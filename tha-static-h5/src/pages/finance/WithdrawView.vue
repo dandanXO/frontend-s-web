@@ -177,7 +177,7 @@
 </template>
 
 <script lang="js">
-import {defineComponent, reactive, ref, onMounted, onUpdated} from "vue";
+import {defineComponent, reactive, ref, onMounted, onActivated, onUpdated} from "vue";
 // import { loadBankCards, confirmWithdraw, withdrawEntrance
 // //  } from "@/api/personal/personal";
 // import { message } from "ant-design-vue";
@@ -189,6 +189,8 @@ import PanelWrapper from "src/components/PanelWrapper.vue";
 import PlatformItem from "src/components/PlatformItem.vue";
 import {useUI} from "stores/ui";
 import {isH5} from "boot/utils"
+import {useI18n} from "vue-i18n";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -199,6 +201,8 @@ export default defineComponent({
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN + '/payment/';
 
+    const {t} = useI18n();
+    const router = useRouter();
     const amountRef = ref();
     const cardRef = ref();
     const store = userStore();
@@ -215,8 +219,21 @@ export default defineComponent({
     const withdrawalMethods = ref([]);
     const selectedWithdrawalMethod = ref([])
     onMounted(() => {
-      getWithdrawalMethods()
+      getWithdrawalMethods();
     });
+
+    onActivated(() => {
+      if (!store.telephone || store.telephone == "" || store.telephone == null) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: t('lang.verify_phone_number'),
+          icon: "report_problem"
+        });
+        router.push("/account/personal");
+      }
+    })
+
     onUpdated(() => {
       if (ui.isCardUpdate === true) {
         ui.isCardUpdate = false;
@@ -229,6 +246,7 @@ export default defineComponent({
       $q.loading.show({
         message: "Confirming Withdrawal"
       });
+
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
       } else {

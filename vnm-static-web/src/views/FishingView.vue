@@ -5,7 +5,7 @@
     :platformType="platformType"
     :platformName="platformName"
     :platformPattern="platformPattern"
-    :platformExpandable="false"
+    :platformExpandable="true"
   />
 </template>
 
@@ -16,6 +16,6 @@ import { fishingPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("fishing");
 const platformGameType = ref("FISH");
-const platformName = ref("FISHING");
+const platformName = ref('fishing');
 const platformPattern = ref(true);
 </script>

@@ -196,6 +196,12 @@ const routes = [
     // component: () => {},
   },
   {
+    path: "/summon/:summonerCode",
+    name: "summonCode",
+    component: () => {}
+    // component: () => {},
+  },
+  {
     path: "/account",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AccountPage.vue") }],
@@ -663,6 +669,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/PrivilegeInvite.vue") }],
     meta: { requiresAuth: true, isApp: true }
+  },
+  {
+    path: "/app-tutorial",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/AppTutorial.vue") }],
   },
   // Always leave this as last one,
   // but you can also remove it

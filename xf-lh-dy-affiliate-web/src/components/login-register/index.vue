@@ -2,8 +2,9 @@
   <div
     class="firstPage"
     :class="[
-      props.siteId !== '5' ? '' : 'ind-firstPage',
+      (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
+      props.siteId !== '8' ? '' : 'vi',
     ]"
   >
     <div class="inner">
@@ -16,7 +17,7 @@
           <div class="second-liner" v-html="currentSite.secondLiner" />
         </div>
         <div class="right">
-          <div class="bg">
+          <div class="bg swiper-no-swiping">
             <div class="top">
               <div class="log">
                 {{ isReg ? $t('common.signup') : $t('common.login') }}
@@ -35,7 +36,7 @@
                 v-if="!isReg"
                 ref="loginFormRef"
                 :model="loginForm"
-                :rules="loginRules"
+                :rules="props.siteId === '8' ? loginRulesVi : loginRules"
                 class="login-form"
                 autocomplete="no-fill"
               >
@@ -43,9 +44,7 @@
                   <el-input
                     ref="userNameRef"
                     v-model="loginForm.userName"
-                    :placeholder="
-                      currentSite.lang === 'EN' ? 'Username' : '用户名'
-                    "
+                    :placeholder="$t('common.username')"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -65,23 +64,35 @@
                       ref="passwordRef"
                       v-model="loginForm.password"
                       :type="passwordType"
-                      :placeholder="
-                        currentSite.lang === 'EN' ? 'Password' : '密码'
-                      "
+                      :placeholder="$t('common.password')"
                       name="password"
                       tabindex="2"
                       autocomplete="no-fill"
                       @keyup="checkCapslock"
                       @blur="capsTooltip = false"
-                      @keyup.enter="handleLogin"
+                      @keyup.enter="props.siteId !== '8' ? handleLogin() : null"
                     />
                   </el-form-item>
                 </el-tooltip>
-                <div style="margin:20px 0px">
+                <el-form-item prop="captchaCode" v-if="props.siteId === '8'">
+                  <el-input
+                    v-model="loginForm.captchaCode"
+                    :placeholder="$t('common.verificationcode')"
+                    name="captchaCode"
+                    type="text"
+                    tabindex="7"
+                    autocomplete="on"
+                    @keyup.enter="handleLogin"
+                    clearable
+                  >
+                    <template #append class="verification">
+                      <img :src="captchaImg" @click="getCaptcha()">
+                    </template>
+                  </el-input>
+                </el-form-item>
+                <div style="margin:20px 0px" v-if="props.siteId !== '8'">
                   <el-link type="primary" @click="forgetPasswordDialog">
-                    {{
-                      currentSite.lang === 'EN' ? 'Forget Password' : '忘记密码'
-                    }}
+                    {{ $t('common.forgetpass') }}
                   </el-link>
                 </div>
                 <div class="flex-c-center-div">
@@ -103,7 +114,10 @@
                   </el-button>
                 </div>
 
-                <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                <div
+                  v-if="props.siteId !== '5' || props.siteId !== '8'"
+                  class="flex-c-center-div"
+                >
                   <div class="contact-div" @click="swipeToContactUs">
                     {{ $t('common.contact_us') }}
                   </div>
@@ -122,11 +136,7 @@
                     <el-input
                       ref="userNameRef"
                       v-model="regForm.userName"
-                      :placeholder="
-                        currentSite.lang === 'EN'
-                          ? 'Affiliate Account'
-                          : '合营账户'
-                      "
+                      :placeholder="$t('common.affiliateaccount')"
                       name="userName"
                       type="text"
                       tabindex="1"
@@ -145,9 +155,7 @@
                         ref="passwordRef"
                         v-model="regForm.password"
                         :type="passwordType"
-                        :placeholder="
-                          currentSite.lang === 'EN' ? 'Password' : '密码'
-                        "
+                        :placeholder="$t('common.password')"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -168,11 +176,7 @@
                         ref="confirmPwdRef"
                         v-model="regForm.confirmPwd"
                         :type="passwordType"
-                        :placeholder="
-                          currentSite.lang === 'EN'
-                            ? 'Confirm Password'
-                            : '密码确认'
-                        "
+                        :placeholder="$t('common.confirmpassword')"
                         name="password"
                         tabindex="3"
                         autocomplete="on"
@@ -205,7 +209,7 @@
                       style="width:50%;"
                       @click.prevent="handleRegister"
                     >
-                      {{ $t('common.apply') }}
+                      {{ props.siteId === '8' || props.siteId === 8 ? $t('google.next_step') :$t('common.apply') }}
                     </el-button>
                     <el-button
                       class="common-btn default-btn"
@@ -215,18 +219,21 @@
                       {{ $t('common.back_login') }}
                     </el-button>
                   </div>
-                  <div v-if="props.siteId !== '5'" class="flex-c-center-div">
+                  <div
+                    v-if="props.siteId !== '5' || props.siteId !== '8'"
+                    class="flex-c-center-div"
+                  >
                     <div class="contact-div" @click="swipeToContactUs">
                       {{ $t('common.contact_us') }}
                     </div>
                   </div>
                 </div>
-                <!--div v-if="step === 2">
+                <div v-if="step === 2 && props.siteId === '8'">
                   <el-form-item prop="realName">
                     <el-input
                       ref="realNameRef"
                       v-model="regForm.realName"
-                      :placeholder="'姓名'"
+                      :placeholder="$t('fields.realName')"
                       name="realName"
                       type="text"
                       tabindex="4"
@@ -237,7 +244,7 @@
                     <el-input
                       ref="telephoneRef"
                       v-model="regForm.telephone"
-                      :placeholder="'手机号码'"
+                      :placeholder="$t('fields.telephone')"
                       name="telephone"
                       type="text"
                       tabindex="4"
@@ -248,14 +255,14 @@
                     <el-input
                       ref="emailRef"
                       v-model="regForm.email"
-                      :placeholder="'邮箱'"
+                      :placeholder="$t('fields.email')"
                       name="Email"
                       type="text"
                       tabindex="5"
                       autocomplete="on"
                     />
                   </el-form-item>
-                  <!- <el-form-item prop="birthday">
+                  <!-- <el-form-item prop="birthday">
                         <el-date-picker
                             v-model="regForm.birthday"
                             type="date"
@@ -265,29 +272,29 @@
                             popper-class="custom-date-picker"
                             :disabled-date="disabledDate"
                         />
-                        </el-form-item>
-                        <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
-                        <el-input v-if="hasAffiliate"
-                                    ref="codeAffiliateRef"
-                                    v-model="regForm.codeAffiliate"
-                                    :placeholder="'代理码'"
-                                    name="codeAffiliate"
-                                    type="text"
-                                    tabindex="8"
-                                    autocomplete="on"
-                                    :disabled="true"
-                        />
-                        <el-input
-                            ref="codeAffiliateRef"
-                            v-model="regForm.codeAffiliate"
-                            :placeholder="'代理码'"
-                            name="codeAffiliate"
-                            type="text"
-                            tabindex="8"
-                            autocomplete="on"
-                        />
-                        </el-form-item>
-                        <el-button
+                  </el-form-item-->
+                  <!-- <el-form-item prop="codeAffiliate" v-if="!hasAffiliate">
+                  <el-input v-if="hasAffiliate"
+                              ref="codeAffiliateRef"
+                              v-model="regForm.codeAffiliate"
+                              :placeholder="'代理码'"
+                              name="codeAffiliate"
+                              type="text"
+                              tabindex="8"
+                              autocomplete="on"
+                              :disabled="true"
+                  />
+                  <el-input
+                      ref="codeAffiliateRef"
+                      v-model="regForm.codeAffiliate"
+                      :placeholder="'代理码'"
+                      name="codeAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                  />
+                  </el-form-item> -->
+                  <!-- <el-button
                     class="common-btn"
                     :loading="loading"
                     type="danger"
@@ -295,8 +302,26 @@
                     @click.prevent="handleRegister"
                   >
                     申请
-                  </el-button>
-                </div> -->
+                  </el-button> -->
+                  <div class="flex-c-center-div">
+                    <el-button
+                      class="common-btn default-btn"
+                      style="width:50%;"
+                      @click="step = 1"
+                    >
+                      {{ $t('google.prev_step') }}
+                    </el-button>
+                    <el-button
+                      class="common-btn"
+                      :loading="loading"
+                      type="danger"
+                      style="width:50%;"
+                      @click.prevent="handleRegister"
+                    >
+                      {{ $t('common.apply') }}
+                    </el-button>
+                  </div>
+                </div>
               </el-form>
             </div>
             <div class="bot">&nbsp;</div>
@@ -319,10 +344,7 @@
         {{ words.join(' , ') }}
       </span>
     </template>
-    <div
-      id="loadDiv"
-      v-loading="dialogLoading"
-    >
+    <div id="loadDiv" v-loading="dialogLoading">
       <el-image
         style="cursor: pointer"
         id="imageRef"
@@ -387,10 +409,7 @@
       {{ index + 1 }}
     </div>
   </div>
-  <el-dialog
-    v-model="showPasswordDialog"
-    :title="t('fields.forgetPassword')"
-  >
+  <el-dialog v-model="showPasswordDialog" :title="t('fields.forgetPassword')">
     <el-steps :active="passwordStep" align-center>
       <el-step :title="t('forgetPassword.verifyAuth')" />
       <el-step :title="t('forgetPassword.verifyQues')" />
@@ -446,7 +465,9 @@
       >
         <div class="auth-title">{{ $t('forgetPassword.messageQues') }}</div>
         <div>
-          <span>{{ securityQuestion.question[securityQuestion.currentIndex] }}</span>
+          <span>
+            {{ securityQuestion.question[securityQuestion.currentIndex] }}
+          </span>
           <el-link
             icon="el-icon-refresh"
             :underline="false"
@@ -464,11 +485,7 @@
           />
         </el-form-item>
         <div class="flex-c-center-div">
-          <el-button
-            class="common-btn"
-            type="danger"
-            @click="submitVerifyQues"
-          >
+          <el-button class="common-btn" type="danger" @click="submitVerifyQues">
             {{ $t('forgetPassword.submit') }}
           </el-button>
         </div>
@@ -496,7 +513,10 @@
             @blur="capsTooltip = false"
           />
         </el-form-item>
-        <el-form-item prop="confirmPassword" :label="t('fields.confirmNewPassword')">
+        <el-form-item
+          prop="confirmPassword"
+          :label="t('fields.confirmNewPassword')"
+        >
           <el-input
             v-model="resetForm.confirmPassword"
             :placeholder="t('fields.confirmNewPassword')"
@@ -538,6 +558,7 @@ import { ElNotification, ElMessage } from 'element-plus'
 import dyLogo from '@/assets/images/dy/logowhitee.png'
 import xfLogo from '@/assets/images/xf/logowhitee.png'
 import indLogo from '@/assets/images/ind/ind-logo.png'
+import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
 import { getVerificationImage } from '@/api/verification'
@@ -561,26 +582,30 @@ export default defineComponent({
   setup(props) {
     const validatePass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.regForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(
+          new Error(t('message.required_same_with_password'))
+        )
       } else {
         return Promise.resolve()
       }
     }
     const validateResetPass2 = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('密码确认不能为空'))
+        return Promise.reject(new Error(t('message.required_confirm_pwd')))
       } else if (v !== state.resetForm.password) {
-        return Promise.reject(new Error('与登录密码不一致'))
+        return Promise.reject(
+          new Error(t('message.required_same_with_password'))
+        )
       } else {
         return Promise.resolve()
       }
     }
     const validateRealName = async (r, v) => {
       if (v === '') {
-        return Promise.reject(new Error('请输入姓名'))
-      } else if (!checkRealName(v)) {
+        return Promise.reject(new Error(t('message.requiredRealName')))
+      } else if (!checkRealName(v) && props.siteId !== '8') {
         return Promise.reject(new Error('请输入中文字符'))
       } else {
         return Promise.resolve()
@@ -599,6 +624,7 @@ export default defineComponent({
             // Data Image
             verificationImg.value = 'data:image/png;base64,' + res.data.img
             state.regForm.codeId = res.data.id
+            state.loginForm.codeId = res.data.id
           }
         })
         .catch(e => {})
@@ -625,6 +651,7 @@ export default defineComponent({
     const googleAuthFormRef = ref(null)
     const quesAuthFormRef = ref(null)
     const resetFormRef = ref(null)
+    const captchaImg = ref('')
     const state = reactive({
       loginForm: {
         userName: '',
@@ -632,6 +659,8 @@ export default defineComponent({
         site: 'DY2',
         key: '',
         coordinates: '',
+        captchaCode: '',
+        codeId: '',
       },
       loginRules: {
         userName: [
@@ -642,8 +671,8 @@ export default defineComponent({
           },
           {
             required: true,
-            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
-            message: '代理账号只能有数字或字母组成',
+            pattern: /^[a-zA-Z0-9_][a-zA-Z0-9_]*$/,
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
             trigger: 'blur',
           },
         ],
@@ -652,6 +681,41 @@ export default defineComponent({
             required: true,
             message: t('message.requiredPassword'),
             trigger: 'blur',
+          },
+        ],
+      },
+      loginRulesVi: {
+        userName: [
+          {
+            required: true,
+            message: t('message.requiredLoginName'),
+            trigger: 'blur',
+          },
+          {
+            required: true,
+            pattern: /^[a-zA-Z1-9][a-zA-Z0-9]*$/,
+            message: t('common.affiliateaccountcanonlycontainnumchar'),
+            trigger: 'blur',
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: t('message.requiredPassword'),
+            trigger: 'blur',
+          },
+        ],
+        captchaCode: [
+          {
+            required: true,
+            message: t('message.required_captcha'),
+            trigger: 'blur',
+          },
+          {
+            min: 4,
+            max: 4,
+            message: t('message.required_4_digits'),
+            trigger: 'change',
           },
         ],
       },
@@ -670,26 +734,26 @@ export default defineComponent({
         userName: [
           {
             required: true,
-            message: '代理账号不能为空',
+            message: t('message.required_signup_account'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
         password: [
           {
             required: true,
-            message: '登录密码不能为空',
+            message: t('message.requried_password'),
             trigger: 'blur',
           },
           {
             min: 6,
             max: 12,
-            message: '由6-12位数字或字母组成',
+            message: t('message.required_6_to_12'),
             trigger: 'blur',
           },
         ],
@@ -713,7 +777,7 @@ export default defineComponent({
         telephone: [
           {
             required: true,
-            message: '手机号码不能为空',
+            message: t('message.requiredTelephone'),
             trigger: 'blur',
           },
         ],
@@ -727,30 +791,30 @@ export default defineComponent({
         email: [
           {
             required: true,
-            message: '邮箱不能为空',
+            message: t('message.requiredEmail'),
             trigger: 'blur',
           },
           {
             type: 'email',
-            message: '邮件地址无效',
+            message: t('message.emailFormat'),
             trigger: 'blur',
           },
           {
             max: 50,
-            message: '由少过50位数字或字母组成',
+            message: t('message.lessthan50'),
             trigger: 'blur',
           },
         ],
         captchaCode: [
           {
             required: true,
-            message: '验证码不能为空',
+            message: t('message.required_captcha'),
             trigger: 'blur',
           },
           {
             min: 4,
             max: 4,
-            message: '由4位数字组成',
+            message: t('message.required_4_digits'),
             trigger: 'change',
           },
         ],
@@ -791,8 +855,8 @@ export default defineComponent({
             required: true,
             message: t('message.requiredAnswer'),
             trigger: 'blur',
-          }
-        ]
+          },
+        ],
       },
       resetForm: {
         password: '',
@@ -870,7 +934,7 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND') {
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -883,11 +947,13 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            // if (step.value === 1) {
-            //   step.value = 2
-            //   return
-            // } else {
-            // }
+            if (props.siteId === '8' || props.siteId === 8) {
+              if (step.value === 1) {
+                step.value = 2
+                return
+              } else {
+              }
+            }
             state.loading = true
             try {
               await store.dispatch(
@@ -895,19 +961,19 @@ export default defineComponent({
                 state.regForm
               )
               ElNotification({
-                title: '系统提示',
-                message:
-                  '尊敬的合作伙伴，您的资料提交成功，我们的代理专员会在24小时内告知您审核结果，如有疑问请联系我们代理专员或在线客服，谢谢。',
+                title: t('fields.systemAlert'),
+                message: t('fields.affiliateSuccessSubmit'),
                 showClose: false,
                 type: 'success',
               })
             } catch (e) {
               ElNotification({
-                title: '系统提示',
+                title: t('fields.systemAlert'),
                 message: e.message,
                 showClose: false,
                 type: 'error',
               })
+              step.value = 1
               getCode()
               state.loading = false
               return
@@ -929,10 +995,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
+        if (state.loginForm.site === 'VNM') {
+          getCaptcha()
+        }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
           router
             .push({
               path: state.redirect || '/',
@@ -1019,6 +1088,8 @@ export default defineComponent({
         } catch (e) {
           if (e.message === '验证失败') {
             methods.onFail()
+          } else if (state.loginForm.site === 'VNM') {
+            methods.onFail()
           } else {
             state.showDialog = false
           }
@@ -1030,7 +1101,8 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const { data } = await getVerificationImage()
+        const imgType = languageVal === 'vi' || languageVal === 'en' ? 1 : 0
+        const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
         })
@@ -1046,7 +1118,7 @@ export default defineComponent({
         state.resetForm.confirmPassword = ''
         state.showPasswordDialog = true
       },
-      restrictIntegerInput: (event) => {
+      restrictIntegerInput: event => {
         var charCode = event.which ? event.which : event.keyCode
         if (charCode < 48 || charCode > 57 || charCode === 46) {
           event.preventDefault()
@@ -1055,8 +1127,15 @@ export default defineComponent({
       submitVerifyGoogle: () => {
         googleAuthFormRef.value.validate(async valid => {
           if (valid) {
-            const { data: ret } = await verifyGoogleAuthentication(state.googleAuthForm.loginName, props.siteId, state.googleAuthForm.code)
-            const { data: ret1 } = await getSecurityQuestionsList(state.googleAuthForm.loginName, props.siteId)
+            const { data: ret } = await verifyGoogleAuthentication(
+              state.googleAuthForm.loginName,
+              props.siteId,
+              state.googleAuthForm.code
+            )
+            const { data: ret1 } = await getSecurityQuestionsList(
+              state.googleAuthForm.loginName,
+              props.siteId
+            )
             state.twoFaCode = ret
             if (ret1 === null || ret1 === undefined) {
               ElMessage.error(t('forgetPassword.noSecurityQuestionSet'))
@@ -1069,7 +1148,10 @@ export default defineComponent({
         })
       },
       nextQuestion: () => {
-        state.securityQuestion.currentIndex = state.securityQuestion.currentIndex === 2 ? 0 : state.securityQuestion.currentIndex + 1
+        state.securityQuestion.currentIndex =
+          state.securityQuestion.currentIndex === 2
+            ? 0
+            : state.securityQuestion.currentIndex + 1
       },
       submitVerifyQues: () => {
         quesAuthFormRef.value.validate(async valid => {
@@ -1099,7 +1181,7 @@ export default defineComponent({
             state.showPasswordDialog = false
           }
         })
-      }
+      },
     })
 
     function getOtherQuery(query) {
@@ -1144,9 +1226,25 @@ export default defineComponent({
       myElement.swiper.slideTo(1)
     }
 
+    const getCaptcha = () => {
+      state.loginForm.captchaCode = ''
+
+      getVerificationCode().then(res => {
+        if (res.code === 0) {
+          captchaImg.value = 'data:image/png;base64,' + res.data.img
+          state.loginForm.codeId = res.data.id
+        } else {
+          ElMessage.error({
+            type: 'error',
+            message: res.message,
+          })
+        }
+      })
+    }
+
     const currentSite = ref({})
     const i18nStoreLanguage = i18nStore()
-    const { setLanguage } = i18nStoreLanguage
+    const { setLanguage, languageVal } = i18nStoreLanguage
     const populateCurrentSiteData = () => {
       if (props.siteId === '6') {
         currentSite.value.firstLiner = '从东赢开始'
@@ -1171,6 +1269,15 @@ export default defineComponent({
         currentSite.value.lang = 'EN'
         setLanguage('en')
       }
+      if (props.siteId === '9') {
+        currentSite.value.firstLiner = 'Starts from 789F'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = ind2Logo
+        state.loginForm.site = 'IW2'
+        currentSite.value.lang = 'EN'
+        setLanguage('en')
+      }
       if (props.siteId === '7') {
         currentSite.value.firstLiner = '从雷火开始'
         currentSite.value.secondLiner = '成为传奇<br>还是成为传奇的歌颂者'
@@ -1178,9 +1285,10 @@ export default defineComponent({
         state.loginForm.site = 'LH1'
         setLanguage('zh')
       }
-      if (props.siteId === '4') {
+      if (props.siteId === '8') {
         currentSite.value.firstLiner = 'Start From TFGaming'
-        currentSite.value.secondLiner = 'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.secondLiner =
+          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
@@ -1204,6 +1312,9 @@ export default defineComponent({
       dialog.addEventListener('scroll', methods.onScrollEvent)
       window.addEventListener('resize', methods.onScrollEvent)
       populateCurrentSiteData()
+      if (props.siteId === '8') {
+        getCaptcha()
+      }
     })
     return {
       userNameRef,
@@ -1235,6 +1346,8 @@ export default defineComponent({
       googleAuthFormRef,
       quesAuthFormRef,
       resetFormRef,
+      getCaptcha,
+      captchaImg,
     }
   },
 })
@@ -1404,6 +1517,17 @@ a {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
       center;
   }
+  &.vi {
+    font-family: 'Roboto';
+    .loginPage .right .top .log {
+      font-family: 'Roboto';
+    }
+    .loginPage .left {
+      .second-liner {
+        font-family: 'Roboto';
+      }
+    }
+  }
   .inner {
     max-width: 1200px;
     width: 100%;
@@ -1469,7 +1593,10 @@ a {
         position: relative;
         .log {
           font-weight: bold;
-          font-family: fzh;
+          //font-family: fzh;
+          font-family: Oxanium, -apple-system, BlinkMacSystemFont, Segoe UI,
+            Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+            Microsoft YaHei, Arial, sans-serif;
           font-size: 32px;
           padding-left: 15px;
         }

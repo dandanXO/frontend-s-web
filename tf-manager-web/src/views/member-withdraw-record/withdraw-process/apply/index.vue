@@ -600,9 +600,9 @@ async function loadSites() {
 
 async function toCheck(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromApplyToChecking([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromApplyToChecking([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromApplyToChecking(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromApplyToChecking(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToUnderReviewSuccess'), type: 'success' })
@@ -612,9 +612,9 @@ async function toCheck(memberWithdrawRecord) {
 
 async function toPending(memberWithdrawRecord) {
   if (memberWithdrawRecord) {
-    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate }])
+    await fromApplyToPending([{ id: memberWithdrawRecord.id, withdrawDate: memberWithdrawRecord.withdrawDate, siteId: memberWithdrawRecord.siteId }])
   } else {
-    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate })))
+    await fromApplyToPending(chooseRecord.map(a => ({ id: a.id, withdrawDate: a.withdrawDate, siteId: a.siteId })))
   }
   await loadRecord()
   ElMessage({ message: t('message.updateToSuspendSuccess'), type: 'success' })

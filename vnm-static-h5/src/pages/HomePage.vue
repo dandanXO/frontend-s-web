@@ -1,23 +1,13 @@
 <template>
-  <!-- <pre> -->
-  <!-- ---{{ $t("lang.langVal") }}--- -->
-  <!-- <br />esport-{{ esport }} -->
-  <!-- <br />sport-{{ sport }} -->
-  <!-- <br />livecasino-{{ livecasino }} -->
-  <!-- <br />poker-{{ poker }} -->
-  <!-- <br />lottery-{{ lottery }} -->
-  <!-- <br />cockfight-{{ cockfight }} -->
-  <!-- <br />fishing-{{ fishing }} -->
-  <!-- <br />casuals-{{ casuals }} -->
-  <!-- </pre> -->
-
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web-fire.svg" alt="download-logo" />
       <div class="download-txt-container">
-        <span class="download-title">{{ $t("lang.app_download_title") }}</span>
-        <span>{{ $t("lang.app_download_desc") }}</span>
+        <span class="download-title">
+          <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
+        </span>
+        <span class="sm-screen-txt">{{ $t("lang.app_download_desc") }}</span>
       </div>
       <div class="buttons">
         <div class="buttons">
@@ -26,7 +16,7 @@
             target="_blank"
             :label="$t('lang.dowload_now')"
             color="brightbtn"
-            class="top-btn"
+            class="top-btn sm-screen-txt"
             no-caps
           />
         </div>
@@ -36,13 +26,13 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-1.png" />
+      <img alt="logo" src="../assets/logo-web-fire.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
-      <q-btn rounded no-caps color="brightbtn" @click="router.push('/login')">
+      <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" @click="router.push('/register')">
+      <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="router.push('/register')">
         {{ $t("lang.register") }}
       </q-btn>
     </div>
@@ -94,8 +84,6 @@
       :img-src="imgURL + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     />
-    <!-- :img-src="require(`../assets/images/home/${banner.mobileImageUrl}`)" -->
-    <!-- :img-src="imgURL + banner.mobileImageUrl" -->
   </q-carousel>
 
   <div class="mid-announcement-section">
@@ -116,6 +104,18 @@
   </div>
 
   <div class="details-bar">
+    <div class="message" @click="refreshBalance">
+      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
+        {{
+          store.token
+            ? !isLoadingBalance
+              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
+              : $t("lang.loading")
+            : $t("lang.not_logged_in")
+        }}
+      </span>
+      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+    </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/deposit-mid.png" />
@@ -125,10 +125,10 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
+      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/transfer-mid.png" />
         <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link>
+      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
@@ -158,16 +158,6 @@
         <span :class="tab === 'live' && 'active'">{{ $t("lang.menu_livecasino") }}</span>
       </div>
 
-      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
-        </template>
-        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
-      </div>
-
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
         <template v-if="tab === 'slot'">
           <img src="../assets/images/home/games/slot-icon-active.png" />
@@ -178,14 +168,14 @@
         <span :class="tab === 'slot' && 'active'">{{ $t("lang.menu_slots") }}</span>
       </div>
 
-      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
-        <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
+      <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
+        <template v-if="tab === 'poker'">
+          <img src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/lottery-icon.png" />
+          <img src="../assets/images/home/games/poker-icon.png" />
         </template>
-        <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
+        <span :class="tab === 'poker' && 'active'">{{ $t("lang.menu_poker") }}</span>
       </div>
 
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
@@ -196,6 +186,16 @@
           <img src="../assets/images/home/games/esport-icon.png" />
         </template>
         <span :class="tab === 'esport' && 'active'">{{ $t("lang.menu_esports") }}</span>
+      </div>
+
+      <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
+        <template v-if="tab === 'lottery'">
+          <img src="../assets/images/home/games/lottery-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/lottery-icon.png" />
+        </template>
+        <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
@@ -293,31 +293,6 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="poker-lists">
-        <template v-for="(item, index) in poker" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
       <div class="game-lists fade-in-image" id="slot-lists">
         <template v-for="(item, index) in slot" :key="index">
           <div
@@ -343,8 +318,8 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="lottery-lists">
-        <template v-for="(item, index) in lottery" :key="index">
+      <div class="game-lists fade-in-image" id="poker-lists">
+        <template v-for="(item, index) in poker" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -393,33 +368,8 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="fishing-lists">
-        <template v-for="(item, index) in fishing" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, 7202)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <div class="game-lists fade-in-image" id="cockfight-lists">
-        <template v-for="(item, index) in cockfight" :key="index">
+      <div class="game-lists fade-in-image" id="lottery-lists">
+        <template v-for="(item, index) in lottery" :key="index">
           <div
             class="platform-block"
             @click="playGame(item.gameName, item.code, item.gameCode)"
@@ -442,8 +392,184 @@
           </div>
         </template>
       </div>
+
+      <div class="game-lists fade-in-image" id="fishing-lists">
+        <template v-for="(item, index) in fishing" :key="index">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/fishing', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="game-lists fade-in-image" id="cockfight-lists">
+        <template v-if="cockfight.length == 0">
+          <div class="platform-block" @click="isPlatformComingSoon = true">
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg('cockfight', 'ws')
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.coming_soon") }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <template v-else>
+          <template v-for="(item, index) in cockfight" :key="index">
+            <div
+              class="platform-block"
+              @click="playGame(item.gameName, item.code, item.gameCode)"
+              :class="item.underMaintenance === true ? 'maintenance' : ''"
+            >
+              <MaintenanceBox :item="item" />
+
+              <div
+                class="platform-img-frame"
+                :style="{
+                  'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+                }"
+              >
+                <div class="platform-content">
+                  <div class="platform-title">
+                    {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </template>
+        </template>
+      </div>
     </div>
   </div>
+
+  <div class="home-news">
+    <div class="home-news-title-section">
+      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
+      <div class="news-see-all">
+        <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
+          {{ $t("lang.see_all") }}
+        </q-btn>
+      </div>
+    </div>
+    <div class="home-news-top-container">
+      <a
+        :href="newsDetail_00.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_00.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_00.title }}</div>
+      </a>
+      <a
+        :href="newsDetail_01.url"
+        target="_blank"
+        class="top-news"
+        :style="{ backgroundImage: `url(${newsDetail_01.pictureurl})` }"
+      >
+        <div class="title-txt">{{ newsDetail_01.title }}</div>
+      </a>
+    </div>
+
+    <div class="home-news-bottom-container">
+      <a :href="newsDetail_02.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_02.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_02.title }}</div>
+      </a>
+      <a :href="newsDetail_03.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_03.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_03.title }}</div>
+      </a>
+      <a :href="newsDetail_04.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_04.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_04.title }}</div>
+      </a>
+      <a :href="newsDetail_05.url" target="_blank" class="bottom-news">
+        <div class="news-img" :style="{ backgroundImage: `url(${newsDetail_05.pictureurl})` }"></div>
+        <div class="news-txt">{{ newsDetail_05.title }}</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="float-service" @click="toggleMenuFloat">
+    <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
+    <div class="float-menu" :class="isMenuFloat && 'show-menu'">
+      <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
+      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
+      <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-04.png" />
+      </a>
+      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-05.png" />
+      </a>
+      <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
+        <img src="../assets/images/home/float-cs-06.png" />
+      </a>
+    </div>
+  </div>
+
+  <q-page-sticky position="bottom-right" :offset="fabPos">
+    <!-- <q-btn
+      rounded
+      no-caps
+      color="info"
+      :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab"
+      @click="getRebateAmt"
+      persistent
+    >
+      {{ $t("lang.rebates") }}
+    </q-btn> -->
+     <div class="rebates-absolute"
+     :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">{{ $t("lang.rebates") }}</div>
+  </q-page-sticky>
+
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isRebateModalVisible"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div style="width: 16px">&nbsp;</div>
+          <div class="titles">{{ $t("lang.menu_rebate") }}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <div class="contents">{{ rebateAmt }}</div>
+        <div class="btnsreas">
+          <div class="confirmsbtns common-md-btn" @click="claimRebateAmt">{{ $t("lang.rebate_claim_now") }}</div>
+          <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 
   <GameModal ref="allGames"></GameModal>
 
@@ -459,13 +585,38 @@
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
-          <div class="titles">系统提示</div>
+          <div class="titles">{{ $t("lang.system_hint") }}</div>
           <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
         </div>
-        <div class="contents">检测到新版本，您是否要更新？</div>
+        <div class="contents" style="font-size: 20px">{{ $t("lang.system_newversiondetected") }}</div>
         <div class="btnsreas">
-          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">立即更新</div>
-          <div class="cacnels common-md-white-btn" @click="cancelUpdate">取消</div>
+          <div class="confirmsbtns common-md-btn" @click="openDownloadPage">{{ $t("lang.system_updatenow") }}</div>
+          <div class="cancels common-md-white-btn" @click="cancelUpdate">{{ $t("lang.system_cancel") }}</div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-common-div"
+    v-model="isLoginModal"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+  >
+    <q-card style="width: 100%" class="modalcontent">
+      <div class="headers">
+        <div class="titles">{{ $t("lang.system_hint") }}</div>
+        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+      </div>
+      <div class="contents">{{ $t("lang.system_please_login") }}</div>
+      <div class="btnsreas">
+        <div class="confirmsbtns common-md-btn btn-standard-height" @click="router.push('/login')">
+          {{ $t("lang.system_loginnow") }}
+        </div>
+        <div class="cacnels common-md-white-btn btn-standard-height" @click="isLoginModal = false">
+          {{ $t("lang.system_cancel") }}
         </div>
       </div>
     </q-card>
@@ -515,19 +666,36 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
-        <div class="promo-banner-container">
+        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" v-else>
             <img :src="homePopupImg" class="alert-img" />
           </div>
-        </div>
+        </router-link>
       </q-card-section>
+    </q-card>
+  </q-dialog>
+
+  <q-dialog width="100%" class="modal-update-div" v-model="isPlatformComingSoon" show-cancel-button>
+    <q-card style="width: 100%" class="bg-bright text-black">
+      <div class="modalcontent">
+        <div class="headers">
+          <div style="width: 16px">&nbsp;</div>
+          <div class="titles">{{ $t("lang.coming_soon") }}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <div class="contents">{{ $t("lang.game_is_coming_soon") }}</div>
+        <div class="btnsreas" style="justify-content: center">
+          <div class="confirmsbtns common-md-btn" v-close-popup>{{ $t("lang.confirm") }}</div>
+          <!-- <div class="cancels common-md-white-btn" @click="isRebateModalVisible = false">{{ $t("lang.cancel") }}</div> -->
+        </div>
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -535,7 +703,7 @@
 <script>
 import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { api } from "boot/axios";
+import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
 import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -565,6 +733,31 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+    const isRebateModalVisible = ref(false);
+    const rebateAmt = ref(0);
+    const getRebateAmt = () => {
+      if (store.hasToken()) {
+        eventapi.get("/daily-rebate/available-amount").then((res) => {
+          if (res.code === 0) {
+            rebateAmt.value = res.data;
+            isRebateModalVisible.value = true;
+          } else {
+          }
+        });
+      } else {
+        isLoginModal.value = true;
+      }
+    };
+    const claimRebateAmt = () => {
+      eventapi.put("/bonus/claim/vnm-daily-rebate").then((res) => {
+        if (res.code === 0) {
+          isRebateModalVisible.value = false;
+        } else {
+        }
+      });
+    };
     const isFirstView = ref(false);
     const closeAlert = () => {
       localStorage.setItem("indexImgTop", new Date().getTime());
@@ -620,11 +813,12 @@ export default defineComponent({
 
           var checkItem1 = document.getElementById("sport-lists");
           var checkItem2 = document.getElementById("live-lists");
-          var checkItem3 = document.getElementById("poker-lists");
-          var checkItem4 = document.getElementById("lottery-lists");
-          var checkItem5 = document.getElementById("slot-lists");
-          var checkItem6 = document.getElementById("fishing-lists");
-          var checkItem7 = document.getElementById("cockfight-lists");
+          var checkItem3 = document.getElementById("slot-lists");
+          var checkItem4 = document.getElementById("poker-lists");
+          var checkItem5 = document.getElementById("esport-lists");
+          var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem7 = document.getElementById("fishing-lists");
+          var checkItem8 = document.getElementById("cockfight-lists");
 
           var positionTop1 = checkItem1.getBoundingClientRect().top;
           var positionTop2 = checkItem2.getBoundingClientRect().top;
@@ -633,6 +827,7 @@ export default defineComponent({
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
+          var positionTop8 = checkItem8.getBoundingClientRect().top;
 
           var bodyElement = document.body;
           var bodyOffset = bodyElement.getBoundingClientRect();
@@ -640,14 +835,16 @@ export default defineComponent({
 
           if (windowHeight + 15 > bodyOffset.bottom) {
             tab.value = "cockfight";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
-            tab.value = "slot";
-          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
+          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
             tab.value = "lottery";
-          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+          } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
+            tab.value = "esport";
+          } else if (0 > positionTop4 - 5 && positionTop5 >= blockHeight) {
             tab.value = "poker";
+          } else if (0 > positionTop3 - 5 && positionTop4 >= blockHeight) {
+            tab.value = "slot";
           } else if (0 > positionTop2 - 5 && positionTop3 >= blockHeight) {
             tab.value = "live";
           } else if (0 > positionTop1 - 5 && positionTop2 >= blockHeight) {
@@ -673,6 +870,9 @@ export default defineComponent({
       }
       if (tab === "slot") {
         scrollToSlide("slot-lists");
+      }
+      if (tab === "esport") {
+        scrollToSlide("esport-lists");
       }
       if (tab === "fishing") {
         scrollToSlide("fishing-lists");
@@ -755,6 +955,8 @@ export default defineComponent({
     const homePopupId = ref(0);
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
+    const homePopupLink = ref("");
+    const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
       if (homePopupFrequencyNum.value !== 0) {
@@ -824,11 +1026,19 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+                homePopupImg.value = process.env.IMAGE_CDN + "/promo/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
                 homePopupFrequency.value = res.data["frequency"];
+
+                if (res.data["path"].includes("http")) {
+                  homePopupLink.value = res.data["path"];
+                  homePopupLinkOut.value = true;
+                } else {
+                  homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
                 isFirstView.value = true;
               }
             }
@@ -842,25 +1052,7 @@ export default defineComponent({
         .get("/promo/banner?category=HOME")
         .then((res) => {
           if (res.code === 0) {
-            // banners.value = res.data;
-
-            banners.value = [
-              {
-                promoPageId: null,
-                desktopImageUrl: "7/032e4d81-78ab-44e5-86e2-eb1aab6d01fa.jpg",
-                mobileImageUrl: "home-banner2.jpg",
-                redirectUrl: "lh1-quiz",
-                category: "HOME"
-              },
-              {
-                promoPageId: null,
-                desktopImageUrl: "7/4457a090-76a1-4d8c-995c-8abae1de30cf.jpg",
-                mobileImageUrl: "home-banner1.jpg",
-                redirectUrl: "chunjisai",
-                category: "HOME"
-              }
-            ];
-          } else {
+            banners.value = res.data;
           }
         })
         .catch(() => {});
@@ -926,6 +1118,9 @@ export default defineComponent({
             }
             if (platTypes.indexOf("LIVE") > -1) {
               var liveObj = Object.assign({}, element);
+              if (liveObj.name === "AE") {
+                liveObj.name = "Sexy";
+              }
               liveObj.title_vn = liveObj.name + " Live Casino";
               liveObj.title_en = liveObj.name + " Live Casino";
               liveObj.icon = "live";
@@ -942,6 +1137,9 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
               if (slotObj.name === "JiliGames") {
                 slotObj.name = "Jili";
+              }
+              if (slotObj.name === "AG") {
+                slotObj.name = "XIN";
               }
               slotObj.title_vn = slotObj.name + " Slots";
               slotObj.title_en = slotObj.name + " Slot";
@@ -973,6 +1171,9 @@ export default defineComponent({
               pokerObj.title_vn = pokerObj.name + " Poker";
               pokerObj.title_en = pokerObj.name + " Poker";
               pokerObj.icon = "poker";
+              if (pokerObj.code === "GPI") {
+                pokerObj.gameCode = "";
+              }
               poker.value.push(pokerObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
@@ -980,6 +1181,9 @@ export default defineComponent({
               lottObj.title_vn = "Xổ Số " + lottObj.name;
               lottObj.title_en = "Lottery " + lottObj.name;
               lottObj.icon = "lottery";
+              if (lottObj.code === "GPI") {
+                lottObj.gameCode = "sode";
+              }
               lottery.value.push(lottObj);
             }
           });
@@ -1051,23 +1255,19 @@ export default defineComponent({
         isStationNotice.value = true;
       }
     };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
-    };
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
       if (Platform.is.android && Platform.is.capacitor) {
         const info = await App.getInfo();
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
         const appType = "ALL";
         const device = Platform.is.android ? "ANDROID" : "IOS";
         const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
         if (res.code === 0) {
           var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
           download_url.value = res.data.url;
           if (latest_ver_no > current_version) {
             isAppUpdateModal.value = true;
@@ -1093,7 +1293,7 @@ export default defineComponent({
 
     const getAppDownloadUrl = () => {
       api
-        .get("/app/getAppData?siteCode=lh1&appType=ALL_SITE")
+        .get("/app/getAppData?siteCode=vnm&appType=ALL_SITE")
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
@@ -1139,9 +1339,67 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
+      getNewsDetails();
     });
 
     const imageLoading = ref(false);
+
+    const isMenuFloat = ref(false);
+
+    const toggleMenuFloat = () => {
+      isMenuFloat.value = !isMenuFloat.value;
+    };
+
+    const isLoginModal = ref(false);
+
+    const newsDetails = ref([]);
+    const newsDetail_00 = ref([]);
+    const newsDetail_01 = ref([]);
+    const newsDetail_02 = ref([]);
+    const newsDetail_03 = ref([]);
+    const newsDetail_04 = ref([]);
+    const newsDetail_05 = ref([]);
+
+    const goToNewsPage = () => {
+      window.open("http://tf88club.net");
+    };
+
+    const gotoPromo = (banner) => {
+      const urlSplit= banner.redirectUrl.split("|");
+      if(urlSplit.length >= 2){
+        const type= urlSplit[0];
+        if(type==='page'){
+          router.push(`/${banner.redirectUrl}`);
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }else{
+        if(banner.redirectUrl.includes("https://")){
+          window.open(banner.redirectUrl,"_blank");
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }
+    }
+
+    const getNewsDetails = () => {
+      api.get("/news").then((res) => {
+        if (res.code === 0) {
+          const filteredData = res.data.filter((item) => item.category.includes("Soi kèo bóng đá"));
+          if (filteredData.length > 0) {
+            newsDetails.value = filteredData;
+            newsDetail_00.value = filteredData[0];
+            newsDetail_01.value = filteredData[1];
+            newsDetail_02.value = filteredData[2];
+            newsDetail_03.value = filteredData[3];
+            newsDetail_04.value = filteredData[4];
+            newsDetail_05.value = filteredData[5];
+          }
+        }
+      });
+    };
+
+    const isPlatformComingSoon = ref(false);
 
     return {
       imageLoading,
@@ -1198,6 +1456,8 @@ export default defineComponent({
       cancelUpdate,
       openDownloadPage,
       homePopupImg,
+      homePopupLink,
+      homePopupLinkOut,
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
@@ -1218,13 +1478,163 @@ export default defineComponent({
       moment,
       unreadInboxMail,
       getUnreadTotal,
-      topBoxVisible
+      topBoxVisible,
+      isMenuFloat,
+      toggleMenuFloat,
+      isRebateModalVisible,
+      rebateAmt,
+      getRebateAmt,
+      claimRebateAmt,
+      fabPos,
+      draggingFab,
+      isLoginModal,
+      newsDetails,
+      getNewsDetails,
+      newsDetail_00,
+      newsDetail_01,
+      newsDetail_02,
+      newsDetail_03,
+      newsDetail_04,
+      newsDetail_05,
+      goToNewsPage,
+      isPlatformComingSoon,
+
+      moveFab(ev) {
+        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
+      }
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+.home-news {
+  width: calc(100% - 2rem);
+  margin: 0 auto 32px;
+
+  .home-news-title-section {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+
+    .news-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #313441;
+    }
+  }
+
+  .home-news-top-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    margin-bottom: 8px;
+
+    .top-news {
+      background-color: #ffffff;
+      border-radius: 12px;
+      height: 140px;
+      background-size: cover;
+      position: relative;
+      overflow: hidden;
+
+      .title-txt {
+        font-weight: 700;
+        color: #ffffff;
+        text-align: left;
+        line-height: 1.4;
+        font-size: 14px;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        text-shadow: 10px 10px 10px #000;
+        overflow: hidden;
+        width: 100%;
+        background: linear-gradient(0deg, #063c78 0%, rgba(0, 0, 0, 0) 72.73%);
+      }
+    }
+  }
+  .home-news-bottom-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 8px;
+    row-gap: 8px;
+    .bottom-news {
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+
+      .news-img {
+        min-width: 60px;
+        min-height: 60px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        background-size: cover;
+      }
+
+      .news-txt {
+        color: #333333;
+        font-size: 12px;
+        padding: 8px;
+        max-height: 40px; /* Assuming 4 lines of text with 12px font size and 12px padding */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
+}
+
+.float-service {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .float-btn {
+    margin-right: -5px;
+  }
+
+  .float-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+    background: rgba(252, 253, 254, 0.3);
+    padding: 12px 6px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    backdrop-filter: blur(5px);
+    margin-right: calc(-100% - 16px);
+    transition: 0.3s all;
+
+    &.show-menu {
+      margin-right: 0;
+    }
+
+    .menu-item {
+      padding: 8px;
+
+      img {
+        display: block;
+        width: 30px;
+        // width: 100%;
+        // max-width: 30px;
+      }
+    }
+  }
+}
+
 .q-page-container {
   min-height: 100vh;
 }
@@ -1329,6 +1739,7 @@ export default defineComponent({
     gap: 12px;
 
     :deep(.q-btn) {
+      min-width: 99px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
@@ -1338,25 +1749,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    // .lang-container {
-    //   img {
-    //     display: block;
-    //     width: 30px;
-    //     height: 30px;
-    //   }
-
-    //   :deep(.q-field__marginal) {
-    //     min-height: 40px;
-    //     height: 40px;
-    //     display: none;
-    //   }
-
-    //   :deep(.q-field__native) {
-    //     min-height: 30px;
-    //     height: 30px;
-    //     padding: 0;
-    //   }
-    // }
+    margin-top:2px;
   }
 
   .header-right {
@@ -1387,7 +1780,11 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  color: #696d70;
+    border-radius: 2.1875rem;
+    background: #fff;
+    box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+    font-family: 'Roboto';
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -1423,7 +1820,7 @@ export default defineComponent({
   width: $box-width;
   margin: 0 auto;
   gap: 10px;
-  padding: 10px 10px 0px;
+  padding: 10px 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1451,8 +1848,9 @@ export default defineComponent({
 
   .menulist {
     flex: 4;
-    padding-left: 8px;
+    // padding-left: 8px;
     display: flex;
+    // justify-content: space-evenly;
     justify-content: space-between;
     gap: 4px;
 
@@ -1471,7 +1869,8 @@ export default defineComponent({
       }
 
       img {
-        width: 2rem;
+        display: block;
+        height: 2rem;
       }
     }
   }
@@ -1480,7 +1879,9 @@ export default defineComponent({
 .modal-update-div {
   .modalcontent {
     background: $white;
-    height: 232px;
+    // height: 232px;
+    height: auto;
+    min-height: 232px;
     border-radius: 10px;
     box-sizing: border-box;
 
@@ -1513,8 +1914,8 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: $font-2;
-      font-size: 1.2rem;
+      color: #468cff;
+      font-size: 2.2rem;
 
       .contentfonts {
         text-align: center;
@@ -1549,7 +1950,7 @@ export default defineComponent({
       margin-top: 20px;
       gap: 15px;
 
-      .cacnels {
+      .cancels {
         flex: 1;
         box-sizing: border-box;
         text-align: center;
@@ -1559,6 +1960,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         margin-right: 8px;
+        padding: 10px !important;
       }
 
       .confirmsbtns {
@@ -1570,6 +1972,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         letter-spacing: 1px;
+        padding: 10px !important;
       }
     }
   }
@@ -1618,7 +2021,7 @@ export default defineComponent({
   align-items: flex-start;
   justify-content: space-between;
   width: $box-width;
-  margin: 0px auto 30px;
+  margin: 0px auto 16px;
   gap: 8px;
 
   .game-left-list {
@@ -1745,6 +2148,7 @@ export default defineComponent({
         overflow: hidden;
         display: grid;
         grid-template-columns: 50% 50%;
+        box-shadow: -1px 5px 11px rgb(0 0 0 / 10%);
 
         .platform-content {
           width: 100%;
@@ -1830,6 +2234,33 @@ export default defineComponent({
     animation: fadeIn 1.5s;
   }
 }
+.rebates-absolute {
+  background: url(../assets/images/home/rebates-absolute.png)no-repeat center center;
+  background-size: contain;
+  height: 100px;
+  width: 135px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  font-weight: bold;
+
+}
+
+.modal-home-popup{
+  background:transparent;
+  box-shadow: none;
+
+  .q-card{
+    background:transparent;
+    box-shadow: none;
+  }
+
+  .q-card-section{
+    background:transparent;
+    box-shadow: none;
+  }
+}
 
 @keyframes fadeIn {
   0% {
@@ -1845,7 +2276,7 @@ export default defineComponent({
 @media (max-width: 480px) {
 }
 
-@media (max-width: 400px) {
+@media (max-width: 410px) {
   .grid {
     .q-card {
       .q-card__section {
@@ -1855,17 +2286,16 @@ export default defineComponent({
       }
     }
   }
-}
-</style>
 
-<style lang="scss">
-.q-select__dialog {
-  label {
-    img {
-      width: 30px;
-      height: 30px;
+
+  .home-header {
+
+    .header-middle {
+
+      :deep(.q-btn) {
+        min-width: 75px;
+      }
     }
-    display: none;
   }
 }
 </style>

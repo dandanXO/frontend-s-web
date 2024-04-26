@@ -166,10 +166,10 @@ onMounted(() => {
   getPromotionListing();
 
   const params= props.params ? JSON.parse(props.params) : "";
-  if(params?.time1){
+  if(params && params.time1){
     startTime.time1= params.time1;
   }
-  if(params?.time2){
+  if(params && params.time2){
     startTime.time2= params.time2;
   }
 

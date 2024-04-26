@@ -26,6 +26,8 @@
                      style="float: right;" @click="logoutPlayer"
           >{{ t('fields.logoutPlayer') }}
           </el-button>
+          <el-button type="info" size="mini" style="float: right;margin-right:5px;" @click="syncMember">{{ t('fields.sync') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item label-align="left" label-class-name="member-label" :class-name="memberDetail.dupName === 'red'?'member-context-red':'member-context'">
           <template #label>
@@ -499,12 +501,13 @@
       </template>
       <div v-loading="loading.fundingInfo">
         <el-descriptions>
-          <el-descriptions-item :label="t('fields.totalBalance')" width="20%">
+          <el-descriptions-item :label="t('fields.totalBalance')" width="30%">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.balance,type: 'money'}" />
               </div>
             </div>
+            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
           </el-descriptions-item>
           <el-descriptions-item v-if="memberDetail.siteId === '5' || memberDetail.site === 5" :label="t('fields.withdrawableBalance')">
             <div style="display: inline-block;" v-loading="loading.total">
@@ -514,12 +517,12 @@
             </div>
           </el-descriptions-item>
           <el-descriptions-item :label="t('fields.thirtyDaysdw')">
-            <div style="display: inline-block;" v-loading="loading.total">
+            <div style="display: inline-block;" v-loading="loading.dnw">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.companyProfit,type: 'money'}" />
               </div>
             </div>
-            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
+            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshDnW" />
           </el-descriptions-item>
         </el-descriptions>
         <el-descriptions
@@ -529,7 +532,7 @@
           border
         >
           <el-descriptions-item v-for="(value, key, index) in platformWallet" label-align="left" :key="index"
-                                label-class-name="member-label"
+                                label-class-name="member-platform-label"
                                 :label="key"
           >
             <div class="platform-balance" v-loading="loading.balance[key]">
@@ -872,7 +875,9 @@ import {
   updateMemberType,
   unlockMember,
   refreshBalance,
-  forceLogout
+  getDnW,
+  forceLogout,
+  syncMemberDetail
 } from "../../../../../api/member";
 import { getPlatformsBySite } from "../../../../../api/platform";
 import { selectIpLabelAll } from "../../../../../api/ip-label";
@@ -918,6 +923,7 @@ export default defineComponent({
       loginInfo: false,
       fundingInfo: false,
       total: false,
+      dnw: false,
       balance: []
     });
 
@@ -1467,7 +1473,6 @@ export default defineComponent({
       const { data: balance } = await refreshBalance(props.mbrId, site.id);
       memberDetail.balance = balance.balance;
       memberDetail.withdrawableBalance = balance.withdrawableBalance;
-      memberDetail.companyProfit = balance.companyProfit;
       memberDetail.totalDeposit = balance.totalDeposit;
       memberDetail.totalWithdraw = balance.totalWithdraw;
       memberDetail.totalBonus = balance.totalBonus;
@@ -1478,6 +1483,13 @@ export default defineComponent({
         loading.balance[key] = false;
       }
       loading.total = false;
+    };
+
+    const refreshDnW = async () => {
+      loading.dnw = true;
+      const { data: balance } = await getDnW(props.mbrId, site.id);
+      memberDetail.companyProfit = balance;
+      loading.dnw = false;
     };
 
     const refreshPlatformBalance = async (key) => {
@@ -1530,6 +1542,11 @@ export default defineComponent({
     async function logoutPlayer() {
       await forceLogout(props.mbrId, site.id);
       ElMessage({ message: t('message.logoutPlayerSuccess'), type: "success" });
+    }
+
+    async function syncMember() {
+      await syncMemberDetail(props.mbrId, site.id);
+      ElMessage({ message: t('message.syncMemberDetailSuccess'), type: "success" });
     }
 
     async function changeAffiliate() {
@@ -1589,7 +1606,7 @@ export default defineComponent({
 
       await loadBalance();
       loading.fundingInfo = false;
-      if (site.id === '3') {
+      if (site.id === '3' || site.id === '8') {
         uiControl.showCall = true;
         uiControl.showCall1 = true;
       }
@@ -1658,6 +1675,7 @@ export default defineComponent({
       showEditRemark,
       loadBalance,
       refreshAllBalance,
+      refreshDnW,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,
@@ -1670,6 +1688,7 @@ export default defineComponent({
       unlock,
       t,
       logoutPlayer,
+      syncMember,
       affForm,
       affFormRules,
       changeAffiliate,
@@ -1684,6 +1703,14 @@ export default defineComponent({
 .member-label {
   width: 150px;
 
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.member-platform-label {
+  width: 10%;
   div {
     display: flex;
     align-items: center;

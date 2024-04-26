@@ -2,8 +2,8 @@
   <q-dialog class="selection-modal" v-model="selectionRef" position="bottom">
     <div class="selection-modal-wrapper">
       <div class="selection-header">
-        <div class="select-cancel" v-close-popup>取消</div>
-        <div class="select-confirm" @click="searchRecord()" v-close-popup>确认</div>
+        <div class="select-cancel" v-close-popup>{{ $t("lang.col_cancel") }}</div>
+        <div class="select-confirm" @click="searchRecord()" v-close-popup>{{ $t("lang.col_confirm") }}</div>
       </div>
       <Swiper
         class="swiper-container"
@@ -25,7 +25,7 @@
   </q-dialog>
   <div class="table-record">
     <div class="flex-div">
-      <span class="select-stage">选择平台：</span>
+      <span class="select-stage">{{ $t("lang.col_selectplat") }}</span>
       <q-select
         clearable
         rounded
@@ -35,40 +35,40 @@
         style="width: 320px; margin: 10px auto 8px; color: #000"
         v-model="platform"
         :options="platformsList"
-        placeholder="选择平台"
+        :placeholder="t('lang.col_selectplathol')"
         map-options
         @clear="platform = ''"
         @update:model-value="searchRecord"
       ></q-select>
 
       <div class="payout-total">
-        <div>总投注: {{ totalBetRecord.totalBet }}</div>
-        <div>总派彩: {{ totalBetRecord.totalPayout }}</div>
+        <div>{{ $t("lang.col_totalbet") }}{{ totalBetRecord.totalBet }}</div>
+        <div>{{ $t("lang.col_totalpayout") }}{{ totalBetRecord.totalPayout }}</div>
       </div>
     </div>
     <div class="flex-div">
-      <span>开始：</span>
+      <span>{{ $t("lang.col_start") }}</span>
       <q-input rounded outlined dense v-model="startDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="startDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                  <q-btn v-close-popup :label="$t('lang.col_close')" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
           </q-icon>
         </template>
       </q-input>
-      <span>结束：</span>
+      <span>{{ $t("lang.col_end") }}</span>
       <q-input rounded outlined dense v-model="endDate">
         <template v-slot:append>
           <q-icon name="event" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="endDate" mask="YYYY-MM-DD" @update:model-value="searchRecord">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="关闭" color="primary" flat />
+                  <q-btn v-close-popup :label="$t('lang.col_close')" color="primary" flat />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -102,7 +102,9 @@ import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";
 import * as _ from "lodash";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = userStore();
 
 const selectionRef = ref(false);
@@ -244,43 +246,37 @@ const getGameName = (gameName) => {
 
   switch (gameName) {
     case "IMES":
-      return "IM电竞";
+      return "IM";
     case "TCG":
-      return "TCG彩票";
+      return "TCG";
     case "MGP":
-      return "MG电子";
+      return "MG";
     case "CQ9":
-      return "CQ电子";
+      return "CQ";
     case "SABA":
-      return "沙巴体育";
+      return "SABA";
     case "TFGaming":
-      return "雷火电竞 ";
+      return "TFGaming ";
     case "SW":
-      return "SW电子";
+      return "SW";
     case "GPS":
-      return "GPS捕鱼";
+      return "GPS";
     case "IA":
-      return "小艾电竞 ";
-    case "DT":
-      return "大唐棋牌";
+      return "IA ";
     case "IM":
-      return "IM体育";
+      return "IM";
     case "BBIN":
-      return "BBIN真人";
-    case "KY":
-      return "开元棋牌";
+      return "BBIN";
     case "PT":
-      return "PT电子";
+      return "PT";
     case "PG":
-      return "PG电子";
+      return "PG";
     case "AG":
-      return "AG真人, XIN电子";
+      return "AG";
     case "ALLBET":
-      return "ALLBET真人";
-    case "GFLC":
-      return "高登棋牌";
-    case "LEG":
-      return "乐游棋牌";
+      return "ALLBET";
+    case "JiliGames":
+      return "JILI Fish, JILI Slot";
 
     default:
       return gameName;
@@ -297,11 +293,11 @@ const loadPlatformLists = () => {
     )
     .then((data) => {
       platformsList.value.push({
-        label: "全部平台",
+        label: t("lang.all_platform"),
         value: ""
       });
 
-      _.each(data, function(item, index) {
+      _.each(data, function (item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
@@ -314,27 +310,27 @@ const loadPlatformLists = () => {
 const tableHeaders = [
   {
     key: "betTime",
-    label: "游戏时间"
+    label: t("lang.col_bettime")
   },
   {
     key: "platform",
-    label: "游戏平台"
+    label: t("lang.col_platform")
   },
   {
     key: "bet",
-    label: "投注"
+    label: t("lang.col_bet")
   },
   {
     key: "payout",
-    label: "派彩"
+    label: t("lang.col_payout")
   },
   {
     key: "gameType",
-    label: "游戏类型"
+    label: t("lang.col_gametype")
   },
   {
     key: "status",
-    label: "投注状态"
+    label: t("lang.col_betstatus")
   }
 ];
 

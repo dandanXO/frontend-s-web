@@ -63,7 +63,7 @@
       </el-form-item>
     </div>
 
-    <div class="light-bg form-field">
+    <div class="light-bg form-field" v-if="!hasReferSummon">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
       <el-form-item label="推荐码" prop="codeAffiliate">
         <el-input
@@ -109,7 +109,7 @@
   </div>
 
   <div class="flex-div">
-    <div style="visibility:hidden">
+    <div style="visibility: hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div>
 
@@ -117,7 +117,6 @@
       已有账号？
       <a @click="openLoginDialog">去登录</a>
     </div>
-
   </div>
 </template>
 
@@ -135,6 +134,16 @@ let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
 const route = useRoute();
 const hasAffiliate = ref(false);
+const hasReferSummon = ref(false);
+
+// Check session storage for summonCode or referCode
+const checkReferSummonCode = () => {
+  const summonCode = sessionStorage.getItem("SUMMON_CODE");
+  const referCode = sessionStorage.getItem("REFERRAL_CODE");
+  if (summonCode || referCode) {
+    hasReferSummon.value = true;
+  }
+};
 
 const resetRegForm = (formEl) => {
   if (!formEl) return;
@@ -161,7 +170,7 @@ const checkName = (v) => {
 const checkName2 = (v) => {
   const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
   return v.match(alphaRegex);
-}
+};
 
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
@@ -174,7 +183,7 @@ let validateName = async (r, v) => {
     return Promise.reject("请输入登录名");
   } else if (!checkName2(v)) {
     return Promise.reject("不允许使用特殊字符");
-  }else {
+  } else {
     return Promise.resolve();
   }
 };
@@ -366,8 +375,8 @@ const getAffiliateCode = () => {
 
 const getReferalCode = () => {
   const referCode = sessionStorage.getItem("REFERRAL_CODE");
-// && route.query && route.query.refer
-  if (referCode ) {
+  // && route.query && route.query.refer
+  if (referCode) {
     regForm.referrer = referCode;
   }
 };
@@ -443,13 +452,15 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  emits("open-login-dialog");
+  router.push("/login");
+  // emits("open-login-dialog");
 };
 
 onMounted(() => {
   getCode();
   getAffiliateCode();
   getReferalCode();
+  checkReferSummonCode();
 });
 </script>
 

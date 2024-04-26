@@ -192,8 +192,9 @@ $node-color: #4ab6fd;
   // flex-wrap: wrap;
   // justify-content: space-evenly;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   margin-bottom: 20px;
+  align-items: flex-start;
 
   .payment-method-item {
     text-align: center;
@@ -315,16 +316,17 @@ $node-color: #4ab6fd;
         align-items: center;
         justify-content: center;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid #c2c2c2;
         border-radius: 4px;
 
         img {
-          background-color: #fff;
+          background-color: transparent;
           margin-bottom: 0;
-          padding: 5px 10px;
+          padding: 5px;
+          display: block;
           width: 100%;
           height: auto;
         }
@@ -361,18 +363,21 @@ $node-color: #4ab6fd;
 
     .promo {
       position: absolute;
-      right: -10px;
+      right: 50%;
+      transform: translate(50%, 0);
       top: -10px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      width: 100%;
+      max-width: 40px;
 
       img {
         padding: 0;
         border: 0;
         background-color: transparent;
         max-width: 40px;
-        width: 40px;
+        width: 100%;
       }
 
       ::after {
@@ -382,6 +387,16 @@ $node-color: #4ab6fd;
   }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 </style>

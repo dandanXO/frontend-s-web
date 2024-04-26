@@ -75,20 +75,24 @@
     <div class="bind-wrapper">
       <q-form class="bind-item q-my-sm">
         <q-label>
-          电子钱包
+          <template v-if="isSZPAY">数字人民币使用的手机号</template>
+          <template v-else>电子钱包</template>
           <em>*</em>
         </q-label>
         <q-input
           ref="cardNumberRef"
-          type="text"
           standout
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入电子钱包"
-          lazy-rules
+          :label="isSZPAY ? '请输入数字人民币使用的手机号' : '请输入电子钱包'"
           clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
+          :type="isSZPAY ? 'number' : 'text'"
+          :rules="[
+            (val) => (val && val.length > 0) || (isSZPAY ? '请输入数字人民币使用的手机号' : '请输入电子钱包'),
+            validateBankLength,
+            validateEWalletNumber
+          ]"
         ></q-input>
 
         <q-label>
@@ -182,7 +186,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -207,6 +211,7 @@ const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
+const isSZPAY = ref(false);
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
 
@@ -221,7 +226,8 @@ const bankCardInfo = reactive({
   cardAddress: "",
   telephone: store.phone,
   smsCode: "",
-  smsCodeId: ""
+  smsCodeId: "",
+  currencyId: ""
 });
 
 const validateBankLength = (val) => {
@@ -234,6 +240,8 @@ const validateBankLength = (val) => {
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "OKPAY":
       return (val.length > 15 && val.length < 17) || "长度应为16个字符";
+    case "SZPAY":
+      return (val.length > 10 && val.length < 13) || "长度应为11个字符";
     default:
       break;
   }
@@ -404,6 +412,20 @@ const handleEnterKey = () => {
     openPhoneVeriDialog();
   }
 };
+
+watch(
+  () => bankCardInfo.bankId,
+  (newVal, oldVal) => {
+    isSZPAY.value = false;
+    const selectedBank = bankList.value.find((bank) => bank.id === newVal);
+    if (selectedBank) {
+      bankCardInfo.currencyId = selectedBank.currencyIds;
+      if (selectedBank.code === "SZPAY") {
+        isSZPAY.value = true;
+      }
+    }
+  }
+);
 
 onMounted(() => {
   loadBankCards();

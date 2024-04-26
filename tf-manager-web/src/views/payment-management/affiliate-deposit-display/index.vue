@@ -208,6 +208,7 @@
             :placeholder="t('fields.affiliate')"
             class="filter-item"
             style="width: 350px;"
+            v-show="uiControl.dialogType === 'CREATE'"
           >
             <el-option
               v-for="item in list.affiliates"
@@ -216,6 +217,13 @@
               :value="item.affiliateId"
             />
           </el-select>
+          <el-input
+            v-model="form.loginName"
+            size="small"
+            style="width: 350px;"
+            v-show="uiControl.dialogType !== 'CREATE'"
+            disabled
+          />
         </el-form-item>
         <el-form-item :label="t('fields.paymentChannel') + 1" prop="paymentId1">
           <el-select
@@ -538,8 +546,7 @@
 <script setup>
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
-import { getAffiliateDepositDisplayList, createAffiliateDepositDisplay, updateAffiliateDepositDisplay, getAffiliateDepositSetting, createAffiliateDepositSetting, updateAffiliateDepositSetting } from '../../../api/affiliate-deposit-display'
-import { getAffiliateList } from '../../../api/affiliate-record'
+import { getAffiliateDepositDisplayList, createAffiliateDepositDisplay, updateAffiliateDepositDisplay, getAffiliateDepositSetting, createAffiliateDepositSetting, updateAffiliateDepositSetting, getAffiliateBySiteId } from '../../../api/affiliate-deposit-display'
 import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
 import { getSiteImage } from '../../../api/site-image'
 import { required } from '../../../utils/validate'
@@ -606,6 +613,7 @@ const form = reactive({
   affiliateId: null,
   privilegeId: null,
   withdrawPlatformId: null,
+  loginName: null,
 })
 const settingForm = reactive({
   id: null,
@@ -692,7 +700,7 @@ async function loadAffiliateDepositSetting() {
 }
 
 async function loadAffiliates() {
-  const { data: ret } = await getAffiliateList(request.siteId);
+  const { data: ret } = await getAffiliateBySiteId(request.siteId);
   list.allAffiliates = ret
   list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
 }
@@ -819,6 +827,7 @@ function showDialog(type) {
 
 function showSettingDialog(type) {
   if (type === 'CREATE') {
+    uiControl.dialogSetting = 'ALL'
     if (affiliateFinancialDepositSettingForm.value) {
       affiliateFinancialDepositSettingForm.value.resetFields()
     }
@@ -839,6 +848,7 @@ function create() {
       uiControl.dialogVisible = false
       await loadAffiliateDepositDisplay()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      await loadAffiliates()
     }
   })
 }
@@ -861,7 +871,7 @@ function createSetting() {
       settingForm.siteId = request.siteId
       for (let i = 1; i <= 3; i++) {
         const propertyName = `privilegeId${i}`;
-        if (settingForm[propertyName] === "") {
+        if (settingForm[propertyName] === "" || settingForm[propertyName] === null) {
           settingForm[propertyName] = 0;
         }
       }

@@ -285,7 +285,8 @@ const uiControl = reactive({
     { key: 5, displayName: "ESPORT", value: "ESPORT" },
     { key: 6, displayName: "POKER", value: "POKER" },
     { key: 7, displayName: "LOTTERY", value: "LOTTERY" },
-    { key: 8, displayName: "CASUAL", value: "CASUAL" }
+    { key: 8, displayName: "CASUAL", value: "CASUAL" },
+    { key: 9, displayName: "COCKFIGHT", value: "COCKFIGHT" }
   ],
   status: [
     { key: 1, displayName: t('betStatus.UNSETTLED'), value: "UNSETTLED" },

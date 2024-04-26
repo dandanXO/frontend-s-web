@@ -13,7 +13,7 @@
           :end-placeholder="t('fields.endDate')"
           style="margin-right: 10px; width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -203,6 +203,8 @@
         </el-table-column>
       </el-table>
       <div style="text-align: right;margin-top:10px;">
+        <span style="margin-right:20px;">{{ t('fields.totalSuccessDeposit') }}: {{ page.totalSuccess }}</span>
+        <span style="margin-right:20px;">{{ t('fields.totalSuccessDepositAmount') }}: {{ page.totalSuccessDepositAmount }}</span>
         <span style="margin-right:20px;">{{ t('fields.totalNoOfDeposits') }}: {{ page.total }}</span>
         <span>{{ t('fields.totalDepositedAmount') }}: {{ page.totalDepositAmount }}</span>
       </div>
@@ -224,10 +226,11 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberDepositRecord, getMemberDepositRecordTotalAmount } from '../../../../../api/member';
+import { getMemberDepositRecord, getMemberDepositRecordTotalAmount, getMemberDepositSuccessRecord } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 const props = defineProps({
   mbrId: {
     type: String,
@@ -270,15 +273,25 @@ const page = reactive({
   records: [],
   total: 0,
   loading: false,
-  totalDepositAmount: 0
+  totalDepositAmount: 0,
+  totalSuccessDepositAmount: 0,
+  totalSuccess: 0
 })
 const sort = column => {
   request.orderBy = column.prop
   loadDepositInfo()
 }
 
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.depositDate = [defaultStartDate, defaultEndDate];
+  }
 }
 
 function resetQuery() {
@@ -309,7 +322,12 @@ async function loadDepositInfo() {
   if (page.records.length !== 0) {
     const { data: amount } = await getMemberDepositRecordTotalAmount(props.mbrId, query);
     page.totalDepositAmount = amount;
+  } else {
+    page.totalDepositAmount = 0;
   }
+  const { data: success } = await getMemberDepositSuccessRecord(props.mbrId, query);
+  page.totalSuccessDepositAmount = success.totalAmount
+  page.totalSuccess = success.totalCount
   page.loading = false;
 }
 

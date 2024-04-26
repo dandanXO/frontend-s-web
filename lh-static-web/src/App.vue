@@ -8,12 +8,14 @@ import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
+import { uiStore } from "@/store/ui";
 
 export default defineComponent({
   setup() {
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
+    const UI= uiStore();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -56,6 +58,12 @@ export default defineComponent({
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
+
+      window.addEventListener("resize",  function handleResize(e){
+        // console.log("RESIZE");
+        UI.innerWidth = window.innerWidth;
+      });
+
     });
 
     onUnmounted(() => {

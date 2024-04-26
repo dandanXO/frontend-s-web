@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>
+<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>-->
     <q-form ref="profileFormRef">
       <div class="flex items-center no-wrap">
         <q-input
@@ -21,7 +21,7 @@
             :label="
               showVerifyBtn && otpCountdownCount <= 0
                 ? $t('lang.personal_sendotp')
-                : `${$t('lang.personal_sentotp_countdown')}${otpCountdownCount}`
+                : `${$t('lang.personal_sentotp_countdown')} ${otpCountdownCount}`
             "
             @click="openVerificationDialog()"
             style="white-space: nowrap"
@@ -44,7 +44,7 @@
       ></q-input>
 
       <div class="text-center q-mt-md" v-if="canEdit">
-        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_verify')" />
+        <q-btn size="md" color="brightbtn" @click="submitUpdateSecurity()" :label="$t('lang.personal_submit_btn')" />
       </div>
     </q-form>
   </div>
@@ -91,6 +91,7 @@ import {api} from "boot/axios";
 import {useRoute, useRouter} from "vue-router";
 import {useQuasar} from "quasar";
 import {userStore} from "src/stores";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "PersonalView",
@@ -98,6 +99,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const qs = require("qs");
     const router = useRouter();
+    const { t } = useI18n();
     const $q = useQuasar();
     const searchForm = reactive({
       start: "",
@@ -105,7 +107,6 @@ export default defineComponent({
     });
 
     const profileFormRef = ref();
-
     const store = userStore();
 
     const loadInfo = () => {
@@ -116,7 +117,7 @@ export default defineComponent({
       formDetail.nickName = personalState.memberInfo.nickName;
       formDetail.realName = personalState.memberInfo.realName;
       formDetail.birthday = personalState.memberInfo.birthday;
-      formDetail.email = personalState.memberInfo.email;
+      formDetail.email = "";
       formDetail.phone = personalState.memberInfo.phone;
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
     };
@@ -138,7 +139,7 @@ export default defineComponent({
     const verificationImg = ref("");
     const getCode = () => {
       api
-          .get("/member/verificationCode")
+          .get("/member/verificationEasyCode")
           .then((response) => {
             if (response.code === 0) {
               verificationImg.value =
@@ -183,12 +184,12 @@ export default defineComponent({
         captchaCode: updateSecurityVerified.captchaCode,
         codeId: updateSecurityVerified.codeId
       };
-      api.post("/otp/sendEmail", qs.stringify(emailDetails)).then((ret) => {
+      api.post("/otp/sendNewEmail", qs.stringify(emailDetails)).then((ret) => {
         if (ret.code === 0) {
           $q.notify({
             color: "positive",
             position: "top",
-            message: $t('lang.personal_emailotp_sent'),
+            message: t('lang.personal_emailotp_sent'),
             icon: "check_circle_outline"
           });
           canEdit.value = true;
@@ -217,7 +218,9 @@ export default defineComponent({
       emailOtpRef.value.validate()
       if (emailOtpRef.value.hasError) {
       } else {
-        api.post("/session/verifyAndUpdateEmail", qs.stringify({
+        var apiUrl= "session/verifyEmailForVNM";
+
+        api.post(apiUrl, qs.stringify({
           email: formDetail.email,
           code: formDetail.emailOtpRef,
           codeId: emailCodeId.value
@@ -226,7 +229,7 @@ export default defineComponent({
             $q.notify({
               color: "positive",
               position: "top",
-              message: $t('lang.personal_verification_successful'),
+              message: t('lang.personal_verification_successful'),
               icon: "check_circle_outline"
             });
             store.emailVerified = true;
@@ -234,12 +237,12 @@ export default defineComponent({
             router.go(-1);
           }
         }).catch((e) => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: e.message,
-            icon: "report_problem"
-          });
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: e.message,
+          //   icon: "report_problem"
+          // });
         });
       }
     };
@@ -262,19 +265,6 @@ export default defineComponent({
     const showVerifyBtn = ref(true);
     const showVerificationTokenInput = ref(false)
 
-
-    const isValidName = () => {
-      const namePattern =
-          /^([\u4e00-\u9fa5]*)$/;
-      return namePattern.test(formDetail.realName) || "请输入中文字符";
-    };
-
-    const isValidPhone = () => {
-      const reg = /^\d+$/;
-      const {phone} = formDetail;
-      const result = '' === phone ? '请验证您的电话号码' : !reg.test(phone) ? '电话号码只允许使用数字' : true;
-      return result
-    }
 
     const otpCountdownCount = ref(0);
     let otpCountdownSchedule;
@@ -300,7 +290,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: $t('lang.personal_email_empty'),
+          message: t('lang.personal_email_empty'),
           icon: "report_problem"
         });
         getCode();
@@ -314,7 +304,7 @@ export default defineComponent({
       }))
           .then(res => {
             getCode();
-            let message = res.message || $t('lang.personal_emailotp_sent'),
+            let message = res.message || t('lang.personal_emailotp_sent'),
                 color = 'positive'
 
             if (res.code === 0) {
@@ -368,10 +358,8 @@ export default defineComponent({
       birthdayRef,
       moment,
       canEdit,
-      isValidName,
       otpCountdownCount,
       showVerificationTokenInput,
-      isValidPhone,
       captchaRef,
       innerCaptchaRef,
       showCaptchaDialog,

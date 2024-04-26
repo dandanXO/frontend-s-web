@@ -1,9 +1,9 @@
 <template>
   <div class="card">
     <div class="deposit-ad">
-      体育用户首存68%红利
+      电竞用户首存55%红利
       <br />
-      新用户首存即送！最高可得680元！
+      新用户首存可获688元！
       <router-link to="/center/deposit">
         <el-button size="small" class="blue-btn join-btn outline">立即参与</el-button>
       </router-link>
@@ -191,7 +191,8 @@ export default defineComponent({
     "LEG": "乐游棋牌",
     "PT": "PT电子",
     "BBINDY": "BBIN真人",
-    "RG": "RG电竞"
+    "RG": "RG电竞",
+    "AGF": "AG捕鱼"
   };
 
     const transferOutAllModal = () => {

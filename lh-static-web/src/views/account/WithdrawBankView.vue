@@ -435,10 +435,17 @@ export default defineComponent({
         } else if(selectedCode === 'OKPAY') {
           min = 16;
           max = 16;
+        } else if(selectedCode === 'SZPAY') {
+          min = 11;
+          max = 11;
         }
       }
       if (v === '') {
-        return Promise.reject('请输入卡号');
+        if (selectedCode === 'SZPAY') {
+        return Promise.reject('请绑定手机号');
+        } else{
+          return Promise.reject('请输入卡号');
+        }
       } else if (v.length < min || v.length > max) {
         if (min === max) {
           return Promise.reject('长度应为 ' + min);

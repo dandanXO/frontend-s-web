@@ -34,7 +34,7 @@ export function registerWBankCard(regForm) {
 }
 
 export function getVerificationCode() {
-  return server.REST.get("/member/verificationCode");
+  return server.REST.get("/member/verificationEasyCode");
 }
 
 export function memberAccessLog(log) {

@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     transition: 0.3s all;
     cursor: pointer;
     position: relative;
@@ -48,7 +48,7 @@
       position: absolute;
       top: 10%;
       bottom: 20%;
-      padding-top: 15px;
+      padding-top: 25px;
       padding-bottom: 15px;
       color: #ffffff;
       font-size: 22px;
@@ -62,13 +62,14 @@
       gap: 15px;
 
       p {
-        font-size: 24px;
+        font-size: 18px;
+        line-height: 1.4;
         margin-top: 3px;
         margin-bottom: 3px;
       }
 
       .small-size {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
 

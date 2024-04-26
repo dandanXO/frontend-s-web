@@ -18,5 +18,5 @@ export function logout() {
 }
 
 export function getVerificationCode() {
-  return server.REST.get("/member/verificationCode");
+  return server.REST.get("/member/verificationEasyCode");
 }

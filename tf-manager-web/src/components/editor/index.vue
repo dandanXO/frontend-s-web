@@ -29,10 +29,11 @@ export default defineComponent({
     });
 
     let instance;
+    const languageLocale = localStorage.getItem("languageLocale") !== 'zh' ? "en" : "zh-CN";
 
     onMounted(() => {
       instance = new WangEditor(editor.value);
-      instance.config.lang = "zh-CN";
+      instance.config.lang = languageLocale;
       instance.config.placeholder = t('fields.pleaseInput');
       instance.i18next = i18next;
       instance.txt.eventHooks.changeEvents.push(() => {

@@ -81,6 +81,8 @@ export const translateRecord = (rec, type = "") => {
     return "关闭"; // Closed
   } else if (rec === "WAITING_CALLBACK") {
     return "自动支付中"; // Waiting Callback
+  } else if (rec === "SETTLED") {
+    return "已结算"; // Settled
   } else if (rec === 1) {
     if (type == "reminder") {
       return "进行中";
@@ -130,6 +132,10 @@ export const translateRecord = (rec, type = "") => {
       return "XIN电子";
     }
     return "AG真人"; // AG
+  } else if (rec === "AGF") {
+    return "AG捕鱼"; // AG
+  } else if (rec === "PMFISH") {
+    return "DB捕鱼"; // PM
   } else if (rec === "BBINDY") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "KY") {

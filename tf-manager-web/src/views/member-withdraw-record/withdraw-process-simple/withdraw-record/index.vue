@@ -946,12 +946,12 @@ async function advancedSearch() {
 }
 
 async function toFail(val) {
-  await autoWithdrawToFail(val.id, val.withdrawDate)
+  await autoWithdrawToFail(val.id, val.withdrawDate, val.siteId)
   await loadRecord()
 }
 
 async function toSuccess(val) {
-  await autoWithdrawToSuccess(val.id, val.withdrawDate)
+  await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
   await loadRecord()
 }
 

@@ -149,6 +149,15 @@
                 :disabled-date="disabledEndDate"
               />
             </el-form-item>
+            <el-form-item :label="t('fields.way')" prop="ways">
+              <el-checkbox-group v-model="form.eligibleWays">
+                <el-checkbox
+                  v-for="item in ways.list"
+                  :key="item"
+                  :label="item"
+                />
+              </el-checkbox-group>
+            </el-form-item>
             <el-form-item :label="t('fields.maxMemberClaimCountPerRain')" prop="maxMemberClaimCountPerRain">
               <el-input-number
                 v-if="form.maxMemberClaimCountPerRain >= 0"
@@ -321,6 +330,15 @@
           >
             + {{ t('fields.add_new') }}
           </el-button>
+        </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinDayBetAmount')" prop="minDayBetAmount" style="width: 600px;">
+          $
+          <el-input-number
+            v-model="form.minDayBetAmount"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
         </el-form-item>
         <el-form-item :label="t('fields.redPacketMinDayDeposit')" prop="redPacketMinDayDeposit" style="width: 600px;">
           $
@@ -616,7 +634,8 @@ import {computed, nextTick, onMounted, reactive, ref} from 'vue'
 import {
   getRedPacketRains,
   createRedPacketRain,
-  updateRedPacketRain
+  updateRedPacketRain,
+  getWays
 } from '../../../../api/privilege-red-packet-rain'
 import {getSiteListSimple} from '../../../../api/site'
 import {required} from '../../../../utils/validate'
@@ -646,6 +665,9 @@ const siteVipList = reactive({
   list: [],
 })
 const currVipList = reactive({
+  list: [],
+})
+const ways = reactive({
   list: [],
 })
 
@@ -706,7 +728,9 @@ const form = reactive({
   redPacketMinDayDeposit: 0,
   redPacketMinTotalDeposit: 0,
   lastDigitRules: [],
+  eligibleWays: [],
   status: null,
+  minDayBetAmount: 0,
 })
 
 const vipRuleForm = reactive({
@@ -735,6 +759,7 @@ const formRules = reactive({
   dailyRefreshDuration: [required(t('message.validateDailyRefreshDurationRequired'))],
   vipRules: [required(t('message.validateVipRulesRequired'))],
   status: [required(t('message.validateStatusRequired'))],
+  eligibleWays: [required(t('message.validateEligibleWaysRequired'))],
 })
 
 function resetQuery() {
@@ -785,6 +810,8 @@ function showEdit(banner) {
         form.vipRules = JSON.parse(banner[key])
       } else if (key === 'lastDigitRules') {
         form.lastDigitRules = JSON.parse(banner[key])
+      } else if (key === 'eligibleWays') {
+        form.eligibleWays = JSON.parse(banner[key])
       } else if (key === 'startTime' || key === 'endTime') {
         form[key] = moment(banner[key]).format('YYYY-MM-DD HH:mm:ss')
       } else if (Object.keys(form).find(k => k === key)) {
@@ -796,10 +823,6 @@ function showEdit(banner) {
         form.siteId = element.id
       }
     })
-    console.log("===========")
-    console.log(banner)
-    console.log(form)
-    console.log("===========")
   })
 }
 
@@ -916,6 +939,11 @@ function changeSite(siteId) {
 async function loadVips() {
   const {data: vip} = await getVipList()
   totalVipList.list = vip
+}
+
+async function loadWays() {
+  const {data: way} = await getWays()
+  ways.list = way
 }
 
 async function getAvailableVip() {
@@ -1133,11 +1161,12 @@ function submit() {
 onMounted(async () => {
   await loadSites();
   await loadVips();
+  await loadWays();
+  console.log(ways.list)
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
   }
-  await loadRedPacketRain();
 })
 </script>
 

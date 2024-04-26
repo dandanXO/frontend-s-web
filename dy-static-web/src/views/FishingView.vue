@@ -17,11 +17,13 @@
       <div class="play-box">
         <div class="game-content" data-aos="zoom-in" data-aos-duration="700">
           <div class="fish5"></div>
-          <!--        <div class="fish1"></div>-->
+          <div class="fish1"></div>
+          <div class="fish6"></div>
         </div>
         <div class="game-btn" data-aos="zoom-in" data-aos-duration="700">
           <button class="btn fish-begin" @click="openGame('GPS捕鱼', 'GPS', '7202')"></button>
-          <!--        <button class="btn fish-begin" @click="openGame('AG捕鱼', 'AG', '6')"></button>-->
+          <button class="btn fish-begin" @click="openGame('AG捕鱼', 'AGF', 'HMPL')"></button>
+          <button class="btn fish-begin" @click="openGame('DB多宝捕鱼', 'PMFISH', '')"></button>
         </div>
       </div>
     </div>
@@ -97,7 +99,7 @@ export default defineComponent({
         image: "gps",
         message:
           "决战中途岛是历史上一场经典的战役是太平洋战争的转捩点，进入游戏画面之后爽快的操控自己的飞机然后对着天空中的敌人射击！让你享受子弹最极速画面最丰富翱翔于天际唯我独尊的感受！"
-      }
+      },
       // {
       //   gameCode: "cmf0001",
       //   name: "龙珠捕鱼",
@@ -106,14 +108,22 @@ export default defineComponent({
       //   message:
       //     "ICONIC GAMING主打的龙珠捕鱼，是一款具有3种精致场景和高赔率的热门射击游戏。 可爱逗趣的海底生物、特殊累积机制、5种随机倍数奖励，丰富的视觉效果带来前所未有的乐趣。"
       // },
-      // {
-      //   gameCode: "6",
-      //   name: "AG捕鱼王",
-      //   code: "AG",
-      //   image: "ag",
-      //   message:
-      //       "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
-      // },
+      {
+        gameCode: "HMPL",
+        name: "AG捕鱼王",
+        code: "AGF",
+        image: "ag",
+        message:
+            "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      },
+      {
+        gameCode: "",
+        name: "DB多宝捕鱼",
+        code: "PMFISH",
+        image: "db",
+        message:
+            "最受欢迎的DB多宝捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。",
+      }
       // {
       //   gameCode: "F-SF01",
       //   name: "SG捕鱼天王",
@@ -217,6 +227,14 @@ export default defineComponent({
   background-image: url(../assets/fishing/fish-5.png);
   width: 295px;
   height: 293px;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+.fish6 {
+  background-image: url(../assets/fishing/fish-6.png);
+  width: 281px;
+  height: 327px;
   background-repeat: no-repeat;
   background-position: center top;
 }

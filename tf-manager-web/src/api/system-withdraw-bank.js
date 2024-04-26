@@ -10,5 +10,13 @@ export const createWithdrawBank = (bank) => {
 };
 
 export const deleteWithdrawBank = (id) => {
-  return https().request(`/system-withdraw-bank/${id}`, Method.DELETE);
+  return https().request(`/system-withdraw-bank/${id}?_method=DELETE`, Method.POST);
+};
+
+export const getWithdrawPlatform = (bank) => {
+  return https().request("/system-withdraw-bank/withdraw", Method.GET, bank, ContentType.form);
+};
+
+export const copyWithdrawBank = (withdrawNameCopyFrom, withdrawNameCopyTo) => {
+  return https().request(`/system-withdraw-bank/duplicate`, Method.POST, { withdrawNameCopyFrom: withdrawNameCopyFrom, withdrawNameCopyTo: withdrawNameCopyTo }, ContentType.form);
 };

@@ -363,7 +363,7 @@
           border-style="dashed"
           label=""
           size="mini"
-          :key="item.code"
+          :key="item.orderIndex"
         >
           <el-input class="disable-input" v-model="item.code" />
           -
@@ -388,6 +388,24 @@
           >
             {{ t('fields.delete') }}
           </el-button>
+          <el-button
+            circle
+            icon="el-icon-arrow-up"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveUp(item, groupConfig)"
+          />
+          <el-button
+            circle
+            icon="el-icon-arrow-down"
+            size="mini"
+            type="primary"
+            style="margin-left: 20px"
+            plain
+            @click="moveDown(item, groupConfig)"
+          />
         </el-form-item>
       </el-collapse-item>
     </el-collapse>
@@ -456,6 +474,7 @@ import {
   updateConfig,
   updateBatch,
   createConfig,
+  updateOrderBatch
 } from '../../../api/config'
 import { hasRole } from '../../../utils/util'
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -706,6 +725,7 @@ async function loadConfigs() {
       config.code !== 's3_url' &&
       config.code !== 'withdraw_tips'
   )
+
   configs.customList = configs.customList.sort((a, b) => {
     if (a.configGroup < b.configGroup) {
       return -1
@@ -719,6 +739,7 @@ async function loadConfigs() {
       }
     }
   })
+
   // group customList items by configGroup and store in customGroup as {group: configGroup, items: [customList]}
   configs.customGroup = []
   let group = null
@@ -732,6 +753,21 @@ async function loadConfigs() {
       items = []
     }
     items.push(configs.customList[index])
+    // handle last group
+    if (index === configs.customList.length - 1) {
+      configs.customGroup.push({ group, items })
+    }
+  }
+
+  // sort configs.customGroup.items by order index
+  for (let index = 0; index < configs.customGroup.length; index++) {
+    configs.customGroup[index].items = configs.customGroup[index].items.sort(
+      (a, b) => a.orderIndex - b.orderIndex
+    )
+    // set item.orderIndex = item index
+    for (let i = 0; i < configs.customGroup[index].items.length; i++) {
+      configs.customGroup[index].items[i].orderIndex = i
+    }
   }
 }
 
@@ -787,6 +823,16 @@ async function updateConfigs() {
     }
   }
   await updateBatch(configs.value)
+  const orderUpdate = []
+  for (let index = 0; index < configs.customGroup.length; index++) {
+    for (let i = 0; i < configs.customGroup[index].items.length; i++) {
+      orderUpdate.push({
+        id: configs.customGroup[index].items[i].id,
+        orderIndex: i,
+      })
+    }
+  }
+  await updateOrderBatch(orderUpdate)
   await loadConfigs()
   ElMessage({ message: t('message.updateSuccess'), type: 'success' })
 }
@@ -819,6 +865,34 @@ async function submit() {
       uiControl.dialogVisible = false
     }
   })
+}
+
+function moveUp(item, groupConfig) {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index > 0) {
+    const temp = groupConfig.items[index]
+
+    groupConfig.items[index] = groupConfig.items[index - 1]
+    groupConfig.items[index].orderIndex = index
+    groupConfig.items[index - 1] = temp
+    groupConfig.items[index - 1].code = temp.code
+    groupConfig.items[index - 1].orderIndex = index - 1
+
+    console.log(groupConfig.items)
+  }
+}
+
+function moveDown(item, groupConfig) {
+  const index = groupConfig.items.findIndex(config => config.id === item.id)
+  if (index < groupConfig.items.length - 1) {
+    const temp = groupConfig.items[index]
+
+    groupConfig.items[index] = groupConfig.items[index + 1]
+    groupConfig.items[index].orderIndex = index
+    groupConfig.items[index + 1] = temp
+    groupConfig.items[index + 1].code = temp.code
+    groupConfig.items[index + 1].orderIndex = index + 1
+  }
 }
 
 onMounted(() => {

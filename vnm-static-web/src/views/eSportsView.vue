@@ -15,6 +15,6 @@ import { eSportsPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("esports");
 const platformGameType = ref("ESPORT");
-const platformName = ref("ESPORTS");
+const platformName = ref('esports');
 const platformPattern = ref(true);
 </script>

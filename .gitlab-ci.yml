@@ -114,6 +114,13 @@ deploy-xf-landing:
 
 #===============================================================================================
 
+deploy-xf-landing-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v2
+
+#===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -132,6 +139,13 @@ deploy-dy-download:
   extends: .s3-deploy
   variables:
     PROJECT: dy-download
+
+#===============================================================================================
+
+deploy-dy-landing-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v2
 
 #===============================================================================================
 
@@ -174,6 +188,27 @@ deploy-ind-download:
   extends: .s3-deploy
   variables:
     PROJECT: ind-download
+
+#===============================================================================================
+
+deploy-ind2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: ind2-download
+
+#===============================================================================================
+
+deploy-vnm-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-download
+
+#===============================================================================================
+
+deploy-vnm-maintenance:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-maintenance
 
 #===============================================================================================
 
@@ -231,6 +266,20 @@ build-image-ind-static-h5:
     PROJECT: ind-static-h5
   needs:
     - build-ind-static-h5
+
+#===============================================================================================
+
+build-ind-static-v2:
+  extends: .build-projects
+  variables:
+    PROJECT: ind-static-v2
+
+build-image-ind-static-v2:
+  extends: .docker-build
+  variables:
+    PROJECT: ind-static-v2
+  needs:
+    - build-ind-static-v2
 
 #===============================================================================================
 
@@ -378,4 +427,18 @@ deploy-lh-landing:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing
+
+#===============================================================================================
+
+deploy-lh-landing-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v2
+
+#===============================================================================================
+
+deploy-lh-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-cesu
 

@@ -89,11 +89,7 @@
         </q-select>
 
         <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
-          最低金额:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
-          <br />
-          最高金额:
-          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
+          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">

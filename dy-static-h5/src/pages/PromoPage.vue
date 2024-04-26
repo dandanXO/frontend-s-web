@@ -319,15 +319,15 @@ export default defineComponent({
           var promoItems = res.data;
 
           promoItems.forEach((element) => {
-            if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
-            } else {
+            // if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
+            // } else {
               promoState.promoList.push(element);
               // console.log(promoState.promoList);
 
               if (route.query.name && String(element.redirectUrl) === route.query.name) {
                 showPromoDetails(element);
               }
-            }
+            // }
           });
           // console.log("Final Promos");
           // console.log(promoState.promoList);

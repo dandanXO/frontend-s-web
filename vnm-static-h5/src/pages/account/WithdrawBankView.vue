@@ -8,7 +8,7 @@
   >
     <q-card style="width: 100%" class="modalcontent">
       <div class="headers">
-        <div class="titles">请输入解绑银行卡号</div>
+        <div class="titles">{{ $t("lang.please_enter_unbind_bank_card") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
       <q-form class="unbind-form">
@@ -19,15 +19,14 @@
           ref="unbindBankCardNoRef"
           v-model="unbindBankCardNo"
           :label="unbindCardLabel()"
-          :rules="[
-            (val) =>
-              (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + '不正确'
-          ]"
+          :rules="[(val) => val == selectedUnbindBankCard.cardNumber || unbindCardLabel() + ' ' + $t('lang.incorrect')]"
         />
       </q-form>
       <div class="btnsreas">
-        <div class="confirmsbtns common-md-btn" @click="unbindBankCard()">确定</div>
-        <q-btn class="cacnels common-md-white-btn" v-close-popup>取消</q-btn>
+        <div class="confirmsbtns btn-standard-height common-md-btn" @click="unbindBankCard()">
+          {{ $t("lang.confirm") }}
+        </div>
+        <q-btn class="cacnels common-md-white-btn btn-standard-height" v-close-popup>{{ $t("lang.cancel") }}</q-btn>
       </div>
     </q-card>
   </q-dialog>
@@ -37,16 +36,16 @@
       <div class="bank-bind-item q-my-sm">
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加银行卡</span>
+          <span>+{{ $t("lang.add_bank_card") }}</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加虚拟币账户</span>
+          <span>+{{ $t("lang.add_virtual_wallet") }}</span>
         </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
-          <span>+添加电子钱包</span>
-        </div>
+        <!--        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">-->
+        <!--          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />-->
+        <!--          <span>+{{ $t("lang.add_ewallet") }}</span>-->
+        <!--        </div>-->
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加支付宝</span>
@@ -54,7 +53,7 @@
       </div>
 
       <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
-        <div class="bank-detail-type">银行卡</div>
+        <div class="bank-detail-type">{{ $t("lang.bd_bank_card") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[BANK_CARD]">
@@ -69,7 +68,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>卡号：</div>
+              <!-- <div>卡号：</div> -->
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -78,12 +77,12 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
         </div>
       </template>
 
       <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
-        <div class="bank-detail-type">虚拟账户</div>
+        <div class="bank-detail-type">{{ $t("lang.bd_virtual_account") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[CRYPTO] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[CRYPTO]">
@@ -98,7 +97,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>卡号：</div>
+              <!-- <div>卡号：</div> -->
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -107,7 +106,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("lang.bd_untie") }}</div>
         </div>
       </template>
 
@@ -178,6 +177,7 @@ import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
 import * as _ from "lodash";
+import { useI18n } from "vue-i18n";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -186,6 +186,7 @@ const EWALLET = "EWALLET";
 const ALIPAY = "ALIPAY";
 
 const $q = useQuasar();
+const { t } = useI18n();
 const router = useRouter();
 
 const imgURL = process.env.IMAGE_CDN + "/payment/";
@@ -240,7 +241,7 @@ const unbindBankCard = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "操作成功",
+        message: t("lang.bd_untie_success"),
         icon: "check_circle_outline"
       });
 
@@ -257,8 +258,8 @@ const isAlipay = (bankID) => {
 const unbindCardLabel = () => {
   const { bankType, bankCode } = selectedUnbindBankCard.value;
   if (isAlipay(bankCode)) return "支付宝号";
-  else if (bankType === BANK_CARD) return "银行卡号";
-  else if (bankType === CRYPTO) return "钱包地址";
+  else if (bankType === BANK_CARD) return t("lang.bd_bank_card");
+  else if (bankType === CRYPTO) return t("lang.bd_virtual_account");
   else if (bankType === EWALLET) return "电子钱包";
 };
 
@@ -318,7 +319,7 @@ onActivated(() => {
       border-radius: 10px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       flex-wrap: wrap;
       margin: 0 auto 14px;
       padding: 1.25rem;
@@ -328,7 +329,7 @@ onActivated(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 47.5%;
+        width: 60.5%;
 
         .bank-bind-img {
           margin-left: auto;
@@ -429,5 +430,9 @@ onActivated(() => {
     width: calc(100% - 16px);
     margin: auto;
   }
+}
+
+.titles {
+  line-height: 1.3;
 }
 </style>

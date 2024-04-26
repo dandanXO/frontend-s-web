@@ -5,18 +5,13 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper"
-      :style="gridColAmount"
-    >
+    <div class="node-content payment-method-wrapper">
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
-        :style="item.group && item.children.length === 0 ? 'display:none': ''"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
+        :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
       >
@@ -24,10 +19,7 @@
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div class="promo">
-            <img
-              v-if="item.promotionIcon"
-              :src="`${imgURL}${item.promotionIcon}`"
-            />
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
 
           <div class="payment-method-wrapper">
@@ -48,10 +40,7 @@
       <node
         @click="clickChildItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
         :list="item.children"
@@ -64,8 +53,7 @@
 <script>
 import { defineComponent, reactive } from "vue";
 
-
-const imgURL = process.env.IMAGE_CDN + '/payment/'
+const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -102,12 +90,10 @@ export default defineComponent({
       payMethods: reactive([]),
       nodeKey: 0,
       imgURL,
-      gridColAmount: 'grid-template-columns: repeat('+ this.gridcol +', 1fr);'
+      gridColAmount: "grid-template-columns: repeat(" + this.gridcol + ", 1fr);"
     };
   },
-  computed() {
-
-  },
+  computed() {},
   updated() {
     this.$nextTick().then(() => {
       if (!this.selectItem) {
@@ -146,9 +132,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -195,8 +179,7 @@ $node-color: #33bcd4;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 
 .title::before {
@@ -213,8 +196,10 @@ $node-color: #33bcd4;
   // display: flex;
   grid-gap: 15px;
   display: grid;
-  margin-bottom: 20px;
-    width: 100%;
+  margin-bottom: 15px;
+  width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: flex-start;
 
   .payment-method-item {
     text-align: center;
@@ -235,32 +220,30 @@ $node-color: #33bcd4;
     &.active {
       // background: rgba(255,255,255, .2);
       .node-text {
-
         .node-txt-img {
-        border-color: $node-color;
+          border-color: $node-color;
 
-        // &:before {
-        //   display: block;
-        //   content: "";
-        //   position: absolute;
-        //   bottom: 23px;
-        //   right: 3px;
-        //   background-color: #4873f1;
-        //   height: 15px;
-        //   width: 15px;
-        //   z-index: 3;
-        //   border-radius: 3px;
-        //   background-image: url("../../assets/images/account/CheckBox.svg");
-        //   background-size: 100%;
-        //   background-position: center center;
-        // }
+          // &:before {
+          //   display: block;
+          //   content: "";
+          //   position: absolute;
+          //   bottom: 23px;
+          //   right: 3px;
+          //   background-color: #4873f1;
+          //   height: 15px;
+          //   width: 15px;
+          //   z-index: 3;
+          //   border-radius: 3px;
+          //   background-image: url("../../assets/images/account/CheckBox.svg");
+          //   background-size: 100%;
+          //   background-position: center center;
+          // }
 
-        img {
-          // border-color: $node-color;
+          img {
+            // border-color: $node-color;
+          }
         }
       }
-      }
-
     }
   }
 }
@@ -294,20 +277,20 @@ $node-color: #33bcd4;
     &.node-group {
       display: flex;
       justify-content: flex-start;
-      align-items:  flex-start;
-      gap: 10px;
+      align-items: flex-start;
+      // gap: 10px;
       margin: 10px 0px;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
-        margin: 0;
+        margin: 0 0px 8px;
       }
       .payment-method-wrapper {
         gap: 5px;
       }
       .payment-method-item {
         border: 1px solid transparent;
-       }
+      }
       .node-text {
         display: flex;
         gap: 5px;
@@ -316,6 +299,7 @@ $node-color: #33bcd4;
         & > div {
           font-size: 12px;
           color: #ffffff;
+          white-space: nowrap;
         }
         img {
           //width: 15px;
@@ -327,7 +311,6 @@ $node-color: #33bcd4;
         }
       }
     }
-
   }
 
   .node-content {
@@ -367,8 +350,8 @@ $node-color: #33bcd4;
         align-items: center;
         justify-content: center;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
-        width: 4rem;
-        height: 4rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid #ddd;
         border-radius: 3px;
@@ -376,7 +359,8 @@ $node-color: #33bcd4;
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 5px 10px;
+          padding: 5px;
+          display: block;
           width: 100%;
           height: auto;
         }
@@ -408,14 +392,19 @@ $node-color: #33bcd4;
 
     .promo {
       position: absolute;
-      right: -5px;
+      right: 50%;
+      transform: translate(50%, 0);
       top: -8px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      width: 100%;
+      max-width: 40px;
+
       img {
         padding: 0;
         border: 0;
+        width: 100%;
         max-width: 40px;
         background-color: transparent;
       }
@@ -436,5 +425,16 @@ $node-color: #33bcd4;
   }
 }
 
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
 
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 </style>

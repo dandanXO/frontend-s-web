@@ -93,17 +93,13 @@
         </q-select>
 
         <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
-          最低金额:
-          {{
+          单笔存款：{{
             calculatedMinDeposit
                 ? calculatedMinDeposit +
                 " " +
                 (isUSDT ? "USDT" : store.currency.value)
                 : 0
-          }}
-          <br/>
-          最高金额:
-          {{
+          }}  -   {{
             activeMethod.depositMax
                 ? activeMethod.depositMax +
                 " " +

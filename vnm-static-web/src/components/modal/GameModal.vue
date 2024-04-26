@@ -39,7 +39,7 @@
         </div>
       </div> -->
       <div>
-        <span class="bottom-button" @click="showDrawer">存款</span>
+        <span class="bottom-button" @click="showDrawer">{{ $t('deposit.depositMoney') }}</span>
       </div>
 
       <span class="copy-button" @click="copyTo" @blur="changeText">{{ copyText }}</span>
@@ -53,7 +53,7 @@
       :style="{ position: 'absolute', overflow: 'hidden' }"
       @close="onClose"
       :closable="true"
-      title="快速存款"
+      :title="$t('deposit.quickDeposit')"
     >
       <!-- <template #extra>
         <el-button style="margin-right: 8px" @click="onClose">Cancel</el-button>
@@ -124,7 +124,7 @@ import { transfer } from "@/api/personal/transfer";
 // import { message } from "ant-design-vue";
 import { storeToRefs } from "pinia";
 import DepositComponent from "@/components/depositComponent.vue";
-import { ElMessageBox } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 // import { Modal } from "ant-design-vue";
@@ -143,7 +143,7 @@ const showDrawer = () => {
   quickTransferTab.value = false;
   drawerVisible.value = true;
 };
-const copyText = ref("复制网址");
+const copyText = ref(t('deposit.copyWebsite'));
 let intervalId = null;
 const copyTo = () => {
   // copyToClipboard(src.value);
@@ -152,7 +152,7 @@ const copyTo = () => {
   // copyText.value = '复制网址';
 
   navigator.clipboard.writeText(src.value);
-  copyText.value = "已复制";
+  copyText.value = t('deposit.copied');
 
   // Clear previous interval if any
   if (intervalId) {
@@ -161,7 +161,7 @@ const copyTo = () => {
 
   // Set a new interval to change the text back after 5 seconds
   intervalId = setInterval(() => {
-    copyText.value = "复制网址";
+    copyText.value = t('deposit.copyWebsite');
     clearInterval(intervalId);
     intervalId = null;
   }, 2000); // 5000 milliseconds = 5 seconds
@@ -245,34 +245,42 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          window.open(
-            res.data,
-            "popUpWindow",
-            "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
-          );
+          if(res.code===0) {
+            window.open(
+              res.data,
+              "popUpWindow",
+              "fullscreen=yes,resizable=no,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no"
+            );
+          }else{
+            ElMessage.error(t('response.' + res.code) || res.message);
+          }
         });
       } else {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
           isMobile: isMobile()
         }).then((res) => {
-          let srcData = res.data;
+          if(res.code===0) {
+            let srcData = res.data;
 
-          if (platformCode === "PG") {
-            const scriptEndTag = "</" + "script>";
-            srcData = res.data
-              .replace(/<\/script>/g, scriptEndTag)
-              .replaceAll(/\\\"/g, '"')
-              .replaceAll(/\n/g, "");
+            if (platformCode === "PG") {
+              const scriptEndTag = "</" + "script>";
+              srcData = res.data
+                .replace(/<\/script>/g, scriptEndTag)
+                .replaceAll(/\\\"/g, '"')
+                .replaceAll(/\n/g, "");
+            }
+
+            src.value = srcData;
+            visible.value = true;
+          }else{
+            ElMessage.error(t('response.' + res.code) || res.message);
           }
-
-          src.value = srcData;
-          visible.value = true;
         });
       }
     } else {
       // router.push("/login");
-      ElMessageBox.alert(t('common.loginbeforeAction'), t('common.systemError'), {
+      ElMessageBox.alert(t('bankError.loginbeforeAction'), t('common.loginTitle'), {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,
@@ -383,21 +391,21 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 

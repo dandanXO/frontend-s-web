@@ -9,39 +9,47 @@
         @click.stop.prevent="store.openLiveChat()"
       >
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
-        <span>24小时在线客服</span>
+        <span>CSKH 24/7</span>
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">cs@e8007.com</span>
+        <span style="margin-left: 5px">vnsupport@tf88.com</span>
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
-        ><span class="customer_phone">+85281701071</span></span
+        ><span class="customer_phone">+84945 091 999</span></span
         >
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
+        <span style="margin-left: 5px"> +63967 254 1561</span>
+      </div>
+      <div class="additional-info-item">
+        <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
+        <span style="margin-left: 5px">@TF88_CS</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
-        <div>热门活动</div>
+        <div>{{ $t('stickySidebar.hotPromotions') }}</div>
       </router-link>
       <div class="sticky-sidebar-item"
            @mouseover="customerHovered = true"
       >
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
-        <div>客服中心</div>
+        <div>{{ $t('stickySidebar.customerService') }}</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
           <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
-          <div>APP下载</div>
+          <div>{{ $t('stickySidebar.appDownload') }}</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
         <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
-        <div>返回顶部</div>
+        <div>{{ $t('stickySidebar.backToTop') }}</div>
       </div>
     </div>
   </div>
@@ -95,7 +103,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   padding: 20px 0px;
   background: #fff;
   height: min-content;
@@ -104,6 +112,8 @@ export default defineComponent({
   .additional-info-item {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     color: #424F72;
     gap: 10px;
     cursor: pointer;

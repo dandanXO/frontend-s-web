@@ -5,7 +5,7 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper" :style="gridColAmount">
+    <div class="node-content payment-method-wrapper">
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -75,7 +75,7 @@ export default defineComponent({
     },
     gridcol: {
       type: Number,
-      default: 4
+      default: 5
     }
   },
   data() {
@@ -90,7 +90,7 @@ export default defineComponent({
       payMethods: reactive([]),
       nodeKey: 0,
       imgURL,
-      gridColAmount: "grid-template-columns: repeat(" + this.gridcol + ", 1fr);"
+      gridColAmount: "grid-template-columns: repeat(5 , 1fr);"
     };
   },
   computed() {},
@@ -199,6 +199,9 @@ $node-color: #468cff;
   display: grid;
   margin-bottom: 15px;
   width: 100%;
+  grid-template-columns: repeat(5, 1fr);
+  padding-right: 15px;
+  align-items: flex-start;
 
   .payment-method-item {
     text-align: center;
@@ -283,7 +286,7 @@ $node-color: #468cff;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
-        margin: 0;
+        margin: 0 0 8px;
       }
       .payment-method-wrapper {
         gap: 5px;
@@ -355,16 +358,18 @@ $node-color: #468cff;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 5.5rem;
-        height: 5rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
+        padding: 4px 4px;
 
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 12px 14px;
+          padding: 0;
+          display: block;
           width: 100%;
           height: auto;
         }
@@ -396,17 +401,21 @@ $node-color: #468cff;
 
     .promo {
       position: absolute;
-      right: -15px;
+      right: 50%;
       top: -10px;
+      transform: translate(50%, 0);
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+      width: 100%;
+      max-width: 40px;
+
       img {
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 64px;
-        width: 64px;
+        max-width: 40px;
+        width: 100%;
       }
       ::after {
         position: relative;
@@ -425,21 +434,33 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 375px) {
-  .node .node-content .node-text .node-txt-img {
-    width: 4.5rem;
-    height: 4.5rem;
+// @media (max-width: 375px) {
+//   .node .node-content .node-text .node-txt-img {
+//     width: 4.5rem;
+//     height: 4.5rem;
+//   }
+//   .node .node-item .promo img {
+//     max-width: 50px;
+//     width: 50px;
+//   }
+//   .node .node-item .promo {
+//     right: -10px;
+//     top: -10px;
+//   }
+//   .node .node-content .node-text .node-txt-img img {
+//     // padding: 5px 10px;
+//   }
+// }
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
   }
-  .node .node-item .promo img {
-    max-width: 50px;
-    width: 50px;
-  }
-  .node .node-item .promo {
-    right: -10px;
-    top: -10px;
-  }
-  .node .node-content .node-text .node-txt-img img {
-    padding: 5px 10px;
+}
+
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

@@ -629,7 +629,7 @@ async function currencyChange() {
   await loadBank();
   await loadSite();
   if (form.currencyId !== null && form.currencyId !== "") {
-    list.bankInfo = list.bankInfo.filter(bank => bank.currencyIds.includes(form.currencyId));
+    list.bankInfo = list.bankInfo.filter(bank => (',' + bank.currencyIds).includes(',' + form.currencyId));
     const selectedCurrency = list.currencies.filter(c => c.id === form.currencyId);
     list.site = list.site.filter(s => s.currency.includes(selectedCurrency[0].currencyCode));
     let isSelectedSite = false;
@@ -663,7 +663,7 @@ async function siteChange() {
     list.currencies = list.currencies.filter(currency => siteInfo[0].currency.includes(currency.currencyCode));
     const bankList = ref([]);
     list.currencies.forEach(c => list.bankInfo.forEach(b => {
-      if (b.currencyIds.includes(c.id)) {
+      if ((',' + b.currencyIds).includes(',' + c.id)) {
         bankList.value.push(b);
       }
     }));

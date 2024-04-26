@@ -61,6 +61,10 @@ export function loadBankCards() {
   return server.REST.get("/session/bankCard");
 }
 
+export function loadAllBankCards() {
+  return server.REST.get("/session/allBankCard");
+}
+
 export function loadUnbindRecord(params) {
   return server.REST.get("/session/unbindLog", { params: params });
 }
@@ -75,6 +79,10 @@ export function confirmWithdraw(bci) {
 
 export function confirmationOfWithdrawalReceived(bci) {
   return server.REST.post("/session/withdraw/confirm", bci);
+}
+
+export function cancellationOfWithdrawalReceived(bci) {
+  return server.REST.post("/session/withdraw/cancel", bci);
 }
 
 export function withdrawEntrance() {

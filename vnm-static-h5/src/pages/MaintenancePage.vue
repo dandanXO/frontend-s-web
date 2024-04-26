@@ -5,17 +5,43 @@
     </div>
     <div class="maintenance-details">
       <div class="maintenance-logo">
-        <img src="../assets/logo-1.png" />
+        <img src="../assets/logo-web-fire.svg" />
       </div>
-      <div class="maintenance-title">目前我们的网站正在维护中...</div>
+      <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">
-        从：2023年7月1日（GMT+8）
+        {{ $t("lang.maintenance_from") }}
         <br />
-        至：2023年9月19日（GMT+8）
+        {{ $t("lang.maintenance_to") }}
         <br />
-        期间所有游戏和服务均无法使用。
+        {{ $t("lang.maintenance_desc_01") }}
         <br />
-        对于给您带来任何的不变，我们深表歉意，并感谢您的耐心等待！
+        {{ $t("lang.maintenance_desc_02") }}
+      </div>
+
+      <div class="maintenance-contact">
+        <div class="contact-item">
+          <div class="contact-img"><img src="../assets/images/home/float-cs-02.png" /></div>
+          <div>
+            {{ $t("lang.maintenance_contact_01") }}
+            <a href="mailto:vnsupport@tf88.com">vnsupport@tf88.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-img"><img src="../assets/images/home/float-cs-01.png" /></div>
+          <div>
+            <!-- <router-link to="/liveChat">24/7 Customer Service</router-link> -->
+            <a href="https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=vn" target="_blank">
+              {{ $t("lang.maintenance_contact_02") }}
+            </a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
+          <div>
+            {{ $t("lang.maintenance_contact_03") }}
+            <a href="https://t.me/TF88_CS" target="_blank">@TF88_CS</a>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <div class="maintenance-btn">
@@ -36,6 +62,28 @@
   background-position: top center;
   flex-direction: column;
   padding: 20px;
+
+  .maintenance-contact {
+    margin-top: 24px;
+
+    .contact-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+
+      a {
+        // text-decoration: underline;
+        color: #4c88f8;
+      }
+    }
+    .contact-img {
+      img {
+        width: 24px;
+        display: block;
+      }
+    }
+  }
 
   .maintenance-details {
     display: flex;

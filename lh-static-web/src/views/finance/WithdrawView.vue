@@ -144,7 +144,9 @@
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button class="common-btn" @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
+          <el-button class="common-btn"
+                     v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
+                     @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
@@ -382,7 +384,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
-      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY");
+      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY") || withdrawInfo.withdrawCode.includes("SZPAY");
       isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
       loadCards();
     };
@@ -576,7 +578,7 @@ export default defineComponent({
         // padding: 8px 20px;
         // background: #ffffff;
         // border: 1px solid #ced4da;
-        max-width: 2.3rem;
+        max-width: 3rem;
         width: 100%;
         height: auto;
         margin-bottom: 0;

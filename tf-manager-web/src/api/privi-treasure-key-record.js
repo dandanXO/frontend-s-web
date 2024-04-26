@@ -22,3 +22,7 @@ export const getMemberKey = (loginName, siteId, code) => {
     },
     ContentType.form);
 };
+
+export const requestExportTreasureKey = (form) => {
+  return https().request("/privi-treasure-key-record/export", Method.GET, form, ContentType.form);
+};

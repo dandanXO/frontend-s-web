@@ -985,7 +985,7 @@ function addAffiliate() {
     if (valid) {
       await registerAffiliate(form)
       uiControl.dialogVisible = false
-      ElMessage({ message: t('message.registerSuccess'), type: 'success' })
+      ElMessage({ message: form.siteId === 5 || form.siteId === 9 ? t('message.registerSuccessInd') : t('message.registerSuccess'), type: 'success' })
       if (page.records.length !== 0) {
         await loadAffiliates()
       }
@@ -1025,7 +1025,8 @@ const populateRiskColor = () => {
 async function approve(affiliate) {
   await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
   await loadAffiliates()
-  ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+  ElMessage({ message: t('message.affiliateApproved'), type: 'success' });
+  page.loading = false;
 }
 
 function freeze() {

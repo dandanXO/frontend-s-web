@@ -1,12 +1,12 @@
 <template>
-  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image': platformType !== 'slot' ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
-    <div class="platform-container"
-      :class="(platformType === 'slot') ? 'slot-container' : ''"
+  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
+    <div v-if="platformsListDisplay.length > 0" class="platform-container"
+      :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
     >
-      <div class="platform-container-slot" v-if="platformType === 'slot'">
-        <img src="../assets/slot/slot-top-bg.png">
+      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'">
+        <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
       </div>
-      <div class="platform-container-inner" v-if="platformType !== 'slot'">
+      <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -21,12 +21,13 @@
             </div>
 
             <div class="platform-item">
-              <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <div class="platform-title"><img style="height: 60px;" :src="require('../assets/' + platformType + '/' + platformType + '-biglogo-' + item.code.toLowerCase() + '.png')" /></div>
-                <div class="platform-subtitle">{{ platformName }}</div>
+              <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
+                <div class="platform-subtitle">{{ $t(`menu.${platformName}`) }}</div>
               </div>
 
-              <div class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              <div v-if="languageVal === 'en'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.message"></div>
+              <div v-if="languageVal === 'vi'" class="platform-txt-box" data-aos="fade-left" data-aos-delay="200" v-html="item.vimessage"></div>
 
               <div class="platform-pattern-row" data-aos="fade-left" data-aos-delay="300" v-if="platformPattern">
                 <img :src="require('../assets/' + platformType + '/' + platformType + '-pattern.png')" />
@@ -69,7 +70,7 @@
               <!--            data-aos="fade-in"-->
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
-              <div class="platform-play-btn" v-if="platformType !== 'slot'">
+              <div class="platform-play-btn" v-if="platformType !== 'slot' || platformType !== 'fishing'">
                 <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
                      :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
                 >
@@ -82,8 +83,8 @@
 
                 <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
                    class="maintenance-p">
-                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("DD/MM/YYYY hh:mm A") }} -
+                  {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY hh:mm A") }}</em>
                 </p>
                 <p v-else>
                   &nbsp;
@@ -94,6 +95,10 @@
           </template>
         </template>
       </div>
+    </div>
+    <div v-else class="empty-container">
+      <img src="../assets/logo.svg">
+      {{ $t('common.comingSoon') }}
     </div>
 
     <div class="margin-center game-container" v-if="platformExpandable">
@@ -131,7 +136,7 @@
               class="search-input"
               v-model="gamePage.searchKey"
               @input="searchList()"
-              placeholder="输入查找游戏名"
+              :placeholder="$t('common.search')"
               clearable
               @clear="searchList()"
             >
@@ -226,6 +231,10 @@ import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
 
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
@@ -275,7 +284,7 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+  filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
     return { ...matchingItem, ...item1 };
   });
@@ -333,9 +342,9 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT") {
-    getPlatformList()
-      .then((data) => {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+    getFn().then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
@@ -366,7 +375,7 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {

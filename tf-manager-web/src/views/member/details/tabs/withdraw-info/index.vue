@@ -13,7 +13,7 @@
           :end-placeholder="t('fields.endDate')"
           style="margin-right: 10px; width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -207,6 +207,10 @@
       </el-table>
       <div style="text-align: right;margin-top:10px;">
         <span style="margin-right:20px;">
+          {{ t('fields.totalSuccessWithdraw') }}: {{ page.totalSuccess }}</span>
+        <span style="margin-right:20px;">
+          {{ t('fields.totalSuccessWithdrawAmount') }}: {{ page.totalSuccessWithdrawAmount }}</span>
+        <span style="margin-right:20px;">
           {{ t('fields.totalNoOfWithdrawals') }}: {{ page.total }}
         </span>
         <span>{{ t('fields.totalWithdrawnAmount') }}: {{ page.totalWithdrawAmount }}</span>
@@ -332,6 +336,7 @@
 import { onMounted, defineProps, reactive } from 'vue'
 import moment from 'moment'
 import {
+  getMemberWithdrawSuccessRecord,
   getMemberWithdrawRecord,
   getMemberWithdrawRecordTotalAmount,
 } from '../../../../../api/member'
@@ -339,6 +344,7 @@ import { getMemberWithdrawLog } from '../../../../../api/member-withdraw-log'
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 const props = defineProps({
   mbrId: {
     type: String,
@@ -374,6 +380,8 @@ const page = reactive({
   total: 0,
   loading: false,
   totalWithdrawAmount: 0,
+  totalSuccess: 0,
+  totalSuccessWithdrawAmount: 0,
 })
 
 const uiControl = reactive({
@@ -409,14 +417,16 @@ const sort = column => {
   loadWithdrwalInfo()
 }
 
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.withdrawDate = [defaultStartDate, defaultEndDate];
+  }
 }
 
 function resetQuery() {
@@ -451,7 +461,12 @@ async function loadWithdrwalInfo() {
       query
     )
     page.totalWithdrawAmount = amount
+  } else {
+    page.totalWithdrawAmount = 0
   }
+  const { data: success } = await getMemberWithdrawSuccessRecord(props.mbrId, query);
+  page.totalSuccessWithdrawAmount = success.totalAmount
+  page.totalSuccess = success.totalCount
   page.loading = false
 }
 

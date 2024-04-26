@@ -11,6 +11,7 @@
         <el-option key="1" value="en">en</el-option>
         <el-option key="2" value="zh">zh</el-option>
         <el-option key="3" value="th">th</el-option>
+        <el-option key="4" value="vi">vi</el-option>
       </el-select>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -81,23 +82,28 @@ export default {
         store.dispatch(AppActionTypes.ACTION_TOGGLE_SIDEBAR, false);
       },
       logout: async () => {
-        const siteId = store.state.user.siteId;
+        const siteIdStore = store.state.user.siteId;
         await store.dispatch(UserActionTypes.ACTION_LOGOUT);
-        if (siteId === "3" || siteId === 3) {
-          router.push("/th/login")
-        } else if (siteId === "5" || siteId === 5) {
-          router.push("/ind/login")
-        } else if (siteId === "7" || siteId === 7) {
-          router.push("/lh/login")
-        } else if (siteId === "1" || siteId === 1) {
-          router.push("/xf/login")
-        } else if (siteId === "6" || siteId === 6) {
-          router.push("/dy/login")
-        } else {
-          location.reload();
-        }
+        checkSite(siteIdStore)
       }
     });
+    const checkSite = (siteId) => {
+      if (siteId === "1" || siteId === 1) {
+        return router.push("/xf/login")
+      } else if (siteId === "3" || siteId === 3) {
+        return router.push("/th/login")
+      } else if (siteId === "5" || siteId === 5) {
+        return router.push("/ind/login")
+      } else if (siteId === "6" || siteId === 6) {
+        return router.push("/dy/login")
+      } else if (siteId === "7" || siteId === 7) {
+        return router.push("/lh/login")
+      } else if (siteId === "8" || siteId === 8) {
+        return router.push("/vi/login")
+      } else {
+        return location.reload();
+      }
+    }
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
     const { setLanguage } = i18nStoreLanguage;

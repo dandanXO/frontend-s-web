@@ -39,7 +39,7 @@
           <router-link to="/"><img src="../assets/logo.png" /></router-link>
         </div>
 
-        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/vip" no-caps flat label="VIP" stack>
+        <q-btn v-if="store.hasToken()" class="flex header-vip-btn" to="/promo?id=194" no-caps flat label="VIP" stack>
           <img class="vip-btn btn-pointer" src="../assets/images/menu/vip-icon.png" />
         </q-btn>
       </q-card-section>
@@ -500,7 +500,7 @@ svg path {
 
 .footer-icon {
   //width: 22px;
-  width: 26px;
+  width: 30px;
   // filter: brightness(1.4);
   margin-bottom: 4px;
 }

@@ -40,7 +40,7 @@ const init = (maxDays, dayCount, monthCount) => {
   const totalItems = maxDays;
   for (let i = 0; i < totalItems; i++) {
     dateDetails.value.push({
-      number: checkInDetails?.signBonus?.[i],
+      number: checkInDetails.signBonus?.[i],
       checkInActive: i < monthCount + (1 - dayCount),
       isCheckedIn: i < monthCount
     });
@@ -68,7 +68,7 @@ const loadDailyCheckIn = () => {
           monthMaxDays: 31,
           dayCount: 0,
           signBonus: [
-            7, 7, 7, 21, 7, 7, 30, 7, 7, 7, 21, 7, 7, 40, 7, 21, 7, 21, 7, 7, 68, 7, 21, 7, 40, 7, 7, 88, 21, 21, 21
+            8.8,8.8,8.8,28,8.8,8.8,48,9.8,9.8,9.8,38,9.8,9.8,68,10.8,28,10.8,48,10.8,10.8,88,10.8,10.8,10.8,58,10.8,10.8,128,28,28,28
           ],
           monthCount: 0
         }

@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-1.png" />
+        <img alt="logo" src="../assets/logo-web-fire.svg" />
       </div>
 
       <div class="header-lang">
@@ -17,11 +17,12 @@
     </div>
 
     <div class="login-img">
-      <img src="../assets/images/login/login-img.png" />
+      <!-- <img src="../assets/images/login/login-img.png" />
       <div class="login-text">
         <div class="text-title">{{ $t("lang.login_title") }}</div>
         <div class="text-desc">{{ $t("lang.login_desc") }}</div>
-      </div>
+      </div> -->
+      <img :src="require(`../assets/images/login/login-img-${languageVal}.png`)" />
     </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
@@ -33,7 +34,7 @@
       <div class="login-form-container">
         <div v-if="!loginType" class="">
           <q-label>
-            {{ $t("lang.please_enter_username") }}
+            {{ $t("lang.username") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -57,7 +58,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_type_the_password") }}
+            {{ $t("lang.password") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -87,7 +88,7 @@
           </q-input>
 
           <q-label>
-            {{ $t("lang.please_enter_verification_code") }}
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
@@ -117,20 +118,20 @@
 
         <div v-if="loginType">
           <q-label>
-            电话号码:
+            {{ $t("lang.phone_number") }}
             <em>*</em>
           </q-label>
           <q-input
-            hide-bottom-space
             ref="telephoneRef"
             v-model="phoneLoginForm.phoneNumber"
-            label="电话号码"
-            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
+            :placeholder="$t('lang.phone_number')"
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_phone_number')]"
             color="white"
             :readonly="phoneLoginForm.smsCodeId ? true : false"
             clearable
             autocomplete="username"
             rounded
+            type="number"
             standout
           >
             <template v-slot:prepend>
@@ -138,18 +139,17 @@
             </template>
           </q-input>
           <q-label>
-            短信验证码:
+            {{ $t("lang.verification_code") }}
             <em>*</em>
           </q-label>
           <q-input
             @pressEnter="alert('ah')"
             ref="phoneVerificationRef"
-            hide-bottom-space
             type="text"
             v-model="phoneLoginForm.code"
-            label="短信验证码"
+            :placeholder="$t('lang.verification_code')"
             clearable
-            :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.verification_code_empty')]"
             color="white"
             rounded
             standout
@@ -158,7 +158,7 @@
               <q-btn
                 size="md"
                 color="brightbtn"
-                label="发送验证码"
+                :label="$t('lang.verification_code_send')"
                 @click="toggleInnerCode"
                 style="white-space: nowrap"
               />
@@ -184,7 +184,7 @@
 
           <!-- <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
-              {{ loginType ? "用户名登录" : "手机号登录" }}
+              {{ loginType ? $t("lang.username_login") : $t("lang.phone_login") }}
             </span>
           </div> -->
 
@@ -207,7 +207,7 @@
           <q-btn class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')" no-caps rounded />
         </router-link>
       </div>
-      <div class="text-center">
+      <div class="text-center q-pb-lg">
         <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
           {{ $t("lang.contact_customer_service") }}
         </router-link>
@@ -223,24 +223,24 @@
     <q-card width="100%">
       <q-card-section class="q-pa-md bg-brightbtn text-white">
         <q-toolbar>
-          <q-toolbar-title>验证码</q-toolbar-title>
+          <q-toolbar-title>{{ $t("lang.captcha_code") }}</q-toolbar-title>
           <q-btn flat v-close-popup round dense icon="close" />
         </q-toolbar>
       </q-card-section>
       <div class="q-px-lg q-pt-sm q-pb-lg">
         <q-card-section class="q-mb-md q-pa-md">
-          <q-input v-model="innerCaptchaRef" placeholder="验证码">
+          <q-input v-model="innerCaptchaRef" :placeholder="$t('lang.enter_captcha_code')">
             <template v-slot:append>
               <img
                 :src="phoneVerificationImg"
-                title="点击刷新验证码"
+                :title="$t('lang.captcha_refresh')"
                 style="margin-top: 6px; cursor: pointer"
                 @click="getInnerCode"
               />
             </template>
           </q-input>
         </q-card-section>
-        <q-btn @click="sendOtpSms" label="发送验证码" color="brightbtn" />
+        <q-btn @click="sendOtpSms" no-caps :label="$t('lang.verification_code_send')" color="brightbtn" />
       </div>
     </q-card>
   </q-dialog>
@@ -252,9 +252,13 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import LangOptions from "components/LangOptions";
 import qs from "qs";
+import { useI18n } from "vue-i18n";
+import { App } from "@capacitor/app";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "LoginPage",
@@ -262,6 +266,9 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -286,7 +293,7 @@ export default defineComponent({
     const route = useRoute();
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -327,7 +334,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -391,23 +398,24 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
+      const sidParam = store.visitorId;
+
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        // const fp = await fpPromise;
+        // const result = await fp.get();
+        // const excludes = { value: ["timezone", "timeZoneOffset"] };
+        // const allComponents = { ...result.components };
+        // excludes.value.forEach((element) => {
+        //   delete allComponents[element];
+        // });
+        const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
           verificationRef.value.validate();
           $q.loading.show({
-            message: "登录中"
+            message: t("lang.logging_in")
           });
           if (loginNameRef.value.hasError || passwordRef.value.hasError || verificationRef.value.hasError) {
             $q.loading.hide();
@@ -418,11 +426,20 @@ export default defineComponent({
                 password: loginForm.password,
                 sid: sidParam,
                 captchaCode: loginForm.captchaCode,
-                codeId: loginForm.codeId
+                codeId: loginForm.codeId,
+                ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
               })
               .then(() => {
                 $q.loading.hide();
                 sessionStorage.removeItem("REFERRAL_CODE");
+
+                // FB tracking :: login-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-success");
+                }
 
                 if (isCheckRmb.value) {
                   localStorage.setItem(
@@ -459,13 +476,13 @@ export default defineComponent({
               $q.notify({
                 color: "negative",
                 position: "top",
-                message: "请验证手机码",
+                message: t("lang.personal_mobilenumber_verify"),
                 icon: "report_problem"
               });
               return;
             }
             $q.loading.show({
-              message: "登录中"
+              message: t("lang.logging_in")
             });
             store
               .memberLoginviaPhone({
@@ -505,12 +522,21 @@ export default defineComponent({
       router.push("/");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version + "." + info.build;
+      }
+    };
+
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
         tab.value = "register";
       }
       checkRememberPwd();
+      getVersionNo();
     });
     onActivated(() => {
       getCode();
@@ -544,7 +570,10 @@ export default defineComponent({
       getInnerCode,
       isValidCnPhone,
       telephoneRef,
-      LangOptions
+      LangOptions,
+      appVersionNo,
+      getVersionNo,
+      languageVal
     };
   }
 });
@@ -612,7 +641,7 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
-      max-width: 300px;
+      max-width: 190px;
     }
 
     .login-text {

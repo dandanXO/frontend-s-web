@@ -11,12 +11,24 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-const isGlobalLH = window.location.hostname.indexOf("lh318") > -1;
+const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
+console.log(window.location.hostname);
+const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+
 if (isGlobalLH) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
-} else {
+} else if(window.location.hostname.includes("leihuo")){
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "LH_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "LH_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "LH_H5_CRT_URL");
+
+}else {
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");
@@ -64,6 +76,14 @@ function getInitApi(apiLinks, urlLsName) {
   }
 }
 
+function getErrorType(errorUrl){
+  errorUrl = errorUrl.replace("https://", "");
+  const firstStr = errorUrl.substr(0,5);
+  console.log(firstStr);
+
+  return firstStr;
+}
+
 function isInApp(){
   if( window.location.pathname === "/vip" ||
     window.location.pathname === "/viptest" ||
@@ -101,11 +121,13 @@ export default boot(({ app, router }) => {
 
   const onResponseError = (error) => {
     // message.error(error.message);
+    const errorType = getErrorType(error.config.baseURL);
+
     Notify.create({
       type: "negative",
-      timeout: 1000,
+      timeout: 2500,
       position: "top",
-      message: error.message
+      message: error.message + ` (${errorType})`
     });
     Loading.hide();
     return Promise.reject(error);
@@ -122,6 +144,8 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
+      const errorType = getErrorType(response.config.baseURL);
+
       if (res.code === ResponseCode.ERROR_SYSTEM) {
         return res;
       }
@@ -175,14 +199,15 @@ export default boot(({ app, router }) => {
           LocalStorage.remove("TOKEN");
           window.location.href = "/";
         }
+
         Notify.create({
           type: "negative",
-          timeout: 1000,
+          timeout: 2500,
           position: "top",
-          message: res.message || "错误"
+          message: res.message + ` (${errorType} ${res.code})` || "错误"
         });
       }
-      throw new Error(res.message || "错误");
+      throw new Error(res.message + ` (${errorType} ${res.code})` || "错误");
     } else {
       Loading.hide();
       return res;

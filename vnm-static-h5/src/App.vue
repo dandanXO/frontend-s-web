@@ -12,6 +12,7 @@ import CsClient from "csweb-client";
 import { userStore } from "src/stores";
 import axios from "axios";
 import { cached } from "boot/cache";
+import { getVisitorId } from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -22,21 +23,19 @@ export default defineComponent({
     $q.dark.set(false);
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
+    const channelValue = ref("");
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -76,14 +75,13 @@ export default defineComponent({
         });
     };
 
-
     const initCsWeb = () => {
       var regDevice = store.getDeviceType();
       // console.log("Footer OnMounted");
 
       // 'XFCS' / 2
       // csclient = new CsClient('LHCS', regDevice, 'zh-CN', '2', 'prod', 'https://csweb01.v6kthwlug.com/');
-      csclient = new CsClient("LHCS", regDevice, "zh-CN", "2", "prod", `https://${CSAUrl}`);
+      csclient = new CsClient("TF88", regDevice, "vn", "2", "prod", `https://${CSAUrl}`);
 
       csclient.set("bottom", "77");
       csclient.set("pageurl", "/liveChat");
@@ -118,16 +116,8 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
 
       if (sidParam) {
@@ -135,10 +125,44 @@ export default defineComponent({
           params: {
             way: way,
             sid: sidParam,
-            siteCode: "lh1"
+            siteCode: "vnm"
           }
         });
       }
+    };
+
+    const onDeviceReady = () => {
+      // Get the file system
+      window.resolveLocalFileSystemURL(
+        cordova.file.applicationDirectory,
+        function (applicationDirectory) {
+          applicationDirectory.getFile(
+            "channel.json",
+            { create: false, exclusive: false },
+            function (fileEntry) {
+              // Read the file
+              fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                  console.log("Read as text: ", evt.target.result);
+                  const jsonData = evt.target.result;
+                  const json = JSON.parse(jsonData);
+                  if (json && json.channel) {
+                    sessionStorage.setItem("AFFILIATE_CODE", json.channel);
+                    channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
+                  }
+                };
+
+                // Read the file as text
+                reader.readAsText(file);
+              }, errorHandler);
+            },
+            errorHandler
+          );
+        },
+        errorHandler
+      );
     };
 
     onMounted(() => {
@@ -148,12 +172,20 @@ export default defineComponent({
 
       onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
+
+      document.addEventListener(
+        "deviceready",
+        () => {
+          onDeviceReady();
+        },
+        false
+      );
     });
 
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
+    });
   }
 });
 </script>

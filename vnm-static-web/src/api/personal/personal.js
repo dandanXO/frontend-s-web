@@ -1,4 +1,5 @@
 import { server } from "@/utils/request";
+import { userStore } from "@/store";
 
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=" + new Date().getTime(), {
@@ -94,9 +95,14 @@ export function sendEmail(emailInfo) {
   return server.REST.post("/otp/sendNewEmail", emailInfo);
 }
 
-export function verifyEmail(emailInfo) {
-  return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
+export function forgetWithdrawSendEmail(emailInfo) {
+  return server.REST.post("/session/sendNewEmail", emailInfo);
 }
+
+export function verifyOtpAndChangePassword(withdrawPwdInfo) {
+  return server.REST.post("/session/verifyOtpAndChangePassword", withdrawPwdInfo);
+}
+
 
 export function saveFinanceFeedback(reminderInfo) {
   return server.REST.post("/session/saveFinanceFeedback", reminderInfo);
@@ -111,7 +117,23 @@ export function sendSms(telephoneInfo) {
 export function sendSessionSms(telephoneInfo) {
   return server.REST.post("/session/sendSms", telephoneInfo);
 }
-export function verifySms(telephoneInfo) {
-  return server.REST.post("/session/verifyAndUpdatePhone", telephoneInfo);
+
+export function verifyEmail(emailInfo) {
+
+  var apiUrl= "session/verifyEmailForVNM";
+
+  return server.REST.post(apiUrl, emailInfo);
 }
 
+export function verifySms(telephoneInfo) {
+
+  var apiUrl="session/verifyPhoneForVNM";
+
+  return server.REST.post(apiUrl, telephoneInfo);
+}
+export function dailyRebateAmt() {
+  return server.EVENT.get("/daily-rebate/available-amount");
+}
+export function claimRebate() {
+  return server.EVENT.put("/bonus/claim/vnm-daily-rebate");
+}

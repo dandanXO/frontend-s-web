@@ -1,8 +1,8 @@
 {
-  "name": "lh-static-h5",
-  "version": "1.0.1",
-  "description": "雷火竞技 - 最专业的竞猜网站",
-  "productName": "雷火",
+  "name": "vnm-static-h5",
+  "version": "1.0.2",
+  "description": "TF88 - Nhà cái cá cược bóng đá, Esports, casino trực tuyến số 1 Châu Á",
+  "productName": "TF88",
   "author": "WeiSeng <weiseng@eagrp.net>",
   "private": true,
   "scripts": {
@@ -25,6 +25,7 @@
     "@capacitor/splash-screen": "^5.0.0",
     "@capacitor/status-bar": "^5.0.6",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "1.4.0",
     "@line/liff": "^2.21.4",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",

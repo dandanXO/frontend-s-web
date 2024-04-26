@@ -226,13 +226,13 @@ export default defineComponent({
         if (res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
-            if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            } else {
+            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
+            //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // } else {
               if (element.redirectUrl === route.query.name) {
                 showPromoDetails(element);
               }
-            }
+            // }
           });
         }
       }).catch((e) => {

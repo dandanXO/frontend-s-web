@@ -38,7 +38,10 @@
       :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
 
-    <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo" />
+    <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-awards' && !isCommonPromo" />
+    
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <FtdPromo  v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
 
     <PrivilegeInvitePromo
       v-if="
@@ -79,14 +82,20 @@
     <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game' && !isCommonPromo && store.token"></LplSummerPromo>
 
     <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
-    <BbDacha2024Promo
-      v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"
-    ></BbDacha2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-match-vote' && !isCommonPromo && store.token"></BbDacha2024Promo>
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
-    <CS2Sign v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <LhStepGamePromo
+      v-if="list.redirectUrl === 'lh1-game-steps' && !isCommonPromo && store.token"
+      :pageContent="list.pageContent"
+    ></LhStepGamePromo>
+    <CS2Sign
+      v-if="list.redirectUrl === 'lh-cs2-copenhagen-major-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
+    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"  :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -137,9 +146,12 @@ import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue"
 // import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 // import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
+import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
-
+import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
+import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
+import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -170,7 +182,11 @@ export default defineComponent({
     BbDacha2024Promo,
     CS2Sign,
     // CnyStepGame2024Promo
-    BonusSpinWheel
+    BonusSpinWheel,
+    LhStepGamePromo,
+    SummonerPromo,
+    AppHongBao,
+    FtdPromo
   },
   props: {
     list: {
@@ -258,7 +274,11 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-dragon-card" ||
       this.list.redirectUrl === "lh1-lpl-game" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
-      this.list.redirectUrl === "lh1-spin-wheel"
+      this.list.redirectUrl === "lh1-spin-wheel" ||
+      this.list.redirectUrl === "lh1-game-steps" ||
+      this.list.redirectUrl === "lh1-summon-event" ||
+      this.list.redirectUrl === "lh1-app-hongbao" ||
+      this.list.redirectUrl === "lh1-ftd-promo"
     ) {
       this.isCommonPromo = false;
     } else {

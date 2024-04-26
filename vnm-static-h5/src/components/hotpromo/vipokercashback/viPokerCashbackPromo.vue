@@ -7,7 +7,7 @@
       <label>{{ $t("lang.vipoker_netlossbonus") }}</label>
       <q-form @submit="chooseNewLossBonus">
         <div class="insert-lucky-num">
-          <q-input v-model="newLossBonus" placeholder="0" type="number" outlined dense />
+          <q-input v-model="newLossBonus" placeholder="0" type="number" readonly outlined dense />
         </div>
       </q-form>
       <q-btn
@@ -23,8 +23,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { submitNewLossBonus } from "../../../api/index/promo";
+import { ref, reactive, computed, onMounted } from "vue";
+import { submitPokerNewLossBonus, refundPokerBonus } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -34,7 +34,7 @@ const newLossBonusBtnLoading = ref(false);
 function chooseNewLossBonus() {
   newLossBonusBtnLoading.value = true;
 
-  submitNewLossBonus(newLossBonus.value)
+  submitPokerNewLossBonus(newLossBonus.value)
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -58,6 +58,18 @@ function chooseNewLossBonus() {
       newLossBonusBtnLoading.value = false;
     });
 }
+
+const getRefundPokerBonus = () => {
+  refundPokerBonus().then((res) => {
+    if (res.code === 0) {
+      newLossBonus.value = res.data;
+    }
+  });
+};
+
+onMounted(() => {
+  getRefundPokerBonus();
+});
 </script>
 
 <style lang="scss" scoped>

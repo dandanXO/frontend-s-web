@@ -314,7 +314,8 @@ $node-color: #45fefa;
         }
         img {
           background-color: #2a313e;
-          max-width: 2.3rem;
+          width: 100%;
+          // max-width: 2.3rem; 
           // max-width: 1.5rem;
           margin-bottom: 0;
         }
@@ -352,7 +353,7 @@ $node-color: #45fefa;
     .node-item {
       display: flex;
       justify-content: center;
-      // min-width: 6rem;
+      min-width: 6rem;
       .payment-method-wrapper {
         display: none;
       }
@@ -383,7 +384,7 @@ $node-color: #45fefa;
         border-radius: 3px;
 
         img {
-          max-width: 2.3rem;
+          // max-width: 2.3rem; 
           width: 100%;
           height: auto;
           // max-width: 1.5rem;

@@ -28,6 +28,8 @@
             {{ memberDetail.loginName }}
           </span>
           <span v-if="memberDetail.loginName === null">-</span>
+          <el-button type="info" size="mini" style="float: right;" @click="syncMember">{{ t('fields.sync') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -327,7 +329,7 @@
           <template #label>
             <div>
               <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
-              {{ t('fields.totalBalance') }}
+              {{ t('fields.affiliateWallet') }}
             </div>
           </template>
           <div style="display: inline-block;" v-loading="loading.total">
@@ -343,6 +345,32 @@
             icon="el-icon-refresh"
             size="mini"
             @click="refreshAllBalance"
+          />
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.commissionWallet') }}
+            </div>
+          </template>
+          <div style="display: inline-block;" v-loading="loading.commissionBalance">
+            <div class="balance">
+              $
+              <span
+                v-formatter="{data: memberDetail.commissionBalance, type: 'money'}"
+              />
+            </div>
+          </div>
+          <el-button
+            class="refresh-btn"
+            icon="el-icon-refresh"
+            size="mini"
+            @click="refreshCommissionBalance"
           />
         </el-descriptions-item>
         <el-descriptions-item
@@ -572,6 +600,56 @@
             style="float: right;"
             v-permission="['sys:affiliate:update:commission']"
             @click="showDialog('UPDATE_COMMISSION')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.paymentFee') }}
+            </div>
+          </template>
+          <span v-if="affiliateDetails.paymentFee !== null">
+            {{ affiliateDetails.paymentFee }} %
+          </span>
+          <span v-if="affiliateDetails.paymentFee === null">{{ t('fields.undefined') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:payment-fee']"
+            @click="showDialog('UPDATE_PAYMENT_FEE')"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon icon-class="money" style="height: 16px;width: 16px;" />
+              {{ t('fields.platformFee') }}
+            </div>
+          </template>
+          <span v-if="affiliateDetails.platformFee !== null">
+            {{ affiliateDetails.platformFee }} %
+          </span>
+          <span v-if="affiliateDetails.platformFee === null">{{ t('fields.undefined') }}</span>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:platform-fee']"
+            @click="showDialog('UPDATE_PLATFORM_FEE')"
           >
             {{ t('fields.update') }}
           </el-button>
@@ -1100,7 +1178,7 @@
         </div>
       </el-form>
       <el-form
-        v-if="uiControl.dialogType === 'UPDATE_COMMISSION'"
+        v-if="uiControl.dialogType === 'UPDATE_COMMISSION' || uiControl.dialogType === 'UPDATE_PAYMENT_FEE' || uiControl.dialogType === 'UPDATE_PLATFORM_FEE'"
         ref="commissionForm"
         :model="commForm"
         :rules="commFormRules"
@@ -1108,7 +1186,7 @@
         size="small"
         label-width="200px"
       >
-        <el-form-item :label="t('fields.commissionRate')" prop="commission">
+        <el-form-item :label="t('fields.rate')" prop="commission">
           <el-input
             v-model="commForm.commission"
             style="width: 250px"
@@ -1117,10 +1195,13 @@
           />
         </el-form-item>
         <div class="dialog-footer">
+          <el-button v-if="uiControl.dialogType !== 'UPDATE_COMMISSION'" @click="updateFeeUndefined()">
+            {{ t('fields.setUndefined') }}
+          </el-button>
           <el-button @click="uiControl.dialogVisible = false">
             {{ t('fields.cancel') }}
           </el-button>
-          <el-button type="primary" @click="updateCommission()">
+          <el-button type="primary" @click="updateFeeRate()">
             {{ t('fields.confirm') }}
           </el-button>
         </div>
@@ -1320,10 +1401,10 @@ import {
   getMemberRealName,
   getMemberTelephone,
   getMemberStatus,
-  freezeMember, unfreezeMember, updateRisk
+  freezeMember, unfreezeMember, updateRisk, syncMemberDetail
 } from '../../../../../api/member'
 import { getFinancialLevels } from '../../../../../api/financial-level'
-import { getAffiliateRecord } from '../../../../../api/affiliate-record'
+import { getAffiliateRecord, getCommissionBalance } from '../../../../../api/affiliate-record'
 import {
   addAffiliateRemark,
   approveAffiliate,
@@ -1338,6 +1419,8 @@ import {
   updateAffiliatePassword,
   updateCommissionModel,
   updateCommissionRate,
+  updatePaymentFeeRate,
+  updatePlatformFeeRate,
   updateTimeType,
   updateBelongType,
 } from '../../../../../api/member-affiliate'
@@ -1411,6 +1494,7 @@ const loading = reactive({
   loginInfo: false,
   remark: false,
   total: false,
+  commissionBalance: false,
   affiliateInfo: false,
   superiorAffiliateInfo: false,
 })
@@ -1456,6 +1540,7 @@ const memberDetail = reactive({
   superiorAffName: '',
   regTime: '',
   balance: 0,
+  commissionBalance: 0,
   totalDeposit: 0,
   totalWithdraw: 0,
   lastLoginTime: '',
@@ -1485,6 +1570,8 @@ const affiliateDetails = reactive({
   downlineMember: 0,
   downlineAffiliate: 0,
   commission: 0,
+  paymentFee: null,
+  platformFee: null,
 })
 
 const superiorAffiliateDetail = reactive({
@@ -1705,6 +1792,12 @@ function showDialog(type) {
   } else if (type === 'UPDATE_COMMISSION') {
     commForm.commission = affiliateDetails.commission / 100
     uiControl.dialogTitle = t('fields.updateCommissionRate')
+  } else if (type === 'UPDATE_PAYMENT_FEE') {
+    commForm.commission = affiliateDetails.paymentFee / 100
+    uiControl.dialogTitle = t('fields.updatePaymentFee')
+  } else if (type === 'UPDATE_PLATFORM_FEE') {
+    commForm.commission = affiliateDetails.platformFee / 100
+    uiControl.dialogTitle = t('fields.updatePlatformFee')
   } else if (type === 'ADD_REMARK') {
     if (addRemarkForm.value) {
       addRemarkForm.value.resetFields()
@@ -1832,6 +1925,11 @@ async function approve() {
   ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
 }
 
+async function syncMember() {
+  await syncMemberDetail(props.affId, memberDetail.siteId);
+  ElMessage({ message: t('message.syncMemberDetailSuccess'), type: "success" });
+}
+
 function updateModel() {
   updateModelForm.value.validate(async valid => {
     if (valid) {
@@ -1884,18 +1982,38 @@ function updateField(type) {
   }
 }
 
-async function updateCommission() {
+async function updateFeeRate() {
   commissionForm.value.validate(async valid => {
     if (valid) {
       // detailField
-      await updateCommissionRate(props.affId, commForm.commission)
+      if (uiControl.dialogType === 'UPDATE_COMMISSION') {
+        await updateCommissionRate(props.affId, commForm.commission)
+      } else if (uiControl.dialogType === 'UPDATE_PAYMENT_FEE') {
+        await updatePaymentFeeRate(props.affId, commForm.commission)
+      } else if (uiControl.dialogType === 'UPDATE_PLATFORM_FEE') {
+        await updatePlatformFeeRate(props.affId, commForm.commission)
+      }
       await loadAffiliateRecord()
       uiControl.dialogVisible = false
       ElMessage({
-        message: t('message.updateCommissionRateSuccess'),
+        message: t('message.updateSuccess'),
         type: 'success',
       })
     }
+  })
+}
+
+async function updateFeeUndefined() {
+  if (uiControl.dialogType === 'UPDATE_PAYMENT_FEE') {
+    await updatePaymentFeeRate(props.affId, null)
+  } else if (uiControl.dialogType === 'UPDATE_PLATFORM_FEE') {
+    await updatePlatformFeeRate(props.affId, null)
+  }
+  await loadAffiliateRecord()
+  uiControl.dialogVisible = false
+  ElMessage({
+    message: t('message.updateSuccess'),
+    type: 'success',
   })
 }
 
@@ -1988,6 +2106,17 @@ async function refreshAllBalance() {
   loading.total = false
 }
 
+async function loadCommissionBalance() {
+  const { data: balance } = await getCommissionBalance(props.affId)
+  memberDetail.commissionBalance = balance
+}
+
+async function refreshCommissionBalance() {
+  loading.commissionBalance = true
+  await loadCommissionBalance()
+  loading.commissionBalance = false
+}
+
 async function loadAffiliateRecord() {
   const { data: record } = await getAffiliateRecord(props.affId)
   affiliateDetails.affiliateCode = record.affiliateCode
@@ -1995,6 +2124,8 @@ async function loadAffiliateRecord() {
   affiliateDetails.downlineMember = record.downlineMember
   affiliateDetails.downlineAffiliate = record.downlineAffiliate
   affiliateDetails.commission = record.commission * 100
+  affiliateDetails.paymentFee = record.paymentFee === null ? null : record.paymentFee * 100
+  affiliateDetails.platformFee = record.platformFee === null ? null : record.platformFee * 100
 }
 
 function restrictCommissionDecimalInput(event) {
@@ -2010,7 +2141,11 @@ function restrictCommissionDecimalInput(event) {
     if (charCode === 46) {
       event.preventDefault()
     }
-    uiControl.commissionMax = 4
+    if (uiControl.dialogType === 'UPDATE_COMMISSION') {
+      uiControl.commissionMax = 4
+    } else {
+      uiControl.commissionMax = 6
+    }
   } else if (commForm.commission === '1') {
     uiControl.commissionMax = 1
   } else {
@@ -2083,6 +2218,7 @@ onMounted(async () => {
   await loadMemberStatus()
   await loadAffiliateRemark()
   await loadBalance()
+  await loadCommissionBalance()
   await loadAffiliateRecord()
   await loadReferralLink()
   await loadRiskLevels();

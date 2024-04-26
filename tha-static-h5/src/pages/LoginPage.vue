@@ -8,9 +8,9 @@
         v-model="loginForm.loginName"
         :label="$t('lang.input_username')"
         :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
         ]"
         color="white"
         autocomplete="username"
@@ -113,6 +113,7 @@ import qs from "qs";
 import { isMobile, isH5 } from "boot/utils";
 import { uuid } from "vue-uuid";
 import axios from "axios";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -150,7 +151,7 @@ export default defineComponent({
 
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((res) => {
           const response = res.data;
           if (response.code === 0) {
@@ -182,6 +183,8 @@ export default defineComponent({
 
     const onSubmit = () => {
       const fpPromise = FingerprintJS.load();
+      const appVer = appVersionNo.value;
+
       (async () => {
         const fp = await fpPromise;
         const result = await fp.get();
@@ -206,7 +209,8 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId
+              codeId: loginForm.codeId,
+              ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
             })
             .then(() => {
               $q.loading.hide();
@@ -331,10 +335,18 @@ export default defineComponent({
       window.open(url, "_blank");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version + "." + info.build;
+      }
+    };
+
     onMounted(() => {
       getCode();
       checkRememberPwd();
-
+      getVersionNo();
       getLineCode();
     });
 

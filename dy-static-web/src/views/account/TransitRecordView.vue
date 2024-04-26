@@ -194,6 +194,12 @@
                     </div>
                   </template>
 
+                  <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
+                    <div style="display: flex; align-items: center">
+                      <el-button size="small" color="red" @click="openWithdrawCancel(scope.row)">取消</el-button>
+                    </div>
+                  </template>
+
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
@@ -396,6 +402,11 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
+                  <div style="display: flex; align-items: center">
+                    <span>{{ getFormatBetTime(scope.row.betTime)}}</span>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'recordTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ scope.row.recordTime }}</span>
@@ -587,7 +598,8 @@ import {
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
-  confirmationOfWithdrawalReceived
+  confirmationOfWithdrawalReceived,
+  cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
 // import { message } from "ant-design-vue";
@@ -1000,6 +1012,10 @@ export default defineComponent({
             pagination.pagingState = response.data.pagingState;
           }
           const dataSource = dataState[recordActive.value];
+
+          totalBetRecord.totalBet = response.data?.sums?.totalBet
+          totalBetRecord.totalPayout = response.data?.sums?.totalPayout
+
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
@@ -1095,12 +1111,12 @@ export default defineComponent({
         startDate: searchForm.gameBetRecord.startDate,
         endDate: searchForm.gameBetRecord.endDate,
       }
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
+      // gameBetRecordTotal(obj).then((ret) => {
+      //   if (ret.code === 0) {
+      //     totalBetRecord.totalBet = ret.data.totalBet
+      //     totalBetRecord.totalPayout = ret.data.totalPayout
+      //   }
+      // })
 
     };
     const selectedBetRecord = ref({})
@@ -1153,6 +1169,31 @@ export default defineComponent({
         }
       })
     }
+
+    const openWithdrawCancel = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      };
+      cancellationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          ElMessageBox.alert("已经取消提款", {
+            // if you want to disable its autofocus
+            // autofocus: false,
+            title: "系统提示",
+            center: true,
+            confirmButtonText: "确认",
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
+        } else {
+          ElMessage.error(res.message);
+        }
+      });
+    };
+
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
@@ -1407,6 +1448,11 @@ export default defineComponent({
         return depositType
       }
     }
+
+    const getFormatBetTime = (betTime) => {
+      return moment(betTime).format("YYYY-MM-DD HH:mm:ss");
+    }
+
     const getGameType = (gameType) => {
       if (!gameType) {
         return ''
@@ -1472,6 +1518,8 @@ export default defineComponent({
           return 'SW电子';
         case 'GPS':
           return 'GPS捕鱼';
+        case 'PMFISH':
+          return 'DB捕鱼';
         case 'IA':
           return '小艾电竞 ';
         case 'DT':
@@ -1488,6 +1536,8 @@ export default defineComponent({
           return 'PG电子';
         case 'AG':
           return 'AG真人, XIN电子';
+        case 'AGF':
+          return 'AG捕鱼';
         case 'ALLBET':
           return 'ALLBET真人';
 
@@ -1536,13 +1586,15 @@ export default defineComponent({
       getGameType,
       getBetStatus,
       openWithdrawConfirm,
+      openWithdrawCancel,
       loadingBtn,
       clearItems,
       formRef,
       getTransferChangeType,
       getPlatform,
       imgURL,
-      getGameName
+      getGameName,
+      getFormatBetTime
     };
   }
 });

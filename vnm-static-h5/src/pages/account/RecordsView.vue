@@ -12,55 +12,62 @@
   </q-page>
 </template>
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+const {t} = useI18n();
+const transitList = ref([]);
 
-const transitList = ref([
-  {
-    code: "deposit",
-    icon: "deposit",
-    name: "存款记录"
-  },
-  {
-    code: "withdraw",
-    icon: "withdraw",
-    name: "提款记录"
-  },
-  {
-    code: "transfer",
-    icon: "transfer",
-    name: "转账记录"
-  },
-  {
-    code: "moneyChange",
-    icon: "transfer",
-    name: "账变记录"
-  },
-  {
-    code: "promo",
-    icon: "deposit",
-    name: "优惠记录"
-  },
-  {
-    code: "bet",
-    icon: "change",
-    name: "投注记录"
-  },
-  {
-    code: "financeFeedback",
-    icon: "help",
-    name: "催单记录"
-  }
-  // {
-  //   code: 'recommend',
-  //   icon: 'recommend',
-  //   name: '推荐好友记录'
-  // },
-  // {
-  //   code: 'betRecord',
-  //   icon: 'help',
-  //   name: '投注记录'
-  // },
-]);
+const getLists = () => {
+  transitList.value = [
+    {
+      code: "deposit",
+      icon: "deposit",
+      name: t('lang.menu_deposit')
+    },
+    {
+      code: "moneyChange",
+      icon: "transfer",
+      name: t('lang.menu_moneychange')
+    },
+    {
+      code: "withdraw",
+      icon: "withdraw",
+      name: t('lang.menu_withdraw')
+    },
+    {
+      code: "promo",
+      icon: "deposit",
+      name: t('lang.menu_promo')
+    },
+    // {
+    //   code: "rebate",
+    //   icon: "deposit",
+    //   name: t('lang.menu_rebate')
+    // },
+    {
+      code: "bet",
+      icon: "change",
+      name: t('lang.menu_transaction')
+    },
+    {
+      code: "financeFeedback",
+      icon: "help",
+      name: t('lang.menu_reminder')
+    }
+  ]
+}
+
+onMounted(() => {
+  getLists();
+})
+
+// const { languageVal } = storeToRefs(i18nStore());
+// watch(languageVal, (newVal) => {
+//   console.log("HEER")
+//   window.location.reload();
+// });
 </script>
 <style scoped lang="scss">
 .transit-buttons {

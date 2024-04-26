@@ -13,9 +13,10 @@
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
+          style="padding-left:20px;"
         />
-        <img src="../assets/app/light.png" alt="最佳电竞竞猜app" width="570px" class="img-slogan" data-v-93674b8c="" />
-        <div class="text-content">
+        <img src="../assets/app/light.png" alt="最佳电竞竞猜app" width="570px" class="img-slogan"  style="padding-left:20px;" data-v-93674b8c="" />
+        <div class="text-content"  style="padding-left:20px;">
           海量体育、电竞顶尖赛事
           <br />
           真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中
@@ -95,6 +96,7 @@ import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { EffectFade, Autoplay } from "swiper/modules";
 import "swiper/css";
+import { useRouter } from "vue-router";
 SwiperCore.use([EffectFade, Autoplay]);
 
 export default defineComponent({
@@ -107,6 +109,7 @@ export default defineComponent({
   },
   setup() {
     const onSwiper = (swiper) => {};
+    const router= useRouter();
 
     const onSlideChange = () => {
       // console.log("slide change");
@@ -123,21 +126,20 @@ export default defineComponent({
         code: "QZ",
         name: "全站APP下载",
         link: ""
+      },
+      {
+        code: "APP",
+        name: "APP下载教程",
+        link: "/app-tutorial"
       }
-      // {
-      //   code: "DJ",
-      //   name: "雷火电竞APP下载",
-      //   link: "https://m.e8386.com"
-      // },
-      // {
-      //   code: "TY",
-      //   name: "雷火体育APP下载",
-      //   link: "https://m.e8386.com"
-      // }
     ]);
     const selectedPlat = ref();
     const clickPlat = (plat) => {
-      selectedPlat.value = plat.code;
+      if(plat.code==='APP'){
+        router.push(plat.link)
+      }else{
+        selectedPlat.value = plat.code;
+      }
     };
 
     const openGame = (gameName, gameCode) => {
@@ -227,7 +229,7 @@ export default defineComponent({
   margin: 0 auto;
   max-width: 1500px;
   transform: translateY(-40%);
-  padding-left: 6%;
+  padding-left: 4.5%;
   z-index: 3;
   display: flex;
 }
@@ -273,8 +275,8 @@ export default defineComponent({
   }
   .buttons {
     display: flex;
-    gap: 70px;
-    padding-top: 100px;
+    gap: 20px;
+    padding-top: 90px;
     .btn {
       background: url(../assets/app/btn.png) no-repeat center center;
       background-size: contain;

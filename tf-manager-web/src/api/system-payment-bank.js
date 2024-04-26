@@ -10,5 +10,5 @@ export const createPaymentBank = (bank) => {
 };
 
 export const deletePaymentBank = (id) => {
-  return https().request(`/system-payment-bank/${id}`, Method.DELETE);
+  return https().request(`/system-payment-bank/${id}?_method=DELETE`, Method.POST);
 };

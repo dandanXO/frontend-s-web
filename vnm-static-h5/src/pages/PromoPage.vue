@@ -32,25 +32,81 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div
-                    class="promo-item"
-                    v-if="
-                      promo.promoType.toLowerCase().split(',').includes(tab.name) ||
-                      (tab.name === 'others' &&
-                        (promo.promoType.toLowerCase().split(',').includes('slot game') ||
-                          promo.promoType.toLowerCase().split(',').includes('welcome') ||
-                          promo.promoType.toLowerCase().split(',').includes('poker') ||
-                          promo.promoType.toLowerCase().split(',').includes('fish')))
-                    "
-                  >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
-                      <img :src="imgURL + promo.mobileImgUrl" />
+                      <div>
+                        <div class="promo-label">
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn
+                            :label="$t('lang.view_detail')"
+                            no-caps
+                            dense
+                            color="brightbtn"
+                            class="promo-item-btn"
+                          />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img :src="imgURL + promo.mobileImgUrl" />
+                        </div>
+                      </div>
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <img :src="imgURL + promo.mobileImgUrl" />
+                      <div>
+                        <div class="promo-label">
+                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                            {{ getPromoLabel(promo.labelType) }}
+                          </div>
+                          <div
+                            class="promo-item-date"
+                            v-if="parsedParam(promo.param).date"
+                            v-html="parsedParam(promo.param).date"
+                          />
+                        </div>
+                        <div class="promo-item-title">{{ promo.title }}</div>
+                        <div
+                          class="promo-item-deal"
+                          v-if="parsedParam(promo.param).sub"
+                          v-html="parsedParam(promo.param).sub"
+                        />
+                        <div>
+                          <q-btn
+                            :label="$t('lang.view_detail')"
+                            no-caps
+                            dense
+                            color="brightbtn"
+                            class="promo-item-btn"
+                          />
+                        </div>
+
+                        <div class="promo-item-side-img">
+                          <img :src="imgURL + promo.mobileImgUrl" />
+                        </div>
+                      </div>
+                      <!-- <div class="promo-img-wrapper"> -->
+                      <!-- <div class="promo-bg"> -->
+                      <!-- <img class="promo-content" src="../assets/images/promo/promo-item-bg.png" /> -->
+                      <!-- </div> -->
+                      <!-- </div> -->
                     </a>
                   </div>
                 </div>
@@ -59,7 +115,7 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <div class="banner-container" v-if="selectedPromo?.mobileBannerUrl">
+              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -67,6 +123,8 @@
                 />
               </div>
               <div class="inner">
+                <!-- <h2>{{ selectedPromo.title }}</h2> -->
+
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -166,11 +224,11 @@ export default defineComponent({
     const tabItems = [
 
       { name: "all", label: t("lang.type_all") },
-      { name: "esport", label: t("lang.type_esport") },
       { name: "sport", label: t("lang.type_sport") },
-      // {name: "slot game", label: '老虎机'},
-      // {name: "fish", label: '捕鱼'},
       { name: "live casino", label: t("lang.type_livecasino") },
+      {name: "slot game", label: t("lang.type_slot") },
+      // { name: "esport", label: t("lang.type_esport") },
+      // {name: "fish", label: '捕鱼'},
       { name: "others", label: t("lang.type_others") }
     ];
 
@@ -219,9 +277,9 @@ export default defineComponent({
 
       } else {
         // non extension
-        if (!store.token) {
-          isDisplayLogin.value = true;
-        } else {
+        // if (!store.token) {
+          // isDisplayLogin.value = true;
+        // } else {
 
           if (promo.redirectUrl.includes("page-vip")) {
             router.push("/account/vip?from=promo");
@@ -234,7 +292,7 @@ export default defineComponent({
             isPromoDetail.value = true;
             selectedPromo.value = promo;
           }
-        }
+        // }
       }
     };
 
@@ -316,17 +374,17 @@ export default defineComponent({
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
-          return "NEW 最新";
+          return "Mới nhất";
         case 1:
-          return "HOT 热门";
+          return "Hot";
         case 3:
-          return "RECOMMEND 推荐";
+          return "Đề xuất";
         case 4:
-          return "DAILY 日常";
+          return "Hàng ngày";
         case 5:
-          return "NEWBIE 新人";
+          return "Thành viên mới";
         case 6:
-          return "TIME 限时";
+          return "TIME Thời gian";
         default:
           return "";
       }
@@ -451,7 +509,7 @@ export default defineComponent({
           background-image: url(../assets/images/promo/promo-item-bg.png);
           background-size: 100% 100%;
           background-repeat: no-repeat;
-          // padding: 32px 24px 16px;
+          padding: 32px 24px 16px;
           position: relative;
           border-radius: 12px;
 
@@ -504,6 +562,7 @@ export default defineComponent({
             font-weight: bold;
             font-size: 1rem;
             max-width: 160px;
+            font-family: 'Roboto';
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -695,6 +754,13 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        h2 {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 5px auto 6px;
+          line-height: 20px;
+        }
 
         img {
           margin-bottom: 5px;

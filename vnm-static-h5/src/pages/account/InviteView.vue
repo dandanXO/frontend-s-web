@@ -1,55 +1,74 @@
 <template>
   <q-page class="share-container">
     <div class="personal-content-box">
+      <div class="qr-title">{{ $t("lang.share_invitefriends") }}</div>
       <div class="shadow-box">
-        <div class="qr-title">{{ $t("lang.share_promoshare") }}</div>
         <div class="title-top-line1">
-          <div class="top-line1-content">
-            {{ $t("lang.share_promodesc") }}
-          </div>
+          <div id="selfTgurl">{{ selfTgurl }}</div>
+          <q-btn @click="copyText(selfTgurl)" style="min-width: 110px">{{ $t("lang.share_copy") }}</q-btn>
         </div>
       </div>
 
-      <div class="shadow-box">
-        <div class="title-top-line2">
-          <div class="share-link-section">
-            <span class="qr-title">{{ $t("lang.share_sponsoredlinks") }}</span>
-            <div class="share-link-div">
-              <div id="selfTgurl">{{ selfTgurl }}</div>
-              <q-btn class="copy-btn common-sm-btn" no-caps @click="copyText(selfTgurl)">
-                {{ $t("lang.share_copy") }}
-              </q-btn>
-            </div>
-          </div>
-        </div>
-        <div class="qr-title">{{ $t("lang.share_qrcode") }}</div>
-        <div class="share-qr-div">
-          <VueQRCodeComponent size="200" id="qr-code" :text="qrCode" />
-        </div>
+      <div class="shadow-box-info">
+        <table border="0" cellpadding="10" cellspacing="0" style="width: 100%">
+          <tr class="box-header-row">
+            <td v-html="$t('lang.share_table_header_01')" />
+            <td v-html="$t('lang.share_table_header_02')" />
+            <td v-html="$t('lang.share_table_header_03')" />
+            <td v-html="$t('lang.share_table_header_04')" />
+          </tr>
+          <template v-if="referredData.length === 0">
+            <tr class="box-content-row">
+              <td colspan="4">
+                <div>
+                  <img
+                    src="../../assets/images/common/empty-data.png"
+                    style="display: block; width: 100px; margin: 20px auto 0"
+                  />
+                </div>
+                {{ $t("lang.share_table_content_empty") }}
+              </td>
+            </tr>
+          </template>
+
+          <template v-else>
+            <tr v-for="(item, i) in referredData" :key="i">
+              <td>{{ item.loginName }}</td>
+              <td>{{ item.regTime }}</td>
+              <td>{{ item.totalBet }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+          </template>
+        </table>
       </div>
 
-      <div class="share-qr-section">
-        <div class="share-info-div">
-          <div class="share-info-box">
-            <img class="user-sign" src="../../assets/images/account/share-total.png" />
-
-            <span>{{ $t("lang.share_accumulated_registration") }}</span>
-            <div class="total-info-div">
-              <span class="total-span" id="total-signup-no">{{ refTotalRegister }}</span>
-              {{ $t("lang.share_persons") }}
-            </div>
-          </div>
-
-          <div class="share-info-box">
-            <img class="topup-sign" src="../../assets/images/account/share-topup.png" />
-
-            <span>{{ $t("lang.share_accumulated_recharge") }}</span>
-            <div class="total-info-div">
-              <span class="total-span" id="total-topup-no">{{ refTotalDeposit }}</span>
-              {{ $t("lang.share_persons") }}
-            </div>
-          </div>
-        </div>
+      <div class="qr-title">{{ $t("lang.share_para_title") }}</div>
+      <div class="share-tnc">
+        <ol>
+          <li v-html="$t('lang.share_tnc_para_01')" />
+          <li v-html="$t('lang.share_tnc_para_02')" />
+          <li v-html="$t('lang.share_tnc_para_03')" />
+          <ol type="a">
+            <li v-html="$t('lang.share_tnc_para_03_a')" />
+            <ol type="i">
+              <li v-html="$t('lang.share_tnc_para_03_a_i')" />
+              <li v-html="$t('lang.share_tnc_para_03_a_ii')" />
+            </ol>
+            <li v-html="$t('lang.share_tnc_para_03_b')" />
+            <ol type="i">
+              <li v-html="$t('lang.share_tnc_para_03_b_i')" />
+              <li v-html="$t('lang.share_tnc_para_03_b_ii')" />
+              <li v-html="$t('lang.share_tnc_para_03_b_iii')" />
+            </ol>
+          </ol>
+          <li v-html="$t('lang.share_tnc_para_04')" />
+          <li v-html="$t('lang.share_tnc_para_05')" />
+          <li v-html="$t('lang.share_tnc_para_06')" />
+          <li v-html="$t('lang.share_tnc_para_07')" />
+          <li v-html="$t('lang.share_tnc_para_08')" />
+          <li v-html="$t('lang.share_tnc_para_09')" />
+          <li v-html="$t('lang.share_tnc_para_10')" />
+        </ol>
       </div>
     </div>
   </q-page>
@@ -61,18 +80,18 @@ import {userStore} from "src/stores";
 import {useQuasar, Platform} from "quasar";
 import {api} from "boot/axios"
 import {Clipboard} from '@capacitor/clipboard';
-
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ShareView",
   components: {
-    VueQRCodeComponent
+    // VueQRCodeComponent
   },
   setup() {
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
-
+    const { t } = useI18n();
     const refCode = ref("");
     const refTotalRegister = ref("");
     const refTotalDeposit = ref("");
@@ -90,12 +109,13 @@ export default defineComponent({
 
 
     const copyText = (text) => {
+      console.log("asdasdasd",text)
       copyToClipboard(text);
       setTimeout(() => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "复制成功！",
+          message: t('lang.share_copy_success'),
           icon: "check_circle_outline"
         });
       }, 100)
@@ -137,6 +157,8 @@ export default defineComponent({
       }
     }
 
+    const referredData = ref([])
+
     onMounted(() => {
       api.get("/session/member/referralCode").then((res) => {
         // console.log(reminderForm)
@@ -146,11 +168,18 @@ export default defineComponent({
         }
       });
 
-      api.get("/session/member/referStats").then((res) => {
+      // api.get("/session/member/referStats").then((res) => {
+      //   // console.log(reminderForm)
+      //   if (res.code === 0) {
+      //     refTotalRegister.value = res.data.totalRegister;
+      //     refTotalDeposit.value = res.data.totalDeposit;
+      //   }
+      // });
+
+      api.get("/session/vnm/referred").then((res) => {
         // console.log(reminderForm)
         if (res.code === 0) {
-          refTotalRegister.value = res.data.totalRegister;
-          refTotalDeposit.value = res.data.totalDeposit;
+          referredData.value = res.data;
         }
       });
 
@@ -162,17 +191,53 @@ export default defineComponent({
       qrCode,
       refTotalRegister,
       refTotalDeposit,
-      copyText
+      copyText,
+      referredData
     }
   }
 });
 </script>
+
 <style lang="scss">
 .share-container {
+  .share-tnc {
+    ol {
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 10px;
+        color: #9aa8cb;
+      }
+    }
+  }
+
+  .shadow-box-info {
+    background: $white;
+    border-radius: 10px;
+    box-shadow: $shadow-bg;
+    margin-bottom: 15px;
+
+    .box-header-row {
+      background: #e7f3ff;
+
+      td {
+        font-weight: bold;
+      }
+    }
+
+    .box-content-row {
+      text-align: center;
+      td {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+    }
+  }
+
   .shadow-box {
     background: $white;
     border-radius: 10px;
-    padding: 15px 12px 24px;
+    padding: 12px;
     box-shadow: $shadow-bg;
     margin-bottom: 15px;
   }
@@ -190,7 +255,7 @@ export default defineComponent({
 
     .top-line1-content {
       line-height: 26px;
-      text-align: center;
+      // text-align: center;
       font-size: 16px;
     }
 
@@ -213,7 +278,7 @@ export default defineComponent({
   }
 
   .qr-title {
-    text-align: center;
+    text-align: left;
     font-size: 1.3rem;
     font-weight: bold;
     margin: 0px auto 10px;
@@ -221,11 +286,11 @@ export default defineComponent({
   }
 
   .personal-content-box .title-top-line1 {
-    margin-top: 20px;
+    // margin-top: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 10px;
-    align-items: baseline;
+    align-items: center;
     // padding-bottom: 30px;
   }
 
@@ -308,8 +373,9 @@ export default defineComponent({
     color: $primary;
     font-size: 1.2rem;
     display: block;
-    margin-bottom: 15px;
+    // margin-bottom: 15px;
     border: 1px solid #aaa;
+    word-break: break-all;
   }
 
   #qr-code {

@@ -5,7 +5,7 @@
     <div class="account-title-container" v-else>
       <span class="account-title">{{ name }}</span>
     </div>
-    <div class="node-content payment-method-wrapper" :style="gridColAmount">
+    <div class="node-content payment-method-wrapper">
       <div
         class="node-item payment-method-item"
         :id="level + '_' + i"
@@ -195,10 +195,11 @@ $node-color: #468cff;
 
 .payment-method-wrapper {
   // display: flex;
-  grid-gap: 15px;
+  grid-gap: 20px;
   display: grid;
   margin-bottom: 15px;
   width: 100%;
+  grid-template-columns: repeat(5, 1fr);
 
   .payment-method-item {
     text-align: center;
@@ -294,10 +295,10 @@ $node-color: #468cff;
       .node-text {
         display: flex;
         gap: 5px;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         & > div {
-          font-size: 12px;
+          font-size: 10.5px;
           color: #000;
         }
         img {
@@ -334,7 +335,7 @@ $node-color: #468cff;
 
     .node-text {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       // gap: 5px;
       flex-direction: column;
@@ -346,7 +347,11 @@ $node-color: #468cff;
 
       .txt-title {
         // font-size: 11px !important;
-        white-space: nowrap;
+        // white-space: nowrap;
+      }
+
+      .overflow {
+        white-space: wrap;
       }
 
       .node-txt-img {
@@ -355,8 +360,8 @@ $node-color: #468cff;
         align-items: center;
         justify-content: center;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
-        width: 5.5rem;
-        height: 5rem;
+        width: 60px;
+        height: 60px;
         margin-bottom: 5px;
         border: 2px solid $secondary;
         border-radius: 10px;
@@ -364,7 +369,7 @@ $node-color: #468cff;
         img {
           background-color: transparent;
           margin-bottom: 0;
-          padding: 12px 14px;
+          padding: 5px;
           width: 100%;
           height: auto;
         }
@@ -425,29 +430,28 @@ $node-color: #468cff;
   }
 }
 
-@media (max-width: 375px) {
-  .node .node-content .node-text .node-txt-img {
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-  .node .node-item .promo img {
-    max-width: 50px;
-    width: 50px;
-  }
-  .node .node-item .promo {
-    right: -10px;
-    top: -10px;
-  }
-  .node .node-content .node-text .node-txt-img img {
-    padding: 5px 10px;
-  }
-}
-
 .node-item.payment-method-item {
   pointer-events: auto;
 }
 
 .node-group {
   pointer-events: none;
+}
+
+.node-wrapper > .node > .payment-method-wrapper .node-item.payment-method-item .node-text .overflow.txt-title {
+  white-space: nowrap !important;
+}
+
+@media (max-width: 420px) {
+  .node-txt-img {
+    width: 54px !important;
+    height: 54px !important;
+  }
+}
+
+@media (max-width: 355px) {
+  .payment-method-wrapper {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 </style>

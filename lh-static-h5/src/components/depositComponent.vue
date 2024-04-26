@@ -85,11 +85,7 @@
         </q-select>
 
         <div class="q-mt-sm q-mb-sm text-grey text-bold ">
-          最低金额:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
-          <br />
-          最高金额:
-          {{
+          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{
             activeMethod.depositMax
               ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
               : " "
@@ -297,7 +293,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
-  (val) => (val && /^\d+$/.test(val)) || '存款金额不能带有小数',
+  (val) => ((val && /^\d+$/.test(val)) || val && isUSDT.value) || '存款金额不能带有小数',
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
@@ -375,6 +371,10 @@ async function loadPrivilege(val) {
           } else {
             unselectedPrivileges.value.push(p);
             hasPrivilege.value = true;
+
+            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === "") {
+              selectedPrivilege.value = p;
+            }
           }
         }
       });
@@ -757,7 +757,7 @@ onMounted(() => {
 }
 
 .q-select__dialog .q-field__control {
-  background: #4fb2ff !important;
+  background: #fff !important;
 }
 
 .deposit-field {
@@ -774,6 +774,9 @@ onMounted(() => {
 }
 
 .deposit-selection {
+  &.q-field--labeled{
+    color: #fff;
+  }
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;

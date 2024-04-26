@@ -1,8 +1,12 @@
 const axios = require('axios')
 
-export const getVerificationImage = async () => {
+export const getVerificationImage = async (type = 0) => {
+  var url = 'https://sumbtf.tebarncale.com/validator/img/1/200/100';
+  if (type === 1) {
+    url = "https://sumbtf.tebarncale.com/validator/img/1/200/100/1"
+  }
+
   return await axios.get(
-    'https://sumbtf.tebarncale.com/validator/img/1/200/100'
-    // 'http://192.168.79.11:8091/validator/img/1/2/400/200/0/0'
+    url
   )
 }

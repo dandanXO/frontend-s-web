@@ -1,3 +1,6 @@
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+
 export const MAIN = "MAIN";
 
 export const getRndInteger = (min, max) => {
@@ -19,6 +22,34 @@ export const getMobileOS = () => {
 };
 export const getDevice = () => {
   return isMobile() ? "MOBILE" : "WEB";
+};
+
+export const displayBalance = (balance) => {
+
+  let numberItem = balance.toString();
+
+  const numberSplits= numberItem.split(".");
+  let numberStr= numberSplits[0];
+  let numberDec= numberSplits[1] ?? "";
+
+  // Initialize an empty string to store the formatted number
+  let formattedNumber = '';
+
+  // Iterate through the string in reverse order
+  for (let i = numberStr.length - 1, j = 0; i >= 0; i--, j++) {
+    // Append the character to the formatted number string
+    formattedNumber = numberStr[i] + formattedNumber;
+
+    // Add a comma after every third digit, except for the last digit
+    if ((j + 1) % 3 === 0 && j !== numberStr.length - 1) {
+      formattedNumber = ',' + formattedNumber;
+    }
+  }
+
+  // if(numberDec){
+  //   return formattedNumber + "." + numberDec;
+  // }
+  return formattedNumber;
 };
 
 export function isEmpty(obj) {
@@ -53,3 +84,29 @@ export const getTimeout = key => {
 }
 
 export const getImageUrl = srcPath => require(`/src/assets/${srcPath}`)
+
+
+export const getVisitorId = async () => {
+  const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+
+  const fp = await getData({ ignoreCache: true });
+
+  // console.log("VisitorInfo");
+  // console.log(fp);
+  if (fp?.visitorId) {
+    localStorage.setItem("VISITOR_ID", fp.visitorId);
+    return fp?.visitorId;
+  } else {
+    const fpPromise = FingerprintJS.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const { timezone, ...allComponents } = result.components;
+    // console.log(allComponents);
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    console.log(timezone);
+    console.log("Use Normal Fingerprint");
+    console.log(sidParam);
+    localStorage.setItem("VISITOR_ID", sidParam);
+    return sidParam;
+  }
+};

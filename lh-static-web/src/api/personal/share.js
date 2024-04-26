@@ -10,3 +10,7 @@ export function getInviteFriendListCount() {
 export function getReferredBonus() {
   return server.REST.get(`session/referredBonus/count`, {});
 }
+
+export function getSummonListCount() {
+  return server.EVENT.get(`/member-summon/get-total-summon`, {});
+}

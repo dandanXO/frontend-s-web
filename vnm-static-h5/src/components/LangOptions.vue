@@ -27,10 +27,11 @@ const { setLanguage } = i18nStore();
 watch(languageVal, (newVal) => {
   setLanguage(languageVal.value);
 });
+
 const langOptions = [
   {
     label: "Vietnamese",
-    value: "vn",
+    value: "vi",
     icon: "iconvn"
   },
   {
@@ -72,6 +73,18 @@ const langOptions = [
     min-height: 30px;
     height: 30px;
     padding: 0;
+  }
+}
+</style>
+
+<style lang="scss">
+.q-select__dialog {
+  label {
+    img {
+      width: 30px;
+      height: 30px;
+    }
+    display: none;
   }
 }
 </style>

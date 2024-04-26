@@ -99,7 +99,7 @@
             style="width: 350px"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.desktopImage')" prop="desktopImageUrl">
+        <el-form-item :label="t('fields.desktopBanner')" prop="desktopImageUrl">
           <el-row :gutter="10">
             <el-col v-if="form.desktopImageUrl" :span="18" style="width: 250px">
               <el-image
@@ -122,7 +122,7 @@
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item :label="t('fields.mobileImage')" prop="mobileImageUrl">
+        <el-form-item :label="t('fields.mobileBanner')" prop="mobileImageUrl">
           <el-row :gutter="10">
             <el-col v-if="form.mobileImageUrl" :span="18" style="width: 250px; max-height: 250px">
               <el-image
@@ -457,6 +457,8 @@ const uiControl = reactive({
     { key: 7, displayName: 'HOMEPROMO', value: 'HOMEPROMO' },
     { key: 8, displayName: 'HOMEPOP', value: 'HOMEPOP' },
     { key: 9, displayName: 'CENTERPROMO', value: 'CENTERPROMO' },
+    { key: 10, displayName: 'LOGIN', value: 'LOGIN' },
+    { key: 11, displayName: 'REGISTER', value: 'REGISTER' },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
@@ -589,9 +591,9 @@ function selectImage(item) {
 async function browseImage(type) {
   loadSiteImage(type)
   if (type === 'DESKTOP') {
-    uiControl.imageSelectionTitle = t('fields.desktopImage')
+    uiControl.imageSelectionTitle = t('fields.desktopBanner')
   } else {
-    uiControl.imageSelectionTitle = t('fields.mobileImage')
+    uiControl.imageSelectionTitle = t('fields.mobileBanner')
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true

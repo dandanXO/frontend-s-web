@@ -16,6 +16,6 @@ import { cockfightPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("cockfight");
 const platformGameType = ref("COCKFIGHT");
-const platformName = ref("cockfight");
+const platformName = ('cockfight');
 const platformPattern = ref(true);
 </script>

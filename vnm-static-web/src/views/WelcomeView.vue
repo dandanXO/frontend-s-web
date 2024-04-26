@@ -2,14 +2,19 @@
     <div class="welcome-page-container">
         <div class="center">
             <div class="logo">
-                <img src="@/assets/home/auth/welcome-congrats.png" />
+                <img src="../assets/home/auth/welcome-header.png">
+                {{ $t('welcome.congrats') }}
             </div>
             <div class="welcome-slides">
-                <div class="welcome-slide card-bg">
-                    <div class="slide-title">完美兼容安全设备</div>
-                    <img class="banner" src="../assets/home/auth/welcome-4-types-icon.png" />
-                    <div>雷火用引领市场的卓越技术，自主研发了全套 终端应用，让您畅享Web、H5、更有iOS、Android原生App,流畅游戏，让您尽在掌握！贴心服务，7x24在线客服全年伴您左右。</div>
-                    <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
+                <div class="welcome-slide first card-bg">
+                    <div class="slide-title">{{ $t('welcome.firstSlide') }}</div>
+                    <div class="slide-content">{{ $t('welcome.firstSlideContent') }}</div>
+                    <div class="slide-qr">
+                        <VueQRCodeComponent :size="100" :text="ui.downloadUrl" />
+                    </div>
+                    
+                    <div class="bold-content">{{ $t('welcome.firstSlideSub') }}</div>
+                    <!-- <img class="supported-platforms-img" src="../assets/home/auth/welcome-supported-platforms.png" />
                     <div class="qr-codes">
                         <template v-for="(det, idx) in platforms" :key="idx">
                             <div class="platform-qr-code">
@@ -17,33 +22,34 @@
                                 <div class="label-desc-wrapper">
                                     <span class="label">{{ det.name }}</span>
                                     <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                                    <span v-else>手机用户扫码下载</span>
+                                    <!- <span v-else>{{ $t('welcome.mobileUsers') }}</span> ->
                                 </div>
                             </div>
                         </template>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="welcome-slide center-slide card-bg">
-                    <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" />
-                    <div class="slide-title">注册后即刻存款的玩家高达</div>
-                    <img class="banner" src="../assets/home/auth/welcome-84-percent-icon.png" />
-                    <div class="grey-card-bg">
-                        <div class="list">您的首次存款，将激活以下优惠：</div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育/真人/棋牌」 <span class="highlighted">首存即送68% </span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「完成新手任务」 <span class="highlighted">领取228雷火币！</span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「每日全场返水」 <span class="highlighted">最高可返2.0% 无上限！</span></div>
-                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>「电竞/体育」 <span class="highlighted">每日保险投注 让您稳赚不赔！</span></div>
-
-                        
+                    <!-- <img class="ribbon" src="../assets/home/auth/welcome-slide-ribbon.png" /> -->
+                    <div class="slide-title">{{ $t('welcome.secondSlide') }}</div>
+                    <div class="slide-content sec">{{ $t('welcome.secondSlideContent') }}</div>
+                    <img class="banner" style="margin: -30px 0px; width: 320px;" src="../assets/home/auth/hundred.png" />
+                    <!-- <div class="grey-card-bg">
+                        <div class="list">{{ $t('welcome.yourFirstDeposit') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.firstDepositBonus') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.completeBeginnerTasks') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyCashback') }}</div>
+                        <div class="list white-space-nowrap"><img src="../assets/home/auth/welcome-slide-bullet-icon.png"/>{{ $t('welcome.dailyInsuranceBets') }}</div>
                     </div>
-                    <router-link to="/center/deposit" class="blue-bg deposit-btn">立即存款</router-link>
+                    -->
+                    <router-link to="/center/deposit" class="deposit-btn">{{ $t('welcome.depositNow') }}</router-link> 
                 </div>
                 <div class="welcome-slide card-bg">
-                    <div class="slide-title">最全的热门电竞赛事</div>
-                    <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" />
-                    <img class="hot-games-img" src="../assets/home/auth/welcome-hot-games.png" />
-                    <div style="margin:15px 10px 5px;">...等多款游戏</div>
-                    <router-link to="/esports"  class="blue-bg proceed-btn">立即前往</router-link>
+                    <div class="slide-title">{{ $t('welcome.thirdSlide') }}</div>
+                    <div class="slide-content">{{ $t('welcome.thirdSlideContent') }}</div>
+                    <!-- <img class="banner" src="../assets/home/auth/welcome-17-types-icon.png" /> -->
+                    <img class="hot-games-img" src="../assets/home/auth/vnm-welcome-hot-games.png" />
+                    <!-- <div style="margin:15px 10px 5px;">...{{ $t('welcome.moreGames') }}</div>
+                    <router-link to="/esports"  class="blue-bg proceed-btn">{{ $t('welcome.proceedNow') }}</router-link> -->
                 </div>
             </div>
         </div>
@@ -51,22 +57,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component';
-
-const platforms = ref([
-    {
-    code: "QZ",
-    name: "全站APP",
-    link: "https://m.e8386.com",
-    },
-    {
-    code: "DJ",
-    name: "电竞APP",
-    link: "https://m.e8386.com",
-    }
-]);
-
+import { useI18n } from "vue-i18n";
+import { uiStore } from "@/store/ui";
+const { t } = useI18n();
+const ui = uiStore()
 </script>
 
 <style lang="scss" scoped>
@@ -137,6 +132,10 @@ const platforms = ref([
     width: 90%;
     min-height: 45px;
     margin: 30px 0px 10px;
+    font-weight: 500;
+    background: url(../assets/home/auth/title-bg-blue.png)no-repeat center center;
+    background-size: contain;
+    color: #ffffff;
 }
 
 .proceed-btn {
@@ -153,22 +152,56 @@ const platforms = ref([
     grid-template-columns: 1fr 1fr 1fr;
     gap: 50px;
     align-items: center;
-    font-family: 'PingFang SC';
-    font-weight: bold;
-
     .welcome-slide {
         display: flex;
         flex-direction: column;
-        width: 350px;
+        width: 420px;
         justify-content: flex-start;
         align-items: center;
         color: #7A80A1;
+        background: #FFFFFFCC;
         position: relative;
         padding: 25px;
+        box-shadow: 0px 0px 10px 0px #0000001A;
+        &.first{
+            .slide-qr {
+                background: url(../assets/home/auth/welcome-qrbg.png)no-repeat center center;
+                
+    width: 150px;
+    height: 155px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    margin: 25px auto;
+            }
+            .slide-content {
+                width: 75%;
+            }
+        }
 
         .slide-title {
-            font-weight: 700;
-            font-size: 18px;
+            font-weight: 900;
+            font-size: 24px;
+            color: #424F72;
+        }
+        .slide-content {
+            text-align: center;
+            font-size: 15px;
+            margin: 10px auto;
+            color: #7A80A1;
+        }
+        .slide-images {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+        }
+        .bold-content {
+            font-weight: 900;
+            color: #7A80A1;
+            font-size: 17px;
         }
 
         .list {
@@ -176,6 +209,7 @@ const platforms = ref([
             align-items: center;
             gap: 10px;
             padding: 5px 0px;
+            white-space: pre-wrap;
         }
 
         .banner {
@@ -187,7 +221,7 @@ const platforms = ref([
         }
 
         &.center-slide {
-            width: 470px;
+            // width: 470px;
 
             .banner {
                 width: 100%;
@@ -220,20 +254,35 @@ const platforms = ref([
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: url("@/assets/home/auth/login-page-bg.jpg") no-repeat center center;
+    background: url("../assets/home/auth/welcome-bg.png") no-repeat center center;
     background-size: cover;
     display: flex;
+    .logo {
+        font-size: 50px;
+        font-weight: bold;
+        color: #ffffff;
+        text-shadow: 5px 5px 25px #5894ff;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            
+    max-width: 365px;
+    margin: -120px 0;
+        }
+    }
 }
 
 .center {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 30px;
     margin: 5% auto;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
 }
 
 .logo img {

@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+  align-center
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"
@@ -7,7 +8,7 @@
     class="notice-modal"
   >
     <div class="notice-header">
-      公告列表
+      {{ $t('home.announcementList') }}
       <div @click="isStationNotice = false">
         <img src="../../assets//home/announcement/close-btn.png" />
       </div>
@@ -137,7 +138,6 @@ onMounted(() => {
 <style scoped lang="scss">
 .notice-header {
   color: #468CFF;
-  font-family: "Inter Bold";
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
@@ -154,7 +154,6 @@ onMounted(() => {
 
 .announcement-content {
   color: #7A80A1;
-  font-family: Inter;
   font-size: 14px;
   font-weight: 500;
   line-height: 30px;
@@ -180,7 +179,7 @@ onMounted(() => {
   width: 80%;
   margin: 0 auto;
   max-width: 1350px;
-
+  overflow: hidden;
   .top-bar-inner {
     max-width: $maxwidth;
     width: 100%;
@@ -217,6 +216,7 @@ onMounted(() => {
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;
+            height: 16px;
           }
         }
       }

@@ -16,6 +16,10 @@ export function loadPromoBanner(category) {
     }
   });
 }
+export function loadHomePopup() {
+  return server.REST.get("/member/ads-popout");
+}
+
 export function claimBonusItem(item) {
   return server.EVENT.put(`/bonus/claim/${item}`);
 }
@@ -28,10 +32,10 @@ export function welcomeTaskClaimBonus(item) {
   return server.EVENT.put(`/welcomeTask/claim/${item}`);
 }
 
-export function submitLuckyNumber(item) {
+export function submitLuckyNumber(item, promoCode) {
   return server.EVENT.post(`/privi/lotteryNumber`, {
     number: item,
-    promoCode: "lh1-lottery"
+    promoCode: promoCode
   });
 }
 
@@ -176,8 +180,21 @@ export function signIn() {
 export function canRedeem() {
   return server.EVENT.get("/vip-upgrade/lh/canRedeem");
 }
+export function canRedeemWelcome() {
+  return server.EVENT.get("/vip-welcome/canRedeem");
+}
+export function canRedeemMonthly(promoCode) {
+  return server.EVENT.get(`/privi/vip/canRedeem?promoCode=${promoCode}`);
+}
+
 export function claim(level) {
   return server.EVENT.post("/vip-upgrade/lh/claim", { vipLevel: level });
+}
+export function claimMonthly() {
+  return server.EVENT.put("/bonus/claim/vnm-vip-monthly");
+}
+export function claimWelcome(level) {
+  return server.EVENT.post("/vip-welcome/claim", { vipLevel: level });
 }
 
 export function getQuestionnaireList() {
@@ -213,4 +230,32 @@ export function claimDailyRainItem(item) {
 }
 export function getDailyRainListing(item) {
   return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
+}
+
+// penny bank
+export function piggyBankGetLottery() {
+  return server.EVENT.post('/piggy-bank/getLottery');
+}
+
+export function piggyBankClaim() {
+  return server.EVENT.put('/piggy-bank/claim');
+}
+export function getBonusPiggyCashback() {
+  return server.EVENT.get('/piggy-bank/amount');
+}
+
+// slot netloss
+export function bonusClaimSlotsRefund() {
+  return server.EVENT.put('/bonus/claim/vnm-slots-refund');
+}
+export function getBonusSlotsCashback() {
+  return server.EVENT.get('/vnm-refund/slots');
+}
+
+// poker cashback
+export function bonusClaimPokerRefund() {
+  return server.EVENT.put('/bonus/claim/vnm-poker-refund');
+}
+export function getBonusPokerCashback() {
+  return server.EVENT.get('/vnm-refund/poker');
 }

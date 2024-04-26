@@ -153,9 +153,10 @@ import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
 import liff from "@line/liff";
+import { useI18n } from "vue-i18n";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
-
+const { t } = useI18n();
 const store = userStore();
 const { token } = storeToRefs(store);
 
@@ -303,7 +304,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       }
 
-      $q.loading.show({ message: "加载中..." });
+      $q.loading.show({ message: t("lang.loading") });
 
       if (way !== "H5") {
         //Change to open at same page.
@@ -329,12 +330,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             })
             .catch((err) => {
               $q.loading.hide();
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: err.message,
-                icon: "report_problem"
-              });
+              // $q.notify({
+              //   color: "negative",
+              //   position: "top",
+              //   message: err.message,
+              //   icon: "report_problem"
+              // });
             });
           return;
         }
@@ -361,12 +362,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: err.message,
+            //   icon: "report_problem"
+            // });
           });
       } else {
         if (platformCode === "platformType") {
@@ -385,6 +386,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           return;
         }
+      // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
         api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
             params: {
@@ -400,12 +402,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             let srcData = response.data;
 
             if (platformCode === "PT") {
-              if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+              if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
                 const newWin = window.open(`/`, "_self");
-                if(newWin){
+                if (newWin) {
                   newWin.location.href = response.data;
                 }
-              }else{
+              } else {
                 window.open(response.data, "_blank");
               }
             } else if (platformCode === "PG") {
@@ -427,12 +429,12 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .catch((err) => {
             $q.loading.hide();
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: err.message,
-              icon: "report_problem"
-            });
+            // $q.notify({
+            //   color: "negative",
+            //   position: "top",
+            //   message: err.message,
+            //   icon: "report_problem"
+            // });
           });
       }
     } else {
