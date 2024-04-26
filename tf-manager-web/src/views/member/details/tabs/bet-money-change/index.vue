@@ -90,7 +90,7 @@
           <template #default="scope">
             <el-tag v-if="scope.row.betStatus === 'SETTLE'" size="mini" type="success">{{ t('betStatus.SETTLED') }}</el-tag>
             <el-tag v-else-if="scope.row.betStatus === 'BET'" size="mini" type="secondary">{{ t('betStatus.BET') }}</el-tag>
-            <el-tag v-else-if="scope.row.betStatus === 'CANCEL'" size="mini" type="danger">{{ t('betStatus.CANCEL') }}</el-tag>
+            <el-tag v-else-if="scope.row.betStatus === 'CANCEL' || scope.row.betStatus === 'ROLLBACK'" size="mini" type="danger">{{ t('betStatus.CANCEL') }}</el-tag>
             <el-tag v-else size="mini" type="warning">{{ t('betStatus.UNSETTLED') }}</el-tag>
           </template>
         </el-table-column>
