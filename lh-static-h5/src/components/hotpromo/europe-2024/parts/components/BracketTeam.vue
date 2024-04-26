@@ -15,11 +15,17 @@ defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 7px;
+
+  img {
+    max-width: 36px !important;
+    margin-bottom: 0 !important;
+  }
+
   .bracket-team__name {
     font-family: Microsoft YaHei UI;
-    font-size: 32px;
-    line-height: 42.56px;
+    font-size: 1rem;
+    line-height: 1.3rem;
     letter-spacing: 0.12em;
   }
 }

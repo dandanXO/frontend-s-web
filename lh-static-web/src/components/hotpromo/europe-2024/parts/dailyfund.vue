@@ -60,7 +60,7 @@
         <button v-if="false" class="bracket-team-select__button">选择</button>
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">进行中</div>
+        <div class="bracket-info__status finished">已结束</div>
         <div class="bracket-info__info-wrapper">
           <div class="bracket-info__info-wrapper-date">6月15日 上午3:00</div>
           <div class="bracket-info__info-wrapper-contest">欧洲杯 半决赛</div>
@@ -133,7 +133,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
   width: 0;
 }
 
-.fund-alert {
+.note {
   font-family: Microsoft YaHei UI;
   font-size: 24px;
   font-weight: 400;
@@ -296,6 +296,10 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
       line-height: 38px;
       letter-spacing: 0.12em;
       text-align: center;
+
+      &.finished {
+        background: linear-gradient(180deg, #f99500 0%, #b34b00 100%);
+      }
     }
 
     .bracket-info__info-wrapper {
@@ -319,6 +323,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
         font-size: 32px;
         line-height: 42.56px;
         letter-spacing: 0.12em;
+        color: #ffffff99;
       }
     }
   }
