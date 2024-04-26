@@ -1596,6 +1596,8 @@ export default {
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
+    'Vietnam Lottery Record List': 'บันทึกรายการหวย',
+    'Vietnam Lottery Result List': 'บันทึกการผลรางวัลหวย',
     'VIP Rebate Record': 'บันทึกรีเบทวีไอพี',
     'Bet Rebate Record': 'บันทึกการคืนเงินส่วนลดจากการพนัน',
     'Refer Friend': 'บันทึกแนะนำเพื่อน',

@@ -12,13 +12,27 @@
           :disabled-date="disabledDate"
           :editable="false"
         />
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadResults()">
+        <el-button
+          style="margin-left: 20px"
+          icon="el-icon-search"
+          size="mini"
+          type="success"
+          @click="loadResults()"
+        >
           {{ t('fields.search') }}
         </el-button>
-        <el-button size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button size="mini" type="warning" @click="resetQuery()">
+          {{ t('fields.reset') }}
+        </el-button>
       </div>
       <div class="btn-group">
-        <el-button icon="el-icon-plus" size="mini" type="primary" v-permission="['sys:lottery:result:add']" @click="showDialog()">
+        <el-button
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          v-permission="['sys:vnm:lottery:result:add']"
+          @click="showDialog()"
+        >
           {{ t('fields.add') }}
         </el-button>
       </div>
@@ -30,8 +44,20 @@
         </div>
       </template>
 
-      <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="580px">
-        <el-form ref="lotteryForm" :model="form" :rules="formRules" :inline="true" size="small" label-width="150px">
+      <el-dialog
+        :title="uiControl.dialogTitle"
+        v-model="uiControl.dialogVisible"
+        append-to-body
+        width="580px"
+      >
+        <el-form
+          ref="lotteryForm"
+          :model="form"
+          :rules="formRules"
+          :inline="true"
+          size="small"
+          label-width="150px"
+        >
           <el-form-item :label="t('fields.resultDate')" prop="resultTime">
             <el-date-picker
               v-model="form.resultTime"
@@ -46,147 +72,176 @@
             />
           </el-form-item>
           <el-form-item :label="t('fields.resultNumber')" prop="number">
-            <el-input v-model="form.number" style="width: 350px;" @keypress="restrictInput" />
+            <el-input
+              v-model="form.number"
+              style="width: 350px;"
+              @keypress="restrictInput"
+            />
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-            <el-button type="primary" @click="addResult">{{ t('fields.confirm') }}</el-button>
+            <el-button @click="uiControl.dialogVisible = false">
+              {{ t('fields.cancel') }}
+            </el-button>
+            <el-button type="primary" @click="addResult">
+              {{ t('fields.confirm') }}
+            </el-button>
           </div>
         </el-form>
       </el-dialog>
 
-      <el-table :data="page.records" ref="table"
-                v-loading="page.loading"
-                row-key="id"
-                size="mini"
-                :resizable="true"
-                highlight-current-row
-                :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-                :empty-text="t('fields.noData')"
+      <el-table
+        :data="page.records"
+        ref="table"
+        v-loading="page.loading"
+        row-key="id"
+        size="mini"
+        :resizable="true"
+        highlight-current-row
+        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="number" :label="t('fields.resultNumber')" min-width="150">
+        <el-table-column
+          prop="number"
+          :label="t('fields.resultNumber')"
+          min-width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.number === null">-</span>
             <span v-if="scope.row.number !== null">{{ scope.row.number }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="resultTime" :label="t('fields.resultDate')" min-width="150">
+        <el-table-column
+          prop="resultTime"
+          :label="t('fields.resultDate')"
+          min-width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.resultTime === null">-</span>
-            <span v-if="scope.row.resultTime !== null">{{ scope.row.resultTime }}</span>
+            <span v-if="scope.row.resultTime !== null">
+              {{ scope.row.resultTime }}
+            </span>
           </template>
         </el-table-column>
-        <el-table-column prop="winners" :label="t('fields.noOfWinners')" min-width="150">
+        <el-table-column
+          prop="winners"
+          :label="t('fields.noOfWinners')"
+          min-width="150"
+        >
           <template #default="scope">
             <span v-if="scope.row.winners === null">0</span>
-            <span v-if="scope.row.winners !== null">{{ scope.row.winners }}</span>
+            <span v-if="scope.row.winners !== null">
+              {{ scope.row.winners }}
+            </span>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="pagination"
-                     @current-change="changePage"
-                     layout="prev, pager, next"
-                     :page-size="request.size"
-                     :page-count="page.pages"
-                     :current-page="request.current"
+      <el-pagination
+        class="pagination"
+        @current-change="changePage"
+        layout="prev, pager, next"
+        :page-size="request.size"
+        :page-count="page.pages"
+        :current-page="request.current"
       />
     </el-card>
   </div>
 </template>
 
 <script setup>
+import { onMounted, reactive, ref } from 'vue'
+import moment from 'moment'
+import { ElMessage } from 'element-plus'
+import { required } from '../../../utils/validate'
+import {
+  getLotteryResults,
+  lotteryResult,
+} from '../../../api/privilege-lottery'
+import { useI18n } from 'vue-i18n'
 
-import { onMounted, reactive, ref } from "vue";
-import moment from 'moment';
-import { ElMessage } from "element-plus";
-import { required } from "../../../utils/validate";
-import { getLotteryResults, lotteryResult } from "../../../api/privilege-lottery";
-import { useI18n } from "vue-i18n";
-
-const { t } = useI18n();
-const lotteryForm = ref(null);
+const { t } = useI18n()
+const lotteryForm = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
-  dialogTitle: t('fields.addLotteryResult')
-});
+  dialogTitle: t('fields.addLotteryResult'),
+})
 
-const startDate = convertDate(new Date());
+const startDate = convertDate(new Date())
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD');
+  return moment(date).format('YYYY-MM-DD')
 }
 
 function disabledDate(time) {
-  return time.getTime() > new Date().getTime();
+  return time.getTime() > new Date().getTime()
 }
 
 const page = reactive({
   pages: 0,
   records: [],
-  loading: false
-});
+  loading: false,
+})
 
 const request = reactive({
   size: 30,
   current: 1,
   resultTime: null,
   affiliateCode: null,
-  siteId: -1,
-});
+  siteId: 8,
+})
 
 const form = reactive({
   resultTime: null,
   number: null,
-  siteId: -1,
-});
+  siteId: 8,
+})
 
 const formRules = reactive({
   resultTime: [required(t('message.validateResultDateRequired'))],
   number: [required(t('message.validateResultNumber'))],
-});
+})
 
 function resetQuery() {
-  request.resultTime = null;
+  request.resultTime = null
 }
 
 async function loadResults() {
-  page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
+  page.loading = true
+  const requestCopy = { ...request }
+  const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
     if (value) {
-      query[key] = value;
+      query[key] = value
     }
-  });
-  const { data: ret } = await getLotteryResults(query);
-  page.pages = ret.pages;
-  page.records = ret.records;
-  page.loading = false;
+  })
+  const { data: ret } = await getLotteryResults(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.loading = false
 }
 
 function changePage(page) {
   if (request.current >= 1) {
-    request.current = page;
-    loadResults();
+    request.current = page
+    loadResults()
   }
 }
 
 function showDialog(type) {
   if (lotteryForm.value) {
-    lotteryForm.value.resetFields();
+    lotteryForm.value.resetFields()
   }
-  form.resultTime = startDate;
-  uiControl.dialogVisible = true;
+  form.resultTime = startDate
+  uiControl.dialogVisible = true
 }
 
 function addResult() {
-  lotteryForm.value.validate(async (valid) => {
+  lotteryForm.value.validate(async valid => {
     if (valid) {
-      await lotteryResult(form);
-      uiControl.dialogVisible = false;
-      await loadResults();
-      ElMessage({ message: t('message.addSuccess'), type: "success" });
+      await lotteryResult(form)
+      uiControl.dialogVisible = false
+      await loadResults()
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
     }
-  });
+  })
 }
 
 function restrictInput(event) {
@@ -196,13 +251,13 @@ function restrictInput(event) {
   }
 
   if (form.number !== null && form.number.toString().length > 2) {
-    event.preventDefault();
+    event.preventDefault()
   }
 }
 
 onMounted(() => {
-  loadResults();
-});
+  loadResults()
+})
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
