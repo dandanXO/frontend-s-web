@@ -2,6 +2,7 @@ export default {
   common: {
     title: 'TF Dashboard',
     logout: 'Logout',
+    welcome_system: "Welcome to Admin System",
     changePassword: 'Change Password',
     status: {
       OPEN: 'Open',

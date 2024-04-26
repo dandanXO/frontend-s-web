@@ -2,6 +2,7 @@ export default {
   common: {
     title: 'TF仪表板',
     logout: '登出',
+    welcome_system: "欢迎来到后台系统",
     changePassword: '更换密码',
     status: {
       OPEN: '开启',
