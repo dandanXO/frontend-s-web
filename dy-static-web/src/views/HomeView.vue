@@ -282,7 +282,7 @@
               </div>
 
               <div class="game-platform" @click="openGame('乐游棋牌', 'LEG', '')" style="margin-left: 14px">
-                <img src="../assets/home/dy.png" />
+                <img src="../assets/home/leg.png" />
                 <div>乐游棋牌</div>
               </div>
             </div>
