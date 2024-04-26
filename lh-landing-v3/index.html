@@ -7,6 +7,9 @@
 
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+
 </head>
 <body>
 <div class="main-wrapper">
@@ -44,7 +47,7 @@
         <div class="item-icon"><img src="img/icon-cs.png" /></div>
         <div class="item-txt">客服ID:VIP156</div>
         <div class="item-btns">
-          <a href="https://www.lh89038.com:9971/agent/8CA665" class="btn-brown-dark">下载</a>
+          <a id="voxis-download-1" target="_blank" class="btn-brown-dark">下载</a>
           <a href="#" class="btn-brown-light" onclick="copyText('VIP156')">复制</a>
         </div>
       </div>
@@ -53,7 +56,7 @@
         <div class="item-icon"><img src="img/icon-cs.png" /></div>
         <div class="item-txt">客服ID:VIP186</div>
         <div class="item-btns">
-          <a href="https://www.lh49250.com:9971//agent/4E1B99" class="btn-brown-dark">下载</a>
+          <a id="voxis-download-2" target="_blank" class="btn-brown-dark">下载</a>
           <a href="#" class="btn-brown-light" onclick="copyText('VIP186')">复制</a>
         </div>
       </div>
@@ -102,6 +105,24 @@
 </div>
 
 <script type="text/javascript">
+
+  $(document).ready(function(e){
+    checkPlatform();
+    
+
+  })
+
+  function checkPlatform() {
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+      $("#voxis-download-1").attr("href" , "https://ltksl.sdxfpkql.com/api/c/xrbdj3m7");
+      $("#voxis-download-2").attr("href" , "https://ltksl.sdxfpkql.com/api/c/xrbdj3m7");
+    } else {
+      $("#voxis-download-1").attr("href" , "https://download.u427suedc.com/im/20240425/2919de57-3bfd-40dc-a8f7-c50354f8e539.apk");
+      $("#voxis-download-2").attr("href" , "https://download.u427suedc.com/im/20240425/2919de57-3bfd-40dc-a8f7-c50354f8e539.apk");
+    }
+  }
+
+
   function copyText(text) {
     navigator.clipboard
       .writeText(text)
