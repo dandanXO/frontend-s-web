@@ -212,7 +212,8 @@ export default {
       PENDING: '待结算',
       LOSE: '输',
       WIN_MATCH: '竞猜成功',
-      WIN_ALL: '所选队伍获胜',
+      WIN_TEAM: '专属队伍获胜',
+      WIN_ALL: '全赢',
       CANCEL: '已取消'
     }
   },
@@ -285,6 +286,7 @@ export default {
     CASUAL: '小游戏',
     NBA: 'NBA',
     COCKFIGHT: '斗鸡',
+    MSI: 'MSI季中冠军赛'
   },
   homeBannerType: {
     HOME: '首页',
@@ -1278,6 +1280,7 @@ export default {
     selectNodeAddTo: '选择节点添加至',
     selected: '已选择',
     selectedNumber: '已选号码',
+    selectedTeam: '竞猜队伍',
     send: '发送',
     sequence: '排序',
     serialNo: '平台订单号',
