@@ -372,7 +372,8 @@ function removePopUpTime(item) {
 function isExpiredTime(dateTime) {
   const startDate = dateTime[0];
   const endDate = dateTime[1];
-  if (endDate < moment().format("YYYY-MM-DD-HH:mm") || endDate < startDate) {
+  // console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
+  if (endDate < moment().format("YYYY-MM-DD HH:mm:ss") || endDate < startDate) {
     return true;
   }
   return false;
