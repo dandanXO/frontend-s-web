@@ -205,7 +205,8 @@ export default {
       PENDING: 'Pending',
       LOSE: 'Lose',
       WIN_MATCH: 'Match Win',
-      WIN_ALL: 'Team Win',
+      WIN_TEAM: 'Team Win',
+      WIN_ALL: 'All Win',
       CANCEL: 'Cancel'
     }
   },
@@ -279,6 +280,7 @@ export default {
     CASUAL: 'CASUAL',
     NBA: 'NBA',
     COCKFIGHT: 'COCKFIGHT',
+    MSI: 'MSI'
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1272,6 +1274,7 @@ export default {
     selectNodeAddTo: 'Select nodes to add to ',
     selected: 'Selected',
     selectedNumber: 'Selected Number',
+    selectedTeam: 'Selected Team',
     send: 'Send',
     sequence: 'Sequence',
     serialNo: 'Serial Number',
