@@ -1,6 +1,7 @@
 export default {
   common: {
     title: 'TF แดชบอร์ด',
+    welcome_system: "ยินดีต้อนรับสู่ระบบหลังบ้าน",
     logout: 'ออกจากระบบ',
     changePassword: 'เปลี่ยนรหัสผ่าน',
   },
