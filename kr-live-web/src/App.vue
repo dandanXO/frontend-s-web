@@ -1,5 +1,6 @@
 <template>
   <router-view />
+  <PageModal ref="pageModalRef"></PageModal>
 </template>
 
 <script>
@@ -15,9 +16,11 @@ import * as _ from "lodash";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
+import PageModal from "components/modal/PageModal";
 
 export default defineComponent({
   name: "App",
+  components: { PageModal },
   setup() {
     var qs = require("qs");
     const ui = useUI();
@@ -26,6 +29,7 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
+    const pageModalRef = ref(null);
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -137,7 +141,7 @@ export default defineComponent({
     const errorHandler = (error) => {
       console.error("File error: " + error.code);
     };
-    
+
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(

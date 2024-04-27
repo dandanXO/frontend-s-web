@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
       <div class="left-content">
-        <div v-for="(item, index) in iconInfo" :key="index" class="credit-info">
+        <div v-for="(item, index) in iconInfo" :key="index" @click="item.goPage()" class="credit-info cursor-pointer">
           <img :src="item.iconUrl" alt="" />
           <div class="info-text">{{ item.info }}</div>
         </div>
@@ -19,22 +19,38 @@
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 const store = userStore();
 
+const router = useRouter();
 const iconInfo = reactive([
-  { info: "송금신청", iconUrl: require("../../assets/icon/deposit.svg") },
+  { info: "송금신청",
+    iconUrl: require("../../assets/icon/deposit.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/deposit`);
+    }
+  },
   {
     info: "출금신청",
-    iconUrl: require("../../assets/icon/withdrawMoney.svg")
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/withdraw`);
+    }
   },
   {
     info: "공지사항",
-    iconUrl: require("../../assets/icon/notify.svg")
+    iconUrl: require("../../assets/icon/notify.svg"),
+    goPage: () => {
+      router.push(`/?page=notify`);
+    }
   },
   {
     info: "고객센터",
-    iconUrl: require("../../assets/icon/customerService.svg")
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    goPage: () => {
+      router.push(`/?page=customer/service`);
+    }
   }
 ]);
 </script>
