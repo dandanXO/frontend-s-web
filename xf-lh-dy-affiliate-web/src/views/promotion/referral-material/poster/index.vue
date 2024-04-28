@@ -694,7 +694,7 @@ async function loadReferralLink() {
 
   const temWebLongLink = ret.find(obj => obj.code === 'affiliate_web_link')
     .value
-  data.qrData = temWebLongLink + '/agent/' + affInfo.affiliateCode
+  data.qrData = temWebLongLink + 'agent/' + affInfo.affiliateCode
   await nextTick()
 }
 
