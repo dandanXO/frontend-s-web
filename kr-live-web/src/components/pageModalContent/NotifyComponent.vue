@@ -6,7 +6,6 @@
         <q-item-label>제목</q-item-label>
         <q-item-label>날짜</q-item-label>
       </q-item-section>
-
       <template v-for="(item) in articleData" :key="item.page">
         <q-expansion-item group="somegroup"  class="table-row-title">
           <template v-slot:header>

@@ -228,6 +228,10 @@ const open = (pageName) => {
   min-height: 624px;
 }
 .page-dialog-main {
+  :deep(.q-panel) {
+    padding: 0 20px;
+    background: #030303;
+  }
   &, .q-tab-panel {
     min-height: 624px;
     background: #030303;
