@@ -1740,7 +1740,7 @@ async function loadFinancialLevels() {
 async function loadReferralLink() {
   const { data: affiliateUrl } = await getConfigList("affiliate_web_link", memberDetail.siteId);
   if (affiliateUrl[0].value) {
-    link.value = affiliateUrl[0].value + '/agent/' + affiliateDetails.affiliateCode;
+    link.value = affiliateUrl[0].value + 'agent/' + affiliateDetails.affiliateCode;
   } else {
     link.value = ''
   }
