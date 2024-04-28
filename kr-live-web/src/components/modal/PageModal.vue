@@ -49,11 +49,10 @@
 
               <q-separator />
 
-              <q-tab-panels v-model="page" animated class="bg-orange-1 text-dark text-center">
+              <q-tab-panels v-model="page" animated class="">
 
                 <template v-for="(item) in pagesInfo" :key="item.page">
                   <q-tab-panel :name="item.page">
-                    <div class="text-h6">{{ item.info }}</div>
                     <component :is="item.component"></component>
                   </q-tab-panel>
                 </template>
@@ -226,16 +225,15 @@ const open = (pageName) => {
   //outline: 1px solid red;
 }
 .page-dialog-links {
-    height: 624px;
+  min-height: 624px;
 }
 .page-dialog-main {
   &, .q-tab-panel {
-    height: 624px;
+    min-height: 624px;
     background: #030303;
   }
   .q-tabs__content {
 
-    border-bottom: 1px solid #D9D9D9;
   }
   width: 860px;
   .q-tab {
@@ -274,10 +272,21 @@ const open = (pageName) => {
     flex-direction: row-reverse;
   }
 }
+:deep(.q-tab__label) {
+  margin-left: 8px;
+}
+
+:deep(.q-tab) {
+  border-bottom: 1px solid #767676;
+}
+
 :deep(.q-tab--active) {
-    border-bottom: 1px solid #1bcef1;
+    border-bottom: 1px solid #767676;
+  border-image: linear-gradient(to right, #767676, #1bcef1, #767676) 0.8;
   .q-tab__label {
     color: #fff;
+    font-weight: unset;
+    font-size: unset;
   }
 }
 

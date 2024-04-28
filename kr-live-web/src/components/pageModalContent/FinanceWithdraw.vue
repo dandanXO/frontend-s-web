@@ -1,36 +1,45 @@
 <template>
-
-  <div></div>
-  <div></div>
-
-  <div class="form-footer">
-    <p class="form-button">
-      <span class="">입금하기</span>
-    </p>
-  </div>
+<div class="modal-body-wrap">
+  <q-card-section class="modal-body-content">
+  </q-card-section>
+  <q-card-actions  class="modal-body-buttons" align="center">
+    <q-btn class="form-button blue" label="입금하기"></q-btn>
+  </q-card-actions>
+</div>
 </template>
 
 <script setup id="FinanceWithdraw">
 </script>
 
 <style lang="scss" scoped>
-.form-footer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.modal-body-wrap {
 }
-.form-button {
-  //display: inline-block;
-  height: 70px;
-  width: 300px;
-  background: url("../../assets/images/home-board/home-board-btn-light.png") no-repeat center center;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
+.modal-body-buttons {
+  position: absolute;
+  bottom: 0;
+}
+.modal-body-content {
+}
+.modal-body-buttons {
+  width: 100%;
+  .form-button {
+    //display: inline-block;
+    height: 70px;
+    width: 200px;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    padding-bottom: 5px;
+    margin: auto 10px;
+    &.blue {
+      background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+    }
+    &.yellow {
+      background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+    }
+  }
 }
 </style>
