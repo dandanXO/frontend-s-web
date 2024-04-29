@@ -92,6 +92,7 @@ const iconInfo = reactive([
 }
 
 .credit-info {
+  cursor: pointer;
   display: flex;
   align-items: center;
 }

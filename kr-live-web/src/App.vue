@@ -60,7 +60,7 @@ export default defineComponent({
 
     let csclient;
     const initCsWeb = () => {
-      csclient = new CsClient("5", regDevice, "th", "2", "prod");
+      csclient = new CsClient("5", regDevice, "kr", "2", "prod");
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");

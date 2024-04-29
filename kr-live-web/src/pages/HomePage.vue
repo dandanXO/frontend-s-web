@@ -72,11 +72,11 @@
           </div>
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
-          <!-- <div v-if="announcementList">
-            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
-          </div> -->
+<!--          <div v-if="announcementList">-->
+<!--            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">-->
+<!--              {{ a.content }}-->
+<!--            </span>-->
+<!--          </div>-->
           <div>XX가 XX게임에서 2000000원 땄어요!</div>
         </marquee-text>
       </div>
@@ -2196,7 +2196,6 @@ export default defineComponent({
   row-gap: 14px;
   width: calc(100% - 20px);
   // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
-  padding: 0px 170px;
   border-radius: 12px;
   overflow-x: auto;
 
@@ -2210,14 +2209,12 @@ export default defineComponent({
     gap: 12px;
     height: 100%;
     display: flex;
-    align-items: center;
     text-align: center;
-    padding: 12px 12px;
+    padding: 16px 12px 20px;
     white-space: nowrap;
     background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
     background-size: 100% 100%;
     position: relative;
-    display: flex;
     justify-content: center;
     align-items: center;
     .home-board-item-text {
@@ -2232,8 +2229,9 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: url("../assets/images/home-board/home-board-btn-light.png") no-repeat center center;
+      background: url("../assets/images/home-board/home-board-btn-light-old.png") no-repeat center center;
       background-size: 100% 100%;
+      margin-top: 2px;
 
       .active-flag {
         display: block;
@@ -2753,9 +2751,6 @@ export default defineComponent({
 
 @media (min-width: 769px) {
   .grid {
-    // column-gap: 16px;
-    // row-gap: 14px;
-    // grid-template-columns: repeat(4, 1fr);
 
     .game-board-item {
       img {
@@ -2791,6 +2786,11 @@ export default defineComponent({
 }
 
 @media (min-width: 991px) {
+  .grid{
+    padding: 0px 170px;
+
+  }
+
   .grid .game-board-item {
     cursor: pointer;
     border-radius: 10px;

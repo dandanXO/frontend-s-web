@@ -12,9 +12,9 @@ const rstArray = process.env.RST_API;
 const evtArray = process.env.EVT_API;
 const crtArray = process.env.CR_API;
 
-var rstApi = getInitApi(rstArray, "THA_H5_RST_URL");
-var evtApi = getInitApi(evtArray, "THA_H5_EVT_URL");
-var crtApi = getInitApi(crtArray, "THA_H5_CRT_URL");
+var rstApi = getInitApi(rstArray, "KRW_H5_RST_URL");
+var evtApi = getInitApi(evtArray, "KRW_H5_EVT_URL");
+var crtApi = getInitApi(crtArray, "KRW_H5_CRT_URL");
 
 const api = axios.create({baseURL: rstApi});
 const cashier = axios.create({baseURL: crtApi});

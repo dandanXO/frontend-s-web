@@ -19,19 +19,19 @@
         </router-view>
       </div>
       </div>
-      
+
     </q-page-container>
     <!-- <q-footer v-if="ui.footer" elevated>
-    
+
     </q-footer> -->
     <footer>
       <div class="footer-box">
         <div class="box" v-for="(items, index) in footerBoxImgUrl" :key="index">
           <img :src="items.imgUrl" alt="" />
         </div>
-        
+
       </div>
-      <div class="copyright-text">ⓒ 2023 RS9 CASINO All right reserved</div>
+      <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
     </footer>
   </q-layout>
 </template>
