@@ -555,9 +555,10 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "CREATE",
   status: [
-    { key: 1, displayName: 'ONGOING', value: 'ONGOING' },
-    { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
-    { key: 3, displayName: 'ENDED', value: 'ENDED' }
+    { key: 1, displayName: 'PENDING', value: 'PENDING' },
+    { key: 2, displayName: 'ONGOING', value: 'ONGOING' },
+    { key: 3, displayName: 'CANCEL', value: 'CANCEL' },
+    { key: 4, displayName: 'ENDED', value: 'ENDED' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
