@@ -106,6 +106,7 @@ import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel
 import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
+import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -147,7 +148,8 @@ export default defineComponent({
     LhStepGamePromo,
     Summoner,
     AppHongBao,
-    FtdPromo
+    FtdPromo,
+    LOLMsi2024Promo
     // DailyBonus
   },
   props: {
@@ -421,7 +423,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-game-steps" ||
       this.list.redirectUrl === "lh1-summon-event" ||
       this.list.redirectUrl === "lh1-app-hongbao" ||
-      this.list.redirectUrl === "lh1-ftd-promo"
+      this.list.redirectUrl === "lh1-ftd-promo" ||
+      this.list.redirectUrl === "lh-msi-match"
     ) {
       this.isCommonPromo = false;
     } else {
