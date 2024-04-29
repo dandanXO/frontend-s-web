@@ -18,7 +18,11 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
+    <AppHongBao
+      v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
     <HongBaoYu2024
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
@@ -55,6 +59,10 @@
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
+    <Summoner
+      v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
