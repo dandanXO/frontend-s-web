@@ -53,7 +53,7 @@
                     color="#0089ED"
                   />
                   <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  <div class="title-text" :title="det.title">标题：{{ det.title }}</div>
+                  <div class="title-text" :title="det.title">{{ det.title }}</div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
                   <div class="right-title">
                     <RiArrowUpSLine v-if="isSelectedMail === det.id" />

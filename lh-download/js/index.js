@@ -63,6 +63,9 @@ $(document).ready(function (e) {
     async function getApiUrl() {
 			var clickBtn = document.getElementById("click-btn");
 			clickBtn.onclick = async function () {
+
+                clickBtn.classList.add("is-active");
+
 			var apiUrl = 'https://tfwkal.nc547frt0an.com/getTfData'
 			try {
 				const response = await fetch(apiUrl, {
@@ -70,6 +73,7 @@ $(document).ready(function (e) {
 				});
 				const data = await response.json();
 				if (data) {
+                    clickBtn.classList.remove("is-active");
 					// debugger;
 					console.log("data", data);
 					if (data.code == 1) {
@@ -84,6 +88,7 @@ $(document).ready(function (e) {
 					}
 				}
 			} catch (error) {
+                clickBtn.classList.remove("is-active");
 				console.log(error)
 			}
 			

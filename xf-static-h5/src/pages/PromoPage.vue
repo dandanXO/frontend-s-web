@@ -1,6 +1,5 @@
 <template>
-  <q-card-section v-if="!isPromoDetail"
-    class="page-title">优惠活动</q-card-section>
+  <q-card-section v-if="!isPromoDetail" class="page-title">优惠活动</q-card-section>
 
   <div class="promo-container" style="background: #090b19">
     <div class="promo">
@@ -21,15 +20,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div
-                  class="promo-item"
-                    v-if="
-                      promo.promoType
-                        .toLowerCase()
-                        .split(',')
-                        .includes(tab.name)
-                    "
-                  >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
@@ -68,17 +59,14 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-              <div class="banner-container"
-                v-if="!isSpecialPromo"
-              >
+              <div class="banner-container" v-if="!isSpecialPromo">
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner"
-                :class="isSpecialPromo ? 'special-promo' : ''">
+              <div class="inner" :class="isSpecialPromo ? 'special-promo' : ''">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
                 </div>
@@ -224,7 +212,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu" || promo.redirectUrl === "xf-return-promo") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false
@@ -592,6 +580,23 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__xf-return-promo {
+        // background-image: url("../assets/images/promotion/hotpromo/return-promo/bg-img.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: top center;
+
+        .banner-container {
+          display: none;
+        }
+
+        .welcome {
+          width: calc(100% - 30px);
+          margin: 0 auto;
+          padding-bottom: 60px;
+        }
+      }
+
       &.bg__cny-spinwheel {
         background-image: url("../assets/images/promotion/hotpromo/bonus-spinwheel/bg.jpg");
         background-size: 100% 100%;
@@ -599,9 +604,9 @@ export default defineComponent({
         background-position: top center;
         background-color: #a1211d;
 
-        .welcome{
+        .welcome {
           width: calc(100% - 30px);
-          margin:0 auto;
+          margin: 0 auto;
           padding-bottom: 60px;
         }
       }
@@ -641,7 +646,7 @@ export default defineComponent({
 
         &.special-promo {
           width: 100%;
-          margin:0 auto;
+          margin: 0 auto;
         }
 
         img {
@@ -729,7 +734,6 @@ export default defineComponent({
   right: 5px;
   top: 5px;
   z-index: 3;
-
 }
 
 .pad-label.label-new {

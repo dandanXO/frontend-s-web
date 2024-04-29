@@ -122,7 +122,7 @@
         />
       </div>
     </div>
-    <el-dialog class="bankModal" width="500" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
+    <el-dialog class="bankModal" width="600" v-model="bankCardModalState.visible" :footer="null" :title="$t('withdraw.bindCard')">
       <div type="warning" class="account-tip-warning">
         <ul>
           <li>{{ $t('personal.bankCardReminder1') }}</li>
@@ -194,6 +194,7 @@
             v-model="bankCardInfo.smsCode"
             :placeholder="$t('withdraw.smsCodeRequired')"
             @keyup.enter="submitBankCard"
+            style="width:340px;"
           />
             <el-button class="common-btn" @click="openCaptchaForm()">{{$t('personal.getVerificationCode')}}</el-button>
           </el-space>
@@ -293,7 +294,11 @@ export default defineComponent({
       return Promise.resolve();
     };
     let validateBankLength = async (r, v) => {
+        var min = 6;
+        var max = 20;
       if (selectedBankType.value === "Bank") {
+          min = 6;
+          max = 20;
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -310,8 +315,6 @@ export default defineComponent({
         }
 
       } else if (selectedBankType.value === "Crypto") {
-        var min = null;
-        var max = null;
         min = 34;
         max = 36;
       } else if (selectedBankType.value === "e-Wallet") {

@@ -1,0 +1,124 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0%;
+  font-size: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #080a16;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a {
+  transition: 0.3s all;
+}
+
+a:hover {
+  filter: brightness(0.7);
+}
+
+.main-wrapper {
+  background-image: url(../img/maintenance-bg.jpg);
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.maintenance-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.maintenance-details {
+  display: flex;
+  flex-direction: column;
+  order: 2;
+}
+
+.maintenance-logo {
+  margin: 20px auto 0;
+}
+
+.maintenance-logo img {
+  display: block;
+  width: 168px;
+}
+
+.maintenance-title {
+  margin-top: 10px;
+  color: #4c88f8;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.maintenance-desc {
+  margin-top: 10px;
+  color: #858585;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.maintenance-img {
+  margin-left: 30px;
+  order: 1;
+}
+
+.maintenance-img img {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+}
+
+.maintenance-contact {
+  margin-top: 24px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.contact-item a {
+  color: #4c88f8;
+}
+
+.contact-img img {
+  width: 24px;
+  display: block;
+}
+
+@media (min-width: 991px) {
+  .maintenance-container {
+    flex-direction: row;
+  }
+
+  .maintenance-details {
+    order: 1;
+  }
+  .maintenance-img {
+    order: 2;
+    margin-left: 20px;
+  }
+
+  .maintenance-title {
+    font-size: 45px;
+  }
+
+  .maintenance-desc {
+    font-size: 20px;
+  }
+}

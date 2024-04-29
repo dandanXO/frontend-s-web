@@ -94,7 +94,7 @@
           prop="loginName"
           :label="t('fields.loginName')"
           align="left"
-          width="120"
+          width="160"
         >
           <template
             #default="scope"
@@ -490,6 +490,22 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="lastLoginTime"
+          :label="t('fields.lastLoginTime')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.lastLoginTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -685,9 +701,13 @@ async function loadRecord() {
 async function loadChildren(tree, treeNode, resolve) {
   const query = {}
 
-  query.recordTime = tree.recordTime
   query.parentAffiliateId = tree.affiliateId
   query.siteId = request.siteId
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
   const { data: children } = await getAffiliateChildSummary(query)
   resolve(children)
 }

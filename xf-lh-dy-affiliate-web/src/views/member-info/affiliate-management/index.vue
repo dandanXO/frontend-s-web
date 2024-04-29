@@ -44,7 +44,12 @@
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="normal" type="primary" plain @click="resetQuery()">
+              <el-button
+                size="normal"
+                type="primary"
+                plain
+                @click="resetQuery()"
+              >
                 {{ $t('fields.reset') }}
               </el-button>
             </div>
@@ -71,7 +76,14 @@
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb>
-      <table style="width: 98%; margin: 0 auto;" cellpadding="0" cellspacing="0" border="0" class="custom-table">
+
+      <table
+        style="width: 98%; margin: 0 auto;"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        class="custom-table"
+      >
         <thead>
           <tr>
             <th>{{ t('fields.loginName') }}</th>
@@ -92,46 +104,105 @@
         <tbody>
           <tr v-for="record in page.records" :key="record.id">
             <td>
-              <el-link type="primary" @click="searchDownline(record.id, record.loginName)">
+              <el-link
+                type="primary"
+                @click="searchDownline(record.id, record.loginName)"
+              >
                 {{ record.loginName }}
               </el-link>
             </td>
             <td>
               <span v-if="record.affiliateCode === null">-</span>
-              <span v-if="record.affiliateCode !== null">{{ record.affiliateCode }}</span>
+              <span v-if="record.affiliateCode !== null">
+                {{ record.affiliateCode }}
+              </span>
             </td>
             <td>
               <span v-if="record.affiliateLevel === null">-</span>
-              <span v-if="record.affiliateLevel !== null">{{ t('affiliate.level.' + record.affiliateLevel) }}</span>
+              <span v-if="record.affiliateLevel !== null">
+                {{ t('affiliate.level.' + record.affiliateLevel) }}
+              </span>
             </td>
             <td>
               <span v-if="record.commission === null">0 %</span>
-              <span v-if="record.commission !== null">{{ record.commission * 100 }} %</span>
+              <span v-if="record.commission !== null">
+                {{ record.commission * 100 }} %
+              </span>
             </td>
             <td>
               <span v-if="record.downlineMember === null">-</span>
-              <span v-if="record.downlineMember !== null">{{ record.downlineMember }}</span>
+              <span v-if="record.downlineMember !== null">
+                {{ record.downlineMember }}
+              </span>
             </td>
             <td>
               <span v-if="record.downlineAffiliate === null">-</span>
-              <span v-if="record.downlineAffiliate !== null">{{ record.downlineAffiliate }}</span>
+              <span v-if="record.downlineAffiliate !== null">
+                {{ record.downlineAffiliate }}
+              </span>
             </td>
             <td>
-              <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === 'NORMAL'" type="success" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === 'DISABLE'" type="danger" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === null" type="info" size="normal">-</el-tag>
+              <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === 'NORMAL'"
+                type="success"
+                size="normal"
+              >
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === 'DISABLE'"
+                type="danger"
+                size="normal"
+              >
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === null"
+                type="info"
+                size="normal"
+              >
+                -
+              </el-tag>
             </td>
             <td>{{ record.site }}</td>
-            <td>$<span v-formatter="{data: record.balance, type: 'money'}" /></td>
+            <td>
+              $
+              <span v-formatter="{data: record.balance, type: 'money'}" />
+            </td>
             <td>
               <span v-if="record.regTime === null">-</span>
-              <span v-if="record.regTime !== null" v-formatter="{data: record.regTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}" />
+              <span
+                v-if="record.regTime !== null"
+                v-formatter="{
+                  data: record.regTime,
+                  formatter: 'YYYY/MM/DD HH:mm:ss',
+                  type: 'date',
+                }"
+              />
             </td>
-            <td>$<span v-formatter="{data: record.totalDeposit, type: 'money'}" /></td>
-            <td>$<span v-formatter="{data: record.totalWithdraw, type: 'money'}" /></td>
             <td>
-              <el-button icon="el-icon-edit" size="normal" type="success" :disabled="breadcrumbNameList.length > 1" @click="showEdit(record)" />
+              $
+              <span
+                v-formatter="{data: record.totalDeposit, type: 'money'}"
+              />
+            </td>
+            <td>
+              $
+              <span
+                v-formatter="{data: record.totalWithdraw, type: 'money'}"
+              />
+            </td>
+            <td>
+              <el-button
+                icon="el-icon-edit"
+                size="normal"
+                type="success"
+                :disabled="breadcrumbNameList.length > 1"
+                @click="showEdit(record)"
+              />
             </td>
           </tr>
         </tbody>
@@ -234,7 +305,11 @@
             maxlength="20"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.commission')" prop="commission">
+        <el-form-item
+          :label="t('fields.commission')"
+          prop="commission"
+          v-if="siteId !== '8'"
+        >
           <el-input
             v-model="cForm.commission"
             style="width: 350px;"
@@ -299,7 +374,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { useStore } from '@/store'
 import moment from 'moment'
 import {
@@ -436,6 +511,20 @@ const shortcuts = [
           .subtract(1, 'months')
           .endOf('month')
           .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisThreeMonths'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment()
+          .subtract(2, 'months')
+          .startOf('month')
+          .valueOf()
       )
       return [start, end]
     },
@@ -684,6 +773,10 @@ function breadcrumbSearch(id, name) {
     searchDownline(id, name)
   }
 }
+
+const siteId = computed(() => {
+  return store.state.user.siteId
+})
 
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel

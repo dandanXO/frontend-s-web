@@ -222,6 +222,12 @@
                     </div>
                   </template>
 
+                  <template v-if="scope.row.status === 'APPLY' || scope.row.status === 'STEP_2'">
+                    <div style="display: flex; align-items: center">
+                      <el-button size="small" color="red" @click="openWithdrawCancel(scope.row)">取消</el-button>
+                    </div>
+                  </template>
+
                   <template
                     v-if="
                       scope.row.status === 'SUCCESS' &&
@@ -402,8 +408,12 @@
                     value-key="code"
                   >
                     <el-option key="" label="-全部平台-" value="">-</el-option>
-                    <el-option v-for="p in platformsList" :key="p.code" :label="getPlatform(p.code)" :value="p.code">
-                    </el-option>
+                    <el-option
+                      v-for="p in platformsList"
+                      :key="p.code"
+                      :label="getPlatform(p.code)"
+                      :value="p.code"
+                    ></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item label="开始">
@@ -657,7 +667,8 @@ import {
   saveFinanceFeedback,
   getVerifyingFeedbackCount,
   financeFeedbackList,
-  confirmationOfWithdrawalReceived
+  confirmationOfWithdrawalReceived,
+  cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
 import { getPlatformList } from "@/api/platform/platform";
@@ -1162,6 +1173,7 @@ export default defineComponent({
         }
       });
     };
+
     const openWithdrawConfirm = (record) => {
       const obj = {
         id: record.id,
@@ -1185,6 +1197,31 @@ export default defineComponent({
         }
       });
     };
+
+    const openWithdrawCancel = (record) => {
+      const obj = {
+        id: record.id,
+        withdrawDate: record.withdrawDate
+      };
+      cancellationOfWithdrawalReceived(obj).then((res) => {
+        if (res.code === 0) {
+          ElMessageBox.alert("已经取消提款", {
+            // if you want to disable its autofocus
+            // autofocus: false,
+            title: "系统提示",
+            center: true,
+            confirmButtonText: "确认",
+            showClose: false,
+            buttonSize: "large"
+          }).then(() => {
+            getTime();
+          });
+        } else {
+          ElMessage.error(res.message);
+        }
+      });
+    };
+
     const submitReminder = () => {
       loadingBtn.value = true;
       if (!reminderForm.photos) {
@@ -1585,6 +1622,7 @@ export default defineComponent({
       getGameType,
       getBetStatus,
       openWithdrawConfirm,
+      openWithdrawCancel,
       loadingBtn,
       clearItems,
       formRef,

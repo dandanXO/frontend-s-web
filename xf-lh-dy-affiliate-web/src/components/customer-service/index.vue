@@ -12,7 +12,9 @@
       <div class="services">
         <div class="contact-boxes" :style="props.siteId === '8' ? 'gap: 50px;': ''">
           <div class="contact-box" v-for="(c, i) in contactlist" :key="i">
-            <div class="contacticon"><img style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)"></div>
+            <div class="contacticon"><img v-if="c.icon !== 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.svg`)">
+              <img v-if="c.icon === 'czalo'" style="max-width: 67px;" :src="require(`../../assets/images/${c.icon}.png`)">
+            </div>
             <div class="type">{{ c.type }}</div>
             <div class="link">{{ c.link }}</div>
             <div class="buttons">

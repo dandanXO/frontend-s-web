@@ -158,7 +158,6 @@
 
         <q-label>
           {{ $t("lang.email") }}
-          <em>*</em>
         </q-label>
         <q-input
           ref="emailRef"
@@ -167,7 +166,7 @@
           type="email"
           v-model="regForm.email"
           :placeholder="$t('lang.email')"
-          :rules="[(val) => (val && val.length > 0) || $t('lang.email_valid'), isValidEmail]"
+          :rules="[isValidEmail]"
           color="white"
         >
           <template v-slot:prepend>
@@ -335,7 +334,7 @@ export default defineComponent({
     });
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -351,7 +350,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -401,6 +400,9 @@ export default defineComponent({
 
     const pwdStrength = ref("");
     const isValidEmail = () => {
+      if (!regForm.email) {
+        return
+      }
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || t("lang.email_valid");
@@ -475,6 +477,17 @@ export default defineComponent({
                   message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
+
+                // FB tracking :: signup-success
+                if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "signup-success");
+                }else if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+                  otag("event", "registration");
+                }
+
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {

@@ -41,14 +41,14 @@
             </span>
           </div>
           <div class="vip-card-info">
-            <div class="level q-mb-md q-mt-md">
+            <div class="level q-mt-md">
               <div class="vip-level">VIP{{ vipIndex + 1 }}</div>
               <div class="vip-card-common-text">{{ vip.title }}</div>
             </div>
-            <!-- <div class="amount">
-              <div class="vip-card-common-text">累计存款：</div>
+            <div class="amount q-mt-sm">
+              <div class="vip-card-common-text">{{ $t("lang.vip_cumulative_deposits") }}</div>
               <div class="vip-card-common-text amount-text">{{ vip.amount }}</div>
-            </div> -->
+            </div>
             <div class="progress">
               <q-linear-progress
                 reverse
@@ -60,7 +60,7 @@
               ></q-linear-progress>
               <div class="start-end">
                 <div class="vip-card-common-text">V{{ vipIndex }}</div>
-                <div class="vip-card-current-num" v-if="vipLevel === vipIndex + 1">VNDP {{ currentDeposit }}</div>
+                <div class="vip-card-current-num" v-if="vipLevel === vipIndex ">VNDP {{ currentDeposit }}</div>
                 <div class="vip-card-common-text">V{{ vipIndex + 1 }}</div>
               </div>
             </div>
@@ -626,15 +626,13 @@ const getProgressBar = () => {
       let vipAmount = parseInt(amt, 10);
       let currentDep = parseInt(current, 10);
 
-      console.log("vipAmount", vipAmount); // Outputs: 400000
-      console.log("currentDep", currentDep);
+      // console.log("vipAmount", vipAmount); // Outputs: 400000
+      // console.log("currentDep", currentDep);
 
       let percentageChange = (currentDep / vipAmount) * 100;
+      vipItems.value[vipLevel.value].progressBarVal = 1 - percentageChange / 100;
 
-      vipItems.value[vipLevel.value - 1].progressBarVal = 1 - percentageChange / 100;
-
-      console.log("percentageChange", percentageChange);
-
+      // console.log("percentageChange", percentageChange);
       // vipItems.value[vipLevel.value - 1].progressBarVal = 0.5;
     }
   });
@@ -908,7 +906,7 @@ onActivated(() => {
   if (store.hasToken()) {
     store.getMemberInfo().then(() => {
       vipLevel.value = +store.vip.replace("VIP", "");
-      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString();
+      currentDeposit.value = parseFloat(store.currentDeposit).toLocaleString("en-US", { maximumFractionDigits: 0 });
       checkVipRedeem();
     });
   } else {
@@ -946,6 +944,7 @@ onActivated(() => {
 
   .vip-card-container {
     position: relative;
+    margin: -16px -20px 0;
 
     .card-img-wrap {
       min-height: 160px;

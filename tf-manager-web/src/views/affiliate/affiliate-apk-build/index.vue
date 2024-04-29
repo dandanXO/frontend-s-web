@@ -186,7 +186,7 @@
       />
     </el-card>
     <el-dialog
-      :title="t('affiliateApk.editParam')"
+      :title="t('affiliateApk.editParam')+ ': ' + loginName"
       v-model="uiControl.dialogVisible"
     >
       <el-form ref="paramForm" :model="form" :rules="formRules" @submit.prevent>
@@ -198,6 +198,7 @@
             active-text="Json"
             inactive-value="key-value"
             active-value="json"
+            @change="syncParam"
           />
           <div v-if="uiControl.showParamFormat === 'key-value'">
             <div v-for="(item, index) in param" :key="index">
@@ -305,6 +306,8 @@ const form = reactive({
   jsonParams: null,
 })
 
+const loginName = ref(null)
+
 function resetQuery() {
   request.loginName = null
   request.affiliateCode = null
@@ -343,6 +346,7 @@ function changePage(page) {
 function showDialog(item) {
   form.id = item.id
   param.value = []
+  loginName.value = item.loginName
   if (item.extraParams) {
     Object.entries(JSON.parse(item.extraParams)).forEach(([key, value]) => {
       const json = {}
@@ -393,6 +397,26 @@ function constructParam() {
     }
   });
   return JSON.stringify(json);
+}
+
+function syncParam() {
+  if (uiControl.showParamFormat === 'json') {
+    form.jsonParams = JSON.stringify(
+      JSON.parse(constructParam()),
+      undefined,
+      2
+    )
+  } else {
+    // json to key-value and add to param
+    const json = JSON.parse(form.jsonParams)
+    param.value = []
+    Object.entries(json).forEach(([key, value]) => {
+      param.value.push({
+        key,
+        value,
+      })
+    })
+  }
 }
 
 async function loadLatestVersion() {

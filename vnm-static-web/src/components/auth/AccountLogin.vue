@@ -151,6 +151,15 @@ const submitLogin = () => {
               loginForm.password = null;
               loginForm.captchaCode = null;
               closeLoginDialog();
+
+              // FB tracking :: login-success
+              if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) { 
+                  fbq("track", "login-success");
+                }
+
             } else {
               getCode();
             }

@@ -40,7 +40,8 @@
           class="column no-wrap flex-center"
           :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
           @click="gotoPromo(banner)"
-        ></q-carousel-slide>
+        >
+        </q-carousel-slide>
       </q-carousel>
     </div>
 
@@ -943,13 +944,24 @@
         <router-link to="/promo?id=81">
           <div class="popup-item">
             <span>
-              คลิกเพื่อหมุนวงล้อ รางวัลสูงสุด
+              หมุนวงล้อ รับโบนัส
               <em>8,880</em>
-              และ
+              รางวัลสูงสุด
               <em>IPHONE</em>
             </span>
           </div>
         </router-link>
+
+        <router-link to="/promo?id=217">
+          <div class="popup-item">
+            <span>
+              รับโบนัสรายวัน เทิร์นโอเวอร์
+              <em>3</em>
+              เท่า
+            </span>
+          </div>
+        </router-link>
+
         <router-link to="/promo?id=80">
           <div class="popup-item">
             <span>
@@ -958,48 +970,19 @@
             </span>
           </div>
         </router-link>
-        <!-- <router-link to="/promo?id=76">
+
+        <router-link to="/promo?id=216">
           <div class="popup-item">
             <span>
-              เลือกรับ
-              <em>100%-200%</em>
-              รับสูงสุด
-              <em>10,000</em>
-              ถอนไม่อั้น
-            </span>
-          </div>
-        </router-link> -->
-        <!--        <router-link to="/promo?id=77">
-          <div class="popup-item">
-            <span>
-              โบนัส
-              <em>30%</em>
-              สูงสุด
-              <em>2,000</em>
-              ถอนไม่อั้น
-            </span>
-          </div>
-        </router-link>-->
-        <router-link to="/promo?id=78">
-          <div class="popup-item">
-            <span>
-              โบนัส
-              <em>20%</em>
-              สูงสุด
-              <em>15,000</em>
-              ถอนไม่อั้น
+              ฝาก
+              <em>200%</em>
+              รับ
+              <em>300</em>
+              ทุกวันศุกร์
             </span>
           </div>
         </router-link>
-        <router-link to="/promo?id=76">
-          <div class="popup-item">
-            <span>
-              ฝากครั้งแรกรับ
-              <em>100%-200%</em>
-              เล่นได้ทุกเกมส์ ถอนไม่อั้น
-            </span>
-          </div>
-        </router-link>
+
         <router-link to="/promo?id=77">
           <div class="popup-item">
             <span>
@@ -1007,6 +990,15 @@
               <em>30%</em>
               สูงสุด
               <em>2,000</em>
+            </span>
+          </div>
+        </router-link>
+        <router-link to="/promo?id=168">
+          <div class="popup-item">
+            <span>
+              สะสมยอดฝาก
+              <em>300</em>
+              รับทันทีฟรีสปรินสล็อต
             </span>
           </div>
         </router-link>
@@ -1662,10 +1654,21 @@ export default defineComponent({
       } else if (banner.promoPageId) {
         router.push({ path: "/promo", query: { id: banner.promoPageId } });
       } else if (banner.redirectUrl) {
-        const redirectPage = "/" + banner.redirectUrl;
-        router.push(`${redirectPage}`);
+        if (banner.redirectUrl.startsWith("promo/")) {
+          const promoId = banner.redirectUrl.substring(6);
+          router.push({ path: "/promo", query: { id: promoId } });
+        } else if (banner.redirectUrl.startsWith("open/")) {
+          const parts = banner.redirectUrl.split("/");
+          if (parts.length === 5) {
+            const gameName = parts[1];
+            const platformCode = parts[2];
+            const gameCode = parts[3];
+            const status = parts[4];
+            gameModalRef.value.open(gameName, platformCode, gameCode, status);
+          }
+        }
       }
-      router.push(`/promo`);
+      // router.push(`/promo`);
     };
 
     // isH5 -- platform checker
@@ -2997,7 +3000,7 @@ export default defineComponent({
     }
 
     .popup-list {
-      margin-top: -40px;
+      margin-top: -100px;
     }
 
     a,

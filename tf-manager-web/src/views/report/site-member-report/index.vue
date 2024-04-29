@@ -271,6 +271,11 @@
         :label="t('fields.lastLoginIp')"
         width="200"
       />
+      <el-table-column
+        prop="firstDepositTime"
+        :label="t('fields.ftdTime')"
+        width="200"
+      />
     </el-table>
     <el-pagination
       class="pagination"
@@ -603,6 +608,7 @@ function getSummaries(param) {
             index !== 14 &&
             index !== 15 &&
             index !== 16 &&
+            index !== 17 &&
             index !== 2
           ) {
             var prop = column.property

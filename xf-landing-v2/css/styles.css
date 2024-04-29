@@ -503,6 +503,8 @@ a:hover {
 
   .qq-listing{
     width: 100%;
+    max-width: 275px;
+    padding-left:35px;
   }
 
   .top-title{
@@ -511,6 +513,7 @@ a:hover {
 
   .hongbao-btn img{
     width: 90%;
+    margin: auto;
   }
 
   .activity-div{

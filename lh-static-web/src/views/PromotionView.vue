@@ -65,12 +65,13 @@
       </div>
     </div>
     <div v-else class="selected-promo">
-      <div class="selected-promo-wrapper">
+      <div class="selected-promo-wrapper" :class="{ darkbluebg: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
         <div
           class="banner-container"
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
-            selectedPromo.promoCode !== 'lh1-game-steps'
+            selectedPromo.promoCode !== 'lh1-game-steps' &&
+            selectedPromo.promoCode !== 'lh1-ftd-promo'
           "
         >
           <div class="promo-bg isDesktop">
@@ -98,7 +99,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps'
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -199,7 +200,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         } else {
           ElMessage.error(res.message)
         }
@@ -208,18 +209,18 @@ export default defineComponent({
     const showPromoDetails = (promo) => {
 
       if (!store.token) {
-          ElMessageBox.alert('请登录后再操作', '系统提示', {
-              // if you want to disable its autofocus
-              // autofocus: false,sd
-              center: true,
-              confirmButtonText: '确认',
-              showClose: false,
-              buttonSize: 'large'
-          }).then(() => {
-            // router.push('/login');
-              store.loginPageVisible = true
-          })
-          return
+        ElMessageBox.alert('请登录后再操作', '系统提示', {
+          // if you want to disable its autofocus
+          // autofocus: false,sd
+          center: true,
+          confirmButtonText: '确认',
+          showClose: false,
+          buttonSize: 'large'
+        }).then(() => {
+          // router.push('/login');
+          store.loginPageVisible = true
+        })
+        return
       } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
@@ -247,9 +248,9 @@ export default defineComponent({
 
       promoTabActive.value = type;
       if (type !== "ALL") {
-          filteredArray.value = promoState.promoList.filter(function(promo) {
-            return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
-          });
+        filteredArray.value = promoState.promoList.filter(function(promo) {
+          return promo.promoType.toLowerCase().split(',').includes(type.toLowerCase());
+        });
       } else {
         filteredArray.value = promoState.promoList
       }
@@ -263,19 +264,19 @@ export default defineComponent({
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
-              if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
-                if (element.redirectUrl === 'lh1-invite') {
-                  showPromoDetails(element)
-                }
-              }
-              if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-                if (element.redirectUrl === 'lh1-football-fight') {
-                  showPromoDetails(element)
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
+            if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
+              if (element.redirectUrl === 'lh1-invite') {
                 showPromoDetails(element)
               }
+            }
+            if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+              if (element.redirectUrl === 'lh1-football-fight') {
+                showPromoDetails(element)
+              }
+            }
+            if (element.redirectUrl === route.query.name) {
+              showPromoDetails(element)
+            }
             // }
           });
         }
@@ -392,11 +393,19 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
+
       tr:first-child td {
         background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
         color: #ffffff;
         border: 0;
       }
+      tr:first-child td:first-child{
+        border-top-left-radius: 16px;
+      }
+      tr:first-child td:last-child{
+        border-top-right-radius: 16px;
+      }
+
       border-collapse: collapse;
       th,
       td {
@@ -426,10 +435,8 @@ export default defineComponent({
         color: #7a8eb9;
       }
       tr {
-        &:last-child {
-          td:first-child {
-            border-radius: 20px 0 0 0;
-          }
+        p{
+          margin:0px;
         }
       }
     }
@@ -742,6 +749,13 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
     .selected-promo-wrapper {
+        &.darkbluebg {
+          background-color: #0D3173;
+          .inner {
+            margin-top: -100px;
+            background-position: 0 160px;
+          }
+        }
       .banner-container {
         width: 100%;
         .promo-bg {

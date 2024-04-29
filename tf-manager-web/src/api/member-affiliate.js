@@ -209,8 +209,8 @@ export const editAffiliateRemark = (id, remark) => {
 
 export const deleteAffiliateRemark = id => {
   return https().request(
-    `/affiliate/remark/${id}`,
-    Method.DELETE,
+    `/affiliate/remark/${id}?_method=DELETE`,
+    Method.POST,
     ContentType.form
   )
 }
@@ -235,8 +235,8 @@ export const getTransferRecords = (id, query) => {
 
 export const deleteSecurityQuestion = id => {
   return https().request(
-    `/affiliate/${id}/resetSecurityQuestion`,
-    Method.DELETE,
+    `/affiliate/${id}/resetSecurityQuestion?_method=DELETE`,
+    Method.POST,
     ContentType.form
   )
 }

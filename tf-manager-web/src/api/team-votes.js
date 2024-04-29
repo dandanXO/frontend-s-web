@@ -14,11 +14,11 @@ export const createTeamVotes = (query) => {
 };
 
 export const deleteTeamVotes = (id) => {
-  return https().request(`/team-votes/${id}`, Method.DELETE, id, ContentType.form);
+  return https().request(`/team-votes/${id}?_method=DELETE`, Method.POST, id, ContentType.form);
 };
 
 export const updateVotes = (vote) => {
-  return https().request(`/team-votes/${vote.id}/update-votes?virtualVotes=${vote.totalVotesVirtual}`, Method.PUT, {}, ContentType.form);
+  return https().request(`/team-votes/${vote.id}/update-votes?virtualVotes=${vote.totalVotesVirtual}?_method=PUT`, Method.POST, {}, ContentType.form);
 };
 
 export const updateAwards = (vote) => {
@@ -30,7 +30,7 @@ export const getTeamVotesRecord = (query) => {
 };
 
 export const cancelTeamVotesRecord = async (id) => {
-  await https().request(`/team-votes/record/${id}/cancel`, Method.PUT, id, ContentType.form);
+  await https().request(`/team-votes/record/${id}/cancel?_method=PUT`, Method.POST, id, ContentType.form);
 };
 
 export const getTeamListSimple = () => {

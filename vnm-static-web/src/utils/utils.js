@@ -46,9 +46,9 @@ export const displayBalance = (balance) => {
     }
   }
 
-  if(numberDec){
-    return formattedNumber + "." + numberDec;
-  }
+  // if(numberDec){
+  //   return formattedNumber + "." + numberDec;
+  // }
   return formattedNumber;
 };
 

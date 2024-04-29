@@ -15,27 +15,35 @@
 }
 .content {
     position: relative;
-    top: 40%;
+    bottom: 0%;
+    top: 0px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-height: 640px;
 }
 a.logo {
-    display: block;
-    width: 90px;
-    height: 90px;
+    display: flex;
+    width: 70px;
+    height: 70px;
     margin: 0 auto;
 }
 a.logo img{
     border-radius:12px;
+    width:100%;
+    height: auto;
 }
 .remind h3 {
-    font-size: 26px;
+    font-size: 24px;
     font-family: "微软雅黑";
     color: #333333;
     text-align: center;
-    margin-top: 0.2rem;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 .remind-txt {
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     color: #7e7e7e;
 }
@@ -57,16 +65,20 @@ a.logo img{
     border-radius: 20px;
     line-height: 40px;
 }
+.load a:active{
+    filter:brightness(0.86);
+    transform: translate(0, 1px);
+}
 .load--2 {
     margin-top: 10px;
 }
 .tuto {
     width: 100%;
-    font-size: 0.28rem;
+    font-size: 16px;
     font-weight: bold;
     color: #333333;
     text-align: center;
-    margin-top: 0.28rem;
+    margin-top: 0px;
 }
 #consult {
     display: block;
@@ -75,7 +87,7 @@ a.logo img{
     height: 0.18rem;
     margin: 0 auto;
     margin-top: 0.18rem;
-    background: url("../images/down.png") no-repeat;
+    /*background: url("../images/down.png") no-repeat;*/
     background-size: 100%;
 }
 .torial {

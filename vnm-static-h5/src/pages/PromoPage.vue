@@ -123,7 +123,7 @@
                 />
               </div>
               <div class="inner">
-                <h2>{{ selectedPromo.title }}</h2>
+                <!-- <h2>{{ selectedPromo.title }}</h2> -->
 
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -374,15 +374,15 @@ export default defineComponent({
     const getPromoLabel = (labelType) => {
       switch (labelType) {
         case 0:
-          return "NEW Mới nhất";
+          return "Mới nhất";
         case 1:
-          return "HOT Phổ biến";
+          return "Hot";
         case 3:
-          return "RECOMMEND Đề xuất";
+          return "Đề xuất";
         case 4:
-          return "DAILY Hằng ngày";
+          return "Hàng ngày";
         case 5:
-          return "NEWBIE Người mới";
+          return "Thành viên mới";
         case 6:
           return "TIME Thời gian";
         default:
@@ -562,6 +562,7 @@ export default defineComponent({
             font-weight: bold;
             font-size: 1rem;
             max-width: 160px;
+            font-family: 'Roboto';
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);

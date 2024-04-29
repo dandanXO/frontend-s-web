@@ -439,7 +439,7 @@ export default defineComponent({
 
     const timerBalance = ref();
     const mainWallet = computed(() => {
-      return store.balance.toFixed(2);
+      return store.balance.toLocaleString("en-US", { maximumFractionDigits: 0 });
     });
     const getVersionNo = async () => {
       if (store.getDeviceType() == "ANDROID") {
@@ -474,7 +474,7 @@ export default defineComponent({
 
     onMounted(() => {
       getBalance();
-      store.getBalance();
+      // store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
       getPromoImage();

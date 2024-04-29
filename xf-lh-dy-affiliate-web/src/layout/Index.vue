@@ -1,18 +1,20 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div class="fixed-header">
-      <Navbar />
+  <ElConfigProvider :locale="locale">
+    <div :class="classObj" class="app-wrapper">
+      <div class="fixed-header">
+        <Navbar />
+      </div>
+      <div
+        v-if="classObj.mobile && sidebar.opened"
+        class="drawer-bg"
+        @click="handleClickOutside"
+      />
+      <div class="main-container">
+        <Sidebar class="sidebar-container" />
+        <AppMain />
+      </div>
     </div>
-    <div
-      v-if="classObj.mobile && sidebar.opened"
-      class="drawer-bg"
-      @click="handleClickOutside"
-    />
-    <div class="main-container">
-      <Sidebar class="sidebar-container" />
-      <AppMain />
-    </div>
-  </div>
+  </ElConfigProvider>
 </template>
 
 <script>
@@ -23,9 +25,14 @@ import {
   onBeforeUnmount,
   onMounted,
   reactive,
-  toRefs
+  toRefs,
 } from 'vue'
 import { useStore } from '@/store'
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import en from 'element-plus/es/locale/lang/en'
+import vi from 'element-plus/es/locale/lang/vi'
+import th from 'element-plus/es/locale/lang/th'
 import { AppActionTypes } from '@/store/modules/app/action-types'
 import { AppMain, Navbar, Sidebar } from './components'
 import resize from './resize'
@@ -36,6 +43,7 @@ export default defineComponent({
     AppMain,
     Navbar,
     Sidebar,
+    ElConfigProvider,
   },
   setup() {
     const store = useStore()
@@ -73,10 +81,24 @@ export default defineComponent({
     onBeforeUnmount(() => {
       removeEventListenerResize()
     })
+
+    const localeMap = {
+      zh: zhCn,
+      en: en,
+      vi: vi,
+      th: th,
+    }
+
+    const locale = computed(() => {
+      const storedLocale = localStorage.getItem('languageLocale')
+      return localeMap[storedLocale] || en // Default to English if not found
+    })
+
     return {
       classObj,
       sidebar,
       ...toRefs(state),
+      locale,
     }
   },
 })
@@ -105,7 +127,7 @@ export default defineComponent({
   transition: margin-left 0.28s;
   display: flex;
   position: relative;
-  background: #F3F8FC;
+  background: #f3f8fc;
   // navbar height = 50px;
   margin-top: 50px;
   padding: 20px;

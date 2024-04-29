@@ -262,7 +262,7 @@ const getInnerCode = () => {
   innerCaptchaCode.value = "";
 
   api
-    .get("/member/verificationCode")
+    .get("/member/verificationEasyCode")
     .then((response) => {
       if (response.code === 0) {
         phoneVerificationImg.value = "data:image/png;base64," + response.data.img;

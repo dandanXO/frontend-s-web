@@ -13,7 +13,7 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
         />
@@ -33,6 +33,13 @@
           @click="resetQuery()"
         >
           {{ t('fields.reset') }}
+        </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:member:detail']"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
         </el-button>
       </div>
     </div>
@@ -185,16 +192,35 @@
         @size-change="loadMemberMoneyChange(true)"
       />
     </el-card>
+
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue'
 import moment from 'moment'
-import { getMemberMoneyChangeList } from '../../../../../api/member'
+import { getMemberMoneyChangeList, requestMemberMoneyChangeExport } from '../../../../../api/member'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
+import { useStore } from "@/store";
+import { useRoute } from "vue-router";
+
+const uiControl = reactive({
+  messageVisible: false,
+});
 
 const props = defineProps({
   mbrId: {
@@ -210,6 +236,7 @@ const props = defineProps({
 const { t } = useI18n()
 const shortcuts = getShortcuts(t);
 const startDate = new Date()
+const store = useStore()
 startDate.setDate(startDate.getDate() - 2)
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
@@ -221,6 +248,23 @@ const request = reactive({
   orderBy: 'recordTime',
   sortType: 'DESC',
 })
+
+const route = useRoute()
+const site = reactive({
+  id: route.query.site
+});
+
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.recordTime = [defaultStartDate, defaultEndDate];
+  }
+}
 
 function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
@@ -246,16 +290,6 @@ const sort = column => {
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
-}
-
-function disabledDate(time) {
-  return (
-    time.getTime() <
-      moment(new Date())
-        .subtract(2, 'months')
-        .startOf('month')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
 }
 
 async function loadMemberMoneyChange(frombutton) {
@@ -287,6 +321,33 @@ async function loadMemberMoneyChange(frombutton) {
   page.records = ret.records
   page.pagingState = ret.pagingState
   page.loading = false
+}
+
+async function requestExportExcel() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = JSON.parse(JSON.stringify(request.recordTime));
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], props.timeZone, 'start');
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], props.timeZone, 'end');
+      query.recordTime = query.recordTime.join(',')
+    }
+  }
+  query.siteId = site.id;
+  query.memberId = props.mbrId
+  query.pagingState = page.pagingState
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await requestMemberMoneyChangeExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
 }
 
 onMounted(() => {

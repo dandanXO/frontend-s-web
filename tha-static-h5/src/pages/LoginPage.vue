@@ -8,9 +8,9 @@
         v-model="loginForm.loginName"
         :label="$t('lang.input_username')"
         :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
         ]"
         color="white"
         autocomplete="username"
@@ -105,14 +105,14 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import { Loading, LocalStorage, Platform, SessionStorage, useQuasar } from "quasar";
+import { Loading, LocalStorage, Platform, useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import qs from "qs";
 import { isMobile, isH5 } from "boot/utils";
 import { uuid } from "vue-uuid";
 import axios from "axios";
+import { App } from "@capacitor/app";
 
 export default defineComponent({
   name: "LoginPage",
@@ -181,16 +181,9 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
+      const appVer = appVersionNo.value;
+      const sidParam = store.visitorId;
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
         loginNameRef.value.validate();
         passwordRef.value.validate();
         // verificationRef.value.validate();
@@ -206,7 +199,8 @@ export default defineComponent({
               password: loginForm.password,
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId
+              codeId: loginForm.codeId,
+              ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
             })
             .then(() => {
               $q.loading.hide();
@@ -267,16 +261,9 @@ export default defineComponent({
             if (res.data && res.data.access_token) {
               const siteId = process.env.SITEID;
               const accessToken = res.data.access_token;
-              const fpPromise = FingerprintJS.load();
+              const sidParam = store.visitorId;
+
               (async () => {
-                const fp = await fpPromise;
-                const result = await fp.get();
-                const excludes = { value: ["timezone", "timeZoneOffset"] };
-                const allComponents = { ...result.components };
-                excludes.value.forEach((element) => {
-                  delete allComponents[element];
-                });
-                const sidParam = FingerprintJS.hashComponents(allComponents);
                 var regDevice = Platform.is.mobile ? "H5" : "WEB";
                 if ("standalone" in window.navigator && window.navigator.standalone) {
                   regDevice = "IOS";
@@ -331,10 +318,18 @@ export default defineComponent({
       window.open(url, "_blank");
     };
 
+    const appVersionNo = ref("");
+    const getVersionNo = async () => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        const info = await App.getInfo();
+        appVersionNo.value = info.version + "." + info.build;
+      }
+    };
+
     onMounted(() => {
       getCode();
       checkRememberPwd();
-
+      getVersionNo();
       getLineCode();
     });
 

@@ -18,6 +18,7 @@
       "
     />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
+    <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo' && !isCommonPromo" />
     <HongBaoYu2024Promo
       :promo-code="list.promoCode"
       v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
@@ -202,7 +203,7 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
-
+import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -217,7 +218,8 @@ export default defineComponent({
     WelcomeTaskPromo,
     PrivilegeInvite,
     // CnySpinWheelPromo,
-    BonusSpinWheelPromo
+    BonusSpinWheelPromo,
+    ReturnPromo
   },
   props: {
     list: {
@@ -276,6 +278,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "cny-spinwheel" ||
+      this.list.redirectUrl === "xf-return-promo" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

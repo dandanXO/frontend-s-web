@@ -18,8 +18,8 @@
           :start-placeholder="t('fields.startDate')"
           :end-placeholder="t('fields.endDate')"
           style="margin-left: 10px; width: 300px"
+          @change="checkDateValue"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -109,6 +109,7 @@ import { getMemberPrivilegeRecord } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 
 const props = defineProps({
   mbrId: {
@@ -135,6 +136,18 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate]
 });
 
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.recordTime = [defaultStartDate, defaultEndDate];
+  }
+}
+
 function resetQuery() {
   request.privilegeName = null;
   request.recordTime = [defaultStartDate, defaultEndDate];
@@ -159,10 +172,6 @@ const sort = (column) => {
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD');
-}
-
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
 }
 
 async function loadMemberPrivilegeRecord() {

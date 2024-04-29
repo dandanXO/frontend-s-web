@@ -1,14 +1,14 @@
 import { createI18n } from "vue-i18n";
-import vn from "./vn";
+import vi from "./vi";
 import cn from "./cn";
 import en from "./en";
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("languageLocale") || "vn",
+  locale: localStorage.getItem("languageLocale") || "vi",
   allowComposition: true,
   messages: {
-    vn,
+    vi,
     en,
     cn
   },

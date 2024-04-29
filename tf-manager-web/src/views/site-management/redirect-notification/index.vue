@@ -105,13 +105,22 @@
             :type="isExpiredTime(item) ? 'danger' : ''"
             style="margin-right: 5px; margin-bottom: 5px"
           >
-            {{ formatPopUpTime(item) }}
+            {{ item }}
           </el-tag>
           <el-date-picker
             v-if="uiControl.popUpTimePickerVisible"
             v-model="popUpTime"
             type="datetime"
-            placeholder="Pick a Date"
+            :placeholder="t('fields.startDate')"
+            format="YYYY-MM-DD HH:mm:ss"
+            @change="addPopUpTime"
+            :disabled-date="disabledTime"
+          />
+          <el-date-picker
+            v-if="uiControl.popUpTimePickerVisible"
+            v-model="popUpTimeEnd"
+            type="datetime"
+            :placeholder="t('fields.endDate')"
             format="YYYY-MM-DD HH:mm:ss"
             @change="addPopUpTime"
             :disabled-date="disabledTime"
@@ -304,6 +313,7 @@ const ways = reactive({
 })
 
 const popUpTime = ref(null)
+const popUpTimeEnd = ref(null);
 
 let chooseSetting = []
 
@@ -360,7 +370,10 @@ function removePopUpTime(item) {
 }
 
 function isExpiredTime(dateTime) {
-  if (dateTime < moment().format("YYYY-MM-DD-HH:mm")) {
+  const startDate = dateTime[0];
+  const endDate = dateTime[1];
+  // console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
+  if (endDate < moment().format("YYYY-MM-DD HH:mm:ss") || endDate < startDate) {
     return true;
   }
   return false;
@@ -370,16 +383,21 @@ function formatPopUpTime(date) {
   return moment(date).format("YYYY-MM-DD HH:mm:ss");
 }
 
+function formatFullTime(startDate, endDate) {
+  return [moment(startDate).format("YYYY-MM-DD HH:mm:ss"), moment(endDate).format("YYYY-MM-DD HH:mm:ss")];
+}
+
 function addPopUpTime() {
-  if (popUpTime.value) {
+  if (popUpTime.value && popUpTimeEnd.value) {
     const popUpTimeList = form.popUpTimes === null ? [] : JSON.parse(form.popUpTimes);
-    if (popUpTimeList.includes(formatPopUpTime(popUpTime.value))) {
+    if (popUpTimeList.includes(formatFullTime(popUpTime.value, popUpTimeEnd.value))) {
       ElMessage({ message: t('message.timeExist'), type: 'error' });
     } else {
-      popUpTimeList.push(formatPopUpTime(popUpTime.value));
+      popUpTimeList.push(formatFullTime(popUpTime.value, popUpTimeEnd.value));
       form.popUpTimes = JSON.stringify(popUpTimeList.sort());
     }
     popUpTime.value = null;
+    popUpTimeEnd.value = null;
     uiControl.popUpTimePickerVisible = false;
   }
 }
@@ -477,7 +495,7 @@ async function removeSetting(setting) {
 }
 
 function submit() {
-  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0] : null
+  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0][0] : null
   const formCopy = { ...form }
   formCopy.eligibleWays = JSON.stringify(formCopy.eligibleWays)
   if (uiControl.dialogType === 'CREATE') {

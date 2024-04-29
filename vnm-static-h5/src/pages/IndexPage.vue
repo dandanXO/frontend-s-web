@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="TF88" src="~assets/logo-web.svg" style="width: 200px" />
+    <img alt="TF88" src="~assets/logo-web-fire.svg" style="width: 200px" />
   </q-page>
 </template>
 

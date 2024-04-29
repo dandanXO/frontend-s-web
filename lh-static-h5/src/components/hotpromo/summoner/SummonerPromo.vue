@@ -17,7 +17,7 @@
       <q-tab-panels v-model="tabPosition" class="summoner-tabs">
         <q-tab-panel name="first" label="精英召唤">
           <div class="main-desc">
-            唤醒人每日存款≥500元，唤醒人与被唤醒人都可活动对应的存款彩金。
+            唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -67,9 +67,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
           <div class="summon-btn" @click="claimReward" style="margin-bottom:16px;">
             <img src="../../../assets/images/promo/hotpromo/summoner/claim-summon-btn.png">
           </div>
@@ -86,15 +86,15 @@
                 唤醒人：<br>
                 VIP3或以上等级会员符 合唤醒人身份<br><br>
                 被唤醒人：<br>
-                VIP1会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br><br>
+                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br><br>
               </div>
-              <p>2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥500元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；</p>
+              <p>2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；</p>
               <p>3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；</p>
               <p>4. 彩金需点击活动页面【点击领取】按钮领取彩金，彩金3倍流水即可提款；</p>
-              <p>5. 本活动不与【精英回归 再战未来】活动共享彩金；</p>
-              <p>6. 同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；</p>
-              <p>7. 任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单</p>
-              <p>8. 为避免文字理解差异，本活动最终解释权归雷火电竞所有;</p>
+<!--              <p>5. 本活动不与【精英回归 再战未来】活动共享彩金；</p>-->
+              <p>5. 同一姓名、手机号、银行卡号、邮箱地址等信息的用户账号，仅可参与一次，若有违规者，将不享受此优惠。会员与被邀请会员禁止注册IP一致，设备一致；</p>
+              <p>6. 任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单</p>
+              <p>7. 为避免文字理解差异，本活动最终解释权归雷火电竞所有;</p>
             </div>
           </div>
         </q-tab-panel>
@@ -141,9 +141,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
           <div class="findfriend" @click="getSummonRecord">
             <img src="../../../assets/images/promo/hotpromo/summoner/findfriend-btn.png">
           </div>
@@ -197,9 +197,9 @@
               </tr>
             </table>
           </div>
-          <router-link to="/account/invite" class="summon-btn">
+          <div @click="goToInvite" class="summon-btn">
             <img src="../../../assets/images/promo/hotpromo/summoner/summon-btn.png">
-          </router-link>
+          </div>
 
           <div class="rules">
             <p>
@@ -230,6 +230,9 @@
 import { ref, reactive, onMounted } from 'vue'
 import { eventapi } from "src/boot/axios";
 import { useQuasar} from "quasar";
+import { useRouter } from "vue-router";
+
+const router= useRouter()
 const $q = useQuasar();
 var qs = require("qs");
 const tabPosition = ref('first')
@@ -269,6 +272,15 @@ const getSummonRecord = () => {
     .catch((err) => {
       console.log("here", err);
     });
+}
+
+
+const goToInvite = () => {
+  if(window.location.pathname === "/promotion"){
+    document.location.href = "app://invitefriend";
+  }else{
+    router.push("/account/invite#summon-share");
+  }
 }
 
 const claimReward = () => {

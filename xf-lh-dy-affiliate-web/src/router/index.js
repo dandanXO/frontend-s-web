@@ -62,6 +62,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/ind2/login',
+    name: 'IW2 Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/ind2/login/index.vue'
+      ),
+  },
+  {
+    path: '/ind2/register',
+    name: 'IW2 Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/ind2/register/index.vue'
+      ),
+  },
+  {
     path: '/vi/login',
     name: 'VNM Login',
     meta: { hidden: true },

@@ -108,7 +108,7 @@
                 val >= selectedWithdrawalMethod.withdrawMin || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
               (val) =>
                 val <= selectedWithdrawalMethod.withdrawMax || $t('lang.withdraw_please_enter_correct_withdraw_amount'),
-              (val) => (val && /^([1-9][0-9]*)$/.test(val))  || $t('lang.withdraw_amt_no_decimal_allow'),
+              (val) => (val && /^([1-9][0-9]*)$/.test(val)) || $t('lang.withdraw_amt_no_decimal_allow'),
               isValidUSDTAmt
             ]"
             clearable
@@ -191,10 +191,12 @@
                 {{ store.currency.value }}
               </span>
             </div>
-            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center; color: #17cd27;">
               <span style="flex: 1">{{ $t("lang.withdraw_estimatedarrival") }}：</span>
               <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
+                {{  selectedWithdrawalMethod && (withdrawInfo.amount < selectedWithdrawalMethod.withdrawMin || (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) < 0)
+                ? "0.00"
+                : (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate - 1).toFixed(2) }}
                 USDT
               </span>
             </div>
@@ -394,6 +396,15 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
+
+            // FB tracking :: login-withdrawal
+            if (
+                  window.location.href.indexOf("https://tf88king.com") > -1 ||
+                  window.location.href.indexOf("https://tfgame88.com") > -1
+                ) {
+                  fbq("track", "login-withdrawal");
+                }
+
 
             withdrawInfo.amount = "";
             withdrawInfo.withdrawPassword = "";

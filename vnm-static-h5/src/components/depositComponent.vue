@@ -549,10 +549,11 @@ async function pDepo(deposit) {
       // console.log(res)
 
       if (res.code === 0) {
-        console.log("After SDubmit");
         console.log(res);
-
         const response = res.data.result;
+
+
+
         if (res.data.result.payResultType === "OFFLINE") {
           btnLoading.value = false;
         }
@@ -590,7 +591,7 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  message: t("lang.deposit_allowpopups"),
                   icon: "report_problem"
                 });
                 btnLoading.value = false;
@@ -654,6 +655,11 @@ async function pDepo(deposit) {
             }
           }
         }
+
+        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
       } else {
         $q.notify({
           color: "negative",

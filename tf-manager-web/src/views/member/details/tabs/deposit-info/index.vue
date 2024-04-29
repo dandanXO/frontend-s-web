@@ -13,7 +13,7 @@
           :end-placeholder="t('fields.endDate')"
           style="margin-right: 10px; width: 300px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
+          @change="checkDateValue"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
@@ -230,6 +230,7 @@ import { getMemberDepositRecord, getMemberDepositRecordTotalAmount, getMemberDep
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 const props = defineProps({
   mbrId: {
     type: String,
@@ -281,8 +282,16 @@ const sort = column => {
   loadDepositInfo()
 }
 
-function disabledDate(time) {
-  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.depositDate = [defaultStartDate, defaultEndDate];
+  }
 }
 
 function resetQuery() {
@@ -313,6 +322,8 @@ async function loadDepositInfo() {
   if (page.records.length !== 0) {
     const { data: amount } = await getMemberDepositRecordTotalAmount(props.mbrId, query);
     page.totalDepositAmount = amount;
+  } else {
+    page.totalDepositAmount = 0;
   }
   const { data: success } = await getMemberDepositSuccessRecord(props.mbrId, query);
   page.totalSuccessDepositAmount = success.totalAmount

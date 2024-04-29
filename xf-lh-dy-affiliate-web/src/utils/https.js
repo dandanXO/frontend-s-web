@@ -4,7 +4,7 @@ import { useStore } from "@/store";
 import { ResponseCode } from "../api/response";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import _cloneDeep from 'lodash/cloneDeep';
-// import { useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import i18n from "../i18n/index";
 
 const toRawType = (value) => {
@@ -48,15 +48,29 @@ const onResponse = (response) => {
     res = JSON.parse(response.data);
   }
   if (res.code !== ResponseCode.SUCCESS) {
-    // debugger;
+    const store = useStore()
+    const router = useRouter()
+    const siteId = store.state.user.siteId
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
         type: "error"
       });
-      const store = useStore()
       store.dispatch(UserActionTypes.ACTION_LOGOUT);
-      location.reload();
+      if (siteId === "1" || siteId === 1) {
+        router.go("/xf/login")
+      } else if (siteId === "3" || siteId === 3) {
+        router.go("/th/login")
+      } else if (siteId === "5" || siteId === 5) {
+        router.go("/ind/login")
+      } else if (siteId === "6" || siteId === 6) {
+        router.go("/dy/login")
+      } else if (siteId === "7" || siteId === 7) {
+        router.go("/lh/login")
+      } else if (siteId === "8" || siteId === 8) {
+        router.go("/vi/login")
+      }
+      location.reload()
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
       res.code === ResponseCode.ERROR_TOKEN_MISSED ||
       res.code === ResponseCode.ERROR_TOKEN_INVALID ||
@@ -66,15 +80,39 @@ const onResponse = (response) => {
         message: "Please re-login. Code: " + res.code,
         type: "error"
       });
-      const store = useStore()
       store.dispatch(UserActionTypes.ACTION_LOGOUT);
-      location.reload();
+      if (siteId === "1" || siteId === 1) {
+        router.go("/xf/login")
+      } else if (siteId === "3" || siteId === 3) {
+        router.go("/th/login")
+      } else if (siteId === "5" || siteId === 5) {
+        router.go("/ind/login")
+      } else if (siteId === "6" || siteId === 6) {
+        router.go("/dy/login")
+      } else if (siteId === "7" || siteId === 7) {
+        router.go("/lh/login")
+      } else if (siteId === "8" || siteId === 8) {
+        router.go("/vi/login")
+      }
+      location.reload()
     } else {
       // const router = useRouter()
       if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED || res.code === ResponseCode.ERROR_TOKEN_INVALID) {
-        const store = useStore()
         store.dispatch(UserActionTypes.ACTION_LOGOUT);
-        location.reload();
+        if (siteId === "1" || siteId === 1) {
+          router.go("/xf/login")
+        } else if (siteId === "3" || siteId === 3) {
+          router.go("/th/login")
+        } else if (siteId === "5" || siteId === 5) {
+          router.go("/ind/login")
+        } else if (siteId === "6" || siteId === 6) {
+          router.go("/dy/login")
+        } else if (siteId === "7" || siteId === 7) {
+          router.go("/lh/login")
+        } else if (siteId === "8" || siteId === 8) {
+          router.go("/vi/login")
+        }
+        location.reload()
       }
       if (res.code === 11000) {
         ElMessage({
@@ -108,9 +146,11 @@ const https = (api) => {
   const currentHost = window.location.host
   const thaiHost = "affiliate-web.monemental.com"
   const indHost = "ind-nfaet6t.exerpsison.com"
+  const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const vnmHost = "vnm-affiliate.th80to83w1.com"
+  // const testLocal = "localhost:9998"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API;
@@ -121,6 +161,10 @@ const https = (api) => {
 
     case indHost:
       apiUrl = isAff ? process.env.VUE_APP_IND_RST_API : (isCr ? process.env.VUE_APP_IND_CR_API : process.env.VUE_APP_IND_BASE_API)
+      break
+
+    case ind2Host:
+      apiUrl = isAff ? process.env.VUE_APP_IND2_BASE_API : (isCr ? process.env.VUE_APP_IND2_CR_API : process.env.VUE_APP_IND2_BASE_API)
       break
 
     case lhHost:

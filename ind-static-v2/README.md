@@ -1,6 +1,14 @@
-# 789F App (ind-h5-project)
+# IndWin7 App (iw2-h5-project)
 
-India H5 APP
+India 2 (**IW2**) H5 APP
+
+- Node Version >= 16.17.0
+- H5 + Android APP
+
+### You might need to install Quasar cli first:
+```bash
+npm install -g @quasar/cli
+```
 
 ## Install the dependencies
 ```bash
@@ -88,7 +96,7 @@ npx cap run android -l --host=192.168.10.22 --port=9090
 
 ### File Directory.
 
-- WithDrawal Dialog :: src/components/WithdrawalComponent.vue
+- Withdrawal Dialog :: src/components/WithdrawalComponent.vue
 - Deposit Dialog :: src/components/depositComponent.vue
 - Message Page:: src/pages/account/MessageView.vue
 - Message Detail Page:: src/pages/account/MessageDetailView.vue

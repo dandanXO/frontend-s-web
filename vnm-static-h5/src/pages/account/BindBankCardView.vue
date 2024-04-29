@@ -291,7 +291,7 @@ const bankCardInfo = reactive({
 
 const validateBankLength = (val) => {
   if (!/^\d+$/.test(val)) return t("lang.bd_please_enter_digit_only");
-  // return (val.length > 15 && val.length < 20) || t("lang.bd_length_between_16_19");
+  return (val.length > 5 && val.length < 21) || t("lang.bd_length_between_8_20");
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -309,7 +309,7 @@ const getInnerCode = () => {
   innerCaptchaCode.value = "";
 
   api
-    .get("/member/verificationCode")
+    .get("/member/verificationEasyCode")
     .then((response) => {
       if (response.code === 0) {
         phoneVerificationImg.value = "data:image/png;base64," + response.data.img;

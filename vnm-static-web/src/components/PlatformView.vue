@@ -83,8 +83,8 @@
 
                 <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
                    class="maintenance-p">
-                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("DD/MM/YYYY hh:mm A") }} -
+                  {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY hh:mm A") }}</em>
                 </p>
                 <p v-else>
                   &nbsp;
@@ -284,7 +284,7 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+  filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
     return { ...matchingItem, ...item1 };
   });
@@ -343,8 +343,8 @@ const switchPlat = (plat) => {
 
 const getPlatGameList = () => {
   if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
-    getPlatformList()
-      .then((data) => {
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+    getFn().then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);

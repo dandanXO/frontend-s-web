@@ -72,17 +72,19 @@ export default route(function (/* { store, ssrContext } */) {
       // console.log("user", user.token);
     }
 
+    
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      if (to.query.reg) {
-        next(`/login?register`);
-      } else {
-        next(`/`);
-      }
+      // if (to.query.reg) {
+      //   next(`/register`);
+      // } else {
+      //   next(`/`);
+      // }
+      next(`/register`);
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/login?register`);
+      next(`/register`);
     }
 
     // if (to.name === "RegisterPage") {

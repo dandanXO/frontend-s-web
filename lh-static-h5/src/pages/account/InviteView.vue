@@ -7,7 +7,7 @@
           <div class="top-line1-content">
             您通过推广链接邀请的用户注册并存款，您将获得最高累计
             <span class="prize-span">2,000</span>
-            元的奖励。<router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
+            元的奖励。<router-link to="/promo?name=lh1-invite">活动详情</router-link>
           </div>
         </div>
       </div>
@@ -54,13 +54,11 @@
     </div>
 
     <div class="personal-content-box" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
-      <div class="shadow-box">
+      <div class="shadow-box" id="summon-share">
         <div class="qr-title">唤醒分享</div>
         <div class="title-top-line1">
           <div class="top-line1-content">
-            您通过唤醒链接邀请的用户注册并存款，您将获得最高累计
-            <span class="prize-span">2,000</span>
-            元的奖励。<router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
+            您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。<router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
           </div>
         </div>
       </div>
@@ -98,12 +96,12 @@
   </q-page>
 </template>
 <script lang="js">
-import {computed, defineComponent, onMounted, ref} from "vue";
+import {computed, defineComponent, onActivated, onMounted, ref} from "vue";
 import VueQRCodeComponent from 'vue-qrcode-component'
 import {userStore} from "src/stores";
-import {useQuasar, Platform} from "quasar";
+import {useQuasar, Platform, scroll} from "quasar";
 import {api, eventapi} from "boot/axios"
-
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "ShareView",
@@ -111,6 +109,8 @@ export default defineComponent({
     VueQRCodeComponent
   },
   setup() {
+    const { getScrollTarget, setVerticalScrollPosition } = scroll;
+    const route = useRoute();
     const $q = useQuasar();
     const store = userStore();
     const selfTgurl = ref("");
@@ -135,6 +135,15 @@ export default defineComponent({
     const SummonQrCode = computed(() => {
       return SummonUrl.value;
     });
+
+    function scrollToElement (el) {
+      const target = getScrollTarget(el)
+      const offset = el.offsetTop
+      const duration = 0;
+      setTimeout(() => {
+        setVerticalScrollPosition(target, offset, duration)
+      },100)
+    }
 
     const copyText = (text) => {
       copyToClipboard(text);
@@ -204,8 +213,13 @@ export default defineComponent({
           refTotalSummon.value = res.data;
         }
       });
+    })
 
-
+    onActivated(() => {
+      // scroll to #summon-share section if route has hash pattern /account/invite#summon-share
+      if(route.hash === '#summon-share') {
+        scrollToElement(document.getElementById('summon-share'));
+      }
     })
 
     return {

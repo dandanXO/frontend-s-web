@@ -105,14 +105,34 @@ onMounted(() => {
   loadNews();
 });
 </script>
-<style lang="scss">
+<style  lang="scss">
 .news-section {
   max-width: 1350px;
   margin: 50px auto;
+
+  .el-tabs{
+    margin-top: -40px;
+  }
+
+  .el-tabs__nav-wrap{
+    padding-left: 140px;
+    padding-bottom: 10px;
+  }
+
+  .el-tabs__item{
+   padding: 0 20px !important;
+  }
+
+  .el-tabs__item.is-active:after{
+    width: 100px;
+    height: 3px;
+  }
+
   .el-card {
     border-radius: 15px;
   }
   .news-listing {
+    font-family: 'Roboto';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;

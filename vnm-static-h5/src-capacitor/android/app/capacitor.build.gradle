@@ -14,7 +14,7 @@ dependencies {
     implementation project(':capacitor-clipboard')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-splash-screen')
-
+    implementation "androidx.webkit:webkit:1.4.0"
 }
 
 

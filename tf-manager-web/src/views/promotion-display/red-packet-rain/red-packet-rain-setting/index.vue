@@ -331,6 +331,15 @@
             + {{ t('fields.add_new') }}
           </el-button>
         </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinDayBetAmount')" prop="minDayBetAmount" style="width: 600px;">
+          $
+          <el-input-number
+            v-model="form.minDayBetAmount"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.redPacketMinDayDeposit')" prop="redPacketMinDayDeposit" style="width: 600px;">
           $
           <el-input-number
@@ -721,6 +730,7 @@ const form = reactive({
   lastDigitRules: [],
   eligibleWays: [],
   status: null,
+  minDayBetAmount: 0,
 })
 
 const vipRuleForm = reactive({
