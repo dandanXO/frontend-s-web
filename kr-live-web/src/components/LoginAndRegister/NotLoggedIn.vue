@@ -46,7 +46,7 @@ const onLoginSubmit = () => {
       .memberLogin({
         loginName: loginForm.loginName.trim(),
         password: loginForm.password,
-        sid: "",
+        sid: store.visitorId,
         captchaCode: loginForm.captchaCode,
         codeId: loginForm.codeId
       })
