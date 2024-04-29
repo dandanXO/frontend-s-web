@@ -1,5 +1,5 @@
 <template>
-  <div class="platform-menu-container">
+  <div class="platform-menu-container" :style="checkPlatLength()">
     <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
     <template v-for="(item, index) in platformsListDisplay" :key="index">
       <!--      <router-link :to="`${props.platformName}?plat=${item.code}`">-->
@@ -7,12 +7,12 @@
            :class="item.underMaintenance === true ? 'maintenance' : ''">
 
         <div class="maintenance-box" v-if="item.underMaintenance === true">
-          <p>维护中</p>
+          <p>{{ $t('maintenance.currentlyMaintaining') }}</p>
           <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-            维护时间:<br/> {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }}<br/>-
-            {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
+            {{ $t('common.maintenanceTime') }}:<br/> {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }}<br/>-
+            {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY HH:mm") }}
           </p>
-          <p class="small-size">请先前往其他场馆娱乐</p>
+<!--          <p class="small-size">{{ $t('maintenance.otherPlatFirst') }}</p>-->
         </div>
 
         <!-- <div class="platform-menu-title" v-html="item.cnname" />
@@ -75,6 +75,17 @@ const getPlatformList = () => {
 //   return props.platforms.filter((nav) => platformsListDisplay.value.some((platform) => platform.code === nav.code));
 // });
 
+const checkPlatLength = () => {
+ if (props.platformType === 'slot') { 
+   if (platformsListDisplay.value.length === 8) {
+    return 'max-width: 1200px'
+   } else if (platformsListDisplay.value.length > 8) {
+    return 'max-width: 1400px'
+   }
+ } else {
+  return ''
+  }
+}
 const router = useRouter();
 const gotoGame = (item, platformType) => {
   // debugger;

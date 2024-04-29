@@ -10,7 +10,7 @@ export const createWithdrawBank = (bank) => {
 };
 
 export const deleteWithdrawBank = (id) => {
-  return https().request(`/system-withdraw-bank/${id}`, Method.DELETE);
+  return https().request(`/system-withdraw-bank/${id}?_method=DELETE`, Method.POST);
 };
 
 export const getWithdrawPlatform = (bank) => {

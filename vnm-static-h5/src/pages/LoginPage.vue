@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-web.svg" />
+        <img alt="logo" src="../assets/logo-web-fire.svg" />
       </div>
 
       <div class="header-lang">
@@ -17,11 +17,12 @@
     </div>
 
     <div class="login-img">
-      <img src="../assets/images/login/login-img.png" />
+      <!-- <img src="../assets/images/login/login-img.png" />
       <div class="login-text">
         <div class="text-title">{{ $t("lang.login_title") }}</div>
         <div class="text-desc">{{ $t("lang.login_desc") }}</div>
-      </div>
+      </div> -->
+      <img :src="require(`../assets/images/login/login-img-${languageVal}.png`)" />
     </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
@@ -256,6 +257,8 @@ import LangOptions from "components/LangOptions";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "LoginPage",
@@ -263,6 +266,8 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const i18nStoreLanguage = i18nStore()
+    const { languageVal } = storeToRefs(i18nStoreLanguage)
     const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
@@ -288,7 +293,7 @@ export default defineComponent({
     const route = useRoute();
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -329,7 +334,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -567,7 +572,8 @@ export default defineComponent({
       telephoneRef,
       LangOptions,
       appVersionNo,
-      getVersionNo
+      getVersionNo,
+      languageVal
     };
   }
 });
@@ -635,7 +641,7 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
-      max-width: 300px;
+      max-width: 190px;
     }
 
     .login-text {

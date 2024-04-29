@@ -19,11 +19,7 @@
           ref="unbindBankCardNoRef"
           v-model="unbindBankCardNo"
           :label="unbindCardLabel()"
-          :rules="[
-            (val) =>
-              (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) ||
-              unbindCardLabel() + ' ' + $t('lang.incorrect')
-          ]"
+          :rules="[(val) => val == selectedUnbindBankCard.cardNumber || unbindCardLabel() + ' ' + $t('lang.incorrect')]"
         />
       </q-form>
       <div class="btnsreas">
@@ -245,7 +241,7 @@ const unbindBankCard = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "操作成功",
+        message: t("lang.bd_untie_success"),
         icon: "check_circle_outline"
       });
 

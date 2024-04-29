@@ -4,9 +4,26 @@
       <div class="search">
         <div>
           <el-select
+            v-model="request.siteId"
+            :placeholder="t('fields.site')"
+            @change="handleChangeSites()"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+          <el-select
+            v-if="
+              route.query.loginNameList !== null &&
+                route.query.loginNameList !== undefined
+            "
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
+            style="margin-left: 10px;"
           >
             <el-option
               v-for="aff in affiliateNames"
@@ -128,6 +145,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="withdrawCount"
+          :label="t('fields.withdrawCount')"
+          align="center"
+          width="120"
+        />
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
@@ -290,7 +313,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch, computed } from 'vue'
 import { hasPermission } from '../../../../utils/util'
 import moment from 'moment'
 import {
@@ -303,8 +326,12 @@ import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
 // import { formatInputTimeZone } from '@/utils/format-timeZone'
 import { useRoute } from 'vue-router'
+import { useStore } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const siteList = reactive({
   list: [],
 })
@@ -328,47 +355,65 @@ const request = reactive({
   loginNameList: null,
   affiliateCode: null,
   affiliateLevel: 'SUPER_AFFILIATE',
+  superiorLoginName: null,
 })
 
 const route = useRoute()
 const getFromRouter = reactive({
   loginNameList: route.query.loginNameList,
+  superiorLoginName: route.query.superiorLoginName,
 })
 
 const total = reactive({
   data: null,
 })
 
+function handleChangeSites() {
+  request.loginNameList = null
+  loadAffiliateList()
+}
+
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = 1
+  }
+  loadAffiliateList()
+}
+
+async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
+  const loginNameArray = getFromRouter.loginNameList.split(',')
   affiliateNames.value = affiliates
-    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
-    .map(a => {
-      const modifiedSuperiorName =
-        a.superiorAffiliateName !== null
-          ? a.superiorAffiliateName.replace('admin', '').trim()
-          : null
-
-      return {
-        name:
-          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
-            ? `${a.loginName} (${modifiedSuperiorName})`
-            : a.loginName,
-      }
-    })
+    .filter(
+      a =>
+        loginNameArray.includes(a.loginName) &&
+        a.affiliateLevel === 'SUPER_AFFILIATE'
+    )
+    .map(a => ({ name: a.loginName }))
 }
 
 let previouseLoginNameList = ref(null)
+let previousSuperiorLoginName = ref(null)
 
 async function loadSitesWithPreDefineAffiliate() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
-  const { data: affiliates } = await getAffiliateList(request.siteId)
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = 1
+  }
 
   if (
     route.query.loginNameList !== null &&
@@ -383,16 +428,18 @@ async function loadSitesWithPreDefineAffiliate() {
       previouseLoginNameList = route.query.loginNameList
       loadRecord()
     }
+  } else if (
+    route.query.superiorLoginName !== null &&
+    route.query.superiorLoginName
+  ) {
+    if (previousSuperiorLoginName.value !== null) {
+      resetQuery()
+      loadRecord()
+    } else {
+      previousSuperiorLoginName = route.query.superiorLoginName
+      loadRecord()
+    }
   }
-
-  const loginNameArray = getFromRouter.loginNameList.split(',')
-  affiliateNames.value = affiliates
-    .filter(
-      a =>
-        loginNameArray.includes(a.loginName) &&
-        a.affiliateLevel === 'SUPER_AFFILIATE'
-    )
-    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -403,7 +450,7 @@ function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
-        .subtract(2, 'months')
+        .subtract(3, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
@@ -413,6 +460,7 @@ function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.loginNameList = null
   request.affiliateCode = null
+  request.superiorLoginName = null
 }
 
 const page = reactive({
@@ -469,6 +517,10 @@ function checkQuery() {
     query.loginNameList = getFromRouter.loginNameList
   }
 
+  if (getFromRouter.superiorLoginName != null) {
+    query.superiorLoginName = getFromRouter.superiorLoginName
+  }
+
   query.affiliateLevel = request.affiliateLevel
 
   return query
@@ -479,6 +531,9 @@ async function loadRecord() {
   const query = checkQuery()
   const { data: ret } = await queryDailySummary(query)
   const { data: ret1 } = await queryDailySummaryTotal(query)
+
+  loadAffiliateList()
+
   total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
@@ -495,9 +550,15 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 11 || index === 12) {
+        if (
+          index === 4 ||
+          index === 6 ||
+          index === 7 ||
+          index === 12 ||
+          index === 13
+        ) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
@@ -529,6 +590,13 @@ onMounted(async () => {
       route.query.loginNameList !== undefined
     ) {
       getFromRouter.loginNameList = route.query.loginNameList
+      loadSitesWithPreDefineAffiliate()
+      resetQuery()
+    } else if (
+      route.query.superiorLoginName !== null &&
+      route.query.superiorLoginName !== undefined
+    ) {
+      getFromRouter.superiorLoginName = route.query.superiorLoginName
       loadSitesWithPreDefineAffiliate()
       resetQuery()
     } else {

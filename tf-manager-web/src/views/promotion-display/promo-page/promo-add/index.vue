@@ -551,6 +551,7 @@ const promoTypes = [
   { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
   { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
   { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
   { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
 ]
 

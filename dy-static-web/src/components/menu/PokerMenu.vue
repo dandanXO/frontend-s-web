@@ -21,7 +21,7 @@
             </span>
           </p>
         </div>
-        
+
         <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
         <div class="contents">
           <p class="platform-title">{{ nav.label }}棋牌</p>
@@ -67,6 +67,14 @@ export default defineComponent({
         slogan: "崭新玩法 感受精彩",
         gameCode: "",
         percentage: "-232px"
+      },
+      {
+        code: "LEG",
+        image: "leg",
+        label: "乐游",
+        slogan: "非同凡响 极致体验",
+        gameCode: "",
+        percentage: "-464px"
       }
     ];
 

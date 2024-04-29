@@ -370,6 +370,10 @@ async function loadPrivilege(val) {
           } else {
             unselectedPrivileges.value.push(p);
             hasPrivilege.value = true;
+
+            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === "") {
+              selectedPrivilege.value = p;
+            }
           }
         }
       });

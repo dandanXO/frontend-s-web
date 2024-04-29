@@ -74,6 +74,18 @@
               >
                 <q-btn @click="openWithdrawConfirmDialog(det)" outline label="确认到账" size="sm" color="bright" />
               </template>
+
+              <template v-if="det.status === 'APPLY' || det.status === 'STEP_2'">
+                <q-btn
+                  @click="openWithdrawCancelDialog(det)"
+                  outline
+                  label="取消"
+                  size="sm"
+                  color="bright"
+                  class="q-mr-sm"
+                />
+              </template>
+
               <q-btn outline label="复制" @click="copyText(det.serialNumber, '单号')" size="sm" color="bright" />
             </template>
           </div>
@@ -152,6 +164,19 @@
       <q-btn @click="isConfirmWithdraw = false" label="取消" color="warning" />
     </q-card>
   </q-dialog>
+
+  <q-dialog width="100%" v-model="isCancelWithdraw">
+    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+      <q-card-section class="q-mb-md">
+        系统提示
+        <br />
+        <br />
+        确认取消提款
+      </q-card-section>
+      <q-btn @click="openWithdrawCancel()" label="确认" color="brightbtn" style="margin-right: 8px" />
+      <q-btn @click="isCancelWithdraw = false" label="取消" color="warning" />
+    </q-card>
+  </q-dialog>
 </template>
 <script>
 import { defineComponent, onMounted, reactive, ref } from "vue";
@@ -205,6 +230,7 @@ export default defineComponent({
     const $q = useQuasar();
     const qs = require("qs");
     const isConfirmWithdraw = ref(false);
+    const isCancelWithdraw = ref(false);
     const passDet = ref(null);
 
     const clearTable = () => {
@@ -254,6 +280,45 @@ export default defineComponent({
               color: "positive",
               position: "top",
               message: "已经确认到账",
+              icon: "check_circle_outline"
+            });
+            removeSessionKeys("/session/member/withdraw");
+          }
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+
+          // console.log(response);
+        })
+
+        .catch((error) => {
+          // Handle the error
+          console.error(error);
+        });
+    };
+
+    const openWithdrawCancelDialog = (det) => {
+      isCancelWithdraw.value = true;
+      passDet.value = det;
+    };
+
+    const openWithdrawCancel = () => {
+      const obj = {
+        id: passDet.value.id,
+        withdrawDate: passDet.value.withdrawDate
+      };
+
+      api
+        .post("/session/withdraw/cancel", qs.stringify(obj))
+        .then((response) => {
+          // Handle the response
+          if (response.code === 0) {
+            isConfirmWithdraw.value = false;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: "已经取消提款",
               icon: "check_circle_outline"
             });
             removeSessionKeys("/session/member/withdraw");
@@ -391,6 +456,9 @@ export default defineComponent({
       openWithdrawConfirmDialog,
       openWithdrawConfirm,
       isConfirmWithdraw,
+      openWithdrawCancelDialog,
+      openWithdrawCancel,
+      isCancelWithdraw,
       passDet,
       copyText,
       text_copied,

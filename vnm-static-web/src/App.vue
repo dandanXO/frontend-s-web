@@ -1,6 +1,6 @@
 <template>
   
-  <el-config-provider :locale="languageVal === 'vi' ? vi : en">
+  <el-config-provider :locale="languageVal === 'en' ? en : vi">
     <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
   </el-config-provider>
   
@@ -8,7 +8,6 @@
 
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";

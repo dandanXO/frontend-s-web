@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="hHh Lpr fFf">
+  <q-layout view="hHh Lpr fFf" :class="{ roboto: languageVal === 'vi', poppins: languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo-web.svg" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-web-fire.svg" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -98,6 +98,9 @@ import { translateRecord } from "src/directives/translate";
 import { useI18n } from "vue-i18n";
 import LangOptions from "components/LangOptions";
 
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
+
 export default defineComponent({
   name: "MainLayout",
 
@@ -119,6 +122,9 @@ export default defineComponent({
     const hasDrawer = ref(false);
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
+
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -412,10 +418,32 @@ export default defineComponent({
       return ui.slotLists;
     });
 
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      isH5.value = store.getDeviceType() === "H5";
+    };
+
+    const loadTrackingScript = () => {
+      const currentDomain = window.location.hostname;
+
+      // Determine the tracking script URL based on the current domain
+      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+
+      if (isH5.value === true) {
+        const script = document.createElement("script");
+        script.src = trackingScriptUrl;
+        script.type = "text/javascript";
+        document.body.appendChild(script);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
+      checkPlatform();
+      loadTrackingScript();
     });
     return {
+      languageVal,
       tab: ref("home"),
       leftDrawerOpen,
       toggleLeftDrawer() {
@@ -447,7 +475,10 @@ export default defineComponent({
         "BindCryptoView",
         "BindEWalletView"
       ],
-      LangOptions
+      LangOptions,
+      isH5,
+      checkPlatform,
+      loadTrackingScript
     };
   }
 });

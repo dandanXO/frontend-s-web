@@ -11,7 +11,7 @@
       :end-placeholder="t('fields.endDate')"
       style="margin-right: 10px;width: 300px"
       :shortcuts="shortcuts"
-      :disabled-date="disabledDate"
+      @change="checkDateValue"
       :editable="false"
       :clearable="false"
     />
@@ -179,6 +179,7 @@ import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from "element-plus";
 
 const store = useStore()
 export default defineComponent({
@@ -203,15 +204,18 @@ export default defineComponent({
     function convertDate(date) {
       return moment(date).format('YYYY-MM-DD')
     }
-    function disabledDate(time) {
-      return (
-        time.getTime() <
-          moment(new Date())
-            .subtract(2, 'months')
-            .startOf('month')
-            .format('x') || time.getTime() > new Date().getTime()
-      )
+    const checkDateValue = (date) => {
+      const [startCheck, endCheck] = date;
+      const distract = moment(endCheck).diff(startCheck, 'days');
+      if (distract >= 93) {
+        ElMessage({
+          message: t('message.startenddatemore3months'),
+          type: "error"
+        });
+        formData.loginTime = [defaultStartDate, defaultEndDate];
+      }
     }
+
     const memberData = reactive({
       pages: 0,
       total: 0,
@@ -277,7 +281,7 @@ export default defineComponent({
       startDate,
       defaultStartDate,
       defaultEndDate,
-      disabledDate,
+      checkDateValue,
       convertDate,
       t,
       ...toRefs(formData),

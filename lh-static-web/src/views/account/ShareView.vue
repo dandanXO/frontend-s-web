@@ -6,7 +6,7 @@
       <div class="label label-grad">推广分享</div>
     </div>
     <p style="margin:1em 0px;">
-      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
+      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-invite">活动详情</router-link>
     </p>
 
 

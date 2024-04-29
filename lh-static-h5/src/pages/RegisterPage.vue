@@ -223,35 +223,37 @@
           </template>
         </q-input>
 
-        <q-label>请输入推荐码</q-label>
-        <q-input
-          v-if="!hasAffiliate"
-          ref="affiliateCodeRef"
-          rounded
-          standout
-          clearable
-          v-model="regForm.codeAffiliate"
-          placeholder="如不是合营玩家不用填写"
-        >
-          <template v-slot:prepend>
-            <img src="../assets/images/login/veri-icon.png" width="24" />
-          </template>
-        </q-input>
-        <q-input
-          v-else
-          ref="affiliateCodeRef"
-          rounded
-          standout
-          clearable
-          v-model="regForm.codeAffiliate"
-          placeholder="如不是合营玩家不用填写"
-          readonly
-          disable
-        >
-          <template v-slot:prepend>
-            <img src="../assets/images/login/veri-icon.png" width="24" />
-          </template>
-        </q-input>
+        <template v-if="!hasReferSummon">
+          <q-label>请输入推荐码</q-label>
+          <q-input
+            v-if="!hasAffiliate"
+            ref="affiliateCodeRef"
+            rounded
+            standout
+            clearable
+            v-model="regForm.codeAffiliate"
+            placeholder="如不是合营玩家不用填写"
+          >
+            <template v-slot:prepend>
+              <img src="../assets/images/login/veri-icon.png" width="24" />
+            </template>
+          </q-input>
+          <q-input
+            v-else
+            ref="affiliateCodeRef"
+            rounded
+            standout
+            clearable
+            v-model="regForm.codeAffiliate"
+            placeholder="如不是合营玩家不用填写"
+            readonly
+            disable
+          >
+            <template v-slot:prepend>
+              <img src="../assets/images/login/veri-icon.png" width="24" />
+            </template>
+          </q-input>
+        </template>
       </div>
 
       <div class="bottom-btn-list">
@@ -324,6 +326,7 @@ export default defineComponent({
     onMounted(() => {
       getReferralCode();
       getAffiliateCode();
+      checkReferSummonCode();
     });
     onActivated(() => {
       getCode();
@@ -400,6 +403,17 @@ export default defineComponent({
       const refCode = sessionStorage.getItem("REFERRAL_CODE");
       if (refCode) {
         regForm.referrer = refCode;
+      }
+    };
+
+    const hasReferSummon = ref(false);
+
+    // Check session storage for summonCode or referCode
+    const checkReferSummonCode = () => {
+      const summonCode = sessionStorage.getItem("SUMMON_CODE");
+      const referCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (summonCode || referCode) {
+        hasReferSummon.value = true;
       }
     };
 
@@ -634,7 +648,9 @@ export default defineComponent({
       phoneVerificationRef,
       isValidCnPhone,
       hasAffiliate,
-      validLoginName
+      validLoginName,
+      hasReferSummon,
+      checkReferSummonCode
     };
   }
 });

@@ -201,7 +201,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.789f.app/", "_blank");
+    window.open("https://m.indwin7.com/", "_blank");
     return;
   }
 
@@ -258,7 +258,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=IND&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=IW2&affiliateCode=3B1BFB").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
@@ -534,7 +534,7 @@ onMounted(() => {
     display: flex;
 
     img {
-      max-width: 100px;
+      max-width: 80px;
       width: 100%;
       text-align: center;
     }

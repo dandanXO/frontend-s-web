@@ -5,7 +5,7 @@
         <el-tab-pane label="进行选号">
           <div class="tab1">
             <div class="left-container">
-              <img src="../../../assets/images/promotion/hotpromo/lottery/lucky_number.png" />
+              <img src="../../../assets/images/promotion/hotpromo/lottery/lucky-iphone.png" />
             </div>
             <div class="right-container">
               <div class="desc">玩家达到存款500元后即可选号，可直接输入号码一天只能参加一次</div>

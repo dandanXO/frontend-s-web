@@ -216,6 +216,7 @@ onMounted(() => {
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;
+            height: 16px;
           }
         }
       }

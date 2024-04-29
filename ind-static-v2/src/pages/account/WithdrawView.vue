@@ -164,7 +164,7 @@
           </InputField>
         </template>
       </InputRowGrid>
-      
+
       <!--
       <div class="top-wrapper">
         <div class="title">
@@ -524,7 +524,7 @@ const withdrawGo = (callback) => {
         refreshBalance();
         getWithdrawalMethods();
 
-        isShowModal.value = false;
+        // isShowModal.value = false;
       } else {
         $q.notify({
           color: "negative",

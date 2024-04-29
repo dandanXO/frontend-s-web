@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web-fire.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -26,7 +26,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web.svg" />
+      <img alt="logo" src="../assets/logo-web-fire.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
@@ -531,9 +531,20 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <q-btn rounded no-caps color="info" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt" persistent>
+    <!-- <q-btn
+      rounded
+      no-caps
+      color="info"
+      :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab"
+      @click="getRebateAmt"
+      persistent
+    >
       {{ $t("lang.rebates") }}
-    </q-btn>
+    </q-btn> -->
+     <div class="rebates-absolute"
+     :disable="draggingFab"
+      v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">{{ $t("lang.rebates") }}</div>
   </q-page-sticky>
 
   <q-dialog
@@ -655,7 +666,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
@@ -1171,7 +1182,7 @@ export default defineComponent({
               lottObj.title_en = "Lottery " + lottObj.name;
               lottObj.icon = "lottery";
               if (lottObj.code === "GPI") {
-                lottObj.gameCode = "thailottery";
+                lottObj.gameCode = "sode";
               }
               lottery.value.push(lottObj);
             }
@@ -1243,10 +1254,6 @@ export default defineComponent({
         noticeTitle.value = "Announcement";
         isStationNotice.value = true;
       }
-    };
-    const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
     };
 
     const download_url = ref("");
@@ -1357,16 +1364,37 @@ export default defineComponent({
       window.open("http://tf88club.net");
     };
 
+    const gotoPromo = (banner) => {
+      const urlSplit= banner.redirectUrl.split("|");
+      if(urlSplit.length >= 2){
+        const type= urlSplit[0];
+        if(type==='page'){
+          router.push(`/${banner.redirectUrl}`);
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }else{
+        if(banner.redirectUrl.includes("https://")){
+          window.open(banner.redirectUrl,"_blank");
+        }else{
+          router.push(`/promo?name=${banner.redirectUrl}`);
+        }
+      }
+    }
+
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
         if (res.code === 0) {
-          newsDetails.value = res.data;
-          newsDetail_00.value = res.data[0];
-          newsDetail_01.value = res.data[1];
-          newsDetail_02.value = res.data[2];
-          newsDetail_03.value = res.data[3];
-          newsDetail_04.value = res.data[4];
-          newsDetail_05.value = res.data[5];
+          const filteredData = res.data.filter((item) => item.category.includes("Soi kèo bóng đá"));
+          if (filteredData.length > 0) {
+            newsDetails.value = filteredData;
+            newsDetail_00.value = filteredData[0];
+            newsDetail_01.value = filteredData[1];
+            newsDetail_02.value = filteredData[2];
+            newsDetail_03.value = filteredData[3];
+            newsDetail_04.value = filteredData[4];
+            newsDetail_05.value = filteredData[5];
+          }
         }
       });
     };
@@ -1711,6 +1739,7 @@ export default defineComponent({
     gap: 12px;
 
     :deep(.q-btn) {
+      min-width: 99px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
@@ -1720,25 +1749,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    // .lang-container {
-    //   img {
-    //     display: block;
-    //     width: 30px;
-    //     height: 30px;
-    //   }
-
-    //   :deep(.q-field__marginal) {
-    //     min-height: 40px;
-    //     height: 40px;
-    //     display: none;
-    //   }
-
-    //   :deep(.q-field__native) {
-    //     min-height: 30px;
-    //     height: 30px;
-    //     padding: 0;
-    //   }
-    // }
+    margin-top:2px;
   }
 
   .header-right {
@@ -1769,7 +1780,11 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  color: #696d70;
+    border-radius: 2.1875rem;
+    background: #fff;
+    box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+    font-family: 'Roboto';
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -2219,6 +2234,33 @@ export default defineComponent({
     animation: fadeIn 1.5s;
   }
 }
+.rebates-absolute {
+  background: url(../assets/images/home/rebates-absolute.png)no-repeat center center;
+  background-size: contain;
+  height: 100px;
+  width: 135px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  font-weight: bold;
+
+}
+
+.modal-home-popup{
+  background:transparent;
+  box-shadow: none;
+
+  .q-card{
+    background:transparent;
+    box-shadow: none;
+  }
+
+  .q-card-section{
+    background:transparent;
+    box-shadow: none;
+  }
+}
 
 @keyframes fadeIn {
   0% {
@@ -2234,13 +2276,24 @@ export default defineComponent({
 @media (max-width: 480px) {
 }
 
-@media (max-width: 400px) {
+@media (max-width: 410px) {
   .grid {
     .q-card {
       .q-card__section {
         .text {
           transform: scale(1.2);
         }
+      }
+    }
+  }
+
+
+  .home-header {
+
+    .header-middle {
+
+      :deep(.q-btn) {
+        min-width: 75px;
       }
     }
   }

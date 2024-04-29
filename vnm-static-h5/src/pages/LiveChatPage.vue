@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <iframe
-      :src="'https://csweb01.v6kthwlug.com/?partnerCode=XFCS&lang=zh-CN&way=' + regDevice + '&token=' + store.token"
+      :src="'https://csweb01.amv4xjcbd.com/?partnerId=7&lang=vn&way=' + regDevice + '&token=' + store.token"
       title="description"
     ></iframe>
     <div class="iFrameFull"></div>

@@ -187,6 +187,21 @@ const uiControl = reactive({
       value: 'AFFILIATE',
     },
     {
+      key: 'DEPOSIT',
+      displayName: 'DEPOSIT',
+      value: 'DEPOSIT',
+    },
+    {
+      key: 'PROMOTION',
+      displayName: 'PROMOTION',
+      value: 'PROMOTION',
+    },
+    {
+      key: 'SITE',
+      displayName: 'SITE',
+      value: 'SITE',
+    },
+    {
       key: 'SYSTEM',
       displayName: 'SYSTEM',
       value: 'SYSTEM',

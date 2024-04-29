@@ -1,6 +1,7 @@
 export default {
   common: {
     title: 'TF แดชบอร์ด',
+    welcome_system: "ยินดีต้อนรับสู่ระบบหลังบ้าน",
     logout: 'ออกจากระบบ',
     changePassword: 'เปลี่ยนรหัสผ่าน',
   },
@@ -193,6 +194,9 @@ export default {
     bet: 'การเดิมพัน',
     payout: 'การจ่ายเงิน',
     merchantDepositSummary: 'สรุปการฝากเงินของร้านค้า',
+    rfdRegisterCount: 'จำนวนการลงทะเบียน',
+    rfdFDepositCount: 'สถิติการฝากครั้งแรก',
+    rfdReport: 'การลงทะเบียนแนวโน้มการฝากเงินครั้งแรก',
   },
   reportGame: {
     gamePlatform: 'แพลตฟอร์มเกม',
@@ -214,6 +218,7 @@ export default {
     POKER: 'โป๊กเกอร์',
     LOTTERY: 'หวย',
     CASUAL: 'ไม่เป็นทางการ',
+    COCKFIGHT: 'ไม่เป็นทางการ',
   },
   distributeStatus: {
     PENDING: 'กำลังดำเนินการ',
@@ -247,6 +252,7 @@ export default {
     POKER: 'โป๊กเกอร์',
     DAILY: 'รายวัน',
     FTD: 'FTD',
+    LOTTERY: 'ลอตเตอรี่',
     OTHER: 'อื่นๆ',
   },
   scheduleType: {
@@ -1176,6 +1182,7 @@ export default {
     grossProfit: 'กำไรขั้นต้น',
   },
   message: {
+    startenddatemore3months: "เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน",
     addRemarkSuccess: 'เพิ่มหมายเหตุความสำเร็จ',
     addSuccess: 'เพิ่มความสำเร็จ',
     adjustSuccess: 'ปรับจำนวนเงินสำเร็จ',
@@ -1590,6 +1597,8 @@ export default {
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
+    'Vietnam Lottery Record List': 'บันทึกรายการหวย',
+    'Vietnam Lottery Result List': 'บันทึกการผลรางวัลหวย',
     'VIP Rebate Record': 'บันทึกรีเบทวีไอพี',
     'Bet Rebate Record': 'บันทึกการคืนเงินส่วนลดจากการพนัน',
     'Refer Friend': 'บันทึกแนะนำเพื่อน',

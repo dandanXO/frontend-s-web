@@ -21,7 +21,7 @@
       v-for="banner in banners"
       :key="banner"
     >
-      <router-link :to="`/promotion?name=${banner.redirectUrl}`">
+      <a @click="goToUrl(banner.redirectUrl)">
         <div
           class="promo-bg isDesktop"
           :style="
@@ -34,7 +34,7 @@
             'background-image: url(' + imgURL + banner.mobileImageUrl + ')'
           "
         ></div>
-      </router-link>
+      </a>
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -43,9 +43,29 @@
 import { ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
 
+const router= useRouter();
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const banners = ref([]);
+
+const goToUrl = (redirectUrl) => {
+  const urlSplit= redirectUrl.split("|");
+  if(urlSplit.length >= 2){
+    const type= urlSplit[0];
+    if(type==='page'){
+      router.push(`/${redirectUrl}`);
+    }else{
+      router.push(`/promotion?name=${redirectUrl}`);
+    }
+  }else{
+    if(redirectUrl.includes("https://")){
+      window.open(redirectUrl,"_blank");
+    }else{
+      router.push(`/promotion?name=${redirectUrl}`);
+    }
+  }
+}
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
@@ -172,6 +192,7 @@ onMounted(() => {
 </style>
 <style lang="scss">
 .imptann-modal {
+  background: transparent;
   max-width: 800px;
 
   .el-dialog__body {

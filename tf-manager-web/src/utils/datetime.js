@@ -122,6 +122,10 @@ export const getShortcuts = t => {
   ]
 }
 
+export const disabledDate = (time) => {
+  return time.getTime() < moment(new Date()).subtract(2, 'months').startOf('month').format('x') || time.getTime() > new Date().getTime();
+}
+
 export const getLogShortcuts = t => {
   return [
     {

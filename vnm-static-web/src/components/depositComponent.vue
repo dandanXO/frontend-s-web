@@ -114,7 +114,7 @@
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
               clearable
-              style="width:350px"
+              style="width:500px"
             >
               <el-option
                 v-for="p in unselectedPrivileges"
@@ -555,6 +555,11 @@ function doDeposit(data) {
           //     { once: true }
           // );
         }
+
+        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
       });
       loadingBtn.value = false;
     } else {
@@ -811,7 +816,7 @@ onMounted(() => {
     }
 
     .el-select__wrapper {
-      width: 350px;
+      width: 500px;
     }
   }
 }

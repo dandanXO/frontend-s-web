@@ -4,7 +4,7 @@
       <el-tabs v-model="tabPosition" class="summoner-tabs">
         <el-tab-pane name="first" label="精英召唤">
           <div class="main-desc">
-            唤醒人每日存款≥500元，唤醒人与被唤醒人都可活动对应的存款彩金。
+            唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -74,10 +74,10 @@
                 VIP3或以上等级会员符 合唤醒人身份<br>
                 <br>
                 被唤醒人：<br>
-                VIP1会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br>
+                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br>
                 <br>
               </div>
-              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥500元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；<br>
+              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；<br>
               <br>
               3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；<br>
               <br>
@@ -269,7 +269,8 @@ onMounted(() => {
 .summoner-tabs {
   :deep(.el-tabs__nav) {
     float: none;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 100px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {

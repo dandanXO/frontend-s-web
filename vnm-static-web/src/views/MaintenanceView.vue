@@ -5,7 +5,11 @@
         <img src="../assets/logo.svg" />
       </div>
       <div class="maintenance-title" v-html="$t('maintenance.title')"></div>
-      <div class="maintenance-desc" v-html="$t('maintenance.desc')">
+      <div class="maintenance-desc" v-html="$t('maintenance.desc')"></div>
+      <div class="maintenance-contact">
+        <a href="mailto:vnsupport@tf88.com" class="email" target="_blank">{{$t('maintenance.email')}}: vnsupport@tf88.com</a>
+        <a :href="`https://csweb01.amv4xjcbd.com/?partnerId=7&way=WEB&lang=${languageVal === 'vi' ? 'vn': 'en'}`" class="email" target="_blank">{{$t('maintenance.customerService')}}</a>
+        <a href="https://t.me/TF88_CS" class="email" target="_blank">Telegram: @TF88_CS</a>
       </div>
     </div>
     <div class="maintenance-img">
@@ -16,6 +20,14 @@
     </div> -->
   </div>
 </template>
+<script setup>
+import { i18nStore } from '@/store/language'
+import { storeToRefs } from 'pinia'
+
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
+
+</script>
 
 <style lang="scss">
 .maintenance-container {
@@ -28,6 +40,11 @@
   background-size: 100% auto;
   background-position: top center;
 
+  .maintenance-contact {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  }
   .maintenance-details {
     display: flex;
     flex-direction: column;

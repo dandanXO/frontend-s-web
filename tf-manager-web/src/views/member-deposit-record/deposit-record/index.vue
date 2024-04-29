@@ -205,7 +205,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        :height="tableHeight"
+        height="calc(100vh - 285px)"
         size="small"
         :resizable="true"
         :data="page.records"
@@ -676,7 +676,6 @@ const siteId = ref(null)
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const searchForm = ref(null)
-const tableHeight = ref(600)
 const vipList = reactive({
   list: [],
 })
@@ -1013,7 +1012,6 @@ onMounted(async () => {
   }
   if (request.siteId === 5) {
     request.size = 10
-    tableHeight.value = 675
   }
 
   if (LOGIN_USER_SITEID.value != null) {

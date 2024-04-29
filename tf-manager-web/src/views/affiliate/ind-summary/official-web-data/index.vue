@@ -3,6 +3,18 @@
     <div class="header-container">
       <div class="search">
         <div>
+          <el-select
+            v-model="request.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+          >
+            <el-option
+              v-for="item in siteList.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
           <el-date-picker
             v-model="request.recordTime"
             format="DD/MM/YYYY"
@@ -12,7 +24,7 @@
             range-separator=":"
             :start-placeholder="t('fields.startDate')"
             :end-placeholder="t('fields.endDate')"
-            style="width: 300px;"
+            style="width: 300px; margin-left: 20px"
             :shortcuts="shortcuts"
             :disabled-date="disabledDate"
             :editable="false"
@@ -91,6 +103,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="withdrawCount"
+          :label="t('fields.withdrawCount')"
+          align="center"
+          width="120"
+        />
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
@@ -253,7 +271,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, computed } from 'vue'
 import moment from 'moment'
 import {
   queryDailySummaryByType,
@@ -262,9 +280,14 @@ import {
 import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
+import { useStore } from '../../../../store'
+
+import { TENANT } from '../../../../store/modules/user/action-types'
 // import { formatInputTimeZone } from '@/utils/format-timeZone'
 
 const { t } = useI18n()
+const store = useStore()
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const siteList = reactive({
   list: [],
 })
@@ -294,7 +317,14 @@ const total = reactive({
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site
-  request.siteId = siteList.list.filter(x => x.siteCode === 'IND')[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    request.siteId = site.value.id
+  } else {
+    request.siteId = 1
+  }
 }
 
 function convertDate(date) {
@@ -378,9 +408,15 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else {
         var prop = column.property
-        if (index === 4 || index === 5 || index === 10 || index === 11) {
+        if (
+          index === 3 ||
+          index === 5 ||
+          index === 6 ||
+          index === 11 ||
+          index === 12
+        ) {
           sums[index] = total.data[prop]
-        } else if (index === 3) {
+        } else if (index === 4) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +
