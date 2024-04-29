@@ -345,20 +345,6 @@ async function confirmDeposit() {
         router.push({ path: "/depositLoading" });
       }
 
-      if (ui.isAffiliateA) {
-        // console.log("Submit Event");
-        fbq("track", "InitiateCheckout", {
-          currency: "THB",
-          value: form.localAmount
-        });
-      }
-      if (ui.isAffiliateB) {
-        fbq("track", "Purchase", {
-          currency: "THB",
-          value: form.localAmount
-        });
-      }
-
       clearInfo();
 
       window.addEventListener(

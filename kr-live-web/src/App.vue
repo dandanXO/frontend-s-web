@@ -6,10 +6,9 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
-// import CsClient from "boot/client";
 //test-update
 import { userStore } from "stores/index";
 import * as _ from "lodash";
@@ -33,18 +32,15 @@ export default defineComponent({
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier:  store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
