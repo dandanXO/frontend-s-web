@@ -18,12 +18,9 @@
     <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token" />
     <Gift8Promo v-if="list.redirectUrl === 'lh1-gift8' && !isCommonPromo && store.token" />
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
-    <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
     <HongBaoYu2024
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
@@ -59,10 +56,8 @@
     ></LhStepGamePromo>
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
-    <Summoner
-      v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-    />
+    <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -115,6 +110,7 @@ import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import Europe2024 from "../components/hotpromo/europe-2024/Europe2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -157,7 +153,8 @@ export default defineComponent({
     Summoner,
     AppHongBao,
     FtdPromo,
-    LOLMsi2024Promo
+    LOLMsi2024Promo,
+    Europe2024
     // DailyBonus
   },
   props: {
@@ -432,7 +429,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-summon-event" ||
       this.list.redirectUrl === "lh1-app-hongbao" ||
       this.list.redirectUrl === "lh1-ftd-promo" ||
-      this.list.redirectUrl === "lh-msi-match"
+      this.list.redirectUrl === "lh-msi-match" ||
+      this.list.redirectUrl === "lh1-eurocup-2024"
+
     ) {
       this.isCommonPromo = false;
     } else {

@@ -138,7 +138,7 @@
               </div>
             </div>
           </div>
-          <div v-else class="selected-promo">
+          <div v-else class="selected-promo" :class="{ euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
             <div class="selected-promo-wrapper">
               <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo && selectedPromo.promoCode !== 'lh1-ftd-promo'">
                 <img
@@ -747,6 +747,9 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
 
+    &.euroCup {
+        background: #010333;
+      }
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
