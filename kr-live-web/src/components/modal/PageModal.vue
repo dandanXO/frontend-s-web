@@ -290,6 +290,7 @@ const leftLinks = reactive([
     info: "로그인",
     clickHandler: () => {
       tabIndex.value = "log";
+      goToFirstTab("log");
     },
   },
   {
@@ -297,6 +298,7 @@ const leftLinks = reactive([
     info: "마이페이지",
     clickHandler: () => {
       tabIndex.value = "my";
+      goToFirstTab("my");
     },
   },
   {
@@ -304,9 +306,15 @@ const leftLinks = reactive([
     info: "입출금내역",
     clickHandler: () => {
       tabIndex.value = "finance";
+      goToFirstTab("finance");
     },
   },
 ])
+
+const goToFirstTab = (tabIndex) => {
+  const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
+  page.value = item?.page
+}
 
 const closeDialog = () => {
   visible.value = false;
