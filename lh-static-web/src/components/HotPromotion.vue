@@ -20,6 +20,7 @@
     <UpgradeHongBao v-if="list.redirectUrl === 'lh1-upgrade-hongbaoz' && !isCommonPromo && store.token" />
     <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
+    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
     <HongBaoYu2024
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
@@ -56,6 +57,7 @@
 
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
     <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -106,6 +108,7 @@ import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel
 import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
+import Europe2024 from "../components/hotpromo/europe-2024/Europe2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -147,7 +150,8 @@ export default defineComponent({
     LhStepGamePromo,
     Summoner,
     AppHongBao,
-    FtdPromo
+    FtdPromo,
+    Europe2024
     // DailyBonus
   },
   props: {
@@ -421,7 +425,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-game-steps" ||
       this.list.redirectUrl === "lh1-summon-event" ||
       this.list.redirectUrl === "lh1-app-hongbao" ||
-      this.list.redirectUrl === "lh1-ftd-promo"
+      this.list.redirectUrl === "lh1-ftd-promo" ||
+      this.list.redirectUrl === "lh1-eurocup-2024"
+      
     ) {
       this.isCommonPromo = false;
     } else {
