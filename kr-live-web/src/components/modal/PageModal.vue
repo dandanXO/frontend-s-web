@@ -13,7 +13,7 @@
       </div>
 
       <div class="page-dialog-main" >
-        <LangToggle v-if="showLangToggle"/>
+        <!-- <LangToggle v-if="showLangToggle"/> -->
 
         <div class="">
           <q-toolbar class="page-dialog-main-header text-white">
