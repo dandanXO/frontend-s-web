@@ -6,7 +6,7 @@
       <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
-                 :class="isLinkActive(item.key) ? 'active' : ''">
+                 :class="tabIndex === item.key ? 'active' : ''">
               <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
             </div>
           </div>
@@ -36,7 +36,7 @@
                   <template v-for="(item) in formattedPagesInfo" :key="item.page">
   <!--                  <p :data-icon="item.imgUrl">123</p>-->
                     <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info"
-                          class="page-dialog-tab">
+                          class="page-dialog-tab" v-if="item.tabIndex === tabIndex">
                       <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" alt="item.info" />
                     </q-tab>
                   </template>
@@ -70,6 +70,11 @@ import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import NotifyComponent from "components/pageModalContent/NotifyComponent";
 import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
+import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
+import MyMessages from "components/pageModalContent/MyMessages.vue";
+import MyTransactionRecords from "components/pageModalContent/MyTransactionRecords.vue";
+import MyTransfer from "components/pageModalContent/MyTransfer.vue";
+import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import LangToggle from "components/LangToggle.vue";
 
 const route = useRoute();
@@ -77,6 +82,7 @@ const router = useRouter();
 const visible = ref(false);
 const store = userStore();
 const page = ref("");
+const tabIndex = ref("log");
 const showLangToggle = ref(process.env.NODE_ENV === "development");
 
 // minimal mode hides left side links and top section tabs
@@ -90,6 +96,17 @@ watch(() => route.query, (_, __) => {
     nextTick(() => {
       page.value = route.query.page;
       if (!visible.value) visible.value = true
+
+      // determine the extact pageInfoItem based on route info
+      const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+      // determine which left side tab to land on
+      if(pageInfoItem?.tabIndex) {
+        tabIndex.value = pageInfoItem.tabIndex;
+      } else {
+        // default to first tab if unable to proceed with the above
+        tabIndex.value = "log";
+      }
+
       open(route.query.page)
     })
   }
@@ -115,8 +132,7 @@ const isLinkActive = (key) => {
     case "log":
       return ["finance/deposit", "finance/withdraw","notify","customer/service"].includes(route.query.page)
     case "my":
-    // TODO
-      return false
+      return ["test"].includes(route.query.page)
     case "finance":
     // TODO
       return false
@@ -125,9 +141,9 @@ const isLinkActive = (key) => {
   }
 };
 
-
 const pagesInfo = reactive([
   {
+    tabIndex: "log",
     page: "finance/deposit",
     info: "송금신청",
     iconUrl: require("../../assets/icon/deposit.svg"),
@@ -140,6 +156,7 @@ const pagesInfo = reactive([
     }
   },
   {
+    tabIndex: "log",
     page: "finance/withdraw",
     info: "출금신청",
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
@@ -152,6 +169,7 @@ const pagesInfo = reactive([
     }
   },
   {
+    tabIndex: "log",
     page: "notify",
     info: "공지사항",
     iconUrl: require("../../assets/icon/notify.svg"),
@@ -164,6 +182,7 @@ const pagesInfo = reactive([
     }
   },
   {
+    tabIndex: "log",
     page: "customer/service",
     info: "고객센터",
     iconUrl: require("../../assets/icon/customerService.svg"),
@@ -174,7 +193,72 @@ const pagesInfo = reactive([
       subTitle: "Q&A",
       description: "입금시 꼭 계좌문의를 하세요!",
     }
-  }
+  },
+  {
+    tabIndex: "my",
+    page: "personal/info",
+    info: "나의정보",
+    iconUrl: require("../../assets/icon/personal-info.svg"),
+    iconActiveUrl: require("../../assets/icon/personal-info-active.svg"),
+    component: MyPersonalInfo,
+    headerInfo: {
+      title: "나의정보",
+      subTitle: "PERSONAL INFO",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "personal/messages",
+    info: "쪽지",
+    iconUrl: require("../../assets/icon/messages.svg"),
+    iconActiveUrl: require("../../assets/icon/messages-active.svg"),
+    component: MyMessages,
+    headerInfo: {
+      title: "쪽지",
+      subTitle: "MESSAGES",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "transaction/records",
+    info: "배팅/윈",
+    iconUrl: require("../../assets/icon/transaction-record.svg"),
+    iconActiveUrl: require("../../assets/icon/transaction-record-active.svg"),
+    component: MyTransactionRecords,
+    headerInfo: {
+      title: "배팅/윈",
+      subTitle: "TRANSACTIONS",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "transaction/transfer",
+    info: "포인트전환",
+    iconUrl: require("../../assets/icon/transfer.svg"),
+    iconActiveUrl: require("../../assets/icon/transfer-active.svg"),
+    component: MyTransfer,
+    headerInfo: {
+      title: "포인트전환",
+      subTitle: "TRANSFER",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "personal/updatePwd",
+    info: "비밀번호",
+    iconUrl: require("../../assets/icon/password-update.svg"),
+    iconActiveUrl: require("../../assets/icon/password-update-active.svg"),
+    component: MyPasswordChange,
+    headerInfo: {
+      title: "비밀번호",
+      subTitle: "PASSWORD CHANGE",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
 ])
 
 const minimalModePagesInfo = reactive([
@@ -205,21 +289,21 @@ const leftLinks = reactive([
     key: "log",
     info: "로그인",
     clickHandler: () => {
-    //   TODO
+      tabIndex.value = "log";
     },
   },
   {
     key: "my",
     info: "마이페이지",
     clickHandler: () => {
-      //   TODO
+      tabIndex.value = "my";
     },
   },
   {
     key: "finance",
     info: "입출금내역",
     clickHandler: () => {
-      //   TODO
+      tabIndex.value = "finance";
     },
   },
 ])
