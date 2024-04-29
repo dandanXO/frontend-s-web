@@ -2064,6 +2064,8 @@ export default {
     validateTimeRequired: '时间必填',
     syncMemberDetailSuccess: '同步会员信息成功',
     timeExist: '时间已存在',
+    wrongPopupTime: "弹窗时间错误。",
+    selectPopupTime: "请选择弹窗时间."
   },
   menu: {
     undefined: '',
