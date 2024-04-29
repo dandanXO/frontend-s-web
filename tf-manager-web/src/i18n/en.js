@@ -2096,6 +2096,8 @@ export default {
     validateTimeRequired: 'Time is required',
     syncMemberDetailSuccess: 'Sync Member Detail Success',
     timeExist: 'Time already exists',
+    wrongPopupTime: "Selected popup time is invalid",
+    selectPopupTime: "Please select Popup Time."
   },
   menu: {
     undefined: '',
