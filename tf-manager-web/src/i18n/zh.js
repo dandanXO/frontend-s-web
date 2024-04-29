@@ -204,6 +204,7 @@ export default {
       CLAIMED: '已领取',
     },
     uefaMatch: {
+      PENDING: '未开始',
       ONGOING: '进行中',
       CANCEL: '已取消',
       ENDED: '已结束'
@@ -1311,6 +1312,7 @@ export default {
     stage: '关卡',
     state: '状态',
     startCopy: '开始复制',
+    startMatch: '开始赛事',
     startUpdate: '开始更新',
     startDate: '开始日期',
     startTime: '开始时间',
@@ -1688,6 +1690,7 @@ export default {
     confirmRefer: '请确认是否发放所有好友邀请奖金, 此操作不可撤销',
     confirmReset: '请确认是否要清除这些数据, 此操作不可撤销',
     confirmSettlement: '请确认是否结算?',
+    confirmStartMatch: '请确认是否开始赛事?',
     confirmToAdjust: '请确认是否进行调整？一旦进行调整将无法再更改',
     confirmToChecking: '请确认是否将此数据返回至待审核?',
     confirmToPay: '请确认是否发放佣金?',

@@ -312,7 +312,7 @@
       >
         <template #default="scope">
           <el-button
-            v-if="scope.row.status === 'ONGOING'"
+            v-if="scope.row.status === 'PENDING' || scope.row.status === 'ONGOING'"
             size="small"
             type="primary"
             v-permission="['sys:uefa-match:update']"
@@ -320,6 +320,16 @@
             style="cursor: pointer"
           >
             {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'PENDING'"
+            size="small"
+            type="success"
+            v-permission="['sys:uefa-match:update']"
+            @click="setOngoing(scope.row.id)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.startMatch') }}
           </el-button>
           <el-button
             v-if="scope.row.status === 'ONGOING'"
@@ -470,7 +480,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getUefaMatch, getTeamBySite, createUefaMatch, updateUefaMatch, endUefaMatch, cancelUefaMatch } from "@/api/uefa";
+import { getUefaMatch, getTeamBySite, createUefaMatch, updateUefaMatch, uefaMatchOngoing, endUefaMatch, cancelUefaMatch } from "@/api/uefa";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -545,9 +555,10 @@ const uiControl = reactive({
   dialogTitle: "",
   dialogType: "CREATE",
   status: [
-    { key: 1, displayName: 'ONGOING', value: 'ONGOING' },
-    { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
-    { key: 3, displayName: 'ENDED', value: 'ENDED' }
+    { key: 1, displayName: 'PENDING', value: 'PENDING' },
+    { key: 2, displayName: 'ONGOING', value: 'ONGOING' },
+    { key: 3, displayName: 'CANCEL', value: 'CANCEL' },
+    { key: 4, displayName: 'ENDED', value: 'ENDED' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
@@ -733,6 +744,21 @@ async function cancelMatch(id) {
     await cancelUefaMatch(id);
     await loadUefaMatch();
     ElMessage({ message: t('message.cancelSuccess'), type: "success" });
+  });
+}
+
+async function setOngoing(id) {
+  ElMessageBox.confirm(
+    t('message.confirmStartMatch'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(async () => {
+    await uefaMatchOngoing(id);
+    await loadUefaMatch();
+    ElMessage({ message: t('message.success'), type: "success" });
   });
 }
 

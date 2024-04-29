@@ -197,6 +197,7 @@ export default {
       CLAIMED: 'Claimed',
     },
     uefaMatch: {
+      PENDING: 'Pending',
       ONGOING: 'Ongoing',
       CANCEL: 'Cancel',
       ENDED: 'Ended'
@@ -1305,6 +1306,7 @@ export default {
     stage: 'Stage',
     state: 'State',
     startCopy: 'Start Copy',
+    startMatch: 'Start Match',
     startUpdate: 'Start Update',
     startDate: 'Start Date',
     startTime: 'Start Time',
@@ -1697,6 +1699,7 @@ export default {
     confirmReset:
       'Confirm that you want to reset these data, the operation cannot be undone',
     confirmSettlement: 'Confirm that you want to proceed with the settlement?',
+    confirmStartMatch: 'Confirm that you want to proceed to begin the match?',
     confirmToChecking:
       'Confirm that you want revert the settlement to checking?',
     confirmToPay: 'Confirm that you want proceed to payment?',

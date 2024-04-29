@@ -33,6 +33,10 @@ export const updateUefaMatch = (id, match) => {
   return https().request(`/uefa/match/${id}?_method=PUT`, Method.POST, match, ContentType.form);
 };
 
+export const uefaMatchOngoing = (id) => {
+  return https().request(`/uefa/matchOngoing/${id}?_method=PUT`, Method.POST);
+};
+
 export const endUefaMatch = (id, winner) => {
   return https().request(`/uefa/matchEnd/${id}?_method=PUT`, Method.POST, { winner: winner }, ContentType.form);
 };
