@@ -15,7 +15,6 @@
         size="small"
         :placeholder="t('fields.site')"
         style="width: 200px;"
-        @focus="loadSites"
       >
         <el-option
           v-for="item in sites.list"
