@@ -19,11 +19,28 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div class="header-right" @click="router.push('/account/inbox?redirect=home')">
-      <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
+    <div class="header-right" @click="() => (hasDrawer = !hasDrawer)">
+      <img
+        class="btn-pointer"
+        :src="
+          $q.dark.isActive
+            ? require('../assets/images/home/home-hamburger-menu-dark.png')
+            : require('../assets/images/home/home-hamburger-menu.png')
+        "
+      />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
     </div>
   </div>
+
+  <q-drawer side="left" :width="300" :breakpoint="500" overlay v-model="hasDrawer">
+    <div class="home-drawer">
+      <user-profile />
+      <div class="home-drawer__divider" />
+      <link-group />
+      <div class="home-drawer__divider" />
+      <system-config />
+    </div>
+  </q-drawer>
 
   <q-carousel
     class="home"
@@ -121,7 +138,13 @@
           <img src="../assets/images/home/games/esport-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/esport-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/esport-icon-dark.png')
+                : require('../assets/images/home/games/esport-icon.png')
+            "
+          />
         </template>
       </div>
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
@@ -129,7 +152,13 @@
           <img src="../assets/images/home/games/sport-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/sport-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/sport-icon-dark.png')
+                : require('../assets/images/home/games/sport-icon.png')
+            "
+          />
         </template>
       </div>
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -137,7 +166,13 @@
           <img src="../assets/images/home/games/live-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/live-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/live-icon-dark.png')
+                : require('../assets/images/home/games/live-icon.png')
+            "
+          />
         </template>
       </div>
 
@@ -146,7 +181,13 @@
           <img src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/poker-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/poker-icon-dark.png')
+                : require('../assets/images/home/games/poker-icon.png')
+            "
+          />
         </template>
       </div>
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
@@ -154,7 +195,13 @@
           <img src="../assets/images/home/games/slot-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/slot-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/slot-icon-dark.png')
+                : require('../assets/images/home/games/slot-icon.png')
+            "
+          />
         </template>
       </div>
       <!--
@@ -172,7 +219,13 @@
           <img src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/lottery-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/lottery-icon-dark.png')
+                : require('../assets/images/home/games/lottery-icon.png')
+            "
+          />
         </template>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
@@ -180,7 +233,13 @@
           <img src="../assets/images/home/games/fish-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/fish-icon-dark.png')
+                : require('../assets/images/home/games/fish-icon.png')
+            "
+          />
         </template>
       </div>
     </div>
@@ -894,6 +953,9 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
+import UserProfile from "components/home/drawer/UserProfile.vue";
+import LinkGroup from "components/home/drawer/LinkGroup.vue";
+import SystemConfig from "components/home/drawer/SystemConfig.vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -904,7 +966,10 @@ export default defineComponent({
     // Swiper,
     // SwiperSlide,
     GameModal,
-    MarqueeText
+    MarqueeText,
+    UserProfile,
+    LinkGroup,
+    SystemConfig
     // PlatformBlock
   },
   setup() {
@@ -916,6 +981,8 @@ export default defineComponent({
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
+
+    const hasDrawer = ref(false);
 
     const setFirstSwiper = (swiper) => {
       firstSwiper.value = swiper;
@@ -1702,9 +1769,17 @@ export default defineComponent({
         // } else {
         //   effectiveCode = alias || code.toLowerCase();
         // }
-        return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+        if ($q.dark.isActive) {
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}-dark.png`)})`;
+        } else {
+          return `url(${require(`../assets/images/home/${platform}/platform-item-${code.toLowerCase()}.png`)})`;
+        }
       } catch (e) {
-        return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
+        if ($q.dark.isActive) {
+          return `url(${require(`../assets/images/home/${platform}/platform-item-empty-dark.png`)})`;
+        } else {
+          return `url(${require(`../assets/images/home/${platform}/platform-item-empty.png`)})`;
+        }
       }
     };
 
@@ -1756,6 +1831,7 @@ export default defineComponent({
       liveTabs,
       selectedLiveTab,
       scrollPageRef,
+      hasDrawer,
       announcementList,
       isStationNotice,
       openPopup,
@@ -2395,6 +2471,61 @@ export default defineComponent({
 
   .fade-in-image {
     animation: fadeIn 1.5s;
+  }
+}
+
+.home-drawer {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  &__divider {
+    border-bottom: 1px solid #ecedf0;
+    margin: 0 20px;
+  }
+}
+
+.body--dark {
+  .download-top-container {
+    background: $background-dark-light;
+    .download-top-box {
+      .q-icon {
+        color: $font-3-dark;
+      }
+      .download-txt-container {
+        color: $font-1-dark;
+        .download-title {
+          color: $font-3-dark;
+        }
+      }
+    }
+  }
+
+  .details-bar {
+    .main-balance {
+      color: $font-3-dark;
+    }
+    .message {
+      color: $font-1-dark;
+    }
+    .menulist {
+      .men {
+        color: $font-4-dark;
+      }
+    }
+  }
+
+  .home-game-section {
+    .game-right-platform {
+      .platform-block {
+        .platform-img-frame {
+          border-radius: 20px;
+          .platform-subtitle {
+            color: $font-3-dark;
+          }
+        }
+      }
+    }
   }
 }
 

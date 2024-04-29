@@ -63,8 +63,8 @@
           >
             <template v-slot:selected-item="scope">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
-                  }}
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                  {{ scope.opt.label }}
                 </q-item-label>
               </q-item-section>
             </template>
@@ -72,8 +72,15 @@
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar>
                   <img
-                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
-                    :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                    :src="
+                      require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)
+                    "
+                    :style="
+                      scope.opt.type === 'main'
+                        ? 'width: 15px; margin: 10px 10px 10px 5px;'
+                        : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'
+                    "
+                  />
                   <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
                 </q-item-section>
                 <q-item-section>
@@ -83,7 +90,13 @@
             </template>
           </q-select>
           <div class="icon">
-            <img src="../../assets/images/account/transfer-arrow.png" />
+            <img
+              :src="
+                $q.dark.isActive
+                  ? require('../../assets/images/account/transfer-arrow-dark.png')
+                  : require('../../assets/images/account/transfer-arrow.png')
+              "
+            />
           </div>
           <!-- <q-select
             hide-bottom-space
@@ -112,8 +125,8 @@
           >
             <template v-slot:selected-item="scope">
               <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">{{ scope.opt.label
-                  }}
+                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                  {{ scope.opt.label }}
                 </q-item-label>
               </q-item-section>
             </template>
@@ -121,8 +134,15 @@
               <q-item v-bind="scope.itemProps">
                 <q-item-section avatar>
                   <img
-                    :src="require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)"
-                    :style="scope.opt.type === 'main' ? 'width: 15px; margin: 10px 10px 10px 5px;' : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'">
+                    :src="
+                      require(`../../assets/images/home/${scope.opt.type.toLowerCase()}/logo-${scope.opt.code.toLowerCase()}.png`)
+                    "
+                    :style="
+                      scope.opt.type === 'main'
+                        ? 'width: 15px; margin: 10px 10px 10px 5px;'
+                        : 'width: 30px; margin-top: 10px; margin-bottom: 10px;'
+                    "
+                  />
                   <!-- <img v-if="scope.opt.bankIcon" style="width: 30px; margin-top: 10px; margin-bottom: 10px;" :src="imgURL + scope.opt.bankIcon"> -->
                 </q-item-section>
                 <q-item-section>
@@ -177,9 +197,7 @@
       </q-form>
     </div>
   </q-page>
-  <q-dialog
-    width="100%"
-    class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width>
+  <q-dialog width="100%" class="modal-common-div" label="信息" v-model="isShowAnnouncementDialog" full-width>
     <q-card class="q-pa-md modal-content">
       <div class="headers">
         <div class="titles">信息</div>
@@ -594,6 +612,20 @@ onMounted(() => {
     margin-top: 0px;
     height: 50px;
     //margin-top: 0.5rem;
+  }
+}
+
+.body--dark {
+  .account-tabs-div,
+  .transfer-mid-div,
+  .transfer-tab-section {
+    @include content-block-dark;
+  }
+
+  .station-notice-wrapper {
+    span {
+      color: $font-1;
+    }
   }
 }
 </style>

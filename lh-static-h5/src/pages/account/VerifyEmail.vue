@@ -13,6 +13,7 @@
           :rules="[(val) => (val && val.length > 0) || '请输入邮箱']"
           :readonly="showVerifyBtn ? false : true"
           style="width: 100%"
+          dark
         />
         <div class="q-ml-md">
           <q-btn

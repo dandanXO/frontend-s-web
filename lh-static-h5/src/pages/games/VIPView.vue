@@ -994,4 +994,70 @@ onActivated(() => {
     }
   }
 }
+
+.body--dark {
+  .vip-container {
+    background: $background-dark;
+
+    .q-icon {
+      box-shadow: none;
+      background: $background-dark-header;
+      color: $font-3-dark;
+    }
+
+    .vip-card-container {
+      .vip-card-info {
+        .level {
+          .vip-level {
+            color: $dark;
+          }
+          .vip-card-common-text {
+            color: $font-1;
+          }
+        }
+        .amount {
+          .vip-card-common-text {
+            color: $font-1;
+          }
+        }
+      }
+    }
+
+    .level-promo-container {
+      @include content-block-dark-with-border;
+      .q-separator {
+        display: none;
+      }
+      .level-promo-header {
+        background: $background-dark-header;
+        .level-promo-title {
+          color: $font-3-dark;
+        }
+      }
+    }
+
+    .vip-detail-container {
+      .rules-content {
+        @include content-block-dark-with-border;
+        thead {
+          > :first-child {
+            background: $background-dark-header;
+          }
+          tr :not(:last-child) {
+            border-right-width: 1px;
+          }
+          th {
+            color: $font-3-dark;
+          }
+        }
+      }
+    }
+
+    .tnc-container {
+      .tnc-note {
+        @include content-block-dark;
+      }
+    }
+  }
+}
 </style>
