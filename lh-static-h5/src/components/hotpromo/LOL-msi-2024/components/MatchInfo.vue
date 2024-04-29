@@ -41,10 +41,10 @@ defineProps({
   .match-info-title {
     display: flex;
     justify-content: space-between;
-    padding: 9px 45px 10px 37px;
+    padding: 4px 30px 5px 25px;
     background-color: #ffffff1a;
-    font-size: 32px;
-    line-height: 42.56px;
+    font-size: 1rem;
+    line-height: 1.3rem;
 
     .match-info-title__status {
       font-weight: 700;
@@ -64,8 +64,8 @@ defineProps({
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 53px;
-    padding: 28px 61px 50px 54px;
+    gap: 26.5px;
+    padding: 14px 50px 25px 35px;
     color: #ffffff;
 
     .match-info-content__team-wrapper {
@@ -80,30 +80,30 @@ defineProps({
 
         span {
           font-family: Microsoft YaHei UI;
-          font-size: 32px;
+          font-size: 1rem;
           font-weight: 400;
-          line-height: 42.56px;
+          line-height: 1.3rem;
           text-align: center;
         }
       }
 
       > span {
         font-family: Microsoft YaHei UI;
-        font-size: 50px;
+        font-size: 1.875rem;
         font-weight: 700;
-        line-height: 66.5px;
+        line-height: 2.5rem;
         text-align: center;
       }
     }
 
     .match-info-content__match-title {
       font-family: Microsoft YaHei UI;
-      font-size: 32px;
+      font-size: 1rem;
       font-weight: 400;
-      line-height: 42.56px;
+      line-height: 1.3rem;
       text-align: center;
       background-color: #99baff1a;
-      padding: 4px 38px 12px 55px;
+      padding: 2px 0 6px 0;
       border-radius: 29.5px;
     }
   }

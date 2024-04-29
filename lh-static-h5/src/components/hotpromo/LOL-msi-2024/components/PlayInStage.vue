@@ -85,23 +85,24 @@ table {
     border: none;
     padding: 16px;
     font-family: Microsoft YaHei UI;
-    font-size: 24px;
-    line-height: 31.92px;
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 
   .divider {
-    border-bottom: 2px solid #ffffff33;
+    border-bottom: 2px solid #ffffff33 !important;
   }
 
   th {
-    background: linear-gradient(90deg, #0275e1 0%, #01067b 100%);
-    color: #ffffff;
+    background: linear-gradient(90deg, #0275e1 0%, #01067b 100%) !important;
+    color: #ffffff !important;
   }
 
   td {
     color: #ffa800;
-    background: #051d4766;
-    border-left: 2px solid #ffffff33;
+    background: #051d4766 !important;
+    border: none !important;
+    border-left: 2px solid #ffffff33 !important;
   }
 }
 </style>
