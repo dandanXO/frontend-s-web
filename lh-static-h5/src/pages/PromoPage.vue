@@ -4,10 +4,11 @@
       class="promo"
       :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
       :style="
+      isPromoDetail ?
         'background-image: url(' +
         imgURL +
         (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-        ')'
+        ')' : ''
       "
     >
       <q-tabs

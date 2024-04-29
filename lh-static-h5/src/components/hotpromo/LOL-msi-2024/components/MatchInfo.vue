@@ -65,7 +65,7 @@ defineProps({
     flex-direction: column;
     justify-content: center;
     gap: 26.5px;
-    padding: 14px 50px 25px 35px;
+    padding: 5px 16px 15px 16px;
     color: #ffffff;
 
     .match-info-content__team-wrapper {
@@ -77,6 +77,10 @@ defineProps({
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        img{
+          max-height: 80px;
+        }
 
         span {
           font-family: Microsoft YaHei UI;
