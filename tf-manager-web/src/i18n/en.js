@@ -2199,6 +2199,8 @@ export default {
     Lottery: 'Lottery',
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
+    'Vietnam Lottery Record List': 'Vietnam Lottery Record List',
+    'Vietnam Lottery Result List': 'Vietnam Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
     'Bet Rebate Record': 'Bet Rebate Record',
     'Refer Friend': 'Refer Friend Record',

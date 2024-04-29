@@ -2167,6 +2167,8 @@ export default {
     Lottery: '彩票',
     'Lottery Record List': '彩票记录',
     'Lottery Result List': '彩票结果',
+    'Vietnam Lottery Record List': '越南彩票记录',
+    'Vietnam Lottery Result List': '越南彩票结果',
     'VIP Rebate Record': 'VIP返水记录',
     'Refer Friend': '推荐人记录',
     'Bet Rebate Record': '投注返水记录',
