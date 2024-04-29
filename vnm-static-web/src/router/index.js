@@ -216,6 +216,9 @@ router.beforeEach((to, from, next) => {
   } else if (window.location.href.indexOf("tf68688.com") > -1) {
     fbq("init", "1123673335564806");
     fbq("track", "PageView");
+  }else if (window.location.href.indexOf("wintf99.com") > -1) {
+    fbq("init", "441415921872746");
+    fbq("track", "PageView");
   }
 });
 export default router;

@@ -86,7 +86,7 @@
         img {
           display: block;
           //width: 100%;
-          transform: scale(1.25);
+          transform: scale(1.10);
           width: 748px;
           max-width: 749px;
         }
@@ -455,7 +455,7 @@
 .game-container {
   overflow: hidden;
   padding: 1rem;
-  max-width: $maxwidth;
+  max-width:1400px;
   margin: 0 auto 5rem;
 
   border-radius: 2rem;
