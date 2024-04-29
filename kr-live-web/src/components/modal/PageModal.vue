@@ -3,7 +3,7 @@
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog">
 
 
-      <div class="page-dialog-links">
+      <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
                  :class="isLinkActive(item.key) ? 'active' : ''">
@@ -26,24 +26,26 @@
             </p>
           </q-toolbar>
           <div class="page-dialog-tabs">
-              <q-tabs
-                v-model="page"
-                align="justify"
-              >
-                <template v-for="(item) in pagesInfo" :key="item.page">
-<!--                  <p :data-icon="item.imgUrl">123</p>-->
-                  <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info"
-                         class="page-dialog-tab">
-                    <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" alt="item.info" />
-                  </q-tab>
-                </template>
-              </q-tabs>
+              <template v-if="!isMinimalMode">
+                <q-tabs
+                  v-model="page"
+                  align="justify"
+                >
+                  <template v-for="(item) in formattedPagesInfo" :key="item.page">
+  <!--                  <p :data-icon="item.imgUrl">123</p>-->
+                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info"
+                          class="page-dialog-tab">
+                      <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" alt="item.info" />
+                    </q-tab>
+                  </template>
+                </q-tabs>
 
-              <q-separator />
+                <q-separator />
+              </template>
 
               <q-tab-panels v-model="page" animated class="">
 
-                <template v-for="(item) in pagesInfo" :key="item.page">
+                <template v-for="(item) in formattedPagesInfo" :key="item.page">
                   <q-tab-panel :name="item.page">
                     <component :is="item.component"></component>
                   </q-tab-panel>
@@ -65,12 +67,19 @@ import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import NotifyComponent from "components/pageModalContent/NotifyComponent";
 import CustomerService from "components/pageModalContent/CustomerService";
+import RegisterComponent from "components/pageModalContent/RegisterComponent";
 
 const route = useRoute();
 const router = useRouter();
 const visible = ref(false);
 const store = userStore();
 const page = ref("");
+
+// minimal mode hides left side links and top section tabs
+const isMinimalMode = computed(() => {
+  const minimalModeRoutes = ['register'];
+  return minimalModeRoutes.includes(route.query.page);
+});
 
 watch(() => route.query, (_, __) => {
   if (route.query && route.query.page) {
@@ -93,7 +102,7 @@ const tabClick  = (targetPage) => {
 }
 
 const headerInfo = computed(() => {
-  return pagesInfo.find(item => item.page === page.value)?.headerInfo || {};
+  return formattedPagesInfo.value.find(item => item.page === page.value)?.headerInfo || {};
 });
 
 
@@ -163,6 +172,29 @@ const pagesInfo = reactive([
     }
   }
 ])
+
+const minimalModePagesInfo = reactive([
+  {
+    page: "register",
+    info: "등록",
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
+    component: RegisterComponent,
+    headerInfo: {
+      title: "등록",
+      subTitle: "REGISTER",
+      description: "",
+    }
+  }
+]);
+
+const formattedPagesInfo = computed(() => {
+  if(isMinimalMode.value) {
+    return minimalModePagesInfo.filter(({ page }) => page === route.query.page);
+  }
+
+  return pagesInfo;
+})
 
 const leftLinks = reactive([
   {

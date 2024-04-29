@@ -10,7 +10,7 @@
       <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
       <img :src="verificationImg" />
     </div>
-    <div class="register">
+    <div class="register" @click="goToRegister">
       <div class="register-text">등록</div>
     </div>
     <div class="login" @click.prevent="onLoginSubmit">
@@ -23,8 +23,10 @@
 import { reactive, ref, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
+import { useRouter } from "vue-router";
 
 const store = userStore();
+const router = useRouter();
 const verificationImg = ref("");
 
 const loginForm = reactive({
@@ -33,6 +35,10 @@ const loginForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+
+const goToRegister = () => {
+  router.push('/?page=register');
+}
 
 const onLoginSubmit = () => {
   (async () => {
