@@ -1651,6 +1651,7 @@ export default {
     popUpTime: 'Pop Up Time',
     notificationType: 'Notification Type',
     notificationContent: 'Notification Content',
+    unbind: 'unbind',
   },
   message: {
     startenddatemore3months: "Start and End date cannot more than 3 months",
@@ -1703,6 +1704,7 @@ export default {
     confirmToCheck: 'Do you want to update？',
     confirmUpdate: 'Do you want to update?',
     confirmUpdatePayment: 'Do you want to update payment?',
+    confirmUnbind: 'Confirm that you want unbind bank card?',
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
@@ -1779,6 +1781,7 @@ export default {
       'Summary for the input period will be generated, please kindly wait',
     transferSuccess: 'Transfer Success',
     twoPasswordNotMatch: 'Two password does not match',
+    unbindSuccess: 'Unbind member bank card success',
     unlockMemberSuccess: 'Unlock Member Success',
     unlockUserSuccess: 'Unlock User Success',
     updateBelongTypeSuccess: 'Update Web Belong Type Success',
