@@ -40,6 +40,7 @@ const countOptions = ref([1,5,10,50,100]);
 .modal-body-buttons {
   position: absolute;
   bottom: 0;
+  left: 0;
 }
 .modal-body-content {
 }

@@ -13,16 +13,10 @@
       </div>
 
       <div class="page-dialog-main" >
-
-
         <div class="">
-
-
           <q-toolbar class="page-dialog-main-header text-white">
-
             <p>{{headerInfo.description}}
             </p>
-
             <p class="header-title">
               <span>{{headerInfo.title}}</span><br/>
               <span>{{headerInfo.subTitle}}</span>
@@ -30,9 +24,7 @@
             <p>
               <q-btn flat @click="closeDialog()" round dense icon="close" />
             </p>
-
           </q-toolbar>
-
           <div class="page-dialog-tabs">
               <q-tabs
                 v-model="page"
@@ -226,6 +218,7 @@ const open = (pageName) => {
 }
 .page-dialog-links {
   min-height: 624px;
+  margin-left: -130px;
 }
 .page-dialog-main {
   :deep(.q-panel) {
@@ -356,6 +349,10 @@ const open = (pageName) => {
 
 }
 .page-dialog-tabs {
+  padding: 10px 20px;
 
+  :deep(.q-tab) {
+  padding-bottom: 10px;
+  }
 }
 </style>

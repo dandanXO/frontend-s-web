@@ -101,6 +101,7 @@ const articleData = ref([
 .modal-body-buttons {
   position: absolute;
   bottom: 0;
+  left: 0;
 }
 .modal-body-content {
 }
