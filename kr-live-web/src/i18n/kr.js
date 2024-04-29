@@ -1,5 +1,17 @@
 export default {
   lang: {
+    // register start
+    reg_login_name: "로그인 이름",
+    reg_phone_num: "전화 번호",
+    reg_pass: "비밀번호",
+    reg_confirm_pass: "비밀번호 확인",
+    reg_email: "이메일",
+    reg_code_affiliate: "코드 제휴사",
+    reg_bank_id: "은행 ID",
+    reg_card_acc: "카드 계좌",
+    reg_card_acc_name: "카드 계좌 이름",
+    reg_card_acc_surname: "카드 계좌 성",
+    // register end
     langVal: "en",
     login: "Login",
     register: "Register",

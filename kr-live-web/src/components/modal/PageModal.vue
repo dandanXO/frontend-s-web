@@ -13,6 +13,8 @@
       </div>
 
       <div class="page-dialog-main" >
+        <LangToggle v-if="showLangToggle"/>
+
         <div class="">
           <q-toolbar class="page-dialog-main-header text-white">
             <p>{{headerInfo.description}}
@@ -68,12 +70,14 @@ import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import NotifyComponent from "components/pageModalContent/NotifyComponent";
 import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
+import LangToggle from "components/LangToggle.vue";
 
 const route = useRoute();
 const router = useRouter();
 const visible = ref(false);
 const store = userStore();
 const page = ref("");
+const showLangToggle = ref(process.env.NODE_ENV === "development");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {

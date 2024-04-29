@@ -1,5 +1,17 @@
 export default {
   lang: {
+    // register start
+    reg_login_name: "Login Name",
+    reg_phone_num: "Phone Number",
+    reg_pass: "Password",
+    reg_confirm_pass: "Confirm Password",
+    reg_email: "Email",
+    reg_code_affiliate: "Code Affiliate",
+    reg_bank_id: "Bank ID",
+    reg_card_acc: "Card Account",
+    reg_card_acc_name: "Card Account Name",
+    reg_card_acc_surname: "Card Account Surname",
+    // register end
     langVal: "en",
     login: "Login",
     register: "Register",
