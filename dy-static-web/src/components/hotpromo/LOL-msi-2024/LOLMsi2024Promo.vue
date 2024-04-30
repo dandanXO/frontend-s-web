@@ -97,5 +97,6 @@ onMounted(async () => {
 .msi-section {
   background: url(@/assets/images/promotion/hotpromo/LOL-msi/webbg.jpg) no-repeat top center;
   background-size: 100% auto;
+  background-color: #280604;
 }
 </style>
