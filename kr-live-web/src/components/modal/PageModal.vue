@@ -1,13 +1,9 @@
 <template>
   <q-scroll-area>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog">
-
-
-
       <div class="page-dialog-main" >
         <!-- <LangToggle v-if="showLangToggle"/> -->
-
-        <div class="">
+        <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
             <p class="header-info-description">{{headerInfo.description}}
             </p>
@@ -334,10 +330,20 @@ const open = (pageName) => {
 
 </script>
 <style scoped lang="scss">
+// reset app.scss
+
+.q-panel > div {
+  height: unset;
+}
 .page-dialog {
   .q-dialog__inner--minimized > div {
-    max-width: unset;
+    max-height: unset;
   }
+}
+
+// ---
+
+.page-dialog {
   width: 980px;
   height: 692px;
   //background: #23263cbc;
@@ -353,10 +359,16 @@ const open = (pageName) => {
   position: relative;
   padding: 0 130px;
   box-sizing: content-box;
+  .page-dialog-main-container {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    position: relative;
+  }
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
-    min-height: 624px;
+    //min-height: 624px;
   }
   .q-tabs__content {
 
@@ -490,30 +502,33 @@ const open = (pageName) => {
   :deep(.q-tab) {
     padding-bottom: 10px;
   }
+  .q-tab-panels {
+    overflow-y: hidden;
+  }
 }
 .q-panel {
   .q-tab-panel {
-    padding: 10px 30px;
+    padding: 10px 30px 120px;
     box-sizing: border-box;
+    overflow-y: scroll;
+    max-height: calc(90vh - 200px);
   }
 }
-.q-tab-panel {
-  padding: unset;
-  div {
 
-  }
-}
 
 .q-tab-panels {
-  background: #030303;
+  background-color: var(--main-bg-color);
   height: 100%;
 }
-
+:deep(.modal-body-buttons) {
+  background-color: var(--main-bg-color);
+}
 
 @media (max-width: 768px) {
   .page-dialog-main {
     width: 90vw;
     height: 95vh;
+    max-height: unset;
     padding: unset;
   }
   .page-dialog-links {
@@ -557,5 +572,18 @@ const open = (pageName) => {
     }
   }
 
+  .q-panel {
+    .q-tab-panel {
+      padding: 10px 20px 100px;
+      max-height: calc(95vh - 250px);
+    }
+  }
+  .modal-body-buttons {
+    .form-button {
+      width: 140px;
+      height: 40px;
+      max-width: 40vw;
+    }
+  }
 }
 </style>

@@ -118,7 +118,6 @@ const articleData = ref([
     color: #fff;
     font-size: 18px;
     padding-bottom: 5px;
-    margin: auto 10px;
     &.blue {
       background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
     }
@@ -128,4 +127,14 @@ const articleData = ref([
   }
 }
 
+
+@media (max-width: 768px) {
+  .modal-body-buttons {
+    .form-button {
+      width: 140px;
+      height: 40px;
+      max-width: 40vw;
+    }
+  }
+}
 </style>
