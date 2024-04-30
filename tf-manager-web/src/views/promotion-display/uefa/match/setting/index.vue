@@ -108,6 +108,23 @@
         <el-form-item :label="t('fields.title')" prop="title">
           <el-input v-model="form.title" style="width: 350px;" maxlength="100" />
         </el-form-item>
+        <el-form-item :label="t('fields.teamGroup')" prop="teamGroup">
+          <el-select
+            v-model="form.teamGroup"
+            size="small"
+            :placeholder="t('fields.teamGroup')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+          >
+            <el-option
+              v-for="item in uiControl.teamGroup"
+              :key="item.key"
+              :label="t('fields.team' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.teamOne')" prop="teamOneId">
           <el-select
             v-model="form.teamOneId"
@@ -156,6 +173,16 @@
             </el-option>
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.sequence')" prop="sequence">
+          <el-input-number
+            type="number"
+            v-model.number="form.sequence"
+            :min="0"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.matchTime')" prop="matchTime">
           <el-date-picker
             type="datetime"
@@ -188,6 +215,16 @@
         <el-row>
           <el-form-item :label="t('fields.title')" prop="title">
             <span>{{ endForm.title }}</span>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.teamGroup')" prop="teamGroup">
+            <span>{{ endForm.teamGroup }}</span>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="t('fields.sequence')" prop="sequence">
+            <span>{{ endForm.sequence }}</span>
           </el-form-item>
         </el-row>
         <el-row>
@@ -227,6 +264,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
+      <el-table-column prop="teamGroup" :label="t('fields.teamGroup')" width="120" />
       <el-table-column prop="teamOneName" :label="t('fields.teamOne')" width="120">
         <template #default="scope">
           <div style="display: flex; align-items: center">
@@ -243,6 +281,7 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="sequence" :label="t('fields.sequence')" width="120" />
       <el-table-column prop="winnerTeam" :label="t('fields.winnerTeam')" width="120">
         <template #default="scope">
           <div v-if="scope.row.winnerTeam" style="display: flex; align-items: center">
@@ -560,6 +599,18 @@ const uiControl = reactive({
     { key: 3, displayName: 'CANCEL', value: 'CANCEL' },
     { key: 4, displayName: 'ENDED', value: 'ENDED' }
   ],
+  teamGroup: [
+    { key: 1, displayName: 'A', value: 'A' },
+    { key: 2, displayName: 'B', value: 'B' },
+    { key: 3, displayName: 'C', value: 'C' },
+    { key: 4, displayName: 'D', value: 'D' },
+    { key: 5, displayName: 'E', value: 'E' },
+    { key: 6, displayName: 'F', value: 'F' },
+    { key: 7, displayName: '16', value: '16' },
+    { key: 8, displayName: '8', value: '8' },
+    { key: 9, displayName: '4', value: '4' },
+    { key: 10, displayName: '2', value: '2' }
+  ],
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false
@@ -575,8 +626,10 @@ const form = reactive({
   id: null,
   siteId: null,
   title: null,
+  teamGroup: null,
   teamOneId: null,
   teamTwoId: null,
+  sequence: null,
   matchTime: null
 });
 
@@ -584,10 +637,12 @@ const endForm = reactive({
   id: null,
   siteId: null,
   title: null,
+  teamGroup: null,
   teamOneId: null,
   teamOneName: null,
   teamTwoId: null,
   teamTwoName: null,
+  sequence: null,
   winner: null,
   matchTime: null
 })
@@ -595,6 +650,7 @@ const endForm = reactive({
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   title: [required(t('message.validateTitleRequired'))],
+  teamGroup: [required(t('message.validateTeamGroupRequired'))],
   teamOneId: [required(t('message.validateTeamOneRequired'))],
   teamTwoId: [required(t('message.validateTeamTwoRequired'))],
   matchTime: [required(t('message.validateMatchTimeRequired'))]
@@ -799,6 +855,13 @@ function submitImage() {
       break
   }
   uiControl.imageSelectionVisible = false
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
 }
 
 onMounted(async () => {
