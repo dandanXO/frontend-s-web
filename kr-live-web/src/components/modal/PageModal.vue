@@ -1,23 +1,11 @@
 <template>
   <q-scroll-area>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog">
-
-
-      <div class="page-dialog-links" v-if="!isMinimalMode">
-          <div class="left-group">
-            <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
-                 :class="tabIndex === item.key ? 'active' : ''">
-              <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
-            </div>
-          </div>
-      </div>
-
       <div class="page-dialog-main" >
         <!-- <LangToggle v-if="showLangToggle"/> -->
-
-        <div class="">
+        <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
-            <p>{{headerInfo.description}}
+            <p class="header-info-description">{{headerInfo.description}}
             </p>
             <p class="header-title">
               <span>{{headerInfo.title}}</span><br/>
@@ -27,6 +15,15 @@
               <q-btn flat @click="closeDialog()" round dense icon="close" />
             </p>
           </q-toolbar>
+          <div class="page-dialog-links" v-if="!isMinimalMode">
+            <p class="header-info-description">{{headerInfo.description}}</p>
+            <div class="left-group">
+              <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
+                   :class="tabIndex === item.key ? 'active' : ''">
+                <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
+              </div>
+            </div>
+          </div>
           <div class="page-dialog-tabs">
               <template v-if="!isMinimalMode">
                 <q-tabs
@@ -34,10 +31,9 @@
                   align="justify"
                 >
                   <template v-for="(item) in formattedPagesInfo" :key="item.page">
-  <!--                  <p :data-icon="item.imgUrl">123</p>-->
                     <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info"
                           class="page-dialog-tab" v-if="item.tabIndex === tabIndex">
-                      <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" alt="item.info" />
+                      <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
                     </q-tab>
                   </template>
                 </q-tabs>
@@ -334,10 +330,20 @@ const open = (pageName) => {
 
 </script>
 <style scoped lang="scss">
+// reset app.scss
+
+.q-panel > div {
+  height: unset;
+}
 .page-dialog {
   .q-dialog__inner--minimized > div {
-    max-width: unset;
+    max-height: unset;
   }
+}
+
+// ---
+
+.page-dialog {
   width: 980px;
   height: 692px;
   //background: #23263cbc;
@@ -345,17 +351,18 @@ const open = (pageName) => {
   //outline: 1px solid red;
 }
 .page-dialog-links {
-  min-height: 624px;
-  margin-left: -130px;
+  position: absolute;
+  left: 0;
 }
 .page-dialog-main {
+  --main-bg-color: #030303;
+  position: relative;
+  padding: 0 130px;
+  box-sizing: content-box;
   :deep(.q-panel) {
-    padding: 0 20px;
-    background: #030303;
   }
   &, .q-tab-panel {
-    min-height: 624px;
-    background: #030303;
+    //min-height: 624px;
   }
   .q-tabs__content {
 
@@ -368,6 +375,9 @@ const open = (pageName) => {
 }
 .page-dialog-links {
 
+  .header-info-description {
+    display: none;
+  }
 }
 
 .info-text {
@@ -398,7 +408,6 @@ const open = (pageName) => {
   }
 }
 :deep(.q-tab__label) {
-  margin-left: 8px;
 }
 
 :deep(.q-tab) {
@@ -431,7 +440,8 @@ const open = (pageName) => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
   &.active {
     background-image: url("../../assets/images/pages-modal/btn1-blue.svg");
@@ -447,11 +457,14 @@ const open = (pageName) => {
   justify-content: space-between;
   height: 82px;
   width: 100%;
-//  div p{
-//    width: 100%;
-//  }
+  padding: unset;
   background-image: url("../../assets/images/pages-modal/modal-header.svg");
+  background-color: var(--main-bg-color);
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   .header-title {
     text-align: center;
   }
@@ -459,9 +472,10 @@ const open = (pageName) => {
     flex: 1;
     margin: auto;:
     color: #FFF;
-    &:first-child {
+    &.header-info-description {
       color: #000;
       text-align: left;
+      margin-left: 10px;
     }
     &:nth-child(2) {
       text-align: center;
@@ -477,10 +491,99 @@ const open = (pageName) => {
 
 }
 .page-dialog-tabs {
-  padding: 10px 20px;
+  background:  var(--main-bg-color);
 
   :deep(.q-tab) {
-  padding-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .q-tab-panels {
+    overflow-y: hidden;
+  }
+}
+.q-panel {
+  .q-tab-panel {
+    padding: 10px 30px 120px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    max-height: calc(90vh - 200px);
+  }
+}
+
+
+.q-tab-panels {
+  background-color: var(--main-bg-color);
+  height: 100%;
+}
+:deep(.modal-body-buttons) {
+  background-color: var(--main-bg-color);
+}
+
+@media (max-width: 768px) {
+  .page-dialog-main {
+    width: 90vw;
+    height: 95vh;
+    max-height: unset;
+    padding: unset;
+  }
+  .page-dialog-main-container {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    position: relative;
+  }
+  .page-dialog-links {
+    background-color: var(--main-bg-color);
+    position: relative;
+    .header-info-description {
+      display: block;
+      margin: unset;
+      text-align: center;
+      padding-top: 12px;
+    }
+    .left-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  .page-dialog-main-header {
+    height: 60px;
+    background-image: url("../../assets/images/pages-modal/modal-header-mobile.svg");
+    .header-info-description {
+     visibility: hidden;
+    }
+    .q-btn {
+      margin-right: 15px;
+    }
+  }
+  .page-dialog-tabs {
+
+    :deep(.q-tab) {
+
+      .q-tab__content {
+        display: flex;
+        flex-direction: column-reverse;
+        .q-tab__label {
+          margin-left: unset;
+          margin-top: 4px;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+
+  .q-panel {
+    .q-tab-panel {
+      padding: 10px 20px 100px;
+      max-height: calc(95vh - 250px);
+    }
+  }
+  .modal-body-buttons {
+    .form-button {
+      width: 140px;
+      height: 40px;
+      max-width: 40vw;
+    }
   }
 }
 </style>

@@ -41,13 +41,8 @@ const countOptions = ref([1,5,10,50,100]);
   position: absolute;
   bottom: 0;
   left: 0;
-}
-.modal-body-content {
-}
-.modal-body-buttons {
   width: 100%;
   .form-button {
-    //display: inline-block;
     height: 70px;
     width: 200px;
     background-size: contain;
@@ -94,15 +89,15 @@ const countOptions = ref([1,5,10,50,100]);
     }
 
     .option-btns {
+      display: grid;
+      grid-template-columns: auto auto auto auto auto auto auto;
+      grid-row-gap: 12px;
+      grid-column-gap: 12px;
       :deep(.q-btn) {
-        width: 100px;
         height: 40px;
-        margin-right: 15px;
         color: #fff;
         font-size: 14px;
         border-radius: 3px;
-        padding: 5px 15px;
-        margin-top: 20px;
         background: #18324A;
         &.active {
           background: #237BFF;
@@ -110,8 +105,33 @@ const countOptions = ref([1,5,10,50,100]);
       }
     }
   }
-
 }
 
+@media (max-width: 768px) {
+  .modal-body-content {
+    .content-form {
+      p {
+        margin-top: 10px;
+      }
+      label {
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+      input {
+        font-size: 13px;
+        line-height: 30px;
+        color: #fff;
+        padding: 3px 12px;
+      }
+      .option-btns {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        :deep(.q-btn) {
+          max-width: unset;
+        }
+      }
+    }
+  }
+}
 
 </style>
