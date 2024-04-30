@@ -359,12 +359,6 @@ const open = (pageName) => {
   position: relative;
   padding: 0 130px;
   box-sizing: content-box;
-  .page-dialog-main-container {
-    top: 50%;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    position: relative;
-  }
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
@@ -530,6 +524,12 @@ const open = (pageName) => {
     height: 95vh;
     max-height: unset;
     padding: unset;
+  }
+  .page-dialog-main-container {
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    position: relative;
   }
   .page-dialog-links {
     background-color: var(--main-bg-color);

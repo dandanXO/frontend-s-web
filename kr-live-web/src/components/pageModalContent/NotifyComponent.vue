@@ -1,7 +1,7 @@
 <template>
   <div class="" style="">
     <div class="">
-      <q-item-section class="notify-table-row">
+      <q-item-section class="table-row-head">
         <q-item-label>번호</q-item-label>
         <q-item-label>제목</q-item-label>
         <q-item-label>날짜</q-item-label>
@@ -9,7 +9,7 @@
       <template v-for="(item) in articleData" :key="item.page">
         <q-expansion-item group="somegroup"  class="table-row-title">
           <template v-slot:header>
-            <q-item-section class="notify-table-row table-row-title">
+            <q-item-section class="table-row table-row-title">
               <q-item-label>{{ item.number }}</q-item-label>
               <q-item-label>{{ item.title }}</q-item-label>
               <q-item-label>{{ item.date }}</q-item-label>
@@ -120,16 +120,39 @@ const articleData = ref([
 </script>
 
 <style lang="scss" scoped>
-.notify-table-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 10px;
+.table-row-head {
+  padding: 5px 10px 0 10px;
+  display: grid;
+  grid-template-columns: 50px 1fr 100px;
+  .q-item__label {
+    margin: auto;
+    padding-bottom: 12px;
+    &:nth-child(2) {
+      text-align: left;
+      margin-left: unset;
+      margin-right: unset;
+    }
+  }
+}
+.table-row {
+  padding: 0 10px 0 10px;
+  display: grid;
+  grid-template-columns: 50px 1fr 100px;
+  .q-item__label {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: unset;
+    &:nth-child(2) {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
 }
 .table-row-title {
   background: #212121;
   margin-bottom: 5px;
+
   :deep(.q-icon) {
     display: none;
   }

@@ -2,13 +2,13 @@
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
       <div class="">
-        <q-item-section class="notify-table-row notify-table-header">
+        <q-item-section class="table-row-head">
           <q-item-label>번호</q-item-label>
           <q-item-label>제목</q-item-label>
           <q-item-label>날짜</q-item-label>
         </q-item-section>
         <template v-for="(item) in articleData" :key="item.page">
-          <q-item-section class="notify-table-row table-row-title">
+          <q-item-section class="table-row table-row-title">
             <q-item-label>{{ item.number }}</q-item-label>
             <q-item-label>{{ item.title }}</q-item-label>
             <q-item-label>{{ item.date }}</q-item-label>
@@ -48,38 +48,39 @@ const articleData = ref([
 </script>
 
 <style lang="scss" scoped>
-.modal-body-wrap {
-}
 .modal-body-content {
-  .notify-table-row {
-    display: flex;
-  }
-  .notify-table-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 10px;
+  .table-row-head {
+    padding-top: 4px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
     .q-item__label {
-      &:first-child {
-        width: 100px;
-        text-align: center;
-      }
+      margin: auto;
+      padding-bottom: 12px;
       &:nth-child(2) {
-        flex: 1;
         text-align: left;
-      }
-      &:last-child {
-        text-align: right;
-        width: 100px;
+        margin-left: unset;
+        margin-riight: unset;
       }
     }
-
-
+  }
+  .table-row {
+    padding: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    .q-item__label {
+      margin: auto;
+      padding: unset;
+      &:nth-child(2) {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
   }
   .table-row-title {
     background: #212121;
     margin-bottom: 5px;
+    padding: 10px 0;
   }
   .content-form {
     p {
