@@ -1,22 +1,25 @@
 <template>
   <div>
-    <el-tabs v-model="tabPosition" class="msi-tabs">
-      <el-tab-pane name="play-in" label="活动一">
-        <play-in-stage>
-          <match-info-swiper :match-list="matchList" />
-        </play-in-stage>
-      </el-tab-pane>
-      <el-tab-pane name="bracket" label="活动二">
-        <bracket-stage>
-          <match-info-swiper :match-list="matchList" />
-        </bracket-stage>
-      </el-tab-pane>
-      <el-tab-pane name="final" label="活动三">
-        <final-stage>
-          <match-info-swiper :match-list="matchList" />
-        </final-stage>
-      </el-tab-pane>
-    </el-tabs>
+    <img src="../../../assets/images/promotion/hotpromo/LOL-msi/webweb.jpg" />
+    <div class="msi-section">
+      <el-tabs v-model="tabPosition" class="msi-tabs">
+        <el-tab-pane name="play-in" label="活动一">
+          <play-in-stage>
+            <match-info-swiper :match-list="matchList" />
+          </play-in-stage>
+        </el-tab-pane>
+        <el-tab-pane name="bracket" label="活动二">
+          <bracket-stage>
+            <match-info-swiper :match-list="matchList" />
+          </bracket-stage>
+        </el-tab-pane>
+        <el-tab-pane name="final" label="活动三">
+          <final-stage>
+            <match-info-swiper :match-list="matchList" />
+          </final-stage>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 <script setup>
@@ -48,10 +51,12 @@ onMounted(async () => {
   margin: auto;
 
   :deep(.el-tabs__nav) {
-    float: none;
+    display: flex;
+    width: 100%;
+
     justify-content: center;
     gap: 128px;
-    margin-bottom: 76px;
+    margin-bottom: 15px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {
@@ -81,5 +86,9 @@ onMounted(async () => {
       color: #ff8080;
     }
   }
+}
+
+.msi-section {
+  background: url(@/assets/images/promotion/hotpromo/LOL-msi/bgbg.png) no-repeat top center;
 }
 </style>

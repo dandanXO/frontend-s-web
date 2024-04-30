@@ -100,7 +100,7 @@ table {
 
   td {
     color: #ffa800;
-    background: #051d4766;
+    background: #342d2d66;
     border-left: 2px solid #ffffff33;
   }
 }

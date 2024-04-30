@@ -48,10 +48,13 @@
       <div class="selected-promo-wrapper">
         <div
           class="banner-container"
-          v-if="selectedPromo.promoCode !== 'dy2-cny-step-game' && selectedPromo.promoCode !== 'dy2-game-steps'"
+          v-if="
+            selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+            selectedPromo.promoCode !== 'dy2-game-steps' &&
+            selectedPromo.promoCode !== 'dy2-msi-promo'
+          "
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
-            isMSIBanner: selectedPromo.promoCode === 'dy2-msi-promo'
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
           }"
         >
           <div
@@ -610,14 +613,6 @@ export default defineComponent({
           }
         }
 
-        &.isMSIBanner {
-          min-height: 600px;
-
-          .promo-bg {
-            min-height: 600px !important;
-          }
-        }
-
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -644,10 +639,9 @@ export default defineComponent({
         gap: 20px;
 
         &.isMSI {
-          padding: 30px 0;
+          padding: 0px 0 30px;
           margin: 0 auto;
           max-width: 1920px;
-          background: url(../assets/images/promotion/hotpromo/LOL-msi/web-bg.jpg);
           width: 100%;
           background-size: cover;
           position: relative;

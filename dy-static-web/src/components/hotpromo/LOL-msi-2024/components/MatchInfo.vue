@@ -56,7 +56,7 @@ defineProps({
     }
 
     .match-info-tit__time {
-      color: #c4c6e9;
+      color: #ffd9d0;
     }
   }
 
@@ -77,6 +77,10 @@ defineProps({
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        img {
+          width: 100px;
+        }
 
         span {
           font-family: Microsoft YaHei UI;
