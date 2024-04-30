@@ -72,11 +72,11 @@
           </div>
         </div>
         <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
-<!--          <div v-if="announcementList">-->
-<!--            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">-->
-<!--              {{ a.content }}-->
-<!--            </span>-->
-<!--          </div>-->
+          <!--          <div v-if="announcementList">-->
+          <!--            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">-->
+          <!--              {{ a.content }}-->
+          <!--            </span>-->
+          <!--          </div>-->
           <div>XX가 XX게임에서 2000000원 땄어요!</div>
         </marquee-text>
       </div>
@@ -280,7 +280,7 @@
             </div>
             <div class="platform-company-box">
               <div
-              class="company-image"
+                class="company-image"
                 :style="{
                   backgroundImage: (() => {
                     return `url(${require(`../assets/images/footer/company${p.code}.png`)})`;
@@ -753,10 +753,13 @@
     </div>
     <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
       <div class="news-item-left">
-        <div class="news-item-sort">[{{ item.sort }}]</div>
-        <span>※</span>
-        <div class="news-item-title">{{ item.title }}</div>
-        <span>※</span>
+        <div class="news-item-title">
+          [
+          {{ item.sort }}
+          ] ※
+          {{ item.title }}
+          ※
+        </div>
       </div>
       <div class="news-item-right">
         <div class="news-item-date">{{ item.date }}</div>
@@ -1563,7 +1566,6 @@ export default defineComponent({
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
-
       //假裝打api接json回傳
       const res = await fetch("fakeData/homePagePlatList.json");
 
@@ -2078,6 +2080,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding: 15px;
   /* margin: 10px 10px 5px; */
 
   @media (min-width: 769px) {
@@ -2089,24 +2092,33 @@ export default defineComponent({
     border-radius: 8px;
     background-color: #000;
     gap: 10px;
-    padding: 8px 12px;
+    padding: 6px;
     justify-content: center;
     align-items: center;
     width: 85%;
     flex: 1;
+    @media (min-width: 769px) {
+      padding: 8px 12px;
+    }
 
     .volume {
-      height: 32px;
+      height: 24px;
       background-color: #ff3c3c;
       display: flex;
       align-items: center;
+      @media (min-width: 769px) {
+        height: 32px;
+      }
       .box {
-        width: 60px;
+        width: 48px;
         font-size: 16px;
         line-height: 22.4px;
         border-radius: 2px;
         display: flex;
         justify-content: center;
+        @media (min-width: 769px) {
+          width: 60px;
+        }
       }
     }
 
@@ -2185,28 +2197,32 @@ export default defineComponent({
 
 .grid-wrapper {
   overflow: hidden;
+  width: 100%;
 }
 
 .grid {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin: 0px auto 0px;
   flex-wrap: wrap;
-  column-gap: 20px;
-  row-gap: 14px;
+  column-gap: 0px;
+  row-gap: 0px;
   width: calc(100% - 20px);
-  // background: linear-gradient(180deg, rgba(0, 0, 40, 0.71) 0%, #303072 100%);
   border-radius: 12px;
   overflow-x: auto;
+  width: 240px;
 
   @media (min-width: 769px) {
     margin: 10px auto;
+    justify-content: space-between;
+    column-gap: 20px;
+    row-gap: 14px;
+    width: calc(100% - 20px);
   }
 
   .game-board-item {
     border-radius: 8px;
-    width: 21%;
-    gap: 12px;
+    width: 112px;
     height: 100%;
     display: flex;
     text-align: center;
@@ -2217,10 +2233,17 @@ export default defineComponent({
     position: relative;
     justify-content: center;
     align-items: center;
+    @media (min-width: 769px) {
+      width: 21%;
+    }
     .home-board-item-text {
       color: #fff;
-      font-size: 24px;
-      line-height: 33.6px;
+      font-size: 14px;
+      line-height: 19.6px;
+      @media (min-width: 769px) {
+        font-size: 24px;
+        line-height: 33.6px;
+      }
     }
 
     .active-flag {
@@ -2267,7 +2290,7 @@ export default defineComponent({
 .game-grid-lists {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   width: calc(100% - 20px);
   margin: 6px auto 20px;
   padding-bottom: 30px;
@@ -2275,8 +2298,6 @@ export default defineComponent({
   column-gap: 15px;
   row-gap: 10px;
   transition: 1s ease-in;
-  .platform-company-box {
-  }
 
   @media (min-width: 769px) {
     margin: 12px auto 20px;
@@ -2304,7 +2325,7 @@ export default defineComponent({
       bottom: 0px;
       z-index: -1;
       width: 100%;
-      height: 60px;
+      height: 47px;
       background-color: #1f2833;
       display: flex;
       justify-content: center;
@@ -2320,16 +2341,19 @@ export default defineComponent({
     .platform-company-box {
       position: absolute;
       left: 3px;
-      bottom: 58px;
+      bottom: 46px;
       background-color: #0000004d;
       backdrop-filter: blur(5px);
       width: 98%;
-      height: 56px;
-      .company-image{
+      height: 41px;
+      .company-image {
         width: 100%;
         height: 100%;
         background-repeat: no-repeat;
         background-position: center center;
+      }
+      @media (min-width: 760px) {
+        height: 56px;
       }
     }
 
@@ -2703,16 +2727,27 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 40px;
+  padding: 0px 15px;
+  @media (min-width: 769px) {
+    padding: 0px 40x;
+  }
   .title-text {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 14px;
+    line-height: 19.6px;
+    @media (min-width: 769px) {
+      font-size: 20px;
+      line-height: 28px;
+    }
   }
   .more-text {
-    font-size: 20px;
-    line-height: 28px;
+    font-size: 14px;
+    line-height: 19.6px;
     color: #ff3c3c;
     cursor: pointer;
+    @media (min-width: 769px) {
+      font-size: 20px;
+      line-height: 28px;
+    }
   }
 }
 
@@ -2723,20 +2758,39 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 40px;
-  font-size: 16px;
-  line-height: 22px;
+  padding: 0px 15px;
+  font-size: 12px;
+  line-height: 16.8px;
   border-bottom: 1px solid #3f3f3f;
+
+  @media (min-width: 769px) {
+    padding: 0px 40x;
+    font-size: 16px;
+    line-height: 22px;
+  }
   .news-item-left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 175px;
+    @media (min-width: 769px) {
+      width: 60%;
+    }
+
     .news-item-sort {
       padding-right: 8px;
     }
     .news-item-title {
       padding-right: 8px;
       padding-left: 8px;
+      @media (max-width: 769px) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .news-item-box {
+    @media (min-width: 769px) {
+      width: 100%;
     }
   }
   .news-item-right {
@@ -2751,7 +2805,6 @@ export default defineComponent({
 
 @media (min-width: 769px) {
   .grid {
-
     .game-board-item {
       img {
         width: auto;
@@ -2786,9 +2839,8 @@ export default defineComponent({
 }
 
 @media (min-width: 991px) {
-  .grid{
+  .grid {
     padding: 0px 170px;
-
   }
 
   .grid .game-board-item {
@@ -2851,6 +2903,42 @@ export default defineComponent({
   .game-grid-lists {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
+    .plat-form-box {
+      position: absolute;
+      /* position: relative; */
+      left: 0px;
+      bottom: 0px;
+      z-index: -1;
+      width: 100%;
+      height: 60px;
+      background-color: #1f2833;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .plat-form-text {
+        color: #fff;
+        font-size: 20px;
+        line-height: 28px;
+        position: relative;
+      }
+    }
+
+    .platform-company-box {
+      position: absolute;
+      left: 3px;
+      bottom: 46px;
+      background-color: #0000004d;
+      backdrop-filter: blur(5px);
+      width: 98%;
+      height: 56px;
+      .company-image {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+    }
   }
 
   #id-live-board {

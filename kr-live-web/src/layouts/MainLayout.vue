@@ -9,17 +9,16 @@
     <q-page-container>
       <div class="home-banner-wrapper"></div>
 
-      <LoginBar />
       <div class="main">
+        <LoginBar />
         <div class="main-content">
-        <router-view v-slot="{ Component }">
-          <KeepAlive :max="8">
-            <component :is="Component" />
-          </KeepAlive>
-        </router-view>
+          <router-view v-slot="{ Component }">
+            <KeepAlive :max="8">
+              <component :is="Component" />
+            </KeepAlive>
+          </router-view>
+        </div>
       </div>
-      </div>
-
     </q-page-container>
     <!-- <q-footer v-if="ui.footer" elevated>
 
@@ -29,7 +28,6 @@
         <div class="box" v-for="(items, index) in footerBoxImgUrl" :key="index">
           <img :src="items.imgUrl" alt="" />
         </div>
-
       </div>
       <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
     </footer>
@@ -543,26 +541,35 @@ svg path {
 .home-banner-wrapper {
   position: relative;
   width: 100%;
-  height: 440px;
-  background-image: url("../assets/images/headerBanner/banner.svg");
+  height: 200px;
+  background-image: url("../assets/images/headerBanner/banner-phone.png");
   background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: cover;
+
+  @media (min-width: 1200px) {
+    background-image: url("../assets/images/headerBanner/banner.svg");
+    height: 440px;
+  }
 }
 
 footer {
   width: 100%;
-  height: 300px;
+  height: 186px;
   background-color: #0d0e0f;
   display: flex;
   flex-direction: column;
-justify-content: space-between;
-align-items: center;
+  justify-content: space-between;
+  align-items: center;
+  @media (min-width: 1200px) {
+    height: 300px;
+  }
 }
 
 .footer-box {
-  margin-top: 36px;
+  margin: 15px 0px;
   max-width: 1280px;
   column-gap: 5px;
   row-gap: 5px;
@@ -570,21 +577,36 @@ align-items: center;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  @media (min-width: 1200px) {
+    margin-top: 36px;
+  }
   .box {
-    width: 140px;
-    height: 60px;
+    width: 75px;
+    height: 32px;
     background-color: #272a30;
     display: flex;
     justify-content: center;
     align-items: center;
+    img {
+      width: 100%;
+    }
+    @media (min-width: 1200px) {
+      width: 140px;
+      height: 60px;
+    }
   }
 }
 
-.copyright-text{
+.copyright-text {
+  font-size: 12px;
+  line-height: 16.8px;
+  padding-bottom: 20px;
+  @media (min-width: 1200px) {
     font-size: 20px;
     line-height: 28px;
     padding-bottom: 20px;
   }
+}
 
 @media (min-width: 600px) {
   .login-btn {
@@ -595,7 +617,7 @@ align-items: center;
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1200px) {
   .home-sticky {
     display: block;
   }
