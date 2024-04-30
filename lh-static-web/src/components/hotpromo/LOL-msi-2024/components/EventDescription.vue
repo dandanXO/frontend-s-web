@@ -25,6 +25,7 @@ import DescriptionImg from "@/components/hotpromo/LOL-msi-2024/images/descriptio
   display: flex;
   flex-direction: column;
   gap: 26px;
+  padding: 0 60px;
 
   > div {
     display: flex;
