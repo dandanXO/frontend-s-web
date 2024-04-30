@@ -341,7 +341,7 @@ const leftLinks = reactive([
 
 const goToFirstTab = (tabIndex) => {
   const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
-  page.value = item?.page
+  router.push(`/?page=${item?.page}`);
 }
 
 const closeDialog = () => {
