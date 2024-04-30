@@ -56,18 +56,20 @@ body {
   height: 100%;
 }
 
-.main{
-  background-image: url("../assets/home/background.svg");
-  background-position: center;
+.main {
+  background-image: url("../assets/home/background-phone2.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  @media (min-width: 1200px) {
+    background-image: url("../assets/home/background.svg");
+    background-size: cover;
+  }
 }
 
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
   padding-bottom: 20px;
-
 }
 
 .main-section {
