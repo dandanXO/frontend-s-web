@@ -48,7 +48,11 @@
       <div class="selected-promo-wrapper">
         <div
           class="banner-container"
-          v-if="selectedPromo.promoCode !== 'dy2-cny-step-game' && selectedPromo.promoCode !== 'dy2-game-steps'"
+          v-if="
+            selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+            selectedPromo.promoCode !== 'dy2-game-steps' &&
+            selectedPromo.promoCode !== 'dy2-msi-promo'
+          "
           :class="{
             isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
           }"
@@ -77,6 +81,7 @@
           class="inner"
           :class="{
             isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -632,6 +637,15 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.isMSI {
+          padding: 0px 0 30px;
+          margin: 0 auto;
+          max-width: 1920px;
+          width: 100%;
+          background-size: cover;
+          position: relative;
+        }
 
         &.fullwidth {
           width: 100%;

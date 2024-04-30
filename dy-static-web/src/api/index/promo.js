@@ -209,3 +209,7 @@ export function getCheckInRecord(promoCode) {
 export function claimCheckInTreasure(promoCode, days) {
   return server.EVENT.post(`/event-check-in/open`, { promoCode, days });
 }
+
+export function getLOLMsiMatchRecord() {
+  return server.EVENT.get("/game-match/upcoming/MSI");
+}
