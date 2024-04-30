@@ -1,6 +1,17 @@
 <template>
   <q-scroll-area>
-    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog">
+    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
+
+
+      <div class="page-dialog-links" v-if="!isMinimalMode">
+          <div class="left-group">
+            <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
+                 :class="tabIndex === item.key ? 'active' : ''">
+              <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
+            </div>
+          </div>
+      </div>
+
       <div class="page-dialog-main" >
         <!-- <LangToggle v-if="showLangToggle"/> -->
         <div class="page-dialog-main-container">
@@ -45,7 +56,7 @@
 
                 <template v-for="(item) in formattedPagesInfo" :key="item.page">
                   <q-tab-panel :name="item.page">
-                    <component :is="item.component"></component>
+                    <component :is="item.component" @closeModal="closeDialog"></component>
                   </q-tab-panel>
                 </template>
               </q-tab-panels>
@@ -71,6 +82,8 @@ import MyMessages from "components/pageModalContent/MyMessages.vue";
 import MyTransactionRecords from "components/pageModalContent/MyTransactionRecords.vue";
 import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import DepositRecord from "components/pageModalContent/DepositRecord.vue";
+import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
 import LangToggle from "components/LangToggle.vue";
 
 const route = useRoute();
@@ -111,10 +124,10 @@ watch(() => route.query, (_, __) => {
 const tabClick  = (targetPage) => {
   page.value = targetPage
   // TODO
-  // router.replace({
-  //   query: { page: targetPage},
-  //   silent: true
-  // })
+  router.replace({
+    query: { page: targetPage},
+    silent: true
+  })
 
 }
 
@@ -255,6 +268,32 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!",
     }
   },
+  {
+    tabIndex: "finance",
+    page: "finance/depositRecord",
+    info: "입금",
+    iconUrl: require("../../assets/icon/deposit.svg"),
+    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    component: DepositRecord,
+    headerInfo: {
+      title: "입금",
+      subTitle: "DEPOSIT RECORD",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "finance",
+    page: "finance/withdrawRecord",
+    info: "출금",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: WithdrawRecord,
+    headerInfo: {
+      title: "출금",
+      subTitle: "WITHDRAW RECORD",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
 ])
 
 const minimalModePagesInfo = reactive([
@@ -309,7 +348,7 @@ const leftLinks = reactive([
 
 const goToFirstTab = (tabIndex) => {
   const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
-  page.value = item?.page
+  router.push(`/?page=${item?.page}`);
 }
 
 const closeDialog = () => {
@@ -470,7 +509,7 @@ const open = (pageName) => {
   }
   p {
     flex: 1;
-    margin: auto;:
+    margin: auto;
     color: #FFF;
     &.header-info-description {
       color: #000;
