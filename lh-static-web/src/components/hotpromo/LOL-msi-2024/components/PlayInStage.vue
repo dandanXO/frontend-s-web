@@ -78,6 +78,7 @@ table {
 
 .remark-table {
   align-self: start;
+  width: 100%;
 
   th,
   td {
