@@ -59,11 +59,31 @@
         <td>*BO1比赛中游戏时间≥40分钟</td>
       </tr>
     </table>
+    <event-rule>
+      <ul class="event-rule">
+        <li>活动期间，投注MSI季中冠军赛BO1(第一局)盘口且早盘有效投注≥1,888元并完成特殊事件即可获得对应彩金；</li>
+        <li>
+          活动期间，每场特殊事件判定标准为如下：速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中游戏比赛时间≥40分钟；
+        </li>
+        <li>活动无需申请，符合条件的会员，彩金于次日24小时内统一派发，彩金3倍流水即可提款；</li>
+        <li>
+          任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+        </li>
+        <li>
+          根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+        </li>
+        <li>
+          此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+        </li>
+        <li>为避免文字理解差异，东赢电竞保留此活动最终解释权；</li>
+      </ul>
+    </event-rule>
   </div>
 </template>
 <script setup>
 import SectionHeader from "./SectionHeader.vue";
 import EventDescription from "./EventDescription.vue";
+import EventRule from "./EventRule.vue";
 </script>
 <style scoped lang="scss">
 @import "../style/section.scss";

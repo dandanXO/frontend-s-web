@@ -54,11 +54,32 @@
     <div class="remark">
       例：用户在MSI季中总决赛赛中有效投注9000元，其中雷火电竞投注5,000元，其他电竞场馆投注4,000元，累计MSI季中总决赛有效投投注9000元，彩金则按雷火专属礼金派发，用户次日可获50元。
     </div>
+    <event-rule>
+      <ul class="event-rule">
+        <li>
+          活动期间，会员当日MSI季中赛BO3(第3局-第5局)累计总有效投注≥1,000元即可获得对应彩金，BO1与BO2有效投注不在统计范围内；
+        </li>
+        <li>活动期间，活动计算当日MSI季中赛BO3(第3局-第5局)赛事总有效投注，次日清零重新计算。活动无需申请自动派发；</li>
+        <li>仅统计电竞场馆所产生的有效投注，其他场馆不在统计范围内，彩金次日24小时内统一派发，彩金3倍流水即可提款；</li>
+        <li>活动期间，会员在东赢电竞场馆娱乐并达到对应投注金额可获得东赢专属礼金，彩金以最高档位派发；</li>
+        <li>
+          任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+        </li>
+        <li>
+          根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
+        </li>
+        <li>
+          此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；
+        </li>
+        <li>为避免文字理解差异，东赢电竞保留此活动最终解释权；</li>
+      </ul>
+    </event-rule>
   </div>
 </template>
 <script setup>
 import SectionHeader from "./SectionHeader.vue";
 import EventDescription from "./EventDescription.vue";
+import EventRule from "./EventRule.vue";
 </script>
 <style scoped lang="scss">
 @import "../style/section.scss";
