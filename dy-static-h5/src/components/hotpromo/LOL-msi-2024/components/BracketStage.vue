@@ -5,7 +5,7 @@
       <slot />
     </div>
     <event-description class="event-description">
-      活动内容修改为：当日投注MSI季中冠军赛BO2(第二局)累计投注≥1,000元且BO2最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中冠军赛BO2最终结算为负盈利≥1,000元也可获得对应负盈利返比。
+      当日投注MSI季中冠军赛BO2(第二局)累计投注≥1,000元且BO2最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中冠军赛BO2最终结算为负盈利≥1,000元也可获得对应负盈利返比。
     </event-description>
     <table class="deposit-table">
       <thead>
