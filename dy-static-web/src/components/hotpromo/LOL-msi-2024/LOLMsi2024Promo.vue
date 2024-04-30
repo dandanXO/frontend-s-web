@@ -48,6 +48,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .top-banner {
   width: 100%;
+  display: block;
 }
 
 .msi-tabs {
