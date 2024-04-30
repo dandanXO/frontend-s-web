@@ -5,8 +5,7 @@
       <slot />
     </div>
     <event-description class="event-description">
-      投注MSI季中冠军赛BO2局，根据BO2当局累计投注≥1,000且BOS最终结算盈利≥500以上即可获得对应的盈利彩金。
-      若BO2当局最终结算为负盈利≥1,000也可获得对应负盈利返比。
+      当日投注MSI季中冠军赛BO2(第二局)累计投注≥1,000元且BO2最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中冠军赛BO2最终结算为负盈利≥1,000元也可获得对应负盈利返比。
     </event-description>
     <table class="deposit-table">
       <thead>
@@ -57,7 +56,7 @@
     <table class="deposit-table special-promo-table">
       <thead>
         <tr>
-          <th>累计盈利</th>
+          <th>累计负盈利</th>
           <th>好运金</th>
           <th>彩金上限</th>
           <th>流水倍数</th>
@@ -68,7 +67,7 @@
           <td>≥1,000</td>
           <td>负盈利金额3%</td>
           <td>888元</td>
-          <td>1倍</td>
+          <td>3倍</td>
         </tr>
       </tbody>
     </table>

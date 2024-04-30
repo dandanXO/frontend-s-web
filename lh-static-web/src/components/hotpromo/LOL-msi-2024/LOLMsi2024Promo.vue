@@ -51,7 +51,7 @@ onMounted(async () => {
     float: none;
     justify-content: center;
     gap: 128px;
-    margin-bottom: 76px;
+    margin-top: 10px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {
