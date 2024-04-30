@@ -663,11 +663,11 @@ async function loadDownlineAffiliates() {
       }
     })
   }
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = request.regTime.join(',')
-    }
-  }
+  // if (request.regTime !== null) {
+  //   if (request.regTime.length === 2) {
+  //     query.regTime = request.regTime.join(',')
+  //   }
+  // }
   query.siteId = site.value.id
   query.memberTypes = 'AFFILIATE'
   const { data: ret } = await getAffiliateDownline(checkId.value, query)
