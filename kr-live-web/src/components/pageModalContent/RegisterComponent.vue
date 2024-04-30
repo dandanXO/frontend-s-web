@@ -168,6 +168,7 @@
         <div>
           <label>계좌번호</label>
           <q-input
+            type="number"
             placeholder="'-'없이숫자만입력."
             ref="cardNumRef"
             filled
