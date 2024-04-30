@@ -1,169 +1,745 @@
 <template>
-  <div class="modal-body-wrap">
-    <q-card-section class="modal-body-content">
-      <form class="register-form">
-        <div>
-          <label>{{ t("lang.reg_phone_num") }}</label>
-          <input v-model="regForm.telephone" placeholder="" />
+  <div class="main-section">
+    <q-form class="register-form" @submit="onSubmit">
+      <div>
+          <label>{{$t('lang.affiliate_code')}}</label>
+          <q-input
+            ref="codeAffiliate"
+            filled
+            v-model="regForm.codeAffiliate"
+            color="white"
+            :disable="hasAffiliate"
+            clearable
+            :hint="$t('lang.affiliate_code_hint')"
+          >
+          </q-input>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_login_name") }}</label>
-          <input v-model="regForm.loginName" placeholder="" />
+          <label>{{$t('lang.phone_number')}}</label>
+          <q-input
+            ref="telRef"
+            filled
+            v-model="regForm.telephone"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+              (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone'),
+              // isValidPhone
+            ]"
+            color="white"
+            clearable
+          >
+            <template v-slot:append>
+              <q-btn
+                class="primary-btn"
+                :label="$t('lang.request_otp_code')"
+                @click="openTelephoneVerificationModal"
+                :disabled="!regForm.telephone"
+              />
+            </template>
+          </q-input>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_pass") }}</label>
-          <input v-model="regForm.password" placeholder="" />
+          <label>{{$t('lang.input_username')}}</label>
+          <q-input
+            ref="loginNameRef"
+            filled
+            v-model="regForm.loginName"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+              (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+            ]"
+            color="white"
+            clearable
+          />
         </div>
+
         <div>
-          <label>{{ t("lang.reg_confirm_pass") }}</label>
-          <input v-model="regForm.confirmPwd" placeholder="" />
+          <label>{{$t('lang.one_time_otp')}}</label>
+          <div class="telephone-otp-row">
+            <q-input
+              ref="telOtpCodeRef"
+              v-model="regForm.smsCode"
+              :placeholder="$t('lang.one_time_otp')"
+              stack-label
+              clearable
+              autocomplete="off"
+              filled
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
+            />
+          </div>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_email") }}</label>
-          <input v-model="regForm.email" placeholder="" />
+          <label>{{$t('lang.confirm_pass')}}</label>
+          <q-input
+            ref="confirmPwdRef"
+            filled
+            :type="isCfmPwd ? 'password' : 'text'"
+            v-model="regForm.confirmPwd"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
+              (val) => val === regForm.password || $t('lang.password_do_not_match'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+            ]"
+            color="white"
+            clearable
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isCfmPwd = !isCfmPwd"
+              />
+            </template>
+          </q-input>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_code_affiliate") }}</label>
-          <input v-model="regForm.codeAffiliate" placeholder="" />
+          <label>Bank Card</label>
+          <q-select filled
+            ref="bankCardRef"
+            v-model="regForm.bankId"
+            :options="banksList"
+            option-value="id"
+            option-label="name" 
+            emit-value
+            map-options
+            lazy-rules
+            :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+          />
         </div>
+
         <div>
-          <label>{{ t("lang.reg_bank_id") }}</label>
-          <input v-model="regForm.bankId" placeholder="" />
+          <label>{{$t('lang.password')}}</label>
+          <div>
+            <q-input
+              ref="pwdRef"
+              filled
+              v-model="regForm.password"
+              :type="isPwd ? 'password' : 'text'"
+              lazy-rules
+              :rules="[
+                (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+                (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
+                // (val) =>
+                //   (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
+              ]"
+              color="white"
+              clearable
+            >
+              <template v-slot:append>
+                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+              </template>
+            </q-input>
+            <div v-if="regForm.password" class="password-str-div">
+              <span
+                :class="{
+                  'weak-pwd': pwdStrength == 'weak',
+                  'normal-pwd': pwdStrength == 'normal',
+                  'strong-pwd': pwdStrength == 'strong'
+                }"
+              >
+                {{ $t("lang.weak_level") }}
+              </span>
+              <span
+                :class="{
+                  'normal-pwd': pwdStrength == 'normal',
+                  'strong-pwd': pwdStrength == 'strong'
+                }"
+              >
+                {{ $t("lang.medium_level") }}
+              </span>
+              <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
+            </div>
+          </div>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_card_acc") }}</label>
-          <input v-model="regForm.cardNumber" placeholder="" />
+          <label>Card Number</label>
+          <q-input
+            ref="cardNumRef"
+            filled
+            v-model="regForm.cardNumber"
+            lazy-rules
+            color="white"
+            clearable
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_enter_card_num'),
+            ]"
+          >
+          </q-input>
         </div>
+
         <div>
-          <label>{{ t("lang.reg_card_acc_name") }}</label>
-          <input v-model="regForm.cardAccountName" placeholder="" />
+          <label>Email</label>
+          <q-input
+            ref="emailRef"
+            type="email"
+            filled
+            v-model="regForm.email"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'),
+              isValidEmail
+            ]"
+            color="white"
+            clearable
+          />
         </div>
+
         <div>
-          <label>{{ t("lang.reg_card_acc_surname") }}</label>
-          <input v-model="regForm.cardAccountSurname" placeholder="" />
+          <label>Card Account</label>
+          <q-input
+            ref="cardAccRef"
+            filled
+            v-model="regForm.cardAccount"
+            lazy-rules
+            color="white"
+            clearable
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty'),
+            ]"
+          >
+          </q-input>
         </div>
-      </form>
-      <div class="action-buttons">
-        <q-btn class="form-button blue" label="등록" @click="handleRegister"></q-btn>
-        <q-btn class="form-button yellow" label="로그인"></q-btn>
-      </div>
-    </q-card-section>
+    </q-form>
+
+    <div class="row justify-center items-center gap-8" style="margin-top: 35px">
+      <q-btn
+        @click.prevent="onSubmit"
+        :label="$t('lang.signup_now')"
+        type="submit"
+        color="brand"
+        class="common-large-btn"
+        rounded
+      />
+    </div>
+
+    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
+      <q-card class="q-pa-md">
+        <div class="modal-head-title q-pb-md">
+          {{ $t("lang.check_your_captcha_code") }}
+        </div>
+        <q-form class="q-gutter-sm">
+          <q-input
+            class="verification-input"
+            ref="telephoneVerifyCaptchaCodeRef"
+            filled
+            type="text"
+            maxlength="4"
+            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode"
+            :label="$t('lang.captcha_code')"
+            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
+            color="white"
+          >
+            <template v-slot:append>
+              <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
+            </template>
+            <template v-slot:prepend>
+              <q-icon name="security" />
+            </template>
+          </q-input>
+          <div class="row justify-center items-center gap-8" style="margin-top: 25px">
+            <q-btn
+              :disabled="isOtpSending"
+              :style="isOtpSending ? 'opacity: .6' : ''"
+              class="common-btn verification-btn third-btn"
+              @click.prevent="getOtpCode"
+            >
+              {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
+            </q-btn>
+          </div>
+        </q-form>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
-<script setup id="RegisterComponent">
-import { reactive, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
+<script>
+import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { Platform, useQuasar } from "quasar";
+import { useQuasar, Platform } from "quasar";
+import { userStore } from "stores/index";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { useUI } from "stores/ui";
+import vueI18n from "src/i18n";
 
-const qs = require("qs");
+export default defineComponent({
+  name: "RegisterPage",
+  setup() {
+    const { t } = useI18n();
+    const store = userStore();
+    const siteId = process.env.SITEID;
+    const qs = require("qs");
 
-const { t } = useI18n();
-const $q = useQuasar();
+    onMounted(() => {
+      //getCode();
+      getAffiliateCode();
+      getReferralCode();
+      api
+          .get(`/member/withdraw/banks?siteId=${siteId}`)
+          .then((ret) => {
+            const res = ret.data;
+            if (res.code === 0) {
+              bankCardModalState.banks.push(...res.data);
+              selectBankType();
+            }
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+    });
+    const imgURL = process.env.IMAGE_CDN + "/payment/";
+    const verificationImg = ref("");
+    const regForm = reactive({
+      loginName: "",
+      password: "",
+      confirmPwd: "",
+      telephone: "",
+      smsCode: "",
+      smsCodeId: "",
+      email: "",
+      cardNumber: "",
+      cardAccount: "",
+      codeAffiliate: "",
+      regHost: location.hostname
+    });
 
-const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
+    const verifyTelephoneForm = reactive({
+      telephone: "",
+      telephoneVerifyCaptchaCode: "",
+      telephoneVerificationCaptchaCodeId: ""
+    });
 
-const siteId = process.env.SITEID;
-const regForm = reactive({
-  loginName: "",
-  password: "",
-  confirmPwd: "",
-  telephone: "",
-  email: "",
-  codeAffiliate: "",
-  bankId: null,
-  cardNumber: null,
-  cardAccountName: "",
-  cardAccountSurname: "",
-  regHost: location.hostname,
-  regDevice: regDevice
-})
+    const telephoneVerificationCaptchaImg = ref("");
+    const isOtpSending = ref(false);
 
-const handleRegister = () => {
-  api.post("/member/register-with-bank-card", qs.stringify(regForm)).then((ret) => {
-    const res = ret.data;
-    if (res.code === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: t("lang.register_successful"),
-        icon: "check_circle_outline"
+    const isTelephoneVerificationModalVisible = ref(false);
+    const openTelephoneVerificationModal = () => {
+      telRef.value.validate();
+
+      if (telRef.value.hasError) {
+        return;
+      }
+
+      getTelephoneVerificationImgCode();
+      isTelephoneVerificationModalVisible.value = true;
+    };
+
+    const getTelephoneVerificationImgCode = () => {
+      api
+        .get("/member/verificationEasyCode")
+        .then((res) => {
+          const response = res.data;
+          if (response.code === 0) {
+            telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
+            verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
+          }
+        })
+        .catch((e) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: e.message,
+            icon: "report_problem"
+          });
+        });
+    };
+
+    const getOtpCode = () => {
+      const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
+
+      if (!isTelephoneVerifyCaptchaCodeValid) {
+        return;
+      }
+
+      isOtpSending.value = true;
+      regForm.smsCode = "";
+      regForm.smsCodeId = "";
+      const telephoneDetails = {
+        telephone: regForm.telephone,
+        codeId: verifyTelephoneForm.telephoneVerificationCaptchaCodeId,
+        captchaCode: verifyTelephoneForm.telephoneVerifyCaptchaCode
+      };
+      api
+        .post("/otp/sendSms", qs.stringify(telephoneDetails))
+        .then((res) => {
+          const ret = res.data;
+          if (ret.code === 0) {
+            regForm.smsCodeId = ret.data.codeId;
+            $q.notify({
+              color: "positive",
+              position: "top",
+              message: t("lang.otp_code_has_been_sent_to_your_mobile_phone"),
+              icon: "check_circle_outline"
+            });
+            isTelephoneVerificationModalVisible.value = false;
+          }
+
+          isOtpSending.value = false;
+        })
+        .catch((e) => {
+          isOtpSending.value = false;
+        });
+    };
+
+    const loginNameRef = ref();
+    const pwdRef = ref();
+    const confirmPwdRef = ref();
+    const telRef = ref();
+    const cardNumRef = ref();
+    const cardAccRef = ref();
+    const telOtpCodeRef = ref();
+    const telephoneVerifyCaptchaCodeRef = ref();
+    const emailRef = ref();
+    const cardAccountNameRef = ref();
+    const cardAccountSurnameRef = ref();
+    const cardNumberRef = ref();
+    const bankCardRef = ref();
+    const $q = useQuasar();
+    const ui = useUI();
+    const pwdStrength = ref("");
+
+    const isValidEmail = () => {
+      const emailPattern =
+        /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
+      return emailPattern.test(regForm.email) || t("lang.invalid_email");
+    };
+
+    const isValidPhone = () => {
+      const phonePattern = /^0[1-9][0-9]*$/;
+      return phonePattern.test(regForm.telephone) || t("lang.invalid_phone_num");
+    };
+    const router = useRouter();
+    const onSubmit = () => {
+      loginNameRef.value.validate();
+      pwdRef.value.validate();
+      confirmPwdRef.value.validate();
+      telRef.value.validate();
+      telOtpCodeRef.value.validate();
+      emailRef.value.validate();
+      cardNumRef.value.validate();
+      cardAccRef.value.validate();
+      bankCardRef.value.validate();
+      $q.loading.show({
+        message: t("lang.loading")
       });
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
-    }
-  })
-  .catch((error) => {
-  });
-}
+      var qs = require("qs");
+      if (
+        loginNameRef.value.hasError ||
+        pwdRef.value.hasError ||
+        confirmPwdRef.value.hasError ||
+        telRef.value.hasError ||
+        telOtpCodeRef.value.hasError ||
+        emailRef.value.hasError ||
+        cardNumRef.value.hasError ||
+        cardAccRef.value.hasError ||
+        bankCardRef.value.hasError
+      ) {
+        $q.loading.hide();
+      } else {
+        const sidParam = store.visitorId;
+        (async () => {
+          regForm.sid = sidParam;
+          regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
+          if ("standalone" in window.navigator && window.navigator.standalone) {
+            regForm.regDevice = "IOS";
+          } else {
+            regForm.regDevice = Platform.is.mobile ? "H5" : "WEB";
+            if (Platform.is.capacitor) {
+              if (Platform.is.android) {
+                regForm.regDevice = "ANDROID";
+              }
+            }
+          }
 
-onMounted(() => {
+          if (regForm.regHost.indexOf("http://localhost") > -1) {
+            regForm.regHost = "app://";
+          }
+          api
+            .post("/member/register-with-bank-card", qs.stringify(regForm))
+            .then((ret) => {
+              const res = ret.data;
+              if (res.code === 0) {
+                router.push("/");
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: t("lang.register_successful"),
+                  icon: "check_circle_outline"
+                });
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: res.message,
+                  icon: "report_problem"
+                });
+              }
+              $q.loading.hide();
+            })
+            .catch((error) => {
+              $q.loading.hide();
+            });
+        })();
+      }
+    };
+
+    watch(
+      () => regForm.password,
+      () => {
+        pwdStrength.value = "";
+        var pwd = regForm.password;
+        var result = 0;
+        if (pwd) {
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
+        }
+
+        var level = 0;
+        for (var i = 0; i <= 4; i++) {
+          if (result & 1) {
+            level++;
+          }
+          result = result >>> 1;
+        }
+        if (pwd && pwd.length >= 6) {
+          switch (level) {
+            case 1:
+              pwdStrength.value = "weak";
+              break;
+            case 2:
+              pwdStrength.value = "normal";
+              break;
+            case 3:
+            case 4:
+              pwdStrength.value = "strong";
+              break;
+          }
+        } else {
+          pwdStrength.value = "weak";
+        }
+      }
+    );
+
+    const bankCardModalState = reactive({
+      visible: false,
+      banks: []
+    });
+
+    const banksList = ref([]);
+    const selectedBankType = ref("Bank");
+    const selectBankType = () => {
+      regForm.bankId = "";
+      banksList.value = [];
+      bankCardModalState.banks.forEach((element) => {
+        if (selectedBankType.value === "Bank" && element.bankType === "BANK") {
+          banksList.value.push(element);
+        }
+        if (selectedBankType.value === "Crypto" && element.bankType === "CRYPTO") {
+          const isCrypto = ref(true);
+          banksList.value.push(element);
+        }
+        if (selectedBankType.value === "e-Wallet" && element.bankType === "EWALLET") {
+          const isEWallet = ref(true);
+          banksList.value.push(element);
+        }
+      });
+    };
+
+    let validateBankLength = (val) => {
+      if (selectedBankType.value === "Bank") {
+        return (val.length > 5 && val.length < 13) || t("lang.length_between_6_12");
+      } else if (selectedBankType.value === "Crypto") {
+        return (val.length > 33 && val.length < 38) || t("lang.length_between_34_37");
+      }
+    };
+    const hasAffiliate = ref(false);
+    const getAffiliateCode = () => {
+      const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+      if (affCode) {
+        hasAffiliate.value = true;
+        regForm.codeAffiliate = affCode;
+      }
+    };
+    const getReferralCode = () => {
+      const refCode = sessionStorage.getItem("REFERRAL_CODE");
+      if (refCode) {
+        regForm.referrer = refCode;
+      }
+    };
+
+    return {
+      regForm,
+      verificationImg,
+      loginNameRef,
+      pwdRef,
+      confirmPwdRef,
+      telRef,
+      cardNumRef,
+      cardAccRef,
+      telOtpCodeRef,
+      telephoneVerifyCaptchaCodeRef,
+      emailRef,
+      cardNumberRef,
+      cardAccountNameRef,
+      cardAccountSurnameRef,
+      bankCardRef,
+      onSubmit,
+      isValidEmail,
+      isValidPhone,
+      isPwd: ref(true),
+      isCfmPwd: ref(true),
+      pwdStrength,
+      selectBankType,
+      selectedBankType,
+      validateBankLength,
+      banksList,
+      imgURL,
+      hasAffiliate,
+      getAffiliateCode,
+      getReferralCode,
+      telephoneVerificationCaptchaImg,
+      isTelephoneVerificationModalVisible,
+      openTelephoneVerificationModal,
+      getTelephoneVerificationImgCode,
+      isOtpSending,
+      getOtpCode,
+      verifyTelephoneForm
+    };
+  }
 });
 
+function charType(num) {
+  if (num >= 48 && num <= 57) {
+    return 1;
+  }
+  if (num >= 97 && num <= 122) {
+    return 2;
+  }
+  if (num >= 65 && num <= 90) {
+    return 4;
+  }
+  return 8;
+}
 </script>
-
+<style lang="scss">
+.register-form {
+  .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+    width: 100%;
+    font-size: 14px;
+    border-radius: 3px;
+    border: 1px solid #5C5C5C;
+    line-height: 40px;
+    color: #fff;
+    background: #212121;
+  }
+}
+</style>
 <style lang="scss" scoped>
-.modal-body-content {
-  .register-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 30px;
 
-    label {
-      margin-bottom: 10px;
-      display: block;
-      font-size: 14px;
-      color: #fff;
+.register-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+  row-gap: 30px;
+}
+.primary-btn {
+  background: linear-gradient(180deg, #39C4FF 0%, #2555FF 100%);
+  border: 1px solid #2260FF66;
+  color: #FFFFFF;
+}
+.verification {
+  display: flex;
+  padding: 10px;
+}
 
-    }
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    input {
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5C5C5C;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
-    }
+.txt-center {
+  text-align: center;
+  padding: 0 10px;
+}
 
-    label, input {
+.password-str-div {
+  display: flex;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 5px;
+  justify-content: space-evenly;
+  gap: 5px;
+  height: 50px;
+
+  span {
+    padding: 8px 3px;
+    //border: 1px solid #fff;
+    border-radius: 5px;
+    background: #434343;
+    width: 33%;
+    text-align: center;
+    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  span.weak-pwd {
+    background: var(--q-negative);
+  }
+
+  span.normal-pwd {
+    background: var(--q-warning);
+    color: var(--q-primary);
+  }
+
+  span.strong-pwd {
+    //background: linear-gradient(to right, #de4545, #db7e42) !important;
+    background: var(--q-positive);
+    font-weight: 600;
+  }
+}
+
+.forget-pwd-tip {
+  color: $lightblue-color;
+}
+
+.register-form {
+  .q-field--error .q-field__bottom {
+    font-size: 15px;
+  }
+
+  max-width: 768px;
+  margin: auto;
+
+  .q-field--filled .q-field__control {
+    border-radius: 8px;
+  }
+
+  .telephone-otp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .q-input {
       width: 100%;
     }
   }
+}
 
-  .action-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    padding: 20px 10px 10px;
-
-    .form-button {
-      height: 70px;
-      width: 200px;
-      background-size: contain;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 18px;
-      padding-bottom: 5px;
-
-      &.blue {
-        background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-      }
-
-      &.yellow {
-        background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-      }
-    }
-  }
+h5 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 </style>
