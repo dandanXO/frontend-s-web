@@ -2,22 +2,23 @@
   <div class="main-section">
     <q-form class="register-form" @submit="onSubmit">
       <div>
-          <label>{{$t('lang.affiliate_code')}}</label>
+          <label>추천인</label>
           <q-input
+            placeholder="추천인입력"
             ref="codeAffiliate"
             filled
             v-model="regForm.codeAffiliate"
             color="white"
             :disable="hasAffiliate"
             clearable
-            :hint="$t('lang.affiliate_code_hint')"
           >
           </q-input>
         </div>
 
         <div>
-          <label>{{$t('lang.phone_number')}}</label>
+          <label>휴대폰번호</label>
           <q-input
+            placeholder="없이 숫자 만 입력"
             ref="telRef"
             filled
             v-model="regForm.telephone"
@@ -33,7 +34,7 @@
             <template v-slot:append>
               <q-btn
                 class="primary-btn"
-                :label="$t('lang.request_otp_code')"
+                :label="'인증 코드'"
                 @click="openTelephoneVerificationModal"
                 :disabled="!regForm.telephone"
               />
@@ -42,7 +43,7 @@
         </div>
 
         <div>
-          <label>{{$t('lang.input_username')}}</label>
+          <label>아이디</label>
           <q-input
             ref="loginNameRef"
             filled
@@ -59,12 +60,12 @@
         </div>
 
         <div>
-          <label>{{$t('lang.one_time_otp')}}</label>
+          <label>인증 코드</label>
           <div class="telephone-otp-row">
             <q-input
               ref="telOtpCodeRef"
               v-model="regForm.smsCode"
-              :placeholder="$t('lang.one_time_otp')"
+              :placeholder="'6자리 숫자'"
               stack-label
               clearable
               autocomplete="off"
@@ -76,50 +77,10 @@
         </div>
 
         <div>
-          <label>{{$t('lang.confirm_pass')}}</label>
-          <q-input
-            ref="confirmPwdRef"
-            filled
-            :type="isCfmPwd ? 'password' : 'text'"
-            v-model="regForm.confirmPwd"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
-              (val) => val === regForm.password || $t('lang.password_do_not_match'),
-              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-            ]"
-            color="white"
-            clearable
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isCfmPwd = !isCfmPwd"
-              />
-            </template>
-          </q-input>
-        </div>
-
-        <div>
-          <label>Bank Card</label>
-          <q-select filled
-            ref="bankCardRef"
-            v-model="regForm.bankId"
-            :options="banksList"
-            option-value="id"
-            option-label="name" 
-            emit-value
-            map-options
-            lazy-rules
-            :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
-          />
-        </div>
-
-        <div>
-          <label>{{$t('lang.password')}}</label>
+          <label>비밀번호</label>
           <div>
             <q-input
+              placeholder="비밀번호입력"
               ref="pwdRef"
               filled
               v-model="regForm.password"
@@ -162,8 +123,52 @@
         </div>
 
         <div>
-          <label>Card Number</label>
+          <label>은행명</label>
+          <q-select filled
+            label="은행선택"
+            ref="bankCardRef"
+            v-model="regForm.bankId"
+            :options="banksList"
+            option-value="id"
+            option-label="name" 
+            emit-value
+            map-options
+            lazy-rules
+            :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+          />
+        </div>
+
+        <div>
+          <label>비밀번호확인</label>
           <q-input
+            placeholder="비밀번호확인입력"
+            ref="confirmPwdRef"
+            filled
+            :type="isCfmPwd ? 'password' : 'text'"
+            v-model="regForm.confirmPwd"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
+              (val) => val === regForm.password || $t('lang.password_do_not_match'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+            ]"
+            color="white"
+            clearable
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isCfmPwd = !isCfmPwd"
+              />
+            </template>
+          </q-input>
+        </div>
+
+        <div>
+          <label>계좌번호</label>
+          <q-input
+            placeholder="'-'없이숫자만입력."
             ref="cardNumRef"
             filled
             v-model="regForm.cardNumber"
@@ -178,8 +183,9 @@
         </div>
 
         <div>
-          <label>Email</label>
+          <label>이메일</label>
           <q-input
+            placeholder="이메일"
             ref="emailRef"
             type="email"
             filled
@@ -195,8 +201,9 @@
         </div>
 
         <div>
-          <label>Card Account</label>
+          <label>예금주</label>
           <q-input
+            placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
             ref="cardAccRef"
             filled
             v-model="regForm.cardAccount"
