@@ -179,10 +179,11 @@ const articleData = ref([
 }
 .table-row-article {
   padding: 10px 5px;
-  max-height: 100px;
+  max-height: 290px;
   overflow: scroll;
   :deep(.q-expansion-item__content) {
     background: #151515;
   }
 }
+
 </style>

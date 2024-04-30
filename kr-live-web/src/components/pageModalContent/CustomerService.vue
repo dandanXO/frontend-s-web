@@ -20,7 +20,7 @@
           <input placeholder="제목을 입력해주세요."/>
         </p>
         <p>
-          <textarea rows="3"/>
+          <textarea rows="4"/>
         </p>
       </form>
     </q-card-section>
@@ -59,7 +59,7 @@ const articleData = ref([
       &:nth-child(2) {
         text-align: left;
         margin-left: unset;
-        margin-riight: unset;
+        margin-right: unset;
       }
     }
   }
@@ -69,8 +69,11 @@ const articleData = ref([
     grid-template-columns: 50px 1fr 100px;
     .q-item__label {
       margin: auto;
-      padding: unset;
+      //padding-bottom: 12px;
       &:nth-child(2) {
+        text-align: left;
+        margin-left: unset;
+        margin-right: unset;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
