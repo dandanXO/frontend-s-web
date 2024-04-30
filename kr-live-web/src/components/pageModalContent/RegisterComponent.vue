@@ -236,7 +236,7 @@
       />
     </div>
 
-    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down">
+    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down" class="register-form-captcha-dialog">
       <q-card class="q-pa-md">
         <div class="modal-head-title q-pb-md">
           {{ $t("lang.check_your_captcha_code") }}
@@ -264,7 +264,7 @@
             <q-btn
               :disabled="isOtpSending"
               :style="isOtpSending ? 'opacity: .6' : ''"
-              class="common-btn verification-btn third-btn"
+              class="common-btn form-button blue"
               @click.prevent="getOtpCode"
             >
               {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
@@ -647,7 +647,7 @@ function charType(num) {
 }
 </script>
 <style lang="scss">
-.register-form {
+.register-form, .register-form-captcha-dialog {
   .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
     width: 100%;
     font-size: 14px;
@@ -655,7 +655,6 @@ function charType(num) {
     border: 1px solid #5C5C5C;
     line-height: 40px;
     color: #fff;
-    background: #212121;
   }
 }
 </style>
