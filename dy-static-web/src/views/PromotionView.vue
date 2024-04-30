@@ -44,7 +44,13 @@
       </div>
     </div>
 
-    <div v-else class="selected-promo">
+    <div
+      v-else
+      class="selected-promo"
+      :class="{
+        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo'
+      }"
+    >
       <div class="selected-promo-wrapper">
         <div
           class="banner-container"
@@ -186,7 +192,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -599,6 +605,9 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
 
+    &.isMSIPromo {
+    }
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
@@ -641,7 +650,7 @@ export default defineComponent({
         &.isMSI {
           padding: 0px 0 30px;
           margin: 0 auto;
-          max-width: 1920px;
+          max-width: none;
           width: 100%;
           background-size: cover;
           position: relative;

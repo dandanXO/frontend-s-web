@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="../../../assets/images/promotion/hotpromo/LOL-msi/webweb.jpg" />
+    <img class="top-banner" src="../../../assets/images/promotion/hotpromo/LOL-msi/webbanner.jpg" />
     <div class="msi-section">
       <el-tabs v-model="tabPosition" class="msi-tabs">
         <el-tab-pane name="play-in" label="活动一">
@@ -46,6 +46,10 @@ onMounted(async () => {
 });
 </script>
 <style scoped lang="scss">
+.top-banner {
+  width: 100%;
+}
+
 .msi-tabs {
   max-width: 1560px;
   margin: auto;
@@ -89,6 +93,7 @@ onMounted(async () => {
 }
 
 .msi-section {
-  background: url(@/assets/images/promotion/hotpromo/LOL-msi/bgbg.png) no-repeat top center;
+  background: url(@/assets/images/promotion/hotpromo/LOL-msi/web-bg.jpg) no-repeat top center;
+  background-size: 100% auto;
 }
 </style>
