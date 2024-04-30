@@ -485,7 +485,7 @@ const open = (pageName) => {
   }
   p {
     flex: 1;
-    margin: auto;:
+    margin: auto;
     color: #FFF;
     &:first-child {
       color: #000;
