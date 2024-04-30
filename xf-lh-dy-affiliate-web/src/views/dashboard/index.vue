@@ -13,7 +13,7 @@
               <el-row>
                 <el-col :lg="19" class="total-title">{{ t('fields.commissionRate') }}</el-col>
                 <el-col :lg="5" class="total-text">
-                  {{ totalCommission.commissionRate * 100 }} %
+                  {{ (totalCommission.commissionRate * 100).toFixed(0) }} %
                 </el-col>
               </el-row>
               <el-row>
