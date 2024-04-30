@@ -279,7 +279,7 @@
 <script>
 import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -484,15 +484,21 @@ export default defineComponent({
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
-                router.push("/");
-                emit("closeModal");
+                SessionStorage.set("TOKEN", res.data);
 
+                emit('closeModal');
+                
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
+
+                setTimeout(() => {
+                  router.push("/");
+                  location.reload();
+                }, 1000)
               } else {
                 $q.notify({
                   color: "negative",
