@@ -221,10 +221,16 @@
     <div class="row justify-center items-center gap-8" style="margin-top: 35px">
       <q-btn
         @click.prevent="onSubmit"
-        :label="$t('lang.signup_now')"
+        :label="'등록'"
         type="submit"
-        color="brand"
-        class="common-large-btn"
+        class="common-large-btn form-button blue"
+        rounded
+      />
+      <q-btn
+        @click.prevent="onSubmit"
+        :label="'로그인'"
+        type="button"
+        class="common-large-btn form-button yellow"
         rounded
       />
     </div>
@@ -653,6 +659,28 @@ function charType(num) {
 }
 </style>
 <style lang="scss" scoped>
+
+.form-button {
+    //display: inline-block;
+    height: 70px;
+    width: 200px;
+    background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    padding-bottom: 5px;
+    margin: auto 10px;
+
+    &.blue {
+        background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+    }
+
+    &.yellow {
+        background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+    }
+}
 
 .register-form {
   display: grid;
