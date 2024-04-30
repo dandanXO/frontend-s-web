@@ -5,7 +5,7 @@
       <slot />
     </div>
     <event-description class="event-description">
-      投注指定赛事BO1，每场赛事早盘有效投注≥1,888元且完成特殊事件即可获得对应彩金。最高可获
+      投注指定比赛BO1（第一局），每场赛事早盘有效投注≥1,888元且完成特殊事件即可获得对应彩金。最高可获
       <span class="event-description-highlight">1,888元</span>
       。
     </event-description>
