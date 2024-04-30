@@ -3,17 +3,17 @@
     <img class="top-banner" src="../../../assets/images/promotion/hotpromo/LOL-msi/webba.jpg" />
     <div class="msi-section">
       <el-tabs v-model="tabPosition" class="msi-tabs">
-        <el-tab-pane name="play-in" label="活动一">
+        <el-tab-pane name="play-in" label="首局赠礼">
           <play-in-stage>
             <match-info-swiper :match-list="matchList" />
           </play-in-stage>
         </el-tab-pane>
-        <el-tab-pane name="bracket" label="活动二">
+        <el-tab-pane name="bracket" label="盈亏返利">
           <bracket-stage>
             <match-info-swiper :match-list="matchList" />
           </bracket-stage>
         </el-tab-pane>
-        <el-tab-pane name="final" label="活动三">
+        <el-tab-pane name="final" label="投注赠礼">
           <final-stage>
             <match-info-swiper :match-list="matchList" />
           </final-stage>

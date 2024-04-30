@@ -48,7 +48,6 @@
         <td>1,888</td>
       </tr>
     </table>
-    <table></table>
     <table class="remark-table">
       <tr class="divider">
         <th>速战速决</th>
