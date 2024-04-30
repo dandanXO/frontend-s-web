@@ -17,7 +17,7 @@ import DescriptionImg from "@/components/hotpromo/LOL-msi-2024/images/descriptio
   align-self: start;
   margin-bottom: 37px;
   font-family: Microsoft YaHei UI;
-  font-size: 28px;
+  font-size: 23px;
   font-weight: 400;
   line-height: 37.24px;
   text-align: left;
@@ -25,7 +25,7 @@ import DescriptionImg from "@/components/hotpromo/LOL-msi-2024/images/descriptio
   display: flex;
   flex-direction: column;
   gap: 26px;
-  padding: 0 60px;
+  padding: 0 25px;
 
   > div {
     display: flex;

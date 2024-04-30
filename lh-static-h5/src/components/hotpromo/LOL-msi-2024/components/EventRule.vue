@@ -1,6 +1,6 @@
 <template>
   <div class="rule-wrapper">
-    <section-header label="活動規則" class="section-header" />
+    <section-header label="活动规则" class="section-header" />
     <div class="rule-content-wrapper">
       <slot />
     </div>
@@ -12,7 +12,7 @@ import SectionHeader from "./SectionHeader.vue";
 <style scoped lang="scss">
 .rule-wrapper {
   font-family: Microsoft YaHei UI;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1rem;
   text-align: left;
@@ -25,7 +25,11 @@ import SectionHeader from "./SectionHeader.vue";
     display: flex;
     align-items: start;
     background-color: #b4dbff1a;
-    padding: 16px 10px 18px 22px;
+    padding: 5px 3px 20px 3px;
+
+    li{
+      margin-bottom: 10px;
+    }
   }
 
   .description-title {
