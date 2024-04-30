@@ -91,6 +91,8 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      margin-bottom: 10px !important;
+
 
       &::before {
         content: url(components/hotpromo/LOL-msi-2024/images/description-icon.png);

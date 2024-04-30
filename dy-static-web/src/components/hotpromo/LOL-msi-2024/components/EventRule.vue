@@ -1,6 +1,6 @@
 <template>
   <div class="rule-wrapper">
-    <section-header label="活動規則" class="section-header" />
+    <section-header label="活动规则" class="section-header" />
     <div class="rule-content-wrapper">
       <slot />
     </div>

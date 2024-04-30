@@ -16,15 +16,14 @@
           <th>累计投注≥50,000</th>
         </tr>
         <tr>
-          <th>速战速决</th>
-          <th colspan="3">礼金额度</th>
+          <th colspan="4">礼金额度</th>
         </tr>
       </thead>
       <tr>
         <td>≥500</td>
         <td>8</td>
         <td>58</td>
-        <td>88</td>
+        <td style="border-bottom: 2px solid rgba(255, 255, 255, 0.2)">88</td>
       </tr>
       <tr>
         <td>≥1,000</td>
