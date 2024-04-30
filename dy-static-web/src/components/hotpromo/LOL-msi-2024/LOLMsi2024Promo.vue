@@ -58,10 +58,11 @@ onMounted(async () => {
   :deep(.el-tabs__nav) {
     display: flex;
     width: 100%;
+    margin-top: 10px;
 
     justify-content: center;
     gap: 128px;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {

@@ -105,7 +105,8 @@
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              isHide: selectedPromo.promoCode === 'dy2-msi-promo'
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
@@ -301,6 +302,10 @@ export default defineComponent({
 
   .promo-view-container {
     line-height: 30px;
+
+    &.isHide {
+      display: none;
+    }
 
     ol {
       padding: 0 15px;
@@ -648,7 +653,7 @@ export default defineComponent({
         gap: 20px;
 
         &.isMSI {
-          padding: 0px 0 30px;
+          padding: 0px 0 0px;
           margin: 0 auto;
           max-width: none;
           width: 100%;

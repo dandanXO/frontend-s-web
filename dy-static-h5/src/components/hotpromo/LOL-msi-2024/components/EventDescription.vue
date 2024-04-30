@@ -1,15 +1,15 @@
 <template>
   <div class="description-wrapper">
-    <div>
-      <img :src="DescriptionImg" />
-      <span class="description-title">活动时间：</span>
-      <span class="description-content">以官网通知为准</span>
-    </div>
-    <div>
-      <img :src="DescriptionImg" />
-      <span class="description-title">活动对象：</span>
-      <span class="description-content">全体会员</span>
-    </div>
+    <!--    <div>-->
+    <!--      <img :src="DescriptionImg" />-->
+    <!--      <span class="description-title">活动时间：</span>-->
+    <!--      <span class="description-content">以官网通知为准</span>-->
+    <!--    </div>-->
+    <!--    <div>-->
+    <!--      <img :src="DescriptionImg" />-->
+    <!--      <span class="description-title">活动对象：</span>-->
+    <!--      <span class="description-content">全体会员</span>-->
+    <!--    </div>-->
     <div>
       <img :src="DescriptionImg" />
       <span class="description-title">活动内容：</span>
