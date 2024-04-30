@@ -70,4 +70,8 @@ import EventDescription from "./EventDescription.vue";
 table {
   margin-bottom: 31px;
 }
+
+.section-wrapper {
+  padding-bottom: 25px;
+}
 </style>

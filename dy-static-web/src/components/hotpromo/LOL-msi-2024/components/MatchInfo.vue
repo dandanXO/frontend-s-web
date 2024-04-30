@@ -64,8 +64,8 @@ defineProps({
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 53px;
-    padding: 28px 61px 50px 54px;
+    gap: 20px;
+    padding: 18px 61px 30px 54px;
     color: #ffffff;
 
     .match-info-content__team-wrapper {

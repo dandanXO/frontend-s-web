@@ -44,7 +44,13 @@
       </div>
     </div>
 
-    <div v-else class="selected-promo">
+    <div
+      v-else
+      class="selected-promo"
+      :class="{
+        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo'
+      }"
+    >
       <div class="selected-promo-wrapper">
         <div
           class="banner-container"
@@ -99,7 +105,8 @@
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              isHide: selectedPromo.promoCode === 'dy2-msi-promo'
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
@@ -186,7 +193,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -295,6 +302,10 @@ export default defineComponent({
 
   .promo-view-container {
     line-height: 30px;
+
+    &.isHide {
+      display: none;
+    }
 
     ol {
       padding: 0 15px;
@@ -599,6 +610,9 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
 
+    &.isMSIPromo {
+    }
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
@@ -639,9 +653,9 @@ export default defineComponent({
         gap: 20px;
 
         &.isMSI {
-          padding: 0px 0 30px;
+          padding: 0px 0 0px;
           margin: 0 auto;
-          max-width: 1920px;
+          max-width: none;
           width: 100%;
           background-size: cover;
           position: relative;
