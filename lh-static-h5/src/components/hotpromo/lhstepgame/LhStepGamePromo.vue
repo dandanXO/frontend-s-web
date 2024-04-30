@@ -604,7 +604,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .stepgame-wrapper {
-  background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/stepgame-bg.png");
+  background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/game1-bg.jpg");
   padding: 1px 1px 0px;
   background-size: 100% auto;
   background-position: top center;
@@ -613,7 +613,7 @@ onUnmounted(() => {
   background-color: #042212;
 
   &.step-2 {
-    background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/stepgame2-bg.png");
+    background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/game2-bg.jpg");
 
     .game-container {
       border: 2px solid #f9dd94;
