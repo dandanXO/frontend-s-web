@@ -90,7 +90,8 @@
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
-                  cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+                  cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+                  msi: selectedPromo.promoCode === 'dy2-msi-promo'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -756,6 +757,14 @@ export default defineComponent({
             font-family: Microsoft Yahei UI;
             max-width: 100%;
           }
+        }
+
+        &.msi {
+          margin: 0px;
+          width: 100%;
+          gap: 0px;
+          padding: 10px;
+          background: url(../assets/images/promotion/hotpromo/LOL-msi/h5h5.jpg) no-repeat center center;
         }
 
         img {

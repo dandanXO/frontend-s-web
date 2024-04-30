@@ -50,7 +50,8 @@
           class="banner-container"
           v-if="selectedPromo.promoCode !== 'dy2-cny-step-game' && selectedPromo.promoCode !== 'dy2-game-steps'"
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isMSIBanner: selectedPromo.promoCode === 'dy2-msi-promo'
           }"
         >
           <div
@@ -77,6 +78,7 @@
           class="inner"
           :class="{
             isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
@@ -608,6 +610,14 @@ export default defineComponent({
           }
         }
 
+        &.isMSIBanner {
+          min-height: 600px;
+
+          .promo-bg {
+            min-height: 600px !important;
+          }
+        }
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -632,6 +642,16 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.isMSI {
+          padding: 30px 0;
+          margin: 0 auto;
+          max-width: 1920px;
+          background: url(../assets/images/promotion/hotpromo/LOL-msi/web-bg.jpg);
+          width: 100%;
+          background-size: cover;
+          position: relative;
+        }
 
         &.fullwidth {
           width: 100%;
