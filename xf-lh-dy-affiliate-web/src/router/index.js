@@ -164,6 +164,14 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'affiliate/summary',
+        component: () => import('../views/affiliate/summary/index.vue'),
+        name: 'Affiliate Summary',
+        meta: {
+          title: 'affiliate-summary',
+        },
+      },
+      {
         path: 'game-record',
         component: () => import('../views/member-info/game-record/index.vue'),
         name: 'Game Record',

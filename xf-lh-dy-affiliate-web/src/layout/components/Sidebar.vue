@@ -244,6 +244,14 @@ const getNavigationData = () => {
             icon: 'affiliate',
           },
           {
+            path: '/affiliate/summary',
+            title: t('menu.AffiliateSummary'),
+            label: 'Affiliate Summary',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
+          },
+          {
             path: '/game-record',
             title: t('menu.Bet Record'),
             label: 'Bet Record',
