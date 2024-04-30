@@ -50,7 +50,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .lol-msi-wrapper {
   .q-tabs {
-    margin-bottom: 27px;
+    margin-bottom: 10px;
     height: auto !important;
     background-color: transparent;
   }
