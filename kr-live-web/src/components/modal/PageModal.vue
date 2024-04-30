@@ -75,6 +75,8 @@ import MyMessages from "components/pageModalContent/MyMessages.vue";
 import MyTransactionRecords from "components/pageModalContent/MyTransactionRecords.vue";
 import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import DepositRecord from "components/pageModalContent/DepositRecord.vue";
+import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
 import LangToggle from "components/LangToggle.vue";
 
 const route = useRoute();
@@ -256,6 +258,32 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "비밀번호",
       subTitle: "PASSWORD CHANGE",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "finance",
+    page: "finance/depositRecord",
+    info: "입금",
+    iconUrl: require("../../assets/icon/deposit.svg"),
+    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    component: DepositRecord,
+    headerInfo: {
+      title: "입금",
+      subTitle: "DEPOSIT RECORD",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
+  {
+    tabIndex: "finance",
+    page: "finance/withdrawRecord",
+    info: "출금",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: WithdrawRecord,
+    headerInfo: {
+      title: "출금",
+      subTitle: "WITHDRAW RECORD",
       description: "입금시 꼭 계좌문의를 하세요!",
     }
   },
