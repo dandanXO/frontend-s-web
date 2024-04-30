@@ -294,7 +294,6 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
@@ -497,16 +496,8 @@ export default defineComponent({
       ) {
         $q.loading.hide();
       } else {
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -529,25 +520,7 @@ export default defineComponent({
               const res = ret.data;
               if (res.code === 0) {
                 //Submit FB register Event.
-                if (ui.isAffiliateA || ui.isAffiliateB) {
-                  // console.log("Submit Event");
-                  fbq("track", "CompleteRegistration", {
-                    currency: vueI18n.global.locale.value,
-                    value: 0.0
-                  });
-                }
                 //Submit tiktok register Event.
-                if (ui.isAffiliateC) {
-                  ttq.track(
-                    "CompleteRegistration",
-                    {
-                      content_type: "product"
-                    },
-                    {
-                      event_id: new Date().getTime()
-                    }
-                  );
-                }
 
                 router.push("/login");
                 $q.notify({

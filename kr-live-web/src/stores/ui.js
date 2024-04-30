@@ -9,12 +9,7 @@ export const useUI = defineStore("ui-store", {
       leftDrawerOpen: false,
       appVersion: "",
       isCardUpdate: false,
-      //Affiliate A: Came From Affiliate 5D0E5C
       isAffiliateA: false,
-      //Affiliate B: Came From slot-win.cc.
-      isAffiliateB: false,
-      //tiktok
-      isAffiliateC:false
     };
   },
   actions: {

@@ -1,9 +1,20 @@
 export default {
   lang: {
+    // register start
+    reg_login_name: "Login Name",
+    reg_phone_num: "Phone Number",
+    reg_pass: "Password",
+    reg_confirm_pass: "Confirm Password",
+    reg_email: "Email",
+    reg_code_affiliate: "Code Affiliate",
+    reg_bank_id: "Bank ID",
+    reg_card_acc: "Card Account",
+    // register end
     langVal: "en",
     login: "Login",
     register: "Register",
     personal_information: "Personal Information",
+    card_account_cannot_empty: "Card Account cannot be empty.",
     input_username_cannot_empty: "Username cannot be empty.",
     input_username: "Login Name",
     password: "Password",
@@ -190,6 +201,7 @@ export default {
     an_otp_has_been_sent_to_email: "An OTP code has been sent to your email.",
     an_otp_has_been_sent_to_phone: "An OTP code has been sent to your phone.",
     one_time_otp: "One Time OTP",
+    email_cannot_be_empty: "Email cannot be empty",
     otp_cannot_be_empty: "OTP cannot be empty.",
     new_password: "New Password",
     enter_new_password: "Please enter new password.",
