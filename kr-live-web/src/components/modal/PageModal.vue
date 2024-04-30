@@ -49,7 +49,7 @@
 
                 <template v-for="(item) in formattedPagesInfo" :key="item.page">
                   <q-tab-panel :name="item.page">
-                    <component :is="item.component"></component>
+                    <component :is="item.component" @closeModal="closeDialog"></component>
                   </q-tab-panel>
                 </template>
               </q-tab-panels>
