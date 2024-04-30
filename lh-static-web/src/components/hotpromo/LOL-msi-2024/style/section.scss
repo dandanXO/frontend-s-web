@@ -10,7 +10,7 @@
 
   .match-info {
     margin-bottom: 49px;
-    width: 100%;
+    width: 70%;
   }
 
   .event-description-highlight {
@@ -26,6 +26,7 @@
     font-weight: 400;
     line-height: 31.92px;
     color: #ffa800;
+    margin-bottom: 30px;
   }
 
   .deposit-table {
@@ -73,6 +74,21 @@
           border-right: 0;
           border-bottom: 0;
         }
+      }
+    }
+  }
+
+  .event-rule {
+    padding-left: 0;
+
+    li {
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      &::before {
+        content: url(@/components/hotpromo/LOL-msi-2024/images/description-icon.png);
       }
     }
   }
