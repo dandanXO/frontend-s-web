@@ -1,6 +1,6 @@
 <template>
   <q-scroll-area>
-    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog">
+    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
 
 
       <div class="page-dialog-links" v-if="!isMinimalMode">
@@ -117,10 +117,10 @@ watch(() => route.query, (_, __) => {
 const tabClick  = (targetPage) => {
   page.value = targetPage
   // TODO
-  // router.replace({
-  //   query: { page: targetPage},
-  //   silent: true
-  // })
+  router.replace({
+    query: { page: targetPage},
+    silent: true
+  })
 
 }
 

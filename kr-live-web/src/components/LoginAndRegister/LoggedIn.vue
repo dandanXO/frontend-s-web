@@ -31,10 +31,10 @@
     <div class="btn-group">
       <div class="left-group">
         <div class="points-conversion">
-          <div class="register-text">포인트전환</div>
+          <div class="register-text" @click="goToTransfer">포인트전환</div>
         </div>
         <div class="my-page">
-          <div class="register-text">마이페이지</div>
+          <div class="register-text" @click="goToPersonalInfo">마이페이지</div>
         </div>
       </div>
       <div class="right-group">
@@ -42,7 +42,7 @@
           <div class="register-text">Logout</div>
         </div>
         <div class="other-points-conversion">
-          <div class="register-text">포인트전환</div>
+          <div class="register-text" @click="goToTransfer">포인트전환</div>
         </div>
       </div>
     </div>
@@ -51,8 +51,19 @@
 
 <script setup>
 import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 const store = userStore();
+const router = useRouter();
+
+const goToPersonalInfo = () => {
+  router.push('/?page=personal/info');
+}
+
+const goToTransfer = () => {
+  router.push('/?page=transaction/transfer');
+}
+
 const onLogoutSubmit = () => {
   store.memberLogout();
 };
