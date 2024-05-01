@@ -500,7 +500,7 @@ const { t } = useI18n()
 const store = useStore()
 const site = ref(null)
 const competitionForm = ref(null)
-const gameDir = 'https://xinfa-files.s3.ap-southeast-1.amazonaws.com' + '/game/'
+const gameDir = process.env.VUE_APP_IMAGE + '/promo/'
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const uiControl = reactive({
@@ -542,7 +542,8 @@ const imageRequest = reactive({
   current: 1,
   name: null,
   siteId: site.value ? site.value.id : null,
-  category: 'GAME',
+  category: 'PROMO',
+  promoType: 'TEAM_ICON',
 })
 
 const form = reactive({
