@@ -256,7 +256,7 @@
     </Transition> -->
 
     <Transition>
-      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
+      <div class="game-grid-lists" id="id-slot-board" v-if="!isShow">
         <!-- <div v-if="store.hasToken()" class="game-item btn-pointer btn-slot-game" @click="showFavourite()">
           <img :src="require('../assets/home/slot/slot-favourite-board.png')" />
         </div> -->
@@ -1351,6 +1351,9 @@ export default defineComponent({
     const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       isShow.value = false;
+
+      platforms.value = platforms.value.reverse();
+      
       if (menu === "slots") {
         switchPlat(platforms.value[0], menu);
       } else if (menu === "live") {
