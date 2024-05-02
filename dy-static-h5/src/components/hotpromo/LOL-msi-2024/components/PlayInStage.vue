@@ -13,7 +13,7 @@
       <thead>
         <tr>
           <th rowspan="2">早盘有效投注</th>
-          <th colspan="2">特殊时间及返利彩金</th>
+          <th colspan="2">特殊事件及返利彩金</th>
           <th rowspan="2">流水倍数</th>
         </tr>
         <tr>
@@ -51,11 +51,11 @@
     <table class="remark-table">
       <tr class="divider">
         <th>速战速决</th>
-        <td>*BO1比赛中游戏时间≤30分钟</td>
+        <td>BO1比赛中游戏比赛时间≤30分钟</td>
       </tr>
       <tr>
         <th>黄金持久</th>
-        <td>*BO1比赛中游戏时间≥40分钟</td>
+        <td>BO1比赛中游戏比赛时间≥30分钟</td>
       </tr>
     </table>
     <event-rule>

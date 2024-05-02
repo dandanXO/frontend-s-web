@@ -18,7 +18,7 @@
       <tr>
         <td>≥1,000</td>
         <td>8</td>
-        <td rowspan="6">3倍/不限场馆</td>
+        <td rowspan="2">3倍/不限场馆</td>
       </tr>
       <tr>
         <td>≥5,000</td>

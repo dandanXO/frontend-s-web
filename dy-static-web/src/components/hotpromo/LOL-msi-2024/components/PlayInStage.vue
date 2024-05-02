@@ -13,7 +13,7 @@
       <thead>
         <tr>
           <th rowspan="2">早盘有效投注</th>
-          <th colspan="2">特殊时间及返利彩金</th>
+          <th colspan="2">特殊事件及返利彩金</th>
           <th rowspan="2">流水倍数</th>
         </tr>
         <tr>
