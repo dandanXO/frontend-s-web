@@ -61,17 +61,17 @@ export default defineComponent({
 
   setup() {
     const footerBoxImgUrl = reactive([
-      { imgUrl: require("../assets/images/footer/company1.png") },
-      { imgUrl: require("../assets/images/footer/company2.png") },
-      { imgUrl: require("../assets/images/footer/company3.png") },
-      { imgUrl: require("../assets/images/footer/company4.png") },
+      { imgUrl: require("assets/images/footer/logo-pp.png") },
+      { imgUrl: require("assets/images/footer/logo-cq9.png") },
+      { imgUrl: require("assets/images/footer/logo-habanero.png") },
+      { imgUrl: require("assets/images/footer/logo-ag.png") },
       { imgUrl: require("../assets/images/footer/company5.png") },
       { imgUrl: require("../assets/images/footer/company6.png") },
       { imgUrl: require("../assets/images/footer/company7.png") },
       { imgUrl: require("../assets/images/footer/company8.png") },
       { imgUrl: require("../assets/images/footer/company9.png") },
-      { imgUrl: require("../assets/images/footer/company10.png") },
-      { imgUrl: require("../assets/images/footer/company11.png") },
+      { imgUrl: require("assets/images/footer/logo-dg.png") },
+      { imgUrl: require("assets/images/footer/logo-ps.png") },
       { imgUrl: require("../assets/images/footer/company12.png") }
     ]);
 
