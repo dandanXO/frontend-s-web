@@ -300,12 +300,12 @@ export default defineComponent({
                 type: "success"
               });
 
-              // FB tracking :: login-withdrawal
+              // FB tracking :: apply-withdrawal
               if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
+                  window.location.href.indexOf("tf88king.com") > -1 ||
+                  window.location.href.indexOf("tfgame88.com") > -1
                 ) {
-                  fbq("track", "login-withdrawal");
+                  fbq("track", "apply-withdrawal");
                 }
 
               getWithdrawalMethods();

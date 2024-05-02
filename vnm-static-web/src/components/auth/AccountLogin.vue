@@ -154,8 +154,8 @@ const submitLogin = () => {
 
               // FB tracking :: login-success
               if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
+                  window.location.href.indexOf("tf88king.com") > -1 ||
+                  window.location.href.indexOf("tfgame88.com") > -1
                 ) { 
                   fbq("track", "login-success");
                 }
