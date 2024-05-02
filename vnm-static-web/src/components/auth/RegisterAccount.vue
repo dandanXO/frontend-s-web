@@ -429,7 +429,8 @@ const submitRegisterForm = async (elForm) => {
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  emits("open-welcome-dialog")
+                  router.push("/");
+                  sessionStorage.setItem("IS_GET_WELCOME", "1");
                 }
               } else {
                 ElMessage.error(response.message);

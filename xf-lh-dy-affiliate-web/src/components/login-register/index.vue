@@ -1302,6 +1302,9 @@ export default defineComponent({
       } else {
         hasAffiliate.value = false
       }
+      if (route.query.isreg) {
+        isReg.value = true;
+      }
       getCode()
       if (state.loginForm.userName === '') {
         userNameRef.value.focus()
