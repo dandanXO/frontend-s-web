@@ -91,11 +91,10 @@ const searchRecord = (isNewSearch) => {
     const { startDate, endDate, platform } = searchForm;
 
     api
-        .get("/session/member/cassandraBetRecord", {
+        .get("/session/member/deposit", {
             params: {
                 startDate,
                 endDate,
-                platform,
                 memberId: store.id,
                 current: pagination.current,
                 size: pagination.pageSize,
