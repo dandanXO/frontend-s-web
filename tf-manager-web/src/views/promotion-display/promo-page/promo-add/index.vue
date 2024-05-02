@@ -664,6 +664,9 @@ function constructParam() {
 }
 
 function submit() {
+  if (!form.labelType) {
+    form.labelType = 0;
+  }
   if (route.name.includes('Add')) {
     create()
   } else {
