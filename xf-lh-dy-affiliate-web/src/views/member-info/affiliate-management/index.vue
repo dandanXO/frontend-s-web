@@ -98,7 +98,7 @@
             <th>{{ t('fields.registerTime') }}</th>
             <th>{{ t('fields.totalDeposit') }}</th>
             <th>{{ t('fields.totalWithdraw') }}</th>
-            <th>{{ t('fields.operate') }}</th>
+            <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -201,6 +201,7 @@
                 size="normal"
                 type="success"
                 :disabled="breadcrumbNameList.length > 1"
+                v-if="store.state.user.siteCode !== 'VNM'"
                 @click="showEdit(record)"
               />
             </td>
