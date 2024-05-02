@@ -6,18 +6,18 @@
         <q-item-label>제목</q-item-label>
         <q-item-label>날짜</q-item-label>
       </q-item-section>
-      <template v-for="(item) in articleData" :key="item.page">
-        <q-expansion-item group="somegroup"  class="table-row-title">
+      <template v-for="item in articleData" :key="item.page">
+        <q-expansion-item group="somegroup" class="table-row-title">
           <template v-slot:header>
             <q-item-section class="table-row table-row-title">
-              <q-item-label>{{ item.number }}</q-item-label>
+              <q-item-label>{{ item.id }}</q-item-label>
               <q-item-label>{{ item.title }}</q-item-label>
-              <q-item-label>{{ item.date }}</q-item-label>
+              <q-item-label>{{ item.sendTime }}</q-item-label>
             </q-item-section>
           </template>
           <q-card>
             <q-card-section class="table-row-article">
-              <article v-html="item.article"></article>
+              <article v-html="item.content"></article>
             </q-card-section>
           </q-card>
         </q-expansion-item>
@@ -27,96 +27,26 @@
 </template>
 
 <script setup id="NotifyComponent">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { api } from "boot/axios";
+import { SessionStorage } from "quasar";
 
 //TODO
-const articleData = ref([
-  {
-    number: 12,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
-    date: "2024/01/13",
-    article: `
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-  `,
-  },
-  {
-    number: 11,
-    title: "[필독] ※ 카지노 잭팟 양방성 배팅 제재 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-  `,
-  },
-  {
-    number: 10,
-    title: "[필독] ※ 양방성 배팅 제재 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-  `,
-  },
-  {
-    number: 9,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-      <p>라이트닝, 번영의나무, 풍성한, 식보, 블랙잭 등 잭팟, 페어, 타이 고배당이 나오는 배팅을 이용한 다구멍 사이드 양방배팅을 강력히 제재합니다.</p>
-      <p>양방향, 작업 배팅은 사전 경고 없이 배팅금 포함 당첨금 전액 몰수 처리이며 </p>
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-  `,
-  },
-  {
-    number: 8,
-    title: "[필독] ※ 카지노 잭팟, 고배당 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-  `,
-  },
-  {
-    number: 7,
-    title: "[필독] ※ 카지노 잭팟, 고배당 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-  `,
-  },
-  {
-    number: 6,
-    title: "[필독] ※ 카지노 잭팟, 고배당 안내 ※",
-    date: "2024/01/13",
-    article: `
-      <p>카지노 잭팟, 고배당 양방성 배팅 제제 안내드립니다.</p>
-  `,
-  },
-]);
+const articleData = ref([]);
 
+const getNoticeData = () => {
+  api
+    .get("/session/inbox", {
+      TOKEN: SessionStorage.getItem("TOKEN")
+    })
+    .then((res) => {
+      articleData.value = res.data.data.records;
+    });
+};
+
+onMounted(() => {
+  getNoticeData();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -185,5 +115,4 @@ const articleData = ref([
     background: #151515;
   }
 }
-
 </style>
