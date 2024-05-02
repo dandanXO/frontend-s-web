@@ -1735,6 +1735,7 @@ export default defineComponent({
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 

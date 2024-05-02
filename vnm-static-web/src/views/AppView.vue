@@ -19,8 +19,8 @@
           {{ $t('app.sports') }}
           <br />
           {{ $t('app.live') }}
-          <br />
-          {{ $t('app.hot') }}
+          <!-- <br /> -->
+          <!-- {{ $t('app.hot') }} -->
         </div>
         <div class="buttons">
           <!-- <div class="btn iphone">
@@ -281,7 +281,7 @@ export default defineComponent({
   .buttons {
     display: flex;
     gap: 70px;
-    padding-top: 100px;
+    padding-top: 40px;
     .btn {
       background: url(../assets/app/btn.png) no-repeat center center;
       background-size: contain;

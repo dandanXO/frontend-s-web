@@ -266,8 +266,8 @@ export default defineComponent({
     LangOptions
   },
   setup() {
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
@@ -799,6 +799,7 @@ export default defineComponent({
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 
