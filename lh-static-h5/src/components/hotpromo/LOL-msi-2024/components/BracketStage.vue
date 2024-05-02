@@ -1,6 +1,5 @@
 <template>
   <div class="section-wrapper">
-    <section-header label="BO2比赛" class="section-header" />
     <div class="match-info">
       <slot />
     </div>
