@@ -48,16 +48,16 @@
           />
         </div>
         <div style="margin-bottom: 10px;">
-          <span style="font-size: small">
-            {{ t('fields.minActiveMemberCount') }}
-          </span>
-          <el-input-number
-            v-model="request.activeMember"
-            style="width: 100px; margin-left: 10px"
-            size="small"
-            maxlength="5"
-            :label="t('fields.activeMember')"
-          />
+          <!--          <span style="font-size: small">-->
+          <!--            {{ t('fields.minActiveMemberCount') }}-->
+          <!--          </span>-->
+          <!--          <el-input-number-->
+          <!--            v-model="request.activeMember"-->
+          <!--            style="width: 100px; margin-left: 10px"-->
+          <!--            size="small"-->
+          <!--            maxlength="5"-->
+          <!--            :label="t('fields.activeMember')"-->
+          <!--          />-->
           <el-button
             style="margin-left: 20px"
             icon="el-icon-search"
@@ -587,7 +587,7 @@ const request = reactive({
   recordTime: [defaultStartDate, defaultEndDate],
   loginName: null,
   affiliateCode: null,
-  activeMember: 0,
+  // activeMember: 0,
 })
 
 const popUpRequest = reactive({
@@ -632,7 +632,7 @@ function resetQuery() {
   request.recordTime = [defaultStartDate, defaultEndDate]
   request.loginName = null
   request.affiliateCode = null
-  request.activeMember = 0
+  // request.activeMember = 0
   request.siteId = site.value ? site.value.id : siteList.list[0].id
 }
 
