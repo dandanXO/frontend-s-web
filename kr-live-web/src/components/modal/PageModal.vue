@@ -242,19 +242,19 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!",
     }
   },
-  {
-    tabIndex: "my",
-    page: "transaction/transfer",
-    info: "포인트전환",
-    iconUrl: require("../../assets/icon/transfer.svg"),
-    iconActiveUrl: require("../../assets/icon/transfer-active.svg"),
-    component: MyTransfer,
-    headerInfo: {
-      title: "포인트전환",
-      subTitle: "TRANSFER",
-      description: "입금시 꼭 계좌문의를 하세요!",
-    }
-  },
+  // {
+  //   tabIndex: "my",
+  //   page: "transaction/transfer",
+  //   info: "포인트전환",
+  //   iconUrl: require("../../assets/icon/transfer.svg"),
+  //   iconActiveUrl: require("../../assets/icon/transfer-active.svg"),
+  //   component: MyTransfer,
+  //   headerInfo: {
+  //     title: "포인트전환",
+  //     subTitle: "TRANSFER",
+  //     description: "입금시 꼭 계좌문의를 하세요!",
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "personal/updatePwd",
