@@ -3,7 +3,7 @@
     <q-tabs v-model="tabPosition" class="msi-tabs">
       <q-tab name="play-in" label="首局赠礼"></q-tab>
       <q-tab name="bracket" label="盈亏返利"></q-tab>
-      <q-tab name="final" label="投注赠礼"></q-tab>
+      <q-tab name="final" label="胜利喝彩"></q-tab>
     </q-tabs>
     <q-tab-panels v-model="tabPosition">
       <q-tab-panel name="play-in">
