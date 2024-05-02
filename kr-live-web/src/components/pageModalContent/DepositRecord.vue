@@ -21,63 +21,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted } from "vue";
-import { Platform, useQuasar } from "quasar";
-import { cashier } from "boot/axios";
-
-const $q = useQuasar();
-
-const isLoadingInitPay = ref(true);
-const payMethods = ref([]);
-
-function initPay() {
-  isLoadingInitPay.value = true;
-  $q.loading.show({
-    message: "Loading data... Please wait..."
-  });
-
-  payMethods.value = [];
-
-  cashier.get("/session/ind/deposit/index/").then((res) => {
-    $q.loading.hide();
-    isLoadingInitPay.value = false;
-
-    if (res.code === 0) {
-      const d = res.data;
-      d.payments.forEach((element) => {
-        element.promoValue = "";
-        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.value.push(element);
-      });
-      if (payMethods.value.length > 0) {
-        activeMethod.value = payMethods.value[0];
-      }
-      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
-        bankCardList.value = payMethods.value[0].extra.banks;
-      }
-    }
-
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
-      let isBacked = localStorage.getItem("isBacked");
-      isBacked = isBacked ? JSON.parse(isBacked) : false;
-      if (isBacked === true) {
-        isDeposited.value = true;
-      }
-    }
-    localStorage.removeItem("isBacked");
-  });
-}
-
-onMounted(() => {
-    initPay();
-})
+import { ref } from "vue";
 </script>
 
 <style lang="scss" scoped>
