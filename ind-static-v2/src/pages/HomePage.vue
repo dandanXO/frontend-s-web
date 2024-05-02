@@ -200,7 +200,13 @@
                         <div
                           class="game--bg"
                           :style="{
-                          backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
+                            backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
                         }"
                         ></div>
                       </div>
@@ -265,8 +271,14 @@
                       <div
                         class="game--bg"
                         :style="{
-                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
-                      }"
+                            backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                        }"
                       ></div>
                     </div>
                     <div class="platform-game-title">
@@ -1280,11 +1292,15 @@ const loadHotGameList = () => {
             return { ...matchingItem, ...item1 };
           });
 
-          hotGameList.value = hotlists.map((item3) => {
+          hotlists = hotlists.map((item3) => {
             const matchingItem = livecasino.value.find((item4) => item3.type==='platform' && item3.code === item4.name);
             return { ...item3 ,...matchingItem  };
           });
 
+          hotGameList.value = hotlists.map((item5) => {
+            const matchingItem = sport.value.find((item6) => item5.type==='sport' && item5.code === item6.name);
+            return { ...item5 ,...matchingItem  };
+          });
 
           console.log("End")
           console.log(hotGameList.value);
