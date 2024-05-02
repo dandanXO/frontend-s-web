@@ -1,108 +1,58 @@
 <template>
-  <q-scroll-area>
-    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
-      <!-- <q-toolbar>
-      <q-avatar>
-        <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg" />
-      </q-avatar>
+  <div>
+    &nbsp;
+  </div>
+<!--  <q-scroll-area>-->
+<!--    <q-dialog v-model="visible" class="gameDialog" full-height full-width>-->
+<!--      <q-toolbar>-->
+<!--        <div class="topActions">-->
+<!--          <q-toolbar-title></q-toolbar-title>-->
+<!--          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />-->
+<!--          <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />-->
+<!--          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />-->
+<!--        </div>-->
 
-      <q-toolbar-title
-        ><span class="text-weight-bold">Quasar</span> Framework</q-toolbar-title
-      >
+<!--        <template v-if="isInnerHtmlSrc === false">-->
+<!--          <iframe-->
+<!--            @load="loadGame()"-->
+<!--            v-show="!logoShow"-->
+<!--            :src="src"-->
+<!--            id="game-iframe"-->
+<!--            scrolling="auto"-->
+<!--            frameborder="0"-->
+<!--            class="game-iframe"-->
+<!--          ></iframe>-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <iframe-->
+<!--            @load="loadGame()"-->
+<!--            v-show="!logoShow"-->
+<!--            v-bind:srcdoc="src"-->
+<!--            id="game-iframe"-->
+<!--            scrolling="auto"-->
+<!--            frameborder="0"-->
+<!--            class="game-iframe"-->
+<!--          ></iframe>-->
+<!--        </template>-->
 
-      <q-btn flat round dense icon="close" v-close-popup />
-    </q-toolbar> -->
-      <q-toolbar>
-        <div class="topActions">
-          <q-toolbar-title></q-toolbar-title>
-          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
-          <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />
-          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />
-        </div>
-
-        <template v-if="isInnerHtmlSrc === false">
-          <iframe
-            @load="loadGame()"
-            v-show="!logoShow"
-            :src="src"
-            id="game-iframe"
-            scrolling="auto"
-            frameborder="0"
-            class="game-iframe"
-          ></iframe>
-        </template>
-        <template v-else>
-          <iframe
-            @load="loadGame()"
-            v-show="!logoShow"
-            v-bind:srcdoc="src"
-            id="game-iframe"
-            scrolling="auto"
-            frameborder="0"
-            class="game-iframe"
-          ></iframe>
-        </template>
-
-        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
-          <div class="q-pa-sm q-pt-sm">
-            <div>
-              <!-- Uncomment for quick Transfer -->
-              <!-- <q-btn-group push>
-                <q-btn
-                  size="sm"
-                  :color="quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Quick Transfer"
-                  icon="multiple_stop"
-                  @click="quickTransferTab = true"
-                />
-
-                <q-btn
-                  size="sm"
-                  :color="!quickTransferTab ? 'white' : 'primary'"
-                  glossy
-                  :text-color="!quickTransferTab ? 'black' : 'white'"
-                  push
-                  label="Bank Transfer"
-                  icon="account_balance"
-                  @click="quickTransferTab = false"
-                />
-              </q-btn-group> -->
-
-              <!-- <template v-if="quickTransferTab">
-                <div class="numbers">
-                  <div class="instruction">Transfer amount to platform</div>
-
-                  <q-btn
-                    class="full-width"
-                    push
-                    glossy
-                    color="brand"
-                    v-for="(val, valIndex) in values"
-                    :key="valIndex"
-                    @click="submitTransfer(val)"
-                  >
-                    {{ val }}
-                  </q-btn>
-                </div>
-              </template> -->
-              <template v-if="!quickTransferTab">
-                <div>
-                  <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>
-                </div>
-                <DepositComponent />
-              </template>
-            </div>
-          </div>
-        </q-drawer>
-      </q-toolbar>
-    </q-dialog>
-    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <img src="../../assets/logo-coming.png" style="width: 80%" />
-    </q-dialog>
-  </q-scroll-area>
+<!--        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
+<!--          <div class="q-pa-sm q-pt-sm">-->
+<!--            <div>-->
+<!--              <template v-if="!quickTransferTab">-->
+<!--                <div>-->
+<!--                  <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
+<!--                </div>-->
+<!--                <DepositComponent />-->
+<!--              </template>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </q-drawer>-->
+<!--      </q-toolbar>-->
+<!--    </q-dialog>-->
+<!--    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">-->
+<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
+<!--    </q-dialog>-->
+<!--  </q-scroll-area>-->
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
@@ -233,38 +183,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
   localStorage.removeItem("isBacked");
 
   isInnerHtmlSrc.value = false;
-  // window.addEventListener(
-  //   "message",
-  //   (event) => {
-  //     console.log("Action");
-  //     console.log(event.data);
-  //     if (event.data?.msg) {
-  //       if (event.data.msg === "closemodal") {
-  //         drawerVisible.value= false;
-  //       }
-  //     }
-  //   });
-
-  //     var gameIfrm = document.getElementById('game-iframe');
-  //     gameIfrm.requestFullscreen();
-  // // const iframeRef = ref(null);
-  // var myScreenOrientation = window.screen.orientation;
-  // console.log(myScreenOrientation)
-  // myScreenOrientation.unlock()
-  // myScreenOrientation.lock("portrait");
-  // console.log(myScreenOrientation)
-  // iframe.find('HTML-Element').touchwipe({
-  // wipeLeft: function() { alert("left"); },
-  // wipeRight: function() { alert("right"); },
-  // wipeUp: function() { alert("up"); },
-  // wipeDown: function() { alert("down"); },
-  // min_move_x: 20,
-  // min_move_y: 20,
-  // preventDefaultEvents: true });
-  // transferInfo.value = {
-  //   platform: platformCode
-  // };
-
   // Get the iframe
   const iFrame = document.getElementById("game-iframe");
 
@@ -304,23 +222,31 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         })
         .then((ret) => {
           let srcDoc = ret.data.data;
-          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
-            src.value = srcDoc;
-          } else {
-            isInnerHtmlSrc.value = true;
 
-            const scriptEndTag = "</" + "script>";
-            srcDoc = srcDoc
-              .replace(/<\/script>/g, scriptEndTag)
-              .replace(/\\\"/g, '"')
-              .replace(/\n/g, "");
-
-            src.value = srcDoc;
-          }
+          window.open(srcDoc, "_blank");
+          // var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          // if (firstFourChars === "http") {
+          //   src.value = srcDoc;
+          // } else {
+          //   isInnerHtmlSrc.value = true;
+          //
+          //   const scriptEndTag = "</" + "script>";
+          //   srcDoc = srcDoc
+          //     .replace(/<\/script>/g, scriptEndTag)
+          //     .replace(/\\\"/g, '"')
+          //     .replace(/\n/g, "");
+          //
+          //   src.value = srcDoc;
+          // }
         });
     } else {
-      router.push({ path: "/login", query: { redirect: route.path } });
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "로그인 해주세요",
+        icon: "report_problem"
+      });
+      // router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };

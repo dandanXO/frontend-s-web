@@ -10,7 +10,7 @@
       <div class="captcha-code">
         <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
       </div>
-      <img :src="verificationImg" @click.prevent="toGetCode" />
+      <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
     </div>
 
     <div class="right-container">
@@ -103,7 +103,7 @@ onMounted(() => {
   flex-direction: column;
   @media (min-width: 1200px) {
     flex-direction: row;
-    width: 600px;
+    width: 700px;
     justify-content: flex-end;
   }
 }
@@ -135,14 +135,18 @@ onMounted(() => {
 }
 
 .password {
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 .captcha-code {
   height: 40px;
   background: #080a0e;
   display: flex;
-  margin-right: 8px;
+  margin-right: 4px;
+}
+
+.captcha-img{
+  height: 40px;
 }
 
 .account-input,
@@ -180,7 +184,7 @@ onMounted(() => {
   }
   .register-text {
     font-size: 12px;
-    line-height: 16, 8px;
+    line-height: 16px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
@@ -206,7 +210,7 @@ onMounted(() => {
   }
   .login-text {
     font-size: 12px;
-    line-height: 16, 8px;
+    line-height: 16px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
