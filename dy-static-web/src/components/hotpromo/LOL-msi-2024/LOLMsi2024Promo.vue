@@ -13,7 +13,7 @@
             <match-info-swiper :match-list="matchList" />
           </bracket-stage>
         </el-tab-pane>
-        <el-tab-pane name="final" label="投注赠礼">
+        <el-tab-pane name="final" label="胜利喝彩">
           <final-stage>
             <match-info-swiper :match-list="matchList" />
           </final-stage>

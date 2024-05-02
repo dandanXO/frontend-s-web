@@ -5,15 +5,15 @@
       <slot />
     </div>
     <event-description class="event-description">
-      投注指定比赛BO1（第一局），每场赛事早盘有效投注≥1,888元且完成特殊事件即可获得对应彩金。最高可获
+      活动期间，当日累计早盘有效投注≥
       <span class="event-description-highlight">1,888元</span>
-      。
+      且第一场比赛第一局触发特殊事件即可获得彩金。
     </event-description>
     <table class="deposit-table">
       <thead>
         <tr>
           <th rowspan="2">早盘有效投注</th>
-          <th colspan="2">特殊时间及返利彩金</th>
+          <th colspan="2">特殊事件及返利彩金</th>
           <th rowspan="2">流水倍数</th>
         </tr>
         <tr>
@@ -25,7 +25,7 @@
         <td>≥1888</td>
         <td>18</td>
         <td>38</td>
-        <td rowspan="5">1倍/不限场馆</td>
+        <td rowspan="5">1倍流水</td>
       </tr>
       <tr>
         <td>≥5,888</td>
@@ -52,18 +52,24 @@
     <table class="remark-table">
       <tr class="divider">
         <th>速战速决</th>
-        <td>*BO1比赛中游戏时间≤30分钟</td>
+        <td>BO1比赛中游戏比赛时间≤30分钟</td>
       </tr>
       <tr>
         <th>黄金持久</th>
-        <td>*BO1比赛中游戏时间≥40分钟</td>
+        <td>BO1比赛中游戏比赛时间≥30分钟</td>
       </tr>
     </table>
     <event-rule>
       <ul class="event-rule">
-        <li>活动期间，投注MSI季中冠军赛BO1(第一局)盘口且早盘有效投注≥1,888元并完成特殊事件即可获得对应彩金；</li>
+        <li>活动期间，投注MSI季中冠军赛盘口早盘有效投注≥1,888元并完成特殊事件即可获得对应彩金；</li>
         <li>
-          活动期间，每场特殊事件判定标准为如下：<br/>&nbsp;&nbsp;&nbsp;速战速决：第一局比赛中比赛时间≤30分钟；<br/>&nbsp;&nbsp;&nbsp;黄金持久：第一局比赛中比赛时间≥40分钟；
+          活动期间，每场特殊事件判定标准为如下：
+          <br />
+          &nbsp;&nbsp;&nbsp;速战速决：第一局比赛中比赛时间≤30分钟；
+          <br />
+          &nbsp;&nbsp;&nbsp;黄金持久：第一局比赛中比赛时间≥30分钟；
+          <br />
+          &nbsp;&nbsp;&nbsp;特殊事件以当日第一场MSI赛事第一局比赛为准；
         </li>
         <li>活动无需申请，符合条件的会员，彩金于次日24小时内统一派发，彩金3倍流水即可提款；</li>
         <li>
