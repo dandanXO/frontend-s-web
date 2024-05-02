@@ -97,13 +97,13 @@
           <template
             #default="scope"
           >
-            <router-link
-              :to="
-                `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`
-              "
-            >
-              <el-link type="primary">{{ scope.row.loginName }}</el-link>
-            </router-link>
+            <!--            <router-link-->
+            <!--              :to="-->
+            <!--                `/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`-->
+            <!--              "-->
+            <!--            >-->
+            <span type="primary">{{ scope.row.loginName }}</span>
+            <!--            </router-link>-->
           </template>
         </el-table-column>
         <el-table-column
@@ -253,14 +253,14 @@
           width="120"
         >
           <template #default="scope">
-            <el-link
-              v-if="scope.row.totalRegisterMemberCount !== 0"
-              type="primary"
-              @click="showDialog('ALLMEMBER', scope.row.affiliateId)"
-            >
-              {{ scope.row.totalRegisterMemberCount }}
-            </el-link>
-            <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>
+            <!--            <el-link-->
+            <!--              v-if="scope.row.totalRegisterMemberCount !== 0"-->
+            <!--              type="primary"-->
+            <!--              @click="showDialog('ALLMEMBER', scope.row.affiliateId)"-->
+            <!--            >-->
+            <span>{{ scope.row.totalRegisterMemberCount }}</span>
+            <!--            </el-link>-->
+            <!--            <span v-else>{{ scope.row.totalRegisterMemberCount }}</span>-->
           </template>
         </el-table-column>
       </el-table>
