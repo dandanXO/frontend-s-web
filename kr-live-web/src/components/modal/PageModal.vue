@@ -398,7 +398,8 @@ const open = (pageName) => {
   position: relative;
   padding: 0 130px;
   box-sizing: content-box;
-  min-width: 860px;
+  width: 860px;
+  max-width: 860px;
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
@@ -563,6 +564,8 @@ const open = (pageName) => {
     height: 95vh;
     max-height: unset;
     padding: unset;
+    min-width: auto;
+    max-width: auto;
   }
   .page-dialog-main-container {
     top: 50%;
