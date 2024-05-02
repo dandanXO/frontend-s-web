@@ -16,7 +16,7 @@
               'grid-column': playerPosition.column
             }"
           >
-            <img src="../../../assets/images/promo/hotpromo/lh-step-game/player-pin.png" />
+            <img :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/player-pin-game${currentStage}.png`)">
           </div>
           <template v-for="(position, step) in stepPositionMapping" :key="step">
             <template
@@ -37,8 +37,10 @@
               >
                 <span>
                   <img
-                    :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}.png`)"
+                    :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}.png`)" v-if="step !== '59'"
                   />
+
+                  <img :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}-game${currentStage}.png`)" v-else>
                 </span>
               </div>
             </template>
