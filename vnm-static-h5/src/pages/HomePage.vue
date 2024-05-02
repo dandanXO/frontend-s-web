@@ -1720,7 +1720,7 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    height: 50px;
 
     @media (max-width: 400px) {
       height: 35px;

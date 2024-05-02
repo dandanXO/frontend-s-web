@@ -782,7 +782,7 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    height: 50px;
     margin-right: auto;
     margin-left: 12px;
 

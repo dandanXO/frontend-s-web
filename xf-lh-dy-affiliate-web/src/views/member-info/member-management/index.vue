@@ -718,7 +718,7 @@ const formatMoney = value => {
     return '-'
   }
   // Assuming you want to format to two decimal places
-  return value.toFixed(2)
+  return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
 const formatDateTime = value => {
