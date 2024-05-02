@@ -31,7 +31,7 @@
     <div class="btn-group">
       <div class="left-group">
         <div class="points-conversion">
-          <div class="register-text" @click="goToTransfer">포인트전환</div>
+          <div class="register-text" @click="goToTransactions">포인트전환</div>
         </div>
         <div class="my-page">
           <div class="register-text" @click="goToPersonalInfo">마이페이지</div>
@@ -39,11 +39,11 @@
       </div>
       <div class="right-group">
         <div class="other-points-conversion" @click.prevent="onLogoutSubmit">
-          <div class="register-text">Logout</div>
+          <div class="register-text">로그 아웃</div>
         </div>
-        <div class="other-points-conversion">
+        <!-- <div class="other-points-conversion">
           <div class="register-text" @click="goToTransfer">포인트전환</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -60,8 +60,8 @@ const goToPersonalInfo = () => {
   router.push('/?page=personal/info');
 }
 
-const goToTransfer = () => {
-  router.push('/?page=transaction/transfer');
+const goToTransactions = () => {
+  router.push('/?page=transaction/records');
 }
 
 const onLogoutSubmit = () => {
@@ -113,7 +113,7 @@ const onLogoutSubmit = () => {
   display: flex;
   width: 40%;
   height: 100%;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   margin-top: 16px;
   @media (min-width: 1200px) {
