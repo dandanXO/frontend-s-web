@@ -71,13 +71,13 @@
             <div class="text">공지</div>
           </div>
         </div>
-        <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 20">
-          <!--          <div v-if="announcementList">-->
-          <!--            <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">-->
-          <!--              {{ a.content }}-->
-          <!--            </span>-->
-          <!--          </div>-->
-          <div>XX가 XX게임에서 2000000원 땄어요!</div>
+        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
+          <div v-if="store.announcementList">
+                      <span v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
+                        {{ a.content }}
+                      </span>
+          </div>
+          <!--          <div>XX가 XX게임에서 2000000원 땄어요!</div>-->
         </marquee-text>
       </div>
     </div>
@@ -100,15 +100,15 @@
 
 
     <Transition>
-      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' ">
-        <template v-for="p in platforms" :key="p">
+      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live' ">
+        <template v-for="p in liveCasinoGames" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
             <div
               class="platform-img"
               :style="{
                 backgroundImage: (() => {
                   try {
-                    return `url(${require(`../assets/images/people/people1.png`)})`;
+                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
                   } catch (e) {
                     return `url(${comingSoonImg})`;
                   }
@@ -123,7 +123,7 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/company1.png`)})`;
+                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
                   })()
                 }"
               ></div>
@@ -132,7 +132,39 @@
         </template>
       </div>
     </Transition>
-
+    <Transition>
+      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' ">
+        <template v-for="p in platforms" :key="p">
+          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
+            <div
+              class="platform-img"
+              :style="{
+                backgroundImage: (() => {
+                  try {
+                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
+                  } catch (e) {
+                    return `url(${comingSoonImg})`;
+                  }
+                })()
+              }"
+            ></div>
+            <div class="plat-form-box">
+              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
+            </div>
+            <div class="platform-company-box">
+              <div
+                class="company-image"
+                :style="{
+                  backgroundImage: (() => {
+                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                  })()
+                }"
+              ></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </Transition>
 
     <Transition>
       <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' ">
@@ -143,7 +175,7 @@
               :style="{
                 backgroundImage: (() => {
                   try {
-                    return `url(${require(`../assets/images/people/people1.png`)})`;
+                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
                   } catch (e) {
                     return `url(${comingSoonImg})`;
                   }
@@ -158,7 +190,7 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/company1.png`)})`;
+                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
                   })()
                 }"
               ></div>
@@ -168,39 +200,7 @@
       </div>
     </Transition>
 
-    <Transition>
-      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live' ">
-        <template v-for="p in liveCasinoGames" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people1.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/company1.png`)})`;
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </Transition>
+
     <Transition>
       <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">
         <template v-for="p in esportPlatform" :key="p">
@@ -210,7 +210,7 @@
               :style="{
                 backgroundImage: (() => {
                   try {
-                    return `url(${require(`../assets/images/people/people1.png`)})`;
+                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
                   } catch (e) {
                     return `url(${comingSoonImg})`;
                   }
@@ -225,7 +225,7 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/company1.png`)})`;
+                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
                   })()
                 }"
               ></div>
@@ -257,91 +257,58 @@
     </div>
   </div>
 
-  <div class="home-bottom-section">
-    <!-- <div class="marquee">
-      <Vue3Marquee pause-on-hover pause-on-click>
-        <img src="../assets/logo/AE.png" height="30" />
-        <img src="../assets/logo/AMBSLOT.png" height="30" />
-        <img src="../assets/logo/ATA.png" height="30" />
-        <img src="../assets/logo/CQ9.png" height="30" />
-        <img src="../assets/logo/JILI.png" height="30" />
-        <img src="../assets/logo/JOKER.png" height="30" />
-        <img src="../assets/logo/KA.png" height="30" />
-        <img src="../assets/logo/LIVE22.png" height="30" />
-        <img src="../assets/logo/MANNAPLAY.png" height="30" />
-        <img src="../assets/logo/PG.png" height="30" />
-        <img src="../assets/logo/PNG.png" height="30" />
-        <img src="../assets/logo/PP.png" height="30" />
-        <img src="../assets/logo/SA.png" height="30" />
-        <img src="../assets/logo/SLOTXO.png" height="30" />
-        <img src="../assets/logo/TF88.png" height="30" />
-        <img src="../assets/logo/WM.png" height="30" />
-        <img src="../assets/logo/YGG.png" height="30" />
-        <img src="../assets/logo/CG.png" height="30" />
-        <img src="../assets/logo/SP.png" height="30" />
-      </Vue3Marquee>
-    </div> -->
-
-    <!-- <div class="bottom-footer">
-      <img class="footer-logo" src="../assets/logo.png" />
-      <p>{{ $t("lang.footer_tnc") }}</p>
-
-      <span>{{ $t("lang.footer_all_rights") }}</span>
-    </div> -->
-  </div>
-
   <GameModal ref="gameModalRef"></GameModal>
 
-  <q-dialog width="100%" v-model="isStationNotice">
-    <q-card style="width: 100%" class="bg-primary text-white">
-      <q-card-section class="q-mb-md">
-        <div class="menu-title flex justify-between items-center">
-          <div style="margin-right: auto">&nbsp;</div>
-          <div>{{ $t("lang.announcement") }}</div>
-          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
-        </div>
+<!--  <q-dialog width="100%" v-model="isStationNotice">-->
+<!--    <q-card style="width: 100%" class="bg-primary text-white">-->
+<!--      <q-card-section class="q-mb-md">-->
+<!--        <div class="menu-title flex justify-between items-center">-->
+<!--          <div style="margin-right: auto">&nbsp;</div>-->
+<!--          <div>{{ $t("lang.announcement") }}</div>-->
+<!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
+<!--        </div>-->
 
-        <q-tabs
-          v-model="activeKey"
-          dense
-          class="text-grey"
-          active-color="brand"
-          indicator-color="black"
-          align="justify"
-          narrow-indicator
-        >
-          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
-        </q-tabs>
+<!--        <q-tabs-->
+<!--          v-model="activeKey"-->
+<!--          dense-->
+<!--          class="text-grey"-->
+<!--          active-color="brand"-->
+<!--          indicator-color="black"-->
+<!--          align="justify"-->
+<!--          narrow-indicator-->
+<!--        >-->
+<!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
+<!--        </q-tabs>-->
 
-        <q-separator />
+<!--        <q-separator />-->
 
-        <q-tab-panels v-model="activeKey" animated>
-          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
-            <q-list style="min-height: 65vh">
-              <div v-for="(ann, idx) in announcementList" :key="idx">
-                <span v-if="ann.typeId === tab.id">
-                  <q-expansion-item
-                    style="max-height: 65vh; overflow: auto"
-                    group="somegroup"
-                    icon="volume_up"
-                    :label="ann.title"
-                  >
-                    <q-card>
-                      <q-card-section>
-                        {{ ann.content }}
-                      </q-card-section>
-                    </q-card>
-                  </q-expansion-item>
+<!--        <q-tab-panels v-model="activeKey" animated>-->
+<!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
+<!--            <q-list style="min-height: 65vh">-->
+<!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
+<!--                <span v-if="ann.typeId === tab.id">-->
+<!--                  <q-expansion-item-->
+<!--                    style="max-height: 65vh; overflow: auto"-->
+<!--                    group="somegroup"-->
+<!--                    icon="volume_up"-->
+<!--                    :label="ann.title"-->
+<!--                  >-->
+<!--                    <q-card>-->
+<!--                      <q-card-section>-->
+<!--                        {{ ann.content }}-->
+<!--                      </q-card-section>-->
+<!--                    </q-card>-->
+<!--                  </q-expansion-item>-->
 
-                  <q-separator></q-separator>
-                </span>
-              </div>
-            </q-list>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+<!--                  <q-separator></q-separator>-->
+<!--                </span>-->
+<!--              </div>-->
+<!--            </q-list>-->
+<!--          </q-tab-panel>-->
+<!--        </q-tab-panels>-->
+<!--      </q-card-section>-->
+<!--    </q-card>-->
+<!--  </q-dialog>-->
 
   <q-dialog
     width="100%"
@@ -394,47 +361,47 @@
     </div>
   </q-page-sticky> -->
 
-  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">
-    <div class="special-invite-bonus-container">
-      <div class="header-decoration-wrapper">
-        <div class="header-decoration">
-          <img
-            class="confetti"
-            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"
-            width="250"
-          />
-          <img
-            class="money-bags"
-            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"
-            width="150"
-          />
-        </div>
-      </div>
-      <div class="special-invite-bonus-content">
-        <div class="title-wrapper">
-          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>
-          <div class="reward-amt">200</div>
-        </div>
-        <div class="desc-wrapper">
-          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>
-          <div class="desc-content">
-            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น
-            <br />
-            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท
-            <br />
-            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ
-            <br />
-            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้
-            <br />
-            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้
-          </div>
-        </div>
-        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">
-          {{ $t("lang.confirm") }}
-        </div>
-      </div>
-    </div>
-  </q-dialog>
+  <!--  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">-->
+  <!--    <div class="special-invite-bonus-container">-->
+  <!--      <div class="header-decoration-wrapper">-->
+  <!--        <div class="header-decoration">-->
+  <!--          <img-->
+  <!--            class="confetti"-->
+  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"-->
+  <!--            width="250"-->
+  <!--          />-->
+  <!--          <img-->
+  <!--            class="money-bags"-->
+  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"-->
+  <!--            width="150"-->
+  <!--          />-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--      <div class="special-invite-bonus-content">-->
+  <!--        <div class="title-wrapper">-->
+  <!--          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>-->
+  <!--          <div class="reward-amt">200</div>-->
+  <!--        </div>-->
+  <!--        <div class="desc-wrapper">-->
+  <!--          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>-->
+  <!--          <div class="desc-content">-->
+  <!--            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น-->
+  <!--            <br />-->
+  <!--            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท-->
+  <!--            <br />-->
+  <!--            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ-->
+  <!--            <br />-->
+  <!--            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้-->
+  <!--            <br />-->
+  <!--            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">-->
+  <!--          {{ $t("lang.confirm") }}-->
+  <!--        </div>-->
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </q-dialog>-->
 
   <!-- <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
     <div class="promo-popup-div">
@@ -1091,10 +1058,10 @@ export default defineComponent({
     };
 
     const getLength = (tab, ann) => {
-      var categoryLength = announcementList.value.filter((item) => item.id == ann.typeId);
+      var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
       return categoryLength.length;
     };
-    const announcementList = ref([]);
+    // const announcementList = ref([]);
     const announcementTypes = ref([]);
     const loadAnnouncement = () => {
       api.get("/announcement").then((ret) => {
@@ -1102,7 +1069,7 @@ export default defineComponent({
         if (res.code === 0) {
           if (res.data.announcements) {
             const d = res.data.announcements;
-            announcementList.value = d;
+            store.announcementList = d;
           }
           if (res.data.type) {
             announcementTypes.value = res.data.type;
@@ -1119,10 +1086,11 @@ export default defineComponent({
     const noticeTitle = ref("");
     const activeKey = ref(null);
     const openPopup = (noticeType) => {
-      if (noticeType) {
-        noticeTitle.value = "Announcement";
-        isStationNotice.value = true;
-      }
+      router.push("/?page=personal/messages");
+      // if (noticeType) {
+        // noticeTitle.value = "Announcement";
+        // isStationNotice.value = true;
+      // }
     };
 
     const isShowBtt = ref(false);
@@ -1269,21 +1237,21 @@ export default defineComponent({
       // console.log(target)
     };
 
-    const checkRedeemSpecialInviteBonusEligiblity = () => {
-      if (store.hasToken()) {
-        eventapi
-          .get("/privi/telephone/canRedeem", {
-            params: {
-              promoCode: "special-invitation-bonus"
-            }
-          })
-          .then((res) => {
-            if (res.data.data === true) {
-              specialInviteBonusEligible.value = true;
-            }
-          });
-      }
-    };
+    // const checkRedeemSpecialInviteBonusEligiblity = () => {
+    //   if (store.hasToken()) {
+    //     eventapi
+    //       .get("/privi/telephone/canRedeem", {
+    //         params: {
+    //           promoCode: "special-invitation-bonus"
+    //         }
+    //       })
+    //       .then((res) => {
+    //         if (res.data.data === true) {
+    //           specialInviteBonusEligible.value = true;
+    //         }
+    //       });
+    //   }
+    // };
 
     const redeemSpecialInviteBonus = () => {
       eventapi
@@ -1321,7 +1289,7 @@ export default defineComponent({
       checkSticky();
 
       // checkSpinWheelPromo();
-      checkRedeemSpecialInviteBonusEligiblity();
+      // checkRedeemSpecialInviteBonusEligiblity();
     });
 
     const popupInterval = ref(null);
@@ -1496,7 +1464,7 @@ export default defineComponent({
       openGame,
       openFavGame,
       scrollPageRef,
-      announcementList,
+      // announcementList,
       isStationNotice,
       closeLineSticky,
       showSticky,
@@ -1769,8 +1737,9 @@ export default defineComponent({
   }
 
   .game-item {
-    border-radius: 8px;
+    border-radius: 2px;
     position: relative;
+    //border: 2px solid #789EFF;
 
     .platform-img {
       width: 100%;
@@ -1780,16 +1749,17 @@ export default defineComponent({
       /* background-size: contain; */
       background-repeat: no-repeat;
       background-position: top center;
+
     }
 
     .plat-form-box {
       position: absolute;
       /* position: relative; */
-      left: 0px;
-      bottom: 0px;
-      z-index: -1;
-      width: 100%;
-      height: 47px;
+      left: 2px;
+      bottom: 2px;
+      right:2px;
+      width: calc(100% - 4px);
+      height: 45px;
       background-color: #1f2833;
       display: flex;
       justify-content: center;
@@ -2367,26 +2337,26 @@ export default defineComponent({
   .game-grid-lists {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
-    .plat-form-box {
-      position: absolute;
-      /* position: relative; */
-      left: 0px;
-      bottom: 0px;
-      z-index: -1;
-      width: 100%;
-      height: 60px;
-      background-color: #1f2833;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .plat-form-text {
-        color: #fff;
-        font-size: 20px;
-        line-height: 28px;
-        position: relative;
-      }
-    }
+    //.plat-form-box {
+    //  position: absolute;
+    //  /* position: relative; */
+    //  left: 0px;
+    //  bottom: 0px;
+    //  z-index: -1;
+    //  width: 100%;
+    //  height: 60px;
+    //  background-color: #1f2833;
+    //  display: flex;
+    //  justify-content: center;
+    //  align-items: center;
+    //
+    //  .plat-form-text {
+    //    color: #fff;
+    //    font-size: 20px;
+    //    line-height: 28px;
+    //    position: relative;
+    //  }
+    //}
 
     .platform-company-box {
       position: absolute;

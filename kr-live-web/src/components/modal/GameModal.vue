@@ -240,7 +240,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           // }
         });
     } else {
-      router.push({ path: "/login", query: { redirect: route.path } });
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "로그인 해주세요",
+        icon: "report_problem"
+      });
+      // router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
 };
