@@ -1662,6 +1662,7 @@ export default {
     popUpTime: '弹窗时间',
     notificationType: '通知类型',
     notificationContent: '通知内容',
+    unbind: '解绑',
   },
   message: {
     startenddatemore3months: "开始与结束时间不能多于3个月",
@@ -1701,6 +1702,7 @@ export default {
     confirmToCheck: '请确认是否更改用户资料',
     confirmUpdate: '请确认是否更新?',
     confirmUpdatePayment: '请确认是否更新支付?',
+    confirmUnbind: '请确认是否解绑会员银行卡?',
     copyToClipboard: '已复制到剪贴板中',
     copySuccess: '成功复制',
     deleteSuccess: '删除成功',
@@ -1770,6 +1772,7 @@ export default {
     summarySuccess: '已选择时段的汇总即将生成，请稍等',
     transferSuccess: '转账成功',
     twoPasswordNotMatch: '重新输入密码不相同',
+    unbindSuccess: '成功解绑会员银行卡',
     unlockMemberSuccess: '成功解锁账号',
     unlockUserSuccess: '成功解锁用户',
     updateBelongTypeSuccess: '网页类型更新成功',
@@ -2068,6 +2071,8 @@ export default {
     validateTimeRequired: '时间必填',
     syncMemberDetailSuccess: '同步会员信息成功',
     timeExist: '时间已存在',
+    wrongPopupTime: "弹窗时间错误。",
+    selectPopupTime: "请选择弹窗时间."
   },
   menu: {
     undefined: '',
@@ -2174,6 +2179,8 @@ export default {
     Lottery: '彩票',
     'Lottery Record List': '彩票记录',
     'Lottery Result List': '彩票结果',
+    'Vietnam Lottery Record List': '越南彩票记录',
+    'Vietnam Lottery Result List': '越南彩票结果',
     'VIP Rebate Record': 'VIP返水记录',
     'Refer Friend': '推荐人记录',
     'Bet Rebate Record': '投注返水记录',

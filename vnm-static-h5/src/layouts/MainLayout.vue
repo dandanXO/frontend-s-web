@@ -379,6 +379,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.page_register");
+        } else if (route.path === "/about") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("lang.page_about");
         }
 
         if (route.query.redirect) {

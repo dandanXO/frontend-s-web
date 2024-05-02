@@ -208,7 +208,7 @@
                 style="display: flex"
                 :label="t('fields.commission')"
               >
-                {{ affInfo.commission * 100 }} %
+                {{ (affInfo.commission * 100).toFixed() }} %
               </el-form-item>
             </el-row>
             <el-row class="info">

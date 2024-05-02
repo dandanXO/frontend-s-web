@@ -86,7 +86,7 @@
                 唤醒人：<br>
                 VIP3或以上等级会员符 合唤醒人身份<br><br>
                 被唤醒人：<br>
-                VIP1会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br><br>
+                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br><br>
               </div>
               <p>2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；</p>
               <p>3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；</p>
@@ -101,9 +101,7 @@
         <q-tab-panel name="sec" label="唤醒圣堂">
 
           <div class="sub-desc">
-            活动时间：以官网通知为准<br>
-            活动对象：全体会员 <br>
-            活动内容：活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，唤醒会员需当日存款与投注≥100元即可领取彩金。
+            活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，唤醒会员需当日存款与投注≥100元即可领取彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -277,7 +275,7 @@ const getSummonRecord = () => {
 
 const goToInvite = () => {
   if(window.location.pathname === "/promotion"){
-    document.location.href = "app://invitefriend";
+    document.location.href = "app://invite";
   }else{
     router.push("/account/invite#summon-share");
   }

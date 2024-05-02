@@ -1657,6 +1657,7 @@ export default {
     popUpTime: 'Pop Up Time',
     notificationType: 'Notification Type',
     notificationContent: 'Notification Content',
+    unbind: 'unbind',
   },
   message: {
     startenddatemore3months: "Start and End date cannot more than 3 months",
@@ -1710,6 +1711,7 @@ export default {
     confirmToCheck: 'Do you want to update？',
     confirmUpdate: 'Do you want to update?',
     confirmUpdatePayment: 'Do you want to update payment?',
+    confirmUnbind: 'Confirm that you want unbind bank card?',
     copyToClipboard: ' has been copied to clipboard.',
     copySuccess: 'Copy Success',
     deleteSuccess: 'Delete Success',
@@ -1786,6 +1788,7 @@ export default {
       'Summary for the input period will be generated, please kindly wait',
     transferSuccess: 'Transfer Success',
     twoPasswordNotMatch: 'Two password does not match',
+    unbindSuccess: 'Unbind member bank card success',
     unlockMemberSuccess: 'Unlock Member Success',
     unlockUserSuccess: 'Unlock User Success',
     updateBelongTypeSuccess: 'Update Web Belong Type Success',
@@ -2100,6 +2103,8 @@ export default {
     validateTimeRequired: 'Time is required',
     syncMemberDetailSuccess: 'Sync Member Detail Success',
     timeExist: 'Time already exists',
+    wrongPopupTime: "Selected popup time is invalid",
+    selectPopupTime: "Please select Popup Time."
   },
   menu: {
     undefined: '',
@@ -2206,6 +2211,8 @@ export default {
     Lottery: 'Lottery',
     'Lottery Record List': 'Lottery Record List',
     'Lottery Result List': 'Lottery Result List',
+    'Vietnam Lottery Record List': 'Vietnam Lottery Record List',
+    'Vietnam Lottery Result List': 'Vietnam Lottery Result List',
     'VIP Rebate Record': 'VIP Rebate Record',
     'Bet Rebate Record': 'Bet Rebate Record',
     'Refer Friend': 'Refer Friend Record',

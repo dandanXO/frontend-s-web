@@ -105,9 +105,8 @@
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import { Loading, LocalStorage, Platform, SessionStorage, useQuasar } from "quasar";
+import { Loading, LocalStorage, Platform, useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import qs from "qs";
 import { isMobile, isH5 } from "boot/utils";
@@ -182,18 +181,9 @@ export default defineComponent({
     };
 
     const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
       const appVer = appVersionNo.value;
-
+      const sidParam = store.visitorId;
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
         loginNameRef.value.validate();
         passwordRef.value.validate();
         // verificationRef.value.validate();
@@ -271,16 +261,9 @@ export default defineComponent({
             if (res.data && res.data.access_token) {
               const siteId = process.env.SITEID;
               const accessToken = res.data.access_token;
-              const fpPromise = FingerprintJS.load();
+              const sidParam = store.visitorId;
+
               (async () => {
-                const fp = await fpPromise;
-                const result = await fp.get();
-                const excludes = { value: ["timezone", "timeZoneOffset"] };
-                const allComponents = { ...result.components };
-                excludes.value.forEach((element) => {
-                  delete allComponents[element];
-                });
-                const sidParam = FingerprintJS.hashComponents(allComponents);
                 var regDevice = Platform.is.mobile ? "H5" : "WEB";
                 if ("standalone" in window.navigator && window.navigator.standalone) {
                   regDevice = "IOS";

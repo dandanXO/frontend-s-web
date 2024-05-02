@@ -39,9 +39,13 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-awards' && !isCommonPromo" />
-    
-    <AppHongBao v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token" :promo-code="list.promoCode" :params="list.param" />
-    <FtdPromo  v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
+
+    <AppHongBao
+      v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+    <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
 
     <PrivilegeInvitePromo
       v-if="
@@ -95,7 +99,12 @@
       :promo-code="list.promoCode"
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
-    <SummonerPromo v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"  :promo-code="list.promoCode" />
+    <SummonerPromo
+      v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
+    <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -152,6 +161,9 @@ import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel
 import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
+import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import EuroCup2024 from "../components/hotpromo/europe-2024/EuroCup2024.vue";
+
 export default defineComponent({
   name: "HotPromo",
   order: 1,
@@ -186,7 +198,9 @@ export default defineComponent({
     LhStepGamePromo,
     SummonerPromo,
     AppHongBao,
-    FtdPromo
+    FtdPromo,
+    LOLMsi2024Promo,
+    EuroCup2024
   },
   props: {
     list: {
@@ -278,7 +292,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-game-steps" ||
       this.list.redirectUrl === "lh1-summon-event" ||
       this.list.redirectUrl === "lh1-app-hongbao" ||
-      this.list.redirectUrl === "lh1-ftd-promo"
+      this.list.redirectUrl === "lh1-ftd-promo" ||
+      this.list.redirectUrl === "lh-msi-match" ||
+      this.list.redirectUrl === "lh1-eurocup-2024"
     ) {
       this.isCommonPromo = false;
     } else {

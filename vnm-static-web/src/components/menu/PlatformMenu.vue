@@ -12,7 +12,7 @@
             {{ $t('common.maintenanceTime') }}:<br/> {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }}<br/>-
             {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY HH:mm") }}
           </p>
-          <p class="small-size">{{ $t('maintenance.otherPlatFirst') }}</p>
+<!--          <p class="small-size">{{ $t('maintenance.otherPlatFirst') }}</p>-->
         </div>
 
         <!-- <div class="platform-menu-title" v-html="item.cnname" />

@@ -490,6 +490,22 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="lastLoginTime"
+          :label="t('fields.lastLoginTime')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.lastLoginTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"

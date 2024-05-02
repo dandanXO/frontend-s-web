@@ -196,3 +196,16 @@ export const syncMemberDetail = (id, siteId) => {
 export const showAlert = (siteId) => {
   return https().request("/member/alert", Method.GET, siteId, ContentType.form);
 };
+
+export const requestMemberMoneyChangeExport = query => {
+  return https().request(
+    '/member/requestMemberMoneyChangeExport',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const unbindBankCard = (cardId) => {
+  return https().request(`/member/bankCard/${cardId}?_method=PUT`, Method.POST, ContentType.form);
+};
