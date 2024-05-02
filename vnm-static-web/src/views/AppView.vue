@@ -243,6 +243,7 @@ export default defineComponent({
   left: 0;
   top: 0;
   overflow: hidden;
+  min-height: 800px;
 }
 .bg-video-wrap,
 .bg-video-wrap #bg-video {
