@@ -1,6 +1,39 @@
 <template>
     <div class="modal-body-wrap">
-        <q-card-section class="modal-body-content">
+        <q-card-section class="modal-body-content deposit-record-form">
+            <div class="search-container">
+                <div class="date-field">
+                    <q-input filled v-model="searchForm.startDate" readonly>
+                        <template v-slot:prepend>
+                            <q-icon name="calendar_today" class="cursor-pointer">
+                                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="searchForm.startDate" @update:model-value="searchRecord(true)"
+                                        mask="YYYY-MM-DD">
+                                        <div class="row items-center justify-end">
+                                            <q-btn v-close-popup label="Close" color="white" flat />
+                                        </div>
+                                    </q-date>
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
+                    <span>to</span>
+                    <q-input filled v-model="searchForm.endDate" readonly>
+                        <template v-slot:prepend>
+                            <q-icon name="calendar_today" class="cursor-pointer">
+                                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                                    <q-date v-model="searchForm.endDate" @update:model-value="searchRecord(true)"
+                                        mask="YYYY-MM-DD">
+                                        <div class="row items-center justify-end">
+                                            <q-btn v-close-popup label="Close" color="white" flat />
+                                        </div>
+                                    </q-date>
+                                </q-popup-proxy>
+                            </q-icon>
+                        </template>
+                    </q-input>
+                </div>
+            </div>
             <div class="">
                 <q-item-section class="notify-table-row notify-table-header">
                     <q-item-label>번호</q-item-label>
@@ -21,9 +54,85 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import { api } from "boot/axios";
+import { userStore } from "stores/index";
+import { updateDate } from "src/boot/utils";
+
+const store = userStore();
+const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
+const pagination = reactive({
+    pageSize: 20,
+    total: 0,
+    pages: 1,
+    current: 1,
+    pagingState: null
+});
+const isLoading = ref(true);
+const gameBetRecordData = ref([]);
+
+const setTime = () => {
+    searchForm.startDate = updateDate(7);
+    searchForm.endDate = updateDate(0);
+};
+
+const searchRecord = (isNewSearch) => {
+    if (!searchForm.startDate || !searchForm.endDate) {
+        return;
+    }
+    if (isNewSearch) {
+        pagination.current = 1;
+        pagination.pagingState = null;
+    }
+
+    isLoading.value = true;
+    gameBetRecordData.value = [];
+
+    const { startDate, endDate, platform } = searchForm;
+
+    api
+        .get("/session/member/cassandraBetRecord", {
+            params: {
+                startDate,
+                endDate,
+                platform,
+                memberId: store.id,
+                current: pagination.current,
+                size: pagination.pageSize,
+                pagingState: pagination.pagingState
+            }
+        })
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => { })
+        .then(() => {
+            isLoading.value = false;
+        });
+};
+
+onMounted(() => {
+    setTime();
+    searchRecord();
+});
+
 </script>
 
+<style lang="scss">
+.deposit-record-form {
+    .search-container {
+        border-radius: 0.5rem;
+        background: transparent;
+        padding: 1rem;
+        margin-top: 0;
+
+        .date-field {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
+</style>
 <style lang="scss" scoped>
 .modal-body-wrap {}
 
