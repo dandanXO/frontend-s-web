@@ -60,7 +60,10 @@ import { userStore } from "stores/index";
 import { updateDate } from "src/boot/utils";
 
 const store = userStore();
-const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
+const searchForm = reactive({
+    startDate: updateDate(7), 
+    endDate: updateDate(0)
+});
 const pagination = reactive({
     pageSize: 20,
     total: 0,
@@ -69,12 +72,6 @@ const pagination = reactive({
     pagingState: null
 });
 const isLoading = ref(true);
-const gameBetRecordData = ref([]);
-
-const setTime = () => {
-    searchForm.startDate = updateDate(7);
-    searchForm.endDate = updateDate(0);
-};
 
 const searchRecord = (isNewSearch) => {
     if (!searchForm.startDate || !searchForm.endDate) {
@@ -86,9 +83,8 @@ const searchRecord = (isNewSearch) => {
     }
 
     isLoading.value = true;
-    gameBetRecordData.value = [];
 
-    const { startDate, endDate, platform } = searchForm;
+    const { startDate, endDate } = searchForm;
 
     api
         .get("/session/member/deposit", {
@@ -111,13 +107,12 @@ const searchRecord = (isNewSearch) => {
 };
 
 onMounted(() => {
-    setTime();
     searchRecord();
 });
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .deposit-record-form {
     .search-container {
         border-radius: 0.5rem;
@@ -131,8 +126,7 @@ onMounted(() => {
         }
     }
 }
-</style>
-<style lang="scss" scoped>
+
 .modal-body-wrap {}
 
 .modal-body-content {
