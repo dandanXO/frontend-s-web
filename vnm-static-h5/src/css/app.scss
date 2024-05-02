@@ -11,7 +11,7 @@ html {
 // app global css in SCSS form
 body {
   background: $white;
-  font-family: "Poppins", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "SF Pro", "Poppins", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #q-app {
@@ -31,6 +31,9 @@ body {
   }
   &.poppins {
     font-family: "Poppins";
+  }
+  &.sanfrancisco {
+    font-family: "SF Pro",
   }
 }
 
