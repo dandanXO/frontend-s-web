@@ -2,7 +2,7 @@ export default {
   common: {
     title: 'TF Dashboard',
     logout: 'Logout',
-    welcome_system: "Welcome to Admin System",
+    welcome_system: 'Welcome to Admin System',
     changePassword: 'Change Password',
     status: {
       OPEN: 'Open',
@@ -199,7 +199,7 @@ export default {
     uefaMatch: {
       ONGOING: 'Ongoing',
       CANCEL: 'Cancel',
-      ENDED: 'Ended'
+      ENDED: 'Ended',
     },
     uefaMatchRecord: {
       PENDING: 'Pending',
@@ -207,8 +207,8 @@ export default {
       WIN_MATCH: 'Match Win',
       WIN_TEAM: 'Team Win',
       WIN_ALL: 'All Win',
-      CANCEL: 'Cancel'
-    }
+      CANCEL: 'Cancel',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -280,7 +280,7 @@ export default {
     CASUAL: 'CASUAL',
     NBA: 'NBA',
     COCKFIGHT: 'COCKFIGHT',
-    MSI: 'MSI'
+    MSI: 'MSI',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -414,10 +414,12 @@ export default {
     PRIVI_HAVENT_START: 'Privilege havent start',
     SUMMONER_VIP_LEVEL_NOT_REACH: 'Summoner VIP level not reach',
     MEMBER_VIP_LEVEL_EXCEED_1: 'Member VIP level exceed 1',
-    MEMBER_HISTORY_DEPOSIT_AMOUNT_NOT_REACH: 'Member history deposit amount not reach',
+    MEMBER_HISTORY_DEPOSIT_AMOUNT_NOT_REACH:
+      'Member history deposit amount not reach',
     MEMBER_DEPOSIT_IN_PAST_15_DAYS: 'Member has deposit recently',
     MEMBER_BET_IN_PAST_15_DAYS: 'Member has bet recently',
-    MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL: 'Member and summoner same register detail',
+    MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL:
+      'Member and summoner same register detail',
     MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
   },
   fields: {
@@ -938,6 +940,7 @@ export default {
     jobName: 'Job Name',
     jobType: 'Job Type',
     label: 'Label',
+    labelCancel: 'cancel',
     lastDigit: 'Last Digit',
     lastDigitMinDayDeposit: 'Min Day Deposit Amount for Last Digit Red Packet',
     lastDigitRules: 'Last Digit Red Packet Rules',
@@ -983,7 +986,8 @@ export default {
     mallName: 'Mall Name',
     manualPay: 'Manual Pay',
     massImport: 'Mass Import',
-    messageAffiliateDepositDisplay: 'Please set deposit display setting for new afiliate',
+    messageAffiliateDepositDisplay:
+      'Please set deposit display setting for new afiliate',
     matchTime: 'Match Time',
     matchTitle: 'Match Title',
     maxBonus: 'Maximum Bonus',
@@ -1654,7 +1658,7 @@ export default {
     unbind: 'unbind',
   },
   message: {
-    startenddatemore3months: "Start and End date cannot more than 3 months",
+    startenddatemore3months: 'Start and End date cannot more than 3 months',
     addRemarkSuccess: 'Add Remark Success',
     addSuccess: 'Add Success',
     adjustSuccess: 'Adjust Amount Success',
@@ -1756,7 +1760,8 @@ export default {
     rebateSuccess:
       'VIP Rebate distribution in process, please refresh and check on the records later.',
     registerSuccess: 'Register Success',
-    registerSuccessInd: 'Register Success. Please set deposit display setting for new afiliate.',
+    registerSuccessInd:
+      'Register Success. Please set deposit display setting for new afiliate.',
     referSuccess: 'Distribute Refer Friend Promo Success',
     replySuccess: 'Reply Success',
     removePreviousLevel: 'Please remove previous level',
@@ -1820,11 +1825,14 @@ export default {
     validateAmountRequired: 'Amount is required',
     validateAnnouncementTypeRequired: 'Announcement Type is required',
     validateAnswerOneRequired: 'Question One Answer is required',
-    validateAnswerOneAtLeastTwoChoices: 'Question One Answer need to have at least to choices',
+    validateAnswerOneAtLeastTwoChoices:
+      'Question One Answer need to have at least to choices',
     validateAnswerTwoRequired: 'Question Two Answer is required',
-    validateAnswerTwoAtLeastTwoChoices: 'Question Two Answer need to have at least to choices',
+    validateAnswerTwoAtLeastTwoChoices:
+      'Question Two Answer need to have at least to choices',
     validateAnswerThreeRequired: 'Question Three Answer is required',
-    validateAnswerThreeAtLeastTwoChoices: 'Question Three Answer need to have at least to choices',
+    validateAnswerThreeAtLeastTwoChoices:
+      'Question Three Answer need to have at least to choices',
     validateAppTypeRequired: 'App type is required',
     validateAtLeastSixChar: 'Please enter at least 6 characters',
     validateAwardsRequired: 'Awards is required',
@@ -2096,8 +2104,8 @@ export default {
     validateTimeRequired: 'Time is required',
     syncMemberDetailSuccess: 'Sync Member Detail Success',
     timeExist: 'Time already exists',
-    wrongPopupTime: "Selected popup time is invalid",
-    selectPopupTime: "Please select Popup Time."
+    wrongPopupTime: 'Selected popup time is invalid',
+    selectPopupTime: 'Please select Popup Time.',
   },
   menu: {
     undefined: '',
