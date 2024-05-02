@@ -244,7 +244,7 @@ const getNavigationData = () => {
             icon: 'affiliate',
           },
           {
-            path: '/affiliate/summary',
+            path: '/summary',
             title: t('menu.AffiliateSummary'),
             label: 'Affiliate Summary',
             active: false,

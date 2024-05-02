@@ -646,7 +646,7 @@ export default {
     'Downline Info': '下级信息',
     Member: '会员',
     Affiliate: '代理',
-    AffiliateSummary: '代理总结',
+    AffiliateSummary: '下级代理总结',
     gameRecord: '游戏记录',
     financeCentre: '财务中心',
     'Bet Record': '会员投注记录',
