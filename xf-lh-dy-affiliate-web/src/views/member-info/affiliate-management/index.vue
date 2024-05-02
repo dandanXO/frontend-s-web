@@ -308,7 +308,7 @@
         <el-form-item
           :label="t('fields.commission')"
           prop="commission"
-          v-if="siteId !== '8'"
+          v-if="store.state.user.siteCode !== 'VNM'"
         >
           <el-input
             v-model="cForm.commission"
@@ -775,6 +775,7 @@ function breadcrumbSearch(id, name) {
 const siteId = computed(() => {
   return store.state.user.siteId
 })
+console.log(siteId);
 
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel
