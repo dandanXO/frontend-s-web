@@ -37,13 +37,13 @@ const showNotify = () => {
 }
 
 const iconInfo = reactive([
-  {
-    info: "송금신청",
-    iconUrl: require("../../assets/icon/deposit.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/deposit`);
-    }
-  },
+  // {
+  //   info: "송금신청",
+  //   iconUrl: require("../../assets/icon/deposit.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=finance/deposit`);
+  //   }
+  // },
   {
     info: "출금신청",
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),

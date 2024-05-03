@@ -151,19 +151,19 @@ const isLinkActive = (key) => {
 };
 
 const pagesInfo = reactive([
-  {
-    tabIndex: "log",
-    page: "finance/deposit",
-    info: "송금신청",
-    iconUrl: require("../../assets/icon/deposit.svg"),
-    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
-    component: FinanceDeposit,
-    headerInfo: {
-      title: "송금신청",
-      subTitle: "DEPOSIT",
-      description: "입금시 꼭 계좌문의를 하세요!",
-    }
-  },
+  // {
+  //   tabIndex: "log",
+  //   page: "finance/deposit",
+  //   info: "송금신청",
+  //   iconUrl: require("../../assets/icon/deposit.svg"),
+  //   iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+  //   component: FinanceDeposit,
+  //   headerInfo: {
+  //     title: "송금신청",
+  //     subTitle: "DEPOSIT",
+  //     description: "입금시 꼭 계좌문의를 하세요!",
+  //   }
+  // },
   {
     tabIndex: "log",
     page: "finance/withdraw",
@@ -268,19 +268,19 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!",
     }
   },
-  {
-    tabIndex: "finance",
-    page: "finance/depositRecord",
-    info: "입금",
-    iconUrl: require("../../assets/icon/deposit.svg"),
-    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
-    component: DepositRecord,
-    headerInfo: {
-      title: "입금",
-      subTitle: "DEPOSIT RECORD",
-      description: "입금시 꼭 계좌문의를 하세요!",
-    }
-  },
+  // {
+  //   tabIndex: "finance",
+  //   page: "finance/depositRecord",
+  //   info: "입금",
+  //   iconUrl: require("../../assets/icon/deposit.svg"),
+  //   iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+  //   component: DepositRecord,
+  //   headerInfo: {
+  //     title: "입금",
+  //     subTitle: "DEPOSIT RECORD",
+  //     description: "입금시 꼭 계좌문의를 하세요!",
+  //   }
+  // },
   {
     tabIndex: "finance",
     page: "finance/withdrawRecord",
@@ -395,7 +395,8 @@ const open = (pageName) => {
 }
 .page-dialog-main {
   --main-bg-color: #030303;
-  position: relative;
+  top: 80px;
+  position: absolute;
   padding: 0 130px;
   box-sizing: content-box;
   width: 860px;
