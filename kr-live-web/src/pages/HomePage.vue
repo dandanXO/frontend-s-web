@@ -1041,14 +1041,14 @@ export default defineComponent({
         .catch((err) => {});
     };
 
-    const getNewsList = async () => {
-      //假裝打api接json回傳
-      // const res = await fetch("fakeData/newsList.json");
 
-      // const result = await res.json();
-
-      // const resData = result.data;
-      // newsList.value = resData;
+    const getLength = (tab, ann) => {
+      var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
+      return categoryLength.length;
+    };
+    // const announcementList = ref([]);
+    const announcementTypes = ref([]);
+    const loadAnnouncement = () => {
       api
         .get("/announcement")
         .then((res) => {
@@ -1076,30 +1076,6 @@ export default defineComponent({
         .catch((err) => {
           console.log(err);
         });
-    };
-
-    const getLength = (tab, ann) => {
-      var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
-      return categoryLength.length;
-    };
-    // const announcementList = ref([]);
-    const announcementTypes = ref([]);
-    const loadAnnouncement = () => {
-      api.get("/announcement").then((ret) => {
-        const res = ret.data;
-        if (res.code === 0) {
-          if (res.data.announcements) {
-            const d = res.data.announcements;
-            store.announcementList = d;
-          }
-          if (res.data.type) {
-            announcementTypes.value = res.data.type;
-            activeKey.value = res.data.type[0].id;
-          }
-          // announcementList.value = d.announcements
-          // announcementList.value = res.data.announcements
-        }
-      });
     };
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
@@ -1360,7 +1336,7 @@ export default defineComponent({
       loadData();
       loadAnnouncement();
       getPlatList();
-      getNewsList();
+
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
