@@ -1,26 +1,28 @@
 <template>
   <div class="not-loggedin-container">
-    <div class="left-container">
-      <div class="account">
-        <input type="text" class="account-input" placeholder="계정" v-model="loginForm.loginName" />
+    <form action="" style="display: flex;" @keypress.enter="onLoginSubmit">
+      <div class="left-container">
+        <div class="account">
+          <input type="text" class="account-input" placeholder="계정" v-model="loginForm.loginName" />
+        </div>
+        <div class="password">
+          <input type="password" class="password-input" placeholder="암호" v-model="loginForm.password" />
+        </div>
+        <div class="captcha-code">
+          <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
+        </div>
+        <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
       </div>
-      <div class="password">
-        <input type="password" class="password-input" placeholder="암호" v-model="loginForm.password" />
-      </div>
-      <div class="captcha-code">
-        <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
-      </div>
-      <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
-    </div>
 
-    <div class="right-container">
-      <div class="register" @click="goToRegister">
-        <div class="register-text">등록</div>
+      <div class="right-container">
+        <div class="register" @click="goToRegister">
+          <div class="register-text">등록</div>
+        </div>
+        <div class="login" @click.prevent="onLoginSubmit">
+          <div class="login-text">로그인</div>
+        </div>
       </div>
-      <div class="login" @click.prevent="onLoginSubmit">
-        <div class="login-text">로그인</div>
-      </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -40,6 +42,10 @@ const loginForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+
+const enter = () => {
+  console.log("123456");
+};
 
 const goToRegister = () => {
   router.push("/?page=register");
@@ -145,7 +151,7 @@ onMounted(() => {
   margin-right: 4px;
 }
 
-.captcha-img{
+.captcha-img {
   height: 40px;
 }
 
