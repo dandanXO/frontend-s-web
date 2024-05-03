@@ -1,5 +1,5 @@
 <template>
-  <div class="main-section">
+  <div class="main-section"> 
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
@@ -77,7 +77,7 @@
                         {{ a.content }}
                       </span>
           </div>
-          <!--          <div>XX가 XX게임에서 2000000원 땄어요!</div>-->
+          <!--          <div>XX 가 XX 게임에서 2000000 원 땄어요!</div>-->
         </marquee-text>
       </div>
     </div>
@@ -1005,7 +1005,7 @@ export default defineComponent({
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
-      //假裝打api接json回傳
+      //假裝打 api 接 json 回傳
       // const res = await fetch("fakeData/homePagePlatList.json");
 
       // const result = await res.json();
@@ -1048,7 +1048,7 @@ export default defineComponent({
     };
 
     const getNewsList = async () => {
-      //假裝打api接json回傳
+      //假裝打 api 接 json 回傳
       const res = await fetch("fakeData/newsList.json");
 
       const result = await res.json();
