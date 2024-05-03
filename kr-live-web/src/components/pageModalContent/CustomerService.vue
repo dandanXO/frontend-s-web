@@ -65,7 +65,7 @@ const sendMessage = () => {
       $q.notify({
         color: "positive",
         position: "top",
-        message: "发送成功",
+        message: "성공적으로 보냈습니다",
         icon: "check_circle_outline"
       });
       serviceForm.title = "";
