@@ -1740,7 +1740,7 @@ export default defineComponent({
     gap: 12px;
 
     :deep(.q-btn) {
-      min-width: 99px;
+      min-width: 80px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
