@@ -592,6 +592,10 @@ export default defineComponent({
         gameCode = p.id;
       }
 
+      if(platformCode === "PP") {
+        gameCode = 101;
+      }
+
 
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
 
