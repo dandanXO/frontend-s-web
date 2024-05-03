@@ -3,7 +3,7 @@
     <div class="information">
       <div class="member">
         <img src="../../assets/images/login/member.svg" alt="" />
-        <div>ID 1587655</div>
+        <div>{{store.nickName}}</div>
       </div>
       <div class="letter">
         <img src="../../assets/images/login/letter.svg" alt="" />
