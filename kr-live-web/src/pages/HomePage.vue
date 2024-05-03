@@ -73,9 +73,9 @@
         </div>
         <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
           <div v-if="store.announcementList">
-                      <span v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
-                        {{ a.content }}
-                      </span>
+            <span v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
+              {{ a.content }}
+            </span>
           </div>
           <!--          <div>XX가 XX게임에서 2000000원 땄어요!</div>-->
         </marquee-text>
@@ -98,9 +98,8 @@
       </div>
     </div>
 
-
     <Transition>
-      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live' ">
+      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">
         <template v-for="p in liveCasinoGames" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
             <div
@@ -133,7 +132,7 @@
       </div>
     </Transition>
     <Transition>
-      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' ">
+      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots'">
         <template v-for="p in platforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
             <div
@@ -167,7 +166,7 @@
     </Transition>
 
     <Transition>
-      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' ">
+      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish'">
         <template v-for="p in fishPlatforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
             <div
@@ -199,7 +198,6 @@
         </template>
       </div>
     </Transition>
-
 
     <Transition>
       <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">
@@ -245,70 +243,70 @@
       <div class="news-item-left">
         <div class="news-item-title">
           [
-          {{ item.sort }}
-          ] ※
           {{ item.title }}
+          ] ※
+          {{ item.content }}
           ※
         </div>
       </div>
       <div class="news-item-right">
-        <div class="news-item-date">{{ item.date }}</div>
+        <div class="news-item-date">{{ item.createTime }}</div>
       </div>
     </div>
   </div>
 
   <GameModal ref="gameModalRef"></GameModal>
 
-<!--  <q-dialog width="100%" v-model="isStationNotice">-->
-<!--    <q-card style="width: 100%" class="bg-primary text-white">-->
-<!--      <q-card-section class="q-mb-md">-->
-<!--        <div class="menu-title flex justify-between items-center">-->
-<!--          <div style="margin-right: auto">&nbsp;</div>-->
-<!--          <div>{{ $t("lang.announcement") }}</div>-->
-<!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
-<!--        </div>-->
+  <!--  <q-dialog width="100%" v-model="isStationNotice">-->
+  <!--    <q-card style="width: 100%" class="bg-primary text-white">-->
+  <!--      <q-card-section class="q-mb-md">-->
+  <!--        <div class="menu-title flex justify-between items-center">-->
+  <!--          <div style="margin-right: auto">&nbsp;</div>-->
+  <!--          <div>{{ $t("lang.announcement") }}</div>-->
+  <!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
+  <!--        </div>-->
 
-<!--        <q-tabs-->
-<!--          v-model="activeKey"-->
-<!--          dense-->
-<!--          class="text-grey"-->
-<!--          active-color="brand"-->
-<!--          indicator-color="black"-->
-<!--          align="justify"-->
-<!--          narrow-indicator-->
-<!--        >-->
-<!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
-<!--        </q-tabs>-->
+  <!--        <q-tabs-->
+  <!--          v-model="activeKey"-->
+  <!--          dense-->
+  <!--          class="text-grey"-->
+  <!--          active-color="brand"-->
+  <!--          indicator-color="black"-->
+  <!--          align="justify"-->
+  <!--          narrow-indicator-->
+  <!--        >-->
+  <!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
+  <!--        </q-tabs>-->
 
-<!--        <q-separator />-->
+  <!--        <q-separator />-->
 
-<!--        <q-tab-panels v-model="activeKey" animated>-->
-<!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
-<!--            <q-list style="min-height: 65vh">-->
-<!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--                <span v-if="ann.typeId === tab.id">-->
-<!--                  <q-expansion-item-->
-<!--                    style="max-height: 65vh; overflow: auto"-->
-<!--                    group="somegroup"-->
-<!--                    icon="volume_up"-->
-<!--                    :label="ann.title"-->
-<!--                  >-->
-<!--                    <q-card>-->
-<!--                      <q-card-section>-->
-<!--                        {{ ann.content }}-->
-<!--                      </q-card-section>-->
-<!--                    </q-card>-->
-<!--                  </q-expansion-item>-->
+  <!--        <q-tab-panels v-model="activeKey" animated>-->
+  <!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
+  <!--            <q-list style="min-height: 65vh">-->
+  <!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
+  <!--                <span v-if="ann.typeId === tab.id">-->
+  <!--                  <q-expansion-item-->
+  <!--                    style="max-height: 65vh; overflow: auto"-->
+  <!--                    group="somegroup"-->
+  <!--                    icon="volume_up"-->
+  <!--                    :label="ann.title"-->
+  <!--                  >-->
+  <!--                    <q-card>-->
+  <!--                      <q-card-section>-->
+  <!--                        {{ ann.content }}-->
+  <!--                      </q-card-section>-->
+  <!--                    </q-card>-->
+  <!--                  </q-expansion-item>-->
 
-<!--                  <q-separator></q-separator>-->
-<!--                </span>-->
-<!--              </div>-->
-<!--            </q-list>-->
-<!--          </q-tab-panel>-->
-<!--        </q-tab-panels>-->
-<!--      </q-card-section>-->
-<!--    </q-card>-->
-<!--  </q-dialog>-->
+  <!--                  <q-separator></q-separator>-->
+  <!--                </span>-->
+  <!--              </div>-->
+  <!--            </q-list>-->
+  <!--          </q-tab-panel>-->
+  <!--        </q-tab-panels>-->
+  <!--      </q-card-section>-->
+  <!--    </q-card>-->
+  <!--  </q-dialog>-->
 
   <q-dialog
     width="100%"
@@ -583,18 +581,16 @@ export default defineComponent({
     const openGame = (p) => {
       // debugger;
       console.log(p);
-      const gameType= p.gameType;
-      const gameName= p.name;
-      const platformCode= p.code;
-      const gameStatus= "OPEN";
-      var gameCode= "";
-      if(gameType === "SLOT" || gameType === 'FISH'){
+      const gameType = p.gameType;
+      const gameName = p.name;
+      const platformCode = p.code;
+      const gameStatus = "OPEN";
+      var gameCode = "";
+      if (gameType === "SLOT" || gameType === "FISH") {
         gameCode = p.id;
       }
 
-
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
-
     };
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
@@ -783,7 +779,7 @@ export default defineComponent({
     });
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
-    const esportPlatform= ref([]);
+    const esportPlatform = ref([]);
     const lotteryGames = ref([]);
     const lotteryGamesMore = ref([]);
     const lotteryGamesList = computed(() => {
@@ -806,7 +802,6 @@ export default defineComponent({
       isShow.value = false;
 
       // platforms.value = platforms.value.reverse();
-
 
       const containerWidth = gameBoardRef.value.clientWidth;
 
@@ -1019,8 +1014,8 @@ export default defineComponent({
           })
         )
         .then((data) => {
-          console.log("HEre")
-          console.log(data);
+          // console.log("HEre");
+          // console.log(data);
 
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
@@ -1043,18 +1038,44 @@ export default defineComponent({
           //     switchPlat(fishPlatforms.value[0], "fish");
           //   }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     };
 
     const getNewsList = async () => {
       //假裝打api接json回傳
-      const res = await fetch("fakeData/newsList.json");
+      // const res = await fetch("fakeData/newsList.json");
 
-      const result = await res.json();
+      // const result = await res.json();
 
-      const resData = result.data;
-      newsList.value = resData;
+      // const resData = result.data;
+      // newsList.value = resData;
+      api
+        .get("/announcement")
+        .then((res) => {
+          const {
+            data: {
+              code,
+              data: { announcements }
+            }
+          } = res;
+
+          if (code === 0) {
+            console.log(announcements);
+            newsList.value = announcements;
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: "資料讀取失敗",
+              icon: "report_problem"
+            });
+          }
+
+          // newsList.value = announcements;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     const getLength = (tab, ann) => {
@@ -1088,8 +1109,8 @@ export default defineComponent({
     const openPopup = (noticeType) => {
       router.push("/?page=personal/messages");
       // if (noticeType) {
-        // noticeTitle.value = "Announcement";
-        // isStationNotice.value = true;
+      // noticeTitle.value = "Announcement";
+      // isStationNotice.value = true;
       // }
     };
 
@@ -1626,7 +1647,6 @@ export default defineComponent({
   }
 }
 
-
 .grid-wrapper {
   overflow: hidden;
   width: 100%;
@@ -1749,7 +1769,6 @@ export default defineComponent({
       /* background-size: contain; */
       background-repeat: no-repeat;
       background-position: top center;
-
     }
 
     .plat-form-box {
@@ -1757,7 +1776,7 @@ export default defineComponent({
       /* position: relative; */
       left: 2px;
       bottom: 2px;
-      right:2px;
+      right: 2px;
       width: calc(100% - 4px);
       height: 45px;
       background-color: #1f2833;
