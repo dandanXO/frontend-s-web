@@ -136,10 +136,10 @@ const newsItems = ref([
   padding: 4px;
 
   .header-left {
-    height: 50px;
+    height: 40px;
 
     @media (max-width: 400px) {
-      height: 35px;
+      height: 30px;
     }
 
     img {
