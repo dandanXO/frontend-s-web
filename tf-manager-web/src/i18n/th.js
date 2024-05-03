@@ -1181,6 +1181,8 @@ export default {
     indRebateAmount: 'จำนวนเงินคืน',
     indAdjustAmount: 'จำนวนการปรับปรุงกองทุน',
     grossProfit: 'กำไรขั้นต้น',
+    winloss: 'ชนะการสูญเสีย',
+    profit2: 'Dep-With',
   },
   message: {
     startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',

@@ -1656,6 +1656,8 @@ export default {
     notificationType: 'Notification Type',
     notificationContent: 'Notification Content',
     unbind: 'unbind',
+    winloss: 'winloss',
+    profit2: 'Dep-With',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

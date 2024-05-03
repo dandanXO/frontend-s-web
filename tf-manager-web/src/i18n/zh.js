@@ -1658,6 +1658,8 @@ export default {
     notificationType: '通知类型',
     notificationContent: '通知内容',
     unbind: '解绑',
+    winloss: '总输赢',
+    profit2: '存提差',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
