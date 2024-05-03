@@ -1,5 +1,5 @@
 <template>
-  <div class="main-section"> 
+  <div class="main-section">
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
@@ -1233,6 +1233,7 @@ export default defineComponent({
           if (code === 0) {
             console.log(announcements);
             newsList.value = announcements;
+            store.announcementList= announcements;
           } else {
             $q.notify({
               color: "negative",
@@ -1254,10 +1255,10 @@ export default defineComponent({
     const noticeTitle = ref("");
     const activeKey = ref(null);
     const openPopup = (noticeType) => {
-      router.push("/?page=personal/messages");
+      // router.push("/?page=personal/messages");
       // if (noticeType) {
-      // noticeTitle.value = "Announcement";
-      // isStationNotice.value = true;
+      //   noticeTitle.value = "Announcement";
+      //   isStationNotice.value = true;
       // }
     };
 
