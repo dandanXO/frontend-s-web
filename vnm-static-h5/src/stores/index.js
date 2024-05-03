@@ -38,7 +38,9 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
-      registeredWithdrawPassword: false
+      registeredWithdrawPassword: false,
+      visitorId: "",
+      isAffiliateA: false
     };
   },
   actions: {

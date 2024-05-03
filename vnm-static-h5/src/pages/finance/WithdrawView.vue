@@ -369,8 +369,8 @@ export default defineComponent({
                 platform.isLoading = false;
               }
             }).catch((e) => {
-                  platform.isLoading = false;
-                }
+                platform.isLoading = false;
+              }
             );
 
           }
@@ -398,12 +398,9 @@ export default defineComponent({
             getWithdrawalMethods();
 
             // FB tracking :: apply-withdrawal
-            if (
-                  window.location.href.indexOf("tf88king.com") > -1 ||
-                  window.location.href.indexOf("tfgame88.com") > -1
-                ) {
-                  fbq("track", "apply-withdrawal");
-                }
+            if (store.isAffiliateA) {
+              fbq("track", "apply-withdrawal");
+            }
 
 
             withdrawInfo.amount = "";
@@ -458,10 +455,10 @@ export default defineComponent({
           response.data.forEach(element => {
             if (element.bankType === "BANK") {
               if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push(element)
-                }
-                if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                  withdrawState.bankCardList.push(element)
+                withdrawState.bankCardList.push(element)
+              }
+              if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+                withdrawState.bankCardList.push(element)
               }
             } else {
               if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {

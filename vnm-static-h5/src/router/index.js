@@ -72,7 +72,7 @@ export default route(function (/* { store, ssrContext } */) {
       // console.log("user", user.token);
     }
 
-    
+
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
       // if (to.query.reg) {
@@ -108,6 +108,30 @@ export default route(function (/* { store, ssrContext } */) {
         next();
       }
     }
+
+
+    // FB tracking
+    console.log(window.location.href);
+    if (window.location.href.indexOf("tf88king.com") > -1) {
+      fbq("init", "888951505918547");
+      fbq("track", "PageView");
+      store.isAffiliateA= true;
+    } else if (window.location.href.indexOf("tfgame88.com") > -1) {
+      fbq("init", "3658633674357920");
+      fbq("track", "PageView");
+      store.isAffiliateA= true;
+    } else if (window.location.href.indexOf("tf88uytin.com") > -1) {
+      otag("init", "adv10336256983680");
+    } else if (window.location.href.indexOf("tf68688.com") > -1) {
+      fbq("init", "1123673335564806");
+      fbq("track", "PageView");
+      store.isAffiliateA= true;
+    }else if (window.location.href.indexOf("wintf99.com") > -1) {
+      fbq("init", "441415921872746");
+      fbq("track", "PageView");
+      store.isAffiliateA= true;
+    }
+
   });
 
   return Router;
