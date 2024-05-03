@@ -360,7 +360,7 @@
       style="max-width: 1280px"
       @close="store.welcomeDialogVisible = false"
     >
-      <HomeWelcome />
+      <HomeWelcome @close-dialog="welcomeDialogVisible = false" />
     </el-dialog>
 
     <el-dialog

@@ -273,7 +273,7 @@ export default defineComponent({
 .intro-container {
   display: flex;
   flex-direction: column;
-  width: 65%;
+  width: 65%; 
   .text-content {
     font-size: 22px;
     color: #ffffff;
@@ -344,6 +344,7 @@ export default defineComponent({
           box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
           cursor: pointer;
           z-index: 1;
+          text-align: center;
 
           &.outline {
             background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
@@ -355,10 +356,10 @@ export default defineComponent({
 
         .platform-qr-code {
           position: absolute;
-          bottom: -20px;
+          bottom: -10px;
           margin: auto;
           width: 280px;
-          height: 297px;
+          height: 287px;
           box-shadow: 0px 4px 34px 0px #00000033;
           background-color: #ffffff;
           border-radius: 8px;
@@ -366,7 +367,7 @@ export default defineComponent({
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;
-          padding: 20px;
+          padding: 15px 10px 0;
           display: none;
 
           .supported-mobile-os {
