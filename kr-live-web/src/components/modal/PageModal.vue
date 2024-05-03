@@ -395,7 +395,8 @@ const open = (pageName) => {
 }
 .page-dialog-main {
   --main-bg-color: #030303;
-  position: relative;
+  top: 80px;
+  position: absolute;
   padding: 0 130px;
   box-sizing: content-box;
   width: 860px;
