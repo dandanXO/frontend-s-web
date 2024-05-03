@@ -196,7 +196,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const tabOption = ref("returnLoginGift");
 const toggleTabOption = () => {
   tabOption.value = tabOption.value === "returnLoginGift" ? "returnDepositGift" : "returnLoginGift";
@@ -207,6 +209,12 @@ const onReturnBonusClick = (bonusItem) => {
     .put(`/bonus/claim/${bonusItem}`)
     .then((res) => {
       if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: `你已领取 ${res.data}元`,
+          icon: "check_circle_outline"
+        });
       }
     })
     .catch((err) => {}); // End catch
