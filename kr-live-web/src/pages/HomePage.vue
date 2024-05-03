@@ -1,5 +1,5 @@
 <template>
-  <div class="main-section">
+  <div class="main-section"> 
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
@@ -77,7 +77,7 @@
                         {{ a.content }}
                       </span>
           </div>
-          <!--          <div>XX가 XX게임에서 2000000원 땄어요!</div>-->
+          <!--          <div>XX 가 XX 게임에서 2000000 원 땄어요!</div>-->
         </marquee-text>
       </div>
     </div>
@@ -259,56 +259,56 @@
 
   <GameModal ref="gameModalRef"></GameModal>
 
-<!--  <q-dialog width="100%" v-model="isStationNotice">-->
-<!--    <q-card style="width: 100%" class="bg-primary text-white">-->
-<!--      <q-card-section class="q-mb-md">-->
-<!--        <div class="menu-title flex justify-between items-center">-->
-<!--          <div style="margin-right: auto">&nbsp;</div>-->
-<!--          <div>{{ $t("lang.announcement") }}</div>-->
-<!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
-<!--        </div>-->
+  <q-dialog width="100%" v-model="isStationNotice">
+    <q-card style="width: 100%" class="bg-primary text-white">
+      <q-card-section class="q-mb-md">
+        <div class="menu-title flex justify-between items-center">
+          <div style="margin-right: auto">&nbsp;</div>
+          <div>{{ $t("lang.announcement") }}</div>
+          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
+        </div>
 
-<!--        <q-tabs-->
-<!--          v-model="activeKey"-->
-<!--          dense-->
-<!--          class="text-grey"-->
-<!--          active-color="brand"-->
-<!--          indicator-color="black"-->
-<!--          align="justify"-->
-<!--          narrow-indicator-->
-<!--        >-->
-<!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
-<!--        </q-tabs>-->
+        <q-tabs
+          v-model="activeKey"
+          dense
+          class="text-grey"
+          active-color="brand"
+          indicator-color="black"
+          align="justify"
+          narrow-indicator
+        >
+          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />
+        </q-tabs>
 
-<!--        <q-separator />-->
+        <q-separator />
 
-<!--        <q-tab-panels v-model="activeKey" animated>-->
-<!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
-<!--            <q-list style="min-height: 65vh">-->
-<!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--                <span v-if="ann.typeId === tab.id">-->
-<!--                  <q-expansion-item-->
-<!--                    style="max-height: 65vh; overflow: auto"-->
-<!--                    group="somegroup"-->
-<!--                    icon="volume_up"-->
-<!--                    :label="ann.title"-->
-<!--                  >-->
-<!--                    <q-card>-->
-<!--                      <q-card-section>-->
-<!--                        {{ ann.content }}-->
-<!--                      </q-card-section>-->
-<!--                    </q-card>-->
-<!--                  </q-expansion-item>-->
+        <q-tab-panels v-model="activeKey" animated>
+          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">
+            <q-list style="min-height: 65vh">
+              <div v-for="(ann, idx) in store.announcementList" :key="idx">
+                <span v-if="ann.typeId === tab.id">
+                  <q-expansion-item
+                    style="max-height: 65vh; overflow: auto"
+                    group="somegroup"
+                    icon="volume_up"
+                    :label="ann.title"
+                  >
+                    <q-card>
+                      <q-card-section>
+                        {{ ann.content }}
+                      </q-card-section>
+                    </q-card>
+                  </q-expansion-item>
 
-<!--                  <q-separator></q-separator>-->
-<!--                </span>-->
-<!--              </div>-->
-<!--            </q-list>-->
-<!--          </q-tab-panel>-->
-<!--        </q-tab-panels>-->
-<!--      </q-card-section>-->
-<!--    </q-card>-->
-<!--  </q-dialog>-->
+                  <q-separator></q-separator>
+                </span>
+              </div>
+            </q-list>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 
   <q-dialog
     width="100%"
@@ -590,6 +590,10 @@ export default defineComponent({
       var gameCode= "";
       if(gameType === "SLOT" || gameType === 'FISH'){
         gameCode = p.id;
+      }
+
+      if(platformCode === "PP") {
+        gameCode = 101;
       }
 
 
@@ -1005,7 +1009,7 @@ export default defineComponent({
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
-      //假裝打api接json回傳
+      //假裝打 api 接 json 回傳
       // const res = await fetch("fakeData/homePagePlatList.json");
 
       // const result = await res.json();
@@ -1048,7 +1052,7 @@ export default defineComponent({
     };
 
     const getNewsList = async () => {
-      //假裝打api接json回傳
+      //假裝打 api 接 json 回傳
       const res = await fetch("fakeData/newsList.json");
 
       const result = await res.json();
@@ -1086,11 +1090,11 @@ export default defineComponent({
     const noticeTitle = ref("");
     const activeKey = ref(null);
     const openPopup = (noticeType) => {
-      router.push("/?page=personal/messages");
-      // if (noticeType) {
-        // noticeTitle.value = "Announcement";
-        // isStationNotice.value = true;
-      // }
+      // router.push("/?page=personal/messages");
+      if (noticeType) {
+        noticeTitle.value = "Announcement";
+        isStationNotice.value = true;
+      }
     };
 
     const isShowBtt = ref(false);

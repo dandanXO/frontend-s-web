@@ -21,7 +21,7 @@ export const userStore = defineStore("userStore", {
       balance: 0,
       token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
-      currency: { value: "฿", label: "บาท" },
+      currency: { value: "₩", label: "บาท" },
       unreadCount: 0,
       currentDeposit: "",
       levelUpDeposit: "",
