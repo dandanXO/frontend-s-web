@@ -221,10 +221,10 @@ const onReturnBonusClick = (bonusItem) => {
         // console.log(res);
         if (res.code === 0) {
           // Success
-          // ElMessageBox.alert(`你已领取 ${res.data.value}`, "系统提示", {
-          //   confirmButtonText: "OK",
-          //   type: "success"
-          // });
+          ElMessageBox.alert(`你已领取 ${res.data}元`, "领取成功", {
+            confirmButtonText: "OK",
+            type: "success"
+          });
         }
       })
       .catch((err) => {}); // End catch
