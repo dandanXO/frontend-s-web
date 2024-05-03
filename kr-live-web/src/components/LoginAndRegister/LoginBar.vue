@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
       <div class="left-content">
-        <div v-for="(item, index) in iconInfo" :key="index" @click="item.goPage()" class="credit-info cursor-pointer">
+        <div v-for="(item, index) in iconInfo" :key="index" @click="store.token ? item.goPage() : showNotify()" class="credit-info cursor-pointer">
           <img :src="item.iconUrl" alt="" />
           <div class="info-text">{{ item.info }}</div>
         </div>
@@ -21,9 +21,21 @@ import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { useQuasar } from "quasar";
 const store = userStore();
+const $q= useQuasar()
 
 const router = useRouter();
+
+const showNotify = () => {
+  $q.notify({
+    color: "negative",
+    position: "top",
+    message: "로그인 해주세요",
+    icon: "report_problem"
+  });
+}
+
 const iconInfo = reactive([
   {
     info: "송금신청",
@@ -78,7 +90,7 @@ const iconInfo = reactive([
   display: flex;
   flex-direction: column;
   @media (min-width: 769px) {
-    width: 1200px;
+    width: 1280px;
     flex-direction: row;
     height: 80px;
   }

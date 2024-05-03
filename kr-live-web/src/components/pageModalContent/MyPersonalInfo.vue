@@ -4,19 +4,35 @@
             <form class="personal-info-form">
                 <div>
                     <label>아이디(닉네임)</label>
-                    <input placeholder="" />
+                    <input 
+                      :value="store.nickName || ''" 
+                      :readonly="store.token ? 'readonly' : false"
+                      placeholder=""
+                    />
                 </div>
                 <div>
                     <label>보유금액</label>
-                    <input placeholder="" />
+                    <input 
+                      :value="store.token ? mainWallet : ''"
+                      :readonly="store.token ?  'readonly' : false"
+                      placeholder="" 
+                    />
                 </div>
                 <div>
                     <label>연락처</label>
-                    <input placeholder="" />
+                    <input 
+                      :value="store.email || ''"
+                      :readonly="store.token ? 'readonly' : false"
+                      placeholder="" 
+                    />
                 </div>
                 <div>
                     <label>가입일시</label>
-                    <input placeholder="" />
+                    <input
+                      :value="store.telephone || ''"
+                      :readonly="store.token ? 'readonly' : false"
+                      placeholder="" 
+                    />
                 </div>
             </form>
             <div class="action-buttons">
@@ -27,7 +43,14 @@
 </template>
 
 <script setup id="RegisterComponent">
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
+import { userStore } from "stores/index";
+
+const store = userStore();
+const mainWallet = computed(() => {
+    const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
+    return store.currency.value + " " + balanceWithTwoDecimalPlaces;
+});
 
 </script>
 

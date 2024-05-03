@@ -3,14 +3,14 @@
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
 
 
-      <div class="page-dialog-links" v-if="!isMinimalMode">
+      <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
                  :class="tabIndex === item.key ? 'active' : ''">
               <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
             </div>
           </div>
-      </div>
+      </div> -->
 
       <div class="page-dialog-main" >
         <!-- <LangToggle v-if="showLangToggle"/> -->
@@ -398,6 +398,8 @@ const open = (pageName) => {
   position: relative;
   padding: 0 130px;
   box-sizing: content-box;
+  width: 860px;
+  max-width: 860px;
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
@@ -406,7 +408,6 @@ const open = (pageName) => {
   .q-tabs__content {
 
   }
-  width: 860px;
   .q-tab {
     color: #767676;
   }
@@ -563,6 +564,8 @@ const open = (pageName) => {
     height: 95vh;
     max-height: unset;
     padding: unset;
+    min-width: auto;
+    max-width: auto;
   }
   .page-dialog-main-container {
     top: 50%;
