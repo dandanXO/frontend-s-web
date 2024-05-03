@@ -199,7 +199,7 @@
         </q-scroll-area>
 
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
+          <q-spinner-hourglass :color="'blue'" size="8em" />
         </div>
 
         <q-scroll-area
