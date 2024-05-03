@@ -19,7 +19,7 @@
           <div class="slide-title">{{ $t("welcome.secondSlide") }}</div>
           <div class="slide-content sec">{{ $t("welcome.secondSlideContent") }}</div>
           <img class="banner" style="margin: -20px 0px; width: 100%" src="../../assets/home/auth/hundred.png" />
-          <router-link to="/center/deposit" class="deposit-btn">{{ $t("welcome.depositNow") }}</router-link>
+          <div class="deposit-btn" @click="goToDeposit()">{{ $t("welcome.depositNow") }}</div>
         </div>
         <div class="welcome-slide card-bg">
           <div class="slide-title">{{ $t("welcome.thirdSlide") }}</div>
@@ -32,11 +32,22 @@
 </template>
 
 <script setup>
+import { ref, defineEmits } from "vue";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { useI18n } from "vue-i18n";
 import { uiStore } from "@/store/ui";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const { t } = useI18n();
 const ui = uiStore();
+
+const emits = defineEmits(["close-dialog, open-login-dialog"]);
+
+const goToDeposit = () => {
+  router.push('/center/personal');
+  emits("close-dialog");
+}
 </script>
 
 <style lang="scss" scoped>
@@ -110,6 +121,7 @@ const ui = uiStore();
   background: url(../../assets/home/auth/title-bg-blue.png) no-repeat center center;
   background-size: contain;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .proceed-btn {

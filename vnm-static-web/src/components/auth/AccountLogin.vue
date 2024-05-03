@@ -153,10 +153,7 @@ const submitLogin = () => {
               closeLoginDialog();
 
               // FB tracking :: login-success
-              if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) { 
+              if (store.isAffiliateA) {
                   fbq("track", "login-success");
                 }
 

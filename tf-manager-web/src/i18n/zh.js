@@ -2,7 +2,7 @@ export default {
   common: {
     title: 'TF仪表板',
     logout: '登出',
-    welcome_system: "欢迎来到后台系统",
+    welcome_system: '欢迎来到后台系统',
     changePassword: '更换密码',
     status: {
       OPEN: '开启',
@@ -207,7 +207,7 @@ export default {
       PENDING: '未开始',
       ONGOING: '进行中',
       CANCEL: '已取消',
-      ENDED: '已结束'
+      ENDED: '已结束',
     },
     uefaMatchRecord: {
       PENDING: '待结算',
@@ -215,8 +215,8 @@ export default {
       WIN_MATCH: '竞猜成功',
       WIN_TEAM: '专属队伍获胜',
       WIN_ALL: '全赢',
-      CANCEL: '已取消'
-    }
+      CANCEL: '已取消',
+    },
   },
   betStatus: {
     BET: '下注',
@@ -287,7 +287,7 @@ export default {
     CASUAL: '小游戏',
     NBA: 'NBA',
     COCKFIGHT: '斗鸡',
-    MSI: 'MSI季中冠军赛'
+    MSI: 'MSI季中冠军赛',
   },
   homeBannerType: {
     HOME: '首页',
@@ -945,6 +945,7 @@ export default {
     jobName: '任务名称',
     jobType: '任务类型',
     label: '标签',
+    labelCancel: '取消',
     lastDigit: '尾数',
     lastDigitMinDayDeposit: '尾数红包当日最小存款',
     lastDigitRules: '尾数红包规则',
@@ -1433,7 +1434,7 @@ export default {
     totalPrivilegeAmount: '总优惠金额',
     totalPrivilegeClaimAmount: '总优惠领取金额',
     totalRebateAmount: '总返水金额',
-    totalRedeem: '总领取金额',
+    totalRedeem: '总领取人数',
     totalRegister: '总新注册用户',
     totalRegisterCount: '注册会员总数',
     totalReimburseAmount: '总报销金额',
@@ -1665,7 +1666,7 @@ export default {
     unbind: '解绑',
   },
   message: {
-    startenddatemore3months: "开始与结束时间不能多于3个月",
+    startenddatemore3months: '开始与结束时间不能多于3个月',
     addRemarkSuccess: '新增备注成功',
     addSuccess: '新增成功',
     adjustSuccess: '平账成功',
@@ -2071,8 +2072,8 @@ export default {
     validateTimeRequired: '时间必填',
     syncMemberDetailSuccess: '同步会员信息成功',
     timeExist: '时间已存在',
-    wrongPopupTime: "弹窗时间错误。",
-    selectPopupTime: "请选择弹窗时间."
+    wrongPopupTime: '弹窗时间错误。',
+    selectPopupTime: '请选择弹窗时间.',
   },
   menu: {
     undefined: '',

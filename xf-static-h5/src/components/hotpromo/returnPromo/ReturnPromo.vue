@@ -109,7 +109,7 @@
                 3.注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口，将不计算为有效投注额内。
               </p>
               <p>
-                4.每位有效玩家、每个手机号码、电子邮箱、IP地址、每张银行卡、每台设备只能享受一次优惠，如发现有违规者我们将保留无限期审核扣回红利及所产生的利润权利；雷火电竞对本活动保有最终解释权。
+                4.每位有效玩家、每个手机号码、电子邮箱、IP地址、每张银行卡、每台设备只能享受一次优惠，如发现有违规者我们将保留无限期审核扣回红利及所产生的利润权利；兴發对本活动保有最终解释权。
               </p>
             </div>
           </div>
@@ -196,7 +196,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const tabOption = ref("returnLoginGift");
 const toggleTabOption = () => {
   tabOption.value = tabOption.value === "returnLoginGift" ? "returnDepositGift" : "returnLoginGift";
@@ -207,6 +209,12 @@ const onReturnBonusClick = (bonusItem) => {
     .put(`/bonus/claim/${bonusItem}`)
     .then((res) => {
       if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: `你已领取 ${res.data}元`,
+          icon: "check_circle_outline"
+        });
       }
     })
     .catch((err) => {}); // End catch

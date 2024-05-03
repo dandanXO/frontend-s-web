@@ -1302,7 +1302,12 @@ export default defineComponent({
       } else {
         hasAffiliate.value = false
       }
-      getCode()
+      if (route.query.isreg) {
+        isReg.value = true;
+      }
+      if (props.siteId !== '8') {
+        getCode()
+      }
       if (state.loginForm.userName === '') {
         userNameRef.value.focus()
       } else if (state.loginForm.password === '') {

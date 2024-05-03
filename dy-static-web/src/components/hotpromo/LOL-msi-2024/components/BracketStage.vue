@@ -1,11 +1,10 @@
 <template>
   <div class="section-wrapper">
-    <section-header label="BO2比赛" class="section-header" />
     <div class="match-info">
       <slot />
     </div>
     <event-description class="event-description">
-      当日投注MSI季中冠军赛BO2(第二局)累计投注≥1,000元且BO2最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中冠军赛BO2最终结算为负盈利≥1,000元也可获得对应负盈利返比。
+      当日投注MSI季中冠军赛滚球盘累计投注≥1,000且最终结算盈利≥500以上即可获得对应的盈利彩金。若MSI季中冠军赛最终结算为负盈利≥1,000也可获得对应负盈利返比。
     </event-description>
     <table class="deposit-table">
       <thead>
@@ -70,11 +69,11 @@
         </tr>
       </tbody>
     </table>
-    <div class="remark">注：当日所有MSI赛事BO2局数结算金额相加，以总结算金额判定正负盈利。</div>
+    <div class="remark">注：当日所有MSI赛事滚球盘口结算金额相加，以总结算金额判定正负盈利。</div>
     <event-rule>
       <ul class="event-rule">
         <li>
-          活动期间，投注当日MSI季中冠军赛BO2(第二局)累计投注≥1,000元且最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中赛BO2（第二局）最终结算为负盈利≥1,000元也可获得对应负盈利返比
+          活动期间，投注当日MSI季中冠军赛滚球盘累计投注≥1,000元且最终结算盈利≥500元以上即可获得对应的盈利彩金。若MSI季中赛最终结算为负盈利≥1,000元也可获得对应负盈利返比
           ；
         </li>
         <li>活动无需申请，符合条件的会员彩金于次日24内统一派发，彩金仅需3倍流水即可提款；</li>

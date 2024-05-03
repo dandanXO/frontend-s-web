@@ -1720,10 +1720,10 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    height: 40px;
 
     @media (max-width: 400px) {
-      height: 35px;
+      height: 30px;
     }
 
     img {
@@ -1735,11 +1735,12 @@ export default defineComponent({
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 
     :deep(.q-btn) {
-      min-width: 99px;
+      min-width: 80px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
