@@ -22,7 +22,7 @@
         <div class="text-title">{{ $t("lang.login_title") }}</div>
         <div class="text-desc">{{ $t("lang.login_desc") }}</div>
       </div> -->
-      <img :src="require(`../assets/images/login/login-img-${languageVal}.png`)" />
+      <img :src="require(`../assets/images/login/login-img.png`)" />
     </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
