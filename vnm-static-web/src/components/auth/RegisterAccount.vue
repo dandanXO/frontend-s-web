@@ -414,7 +414,8 @@ const submitRegisterForm = async (elForm) => {
                 // FB tracking :: signup-success
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
-                } else if (window.location.href.indexOf("tf88uytin.com") > -1) {
+                }
+                if (window.location.href.indexOf("tf88uytin.com") > -1) {
                   otag("event", "registration");
                 }
 
