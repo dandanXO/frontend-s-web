@@ -223,7 +223,8 @@ const onReturnBonusClick = (bonusItem) => {
           // Success
           ElMessageBox.alert(`你已领取 ${res.data}元`, "领取成功", {
             confirmButtonText: "OK",
-            type: "success"
+            type: "success",
+            center: true
           });
         }
       })
