@@ -631,14 +631,14 @@ export default defineComponent({
   }
 
   .login-img {
-    padding: 0 16px 16px;
+    padding: 0 0px 16px 0px;
     display: flex;
     justify-content: center;
     position: relative;
     img {
       display: block;
       width: 100%;
-      max-width: 190px;
+      max-width: 100%;
     }
 
     .login-text {
