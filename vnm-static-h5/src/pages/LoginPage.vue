@@ -779,12 +779,12 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 50px;
+    height: 40px;
     margin-right: auto;
     margin-left: 12px;
 
     @media (max-width: 400px) {
-      height: 35px;
+      height: 30px;
     }
 
     img {
