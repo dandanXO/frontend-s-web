@@ -301,10 +301,7 @@ export default defineComponent({
               });
 
               // FB tracking :: apply-withdrawal
-              if (
-                  window.location.href.indexOf("tf88king.com") > -1 ||
-                  window.location.href.indexOf("tfgame88.com") > -1
-                ) {
+              if (store.isAffiliateA) {
                   fbq("track", "apply-withdrawal");
                 }
 
