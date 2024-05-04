@@ -17,7 +17,7 @@
       <div class="return-promo-content">
         <div class="content-time">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-time.png" />
-          <p>2023年4月25日00:00起</p>
+          <p>2024年5月5日00:00起</p>
         </div>
 
         <template v-if="tabOption === 'returnLoginGift'">
@@ -118,7 +118,7 @@
         <template v-if="tabOption === 'returnDepositGift'">
           <div class="content-main">
             <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
-            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领1,888元。</p>
+            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领2,188元。</p>
 
             <table class="return-table" border="0" cellpadding="0" cellspacing="0">
               <thead>
