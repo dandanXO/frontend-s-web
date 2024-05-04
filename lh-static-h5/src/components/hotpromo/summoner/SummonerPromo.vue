@@ -275,6 +275,7 @@ const getSummonRecord = () => {
 
 const goToInvite = () => {
   if(window.location.pathname === "/promotion"){
+    sessionStorage.setItem("GO_SUMMON", "1");
     document.location.href = "app://invite";
   }else{
     router.push("/account/invite#summon-share");
