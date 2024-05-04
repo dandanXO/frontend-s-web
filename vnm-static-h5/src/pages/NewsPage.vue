@@ -1,7 +1,7 @@
 <template>
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web-fire.svg" />
+      <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" @click="router.push('/login')">
