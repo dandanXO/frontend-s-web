@@ -1,7 +1,7 @@
 <template>
   <div class="return-promo-wrapper">
     <div class="return-promo-title">
-      <img src="../../../assets/images/promotion/hotpromo/return-promo/title-img.png" />
+      <img src="../../../assets/images/promotion/hotpromo/return-promo/title-img2.png" />
     </div>
 
     <div class="return-promo-options">
@@ -73,14 +73,14 @@
                 <td>铂金Ⅰ</td>
                 <td>888</td>
               </tr>
-              <tr>
-                <td>钻石</td>
-                <td>1,188</td>
-              </tr>
-              <tr>
-                <td>王者</td>
-                <td>1,888</td>
-              </tr>
+              <!--              <tr>-->
+              <!--                <td>钻石</td>-->
+              <!--                <td>1,188</td>-->
+              <!--              </tr>-->
+              <!--              <tr>-->
+              <!--                <td>王者</td>-->
+              <!--                <td>1,888</td>-->
+              <!--              </tr>-->
             </tbody>
           </table>
 
