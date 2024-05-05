@@ -33,44 +33,44 @@
             </thead>
             <tbody>
               <tr>
-                <td>青铜Ⅱ</td>
+                <td>VIP1</td>
                 <td>8</td>
                 <td rowspan="12">3倍/不限场馆</td>
               </tr>
               <tr>
-                <td>青铜Ⅰ</td>
+                <td>VIP2</td>
                 <td>15</td>
               </tr>
               <tr>
-                <td>白银Ⅲ</td>
+                <td>VIP3</td>
                 <td>38</td>
               </tr>
               <tr>
-                <td>白银Ⅱ</td>
+                <td>VIP4</td>
                 <td>68</td>
               </tr>
               <tr>
-                <td>白银Ⅰ</td>
+                <td>VIP5</td>
                 <td>98</td>
               </tr>
               <tr>
-                <td>黄金Ⅲ</td>
+                <td>VIP6</td>
                 <td>158</td>
               </tr>
               <tr>
-                <td>黄金Ⅱ</td>
+                <td>VIP7</td>
                 <td>238</td>
               </tr>
               <tr>
-                <td>黄金Ⅰ</td>
+                <td>VIP8</td>
                 <td>388</td>
               </tr>
               <tr>
-                <td>铂金Ⅱ</td>
+                <td>VIP9</td>
                 <td>588</td>
               </tr>
               <tr>
-                <td>铂金Ⅰ</td>
+                <td>VIP10</td>
                 <td>888</td>
               </tr>
               <!--              <tr>-->
