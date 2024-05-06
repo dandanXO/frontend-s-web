@@ -156,7 +156,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "appTutorial" */ "../views/AppTutorial.vue")
       },
       {
-        path: "/mail",
+        path: "/mailnew",
         name: "mail",
         component: () => import(/* webpackChunkName: "appTutorial" */ "../views/Mail.vue")
       }
