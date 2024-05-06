@@ -691,6 +691,7 @@ import { App } from "@capacitor/app";
 import liff from "@line/liff";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
+import moment from "moment";
 
 export default defineComponent({
   name: "IndexPage",
@@ -749,7 +750,7 @@ export default defineComponent({
     const gameModalRef = ref(null);
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
-    }
+    };
     const openGame = (p) => {
       // debugger;
       console.log(p);
@@ -762,10 +763,9 @@ export default defineComponent({
         gameCode = p.id;
       }
 
-      if(platformCode === "PP") {
+      if (platformCode === "PP") {
         gameCode = 101;
       }
-
 
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
@@ -1212,13 +1212,13 @@ export default defineComponent({
         .catch((err) => {});
     };
 
-
     const getLength = (tab, ann) => {
       var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
       return categoryLength.length;
     };
     // const announcementList = ref([]);
     const announcementTypes = ref([]);
+    const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
     const loadAnnouncement = () => {
       api
         .get("/announcement")
@@ -1232,8 +1232,12 @@ export default defineComponent({
 
           if (code === 0) {
             console.log(announcements);
-            newsList.value = announcements;
-            store.announcementList= announcements;
+            const announcementsFormattedData = announcements.map((item) => ({
+              ...item,
+              createTime: formatDate(item.createTime)
+            }));
+            newsList.value = announcementsFormattedData;
+            store.announcementList = announcements;
           } else {
             $q.notify({
               color: "negative",
@@ -1508,7 +1512,6 @@ export default defineComponent({
       loadData();
       loadAnnouncement();
       getPlatList();
-
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -2132,7 +2135,7 @@ export default defineComponent({
       }
 
       &.active {
-        background: linear-gradient(180deg, #39C4FF 0%, #2555FF 100%);
+        background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
         box-shadow: inset 0 0 5px #ffffff;
 
         img {
