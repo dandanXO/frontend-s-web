@@ -212,7 +212,7 @@ export default defineComponent({
           })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu" || promo.redirectUrl === "xf-return-promo") {
+      if (promo.promoCode === "cny-hongbaoyu" || promo.promoCode === "cny-spinwheel" || promo.redirectUrl === "cny-hongbaoyu" || promo.redirectUrl === "xf-return-promo" || promo.redirectUrl === "xf-deposit-award") {
         isSpecialPromo.value = true
       } else {
         isSpecialPromo.value = false
@@ -580,6 +580,23 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
+      &.bg__xf-deposit-award {
+        // background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg-img.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: top center;
+
+        .banner-container {
+          display: none;
+        }
+
+        .welcome {
+          width: calc(100% - 30px);
+          margin: 0 auto;
+          padding-bottom: 60px;
+        }
+      }
+
       &.bg__xf-return-promo {
         // background-image: url("../assets/images/promotion/hotpromo/return-promo/bg-img.png");
         background-size: 100% 100%;
