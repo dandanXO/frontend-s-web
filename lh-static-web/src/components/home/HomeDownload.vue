@@ -20,7 +20,7 @@
             </div>
             <div class="download">
               <div class="dl-mobile-img">
-                <img src="../../assets/home/download/mobile-img.png" width="100%" />
+                <img src="../../assets/home/download/mobile-img2.png" width="100%" />
               </div>
               <div class="dl-wrapper">
                 <VueQRCodeComponent :size="120" :text="ui.downloadUrl" class="dl-frame" />
