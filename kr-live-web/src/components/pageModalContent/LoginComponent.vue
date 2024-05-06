@@ -102,8 +102,11 @@ export default defineComponent({
               message: "성공적으로 로그인하세요",
               icon: "check_circle_outline"
             });
-            router.push("/");
-            location.reload();
+
+            setTimeout(() => {
+                  router.push("/");
+                  location.reload();
+                }, 1000)
           })
           .catch((error) => {
             console.log(error);

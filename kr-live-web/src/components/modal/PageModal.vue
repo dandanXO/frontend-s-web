@@ -123,6 +123,9 @@ watch(
 
         open(route.query.page);
       });
+    } else {
+      router.push("/");
+      visible.value = false;
     }
   },
   { immediate: true }
