@@ -132,7 +132,7 @@ onMounted(() => {
     border-radius: 15px;
   }
   .news-listing {
-    font-family: 'Roboto';
+    // font-family: 'Roboto';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
