@@ -400,6 +400,7 @@ const open = (pageName) => {
   box-sizing: content-box;
   width: 860px;
   max-width: 860px;
+  max-height: 100%;
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
@@ -561,18 +562,18 @@ const open = (pageName) => {
 
 @media (max-width: 768px) {
   .page-dialog-main {
-    width: 90vw;
-    height: 95vh;
+    width: 100%;
+    height: 100%;
     max-height: unset;
     padding: unset;
     min-width: auto;
     max-width: auto;
   }
   .page-dialog-main-container {
-    top: 50%;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    position: relative;
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+    // left: 50%;
+    // position: relative;
   }
   .page-dialog-links {
     background-color: var(--main-bg-color);
