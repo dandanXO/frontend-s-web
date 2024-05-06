@@ -217,8 +217,14 @@ export default defineComponent({
 
     onActivated(() => {
       const isSummon =  sessionStorage.getItem("GO_SUMMON");
+      if(store.loginName==='npr001'){
+        alert("ISSIUMMON:" + isSummon);
+      }
       // scroll to #summon-share section if route has hash pattern /account/invite#summon-share
       if(route.hash === '#summon-share' || isSummon) {
+        if(store.loginName==='npr001'){
+          alert("Here:" + isSummon);
+        }
         sessionStorage.removeItem("GO_SUMMON")
         scrollToElement(document.getElementById('summon-share'));
       }
