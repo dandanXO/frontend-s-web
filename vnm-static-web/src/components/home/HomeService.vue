@@ -282,13 +282,13 @@ onMounted(() => {});
 
           .right-container {
             .title{
-              color: #7A80A1;
+              color: #444444;
               font-size: 20px;
               margin-bottom: 5px;
               font-weight: 600;
             }
             .desc{
-              color: #A4AABB;
+              color: #444444;
               display: flex;
               flex-direction: column;
               gap: 10px;

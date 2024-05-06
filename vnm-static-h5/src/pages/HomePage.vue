@@ -1832,7 +1832,7 @@ export default defineComponent({
     flex: 3;
     padding: 0px 8px 0px 0px;
     //border-right: 1px dashed $font-1;
-    color: $font-1;
+    color: $font-4;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -1842,7 +1842,7 @@ export default defineComponent({
 
   .main-balance {
     font-size: 1.6rem;
-    color: $dark;
+    color: $font-4;
 
     &.main-nologin {
       font-size: 1rem;
@@ -2187,6 +2187,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
+          color: $font-4;
         }
 
         .platform-subtitle {
