@@ -171,6 +171,14 @@ export const constantRoutes = [
           title: 'game-record',
         },
       },
+      {
+        path: 'summary',
+        component: () => import('../views/affiliate/summary/index.vue'),
+        name: 'Affiliate Summary',
+        meta: {
+          title: 'affiliate-summary',
+        },
+      },
     ],
   },
   {

@@ -2,13 +2,13 @@
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
       <div class="">
-        <q-item-section class="notify-table-row notify-table-header">
+        <q-item-section class="table-row-head">
           <q-item-label>번호</q-item-label>
           <q-item-label>제목</q-item-label>
           <q-item-label>날짜</q-item-label>
         </q-item-section>
-        <template v-for="(item) in articleData" :key="item.page">
-          <q-item-section class="notify-table-row table-row-title">
+        <template v-for="item in articleData" :key="item.page">
+          <q-item-section class="table-row table-row-title">
             <q-item-label>{{ item.number }}</q-item-label>
             <q-item-label>{{ item.title }}</q-item-label>
             <q-item-label>{{ item.date }}</q-item-label>
@@ -17,22 +17,33 @@
       </div>
       <form class="content-form">
         <p>
-          <input placeholder="제목을 입력해주세요."/>
+          <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
         </p>
         <p>
-          <textarea rows="3"/>
+          <textarea rows="4" v-model="serviceForm.content" />
         </p>
       </form>
     </q-card-section>
-    <q-card-actions  class="modal-body-buttons" align="center">
-      <q-btn class="form-button blue" label="입금하기"></q-btn>
+    <q-card-actions class="modal-body-buttons" align="center">
+      <q-btn class="form-button blue" label="입금하기" @click.prevent="sendMessage"></q-btn>
       <q-btn class="form-button yellow" label="전체확인"></q-btn>
     </q-card-actions>
   </div>
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref } from "vue";
+import { reactive, ref } from "vue";
+import { useQuasar } from "quasar";
+import { api } from "boot/axios";
+var qs = require("qs");
+
+const $q = useQuasar();
+
+const serviceForm = reactive({
+  title: "",
+  content: ""
+});
+
 const articleData = ref([
   {
     number: 2,
@@ -44,53 +55,81 @@ const articleData = ref([
     title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
     date: "2024/01/13"
   }
-])
+]);
+
+const sendMessage = () => {
+  api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
+    const resCode = res.data.code;
+    const resMessage = res.data.message
+    if (resCode === 0) {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "성공적으로 보냈습니다",
+        icon: "check_circle_outline"
+      });
+      serviceForm.title = "";
+      serviceForm.content = "";
+    } else {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: resMessage,
+        icon: "report_problem"
+      });
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>
-.modal-body-wrap {
-}
 .modal-body-content {
-  .notify-table-row {
-    display: flex;
-  }
-  .notify-table-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 10px;
+  .table-row-head {
+    padding-top: 4px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
     .q-item__label {
-      &:first-child {
-        width: 100px;
-        text-align: center;
-      }
+      margin: auto;
+      padding-bottom: 12px;
       &:nth-child(2) {
-        flex: 1;
         text-align: left;
-      }
-      &:last-child {
-        text-align: right;
-        width: 100px;
+        margin-left: unset;
+        margin-right: unset;
       }
     }
-
-
+  }
+  .table-row {
+    padding: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    .q-item__label {
+      margin: auto;
+      //padding-bottom: 12px;
+      &:nth-child(2) {
+        text-align: left;
+        margin-left: unset;
+        margin-right: unset;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
   }
   .table-row-title {
     background: #212121;
     margin-bottom: 5px;
+    padding: 10px 0;
   }
   .content-form {
     p {
       margin-top: 20px;
-
     }
-    input, textarea {
+    input,
+    textarea {
       width: 100%;
       font-size: 14px;
       border-radius: 3px;
-      border: 1px solid #5C5C5C;
+      border: 1px solid #5c5c5c;
       line-height: 40px;
       color: #fff;
       background: #212121;
@@ -118,7 +157,6 @@ const articleData = ref([
     color: #fff;
     font-size: 18px;
     padding-bottom: 5px;
-    margin: auto 10px;
     &.blue {
       background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
     }
@@ -128,4 +166,13 @@ const articleData = ref([
   }
 }
 
+@media (max-width: 768px) {
+  .modal-body-buttons {
+    .form-button {
+      width: 140px;
+      height: 40px;
+      max-width: 40vw;
+    }
+  }
+}
 </style>

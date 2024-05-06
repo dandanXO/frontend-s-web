@@ -1,4 +1,6 @@
 import { Platform } from "quasar";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
 export const MAIN = "MAIN";
 
@@ -19,12 +21,14 @@ export const isMobile = () => {
 };
 
 export const getDevice = () => {
-  if (isH5()) {
+  if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
+    return "IOS";
+  } else if (Platform.is.android && Platform.is.capacitor) {
+    return "ANDROID";
+  } else if(isMobile()){
     return "H5";
-  } else if (isMobile()) {
-    return "MOBILE";
-  } else {
-    return "WEB";
+  }else {
+    return "WEB"
   }
 };
 
@@ -95,4 +99,44 @@ export const openLiveChat = (e, router) => {
   } else {
     router.push("/liveChat");
   }
+};
+
+export const getVisitorId = async () => {
+  const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+
+  const fp = await getData({ ignoreCache: true });
+
+  // console.log("VisitorInfo");
+  // console.log(fp);
+  if (fp && fp.visitorId) {
+    localStorage.setItem("VISITOR_ID", fp.visitorId);
+    return fp.visitorId;
+  } else {
+    const fpPromise = FingerprintJS.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const { timezone, ...allComponents } = result.components;
+    // console.log(allComponents);
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    console.log("Use Normal Fingerprint");
+    console.log(sidParam);
+    localStorage.setItem("VISITOR_ID", sidParam);
+    return sidParam;
+  }
+};
+
+export const updateDate = (val) => {
+  const gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  const oldDate = new Date(gapDate);
+
+  // Adjust the time to GMT+5.5
+  oldDate.setHours(oldDate.getHours() + 5);
+  oldDate.setMinutes(oldDate.getMinutes() + 30);
+
+  const newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  return newDate.Y + newDate.M + newDate.D;
 };

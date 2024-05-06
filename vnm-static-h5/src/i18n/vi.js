@@ -1157,6 +1157,7 @@ export default {
     page_rescuefundrecords: "Lịch sử quỹ cứu trợ",
     page_register: "Đăng ký",
     page_lobby: "Sảnh chờ",
+    page_about: "About TFgaming",
 
     menu_deposit: "Nạp tiền",
     menu_withdraw: "Rút tiền",
@@ -1277,7 +1278,157 @@ export default {
     fishing: "Fishing",
     cockfight: "Cockfight",
     copy_success: "Liên kết đã được sao chép thành công!",
-    enter_transfer_amount: "Nhập số tiền chuyển"
+    enter_transfer_amount: "Nhập số tiền chuyển",
+    // about
+    about: {
+      affiliate: "Đại Lý",
+      aboutus: "Về TFGaming",
+      welcome:
+        "Chào mừng bạn đến với TF88 Gaming! Chúng tôi là một trong những nhà cung cấp cá cược trực tuyến hàng đầu tại Việt Nam, với sứ mệnh mang đến cho khách hàng giải trí tuyệt vời và cơ hội kiếm được nhiều phần thưởng.",
+      product: "SẢN PHẨM",
+      productDescription:
+        "TF88 cung cấp một loạt các sản phẩm cá cược trực tuyến bao gồm sòng bạc trực tuyến, sổ sách thể thao, máy đánh bạc, e-sports và xổ số... Với những sản phẩm đa dạng này, chúng tôi tin rằng khách hàng sẽ có nhiều cơ hội để tìm thấy trò chơi phù hợp với sở thích và nhu cầu giải trí của mình.",
+      liquidity: "DUNG LƯỢNG",
+      liquidityDescription:
+        "Sở hữu hệ thống thanh toán linh hoạt và đa dạng thông qua các ngân hàng địa phương, ví điện tử, thẻ di động, Usdt... TF88 cam kết xử lý các giao dịch của khách hàng càng nhanh càng tốt, trên cơ sở đảm bảo thông tin giao dịch tối đa.",
+      security: "BẢO MẬT",
+      securityDescription:
+        "TF88 sử dụng các công nghệ bảo mật tiên tiến để đảm bảo rằng thông tin của khách hàng được bảo vệ một cách tốt nhất. Chúng tôi thực hiện các biện pháp bảo mật cần thiết để bảo vệ thông tin cá nhân và quyền riêng tư của các thành viên. Vì vậy, hãy yên tâm rằng thông tin bạn cung cấp luôn an toàn trong hệ thống dữ liệu bảo mật của chúng tôi.",
+      promotion: "KHUYẾN MÃI",
+      promotionDescription:
+        "Chúng tôi hiểu rằng tỷ lệ cược không luôn đúng như bạn mong muốn, đó là lý do tại sao TF88 đã tạo ra nhiều chương trình khuyến mãi để đảm bảo bạn luôn nhận được ưu đãi tốt nhất trên mỗi cược. Chúng tôi luôn tìm cách tạo ra môi trường chơi game tốt nhất cho khách hàng của mình.",
+      license: "GIẤY PHÉP",
+      licenseDescription:
+        "TF88 được cấp phép bởi North Cagayan (NCGAC) dưới sự điều hành của chính phủ Philippin. Công ty có trụ sở tại Manila, Philippin.",
+      collectInformation: "Thu Thập Thông Tin",
+      policyMessage:
+        "Trong quá trình thăm quan, hệ thống và trình duyệt của bạn có thể truyền thông tin đến máy chủ của chúng tôi, thông tin này được dùng để thu thập và giúp TF88 luôn cải thiện chất lượng để bạn có trải nghiệm tốt hơn.",
+      personalInformation:
+        "Thông tin cá nhân của bạn khi đăng ký bao gồm: Họ và tên đầy đủ, email, số điện thoại, ngày sinh và các thông tin khác để TF88 hoàn thiện thông tin của bạn cho quản lý tài khoản.",
+      processingPurposes: "Thông tin của bạn sẽ được xử lý cho nhiều mục đích, bao gồm:",
+      manageProcessInfo: "Trên trang web của TF88 để quản lý và xử lý thông tin của bạn.",
+      offerGames: "Cung cấp trò chơi và chấp nhận cược cho bạn.",
+      determineLegalAge: "Xác định độ tuổi pháp lý của bạn khi tham gia trò chơi tại TF88.",
+      meetProductPreferences: "Dựa trên sở thích để đáp ứng sản phẩm phù hợp.",
+      webMaintenance: "Để bảo trì trang web và chẩn đoán vấn đề.",
+      improveServiceQuality: "Để cải thiện chất lượng dịch vụ.",
+      riskPrevention: "Để phòng tránh rủi ro và cải thiện trang web.",
+      complyLegalSanctions: "Tuân thủ các biện pháp trừng phạt pháp lý liên quan.",
+      statisticalAnalysis:
+        "Trong quá trình phục vụ bạn, chúng tôi tiến hành phân tích thống kê dựa trên các vùng khác nhau. Chúng tôi có thể cung cấp thông tin cho bên thứ ba để hiển thị quảng cáo.",
+      cooperateSuppliers:
+        "TF88 hợp tác với nhiều nhà cung cấp, vì vậy thông tin của bạn có thể được cung cấp cho nhà cung cấp để tra cứu kết quả nhằm đảm bảo sự công bằng của kết quả và bảo vệ quyền lợi của bạn.",
+      promotionInformation: "Thông tin khuyến mãi",
+      marketingPromotions:
+        "Để Marketing thực hiện các chương trình khuyến mãi và thông báo về giải thưởng của chương trình khuyến mãi chiến thắng, TF88 có thể công bố thông tin tài khoản nick của bạn hoặc các ký tự đầu tiên và số giải thưởng bạn nhận được.",
+      privacy: "Quyền riêng tư",
+      privacyAssurance:
+        "TF88 sẽ đảm bảo an ninh thông tin cá nhân của bạn. Bởi vì TF88 sử dụng hệ thống tường lửa mạnh nhất để ngăn chặn sự xâm nhập của hành vi bất hợp pháp.",
+      dataSecurity: "Bảo mật dữ liệu",
+      dataSecurityAssurance: "Đối với mọi dữ liệu và thông tin liên quan đến công ty, yêu cầu bảo mật khi xử lý.",
+      // Legal Basis
+      legalBasis: "Cơ Sở Pháp Lý",
+      generalTermsMessage:
+        "Dưới đây là các điều khoản chung để sử dụng TF88. Bằng cách đăng ký tài khoản, bạn đồng ý tuân thủ các điều khoản chung của chúng tôi. Tất cả các hoạt động trong tài khoản của khách truy cập trên trang web đều phải tuân theo và được giám sát bởi các điều khoản sau:",
+      ageRequirement: "Thành viên phải ít nhất 18 tuổi và có khả năng trí tuệ để chịu trách nhiệm về hành động của họ.",
+      singleAccount:
+        "Mỗi khách hàng chỉ được mở một tài khoản trên trang web TF88. Chúng tôi có thể đóng bất kỳ tài khoản bổ sung nào được mở và mọi khoản tiền còn lại trong tài khoản sẽ được xử lý theo quyết định duy nhất của TF88.",
+      personalInformation2:
+        "Khách hàng cung cấp thông tin cá nhân khi đăng ký tài khoản và cần đảm bảo rằng thông tin được cung cấp của họ được cập nhật đúng cách trên trang web. Nếu có sai sót trong thông tin đăng ký, TF88 không chịu trách nhiệm liên quan. Chúng tôi đảm bảo rằng thông tin của khách hàng được bảo mật và an toàn.",
+      checkAccountBalance:
+        "Khách hàng phải thường xuyên kiểm tra số dư tài khoản, khi có bất kỳ sai lệch nào, khách hàng phải chịu trách nhiệm báo cáo ngay cho Hỗ trợ Trực tuyến để kiểm tra và xác minh tài khoản.",
+      accountSecurity:
+        "Khách hàng phải đảm bảo an ninh thông tin tài khoản của họ, khi khách hàng tiết lộ thông tin cho người khác, mọi tranh chấp hoặc xung đột sau này TF88 sẽ không chịu trách nhiệm.",
+      depositInstructions:
+        "Khách hàng cần nạp tiền phải tuân thủ thông tin và hướng dẫn trên trang web, TF88 không chịu trách nhiệm đối với tất cả các giao dịch không được thực hiện theo hướng dẫn.",
+      accessFromRestrictedArea:
+        "TF88 không khuyến khích hoặc cấm cố gắng truy cập vào trang web từ khu vực không được chỉ định cho dịch vụ của chúng tôi.",
+      entertainmentPurpose:
+        "TF88 cung cấp sản phẩm cho mục đích giải trí, khách hàng đồng ý tham gia TF88 sẽ có một số rủi ro nhất định. Khi sử dụng dịch vụ tại TF88, chúng tôi từ chối trách nhiệm của trang web đối với bất kỳ tổn thất nào của khách hàng.",
+      withdrawalRequest:
+        "TF88 có quyền từ chối yêu cầu rút tiền nếu thông tin đăng ký không chính xác, TF88 có quyền yêu cầu tài liệu liên quan để xác nhận thông tin đăng ký.",
+      honestyPolicy:
+        "Khách hàng phải đảm bảo không gian dối, biểu hiện sai sự thật hoặc tiết lộ thông tin không chính xác để làm ảnh hưởng đến TF88.",
+      suspensionPolicyMessage:
+        "Nếu TF88 nghi ngờ rằng một khách hàng không tuân thủ các quy định trên, chúng tôi có quyền đình chỉ tài khoản để xử lý theo quy định.",
+
+      // Betting Rules
+      bettingRules: "Quy Tắc Đặt Cược",
+      familyRestriction:
+        "Mọi người cùng gia đình, cùng địa chỉ nhà, cùng số điện thoại, số tài khoản ngân hàng hoặc địa chỉ IP trên internet sẽ không được tham gia vào các chương trình khuyến mãi của TF88.",
+      entertainmentPurpose2:
+        "Tất cả các chương trình khuyến mãi tại TF88 chỉ dành cho mục đích giải trí, TF88 có quyền hạn chế quyền tham gia của khách hàng vào bất kỳ chương trình khuyến mãi nào.",
+      modifyPromotion:
+        "TF88 có quyền thay đổi, sửa đổi hoặc chấm dứt Chương trình khuyến mãi, hoặc một phần của nó, vào bất kỳ thời điểm nào và mà không cần thông báo trước.",
+      singleDeposit: "Mỗi lần nạp tiền chỉ có thể tham gia một Chương trình khuyến mãi.",
+      refundBasedOnBetTurnover:
+        "Hoàn tiền sẽ dựa trên tổng số tiền cược hợp lệ (tổng số lượt cược) của thành viên trong mỗi sản phẩm theo từng thị trường, từng trận đấu và từng cấp độ thành viên như sau:",
+      refundOptions: {
+        loseAll: "Thua hết - Hoàn lại số cược",
+        loseLessThanStake: "Thua ít hơn số cược - Hoàn lại Số Tiền Thắng/Thua",
+        winGreaterThanOrEqualTo75: "Thắng >= 75% - Hoàn lại số cược",
+        winLessThan75: "Thắng < 75% - Hoàn tiền trên số tiền thắng"
+      },
+      requiredRounds:
+        "Số lượt cược yêu cầu phải đạt được trong vòng 30 ngày để tránh việc mất đi tiền thưởng và số tiền thắng.",
+      abuseDiscretion:
+        "Quyết định về những gì cấu thành việc lạm dụng tiền thưởng sẽ nằm trong thẩm quyền của TF88, bằng chứng rõ ràng về việc lạm dụng tiền thưởng sẽ bao gồm, nhưng không giới hạn ở các ví dụ sau:",
+      abuseExamples: {
+        excludedGames: "Cược tiền thưởng trên các trò chơi được loại trừ",
+        multipleAccounts: "Sử dụng nhiều tài khoản",
+        crossAccountBets: "Cược qua các tài khoản khác nhau",
+        oddsDifference: "Lạm dụng sự khác biệt về tỷ lệ cược giữa các trang web cá cược",
+        doubleBetAmount: "Gấp đôi số tiền cược cho mỗi lượt cược liên tiếp",
+        betOnBothSides: "Cược hai bên",
+        doubleBet: "Cược kép",
+        affiliateAbuse: "Lạm dụng đại lý liên kết CPA hoặc chia sẻ doanh thu"
+      },
+      excludedBets:
+        "Tất cả các loại cược DRAW, cược HỦY, cược Tiến Jackpot, cược Tiến Slot, trò chơi thẻ và bàn, thể thao ảo, tỷ lệ dưới 1.75 Dec hoặc 0.75 Cn sẽ không được tính vào doanh số cược của chương trình khuyến mãi.",
+      transactionRecordsCheck:
+        "TF88 giữ quyền kiểm tra hồ sơ giao dịch và thời gian đăng nhập bất kỳ lúc nào và vì bất kỳ lý do nào. Nếu, sau cuộc điều tra của chúng tôi, chúng tôi phát hiện ra rằng một người chơi đã hưởng lợi từ chương trình khuyến mãi bằng cách đặt cược theo cách được mô tả ở trên, hoặc chúng tôi xem xét rằng đã có các hành vi tham gia không công bằng, TF88 giữ quyền rút số tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm.",
+      falsifiedContentDisqualification:
+        "Bất kỳ người nào làm giả nội dung khuyến mãi có thể bị loại, điều này có nghĩa là số tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm sẽ bị tịch thu.",
+      amendTermsAndConditions:
+        "TF88 giữ quyền chấm dứt hoặc sửa đổi Điều khoản và Điều kiện của chương trình khuyến mãi vào bất kỳ thời điểm nào vì bất kỳ lý do nào mà không cần thông báo trước.",
+      withdrawalVerification:
+        "Các giao dịch rút tiền có thể được kiểm tra và/hoặc xác minh danh tính trước khi được xử lý. Thành viên có thể được yêu cầu cung cấp bằng chứng về danh tính, địa chỉ, tuổi và/hoặc biên nhận gửi tiền, bằng chứng về trò chơi đã chơi hoặc số điện thoại. Nếu không cung cấp thông tin cần thiết này cho chúng tôi trong vòng 72 giờ, có thể dẫn đến việc mất tiền thưởng và bất kỳ khoản tiền thắng nào đi kèm.",
+
+      // Blame
+      blame: "Chơi Có Trách Nhiệm",
+      intro:
+        "TF88 luôn cố gắng cung cấp một nền tảng an toàn cho người chơi để thư giãn và được giải trí. Chúng tôi hiểu rõ rằng cá cược có thể mang lại các rủi ro liên quan đến nghiện nằm. TF88 chịu trách nhiệm duy nhất về sự hiểu biết của người chơi về tất cả các nguy cơ có thể gặp phải. Đảm bảo bạn đang chơi một cách có trách nhiệm thông qua các câu hỏi tự đánh giá dưới đây:",
+      questions: {
+        question1: "Bạn có bao giờ bỏ bê công việc để chơi cá cược?",
+        question2: "Bạn có đặt cược để giết thời gian hoặc để tránh sự chán chường không?",
+        question3:
+          "Khi bạn thua một cược và hết tiền, bạn có cảm thấy lạc lõng, tuyệt vọng và cần phải đặt cược lại ngay lập tức không?",
+        question4: "Bạn có từng phụ thuộc vào cá cược để kiếm tiền trả nợ hoặc giải quyết khó khăn tài chính không?",
+        question5:
+          "Sau khi mất hết tiền của bạn, bạn có bao giờ cảm thấy bị ép buộc phải lấy lại số tiền thua ngay lập tức không?",
+        question6: "Sau khi thắng, bạn có khao khát chiến thắng lớn hơn không?",
+        question7: "Bạn có bao giờ đặt cược tất cả tiền của mình cho đến khi hết tiền không?",
+        question8: "Bạn có từng nói dối hoặc xem xét việc phạm tội để có tiền để đặt cược không?",
+        question9: "Bạn có bao giờ mất hứng thú vào gia đình, bạn bè hoặc thói quen không?",
+        question10: "Cá cược có khiến bạn tuyệt vọng hoặc thậm chí tự tử không?"
+      },
+      signsOfGambling: "Nếu câu trả lời là 'CÓ' thì có thể bạn đang thể hiện dấu hiệu của việc cá cược.",
+      adviceTitle: "LỜI KHUYÊN",
+      advice1: "Cá cược chỉ nên được xem là giải trí.",
+      advice2: "Đề xuất quản lý thời gian chơi, không quá 2 giờ mỗi ngày.",
+      advice3: "Quản lý vốn chơi, xác định số tiền tối đa của một số chiến thắng và thua trước khi chơi.",
+      advice4:
+        "Khi bạn trải qua các cảm xúc tiêu cực, say rượu, không an toàn,... Tìm một sở thích khác thay vì cá cược.",
+      advice5:
+        "Đừng ngần ngại tìm sự giúp đỡ từ những người xung quanh khi bạn cảm thấy mọi thứ đang trở nên tồi tệ hơn.",
+      tf88SupportTitle: "Sự hỗ trợ từ cá cược có trách nhiệm của TF88",
+      tf88SupportContent:
+        "Là một trong những nền tảng game hàng đầu tại Việt Nam và châu Á. Chúng tôi đảm bảo các nguyên tắc tiêu cực của phòng ngừa và kiểm soát khi đặt cược trên tất cả các bên bao gồm cả nhà cung cấp và các cơ quan quản lý nền tảng. Ngoài ra, đội ngũ của TF88 luôn được trang bị đủ kiến thức và kỹ năng về cá cược có trách nhiệm sẵn sàng hỗ trợ bạn bất cứ lúc nào.",
+      ageRestriction:
+        "TF88 CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",
+      partner: "Đối tác",
+      paymentMethod: "Phương thức"
+    }
   },
   error: {
     101: "Không tìm thấy nền tảng",
@@ -1311,7 +1462,7 @@ export default {
     1000: "Lỗi trong tên đăng nhập hoặc mật khẩu",
     1001: "Tài khoản đã bị đóng",
     1002: "Tài khoản cho đối tác",
-    1004: "Tên người dùng chỉ có thể chứa chữ số và chữ cái",
+    1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
     1300: "Số tiền phải là số và lớn hơn 0",
     1301: "Không hỗ trợ thẻ này",
     1302: "Không hỗ trợ loại tiền này",

@@ -27,9 +27,9 @@
                         </div>
                     </div>
                     <div class="choices" :class="{ isConfirmed: team.isSelectionConfirmed }">
-                        <div @click="team.isSelectionConfirmed ? null : toggleSelection(team, choice.name)"
-                            :class="{ 'selected': team.selection.some(item => item.name === choice.name) }"
-                            v-for="choice in choices" class="choice">
+                        <div @click="team.isSelectionConfirmed ? null : toggleSelection(team, choice)"
+                            :class="{ 'selected': team.selection.some(item => item.id === choice.id) }"
+                            v-for="choice in team.choices" class="choice">
                             <div class="close-icon"></div>
                             <img src="../images/flag.png">
                             {{ choice.name }}
@@ -60,56 +60,56 @@
 
 <script setup>
 import { ref, defineProps } from 'vue';
+import { getTeams, submitTeam } from "@/api/promotion/eurocup";
+import { onMounted } from 'vue';
 
 const props = defineProps({
     tabtitle: String
 });
 const teams = ref([
-    {
-        name: 'A',
-        selection: [{ name: '德国' }, { name: '苏格兰' }],
-        isSelectionConfirmed: true,
-    },
+    // {
+    //     name: 'A',
+    //     selection: [{ name: '德国' }, { name: '苏格兰' }],
+    //     isSelectionConfirmed: true,
+    //     choices: [{
+    //     name: '德国',
+    // },
+    // {
+    //     name: '苏格兰'
+    // },
+    // {
+    //     name: '美国'
+    // },
+    // {
+    //     name: '法国'
+    // },]
+    // },
     
-    {
-        name: 'B',
-        selection: [],
-        isSelectionConfirmed: false,
-    },
+    // {
+    //     name: 'B',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // },
     
-    {
-        name: 'C',
-        selection: [],
-        isSelectionConfirmed: false,
-    },
+    // {
+    //     name: 'C',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // },
     
-    {
-        name: 'D',
-        selection: [],
-        isSelectionConfirmed: false,
-    }
-])
-const choices = ref([
-    {
-        name: '德国',
-    },
-    {
-        name: '苏格兰'
-    },
-    {
-        name: '美国'
-    },
-    {
-        name: '法国'
-    },
-])
+    // {
+    //     name: 'D',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // }
+]);
 
-function toggleSelection(team, choiceName) {
+function toggleSelection(team, choice) {
     if (team && Array.isArray(team.selection)) {
-        const index = team.selection.findIndex(item => item.name === choiceName);
+        const index = team.selection.findIndex(item => item.id === choice.id);
         if (index === -1) {
             // Choice is not selected, so add it to the selection
-            team.selection.push({ name: choiceName });
+            team.selection = ([{ id: choice.id, name: choice.name }]);
         }
         else {
           // Choice is already selected, so remove it from the selection
@@ -122,17 +122,79 @@ function toggleSelection(team, choiceName) {
 }
 function confirmSelection(team, choiceName) {
     if (team && Array.isArray(team.selection)) {
-        team.isSelectionConfirmed = true;
+        // team.isSelectionConfirmed = true;
+        const teamIds = [];
+        team.selection.forEach(element => {
+            teamIds.push(element.id)
+        });
+        submitTeam(teamIds).then((res) => {
+            if (res.code === 0) {
+                team.isSelectionConfirmed = true;
+                init();
+            }
+        })
     }
 
 }
+const init = () => {
+    getTeams().then((res) => {
+    if (res.code === 0) {
+        teams.value = [];
+        const groupedTeams = {}; // Object to store teams grouped by teamGroup
+        res.data.teams.forEach(teamData => {
+            const teamGroup = teamData.teamGroup;
+            if (!groupedTeams[teamGroup]) {
+                // Initialize an array for the teamGroup if not exists
+                groupedTeams[teamGroup] = [];
+            }
+            // Push the teamData to the corresponding teamGroup array
+            groupedTeams[teamGroup].push(teamData);
+        });
+
+        // Iterate over grouped teams and create team objects
+        for (const teamGroup in groupedTeams) {
+            if (groupedTeams.hasOwnProperty(teamGroup)) {
+                const teamsInGroup = groupedTeams[teamGroup];
+                const team = {
+                    name: teamGroup,
+                    selection: [],
+                    isSelectionConfirmed: false,
+                    choices: []
+                };
+                // Push choices for the teamGroup into the team's choices array
+                teamsInGroup.forEach(teamData => {
+                    team.choices.push({ name: teamData.teamName, id: teamData.id });
+                });
+                // Push the team object to the teams array
+                teams.value.push(team);
+            }
+        }
+        // Update selection for selected teams
+        res.data.selected.forEach((selectedTeam) => {
+            const team = teams.value.find(team => team.name === selectedTeam.teamGroup);
+            if (team) {
+                const selectedTeamName = selectedTeam.teamName;
+                const choice = team.choices.find(choice => choice.name === selectedTeamName);
+                if (choice) {
+                    team.selection.push(choice);
+                    team.isSelectionConfirmed = true;
+                }
+            }
+        });
+    }
+});
+}
+onMounted(() => {
+    init()
+})
 </script>
 <style lang="scss">
 .teams {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 1360px;
 
     .team {
         .team-box {
@@ -144,25 +206,25 @@ function confirmSelection(team, choiceName) {
                 position: absolute;
                 padding: 6px;
                 background: linear-gradient(180deg, #F99500 0%, #B34B00 100%);
-                width: 23%;
+                width: 19%;
                 border-radius: 5px;
                 text-align: center;
                 color: #ffffff;
                 font-family: Microsoft YaHei UI;
                 font-size: 24px;
                 font-weight: 700;
-                line-height: 42.56px;
+                line-height:35.56px;
             }
 
             .chosen-items {
-                margin-left: 25%;
+                margin-left: 23%;
                 height: 60px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 color: #ffffff;
                 font-family: Microsoft YaHei UI;
-                font-size: 12px;
+                font-size: 24px;
                 font-weight: 400;
                 line-height: 31.92px;
                 letter-spacing: 0.12em;
@@ -217,8 +279,7 @@ function confirmSelection(team, choiceName) {
                 gap: 10px;
                 align-items: center;
                 justify-content: space-evenly;
-                height: 260px;
-
+                padding: 50px 0;
                 .choice {
                     display: flex;
                     flex-direction: column;

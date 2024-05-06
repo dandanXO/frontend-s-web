@@ -205,3 +205,7 @@ export const requestMemberMoneyChangeExport = query => {
     ContentType.form
   )
 }
+
+export const unbindBankCard = (cardId) => {
+  return https().request(`/member/bankCard/${cardId}?_method=PUT`, Method.POST, ContentType.form);
+};

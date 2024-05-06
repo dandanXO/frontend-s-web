@@ -97,11 +97,11 @@
         </el-form-item>
         <el-form-item :label="t('fields.popUpTime')" prop="popUpTimes">
           <el-tag
-            v-for="item in JSON.parse(form.popUpTimes)"
+            v-for="(item,index) in JSON.parse(form.popUpTimes)"
             :key="item"
             class="ml-1"
             closable
-            @close="removePopUpTime(item)"
+            @close="removePopUpTime(index)"
             :type="isExpiredTime(item) ? 'danger' : ''"
             style="margin-right: 5px; margin-bottom: 5px"
           >
@@ -315,6 +315,21 @@ const ways = reactive({
 const popUpTime = ref(null)
 const popUpTimeEnd = ref(null);
 
+const hasDateError = computed(() => {
+  if (form.popUpTimes === null) {
+    return -1;
+  } else {
+    const listsing = JSON.parse(form.popUpTimes);
+    var isExpired = 0;
+    listsing.forEach((list) => {
+      if (isExpiredTime(list)) {
+        isExpired = 1;
+      }
+    })
+    return isExpired;
+  }
+})
+
 let chooseSetting = []
 
 function resetQuery() {
@@ -363,9 +378,9 @@ function changePage(page) {
   loadNotifcations()
 }
 
-function removePopUpTime(item) {
+function removePopUpTime(index) {
   const popUpTimeList = form.popUpTimes === null ? [] : JSON.parse(form.popUpTimes);
-  popUpTimeList.splice(popUpTimeList.indexOf(item), 1);
+  popUpTimeList.splice(index, 1);
   form.popUpTimes = JSON.stringify(popUpTimeList);
 }
 
@@ -495,7 +510,14 @@ async function removeSetting(setting) {
 }
 
 function submit() {
-  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0][0] : null
+  if (hasDateError.value === -1) {
+    ElMessage({ message: t('message.selectPopupTime'), type: 'error' })
+    return;
+  } else if (hasDateError.value === 1) {
+    ElMessage({ message: t('message.wrongPopupTime'), type: 'error' })
+    return;
+  }
+  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0][1] : null
   const formCopy = { ...form }
   formCopy.eligibleWays = JSON.stringify(formCopy.eligibleWays)
   if (uiControl.dialogType === 'CREATE') {

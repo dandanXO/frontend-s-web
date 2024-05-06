@@ -479,12 +479,10 @@ export default defineComponent({
                 });
 
                 // FB tracking :: signup-success
-                if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
+                if (store.isAffiliateA) {
                   fbq("track", "signup-success");
-                }else if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+                }
+                if(window.location.href.indexOf("tf88uytin.com") > -1){
                   otag("event", "registration");
                 }
 

@@ -156,3 +156,7 @@ export function getCheckInRecord(promoCode) {
 export function claimCheckInTreasure(promoCode, days) {
   return eventapi.post(`/event-check-in/open`, qs.stringify({ promoCode, days }));
 }
+
+export function getLOLMsiMatchRecord() {
+  return eventapi.get("/game-match/upcoming/MSI");
+}

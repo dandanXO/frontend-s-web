@@ -463,3 +463,16 @@ deploy-lh-cesu:
   variables:
     PROJECT: lh-cesu
 
+#===============================================================================================
+
+build-kr-live-web:
+  extends: .build-projects
+  variables:
+    PROJECT: kr-live-web
+
+build-image-kr-live-web:
+  extends: .docker-build
+  variables:
+    PROJECT: kr-live-web
+  needs:
+    - build-kr-live-web

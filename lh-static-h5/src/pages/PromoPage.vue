@@ -4,10 +4,11 @@
       class="promo"
       :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
       :style="
+      isPromoDetail ?
         'background-image: url(' +
         imgURL +
         (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-        ')'
+        ')' : ''
       "
     >
       <q-tabs
@@ -138,6 +139,7 @@
             </div>
           </div>
           <div v-else class="selected-promo" :class="{ euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
+            <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
               <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo && selectedPromo.promoCode !== 'lh1-ftd-promo'">
                 <img
@@ -1033,6 +1035,36 @@ export default defineComponent({
     .q-tab-panels {
       background: $background-dark;
     }
+  }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

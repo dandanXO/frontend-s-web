@@ -1,20 +1,21 @@
 <template>
     <div class="team-buttons">
     <button
-        v-for="(group, index) in groups"
+        v-for="(group, index) in groupedMatches"
         :key="index"
         @click="activateTeamsTab(index)"
         :class="{ active: groupActiveTab === index }"
     >
-        {{ group.name }} 组
+        {{ group.teamGroup }} 组
     </button>
 </div>
-    <div class="team-content">
-        <template v-for="gp in groups[groupActiveTab].items">
+    <transition name="fade" mode="out">
+    <div class="team-content" v-if="groupedMatches[groupActiveTab]">
+        <template v-for="gp in groupedMatches[groupActiveTab].items">
             <div class="gpbar">
                 <div class="group-head">
                     <div class="team-name">
-                        {{ groups[groupActiveTab].name }} 组
+                        {{ groupedMatches[groupActiveTab].teamGroup }} 组
                     </div>
                     <div class="smalltxt">
                         Group<br>
@@ -23,183 +24,63 @@
                 </div>
                 <div class="group-section">
                     <div class="team teamA">
-                        {{ gp.teamA.name }}
-                        <img src="../images/flag.png">
+                        {{ gp.teamOneName }}
+                        <img :src="imgUrl + gp.teamOneIcon">
                     </div>
                     <div class="versus">
                         <span class="vs">VS</span>
-                        <span class="date">{{ gp.date }}</span>
+                        <span class="date">{{ gp.matchTime }}</span>
                     </div>
                     <div class="team teamB">
-                        {{ gp.teamB.name }}
-                        <img src="../images/flag.png">
+                        {{ gp.teamTwoName }}
+                        <img :src="imgUrl + gp.teamTwoIcon">
                     </div>
                 </div>
             </div>
         </template>
     </div>
+</transition>
 </template>
 <script setup>
 
+import { onMounted, computed } from 'vue';
 import { ref } from 'vue';
-const groups = ref([
-  { name: 'A', items: [
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
+import { euroMatchAll } from '@/api/promotion/eurocup';
+const matches = ref([]);
+const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+const groupedMatches = computed(() => {
+  const groups = {};
+  matches.value.forEach(match => {
+    if (!groups[match.teamGroup]) {
+      groups[match.teamGroup] = [];
     }
-  ] },
-  { name: 'B', items: [
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    }
-  ] },
-  { name: 'C', items: [
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    },
-    {
-        date: '2024-6-15  上午3:00',
-        location: 'XXXXXXX体育场',
-        teamA: {
-            name: '德国',
-            flag: 'germany',
-        },
-        teamB: {
-            name: '德国',
-            flag: 'germany',
-        }
-    }
-  ] },
-]);
+    groups[match.teamGroup].push(match);
+  });
+  return Object.keys(groups).map(teamGroup => ({
+    teamGroup,
+    items: groups[teamGroup]
+  }));
+});
 const groupActiveTab = ref(0);
 function activateTeamsTab(index) {
     groupActiveTab.value = index;
 }
+onMounted(() => {
+    euroMatchAll().then((res) => {
+        if (res.code === 0) {
+            matches.value = res.data
+        }
+    })
+})
 </script>
 <style lang="scss">
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .team-buttons {
         display: flex;
         gap: 50px;
@@ -285,6 +166,9 @@ function activateTeamsTab(index) {
                     align-items: center;
                     &.teamB {
                         flex-direction: row-reverse;
+                    }
+                    img {
+                        width: 50px;
                     }
 
                 }

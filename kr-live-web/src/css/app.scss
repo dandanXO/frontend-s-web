@@ -56,18 +56,20 @@ body {
   height: 100%;
 }
 
-.main{
-  background-image: url("../assets/home/background.svg");
-  background-position: center;
+.main {
+  background-image: url("../assets/home/background-phone2.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  @media (min-width: 1200px) {
+    background-image: url("../assets/home/background.svg");
+    background-size: cover;
+  }
 }
 
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
   padding-bottom: 20px;
-
 }
 
 .main-section {
@@ -361,7 +363,18 @@ svg {
 }
 
 .bg-brand {
-  background-image: $linear-bg-1;
+  // background-image: $linear-bg-1;
+  height: 70px;
+  width: 200px;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  padding-bottom: 5px;
+  margin: auto 10px;
+  background: url("../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
 }
 
 .menu-title {
@@ -555,7 +568,18 @@ svg {
 }
 
 .third-btn {
-  background: $linear-bg-4;
+  // background: $linear-bg-4;
+  height: 70px;
+  width: 200px;
+  background-size: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 12px;
+  padding-bottom: 5px;
+  margin: auto 10px;
+  background: url("../assets/images/pages-modal/btn1-gray.svg") no-repeat center center;
 }
 
 .close-btn {
@@ -576,7 +600,8 @@ svg {
 
 .q-field--filled.q-field--dark .q-field__control,
 .q-field--filled.q-field--dark .q-field__control:before {
-  background: #5d0d0d;
+  // background: #5d0d0d;
+  background: #212121;
 }
 
 .verification-input:hover :before {

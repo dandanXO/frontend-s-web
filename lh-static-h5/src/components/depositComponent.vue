@@ -1,4 +1,6 @@
 <template>
+
+  <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
     <div class="q-mb-lg">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
@@ -321,6 +323,8 @@ const initPay = () => {
     message: "加载数据中... 请稍等..."
   });
 
+  isFetchingApi.value = window.location.pathname === "/deposit";
+
   payMethods.value = [];
   cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
@@ -351,7 +355,10 @@ const initPay = () => {
       }
     }
     localStorage.removeItem("isBacked");
-  });
+    isFetchingApi.value = false;
+  }).catch((err) => {
+    isFetchingApi.value = false;
+  })
 };
 
 async function loadPrivilege(val) {
@@ -679,6 +686,8 @@ async function pDepo(deposit) {
 const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
+const isFetchingApi = ref(false);
+
 const checkExtension = () => {
   // console.log(currentPath.value);
   if (currentPath.value === "/deposit") {
@@ -785,6 +794,36 @@ onMounted(() => {
   .deposit-field.q-field {
     box-shadow: none;
     background: $background-dark-light;
+  }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

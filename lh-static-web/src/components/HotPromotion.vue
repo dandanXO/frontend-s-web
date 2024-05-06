@@ -58,6 +58,7 @@
     <BonusSpinWheel v-if="list.redirectUrl === 'lh1-spin-wheel' && !isCommonPromo && store.token" />
     <Summoner v-if="list.redirectUrl === 'lh1-summon-event' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <Europe2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -108,6 +109,7 @@ import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel
 import Summoner from "../components/hotpromo/summoner/Summoner.vue";
 import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
+import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import Europe2024 from "../components/hotpromo/europe-2024/Europe2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
@@ -151,6 +153,7 @@ export default defineComponent({
     Summoner,
     AppHongBao,
     FtdPromo,
+    LOLMsi2024Promo,
     Europe2024
     // DailyBonus
   },
@@ -426,8 +429,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-summon-event" ||
       this.list.redirectUrl === "lh1-app-hongbao" ||
       this.list.redirectUrl === "lh1-ftd-promo" ||
+      this.list.redirectUrl === "lh-msi-match" ||
       this.list.redirectUrl === "lh1-eurocup-2024"
-      
+
     ) {
       this.isCommonPromo = false;
     } else {

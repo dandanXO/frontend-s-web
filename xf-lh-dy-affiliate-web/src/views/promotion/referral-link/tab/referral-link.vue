@@ -36,13 +36,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')" v-if="siteId === '8'">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
                   {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.webLongLink)">
@@ -63,13 +63,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')" v-if="siteId === '8'">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
                   {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('WEB', 'NORMAL')">
@@ -114,13 +114,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')" v-if="siteId === '8'">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
                   {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.h5LongLink)">
@@ -141,13 +141,13 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="handleQrSelection('H5', 'WX')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleQrSelection('H5', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')" v-if="siteId !== '8'">
+                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')" v-if="siteId === '8'">
+                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
                   {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('H5', 'NORMAL')">
@@ -444,6 +444,7 @@ function handleQrSelection(linkType, urlType) {
 const siteId = computed(() => {
   return store.state.user.siteId
 })
+console.log(siteId)
 
 onMounted(() => {
   loadAffiliateInfo()
