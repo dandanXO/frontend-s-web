@@ -861,7 +861,7 @@ export default {
     1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
-    1004: "Tên tài khoản không được chứa ký tự đặc biệt",
+    1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
     1300: "Số tiền phải là số lớn hơn 0",
     1301: "Thẻ này không được hỗ trợ",
     1302: "Loại tiền này không được hỗ trợ",
