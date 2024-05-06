@@ -11,71 +11,75 @@
           </div>
       </div> -->
 
-      <div class="page-dialog-main" >
+      <div class="page-dialog-main">
         <!-- <LangToggle v-if="showLangToggle"/> -->
         <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
-            <p class="header-info-description">{{headerInfo.description}}
-            </p>
+            <p class="header-info-description">{{ headerInfo.description }}</p>
             <p class="header-title">
-              <span>{{headerInfo.title}}</span><br/>
-              <span>{{headerInfo.subTitle}}</span>
+              <span>{{ headerInfo.title }}</span>
+              <br />
+              <span>{{ headerInfo.subTitle }}</span>
             </p>
             <p>
               <q-btn flat @click="closeDialog()" round dense icon="close" />
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
-            <p class="header-info-description">{{headerInfo.description}}</p>
+            <p class="header-info-description">{{ headerInfo.description }}</p>
             <div class="left-group">
-              <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
-                   :class="tabIndex === item.key ? 'active' : ''">
-                <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
+              <div
+                v-for="item in leftLinks"
+                :key="item.key"
+                class="page-dialog-links-btn"
+                :class="tabIndex === item.key ? 'active' : ''"
+              >
+                <div @click="item.clickHandler()" class="register-text">{{ item.info }}</div>
               </div>
             </div>
           </div>
           <div class="page-dialog-tabs">
-              <template v-if="!isMinimalMode">
-                <q-tabs
-                  v-model="page"
-                  align="justify"
-                >
-                  <template v-for="(item) in formattedPagesInfo" :key="item.page">
-                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info"
-                          class="page-dialog-tab" v-if="item.tabIndex === tabIndex">
-                      <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
-                    </q-tab>
-                  </template>
-                </q-tabs>
-
-                <q-separator />
-              </template>
-
-              <q-tab-panels v-model="page" animated class="">
-
-                <template v-for="(item) in formattedPagesInfo" :key="item.page">
-                  <q-tab-panel :name="item.page">
-                    <component :is="item.component" @closeModal="closeDialog"></component>
-                  </q-tab-panel>
+            <template v-if="!isMinimalMode">
+              <q-tabs v-model="page" align="justify">
+                <template v-for="item in formattedPagesInfo" :key="item.page">
+                  <q-tab
+                    @click="tabClick(item.page)"
+                    :name="item.page"
+                    :label="item.info"
+                    class="page-dialog-tab"
+                    v-if="item.tabIndex === tabIndex"
+                  >
+                    <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
+                  </q-tab>
                 </template>
-              </q-tab-panels>
+              </q-tabs>
+
+              <q-separator />
+            </template>
+
+            <q-tab-panels v-model="page" animated class="">
+              <template v-for="item in formattedPagesInfo" :key="item.page">
+                <q-tab-panel :name="item.page">
+                  <component :is="item.component" @closeModal="closeDialog"></component>
+                </q-tab-panel>
+              </template>
+            </q-tab-panels>
           </div>
         </div>
-
       </div>
     </q-card>
     </q-dialog>
-
 </template>
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { ref, defineExpose, reactive, computed, watch, nextTick } from "vue";
+import { ref, defineExpose, reactive, computed, watch, nextTick, onMounted } from "vue";
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import NotifyComponent from "components/pageModalContent/NotifyComponent";
 import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
+import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import MyMessages from "components/pageModalContent/MyMessages.vue";
 import MyTransactionRecords from "components/pageModalContent/MyTransactionRecords.vue";
@@ -95,57 +99,60 @@ const showLangToggle = ref(process.env.NODE_ENV === "development");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {
-  const minimalModeRoutes = ['register'];
+  const minimalModeRoutes = ["register", "login"];
   return minimalModeRoutes.includes(route.query.page);
 });
 
-watch(() => route.query, (_, __) => {
-  if (route.query && route.query.page) {
-    nextTick(() => {
-      page.value = route.query.page;
-      if (!visible.value) visible.value = true
+watch(
+  () => route.query,
+  (_, __) => {
+    console.log(route.query);
+    if (route.query && route.query.page) {
+      nextTick(() => {
+        page.value = route.query.page;
+        if (!visible.value) visible.value = false;
 
-      // determine the extact pageInfoItem based on route info
-      const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
-      // determine which left side tab to land on
-      if(pageInfoItem?.tabIndex) {
-        tabIndex.value = pageInfoItem.tabIndex;
-      } else {
-        // default to first tab if unable to proceed with the above
-        tabIndex.value = "log";
-      }
+        // determine the extact pageInfoItem based on route info
+        const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+        // determine which left side tab to land on
+        if (pageInfoItem?.tabIndex) {
+          tabIndex.value = pageInfoItem.tabIndex;
+        } else {
+          // default to first tab if unable to proceed with the above
+          tabIndex.value = "log";
+        }
 
-      open(route.query.page)
-    })
-  }
-}, { immediate: true});
+        open(route.query.page);
+      });
+    }
+  },
+  { immediate: true }
+);
 
-const tabClick  = (targetPage) => {
-  page.value = targetPage
+const tabClick = (targetPage) => {
+  page.value = targetPage;
   // TODO
   router.replace({
-    query: { page: targetPage},
+    query: { page: targetPage },
     silent: true
-  })
-
-}
+  });
+};
 
 const headerInfo = computed(() => {
-  return formattedPagesInfo.value.find(item => item.page === page.value)?.headerInfo || {};
+  return formattedPagesInfo.value.find((item) => item.page === page.value)?.headerInfo || {};
 });
-
 
 const isLinkActive = (key) => {
   switch (key) {
     case "log":
-      return ["finance/deposit", "finance/withdraw","notify","customer/service"].includes(route.query.page)
+      return ["finance/deposit", "finance/withdraw", "notify", "customer/service"].includes(route.query.page);
     case "my":
-      return ["test"].includes(route.query.page)
+      return ["test"].includes(route.query.page);
     case "finance":
-    // TODO
-      return false
+      // TODO
+      return false;
     default:
-      return false
+      return false;
   }
 };
 
@@ -173,7 +180,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "출금신청",
       subTitle: "WITHDRAW",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -186,7 +193,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "공지사항",
       subTitle: "NOTICE",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -199,7 +206,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "고객센터",
       subTitle: "Q&A",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -212,7 +219,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "나의정보",
       subTitle: "PERSONAL INFO",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -225,7 +232,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "쪽지",
       subTitle: "MESSAGES",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -238,7 +245,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "배팅/윈",
       subTitle: "TRANSACTIONS",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   // {
@@ -264,7 +271,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "비밀번호",
       subTitle: "PASSWORD CHANGE",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   // {
@@ -290,10 +297,10 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "출금",
       subTitle: "WITHDRAW RECORD",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
-  },
-])
+  }
+]);
 
 const minimalModePagesInfo = reactive([
   {
@@ -305,18 +312,34 @@ const minimalModePagesInfo = reactive([
     headerInfo: {
       title: "등록",
       subTitle: "REGISTER",
-      description: "",
+      description: ""
+    }
+  },
+  {
+    page: "login",
+    info: "로그인",
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
+    component: LoginComponent,
+    headerInfo: {
+      title: "로그인",
+      subTitle: "LOGIN",
+      description: ""
     }
   }
 ]);
 
+// const minimalLoginModePagesInfo = reactive([
+
+// ]);
+
 const formattedPagesInfo = computed(() => {
-  if(isMinimalMode.value) {
+  if (isMinimalMode.value) {
     return minimalModePagesInfo.filter(({ page }) => page === route.query.page);
   }
 
   return pagesInfo;
-})
+});
 
 const leftLinks = reactive([
   {
@@ -325,7 +348,7 @@ const leftLinks = reactive([
     clickHandler: () => {
       tabIndex.value = "log";
       goToFirstTab("log");
-    },
+    }
   },
   {
     key: "my",
@@ -333,7 +356,7 @@ const leftLinks = reactive([
     clickHandler: () => {
       tabIndex.value = "my";
       goToFirstTab("my");
-    },
+    }
   },
   {
     key: "finance",
@@ -341,14 +364,14 @@ const leftLinks = reactive([
     clickHandler: () => {
       tabIndex.value = "finance";
       goToFirstTab("finance");
-    },
-  },
-])
+    }
+  }
+]);
 
 const goToFirstTab = (tabIndex) => {
   const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
   router.push(`/?page=${item?.page}`);
-}
+};
 
 const closeDialog = () => {
   visible.value = false;
@@ -356,16 +379,19 @@ const closeDialog = () => {
   router.push({ path: route.pathname });
 };
 const open = (pageName) => {
-  console.log(pageName)
+  console.log(pageName);
   // if (store.hasToken()) {
   //   if (!visible.value) {
-      visible.value = true
-    // }
+  visible.value = true;
+  // }
   // } else {
   //   router.push({ path: "/login", query: { redirect: route.path } });
   // }
 };
 
+onMounted(() => {
+  console.log(router.currentRoute.value.fullPath);
+});
 </script>
 <style scoped lang="scss">
 // reset app.scss
@@ -403,19 +429,17 @@ const open = (pageName) => {
   max-height: 100%;
   :deep(.q-panel) {
   }
-  &, .q-tab-panel {
+  &,
+  .q-tab-panel {
     //min-height: 624px;
   }
   .q-tabs__content {
-
   }
   .q-tab {
     color: #767676;
   }
-
 }
 .page-dialog-links {
-
   .header-info-description {
     display: none;
   }
@@ -439,11 +463,11 @@ const open = (pageName) => {
   display: flex;
   align-items: center;
 }
-.top-actions{
+.top-actions {
   display: flex;
   //justify-content: flex-end;
 }
-.page-dialog-tab  {
+.page-dialog-tab {
   :deep(.q-tab__content) {
     flex-direction: row-reverse;
   }
@@ -456,7 +480,7 @@ const open = (pageName) => {
 }
 
 :deep(.q-tab--active) {
-    border-bottom: 1px solid #767676;
+  border-bottom: 1px solid #767676;
   border-image: linear-gradient(to right, #767676, #1bcef1, #767676) 0.8;
   .q-tab__label {
     color: #fff;
@@ -472,7 +496,7 @@ const open = (pageName) => {
   padding-right: 10px;
 }
 
-.page-dialog-links-btn{
+.page-dialog-links-btn {
   width: 120px;
   height: 36px;
   background-size: 100% 100%;
@@ -513,7 +537,7 @@ const open = (pageName) => {
   p {
     flex: 1;
     margin: auto;
-    color: #FFF;
+    color: #fff;
     &.header-info-description {
       color: #000;
       text-align: left;
@@ -523,17 +547,16 @@ const open = (pageName) => {
       text-align: center;
       span:first-child {
         font-weight: bold;
-        font-size: 1.2rem
+        font-size: 1.2rem;
       }
     }
     &:last-child {
       text-align: right;
     }
   }
-
 }
 .page-dialog-tabs {
-  background:  var(--main-bg-color);
+  background: var(--main-bg-color);
 
   :deep(.q-tab) {
     padding-bottom: 10px;
@@ -550,7 +573,6 @@ const open = (pageName) => {
     max-height: calc(90vh - 200px);
   }
 }
-
 
 .q-tab-panels {
   background-color: var(--main-bg-color);
@@ -594,16 +616,14 @@ const open = (pageName) => {
     height: 60px;
     background-image: url("../../assets/images/pages-modal/modal-header-mobile.svg");
     .header-info-description {
-     visibility: hidden;
+      visibility: hidden;
     }
     .q-btn {
       margin-right: 15px;
     }
   }
   .page-dialog-tabs {
-
     :deep(.q-tab) {
-
       .q-tab__content {
         display: flex;
         flex-direction: column-reverse;
