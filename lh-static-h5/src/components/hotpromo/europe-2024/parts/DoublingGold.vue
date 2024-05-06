@@ -54,7 +54,7 @@
         </tr>
         <tr>
             <td>≥1888</td>
-            <td>18</td>
+            <td>88</td>
         </tr>
     </table>
 </template>

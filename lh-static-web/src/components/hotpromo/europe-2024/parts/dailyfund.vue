@@ -76,15 +76,25 @@
       <th>彩金倍数</th>
     </tr>
     <tr>
-      <td>≥1888</td>
-      <td>18</td>
+      <td>≥3,000</td>
+      <td>8</td>
       <td>18</td>
       <td rowspan="4">3倍</td>
     </tr>
     <tr>
-      <td>≥1888</td>
-      <td>18</td>
-      <td>18</td>
+      <td>≥6,000</td>
+      <td>28</td>
+      <td>58</td>
+    </tr>
+    <tr>
+      <td>≥10,000</td>
+      <td>68</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <td>≥100,000</td>
+      <td>158</td>
+      <td>188</td>
     </tr>
   </table>
   <el-dialog width="300" :title="selectedMatch.title" v-model="confirmDialog">
