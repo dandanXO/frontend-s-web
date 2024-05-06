@@ -1,6 +1,6 @@
 <template>
   <div class="not-loggedin-container">
-    <form action="" style="display: flex;" @keypress.enter="onLoginSubmit">
+    <form action="" class='login-form' @keypress.enter="onLoginSubmit">
       <div class="left-container">
         <div class="account">
           <input type="text" class="account-input" placeholder="계정" v-model="loginForm.loginName" />
@@ -114,18 +114,28 @@ onMounted(() => {
   }
 }
 
+.login-form{
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
+}
+
 .left-container {
   display: none;
   justify-content: space-between;
-  @media (min-width: 1200px) {
+  @media (min-width: 769px) {
     display: flex;
   }
 }
 
 .right-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
   margin-left: 0px;
+  margin-top: 8px;
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;
