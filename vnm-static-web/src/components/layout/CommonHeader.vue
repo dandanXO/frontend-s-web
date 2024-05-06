@@ -1878,7 +1878,7 @@ body {
           flex-direction: column;
           text-decoration: none;
           gap: 2px;
-          color: $font-1;
+          color: #444444;
 
           &.icon {
             gap: 0;
@@ -2048,7 +2048,7 @@ body {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    // font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
   span.weak-pwd {
@@ -2625,7 +2625,7 @@ body {
   &.btn-color-white {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
     box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
-    color: $font-1;
+    color: #444444;
     position: relative;
     img {
       position: absolute;

@@ -152,7 +152,7 @@ a:focus {
 
 .bg-lightbluebtn {
   background: #ffffff;
-  color: #7a80a1 !important;
+  color: $font-4 !important;
   box-shadow: 0px -2px 7px 0px #a2bff4 inset;
 }
 
@@ -592,7 +592,8 @@ svg {
   span {
     margin-right: 10px;
     cursor: pointer;
-    color: $font-1;
+    // color: $font-1;
+    color: $font-4;
   }
 }
 

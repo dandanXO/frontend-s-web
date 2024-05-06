@@ -212,7 +212,7 @@ onMounted(() => {
           width: 100%;
 
           .station-notice-item {
-            color: #7a80a1;
+            color: #444444;
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;
