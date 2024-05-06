@@ -28,11 +28,11 @@ import VenueFund from "../../hotpromo/europe-2024/parts/VenueFund.vue"
 // import { ElMessage } from "element-plus";
 
 const tabs = ref([
-  { name: '欧洲杯红包雨', content: EuropeHongBaoYu },
   { name: '赛程比赛展示', content: ScheduleDisplay },
   { name: '专属队伍翻倍金', content: DoublingGold},
   { name: '每日参与金', content: DailyFund },
   { name: '首投场馆助威金', content: VenueFund },
+  { name: '欧洲杯红包雨', content: EuropeHongBaoYu },
 ]);
 
 const activeTab = ref(0);

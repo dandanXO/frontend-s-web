@@ -1,9 +1,9 @@
 <template>
-  <q-layout view="hHh Lpr fFf" :class="{ roboto: languageVal === 'vi', poppins: languageVal === 'en' }">
+  <q-layout view="hHh Lpr fFf" :class="{ sanfrancisco: languageVal === 'vi', poppins: languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
-          <router-link to="/"><img src="../assets/logo-web-fire.svg" alt="logo" /></router-link>
+          <router-link to="/"><img src="../assets/logo-web.svg" alt="logo" /></router-link>
         </div>
         <q-card-actions v-if="!store.hasToken()">
           <q-btn glossy color="brand" to="/login">登录</q-btn>
@@ -379,6 +379,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.page_register");
+        } else if (route.path === "/about") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("lang.page_about");
         }
 
         if (route.query.redirect) {

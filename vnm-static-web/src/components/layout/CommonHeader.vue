@@ -360,7 +360,7 @@
       style="max-width: 1280px"
       @close="store.welcomeDialogVisible = false"
     >
-      <HomeWelcome />
+      <HomeWelcome @close-dialog="welcomeDialogVisible = false" />
     </el-dialog>
 
     <el-dialog
@@ -1167,6 +1167,12 @@ export default defineComponent({
     }
     onMounted(() => {
 
+      const isGetWelcome = sessionStorage.getItem("IS_GET_WELCOME");
+      if(isGetWelcome){
+        welcomeDialogVisible.value= true;
+        sessionStorage.removeItem("IS_GET_WELCOME");
+      }
+
       if (regCountdown.value > 0)
         countdownTimer("REGISTER");
       getAffiliateCode();
@@ -1365,44 +1371,44 @@ export default defineComponent({
 
     // watch(
     //   () => regForm.password
-      // () => {
-      //   pwdStrength.value = "";
+    // () => {
+    //   pwdStrength.value = "";
 
-      //   var pwd = regForm.password;
-      //   var result = 0;
-      //   for (var i = 0, len = pwd.length; i < len; ++i) {
-      //     result |= charType(pwd.charCodeAt(i));
-      //   }
+    //   var pwd = regForm.password;
+    //   var result = 0;
+    //   for (var i = 0, len = pwd.length; i < len; ++i) {
+    //     result |= charType(pwd.charCodeAt(i));
+    //   }
 
-      //   var level = 0;
-      //   for (i = 0; i <= 4; i++) {
-      //     if (result & 1) {
-      //       level++;
-      //     }
-      //     result = result >>> 1;
-      //   }
+    //   var level = 0;
+    //   for (i = 0; i <= 4; i++) {
+    //     if (result & 1) {
+    //       level++;
+    //     }
+    //     result = result >>> 1;
+    //   }
 
-      //   // console.log(level);
+    //   // console.log(level);
 
-      //   if (pwd.length >= 6) {
-      //     switch (level) {
-      //       case 1:
-      //         pwdStrength.value = "weak";
-      //         break;
-      //       case 2:
-      //         pwdStrength.value = "normal";
-      //         break;
-      //       case 3:
-      //       case 4:
-      //         pwdStrength.value = "strong";
-      //         break;
-      //     }
-      //   } else {
-      //     pwdStrength.value = "weak";
-      //   }
+    //   if (pwd.length >= 6) {
+    //     switch (level) {
+    //       case 1:
+    //         pwdStrength.value = "weak";
+    //         break;
+    //       case 2:
+    //         pwdStrength.value = "normal";
+    //         break;
+    //       case 3:
+    //       case 4:
+    //         pwdStrength.value = "strong";
+    //         break;
+    //     }
+    //   } else {
+    //     pwdStrength.value = "weak";
+    //   }
 
-      //   // console.log(pwdStrength.value);
-      // },
+    //   // console.log(pwdStrength.value);
+    // },
     // );
     const todayDate = () => {
       return "GTM+8 " + moment().utcOffset("+08:00").format("M/D/YYYY, h:mm:ss A ") + moment(new Date()).locale("zh-cn").format("dddd");
@@ -1841,7 +1847,7 @@ body {
       }
 
       .logo {
-        height: 70px;
+        height: 50px;
         //width: 102px;
 
         img {
@@ -1915,7 +1921,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }

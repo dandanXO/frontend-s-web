@@ -1,7 +1,8 @@
 <template>
   <div class="bracket-team-wrapper">
-    <img :src="imgUrl" />
-    <span class="bracket-team__name">{{ country }}</span>
+    <img :src="imgUrl" v-if="imgUrl" />
+    <span v-if="imgUrl" class="bracket-team__name">{{ country }}</span>
+    <div v-else>?</div>
   </div>
 </template>
 <script setup>

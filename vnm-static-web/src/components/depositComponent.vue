@@ -556,7 +556,7 @@ function doDeposit(data) {
           // );
         }
 
-        if(window.location.href.indexOf("https://tf88uytin.com") > -1){
+        if(window.location.href.indexOf("tf88uytin.com") > -1){
           otag("event", "deposit");
         }
 

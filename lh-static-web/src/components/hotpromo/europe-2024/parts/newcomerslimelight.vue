@@ -3,10 +3,10 @@
         活动期间，会员此前从未投注过选择的场馆，选择完成后，当日场馆有效投注额满足<span>≥500</span>即可获得体验彩金。    
     </div>
     <div class="newcomers-grid">
-        <img src="../images/newcomers-esport.png">
-        <img src="../images/newcomers-live.png">
-        <img src="../images/newcomers-poker.png">
-        <img src="../images/newcomers-slot.png">
+        <img @click="getBonus('ESPORT')" src="../images/newcomers-esport.png">
+        <img @click="getBonus('LIVE')" src="../images/newcomers-live.png">
+        <img @click="getBonus('POKER')" src="../images/newcomers-poker.png">
+        <img @click="getBonus('SLOT')" src="../images/newcomers-slot.png">
     </div>
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -38,6 +38,21 @@
         </tr>
     </table>
 </template>
+<script setup>
+import { onMounted, ref } from "vue";
+import { firstBet } from '@/api/promotion/eurocup';
+import { ElMessage } from "element-plus";
+   
+const getBonus = (type) => {
+        firstBet(type).then((res) => {
+            if (res.code === 0) {
+                ElMessage.success('成功领取' + res.data + '元')
+            } else {
+                ElMessage.error(res.message);
+            }
+        }) 
+    }
+</script>
 <style>
     .newcomers-intro {
         font-family: Microsoft YaHei UI;
@@ -63,6 +78,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         img {
+            cursor: pointer;
             width: 100%;
         }
     }

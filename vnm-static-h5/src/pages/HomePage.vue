@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web-fire.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -26,7 +26,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web-fire.svg" />
+      <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
@@ -1720,26 +1720,29 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    // height: 50px;
 
-    @media (max-width: 400px) {
-      height: 35px;
-    }
+    // @media (max-width: 400px) {
+    //   height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 
     :deep(.q-btn) {
-      min-width: 99px;
+      min-width: 80px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {

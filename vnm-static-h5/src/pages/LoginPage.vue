@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-web-fire.svg" />
+        <img alt="logo" src="../assets/logo-web.svg" />
       </div>
 
       <div class="header-lang">
@@ -22,7 +22,7 @@
         <div class="text-title">{{ $t("lang.login_title") }}</div>
         <div class="text-desc">{{ $t("lang.login_desc") }}</div>
       </div> -->
-      <img :src="require(`../assets/images/login/login-img-${languageVal}.png`)" />
+      <img :src="require(`../assets/images/login/login-img.png`)" />
     </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
@@ -266,8 +266,8 @@ export default defineComponent({
     LangOptions
   },
   setup() {
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
@@ -434,10 +434,7 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 // FB tracking :: login-success
-                if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
+                if (store.isAffiliateA) {
                   fbq("track", "login-success");
                 }
 
@@ -634,14 +631,14 @@ export default defineComponent({
   }
 
   .login-img {
-    padding: 0 16px 16px;
+    padding: 0 0px 16px 0px;
     display: flex;
     justify-content: center;
     position: relative;
     img {
       display: block;
-      width: 100%;
-      max-width: 190px;
+      width: 110%;
+      margin-right: -15%;
     }
 
     .login-text {
@@ -782,23 +779,26 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
-    margin-right: auto;
-    margin-left: 12px;
+    // height: 50px;
+    // margin-right: auto;
+    // margin-left: 12px;
 
-    @media (max-width: 400px) {
-      height: 35px;
-    }
+    // @media (max-width: 400px) {
+      // height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 

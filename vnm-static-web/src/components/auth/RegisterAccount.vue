@@ -412,12 +412,10 @@ const submitRegisterForm = async (elForm) => {
                 });
 
                 // FB tracking :: signup-success
-                if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
+                if (store.isAffiliateA) {
                   fbq("track", "signup-success");
-                } else if (window.location.href.indexOf("https://tf88uytin.com") > -1) {
+                }
+                if (window.location.href.indexOf("tf88uytin.com") > -1) {
                   otag("event", "registration");
                 }
 
@@ -429,7 +427,8 @@ const submitRegisterForm = async (elForm) => {
                 sessionStorage.removeItem("AFFILIATE_CODE");
 
                 if (store.token) {
-                  emits("open-welcome-dialog")
+                  router.push("/");
+                  sessionStorage.setItem("IS_GET_WELCOME", "1");
                 }
               } else {
                 ElMessage.error(response.message);
@@ -537,7 +536,7 @@ onMounted(() => {
   padding: 10px 0;
 }
 .flex-div {
-  margin-top: 25px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;

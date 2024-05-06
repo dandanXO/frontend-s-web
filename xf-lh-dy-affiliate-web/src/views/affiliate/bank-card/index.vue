@@ -240,6 +240,9 @@ const personalState = reactive({
 });
 const loadCards = () => {
   personalState.bankCardList = [];
+  personalState.bankList = [];
+  personalState.cryptoList = [];
+  personalState.eWalletList = [];
   loadBankCards().then((response) => {
     if (response.code === 0) {
       personalState.bankCardList.push(...response.data);
@@ -377,11 +380,7 @@ const confirmUnbind = (card) => {
       // Remove card API
       deleteBankCard(card.id).then((res) => {
         if (res.code === 0) {
-          for (let i = 0; i < personalState.bankCardList.length; i++) {
-            if (personalState.bankCardList[i].id === card.id) {
-              personalState.bankCardList.splice(i, 1);
-            }
-          }
+          loadCards();
         }
       }).catch((e) => {
         console.log("error", e);

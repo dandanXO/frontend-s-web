@@ -2,19 +2,20 @@
     <div class="tab-title">
         {{ tabtitle }}
     </div>
+    
     <div class="doublinggold">
         <span class="note">
             注：用户选定每组的参与队伍后不予更改；
         </span>
         <div class="teams">
-            <div v-for="(team, teamindex) in teams" :key="teamindex" class="team">
+            <div v-for="(team, teamindex) in teams" class="team" :key="teamindex">
                 <div class="team-box">
                     <div class="team-num">{{ team.name }} 组</div>
                     <div class="chosen-items">
                         <div class="selection">
-                            {{ team.selection.length > 0 ? '' : '请选队伍' }}
+                            {{ team.selection.length > 0 ? ' 已选择：' : '请选队伍' }}
                             <div class="selected-items">
-                                <div v-for="(t, idx) in team.selection" :key="idx">
+                                <div v-for="t in team.selection" :key="t">
                                     {{ t.name }}
                                 </div>
                             </div>
@@ -27,9 +28,9 @@
                         </div>
                     </div>
                     <div class="choices" :class="{ isConfirmed: team.isSelectionConfirmed }">
-                        <div @click="team.isSelectionConfirmed ? null : toggleSelection(team, choice.name)"
-                            :class="{ 'selected': team.selection.some(item => item.name === choice.name) }"
-                            v-for="(choice, cidx) in choices" :key="cidx" class="choice">
+                        <div @click="team.isSelectionConfirmed ? null : toggleSelection(team, choice)"
+                            :class="{ 'selected': team.selection.some(item => item.id === choice.id) }"
+                            v-for="(choice, choiceindex) in team.choices" class="choice" :key="choiceindex">
                             <div class="close-icon"></div>
                             <img src="../images/flag.png">
                             {{ choice.name }}
@@ -59,57 +60,56 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps, onMounted } from 'vue';
+import { eventapi } from "boot/axios"
 
 const props = defineProps({
     tabtitle: String
 });
 const teams = ref([
-    {
-        name: 'A',
-        selection: [{ name: '德国' }, { name: '苏格兰' }],
-        isSelectionConfirmed: true,
-    },
+    // {
+    //     name: 'A',
+    //     selection: [{ name: '德国' }, { name: '苏格兰' }],
+    //     isSelectionConfirmed: true,
+    //     choices: [{
+    //     name: '德国',
+    // },
+    // {
+    //     name: '苏格兰'
+    // },
+    // {
+    //     name: '美国'
+    // },
+    // {
+    //     name: '法国'
+    // },]
+    // },
     
-    {
-        name: 'B',
-        selection: [],
-        isSelectionConfirmed: false,
-    },
+    // {
+    //     name: 'B',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // },
     
-    {
-        name: 'C',
-        selection: [],
-        isSelectionConfirmed: false,
-    },
+    // {
+    //     name: 'C',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // },
     
-    {
-        name: 'D',
-        selection: [],
-        isSelectionConfirmed: false,
-    }
-])
-const choices = ref([
-    {
-        name: '德国',
-    },
-    {
-        name: '苏格兰'
-    },
-    {
-        name: '美国'
-    },
-    {
-        name: '法国'
-    },
-])
+    // {
+    //     name: 'D',
+    //     selection: [],
+    //     isSelectionConfirmed: false,
+    // }
+]);
 
-function toggleSelection(team, choiceName) {
+function toggleSelection(team, choice) {
     if (team && Array.isArray(team.selection)) {
-        const index = team.selection.findIndex(item => item.name === choiceName);
+        const index = team.selection.findIndex(item => item.id === choice.id);
         if (index === -1) {
             // Choice is not selected, so add it to the selection
-            team.selection.push({ name: choiceName });
+            team.selection = ([{ id: choice.id, name: choice.name }]);
         }
         else {
           // Choice is already selected, so remove it from the selection
@@ -122,10 +122,71 @@ function toggleSelection(team, choiceName) {
 }
 function confirmSelection(team, choiceName) {
     if (team && Array.isArray(team.selection)) {
-        team.isSelectionConfirmed = true;
+        // team.isSelectionConfirmed = true;
+        const teamIds = [];
+        team.selection.forEach(element => {
+            teamIds.push(element.id)
+        });
+        eventapi.post("/uefa/team/submit", teamIds).then((res) => {
+            if (res.code === 0) {
+                team.isSelectionConfirmed = true;
+                init();
+            }
+        })
     }
 
 }
+const init = () => {
+    eventapi.get("/uefa/team").then((res) => {
+    if (res.code === 0) {
+        teams.value = [];
+        const groupedTeams = {}; // Object to store teams grouped by teamGroup
+        res.data.teams.forEach(teamData => {
+            const teamGroup = teamData.teamGroup;
+            if (!groupedTeams[teamGroup]) {
+                // Initialize an array for the teamGroup if not exists
+                groupedTeams[teamGroup] = [];
+            }
+            // Push the teamData to the corresponding teamGroup array
+            groupedTeams[teamGroup].push(teamData);
+        });
+
+        // Iterate over grouped teams and create team objects
+        for (const teamGroup in groupedTeams) {
+            if (groupedTeams.hasOwnProperty(teamGroup)) {
+                const teamsInGroup = groupedTeams[teamGroup];
+                const team = {
+                    name: teamGroup,
+                    selection: [],
+                    isSelectionConfirmed: false,
+                    choices: []
+                };
+                // Push choices for the teamGroup into the team's choices array
+                teamsInGroup.forEach(teamData => {
+                    team.choices.push({ name: teamData.teamName, id: teamData.id });
+                });
+                // Push the team object to the teams array
+                teams.value.push(team);
+            }
+        }
+        // Update selection for selected teams
+        res.data.selected.forEach((selectedTeam) => {
+            const team = teams.value.find(team => team.name === selectedTeam.teamGroup);
+            if (team) {
+                const selectedTeamName = selectedTeam.teamName;
+                const choice = team.choices.find(choice => choice.name === selectedTeamName);
+                if (choice) {
+                    team.selection.push(choice);
+                    team.isSelectionConfirmed = true;
+                }
+            }
+        });
+    }
+});
+}
+onMounted(() => {
+    init()
+})
 </script>
 <style lang="scss">
 .teams {

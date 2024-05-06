@@ -333,6 +333,7 @@ export default defineComponent({
 
 <style lang="scss">
 .promo-container {
+  overflow-x: hidden;
   min-height: 600px;
 
   .promo-banner {

@@ -4,71 +4,67 @@
   </div>
   <div class="note">注：用户选定每组的参与队伍后不予更改；</div>
   <div class="fund-wrapper">
-    <img :src="FundLogoImg" class="fund-logo" />
+    <img src="../images/daily-fund-logo.png" class="fund-logo" />
     <div class="fund-inner-wrapper">
       <div class="fund-status">
         <span class="fund-status__point-title">总积分</span>
-        <div class="fund-status__point">6000</div>
+        <div class="fund-status__point">{{matchPoints.currentPoints}}</div>
         <div class="fund-contest-time-left">
-          <img :src="FundIconTimeImg" />
+          <img src="../images/daily-fund-icon-time.svg" />
           <span class="fund-contest-time-left__title">比赛剩余</span>
-          <span class="fund-contest-time-left__content">1天5小时</span>
+          <span class="fund-contest-time-left__content" v-if="remainingTime">{{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}</span>
         </div>
       </div>
       <div class="fund-divider" />
       <div class="fund-progress-wrapper">
-        <div class="fund-progress-ranking-wrapper">
-          <div />
-          <img v-for="(img, index) in fundRankingList" :key="`ranking-icon-${index}`" :src="img" />
+        <div class="fund-progress-ranking-wrapper firstrow">
+          <div v-for="(num, i) in rankPoints" :key="`ranking-text-${i}`" :class="`ranking-${i}`">
+            <div v-if="i === 0"></div>
+            <div v-if="i !== 0">
+              {{ num.amt }} 元
+            <img :src="require(`../images/daily-fund-ranking-${i+1}.png`)" />
+            </div>
+          </div>
+          
         </div>
         <el-progress
-          :percentage="10"
+          :percentage="getPercentage(matchPoints.currentPoints)"
           class="fund-progress-bar"
           :show-text="false"
           color=" linear-gradient(180deg, #00D1FF 0%, #0D70D6 100%)"
         />
         <div class="fund-progress-ranking-wrapper">
-          <div class="ranking-0">0</div>
-          <div v-for="num in 6" :key="`ranking-text-${num}`" :class="`ranking-${num}`">
-            {{ num }}
+          <div v-for="(num, i) in rankPoints" :key="`ranking-text-${i+1}`" :class="`ranking-${i+1}`">
+              {{ num.points }}
+              <div v-if="i !== 0">
+              <div class="claim">
+                <img @click="claimPoint(num.points)" v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed && !matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claim.png">
+                <img v-else src="../images/daily-fund-claimed.png">
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="bracket-list-wrapper">
-    <div class="bracket-wrapper">
+    <div class="bracket-wrapper" v-for="(match, index) in ongoingMatches" :key="index">
       <div class="bracket-team-select">
-        <bracket-team :img-url="FlagImg" country="德国" />
-        <button class="bracket-team-select__button">选择</button>
+        <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
+        <button @click="matchSubmit(match, match.teamOneId, match.teamOneName)" v-if="!match.selectedTeamId" class="bracket-team-select__button">选择</button>
+        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">进行中</div>
+        <div class="bracket-info__status">{{match.status === 'ONGOING' ? '进行中' : '已结束'}}</div>
         <div class="bracket-info__info-wrapper">
-          <div class="bracket-info__info-wrapper-date">6月15日 上午3:00</div>
-          <div class="bracket-info__info-wrapper-contest">欧洲杯 半决赛</div>
+          <div class="bracket-info__info-wrapper-date">{{ match.matchTime }}</div>
+          <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
         </div>
       </div>
       <div class="bracket-team-select">
-        <bracket-team :img-url="FlagImg" country="德国" />
-        <button class="bracket-team-select__button">选择</button>
-      </div>
-    </div>
-    <div class="bracket-wrapper">
-      <div class="bracket-team-select">
-        <bracket-team :img-url="FlagImg" country="德国" />
-        <button v-if="false" class="bracket-team-select__button">选择</button>
-      </div>
-      <div class="bracket-info">
-        <div class="bracket-info__status finished">已结束</div>
-        <div class="bracket-info__info-wrapper">
-          <div class="bracket-info__info-wrapper-date">6月15日 上午3:00</div>
-          <div class="bracket-info__info-wrapper-contest">欧洲杯 半决赛</div>
-        </div>
-      </div>
-      <div class="bracket-team-select">
-        <bracket-team :img-url="FlagImg" country="德国" />
-        <button class="bracket-team-select__button active">已选</button>
+        <bracket-team  :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
+        <button @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)" v-if="!match.selectedTeamId" class="bracket-team-select__button">选择</button>
+        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
       </div>
     </div>
   </div>
@@ -91,46 +87,165 @@
       <td>18</td>
     </tr>
   </table>
+  <el-dialog width="300" :title="selectedMatch.title" v-model="confirmDialog">
+    <p>您确定要选择 <span style="font-weight: bold; color: #0051b3;">{{selectedItem.name}}</span> 吗？请注意，一旦选择后将无法更改。</p>
+      <div style="margin-top: 20px;">
+      <el-button type="primary" @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)">确定</el-button>
+      <el-button type="danger" @click="confirmDialog = false">取消</el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
 import { defineProps, ref } from "vue";
-import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
-import FundLogoImg from "@/components/hotpromo/europe-2024/images/daily-fund-logo.png";
-import FundIconTimeImg from "@/components/hotpromo/europe-2024/images/daily-fund-icon-time.svg";
-import FundRankingImg1 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-1.png";
-import FundRankingImg2 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-2.png";
-import FundRankingImg3 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-3.png";
-import FundRankingImg4 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-4.png";
-import FundRankingImg5 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-5.png";
-import FundRankingImg6 from "@/components/hotpromo/europe-2024/images/daily-fund-ranking-6.png";
 import BracketTeam from "./components/BracketTeam.vue";
+import { onMounted } from "vue";
+import { euroMatchOngoing, euroMatchPoints, euroClaimMatchPoints, euroMatchSubmit } from "@/api/promotion/eurocup";
+import { ElMessage } from "element-plus";
 
 const props = defineProps({
   tabtitle: String
 });
+const rankPoints = [
+  {
+    amt: '',
+    points: 0
+  },
+  {
+    amt: 8,
+    points: 1000
+  },
+  {
+    amt: 8,
+    points: 2000
+  },
+  {
+    amt: 18,
+    points: 3000
+  },
+  {
+    amt: 58,
+    points: 4000
+  },
+  {
+    amt: 88,
+    points: 5000
+  },
+  {
+    amt: 188,
+    points: 6000
+  },
+]
+const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+const confirmDialog = ref(false);
+const selectedMatch = ref('');
+const selectedItem = ref({
+  id: null,
+  name: null
+});
+const matchPoints = ref([]);
+const getPercentage = (points) => {
+  return points / 6000 * 100
+}
+const isClaimed = ref(false)
+const ongoingMatches = ref();
+const remainingTime = ref();
+const getMatchPoints = () => {
+  euroMatchPoints().then((res) => {
+    if (res.code === 0) {
+      matchPoints.value = res.data
+      remainingTime.value = calculateRemainingTime(res.data.endDate);
+    } else {
+      ElMessage.error(res.message);
+    }
+  })
+}
+const claimPoint = (points) => {
+  euroClaimMatchPoints(points).then((res) => {
+    if (res.code === 0) {
+      ElMessage.success('领取成功');
+    } else {
+      ElMessage.error(res.message);
+    }
+  })
+}
+const getMatches = () => {
+  euroMatchOngoing().then((res) => {
+    if (res.code === 0) {
+      ongoingMatches.value = res.data
+    }
+  })
+}
+const matchSubmit = (match, id, name) => {
+  confirmDialog.value = true;
+  selectedMatch.value = match
+  selectedItem.value = {
+    id: id,
+    name: name
+  }
+}
+const confirmMatchSelect = () => {
+  euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
+    if (res.code === 0) {
+      ElMessage.success('提交成功');
+      confirmDialog.value = false;
+      getMatches();
+    }
+  })
+}
+function calculateRemainingTime(endDate) {
+  // Parse the end date string into a Date object
+  const endDateTime = new Date(endDate);
 
-const fundRankingList = ref([
-  FundRankingImg1,
-  FundRankingImg2,
-  FundRankingImg3,
-  FundRankingImg4,
-  FundRankingImg5,
-  FundRankingImg6
-]);
+  // Get the current date and time
+  const now = new Date();
+
+  // Calculate the difference in milliseconds between now and the end date
+  const difference = endDateTime - now;
+
+  // Convert milliseconds to days and hours
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+  // Return the remaining time as an object
+  return {
+    days,
+    hours
+  };
+}
+
+onMounted(() => {
+  getMatches()
+  getMatchPoints()
+})
 </script>
 <style scoped lang="scss">
-$ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
+$ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 
 @for $i from 1 through length($ranking-list) {
   .ranking-#{$i} {
-    width: nth($ranking-list, $i);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    div {
+      display: flex;
+      gap: 5px;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      font-size: 20px;
+    }
+    img {    
+      width: nth($ranking-list, $i);
+    }
   }
 }
 
 .ranking-0 {
-  width: 0;
+  width: 50px;
 }
 
 .note {
@@ -148,11 +263,14 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
   padding: 10px 0;
   position: relative;
   font-family: Microsoft YaHei UI;
+    margin-bottom: 43px;
 
   .fund-logo {
     position: absolute;
     top: 0;
     left: -54px;
+    bottom: 0;
+    margin: auto;
   }
 
   .fund-inner-wrapper {
@@ -161,7 +279,6 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
     display: flex;
     gap: 35px;
     border-radius: 28px;
-    margin-bottom: 43px;
     color: #ffffff;
 
     .fund-status {
@@ -213,10 +330,21 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 129px;
       .fund-progress-ranking-wrapper {
         display: flex;
         justify-content: space-between;
-        align-items: end;
+
+    align-items: flex-end;
         width: 100%;
+          font-size: 24px;
+          .claim {
+            width: 100px;
+            cursor: pointer;
+            img {
+              width: 100%;
+            }
+          }
+        
 
         &:last-child {
+          align-items: flex-start;
           font-size: 24px;
           line-height: 31.92px;
         }

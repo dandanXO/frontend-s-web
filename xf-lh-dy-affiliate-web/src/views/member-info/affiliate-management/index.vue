@@ -8,23 +8,23 @@
       </template>
       <div class="inputs-wrap">
         <el-form @submit.prevent inline="true">
-          <el-form-item :label="t('fields.registerTime') + ' :'">
-            <el-date-picker
-              v-model="request.regTime"
-              format="DD/MM/YYYY"
-              value-format="YYYY-MM-DD"
-              size="normal"
-              class="input-small"
-              type="daterange"
-              range-separator=":"
-              :start-placeholder="t('fields.startDate')"
-              :end-placeholder="t('fields.endDate')"
-              :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
-              :editable="false"
-              :clearable="false"
-            />
-          </el-form-item>
+          <!--          <el-form-item :label="t('fields.registerTime') + ' :'">-->
+          <!--            <el-date-picker-->
+          <!--              v-model="request.regTime"-->
+          <!--              format="DD/MM/YYYY"-->
+          <!--              value-format="YYYY-MM-DD"-->
+          <!--              size="normal"-->
+          <!--              class="input-small"-->
+          <!--              type="daterange"-->
+          <!--              range-separator=":"-->
+          <!--              :start-placeholder="t('fields.startDate')"-->
+          <!--              :end-placeholder="t('fields.endDate')"-->
+          <!--              :shortcuts="shortcuts"-->
+          <!--              :disabled-date="disabledDate"-->
+          <!--              :editable="false"-->
+          <!--              :clearable="false"-->
+          <!--            />-->
+          <!--          </el-form-item>-->
           <el-form-item :label="t('fields.loginName') + ' :'">
             <el-input
               class="input-small"
@@ -98,7 +98,7 @@
             <th>{{ t('fields.registerTime') }}</th>
             <th>{{ t('fields.totalDeposit') }}</th>
             <th>{{ t('fields.totalWithdraw') }}</th>
-            <th>{{ t('fields.operate') }}</th>
+            <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -201,6 +201,7 @@
                 size="normal"
                 type="success"
                 :disabled="breadcrumbNameList.length > 1"
+                v-if="store.state.user.siteCode !== 'VNM'"
                 @click="showEdit(record)"
               />
             </td>
@@ -308,7 +309,7 @@
         <el-form-item
           :label="t('fields.commission')"
           prop="commission"
-          v-if="siteId !== '8'"
+          v-if="store.state.user.siteCode !== 'VNM'"
         >
           <el-input
             v-model="cForm.commission"
@@ -376,7 +377,7 @@
 <script setup>
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { useStore } from '@/store'
-import moment from 'moment'
+// import moment from 'moment'
 import {
   getAffiliateDownline,
   regsterAffiliate,
@@ -410,129 +411,128 @@ const affiliateLevel = ref(null)
 
 const site = ref(null)
 const affInfo = ref(null)
-const startDate = new Date()
-const defaultStartDate = convertDate(
-  startDate.setTime(
-    moment(startDate)
-      .startOf('month')
-      .format('x')
-  )
-)
-const defaultEndDate = convertDate(new Date())
+// const startDate = new Date()
+// const defaultStartDate = convertDate(
+//   startDate.setTime(
+//     moment(startDate)
+//       .startOf('month')
+//       .format('x')
+//   )
+// )
+// const defaultEndDate = convertDate(new Date())
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'days')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'days')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'weeks')
-          .startOf('isoWeek')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'weeks')
-          .endOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'months')
-          .startOf('month')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'months')
-          .endOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisThreeMonths'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment()
-          .subtract(2, 'months')
-          .startOf('month')
-          .valueOf()
-      )
-      return [start, end]
-    },
-  },
-]
+// const shortcuts = [
+//   {
+//     text: t('fields.today'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.yesterday'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'days')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'days')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisWeek'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .startOf('isoWeek')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.lastWeek'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'weeks')
+//           .startOf('isoWeek')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'weeks')
+//           .endOf('isoWeek')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisMonth'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .startOf('month')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.lastMonth'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'months')
+//           .startOf('month')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'months')
+//           .endOf('month')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisThreeMonths'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment()
+//           .subtract(2, 'months')
+//           .startOf('month')
+//           .valueOf()
+//       )
+//       return [start, end]
+//     },
+//   },
+// ]
 
 const request = reactive({
-  regTime: [defaultStartDate, defaultEndDate],
   loginName: null,
   size: 20,
   current: 1,
@@ -563,13 +563,13 @@ const eForm = reactive({
   commission: null,
 })
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
+// function convertDate(date) {
+//   return moment(date).format('YYYY-MM-DD')
+// }
 
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime()
-}
+// function disabledDate(time) {
+//   return time.getTime() > new Date().getTime()
+// }
 
 const validatePassword = (rule, value, callback) => {
   if (value !== '' && cForm.reEnterPassword !== '') {
@@ -650,7 +650,6 @@ function restrictCommissionDecimalInput(event) {
 }
 
 function resetQuery() {
-  request.regTime = [defaultStartDate, defaultEndDate]
   request.loginName = null
 }
 
@@ -665,11 +664,11 @@ async function loadDownlineAffiliates() {
       }
     })
   }
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = request.regTime.join(',')
-    }
-  }
+  // if (request.regTime !== null) {
+  //   if (request.regTime.length === 2) {
+  //     query.regTime = request.regTime.join(',')
+  //   }
+  // }
   query.siteId = site.value.id
   query.memberTypes = 'AFFILIATE'
   const { data: ret } = await getAffiliateDownline(checkId.value, query)
@@ -777,6 +776,7 @@ function breadcrumbSearch(id, name) {
 const siteId = computed(() => {
   return store.state.user.siteId
 })
+console.log(siteId);
 
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel

@@ -42,6 +42,7 @@
     >
       <el-table-column prop="member" :label="t('fields.member')" width="120" fixed />
       <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
+      <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" width="180" />
       <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.registerTime === null">-</span>

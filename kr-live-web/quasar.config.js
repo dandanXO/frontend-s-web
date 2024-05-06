@@ -24,7 +24,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-webpack/boot-files
-    boot: ["axios", "cache", "line", "lang", "aos"],
+    boot: ["axios", "cache", "fingerprint", "line", "lang", "aos"],
 
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-css
     css: ["app.scss"],
@@ -83,8 +83,8 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js#Property%3A-framework
     framework: {
       config: {
-        brand: "#342961",
-        primary: "#342961",
+        brand: "#292B31",
+        primary: "#292B31",
         screen: {
           bodyClasses: true
         }
@@ -150,8 +150,8 @@ module.exports = configure(function (ctx) {
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
-        background_color: "#000028",
-        theme_color: "#000028",
+        background_color: "#292B31",
+        theme_color: "#292B31",
         icons: [
           {
             src: "icons/icon-128x128.png",
