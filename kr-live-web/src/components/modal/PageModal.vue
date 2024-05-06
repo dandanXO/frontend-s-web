@@ -1,8 +1,7 @@
 <template>
-  <q-scroll-area>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
-
-
+      <q-card style="max-width: none; background: transparent; box-shadow: none;">
+      
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
@@ -64,8 +63,8 @@
         </div>
 
       </div>
+    </q-card>
     </q-dialog>
-  </q-scroll-area>
 
 </template>
 <script setup id="PageModal">
@@ -395,12 +394,13 @@ const open = (pageName) => {
 }
 .page-dialog-main {
   --main-bg-color: #030303;
-  top: 80px;
-  position: absolute;
-  padding: 0 130px;
+  // top: 80px;
+  // position: absolute;
+  padding: 0 0 0 130px;
   box-sizing: content-box;
   width: 860px;
   max-width: 860px;
+  max-height: 100%;
   :deep(.q-panel) {
   }
   &, .q-tab-panel {
@@ -508,6 +508,7 @@ const open = (pageName) => {
   border-top-right-radius: 15px;
   .header-title {
     text-align: center;
+    white-space: nowrap;
   }
   p {
     flex: 1;
@@ -561,18 +562,18 @@ const open = (pageName) => {
 
 @media (max-width: 768px) {
   .page-dialog-main {
-    width: 90vw;
-    height: 95vh;
+    width: 100%;
+    height: 100%;
     max-height: unset;
     padding: unset;
     min-width: auto;
     max-width: auto;
   }
   .page-dialog-main-container {
-    top: 50%;
-    transform: translate(-50%, -50%);
-    left: 50%;
-    position: relative;
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+    // left: 50%;
+    // position: relative;
   }
   .page-dialog-links {
     background-color: var(--main-bg-color);
