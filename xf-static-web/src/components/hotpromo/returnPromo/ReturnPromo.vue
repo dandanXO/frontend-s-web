@@ -15,7 +15,7 @@
     <div class="return-promo-content">
       <div class="content-time">
         <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-time.png" />
-        <p>2024年5月6日00:00起</p>
+        <p>2024年5月7日00:00起</p>
       </div>
 
       <template v-if="tabOption === 'returnLoginGift'">
