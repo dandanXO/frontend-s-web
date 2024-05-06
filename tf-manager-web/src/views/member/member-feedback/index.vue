@@ -292,6 +292,7 @@ async function showReadFeedback(feedback) {
 function submitReply() {
   feedbackForm.value.validate(async (valid) => {
     if (valid) {
+      form.replyTitle = form.replyTitle.substr(0, 100);
       await replyFeedback(form.id, form.siteId, form.replyTitle, form.replyContent);
       uiControl.formVisible = false;
       await loadFeedback();
