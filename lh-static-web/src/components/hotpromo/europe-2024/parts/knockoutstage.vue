@@ -93,59 +93,6 @@ const bracketDateList = ref([
   { top: 1492, left: 1317, seg: 8, group: '16' }
 ]);
 const teams = ref([
-  {
-    "id": 1,
-    "matchTime": "2024-04-29 00:00:00",
-    "selectedTeamId": null,
-    "selectedTeamName": null,
-    "sequence": 1,
-    "siteId": 7,
-    "status": "ONGOING",
-    "teamGroup": '16',
-    "teamOneIcon": "7/b9ee4765-2bfa-4369-9b9a-9fd3ee49ab40.png",
-    "teamOneId": 1,
-    "teamOneName": "德国",
-    "teamTwoIcon": "7/9c417412-25bc-4312-ae5b-feaf7f680010.png",
-    "teamTwoId": 2,
-    "teamTwoName": "苏格兰",
-    "title": "德国 VS 苏格兰"
-  },
-  {
-    "id": 1,
-    "matchTime": "2024-04-29 00:00:00",
-    "selectedTeamIcon": null,
-    "selectedTeamId": null,
-    "selectedTeamName": null,
-    "sequence": 2,
-    "siteId": 7,
-    "status": "ONGOING",
-    "teamGroup": '16',
-    "teamOneIcon": "7/b9ee4765-2bfa-4369-9b9a-9fd3ee49ab40.png",
-    "teamOneId": 1,
-    "teamOneName": "德国",
-    "teamTwoIcon": "7/9c417412-25bc-4312-ae5b-feaf7f680010.png",
-    "teamTwoId": 2,
-    "teamTwoName": "苏格兰",
-    "title": "德国 VS 苏格兰"
-  },
-  {
-    "id": 1,
-    "matchTime": "2024-04-29 00:00:00",
-    "selectedTeamIcon": null,
-    "selectedTeamId": null,
-    "selectedTeamName": null,
-    "sequence": 1,
-    "siteId": 7,
-    "status": "ONGOING",
-    "teamGroup": '2',
-    "teamOneIcon": "7/b9ee4765-2bfa-4369-9b9a-9fd3ee49ab40.png",
-    "teamOneId": 1,
-    "teamOneName": "德国",
-    "teamTwoIcon": "7/9c417412-25bc-4312-ae5b-feaf7f680010.png",
-    "teamTwoId": 2,
-    "teamTwoName": "苏格兰",
-    "title": "德国 VS 苏格兰"
-  },
 ])
 const populateTeams = () => {
   pageLoading.value = true

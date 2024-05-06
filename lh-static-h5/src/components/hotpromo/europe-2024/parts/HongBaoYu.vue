@@ -107,7 +107,7 @@ const props = defineProps({
     align-items: center;
     .hongbao {
         width: 80%;
-        max-width: 300px;
+    max-width: 230px;
         img {
             width: 100%;
         }
@@ -116,7 +116,7 @@ const props = defineProps({
         background-repeat: no-repeat;
         background-image: url(../images/claim-btn.png);
         background-size: contain;
-        width: 180px;
+        width: 140px;
         height: 120px;
         cursor: pointer;
     }
