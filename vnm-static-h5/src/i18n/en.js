@@ -1461,7 +1461,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
-    1004: "Username can only contains numbers and letters",
+    1004: "The account is temporarily locked due to entering the wrong password many times",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
