@@ -926,6 +926,7 @@ export default {
     homeTeam: 'Home Team',
     homeTeamIcon: 'Home Team Icon',
     icon: 'Icon',
+    pIcon: 'Privilege Icon',
     id: 'ID',
     identifyCode: 'Identify Code',
     imageSize: 'Image Size',

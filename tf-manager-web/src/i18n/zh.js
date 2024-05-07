@@ -930,6 +930,7 @@ export default {
     homeTeam: '主队',
     homeTeamIcon: '主队图标',
     icon: '图标',
+    pIcon: '优惠图标',
     id: 'ID',
     identifyCode: '识别码',
     imageSize: '图像尺寸',
