@@ -381,7 +381,7 @@ onMounted(() => {
 .main-desc {
   color: #7A8EB9;
   font-family: PingFang SC;
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 34.45px;
   margin: 30px auto;
@@ -395,7 +395,7 @@ onMounted(() => {
   font-weight: 500;
   line-height: 34.45px;
   margin: 30px auto;
-  text-align: left;
+  text-align: center;
 
 }
 :deep(.summoner-modal .el-dialog__body) {
