@@ -190,11 +190,11 @@ button {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 10px;
     color: #fff;
     font-weight: bold;
-    font-size: 19px;
+    font-size: 16px;
 }
 
 .modal-input {
