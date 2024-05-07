@@ -74,7 +74,7 @@
             <div class="modal-header">
                 <img src="assets/images/safari-logo.svg" style="width: 50px;height: 50px;"/>
                 <div>
-                    <span>该链接只能使用Safari打开<br/>请使用Safari游览器打开</span>
+                    <span>该链接只能使用<span class="color-rose">Safari</span>打开<br/>请使用<span class="color-rose">Safari</span>游览器打开</span>
                 </div>
             </div>
             <div class="modal-body">
@@ -245,8 +245,8 @@
 
 
     function detectIfSafari() {
-        console.log(navigator.userAgent)
-        if (false && navigator.userAgent.includes('Safari') && !navigator.userAgent.includes('Chrome')) {
+        // console.log(navigator.userAgent)
+        if (isSafari()) {
             // Safari detected
             console.log("You are using Safari.");
         } else {
@@ -256,8 +256,6 @@
 
             $(".modal-open").show();
 
-            $(".step-2-btn, .step-1-btn").css("pointer-events", "none").css("filter", "grayscale(1)");
-
 
             $("#id-copy-btn").click(function(e){
                 var textToCopy= $("#id-url-input").text();
@@ -266,6 +264,10 @@
                 alert("复制成功。")
             })
         }
+    }
+
+    function isSafari() {
+        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     }
 
     function copyTextToClipboard(text) {
