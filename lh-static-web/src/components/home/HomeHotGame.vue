@@ -1199,7 +1199,7 @@ $transition_timer: 0.5s;
           // sports
           .character-sports-im{
             position: relative;
-            right: 1rem;
+            right: 8rem;
             height: 28rem;
           }
 
@@ -1207,6 +1207,12 @@ $transition_timer: 0.5s;
             position: relative;
             right: 3rem;
             height: 28rem;
+          }
+
+          .character-sports-fb {
+            position: relative;
+            right: 6rem;
+            height: 26rem;
           }
 
           .character-sports-pinnacle,
