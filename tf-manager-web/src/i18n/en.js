@@ -1509,6 +1509,7 @@ export default {
     viewChoice: 'View Questionnaire Choices',
     viewDetails: 'View Details',
     viewLog: 'View Log',
+    viewLoginName: 'View Login Name',
     vipLevel: 'VIP Level',
     vipRebateDetails: 'VIP Rebate Record Details',
     vipRebateRecord: 'VIP Rebate Record',

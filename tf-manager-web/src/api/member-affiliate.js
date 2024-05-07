@@ -240,3 +240,12 @@ export const deleteSecurityQuestion = id => {
     ContentType.form
   )
 }
+
+export const updateViewLoginName = (id, view) => {
+  return https().request(
+    `/affiliate/${id}/viewLoginName?_method=PUT`,
+    Method.POST,
+    { view: view },
+    ContentType.form
+  )
+}
