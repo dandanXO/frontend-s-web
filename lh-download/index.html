@@ -246,7 +246,7 @@
 
     function detectIfSafari() {
         // console.log(navigator.userAgent)
-        if (navigator.userAgent.toLowerCase().includes('safari') && !navigator.userAgent.toLowerCase().includes('chrome')) {
+        if (isSafari()) {
             // Safari detected
             console.log("You are using Safari.");
         } else {
@@ -267,7 +267,8 @@
     }
 
     function isSafari() {
-        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const ua = navigator.userAgent.toLowerCase();
+        return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
     }
 
     function copyTextToClipboard(text) {
