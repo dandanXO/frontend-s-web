@@ -547,12 +547,13 @@ async function pDepo(deposit) {
     .then((res) => {
       // const res = ret.data
       // console.log(res)
-
       if (res.code === 0) {
+        if(window.location.href.indexOf("tf88uytin.com") > -1){
+          otag("event", "deposit");
+        }
+
         console.log(res);
         const response = res.data.result;
-
-
 
         if (res.data.result.payResultType === "OFFLINE") {
           btnLoading.value = false;
@@ -654,10 +655,6 @@ async function pDepo(deposit) {
               }
             }
           }
-        }
-
-        if(window.location.href.indexOf("tf88uytin.com") > -1){
-          otag("event", "deposit");
         }
 
       } else {
