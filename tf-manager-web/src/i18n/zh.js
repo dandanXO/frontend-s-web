@@ -1512,6 +1512,7 @@ export default {
     viewChoice: '查看问答选项',
     viewDetails: '查看详情',
     viewLog: '查看日志',
+    viewLoginName: '查看下线用户名',
     vipLevel: 'VIP等级',
     vipRebateDetails: 'VIP返水记录明细',
     vipRebateRecord: 'VIP返水记录',
