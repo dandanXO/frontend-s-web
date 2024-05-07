@@ -122,7 +122,11 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    try {
+                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    } catch (e) {
+                      return '';
+                    }
                   })()
                 }"
               ></div>
@@ -157,7 +161,11 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    try {
+                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    } catch (e) {
+                      return '';
+                    }
                   })()
                 }"
               ></div>
@@ -358,7 +366,11 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    try {
+                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    } catch (e) {
+                      return '';
+                    }
                   })()
                 }"
               ></div>
@@ -392,7 +404,11 @@
                 class="company-image"
                 :style="{
                   backgroundImage: (() => {
-                    return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    try {
+                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
+                    } catch (e) {
+                      return '';
+                    }
                   })()
                 }"
               ></div>
