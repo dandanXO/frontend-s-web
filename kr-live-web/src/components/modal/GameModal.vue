@@ -232,7 +232,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((ret) => {
           gameLaunchNotif({
             position: 'top',
-            spinnerColor: 'blue',
             icon: 'done', // we add an icon
             spinner: false, // we reset the spinner setting so the icon can be displayed
             message: '게임 시작..',
@@ -256,6 +255,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           //
           //   src.value = srcDoc;
           // }
+        }).catch(() => {
+          gameLaunchNotif({
+            position: 'top',
+            icon: 'error', // we add an icon
+            spinner: false, // we reset the spinner setting so the icon can be displayed
+            message: '오류',
+            timeout: 2500 // we will timeout it in 2.5s
+          })
         });
     } else {
       $q.notify({
