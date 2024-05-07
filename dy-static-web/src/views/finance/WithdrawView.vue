@@ -39,7 +39,7 @@
             <span class="promo" v-if="method.recommended">
               {{ "finance.withdraw.recommended" }}
             </span>
-            <img :src="imgURL + method.icon" />
+            <img class="promo-img" :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
 
             <div class="promo-label">
@@ -526,7 +526,7 @@ export default defineComponent({
       // margin-right: 10px;
       // border-radius: 6px;
       // border: solid 1px #484460;
-      // position: relative;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -536,10 +536,10 @@ export default defineComponent({
 
       .promo-label {
         position: absolute;
-        bottom: -13px;
+        bottom: 14px;
         left: 50%;
         transform: translate(-50%);
-        width: 50px;
+        width: 44px;
 
         img {
           width: 100%;
@@ -547,7 +547,7 @@ export default defineComponent({
         }
       }
 
-      img {
+      .promo-img {
         //     width: 40px;
         // padding: 8px 20px;
         // background: #ffffff;
@@ -556,7 +556,7 @@ export default defineComponent({
         background-color: #f7f7f7;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         max-width: 1.5rem;
-        margin-bottom: 0;
+        margin-bottom: 4px;
         border: 2px solid #dddddd;
         padding: 5px 15px;
         border-radius: 3px;
