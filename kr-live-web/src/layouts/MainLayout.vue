@@ -72,7 +72,12 @@ export default defineComponent({
       { imgUrl: require("../assets/images/footer/company9.png") },
       { imgUrl: require("assets/images/footer/logo-dg.png") },
       { imgUrl: require("assets/images/footer/logo-ps.png") },
-      { imgUrl: require("../assets/images/footer/company12.png") }
+      { imgUrl: require("../assets/images/footer/company12.png") },
+      { imgUrl: require("../assets/images/footer/logo-evo.png") },
+      { imgUrl: require("../assets/images/footer/logo-ae.png") },
+      { imgUrl: require("../assets/images/footer/logo-tfgaming.png") },
+      { imgUrl: require("../assets/images/footer/logo-evoplay.png") },
+      { imgUrl: require("../assets/images/footer/logo-wm.png") },
     ]);
 
     const route = useRoute();
