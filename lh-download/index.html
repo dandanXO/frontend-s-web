@@ -267,8 +267,7 @@
     }
 
     function isSafari() {
-        const ua = navigator.userAgent.toLowerCase();
-        return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
+        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && typeof safari !== 'undefined';
     }
 
     function copyTextToClipboard(text) {
