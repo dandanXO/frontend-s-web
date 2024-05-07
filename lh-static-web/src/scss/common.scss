@@ -82,6 +82,7 @@ body {
   .el-carousel__indicators {
     position: absolute;
     bottom: 0px;
+    transform: translate(-50%);
   }
 
   .el-carousel__indicators--outside {
