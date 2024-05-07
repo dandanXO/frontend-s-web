@@ -333,7 +333,7 @@ export default defineComponent({
 
 <style lang="scss">
 .promo-container {
-  overflow-x: hidden;
+  //overflow-x: hidden;
   min-height: 600px;
 
   .promo-banner {
@@ -510,7 +510,7 @@ export default defineComponent({
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 35px;
+          gap: 25px;
           min-height: 818px;
           // position: sticky;
           // top: 100px;
