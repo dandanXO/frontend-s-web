@@ -786,4 +786,11 @@ h5 {
   margin-bottom: 12px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .register-form {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
 </style>

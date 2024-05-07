@@ -1,6 +1,6 @@
 <template>
   <div class="not-loggedin-container">
-    <form action="" style="display: flex;" @keypress.enter="onLoginSubmit">
+    <form action="" class="login-form" @keypress.enter="onLoginSubmit">
       <div class="left-container">
         <div class="account">
           <input type="text" class="account-input" placeholder="계정" v-model="loginForm.loginName" />
@@ -31,6 +31,13 @@ import { reactive, ref, onMounted } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import { useBreakpoints } from "@vueuse/core";
+
+const breakpoints = useBreakpoints({
+  laptop: 768
+});
+
+const loginWindow = breakpoints.smaller("laptop");
 
 const store = userStore();
 const router = useRouter();
@@ -43,10 +50,6 @@ const loginForm = reactive({
   codeId: ""
 });
 
-const enter = () => {
-  console.log("123456");
-};
-
 const goToRegister = () => {
   router.push("/?page=register");
 };
@@ -56,23 +59,27 @@ const toGetCode = () => {
 };
 
 const onLoginSubmit = () => {
-  (async () => {
-    store
-      .memberLogin({
-        loginName: loginForm.loginName.trim(),
-        password: loginForm.password,
-        sid: store.visitorId,
-        captchaCode: loginForm.captchaCode,
-        codeId: loginForm.codeId
-      })
-      .then(() => {
-        location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-        getCode();
-      });
-  })();
+  if (loginWindow.value) {
+    router.push("/?page=login");
+  } else {
+    (async () => {
+      store
+        .memberLogin({
+          loginName: loginForm.loginName.trim(),
+          password: loginForm.password,
+          sid: store.visitorId,
+          captchaCode: loginForm.captchaCode,
+          codeId: loginForm.codeId
+        })
+        .then(() => {
+          location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+          getCode();
+        });
+    })();
+  }
 };
 
 const getCode = () => {
@@ -114,18 +121,28 @@ onMounted(() => {
   }
 }
 
+.login-form {
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 1200px) {
+    flex-direction: row;
+  }
+}
+
 .left-container {
   display: none;
   justify-content: space-between;
-  @media (min-width: 1200px) {
+  @media (min-width: 769px) {
     display: flex;
   }
 }
 
 .right-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
   margin-left: 0px;
+  margin-top: 8px;
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;

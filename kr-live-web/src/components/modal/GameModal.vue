@@ -216,11 +216,28 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         apiParams.language = t("lang.langVal");
       }
 
+      const gameLaunchNotif = $q.notify({
+        position: 'top',
+        spinnerColor: 'blue',
+        group: false, // required to be updatable
+        timeout: 0, // we want to be in control when it gets dismissed
+        spinner: true,
+        message: '로드 중...'
+      })
+
       api
         .get(`/session/launch?_time=${new Date().getTime()}`, {
           params: apiParams
         })
         .then((ret) => {
+          gameLaunchNotif({
+            position: 'top',
+            icon: 'done', // we add an icon
+            spinner: false, // we reset the spinner setting so the icon can be displayed
+            message: '게임 시작..',
+            timeout: 2500 // we will timeout it in 2.5s
+          })
+
           let srcDoc = ret.data.data;
 
           window.open(srcDoc, "_blank");
@@ -238,6 +255,14 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           //
           //   src.value = srcDoc;
           // }
+        }).catch(() => {
+          gameLaunchNotif({
+            position: 'top',
+            icon: 'error', // we add an icon
+            spinner: false, // we reset the spinner setting so the icon can be displayed
+            message: '오류',
+            timeout: 2500 // we will timeout it in 2.5s
+          })
         });
     } else {
       $q.notify({
