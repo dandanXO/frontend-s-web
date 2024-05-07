@@ -235,6 +235,8 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -464,6 +466,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
