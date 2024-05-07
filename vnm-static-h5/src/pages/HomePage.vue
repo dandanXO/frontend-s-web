@@ -103,7 +103,73 @@
     </div>
   </div>
 
-  <div class="details-bar">
+  <div class="hot-matches-wrapper">
+    <div class="hot-matches-title">🔥Trận Đấu Hot - Hot Matches</div>
+    <div class="hot-matches-container">
+      <q-carousel
+        class="hot-matches-carousel"
+        navigation
+        v-model="slideHotMatches"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+      >
+        <template v-slot:navigation-icon="{ active, onClick }" v-if="hotMatches.length > 1">
+          <q-btn
+            padding="3px"
+            v-if="active"
+            size="xs"
+            color="light-blue"
+            @click="onClick"
+            style="border: 1px solid #2a8af2; border-radius: 50%; margin: 6px 8px"
+          />
+          <q-btn
+            padding="3px"
+            v-else
+            size="xs"
+            color="transparent"
+            @click="onClick"
+            style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
+          />
+        </template>
+
+        <q-carousel-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
+          <div class="hot-matches-item">
+            <div class="team-details team-details__home">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+              </div>
+              <div class="team-name">{{ item.teamOneName }}</div>
+            </div>
+            <div class="match-details">
+              <div class="match-title">{{ item.competitionName }}</div>
+              <div class="match-time">{{ item.competitionTime }}</div>
+              <div class="match-btn">
+                <q-btn
+                  rounded
+                  no-caps
+                  color="brightbtn"
+                  class="sm-screen-txt"
+                  @click="playGame(item.platformName, item.platformCode, '')"
+                >
+                  {{ $t("lang.play_now") }}
+                </q-btn>
+              </div>
+            </div>
+            <div class="team-details team-details__away">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+              </div>
+              <div class="team-name">{{ item.teamTwoName }}</div>
+            </div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </div>
+
+  <!-- <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
         {{
@@ -125,16 +191,12 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
-        <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
       </router-link>
     </div>
-  </div>
+  </div> -->
 
   <div class="home-game-section">
     <div class="game-left-list">
@@ -1329,6 +1391,7 @@ export default defineComponent({
       getAppDownloadUrl();
       getUnreadTotal();
       getNewsDetails();
+      loadHotMatches();
     });
 
     const imageLoading = ref(false);
@@ -1399,7 +1462,22 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       fabPos.value = [newX, newY];
-    }
+    };
+
+    const hotMatches = ref([]);
+
+    const loadHotMatches = () => {
+      api
+        .get("/platform-competition?type=Football")
+        .then((res) => {
+          if (res.code === 0) {
+            hotMatches.value = res.data;
+          }
+        })
+        .catch(() => {});
+    };
+
+    const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
 
     return {
       imageLoading,
@@ -1498,8 +1576,11 @@ export default defineComponent({
       newsDetail_05,
       goToNewsPage,
       isPlatformComingSoon,
-
       moveFab,
+      loadHotMatches,
+      hotMatches,
+      hotMatchesImgURL,
+      slideHotMatches: ref(0)
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2296,6 +2377,92 @@ export default defineComponent({
     .header-middle {
       :deep(.q-btn) {
         min-width: 75px;
+      }
+    }
+  }
+}
+
+.hot-matches-wrapper {
+  width: calc(100% - 2rem);
+  margin: 20px auto 10px;
+
+  .hot-matches-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #313441;
+  }
+
+  .hot-matches-container {
+  }
+
+  .hot-matches-carousel {
+    height: auto !important;
+    background: transparent;
+  }
+
+  .hot-matches-slide {
+    padding-top: 0;
+  }
+
+  .hot-matches-item {
+    background: #f4f9fe;
+    border-radius: 20px;
+    margin-top: 12px;
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+
+    .match-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+
+      .match-title {
+        color: #424f72;
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+      }
+      .match-time {
+        color: #7a80a1;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .match-btn {
+        margin-top: auto;
+        margin-bottom: 12px;
+      }
+    }
+
+    .team-details {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      max-width: 30%;
+
+      .team-details__home {
+      }
+
+      .team-details__away {
+      }
+
+      .team-icon {
+        // border-radius: 50%;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+      }
+
+      .team-name {
+        text-align: center;
+        color: #7a80a1;
       }
     }
   }

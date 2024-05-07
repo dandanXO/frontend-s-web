@@ -42,6 +42,7 @@ export default {
     login_register_to_view: "Log in/Register to view",
     tf88_news: "TF88 News",
     see_all: "See all",
+    play_now: "Play now",
 
     // side menu
     menu_sports: "Sports",

@@ -150,7 +150,8 @@ export default {
     futureGaming: "The future of gaming is here.Great games on all devices.TF88 App",
     scanToDownload: "Scan to download the APP",
     moreDetails: "More details",
-    announcementList: "Announcement List"
+    announcementList: "Announcement List",
+    playNow: "Play now",
   },
   personal: {
     personalInfo: "Personal information",

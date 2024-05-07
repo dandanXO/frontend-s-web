@@ -150,7 +150,8 @@ export default {
     futureGaming: "Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.",
     scanToDownload: "Quét để tải ứng dụng",
     moreDetails: "Chi tiết thêm",
-    announcementList: "Danh sách thông báo"
+    announcementList: "Danh sách thông báo",
+    playNow: "Bắt đầu chơi",
   },
   personal: {
     personalInfo: "Thông tin cá nhân",
