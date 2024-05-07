@@ -1416,6 +1416,9 @@ export default defineComponent({
               if (spObj.code === "SABA") {
                 spObj.title = "沙巴体育";
               }
+              if (spObj.code === "FB") {
+                spObj.title = "FB体育";
+              }
               if (spObj.code === "PINNACLE") {
                 spObj.title = "平博体育";
               }
