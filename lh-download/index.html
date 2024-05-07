@@ -246,7 +246,7 @@
 
     function detectIfSafari() {
         // console.log(navigator.userAgent)
-        if (isSafari()) {
+        if (navigator.userAgent.toLowerCase().includes('safari') && !navigator.userAgent.toLowerCase().includes('chrome')) {
             // Safari detected
             console.log("You are using Safari.");
         } else {
