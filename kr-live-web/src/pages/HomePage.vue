@@ -343,9 +343,9 @@
     <!-- slot end -->
 
     <Transition>
-      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish'">
+      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && !isShow">
         <template v-for="p in fishPlatforms" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
+          <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
             <div
               class="platform-img"
               :style="{
@@ -377,6 +377,172 @@
             </div>
           </div>
         </template>
+      </div>
+    </Transition>
+    <Transition>
+      <div class="game-scroll-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && isShow">
+        <q-scroll-area
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+        >
+          <div class="bookmarks">
+            <div
+              class="plat-item"
+              v-for="p in fishPlatforms"
+              :class="{ active: p.id === selectedPlatId }"
+              :key="p"
+              @click="switchPlat(p, 'fish')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
+            </div>
+          </div>
+          <q-scroll-observer axis="vertical" />
+        </q-scroll-area>
+
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass :color="'blue'" size="8em" />
+        </div>
+
+        <q-scroll-area
+          v-if="!isLoading && selectedPlatId === -99"
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+        >
+          <div class="fish-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
+            <div
+              v-for="(game, index) in sortedFavGamesList"
+              :key="index"
+              :data-id="index"
+              v-intersection="onIntersection"
+              style="height: auto"
+              class="btn-pointer inner-fish-game"
+            >
+              <transition name="in-view">
+                <q-list
+                  class="btn-fish-game q-col-gutter-none"
+                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
+                >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
+                    <div class="fish-name">
+                      {{ game.name }}
+                    </div>
+                  </div>
+                </q-list>
+              </transition>
+            </div>
+          </div>
+
+          <div class="coming-soon-div" v-else>
+            <img src="../assets/home/coming-soon-img.png" />
+            <span>{{ $t("lang.no_fav_game_yet") }}</span>
+          </div>
+        </q-scroll-area>
+
+        <q-scroll-area
+          v-if="!isLoading && selectedPlatId !== -99"
+          ref="scrollFishRef"
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+        >
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                color="white"
+                filled
+                class="search-input"
+                v-model="gamePage.searchKey"
+                :label="$t('lang.keyin_keyword')"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    style="margin-right: 5px"
+                    @click="clearSearchInput"
+                    class="clear-input-icon btn-pointer"
+                    name="close"
+                  ></q-icon>
+
+                  <q-icon
+                    color="brightbtn"
+                    name="search"
+                    style=""
+                    @click="searchList"
+                    class="clear-input-icon btn-pointer"
+                  ></q-icon>
+                </template>
+              </q-input>
+            </q-form>
+          </div>
+          <div class="fish-grid" style="padding-bottom: 20px">
+            <div
+              v-for="(game, index) in gamePage.gameList"
+              :key="index"
+              :data-id="index"
+              v-intersection="onIntersection"
+              style="height: auto"
+              class="btn-pointer inner-slot-game"
+            >
+              <transition name="in-view">
+                <q-list
+                  class="btn-fish-game q-col-gutter-none"
+                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
+                >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
+                    <div class="fish-name">{{ game.name }}</div>
+                  </div>
+                </q-list>
+              </transition>
+            </div>
+          </div>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
+        </q-scroll-area>
       </div>
     </Transition>
 
@@ -1047,7 +1213,7 @@ export default defineComponent({
         selectedPlatId.value = plat.id;
         loadGameList("FISH");
         if (scrollPageRef.value) {
-          scrollPageRef.value.setScrollPosition("vertical", 0);
+          scrollFishRef.value.setScrollPosition("vertical", 0);
         }
       } else if (menuType === "poker") {
         selectedLiveTab.value = plat.name;
@@ -1085,6 +1251,7 @@ export default defineComponent({
       }
     };
     const scrollSlotRef = ref();
+    const scrollFishRef = ref();
     const scrollPageRef = ref();
     const isLoading = ref(false);
     const loadGameList = (type) => {
@@ -1627,6 +1794,7 @@ export default defineComponent({
       scrollPosition,
       isShowBtt,
       scrollSlotRef,
+      scrollFishRef,
       selectedPlatId,
       searchList,
       clearSearchInput,
@@ -1765,7 +1933,7 @@ export default defineComponent({
   }
 }
 
-.slot-grid {
+.slot-grid, .fish-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 0px auto 10px;
@@ -1774,7 +1942,7 @@ export default defineComponent({
   row-gap: 10px;
   width: calc(100% - 20px);
 
-  .inner-slot-game {
+  .inner-slot-game, .inner-fish-game {
     position: relative;
   }
 
@@ -1790,7 +1958,7 @@ export default defineComponent({
     }
   }
 
-  .slot-name {
+  .slot-name, .fish-name {
     text-align: center;
     padding: 5px 2px 0px;
     font-size: 10px;
@@ -2452,7 +2620,7 @@ export default defineComponent({
     }
   }
 
-  .slot-grid {
+  .slot-grid, .fish-grid {
     grid-template-columns: repeat(4, 1fr);
     column-gap: 14px;
     row-gap: 14px;
@@ -2512,7 +2680,7 @@ export default defineComponent({
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .slot-grid {
+  .slot-grid, .fish-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 
