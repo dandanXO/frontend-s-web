@@ -1847,7 +1847,7 @@ body {
       }
 
       .logo {
-        height: 50px;
+        height: 64px;
         //width: 102px;
 
         img {
