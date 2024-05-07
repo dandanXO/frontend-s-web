@@ -516,6 +516,10 @@ function doDeposit(data) {
   loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
+      if(window.location.href.indexOf("tf88uytin.com") > -1){
+        otag("event", "deposit");
+      }
+
       doIt(d).then((resp) => {
         const response = resp.data.result;
         if (response.payResultType === "OFFLINE") {
@@ -556,9 +560,6 @@ function doDeposit(data) {
           // );
         }
 
-        if(window.location.href.indexOf("tf88uytin.com") > -1){
-          otag("event", "deposit");
-        }
 
       });
       loadingBtn.value = false;

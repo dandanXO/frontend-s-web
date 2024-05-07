@@ -96,8 +96,8 @@
             <th>{{ t('fields.site') }}</th>
             <th>{{ t('fields.balance') }}</th>
             <th>{{ t('fields.registerTime') }}</th>
-            <th>{{ t('fields.totalDeposit') }}</th>
-            <th>{{ t('fields.totalWithdraw') }}</th>
+            <!--            <th>{{ t('fields.totalDeposit') }}</th>-->
+            <!--            <th>{{ t('fields.totalWithdraw') }}</th>-->
             <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
@@ -183,18 +183,18 @@
                 }"
               />
             </td>
-            <td>
-              $
-              <span
-                v-formatter="{data: record.totalDeposit, type: 'money'}"
-              />
-            </td>
-            <td>
-              $
-              <span
-                v-formatter="{data: record.totalWithdraw, type: 'money'}"
-              />
-            </td>
+            <!--            <td>-->
+            <!--              $-->
+            <!--              <span-->
+            <!--                v-formatter="{data: record.totalDeposit, type: 'money'}"-->
+            <!--              />-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--              $-->
+            <!--              <span-->
+            <!--                v-formatter="{data: record.totalWithdraw, type: 'money'}"-->
+            <!--              />-->
+            <!--            </td>-->
             <td>
               <el-button
                 icon="el-icon-edit"

@@ -103,7 +103,7 @@ export default {
     maintenance: "Bảo trì",
     maintenanceTime: "Thời gian bảo trì",
     viewnow: "Xem ngay",
-    playnow: "Chơi ngay",
+    playnow: "Chơi Ngay",
     systemError: "Lỗi hệ thống",
     loginTitle: "Thông báo",
     bankName: "Ngân hàng ",

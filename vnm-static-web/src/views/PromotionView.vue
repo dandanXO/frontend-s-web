@@ -402,7 +402,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: #7a8eb9;
+        color: $font-5;
       }
       tr {
         &:last-child {
@@ -865,7 +865,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
-          color: #7a8eb9;
+          color: $font-5;
           font-size: 20px;
           ol {
             li {

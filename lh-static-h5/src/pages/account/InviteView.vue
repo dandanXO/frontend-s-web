@@ -164,7 +164,7 @@ export default defineComponent({
       const duration = 0;
       setTimeout(() => {
         setVerticalScrollPosition(target, offset, duration)
-      },100)
+      },150)
     }
 
     const copyText = (text) => {
@@ -239,9 +239,11 @@ export default defineComponent({
 
     onActivated(() => {
       const isSummon =  sessionStorage.getItem("GO_SUMMON");
+      const isSummon2 =  localStorage.getItem("GO_SUMMON");
       // scroll to #summon-share section if route has hash pattern /account/invite#summon-share
-      if(route.hash === '#summon-share' || isSummon) {
+      if(route.hash === '#summon-share' || isSummon || isSummon2) {
         sessionStorage.removeItem("GO_SUMMON")
+        localStorage.removeItem("GO_SUMMON")
         scrollToElement(document.getElementById('summon-share'));
       }
     })

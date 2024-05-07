@@ -132,7 +132,7 @@ onMounted(() => {
     border-radius: 15px;
   }
   .news-listing {
-    font-family: 'Roboto';
+    // font-family: 'Roboto';
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -164,7 +164,7 @@ onMounted(() => {
         flex: 3;
         cursor: pointer;
         .news-title {
-          color: #7a80a1;
+          color: #444444;
           font-size: 20px;
           font-weight: 700;
         }
@@ -173,7 +173,7 @@ onMounted(() => {
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
-          color: #a4aabb;
+          color: #444444;
           margin: 15px 0;
         }
         .standard-button {

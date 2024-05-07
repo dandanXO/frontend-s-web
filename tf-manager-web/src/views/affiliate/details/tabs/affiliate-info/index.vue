@@ -692,6 +692,36 @@
           </span>
           <span v-if="affiliateDetails.downlineAffiliate === null">0</span>
         </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon
+                icon-class="peoples"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.viewLoginName') }}
+            </div>
+          </template>
+          <el-tag v-if="affiliateDetails.viewLoginName" size="mini" type="success">
+            {{ t('fields.show') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger">
+            {{ t('fields.hidden') }}
+          </el-tag>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:view-login-name']"
+            @click="changeViewLoginName()"
+          >
+            {{ t('fields.update') }}
+          </el-button>
+        </el-descriptions-item>
         <el-descriptions-item />
       </el-descriptions>
     </el-card>
@@ -1423,6 +1453,7 @@ import {
   updatePlatformFeeRate,
   updateTimeType,
   updateBelongType,
+  updateViewLoginName
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1561,7 +1592,7 @@ const memberDetail = reactive({
   site: '',
   siteId: 0,
   risk: '',
-  riskColor: '',
+  riskColor: ''
 })
 
 const affiliateDetails = reactive({
@@ -1572,6 +1603,7 @@ const affiliateDetails = reactive({
   commission: 0,
   paymentFee: null,
   platformFee: null,
+  viewLoginName: 1
 })
 
 const superiorAffiliateDetail = reactive({
@@ -2126,6 +2158,7 @@ async function loadAffiliateRecord() {
   affiliateDetails.commission = record.commission * 100
   affiliateDetails.paymentFee = record.paymentFee === null ? null : record.paymentFee * 100
   affiliateDetails.platformFee = record.platformFee === null ? null : record.platformFee * 100
+  affiliateDetails.viewLoginName = record.viewLoginName;
 }
 
 function restrictCommissionDecimalInput(event) {
@@ -2198,6 +2231,18 @@ async function resetSecurityQuestion() {
       memberDetail[detailField] = data.data[detailField]
     })
     ElMessage({ message: t('message.resetSuccess'), type: 'success' })
+  })
+}
+
+async function changeViewLoginName() {
+  ElMessageBox.confirm(t('message.confirmUpdate'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await updateViewLoginName(props.affId)
+    await loadAffiliateRecord()
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
   })
 }
 

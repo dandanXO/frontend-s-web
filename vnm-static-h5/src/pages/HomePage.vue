@@ -531,20 +531,9 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <!-- <q-btn
-      rounded
-      no-caps
-      color="info"
-      :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab"
-      @click="getRebateAmt"
-      persistent
-    >
+    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
-    </q-btn> -->
-     <div class="rebates-absolute"
-     :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">{{ $t("lang.rebates") }}</div>
+    </div>
   </q-page-sticky>
 
   <q-dialog
@@ -1365,22 +1354,22 @@ export default defineComponent({
     };
 
     const gotoPromo = (banner) => {
-      const urlSplit= banner.redirectUrl.split("|");
-      if(urlSplit.length >= 2){
-        const type= urlSplit[0];
-        if(type==='page'){
+      const urlSplit = banner.redirectUrl.split("|");
+      if (urlSplit.length >= 2) {
+        const type = urlSplit[0];
+        if (type === "page") {
           router.push(`/${banner.redirectUrl}`);
-        }else{
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
-      }else{
-        if(banner.redirectUrl.includes("https://")){
-          window.open(banner.redirectUrl,"_blank");
-        }else{
+      } else {
+        if (banner.redirectUrl.includes("https://")) {
+          window.open(banner.redirectUrl, "_blank");
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
       }
-    }
+    };
 
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
@@ -1400,6 +1389,17 @@ export default defineComponent({
     };
 
     const isPlatformComingSoon = ref(false);
+
+    const moveFab = (ev) => {
+      const maxX = window.innerWidth - 135;
+      const maxY = window.innerHeight - 200;
+      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    }
 
     return {
       imageLoading,
@@ -1499,10 +1499,12 @@ export default defineComponent({
       goToNewsPage,
       isPlatformComingSoon,
 
-      moveFab(ev) {
-        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
-        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
-      }
+      moveFab,
+
+      // moveFab(ev) {
+      //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      //   fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
+      // }
     };
   }
 });
@@ -1752,7 +1754,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    margin-top:2px;
+    margin-top: 2px;
   }
 
   .header-right {
@@ -1784,10 +1786,10 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   color: #696d70;
-    border-radius: 2.1875rem;
-    background: #fff;
-    box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
-    font-family: 'Roboto';
+  border-radius: 2.1875rem;
+  background: #fff;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -1832,7 +1834,7 @@ export default defineComponent({
     flex: 3;
     padding: 0px 8px 0px 0px;
     //border-right: 1px dashed $font-1;
-    color: $font-1;
+    color: $font-4;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -1842,7 +1844,7 @@ export default defineComponent({
 
   .main-balance {
     font-size: 1.6rem;
-    color: $dark;
+    color: $font-4;
 
     &.main-nologin {
       font-size: 1rem;
@@ -2187,6 +2189,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
+          color: $font-4;
         }
 
         .platform-subtitle {
@@ -2238,7 +2241,7 @@ export default defineComponent({
   }
 }
 .rebates-absolute {
-  background: url(../assets/images/home/rebates-absolute.png)no-repeat center center;
+  background: url(../assets/images/home/rebates-absolute.png) no-repeat center center;
   background-size: contain;
   height: 100px;
   width: 135px;
@@ -2247,20 +2250,19 @@ export default defineComponent({
   align-items: center;
   padding-top: 40px;
   font-weight: bold;
-
 }
 
-.modal-home-popup{
-  background:transparent;
+.modal-home-popup {
+  background: transparent;
   box-shadow: none;
 
-  .q-card{
-    background:transparent;
+  .q-card {
+    background: transparent;
     box-shadow: none;
   }
 
-  .q-card-section{
-    background:transparent;
+  .q-card-section {
+    background: transparent;
     box-shadow: none;
   }
 }
@@ -2290,11 +2292,8 @@ export default defineComponent({
     }
   }
 
-
   .home-header {
-
     .header-middle {
-
       :deep(.q-btn) {
         min-width: 75px;
       }

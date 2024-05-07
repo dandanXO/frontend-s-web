@@ -12,7 +12,7 @@
     <div class="all-promotions" v-if="!isPromoDetail">
       <div class="promo-main-container">
         <div class="promo-type-wrapper">
-          <div style="position: sticky; top: 0">
+          <div>
             <div class="type-list">
               <img src="../assets/promo/menu-title.png" />
               <div
@@ -333,7 +333,7 @@ export default defineComponent({
 
 <style lang="scss">
 .promo-container {
-  overflow-x: hidden;
+  //overflow-x: hidden;
   min-height: 600px;
 
   .promo-banner {
@@ -344,6 +344,7 @@ export default defineComponent({
 
     .promo-banner-image {
       position: relative;
+    overflow: hidden;
 
       .countdown-day{
         position:absolute;
@@ -485,12 +486,17 @@ export default defineComponent({
       padding: 10px 0;
       display: flex;
       gap: 30px;
+      min-height: 1250px;
+    align-items: flex-start;
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
         border-radius: 20px;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
         /* width */
+        align-self: flex-start;
+        position: sticky;
+        top: 120px;
         ::-webkit-scrollbar {
           width: 0px;
           height: 0px;
@@ -504,10 +510,10 @@ export default defineComponent({
           overflow: auto;
           width: 280px;
           flex-direction: column;
-          gap: 35px;
+          gap: 25px;
           min-height: 818px;
-          position: sticky;
-          top: 100px;
+          // position: sticky;
+          // top: 100px;
           .type-item {
             cursor: pointer;
             // border-radius: 20px;

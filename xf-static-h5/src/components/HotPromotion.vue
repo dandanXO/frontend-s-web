@@ -19,6 +19,7 @@
     />
     <BonusSpinWheelPromo v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo' && !isCommonPromo" />
+    <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award' && !isCommonPromo" />
     <HongBaoYu2024Promo
       :promo-code="list.promoCode"
       v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
@@ -204,6 +205,7 @@ import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeIn
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
+import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -219,7 +221,8 @@ export default defineComponent({
     PrivilegeInvite,
     // CnySpinWheelPromo,
     BonusSpinWheelPromo,
-    ReturnPromo
+    ReturnPromo,
+    DepositAwardPromo
   },
   props: {
     list: {
@@ -279,6 +282,7 @@ export default defineComponent({
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "cny-spinwheel" ||
       this.list.redirectUrl === "xf-return-promo" ||
+      this.list.redirectUrl === "xf-deposit-award" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

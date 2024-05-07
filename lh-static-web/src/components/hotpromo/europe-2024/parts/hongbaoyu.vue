@@ -100,7 +100,8 @@ const refreshBal = () => {
     justify-content: center;
     align-items: center;
     .hongbao {
-        width: 500px;
+        width: 250px;
+        
         img {
             width: 100%;
         }
@@ -109,8 +110,8 @@ const refreshBal = () => {
         background-repeat: no-repeat;
         background-image: url(../images/claim-btn.png);
         background-size: contain;
-        width: 330px;
-        height: 150px;
+        width: 160px;
+        height: 100px;
         cursor: pointer;
     }
   }

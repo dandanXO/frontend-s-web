@@ -102,7 +102,7 @@ onMounted(() => {
     min-height: 1240px;
 
     .title {
-      color: #424f72;
+      color: $font-5;
       font-size: 1.125rem;
       font-weight: 700;
       line-height: normal;
@@ -131,7 +131,7 @@ onMounted(() => {
   :deep(.el-tabs__item.is-active) {
     background: #e7f3ff;
     height: 50px;
-    color: #424f72;
+    color:  $font-5;
   }
 }
 </style>
