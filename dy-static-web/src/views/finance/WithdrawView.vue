@@ -41,6 +41,10 @@
             </span>
             <img :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img v-if="method.privilegeIcon" :src="`${imgURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </el-form-item>
 
@@ -529,6 +533,20 @@ export default defineComponent({
       flex-direction: column;
       cursor: pointer;
       margin-right: 5px;
+
+      .promo-label {
+        position: absolute;
+        bottom: -13px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 50px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
       img {
         //     width: 40px;
         // padding: 8px 20px;

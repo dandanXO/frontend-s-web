@@ -16,6 +16,11 @@
               <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
+
           </div>
         </div>
         <q-form ref="withdrawFormRef">
@@ -291,6 +296,9 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -518,6 +526,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
@@ -557,6 +566,20 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
+    .promo-label{
+      position:absolute;
+      bottom:8px;
+      left:50%;
+      transform: translate(-50%);
+      width: 50px;
+
+      img{
+        width: 100%;
+        height: auto;
+        padding: 4px 6px;
+      }
+    }
+
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 6px;
@@ -575,6 +598,11 @@ export default defineComponent({
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
         border: 1px solid #33bcd4;
+      }
+
+      .promo-img{
+        border:none;
+        border-radius:0px;
       }
 
       // img {
