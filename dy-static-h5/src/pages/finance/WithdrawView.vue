@@ -157,7 +157,6 @@
           <div v-else-if="isEWALLET">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
-              >
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
@@ -502,19 +501,19 @@ export default defineComponent({
       // display: flex;
       // justify-content: center;
       width: 100%;
-      max-width: 5rem;
+      max-width: 4.5rem;
 
       position: relative;
       cursor: pointer;
 
       .promo-label {
         position: absolute;
-        bottom: 8px;
+        bottom: 6px;
         left: 50%;
         transform: translate(-50%);
         //width: 50px;
         width: 80%;
-        max-width: 4rem;
+        max-width: 4.2rem;
 
         img {
           width: 100%;
@@ -527,14 +526,14 @@ export default defineComponent({
         border: 2px solid #d7d7d7;
         border-radius: 6px;
         margin-bottom: 10px;
-        padding: 8px;
+        padding: 4px;
         display: flex;
         align-items: center;
       }
 
       img {
         width: 100%;
-        padding: 5px 10px;
+        padding: 0px 5px;
       }
 
       &.active {
