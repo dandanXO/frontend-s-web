@@ -137,7 +137,7 @@
         margin-bottom: 1.5rem;
         display: grid;
         grid-template-columns: repeat(6, 5rem);
-        grid-gap: 1.0rem;
+        grid-gap: 1rem;
       }
 
       .platform-list-item {
@@ -171,7 +171,6 @@
 
         &.active {
           font-weight: bold;
-
 
           .list-item-btn {
             border: 0px;
@@ -726,5 +725,64 @@
 .game-cat-tabs {
   :deep(.el-tabs__nav-wrap::after) {
     background-color: transparent;
+  }
+}
+
+.dark {
+  .platform-section {
+    background-image: none;
+    background: $background-dark;
+  }
+
+  .platform-container {
+    .platform-container-inner {
+      .platform-item {
+        .platform-title-wrap {
+          .platform-title,
+          .platform-subtitle {
+            background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
+            background-clip: text;
+          }
+        }
+
+        .platform-txt-box {
+          color: $font-3-dark;
+        }
+      }
+    }
+  }
+
+  .game-container {
+    @include content-block-dark;
+  }
+
+  .pagination-wrapper {
+    &:deep(.el-pagination) {
+      .el-pager {
+        li {
+          background: #4e6b96;
+          border: 1px solid #dfe3e8;
+          color: $color-white;
+
+          &.is-active {
+            background: $accent;
+            color: $color-white;
+          }
+        }
+      }
+
+      .btn-prev,
+      .btn-next {
+        background: #4e6b96;
+        color: #c4cdd5;
+        border: 1px solid #dfe3e8;
+
+        &:disabled {
+          background: #919eab;
+          color: #c4cdd5;
+          border: none;
+        }
+      }
+    }
   }
 }

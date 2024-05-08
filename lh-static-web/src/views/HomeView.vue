@@ -48,7 +48,7 @@ onMounted(() => {
 .dark {
   .home {
     background-image: none;
-    background-color: #20242a;
+    background-color: $background-dark;
   }
 }
 </style>

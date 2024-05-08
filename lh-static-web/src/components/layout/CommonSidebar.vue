@@ -15,6 +15,14 @@
       </div>
     </div>
     <div class="sticky-sidebar-items">
+      <div
+        v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+        class="sticky-sidebar-item"
+        @click="handleDarkModeClick"
+      >
+        <img src="@/assets/images/home/sticky-sidebar-dark-mode-icon.png" />
+        <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
+      </div>
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
         <div>热门活动</div>
@@ -41,6 +49,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   components: {},
@@ -51,6 +60,9 @@ export default defineComponent({
     };
     const store = userStore();
     const ui = uiStore();
+    const isDark = useDark();
+
+    const handleDarkModeClick = () => (isDark.value = !isDark.value);
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -72,7 +84,9 @@ export default defineComponent({
       store,
       customerHovered,
       scrollToTop,
-      downloadUrl
+      downloadUrl,
+      isDark,
+      handleDarkModeClick
     };
   }
 });
@@ -149,5 +163,27 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.dark {
+  .sticky-sidebar-items {
+    @include content-block-dark;
+
+    .sticky-sidebar-item {
+      color: $color-white;
+    }
+  }
+
+  .additional-info-items {
+    @include content-block-dark;
+
+    .additional-info-item {
+      color: $color-white;
+
+      &:hover {
+        background: rgba($font-1-dark, 10%);
+      }
+    }
+  }
 }
 </style>

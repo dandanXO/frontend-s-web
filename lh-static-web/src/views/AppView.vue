@@ -13,10 +13,17 @@
           width="570px"
           class="img-slogan"
           data-v-93674b8c=""
-          style="padding-left:20px;"
+          style="padding-left: 20px"
         />
-        <img src="../assets/app/light.png" alt="最佳电竞竞猜app" width="570px" class="img-slogan"  style="padding-left:20px;" data-v-93674b8c="" />
-        <div class="text-content"  style="padding-left:20px;">
+        <img
+          src="../assets/app/light.png"
+          alt="最佳电竞竞猜app"
+          width="570px"
+          class="img-slogan"
+          style="padding-left: 20px"
+          data-v-93674b8c=""
+        />
+        <div class="text-content" style="padding-left: 20px">
           海量体育、电竞顶尖赛事
           <br />
           真人娱乐、彩票投注及电子游艺等，最新最全娱乐项目尽在掌中
@@ -109,7 +116,7 @@ export default defineComponent({
   },
   setup() {
     const onSwiper = (swiper) => {};
-    const router= useRouter();
+    const router = useRouter();
 
     const onSlideChange = () => {
       // console.log("slide change");
@@ -135,9 +142,9 @@ export default defineComponent({
     ]);
     const selectedPlat = ref();
     const clickPlat = (plat) => {
-      if(plat.code==='APP'){
-        router.push(plat.link)
-      }else{
+      if (plat.code === "APP") {
+        router.push(plat.link);
+      } else {
         selectedPlat.value = plat.code;
       }
     };
@@ -318,83 +325,83 @@ export default defineComponent({
       }
     }
     .platform-button-w-qr-code {
-          display: flex;
-          justify-content: center;
-          position: relative;
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .platform-button {
+      width: 242px;
+      height: 68px;
+      font-size: 22px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      line-height: 30px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+      cursor: pointer;
+      z-index: 1;
+
+      &.outline {
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+        box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
+        box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
+        color: #468cff;
+      }
+    }
+
+    .platform-qr-code {
+      position: absolute;
+      bottom: -20px;
+      margin: auto;
+      width: 280px;
+      height: 297px;
+      box-shadow: 0px 4px 34px 0px #00000033;
+      background-color: #ffffffd6;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 20px;
+      display: none;
+
+      .supported-mobile-os {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          line-height: 29px;
+          padding: 0px 3px;
         }
+      }
 
-        .platform-button {
-          width: 242px;
-          height: 68px;
-          font-size: 22px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          color: #fff;
-          line-height: 30px;
-          padding: 10px 20px;
-          border-radius: 100px;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-          cursor: pointer;
-          z-index: 1;
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        cursor: pointer;
+        color: #0000004d;
+      }
 
-          &.outline {
-            background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-            box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
-            box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
-            color: #468cff;
-          }
-        }
+      .qr-code-wrapper {
+        background-image: url("./../assets/app/square-crosshair.png");
+        background-size: 100% 100%;
+        padding: 8px;
+      }
 
-        .platform-qr-code {
-          position: absolute;
-          bottom: -20px;
-          margin: auto;
-          width: 280px;
-          height: 297px;
-          box-shadow: 0px 4px 34px 0px #00000033;
-          background-color: #ffffffd6;
-          border-radius: 8px;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
-          padding: 20px;
-          display: none;
-
-          .supported-mobile-os {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            span {
-              line-height: 29px;
-              padding: 0px 3px;
-            }
-          }
-
-          .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            cursor: pointer;
-            color: #0000004d;
-          }
-
-          .qr-code-wrapper {
-            background-image: url("./../assets/app/square-crosshair.png");
-            background-size: 100% 100%;
-            padding: 8px;
-          }
-
-          &.visible {
-            display: flex;
-            animation-duration: 0.5s;
-            animation-fill-mode: both;
-            animation-name: fadeInUp;
-          }
-        }
+      &.visible {
+        display: flex;
+        animation-duration: 0.5s;
+        animation-fill-mode: both;
+        animation-name: fadeInUp;
+      }
+    }
   }
 }
 .animated {
@@ -1152,5 +1159,16 @@ export default defineComponent({
   animation-name: fadeInUp;
   -webkit-animation-duration: 0.75s;
   animation-duration: 0.75s;
+}
+
+.dark {
+  .intro-container {
+    .buttons {
+      .platform-qr-code {
+        background-color: $background-content-block-dark;
+        color: $font-3-dark;
+      }
+    }
+  }
 }
 </style>

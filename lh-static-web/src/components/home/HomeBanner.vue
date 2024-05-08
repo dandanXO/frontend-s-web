@@ -8,18 +8,16 @@
     <img :src="homePopupImg" class="alert-img" />
   </el-dialog>
 
-  <el-carousel class="banner-slider" indicator-position="outside" :autoplay="true" :interval="5000">
+  <el-carousel class="banner-slider" indicator-position="outside" :autoplay="false" :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
       <router-link :to="`/promotion?name=${banner.redirectUrl}`">
-        <!-- TODO: mock -->
-        <!-- <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"></div> -->
-        <!-- <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div> -->
-        <div
-          v-if="isDark"
-          class="promo-bg isDesktop"
-          :style="'background-image: url(' + banner.darkDesktopImageUrl + ')'"
-        ></div>
-        <div v-else class="promo-bg isDesktop" :style="'background-image: url(' + banner.desktopImageUrl + ')'"></div>
+        <div class="banner-background">
+          <div
+            class="promo-bg isDesktop"
+            :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
+          ></div>
+          <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
+        </div>
       </router-link>
     </el-carousel-item>
   </el-carousel>
@@ -30,8 +28,6 @@ import { ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark } from "@vueuse/core";
-import testBanner from "@/assets/home/bannerTest/banner.png";
-import testBannerDark from "@/assets/home/bannerTest/banner-dark.png";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const banners = ref([]);
@@ -39,30 +35,14 @@ const banners = ref([]);
 const isDark = useDark();
 
 const loadBanners = () => {
-  banners.value = [
-    {
-      promoPageId: null,
-      desktopImageUrl: testBanner,
-      darkDesktopImageUrl: testBannerDark,
-      redirectUrl: "lh1-spin-wheel",
-      category: "HOME"
-    },
-    {
-      promoPageId: null,
-      desktopImageUrl: testBanner,
-      darkDesktopImageUrl: testBannerDark,
-      redirectUrl: "lh1-spin-wheel",
-      category: "HOME"
-    }
-  ];
-  // TODO: mock
-  // loadPromoBanner("HOME").then((res) => {
-  //   if (res.code === 0) banners.value = res.data;
-  //   else ElMessage.error({
-  //               type: "error",
-  //               message: res.message
-  //             });
-  // });
+  loadPromoBanner("HOME").then((res) => {
+    if (res.code === 0) banners.value = res.data;
+    else
+      ElMessage.error({
+        type: "error",
+        message: res.message
+      });
+  });
 };
 
 const setWithExpiry = (key, value, interval) => {
@@ -129,6 +109,13 @@ onMounted(() => {
   width: 100%;
 
   .banner-container {
+    .banner-background {
+      background-image: url(@/assets/images/home/banner/banner-background.png);
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
+
     .promo-bg {
       background-image: url(../../assets/images/mock/home_banner.png);
       background-size: contain;
@@ -163,6 +150,16 @@ onMounted(() => {
 
   .el-dialog__headerbtn {
     opacity: 0;
+  }
+}
+
+.dark {
+  .banner-slider {
+    .banner-container {
+      .banner-background {
+        background-image: url(@/assets/images/home/banner/banner-background-dark.png);
+      }
+    }
   }
 }
 </style>

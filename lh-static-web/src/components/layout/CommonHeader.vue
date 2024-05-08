@@ -19,7 +19,10 @@
                     <h2 class="nav-title active">{{ nav.name }}</h2>
                   </template>
                   <template v-else>
-                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
+                    <img
+                      class="menu-icon"
+                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
+                    />
                     <h2 class="nav-title">{{ nav.name }}</h2>
                   </template>
                 </a>
@@ -36,22 +39,22 @@
                   <span>
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.svg"
+                      :src="require(`../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Promotion'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.svg"
+                      :src="require(`../../assets/images/home/header-affiliate-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.svg"
+                      :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.svg"
+                      :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'VIP'"
                     />
                   </span>
@@ -81,7 +84,6 @@
           <router-link to="/register" class="action-btn">
             <a class="header-btn btn-color-white">注册</a>
           </router-link> -->
-          <button @click="handleDarkModeClick">切换黑暗模式</button>
           <a class="header-btn btn-color-blue" @click="loginDialogVisible = true">登录</a>
           <a class="header-btn btn-color-white" @click="registerDialogVisible = true">注册</a>
         </div>
@@ -444,7 +446,7 @@ import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
-import { useElementSize } from "@vueuse/core";
+import { useDark, useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
@@ -453,7 +455,6 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
-import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -527,6 +528,7 @@ export default defineComponent({
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const { height } = useElementSize(el);
+    const isDark = useDark()
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -1378,10 +1380,6 @@ export default defineComponent({
       router.push(path);
     };
 
-    const isDark = useDark()
-
-    const handleDarkModeClick = () => isDark.value = !isDark.value
-
     return {
       token,
       el,
@@ -1448,7 +1446,7 @@ export default defineComponent({
       openLoginDialog,
       openRegDialog,
       openForgotpwdDialog,
-      handleDarkModeClick
+      isDark
     };
   }
 });
@@ -2515,6 +2513,71 @@ body {
     &.active {
       font-weight: 500;
       color: #fff;
+    }
+  }
+}
+
+.dark {
+  .acc-dialog.el-dialog {
+    .el-dialog__header {
+      .el-dialog__close {
+        color: $color-white !important;
+      }
+    }
+
+    .el-dialog__body {
+      .acc-dialog-left {
+        background-image: url(../../assets/home/acc-dialog-bg-dark.png);
+        background-size: 100% 100%;
+        background-position: center center;
+      }
+    }
+  }
+
+  .header-container {
+    .top-nav-wrapper {
+      background: $background-dark;
+      box-shadow: $shadow-header-dark;
+      .top-nav-inner {
+        .navigations {
+          a {
+            color: $font-1-dark;
+          }
+
+          .sub-menu {
+            background: $background-content-block-dark;
+            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
+          }
+        }
+      }
+    }
+  }
+
+  .header-menu-item {
+    .nav-title {
+      color: $font-4-dark;
+      &.active {
+        color: $color-white;
+      }
+    }
+  }
+
+  .profile-actions {
+    .action-btn {
+      color: $color-white;
+
+      .icon-rounded {
+        box-shadow: none;
+        background-color: $background-content-block-lighter-dark;
+      }
+    }
+  }
+
+  .profile-info {
+    .profile-details {
+      .details-name {
+        color: $color-white;
+      }
     }
   }
 }

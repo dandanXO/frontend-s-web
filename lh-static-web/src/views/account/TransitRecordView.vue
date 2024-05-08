@@ -1704,6 +1704,21 @@ export default defineComponent({
   border-radius: 15px;
   padding: 20px 40px;
 }
+
+.dark {
+  .transaction-container {
+    box-shadow: 0px 0px 10px 0px #0000001a;
+    background-color: $background-content-block-dark;
+
+    color: $font-3-dark;
+  }
+
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
+}
 </style>
 <style scoped lang="scss">
 @media (max-width: 768px) {

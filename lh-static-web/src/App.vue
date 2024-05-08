@@ -9,13 +9,15 @@ import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
-    const UI= uiStore();
+    const UI = uiStore();
+    const isDark = useDark();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -28,7 +30,7 @@ export default defineComponent({
 
         const obj = {
           identifier: store.visitorId,
-          affiliateCode: affiliateItem,
+          affiliateCode: affiliateItem
         };
         memberAccessLog(obj).then((res) => {
           if (res.code === 0) {
@@ -59,18 +61,20 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
 
-      window.addEventListener("resize",  function handleResize(e){
+      window.addEventListener("resize", function handleResize(e) {
         // console.log("RESIZE");
         UI.innerWidth = window.innerWidth;
       });
 
+      // TODO: Remove after testing is completed.
+      if (store.memberType !== "TEST" || store.memberType !== "PROMO_TEST") isDark.value = false;
     });
 
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
-  },
+    });
+  }
 });
 </script>
 <style lang="scss">

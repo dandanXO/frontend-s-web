@@ -16,7 +16,6 @@
 
 <script setup>
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
-
 </script>
 
 <style scoped lang="scss">
@@ -45,10 +44,20 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 }
 
 .card-bg {
-  background-color: #F7F9FC;
-  box-shadow: 0px 0px 10px 0px #0000001A;
+  background-color: #f7f9fc;
+  box-shadow: 0px 0px 10px 0px #0000001a;
   padding: 50px;
   border-radius: 10px;
 }
+
+.dark {
+  .register-page-container {
+    background: url("@/assets/home/auth/login-page-bg-dark.png") no-repeat top center;
+    background-size: cover;
+  }
+
+  .card-bg {
+    @include content-block-dark;
+  }
+}
 </style>
-  
