@@ -15,14 +15,14 @@
       <div class="money">
         <img src="../../assets/images/login/money.svg" alt="" />
         <div>
-          0
+          {{ store.balance }}
           <span>원</span>
         </div>
       </div>
       <div class="item">
         <img src="../../assets/images/login/item.svg" alt="" />
         <div>
-          {{ store.balance }}
+          0
           <span>P</span>
         </div>
       </div>
