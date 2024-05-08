@@ -41,7 +41,7 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-label">
-                  <div class="label-type" v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-type" v-if="promo.labelType !== 2 && promo.labelType !== -1">{{ getPromoLabel(promo.labelType) }}</div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
 

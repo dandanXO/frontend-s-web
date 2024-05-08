@@ -43,7 +43,7 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
                           <div
@@ -74,7 +74,7 @@
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                          <div class="promo-ribbon" v-if="promo.labelType !== -1 && promo.labelType !== 2">
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
                           <div
