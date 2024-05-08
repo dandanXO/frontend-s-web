@@ -6,26 +6,26 @@
         <div class="hongbao"><img src="../images/hongbao.png"></div>
         <div class="claim-button" @click="getPromotion"></div>
     </div>
-    
+    <div class="remark">欧洲杯赛程期间，当日每一场比赛进球后1-3分钟内将开启进球红包雨庆祝。红包雨金额跟随每一场比赛总进球粒数增加红包雨奖金，先到先得，抢完截止。</div>
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
           <th>进*粒球</th>
           <th>红包雨总奖金</th>
           <th>流水倍数</th>
         </tr>
-        
+
         <tr>
           <td>≥1</td>
           <td>10,000</td>
           <td rowspan="3">1倍/不限场馆</td>
         </tr>
-        
-        
+
+
         <tr>
           <td>≥3</td>
           <td>50,000</td>
         </tr>
-        
+
         <tr>
           <td>≥5</td>
           <td>100,000</td>
@@ -50,7 +50,7 @@
 
     </el-dialog>
   </template>
-  
+
   <script setup>
   import { defineProps, ref } from 'vue';
 import { claimBonusItem } from "@/api/index/promo";
@@ -91,7 +91,7 @@ const refreshBal = () => {
   const props = defineProps({
     tabtitle: String
   });
-  
+
   </script>
   <style lang="scss" scoped>
   .redpacket {
@@ -101,7 +101,7 @@ const refreshBal = () => {
     align-items: center;
     .hongbao {
         width: 250px;
-        
+
         img {
             width: 100%;
         }
@@ -166,8 +166,8 @@ text-align: center;
             display: none;
           }
     }
-    .el-dialog__body{ 
-      display: flex; 
+    .el-dialog__body{
+      display: flex;
       justify-content: space-between;
       align-items: center;
       flex-direction: column;
@@ -190,5 +190,11 @@ text-align: center;
         }
       }
     }
+  }
+
+  .remark {
+    font-size: 20px;
+    color: $color-white;
+    margin-bottom: 16px;
   }
 </style>

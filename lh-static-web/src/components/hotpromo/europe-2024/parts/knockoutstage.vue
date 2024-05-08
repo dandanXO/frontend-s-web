@@ -31,43 +31,43 @@ const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([
   // left side round of 16
-  { top: -2,   left: -4, seg: 1, group: '16', team: 'A' },
-  { top: 249,  left: -4, seg: 1, group: '16', team: 'B' },
-  { top: 452,  left: -4, seg: 2, group: '16', team: 'A' },
-  { top: 702,  left: -4, seg: 2, group: '16', team: 'B' },
-  { top: 902,  left: -4, seg: 3, group: '16', team: 'A' },
-  { top: 1152, left: -4, seg: 3, group: '16', team: 'B' },
-  { top: 1355, left: -4, seg: 4, group: '16', team: 'A' },
-  { top: 1605, left: -4, seg: 4, group: '16', team: 'B' },
+  { top: -2,   left: 67, seg: 1, group: '16', team: 'A' },
+  { top: 151,  left: 67, seg: 1, group: '16', team: 'B' },
+  { top: 299,  left: 67, seg: 2, group: '16', team: 'A' },
+  { top: 452,  left: 67, seg: 2, group: '16', team: 'B' },
+  { top: 575,  left: 67, seg: 3, group: '16', team: 'A' },
+  { top: 728, left: 67, seg: 3, group: '16', team: 'B' },
+  { top: 876, left: 67, seg: 4, group: '16', team: 'A' },
+  { top: 1029, left: 67, seg: 4, group: '16', team: 'B' },
   // left side quarterfinal
-  { top: 129,  left: 260, seg: 1, group: '8', team: 'A' },
-  { top: 582,  left: 260, seg: 1, group: '8', team: 'B' },
-  { top: 1032, left: 260, seg: 2, group: '8', team: 'A'},
-  { top: 1485, left: 260, seg: 2, group: '8', team: 'B'},
+  { top: 76,  left: 247, seg: 1, group: '8', team: 'A' },
+  { top: 377,  left: 247, seg: 1, group: '8', team: 'B' },
+  { top: 653, left: 247, seg: 2, group: '8', team: 'A'},
+  { top: 954, left: 247, seg: 2, group: '8', team: 'B'},
   // left side semifinal
-  { top: 357,  left: 517, seg: 1, group: '4', team: 'A'},
-  { top: 1261, left: 517, seg: 1, group: '4', team: 'B'},
+  { top: 226,  left: 445, seg: 1, group: '4', team: 'A'},
+  { top: 803, left: 445, seg: 1, group: '4', team: 'B'},
   // left side final
-  { top: 781,  left: 648, seg: 1, group: '2', team: 'A' },
+  { top: 508,  left: 613, seg: 1, group: '2', team: 'A' },
   // right side final
-  { top: 781,  left: 780, seg: 1, group: '2', team: 'B' },
+  { top: 508,  left: 813, seg: 1, group: '2', team: 'B' },
   // right side semifinal
-  { top: 357,  left: 911, seg: 2, group: '4', team: 'A'},
-  { top: 1261, left: 911, seg: 2, group: '4', team: 'B'},
+  { top: 226,  left: 983, seg: 2, group: '4', team: 'A'},
+  { top: 803, left: 983, seg: 2, group: '4', team: 'B'},
   // right side quarterfinal
-  { top: 129,  left: 1168, seg: 3, group: '8', team: 'A' },
-  { top: 582,  left: 1168, seg: 3, group: '8', team: 'B' },
-  { top: 1032, left: 1168, seg: 4, group: '8', team: 'A' },
-  { top: 1485, left: 1168, seg: 4, group: '8', team: 'B' },
+  { top: 76,  left: 1180, seg: 3, group: '8', team: 'A' },
+  { top: 377,  left: 1180, seg: 3, group: '8', team: 'B' },
+  { top: 653, left: 1180, seg: 4, group: '8', team: 'A' },
+  { top: 954, left: 1180, seg: 4, group: '8', team: 'B' },
   // right side round of 16
-  { top: -2,   left: 1432, seg: 5, group: '16', team: 'A' },
-  { top: 249,  left: 1432, seg: 5, group: '16', team: 'B' },
-  { top: 452,  left: 1432, seg: 6, group: '16', team: 'A' },
-  { top: 702,  left: 1432, seg: 6, group: '16', team: 'B' },
-  { top: 902,  left: 1432, seg: 7, group: '16', team: 'A' },
-  { top: 1152, left: 1432, seg: 7, group: '16', team: 'B' },
-  { top: 1355, left: 1432, seg: 8, group: '16', team: 'A' },
-  { top: 1605, left: 1432, seg: 8, group: '16', team: 'B' }
+  { top: -2,   left: 1360, seg: 5, group: '16', team: 'A' },
+  { top: 151,  left: 1360, seg: 5, group: '16', team: 'B' },
+  { top: 299,  left: 1360, seg: 6, group: '16', team: 'A' },
+  { top: 452,  left: 1360, seg: 6, group: '16', team: 'B' },
+  { top: 575,  left: 1360, seg: 7, group: '16', team: 'A' },
+  { top: 728, left: 1360, seg: 7, group: '16', team: 'B' },
+  { top: 876, left: 1360, seg: 8, group: '16', team: 'A' },
+  { top: 1029, left: 1360, seg: 8, group: '16', team: 'B' }
 ]);
 
 const bracketDateList = ref([
@@ -127,7 +127,7 @@ const populateTeams = () => {
       finalDate.value = team.matchTime
     }
   });
-  
+
   pageLoading.value = false
 };
 const formatDate = (matchTime) => {
@@ -153,7 +153,7 @@ onMounted(() => {
   width: 100%;
   height: 1715px;
   background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
-  background-size: 1500px auto;
+  background-position: center top;
   color: #ffffff;
 
   .bracket-team {
@@ -172,7 +172,7 @@ onMounted(() => {
   }
   .bracket-final {
     position: absolute;
-    top: 936px;
+    top: 610px;
     left: 648px;
     display: flex;
     flex-direction: column;
