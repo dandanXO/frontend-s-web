@@ -59,7 +59,8 @@ export default {
     deposit_should_between: "Deposit amount should between ",
     msg_deleted: "Message deleted",
     please_select_bank: "Please select bank",
-    you_account_has_been_sent_email: "Your Account Id has been sent to your email"
+    you_account_has_been_sent_email: "Your Account Id has been sent to your email",
+    choose_later: "Choose Later"
   },
   login: {
     username: "Username",

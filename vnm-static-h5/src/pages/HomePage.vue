@@ -2262,7 +2262,10 @@ export default defineComponent({
     background: transparent;
     box-shadow: none;
   }
-
+  .q-card__section {
+    background:none;
+    box-shadow: none;
+  }
   .q-card-section {
     background: transparent;
     box-shadow: none;

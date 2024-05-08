@@ -1277,6 +1277,7 @@ export default {
     cockfight: "Cockfight",
     copy_success: "Link successfully copied!",
     enter_transfer_amount: "Enter Transfer Amount",
+    choose_later: "Choose Later",
     // about
     about: {
       affiliate: "Affiliates",
