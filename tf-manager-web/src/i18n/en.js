@@ -1660,6 +1660,7 @@ export default {
     redirectUrlApp: 'Redirect URL APP',
     redirectUrlWeb: 'Redirect URL Web',
     redirectUrlH5: 'Redirect URL H5',
+    popUpDurationSeconds: 'Pop Up Duration (Seconds)',
     popUpTime: 'Pop Up Time',
     notificationType: 'Notification Type',
     notificationContent: 'Notification Content',
