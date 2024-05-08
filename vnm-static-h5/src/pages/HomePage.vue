@@ -104,7 +104,10 @@
   </div>
 
   <div class="hot-matches-wrapper">
-    <div class="hot-matches-title">🔥Trận Đấu Hot - Hot Matches</div>
+    <div class="hot-matches-title">
+      <div><img src="../assets/images/home/icon-hot-matches.png" /></div>
+      {{ $t("lang.hotMatches") }}
+    </div>
     <div class="hot-matches-container">
       <q-carousel
         class="hot-matches-carousel"
@@ -136,6 +139,7 @@
 
         <q-carousel-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
           <div class="hot-matches-item">
+            <div class="top-match-title">{{ item.competitionName }}</div>
             <div class="team-details team-details__home">
               <div class="team-icon">
                 <img :src="hotMatchesImgURL + item.teamOneLogo" />
@@ -143,8 +147,7 @@
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
-              <div class="match-title">{{ item.competitionName }}</div>
-              <div class="match-time">{{ item.competitionTime }}</div>
+              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
                 <q-btn
                   rounded
@@ -1479,6 +1482,23 @@ export default defineComponent({
 
     const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
 
+    const formattedTime = (timeString) => {
+      if (!timeString) {
+        return "";
+      }
+
+      const dateTime = new Date(timeString);
+      const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}/${dateTime.getFullYear()}`;
+      const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+
+      return `${formattedDate} ${formattedTime}`;
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1580,7 +1600,8 @@ export default defineComponent({
       loadHotMatches,
       hotMatches,
       hotMatchesImgURL,
-      slideHotMatches: ref(0)
+      slideHotMatches: ref(0),
+      formattedTime
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2390,6 +2411,14 @@ export default defineComponent({
     font-size: 18px;
     font-weight: 700;
     color: #313441;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    img {
+      display: block;
+      width: 30px;
+    }
   }
 
   .hot-matches-container {
@@ -2398,26 +2427,44 @@ export default defineComponent({
   .hot-matches-carousel {
     height: auto !important;
     background: transparent;
+    padding-bottom: 10px;
+
+    :deep(.q-carousel__navigation--bottom) {
+      bottom: 0px !important;
+    }
   }
 
   .hot-matches-slide {
     padding-top: 0;
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 20px;
     margin-top: 12px;
-    padding: 18px;
+    padding: 18px 18px 12px;
     display: flex;
     justify-content: space-between;
-    gap: 6px;
+    flex-wrap: wrap;
+    box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+
+    .top-match-title {
+      color: #424f72;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 4px;
+    }
 
     .match-details {
       display: flex;
       flex-direction: column;
       gap: 4px;
       align-items: center;
+      margin-top: 12px;
 
       .match-title {
         color: #424f72;
@@ -2432,8 +2479,8 @@ export default defineComponent({
       }
 
       .match-btn {
-        margin-top: auto;
-        margin-bottom: 12px;
+        // margin-top: auto;
+        margin-top: 6px;
       }
     }
 
@@ -2454,9 +2501,13 @@ export default defineComponent({
 
       .team-icon {
         // border-radius: 50%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         img {
-          width: 70px;
-          height: 70px;
+          width: 100%;
+          max-width: 70px;
         }
       }
 

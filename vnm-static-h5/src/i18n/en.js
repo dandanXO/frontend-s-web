@@ -43,6 +43,7 @@ export default {
     tf88_news: "TF88 News",
     see_all: "See all",
     play_now: "Play now",
+    hotMatches: "Hot Matches",
 
     // side menu
     menu_sports: "Sports",

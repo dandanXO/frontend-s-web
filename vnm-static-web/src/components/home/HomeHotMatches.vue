@@ -1,6 +1,9 @@
 <template>
   <div class="hot-matches-wrapper">
-    <div class="hot-matches-title">🔥Trận Đấu Hot - Hot Matches</div>
+    <div class="hot-matches-title">
+      <div><img src="../../assets/images/home/icon-hot-matches.png" /></div>
+      {{ $t("home.hotMatches") }}
+    </div>
     <div class="hot-matches-container">
       <swiper
         :slides-per-view="hotMatches.length > 2 ? '3' : hotMatches.length"
@@ -23,6 +26,7 @@
           :class="hotMatches.length === 1 && 'one-slide-only'"
         >
           <div class="hot-matches-item">
+            <div class="top-match-title">{{ item.competitionName }}</div>
             <div class="team-details team-details__home">
               <div class="team-icon">
                 <img :src="hotMatchesImgURL + item.teamOneLogo" />
@@ -30,14 +34,16 @@
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
-              <div class="match-title">{{ item.competitionName }}</div>
-              <div class="match-time">{{ item.competitionTime }}</div>
+              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
 
               <div class="match-vs">VS</div>
 
               <div class="match-btn">
-                <a class="standard-button lg-btn btn-color-blue" @click="openGame(item.platformName, item.platformCode, '')">
-                  {{ $t("home.playNow") }}
+                <a
+                  class="standard-button lg-btn btn-color-blue"
+                  @click="openGame(item.platformName, item.platformCode, '')"
+                >
+                  {{ $t("common.playnow") }}
                 </a>
               </div>
             </div>
@@ -57,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { getHotMatches } from "../../api/index/hotMatches.js";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
@@ -85,6 +91,23 @@ const loadHotMatches = () => {
   });
 };
 
+const formattedTime = (timeString) => {
+  if (!timeString) {
+    return "";
+  }
+
+  const dateTime = new Date(timeString);
+  const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${dateTime.getFullYear()}`;
+  const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}`;
+
+  return `${formattedDate} ${formattedTime}`;
+};
+
 onMounted(() => {
   loadHotMatches();
 });
@@ -93,12 +116,20 @@ onMounted(() => {
 <style lang="scss">
 .hot-matches-wrapper {
   max-width: 1350px;
-  margin: 20px auto 10px;
+  margin: 50px auto 0px;
 
   .hot-matches-title {
     font-size: 24px;
     font-weight: 700;
     color: #313441;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    img {
+      display: block;
+      width: 40px;
+    }
   }
 
   .hot-matches-container {
@@ -126,16 +157,25 @@ onMounted(() => {
     padding: 24px 24px;
     display: flex;
     justify-content: space-between;
-    gap: 12px;
     width: 100%;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
     position: relative;
+    flex-wrap: wrap;
+
+    .top-match-title {
+      color: #424f72;
+      font-weight: 700;
+      font-size: 24px;
+      width: 100%;
+      text-align: center;
+    }
 
     .match-details {
       display: flex;
       flex-direction: column;
       gap: 4px;
       align-items: center;
+      width: 40%;
 
       .match-title {
         color: #424f72;
@@ -150,7 +190,7 @@ onMounted(() => {
         color: #7a80a1;
         font-size: 16px;
         text-align: center;
-        margin-top: 40px;
+        margin-top: 12px;
       }
 
       .match-vs {
@@ -174,7 +214,7 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      width: 30%;
+      width: 26%;
 
       .team-details__home {
       }
@@ -184,9 +224,14 @@ onMounted(() => {
 
       .team-icon {
         // border-radius: 50%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         img {
-          width: 100px;
-          height: 100px;
+          width: 100%;
+          max-width: 90px;
         }
       }
 

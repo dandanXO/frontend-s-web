@@ -151,7 +151,7 @@ export default {
     scanToDownload: "Quét để tải ứng dụng",
     moreDetails: "Chi tiết thêm",
     announcementList: "Danh sách thông báo",
-    playNow: "Bắt đầu chơi",
+    hotMatches: "Trận Đấu Hot",
   },
   personal: {
     personalInfo: "Thông tin cá nhân",

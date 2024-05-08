@@ -152,6 +152,7 @@ export default {
     moreDetails: "More details",
     announcementList: "Announcement List",
     playNow: "Play now",
+    hotMatches: "Hot Matches",
   },
   personal: {
     personalInfo: "Personal information",
