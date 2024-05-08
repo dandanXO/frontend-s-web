@@ -220,6 +220,7 @@ import moment from "moment/moment";
 
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import { useLocalStorage } from "@vueuse/core";
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
@@ -367,7 +368,8 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+          var imageUrl= useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value ;
+          element.icon = `${imageUrl}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;
