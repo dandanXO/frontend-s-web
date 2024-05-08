@@ -976,9 +976,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
+          // debugger;
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             localStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
+            // isImportantAnnoucementModal.value = true;
             return null;
           }
         })
