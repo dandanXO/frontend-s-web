@@ -369,7 +369,7 @@ export default {
     inputUSDT: "Input USDT",
     chooseAmt: "Choose Amount",
     note: "Please note:",
-    notept1: "The transaction unit in the game is TF VNDP, 1 VNDP = 1000VND",
+    notept1: "The transaction unit in the game is TF VNDP, 1 VNDP = 1,000VND",
     redirected: "You will be redirected to your bank page to complete the deposit",
     successful: "If successful, you will receive a notification on this page",
     deposited: "Deposited",

@@ -63,11 +63,11 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              {{$t('deposit.minAmt')}}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
+              {{$t('deposit.minAmt')}}: {{ calculatedMinDeposit ? calculatedMinDeposit.toLocaleString() : 0 }} {{ isUSDT ? "USDT" : store.currency.label
               }}
               <br />
               {{$t('deposit.maxAmt')}}: {{
-                activeMethod.depositMax ? activeMethod.depositMax : $t('deposit.noLimit')
+                activeMethod.depositMax ? activeMethod.depositMax.toLocaleString() : $t('deposit.noLimit')
               }} {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
           </el-space>

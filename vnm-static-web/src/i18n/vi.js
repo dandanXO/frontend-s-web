@@ -367,7 +367,7 @@ export default {
     inputUSDT: "Nhập USDT",
     chooseAmt: "Chọn Số Tiền",
     note: "Vui lòng lưu ý:",
-    notept1: "Đơn vị giao dịch trong game là VNDP , 1 VNDP = 1000VND",
+    notept1: "Đơn vị giao dịch trong game là VNDP , 1 VNDP = 1,000VND",
     redirected: "Bạn sẽ được chuyển hướng đến trang ngân hàng của bạn để hoàn thành việc gửi tiền",
     successful: "Nếu thành công, bạn sẽ nhận được thông báo trên trang này.",
     deposited: "Đã gửi",

@@ -80,13 +80,13 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${
-                    selectedWithdrawalMethod.withdrawMax
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${
+                    selectedWithdrawalMethod.withdrawMax.toLocaleString()
                   } ${store.currency.label}`
                 }}
                 <br />
                 {{
-                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${
+                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString()} ${
                     store.currency.label
                   }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
@@ -108,7 +108,7 @@
         </el-form-item>
         <div class="values">
           <span @click="withdrawInfo.amount = amt.toString()" class="amt" v-for="amt in amounts">
-            {{ amt }}
+            {{ amt.toLocaleString() }}
           </span>
         </div>
         <el-row>
@@ -441,9 +441,9 @@ export default defineComponent({
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
             t('withdraw.depositAmountRange') + " " +
-            selectedWithdrawalMethod.value.withdrawMin +
+            selectedWithdrawalMethod.value.withdrawMin.toLocaleString() +
             " - " +
-            selectedWithdrawalMethod.value.withdrawMax
+            selectedWithdrawalMethod.value.withdrawMax.toLocaleString()
           );
         } else {
           return Promise.resolve();
