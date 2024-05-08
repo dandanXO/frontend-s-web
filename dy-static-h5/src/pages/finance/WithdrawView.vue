@@ -512,7 +512,9 @@ export default defineComponent({
         bottom: 8px;
         left: 50%;
         transform: translate(-50%);
-        width: 50px;
+        //width: 50px;
+        width: 80%;
+        max-width: 4rem;
 
         img {
           width: 100%;
@@ -524,7 +526,7 @@ export default defineComponent({
       .withdraw-img {
         border: 2px solid #d7d7d7;
         border-radius: 6px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         padding: 8px;
         display: flex;
         align-items: center;
