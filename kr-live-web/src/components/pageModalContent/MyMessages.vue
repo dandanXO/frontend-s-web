@@ -1,117 +1,119 @@
 <template>
-    <div class="modal-body-wrap">
-        <q-card-section class="modal-body-content">
-            <div class="">
-                <q-item-section class="notify-table-row notify-table-header">
-                    <q-item-label>쪽지함</q-item-label>
-                </q-item-section>
-                <div class="no-data">
-                    조회된 데이터가 없습니다.
-                </div>
-            </div>
-        </q-card-section>
-        <q-card-actions class="modal-body-buttons" align="center">
-            <q-btn class="form-button blue" label="입금하기"></q-btn>
-            <q-btn class="form-button yellow" label="전체확인"></q-btn>
-        </q-card-actions>
+    <div class="" style="">
+      <div class="">
+        <q-item-section class="table-row-head">
+          <q-item-label>번호</q-item-label>
+          <q-item-label>제목</q-item-label>
+          <q-item-label>날짜</q-item-label>
+        </q-item-section>
+        <template v-for="item in articleData" :key="item.page">
+          <q-expansion-item group="somegroup" class="table-row-title">
+            <template v-slot:header>
+              <q-item-section class="table-row table-row-title">
+                <q-item-label>{{ item.id }}</q-item-label>
+                <q-item-label>{{ item.title }}</q-item-label>
+                <q-item-label>{{ item.sendTime }}</q-item-label>
+              </q-item-section>
+            </template>
+            <q-card>
+              <q-card-section class="table-row-article">
+                <article v-html="item.content"></article>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </template>
+      </div>
     </div>
-</template>
-
-<script setup id="FinanceDeposit">
-import { ref } from "vue";
-</script>
-
-<style lang="scss" scoped>
-.modal-body-wrap {}
-
-.modal-body-content {
-    .notify-table-row {
-        display: flex;
+  </template>
+  
+  <script setup id="NotifyComponent">
+  import { ref, onMounted } from "vue";
+  import { api } from "boot/axios";
+  import { SessionStorage } from "quasar";
+  
+  //TODO
+  const articleData = ref([]);
+  
+  const getNoticeData = () => {
+    api
+      .get("/session/inbox", {
+        TOKEN: SessionStorage.getItem("TOKEN")
+      })
+      .then((res) => {
+        articleData.value = res.data.data.records;
+      });
+  };
+  
+  onMounted(() => {
+    getNoticeData();
+  });
+  </script>
+  
+  <style lang="scss" scoped>
+  .table-row-head {
+    padding: 5px 10px 0 10px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    .q-item__label {
+      margin: auto;
+      padding-bottom: 12px;
+      &:nth-child(2) {
+        text-align: left;
+        margin-left: unset;
+        margin-right: unset;
+      }
     }
-
-    .notify-table-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 10px;
-
-        .q-item__label {
-            &:first-child {
-                width: 800px;
-                text-align: center;
-            }
+  }
+  .table-row {
+    padding: 0 10px 0 10px;
+    display: grid;
+    grid-template-columns: 50px 1fr 100px;
+    .q-item__label {
+      margin-top: auto;
+      margin-bottom: auto;
+      padding: unset;
+      &:nth-child(2) {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+  .table-row-title {
+    background: #212121;
+    margin-bottom: 5px;
+  
+    :deep(.q-icon) {
+      display: none;
+    }
+  
+    :deep(.q-expansion-item__container .q-item) {
+      display: flex;
+      width: 100%;
+      padding: 0;
+      .q-item__label {
+        &:first-child {
+          width: 100px;
+          text-align: center;
         }
-
-
-    }
-
-    .table-row-title {
-        background: #212121;
-        margin-bottom: 5px;
-    }
-
-    .content-form {
-        p {
-            margin-top: 20px;
-
+        &:nth-child(2) {
+          flex: 1;
+          text-align: left;
         }
-
-        input,
-        textarea {
-            width: 100%;
-            font-size: 14px;
-            border-radius: 3px;
-            border: 1px solid #5C5C5C;
-            line-height: 40px;
-            color: #fff;
-            background: #212121;
-            padding: 5px 15px;
+        &:last-child {
+          text-align: right;
+          width: 100px;
         }
+      }
     }
-
-    .no-data {
-        width: 100%;
-        min-height: 48px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #212121;
-        color: #767676;
+  }
+  .table-row-article {
+    padding: 10px 5px;
+    max-height: 290px;
+    overflow: scroll;
+    :deep(.q-expansion-item__content) {
+      background: #151515;
     }
-}
-
-.modal-body-buttons {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-
-.modal-body-content {}
-
-.modal-body-buttons {
-    width: 100%;
-
-    .form-button {
-        //display: inline-block;
-        height: 70px;
-        width: 200px;
-        background-size: contain;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        font-size: 18px;
-        padding-bottom: 5px;
-        margin: auto 10px;
-
-        &.blue {
-            background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-        }
-
-        &.yellow {
-            background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-        }
-    }
-}
-</style>
+  }
+  </style>
+  

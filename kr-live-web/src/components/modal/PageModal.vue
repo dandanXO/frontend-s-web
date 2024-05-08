@@ -188,14 +188,14 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "log",
-    page: "notify",
-    info: "공지사항",
-    iconUrl: require("../../assets/icon/notify.svg"),
-    iconActiveUrl: require("../../assets/icon/notify-active.svg"),
-    component: NotifyComponent,
+    page: "personal/messages",
+    info: "쪽지",
+    iconUrl: require("../../assets/icon/messages.svg"),
+    iconActiveUrl: require("../../assets/icon/messages-active.svg"),
+    component: MyMessages,
     headerInfo: {
-      title: "공지사항",
-      subTitle: "NOTICE",
+      title: "쪽지",
+      subTitle: "MESSAGES",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
@@ -227,14 +227,14 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "my",
-    page: "personal/messages",
-    info: "쪽지",
-    iconUrl: require("../../assets/icon/messages.svg"),
-    iconActiveUrl: require("../../assets/icon/messages-active.svg"),
-    component: MyMessages,
+    page: "notify",
+    info: "공지사항",
+    iconUrl: require("../../assets/icon/notify.svg"),
+    iconActiveUrl: require("../../assets/icon/notify-active.svg"),
+    component: NotifyComponent,
     headerInfo: {
-      title: "쪽지",
-      subTitle: "MESSAGES",
+      title: "공지사항",
+      subTitle: "NOTICE",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },

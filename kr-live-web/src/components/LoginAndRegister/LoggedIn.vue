@@ -22,7 +22,7 @@
       <div class="item">
         <img src="../../assets/images/login/item.svg" alt="" />
         <div>
-          0
+          {{ store.balance }}
           <span>P</span>
         </div>
       </div>
