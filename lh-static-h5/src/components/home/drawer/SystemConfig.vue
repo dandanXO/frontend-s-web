@@ -8,12 +8,15 @@
   </div>
 </template>
 <script setup>
+import { useLocalStorage } from "@vueuse/core";
 import { useQuasar } from "quasar";
 
+const isDarkMode = useLocalStorage("DARK_MODE", false);
 const $q = useQuasar();
 
 const handleDarkModeToggle = (value) => {
   $q.dark.set(value);
+  isDarkMode.value = value;
 };
 </script>
 <style scoped lang="scss">
