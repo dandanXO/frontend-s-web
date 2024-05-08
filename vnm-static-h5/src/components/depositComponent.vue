@@ -92,10 +92,18 @@
 
         <div class="q-mt-sm q-mb-sm text-grey text-bold">
           {{ $t("lang.deposit_minamount") }}:
-          {{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}
+          {{
+            calculatedMinDeposit
+              ? calculatedMinDeposit.toLocaleString() + " " + (isUSDT ? "USDT" : store.currency.value)
+              : 0
+          }}
           <br />
           {{ $t("lang.deposit_maxamount") }}:
-          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
+          {{
+            activeMethod.depositMax
+              ? activeMethod.depositMax.toLocaleString() + " " + (isUSDT ? "USDT" : store.currency.value)
+              : " "
+          }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
@@ -203,7 +211,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount, watch } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -299,15 +307,44 @@ const blurCode = () => {
   });
 };
 
+// const verifyDepositAmount = ref([
+//   (val) => !!val || t("lang.deposit_please_enter_deposit"),
+//   (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
+//   (val) =>
+//     val > calculatedMinDeposit.value - 1 ||
+//     t("lang.deposit_between") +
+//       calculatedMinDeposit.value.toLocaleString() +
+//       " - " +
+//       activeMethod.value.depositMax.toLocaleString(),
+//   (val) =>
+//     val < activeMethod.value.depositMax + 1 ||
+//     t("lang.deposit_between") +
+//       calculatedMinDeposit.value.toLocaleString() +
+//       " - " +
+//       activeMethod.value.depositMax.toLocaleString()
+// ]);
+
 const verifyDepositAmount = ref([
   (val) => !!val || t("lang.deposit_please_enter_deposit"),
-  (val) => (val && /^\d+$/.test(val)) || t("lang.deposit_cantcontaindecimals"),
-  (val) =>
-    val > calculatedMinDeposit.value - 1 ||
-    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
-  (val) =>
-    val < activeMethod.value.depositMax + 1 ||
-    t("lang.deposit_between") + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+  (val) => (val && /^\d+(,\d{3})*(\.\d+)?$/.test(val.replace(/,/g, ""))) || t("lang.deposit_cantcontaindecimals"),
+  (val) => {
+    const value = parseFloat(val.replace(/,/g, ""));
+    return (
+      value > calculatedMinDeposit.value - 1 ||
+      `${t(
+        "lang.deposit_between"
+      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+    );
+  },
+  (val) => {
+    const value = parseFloat(val.replace(/,/g, ""));
+    return (
+      value < activeMethod.value.depositMax + 1 ||
+      `${t(
+        "lang.deposit_between"
+      )}${calculatedMinDeposit.value.toLocaleString()} - ${activeMethod.value.depositMax.toLocaleString()}`
+    );
+  }
 ]);
 
 const form = reactive({
@@ -548,7 +585,7 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if(window.location.href.indexOf("tf88uytin.com") > -1){
+        if (window.location.href.indexOf("tf88uytin.com") > -1) {
           otag("event", "deposit");
         }
 
@@ -656,7 +693,6 @@ async function pDepo(deposit) {
             }
           }
         }
-
       } else {
         $q.notify({
           color: "negative",

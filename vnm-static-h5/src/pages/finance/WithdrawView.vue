@@ -161,15 +161,15 @@
               {{
                 $t("lang.withdraw_singlewithdrawal") +
                 ": " +
-                selectedWithdrawalMethod.withdrawMin +
+                selectedWithdrawalMethod.withdrawMin.toLocaleString() +
                 "VNDP - " +
-                selectedWithdrawalMethod.withdrawMax +
+                selectedWithdrawalMethod.withdrawMax.toLocaleString() +
                 "VNDP"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount + "VNDP" }}
+              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() + "VNDP" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               <br />
