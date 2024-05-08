@@ -588,7 +588,7 @@
   <div class="news-section">
     <div class="news-title">
       <div class="title-text">공지사항</div>
-      <div class="more-text">+ 더보기</div>
+      <router-link class="more-text" to="/?page=notify">+ 더보기</router-link>
     </div>
     <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
       <div class="news-item-left">
