@@ -17,7 +17,7 @@ defineProps({
   flex-direction: column;
   align-items: center;
   gap: 14px;
-    margin-top: 8px;
+  margin-top: 8px;
   img {
     width: 50px;
   }
@@ -27,7 +27,8 @@ defineProps({
     line-height: 42.56px;
     letter-spacing: 0.12em;
     word-break: keep-all;
-  }.bracket-team__qn {
+  }
+  .bracket-team__qn {
     font-family: Microsoft YaHei UI;
     font-size: 32px;
     line-height: 35px;

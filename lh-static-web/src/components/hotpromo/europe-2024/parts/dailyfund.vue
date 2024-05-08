@@ -25,7 +25,7 @@
             <img :src="require(`../images/daily-fund-ranking-${i+1}.png`)" />
             </div>
           </div>
-          
+
         </div>
         <el-progress
           :percentage="getPercentage(matchPoints.currentPoints)"
@@ -97,12 +97,14 @@
       <td>188</td>
     </tr>
   </table>
-  <el-dialog width="300" :title="selectedMatch.title" v-model="confirmDialog">
-    <p>您确定要选择 <span style="font-weight: bold; color: #0051b3;">{{selectedItem.name}}</span> 吗？请注意，一旦选择后将无法更改。</p>
-      <div style="margin-top: 20px;">
-      <el-button type="primary" @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)">确定</el-button>
-      <el-button type="danger" @click="confirmDialog = false">取消</el-button>
+  <el-dialog width="500" :title="selectedMatch.title" v-model="confirmDialog">
+    <div class="dialog-header">
+      <span>您确定要选择 <span style="font-weight: bold; color: #0051b3;">{{selectedItem.name}}</span> 吗？请注意，一旦选择后将无法更改。</span>
     </div>
+      <div class="dialog-footer">
+        <el-button color="grey" @click="confirmDialog = false">取消</el-button>
+        <el-button type="primary" @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)">确定</el-button>
+      </div>
   </el-dialog>
 </template>
 
@@ -248,7 +250,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       align-items: center;
       font-size: 20px;
     }
-    img {    
+    img {
       width: nth($ranking-list, $i);
     }
   }
@@ -351,7 +353,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
               width: 100%;
             }
           }
-        
+
 
         &:last-child {
           align-items: flex-start;
@@ -465,5 +467,18 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       }
     }
   }
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: center;
 }
 </style>

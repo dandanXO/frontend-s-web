@@ -7,14 +7,16 @@
     <img src="../images/daily-fund-logo.png" class="fund-logo" />
     <div class="fund-inner-wrapper">
       <div class="fund-status">
-        <div style="display:flex; gap: 10px;">
-        <span class="fund-status__point-title">总积分</span>
-        <div class="fund-status__point">{{matchPoints.currentPoints}}</div>
-        </div> 
+        <div style="display: flex; gap: 10px">
+          <span class="fund-status__point-title">总积分</span>
+          <div class="fund-status__point">{{ matchPoints.currentPoints }}</div>
+        </div>
         <div class="fund-contest-time-left">
           <img src="../images/daily-fund-icon-time.svg" />
           <span class="fund-contest-time-left__title">比赛剩余</span>
-          <span class="fund-contest-time-left__content" v-if="remainingTime">{{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}</span>
+          <span class="fund-contest-time-left__content" v-if="remainingTime">
+            {{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}
+          </span>
         </div>
       </div>
       <div class="fund-divider" />
@@ -24,21 +26,26 @@
             <div v-if="i === 0"></div>
             <div v-if="i !== 0">
               {{ num.amt }} 元
-            <img :src="require(`../images/daily-fund-ranking-${i+1}.png`)" />
+              <img :src="require(`../images/daily-fund-ranking-${i + 1}.png`)" />
             </div>
           </div>
-          
         </div>
-        <q-linear-progress :value="getPercentage(matchPoints.currentPoints)"
-          class="fund-progress-bar"
-        />
+        <q-linear-progress :value="getPercentage(matchPoints.currentPoints)" class="fund-progress-bar" />
         <div class="fund-progress-ranking-wrapper">
-          <div v-for="(num, i) in rankPoints" :key="`ranking-text-${i+1}`" :class="`ranking-text-${i+1}`">
-              {{ num.points }}
-              <div v-if="i !== 0">
+          <div v-for="(num, i) in rankPoints" :key="`ranking-text-${i + 1}`" :class="`ranking-text-${i + 1}`">
+            {{ num.points }}
+            <div v-if="i !== 0">
               <div class="claim">
-                <img @click="claimPoint(num.points)" v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed && !matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claim.png">
-                <img v-else src="../images/daily-fund-claimed.png">
+                <img
+                  @click="claimPoint(num.points)"
+                  v-if="
+                    matchPoints.currentPoints >= num.points &&
+                    matchPoints.pointsClaimed &&
+                    !matchPoints.pointsClaimed.includes(num.points)
+                  "
+                  src="../images/daily-fund-claim.png"
+                />
+                <img v-else src="../images/daily-fund-claimed.png" />
               </div>
             </div>
           </div>
@@ -50,19 +57,31 @@
     <div class="bracket-wrapper" v-for="(match, index) in ongoingMatches" :key="index">
       <div class="bracket-team-select">
         <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
-        <button @click="matchSubmit(match, match.teamOneId, match.teamOneName)" v-if="!match.selectedTeamId" class="bracket-team-select__button">选择</button>
+        <button
+          @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
+          v-if="!match.selectedTeamId"
+          class="bracket-team-select__button"
+        >
+          选择
+        </button>
         <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">{{match.status === 'ONGOING' ? '进行中' : '已结束'}}</div>
+        <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
           <div class="bracket-info__info-wrapper-date">{{ match.matchTime }}</div>
           <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
         </div>
       </div>
       <div class="bracket-team-select">
-        <bracket-team  :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
-        <button @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)" v-if="!match.selectedTeamId" class="bracket-team-select__button">选择</button>
+        <bracket-team :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
+        <button
+          @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
+          v-if="!match.selectedTeamId"
+          class="bracket-team-select__button"
+        >
+          选择
+        </button>
         <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
       </div>
     </div>
@@ -97,14 +116,16 @@
     </tr>
   </table>
   <q-dialog width="300" :title="selectedMatch.title" v-model="confirmDialog">
-    
-  <q-card style="width: 100%; padding: 20px; text-align: center" class="bg-white text-black">
+    <q-card class="bg-white text-black vote-card">
       <q-card-section class="q-mb-md">
-        <p>您确定要选择 <span style="font-weight: bold; color: #0051b3;">{{selectedItem.name}}</span> 吗？请注意，一旦选择后将无法更改。</p>
-     
+        <p>
+          您确定要选择
+          <span style="font-weight: bold; color: #0051b3">{{ selectedItem.name }}</span>
+          吗？请注意，一旦选择后将无法更改。
+        </p>
       </q-card-section>
-      <q-btn @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)" label="确认" color="brightbtn" style="margin-right: 8px" />
-      <q-btn @click="confirmDialog = false" label="取消" color="warning" />
+      <q-btn @click="confirmDialog = false" label="取消" color="warning" class="q-mr-md" />
+      <q-btn @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)" label="确定" color="brightbtn" />
     </q-card>
   </q-dialog>
 </template>
@@ -118,14 +139,14 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 const $q = useQuasar();
-const store = userStore()
+const store = userStore();
 var qs = require("qs");
 const props = defineProps({
   tabtitle: String
 });
 const rankPoints = [
   {
-    amt: '',
+    amt: "",
     points: 0
   },
   {
@@ -151,26 +172,26 @@ const rankPoints = [
   {
     amt: 188,
     points: 6000
-  },
-]
-const imgUrl = process.env.IMAGE_CDN + '/promo/';
+  }
+];
+const imgUrl = process.env.IMAGE_CDN + "/promo/";
 const confirmDialog = ref(false);
-const selectedMatch = ref('');
+const selectedMatch = ref("");
 const selectedItem = ref({
   id: null,
   name: null
 });
 const matchPoints = ref([]);
 const getPercentage = (points) => {
-  return points / 6000 * 100
-}
-const isClaimed = ref(false)
+  return (points / 6000) * 100;
+};
+const isClaimed = ref(false);
 const ongoingMatches = ref();
 const remainingTime = ref();
 const getMatchPoints = () => {
   eventapi.get("/uefa/matchPoints").then((res) => {
     if (res.code === 0) {
-      matchPoints.value = res.data
+      matchPoints.value = res.data;
       remainingTime.value = calculateRemainingTime(res.data.endDate);
     } else {
       $q.notify({
@@ -180,15 +201,15 @@ const getMatchPoints = () => {
         icon: "report_problem"
       });
     }
-  })
-}
+  });
+};
 const claimPoint = (points) => {
-  eventapi.post("/uefa/matchPoints/claim", qs.stringify({point: points})).then((res) => {
+  eventapi.post("/uefa/matchPoints/claim", qs.stringify({ point: points })).then((res) => {
     if (res.code === 0) {
       $q.notify({
         color: "positive",
         position: "top",
-        message: '领取成功',
+        message: "领取成功",
         icon: "report_problem"
       });
     } else {
@@ -199,44 +220,46 @@ const claimPoint = (points) => {
         icon: "report_problem"
       });
     }
-  })
-}
+  });
+};
 const getMatches = () => {
   eventapi.get("/uefa/match/ongoing").then((res) => {
     if (res.code === 0) {
-      ongoingMatches.value = res.data
+      ongoingMatches.value = res.data;
     }
-  })
-}
+  });
+};
 const matchSubmit = (match, id, name) => {
   confirmDialog.value = true;
-  selectedMatch.value = match
+  selectedMatch.value = match;
   selectedItem.value = {
     id: id,
     name: name
-  }
-}
+  };
+};
 const confirmMatchSelect = () => {
-  eventapi.post("/uefa/match/submit", {
-    matchId: selectedMatch.value.id,
-    selectedTeamId: selectedItem.value.id,
-    headers: {
+  eventapi
+    .post("/uefa/match/submit", {
+      matchId: selectedMatch.value.id,
+      selectedTeamId: selectedItem.value.id,
+      headers: {
         token: `${store.token}`,
-        'Content-Type': 'application/json'
-    }}).then((res) => {
-    if (res.code === 0) {
-      
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: '领取成功',
-        icon: "report_problem"
-      });
-      confirmDialog.value = false;
-      getMatches();
-    }
-  })
-}
+        "Content-Type": "application/json"
+      }
+    })
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "领取成功",
+          icon: "report_problem"
+        });
+        confirmDialog.value = false;
+        getMatches();
+      }
+    });
+};
 function calculateRemainingTime(endDate) {
   // Parse the end date string into a Date object
   const endDateTime = new Date(endDate);
@@ -259,9 +282,9 @@ function calculateRemainingTime(endDate) {
 }
 
 onMounted(() => {
-  getMatches()
-  getMatchPoints()
-})
+  getMatches();
+  getMatchPoints();
+});
 </script>
 <style scoped lang="scss">
 $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
@@ -371,14 +394,12 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
         justify-content: space-between;
         align-items: end;
         width: 100%;
-        
 
         &:last-child {
           font-size: 0.625rem;
           line-height: 0.8rem;
           text-align: center;
           align-items: flex-start;
-
         }
       }
 
@@ -480,6 +501,13 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
       }
     }
   }
+}
+
+.vote-card {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  max-width: 400px;
 }
 
 @media (max-width: 410px) {
