@@ -9,7 +9,6 @@ import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
-import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
@@ -17,7 +16,6 @@ export default defineComponent({
     const onlineStatInterval = ref();
     const store = userStore();
     const UI = uiStore();
-    const isDark = useDark();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -65,9 +63,6 @@ export default defineComponent({
         // console.log("RESIZE");
         UI.innerWidth = window.innerWidth;
       });
-
-      // TODO: Remove after testing is completed.
-      if (store.memberType !== "TEST" || store.memberType !== "PROMO_TEST") isDark.value = false;
     });
 
     onUnmounted(() => {
