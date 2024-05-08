@@ -66,12 +66,12 @@
                 <td>≥100,000</td>
                 <td>1088</td>
                 <td>1588</td>
-                <td>1088</td>
+                <td>1888</td>
               </tr>
             </tbody>
           </table>
 
-          <p class="q-mt-md">例：用户A当日存款10,000元后投注体育场馆50,000万元,用户A可获得88+128=216元</p>
+          <p class="q-mt-md" style="text-align: left">例：用户A当日存款10,000元后投注体育场馆50,000元,用户A可获得88+128=216元</p>
         </div>
 
         <div class="content-rules">
