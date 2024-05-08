@@ -27,6 +27,7 @@
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
+      :promo-param="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
     />
 

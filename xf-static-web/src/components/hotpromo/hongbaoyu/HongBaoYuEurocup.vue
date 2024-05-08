@@ -40,8 +40,7 @@
         <div class="event-details">
           <div class="details-item">
             <div class="event-frame">活动时间</div>
-            <div class="event-txt">2024年06月14日至2024年07月14日</div>
-            <!-- <div class="event-txt">{{ promotionListing.datetime }}</div> -->
+            <div class="event-txt">{{ getDateRange(promoParam) }}</div>
           </div>
 
           <div class="details-item">
@@ -136,11 +135,27 @@ const props = defineProps({
   pageContent: {
     type: String,
     required: true
+  },
+  promoParam: {
+    type: String,
+    required: true
   }
 });
 
 const promoCode = ref(props.promoCode);
 const promoContent = ref(props.pageContent);
+const promoParam = ref(props.promoParam);
+
+const getDateRange = (param) => {
+  try {
+    const promoObject = JSON.parse(param);
+    const dateTimeRange = promoObject[" datetime"].trim(); // Trim the property name
+    return dateTimeRange;
+  } catch (error) {
+    console.error("Error parsing promoParam:", error);
+    return "";
+  }
+};
 
 const store = userStore();
 const privilegeClaimedModalVisible = ref(false);

@@ -601,9 +601,6 @@ export default defineComponent({
 
     .selected-promo-wrapper {
       &.bg__xf-eurocup-hongbao {
-        background-size: 100% auto;
-        background-repeat: no-repeat;
-        background-position: top center;
         padding-bottom: 0px;
         background-color: #090b18;
 

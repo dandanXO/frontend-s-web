@@ -11,6 +11,7 @@
     <HongBaoYuEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
+      :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao' && store.token"
     />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
