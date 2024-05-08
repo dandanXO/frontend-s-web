@@ -1662,6 +1662,7 @@ export default {
     redirectUrlApp: 'APP跳转链接',
     redirectUrlWeb: 'Web跳转链接',
     redirectUrlH5: 'H5跳转链接',
+    popUpDurationSeconds: '弹窗持续时间(秒)',
     popUpTime: '弹窗时间',
     notificationType: '通知类型',
     notificationContent: '通知内容',

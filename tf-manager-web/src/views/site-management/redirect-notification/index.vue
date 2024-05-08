@@ -127,6 +127,9 @@
           />
           <el-button type="primary" @click="uiControl.popUpTimePickerVisible = true">{{ t('fields.add') }}</el-button>
         </el-form-item>
+        <el-form-item :label="t('fields.popUpDurationSeconds')" prop="popUpDuration">
+          <el-input-number :precision="0" :step="1" :min="0" v-model="form.popUpDuration" style="width: 100px" />
+        </el-form-item>
         <el-form-item :label="t('fields.notificationType')" prop="notificationType">
           <el-select
             v-model="form.notificationType"
@@ -290,6 +293,7 @@ const form = reactive({
   notificationContent: null,
   eligibleWays: [],
   popUpTimes: null,
+  popUpDuration: null,
   redirectUrlApp: null,
   redirectUrlH5: null,
   redirectUrlWeb: null,
