@@ -57,6 +57,17 @@
       <td>88</td>
     </tr>
   </table>
+  <div class="rule-title">
+    活动规则
+  </div>
+  <ol class="rule-content">
+    <li>活动期间，会员在A组~F组每组选出一只队伍作为用户参赛队伍，若用户选择的队伍胜利且有效投注≥3,000元即可获的专属队伍奖金；</li>
+    <li>活动期间，用户参与免费竞猜，竞猜正确可获100积分，若用户选择的参与队伍获胜可额外加赠100积分，积分对应彩金仅限领取1次，积分≥6000分是可获188元；</li>
+    <li>此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；</li>
+    <li>仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；</li>
+    <li>每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关  闭相关账户的权利，并不退还款项，且用户列入黑名单；</li>
+    <li>为避免文字理解差异，本站保留最终解释权。</li>
+  </ol>
 </template>
 
 <script setup>
@@ -332,5 +343,23 @@ onMounted(() => {
       }
     }
   }
+}
+.rule-title, .rule-content {
+  font-family: Microsoft YaHei UI;
+  line-height: 31.95px;
+  letter-spacing: 0.12em;
+  text-align: left;
+  color: #ffffff;
+  margin: 10px 0;
+}
+.rule-title {
+  font-size:22px;
+  font-weight: 700;
+  line-height: 42.6px;
+}
+.rule-content {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 10px;
 }
 </style>
