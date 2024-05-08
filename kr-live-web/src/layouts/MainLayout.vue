@@ -7,7 +7,9 @@
     </q-drawer>
 
     <q-page-container>
-      <div class="home-banner-wrapper"></div>
+      <div class="home-banner-wrapper">
+        <img style="width:33%" src="../assets/images/index/kr-logo.svg" />
+      </div>
 
       <div class="main">
         <LoginBar />
@@ -545,6 +547,9 @@ svg path {
 }
 
 .home-banner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   width: 100%;
   height: 200px;
