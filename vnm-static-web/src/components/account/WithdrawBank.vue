@@ -264,6 +264,7 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import emptyData from "@/components/emptyData.vue";
 import { storeToRefs } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -359,7 +360,7 @@ export default defineComponent({
       }
     }
     const tblLoading = ref(false);
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/payment/";
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);

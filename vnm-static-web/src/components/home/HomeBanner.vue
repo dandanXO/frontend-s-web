@@ -5,9 +5,9 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-     <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
-       <img :src="homePopupImg" class="alert-img" />
-     </a>
+    <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+      <img :src="homePopupImg" class="alert-img" />
+    </a>
   </el-dialog>
 
   <el-carousel
@@ -44,9 +44,10 @@ import { ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useLocalStorage } from '@vueuse/core'
 
 const router= useRouter();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 
 const goToUrl = (redirectUrl) => {
@@ -71,9 +72,9 @@ const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
     if (res.code === 0) banners.value = res.data;
     else ElMessage.error({
-                type: "error",
-                message: res.message
-              });
+      type: "error",
+      message: res.message
+    });
   });
 };
 
@@ -144,7 +145,7 @@ const checkShowImgTop = () => {
             } else {
               homePopupPath.value = "/promotion?name=" + data["path"];
             }
-            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/promo/" + data["desktopImgUrl"];
+            homePopupImg.value = imgURL  + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
             homePopupId.value = data["id"];

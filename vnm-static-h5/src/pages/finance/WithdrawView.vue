@@ -299,6 +299,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -308,7 +309,7 @@ export default defineComponent({
     const isNewUser = ref(false);
     const { t } = useI18n();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN;
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
     const amountRef = ref();
     const withdrawPwdRef = ref();
     const cardRef = ref();

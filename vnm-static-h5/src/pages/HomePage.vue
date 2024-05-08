@@ -710,6 +710,7 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
+import { useLocalStorage } from '@vueuse/core'
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -934,7 +935,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL =useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -962,11 +963,11 @@ export default defineComponent({
         id: homePopupId.value,
         frequency: homePopupFrequency.value
       };
-      sessionStorage.setItem(key, JSON.stringify(item));
+      localStorage.setItem(key, JSON.stringify(item));
     };
 
     const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
+      const itemStr = localStorage.getItem(key);
       if (!itemStr) {
         return null;
       }
@@ -976,7 +977,7 @@ export default defineComponent({
         .get("/member/ads-popout")
         .then((res) => {
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
+            localStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
             return null;
           }
@@ -1015,7 +1016,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value = imgURL + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];

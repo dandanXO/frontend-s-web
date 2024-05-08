@@ -12,9 +12,26 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-var rstApi = getInitApi(rstArray, "VNM_H5_RST_URL");
-var crtApi = getInitApi(crtArray, "VNM_H5_CRT_URL");
-var evtApi = getInitApi(evtArray, "VNM_H5_EVT_URL");
+const globalLinks= ["tf88won"];
+console.log(window.location.hostname);
+const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
+
+if (isGlobalVN) {
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "VNM_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "VNM_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "VNM_H5_CRT_URL");
+
+  localStorage.setItem("IMAGE_CDN", process.env.GLOBAL_IMAGE_CDN);
+
+}else {
+  var rstApi = getInitApi(rstArray, "VNM_H5_RST_URL");
+  var crtApi = getInitApi(crtArray, "VNM_H5_CRT_URL");
+  var evtApi = getInitApi(evtArray, "VNM_H5_EVT_URL");
+}
 
 const api = axios.create({ baseURL: rstApi });
 const cashier = axios.create({ baseURL: crtApi });
