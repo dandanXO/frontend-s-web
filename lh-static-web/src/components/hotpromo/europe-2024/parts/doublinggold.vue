@@ -31,7 +31,7 @@
                             :class="{ 'selected': team.selection.some(item => item.id === choice.id) }"
                             v-for="choice in team.choices" class="choice">
                             <div class="close-icon"></div>
-                            <img src="../images/flag.png">
+                            <img class="team-flag" :src="`${imgURL}${choice.teamIcon}`" />
                             {{ choice.name }}
                         </div>
                     </div>
@@ -62,6 +62,8 @@
 import { ref, defineProps } from 'vue';
 import { getTeams, submitTeam } from "@/api/promotion/eurocup";
 import { onMounted } from 'vue';
+
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
 const props = defineProps({
     tabtitle: String
@@ -163,7 +165,7 @@ const init = () => {
                 };
                 // Push choices for the teamGroup into the team's choices array
                 teamsInGroup.forEach(teamData => {
-                    team.choices.push({ name: teamData.teamName, id: teamData.id });
+                    team.choices.push({ name: teamData.teamName, id: teamData.id , teamIcon: teamData.teamIcon });
                 });
                 // Push the team object to the teams array
                 teams.value.push(team);
@@ -292,6 +294,12 @@ onMounted(() => {
                     .close-icon {
                         display: none;
                     }
+
+                  .team-flag{
+                    width: 64px;
+                    height: auto;
+                    max-height: 64px;
+                  }
 
                     &.selected {
                         border: 1px solid;
