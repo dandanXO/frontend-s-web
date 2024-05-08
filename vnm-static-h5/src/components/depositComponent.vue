@@ -211,7 +211,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef, watch } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -419,12 +419,27 @@ async function loadPrivilege(val) {
           }
         }
       });
+
+      unselectedPrivileges.value.push({
+        code: "LATER",
+        depositMin: 0,
+        id: 0,
+        name: t('lang.choose_later'),
+        payTypes: "",
+        triggerType: ""
+      })
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
     }
   });
 }
+
+watch(selectedPrivilege, (newVal) => {
+  if(newVal && newVal.id ===0){
+    selectedPrivilege.value = null;
+  }
+})
 
 function selectPayType(value) {
   if (value) {

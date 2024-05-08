@@ -1279,6 +1279,7 @@ export default {
     cockfight: "Cockfight",
     copy_success: "Liên kết đã được sao chép thành công!",
     enter_transfer_amount: "Nhập số tiền chuyển",
+    choose_later: "Tham Gia Sa",
     // about
     about: {
       affiliate: "Đại Lý",

@@ -352,7 +352,7 @@ $node-color: #468cff;
       }
 
       .overflow {
-        white-space: wrap;
+        white-space: nowrap;
       }
 
       .node-txt-img {
