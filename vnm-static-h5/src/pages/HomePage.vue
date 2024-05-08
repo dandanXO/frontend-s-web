@@ -949,9 +949,6 @@ export default defineComponent({
     const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
       isImportantAnnoucementModal.value = false;
     };
 
@@ -1028,6 +1025,10 @@ export default defineComponent({
                   homePopupLinkOut.value = true;
                 } else {
                   homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
+                if (homePopupFrequencyNum.value !== 0) {
+                  setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
                 }
 
                 isFirstView.value = true;
