@@ -4,11 +4,12 @@
       class="promo"
       :class="selectedPromo.redirectUrl === 'lh1-app-hongbao' ? 'unfixed' : ''"
       :style="
-      isPromoDetail ?
-        'background-image: url(' +
-        imgURL +
-        (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-        ')' : ''
+        isPromoDetail
+          ? 'background-image: url(' +
+            imgURL +
+            (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+            ')'
+          : ''
       "
     >
       <q-tabs
@@ -34,12 +35,7 @@
                   data-aos-easing="ease-out"
                   data-aos-duration="1000"
                 >
-                  <div
-                    class="promo-item"
-                    v-if="
-                      promo.promoType.toLowerCase().split(',').includes(tab.name)
-                    "
-                  >
+                  <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div>
                         <div class="promo-label">
@@ -105,43 +101,58 @@
                     </a>
                   </div>
 
-<!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
-<!--                    <a @click="showPromoDetails(promo)">-->
-<!--                      <div>-->
-<!--                        <div class="promo-label">-->
-<!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
-<!--                            {{ getPromoLabel(promo.labelType) }}-->
-<!--                          </div>-->
-<!--                          <div-->
-<!--                            class="promo-item-date"-->
-<!--                            v-if="parsedParam(promo.param).date"-->
-<!--                            v-html="parsedParam(promo.param).date"-->
-<!--                          />-->
-<!--                        </div>-->
-<!--                        <div class="promo-item-title">{{ promo.title }}</div>-->
-<!--                        <div-->
-<!--                          class="promo-item-deal"-->
-<!--                          v-if="parsedParam(promo.param).sub"-->
-<!--                          v-html="parsedParam(promo.param).sub"-->
-<!--                        />-->
-<!--                        <div>-->
-<!--                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />-->
-<!--                        </div>-->
+                  <!--                  <div class="promo-item" v-if="tab.name === 'daily' && promo.labelType === 4">-->
+                  <!--                    <a @click="showPromoDetails(promo)">-->
+                  <!--                      <div>-->
+                  <!--                        <div class="promo-label">-->
+                  <!--                          <div class="promo-ribbon" v-if="promo.labelType !== 2">-->
+                  <!--                            {{ getPromoLabel(promo.labelType) }}-->
+                  <!--                          </div>-->
+                  <!--                          <div-->
+                  <!--                            class="promo-item-date"-->
+                  <!--                            v-if="parsedParam(promo.param).date"-->
+                  <!--                            v-html="parsedParam(promo.param).date"-->
+                  <!--                          />-->
+                  <!--                        </div>-->
+                  <!--                        <div class="promo-item-title">{{ promo.title }}</div>-->
+                  <!--                        <div-->
+                  <!--                          class="promo-item-deal"-->
+                  <!--                          v-if="parsedParam(promo.param).sub"-->
+                  <!--                          v-html="parsedParam(promo.param).sub"-->
+                  <!--                        />-->
+                  <!--                        <div>-->
+                  <!--                          <q-btn label="查看详情" dense color="brightbtn" class="promo-item-btn" />-->
+                  <!--                        </div>-->
 
-<!--                        <div class="promo-item-side-img">-->
-<!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </a>-->
-<!--                  </div>-->
+                  <!--                        <div class="promo-item-side-img">-->
+                  <!--                          <img :src="imgURL + promo.mobileImgUrl" />-->
+                  <!--                        </div>-->
+                  <!--                      </div>-->
+                  <!--                    </a>-->
+                  <!--                  </div>-->
                 </div>
               </div>
             </div>
           </div>
-          <div v-else class="selected-promo" :class="{ euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
+          <div
+            v-else
+            class="selected-promo"
+            :class="{
+              euroCup: selectedPromo.promoCode === 'lh1-eurocup-2024',
+              'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            }"
+          >
             <div class="loader" v-if="isFetchingPromo" />
             <div class="selected-promo-wrapper">
-              <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl && !isSpecialPromo && selectedPromo.promoCode !== 'lh1-ftd-promo'">
+              <div
+                class="banner-container"
+                v-if="
+                  selectedPromo &&
+                  selectedPromo.mobileBannerUrl &&
+                  !isSpecialPromo &&
+                  selectedPromo.promoCode !== 'lh1-ftd-promo'
+                "
+              >
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
@@ -755,8 +766,13 @@ export default defineComponent({
     width: 100%;
 
     &.euroCup {
-        background: #010333;
-      }
+      background: #010333;
+    }
+
+    &.europe-first-shoot {
+      background-color: #0d3173;
+    }
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;

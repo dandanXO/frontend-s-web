@@ -41,7 +41,9 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-label">
-                  <div class="label-type" v-if="promo.labelType !== 2 && promo.labelType !== -1">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-type" v-if="promo.labelType !== 2 && promo.labelType !== -1">
+                    {{ getPromoLabel(promo.labelType) }}
+                  </div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
 
@@ -99,7 +101,8 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo'
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo',
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -344,7 +347,7 @@ export default defineComponent({
 
     .promo-banner-image {
       position: relative;
-    overflow: hidden;
+      overflow: hidden;
 
       .countdown-day {
         position: absolute;
@@ -487,7 +490,7 @@ export default defineComponent({
       display: flex;
       gap: 30px;
       min-height: 1250px;
-    align-items: flex-start;
+      align-items: flex-start;
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
@@ -804,6 +807,10 @@ export default defineComponent({
 
         &:has(.corner-decor) {
           position: relative;
+        }
+
+        &.europe-first-shoot {
+          background-color: #0d3173;
         }
 
         .hot-promo {
