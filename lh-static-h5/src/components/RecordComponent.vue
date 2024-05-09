@@ -314,7 +314,7 @@ export default defineComponent({
         .then((response) => {
           // Handle the response
           if (response.code === 0) {
-            isConfirmWithdraw.value = false;
+            isCancelWithdraw.value = false;
             $q.notify({
               color: "positive",
               position: "top",
