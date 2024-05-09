@@ -27,7 +27,7 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
 };
 
 onMounted(() => {
-  console.log("Home");
+  // console.log("Home");
 });
 </script>
 

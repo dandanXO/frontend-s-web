@@ -419,7 +419,7 @@ export default defineComponent({
 
     const tableRecords = ref([]);
     const getRecords = () => {
-      console.log(checkRecordFormData)
+      // console.log(checkRecordFormData)
       const params = {
         rebateType: checkRecordFormData.recordType,
         bonusType: checkRecordFormData.privilegeType,
