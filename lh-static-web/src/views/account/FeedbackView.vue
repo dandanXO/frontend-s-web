@@ -63,7 +63,7 @@
             </div>
 
             <div class="mail-input-item">
-              <div class="input-title">上传照片</div>
+              <div class="input-title">上传图片</div>
               <div class="input-fill">
                 <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
               </div>

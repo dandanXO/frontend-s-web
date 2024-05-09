@@ -49,7 +49,7 @@
         </div>
 
         <div class="write-board-div q-pa-md">
-          <div class="top q-pb-md">上传照片</div>
+          <div class="top q-pb-md">上传图片</div>
           <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
         </div>
 
