@@ -106,13 +106,17 @@ export default defineComponent({
       if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.split(",").includes("SPORT")
+          );
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.split(",").includes("SPORT")
+          );
           setFilteredPlatforms();
         });
       }
@@ -123,11 +127,19 @@ export default defineComponent({
         platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
+      filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+        const matchingItem = platformsListDisplay.value.find((item2) => item1.code === item2.code);
+        return { ...matchingItem, ...item1 };
+      });
+
       filteredPlatforms.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
         }
       });
+
+      filteredPlatforms.value = filteredPlatforms.value.sort((a, b) => a.sequence - b.sequence);
+
       setSelectedPlat();
     };
 
