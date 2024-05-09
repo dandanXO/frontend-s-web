@@ -452,8 +452,11 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  router.push("/login");
-  // emits("open-login-dialog");
+  if(route.path === '/register'){
+    router.push("/login");
+  }else{
+    emits("open-login-dialog");
+  }
 };
 
 onMounted(() => {
