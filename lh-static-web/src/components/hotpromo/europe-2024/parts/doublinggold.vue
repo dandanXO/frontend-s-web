@@ -3,6 +3,7 @@
     {{ tabtitle }}
   </div>
 
+  <div class="remark" style="padding-top: 20px;">活动期间，欧洲杯开赛前需满足累积存款≥500且有效流水≥3000，开赛日时可派发58元，无需申请，欧洲杯开赛当日存款≥100元即可符合资格，次日24点前免费派发18元。</div>
   <table>
     <tr>
       <th>达成条件</th>
@@ -78,5 +79,10 @@ table {
 .rule-content {
   font-size: 24px;
   font-weight: 400;
+}
+.remark {
+  font-size: 18px;
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 </style>
