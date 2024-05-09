@@ -232,7 +232,7 @@ export default defineComponent({
         font-size: 16px;
         line-height: 26px;
         letter-spacing: 1px;
-        margin: 80px 0 77px;
+        margin: 55px 0 60px;
         color: #2e79fc;
       }
       .play-btn {
@@ -261,10 +261,12 @@ export default defineComponent({
   .platform-list-box {
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 25px;
-    margin: 35px auto 90px;
+    width: 600px;
+    flex-wrap: wrap;
+    margin: 35px auto 50px;
     .platform-list-item {
       display: flex;
       justify-content: center;
