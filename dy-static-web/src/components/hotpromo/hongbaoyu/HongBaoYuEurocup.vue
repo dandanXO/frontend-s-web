@@ -337,6 +337,8 @@
         min-height: 250px;
         width: 100%;
         max-width: 1240px;
+        border: 1px solid #51ACFF;
+
         .contents {
           max-height: 280px;
           overflow-y: hidden;
@@ -372,6 +374,7 @@
       padding-bottom: 40px;
       margin-bottom: 40px;
       border-radius: 8px;
+      border: 1px solid #ACD4F6;
   
       .contents {
         margin-top: 25px;
