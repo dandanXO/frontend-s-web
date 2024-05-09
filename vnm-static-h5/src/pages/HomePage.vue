@@ -104,9 +104,24 @@
   </div>
 
   <div class="hot-matches-wrapper">
-    <div class="hot-matches-title">
-      <div><img src="../assets/images/home/icon-hot-matches.png" /></div>
-      {{ $t("lang.hotMatches") }}
+    <div class="hot-matches-title-wrapper">
+      <div class="hot-matches-title">
+        <div>
+          <img src="../assets/images/home/icon-hot-matches.png" />
+        </div>
+        {{ $t("lang.hotMatches") }}
+      </div>
+      <div>
+        <q-btn
+          @click="playGame('', 'SABA', '')"
+          rounded
+          no-caps
+          color="brightbtn"
+          class="sm-screen-txt"
+        >
+          {{ $t("lang.bet_now") }}
+        </q-btn>
+      </div>
     </div>
     <div class="hot-matches-container">
       <q-carousel
@@ -2406,6 +2421,12 @@ export default defineComponent({
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
   margin: 20px auto 10px;
+
+  .hot-matches-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .hot-matches-title {
     font-size: 18px;

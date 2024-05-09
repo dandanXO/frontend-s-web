@@ -46,6 +46,7 @@ export default {
     tf88_news: "Tin tức TF88",
     see_all: "Nhìn thấy tất cả",
     play_now: "Chơi Ngay",
+    bet_now: "Cược Ngay",
     hotMatches: "Trận Đấu Hot",
 
     // side menu

@@ -104,6 +104,7 @@ export default {
     maintenanceTime: "Time of maintenance",
     viewnow: "View Now",
     playnow: "Play Now",
+    betnow: "Bet Now",
     systemError: "System error",
     loginTitle: "Announcement",
     bankName: "Bank Name",

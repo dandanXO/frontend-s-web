@@ -1,8 +1,20 @@
 <template>
   <div class="hot-matches-wrapper">
-    <div class="hot-matches-title">
-      <div><img src="../../assets/images/home/icon-hot-matches.png" /></div>
-      {{ $t("home.hotMatches") }}
+    <div class="hot-matches-title-wrapper">
+      <div class="hot-matches-title">
+        <div>
+          <img src="../../assets/images/home/icon-hot-matches.png" />
+        </div>
+        {{ $t("home.hotMatches") }}
+      </div>
+      <div>
+        <router-link
+          class="standard-button sm-btn btn-color-blue"
+          to="/sports"
+        >
+          {{ $t("common.betnow") }}
+        </router-link>
+      </div>
     </div>
     <div class="hot-matches-container">
       <swiper
@@ -117,6 +129,12 @@ onMounted(() => {
 .hot-matches-wrapper {
   max-width: 1350px;
   margin: 50px auto 0px;
+
+  .hot-matches-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .hot-matches-title {
     font-size: 24px;

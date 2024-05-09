@@ -104,6 +104,7 @@ export default {
     maintenanceTime: "Thời gian bảo trì",
     viewnow: "Xem ngay",
     playnow: "Chơi Ngay",
+    betnow: "Cược Ngay",
     systemError: "Lỗi hệ thống",
     loginTitle: "Thông báo",
     bankName: "Ngân hàng ",
