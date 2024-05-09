@@ -52,7 +52,15 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
+
+                  <div class="read-label" v-if="det.readTime && det.sendTime" >
+                    <img src="../assets/images/inbox/read-mail.png" />
+                  </div>
+                  <div class="read-label" v-else>
+                    <img src="../assets/images/inbox/unread-mail.png" />
+                  </div>
+
+
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
                   <div class="right-title">
@@ -527,6 +535,13 @@ export default defineComponent({
     font-size: 1.1rem;
     color: $font-1;
     word-break: break-all;
+
+    .read-label{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+    }
 
     .title-wrapper {
       width: 100%;
