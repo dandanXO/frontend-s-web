@@ -56,7 +56,12 @@
                     <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
                       <el-checkbox v-model="selectedIds[item.id]" size="large" />
                     </div>
-                    <div v-if="item.readTime" class="read-badge">已读</div>
+                    <div v-if="item.readTime" class="read-badge">
+                      <img src="../../assets/images/mail/read-mail.png" />
+                    </div>
+                    <div v-else class="read-badge">
+                      <img src="../../assets/images/mail/unread-mail.png" />
+                    </div>
                     <div class="title-wrapper">
                       <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">
                         {{ item.title }}
@@ -668,15 +673,19 @@ onMounted(() => {
 }
 
 .read-badge {
-  width: 35px;
-  height: 16px;
-  border-radius: 25px;
+  width: 18px;
+  height: 18px;
+  //border-radius: 25px;
   text-align: center;
-  color: #fff;
-  background: #4086ff;
-  font-size: 10px;
-  line-height: 16px;
+  //color: #fff;
+  //background: #4086ff;
+  //font-size: 10px;
+  line-height: 18px;
   margin-right: 10px;
+
+  img{
+    width: 100%;
+  }
 }
 
 .title-wrapper {
