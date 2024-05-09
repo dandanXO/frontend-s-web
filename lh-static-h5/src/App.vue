@@ -28,7 +28,9 @@ export default defineComponent({
     const onlineStatInterval = ref();
 
     const darkModeFromStorage = useLocalStorage("DARK_MODE", false);
-    if (darkModeFromStorage.value) $q.dark.set(true);
+    if (darkModeFromStorage.value && store.hasToken()) {
+      $q.dark.set(true);
+    }
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
