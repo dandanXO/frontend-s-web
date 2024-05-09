@@ -152,7 +152,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" :model-value="true">
+  <q-dialog width="100%" v-model="isConfirmWithdraw">
     <q-card style="width: 100%; padding: 20px" :class="$q.dark.isActive ? '' : 'bg-white text-black'">
       <q-card-section class="q-mb-md">
         系统提示
