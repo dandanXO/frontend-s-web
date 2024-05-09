@@ -1131,6 +1131,7 @@ export default {
     permission: '权限',
     permissionAssignment: '分配权限',
     pgroup: '优惠组别',
+    photo: '图片',
     piggyBankRecords: '存钱罐记录',
     piggyBankSettings: '存钱罐设置',
     place: '位置',

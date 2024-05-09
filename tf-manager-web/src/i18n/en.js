@@ -1128,6 +1128,7 @@ export default {
     permission: 'Permission',
     permissionAssignment: 'Permission Assignment',
     pgroup: 'Privilege Group',
+    photo: 'Photo',
     piggyBankRecords: 'Piggy Bank Records',
     piggyBankSettings: 'Piggy Bank Settings',
     place: 'Place',
