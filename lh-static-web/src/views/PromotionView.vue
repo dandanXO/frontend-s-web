@@ -41,7 +41,9 @@
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
                 <div class="promo-label">
-                  <div class="label-type" v-if="promo.labelType !== 2 && promo.labelType !== -1">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-type" v-if="promo.labelType !== 2 && promo.labelType !== -1">
+                    {{ getPromoLabel(promo.labelType) }}
+                  </div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
 
@@ -65,7 +67,7 @@
       </div>
     </div>
     <div v-else class="selected-promo">
-      <div class="selected-promo-wrapper" :class="{ darkbluebg: selectedPromo.promoCode === 'lh1-eurocup-2024'}">
+      <div class="selected-promo-wrapper" :class="{ darkbluebg: selectedPromo.promoCode === 'lh1-eurocup-2024' }">
         <div
           class="banner-container"
           v-if="
@@ -99,7 +101,8 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo'
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo',
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -337,21 +340,21 @@ export default defineComponent({
   min-height: 600px;
 
   .promo-banner {
-    background:#f3f7fd;
-    width:100%;
-    display:flex;
-    justify-content:center;
+    background: #f3f7fd;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 
     .promo-banner-image {
       position: relative;
-    overflow: hidden;
+      overflow: hidden;
 
-      .countdown-day{
-        position:absolute;
+      .countdown-day {
+        position: absolute;
         font-size: 140px;
-        font-weight:bold;
+        font-weight: bold;
         color: blue;
-        background: linear-gradient(180deg, #73B2FF 31.25%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff 100%);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -401,10 +404,10 @@ export default defineComponent({
         color: #ffffff;
         border: 0;
       }
-      tr:first-child td:first-child{
+      tr:first-child td:first-child {
         border-top-left-radius: 16px;
       }
-      tr:first-child td:last-child{
+      tr:first-child td:last-child {
         border-top-right-radius: 16px;
       }
 
@@ -437,8 +440,8 @@ export default defineComponent({
         color: #7a8eb9;
       }
       tr {
-        p{
-          margin:0px;
+        p {
+          margin: 0px;
         }
       }
     }
@@ -487,7 +490,7 @@ export default defineComponent({
       display: flex;
       gap: 30px;
       min-height: 1250px;
-    align-items: flex-start;
+      align-items: flex-start;
       .promo-type-wrapper {
         display: flex;
         box-shadow: 0px 4px 22px 0px #00000026;
@@ -756,13 +759,13 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
     .selected-promo-wrapper {
-        &.darkbluebg {
-          background-color: #0D3173;
-          .inner {
-            margin-top: -100px;
-            background-position: 0 160px;
-          }
+      &.darkbluebg {
+        background-color: #0d3173;
+        .inner {
+          margin-top: -100px;
+          background-position: 0 160px;
         }
+      }
       .banner-container {
         width: 100%;
         .promo-bg {
@@ -804,6 +807,10 @@ export default defineComponent({
 
         &:has(.corner-decor) {
           position: relative;
+        }
+
+        &.europe-first-shoot {
+          background-color: #0d3173;
         }
 
         .hot-promo {
@@ -932,6 +939,61 @@ export default defineComponent({
             }
             &.isMobile {
               display: block;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .promo-container {
+    .all-promotions {
+      background: $background-dark;
+
+      .promo-main-container {
+        .promo-type-wrapper {
+          @include content-block-dark;
+
+          .type-list {
+            .type-item {
+              background: linear-gradient(180deg, #294e85 0%, #464e79 100%);
+              box-shadow: 0px 3.32px 7.61px 0px #bbdcff inset, 0px -1.66px 6.09px 0px #a2bff4 inset;
+
+              &.active {
+                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+              }
+
+              .label {
+                color: $color-white;
+              }
+            }
+          }
+        }
+
+        .promo-list-wrapper {
+          .promo-item {
+            background: url(../assets/promo/front-bg-dark.png) no-repeat center center;
+            background-size: cover;
+
+            .promo-img-wrapper {
+              .promo-label {
+                .label-date {
+                  color: rgba($color-white, 20%);
+                }
+              }
+
+              .promo-details {
+                .front-sub {
+                  color: $color-white;
+                }
+
+                .front-btn {
+                  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
+                }
+              }
             }
           }
         }

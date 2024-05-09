@@ -86,12 +86,12 @@
           </template>
         </q-select>
 
-        <div class="q-mt-sm q-mb-sm text-grey text-bold ">
-          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : " "
+        <div class="q-mt-sm q-mb-sm text-grey text-bold">
+          单笔存款：{{
+            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
+          -
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
@@ -143,7 +143,6 @@
         </div>
         <div class="q-mt-sm" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-
       </q-form>
     </div>
   </div>
@@ -218,7 +217,7 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
-const isNoRealName= ref(false);
+const isNoRealName = ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
@@ -295,7 +294,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
-  (val) => ((val && /^\d+$/.test(val)) || val && isUSDT.value) || '存款金额不能带有小数',
+  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "存款金额不能带有小数",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
@@ -477,7 +476,7 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   if (!extensionState.value && (store.phone === "" || store.phone === null)) {
     isNewUser.value = true;
-  }else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
+  } else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
     isNoRealName.value = true;
   } else {
     btnLoading.value = true;
@@ -709,7 +708,6 @@ onMounted(() => {
     checkNewUser();
   }
 });
-
 </script>
 
 <style lang="scss">
@@ -783,12 +781,19 @@ onMounted(() => {
 }
 
 .deposit-selection {
-  &.q-field--labeled{
+  &.q-field--labeled {
     color: #fff;
   }
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;
+  }
+}
+
+.body--dark {
+  .deposit-field.q-field {
+    box-shadow: none;
+    background: $background-dark-light;
   }
 }
 </style>

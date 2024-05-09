@@ -411,6 +411,13 @@ const submitPostVerifyForm = () => {
   margin-top: 20px;
   width: 100%;
 }
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
+}
 </style>
 
 <style lang="scss">

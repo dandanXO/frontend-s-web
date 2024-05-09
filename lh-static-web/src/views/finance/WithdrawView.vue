@@ -129,7 +129,6 @@
           <template v-else>
             <span>加载中...</span>
           </template>
-
         </el-form-item>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
           <span style="color: #17cd27">
@@ -148,9 +147,11 @@
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button class="common-btn"
-                     v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-                     @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
+          <el-button
+            class="common-btn"
+            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
+            @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+          >
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
@@ -694,7 +695,8 @@ export default defineComponent({
     gap: 15px;
   }
 
-  :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+  :deep(.el-input__wrapper),
+  :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
   }
@@ -854,11 +856,42 @@ export default defineComponent({
 .menu-title-container {
   .menu-title {
     font-size: 18px;
-    color: #424F72;
+    color: #424f72;
   }
 
   .additional-title {
     padding-left: 16px;
+  }
+}
+
+.dark {
+  .card {
+    @include content-block-dark;
+    color: $font-3-dark;
+  }
+
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
+
+  .account-container {
+    .account-content-wrapper {
+      .withdraw-type-item {
+        border: unset;
+        box-shadow: unset;
+        background-color: $background-content-block-lighter-dark;
+      }
+    }
+  }
+
+  .withdraw-form {
+    :deep(.el-input__wrapper),
+    :deep(.el-select__wrapper) {
+      background-color: $background-content-block-lighter-dark;
+      box-shadow: none;
+    }
   }
 }
 </style>

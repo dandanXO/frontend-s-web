@@ -57,7 +57,8 @@
           v-if="
             selectedPromo.promoCode !== 'dy2-cny-step-game' &&
             selectedPromo.promoCode !== 'dy2-game-steps' &&
-            selectedPromo.promoCode !== 'dy2-msi-promo'
+            selectedPromo.promoCode !== 'dy2-msi-promo' &&
+            selectedPromo.promoCode !== 'dy-eurocup-hongbao'
           "
           :class="{
             isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
@@ -91,7 +92,8 @@
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
-              selectedPromo.promoCode === 'dy2-game-steps'
+              selectedPromo.promoCode === 'dy2-game-steps' ||
+              selectedPromo.promoCode === 'dy-eurocup-hongbao'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">

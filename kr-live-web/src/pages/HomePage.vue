@@ -1,5 +1,5 @@
 <template>
-  <div class="main-section">
+  <div class="main-section test123">
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />

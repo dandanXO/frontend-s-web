@@ -104,4 +104,16 @@ export default defineComponent({
     }
   }
 }
+
+.body--dark {
+  .transit-buttons {
+    @include content-block-dark;
+    .btn {
+      border-color: #666666;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
 </style>

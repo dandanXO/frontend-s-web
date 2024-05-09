@@ -24,6 +24,12 @@
       :promo-code="list.promoCode"
       v-if="!isCommonPromo && list.redirectUrl === 'cny-hongbaoyu'"
     />
+    <HongBaoYuEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
+    />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -200,6 +206,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
+import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
@@ -217,6 +224,7 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYuPromo,
     HongBaoYu2024Promo,
+    HongBaoYuEurocupPromo,
     WelcomeTaskPromo,
     PrivilegeInvite,
     // CnySpinWheelPromo,
@@ -283,6 +291,7 @@ export default defineComponent({
       this.list.redirectUrl === "cny-spinwheel" ||
       this.list.redirectUrl === "xf-return-promo" ||
       this.list.redirectUrl === "xf-deposit-award" ||
+      this.list.redirectUrl === "xf-eurocup-hongbao" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

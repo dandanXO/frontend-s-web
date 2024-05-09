@@ -1976,6 +1976,9 @@ export default defineComponent({
               if (spObj.code === "SABA") {
                 spObj.title = spObj.code + "体育";
               }
+              if (spObj.code === "FB") {
+                spObj.title = "FB体育";
+              }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
               sport.value.push(spObj);
@@ -2045,7 +2048,7 @@ export default defineComponent({
 
               if (fishObj.code === "AGF") {
                 fishObj.title = "AG捕鱼";
-              } else if (fishObj.code === "PMFISH"){
+              } else if (fishObj.code === "PMFISH") {
                 fishObj.title = "DB捕鱼";
               }
 

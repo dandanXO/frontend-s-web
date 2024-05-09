@@ -104,7 +104,11 @@
       :promo-code="list.promoCode"
     />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
-    <EuroCup2024 v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <EuroCup2024
+      v-if="list.redirectUrl === 'lh1-eurocup-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
+    <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -163,6 +167,7 @@ import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
 import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import EuroCup2024 from "../components/hotpromo/europe-2024/EuroCup2024.vue";
+import EuroCup2024FirstShoot from "./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -200,7 +205,8 @@ export default defineComponent({
     AppHongBao,
     FtdPromo,
     LOLMsi2024Promo,
-    EuroCup2024
+    EuroCup2024,
+    EuroCup2024FirstShoot
   },
   props: {
     list: {
@@ -294,7 +300,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-app-hongbao" ||
       this.list.redirectUrl === "lh1-ftd-promo" ||
       this.list.redirectUrl === "lh-msi-match" ||
-      this.list.redirectUrl === "lh1-eurocup-2024"
+      this.list.redirectUrl === "lh1-eurocup-2024" ||
+      this.list.redirectUrl === "lh1-eurocup-firstshoot"
     ) {
       this.isCommonPromo = false;
     } else {

@@ -403,4 +403,30 @@ onMounted(() => {
     color: #ff4949;
   }
 }
+
+.body--dark {
+  .acct-balances {
+    @include content-block-dark;
+    .balamt {
+      color: $font-3-dark !important;
+    }
+    .transfer-plat-wrapper {
+      .transfer-plat-inner {
+        .transfer-plat-item {
+          .platform-details {
+            .name-wrapper {
+              color: $font-3-dark;
+            }
+            .balance-wrapper {
+              color: $primary-dark;
+            }
+          }
+        }
+      }
+    }
+    .showall {
+      color: $grey-color;
+    }
+  }
+}
 </style>

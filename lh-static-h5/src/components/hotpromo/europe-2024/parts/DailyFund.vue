@@ -69,7 +69,7 @@
       <div class="bracket-info">
         <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
-          <div class="bracket-info__info-wrapper-date">{{ match.matchTime }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
           <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
         </div>
       </div>
@@ -138,6 +138,8 @@ import { eventapi } from "boot/axios";
 // import { euroMatchOngoing, euroMatchPoints, euroClaimMatchPoints, euroMatchSubmit } from "@/api/promotion/eurocup";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
+import moment from "moment";
+
 const $q = useQuasar();
 const store = userStore();
 var qs = require("qs");

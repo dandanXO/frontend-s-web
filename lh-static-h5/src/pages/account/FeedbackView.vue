@@ -917,4 +917,16 @@ onMounted(() => {
   color: $font-2;
   font-size: 1.275rem;
 }
+
+.body--dark {
+  .quiz-container {
+    .quiz-content {
+      @include content-block-dark-with-border;
+      .content-title,
+      .content-desc {
+        color: $font-3-dark;
+      }
+    }
+  }
+}
 </style>

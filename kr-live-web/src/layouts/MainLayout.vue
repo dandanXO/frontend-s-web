@@ -8,7 +8,7 @@
 
     <q-page-container>
       <div class="home-banner-wrapper">
-        <img style="width:33%" src="../assets/images/index/kr-logo.svg" />
+        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" />
       </div>
 
       <div class="main">
@@ -544,6 +544,13 @@ svg path {
 .drawer-container {
   padding: 10px 16px;
   width: calc(100%);
+}
+
+.top-logo{
+  width: 33%;
+  @media (max-width: 768px) {
+    width : 66%;
+  }
 }
 
 .home-banner-wrapper {

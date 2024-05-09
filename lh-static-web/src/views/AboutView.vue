@@ -45,7 +45,8 @@ const router = useRouter();
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 
 const updateTab = (pane) => {
-  if (pane.props.name === "agent") window.open('https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : ''), "_self");
+  if (pane.props.name === "agent")
+    window.open("https://lh1-affiliate.phoicynxeey.com/lh/login?agent=" + (affCode ? affCode : ""), "_self");
   else router.push({ query: { id: pane.props.name } });
 };
 
@@ -116,7 +117,6 @@ onMounted(() => {
   }
 
   :deep(.el-tabs__content) {
-    
   }
 
   :deep(.el-tabs__item) {
@@ -127,13 +127,43 @@ onMounted(() => {
     align-items: center;
     justify-content: left;
     gap: 10px;
-    color: #A4AABB;
+    color: #a4aabb;
   }
 
   :deep(.el-tabs__item.is-active) {
     background: #e7f3ff;
     height: 50px;
-    color: #424F72;
+    color: #424f72;
+  }
+}
+
+.dark {
+  .about-container {
+    background-color: $background-dark;
+
+    :deep(.el-tabs__header),
+    .about-content {
+      background-color: $background-content-block-dark;
+    }
+
+    :deep(.el-tabs__item) {
+      &.is-active {
+        color: $color-white;
+        background-color: $background-content-block-lighter-dark;
+
+        .icon-selected-img {
+          background-color: transparent;
+        }
+      }
+    }
+
+    .about-content {
+      color: $font-3-dark;
+
+      .title {
+        color: $color-white;
+      }
+    }
   }
 }
 </style>

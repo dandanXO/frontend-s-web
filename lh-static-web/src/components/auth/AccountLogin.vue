@@ -45,13 +45,12 @@
   </el-form>
 
   <div class="flex-div">
-    <div style="visibility:hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
-    
+    <div style="visibility: hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
+
     <div style="text-align: left" class="font-gray">
       没有账号？
       <a @click="openRegDialog">去注册</a>
     </div>
-
   </div>
 </template>
 
@@ -62,7 +61,7 @@ import { userStore } from "@/store/index";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 
-const props= defineProps(["pageType"]);
+const props = defineProps(["pageType"]);
 
 const loginRules = {
   loginName: [
@@ -129,7 +128,11 @@ const submitLogin = () => {
             summoner: loginForm.summoner
           })
           .then(() => {
-            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : props.pageType === 'view' ? '/' : route.path;
+            const jumpUrl = route.query.redirect
+              ? route.query.redirect.toString()
+              : props.pageType === "view"
+                ? "/"
+                : route.path;
             if (store.token) {
               router.push(jumpUrl);
 
@@ -177,8 +180,12 @@ const closeLoginDialog = () => {
 };
 
 const openRegDialog = () => {
-  router.push("/register")
-  // emits("open-reg-dialog");
+  // console.log(route.path)
+  if(route.path === '/login'){
+    router.push("/register");
+  }else{
+    emits("open-reg-dialog");
+  }
 };
 
 const openForgotpwdDialog = () => {
@@ -187,7 +194,7 @@ const openForgotpwdDialog = () => {
 
 const getSummonCode = () => {
   const summonCode = sessionStorage.getItem("SUMMON_CODE");
-// && route.query && route.query.refer
+  // && route.query && route.query.refer
   if (summonCode) {
     loginForm.summoner = summonCode;
   }
@@ -249,6 +256,22 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
+
+  .font-gray {
+    color: $font-3-dark;
+  }
+
+  .blue-bg {
+    box-shadow: none;
+    background-color: #3998ff;
+  }
 }
 </style>
 

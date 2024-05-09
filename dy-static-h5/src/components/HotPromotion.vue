@@ -20,6 +20,12 @@
     <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
+    <HongBaoYuEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy-eurocup-hongbao'"
+    />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -106,6 +112,7 @@ import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVo
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
+import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -150,7 +157,8 @@ export default defineComponent({
     Dy2StepGamePromo,
     CS2Sign,
     BonusSpinWheel,
-    LOLMsi2024Promo
+    LOLMsi2024Promo,
+    HongBaoYuEurocupPromo
   },
   props: {
     list: {
@@ -227,7 +235,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-game-steps" ||
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
-      this.list.redirectUrl === "dy2-msi-promo"
+      this.list.redirectUrl === "dy2-msi-promo" ||
+      this.list.redirectUrl === "dy-eurocup-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
