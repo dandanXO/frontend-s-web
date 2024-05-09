@@ -212,8 +212,8 @@ router.beforeEach((to, from, next) => {
     fbq("init", "3658633674357920");
     fbq("track", "PageView");
     store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("tf88uytin.com") > -1) {
-    console.log("tf88uytin.com Here")
+  } else if (window.location.href.indexOf("5svn88.com") > -1) {
+    console.log("5svn88.com 2")
     otag("init", "adv10336256983680");
   } else if (window.location.href.indexOf("tf68688.com") > -1) {
     fbq("init", "1123673335564806");
