@@ -18,21 +18,21 @@
 
 <script setup id="euroCup">
 import { ref, defineProps, onMounted } from "vue";
-import EuropeHongBaoYu from "../../hotpromo/europe-2024/parts/HongBaoYu.vue"
-import ScheduleDisplay from "../../hotpromo/europe-2024/parts/ScheduleDisplay.vue"
-import DoublingGold from "../../hotpromo/europe-2024/parts/DoublingGold.vue"
-import DailyFund from "../../hotpromo/europe-2024/parts/DailyFund.vue"
-import VenueFund from "../../hotpromo/europe-2024/parts/VenueFund.vue"
+import EuropeHongBaoYu from "../../hotpromo/europe-2024/parts/HongBaoYu.vue";
+import ScheduleDisplay from "../../hotpromo/europe-2024/parts/ScheduleDisplay.vue";
+import DoublingGold from "../../hotpromo/europe-2024/parts/DoublingGold.vue";
+import DailyFund from "../../hotpromo/europe-2024/parts/DailyFund.vue";
+import VenueFund from "../../hotpromo/europe-2024/parts/VenueFund.vue";
 // import { ref, defineProps, onMounted } from "vue";
 // import { claimDailyRainItem } from "@/api/index/promo";
 // import { ElMessage } from "element-plus";
 
 const tabs = ref([
-  { name: '赛程比赛展示', content: ScheduleDisplay },
-  { name: '专属队伍翻倍金', content: DoublingGold},
-  { name: '每日参与金', content: DailyFund },
+  { name: "欧洲杯赛程", content: ScheduleDisplay },
+  { name: "欧洲杯庆赛礼", content: DoublingGold },
+  { name: "欧洲杯专属豪礼", content: DailyFund },
   // { name: '首投场馆助威金', content: VenueFund },
-  { name: '欧洲杯红包雨', content: EuropeHongBaoYu },
+  { name: "欧洲杯进球红包雨", content: EuropeHongBaoYu }
 ]);
 
 const activeTab = ref(0);
@@ -56,7 +56,7 @@ function activateTab(index) {
     flex-wrap: wrap;
     gap: 15px;
     button {
-      background: url(images/inactive-tab.png)no-repeat center center;
+      background: url(images/inactive-tab.png) no-repeat center center;
 
       width: 45%;
       height: 50px;
@@ -68,7 +68,7 @@ function activateTab(index) {
       font-weight: 800;
       //line-height: 34.75px;
       text-align: center;
-      display:flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding-bottom: 3px;
@@ -91,17 +91,18 @@ function activateTab(index) {
       letter-spacing: 0.12em;
       text-align: left;
       margin: 30px auto;
-      background: linear-gradient(360deg, #BCF3FF 10.4%, #FFFFFF 100%);
+      background: linear-gradient(360deg, #bcf3ff 10.4%, #ffffff 100%);
       border: none;
       color: transparent; /* Hide the original text */
       -webkit-background-clip: text; /* Apply background gradient to the text */
       background-clip: text;
 
-      &:before, &:after {
+      &:before,
+      &:after {
         content: "";
         height: 20px;
         width: 80px;
-        background: url(images/titlewing.png)no-repeat center center;
+        background: url(images/titlewing.png) no-repeat center center;
         background-size: contain;
       }
       &:after {
@@ -112,14 +113,15 @@ function activateTab(index) {
   table {
     width: 100%;
     tr {
-      th, td{
-        background-color: #051D4766 !important;
+      th,
+      td {
+        background-color: #051d4766 !important;
         padding: 20px;
         text-align: center;
         font-size: 16px;
       }
       th {
-        background: linear-gradient(180deg, #0275E1 0%, #01067B 100%);
+        background: linear-gradient(180deg, #0275e1 0%, #01067b 100%);
         color: #ffffff;
       }
       &:nth-child(2) {
@@ -130,13 +132,12 @@ function activateTab(index) {
       &:last-child {
         td {
           border-bottom: 0;
-
         }
       }
       td {
-        background: #051D4766;
+        background: #051d4766;
         color: #ffffff;
-        border: 2px solid #FFFFFF33;
+        border: 2px solid #ffffff33;
         &:first-child {
           border-left: 0;
           border-top: 0;
@@ -149,13 +150,12 @@ function activateTab(index) {
     }
   }
   .note {
-    color: #FAFF00;
-    font-family: 'Microsoft Yahei UI';
+    color: #faff00;
+    font-family: "Microsoft Yahei UI";
     text-align: center;
     margin: 10px auto;
     font-size: 16px;
     display: block;
   }
 }
-
 </style>
