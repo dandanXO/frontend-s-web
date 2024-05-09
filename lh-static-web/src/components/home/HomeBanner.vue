@@ -13,9 +13,15 @@
       <router-link :to="`/promotion?name=${banner.redirectUrl}`">
         <div class="banner-background">
           <div
+            v-if="!banner.isLocal"
             class="promo-bg isDesktop"
             :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
           ></div>
+          <div v-else class="promo-bg isDesktop"
+               :style="'background-image: url(' + require(`../../assets/home/bannerTest/IM-img.png`) + ')'"
+               >
+          </div>
+
           <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
         </div>
       </router-link>
@@ -28,15 +34,30 @@ import { ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark } from "@vueuse/core";
+import { userStore } from "@/store";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const banners = ref([]);
 
 const isDark = useDark();
+const store= userStore()
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
-    if (res.code === 0) banners.value = res.data;
+    if (res.code === 0) {
+      banners.value = res.data;
+
+      console.log(banners.value);
+
+      if(store.token && (store.memberType==='TEST' || store.memberType === 'PROMO_TEST')){
+        banners.value.unshift({
+          category: "HOME",
+          isLocal: true,
+          promoPageId: null,
+          redirectUrl: "lh1-im-sport"
+        })
+      }
+    }
     else
       ElMessage.error({
         type: "error",
