@@ -1104,6 +1104,26 @@ export default defineComponent({
   }
 }
 
+.body--dark {
+  .profile {
+    .pro-details {
+      .nickname-span {
+        color: $font-3-dark;
+      }
+    }
+  }
+
+  .acct-nav {
+    .acct-menu {
+      @include content-block-dark;
+    }
+  }
+
+  .acct-logout {
+    @include content-block-dark;
+  }
+}
+
 @media (max-width: 430px) {
   .acct-nav {
     .acct-menu {

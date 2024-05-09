@@ -10,14 +10,14 @@
             <a @click="refreshBalance" class="balance-container">
               <div>账户余额：</div>
               <div class="balance-txt">
-                <span v-if="isLoadingBalance"> 加载中...</span>
+                <span v-if="isLoadingBalance">加载中...</span>
                 <span v-if="!isLoadingBalance">￥{{ store.balance }}</span>
               </div>
               <el-icon><Refresh /></el-icon>
               <div class="trans-tip">（游戏前，请将余额转到相应场馆）</div>
             </a>
           </div>
-          <!-- 
+          <!--
           <div class="balance-details">
             <div>雷火币：</div>
             <div class="balance-txt">
@@ -116,7 +116,7 @@ export default defineComponent({
         display: flex;
         justify-content: space-between;
         align-items: center;
-    padding: 20px 40px;
+        padding: 20px 40px;
         background-color: #fff;
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
@@ -236,6 +236,56 @@ export default defineComponent({
                 width: 7px;
                 height: 27px;
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .account-container {
+    background-image: none;
+    background-color: $background-dark;
+
+    .account-container-wrap {
+      .account-menu-container {
+        @include content-block-dark;
+
+        .account-info-wrapper {
+          box-shadow: none;
+        }
+
+        .web-menu {
+          .account-menu-list {
+            .account-menu-item {
+              color: $font-3-dark;
+
+              &:hover,
+              &.router-link-exact-active {
+                color: $color-white;
+                background: #e7f3ff1a;
+              }
+            }
+          }
+        }
+      }
+
+      .account-content-wrapper {
+        .account-balance,
+        .account-contents {
+          @include content-block-dark;
+        }
+
+        .account-balance {
+          .balance-details {
+            color: $font-3-dark;
+          }
+
+          .balance-container {
+            .trans-tip {
+              color: $font-3-dark;
             }
           }
         }

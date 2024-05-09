@@ -23,6 +23,11 @@
     </div> -->
   </div>
 </template>
+<script setup>
+import { useDark } from "@vueuse/core";
+
+const isDark = useDark();
+</script>
 
 <style lang="scss">
 .maintenance-container {
@@ -72,6 +77,12 @@
       width: 100%;
       max-width: 600px;
     }
+  }
+}
+
+.dark {
+  .maintenance-container {
+    background: $background-dark;
   }
 }
 </style>

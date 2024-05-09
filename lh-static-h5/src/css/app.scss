@@ -86,55 +86,55 @@ a:focus {
       .game-lists {
         min-height: 520px;
       }
-      #live-lists{
+      #live-lists {
         min-height: 900px;
       }
-      #fishing-lists{
+      #fishing-lists {
         min-height: 130px;
       }
-      #lottery-lists{
+      #lottery-lists {
         min-height: 130px;
       }
 
-      .platform-block .platform-img-frame{
+      .platform-block .platform-img-frame {
         min-height: 120px;
       }
     }
 
-    .login-container .logo img{
+    .login-container .logo img {
       height: 66px;
       width: 135px;
     }
 
-    .acct-nav .acct-menu{
+    .acct-nav .acct-menu {
       height: 230px;
     }
 
-    .affiliate-container .ambassador .ambassador-img{
+    .affiliate-container .ambassador .ambassador-img {
       height: 140px;
     }
-    .download-top-container .download-top-box{
-      flex-wrap: nowrap;;
+    .download-top-container .download-top-box {
+      flex-wrap: nowrap;
     }
-    .bank-detail-container .bank-detail-wrapper .bank-card .left-container .bank-name img{
+    .bank-detail-container .bank-detail-wrapper .bank-card .left-container .bank-name img {
       width: 30px;
       height: 30px;
     }
-    .q-carousel.home{
+    .q-carousel.home {
       min-height: 150px;
 
       .q-panel > div {
         min-height: 150px;
       }
     }
-    .promo .q-tabs{
-      height:60px;
-      top:0px;
+    .promo .q-tabs {
+      height: 60px;
+      top: 0px;
     }
-    .mail-inbox-list .title-div{
-      height:55px;
+    .mail-inbox-list .title-div {
+      height: 55px;
     }
-    .q-footer .q-tab{
+    .q-footer .q-tab {
       text-align: center;
     }
   }
@@ -197,20 +197,20 @@ body.platform-ios .q-dialog__inner--minimized > div {
   max-height: calc(100% - 108px);
 }
 
-body.platform-ios{
-  .home-game-section .game-right-platform .platform-block{
+body.platform-ios {
+  .home-game-section .game-right-platform .platform-block {
     min-height: 130px;
   }
 }
 
-body.body-applinks{
-  .q-page-container{
-    &::before{
-      position:absolute;
+body.body-applinks {
+  .q-page-container {
+    &::before {
+      position: absolute;
       left: 1px;
-      top:1px;
+      top: 1px;
       width: 5px;
-      height:5px;
+      height: 5px;
       border-radius: 50%;
       content: "";
       background-color: green;
@@ -659,4 +659,77 @@ svg {
 // bottom navigation
 .q-footer .q-layout__shadow:after {
   display: none;
+}
+
+.body--dark {
+  --q-primary: #{$primary-dark};
+
+  .q-layout,
+  .q-header,
+  .q-footer,
+  .q-page {
+    background: $background-dark;
+  }
+
+  .q-header {
+    background: $background-dark-light;
+    &.with-shadow {
+      box-shadow: none;
+    }
+  }
+
+  .q-footer {
+    box-shadow: none;
+    .q-tab {
+      background: $background-dark-light;
+    }
+  }
+
+  .page-title {
+    color: $font-2-dark;
+  }
+
+  .station-notice-wrapper {
+    span {
+      color: $font-1-dark;
+    }
+  }
+
+  .modal-common-div {
+    .modalcontent {
+      @include content-block-dark;
+    }
+
+    .headers {
+      background: transparent;
+      border-bottom-color: #4d4d4d;
+    }
+
+    .headers,
+    .contents,
+    .black-titles {
+      color: $font-3-dark;
+    }
+  }
+
+  .login-container {
+    .login-form-container {
+      .q-field--standout.q-field--rounded {
+        .q-field__control {
+          background: $background-dark;
+          border: none;
+        }
+      }
+    }
+  }
+
+  .q-field--standout.q-field--highlighted .q-field__control {
+    color: $font-3-dark;
+  }
+
+  .q-field--standout.q-field--highlighted .q-field__native,
+  .q-field--standout.q-field--highlighted .q-field__append,
+  .q-field--standout.q-field--highlighted .q-field__input {
+    color: $font-3-dark;
+  }
 }

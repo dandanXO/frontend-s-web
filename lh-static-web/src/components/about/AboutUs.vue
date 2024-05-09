@@ -1,6 +1,7 @@
 <template>
   <div class="top-container">
-    <b>雷火宗旨</b> – 提供给顾客最佳水位和最优秀的服务；
+    <b>雷火宗旨</b>
+    – 提供给顾客最佳水位和最优秀的服务；
     <ul>
       <li>我们的优势：雷火网站，盘口赔率即时开出, 您不需等待交易买卖。</li>
       <li>资金流动更具快捷性，让您随时随地自由分配您的资金以便投注更大金额，与此同时，享受最佳水位！</li>
@@ -8,7 +9,10 @@
   </div>
   <div class="bot-container">
     <div class="content">
-      <img src="../../assets/about/aboutus/group.png" style="width: 33.87px; height: 34px;"/>
+      <img
+        :src="require(`../../assets/about/aboutus/group${isDark ? '-dark' : ''}.png`)"
+        style="width: 33.87px; height: 34px"
+      />
       <div class="title">更多产品</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -20,7 +24,10 @@
       </div>
     </div>
     <div class="content">
-      <img src="../../assets/about/aboutus/diversity.png" style="width: 33.87px; height: 34px;" />
+      <img
+        :src="require(`../../assets/about/aboutus/diversity${isDark ? '-dark' : ''}.png`)"
+        style="width: 33.87px; height: 34px"
+      />
       <div class="title">多样产品</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -30,7 +37,10 @@
       </div>
     </div>
     <div class="content">
-      <img src="../../assets/about/aboutus/building.png" style="width: 34px; height: 34px;"/>
+      <img
+        :src="require(`../../assets/about/aboutus/building${isDark ? '-dark' : ''}.png`)"
+        style="width: 34px; height: 34px"
+      />
       <div class="title">公司资料</div>
       <div class="desc">“ 雷火是业界公认的滚球专家，每月平均提供约10,000场现场滚球赛事。”</div>
       <div class="info">
@@ -47,7 +57,11 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useDark } from "@vueuse/core";
+
+const isDark = useDark();
+</script>
 
 <style scoped lang="scss">
 .top-container {
@@ -88,7 +102,6 @@
       line-height: 27px;
       letter-spacing: 0.05em;
       text-align: center;
-
     }
 
     .desc {
@@ -109,6 +122,24 @@
       line-height: 31px;
       letter-spacing: 0em;
       text-align: center;
+    }
+  }
+}
+
+.dark {
+  .bot-container {
+    .content {
+      background: url(@/assets/about/aboutus/bg-dark.png) no-repeat;
+      background-size: cover;
+
+      .title,
+      .desc {
+        color: $color-white;
+      }
+
+      .info {
+        color: inherit;
+      }
     }
   }
 }

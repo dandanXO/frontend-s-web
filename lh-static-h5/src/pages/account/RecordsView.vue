@@ -5,7 +5,13 @@
         <!--        <img :src="require(`../../assets/images/account/${trans.icon}_record.png`)">-->
         {{ trans.name }}
         <div class="right">
-          <img src="../../assets/images/account/account-right-small.png" />
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../../assets/images/account/account-right-small-dark.png')
+                : require('../../assets/images/account/account-right-small.png')
+            "
+          />
         </div>
       </router-link>
     </div>
@@ -95,6 +101,14 @@ const transitList = ref([
         width: 10px;
         height: auto;
       }
+    }
+  }
+}
+
+.body--dark {
+  .transit-buttons {
+    .btn {
+      @include content-block-dark-with-border;
     }
   }
 }

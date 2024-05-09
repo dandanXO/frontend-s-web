@@ -16,9 +16,9 @@ import { defineComponent } from "vue";
 import DepositComponent from "@/components/depositComponent.vue";
 export default defineComponent({
   components: {
-    DepositComponent,
+    DepositComponent
   },
-  setup() {},
+  setup() {}
 });
 </script>
 <style lang="scss" scoped>
@@ -31,22 +31,33 @@ export default defineComponent({
   color: #ff0000;
 }
 
-.menu-title-container{
-  .menu-title{
+.menu-title-container {
+  .menu-title {
     font-size: 18px;
-    color: #424F72;
+    color: #424f72;
   }
 
-  .additional-title{
+  .additional-title {
     padding-left: 16px;
   }
 }
 
-.deposit-container{
+.deposit-container {
   background-color: #fff;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
   border-radius: 15px;
   padding: 20px 40px;
 }
 
+.dark {
+  .deposit-container {
+    @include content-block-dark;
+  }
+
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
+}
 </style>

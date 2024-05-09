@@ -49,12 +49,11 @@
       </el-form>
 
       <div class="flex-div">
-        <div style="visibility:hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
+        <div style="visibility: hidden"><a @click="closeLoginDialog">先去逛逛</a></div>
         <div style="text-align: left" class="font-gray">
           没有账号？
           <a @click="openRegDialog">去注册</a>
         </div>
-
       </div>
     </el-tab-pane>
   </el-tabs>
@@ -377,6 +376,22 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
+
+  .font-gray {
+    color: $font-3-dark;
+  }
+
+  .blue-bg {
+    box-shadow: none;
+    background-color: #3998ff;
+  }
 }
 </style>
 <style lang="scss">

@@ -180,7 +180,11 @@
   </div>
 
   <q-dialog class="modal-common-div" width="100%" v-model="isDisplayLogin">
-    <q-card style="width: 100%; padding: 10px 12px 20px" class="bg-white text-black text-center">
+    <q-card
+      style="width: 100%; padding: 10px 12px 20px"
+      class="text-black text-center"
+      :class="$q.dark.isActive ? '' : 'bg-white'"
+    >
       <div class="headers">
         <div style="width: 2.4em">&nbsp;</div>
         <div class="titles">系统提示</div>
@@ -325,12 +329,14 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
+      // TODO: write back
+      const hasPromoList = promoState.promoList.filter(p => p.hasPromo)
       if (type.value !== "ALL") {
-        filteredArray.value = promoState.promoList.filter(function(promo) {
+        filteredArray.value = hasPromoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = promoState.promoList;
+        filteredArray.value = hasPromoList;
       }
     };
 
@@ -971,6 +977,64 @@ export default defineComponent({
 
   &.extension-tab {
     top: 0;
+  }
+}
+
+.body--dark {
+  .promo-container {
+    background: $background-dark;
+    .all-promotions {
+      .promo-main-container {
+        .promo-list-wrapper {
+          .promo-item {
+            background-image: url(../assets/images/promo/promo-item-bg-dark.png);
+            .promo-ribbon {
+              background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+              clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
+              &::after {
+                display: none;
+              }
+            }
+            .promo-item-date {
+              color: $grey-color;
+            }
+            .promo-item-title {
+              color: $font-3-dark;
+            }
+            .promo-item-deal {
+              color: $grey-color;
+            }
+          }
+        }
+      }
+    }
+
+    .selected-promo {
+      .selected-promo-wrapper {
+        .inner {
+          table {
+            th {
+              background: $background-dark-header;
+              color: $font-3-dark;
+            }
+            td {
+              background: $background-dark-light;
+              border-color: $border-dark;
+              color: #999999;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .promo {
+    .q-tabs {
+      background: $background-dark-light;
+    }
+    .q-tab-panels {
+      background: $background-dark;
+    }
   }
 }
 </style>

@@ -507,6 +507,22 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
 }
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
+
+  .font-gray {
+    color: $font-3-dark;
+  }
+
+  .blue-bg {
+    box-shadow: none;
+    background-color: #3998ff;
+  }
+}
 </style>
 
 <style lang="scss">
