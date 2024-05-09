@@ -15,7 +15,7 @@
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
         <span style="margin-left: 5px">vnsupport@tf88.com</span>
       </div>
-      <div class="additional-info-item">
+      <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
         <span style="margin-left: 5px"
         ><span class="customer_phone">+84945 091 999</span></span
@@ -24,7 +24,7 @@
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-zalo-icon.png" />
         <span style="margin-left: 5px"> +63967 254 1561</span>
-      </div>
+      </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
         <span style="margin-left: 5px">@TF88_CS</span>
