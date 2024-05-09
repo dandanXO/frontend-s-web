@@ -61,6 +61,14 @@
                 />
               </div>
             </div>
+
+            <div class="mail-input-item">
+              <div class="input-title">上传照片</div>
+              <div class="input-fill">
+                <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
+              </div>
+            </div>
+            
             <div class="mail-input-item">
               <div class="input-title">内容</div>
               <div class="input-fill">
@@ -277,6 +285,7 @@ import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 import { CaretBottom } from "@element-plus/icons-vue";
 import VueQRCodeComponent from "vue-qrcode-component";
+import FileUpload from "@/components/feedback/FileUpload.vue";
 
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
@@ -296,6 +305,11 @@ const loadFeedbackType = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailboxState.mailboxList.write.photo = linkId;
 };
 
 function onBtnStartAnswerClick() {
@@ -543,7 +557,8 @@ const mailboxState = reactive({
     },
     write: {
       title: "",
-      content: ""
+      content: "",
+      photo: "",
     },
     quiz: {}
   }
@@ -676,6 +691,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.feedbackType = "";
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
+            uploadFileRef.value.clear();
           } else {
             ElMessage.error(response.message);
           }
