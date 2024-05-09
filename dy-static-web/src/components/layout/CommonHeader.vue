@@ -132,7 +132,7 @@
           <div @mousetouch="selectedMenu = ''" class="sub-menu" :style="'height:' + height + 'px;'">
             <GameMenu ref="el" v-if="selectedMenu === 'Slots'" />
             <EsportsMenu ref="el" v-if="selectedMenu === 'Esports'" @load-modal="openGame" />
-            <SportsMenu ref="el" @load-modal="openGame" />
+            <SportsMenu ref="el" v-if="selectedMenu === 'Sports'" @load-modal="openGame" />
             <LiveCasinoMenu ref="el" v-if="selectedMenu === 'Live Casino'" @load-modal="openGame" />
             <LotteryMenu ref="el" v-if="selectedMenu === 'Lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'Poker'" @load-modal="openGame" />
