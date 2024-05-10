@@ -121,7 +121,7 @@
 
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
           <div class="quiz-wrapper">
-            <div class="quiz-announcement-wrapper">
+            <div class="quiz-announcement-wrapper" v-if="uiIsShowStatus.showQuestions">
               <img src="@/assets/feedback/quiz-announcement-icon.png" />
               <div
                 class="quiz-announcement-inner"
