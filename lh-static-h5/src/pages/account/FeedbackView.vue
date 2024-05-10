@@ -315,7 +315,13 @@ const getSelected = (item, ans) => {
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
-  const previousChoicesArr = Array.from(choices[item.sequence - 1].choice || []);
+  // const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  let previousChoicesArr;
+  if (choices[item.sequence - 1] && choices[item.sequence - 1].choice) {
+    previousChoicesArr = Array.from(choices[item.sequence - 1].choice);
+  } else {
+    previousChoicesArr = [];
+  }
   const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {

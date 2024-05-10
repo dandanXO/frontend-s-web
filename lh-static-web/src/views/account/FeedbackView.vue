@@ -65,7 +65,7 @@
             <div class="mail-input-item">
               <div class="input-title">上传图片</div>
               <div class="input-fill">
-                <FileUpload @photo-response="getImageLink" ref="uploadFileRef" />
+                <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
               </div>
             </div>
 
@@ -255,7 +255,7 @@
                       @click="btnClick('final')"
                       style="display: none"
                       :disabled="!input && optionModal.length === 0"
-                      :class="!input || optionModal.length === 0 ? 'next-disabled' : ''" 
+                      :class="!input || optionModal.length === 0 ? 'next-disabled' : ''"
                     >
                       完成
                     </button>
@@ -335,6 +335,11 @@ const loadFeedbackType = () => {
 const uploadFileRef = ref();
 const getImageLink = (linkId) => {
   mailboxState.mailboxList.write.photo = linkId;
+
+  ElMessage.success({
+    type: "success",
+    message: "上传成功"
+  });
 };
 
 function onBtnStartAnswerClick() {
@@ -799,12 +804,17 @@ onUnmounted(() => {
 <style lang="scss">
 
 .standard-button.btn-color-blue {
-    &.next-disabled {
-      cursor: disabled;
-      background: #AAAAAA;
-      border-color: #AAAAAA;
-    }
+  &.next-disabled {
+    cursor: disabled;
+    background: #AAAAAA;
+    border-color: #AAAAAA;
   }
+}
+
+.upload-photo-board .el-input__wrapper{
+  width: 875px;
+}
+
 </style>
 <style scoped lang="scss">
 .quiz-container {
@@ -951,7 +961,7 @@ onUnmounted(() => {
       margin-left: 20px;
       .singlemultiple {
         color: #ff0000;
-      font-size: 14px;
+        font-size: 14px;
       }
     }
     .questions-desc {
