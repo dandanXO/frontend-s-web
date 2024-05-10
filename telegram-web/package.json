@@ -7,6 +7,7 @@
     "dev": "vite --host --force",
     "build": "tsc && GH_PAGES=true VITE_GH_PAGES=true vite build",
     "build:prod": "tsc && GH_PAGES=true VITE_GH_PAGES=true vite build",
+    "build:local": "tsc && vite build",
     "build:dev": "tsc && vite build",
     "preview": "vite preview"
   },
