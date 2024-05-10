@@ -367,6 +367,8 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
+  background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
+  box-shadow: inset 0 0 5px #ffffff;
 
   .game-wrapper {
     display: flex;
