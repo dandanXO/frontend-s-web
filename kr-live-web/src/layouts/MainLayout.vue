@@ -31,7 +31,7 @@
           <img :src="items.imgUrl" alt="" />
         </div>
       </div>
-      <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
+      <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
     </footer>
   </q-layout>
 </template>
@@ -81,6 +81,7 @@ export default defineComponent({
       { imgUrl: require("../assets/images/footer/logo-evoplay.png") },
       { imgUrl: require("../assets/images/footer/logo-wm.png") },
       { imgUrl: require("../assets/images/footer/logo-nlc.png") },
+      { imgUrl: require("../assets/images/footer/logo-pg.png") },
     ]);
 
     const route = useRoute();
