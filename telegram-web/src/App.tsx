@@ -8,7 +8,7 @@ import {TonProofDemo} from "./components/TonProofDemo/TonProofDemo";
 function App() {
   return (
       <TonConnectUIProvider
-          manifestUrl="https://telegram-web.532ut87eu6.com/demo-dapp-with-react-ui/tonconnect-manifest.json"
+          manifestUrl="https://telegram-web.532ut87eu6.com/tonconnect-manifest.json"
           uiPreferences={{ theme: THEME.DARK }}
           walletsListConfiguration={{
             includeWallets: [
