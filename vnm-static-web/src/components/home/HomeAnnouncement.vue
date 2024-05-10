@@ -54,7 +54,7 @@
           />
           <div class="station-notice">
             <Vue3Marquee :clone="false"
-                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70">
+                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 140">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -212,7 +212,7 @@ onMounted(() => {
           width: 100%;
 
           .station-notice-item {
-            color: #7a80a1;
+            color: #444444;
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;

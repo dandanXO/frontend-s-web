@@ -1409,7 +1409,9 @@ export default defineComponent({
         return "DB真人"; // PGDY
       } else if (platformName === "PM") {
         return "熊猫体育"; // PGDY
-      } else if (platformName === "PMFISH") {
+      } else if (platformName === "FB") {
+        return "FB体育"; // PGDY
+      }else if (platformName === "PMFISH") {
         return "DB捕鱼";
       } else if (platformName === "RG") {
         return "RG电竞";
@@ -1701,6 +1703,21 @@ export default defineComponent({
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
   border-radius: 15px;
   padding: 20px 40px;
+}
+
+.dark {
+  .transaction-container {
+    box-shadow: 0px 0px 10px 0px #0000001a;
+    background-color: $background-content-block-dark;
+
+    color: $font-3-dark;
+  }
+
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
 }
 </style>
 <style scoped lang="scss">

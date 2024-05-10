@@ -177,10 +177,13 @@ import {
   sportsPlatforms
 } from "@/shared/platformArray";
 import moment from "moment";
+import { useDark } from "@vueuse/core";
 
 const store = userStore();
 const router = useRouter();
 const platformGame = ref();
+
+const isDark = useDark();
 
 const hotgameData = ref([
   {
@@ -350,9 +353,7 @@ const hotgameData = ref([
     section: "live",
     type: "live",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/live/live-pattern.png")
-      ],
+      isShowSportsIcon: [require("../../assets/live/live-pattern.png")],
       providerList: [
         // {
         //   key: "ag",
@@ -489,9 +490,7 @@ const hotgameData = ref([
     section: "slot",
     type: "slot",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/slot/slot-pattern.png")
-      ],
+      isShowSportsIcon: [require("../../assets/slot/slot-pattern.png")],
       providerList: [
         // {
         //   key: "pg",
@@ -553,9 +552,7 @@ const hotgameData = ref([
     section: "poker",
     type: "poker",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/poker/poker-pattern.png")
-      ],
+      isShowSportsIcon: [require("../../assets/poker/poker-pattern.png")],
       providerList: [
         // {
         //   key: "dat",
@@ -617,9 +614,7 @@ const hotgameData = ref([
     section: "fishing",
     type: "fish",
     content: {
-      isShowSportsIcon: [
-        require("../../assets/fishing/fishing-pattern.png")
-      ],
+      isShowSportsIcon: [require("../../assets/fishing/fishing-pattern.png")],
       providerList: [
         // {
         //   key: "ag",
@@ -716,7 +711,7 @@ const checkPlatforms = () => {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
-          additem.alias= "XIN电子";
+          additem.alias = "XIN电子";
         }
         item.content.providerList.push(additem);
       }
@@ -981,13 +976,20 @@ $transition_timer: 0.5s;
               height: 1.5rem;
             }
 
-            &.sports, &.casino, &.lottery, &.board, &.fishing, &.slots {
+            &.sports,
+            &.casino,
+            &.lottery,
+            &.board,
+            &.fishing,
+            &.slots {
               img {
                 width: auto;
               }
             }
 
-            &.lottery, &.fishing, &.slots {
+            &.lottery,
+            &.fishing,
+            &.slots {
               img {
                 height: 1.8rem;
               }
@@ -1014,20 +1016,19 @@ $transition_timer: 0.5s;
                 height: 2rem;
                 padding: 0.25rem;
                 border-radius: 0.3145rem;
-                border: 1px solid #0E7DFF;
-                background: linear-gradient(180deg, #DCEBFF 0%, #F4F4F4 100%);
+                border: 1px solid #0e7dff;
+                background: linear-gradient(180deg, #dcebff 0%, #f4f4f4 100%);
                 object-fit: contain;
-
 
                 &.active {
                   border: 0px;
-                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+                  background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
 
               .game-provider-text {
-                color: #A5C0E4;
+                color: #a5c0e4;
                 text-align: center;
                 font-family: Microsoft YaHei;
                 font-size: 0.73363rem;
@@ -1048,7 +1049,7 @@ $transition_timer: 0.5s;
                 }
                 .game-provider-img {
                   border: 0px;
-                  background: linear-gradient(180deg, #7ED5FF 0%, #0E7DFF 100%);
+                  background: linear-gradient(180deg, #7ed5ff 0%, #0e7dff 100%);
                   box-shadow: 0px 3.35448px 3.35448px 0px rgba(0, 0, 0, 0.25);
                 }
               }
@@ -1151,7 +1152,7 @@ $transition_timer: 0.5s;
           img {
             position: relative;
             right: 4rem;
-            bottom:0px;
+            bottom: 0px;
             height: 30rem;
 
             &.character-fishing-gps {
@@ -1159,9 +1160,8 @@ $transition_timer: 0.5s;
             }
           }
 
-
           //lottery
-          .character-lottery-tcg{
+          .character-lottery-tcg {
             right: 6rem;
           }
 
@@ -1197,9 +1197,9 @@ $transition_timer: 0.5s;
           }
 
           // sports
-          .character-sports-im{
+          .character-sports-im {
             position: relative;
-            right: 1rem;
+            right: 8rem;
             height: 28rem;
           }
 
@@ -1207,6 +1207,12 @@ $transition_timer: 0.5s;
             position: relative;
             right: 3rem;
             height: 28rem;
+          }
+
+          .character-sports-fb {
+            position: relative;
+            right: 6rem;
+            height: 26rem;
           }
 
           .character-sports-pinnacle,
@@ -1235,13 +1241,13 @@ $transition_timer: 0.5s;
             height: 31rem;
           }
 
-          .character-casino-pmlive{
+          .character-casino-pmlive {
             position: relative;
             right: 5rem;
             height: 31rem;
           }
 
-          .character-casino-db{
+          .character-casino-db {
             position: relative;
             right: 4rem;
             height: 30rem;
@@ -1277,15 +1283,15 @@ $transition_timer: 0.5s;
             height: 29rem;
           }
 
-          .character-casino-allbet{
+          .character-casino-allbet {
             right: 6rem;
           }
 
-          .character-casino-we{
+          .character-casino-we {
             right: 8rem;
           }
 
-          .character-casino-bbindy{
+          .character-casino-bbindy {
             right: 6rem;
           }
 
@@ -1303,21 +1309,21 @@ $transition_timer: 0.5s;
             height: 30rem;
           }
 
-          .character-board-leyou,.character-board-leg {
+          .character-board-leyou,
+          .character-board-leg {
             position: relative;
-             right: 7rem;
+            right: 7rem;
             height: 30rem;
           }
 
-          .character-board-dt{
+          .character-board-dt {
             height: 32rem;
             right: 8rem;
           }
 
-          .character-board-gflc{
+          .character-board-gflc {
             right: 6rem;
           }
-
 
           // slots
           .character-slots-pg {
@@ -1400,5 +1406,43 @@ $transition_timer: 0.5s;
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(100px);
+}
+
+.dark {
+  .hotgame-section {
+    .hotgame-container {
+      .hotgame-wrapper {
+        .hotgame-banner-wrapper {
+          .hotgame-banner {
+            background: linear-gradient(180deg, #28313e 0%, #476ba8 100%);
+            box-shadow: 0px 2px 4.58px 0px #bbdcff inset;
+            color: $color-white;
+
+            .hotgame-text {
+              color: unset;
+            }
+          }
+        }
+
+        .hotgame-content-wrapper {
+          @include content-block-dark;
+
+          .left-container {
+            .title-wrapper {
+              .title,
+              .subtitle {
+                background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
+                background-clip: text;
+              }
+            }
+
+            .desc {
+              color: $font-3-dark;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>

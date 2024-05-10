@@ -2,7 +2,7 @@
   <div v-if="isH5 && topBoxVisible" class="download-top-container">
     <div class="download-top-box">
       <q-icon name="close" @click="closeTopBox" />
-      <img class="headicon" src="../assets/logo-web-fire.svg" alt="download-logo" />
+      <img class="headicon" src="../assets/logo-web.svg" alt="download-logo" />
       <div class="download-txt-container">
         <span class="download-title">
           <div class="sm-screen-txt">{{ $t("lang.app_download_title") }}</div>
@@ -26,7 +26,7 @@
 
   <div class="home-header">
     <div class="header-left" @click="router.push('/')">
-      <img alt="logo" src="../assets/logo-web-fire.svg" />
+      <img alt="logo" src="../assets/logo-web.svg" />
     </div>
     <div class="header-middle" v-if="!store.token">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
@@ -517,13 +517,13 @@
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
       <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
-      <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
+      <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
       <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+      <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
-      </a>
+      </a> -->
       <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
       </a>
@@ -531,20 +531,9 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos">
-    <!-- <q-btn
-      rounded
-      no-caps
-      color="info"
-      :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab"
-      @click="getRebateAmt"
-      persistent
-    >
+    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
-    </q-btn> -->
-     <div class="rebates-absolute"
-     :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">{{ $t("lang.rebates") }}</div>
+    </div>
   </q-page-sticky>
 
   <q-dialog
@@ -721,6 +710,7 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
+import { useLocalStorage } from '@vueuse/core'
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -945,7 +935,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL =useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -959,9 +949,6 @@ export default defineComponent({
     const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
       isImportantAnnoucementModal.value = false;
     };
 
@@ -973,11 +960,11 @@ export default defineComponent({
         id: homePopupId.value,
         frequency: homePopupFrequency.value
       };
-      sessionStorage.setItem(key, JSON.stringify(item));
+      localStorage.setItem(key, JSON.stringify(item));
     };
 
     const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
+      const itemStr = localStorage.getItem(key);
       if (!itemStr) {
         return null;
       }
@@ -986,9 +973,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
+          // debugger;
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
+            localStorage.removeItem(key);
+            // isImportantAnnoucementModal.value = true;
             return null;
           }
         })
@@ -1026,7 +1014,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value = imgURL + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -1037,6 +1025,10 @@ export default defineComponent({
                   homePopupLinkOut.value = true;
                 } else {
                   homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
+                if (homePopupFrequencyNum.value !== 0) {
+                  setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
                 }
 
                 isFirstView.value = true;
@@ -1365,22 +1357,22 @@ export default defineComponent({
     };
 
     const gotoPromo = (banner) => {
-      const urlSplit= banner.redirectUrl.split("|");
-      if(urlSplit.length >= 2){
-        const type= urlSplit[0];
-        if(type==='page'){
+      const urlSplit = banner.redirectUrl.split("|");
+      if (urlSplit.length >= 2) {
+        const type = urlSplit[0];
+        if (type === "page") {
           router.push(`/${banner.redirectUrl}`);
-        }else{
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
-      }else{
-        if(banner.redirectUrl.includes("https://")){
-          window.open(banner.redirectUrl,"_blank");
-        }else{
+      } else {
+        if (banner.redirectUrl.includes("https://")) {
+          window.open(banner.redirectUrl, "_blank");
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
       }
-    }
+    };
 
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
@@ -1400,6 +1392,17 @@ export default defineComponent({
     };
 
     const isPlatformComingSoon = ref(false);
+
+    const moveFab = (ev) => {
+      const maxX = window.innerWidth - 135;
+      const maxY = window.innerHeight - 200;
+      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    }
 
     return {
       imageLoading,
@@ -1499,10 +1502,12 @@ export default defineComponent({
       goToNewsPage,
       isPlatformComingSoon,
 
-      moveFab(ev) {
-        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
-        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
-      }
+      moveFab,
+
+      // moveFab(ev) {
+      //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      //   fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
+      // }
     };
   }
 });
@@ -1720,15 +1725,17 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 40px;
+    // height: 50px;
 
-    @media (max-width: 400px) {
-      height: 30px;
-    }
+    // @media (max-width: 400px) {
+    //   height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 
@@ -1750,7 +1757,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    margin-top:2px;
+    margin-top: 2px;
   }
 
   .header-right {
@@ -1782,10 +1789,10 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
   color: #696d70;
-    border-radius: 2.1875rem;
-    background: #fff;
-    box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
-    font-family: 'Roboto';
+  border-radius: 2.1875rem;
+  background: #fff;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -1830,7 +1837,7 @@ export default defineComponent({
     flex: 3;
     padding: 0px 8px 0px 0px;
     //border-right: 1px dashed $font-1;
-    color: $font-1;
+    color: $font-4;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -1840,7 +1847,7 @@ export default defineComponent({
 
   .main-balance {
     font-size: 1.6rem;
-    color: $dark;
+    color: $font-4;
 
     &.main-nologin {
       font-size: 1rem;
@@ -2185,6 +2192,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
+          color: $font-4;
         }
 
         .platform-subtitle {
@@ -2236,7 +2244,7 @@ export default defineComponent({
   }
 }
 .rebates-absolute {
-  background: url(../assets/images/home/rebates-absolute.png)no-repeat center center;
+  background: url(../assets/images/home/rebates-absolute.png) no-repeat center center;
   background-size: contain;
   height: 100px;
   width: 135px;
@@ -2245,20 +2253,22 @@ export default defineComponent({
   align-items: center;
   padding-top: 40px;
   font-weight: bold;
-
 }
 
-.modal-home-popup{
-  background:transparent;
+.modal-home-popup {
+  background: transparent;
   box-shadow: none;
 
-  .q-card{
-    background:transparent;
+  .q-card {
+    background: transparent;
     box-shadow: none;
   }
-
-  .q-card-section{
-    background:transparent;
+  .q-card__section {
+    background:none;
+    box-shadow: none;
+  }
+  .q-card-section {
+    background: transparent;
     box-shadow: none;
   }
 }
@@ -2288,11 +2298,8 @@ export default defineComponent({
     }
   }
 
-
   .home-header {
-
     .header-middle {
-
       :deep(.q-btn) {
         min-width: 75px;
       }

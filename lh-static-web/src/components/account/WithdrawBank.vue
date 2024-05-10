@@ -1297,6 +1297,22 @@ body {
 .account-content {
   padding-bottom: 30px;
 }
+
+.dark {
+  .account-title {
+    color: $color-white;
+  }
+
+  .bank-card-list {
+    .bank-card-item {
+      background-color: $background-content-block-lighter-dark;
+
+      .card-bank-name {
+        color: $color-white;
+      }
+    }
+  }
+}
 </style>
 
 <style lang="scss">

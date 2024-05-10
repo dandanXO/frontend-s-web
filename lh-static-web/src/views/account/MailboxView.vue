@@ -1,6 +1,10 @@
 <template>
   <div class="account-box account-contents">
-    <Mail v-if="showMailId || showMailId === 0" :mail="showMailId ? mailboxState.mailboxList.inbox.list[showMailId] : mailboxState.mailboxList.inbox.list[0]" :closeMail="() => showMailId = undefined"/>
+    <Mail
+      v-if="showMailId || showMailId === 0"
+      :mail="showMailId ? mailboxState.mailboxList.inbox.list[showMailId] : mailboxState.mailboxList.inbox.list[0]"
+      :closeMail="() => (showMailId = undefined)"
+    />
     <template v-else>
       <div class="menu-title-container">
         <div class="menu-title">消息中心</div>
@@ -13,8 +17,8 @@
               <div class="mail-category-label">
                 <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
                 <span>
-                      {{ item.name }}
-                    </span>
+                  {{ item.name }}
+                </span>
               </div>
             </template>
             <template v-if="mailboxState.mailboxList.inbox.list.length > 0">
@@ -39,28 +43,43 @@
                     全部已读
                   </div>
 
-                  <el-switch
-                    v-model="isShowSelect"
-                    inline-prompt
-                    active-text="选择多个"
-                    inactive-text="选择多个"
-                  />
+                  <el-switch v-model="isShowSelect" inline-prompt active-text="选择多个" inactive-text="选择多个" />
                 </div>
               </div>
               <el-collapse v-model="activeNames" @change="handleChange">
-                <el-collapse-item v-for="(item, index) in mailboxState.mailboxList.inbox.list" :key="index" @click="openMsg(item, index)">
+                <el-collapse-item
+                  v-for="(item, index) in mailboxState.mailboxList.inbox.list"
+                  :key="index"
+                  @click="openMsg(item, index)"
+                >
                   <template #title>
                     <div v-if="isShowSelect" class="mailbox-checkbox" @click.stop="">
                       <el-checkbox v-model="selectedIds[item.id]" size="large" />
                     </div>
-                    <div v-if="item.readTime" class="read-badge">已读</div>
+                    <div v-if="item.readTime" class="read-badge">
+                      <img src="../../assets/images/mail/read-mail.png" />
+                    </div>
+                    <div v-else class="read-badge">
+                      <img src="../../assets/images/mail/unread-mail.png" />
+                    </div>
                     <div class="title-wrapper">
-                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">{{ item.title }}</div>
-                      <div v-if="item.sendTime" class="send-time" :title="`发送时间: ${moment(item.sendTime).format('YYYY-MM-DD HH:mm:ss')}`"><i>{{ moment(item.sendTime).format('MM-DD') }}</i></div>
+                      <div :class="`title-text ${item.readTime ? '' : 'unread'}`" :title="item.title">
+                        {{ item.title }}
+                      </div>
+                      <div
+                        v-if="item.sendTime"
+                        class="send-time"
+                        :title="`发送时间: ${moment(item.sendTime).format('YYYY-MM-DD HH:mm:ss')}`"
+                      >
+                        <i>{{ moment(item.sendTime).format("MM-DD") }}</i>
+                      </div>
                     </div>
                   </template>
                   <div>
-                    <div>正文：<div v-html="item.content.replace(/\n/g, '<br/>')"></div></div>
+                    <div>
+                      正文：
+                      <div v-html="item.content.replace(/\n/g, '<br/>')"></div>
+                    </div>
                   </div>
                 </el-collapse-item>
               </el-collapse>
@@ -100,7 +119,7 @@ import {
 import moment from "moment";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
-import Mail from '@/components/mailbox/Mail.vue';
+import Mail from "@/components/mailbox/Mail.vue";
 
 const loadingBtn = ref(false);
 const mailboxData = ref([]);
@@ -110,7 +129,7 @@ const selectedIds = ref({});
 const store = userStore();
 const showMailId = ref();
 
-const activeNames= ref();
+const activeNames = ref();
 
 const mailboxMessageTypeData = ref([
   { num: 2, type: "ACTIVITY", name: "活动" },
@@ -134,9 +153,7 @@ const changeMailboxType = (nk) => {
   changePage(1);
 };
 
-const handleChange= () => {
-
-}
+const handleChange = () => {};
 
 const mailboxNotifyState = reactive({
   NOTIFICATION: [],
@@ -202,7 +219,6 @@ const isAnyReadTimeNull = (mailboxList) => {
   return mailboxList.inbox.list.some((item) => item.readTime === null);
 };
 
-
 const loadPersonalMailbox = () => {
   mailboxState.mailboxList[mailboxState.active].list = [];
   if (mailboxState.active === "inbox") {
@@ -220,7 +236,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
       })
       .catch((error) => {
@@ -241,7 +257,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
           mailboxState.mailboxList[mailboxState.active].total = response.data.total;
         } else {
-          ElMessage.error(response.message)
+          ElMessage.error(response.message);
         }
       })
       .catch((error) => {
@@ -268,7 +284,7 @@ const readAllMsg = (m) => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
     })
     .catch((error) => {
@@ -283,11 +299,10 @@ const readMultipleMsg = () => {
 
   // console.log(mailboxMessageTab.value);
   mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
-    if(formattedIds.indexOf(mail.id) > -1){
+    if (formattedIds.indexOf(mail.id) > -1) {
       mail.readTime = moment().format("YYYY-MM-DD");
     }
   });
-
 
   readMultipleMail(formattedIds)
     .then((res) => {
@@ -302,7 +317,7 @@ const readMultipleMsg = () => {
 
         isShowSelect.value = false;
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
     })
     .catch((error) => {
@@ -312,29 +327,29 @@ const readMultipleMsg = () => {
 
 const openMsg = (mail, idx) => {
   const { id, readTime } = mail;
-  
+
   showMailId.value = idx;
   // showMailId.value = id;
   mail.readTime = moment().format("YYYY-MM-DD");
 
   // console.log(mail);
   mailboxNotifyState[mailboxMessageTab.value].forEach((mail) => {
-    if(mail.id === id){
+    if (mail.id === id) {
       mail.readTime = moment().format("YYYY-MM-DD");
     }
   });
   // console.log(mailboxNotifyState[mailboxMessageTab.value]);
-  
-  if(!readTime) {
-    readMail({ id }).then((res) => {
-      if(res.code === 0) {
-        checkMailboxUnread();
 
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  if (!readTime) {
+    readMail({ id })
+      .then((res) => {
+        if (res.code === 0) {
+          checkMailboxUnread();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 };
 
@@ -351,24 +366,22 @@ const checkMailboxUnread = () => {
     });
 };
 
-
 const deleteMultipleMsg = () => {
   const selectedMessages = mailboxState.mailboxList.inbox.list.filter((m) => selectedIds.value[m.id]);
   const selectedIdsArray = selectedMessages.map((msg) => msg.id);
   const formattedIds = selectedIdsArray.join(",");
 
   selectedIdsArray.forEach((delnum) => {
-    let index = mailboxNotifyState[mailboxMessageTab.value].filter(obj => obj.id == delnum);
+    let index = mailboxNotifyState[mailboxMessageTab.value].filter((obj) => obj.id == delnum);
     if (index !== -1) {
       mailboxNotifyState[mailboxMessageTab.value].splice(index, 1);
     }
 
-    let index2 = mailboxNotifyState["ALL"].filter(obj => obj.id == delnum);
+    let index2 = mailboxNotifyState["ALL"].filter((obj) => obj.id == delnum);
     if (index2 !== -1) {
       mailboxNotifyState["ALL"].splice(index2, 1);
     }
-  })
-
+  });
 
   deleteMultipleMail(formattedIds)
     .then((res) => {
@@ -395,7 +408,7 @@ const deleteMultipleMsg = () => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
     })
     .catch((error) => {
@@ -405,8 +418,8 @@ const deleteMultipleMsg = () => {
 
 const deleteAllMsg = (m) => {
   const readType = m === null ? "ALL" : m;
-  
-  if(m === 'ALL') {
+
+  if (m === "ALL") {
     mailboxNotifyState.NOTIFICATION = [];
     mailboxNotifyState.ACTIVITY = [];
     mailboxNotifyState.ANNOUNCEMENT = [];
@@ -414,9 +427,9 @@ const deleteAllMsg = (m) => {
     mailboxNotifyState.ALL = [];
   } else {
     mailboxNotifyState[readType] = [];
-    mailboxNotifyState['ALL'] = mailboxNotifyState['ALL'].filter((item) => item.type !== m);
+    mailboxNotifyState["ALL"] = mailboxNotifyState["ALL"].filter((item) => item.type !== m);
   }
-  
+
   // if { type: "ALL" }, not needed to be passed as params
   const params = m === "ALL" ? undefined : m;
 
@@ -431,7 +444,7 @@ const deleteAllMsg = (m) => {
         checkMailboxUnread();
         loadPersonalMailbox();
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
     })
     .catch((error) => {
@@ -499,7 +512,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
           } else {
-            ElMessage.error(response.message)
+            ElMessage.error(response.message);
             // message.error(response.message);
           }
         })
@@ -570,13 +583,15 @@ onMounted(() => {
     margin-bottom: 20px;
     margin-top: 10px;
 
-    .left, .right {
+    .left,
+    .right {
       display: flex;
       align-items: center;
       gap: 15px;
     }
 
-    .left, .right {
+    .left,
+    .right {
       .mail-action {
         display: flex;
         align-items: center;
@@ -657,16 +672,20 @@ onMounted(() => {
   }
 }
 
-.read-badge{
-  width: 35px;
-  height: 16px;
-  border-radius: 25px;
+.read-badge {
+  width: 18px;
+  height: 18px;
+  //border-radius: 25px;
   text-align: center;
-  color:#fff;
-  background: #4086ff;
-  font-size: 10px;
-  line-height: 16px;
+  //color: #fff;
+  //background: #4086ff;
+  //font-size: 10px;
+  line-height: 18px;
   margin-right: 10px;
+
+  img{
+    width: 100%;
+  }
 }
 
 .title-wrapper {
@@ -674,7 +693,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  
+
   .title-text {
     text-align: left;
     text-overflow: ellipsis;
@@ -686,6 +705,21 @@ onMounted(() => {
     font-size: 0.8rem;
     font-weight: 400;
     margin: 0 10px;
+  }
+}
+
+.dark {
+  .menu-title {
+    color: $color-white;
+  }
+
+  .mail-content {
+    &:deep(.el-collapse) {
+      .el-collapse-item__header {
+        background: $background-content-block-lighter-dark;
+        color: $font-3-dark;
+      }
+    }
   }
 }
 </style>

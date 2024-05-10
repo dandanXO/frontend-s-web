@@ -2,7 +2,9 @@
   <div class="account-menu-container">
     <div class="account-info-wrapper">
       <div class="account-info-bg">
-        <img class="account-avatar" src="../../assets/images/home/profile-pic.png" />
+        <img v-if="!store.profilePhoto" class="account-avatar" src="../../assets/images/home/profile-pic.png" />
+        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="account-avatar" src="../../assets/images/home/profile-pic.png" />
+        <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="account-avatar" :src="imageDir + store.profilePhoto" />
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
         <div @click="refreshBalance" class="account-details-balance">
@@ -68,6 +70,7 @@ const refreshBalance = () => {
     isLoadingBalance.value = false;
   });
 };
+const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
 
 const loginName = computed(() => {
   return store.nickName;

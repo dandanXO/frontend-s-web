@@ -2,9 +2,8 @@
   <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
-
     </div>
-<!--    <div class="banner-container" />-->
+    <!--    <div class="banner-container" />-->
 
     <Carousel v-model="currentSlide" :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
@@ -108,7 +107,7 @@
               <td>30,000</td>
               <td id="vipPromoInfo4">
                 存款最少100元可申请每月一次再存20% 最高奖金1888元
-                <span style="color: #B8945D;">（仅限白银Ⅲ申请）</span>
+                <span style="color: #b8945d">（仅限白银Ⅲ申请）</span>
               </td>
               <td>电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
             </tr>
@@ -319,20 +318,20 @@ export default defineComponent({
       }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0
+        levelUpDeposit = 0;
       }
       if (vipLevel === 0) {
-        return 0
+        return 0;
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100
+        return 100;
       } else {
-        return 0
+        return 0;
       }
-      
+
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
 
@@ -574,7 +573,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-             ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
         });
       }
@@ -586,7 +585,7 @@ export default defineComponent({
           store.getBalance();
           initVIPTable();
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
       });
     };
@@ -600,8 +599,8 @@ export default defineComponent({
       currentSlide.value = vipLevel - 1;
     };
     onMounted(() => {
-        initVIPTable();
-        slideTo();
+      initVIPTable();
+      slideTo();
     });
 
     return {
@@ -658,7 +657,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
-  position:relative;
+  position: relative;
   background-image: url("../assets/vip/vip-bg.jpg");
   background-color: #f3f7fd;
   background-repeat: no-repeat;
@@ -668,12 +667,12 @@ $border-settings: 1px solid #e5e7eb;
   color: #8d8d8d;
   min-height: 100vh;
 
-  .header-section{
-    margin:0 auto;
+  .header-section {
+    margin: 0 auto;
     width: 100%;
     text-align: center;
   }
-  .vip-header{
+  .vip-header {
     width: 400px;
     margin: 10px auto;
   }
@@ -731,26 +730,25 @@ $border-settings: 1px solid #e5e7eb;
       background-size: contain;
     }
 
-
     &9 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
       background-size: contain;
     }
 
-&10 {
-  background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-  background-size: contain;
-}
+    &10 {
+      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
+      background-size: contain;
+    }
 
-&11 {
-  background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
-  background-size: contain;
-}
+    &11 {
+      background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+      background-size: contain;
+    }
 
-&12 {
-  background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
-  background-size: contain;
-}
+    &12 {
+      background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
+      background-size: contain;
+    }
     .vipLevelReachStatus {
       background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
       background-size: contain;
@@ -986,6 +984,46 @@ $border-settings: 1px solid #e5e7eb;
 
       .vipcontents {
         padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.dark {
+  .vip-container {
+    background-image: url("../assets/vip/vip-bg-dark.png");
+    background-color: #f3f7fd;
+    background-repeat: no-repeat;
+
+    .vip-program {
+      table {
+        border: none;
+        th {
+          background-color: #001a33;
+          color: $color-white;
+          border: none;
+        }
+        td {
+          background-color: #28313e;
+          color: $color-white;
+          border-color: #3b4c6f;
+        }
+      }
+    }
+
+    .terms-conditions {
+      .section-title {
+        color: $color-white;
+      }
+      .terms {
+        @include content-block-dark;
+        color: $font-3-dark;
+        margin-top: 39px;
+        .term {
+          &:first-child {
+            margin-top: 0;
+          }
+        }
       }
     }
   }

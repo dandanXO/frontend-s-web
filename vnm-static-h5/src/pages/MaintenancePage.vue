@@ -5,7 +5,7 @@
     </div>
     <div class="maintenance-details">
       <div class="maintenance-logo">
-        <img src="../assets/logo-web-fire.svg" />
+        <img src="../assets/logo-web.svg" />
       </div>
       <div class="maintenance-title">{{ $t("lang.maintenance_title") }}</div>
       <div class="maintenance-desc">

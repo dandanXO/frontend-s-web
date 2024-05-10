@@ -146,6 +146,7 @@ import { storeToRefs } from 'pinia'
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -154,7 +155,7 @@ export default defineComponent({
   setup() {
     const { t } = useI18n();
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
@@ -402,7 +403,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: #7a8eb9;
+        color: $font-5;
       }
       tr {
         &:last-child {
@@ -865,7 +866,7 @@ export default defineComponent({
           width: 95%;
           text-align: left;
           padding: 20px;
-          color: #7a8eb9;
+          color: $font-5;
           font-size: 20px;
           ol {
             li {

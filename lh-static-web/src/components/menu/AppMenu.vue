@@ -5,7 +5,7 @@
         <div class="appmeu-container">
           <div class="appmenu-img">
             <img
-              :src="require('../../assets/app/appmenu-2.png')"
+              :src="require('../../assets/app/appmenu-3.png')"
               alt=""
             />
           </div>
@@ -116,6 +116,7 @@ export default defineComponent({
     img {
       display: block;
       width: 100%;
+      max-width: 350px;
     }
     @media screen and (min-width: 1550px) {
       min-width: 300px;

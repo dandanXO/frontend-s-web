@@ -8,7 +8,7 @@
       </div>
 
       <div class="header-left" @click="router.push('/')">
-        <img alt="logo" src="../assets/logo-web-fire.svg" />
+        <img alt="logo" src="../assets/logo-web.svg" />
       </div>
 
       <div class="header-lang">
@@ -637,8 +637,8 @@ export default defineComponent({
     position: relative;
     img {
       display: block;
-      width: 100%;
-      max-width: 100%;
+      width: 110%;
+      margin-right: -15%;
     }
 
     .login-text {
@@ -779,17 +779,19 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 40px;
-    margin-right: auto;
-    margin-left: 12px;
+    // height: 50px;
+    // margin-right: auto;
+    // margin-left: 12px;
 
-    @media (max-width: 400px) {
-      height: 30px;
-    }
+    // @media (max-width: 400px) {
+      // height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 

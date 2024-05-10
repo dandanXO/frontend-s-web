@@ -1279,6 +1279,7 @@ export default {
     cockfight: "Cockfight",
     copy_success: "Liên kết đã được sao chép thành công!",
     enter_transfer_amount: "Nhập số tiền chuyển",
+    choose_later: "Tham Gia Sa",
     // about
     about: {
       affiliate: "Đại Lý",
@@ -1462,7 +1463,7 @@ export default {
     1000: "Lỗi trong tên đăng nhập hoặc mật khẩu",
     1001: "Tài khoản đã bị đóng",
     1002: "Tài khoản cho đối tác",
-    1004: "Tên người dùng chỉ có thể chứa chữ số và chữ cái",
+    1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
     1300: "Số tiền phải là số và lớn hơn 0",
     1301: "Không hỗ trợ thẻ này",
     1302: "Không hỗ trợ loại tiền này",

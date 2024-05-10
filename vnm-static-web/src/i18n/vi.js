@@ -59,7 +59,8 @@ export default {
     deposit_should_between: "Vui lòng nhập số tiền từ ",
     msg_deleted: "Tin nhắn đã bị xóa",
     please_select_bank: "Vui lòng chọn ngân hàng",
-    you_account_has_been_sent_email: "Mã tài khoản của bạn đã được gửi đến email của bạn."
+    you_account_has_been_sent_email: "Mã tài khoản của bạn đã được gửi đến email của bạn.",
+    choose_later: "Tham Gia Sau"
   },
   login: {
     username: "Tên tài khoản",
@@ -103,7 +104,7 @@ export default {
     maintenance: "Bảo trì",
     maintenanceTime: "Thời gian bảo trì",
     viewnow: "Xem ngay",
-    playnow: "Chơi ngay",
+    playnow: "Chơi Ngay",
     systemError: "Lỗi hệ thống",
     loginTitle: "Thông báo",
     bankName: "Ngân hàng ",
@@ -367,7 +368,7 @@ export default {
     inputUSDT: "Nhập USDT",
     chooseAmt: "Chọn Số Tiền",
     note: "Vui lòng lưu ý:",
-    notept1: "Đơn vị giao dịch trong game là VNDP , 1 VNDP = 1000VND",
+    notept1: "Đơn vị giao dịch trong game là VNDP , 1 VNDP = 1,000VND",
     redirected: "Bạn sẽ được chuyển hướng đến trang ngân hàng của bạn để hoàn thành việc gửi tiền",
     successful: "Nếu thành công, bạn sẽ nhận được thông báo trên trang này.",
     deposited: "Đã gửi",
@@ -861,7 +862,7 @@ export default {
     1000: "Tên đăng nhập hoặc Mật khẩu không hợp lệ. Vui lòng thử lại!",
     1001: "Tài khoản đã đóng",
     1002: "Tài khoản dành cho đại lý",
-    1004: "Tên tài khoản không được chứa ký tự đặc biệt",
+    1004: "Tài khoản đang tạm khóa do nhập sai mật khẩu nhiều lần",
     1300: "Số tiền phải là số lớn hơn 0",
     1301: "Thẻ này không được hỗ trợ",
     1302: "Loại tiền này không được hỗ trợ",

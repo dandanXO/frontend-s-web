@@ -91,7 +91,8 @@
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
-                  msi: selectedPromo.promoCode === 'dy2-msi-promo'
+                  msi: selectedPromo.promoCode === 'dy2-msi-promo',
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy-eurocup-hongbao'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -112,7 +113,7 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.id !== 259" v-html="selectedPromo.pageContent"></div>
+                  <div v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241" v-html="selectedPromo.pageContent"></div>
                 </div>
               </div>
             </div>
@@ -712,6 +713,15 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.dyEurocupHongbao {
+          margin: 0;
+          width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         &.hongbaoyu {
           margin: 0px;

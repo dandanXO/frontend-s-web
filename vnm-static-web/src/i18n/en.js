@@ -59,7 +59,8 @@ export default {
     deposit_should_between: "Deposit amount should between ",
     msg_deleted: "Message deleted",
     please_select_bank: "Please select bank",
-    you_account_has_been_sent_email: "Your Account Id has been sent to your email"
+    you_account_has_been_sent_email: "Your Account Id has been sent to your email",
+    choose_later: "Choose Later"
   },
   login: {
     username: "Username",
@@ -369,7 +370,7 @@ export default {
     inputUSDT: "Input USDT",
     chooseAmt: "Choose Amount",
     note: "Please note:",
-    notept1: "The transaction unit in the game is TF VNDP, 1 VNDP = 1000VND",
+    notept1: "The transaction unit in the game is TF VNDP, 1 VNDP = 1,000VND",
     redirected: "You will be redirected to your bank page to complete the deposit",
     successful: "If successful, you will receive a notification on this page",
     deposited: "Deposited",
@@ -867,7 +868,7 @@ export default {
     1000: "Login name or password error, please try again!",
     1001: "Account is closed",
     1002: "Account is for affiliates",
-    1004: "Username can only contains numbers and letters",
+    1004: "The account is temporarily locked due to entering the wrong password many times",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",

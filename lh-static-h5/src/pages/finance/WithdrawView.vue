@@ -15,6 +15,10 @@
               <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </div>
         <q-form ref="withdrawFormRef">
@@ -66,7 +70,7 @@
               <q-item-section>
                 <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                   {{ scope.opt.bankName }} - ****{{
-                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                   }}
                 </q-item-label>
               </q-item-section>
@@ -89,8 +93,8 @@
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
               (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
-              (val) => (val && /^\d+$/.test(val))  || '提款金额不能有小数',
-              isValidUSDTAmt,
+              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
+              isValidUSDTAmt
             ]"
             clearable
           >
@@ -144,9 +148,9 @@
             </div>
             <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
-<!--          <div v-else-if="!isEWALLET && !isUSDT">-->
-<!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
-<!--          </div>-->
+          <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
+          <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
+          <!--          </div>-->
           <div v-else-if="isEWALLET">
             <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
             <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -244,6 +248,8 @@ export default defineComponent({
     const isNewUser = ref(false);
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -497,6 +503,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
@@ -571,6 +578,20 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
+    .promo-label{
+      position:absolute;
+      bottom:8px;
+      left:50%;
+      transform: translate(-50%);
+      width: 50px;
+
+      img{
+        width: 100%;
+        height: auto;
+        padding: 4px 6px;
+      }
+    }
+
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 10px;
@@ -583,13 +604,14 @@ export default defineComponent({
     }
 
     &.active {
-      // background: #212534;
-      // color: #db7e42;
-      // box-shadow: none;
-      // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
         border: 3px solid #33bcd4;
         border-radius: 10px;
+      }
+
+      .promo-img{
+        border:none;
+        border-radius:0px;
       }
 
       .type-name {
@@ -641,5 +663,15 @@ export default defineComponent({
 
 .quick-withdraw-btn {
   width: 100%;
+}
+
+.body--dark {
+  .withdraw-section {
+    @include content-block-dark;
+    .withdraw-selection.q-field,
+    .withdraw-field.q-field {
+      box-shadow: none;
+    }
+  }
 }
 </style>

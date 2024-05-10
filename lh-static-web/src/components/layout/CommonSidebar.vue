@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="sticky-sidebar"
-    @mouseleave="customerHovered = false"
-  >
+  <div class="sticky-sidebar" @mouseleave="customerHovered = false">
     <div class="additional-info-items" v-if="customerHovered">
-      <div
-        class="additional-info-item"
-        @click.stop.prevent="store.openLiveChat()"
-      >
+      <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
         <span>24小时在线客服</span>
       </div>
@@ -17,19 +11,23 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
-        <span style="margin-left: 5px"
-        ><span class="customer_phone">+85281701071</span></span
-        >
+        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
+      <div
+        v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+        class="sticky-sidebar-item"
+        @click="handleDarkModeClick"
+      >
+        <img src="@/assets/images/home/sticky-sidebar-dark-mode-icon.png" />
+        <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
+      </div>
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
         <div>热门活动</div>
       </router-link>
-      <div class="sticky-sidebar-item"
-           @mouseover="customerHovered = true"
-      >
+      <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>客服中心</div>
       </div>
@@ -51,7 +49,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
-
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   components: {},
@@ -62,6 +60,9 @@ export default defineComponent({
     };
     const store = userStore();
     const ui = uiStore();
+    const isDark = useDark();
+
+    const handleDarkModeClick = () => (isDark.value = !isDark.value);
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -83,14 +84,15 @@ export default defineComponent({
       store,
       customerHovered,
       scrollToTop,
-      downloadUrl
+      downloadUrl,
+      isDark,
+      handleDarkModeClick
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
-
 .additional-info-items {
   display: flex;
   flex-direction: column;
@@ -104,13 +106,13 @@ export default defineComponent({
   .additional-info-item {
     display: flex;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
 
     &:hover {
-      background-color: #E5F5FF;
+      background-color: #e5f5ff;
     }
   }
 }
@@ -122,7 +124,7 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: 0px 0px 8px 0px #00000038;
@@ -141,7 +143,7 @@ export default defineComponent({
         filter: brightness(1.05);
       }
 
-      color: #4E93FF;
+      color: #4e93ff;
     }
   }
 }
@@ -161,5 +163,27 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.dark {
+  .sticky-sidebar-items {
+    @include content-block-dark;
+
+    .sticky-sidebar-item {
+      color: $color-white;
+    }
+  }
+
+  .additional-info-items {
+    @include content-block-dark;
+
+    .additional-info-item {
+      color: $color-white;
+
+      &:hover {
+        background: rgba($font-1-dark, 10%);
+      }
+    }
+  }
 }
 </style>

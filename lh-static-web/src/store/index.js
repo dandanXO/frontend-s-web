@@ -31,7 +31,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 7,
       unreadTotal: 0,
-      visitorId: ""
+      visitorId: "",
+      profilePhoto: "",
     };
   },
   actions: {
@@ -103,6 +104,7 @@ export const userStore = defineStore("userStore", {
             this.evip = ret.data.evip;
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
+            this.profilePhoto = ret.data.profilePhoto;
           } else {
             ElMessage.error(ret.message);
           }
@@ -136,7 +138,7 @@ export const userStore = defineStore("userStore", {
 
       return getCSAFromServer()
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           var lineUrl = "";
           const randNum = Math.floor(Math.random() * 2) + 1;
           if (randNum === 1) {

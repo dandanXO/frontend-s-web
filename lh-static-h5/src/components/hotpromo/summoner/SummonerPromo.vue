@@ -275,7 +275,9 @@ const getSummonRecord = () => {
 
 const goToInvite = () => {
   if(window.location.pathname === "/promotion"){
-    document.location.href = "app://invite";
+    sessionStorage.setItem("GO_SUMMON", "1");
+    localStorage.setItem("GO_SUMMON", "1");
+    document.location.href = "app://invite#summon-share";
   }else{
     router.push("/account/invite#summon-share");
   }
@@ -486,9 +488,9 @@ onMounted(() => {
   font-family: PingFang SC;
   font-size: 18px;
   font-weight: 500;
-  line-height: 34.45px;
+  line-height: 24px;
   margin: 15px auto;
-  text-align: left;
+  text-align: center;
 
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="return-promo-wrapper">
     <div class="return-promo-title">
-      <img src="../../../assets/images/promotion/hotpromo/return-promo/top-img.png" />
+      <img src="../../../assets/images/promotion/hotpromo/return-promo/top-img2.png" />
     </div>
     <div class="return-promo-container">
       <div class="return-promo-options">
@@ -17,7 +17,7 @@
       <div class="return-promo-content">
         <div class="content-time">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-time.png" />
-          <p>2023年4月25日00:00起</p>
+          <p>2024年5月7日00:00起</p>
         </div>
 
         <template v-if="tabOption === 'returnLoginGift'">
@@ -35,54 +35,54 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>青铜Ⅱ</td>
+                  <td>VIP1</td>
                   <td>8</td>
                   <td rowspan="12">3倍/不限场馆</td>
                 </tr>
                 <tr>
-                  <td>青铜Ⅰ</td>
+                  <td>VIP2</td>
                   <td>15</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅲ</td>
+                  <td>VIP3</td>
                   <td>38</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅱ</td>
+                  <td>VIP4</td>
                   <td>68</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅰ</td>
+                  <td>VIP5</td>
                   <td>98</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅲ</td>
+                  <td>VIP6</td>
                   <td>158</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅱ</td>
+                  <td>VIP7</td>
                   <td>238</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅰ</td>
+                  <td>VIP8</td>
                   <td>388</td>
                 </tr>
                 <tr>
-                  <td>铂金Ⅱ</td>
+                  <td>VIP9</td>
                   <td>588</td>
                 </tr>
                 <tr>
-                  <td>铂金Ⅰ</td>
+                  <td>VIP10</td>
                   <td>888</td>
                 </tr>
-                <tr>
-                  <td>钻石</td>
-                  <td>1,188</td>
-                </tr>
-                <tr>
-                  <td>王者</td>
-                  <td>1,888</td>
-                </tr>
+<!--                <tr>-->
+<!--                  <td>钻石</td>-->
+<!--                  <td>1,188</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>王者</td>-->
+<!--                  <td>1,888</td>-->
+<!--                </tr>-->
               </tbody>
             </table>
 
@@ -118,7 +118,7 @@
         <template v-if="tabOption === 'returnDepositGift'">
           <div class="content-main">
             <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
-            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领1,888元。</p>
+            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领2,188元。</p>
 
             <table class="return-table" border="0" cellpadding="0" cellspacing="0">
               <thead>

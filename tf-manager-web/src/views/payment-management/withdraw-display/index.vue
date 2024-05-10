@@ -233,7 +233,7 @@
                 ref="input"
                 style="display: none"
                 accept="image/*"
-                @change="attachPhoto($event)"
+                @change="attachPhoto($event, 'icon')"
               />
               <el-button
                 style="display: block"
@@ -241,6 +241,34 @@
                 size="mini"
                 type="success"
                 @click="$refs.input.click()"
+              >
+                {{ t('fields.upload') }}
+              </el-button>
+            </el-col>
+          </el-row>
+          <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
+        </el-form-item>
+        <el-form-item :label="t('fields.pIcon')" prop="privilegeIcon">
+          <el-row :gutter="24">
+            <el-col :span="18">
+              <el-input v-model="ruleForm.privilegeIcon" autocomplete="off" />
+            </el-col>
+            <el-col :span="6">
+              <!-- eslint-disable -->
+              <input
+                id="uploadFile1"
+                type="file"
+                ref="input1"
+                style="display: none"
+                accept="image/*"
+                @change="attachPhoto($event,'pIcon')"
+              />
+              <el-button
+                style="display: block"
+                icon="el-icon-upload"
+                size="mini"
+                type="success"
+                @click="$refs.input1.click()"
               >
                 {{ t('fields.upload') }}
               </el-button>
@@ -313,6 +341,7 @@ const ruleForm = reactive({
   name: null,
   code: null,
   icon: null,
+  privilegeIcon: null,
   sequence: null,
   currencyId: null,
   selected: []
@@ -409,6 +438,7 @@ function showDialog(type) {
       ruleForm.id = null
     }
   } else {
+    ruleForm.privilegeIcon = null
     uiControl.dialogTitle = t('fields.edit')
   }
   uiControl.dialogType = type
@@ -551,7 +581,7 @@ async function loadPayments() {
   updateFinancialToCopy();
 }
 
-async function attachPhoto(event) {
+async function attachPhoto(event, type) {
   const files = event.target.files[0]
   const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
   const dirWithdraw = 'withdraw'
@@ -565,7 +595,12 @@ async function attachPhoto(event) {
     formData.append('overwrite', false)
     const data = await uploadImage(formData)
     if (data.code === 0) {
-      ruleForm.icon = data.data
+      console.log(type)
+      if (type === 'icon') {
+        ruleForm.icon = data.data
+      } else {
+        ruleForm.privilegeIcon = data.data
+      }
     } else {
       ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
     }
