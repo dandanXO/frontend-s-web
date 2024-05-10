@@ -199,7 +199,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
       var way = null;
       if (Platform.is.android) {
         way = "ANDROID";
@@ -258,6 +257,8 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               
               src.value = srcDoc;
             }
+
+            visible.value = true;
           } else {
             window.open(srcDoc, "_blank");
           }
