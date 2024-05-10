@@ -295,7 +295,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
