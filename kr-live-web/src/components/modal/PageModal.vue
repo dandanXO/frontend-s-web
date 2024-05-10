@@ -82,7 +82,7 @@ import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import MyMessages from "components/pageModalContent/MyMessages.vue";
-import MyTransactionRecords from "components/pageModalContent/MyTransactionRecords.vue";
+import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import DepositRecord from "components/pageModalContent/DepositRecord.vue";
@@ -244,7 +244,7 @@ const pagesInfo = reactive([
     info: "배팅/윈",
     iconUrl: require("../../assets/icon/transaction-record.svg"),
     iconActiveUrl: require("../../assets/icon/transaction-record-active.svg"),
-    component: MyTransactionRecords,
+    component: TransitRecord,
     headerInfo: {
       title: "배팅/윈",
       subTitle: "TRANSACTIONS",
