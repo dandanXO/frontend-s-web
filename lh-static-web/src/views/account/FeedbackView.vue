@@ -161,7 +161,7 @@
                 <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
-                      {{ item.question }}
+                      {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                     </div>
                     <div class="answer-container">
                       <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
@@ -244,7 +244,7 @@
                     </button>
                   </div>
                   <div>
-                    <button id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                    <button :disabled="!input && optionModal.length === 0" :class="!input && optionModal.length === 0 ? 'next-disabled': ''" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
                       下一题
                     </button>
                   </div>
@@ -254,6 +254,8 @@
                       class="standard-button btn-color-blue"
                       @click="btnClick('final')"
                       style="display: none"
+                      :disabled="!input && optionModal.length === 0"
+                      :class="!input || optionModal.length === 0 ? 'next-disabled' : ''" 
                     >
                       完成
                     </button>
@@ -437,7 +439,7 @@ const getQuesTitleOptions = () => {
   });
 };
 const isAnswered = ref(false);
-const answerInputModal = ref("");
+const answerInputModal = ref(null);
 const choices = reactive([]);
 const cacheChoices = reactive([]);
 const getSelected = (item, ans) => {
@@ -794,7 +796,16 @@ onUnmounted(() => {
   if (announcementTimer.value) clearInterval(announcementTimer.value);
 });
 </script>
+<style lang="scss">
 
+.standard-button.btn-color-blue {
+    &.next-disabled {
+      cursor: disabled;
+      background: #AAAAAA;
+      border-color: #AAAAAA;
+    }
+  }
+</style>
 <style scoped lang="scss">
 .quiz-container {
   //   background: salmon;
@@ -938,6 +949,10 @@ onUnmounted(() => {
       justify-content: flex-start;
       width: 100%;
       margin-left: 20px;
+      .singlemultiple {
+        color: #ff0000;
+      font-size: 14px;
+      }
     }
     .questions-desc {
       color: $font-2;
