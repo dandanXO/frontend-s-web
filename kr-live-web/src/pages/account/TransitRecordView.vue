@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="display:none;">
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />

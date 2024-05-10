@@ -1,58 +1,57 @@
 <template>
-  <div>
-    &nbsp;
-  </div>
-<!--  <q-scroll-area>-->
-<!--    <q-dialog v-model="visible" class="gameDialog" full-height full-width>-->
-<!--      <q-toolbar>-->
-<!--        <div class="topActions">-->
-<!--          <q-toolbar-title></q-toolbar-title>-->
-<!--          <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />-->
-<!--          <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />-->
-<!--          <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" />-->
-<!--        </div>-->
+  <q-scroll-area>
+    <q-dialog v-model="visible" class="gameDialog" full-height full-width>
+      <q-toolbar>
+        <div class="game-wrapper">
+          <div class="topActions">
+            <q-toolbar-title></q-toolbar-title>
+            <q-btn v-if="!drawerVisible" flat @click="closeDialog()" round dense icon="close" />
+            <!-- <q-btn v-if="!drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="menu_open" />
+            <q-btn v-if="drawerVisible" flat @click="drawerVisible = !drawerVisible" round dense icon="read_more" /> -->
+          </div>
 
-<!--        <template v-if="isInnerHtmlSrc === false">-->
-<!--          <iframe-->
-<!--            @load="loadGame()"-->
-<!--            v-show="!logoShow"-->
-<!--            :src="src"-->
-<!--            id="game-iframe"-->
-<!--            scrolling="auto"-->
-<!--            frameborder="0"-->
-<!--            class="game-iframe"-->
-<!--          ></iframe>-->
-<!--        </template>-->
-<!--        <template v-else>-->
-<!--          <iframe-->
-<!--            @load="loadGame()"-->
-<!--            v-show="!logoShow"-->
-<!--            v-bind:srcdoc="src"-->
-<!--            id="game-iframe"-->
-<!--            scrolling="auto"-->
-<!--            frameborder="0"-->
-<!--            class="game-iframe"-->
-<!--          ></iframe>-->
-<!--        </template>-->
+          <template v-if="transferInfo.platform === 'PG'">
+            <iframe
+              @load="loadGame()"
+              v-show="!logoShow"
+              v-bind:srcdoc="src"
+              id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'"
+              frameborder="0"
+              class="game-iframe"
+            ></iframe>
+          </template>
+          <template v-else>
+            <iframe
+              @load="loadGame()"
+              v-show="!logoShow"
+              :src="src"
+              id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'"
+              frameborder="0"
+              class="game-iframe"
+            ></iframe>
+          </template>
 
-<!--        <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
-<!--          <div class="q-pa-sm q-pt-sm">-->
-<!--            <div>-->
-<!--              <template v-if="!quickTransferTab">-->
-<!--                <div>-->
-<!--                  <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
-<!--                </div>-->
-<!--                <DepositComponent />-->
-<!--              </template>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </q-drawer>-->
-<!--      </q-toolbar>-->
-<!--    </q-dialog>-->
-<!--    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">-->
-<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
-<!--    </q-dialog>-->
-<!--  </q-scroll-area>-->
+          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
+            <div class="q-pa-sm q-pt-sm">
+              <div>
+                <template v-if="!quickTransferTab">
+                  <div>
+                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>
+                  </div>
+                  <DepositComponent />
+                </template>
+              </div>
+            </div>
+          </q-drawer>
+        </div>
+      </q-toolbar>
+    </q-dialog>
+    <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
+      <img src="../../assets/logo-coming.png" style="width: 80%" />
+    </q-dialog>
+  </q-scroll-area>
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
@@ -176,6 +175,9 @@ const closeDialog = () => {
   // AppFullscreen.exit()
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
+  transferInfo.value = {
+    platform: platformCode
+  };
   // debugger;
   // AppFullscreen.request()
 
@@ -197,7 +199,6 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
       var way = null;
       if (Platform.is.android) {
         way = "ANDROID";
@@ -240,21 +241,27 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
           let srcDoc = ret.data.data;
 
-          window.open(srcDoc, "_blank");
-          // var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          // if (firstFourChars === "http") {
-          //   src.value = srcDoc;
-          // } else {
-          //   isInnerHtmlSrc.value = true;
-          //
-          //   const scriptEndTag = "</" + "script>";
-          //   srcDoc = srcDoc
-          //     .replace(/<\/script>/g, scriptEndTag)
-          //     .replace(/\\\"/g, '"')
-          //     .replace(/\n/g, "");
-          //
-          //   src.value = srcDoc;
-          // }
+          
+          if(platformCode === "PG") {
+            var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+            if (firstFourChars === "http") {
+              src.value = srcDoc;
+            } else {
+              isInnerHtmlSrc.value = true;
+              
+              const scriptEndTag = "</" + "script>";
+              srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
+              
+              src.value = srcDoc;
+            }
+
+            visible.value = true;
+          } else {
+            window.open(srcDoc, "_blank");
+          }
         }).catch(() => {
           gameLaunchNotif({
             position: 'top',
@@ -361,6 +368,13 @@ defineExpose({
   align-items: flex-start;
   flex-direction: column;
   padding: 0;
+  background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
+  box-shadow: inset 0 0 5px #ffffff;
+
+  .game-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 
   .topActions {
     display: flex;
