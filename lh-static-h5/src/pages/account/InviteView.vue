@@ -67,7 +67,7 @@
       </div>
     </div>
 
-    <div class="personal-content-box" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+    <div class="personal-content-box">
       <div class="shadow-box" id="summon-share">
         <div class="qr-title">唤醒分享</div>
         <div class="title-top-line1">
