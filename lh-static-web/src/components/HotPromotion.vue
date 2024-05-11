@@ -24,11 +24,11 @@
       :params="list.param"
     />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
-    <AppHongBao
+<!--    <AppHongBao
       v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
-    />
+    />-->
     <HongBaoYu2024
       v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
