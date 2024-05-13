@@ -510,13 +510,14 @@ onMounted(() => {
   margin-top: 10px;
   margin-bottom: 10px;
   // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
-  background: linear-gradient(180deg, #C7C7C7 0%, #4A4A4A 100%);
-  border: 2px solid #595959;
+  background: linear-gradient(180deg, #E1E1E1 0%, #525252 100%);
+  border: 2px solid #0000008c;
   color: #000;
+  border-radius: 2px;
   &.active {
-    background: linear-gradient(180deg, #39C4FF 0%, #2555FF 100%);
+    background: linear-gradient(180deg, #A7E1FF 0%, #275FFF 100%);
     color: #fff;
-    border: 2px solid #2260FF66;
+    border: 2px solid rgb(104 146 255 / 40%);
   }
   .register-text {
     font-size: 16px;
