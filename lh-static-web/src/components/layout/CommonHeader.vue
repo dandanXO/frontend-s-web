@@ -2394,7 +2394,8 @@ body {
         .acc-dialog-img {
           margin-top: -70px;
           margin-left: -80px;
-          margin-right: -30px;
+          margin-right: 0px;
+          margin-bottom: -7px;
 
           img {
             display: block;
