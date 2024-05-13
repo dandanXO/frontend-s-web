@@ -1,6 +1,6 @@
 <template>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss full-height>
-      <q-card style="max-width: none; background: transparent; box-shadow: none;">
+      <q-card style="max-width: none; background: transparent; box-shadow: none; margin: 120px;">
       
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
@@ -22,7 +22,7 @@
               <span>{{ headerInfo.subTitle }}</span>
             </p>
             <p>
-              <q-btn flat @click="closeDialog()" round dense icon="close" />
+              <img src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" style="margin-right: 25px; width: 30px;"/>
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
@@ -40,7 +40,7 @@
           </div>
           <div class="page-dialog-tabs">
             <template v-if="!isMinimalMode">
-              <q-tabs v-model="page" align="justify">
+              <q-tabs style="padding: 0px 30px" v-model="page" align="justify">
                 <template v-for="item in formattedPagesInfo" :key="item.page">
                   <q-tab
                     @click="tabClick(item.page)"
@@ -49,12 +49,10 @@
                     class="page-dialog-tab"
                     v-if="item.tabIndex === tabIndex"
                   >
-                    <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
+                    <img style="padding-right:5px;" :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
                   </q-tab>
                 </template>
               </q-tabs>
-
-              <q-separator />
             </template>
 
             <q-tab-panels v-model="page" animated class="">
@@ -420,12 +418,13 @@ onMounted(() => {
 .page-dialog-links {
   position: absolute;
   left: 0;
+  top: 8px;
 }
 .page-dialog-main {
   --main-bg-color: #030303;
   // top: 80px;
   // position: absolute;
-  padding: 0 0 0 130px;
+  padding: 0 0 0 140px;
   box-sizing: content-box;
   width: 860px;
   max-width: 860px;
@@ -484,7 +483,7 @@ onMounted(() => {
 
 :deep(.q-tab--active) {
   border-bottom: 1px solid #767676;
-  border-image: linear-gradient(to right, #767676, #1bcef1, #767676) 0.8;
+  border-image: linear-gradient(to right, #767676, #0075FE, #767676) 0.8;
   .q-tab__label {
     color: #fff;
     font-weight: unset;
@@ -510,20 +509,24 @@ onMounted(() => {
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
+  // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
+  background: linear-gradient(180deg, #C7C7C7 0%, #4A4A4A 100%);
+  border: 2px solid #595959;
+  color: #000;
   &.active {
-    background-image: url("../../assets/images/pages-modal/btn1-blue.svg");
+    background: linear-gradient(180deg, #39C4FF 0%, #2555FF 100%);
+    color: #fff;
+    border: 2px solid #2260FF66;
   }
   .register-text {
     font-size: 16px;
     line-height: 22.4px;
-    color: #fff;
   }
 }
 
 .page-dialog-main-header {
   justify-content: space-between;
-  height: 82px;
+  height: 75px;
   width: 100%;
   padding: unset;
   background-image: url("../../assets/images/pages-modal/modal-header.svg");
@@ -570,7 +573,7 @@ onMounted(() => {
 }
 .q-panel {
   .q-tab-panel {
-    padding: 10px 30px 120px;
+    padding: 10px 60px 120px;
     box-sizing: border-box;
     overflow-y: scroll;
     max-height: calc(90vh - 200px);
