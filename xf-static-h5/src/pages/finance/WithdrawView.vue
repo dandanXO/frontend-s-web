@@ -245,6 +245,8 @@
               class="q-mt-md fit"
               color="brightbtn"
               @click="submitWithdraw"
+              :loading="withdrawLoading"
+              :disable="withdrawLoading"
               label="立即提款"
             />
           </div>
@@ -356,14 +358,19 @@ export default defineComponent({
         });
       }
     };
+
+    const withdrawLoading = ref(false);
+
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
         message: "确认中。。。"
       });
+      withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
+        withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
@@ -375,6 +382,8 @@ export default defineComponent({
             });
             getWithdrawalMethods();
 
+            withdrawLoading.value = false;
+
           } else {
             $q.notify({
               color: "negative",
@@ -382,9 +391,12 @@ export default defineComponent({
               message: response.message,
               icon: "report_problem"
             });
+
+            withdrawLoading.value = false;
           }
         }).catch((error) => {
           console.log("error", error);
+          withdrawLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -542,7 +554,8 @@ export default defineComponent({
       chooseLabel,
       chooseCard,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      withdrawLoading
     };
   }
 });

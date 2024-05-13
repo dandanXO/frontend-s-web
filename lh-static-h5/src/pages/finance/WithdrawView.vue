@@ -181,7 +181,13 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn class="q-mt-md common-large-btn quick-withdraw-btn" @click="submitWithdraw" label="立即提款" />
+            <q-btn
+              class="q-mt-md common-large-btn quick-withdraw-btn"
+              @click="submitWithdraw"
+              :loading="withdrawLoading"
+              :disable="withdrawLoading"
+              label="立即提款"
+            />
           </div>
           <div class="q-py-md">
             <div
@@ -316,14 +322,19 @@ export default defineComponent({
         });
       }
     };
+
+    const withdrawLoading = ref(false);
+
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
         message: "确认中。。。"
       });
+      withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
+        withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
@@ -342,6 +353,8 @@ export default defineComponent({
               },0)
             }
 
+            withdrawLoading.value = false;
+
           } else {
             $q.notify({
               color: "negative",
@@ -349,9 +362,12 @@ export default defineComponent({
               message: response.message,
               icon: "report_problem"
             });
+
+            withdrawLoading.value = false;
           }
         }).catch((error) => {
           console.log("error", error);
+          withdrawLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -522,7 +538,8 @@ export default defineComponent({
       tutorialLabel,
       isNewUser,
       checkNewUser,
-      isValidUSDTAmt
+      isValidUSDTAmt,
+      withdrawLoading
     };
   }
 });
@@ -578,14 +595,14 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
-    .promo-label{
-      position:absolute;
-      bottom:8px;
-      left:50%;
+    .promo-label {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
       transform: translate(-50%);
       width: 50px;
 
-      img{
+      img {
         width: 100%;
         height: auto;
         padding: 4px 6px;
@@ -609,9 +626,9 @@ export default defineComponent({
         border-radius: 10px;
       }
 
-      .promo-img{
-        border:none;
-        border-radius:0px;
+      .promo-img {
+        border: none;
+        border-radius: 0px;
       }
 
       .type-name {
