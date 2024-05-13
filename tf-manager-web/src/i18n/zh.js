@@ -1277,6 +1277,7 @@ export default {
     searchCondition: '搜索条件',
     securityQuestion: '安全密保',
     secondTicket: '第二章票(下注/存款)',
+    selectedMembers: '指定会员',
     sendTime: '发送时间',
     sendSuccess: '发送成功',
     sendFail: '发送失败',
