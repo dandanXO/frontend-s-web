@@ -128,12 +128,6 @@
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
-                <el-dropdown-item command="picture">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
-                    <span>更换头像</span>
-                  </div>
-                </el-dropdown-item>
                 <el-dropdown-item command="deposit">
                   <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
@@ -426,59 +420,6 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog
-      v-model="profileDialogVisible"
-      append-to-body
-      :close-on-press-escape="false"
-      class="profile-dialog"
-    >
-    <div class="header">
-      修改头像
-    </div>
-      <el-form :inline="true" size="small" label-width="180px">
-        <div class="grid-container">
-          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
-            <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
-          </div>
-          <!-- <div class="grid-item" v-if="uploadedImage.url"
-            :class="selectedImage === imageForm.path ? 'selected' : ''"
-          >
-            <el-image
-              v-if="uploadedImage.url"
-              :src="uploadedImage.url"
-              fit="contain"
-              @click="selectImage(imageForm.path)"
-            />
-          </div> -->
-        </div>
-        <!-- <el-form-item prop="path">
-          <el-row :gutter="10">
-            <el-col :span="5">
-              <!- eslint-disable ->
-              <input
-                id="uploadFile"
-                type="file"
-                ref="inputImage"
-                style="display: none"
-                accept="image/*"
-                @change="attachImage"
-              />
-              <el-button :icon="Upload" type="success" @click="$refs.inputImage.click()">
-                上传
-                <el-icon>
-                  <RiChatUploadLine />
-                </el-icon>
-              </el-button>
-            </el-col>
-            <el-col :span="1" />
-          </el-row>
-        </el-form-item> -->
-        <div class="dialog-footer">
-          <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
-          <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
-        </div>
-      </el-form>
-    </el-dialog>
 
     <GameModal ref="modalGame"></GameModal>
   </header>
@@ -590,8 +531,6 @@ export default defineComponent({
     const logoutDialogVisible = ref(false);
     const captchaDialogVisible = ref(false);
     const profileDialogVisible = ref(false);
-    const inputImage = ref(null)
-    const selectedImage = ref(null)
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
@@ -625,61 +564,7 @@ export default defineComponent({
       if (command === "logout") {
         onLogout();
       }
-      if (command === "picture") {
-        onShowProfile();
-      }
     };
-
-    const onShowProfile = () => {
-      imageForm.path = null
-      inputImage.value = null
-      uploadedImage.url = null
-      profileDialogVisible.value = true
-    };
-
-    async function attachImage(event) {
-      const data = await attachPhoto(event)
-      if (data.code === 0) {
-        imageForm.path = data.data
-        selectedImage.value = imageForm.path
-        inputImage.value = ''
-      } else {
-        ElMessage({ message: '照片上传失败', type: 'error' })
-      }
-    };
-
-    async function attachPhoto(event) {
-      const files = event.target.files[0]
-
-      const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-      const dir = 'temp'
-      if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-        ElMessage({ message: '照片格式错误', type: 'error' })
-      } else {
-        var formData = new FormData()
-        formData.append('files', files)
-        formData.append('dir', dir)
-        formData.append('overwrite', false)
-        uploadedImage.url = URL.createObjectURL(files)
-        return await uploadImage(formData)
-      }
-    }
-    const submitPhotoLoading = ref(false)
-    async function submitPhoto() {
-      if (!selectedImage.value) {
-        return ElMessage.warning('请选择图片');
-      }
-      submitPhotoLoading.value = true
-      const data = await saveImage(selectedImage.value);
-      profileDialogVisible.value = false
-      ElMessage({ message: '修改成功', type: 'success' })
-      store.profilePhoto = data.data
-      submitPhotoLoading.value = false
-    }
-
-    const selectImage = (item) => {
-      selectedImage.value = item
-    }
 
     const showSubMenu = (nav) => {
       if (nav.submenu === true) {
@@ -1250,9 +1135,6 @@ export default defineComponent({
         loginDialogVisible.value = false;
       }
 
-      if (store.profilePhoto && store.profilePhoto.includes('default')) {
-        selectedImage.value = store.profilePhoto
-      }
       // console.log(route);
       // alert(route.name)
 
@@ -1577,16 +1459,6 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       isDark,
-      profileDialogVisible,
-      uploadedImage,
-      attachImage,
-      imageForm,
-      inputImage,
-      submitPhoto,
-      selectImage,
-      selectedImage,
-      imageDir,
-      submitPhotoLoading
     };
   }
 });

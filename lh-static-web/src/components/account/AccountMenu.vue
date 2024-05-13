@@ -1,10 +1,12 @@
 <template>
   <div class="account-menu-container">
     <div class="account-info-wrapper">
-      <div class="account-info-bg">
-        <img v-if="!store.profilePhoto" class="account-avatar" src="../../assets/images/home/profile-pic.png" />
-        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="account-avatar" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-        <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="account-avatar" :src="imageDir + store.profilePhoto" />
+      <div class="account-info-bg" @click="onShowProfile">
+        <div  class="account-avatar">
+        <img v-if="!store.profilePhoto" src="../../assets/images/home/profile-pic.png" />
+        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
+        <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto" />
+        </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
         <div @click="refreshBalance" class="account-details-balance">
@@ -54,14 +56,69 @@
       </div>
     </div>
   </div>
+    <el-dialog
+      v-model="profileDialogVisible"
+      append-to-body
+      :close-on-press-escape="false"
+      class="profile-dialog"
+    >
+    <div class="header">
+      修改头像
+    </div>
+      <el-form :inline="true" size="small" label-width="180px">
+        <div class="grid-container">
+          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
+            <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
+          </div>
+          <!-- <div class="grid-item" v-if="uploadedImage.url"
+            :class="selectedImage === imageForm.path ? 'selected' : ''"
+          >
+            <el-image
+              v-if="uploadedImage.url"
+              :src="uploadedImage.url"
+              fit="contain"
+              @click="selectImage(imageForm.path)"
+            />
+          </div> -->
+        </div>
+        <!-- <el-form-item prop="path">
+          <el-row :gutter="10">
+            <el-col :span="5">
+              <!- eslint-disable ->
+              <input
+                id="uploadFile"
+                type="file"
+                ref="inputImage"
+                style="display: none"
+                accept="image/*"
+                @change="attachImage"
+              />
+              <el-button :icon="Upload" type="success" @click="$refs.inputImage.click()">
+                上传
+                <el-icon>
+                  <RiChatUploadLine />
+                </el-icon>
+              </el-button>
+            </el-col>
+            <el-col :span="1" />
+          </el-row>
+        </el-form-item> -->
+        <div class="dialog-footer">
+          <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
+          <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { RiRefreshLine } from "vue-remix-icons";
 
+const inputImage = ref(null)
+    const selectedImage = ref(null)
 const store = userStore();
 const isLoadingBalance = ref(false);
 const refreshBalance = () => {
@@ -111,9 +168,70 @@ const checkMailboxUnread = () => {
     });
 };
 
+const profileDialogVisible = ref(false);
+const uploadedImage = reactive({
+      url: null,
+    })
+    const imageForm = reactive({
+      path: null,
+    })
+const onShowProfile = () => {
+      imageForm.path = null
+      inputImage.value = null
+      uploadedImage.url = null
+      profileDialogVisible.value = true
+    };
+
+    async function attachImage(event) {
+      const data = await attachPhoto(event)
+      if (data.code === 0) {
+        imageForm.path = data.data
+        selectedImage.value = imageForm.path
+        inputImage.value = ''
+      } else {
+        ElMessage({ message: '照片上传失败', type: 'error' })
+      }
+    };
+
+    async function attachPhoto(event) {
+      const files = event.target.files[0]
+
+      const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+      const dir = 'temp'
+      if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+        ElMessage({ message: '照片格式错误', type: 'error' })
+      } else {
+        var formData = new FormData()
+        formData.append('files', files)
+        formData.append('dir', dir)
+        formData.append('overwrite', false)
+        uploadedImage.url = URL.createObjectURL(files)
+        return await uploadImage(formData)
+      }
+    }
+    const submitPhotoLoading = ref(false)
+    async function submitPhoto() {
+      if (!selectedImage.value) {
+        return ElMessage.warning('请选择图片');
+      }
+      submitPhotoLoading.value = true
+      const data = await saveImage(selectedImage.value);
+      profileDialogVisible.value = false
+      ElMessage({ message: '修改成功', type: 'success' })
+      store.profilePhoto = data.data
+      submitPhotoLoading.value = false
+    }
+
+    const selectImage = (item) => {
+      selectedImage.value = item
+    }
+
 onMounted(() => {
   checkMailboxUnread();
   setInterval(checkMailboxUnread, 60000);
+  if (store.profilePhoto && store.profilePhoto.includes('default')) {
+    selectedImage.value = store.profilePhoto
+  }
 });
 </script>
 
