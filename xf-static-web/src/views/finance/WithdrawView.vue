@@ -164,7 +164,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -238,17 +244,20 @@ export default defineComponent({
               })
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
+              loadingBtn.value = false;
               // message.error(response.message);
             }
           }).catch((error) => {
               console.log(error.message);
+              loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
           console.log("error", error);
+          loadingBtn.value = false;
         });
-        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
