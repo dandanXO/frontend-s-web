@@ -206,7 +206,7 @@ export default {
     new_password: "New Password",
     enter_new_password: "Please enter new password.",
     captcha_code: "Captcha Code",
-    enter_captcha_code: "Please enter captcha code.",
+    enter_captcha_code: "보안 문자 코드를 입력하세요.",
     return_to_login: "Return to Login",
     verifying: "Verifying",
     receive_a_daily_bonus_share_qr_code_with_friends:

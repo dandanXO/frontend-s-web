@@ -32,7 +32,19 @@
            />
         </div>
         <div class="captcha-code">
-          <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
+          <q-input 
+            dense
+            borderless
+            ref="captchaRef"
+            type="text" 
+            class="captcha-code-input" 
+            placeholder="암호" 
+            v-model="loginForm.captchaCode"
+            lazy-rules
+            :rules="[
+                (val) => (val && val.length > 0) || $t('lang.enter_captcha_code')
+              ]"
+          />
         </div>
         <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
       </div>
@@ -58,6 +70,7 @@ import { useBreakpoints } from "@vueuse/core";
 
 const loginNameRef = ref();
 const pwdRef = ref();
+const captchaRef = ref();
 
 const breakpoints = useBreakpoints({
   laptop: 768
@@ -91,8 +104,9 @@ const onLoginSubmit = () => {
     (async () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
+      captchaRef.value.validate();
 
-      if (loginNameRef.value.hasError || pwdRef.value.hasError) {
+      if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
         // has error
       } else {
         store.memberLogin({
@@ -209,7 +223,7 @@ onMounted(() => {
 .account-input,
 .password-input,
 .captcha-code-input {
-  padding: 5px 10px;
+  padding: 0px 10px;
   border: none;
   color: #fff;
 
