@@ -114,7 +114,7 @@
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
                 <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
-                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
                 <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
@@ -427,86 +427,20 @@
       </div>
     </el-dialog>
     <el-dialog
-      title="更换头像"
       v-model="profileDialogVisible"
       append-to-body
       :close-on-press-escape="false"
+      class="profile-dialog"
     >
+    <div class="header">
+      修改头像
+    </div>
       <el-form :inline="true" size="small" label-width="180px">
         <div class="grid-container">
-          <div class="grid-item"
-            :class="selectedImage === 'default-1' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-1')"
-            />
+          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === profIndex+1 }" @click="selectImage(profIndex+1)">
+            <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
           </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-2' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-2')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-3' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-3')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-4' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-4')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-5' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-5')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-6' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-6')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-7' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-7')"
-            />
-          </div>
-          <div class="grid-item"
-            :class="selectedImage === 'default-8' ? 'selected' : ''"
-          >
-            <img
-              src="../../assets/images/home/profile-pic.png"
-              fit="contain"
-              @click="selectImage('default-8')"
-            />
-          </div>
-          <div class="grid-item" v-if="uploadedImage.url"
+          <!-- <div class="grid-item" v-if="uploadedImage.url"
             :class="selectedImage === imageForm.path ? 'selected' : ''"
           >
             <el-image
@@ -515,12 +449,12 @@
               fit="contain"
               @click="selectImage(imageForm.path)"
             />
-          </div>
+          </div> -->
         </div>
-        <el-form-item prop="path">
+        <!-- <el-form-item prop="path">
           <el-row :gutter="10">
             <el-col :span="5">
-              <!-- eslint-disable -->
+              <!- eslint-disable ->
               <input
                 id="uploadFile"
                 type="file"
@@ -538,10 +472,10 @@
             </el-col>
             <el-col :span="1" />
           </el-row>
-        </el-form-item>
+        </el-form-item> -->
         <div class="dialog-footer">
-          <el-button type="primary" @click="profileDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitPhoto">更换</el-button>
+          <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
+          <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -731,12 +665,17 @@ export default defineComponent({
         return await uploadImage(formData)
       }
     }
-
+    const submitPhotoLoading = ref(false)
     async function submitPhoto() {
-      const data = await saveImage(selectedImage.value);
+      if (!selectedImage.value) {
+        return ElMessage.warning('请选择图片');
+      }
+      submitPhotoLoading.value = true
+      const data = await saveImage('default-' + selectedImage.value);
       profileDialogVisible.value = false
       ElMessage({ message: '修改成功', type: 'success' })
       store.profilePhoto = data.data
+      submitPhotoLoading.value = false
     }
 
     const selectImage = (item) => {
@@ -1645,6 +1584,7 @@ export default defineComponent({
       selectImage,
       selectedImage,
       imageDir,
+      submitPhotoLoading
     };
   }
 });
@@ -2782,19 +2722,22 @@ body {
 
 .grid-container {
   margin: 20px auto;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .grid-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   border-radius: 5px;
   transition: transform 0.5s;
+  img {
+    width: 100px;
+  cursor: pointer;
+  }
 }
 
 .grid-item .el-image:hover {
@@ -2802,7 +2745,51 @@ body {
 }
 
 .grid-item.selected {
-  box-shadow: 0 4px 8px rgba(12, 20, 242, 0.12), 0 0 6px rgba(12, 20, 242, 0.12);
-  border: 1px solid blue;
+    position:relative;
+    color: #ffffff;
+  img {
+    border: 3px solid #33BC03;
+    border-radius: 50%;
+  }
+    &:after {
+      content: "✓";
+    position: absolute;
+    background: #33BC03;
+    font-size: 15px;
+    width: 25px;
+    height: 25px;
+    right: 0px;
+    bottom: 5px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    }
+}
+
+
+.profile-dialog{
+  max-width: 660px;
+}
+
+.profile-dialog .header {
+  font-size: 20px;
+}
+
+.profile-dialog .standard-button {
+    width: 65%;
+    font-size: 24px;
+    display: block;
+    margin: 10px auto;
+    height: unset;
+    padding: 20px;
+    border-radius: 40px;
+}
+.profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
+  
+  background: #7A8EB966;
+  border-radius: 25px;
+  top: 8px;
 }
 </style>

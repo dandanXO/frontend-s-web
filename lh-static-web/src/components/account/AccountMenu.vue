@@ -3,7 +3,7 @@
     <div class="account-info-wrapper">
       <div class="account-info-bg">
         <img v-if="!store.profilePhoto" class="account-avatar" src="../../assets/images/home/profile-pic.png" />
-        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="account-avatar" src="../../assets/images/home/profile-pic.png" />
+        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="account-avatar" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
         <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="account-avatar" :src="imageDir + store.profilePhoto" />
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>

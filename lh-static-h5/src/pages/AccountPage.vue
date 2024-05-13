@@ -2,8 +2,10 @@
   <q-page>
     <div class="profile">
       <div class="left">
-        <div class="avatar">
-          <img src="../assets/images/account/avatar.png" />
+        <div class="avatar" @click="updateProfilePhoto">
+          <img v-if="!store.profilePhoto" src="../assets/images/account/avatar.png" />
+        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../assets/images/profile/${store.profilePhoto}.png`)" />
+        <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imgURL + store.profilePhoto" />
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
@@ -329,6 +331,28 @@
       </div>
     </q-card>
   </q-dialog>
+    <q-dialog
+      v-model="profileDialogVisible"
+      persistent
+      class="profile-dialog"
+    >
+      <q-card style="flex-direction: column; display: flex;">
+        <div class="header">
+          修改头像
+      <q-btn dense flat icon="close" v-close-popup>
+        <q-tooltip>Close</q-tooltip>
+      </q-btn>
+        </div>
+        <div class="grid-container">
+          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === profIndex+1 }" @click="selectImage(profIndex+1)">
+            <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)">
+          </div>
+        </div>
+        <div class="dialog-footer">
+          <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">确认</q-btn>
+        </div>
+      </q-card>
+    </q-dialog>
 </template>
 
 <script>
@@ -518,7 +542,41 @@ export default defineComponent({
         vipProgress.value = parseFloat(store.currentDeposit) / parseFloat(store.levelUpDeposit);
       }
     };
-
+    const submitPhotoLoading = ref(false)
+    var qs = require('qs')
+    const selectedImage = ref(null)
+    const profileDialogVisible = ref(false)
+    const updateProfilePhoto = () => {
+      selectedImage.value = null
+      profileDialogVisible.value = true
+    }
+    const selectImage = (item) => {
+      selectedImage.value = item
+    }
+    const submitPhoto = async() => {
+      submitPhotoLoading.value = true
+      if (!selectedImage.value) {
+        return $q.notify({
+              type: "negative",
+              position: "top",
+              message: "请选择图片",
+              icon: "report_problem"
+            });
+      }
+      await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': 'default-' + selectedImage.value }))
+      .then(data => {
+          // Handle response here
+        store.profilePhoto = data.data
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "修改成功",
+          icon: "check_circle_outline"
+        });
+        submitPhotoLoading.value = false
+        profileDialogVisible.value = false
+      })
+    }
     return {
       header: "Account",
       logout,
@@ -544,7 +602,13 @@ export default defineComponent({
       getVipProgress,
       formatNumber,
       updatedVip,
-      isHideLevelUp
+      isHideLevelUp,
+      updateProfilePhoto,
+      profileDialogVisible,
+      selectedImage,
+      selectImage,
+      submitPhoto
+
     };
   }
 });
@@ -1159,4 +1223,76 @@ export default defineComponent({
     height: 32px;
   }
 }
+.profile-dialog .q-card {
+  box-shadow: 0px -8px 8px 0px #C3D4E6 inset;
+  border-radius: 10px;
+
+}
+.profile-dialog .header {
+  font-size: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.profile-dialog .submitImgBtn {
+      background-image: url("../assets/images/download/active-tab-bg.png");
+      background-size: 100% 100%;
+      color: #ffffff;
+      width: 100px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: none;
+      &:before {
+        box-shadow: none;
+      }
+}
+.grid-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: transform 0.5s;
+  img {
+    width: 80px;
+  cursor: pointer;
+  }
+}
+
+.grid-item .el-image:hover {
+  cursor: pointer;
+}
+
+.grid-item.selected {
+    position:relative;
+    color: #ffffff;
+  img {
+    border: 3px solid #33BC03;
+    border-radius: 50%;
+  }
+    &:after {
+      content: "✓";
+    position: absolute;
+    background: #33BC03;
+    font-size: 13px;
+    width: 20px;
+    height: 20px;
+    right: 0px;
+    bottom: 5px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    }
+}
+
 </style>

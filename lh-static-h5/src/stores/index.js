@@ -38,7 +38,8 @@ export const userStore = defineStore("userStore", {
             emailVerified: false,
             currentDeposit: "",
             levelUpDeposit: "",
-          visitorId: ""
+          visitorId: "",
+          profilePhoto: ""
         };
     },
     actions: {
@@ -198,6 +199,7 @@ export const userStore = defineStore("userStore", {
                         this.evip = exclusive.wap;
                     }
 
+                    this.profilePhoto = response.data.profilePhoto;
                     this.unreadInboxMail = 0;
                     // this.unreadInboxMail = 16;
                     this.getBalance();
