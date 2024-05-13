@@ -111,50 +111,31 @@
         </div>
         {{ $t("lang.hotMatches") }}
       </div>
+
       <div>
-        <q-btn
-          @click="playGame('', 'SABA', '')"
-          rounded
-          no-caps
-          color="brightbtn"
-          class="sm-screen-txt"
-        >
+        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">
           {{ $t("lang.bet_now") }}
         </q-btn>
       </div>
     </div>
     <div class="hot-matches-container">
-      <q-carousel
-        class="hot-matches-carousel"
+      <swiper
+        :slides-per-view="1.2"
+        :modules="modules"
+        :loop="false"
+        @swiper="onSwiper"
+        effect="fade"
+        :auto-height="false"
+        :allow-slide-next="true"
+        :space-between="10"
         navigation
-        v-model="slideHotMatches"
-        swipeable
-        transition-next="slide-left"
-        transition-prev="slide-right"
-        animated
+        class="hot-matches-carousel"
       >
-        <template v-slot:navigation-icon="{ active, onClick }" v-if="hotMatches.length > 1">
-          <q-btn
-            padding="3px"
-            v-if="active"
-            size="xs"
-            color="light-blue"
-            @click="onClick"
-            style="border: 1px solid #2a8af2; border-radius: 50%; margin: 6px 8px"
-          />
-          <q-btn
-            padding="3px"
-            v-else
-            size="xs"
-            color="transparent"
-            @click="onClick"
-            style="border: 1px solid #aaaaaa; border-radius: 50%; margin: 6px 8px"
-          />
-        </template>
-
-        <q-carousel-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
+        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
           <div class="hot-matches-item">
-            <div class="top-match-title">{{ item.competitionName }}</div>
+            <div class="top-match-title">
+              <div class="title-frame">{{ item.competitionName }}</div>
+            </div>
             <div class="team-details team-details__home">
               <div class="team-icon">
                 <img :src="hotMatchesImgURL + item.teamOneLogo" />
@@ -162,6 +143,7 @@
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
+              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
                 <q-btn
@@ -182,8 +164,8 @@
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
           </div>
-        </q-carousel-slide>
-      </q-carousel>
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
 
@@ -783,7 +765,16 @@ import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
-import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
+import SwiperCore, {
+  A11y,
+  Controller,
+  HashNavigation,
+  Keyboard,
+  Mousewheel,
+  Scrollbar,
+  Thumbs,
+  Pagination
+} from "swiper";
 import moment from "moment";
 // Import Swiper styles
 import "swiper/css";
@@ -793,13 +784,18 @@ import MaintenanceBox from "components/MaintenanceBox.vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css/pagination";
+
 export default defineComponent({
   name: "IndexPage",
   components: {
     MaintenanceBox,
     GameModal,
     MarqueeText,
-    LangOptions
+    LangOptions,
+    Swiper,
+    SwiperSlide
   },
   setup() {
     const fabPos = ref([18, 18]);
@@ -1505,7 +1501,7 @@ export default defineComponent({
       const dateTime = new Date(timeString);
       const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
         .toString()
-        .padStart(2, "0")}/${dateTime.getFullYear()}`;
+        .padStart(2, "0")}`;
       const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
         .getMinutes()
         .toString()
@@ -1513,6 +1509,10 @@ export default defineComponent({
 
       return `${formattedDate} ${formattedTime}`;
     };
+
+    const onSwiper = (swiper) => {};
+
+    const modulesHot = [Navigation, Pagination];
 
     return {
       imageLoading,
@@ -1616,7 +1616,9 @@ export default defineComponent({
       hotMatches,
       hotMatchesImgURL,
       slideHotMatches: ref(0),
-      formattedTime
+      formattedTime,
+      onSwiper,
+      modulesHot
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2456,9 +2458,9 @@ export default defineComponent({
   }
 
   .hot-matches-slide {
-    padding-top: 0;
-    padding-left: 6px;
-    padding-right: 6px;
+    // padding-top: 0;
+    // padding-left: 6px;
+    // padding-right: 6px;
   }
 
   .hot-matches-item {
@@ -2472,12 +2474,22 @@ export default defineComponent({
     box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
 
     .top-match-title {
-      color: #424f72;
+      color: #ffffff;
       font-weight: 700;
       font-size: 16px;
       text-align: center;
       width: 100%;
       margin-bottom: 4px;
+      margin: -20px auto 0;
+
+      .title-frame {
+        background-image: url("../assets/images/home/top-match-title.png");
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        padding: 4px 12px;
+        margin: auto;
+      }
     }
 
     .match-details {
@@ -2486,6 +2498,11 @@ export default defineComponent({
       gap: 4px;
       align-items: center;
       margin-top: 12px;
+
+      img {
+        display: block;
+        width: 70px;
+      }
 
       .match-title {
         color: #424f72;
@@ -2497,6 +2514,7 @@ export default defineComponent({
         color: #7a80a1;
         font-size: 14px;
         text-align: center;
+        margin-top: 12px;
       }
 
       .match-btn {

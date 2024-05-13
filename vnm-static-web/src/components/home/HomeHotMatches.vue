@@ -8,10 +8,7 @@
         {{ $t("home.hotMatches") }}
       </div>
       <div>
-        <router-link
-          class="standard-button sm-btn btn-color-blue"
-          to="/sports"
-        >
+        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">
           {{ $t("common.betnow") }}
         </router-link>
       </div>
@@ -46,10 +43,8 @@
               <div class="team-name">{{ item.teamOneName }}</div>
             </div>
             <div class="match-details">
+              <div class="match-vs"><img src="../../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
-
-              <div class="match-vs">VS</div>
-
               <div class="match-btn">
                 <a
                   class="standard-button lg-btn btn-color-blue"
@@ -111,7 +106,7 @@ const formattedTime = (timeString) => {
   const dateTime = new Date(timeString);
   const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
     .toString()
-    .padStart(2, "0")}/${dateTime.getFullYear()}`;
+    .padStart(2, "0")}`;
   const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
     .getMinutes()
     .toString()
@@ -134,6 +129,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 12px;
   }
 
   .hot-matches-title {
@@ -142,11 +138,11 @@ onMounted(() => {
     color: #313441;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
 
     img {
       display: block;
-      width: 40px;
+      width: 30px;
     }
   }
 
@@ -181,11 +177,17 @@ onMounted(() => {
     flex-wrap: wrap;
 
     .top-match-title {
-      color: #424f72;
+      color: #ffffff;
       font-weight: 700;
       font-size: 24px;
       width: 100%;
       text-align: center;
+      background-image: url("../../assets/images/home/top-match-title.png");
+      background-size: 300px 100%;
+      background-repeat: no-repeat;
+      background-position: center center;
+      padding: 8px 12px;
+      margin-top: -32px;
     }
 
     .match-details {
@@ -206,7 +208,7 @@ onMounted(() => {
       }
       .match-time {
         color: #7a80a1;
-        font-size: 16px;
+        font-size: 20px;
         text-align: center;
         margin-top: 12px;
       }
@@ -216,12 +218,17 @@ onMounted(() => {
         line-height: 1;
         font-weight: 900;
         font-family: Poppins;
-        margin: 10px 0;
+        margin-top: 20px;
         color: rgba(115, 178, 255, 0.2);
+
+        img {
+          display: block;
+          width: 94px;
+        }
       }
 
       .match-btn {
-        margin-top: auto;
+        margin-top: 12px;
         margin-bottom: 12px;
       }
     }
