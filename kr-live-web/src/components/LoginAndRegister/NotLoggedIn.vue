@@ -3,10 +3,39 @@
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
       <div class="left-container">
         <div class="account">
-          <input type="text" class="account-input" placeholder="계정" v-model="loginForm.loginName" />
+          <q-input 
+            ref="loginNameRef"
+            dense
+            borderless
+            type="text" 
+            class="account-input" 
+            placeholder="계정" 
+            v-model="loginForm.loginName" 
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+              (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+            ]"
+          />
         </div>
         <div class="password">
-          <input type="password" class="password-input" placeholder="암호" v-model="loginForm.password" />
+          <q-input 
+            ref="pwdRef"
+            dense
+            borderless
+            type="password" 
+            class="password-input" 
+            placeholder="암호" 
+            v-model="loginForm.password"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
+              (val) =>
+                (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
+            ]"
+           />
         </div>
         <div class="captcha-code">
           <input type="text" class="captcha-code-input" placeholder="암호" v-model="loginForm.captchaCode" />
@@ -32,6 +61,9 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
+
+const loginNameRef = ref();
+const pwdRef = ref();
 
 const breakpoints = useBreakpoints({
   laptop: 768
@@ -130,6 +162,7 @@ onMounted(() => {
 }
 
 .left-container {
+  height: 40px;
   display: none;
   justify-content: space-between;
   @media (min-width: 769px) {
@@ -142,7 +175,7 @@ onMounted(() => {
   justify-content: flex-end;
   align-items: center;
   margin-left: 0px;
-  margin-top: 8px;
+  
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;
@@ -150,11 +183,10 @@ onMounted(() => {
 }
 .account,
 .password {
-  width: 140px;
-  height: 40px;
   background: #080a0e;
   display: flex;
   align-items: center;
+  border: 1px solid #2D2D2D;
 }
 
 .password {
@@ -162,22 +194,23 @@ onMounted(() => {
   margin-right: 8px;
 }
 .captcha-code {
-  height: 40px;
+  // height: 40px;
   background: #080a0e;
   display: flex;
   margin-right: 4px;
+  border: 1px solid #2D2D2D;
 }
 
 .captcha-img {
-  height: 40px;
+  // height: 40px;
+  margin: 2px;
 }
 
 .account-input,
 .password-input,
 .captcha-code-input {
-  width: 100px;
+  padding: 5px 10px;
   border: none;
-  padding-left: 12px;
   color: #fff;
 
   &:focus {
@@ -192,18 +225,18 @@ onMounted(() => {
 }
 
 .register {
-  width: 80px;
-  height: 28px;
-  background-image: url("../../assets/images/login/register-btn.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  width: 100px;
+  min-height: 35px;
+  background: linear-gradient(180deg, #ffe2a0 0%, #FF7421 100%);
+  border: 2px solid rgb(201 128 0);
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   @media (min-width: 1200px) {
     width: 100px;
-    height: 36px;
+    height: 100%;
   }
   .register-text {
     font-size: 12px;
@@ -218,10 +251,10 @@ onMounted(() => {
 
 .login {
   width: 80px;
-  height: 28px;
-  background-image: url("../../assets/images/login/login-btn.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  min-height: 35px;
+  background: linear-gradient(180deg, #83d2f9 0%, #2659FF 100%);
+  border: 2px solid #2a4486;
+  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,7 +262,7 @@ onMounted(() => {
   margin-left: 16px;
   @media (min-width: 1200px) {
     width: 100px;
-    height: 36px;
+    height: 100%;
   }
   .login-text {
     font-size: 12px;
