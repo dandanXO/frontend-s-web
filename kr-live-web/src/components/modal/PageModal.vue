@@ -1,6 +1,6 @@
 <template>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss full-height>
-      <q-card style="max-width: none; background: transparent; box-shadow: none; margin: 120px;">
+      <q-card style="max-width: none; background: transparent; box-shadow: none;">
       
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
@@ -606,6 +606,7 @@ onMounted(() => {
   .page-dialog-links {
     background-color: var(--main-bg-color);
     position: relative;
+    top: 0px;
     .header-info-description {
       display: block;
       margin: unset;
@@ -616,6 +617,8 @@ onMounted(() => {
       display: flex;
       flex-direction: row;
       justify-content: center;
+      gap: 10px;
+      padding: 0px 10px;
     }
   }
   .page-dialog-main-header {
