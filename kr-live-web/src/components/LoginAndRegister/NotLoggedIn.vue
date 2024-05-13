@@ -91,8 +91,13 @@ const onLoginSubmit = () => {
     router.push("/?page=login");
   } else {
     (async () => {
-      store
-        .memberLogin({
+      loginNameRef.value.validate();
+      pwdRef.value.validate();
+
+      if (loginNameRef.value.hasError || pwdRef.value.hasError) {
+        // has error
+      } else {
+        store.memberLogin({
           loginName: loginForm.loginName.trim(),
           password: loginForm.password,
           sid: store.visitorId,
@@ -106,6 +111,7 @@ const onLoginSubmit = () => {
           console.log(error);
           getCode();
         });
+      }
     })();
   }
 };
