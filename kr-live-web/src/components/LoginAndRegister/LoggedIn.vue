@@ -117,7 +117,7 @@ const onLogoutSubmit = () => {
   justify-content: center;
   margin-top: 16px;
   @media (min-width: 1200px) {
-    margin-top: 0px;
+    margin-top: 10px;
   }
 }
 
@@ -125,7 +125,7 @@ const onLogoutSubmit = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: 16px;
+  row-gap: 10px;
 }
 .right-group {
   display: flex;

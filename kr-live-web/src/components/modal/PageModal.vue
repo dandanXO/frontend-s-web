@@ -1,7 +1,7 @@
 <template>
     <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
       <q-card style="max-width: none; background: transparent; box-shadow: none;">
-      
+
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
@@ -158,19 +158,19 @@ const isLinkActive = (key) => {
 };
 
 const pagesInfo = reactive([
-  // {
-  //   tabIndex: "log",
-  //   page: "finance/deposit",
-  //   info: "송금신청",
-  //   iconUrl: require("../../assets/icon/deposit.svg"),
-  //   iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
-  //   component: FinanceDeposit,
-  //   headerInfo: {
-  //     title: "송금신청",
-  //     subTitle: "DEPOSIT",
-  //     description: "입금시 꼭 계좌문의를 하세요!",
-  //   }
-  // },
+  {
+    tabIndex: "log",
+    page: "finance/deposit",
+    info: "송금신청",
+    iconUrl: require("../../assets/icon/deposit.svg"),
+    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    component: FinanceDeposit,
+    headerInfo: {
+      title: "송금신청",
+      subTitle: "DEPOSIT",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
   {
     tabIndex: "log",
     page: "finance/withdraw",
@@ -563,6 +563,7 @@ onMounted(() => {
   }
 }
 .page-dialog-tabs {
+  min-height: calc(100vh - 240px);
   background: var(--main-bg-color);
 
   :deep(.q-tab) {
