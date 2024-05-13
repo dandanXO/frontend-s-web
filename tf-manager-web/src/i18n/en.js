@@ -1278,6 +1278,7 @@ export default {
     searchCondition: 'Search Condition',
     securityQuestion: 'Security Question',
     secondTicket: 'Second Ticket （Bet/Deposit）',
+    selectedMembers: 'Selected Members',
     sendTime: 'Send Time',
     sendSuccess: 'Send Success',
     sendFail: 'Send Fail',
