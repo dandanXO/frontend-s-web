@@ -103,7 +103,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper">
+  <div class="hot-matches-wrapper" v-if="store.token && store.memberType==='TEST'">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -168,8 +168,7 @@
       </swiper>
     </div>
   </div>
-
-  <!-- <div class="details-bar">
+  <div class="details-bar" v-else>
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
         {{
@@ -196,7 +195,7 @@
         <div class="">{{ $t("lang.vip") }}</div>
       </router-link>
     </div>
-  </div> -->
+  </div>
 
   <div class="home-game-section">
     <div class="game-left-list">

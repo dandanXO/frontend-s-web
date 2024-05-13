@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-matches-wrapper">
+  <div class="hot-matches-wrapper" v-if="store.memberType==='TEST'">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -78,7 +78,9 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import GameModal from "@/components/modal/GameModal";
+import { userStore } from "@/store";
 
+const store= userStore();
 const { t } = useI18n();
 const hotMatches = ref([]);
 const hotMatchesImgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
