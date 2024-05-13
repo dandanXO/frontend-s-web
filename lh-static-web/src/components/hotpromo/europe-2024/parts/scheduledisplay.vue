@@ -16,18 +16,18 @@
         <component :is="schedTabs[schedActiveTab].content" />
     </div>
   </template>
-  
+
   <script setup>
     import { ref, defineProps } from 'vue';
     import GroupStage from "@/components/hotpromo/europe-2024/parts/groupstage.vue"
     import KnockoutStage from "@/components/hotpromo/europe-2024/parts/knockoutstage.vue"
-  
+
   const props = defineProps({
     tabtitle: String
   });
-  
+
 const schedTabs = ref([
-  { name: '小组赛', content: GroupStage },
+  { name: '当日赛事', content: GroupStage },
   { name: '淘汰赛', content: KnockoutStage },
 ]);
 const schedActiveTab = ref(0);

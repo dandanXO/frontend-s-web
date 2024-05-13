@@ -105,6 +105,7 @@ export default {
     maintenanceTime: "Time of maintenance",
     viewnow: "View Now",
     playnow: "Play Now",
+    betnow: "Bet Now",
     systemError: "System error",
     loginTitle: "Announcement",
     bankName: "Bank Name",
@@ -151,7 +152,9 @@ export default {
     futureGaming: "The future of gaming is here.Great games on all devices.TF88 App",
     scanToDownload: "Scan to download the APP",
     moreDetails: "More details",
-    announcementList: "Announcement List"
+    announcementList: "Announcement List",
+    playNow: "Play now",
+    hotMatches: "Hot Matches",
   },
   personal: {
     personalInfo: "Personal information",

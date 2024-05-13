@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
-      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
+      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card" class="feedback-tabs">
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
@@ -61,6 +61,14 @@
                 />
               </div>
             </div>
+
+            <div class="mail-input-item">
+              <div class="input-title">上传图片</div>
+              <div class="input-fill">
+                <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
+              </div>
+            </div>
+
             <div class="mail-input-item">
               <div class="input-title">内容</div>
               <div class="input-fill">
@@ -112,152 +120,172 @@
         </el-tab-pane>
 
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
-          <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
-            <div class="quiz-header">有奖问答</div>
-            <div class="quiz-gift">
-              <img src="../../assets/feedback/gift.png" />
-            </div>
-            <div class="quiz-content">
-              <div class="content-title">让我们聆听您的心声</div>
-              <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
-              <div class="content-btn">
-                <button class="standard-button btn-color-blue" @click="onBtnStartAnswerClick()">开始答题</button>
+          <div class="quiz-wrapper">
+            <div class="quiz-announcement-wrapper" v-if="uiIsShowStatus.showQuestions">
+              <img src="@/assets/feedback/quiz-announcement-icon.png" />
+              <div
+                class="quiz-announcement-inner"
+                :class="{ animated: announcementAnimated }"
+                @transitionend="handleAnnouncementAnimationEnd"
+              >
+                <div v-for="(announcement, index) in announcements" :key="index">
+                  恭喜用户 {{ announcement.account }}xxxxxxxxx 获得反馈彩金
+                  <span class="amount">{{ announcement.bonus }}元</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div v-if="uiIsShowStatus.questionBox" class="questions-container">
-            <!-- <div class="questions-back-btn">
-                <img src="../../assets/feedback/back-btn.png"/>
-            </div> -->
-            <div class="questions-header">有奖问答</div>
-            <div class="questions-gift">
-              <img src="../../assets/feedback/gift.png" />
+
+            <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
+            <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
+              <div class="quiz-header">有奖问答</div>
+              <div class="quiz-gift">
+                <img src="../../assets/feedback/gift.png" />
+              </div>
+              <div class="quiz-content">
+                <div class="content-title">让我们聆听您的心声</div>
+                <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
+                <div class="content-btn">
+                  <button class="standard-button btn-color-blue" @click="onBtnStartAnswerClick()">开始答题</button>
+                </div>
+              </div>
             </div>
-            <div class="questions-content" v-if="!isAnswered">
-              <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
-                <template v-if="recordsPagination.current === item.sequence">
-                  <div class="questions-title">
-                    {{ item.question }}
-                  </div>
-                  <div class="answer-container">
-                    <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
-                      <el-checkbox
-                        v-model="optionModal"
-                        :label="index"
-                        @change="
-                          (newValue) => {
-                            toggleSelected(
-                              item,
-                              ans.needSpecify ? answerInputModal : ans.choice,
-                              newValue,
-                              ans.needSpecify
-                            );
-                          }
-                        "
-                      >
-                        {{ ans.choice }}
-                      </el-checkbox>
-                      <div
-                        v-if="
-                          item.isMultiple &&
-                          Array.isArray(optionModal) &&
-                          Array.from(optionModal).includes(index) &&
-                          ans.needSpecify
-                        "
-                      >
-                        <el-input
-                          class="answer-input-fill"
-                          v-model="answerInputModal"
-                          placeholder="请输入获取渠道"
-                          type="textarea"
-                          :autosize="{ minRows: 4 }"
+            <div v-if="uiIsShowStatus.questionBox" class="questions-container">
+              <!-- <div class="questions-back-btn">
+                  <img src="../../assets/feedback/back-btn.png"/>
+              </div> -->
+              <div class="questions-header">有奖问答</div>
+              <div class="questions-gift">
+                <img src="../../assets/feedback/gift.png" />
+              </div>
+              <div class="questions-content" v-if="!isAnswered">
+                <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
+                  <template v-if="recordsPagination.current === item.sequence">
+                    <div class="questions-title">
+                      {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
+                    </div>
+                    <div class="answer-container">
+                      <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
+                        <el-checkbox
+                          v-model="optionModal"
+                          :label="index"
                           @change="
-                            (val) => {
-                              toggleSelected(item, val, true, ans.needSpecify);
+                            (newValue) => {
+                              toggleSelected(
+                                item,
+                                ans.needSpecify ? answerInputModal : ans.choice,
+                                newValue,
+                                ans.needSpecify
+                              );
                             }
                           "
-                        />
-                      </div>
-                    </template>
-                    <template v-else>
-                      <el-radio-group v-model="optionModal">
-                        <el-radio
-                          v-for="(ans, index) in item.choices"
-                          :key="index"
-                          :label="index"
-                          @click="getSelected(item, ans.choice)"
                         >
                           {{ ans.choice }}
-                          <div v-if="optionModal === index && ans.needSpecify">
-                            <el-input
-                              class="answer-input-fill"
-                              v-model="answerInputModal"
-                              placeholder="请输入获取渠道"
-                              type="textarea"
-                              :autosize="{ minRows: 4 }"
-                              @input="getSelected(item, ans.choice)"
-                            />
-                          </div>
-                        </el-radio>
-                      </el-radio-group>
-                    </template>
+                        </el-checkbox>
+                        <div
+                          v-if="
+                            item.isMultiple &&
+                            Array.isArray(optionModal) &&
+                            Array.from(optionModal).includes(index) &&
+                            ans.needSpecify
+                          "
+                        >
+                          <el-input
+                            class="answer-input-fill"
+                            v-model="answerInputModal"
+                            placeholder="请输入获取渠道"
+                            type="textarea"
+                            :autosize="{ minRows: 4 }"
+                            @change="
+                              (val) => {
+                                toggleSelected(item, val, true, ans.needSpecify);
+                              }
+                            "
+                          />
+                        </div>
+                      </template>
+                      <template v-else>
+                        <el-radio-group v-model="optionModal">
+                          <el-radio
+                            v-for="(ans, index) in item.choices"
+                            :key="index"
+                            :label="index"
+                            @click="getSelected(item, ans.choice)"
+                          >
+                            {{ ans.choice }}
+                            <div v-if="optionModal === index && ans.needSpecify">
+                              <el-input
+                                class="answer-input-fill"
+                                v-model="answerInputModal"
+                                placeholder="请输入获取渠道"
+                                type="textarea"
+                                :autosize="{ minRows: 4 }"
+                                @input="getSelected(item, ans.choice)"
+                              />
+                            </div>
+                          </el-radio>
+                        </el-radio-group>
+                      </template>
+                    </div>
+                  </template>
+                </div>
+
+                <div
+                  :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}`"
+                  style="display: flex; justify-content: space-between; gap: 10px"
+                >
+                  <div>
+                    <button
+                      id="prevBtn"
+                      class="standard-button btn-color-blue"
+                      @click="btnClick('prev')"
+                      style="display: none"
+                    >
+                      上一题
+                    </button>
                   </div>
-                </template>
+                  <div>
+                    <button :disabled="!input && optionModal.length === 0" :class="!input && optionModal.length === 0 ? 'next-disabled': ''" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                      下一题
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      id="finalBtn"
+                      class="standard-button btn-color-blue"
+                      @click="btnClick('final')"
+                      style="display: none"
+                      :disabled="!input && optionModal.length === 0"
+                      :class="!input || optionModal.length === 0 ? 'next-disabled' : ''"
+                    >
+                      完成
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div
-                :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}`"
-                style="display: flex; justify-content: space-between; gap: 10px"
-              >
-                <div>
-                  <button
-                    id="prevBtn"
-                    class="standard-button btn-color-blue"
-                    @click="btnClick('prev')"
-                    style="display: none"
-                  >
-                    上一题
-                  </button>
+              <div class="questions-content" v-if="isAnswered">
+                <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
+                <div class="header-title-div">
+                  <span class="span1">恭喜您完成本月的调查问卷</span>
+                  <span class="span2">下月问卷将于次月1号重新开启</span>
                 </div>
-                <div>
-                  <button id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">下一题</button>
+                <div class="header-title-div" style="margin-top: 25px">
+                  <span class="span3">
+                    根据您填写的内容随机为您派发
+                    <span class="span1" style="color: #468cff">0-188元</span>
+                  </span>
                 </div>
-                <div>
-                  <button
-                    id="finalBtn"
-                    class="standard-button btn-color-blue"
-                    @click="btnClick('final')"
-                    style="display: none"
-                  >
-                    完成
-                  </button>
+                <div class="qr-code-div">
+                  <VueQRCodeComponent :size="188" :text="referralLink" />
+                  <!-- <img src="../../assets/feedback/share.png"/> -->
                 </div>
-              </div>
-            </div>
-
-            <div class="questions-content" v-if="isAnswered">
-              <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
-              <div class="header-title-div">
-                <span class="span1">恭喜您完成本月的调查问卷</span>
-                <span class="span2">下月问卷将于次月1号重新开启</span>
-              </div>
-              <div class="header-title-div" style="margin-top: 25px">
-                <span class="span3">
-                  根据您填写的内容随机为您派发
-                  <span class="span1" style="color: #468cff">0-188元</span>
-                </span>
-              </div>
-              <div class="qr-code-div">
-                <VueQRCodeComponent :size="188" :text="referralLink" />
-                <!-- <img src="../../assets/feedback/share.png"/> -->
-              </div>
-              <div class="url-div">
-                <el-input class="url-input-fill" v-model="referralLink" :readonly="true" type="url" />
-                <div>
-                  <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">
-                    {{ copybtntxt }}
-                  </button>
+                <div class="url-div">
+                  <el-input class="url-input-fill" v-model="referralLink" :readonly="true" type="url" />
+                  <div>
+                    <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">
+                      {{ copybtntxt }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,7 +297,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
@@ -277,6 +305,7 @@ import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 import { CaretBottom } from "@element-plus/icons-vue";
 import VueQRCodeComponent from "vue-qrcode-component";
+import FileUpload from "@/components/feedback/FileUpload.vue";
 
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
@@ -287,6 +316,11 @@ const uiIsShowStatus = reactive({
 });
 
 const feedbackTypes = ref("");
+const announcementBonusList = ref([8, 12, 16, 36, 38, 68]);
+const announcementTimer = ref(null);
+const announcementAnimated = ref(false);
+const announcements = ref([]);
+
 const loadFeedbackType = () => {
   getFeedbackType()
     .then((res) => {
@@ -296,6 +330,16 @@ const loadFeedbackType = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailboxState.mailboxList.write.photo = linkId;
+
+  ElMessage.success({
+    type: "success",
+    message: "上传成功"
+  });
 };
 
 function onBtnStartAnswerClick() {
@@ -400,7 +444,7 @@ const getQuesTitleOptions = () => {
   });
 };
 const isAnswered = ref(false);
-const answerInputModal = ref("");
+const answerInputModal = ref(null);
 const choices = reactive([]);
 const cacheChoices = reactive([]);
 const getSelected = (item, ans) => {
@@ -543,7 +587,8 @@ const mailboxState = reactive({
     },
     write: {
       title: "",
-      content: ""
+      content: "",
+      photo: ""
     },
     quiz: {}
   }
@@ -676,6 +721,7 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.feedbackType = "";
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
+            uploadFileRef.value.clear();
           } else {
             ElMessage.error(response.message);
           }
@@ -707,6 +753,31 @@ const testAns = () => {
   });
 };
 
+const getRandomAccount = () => {
+  const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
+  const randomIndex1 = Math.floor(Math.random() * 26);
+  const randomIndex2 = Math.floor(Math.random() * 26);
+
+  return letters[randomIndex1] + letters[randomIndex2];
+};
+
+const getRandomBonus = () => {
+  return announcementBonusList.value[Math.floor(Math.random() * announcementBonusList.value.length)];
+};
+
+const initAnnouncement = () => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+  announcementTimer.value = setInterval(() => {
+    announcementAnimated.value = true;
+  }, 5000);
+};
+
+const handleAnnouncementAnimationEnd = () => {
+  const newAnnouncement = { account: getRandomAccount(), bonus: getRandomBonus() };
+  announcements.value = [announcements.value[1], newAnnouncement];
+  announcementAnimated.value = false;
+};
+
 onMounted(() => {
   if (store.token) {
     testAns();
@@ -715,10 +786,36 @@ onMounted(() => {
     loadFeedbackType();
   }
 
+  if (uiIsShowStatus.showQuestions) {
+    announcements.value = [
+      { account: getRandomAccount(), bonus: getRandomBonus() },
+      { account: getRandomAccount(), bonus: getRandomBonus() }
+    ];
+    initAnnouncement();
+  }
+
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
-</script>
 
+onUnmounted(() => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+});
+</script>
+<style lang="scss">
+
+.standard-button.btn-color-blue {
+  &.next-disabled {
+    cursor: disabled;
+    background: #AAAAAA;
+    border-color: #AAAAAA;
+  }
+}
+
+.upload-photo-board .el-input__wrapper{
+  width: 875px;
+}
+
+</style>
 <style scoped lang="scss">
 .quiz-container {
   //   background: salmon;
@@ -752,7 +849,7 @@ onMounted(() => {
     width: 129px;
     height: 110px;
     position: absolute;
-    top: 10px;
+    top: 54px;
     right: 200px;
   }
 
@@ -862,6 +959,10 @@ onMounted(() => {
       justify-content: flex-start;
       width: 100%;
       margin-left: 20px;
+      .singlemultiple {
+        color: #ff0000;
+        font-size: 14px;
+      }
     }
     .questions-desc {
       color: $font-2;
@@ -1172,6 +1273,49 @@ onMounted(() => {
   font-weight: 600;
   color: $font-2;
   font-size: 1.275rem;
+}
+
+.feedback-tabs {
+  padding-top: 0;
+}
+
+.quiz-announcement-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #5ea1ff1a;
+  padding: 0 15px;
+  border-radius: 35px;
+  height: 44px;
+  overflow: hidden;
+
+  img {
+    width: 36px;
+  }
+
+  .quiz-announcement-inner {
+    position: relative;
+    align-self: start;
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0.05em;
+    color: $font-1;
+
+    &.animated {
+      transition: transform 1s;
+      transform: translateY(-44px);
+    }
+
+    > div {
+      height: 44px;
+
+      .amount {
+        color: $primary;
+      }
+    }
+  }
 }
 
 .dark {

@@ -160,7 +160,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -234,17 +240,20 @@ export default defineComponent({
               })
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
               // message.error(response.message);
+              loadingBtn.value = false;
             }
           }).catch((error) => {
               console.log(error.message);
+              loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
           console.log("error", error);
+          loadingBtn.value = false;
         });
-        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
@@ -399,8 +408,8 @@ export default defineComponent({
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com',
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 

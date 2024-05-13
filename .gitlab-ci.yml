@@ -476,3 +476,17 @@ build-image-kr-live-web:
     PROJECT: kr-live-web
   needs:
     - build-kr-live-web
+
+#===============================================================================================
+
+build-telegram-web:
+  extends: .build-projects
+  variables:
+    PROJECT: telegram-web
+
+build-image-telegram-web:
+  extends: .docker-build
+  variables:
+    PROJECT: telegram-web
+  needs:
+    - build-telegram-web

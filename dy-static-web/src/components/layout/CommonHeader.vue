@@ -3140,10 +3140,11 @@ body {
   &.sports {
     .platform-box {
       padding: 0;
+      gap: 10px;
+      max-width: 410px;
 
       .imgbox {
         background-image: url(../../assets/home/header_sport_new_3.png);
-        // background-size: 320%;
 
         background-size: 410%;
         overflow: hidden;
@@ -3152,6 +3153,8 @@ body {
         background-position: center center;
 
         flex: 6;
+        width: 306px;
+        height: 270px;
       }
 
       .contents {

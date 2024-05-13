@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="max-width: 1600px">
     <div class="platform-menu sports">
       <div
         v-for="nav in filteredNavigations"
@@ -23,22 +23,22 @@
 
           <div class="imgbox" :style="`background-position-x: ${nav.percentage}`"></div>
           <div class="contents">
-            <p class="platform-title">{{ nav.label }}体育</p>
+            <p class="platform-title">{{ nav.label }}</p>
             <p class="platform-slogan">{{ nav.slogan }}</p>
             <div class="platform">SPORTS GAME</div>
           </div>
         </div>
       </div>
-      <div class="header-fs-box">
-        <p class="fs-title">体育博彩</p>
-        <p class="fs-name">
-          SPORTS
-          <br />
-          EVENTS
-        </p>
-        <p class="fs-desc">返水最高可达</p>
-        <div class="fs-percentage"></div>
-      </div>
+      <!--      <div class="header-fs-box">-->
+      <!--        <p class="fs-title">体育博彩</p>-->
+      <!--        <p class="fs-name">-->
+      <!--          SPORTS-->
+      <!--          <br />-->
+      <!--          EVENTS-->
+      <!--        </p>-->
+      <!--        <p class="fs-desc">返水最高可达</p>-->
+      <!--        <div class="fs-percentage"></div>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -53,21 +53,27 @@ export default defineComponent({
   setup() {
     const navigations = [
       {
+        code: "FB",
+        icon: "fb",
+        label: "FB体育",
+        slogan: "崭新玩法 感受精彩",
+        percentage: "-485px;"
+      },
+      { code: "SABA", icon: "saba", label: "沙巴体育", slogan: "最佳水位 最强赛事", percentage: "-235px;" },
+      {
         code: "IM",
         icon: "im",
-        label: "IM",
+        label: "IM体育",
         slogan: "赛事最多 玩法新颖",
         percentage: "5px;"
       },
       {
         code: "PM",
         icon: "db",
-        label: "熊猫",
+        label: "熊猫体育",
         slogan: "最强滚球 超高水位",
-        percentage: "-800px;"
-      },
-      { code: "SABA", icon: "saba", label: "沙巴", slogan: "最佳水位 最强赛事", percentage: "-260px;" }
-      // { code: "CR", icon: "xf", label: "CR", slogan: "崭新玩法 感受精彩", percentage: "-560px;" },
+        percentage: "-745px;"
+      }
     ];
 
     const store = userStore();
@@ -92,7 +98,8 @@ export default defineComponent({
         .map((nav) => ({
           ...nav,
           ...platformsListDisplay.value.find((platform) => platform.code === nav.code)
-        }));
+        }))
+        .sort((a, b) => a.sequence - b.sequence);
     });
 
     onMounted(() => {

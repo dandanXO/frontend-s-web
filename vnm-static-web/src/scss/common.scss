@@ -467,6 +467,13 @@ body {
     padding: 6px 16px;
   }
 
+  &.lg-btn {
+    height: 54px;
+    font-size: 1.2rem;
+    min-width: 50px;
+    padding: 16px 24px;
+  }
+
   &.btn-color-blue {
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
     box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;

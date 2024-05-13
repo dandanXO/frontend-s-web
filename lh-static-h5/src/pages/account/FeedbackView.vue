@@ -20,7 +20,7 @@
             <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
               <template v-if="recordsPagination.current === item.sequence">
                 <div class="questions-title">
-                  {{ item.question }}
+                  {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                 </div>
                 <div class="answer-container">
                   <q-form>
@@ -129,7 +129,7 @@
                 </q-btn>
               </div>
               <div>
-                <q-btn color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                <q-btn :disabled="!input && optionModal.length === 0" color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
                   下一题
                 </q-btn>
               </div>
@@ -140,6 +140,7 @@
                   class="standard-button btn-color-blue"
                   @click="btnClick('final')"
                   style="display: none"
+                  :disabled="!input && optionModal.length === 0"
                 >
                   完成
                 </q-btn>
@@ -314,7 +315,13 @@ const getSelected = (item, ans) => {
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
-  const previousChoicesArr = Array.from(choices[item.sequence - 1].choice || []);
+  // const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  let previousChoicesArr;
+  if (choices[item.sequence - 1] && choices[item.sequence - 1].choice) {
+    previousChoicesArr = Array.from(choices[item.sequence - 1].choice);
+  } else {
+    previousChoicesArr = [];
+  }
   const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {
@@ -623,6 +630,10 @@ onMounted(() => {
       justify-content: flex-start;
       width: 100%;
       margin-left: 20px;
+      .singlemultiple {
+        color: #ff0000;
+      font-size: 14px;
+      }
     }
 
     .questions-desc {
