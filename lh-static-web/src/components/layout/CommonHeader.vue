@@ -303,7 +303,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -332,7 +332,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -381,7 +381,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -2382,7 +2382,7 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../assets/home/acc-dialog-bg.png);
+        background-image: url(../../assets/home/acc-dialog-bg-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2392,9 +2392,9 @@ body {
         padding: 8px;
 
         .acc-dialog-img {
-          margin-top: -50px;
-          margin-left: -140px;
-          margin-right: -70px;
+          margin-top: -70px;
+          margin-left: -80px;
+          margin-right: -30px;
 
           img {
             display: block;
@@ -2527,7 +2527,7 @@ body {
 
     .el-dialog__body {
       .acc-dialog-left {
-        background-image: url(../../assets/home/acc-dialog-bg-dark.png);
+        background-image: url(../../assets/home/acc-dialog-bg-dark-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
       }
