@@ -406,7 +406,7 @@ export default defineComponent({
     const openEWalletTutorial = (code) => {
       const urlMap = {
         'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/useTutorial',
+        'EBPAY': 'https://www.ebpay.org/',
         'OKPAY': 'https://me-qr.com/l/okpay'
       };
 
