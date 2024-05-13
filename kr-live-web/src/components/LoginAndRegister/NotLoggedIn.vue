@@ -30,11 +30,7 @@
             v-model="loginForm.password"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
-              (val) =>
-                (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
-            ]"
+              (val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
            />
         </div>
         <div class="captcha-code">
