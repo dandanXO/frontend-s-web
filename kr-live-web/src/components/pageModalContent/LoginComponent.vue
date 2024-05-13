@@ -211,6 +211,10 @@ export default defineComponent({
   }
 }
 
+.captcha-img{
+  height: 56px;
+}
+
 h5 {
   font-size: 20px;
   margin-bottom: 12px;
