@@ -344,7 +344,7 @@
       </q-btn>
         </div>
         <div class="grid-container">
-          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === profIndex+1 }" @click="selectImage(profIndex+1)">
+          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-'+(profIndex+1) }" @click="selectImage('default-'+(profIndex+1))">
             <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)">
           </div>
         </div>
@@ -463,6 +463,9 @@ export default defineComponent({
         btmSwiper.classList.add("shorter-menu");
       }
       getVipProgress();
+      if (store.profilePhoto && store.profilePhoto.includes('default')) {
+        selectedImage.value = store.profilePhoto
+      }
     });
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
@@ -547,7 +550,6 @@ export default defineComponent({
     const selectedImage = ref(null)
     const profileDialogVisible = ref(false)
     const updateProfilePhoto = () => {
-      selectedImage.value = null
       profileDialogVisible.value = true
     }
     const selectImage = (item) => {
@@ -563,7 +565,7 @@ export default defineComponent({
               icon: "report_problem"
             });
       }
-      await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': 'default-' + selectedImage.value }))
+      await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': selectedImage.value }))
       .then(data => {
           // Handle response here
         store.profilePhoto = data.data

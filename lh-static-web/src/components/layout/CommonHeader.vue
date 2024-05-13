@@ -437,7 +437,7 @@
     </div>
       <el-form :inline="true" size="small" label-width="180px">
         <div class="grid-container">
-          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === profIndex+1 }" @click="selectImage(profIndex+1)">
+          <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
             <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
           </div>
           <!-- <div class="grid-item" v-if="uploadedImage.url"
@@ -632,7 +632,6 @@ export default defineComponent({
 
     const onShowProfile = () => {
       imageForm.path = null
-      selectedImage.value = null
       inputImage.value = null
       uploadedImage.url = null
       profileDialogVisible.value = true
@@ -671,7 +670,7 @@ export default defineComponent({
         return ElMessage.warning('请选择图片');
       }
       submitPhotoLoading.value = true
-      const data = await saveImage('default-' + selectedImage.value);
+      const data = await saveImage(selectedImage.value);
       profileDialogVisible.value = false
       ElMessage({ message: '修改成功', type: 'success' })
       store.profilePhoto = data.data
@@ -1251,6 +1250,9 @@ export default defineComponent({
         loginDialogVisible.value = false;
       }
 
+      if (store.profilePhoto && store.profilePhoto.includes('default')) {
+        selectedImage.value = store.profilePhoto
+      }
       // console.log(route);
       // alert(route.name)
 
@@ -2778,12 +2780,10 @@ body {
 }
 
 .profile-dialog .standard-button {
-    width: 65%;
-    font-size: 24px;
+    width: 400px;
     display: block;
     margin: 10px auto;
     height: unset;
-    padding: 20px;
     border-radius: 40px;
 }
 .profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
