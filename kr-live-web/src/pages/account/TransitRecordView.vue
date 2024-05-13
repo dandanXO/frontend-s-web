@@ -1,5 +1,5 @@
 <template>
-  <div style="display:none;">
+  <div>
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped">
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />
@@ -465,7 +465,7 @@
                   filled
                   clearable
                   :options="platformsList"
-                  label="แพลตฟอร์มเกม"
+                  label="게임 플랫폼"
                   color="white"
                   label-color="grey"
                   option-label="name"
