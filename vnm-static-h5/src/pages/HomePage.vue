@@ -772,7 +772,8 @@ import SwiperCore, {
   Mousewheel,
   Scrollbar,
   Thumbs,
-  Pagination
+  Pagination,
+  Navigation
 } from "swiper";
 import moment from "moment";
 // Import Swiper styles
