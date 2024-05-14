@@ -163,6 +163,7 @@
                 class="inner"
                 :class="{
                   lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
               >
@@ -181,6 +182,15 @@
                   }"
                 >
                   <div v-html="selectedPromo.pageContent"></div>
+                </div>
+                <div
+                  v-if="['lh-cs2-cct-major-2024'].includes(selectedPromo.promoCode)"
+                  class="corner-decor"
+                >
+                  <img
+                    v-if="selectedPromo.promoCode === 'lh-cs2-cct-major-2024'"
+                    src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
+                  />
                 </div>
               </div>
             </div>
@@ -826,6 +836,15 @@ export default defineComponent({
           }
         }
 
+        &.lhcs2{
+          margin-top: 0px;
+
+        }
+
+        &:has(.corner-decor) {
+          position: relative;
+        }
+
         img {
           margin-bottom: 5px;
         }
@@ -862,6 +881,16 @@ export default defineComponent({
         img {
           width: 100%;
           display: block;
+        }
+
+        .corner-decor {
+          position: absolute;
+          left: -5%;
+          bottom: -20px;
+
+          img {
+            margin: 0;
+          }
         }
 
         // .hot-promo {
