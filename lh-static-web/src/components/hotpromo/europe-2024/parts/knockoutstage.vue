@@ -14,7 +14,9 @@
       :key="`date-${index}`"
       :style="{ top: date.top + 'px', left: date.left + 'px' }"
     >
-      <span v-html="formatDate(date.matchTime)" />
+      <!-- <span v-html="formatDate(date.matchTime)" />   -->
+      06月30日<br>
+00:00
     </div>
     <div class="bracket-final">
       <span class="bracket-final__title">决赛</span>
@@ -32,66 +34,66 @@ const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([
   // left side round of 16
-  { top: -2,   left: 67, seg: 1, group: '16', team: 'A' },
-  { top: 151,  left: 67, seg: 1, group: '16', team: 'B' },
-  { top: 299,  left: 67, seg: 2, group: '16', team: 'A' },
-  { top: 452,  left: 67, seg: 2, group: '16', team: 'B' },
-  { top: 575,  left: 67, seg: 3, group: '16', team: 'A' },
-  { top: 728, left: 67, seg: 3, group: '16', team: 'B' },
-  { top: 876, left: 67, seg: 4, group: '16', team: 'A' },
-  { top: 1029, left: 67, seg: 4, group: '16', team: 'B' },
+  { top: -2,   left:-2, seg: 1, group: '16', team: 'A' },
+  { top: 151,  left:-2, seg: 1, group: '16', team: 'B' },
+  { top: 299,  left:-2, seg: 2, group: '16', team: 'A' },
+  { top: 452,  left:-2, seg: 2, group: '16', team: 'B' },
+  { top: 575,  left:-2, seg: 3, group: '16', team: 'A' },
+  { top: 728, left: -2, seg: 3, group: '16', team: 'B' },
+  { top: 876, left: -2, seg: 4, group: '16', team: 'A' },
+  { top: 1029, left:-2, seg: 4, group: '16', team: 'B' },
   // left side quarterfinal
-  { top: 76,  left: 247, seg: 1, group: '8', team: 'A' },
-  { top: 377,  left: 247, seg: 1, group: '8', team: 'B' },
-  { top: 653, left: 247, seg: 2, group: '8', team: 'A'},
-  { top: 954, left: 247, seg: 2, group: '8', team: 'B'},
+  { top: 76,   left: 178, seg: 1, group: '8', team: 'A' },
+  { top: 377,  left: 178, seg: 1, group: '8', team: 'B' },
+  { top: 653,  left: 178, seg: 2, group: '8', team: 'A' },
+  { top: 954,  left: 178, seg: 2, group: '8', team: 'B' },
   // left side semifinal
-  { top: 226,  left: 445, seg: 1, group: '4', team: 'A'},
-  { top: 803, left: 445, seg: 1, group: '4', team: 'B'},
+  { top: 226,  left: 380, seg: 1, group: '4', team: 'A' },
+  { top: 803,  left: 380, seg: 1, group: '4', team: 'B' },
   // left side final
-  { top: 508,  left: 613, seg: 1, group: '2', team: 'A' },
+  { top: 508,  left: 545, seg: 1, group: '2', team: 'A' },
   // right side final
-  { top: 508,  left: 813, seg: 1, group: '2', team: 'B' },
+  { top: 508,  left: 743, seg: 1, group: '2', team: 'B' },
   // right side semifinal
-  { top: 226,  left: 983, seg: 2, group: '4', team: 'A'},
-  { top: 803, left: 983, seg: 2, group: '4', team: 'B'},
+  { top: 226,  left: 913, seg: 2, group: '4', team: 'A' },
+  { top: 803,  left: 913, seg: 2, group: '4', team: 'B' },
   // right side quarterfinal
-  { top: 76,  left: 1180, seg: 3, group: '8', team: 'A' },
-  { top: 377,  left: 1180, seg: 3, group: '8', team: 'B' },
-  { top: 653, left: 1180, seg: 4, group: '8', team: 'A' },
-  { top: 954, left: 1180, seg: 4, group: '8', team: 'B' },
+  { top: 76,   left: 1110, seg: 3, group: '8', team: 'A' },
+  { top: 377,  left: 1110, seg: 3, group: '8', team: 'B' },
+  { top: 653,  left: 1110, seg: 4, group: '8', team: 'A' },
+  { top: 954,  left: 1110, seg: 4, group: '8', team: 'B' },
   // right side round of 16
-  { top: -2,   left: 1360, seg: 5, group: '16', team: 'A' },
-  { top: 151,  left: 1360, seg: 5, group: '16', team: 'B' },
-  { top: 299,  left: 1360, seg: 6, group: '16', team: 'A' },
-  { top: 452,  left: 1360, seg: 6, group: '16', team: 'B' },
-  { top: 575,  left: 1360, seg: 7, group: '16', team: 'A' },
-  { top: 728, left: 1360, seg: 7, group: '16', team: 'B' },
-  { top: 876, left: 1360, seg: 8, group: '16', team: 'A' },
-  { top: 1029, left: 1360, seg: 8, group: '16', team: 'B' }
+  { top: -2,   left: 1290, seg: 5, group: '16', team: 'A' },
+  { top: 151,  left: 1290, seg: 5, group: '16', team: 'B' },
+  { top: 299,  left: 1290, seg: 6, group: '16', team: 'A' },
+  { top: 452,  left: 1290, seg: 6, group: '16', team: 'B' },
+  { top: 575,  left: 1290, seg: 7, group: '16', team: 'A' },
+  { top: 728,  left: 1290, seg: 7, group: '16', team: 'B' },
+  { top: 876,  left: 1290, seg: 8, group: '16', team: 'A' },
+  { top: 1029, left: 1290, seg: 8, group: '16', team: 'B' }
 ]);
 
 const bracketDateList = ref([
   // left side round of 16
-  { top: 138,  left: 84, seg: 1, group: '16' },
-  { top: 590,  left: 84, seg: 2, group: '16' },
-  { top: 1040, left: 84, seg: 3, group: '16' },
-  { top: 1492, left: 84, seg: 4, group: '16' },
+  { top: 100,  left: 24, seg: 1, group: '16' },
+  { top: 390,  left: 24, seg: 2, group: '16' },
+  { top: 670,  left: 24, seg: 3, group: '16' },
+  { top: 975,  left: 24, seg: 4, group: '16' },
   // left side quarterfinal
-  { top: 365,  left: 340, seg: 1, group: '8' },
-  { top: 1270, left: 340, seg: 2, group: '8' },
+  { top: 240,  left: 190, seg: 1, group: '8' },
+  { top: 815,  left: 190, seg: 2, group: '8' },
   // left side semifinal
-  { top: 802, left: 498, seg: 1, group: '4'},
+  { top: 520,  left: 390, seg: 1, group: '4' },
   // right side semifinal
-  { top: 802, left: 900, seg: 2, group: '4' },
+  { top: 520,  left: 855, seg: 2, group: '4' },
   // right side quarterfinal
-  { top: 365,  left: 1050, seg: 3, group: '8' },
-  { top: 1270, left: 1050, seg: 4, group: '8' },
+  { top: 240,  left: 1050, seg: 3, group: '8' },
+  { top: 815,  left: 1050, seg: 4, group: '8' },
   // right side round of 16
-  { top: 138,  left: 1317, seg: 5, group: '16' },
-  { top: 590,  left: 1317, seg: 6, group: '16' },
-  { top: 1040, left: 1317, seg: 7, group: '16' },
-  { top: 1492, left: 1317, seg: 8, group: '16' }
+  { top: 100,  left: 1220, seg: 5, group: '16' },
+  { top: 390,  left: 1220, seg: 6, group: '16' },
+  { top: 670,  left: 1220, seg: 7, group: '16' },
+  { top: 975,  left: 1220, seg: 8, group: '16' }
 ]);
 const teams = ref([
 ])
@@ -101,42 +103,42 @@ const populateTeams = () => {
   euroMatchAll().then((res) => {
     if (res.code === 0) {
       teams.value = res.data
+      teams.value.forEach(team => {
+        const teamEntry = {
+          teamIcon: null,
+          teamName: null
+        };
+
+        const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
+        const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
+        const date = bracketDateList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup);
+        // Update Team A entry
+        if (indexA !== -1) {
+          bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
+          bracketTeamList.value[indexA].teamName = team.teamOneName;
+        } else {
+          console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
+        }
+
+        // Update Team B entry
+        if (indexB !== -1) {
+          bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
+          bracketTeamList.value[indexB].teamName = team.teamTwoName;
+        } else {
+          console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
+        }
+        if (date !== -1) {
+          bracketDateList.value[date].matchTime = team.matchTime
+        }
+        if (team.teamGroup === '2' || team.teamGroup === 2) {
+          finalDate.value = team.matchTime
+        }
+      });
+
+      pageLoading.value = false
     }
   })
   
-  teams.value.forEach(team => {
-    const teamEntry = {
-      teamIcon: null,
-      teamName: null
-    };
-
-    const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
-    const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
-    const date = bracketDateList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup);
-    // Update Team A entry
-    if (indexA !== -1) {
-      bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
-      bracketTeamList.value[indexA].teamName = team.teamOneName;
-    } else {
-      console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
-    }
-
-    // Update Team B entry
-    if (indexB !== -1) {
-      bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
-      bracketTeamList.value[indexB].teamName = team.teamTwoName;
-    } else {
-      console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
-    }
-    if (date !== -1) {
-      bracketDateList.value[date].matchTime = team.matchTime
-    }
-    if (team.teamGroup === '2' || team.teamGroup === 2) {
-      finalDate.value = team.matchTime
-    }
-  });
-
-  pageLoading.value = false
 };
 const formatDate = (matchTime) => {
       if (!matchTime) return ''; // Return empty string if matchTime is not available
@@ -158,8 +160,8 @@ onMounted(() => {
 <style scoped lang="scss">
 .bracket-wrapper {
   position: relative;
-  width: 100%;
-  height: 1715px;
+  width: 1360px;
+  height: 1215px;
   background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
   background-position: center top;
   color: #ffffff;
@@ -173,8 +175,8 @@ onMounted(() => {
     position: absolute;
     width: 122px;
     font-family: Microsoft YaHei UI;
-    font-size: 24px;
-    line-height: 31.92px;
+    font-size: 18px;
+    line-height: 20.92px;
     letter-spacing: 0.12em;
     text-align: center;
   }

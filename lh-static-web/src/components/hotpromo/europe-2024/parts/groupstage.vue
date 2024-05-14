@@ -51,6 +51,9 @@ const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
 const groupedMatches = computed(() => {
   const groups = {};
   matches.value.forEach(match => {
+    if(match.teamGroup === '2' || match.teamGroup === '4'|| match.teamGroup === '8' || match.teamGroup === '16') { 
+      return
+    }
     if (!groups[match.teamGroup]) {
       groups[match.teamGroup] = [];
     }
