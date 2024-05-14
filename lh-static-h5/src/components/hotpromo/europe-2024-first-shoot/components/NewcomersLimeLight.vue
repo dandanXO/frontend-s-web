@@ -26,30 +26,40 @@
             <td>38</td>
         </tr>
     </table>
+  <q-dialog align-center centered class="winDialog" v-model="bonusOpened">
+    <div class="blue-card">
+      <div class="dialog-congrats">恭喜您，获得奖金</div>
+      <div class="hongbao-angbao">{{ winAmount }} 元</div>
+      <img src="../images/hongbaobonus.png" />
+      <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png" /></div>
+    </div>
+  </q-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
+import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { eventapi } from "boot/axios"
 var qs = require("qs")
+const store = userStore();
 const $q = useQuasar();
+const bonusOpened = ref(false);
+const winAmount = ref(0);
 const getBonus = (type) => {
         eventapi.post("/first-bet/claim", qs.stringify({gameType: type})).then((res) => {
             if (res.code === 0) {
+                winAmount.value = res.data;
+                bonusOpened.value = true;
+            } else {
                 $q.notify({
-                    type: "positive",
-                    position: "top",
-                    message: `成功领取${res.data}元`,
-                    icon: "check_circle_outline"
+                color: "negative",
+                position: "top",
+                message: res.message,
+                icon: "report_problem"
                 });
-                } else {
-                    $q.notify({
-                    color: "negative",
-                    position: "top",
-                    message: res.message,
-                    icon: "report_problem"
-                    });
-                }
+
+                bonusOpened.value = false;
+            }
         }) 
     }
     
@@ -59,6 +69,10 @@ const items = ref([
     { bonusType: 'POKER' },
     { bonusType: 'SLOT' }
 ])
+const refreshBal = () => {
+  store.getBalance();
+  bonusOpened.value = false;
+};
 </script>
 <style lang="scss">
     .newcomers-intro {
@@ -108,4 +122,38 @@ const items = ref([
             }
         }
     }
+.blue-card {
+  background: #0d317399;
+  max-width: 360px;
+  width: 100%;
+  padding: 50px;
+  border-radius: 10px;
+  gap: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .dialog-congrats {
+    color: #ffffffcc;
+    font-family: Microsoft YaHei UI;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 31.92px;
+    text-align: center;
+  }
+  .hongbao-angbao {
+    color: #faff00;
+    font-family: Microsoft YaHei UI;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 31.92px;
+  }
+  .confirm {
+    cursor: pointer;
+    img {
+      width: 180px;
+    }
+  }
+}
 </style>
