@@ -128,8 +128,8 @@ a:hover {
       backdrop-filter: blur(5px);
       width: 98%;
       height: 55px;
-      -webkit-clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
-      clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
+    //   -webkit-clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
+    //   clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
 
       .company-image {
         width: 100%;
@@ -163,8 +163,8 @@ a:hover {
     text-align: center;
     -webkit-transition: 0.3s;;
     transition: 0.3s;;
-    -webkit-transform: skewX(-10deg);
-    transform: skewX(-10deg)
+    // -webkit-transform: skewX(-10deg);
+    // transform: skewX(-10deg)
 }
 
 .game_item:hover .game_box .game_info {
@@ -194,8 +194,8 @@ a:hover {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, .6);
-    -webkit-clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
-    clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
+    // -webkit-clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
+    // clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
     opacity: 0;
     -webkit-transition: 0.3s;;
     transition: 0.3s;;
@@ -312,8 +312,8 @@ img {
 .item_list .game_item .game_box .game_thumb:after,
 .item_list .game_item .game_box .game_thumb>img {
     position: absolute;
-    -webkit-clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
-    clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
+    // -webkit-clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
+    // clip-path: polygon(20% 0, 80% 0, 100% 70%, 80% 100%, 20% 100%, 0 70%);
     -webkit-transition: 0.3s;;
     transition: 0.3s;
 }
