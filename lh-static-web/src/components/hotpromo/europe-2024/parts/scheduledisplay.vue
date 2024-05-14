@@ -28,7 +28,7 @@
 
 const schedTabs = ref([
   { name: '当日赛事', content: GroupStage },
-  { name: '淘汰赛', content: KnockoutStage },
+  { name: '赛程表', content: KnockoutStage },
 ]);
 const schedActiveTab = ref(0);
 function activateSchedTab(index) {
