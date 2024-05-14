@@ -116,6 +116,8 @@ import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { RiRefreshLine } from "vue-remix-icons";
+import { uploadImage, saveImage } from '@/api/personal/common';
+import { ElMessage } from "element-plus";
 
 const inputImage = ref(null)
 const selectedImage = ref(null)
