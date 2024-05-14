@@ -99,6 +99,10 @@
     </div>
 
     <Transition>
+      <GameItem v-if="currentSelectedMenu === 'live'" :games="liveCasinoGames" :onClickGameItem="openGame" />
+    </Transition>
+
+    <Transition style="display:none">
       <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">
         <template v-for="p in liveCasinoGames" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
@@ -138,6 +142,10 @@
 
     <!-- slot start -->
     <Transition>
+      <GameItem v-if="currentSelectedMenu === 'slots' && !isShow" :games="platforms" :onClickGameItem="selectSlotPlat" />
+    </Transition>
+
+    <Transition style="display:none">
       <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
         <template v-for="p in platforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">
@@ -547,6 +555,10 @@
     </Transition>
 
     <Transition>
+      <GameItem v-if="currentSelectedMenu === 'esport'" :games="esportPlatform" :onClickGameItem="openGame" />
+    </Transition>
+
+    <Transition style="display:none">
       <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">
         <template v-for="p in esportPlatform" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
@@ -861,6 +873,7 @@ import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
+import GameItem from "components/game/GameItem";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
@@ -883,7 +896,8 @@ export default defineComponent({
     BacktoTop,
     Vue3Marquee,
     RiStarLine,
-    RiStarFill
+    RiStarFill,
+    GameItem
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
