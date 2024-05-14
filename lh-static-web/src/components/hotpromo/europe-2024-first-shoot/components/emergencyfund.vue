@@ -69,6 +69,7 @@
         margin: 60px 0;
         &__rule-title {
             margin: 10px 0;
+            text-align: center;
         }
         &__rule-content {
             font-family: Microsoft YaHei UI;
