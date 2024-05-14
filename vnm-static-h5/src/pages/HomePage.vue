@@ -129,7 +129,6 @@
         :allow-slide-next="true"
         :pagination="{ clickable: true, type: 'bullets' }"
         :space-between="10"
-        navigation
         class="hot-matches-carousel"
       >
         <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
