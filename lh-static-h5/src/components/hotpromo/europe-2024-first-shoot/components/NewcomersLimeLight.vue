@@ -67,7 +67,8 @@ const items = ref([
     { bonusType: 'ESPORT' },
     { bonusType: 'LIVE' },
     { bonusType: 'POKER' },
-    { bonusType: 'SLOT' }
+    { bonusType: 'SLOT' },
+    { bonusType: 'SPORT' }
 ])
 const refreshBal = () => {
   store.getBalance();
@@ -97,7 +98,7 @@ const refreshBal = () => {
     }
     .newcomers-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         
         .item {
             position:relative;
@@ -110,7 +111,7 @@ const refreshBal = () => {
                 position: absolute;
                 left: 0;
                 right: 0;
-                bottom: 28%;
+                bottom: 18%;
                 text-align: center;
                 display: flex;
                 justify-content: center;

@@ -23,8 +23,8 @@ defineProps({
   }
   .bracket-team__name {
     font-family: Microsoft YaHei UI;
-    font-size: 32px;
-    line-height: 42.56px;
+    font-size: 20px;
+    line-height: 22.56px;
     letter-spacing: 0.12em;
     word-break: keep-all;
   }

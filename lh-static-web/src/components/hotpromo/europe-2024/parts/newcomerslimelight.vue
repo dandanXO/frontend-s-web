@@ -63,7 +63,8 @@ const items = ref([
     { bonusType: 'ESPORT' },
     { bonusType: 'LIVE' },
     { bonusType: 'POKER' },
-    { bonusType: 'SLOT' }
+    { bonusType: 'SLOT' },
+    { bonusType: 'SPORT' }
 ])
 </script>
 <style lang="scss">
