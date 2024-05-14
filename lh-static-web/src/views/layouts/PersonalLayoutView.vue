@@ -185,7 +185,9 @@ export default defineComponent({
         .account-avatar {
           width: 75px;
           position: relative;
-          img{ 
+          cursor: pointer;
+
+          img{
             width: 100%;
           }
           &:hover {

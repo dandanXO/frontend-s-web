@@ -550,6 +550,10 @@ export default defineComponent({
     const selectedImage = ref(null)
     const profileDialogVisible = ref(false)
     const updateProfilePhoto = () => {
+      if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST' )){
+        return;
+      }
+
       profileDialogVisible.value = true
     }
     const selectImage = (item) => {
