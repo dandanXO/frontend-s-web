@@ -26,6 +26,7 @@
 import { ref, onMounted } from "vue";
 import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
 import BracketTeam from "./components/BracketTeam.vue";
+import { euroMatchAll } from '@/api/promotion/eurocup';
 const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
 const pageLoading = ref(true);
 const finalDate = ref(null);
@@ -96,6 +97,13 @@ const teams = ref([
 ])
 const populateTeams = () => {
   pageLoading.value = true
+  
+  euroMatchAll().then((res) => {
+    if (res.code === 0) {
+      teams.value = res.data
+    }
+  })
+  
   teams.value.forEach(team => {
     const teamEntry = {
       teamIcon: null,
