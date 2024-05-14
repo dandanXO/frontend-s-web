@@ -5,6 +5,7 @@
       (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
+      props.siteId !== '10' ? '' : 'kr',
     ]"
   >
     <div class="inner">
@@ -185,6 +186,17 @@
                       />
                     </el-form-item>
                   </el-tooltip>
+                  <el-form-item prop="codeAffiliate" v-if="props.siteId === '10'">
+                    <el-input
+                      ref="codeAffiliateRef"
+                      v-model="regForm.codeAffiliate"
+                      :placeholder="$t('fields.affiliateCode')"
+                      name="codeAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                    />
+                  </el-form-item>
                   <el-form-item prop="captchaCode">
                     <el-input
                       ref="verificationRef"
@@ -729,6 +741,7 @@ export default defineComponent({
         captchaCode: '',
         regHost: location.hostname,
         codeId: '',
+        codeAffiliate: '',
       },
       regRules: {
         userName: [
@@ -1292,6 +1305,14 @@ export default defineComponent({
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
+      }
+      if (props.siteId === '10') {
+        currentSite.value.firstLiner = 'Start From BET2WON'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = viLogo
+        state.loginForm.site = 'KRW'
+        setLanguage('en')
       }
     }
     onMounted(() => {
