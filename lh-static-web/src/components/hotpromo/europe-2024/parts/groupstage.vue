@@ -14,9 +14,9 @@
       <template v-for="gp in groupedMatches[groupActiveTab].items">
         <div class="gpbar">
           <div class="group-head">
-            <div class="team-name">
+            <!-- <div class="team-name">
               {{ groupedMatches[groupActiveTab].teamGroup }} 组
-            </div>
+            </div> -->
             <div class="smalltxt">
               Group<br>
               小组赛
@@ -112,9 +112,11 @@ onMounted(() => {
   }
 }
 .team-content {
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   .gpbar {
     display: flex;
     justify-content: stretch;
@@ -123,13 +125,14 @@ onMounted(() => {
     border: 1px solid #FFFFFF66;
     .group-head {
       flex: 2;
-      background: url(../images/groupbg.png)no-repeat center center;
+      background: url(../images/groupbg.png)no-repeat center right;
       display: flex;
       background-size: cover;
       justify-content: space-evenly;
       gap: 20px;
       align-items: center;
-      padding: 30px 55px 30px 0px;
+      padding: 20px 40px 20px 0;
+
       .team-name {
         color: #FFFFFF33;
         font-family: Microsoft YaHei UI;
@@ -160,20 +163,20 @@ onMounted(() => {
       .team {
         color: #ffffff;
         font-family: Microsoft YaHei UI;
-        font-size: 32px;
+        font-size: 22px;
         font-weight: 400;
-        line-height: 42.56px;
+        line-height: 32.56px;
         letter-spacing: 0.12em;
         display: flex;
-        gap: 10px;
 
-        align-items: center;
+        gap: 0;
+    align-items: center;
+    flex-direction: column-reverse;
         &.teamA{
           justify-content: flex-end;
         }
         &.teamB {
           justify-content: flex-end;
-          flex-direction: row-reverse;
         }
         img {
           width: 50px;
@@ -198,7 +201,7 @@ onMounted(() => {
         }
         .date {
           font-family: Microsoft YaHei UI;
-          font-size: 20px;
+          font-size: 15px;
           font-weight: 400;
           line-height: 26.6px;
           color: #FFFFFFCC;
