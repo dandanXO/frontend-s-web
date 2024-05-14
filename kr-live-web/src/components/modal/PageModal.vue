@@ -22,7 +22,7 @@
               <span>{{ headerInfo.subTitle }}</span>
             </p>
             <p>
-              <img src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" style="margin-right: 25px; width: 30px;"/>
+              <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()"/>
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
@@ -514,6 +514,9 @@ onMounted(() => {
   border: 2px solid #0000008c;
   color: #000;
   border-radius: 2px;
+  &:hover {
+    filter: brightness(1.1);
+  }
   &.active {
     background: linear-gradient(180deg, #A7E1FF 0%, #275FFF 100%);
     color: #fff;
@@ -541,6 +544,18 @@ onMounted(() => {
     text-align: center;
     white-space: nowrap;
   }
+
+  .header-close-btn {
+    margin-right: 25px; 
+    width: 30px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+      filter: brightness(1.1);
+    }
+  }
+
   p {
     flex: 1;
     margin: auto;
