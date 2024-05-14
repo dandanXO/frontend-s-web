@@ -1,7 +1,7 @@
 export default {
   menu: {
     home: "Home",
-    esports: "Esports",
+    esports: "eSports",
     sports: "Sports",
     liveCasino: "Live Casino",
     poker: "Poker",
