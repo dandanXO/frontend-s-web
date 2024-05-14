@@ -1409,8 +1409,16 @@ export default defineComponent({
       getAppDownloadUrl();
       getUnreadTotal();
       getNewsDetails();
+      runMenuFloat();
       loadHotMatches();
     });
+
+    const runMenuFloat = () => {
+        toggleMenuFloat()
+      setTimeout(() => {
+        toggleMenuFloat()
+      }, 2000);
+    }
 
     const imageLoading = ref(false);
 
