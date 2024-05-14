@@ -109,6 +109,10 @@
       :promo-code="list.promoCode"
     />
     <EuroCup2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && !isCommonPromo && store.token" />
+    <CS2CCTPromo
+      v-if="list.redirectUrl === 'lh-cs2-cct-major-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -168,6 +172,7 @@ import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import EuroCup2024 from "../components/hotpromo/europe-2024/EuroCup2024.vue";
 import EuroCup2024FirstShoot from "./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue";
+import CS2CCTPromo from "../components/hotpromo/CS2CCTPromo/CS2CCTPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -206,7 +211,8 @@ export default defineComponent({
     FtdPromo,
     LOLMsi2024Promo,
     EuroCup2024,
-    EuroCup2024FirstShoot
+    EuroCup2024FirstShoot,
+    CS2CCTPromo
   },
   props: {
     list: {
@@ -301,7 +307,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-ftd-promo" ||
       this.list.redirectUrl === "lh-msi-match" ||
       this.list.redirectUrl === "lh1-eurocup-2024" ||
-      this.list.redirectUrl === "lh1-eurocup-firstshoot"
+      this.list.redirectUrl === "lh1-eurocup-firstshoot" ||
+      this.list.redirectUrl === "lh-cs2-cct-major-2024"
     ) {
       this.isCommonPromo = false;
     } else {
