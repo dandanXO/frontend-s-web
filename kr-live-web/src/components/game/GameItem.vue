@@ -122,11 +122,11 @@ a:hover {
 
     .platform-company-box {
       position: absolute;
-      left: 0px;
+      left: 6px;
       bottom: 5px;
       background-color: #0000004d;
       backdrop-filter: blur(5px);
-      width: 98%;
+      width: calc(100% - 12px);
       height: 55px;
     //   -webkit-clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
     //   clip-path: polygon(0 -35%, 100% -25%, 80% 100%, 22% 100%);
@@ -157,8 +157,8 @@ a:hover {
     line-height: 1;
     height: 60px;
     margin: 0 10px;
-    border: 1px solid #38287b;
-    background: #0d0d1d;
+    border: 1px solid #323e4d;
+    background: #1F2833;
     border-radius:  4px;;
     text-align: center;
     -webkit-transition: 0.3s;;
@@ -168,8 +168,8 @@ a:hover {
 }
 
 .game_item:hover .game_box .game_info {
-    border: 1px solid #5128be;
-    background: #1d113e;
+    // border: 1px solid #6d7c8e;
+    // background: #445365;
     -webkit-box-shadow: 0 2px 4px 1px rgba(0, 0, 0, .9);
     box-shadow: 0 2px 4px 1px rgba(0, 0, 0, .9)
 }
@@ -285,8 +285,7 @@ h2 {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(45%, #343067), color-stop(48%, #1d1b3c), color-stop(80%, #5f40b2));
-    background: linear-gradient(180deg, #343067 45%, #1d1b3c 48%, #5f40b2 80%);
+    background-color: #789EFF;
     background-size: auto 200%;
     z-index: -1
 }
