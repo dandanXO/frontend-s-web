@@ -105,6 +105,7 @@ export default {
     maintenanceTime: "Thời gian bảo trì",
     viewnow: "Xem ngay",
     playnow: "Chơi Ngay",
+    betnow: "Cược Ngay",
     systemError: "Lỗi hệ thống",
     loginTitle: "Thông báo",
     bankName: "Ngân hàng ",
@@ -151,7 +152,8 @@ export default {
     futureGaming: "Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.",
     scanToDownload: "Quét để tải ứng dụng",
     moreDetails: "Chi tiết thêm",
-    announcementList: "Danh sách thông báo"
+    announcementList: "Danh sách thông báo",
+    hotMatches: "Trận Đấu Hot",
   },
   personal: {
     personalInfo: "Thông tin cá nhân",

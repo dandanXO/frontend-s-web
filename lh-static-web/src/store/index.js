@@ -31,7 +31,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 7,
       unreadTotal: 0,
-      visitorId: ""
+      visitorId: "",
+      profilePhoto: "",
     };
   },
   actions: {
@@ -103,6 +104,7 @@ export const userStore = defineStore("userStore", {
             this.evip = ret.data.evip;
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
+            this.profilePhoto = ret.data.profilePhoto;
           } else {
             ElMessage.error(ret.message);
           }

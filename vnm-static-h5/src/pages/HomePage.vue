@@ -103,7 +103,73 @@
     </div>
   </div>
 
-  <div class="details-bar">
+  <div class="hot-matches-wrapper" v-if="store.token && store.memberType==='TEST'">
+    <div class="hot-matches-title-wrapper">
+      <div class="hot-matches-title">
+        <div>
+          <img src="../assets/images/home/icon-hot-matches.png" />
+        </div>
+        {{ $t("lang.hotMatches") }}
+      </div>
+
+<!--      <div>-->
+<!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+<!--          {{ $t("lang.bet_now") }}-->
+<!--        </q-btn>-->
+<!--      </div>-->
+    </div>
+    <div class="hot-matches-container">
+      <swiper
+        :slides-per-view="1"
+        :modules="modules"
+        :loop="false"
+        @swiper="onSwiper"
+        effect="fade"
+        :auto-height="false"
+        :allow-slide-next="true"
+        :pagination="{ clickable: true, type: 'bullets' }"
+        :space-between="10"
+        navigation
+        class="hot-matches-carousel"
+      >
+        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
+          <div class="hot-matches-item">
+            <div class="top-match-title">
+              <div class="title-frame">{{ item.competitionName }}</div>
+            </div>
+            <div class="team-details team-details__home">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+              </div>
+              <div class="team-name">{{ item.teamOneName }}</div>
+            </div>
+            <div class="match-details">
+              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
+              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
+              <div class="match-btn">
+                <q-btn
+                  rounded
+                  no-caps
+                  color="brightbtn"
+                  class="sm-screen-txt"
+                  @click="playGame(item.platformName, item.platformCode, '')"
+                >
+                  {{ $t("lang.play_now") }}
+                </q-btn>
+              </div>
+            </div>
+            <div class="team-details team-details__away">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+              </div>
+              <div class="team-name">{{ item.teamTwoName }}</div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+  </div>
+  <div class="details-bar" v-else>
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
         {{
@@ -125,10 +191,6 @@
         <img src="../assets/images/home/withdraw-mid.png" />
         <div class="">{{ $t("lang.withdraw") }}</div>
       </router-link>
-      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
-        <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link> -->
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img src="../assets/images/home/vip-mid.png" />
         <div class="">{{ $t("lang.vip") }}</div>
@@ -530,7 +592,7 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -703,7 +765,17 @@ import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
-import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
+import SwiperCore, {
+  A11y,
+  Controller,
+  HashNavigation,
+  Keyboard,
+  Mousewheel,
+  Scrollbar,
+  Thumbs,
+  Pagination,
+  Navigation
+} from "swiper";
 import moment from "moment";
 // Import Swiper styles
 import "swiper/css";
@@ -714,13 +786,18 @@ import { useLocalStorage } from '@vueuse/core'
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css/pagination";
+
 export default defineComponent({
   name: "IndexPage",
   components: {
     MaintenanceBox,
     GameModal,
     MarqueeText,
-    LangOptions
+    LangOptions,
+    Swiper,
+    SwiperSlide
   },
   setup() {
     const fabPos = ref([18, 18]);
@@ -1333,6 +1410,7 @@ export default defineComponent({
       getUnreadTotal();
       getNewsDetails();
       runMenuFloat();
+      loadHotMatches();
     });
 
     const runMenuFloat = () => {
@@ -1410,7 +1488,43 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       fabPos.value = [newX, newY];
-    }
+    };
+
+    const hotMatches = ref([]);
+
+    const loadHotMatches = () => {
+      api
+        .get("/platform-competition?type=Football")
+        .then((res) => {
+          if (res.code === 0) {
+            hotMatches.value = res.data;
+          }
+        })
+        .catch(() => {});
+    };
+
+    const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
+
+    const formattedTime = (timeString) => {
+      if (!timeString) {
+        return "";
+      }
+
+      const dateTime = new Date(timeString);
+      const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+      const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}`;
+
+      return `${formattedDate} ${formattedTime}`;
+    };
+
+    const onSwiper = (swiper) => {};
+
+    const modulesHot = [Navigation, Pagination];
 
     return {
       imageLoading,
@@ -1454,7 +1568,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar],
+      modules: [Scrollbar,Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -1509,8 +1623,14 @@ export default defineComponent({
       newsDetail_05,
       goToNewsPage,
       isPlatformComingSoon,
-
       moveFab,
+      loadHotMatches,
+      hotMatches,
+      hotMatchesImgURL,
+      slideHotMatches: ref(0),
+      formattedTime,
+      onSwiper,
+      modulesHot
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2310,6 +2430,150 @@ export default defineComponent({
     .header-middle {
       :deep(.q-btn) {
         min-width: 75px;
+      }
+    }
+  }
+}
+
+.hot-matches-wrapper {
+  width: calc(100% - 2rem);
+  margin: 20px auto 0px;
+
+  .hot-matches-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hot-matches-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #313441;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    img {
+      display: block;
+      width: 30px;
+    }
+  }
+
+  .hot-matches-container {
+
+    :deep(.swiper-pagination){
+      //bottom: -20px;
+      position:relative;
+      margin-top: 10px;
+    }
+  }
+
+  .hot-matches-carousel {
+    height: auto !important;
+    background: transparent;
+    //padding-bottom: 10px;
+
+    :deep(.q-carousel__navigation--bottom) {
+      bottom: 0px !important;
+    }
+  }
+
+  .hot-matches-slide {
+    // padding-top: 0;
+    // padding-left: 6px;
+    // padding-right: 6px;
+  }
+
+  .hot-matches-item {
+    background: #f4f9fe;
+    border-radius: 20px;
+    margin-top: 12px;
+    padding: 18px 18px 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+
+    .top-match-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 4px;
+      margin: -20px auto 0;
+
+      .title-frame {
+        background-image: url("../assets/images/home/top-match-title.png");
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        padding: 4px 12px;
+        margin: auto;
+      }
+    }
+
+    .match-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      margin-top: 12px;
+
+      img {
+        display: block;
+        width: 70px;
+      }
+
+      .match-title {
+        color: #424f72;
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+      }
+      .match-time {
+        color: #7a80a1;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 12px;
+      }
+
+      .match-btn {
+        // margin-top: auto;
+        margin-top: 6px;
+      }
+    }
+
+    .team-details {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      max-width: 30%;
+
+      .team-details__home {
+      }
+
+      .team-details__away {
+      }
+
+      .team-icon {
+        // border-radius: 50%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 100%;
+          max-width: 70px;
+        }
+      }
+
+      .team-name {
+        text-align: center;
+        color: #7a80a1;
       }
     }
   }

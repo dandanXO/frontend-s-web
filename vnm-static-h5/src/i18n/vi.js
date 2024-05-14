@@ -45,6 +45,9 @@ export default {
     login_register_to_view: "Đăng nhập để kiểm tra số dư",
     tf88_news: "Tin tức TF88",
     see_all: "Nhìn thấy tất cả",
+    play_now: "Chơi Ngay",
+    bet_now: "Cược Ngay",
+    hotMatches: "Trận Đấu Hot",
 
     // side menu
     menu_sports: "Thể Thao",
