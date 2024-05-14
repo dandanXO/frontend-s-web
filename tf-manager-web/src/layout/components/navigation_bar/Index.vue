@@ -36,6 +36,7 @@
         <el-option key="1" value="en">en</el-option>
         <el-option key="2" value="zh">zh</el-option>
         <el-option key="3" value="th">th</el-option>
+        <el-option key="4" value="kr">kr</el-option>
       </el-select>
       <el-dropdown
         class="avatar-container right-menu-item hover-effect"
