@@ -136,6 +136,7 @@ const getCode = () => {
       if (response.code === 0) {
         verificationImg.value = "data:image/png;base64," + response.data.img;
         loginForm.codeId = response.data.id;
+        loginForm.captchaCode = '';
       }
     })
     .catch((e) => {

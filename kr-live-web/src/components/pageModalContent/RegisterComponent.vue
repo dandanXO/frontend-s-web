@@ -4,6 +4,7 @@
       <div>
           <label>추천인</label>
           <q-input
+            dense
             placeholder="추천인입력"
             ref="codeAffiliate"
             filled
@@ -18,6 +19,7 @@
         <div>
           <label>휴대폰번호</label>
           <q-input
+            dense
             placeholder="없이 숫자 만 입력"
             ref="telRef"
             filled
@@ -45,6 +47,7 @@
         <div>
           <label>아이디</label>
           <q-input
+            dense
             ref="loginNameRef"
             filled
             v-model="regForm.loginName"
@@ -63,6 +66,7 @@
           <label>인증 코드</label>
           <div class="telephone-otp-row">
             <q-input
+              dense
               ref="telOtpCodeRef"
               v-model="regForm.smsCode"
               :placeholder="'6자리 숫자'"
@@ -80,6 +84,7 @@
           <label>비밀번호</label>
           <div>
             <q-input
+              dense
               placeholder="비밀번호입력"
               ref="pwdRef"
               filled
@@ -124,7 +129,9 @@
 
         <div>
           <label>은행명</label>
-          <q-select filled
+          <q-select 
+            dense
+            filled
             label="은행선택"
             ref="bankCardRef"
             v-model="regForm.bankId"
@@ -141,6 +148,7 @@
         <div>
           <label>비밀번호확인</label>
           <q-input
+            dense
             placeholder="비밀번호확인입력"
             ref="confirmPwdRef"
             filled
@@ -168,6 +176,7 @@
         <div>
           <label>계좌번호</label>
           <q-input
+            dense
             type="number"
             placeholder="'-'없이숫자만입력."
             ref="cardNumRef"
@@ -186,6 +195,7 @@
         <div>
           <label>이메일</label>
           <q-input
+            dense
             placeholder="이메일"
             ref="emailRef"
             type="email"
@@ -204,6 +214,7 @@
         <div>
           <label>예금주</label>
           <q-input
+            dense
             placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
             ref="cardAccRef"
             filled
