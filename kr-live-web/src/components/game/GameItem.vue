@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="game_info">
-                    <h2>{{ p.alias ? p.alias : p.name }}</h2>
+                    <h2>게임입장</h2>
                     <h3>{{ p.alias ? p.alias : p.name }}</h3>
                 </div>
             </div>
@@ -159,12 +159,12 @@ a:hover {
     margin: 0 10px;
     border: 1px solid #38287b;
     background: #0d0d1d;
-    border-radius: var(--radius);
+    border-radius:  4px;;
     text-align: center;
     -webkit-transition: 0.3s;;
     transition: 0.3s;;
-    -webkit-transform: skewX(var(--deg));
-    transform: skewX(var(--deg))
+    -webkit-transform: skewX(-10deg);
+    transform: skewX(-10deg)
 }
 
 .game_item:hover .game_box .game_info {
