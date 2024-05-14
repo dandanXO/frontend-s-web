@@ -112,11 +112,11 @@
         {{ $t("lang.hotMatches") }}
       </div>
 
-<!--      <div>-->
-<!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
-<!--          {{ $t("lang.bet_now") }}-->
-<!--        </q-btn>-->
-<!--      </div>-->
+      <!--      <div>-->
+      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+      <!--          {{ $t("lang.bet_now") }}-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
@@ -751,7 +751,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
@@ -782,6 +782,7 @@ import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
 import { useLocalStorage } from '@vueuse/core'
+import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1398,6 +1399,35 @@ export default defineComponent({
       }
     };
 
+    const initOneSignal = () => {
+      OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
+
+      let myClickListener = async function (event) {
+        console.log("CLICK PUSH");
+        let notificationData = event;
+        console.log(notificationData);
+        console.log(notificationData.notification.title);
+        console.log(notificationData.notification.body);
+        console.log(notificationData.notification.additionalData);
+        // populatePushNotificationData(notificationData.notification);
+        alert(notificationData.notification.title + notificationData.notification.body);
+      };
+      OneSignal.Notifications.addEventListener("click", myClickListener);
+
+      // Prompts the user for notification permissions.
+      //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+      OneSignal.Notifications.requestPermission(true).then((accepted) => {
+        console.log("User accepted notifications: " + accepted);
+      });
+    };
+
+    onMounted(()=>{
+      if (Platform.is.android && Platform.is.capacitor) {
+        initOneSignal();
+      }
+
+    })
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1413,7 +1443,7 @@ export default defineComponent({
     });
 
     const runMenuFloat = () => {
-        toggleMenuFloat()
+      toggleMenuFloat()
       setTimeout(() => {
         toggleMenuFloat()
       }, 2000);
