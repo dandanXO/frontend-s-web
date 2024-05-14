@@ -7,11 +7,11 @@
         </div>
         {{ $t("home.hotMatches") }}
       </div>
-      <div>
-        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">
-          {{ $t("common.betnow") }}
-        </router-link>
-      </div>
+<!--      <div>-->
+<!--        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">-->
+<!--          {{ $t("common.betnow") }}-->
+<!--        </router-link>-->
+<!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
@@ -48,7 +48,7 @@
               <div class="match-btn">
                 <a
                   class="standard-button lg-btn btn-color-blue"
-                  @click="openGame(item.platformName, item.platformCode, '')"
+                  @click="goToSportPage"
                 >
                   {{ $t("common.playnow") }}
                 </a>
@@ -79,7 +79,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import GameModal from "@/components/modal/GameModal";
 import { userStore } from "@/store";
+import { useRouter } from "vue-router";
 
+const router= useRouter();
 const store= userStore();
 const { t } = useI18n();
 const hotMatches = ref([]);
@@ -99,6 +101,10 @@ const loadHotMatches = () => {
     }
   });
 };
+
+const goToSportPage = () => {
+  router.push("/sports");
+}
 
 const formattedTime = (timeString) => {
   if (!timeString) {

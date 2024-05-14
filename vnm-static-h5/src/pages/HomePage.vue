@@ -112,21 +112,22 @@
         {{ $t("lang.hotMatches") }}
       </div>
 
-      <div>
-        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">
-          {{ $t("lang.bet_now") }}
-        </q-btn>
-      </div>
+<!--      <div>-->
+<!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+<!--          {{ $t("lang.bet_now") }}-->
+<!--        </q-btn>-->
+<!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1.2"
+        :slides-per-view="1"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
         effect="fade"
         :auto-height="false"
         :allow-slide-next="true"
+        :pagination="{ clickable: true, type: 'bullets' }"
         :space-between="10"
         navigation
         class="hot-matches-carousel"
@@ -591,7 +592,7 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -1559,7 +1560,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar],
+      modules: [Scrollbar,Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -2428,7 +2429,7 @@ export default defineComponent({
 
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
-  margin: 20px auto 10px;
+  margin: 20px auto 0px;
 
   .hot-matches-title-wrapper {
     display: flex;
@@ -2451,12 +2452,18 @@ export default defineComponent({
   }
 
   .hot-matches-container {
+
+    :deep(.swiper-pagination){
+      //bottom: -20px;
+      position:relative;
+      margin-top: 10px;
+    }
   }
 
   .hot-matches-carousel {
     height: auto !important;
     background: transparent;
-    padding-bottom: 10px;
+    //padding-bottom: 10px;
 
     :deep(.q-carousel__navigation--bottom) {
       bottom: 0px !important;
