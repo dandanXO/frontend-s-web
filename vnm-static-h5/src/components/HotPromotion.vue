@@ -18,6 +18,8 @@
 
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
+    <upgradeHongBaoPromo v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'" :promo-code="list.promoCode" />
+
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -49,6 +51,7 @@ import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.v
 import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPokerCashbackPromo.vue";
 import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
+import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -60,7 +63,8 @@ export default defineComponent({
     DailyLoginPromo,
     ViPokerCashbackPromo,
     ViSlotNetLossPromo,
-    ViPennyBankPromo
+    ViPennyBankPromo,
+    upgradeHongBaoPromo
     // CnyStepGame2024Promo
   },
   props: {
@@ -116,7 +120,8 @@ export default defineComponent({
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "vi-poker-cashback" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-penny-bank"
+      this.list.redirectUrl === "vi-penny-bank" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket"
     ) {
       this.isCommonPromo = false;
     } else {
