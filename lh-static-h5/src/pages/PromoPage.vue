@@ -163,6 +163,7 @@
                 class="inner"
                 :class="{
                   lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
               >
@@ -833,6 +834,11 @@ export default defineComponent({
           .hot-promo {
             border-radius: 0px;
           }
+        }
+
+        &.lhcs2{
+          margin-top: 0px;
+
         }
 
         &:has(.corner-decor) {
