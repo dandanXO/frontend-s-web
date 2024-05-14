@@ -73,7 +73,8 @@
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
-            selectedPromo.promoCode !== 'lh1-ftd-promo'
+            selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+            selectedPromo.promoCode !== 'lh-eurocup-manual'
           "
         >
           <div class="promo-bg isDesktop">
