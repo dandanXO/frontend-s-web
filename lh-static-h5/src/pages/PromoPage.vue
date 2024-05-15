@@ -150,7 +150,8 @@
                   selectedPromo &&
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
-                  selectedPromo.promoCode !== 'lh1-ftd-promo'
+                  selectedPromo.promoCode !== 'lh1-ftd-promo'&&
+                  selectedPromo.promoCode !== 'lh-eurocup-manual'
                 "
               >
                 <img
@@ -162,7 +163,7 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
@@ -171,7 +172,7 @@
                   <HotPromotion :list="selectedPromo" />
                 </div>
                 <div
-                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps'"
+                  v-if="selectedPromo.promoType && selectedPromo.promoCode !== 'lh1-game-steps' && selectedPromo.promoCode !== 'lh-eurocup-manual'"
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
                     sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -321,6 +322,8 @@ export default defineComponent({
           router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
         }
         isPromoDetail.value = true;
+
+
         selectedPromo.value = promo;
         if (isAndroid()) {
           LocalStorage.set("TOKEN", extensionToken.value, 86400);
