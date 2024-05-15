@@ -119,6 +119,9 @@
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
+            v-if="
+            selectedPromo.promoCode !== 'lh-eurocup-manual'
+          "
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
@@ -242,6 +245,8 @@ export default defineComponent({
           //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
           // }
           // isPromoDetail.value = true;
+
+          console.log(promo)
           selectedPromo.value = promo
         }
       }
