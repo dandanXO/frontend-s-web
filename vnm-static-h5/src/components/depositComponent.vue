@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
-    <div class="q-mb-lg">
+    <!-- <div class="q-mb-lg">
       <span class="additional-tips">
         {{ $t("lang.deposit_encounterproblem") }}
       </span>
-    </div>
+    </div> -->
 
     <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
