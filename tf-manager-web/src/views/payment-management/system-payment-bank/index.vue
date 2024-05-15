@@ -65,6 +65,7 @@
         <el-form-item :label="t('fields.paymentName')" prop="paymentId">
           <el-select
             clearable
+            filterable
             v-model="form.paymentId"
             size="small"
             :placeholder="t('fields.paymentName')"
