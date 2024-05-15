@@ -112,23 +112,23 @@
         {{ $t("lang.hotMatches") }}
       </div>
 
-      <div>
-        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">
-          {{ $t("lang.bet_now") }}
-        </q-btn>
-      </div>
+      <!--      <div>-->
+      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+      <!--          {{ $t("lang.bet_now") }}-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1.2"
+        :slides-per-view="1"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
         effect="fade"
         :auto-height="false"
         :allow-slide-next="true"
+        :pagination="{ clickable: true, type: 'bullets' }"
         :space-between="10"
-        navigation
         class="hot-matches-carousel"
       >
         <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
@@ -591,7 +591,7 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -751,7 +751,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
@@ -772,7 +772,8 @@ import SwiperCore, {
   Mousewheel,
   Scrollbar,
   Thumbs,
-  Pagination
+  Pagination,
+  Navigation
 } from "swiper";
 import moment from "moment";
 // Import Swiper styles
@@ -781,6 +782,7 @@ import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
 import { useLocalStorage } from '@vueuse/core'
+import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1397,6 +1399,35 @@ export default defineComponent({
       }
     };
 
+    const initOneSignal = () => {
+      OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
+
+      let myClickListener = async function (event) {
+        console.log("CLICK PUSH");
+        let notificationData = event;
+        console.log(notificationData);
+        console.log(notificationData.notification.title);
+        console.log(notificationData.notification.body);
+        console.log(notificationData.notification.additionalData);
+        // populatePushNotificationData(notificationData.notification);
+        alert(notificationData.notification.title + notificationData.notification.body);
+      };
+      OneSignal.Notifications.addEventListener("click", myClickListener);
+
+      // Prompts the user for notification permissions.
+      //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+      OneSignal.Notifications.requestPermission(true).then((accepted) => {
+        console.log("User accepted notifications: " + accepted);
+      });
+    };
+
+    onMounted(()=>{
+      if (Platform.is.android && Platform.is.capacitor) {
+        initOneSignal();
+      }
+
+    })
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1407,8 +1438,16 @@ export default defineComponent({
       getAppDownloadUrl();
       getUnreadTotal();
       getNewsDetails();
+      runMenuFloat();
       loadHotMatches();
     });
+
+    const runMenuFloat = () => {
+      toggleMenuFloat()
+      setTimeout(() => {
+        toggleMenuFloat()
+      }, 2000);
+    }
 
     const imageLoading = ref(false);
 
@@ -1558,7 +1597,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar],
+      modules: [Scrollbar,Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -2427,7 +2466,7 @@ export default defineComponent({
 
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
-  margin: 20px auto 10px;
+  margin: 20px auto 0px;
 
   .hot-matches-title-wrapper {
     display: flex;
@@ -2450,12 +2489,18 @@ export default defineComponent({
   }
 
   .hot-matches-container {
+
+    :deep(.swiper-pagination){
+      //bottom: -20px;
+      position:relative;
+      margin-top: 10px;
+    }
   }
 
   .hot-matches-carousel {
     height: auto !important;
     background: transparent;
-    padding-bottom: 10px;
+    //padding-bottom: 10px;
 
     :deep(.q-carousel__navigation--bottom) {
       bottom: 0px !important;

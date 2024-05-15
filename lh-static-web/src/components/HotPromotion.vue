@@ -74,6 +74,7 @@
     />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'lh-msi-match' && !isCommonPromo && store.token" />
     <Europe2024FirstShoot v-if="list.redirectUrl === 'lh1-eurocup-firstshoot' && !isCommonPromo && store.token" />
+    <CS2CCTPromo v-if="list.redirectUrl === 'lh-cs2-cct-major-2024' && !isCommonPromo && store.token" :promo-code="list.promoCode"/>
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -127,6 +128,7 @@ import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import Europe2024 from "../components/hotpromo/europe-2024/Europe2024.vue";
 import Europe2024FirstShoot from "../components/hotpromo/europe-2024-first-shoot/Europe2024FirstShoot.vue";
+import CS2CCTPromo from "../components/hotpromo/CS2CCTPromo/CS2CCTPromo.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -171,7 +173,8 @@ export default defineComponent({
     FtdPromo,
     LOLMsi2024Promo,
     Europe2024,
-    Europe2024FirstShoot
+    Europe2024FirstShoot,
+    CS2CCTPromo
     // DailyBonus
   },
   props: {
@@ -448,7 +451,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-ftd-promo" ||
       this.list.redirectUrl === "lh-msi-match" ||
       this.list.redirectUrl === "lh1-eurocup-2024" ||
-      this.list.redirectUrl === "lh1-eurocup-firstshoot"
+      this.list.redirectUrl === "lh1-eurocup-firstshoot" ||
+      this.list.redirectUrl === "lh-cs2-cct-major-2024"
     ) {
       this.isCommonPromo = false;
     } else {

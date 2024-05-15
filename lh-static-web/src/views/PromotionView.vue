@@ -122,7 +122,7 @@
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
-            v-if="['lh-cs2-copenhagen-major-2024'].includes(selectedPromo.redirectUrl)"
+            v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-cct-major-2024'].includes(selectedPromo.redirectUrl)"
             class="corner-decor"
             style="position: absolute; left: 0px; bottom: 0px"
           >
@@ -130,6 +130,10 @@
               width="125px"
               v-if="selectedPromo.redirectUrl === 'lh-cs2-copenhagen-major-2024'"
               src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
+            />
+            <img
+              v-if="selectedPromo.redirectUrl === 'lh-cs2-cct-major-2024'"
+              src="@/assets/images/promotion/hotpromo/CS2CCTPromo/bg.png"
             />
           </div>
         </div>

@@ -66,9 +66,10 @@
         letter-spacing: 0.12em;
         text-align: left;
         color: #ffffff;
-        margin: 60px 0;
+        margin: 30px 0 60px;
         &__rule-title {
             margin: 10px 0;
+            text-align: center;
         }
         &__rule-content {
             font-family: Microsoft YaHei UI;

@@ -27,18 +27,35 @@
             <td>38</td>
         </tr>
     </table>
+    
+    <el-dialog align-center centered class="winDialog" v-model="bonusOpened">
+      <div class="dialog-congrats">恭喜您，获得奖金</div>
+      <div class="hongbao-angbao">{{ winAmount }} 元</div>
+      <img src="../images/hongbaobonus.png">
+      <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png"></div>
+
+    </el-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { firstBet } from '@/api/promotion/eurocup';
 import { ElMessage } from "element-plus";
-   
+import { userStore } from '@/store';
+const store = userStore();
+const bonusOpened = ref(false);
+const winAmount = ref(0);
 const getBonus = (type) => {
         firstBet(type).then((res) => {
             if (res.code === 0) {
-                ElMessage.success('成功领取' + res.data + '元')
+                winAmount.value = res.data;
+                bonusOpened.value = true;
             } else {
-                ElMessage.error(res.message);
+                ElMessage.error({
+                type: "error",
+                message: res.message
+                });
+
+                bonusOpened.value = false;
             }
         }) 
     }
@@ -46,7 +63,8 @@ const items = ref([
     { bonusType: 'ESPORT' },
     { bonusType: 'LIVE' },
     { bonusType: 'POKER' },
-    { bonusType: 'SLOT' }
+    { bonusType: 'SLOT' },
+    { bonusType: 'SPORT' }
 ])
 </script>
 <style lang="scss">

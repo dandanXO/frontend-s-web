@@ -3,16 +3,34 @@
     <q-form class="login-window-form" @submit="onSubmit">
       <div>
         <label>계정</label>
-        <q-input filled color="white" clearable v-model="loginForm.loginName"></q-input>
+        <q-input ref="loginNameRef" filled color="white" clearable v-model="loginForm.loginName"
+        lazy-rules
+        :rules="[
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+        ]"
+        ></q-input>
       </div>
       <div>
         <label>암호</label>
-        <q-input filled color="white" clearable v-model="loginForm.password" type="password"></q-input>
+        <q-input ref="pwdRef" filled color="white" clearable v-model="loginForm.password" type="password"
+        lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
+            (val) =>
+              (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
+          ]"
+          ></q-input>
       </div>
       <div>
         <label>암호</label>
         <div class="captcha-code">
-          <q-input filled color="white" clearable class="captcha-code-input" v-model="loginForm.captchaCode"></q-input>
+          <q-input ref="captchaRef" filled color="white" clearable class="captcha-code-input" v-model="loginForm.captchaCode"  lazy-rules
+            :rules="[
+                (val) => (val && val.length > 0) || $t('lang.enter_captcha_code')
+              ]"></q-input>
           <img class="captcha-img" :src="verificationImg" @click.prevent="getCode" />
         </div>
       </div>
@@ -49,6 +67,10 @@ export default defineComponent({
     const router = useRouter();
     const siteId = process.env.SITEID;
     const qs = require("qs");
+
+    const loginNameRef = ref();
+    const pwdRef = ref();
+    const captchaRef = ref();
 
     const loginForm = reactive({
       loginName: "",
@@ -87,8 +109,13 @@ export default defineComponent({
     const ui = useUI();
     const onSubmit = () => {
       (async () => {
-        store
-          .memberLogin({
+        loginNameRef.value.validate();
+        pwdRef.value.validate();
+        captchaRef.value.validate();
+
+        if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
+        } else {
+          store.memberLogin({
             loginName: loginForm.loginName.trim(),
             password: loginForm.password,
             sid: store.visitorId,
@@ -112,6 +139,7 @@ export default defineComponent({
             console.log(error);
             getCode();
           });
+        }
       })();
     };
 
@@ -119,7 +147,10 @@ export default defineComponent({
       loginForm,
       verificationImg,
       getCode,
-      onSubmit
+      onSubmit,
+      loginNameRef,
+      pwdRef,
+      captchaRef
     };
   }
 });
@@ -178,6 +209,10 @@ export default defineComponent({
   &.yellow {
     background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
   }
+}
+
+.captcha-img{
+  height: 56px;
 }
 
 h5 {

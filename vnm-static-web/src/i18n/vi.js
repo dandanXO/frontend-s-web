@@ -1,7 +1,7 @@
 export default {
   menu: {
     home: "Trang chủ",
-    esports: "E-sport",
+    esports: "eSport",
     sports: "Thể Thao",
     liveCasino: "Casino",
     poker: "Poker",

@@ -113,7 +113,9 @@
           <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
-                <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
+                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
@@ -303,7 +305,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -332,7 +334,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -381,7 +383,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -434,7 +436,8 @@ import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import {
-  RiRefreshLine
+  RiRefreshLine,
+  RiChatUploadLine
 } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
@@ -455,6 +458,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
+import { uploadImage, saveImage } from '@/api/personal/common'
 
 export default defineComponent({
   name: "CommonHeader",
@@ -472,7 +476,8 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount
+    RegisterAccount,
+    RiChatUploadLine
   },
   data: () => ({
     // carousel settings
@@ -494,6 +499,7 @@ export default defineComponent({
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
+    const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
@@ -524,6 +530,7 @@ export default defineComponent({
     const noticeDialogVisible = ref(false);
     const logoutDialogVisible = ref(false);
     const captchaDialogVisible = ref(false);
+    const profileDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
@@ -670,7 +677,12 @@ export default defineComponent({
     const hasAffiliate = ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
     const loginCountdown = ref(0);
-
+    const uploadedImage = reactive({
+      url: null,
+    })
+    const imageForm = reactive({
+      path: null,
+    })
     const loginRules = {
       loginName: [
         {
@@ -1446,7 +1458,7 @@ export default defineComponent({
       openLoginDialog,
       openRegDialog,
       openForgotpwdDialog,
-      isDark
+      isDark,
     };
   }
 });
@@ -2382,7 +2394,7 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../assets/home/acc-dialog-bg.png);
+        background-image: url(../../assets/home/acc-dialog-bg-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2392,9 +2404,10 @@ body {
         padding: 8px;
 
         .acc-dialog-img {
-          margin-top: -50px;
-          margin-left: -140px;
-          margin-right: -70px;
+          margin-top: -70px;
+          margin-left: -80px;
+          margin-right: 0px;
+          margin-bottom: -7px;
 
           img {
             display: block;
@@ -2527,7 +2540,7 @@ body {
 
     .el-dialog__body {
       .acc-dialog-left {
-        background-image: url(../../assets/home/acc-dialog-bg-dark.png);
+        background-image: url(../../assets/home/acc-dialog-bg-dark-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
       }
@@ -2580,5 +2593,76 @@ body {
       }
     }
   }
+}
+
+.grid-container {
+  margin: 20px auto;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: transform 0.5s;
+  img {
+    width: 100px;
+  cursor: pointer;
+  }
+}
+
+.grid-item .el-image:hover {
+  cursor: pointer;
+}
+
+.grid-item.selected {
+    position:relative;
+    color: #ffffff;
+  img {
+    border: 3px solid #33BC03;
+    border-radius: 50%;
+  }
+    &:after {
+      content: "✓";
+    position: absolute;
+    background: #33BC03;
+    font-size: 15px;
+    width: 25px;
+    height: 25px;
+    right: 0px;
+    bottom: 5px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    }
+}
+
+
+.profile-dialog{
+  max-width: 660px;
+}
+
+.profile-dialog .header {
+  font-size: 20px;
+}
+
+.profile-dialog .standard-button {
+    width: 400px;
+    display: block;
+    margin: 10px auto;
+    height: unset;
+    border-radius: 40px;
+}
+.profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
+  
+  background: #7A8EB966;
+  border-radius: 25px;
+  top: 8px;
 }
 </style>

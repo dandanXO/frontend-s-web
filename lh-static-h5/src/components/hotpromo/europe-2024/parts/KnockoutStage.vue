@@ -27,6 +27,7 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
+import { eventapi } from "boot/axios";
 const pageLoading = ref(false);
 const refBracketWrapper = ref(null);
 const flagWidth = ref(36);
@@ -77,36 +78,41 @@ const teams = ref([
 ])
 const populateTeams = () => {
   pageLoading.value = true
-  teams.value.forEach(team => {
-    const teamEntry = {
-      teamIcon: null,
-      teamName: null
-    };
+  eventapi.get("/uefa/match/all").then((res) => {
+    if (res.code === 0) {
+      teams.value = res.data
+      teams.value.forEach(team => {
+        const teamEntry = {
+          teamIcon: null,
+          teamName: null
+        };
 
-    const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
-    const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
-    // Update Team A entry
-    if (indexA !== -1) {
-      bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
-      bracketTeamList.value[indexA].teamName = team.teamOneName;
-    } else {
-      console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
-    }
+        const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
+        const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
+        // Update Team A entry
+        if (indexA !== -1) {
+          bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
+          bracketTeamList.value[indexA].teamName = team.teamOneName;
+        } else {
+          console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
+        }
 
-    // Update Team B entry
-    if (indexB !== -1) {
-      bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
-      bracketTeamList.value[indexB].teamName = team.teamTwoName;
-    } else {
-      console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
+        // Update Team B entry
+        if (indexB !== -1) {
+          bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
+          bracketTeamList.value[indexB].teamName = team.teamTwoName;
+        } else {
+          console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
+        }
+        
+        if (team.teamGroup === '2' || team.teamGroup === 2) {
+          finalDate.value = team.matchTime
+        }
+      });
+      
+      pageLoading.value = false
     }
-    
-    if (team.teamGroup === '2' || team.teamGroup === 2) {
-      finalDate.value = team.matchTime
-    }
-  });
-  
-  pageLoading.value = false
+  })
 };
 const formatDate = (matchTime) => {
       if (!matchTime) return ''; // Return empty string if matchTime is not available
@@ -162,7 +168,7 @@ const resizeDom = () => {
     }
 
     img {
-      max-width: 36px;
+      max-width: 33px;
       width: unset !important;
       margin-bottom: 0 !important;
     }

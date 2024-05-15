@@ -108,7 +108,7 @@ onMounted(() => {
 <style  lang="scss">
 .news-section {
   max-width: 1350px;
-  margin: 50px auto;
+  margin: 30px auto 50px;
 
   .el-tabs{
     margin-top: -40px;

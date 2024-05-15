@@ -1,7 +1,7 @@
 <template>
-    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss full-height>
+    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
       <q-card style="max-width: none; background: transparent; box-shadow: none;">
-      
+
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
@@ -22,7 +22,7 @@
               <span>{{ headerInfo.subTitle }}</span>
             </p>
             <p>
-              <q-btn flat @click="closeDialog()" round dense icon="close" />
+              <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()"/>
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
@@ -40,7 +40,7 @@
           </div>
           <div class="page-dialog-tabs">
             <template v-if="!isMinimalMode">
-              <q-tabs v-model="page" align="justify">
+              <q-tabs style="padding: 0px 30px" v-model="page" align="justify">
                 <template v-for="item in formattedPagesInfo" :key="item.page">
                   <q-tab
                     @click="tabClick(item.page)"
@@ -49,12 +49,10 @@
                     class="page-dialog-tab"
                     v-if="item.tabIndex === tabIndex"
                   >
-                    <img :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
+                    <img style="padding-right:5px;" :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
                   </q-tab>
                 </template>
               </q-tabs>
-
-              <q-separator />
             </template>
 
             <q-tab-panels v-model="page" animated class="">
@@ -160,19 +158,19 @@ const isLinkActive = (key) => {
 };
 
 const pagesInfo = reactive([
-  // {
-  //   tabIndex: "log",
-  //   page: "finance/deposit",
-  //   info: "송금신청",
-  //   iconUrl: require("../../assets/icon/deposit.svg"),
-  //   iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
-  //   component: FinanceDeposit,
-  //   headerInfo: {
-  //     title: "송금신청",
-  //     subTitle: "DEPOSIT",
-  //     description: "입금시 꼭 계좌문의를 하세요!",
-  //   }
-  // },
+  {
+    tabIndex: "log",
+    page: "finance/deposit",
+    info: "송금신청",
+    iconUrl: require("../../assets/icon/deposit.svg"),
+    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    component: FinanceDeposit,
+    headerInfo: {
+      title: "송금신청",
+      subTitle: "DEPOSIT",
+      description: "입금시 꼭 계좌문의를 하세요!",
+    }
+  },
   {
     tabIndex: "log",
     page: "finance/withdraw",
@@ -420,12 +418,13 @@ onMounted(() => {
 .page-dialog-links {
   position: absolute;
   left: 0;
+  top: 8px;
 }
 .page-dialog-main {
   --main-bg-color: #030303;
   // top: 80px;
   // position: absolute;
-  padding: 0 0 0 130px;
+  padding: 0 0 0 140px;
   box-sizing: content-box;
   width: 860px;
   max-width: 860px;
@@ -484,7 +483,7 @@ onMounted(() => {
 
 :deep(.q-tab--active) {
   border-bottom: 1px solid #767676;
-  border-image: linear-gradient(to right, #767676, #1bcef1, #767676) 0.8;
+  border-image: linear-gradient(to right, #767676, #0075FE, #767676) 0.8;
   .q-tab__label {
     color: #fff;
     font-weight: unset;
@@ -510,20 +509,28 @@ onMounted(() => {
   cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
-  background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
+  // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
+  background: linear-gradient(180deg, #E1E1E1 0%, #525252 100%);
+  border: 2px solid #0000008c;
+  color: #000;
+  border-radius: 2px;
+  &:hover {
+    filter: brightness(1.1);
+  }
   &.active {
-    background-image: url("../../assets/images/pages-modal/btn1-blue.svg");
+    background: linear-gradient(180deg, #A7E1FF 0%, #275FFF 100%);
+    color: #fff;
+    border: 2px solid rgb(104 146 255 / 40%);
   }
   .register-text {
     font-size: 16px;
     line-height: 22.4px;
-    color: #fff;
   }
 }
 
 .page-dialog-main-header {
   justify-content: space-between;
-  height: 82px;
+  height: 75px;
   width: 100%;
   padding: unset;
   background-image: url("../../assets/images/pages-modal/modal-header.svg");
@@ -537,6 +544,18 @@ onMounted(() => {
     text-align: center;
     white-space: nowrap;
   }
+
+  .header-close-btn {
+    margin-right: 25px; 
+    width: 30px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+      filter: brightness(1.1);
+    }
+  }
+
   p {
     flex: 1;
     margin: auto;
@@ -559,6 +578,7 @@ onMounted(() => {
   }
 }
 .page-dialog-tabs {
+  min-height: calc(100vh - 240px);
   background: var(--main-bg-color);
 
   :deep(.q-tab) {
@@ -570,7 +590,7 @@ onMounted(() => {
 }
 .q-panel {
   .q-tab-panel {
-    padding: 10px 30px 120px;
+    padding: 10px 60px 120px;
     box-sizing: border-box;
     overflow-y: scroll;
     max-height: calc(90vh - 200px);
@@ -603,6 +623,7 @@ onMounted(() => {
   .page-dialog-links {
     background-color: var(--main-bg-color);
     position: relative;
+    top: 0px;
     .header-info-description {
       display: block;
       margin: unset;
@@ -613,6 +634,8 @@ onMounted(() => {
       display: flex;
       flex-direction: row;
       justify-content: center;
+      gap: 10px;
+      padding: 0px 10px;
     }
   }
   .page-dialog-main-header {

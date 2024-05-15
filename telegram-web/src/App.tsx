@@ -33,7 +33,7 @@ function App() {
             ]
           }}
           actionsConfiguration={{
-              twaReturnUrl: 'https://t.me/機器人位子'
+              twaReturnUrl: 'https://t.me/web_test_tg_app'
           }}
       >
         <div className="app">
