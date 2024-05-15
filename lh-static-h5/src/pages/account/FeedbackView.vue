@@ -1,6 +1,22 @@
 <template>
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
+
+      <div class="quiz-announcement-wrapper" v-if="uiIsShowStatus.showQuestions">
+        <img src="../../assets/images/feedback/quiz-announcement-icon.png" />
+        <div
+          class="quiz-announcement-inner"
+          :class="{ animated: announcementAnimated }"
+          @transitionend="handleAnnouncementAnimationEnd"
+        >
+          <div v-for="(announcement, index) in announcements" :key="index">
+            恭喜用户 {{ announcement.account }}xxxxxxxxx 获得反馈彩金
+            <span class="amount">{{ announcement.bonus }}元</span>
+          </div>
+        </div>
+      </div>
+
+
       <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
         <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
         <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
@@ -195,6 +211,17 @@ const uiIsShowStatus = reactive({
   questionBox: false,
   showQuestions: true
 });
+
+const announcementBonusList = ref([8, 12, 16, 36, 38, 68]);
+const announcementTimer = ref(null);
+const announcementAnimated = ref(false);
+const announcements = ref([]);
+
+const handleAnnouncementAnimationEnd = () => {
+  const newAnnouncement = { account: getRandomAccount(), bonus: getRandomBonus() };
+  announcements.value = [announcements.value[1], newAnnouncement];
+  announcementAnimated.value = false;
+};
 
 function onBtnStartAnswerClick() {
   uiIsShowStatus.startAnswerBox = false;
@@ -461,12 +488,42 @@ const testAns = () => {
     }
   });
 };
+
+const getRandomBonus = () => {
+  return announcementBonusList.value[Math.floor(Math.random() * announcementBonusList.value.length)];
+};
+
+const initAnnouncement = () => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+  announcementTimer.value = setInterval(() => {
+    announcementAnimated.value = true;
+  }, 5000);
+};
+
+const getRandomAccount = () => {
+  const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
+  const randomIndex1 = Math.floor(Math.random() * 26);
+  const randomIndex2 = Math.floor(Math.random() * 26);
+
+  return letters[randomIndex1] + letters[randomIndex2];
+};
+
 onMounted(() => {
   if (store.hasToken()) {
     testAns();
     getReferral();
   }
-  // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
+
+
+  if (uiIsShowStatus.showQuestions) {
+    announcements.value = [
+      { account: getRandomAccount(), bonus: getRandomBonus() },
+      { account: getRandomAccount(), bonus: getRandomBonus() }
+    ];
+    initAnnouncement();
+  }
+
+
 });
 </script>
 
@@ -928,6 +985,47 @@ onMounted(() => {
   color: $font-2;
   font-size: 1.275rem;
 }
+
+.quiz-announcement-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #5ea1ff1a;
+  padding: 0 15px;
+  border-radius: 35px;
+  height: 44px;
+  margin: 8px auto;
+  overflow: hidden;
+
+  img {
+    width: 36px;
+  }
+
+  .quiz-announcement-inner {
+    position: relative;
+    align-self: start;
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0.05em;
+    color: $font-1;
+
+    &.animated {
+      transition: transform 1s;
+      transform: translateY(-44px);
+    }
+
+    > div {
+      height: 44px;
+
+      .amount {
+        color: $primary;
+      }
+    }
+  }
+}
+
 
 .body--dark {
   .quiz-container {
