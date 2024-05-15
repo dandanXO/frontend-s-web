@@ -215,7 +215,7 @@ onMounted(() => {
         top: 16px;
       }
       .match-time {
-        color: #7a80a1;
+        color: #444444;
         font-size: 20px;
         text-align: center;
         margin-top: 12px;
@@ -271,7 +271,7 @@ onMounted(() => {
       .team-name {
         font-size: 18px;
         text-align: center;
-        color: #7a80a1;
+        color: #444444;
       }
     }
   }

@@ -20,9 +20,9 @@
       <!-- <div class="buttons">
         <div class="common-btn" @click="getPromotion">抽奖</div>
         <div class="common-btn blue">十连抽</div>
-      </div> -->
+      </div>->
     </div>
-    <div class="activity-boxes">
+     <div class="activity-boxes">
       <div class="activity-box">
         <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
@@ -34,10 +34,10 @@
             </tr>
           </table>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
-
+<!-- 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
@@ -52,7 +52,7 @@
         <td>{{ startTime.time2 }}</td>
       </tr>
     </tbody>
-  </table>
+  </table>  -->
 
   <q-dialog
     class="award-modal hongbaoyu-modal"
@@ -64,10 +64,10 @@
     <div class="modal-div">
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
-        <div class="grats">恭喜中奖！</div>
+        <div class="grats">{{$t('lang.congrats')}}</div>
         <div class="amount">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+        <div class="get-btn" @click="getPromotionPrize">{{$t('lang.claim')}}</div>
       </div>
     </div>
   </q-dialog>
@@ -350,7 +350,6 @@ onMounted(() => {
     justify-content: center;
     top: 0;
     margin-top: 48%;
-    left: -10px;
     color: #f23b1d;
     font-size: 35px;
     font-weight: bold;
@@ -364,10 +363,9 @@ onMounted(() => {
     border-radius: 30px;
     background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
     position: absolute;
-    margin-top: 270px;
-    margin-left: -15px;
+    margin-top: 180px;
     font-size: 14px;
-    padding: 12px 24px;
+    padding: 5px 25px;
     cursor: pointer;
 
     &:hover {

@@ -22,7 +22,7 @@
         <div class="common-btn blue">十连抽</div>
       </div> -->
     </div>
-    <div class="activity-boxes">
+    <!-- <div class="activity-boxes">
       <div class="activity-box">
         <div class="activity-title">中奖名单</div>
         <div class="activity-content-container">
@@ -35,10 +35,10 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
-  <div class="promo-container-hongbao">
+  <!-- <div class="promo-container-hongbao">
     <div class="promo-view-container">
       <table border="0" width="600" cellpadding="0" cellspacing="0">
         <tbody>
@@ -56,7 +56,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
 
   <el-dialog
     class="award-modal hongbaoyu-modal"
@@ -76,10 +76,10 @@
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu2024/red-packet-opened.png`)" />
         <!-- <img src="../../../assets/images/promotion/hotpromo/red-packet-opened.png" /> -->
-        <div class="grats">恭喜中奖！</div>
+        <div class="grats">{{ $t('promo.congrats') }}</div>
         <div class="amount">{{ winAmount }}</div>
 
-        <div class="get-btn" @click="getPromotionPrize">点击领取</div>
+        <div class="get-btn" @click="getPromotionPrize">{{ $t('promo.claim') }}</div>
       </div>
     </div>
   </el-dialog>
@@ -100,7 +100,7 @@ const startTime= reactive({
 })
 
 const store = userStore();
-const privilegeClaimedModalVisible = ref(true);
+const privilegeClaimedModalVisible = ref(false);
 const promoNotReady = ref(false);
 const bonusOpened = ref(false);
 const winAmount = ref(0);
@@ -367,7 +367,6 @@ onMounted(() => {
     justify-content: center;
     top: 0;
     margin-top: 250px;
-    left: -15px;
     color: #f23b1d;
     font-size: 50px;
     font-weight: bold;
@@ -382,7 +381,6 @@ onMounted(() => {
     background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
     position: absolute;
     margin-top: 270px;
-    margin-left: -15px;
     font-size: 20px;
     padding: 12px 24px;
     cursor: pointer;

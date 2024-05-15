@@ -125,7 +125,7 @@
     </div>
     <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1"
+        :slides-per-view="1.2"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
@@ -156,7 +156,7 @@
                   no-caps
                   color="brightbtn"
                   class="sm-screen-txt"
-                  @click="playGame(item.platformName, item.platformCode, '')"
+                  @click="selectTab('sport')"
                 >
                   {{ $t("lang.play_now") }}
                 </q-btn>
@@ -1776,6 +1776,7 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  z-index: 99;
 
   .float-btn {
     margin-right: -5px;
@@ -2575,7 +2576,7 @@ export default defineComponent({
         text-align: center;
       }
       .match-time {
-        color: #7a80a1;
+        color: #444444;
         font-size: 14px;
         text-align: center;
         margin-top: 12px;
@@ -2616,7 +2617,7 @@ export default defineComponent({
 
       .team-name {
         text-align: center;
-        color: #7a80a1;
+        color: #444444;
       }
     }
   }

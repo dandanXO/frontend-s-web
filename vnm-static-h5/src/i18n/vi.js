@@ -454,6 +454,9 @@ export default {
     didnt_win: "Không thắng",
     please_select_query_time: "Vui lòng chọn thời gian truy vấn",
 
+    // promo -- upgradeHongbao
+    congrats: "Chúc mừng",
+    claim: "Nhấn",
     // slot
     slot_search: "Tìm kiếm trò chơi",
 
@@ -1282,7 +1285,7 @@ export default {
     cockfight: "Cockfight",
     copy_success: "Liên kết đã được sao chép thành công!",
     enter_transfer_amount: "Nhập số tiền chuyển",
-    choose_later: "Tham Gia Sa",
+    choose_later: "Tham Gia Sau",
     // about
     about: {
       affiliate: "Đại Lý",
@@ -1511,6 +1514,7 @@ export default {
     30004: "Số tiền nạp thành viên không đúng theo điều kiện",
     30005: "Chưa hoàn thành số lượng quay lại theo điều kiện",
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
+    30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",
