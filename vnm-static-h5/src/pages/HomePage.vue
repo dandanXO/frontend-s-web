@@ -86,6 +86,11 @@
     />
   </q-carousel>
 
+  <PushNotification
+    :pushNotificationData="pushNotificationData"
+    v-if="Platform.is.android && Platform.is.capacitor"
+  />
+
   <div class="mid-announcement-section">
     <div class="midd">
       <div class="station-notice-wrapper">
@@ -787,6 +792,7 @@ import OneSignal from "onesignal-cordova-plugin";
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import { Swiper, SwiperSlide } from "swiper/vue";
+import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 
 export default defineComponent({
@@ -797,7 +803,8 @@ export default defineComponent({
     MarqueeText,
     LangOptions,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    PushNotification
   },
   setup() {
     const fabPos = ref([18, 18]);
@@ -1399,6 +1406,11 @@ export default defineComponent({
       }
     };
 
+    const pushNotificationData = ref();
+    const populatePushNotificationData = (data) => {
+      pushNotificationData.value = data;
+    };
+
     const initOneSignal = () => {
       OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
 
@@ -1409,8 +1421,8 @@ export default defineComponent({
         console.log(notificationData.notification.title);
         console.log(notificationData.notification.body);
         console.log(notificationData.notification.additionalData);
-        // populatePushNotificationData(notificationData.notification);
-        alert(notificationData.notification.title + notificationData.notification.body);
+        populatePushNotificationData(notificationData.notification);
+        // alert(notificationData.notification.title + notificationData.notification.body);
       };
       OneSignal.Notifications.addEventListener("click", myClickListener);
 
@@ -1659,7 +1671,9 @@ export default defineComponent({
       slideHotMatches: ref(0),
       formattedTime,
       onSwiper,
-      modulesHot
+      modulesHot,
+      Platform,
+      pushNotificationData
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
