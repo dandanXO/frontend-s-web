@@ -14,6 +14,7 @@ export default {
     commissionModel: {
       NORMAL: 'Nomal',
       SIMPLE: 'Simple',
+      DETAILS: 'Details',
     },
     level: {
       AFFILIATE: 'Affiliate',
@@ -1297,6 +1298,7 @@ export default {
     settleView: 'View',
     settlePay: 'Pay',
     settleEdit: 'Edit',
+    shareRatio: 'Share Ratio',
     show: 'Show',
     showAll: 'Show All',
     sid: 'SID',
@@ -1826,6 +1828,7 @@ export default {
     updateToUnderReviewSuccess: 'Update to Under Review Success',
     updateUserTypeSuccess: 'Update UserType Success',
     updateVIPLevelSuccess: 'Update VIP Level Success',
+    updateShareRatioSuccess: 'Update Share Ratio Success',
     useCommaToSeparateDomain:
       'Please use "," to separate domain name if insert multiple domain',
     validateAdsTypeRequired: 'Ads Type is required',
@@ -2120,6 +2123,7 @@ export default {
     validateKeyQuantityRequired: 'Key quantity is required',
     validateMonthRequired: 'Year/Month is required',
     validateTimeRequired: 'Time is required',
+    validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
     syncMemberDetailSuccess: 'Sync Member Detail Success',
     timeExist: 'Time already exists',
     wrongPopupTime: 'Selected popup time is invalid',
@@ -2474,6 +2478,18 @@ export default {
     friday: 'Friday',
     saturday: 'Saturday',
     sunday: 'Sunday',
+  },
+  affiliateShareRatio: {
+    AGENT_SHARE_BET_RATIO_FISH: 'Bet Ratio-FISH',
+    AGENT_SHARE_BET_RATIO_SLOT: 'Bet Ratio-SLOT',
+    AGENT_SHARE_BET_RATIO_ESPORT: 'Bet Ratio-ESPORT',
+    AGENT_SHARE_BET_RATIO_LIVE: 'Bet Ratio-LIVE',
+    AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
+    AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
+    AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
+    AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
+    AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
   },
   error: {
     400: 'Bad Request',
