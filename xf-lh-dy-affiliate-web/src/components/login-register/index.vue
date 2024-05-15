@@ -190,7 +190,7 @@
                     <el-input
                       ref="codeAffiliateRef"
                       v-model="regForm.codeAffiliate"
-                      :placeholder="$t('fields.affiliateCode')"
+                      :placeholder="$t('fields.referralCode')"
                       name="codeAffiliate"
                       type="text"
                       tabindex="8"
@@ -573,6 +573,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
+import krLogo from '@/assets/images/kr/kr-logo.svg'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1310,7 +1311,7 @@ export default defineComponent({
         currentSite.value.firstLiner = 'Start From BET2WON'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
-        currentSite.value.logo = viLogo
+        currentSite.value.logo = krLogo
         state.loginForm.site = 'KRW'
         setLanguage('en')
       }
