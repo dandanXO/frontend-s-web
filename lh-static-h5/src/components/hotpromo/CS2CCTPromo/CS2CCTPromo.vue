@@ -396,7 +396,7 @@ onMounted(() => {
 .cs2 {
   text-align: center;
   .title {
-    margin: 20px auto;
+    margin: 10px auto;
   }
 
   .tips {
@@ -522,10 +522,14 @@ onMounted(() => {
       }
       .sign-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, 165px);
+        grid-template-columns: repeat(3,1fr);
         justify-content: space-around;
         row-gap: 56px;
         margin: 25px auto;
+
+        @media (max-width: 375px){
+          grid-template-columns: repeat(2,1fr);
+        }
 
         .item {
           display: flex;
