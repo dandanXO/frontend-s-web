@@ -618,7 +618,7 @@ export default defineComponent({
       }
 
       &.bg__xf-deposit-award {
-        background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg.png");
+        background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg.jpg");
         // background-size: cover;
         background-size: 100% auto;
         background-repeat: no-repeat;
