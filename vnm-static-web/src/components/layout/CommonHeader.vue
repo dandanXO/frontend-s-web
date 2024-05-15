@@ -2664,7 +2664,7 @@ body {
     font-weight: bold;
 
     &.active {
-      font-weight: 500;
+      //font-weight: 500;
       color: #fff;
     }
   }
