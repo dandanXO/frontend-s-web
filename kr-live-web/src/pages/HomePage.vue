@@ -102,86 +102,86 @@
       <GameItem v-if="currentSelectedMenu === 'live'" :games="liveCasinoGames" :onClickGameItem="openGame" />
     </Transition>
 
-    <Transition style="display:none">
-      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">
-        <template v-for="p in liveCasinoGames" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </Transition>
+<!--    <Transition style="display:none">-->
+<!--      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">-->
+<!--        <template v-for="p in liveCasinoGames" :key="p">-->
+<!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
+<!--            <div-->
+<!--              class="platform-img"-->
+<!--              :style="{-->
+<!--                backgroundImage: (() => {-->
+<!--                  try {-->
+<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
+<!--                  } catch (e) {-->
+<!--                    return `url(${comingSoonImg})`;-->
+<!--                  }-->
+<!--                })()-->
+<!--              }"-->
+<!--            ></div>-->
+<!--            <div class="plat-form-box">-->
+<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
+<!--            </div>-->
+<!--            <div class="platform-company-box">-->
+<!--              <div-->
+<!--                class="company-image"-->
+<!--                :style="{-->
+<!--                  backgroundImage: (() => {-->
+<!--                    try {-->
+<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
+<!--                    } catch (e) {-->
+<!--                      return '';-->
+<!--                    }-->
+<!--                  })()-->
+<!--                }"-->
+<!--              ></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </div>-->
+<!--    </Transition>-->
 
     <!-- slot start -->
     <Transition>
       <GameItem v-if="currentSelectedMenu === 'slots' && !isShow" :games="platforms" :onClickGameItem="selectSlotPlat" />
     </Transition>
 
-    <Transition style="display:none">
-      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">
-        <template v-for="p in platforms" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </Transition>
+<!--    <Transition style="display:none">-->
+<!--      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">-->
+<!--        <template v-for="p in platforms" :key="p">-->
+<!--          <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">-->
+<!--            <div-->
+<!--              class="platform-img"-->
+<!--              :style="{-->
+<!--                backgroundImage: (() => {-->
+<!--                  try {-->
+<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
+<!--                  } catch (e) {-->
+<!--                    return `url(${comingSoonImg})`;-->
+<!--                  }-->
+<!--                })()-->
+<!--              }"-->
+<!--            ></div>-->
+<!--            <div class="plat-form-box">-->
+<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
+<!--            </div>-->
+<!--            <div class="platform-company-box">-->
+<!--              <div-->
+<!--                class="company-image"-->
+<!--                :style="{-->
+<!--                  backgroundImage: (() => {-->
+<!--                    try {-->
+<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
+<!--                    } catch (e) {-->
+<!--                      return '';-->
+<!--                    }-->
+<!--                  })()-->
+<!--                }"-->
+<!--              ></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </div>-->
+<!--    </Transition>-->
     <Transition>
       <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
         <q-scroll-area
@@ -558,43 +558,48 @@
       <GameItem v-if="currentSelectedMenu === 'esport'" :games="esportPlatform" :onClickGameItem="openGame" />
     </Transition>
 
-    <Transition style="display:none">
-      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">
-        <template v-for="p in esportPlatform" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
+<!--    <Transition style="display:none">-->
+<!--      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">-->
+<!--        <template v-for="p in esportPlatform" :key="p">-->
+<!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
+<!--            <div-->
+<!--              class="platform-img"-->
+<!--              :style="{-->
+<!--                backgroundImage: (() => {-->
+<!--                  try {-->
+<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
+<!--                  } catch (e) {-->
+<!--                    return `url(${comingSoonImg})`;-->
+<!--                  }-->
+<!--                })()-->
+<!--              }"-->
+<!--            ></div>-->
+<!--            <div class="plat-form-box">-->
+<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
+<!--            </div>-->
+<!--            <div class="platform-company-box">-->
+<!--              <div-->
+<!--                class="company-image"-->
+<!--                :style="{-->
+<!--                  backgroundImage: (() => {-->
+<!--                    try {-->
+<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
+<!--                    } catch (e) {-->
+<!--                      return '';-->
+<!--                    }-->
+<!--                  })()-->
+<!--                }"-->
+<!--              ></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </template>-->
+<!--      </div>-->
+<!--    </Transition>-->
+
+    <Transition>
+      <GameItem v-if="currentSelectedMenu === 'sport'" :games="sportPlatform" :onClickGameItem="openGame" />
     </Transition>
+
   </div>
 
   <div class="news-section">
@@ -1061,6 +1066,7 @@ export default defineComponent({
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
     const esportsGame = ref([]);
+    const sportsGame = ref([]);
 
     // {
     //   code: "TFGaming",
@@ -1069,15 +1075,6 @@ export default defineComponent({
     //   gameCode: "MX-LIVE-001",
     //   logo: require("../assets/logo/TF88.png"),
     // },
-
-    const sportsGame = [
-      {
-        code: "SABA",
-        name: "SABA Sport",
-        gameName: "SABA",
-        gameCode: "SABA"
-      }
-    ];
     const platformMinigame = ref([]);
     const miniGames = ref([]);
     const miniGamesMore = ref([
@@ -1153,6 +1150,7 @@ export default defineComponent({
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const esportPlatform = ref([]);
+    const sportPlatform = ref([]);
     const lotteryGames = ref([]);
     const lotteryGamesMore = ref([]);
     const lotteryGamesList = computed(() => {
@@ -1166,7 +1164,8 @@ export default defineComponent({
       { name: "live", label: "라이브카지노" },
       { name: "slots", label: "슬롯게임" },
       { name: "esport", label: "E-스포츠" },
-      { name: "fish", label: "낚시 게임" }
+      { name: "sport", label: "스포츠" }
+      // { name: "fish", label: "낚시 게임" }
     ];
 
     const currentSelectedMenu = ref("live");
@@ -1389,6 +1388,11 @@ export default defineComponent({
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
           liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
+
+          sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
+
+          console.log("SORT")
+          console.log(sportPlatform.value)
 
           // platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
 
@@ -1817,6 +1821,7 @@ export default defineComponent({
       currentSelectedMenu,
       esportsGame,
       esportPlatform,
+      sportPlatform,
       showFavourite,
       selectFishPlat,
       selectLotteryPlat,
