@@ -62,11 +62,57 @@
           </div>
         </div>
       </div>
-      <div class="alert-line">
+      <div class="alert-box">
+        <div class="alert-line" v-if="tab === 'groupStage'">
         轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
       </div>
+      <div class="alert-line" v-if="tab === 'roundOf16'">
+        第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+      <div class="alert-line" v-if="tab === 'quarterFinal'">
+        第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+      <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+      </div>
+    
       <div class="money-table">
-        <table>
+        <table v-if="tab === 'groupStage'">
+          <tr>
+            <th>任意赛事早盘有效投注</th>
+            <th>首当其冲</th>
+            <th>梅开二度</th>
+            <th>势如破竹</th>
+          </tr>
+          <tr>
+            <td>500</td>
+            <td>3</td>
+            <td>5</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>1,000</td>
+            <td>8</td>
+            <td>10</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>5,000</td>
+            <td>18</td>
+            <td>36</td>
+            <td>38</td>
+          </tr>
+          <tr>
+            <td>10,000</td>
+            <td>36</td>
+            <td>58</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>50,000</td>
+            <td>188</td>
+            <td>288</td>
+            <td>388</td>
+          </tr>
+        </table>
+        <table v-if="tab === 'roundOf16'">
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>扭转乾坤</th>
@@ -104,8 +150,87 @@
             <td>388</td>
           </tr>
         </table>
+        <table v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
+          <tr>
+            <th>任意赛事早盘有效投注</th>
+            <th>首当其冲</th>
+            <th>扭转乾坤</th>
+            <th>梅开二度</th>
+            <th>绝处逢生</th>
+            <th>势如破竹</th>
+            <th>帽子戏法</th>
+          </tr>
+          <tr>
+            <td>500</td>
+            <td>3</td>
+            <td>3</td>
+            <td>5</td>
+            <td>5</td>
+            <td>6</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>1,000</td>
+            <td>8</td>
+            <td>8</td>
+            <td>10</td>
+            <td>10</td>
+            <td>12</td>
+            <td>12</td>
+          </tr>
+          <tr>
+            <td>5,000</td>
+            <td>18</td>
+            <td>18</td>
+            <td>36</td>
+            <td>36</td>
+            <td>38</td>
+            <td>38</td>
+          </tr>
+          <tr>
+            <td>10,000</td>
+            <td>36</td>
+            <td>36</td>
+            <td>58</td>
+            <td>58</td>
+            <td>88</td>
+            <td>88</td>
+          </tr>
+          <tr>
+            <td>50,000</td>
+            <td>188</td>
+            <td>188</td>
+            <td>288</td>
+            <td>288</td>
+            <td>388</td>
+            <td>388</td>
+          </tr>
+        </table>
       </div>
-      <div class="info">
+      <div class="info" v-if="tab === 'groupStage' || tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
+        <div class="info-item">
+          <div class="title">首当其冲</div>
+          <div class="content">
+            <span>15分钟内（含15分钟）</span>
+            <span>有进球</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="title">梅开二度</div>
+          <div class="content">
+            <span>任意方球员</span>
+            <span>进两个球</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="title">势如破竹</div>
+          <div class="content">
+            <span>胜方赢球3个</span>
+            <span>且零封对手</span>
+          </div>
+        </div>
+      </div>
+      <div class="info" v-if="tab === 'roundOf16' || tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
         <div class="info-item">
           <div class="title">扭转乾坤</div>
           <div class="content">
@@ -131,12 +256,12 @@
       <div class="notice">
         <ul>
           <li>1.活动期间，会员投注赛程任意赛事有效投注额≥500 即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；</li>
-          <li>2. 本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
-          <li>3. 本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
-          <li>4. 达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
-          <li>5. 同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
-          <li>6. 任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
-          <li>7. 为避免文字理解差异，本站保留本活动最终解释权。</li>
+          <li>2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
+          <li>3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
+          <li>4.达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
+          <li>5.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
+          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
+          <li>7.为避免文字理解差异，本站保留本活动最终解释权。</li>
         </ul>
       </div>
     </div>
