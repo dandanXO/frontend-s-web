@@ -460,7 +460,7 @@
                   </template>
                 </q-input>
                 <q-select
-                  style="width: 100%; max-width: 400px"
+                  style="width: 100%; max-width: 175px"
                   v-model="searchForm.gameBetRecord.platform"
                   filled
                   clearable
