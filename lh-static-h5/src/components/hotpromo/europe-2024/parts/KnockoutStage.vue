@@ -11,11 +11,11 @@
           : { top: team.top + '%', left: team.left + '%' }
       "
     >
-      <img v-if="team.teamIcon" :src="team.teamIcon ? imgUrl + team.teamIcon : null" :style="`max-width:${flagWidth}px`" />
+      <img v-if="team.teamIcon" :src="team.teamIcon ? imgUrl + team.teamIcon :null" :style="`max-width:${flagWidth}px`" />
       <span v-else style="color: #000000; display: flex;
     justify-content: center;
     align-items: center;
-    width: 28px;
+    width: 22px;
     padding-bottom: 2px;">?</span>
       <span v-if="team.teamIcon" class="bracket-team__name">{{team.teamName}}</span>
     </div>
@@ -30,49 +30,49 @@ import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
 const pageLoading = ref(false);
 const refBracketWrapper = ref(null);
-const flagWidth = ref(36);
+const flagWidth = ref(30);
 const domHeight = ref(770);
 const finalDate = ref('');
 const imgUrl = process.env.IMAGE_CDN + '/promo/';
 const bracketTeamList = ref([
   // top side round of 16
-  { bottom: 96, left: -0.7, seg: 1, group: '16', team: 'A' },
-  { bottom: 96, left: 13, seg: 1, group: '16', team: 'B' },
-  { bottom: 96, left: 26.6, seg: 2, group: '16', team: 'A' },
-  { bottom: 96, left: 40.3, seg: 2, group: '16', team: 'B' },
-  { bottom: 96, left: 51.8, seg: 3, group: '16', team: 'A' },
-  { bottom: 96, left: 65.3, seg: 3, group: '16', team: 'B' },
-  { bottom: 96, left: 78.9, seg: 4, group: '16', team: 'A' },
-  { bottom: 96, left: 92.5, seg: 4, group: '16', team: 'B' },
+  { bottom: 96, left: -0.3, seg: 1, group: '16', team: 'A' },
+  { bottom: 96, left: 13.4, seg: 1, group: '16', team: 'B' },
+  { bottom: 96, left: 27, seg: 2, group: '16', team: 'A' },
+  { bottom: 96, left: 40.1, seg: 2, group: '16', team: 'B' },
+  { bottom: 96, left: 52.1, seg: 3, group: '16', team: 'A' },
+  { bottom: 96, left: 66, seg: 3, group: '16', team: 'B' },
+  { bottom: 96, left: 79.3, seg: 4, group: '16', team: 'A' },
+  { bottom: 96, left: 92.8, seg: 4, group: '16', team: 'B' },
   // top side quarterfinal
-  { bottom: 80, left: 6.3 , seg: 1, group: '8', team: 'A'},
-  { bottom: 80, left: 33.3, seg: 1, group: '8', team: 'B' },
-  { bottom: 80, left: 58.7, seg: 2, group: '8', team: 'A' },
-  { bottom: 80, left: 86  , seg: 2, group: '8', team: 'B'},
+  { bottom: 80.4, left: 6.5 , seg: 1, group: '8', team: 'A'},
+  { bottom: 80.4, left: 33.5, seg: 1, group: '8', team: 'B' },
+  { bottom: 80.4, left: 58.8, seg: 2, group: '8', team: 'A' },
+  { bottom: 80.4, left: 86, seg: 2, group: '8', team: 'B'},
   // top side semifinal
-  { bottom: 69, left: 19.6, seg: 1, group: '4', team: 'A' },
-  { bottom: 69, left: 72.2, seg: 1, group: '4', team: 'B' },
+  { bottom: 69.2, left: 18.6, seg: 1, group: '4', team: 'A' },
+  { bottom: 69.2, left: 71.2, seg: 1, group: '4', team: 'B' },
   // top side final
-  { bottom: 64.3, left: 46, seg: 1, group: '2', team: 'A' },
+  { bottom: 64.5, left: 46, seg: 1, group: '2', team: 'A' },
   // bottom side final
-  { top: 51.6, left: 46, seg: 1, group: '2', team: 'B' },
+  { top: 52.8, left: 46, seg: 1, group: '2', team: 'B' },
   // bottom side semifinal
-  { top: 56.3, left: 19.6, seg: 2, group: '4', team: 'A' },
-  { top: 56.3, left: 72.2, seg: 2, group: '4', team: 'B' },
+  { top: 56.6, left: 20.1, seg: 2, group: '4', team: 'A' },
+  { top: 56.6, left: 72.8, seg: 2, group: '4', team: 'B' },
   // bottom side quarterfinal
-  { top: 67.6, left: 6.1 , seg: 3, group: '8', team: 'A' },
-  { top: 67.6, left: 33.3, seg: 3, group: '8', team: 'B' },
-  { top: 67.6, left: 58.7, seg: 4, group: '8', team: 'A' },
-  { top: 67.6, left: 86  , seg: 4, group: '8', team: 'B'},
+  { top: 68.6, left: 6.5, seg: 3, group: '8', team: 'A' },
+  { top: 68.6, left: 33.6, seg: 3, group: '8', team: 'B' },
+  { top: 68.6, left: 58.8, seg: 4, group: '8', team: 'A' },
+  { top: 68.6, left: 86 , seg: 4, group: '8', team: 'B'},
   // bottom side round of 16
-  { top: 83.3, left: -0.7, seg: 5, group: '16', team: 'A' },
-  { top: 83.3, left: 13  , seg: 5, group: '16', team: 'B' },
-  { top: 83.3, left: 26.6, seg: 6, group: '16', team: 'A' },
-  { top: 83.3, left: 40.3, seg: 6, group: '16', team: 'B' },
-  { top: 83.3, left: 51.8, seg: 7, group: '16', team: 'A' },
-  { top: 83.3, left: 65.3, seg: 7, group: '16', team: 'B' },
-  { top: 83.3, left: 78.9, seg: 8, group: '16', team: 'A' },
-  { top: 83.3, left: 92.5, seg: 8, group: '16', team: 'B' }
+  { top: 84.3, left: -0.3, seg: 5, group: '16', team: 'A' },
+  { top: 84.3, left: 13.4, seg: 5, group: '16', team: 'B' },
+  { top: 84.3, left: 27, seg: 6, group: '16', team: 'A' },
+  { top: 84.3, left: 40.1, seg: 6, group: '16', team: 'B' },
+  { top: 84.3, left: 52.1, seg: 7, group: '16', team: 'A' },
+  { top: 84.3, left: 66, seg: 7, group: '16', team: 'B' },
+  { top: 84.3, left: 79.3, seg: 8, group: '16', team: 'A' },
+  { top: 84.3, left: 92.8, seg: 8, group: '16', team: 'B' }
 ]);
 const teams = ref([
 ])
@@ -139,7 +139,7 @@ const resizeDom = () => {
   const currentWidth = window.innerWidth;
   if (currentWidth < 500) {
     const scaleRatio = currentWidth / 500;
-    flagWidth.value = currentWidth * 0.072;
+    flagWidth.value = currentWidth * 0.062;
     domHeight.value = 770 * scaleRatio;
   }
 };
@@ -162,13 +162,14 @@ const resizeDom = () => {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
+    width: 24px;
 
     &.top {
       flex-direction: column-reverse;
     }
 
     img {
-      max-width: 33px;
+      max-width: 30px;
       width: unset !important;
       margin-bottom: 0 !important;
     }
@@ -177,6 +178,7 @@ const resizeDom = () => {
       font-size: 0.7rem;
       line-height: 1.1rem;
       letter-spacing: 0.12rem;
+      word-break: keep-all;
     }
   }
 
