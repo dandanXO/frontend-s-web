@@ -219,7 +219,7 @@
               <th scope="col">{{ t('fields.loginName') }}</th>
               <th scope="col">{{ t('fields.totalDeposit') }}</th>
               <th scope="col">{{ t('fields.totalWithdraw') }}</th>
-              <th scope="col">{{ t('fields.winLoss') }}</th>
+              <th scope="col">{{ t('fields.netProfit') }}</th>
               <th scope="col">{{ t('fields.registerTime') }}</th>
               <th scope="col">{{ t('fields.lastLoginTime') }}</th>
               <th scope="col">{{ t('fields.memberTag') }}</th>
@@ -243,8 +243,8 @@
               <td :data-label="t('fields.totalWithdraw')">
                 {{ '$' + formatMoney(item.totalWithdraw) }}
               </td>
-              <td :data-label="t('fields.winLoss')">
-                {{ '$' + formatMoney(item.winLoss) }}
+              <td :data-label="t('fields.netProfit')">
+                {{ '$' + formatMoney(item.netProfit) }}
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
@@ -656,7 +656,6 @@ const uiControl = reactive({
   orderBy: [
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
-    { display: 'winLoss', value: 'win_loss' },
     { display: 'lastLoginTime', value: 'last_login_time' },
   ],
   sortType: [
