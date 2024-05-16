@@ -315,15 +315,15 @@ a:hover {
 
 #activity-1{
   background-image: url("../images/activity-bg1.png");
-  background-size:contain;
+  background-size:100% 100%;
 }
 #activity-2{
   background-image: url("../images/activity-bg2.png");
-  background-size:contain;
+  background-size:100% 100%;
 }
 #activity-3{
   background-image: url("../images/activity-bg3.png");
-  background-size:contain;
+  background-size:100% 100%;
 }
 
 .activity-section{
@@ -339,6 +339,7 @@ a:hover {
 
 .activity-div{
   width:100%;
+  height: 170px;
   aspect-ratio: 694/189;
 }
 
@@ -416,7 +417,7 @@ a:hover {
   -webkit-text-fill-color: transparent;
   font-size: 26px;
   font-weight: bold;
-  top: 25%;
+  top: 35px;
   position:absolute;
   left: 25px;
 }
@@ -429,7 +430,7 @@ a:hover {
   left: 25px;
   width: fit-content;
   padding: 10px 25px;
-  top: 60%;
+  top: 80px;
   font-size: 18px;
   line-height: 22px;
   color: #A30000;
@@ -497,6 +498,10 @@ a:hover {
 
   .top-board{
     gap: 8px;
+  }
+
+  .activity-div{
+    height: 145px;
   }
 
   h2{
