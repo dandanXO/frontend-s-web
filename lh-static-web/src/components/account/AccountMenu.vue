@@ -91,7 +91,7 @@
               accept="image/*"
               @change="attachImage"
             />
-              <div @click="$refs.inputImage.click()" style="border-radius: 50%; width: 100px; height: 100px; background: #dddddd; color: #ffffff; font-size: 50px; display: flex; justify-content: center; align-items: center;"> +
+              <div @click="$refs.inputImage.click()" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
               </div>
       </el-form-item>
     </div>
