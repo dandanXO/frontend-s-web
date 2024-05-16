@@ -615,14 +615,14 @@
                     id="copper-type"
                     @click="playGame(game.name, 'TFGaming', game.copper)"
                   >
-                    10 - 3,000
+                    1,000 - 65K
                   </div>
                   <div
                     class="game-type btn-pointer"
                     id="silver-type"
                     @click="playGame(game.id, 'TFGaming', game.silver)"
                   >
-                    500 - 100K
+                    100K - 130K
                   </div>
                   <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
                     1,000 - 20K
@@ -1895,9 +1895,16 @@ export default defineComponent({
       switchPlat(plat, "lottery");
     };
     const selectCasualPlat = (plat) => {
-      selectedPlatId.value = plat.id;
-      isShow.value = true;
-      switchPlat(plat, "casual");
+      console.log(plat);
+      if(plat.code ==='Spribe'){
+        playGame(plat.name, plat.code, 'aviator')
+      }else{
+        selectedPlatId.value = plat.id;
+        isShow.value = true;
+        switchPlat(plat, "casual");
+      }
+
+
     };
     const isGoMiniGame = ref(false);
     const showTypeH5 = (id) => {
@@ -2566,6 +2573,12 @@ export default defineComponent({
 .minigame-select-div {
   position: relative;
 
+  img{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 672 / 828;
+  }
+
   &:hover {
   }
 
@@ -2914,26 +2927,7 @@ export default defineComponent({
   .game-grid-lists {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
-    //.plat-form-box {
-    //  position: absolute;
-    //  /* position: relative; */
-    //  left: 0px;
-    //  bottom: 0px;
-    //  z-index: -1;
-    //  width: 100%;
-    //  height: 60px;
-    //  background-color: #1f2833;
-    //  display: flex;
-    //  justify-content: center;
-    //  align-items: center;
-    //
-    //  .plat-form-text {
-    //    color: #fff;
-    //    font-size: 20px;
-    //    line-height: 28px;
-    //    position: relative;
-    //  }
-    //}
+
 
     .platform-company-box {
       position: absolute;

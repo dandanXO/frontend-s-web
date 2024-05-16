@@ -84,7 +84,8 @@ export default defineComponent({
       { imgUrl: require("../assets/images/footer/logo-wm.png") },
       { imgUrl: require("../assets/images/footer/logo-nlc.png") },
       { imgUrl: require("../assets/images/footer/logo-pg.png") },
-      { imgUrl: require("../assets/images/footer/logo-bti.png") }
+      { imgUrl: require("../assets/images/footer/logo-bti.png") },
+      { imgUrl: require("../assets/images/footer/logo-spribe.png") }
     ]);
 
     const route = useRoute();

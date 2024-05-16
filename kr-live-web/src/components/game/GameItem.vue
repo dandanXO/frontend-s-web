@@ -139,10 +139,16 @@ a {
 }
 
 .game_item {
-  // width: calc(25% - 70px);
-  width: 100%;
-  @media (min-width: 769px) {
-    width: calc(25% - 15px);
+  width: calc(25% - 15px);
+
+  @media (max-width: 769px) {
+    width: calc(33% - 15px);
+  }
+  @media (max-width: 600px) {
+    width: calc(50% - 15px);
+  }
+  @media (max-width: 355px) {
+    width: calc(100% - 15px);
   }
 }
 
