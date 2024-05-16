@@ -1,5 +1,5 @@
 <template>
-  <div class="system-config-wrapper">
+  <div class="system-config-wrapper" v-if="store.memberType ==='TEST' || store.memberType==='PROMO_TEST'">
     <h5 class="system-config-title">系统设置</h5>
     <div class="system-config-inner-wrapper">
       <span>夜间模式</span>
@@ -10,7 +10,9 @@
 <script setup>
 import { useLocalStorage } from "@vueuse/core";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
+const store= userStore
 const isDarkMode = useLocalStorage("DARK_MODE", false);
 const $q = useQuasar();
 

@@ -1,7 +1,7 @@
 export default {
   menu: {
     home: "Trang chủ",
-    esports: "E-sport",
+    esports: "eSport",
     sports: "Thể Thao",
     liveCasino: "Casino",
     poker: "Poker",
@@ -268,8 +268,12 @@ export default {
     btn_claim_now: "Yêu cầu ngay",
     net_work_bonus: "Tiền thưởng",
 
-    bonus: "Phần thưởng"
+    bonus: "Phần thưởng",
     // vi-daily-checkin end
+    
+    // vi-mualixi-redpacket
+    congrats: "Chúc mừng",
+    claim: "Nhấn",
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -908,6 +912,7 @@ export default {
     30004: "Nạp tiền thành viên không đáp ứng yêu cầu",
     30005: "Doanh số chưa đạt yêu cầu",
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
+    30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

@@ -45,6 +45,7 @@ a:hover {
   display: flex;
   justify-content: center;
   padding-top: 20px;
+  margin-bottom: 10px;
 }
 
 .top-logo img {
@@ -340,7 +341,7 @@ a:hover {
 .voxis-section{
   width: 100%;
   max-width: 500px;
-  margin: 10px auto 5px;
+  margin: 10px auto 10px;
 }
 
 .voxis-info{

@@ -46,6 +46,9 @@ function activateTab(index) {
     width: 100%;
     max-width: 1500px;
     margin: 10px auto;
+    .rule-title {
+      text-align: center;
+    }
     .tab-buttons {
       width: 100%;
       display: flex;
@@ -55,7 +58,7 @@ function activateTab(index) {
       margin: 10px auto;
       button {
         background: url(images/inactive-tab.png)no-repeat center center;
-        width: 240px;
+        width: 320px;
         height: 86px;
         background-size: contain;
         color: #ffffff;

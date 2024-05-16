@@ -163,7 +163,7 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"

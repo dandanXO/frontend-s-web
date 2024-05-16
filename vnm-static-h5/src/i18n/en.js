@@ -449,6 +449,10 @@ export default {
     didnt_win: "Didn't win",
     please_select_query_time: "Please select the query time",
 
+    // promo -- upgradeHongbao
+    congrats: "Congratulations",
+    claim: "Claim",
+
     // slot
     slot_search: "Search for games",
 

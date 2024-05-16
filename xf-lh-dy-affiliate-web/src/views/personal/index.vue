@@ -86,6 +86,15 @@
                 <span v-formatter="{data: balance, type: 'money'}" />
               </el-form-item>
             </el-row>
+            <el-row class="info">
+              <el-icon color="#7D8792">
+                <Icon :icon="bookCoins20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.commissionBalance')">
+                $
+                <span v-formatter="{data: commissionBalance, type: 'money'}" />
+              </el-form-item>
+            </el-row>
           </el-form>
         </el-card>
 
@@ -586,6 +595,7 @@ import {
   checkHasWithdrawPw,
   createSecurityQuestion,
   getAffiliateBalance,
+  getAffiliateCommissionBalance,
   getAffiliateInfo,
   getSecurityQuestions,
   getAuthenticator,
@@ -637,6 +647,7 @@ const uiControl = reactive({
   showPasswordDialog: false,
 })
 const balance = ref(0)
+const commissionBalance = ref(0)
 const hasWithdrawPw = ref(false)
 const hasSecurityQn = ref(false)
 const hasGoogleAuthenticator = ref(false)
@@ -874,11 +885,17 @@ async function loadAffiliateInfo() {
     affInfo[field] = aff[field]
   })
   await loadAffiliateBalance()
+  await loadAffiliateCommissionBalance()
 }
 
 async function loadAffiliateBalance() {
   const { data: bal } = await getAffiliateBalance(store.state.user.id)
   balance.value = bal
+}
+
+async function loadAffiliateCommissionBalance() {
+  const { data: bal } = await getAffiliateCommissionBalance(store.state.user.id)
+  commissionBalance.value = bal
 }
 
 async function editRealName() {

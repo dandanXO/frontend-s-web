@@ -20,7 +20,6 @@
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
     <div
-      v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
       class="header-right"
       @click="() => (hasDrawer = !hasDrawer)"
     >
@@ -33,9 +32,6 @@
         "
       />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
-    </div>
-    <div v-else class="header-right" @click="router.push('/account/inbox?redirect=home')">
-      <img class="btn-pointer" src="../assets/images/home/home-message-box.png" />
     </div>
   </div>
 

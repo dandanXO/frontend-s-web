@@ -102,7 +102,7 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo',
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
           }"
         >
@@ -809,6 +809,10 @@ export default defineComponent({
           max-width: 100%;
           margin: 0;
           padding: 0;
+
+          .hot-promo{
+            border-radius: 0px
+          }
 
           .promo-view-container {
             display: none;

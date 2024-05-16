@@ -41,7 +41,6 @@ function activateSchedTab(index) {
   width: 100%;
   max-width: 1500px;
   margin: 10px auto;
-
   .tab-content {
     min-height: unset;
   }
@@ -56,7 +55,7 @@ function activateSchedTab(index) {
   margin: 10px auto;
   button {
     background: url(./images/schedinactive-tab.png) no-repeat center center;
-    width: 240px;
+    width: 320px;
     height: 86px;
     background-size: contain;
     color: #ffffff;
