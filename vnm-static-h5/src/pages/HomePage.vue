@@ -108,7 +108,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper" v-if="store.token && store.memberType==='TEST'">
+  <div class="hot-matches-wrapper">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -173,34 +173,34 @@
       </swiper>
     </div>
   </div>
-  <div class="details-bar" v-else>
-    <div class="message" @click="refreshBalance">
-      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{
-          store.token
-            ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
-              : $t("lang.loading")
-            : $t("lang.not_logged_in")
-        }}
-      </span>
-      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
-    </div>
-    <div class="menulist">
-      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
-        <div class="">{{ $t("lang.deposit") }}</div>
-      </router-link>
-      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
-        <div class="">{{ $t("lang.withdraw") }}</div>
-      </router-link>
-      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
-        <div class="">{{ $t("lang.vip") }}</div>
-      </router-link>
-    </div>
-  </div>
+<!--  <div class="details-bar">-->
+<!--    <div class="message" @click="refreshBalance">-->
+<!--      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">-->
+<!--        {{-->
+<!--          store.token-->
+<!--            ? !isLoadingBalance-->
+<!--              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })-->
+<!--              : $t("lang.loading")-->
+<!--            : $t("lang.not_logged_in")-->
+<!--        }}-->
+<!--      </span>-->
+<!--      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>-->
+<!--    </div>-->
+<!--    <div class="menulist">-->
+<!--      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">-->
+<!--        <img src="../assets/images/home/deposit-mid.png" />-->
+<!--        <div class="">{{ $t("lang.deposit") }}</div>-->
+<!--      </router-link>-->
+<!--      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">-->
+<!--        <img src="../assets/images/home/withdraw-mid.png" />-->
+<!--        <div class="">{{ $t("lang.withdraw") }}</div>-->
+<!--      </router-link>-->
+<!--      <router-link to="/account/vip?redirect=home" class="men btn-pointer">-->
+<!--        <img src="../assets/images/home/vip-mid.png" />-->
+<!--        <div class="">{{ $t("lang.vip") }}</div>-->
+<!--      </router-link>-->
+<!--    </div>-->
+<!--  </div>-->
 
   <div class="home-game-section">
     <div class="game-left-list">
