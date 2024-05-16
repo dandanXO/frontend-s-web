@@ -558,6 +558,72 @@
       <GameItem v-if="currentSelectedMenu === 'esport'" :games="esportPlatform" :onClickGameItem="openGame" />
     </Transition>
 
+    <Transition>
+      <GameItem v-if="currentSelectedMenu === 'casual' && !isShow" :games="platformMinigame" :onClickGameItem="selectCasualPlat" />
+    </Transition>
+    <Transition>
+      <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
+        </div>
+        <template v-if="!isLoading">
+          <template v-for="(game, index) in miniGames" :key="index">
+            <div class="game-item btn-pointer btn-slot-game" @click="playGame(game.name, selectedPlat.code, game.code)">
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${game.icon})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
+            </div>
+          </template>
+
+          <template v-if="selectedPlat.code === 'TFGaming'">
+            <div
+              class="game-item minigame-select-div"
+              v-for="(game, index) in miniGamesMore"
+              :key="index"
+              @click="showTypeH5(game.id)"
+              @mouseover="showTypeWeb(game.id)"
+              @mouseleave="showTypeWeb(0)"
+            >
+              <img :src="game.logo" />
+
+              <transition appear>
+                <div class="select-type-div" v-if="showMiniType == game.id">
+                  <div
+                    class="game-type btn-pointer"
+                    id="copper-type"
+                    @click="playGame(game.name, 'TFGaming', game.copper)"
+                  >
+                    10 - 3,000
+                  </div>
+                  <div
+                    class="game-type btn-pointer"
+                    id="silver-type"
+                    @click="playGame(game.id, 'TFGaming', game.silver)"
+                  >
+                    500 - 100K
+                  </div>
+                  <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
+                    1,000 - 20K
+                  </div>
+                </div>
+              </transition>
+            </div>
+          </template>
+        </template>
+      </div>
+    </Transition>
+
+    
+
 <!--    <Transition style="display:none">-->
 <!--      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">-->
 <!--        <template v-for="p in esportPlatform" :key="p">-->
@@ -1164,7 +1230,8 @@ export default defineComponent({
       { name: "live", label: "라이브카지노" },
       { name: "slots", label: "슬롯게임" },
       { name: "esport", label: "E-스포츠" },
-      { name: "sport", label: "스포츠" }
+      { name: "sport", label: "스포츠" },
+      { name: "casual", label: "평상복" }
       // { name: "fish", label: "낚시 게임" }
     ];
 
@@ -1316,7 +1383,7 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              if (mini.icon.startsWith("3/")) {
+              if (mini.icon.startsWith("10/")) {
                 mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
               } else {
                 mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
@@ -1394,7 +1461,7 @@ export default defineComponent({
           console.log("SORT")
           console.log(sportPlatform.value)
 
-          // platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
+          platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
 
           // xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
           // lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));

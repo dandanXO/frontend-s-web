@@ -33,18 +33,18 @@
             ></iframe>
           </template>
 
-          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">
-            <div class="q-pa-sm q-pt-sm">
-              <div>
-                <template v-if="!quickTransferTab">
-                  <div>
-                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>
-                  </div>
-                  <DepositComponent />
-                </template>
-              </div>
-            </div>
-          </q-drawer>
+<!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
+<!--            <div class="q-pa-sm q-pt-sm">-->
+<!--              <div>-->
+<!--                <template v-if="!quickTransferTab">-->
+<!--                  <div>-->
+<!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
+<!--                  </div>-->
+<!--                  <DepositComponent />-->
+<!--                </template>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </q-drawer>-->
         </div>
       </q-toolbar>
     </q-dialog>
@@ -241,20 +241,20 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
           let srcDoc = ret.data.data;
 
-          
+
           if(platformCode === "PG") {
             var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
             if (firstFourChars === "http") {
               src.value = srcDoc;
             } else {
               isInnerHtmlSrc.value = true;
-              
+
               const scriptEndTag = "</" + "script>";
               srcDoc = srcDoc
               .replace(/<\/script>/g, scriptEndTag)
               .replace(/\\\"/g, '"')
               .replace(/\n/g, "");
-              
+
               src.value = srcDoc;
             }
 
