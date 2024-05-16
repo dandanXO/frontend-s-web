@@ -36,43 +36,43 @@ const finalDate = ref('');
 const imgUrl = process.env.IMAGE_CDN + '/promo/';
 const bracketTeamList = ref([
   // top side round of 16
-  { bottom: 96, left: -0.3, seg: 1, group: '16', team: 'A' },
-  { bottom: 96, left: 13.4, seg: 1, group: '16', team: 'B' },
-  { bottom: 96, left: 27, seg: 2, group: '16', team: 'A' },
-  { bottom: 96, left: 40.1, seg: 2, group: '16', team: 'B' },
-  { bottom: 96, left: 52.1, seg: 3, group: '16', team: 'A' },
-  { bottom: 96, left: 66, seg: 3, group: '16', team: 'B' },
-  { bottom: 96, left: 79.3, seg: 4, group: '16', team: 'A' },
-  { bottom: 96, left: 92.8, seg: 4, group: '16', team: 'B' },
+  { bottom: 96, left: 3.3, seg: 1, group: '16', team: 'A' },
+  { bottom: 96, left: 17, seg: 1, group: '16', team: 'B' },
+  { bottom: 96, left: 30.5, seg: 2, group: '16', team: 'A' },
+  { bottom: 96, left: 44.2, seg: 2, group: '16', team: 'B' },
+  { bottom: 96, left: 55.8, seg: 3, group: '16', team: 'A' },
+  { bottom: 96, left: 69.5, seg: 3, group: '16', team: 'B' },
+  { bottom: 96, left: 82.9, seg: 4, group: '16', team: 'A' },
+  { bottom: 96, left: 96.5, seg: 4, group: '16', team: 'B' },
   // top side quarterfinal
-  { bottom: 80.4, left: 6.5 , seg: 1, group: '8', team: 'A'},
-  { bottom: 80.4, left: 33.5, seg: 1, group: '8', team: 'B' },
-  { bottom: 80.4, left: 58.8, seg: 2, group: '8', team: 'A' },
-  { bottom: 80.4, left: 86, seg: 2, group: '8', team: 'B'},
+  { bottom: 78.5, left: 10.2 , seg: 1, group: '8', team: 'A'},
+  { bottom: 78.5, left: 37.2, seg: 1, group: '8', team: 'B' },
+  { bottom: 78.5, left: 62.7, seg: 2, group: '8', team: 'A' },
+  { bottom: 78.5, left: 90.1, seg: 2, group: '8', team: 'B'},
   // top side semifinal
-  { bottom: 69.2, left: 18.6, seg: 1, group: '4', team: 'A' },
-  { bottom: 69.2, left: 71.2, seg: 1, group: '4', team: 'B' },
+  { bottom: 66, left: 23.6, seg: 1, group: '4', team: 'A' },
+  { bottom: 66, left: 76.2, seg: 1, group: '4', team: 'B' },
   // top side final
-  { bottom: 64.5, left: 46, seg: 1, group: '2', team: 'A' },
+  { bottom: 61, left: 50, seg: 1, group: '2', team: 'A' },
   // bottom side final
-  { top: 52.8, left: 46, seg: 1, group: '2', team: 'B' },
+  { top: 57.8, left: 50, seg: 1, group: '2', team: 'B' },
   // bottom side semifinal
-  { top: 56.6, left: 20.1, seg: 2, group: '4', team: 'A' },
-  { top: 56.6, left: 72.8, seg: 2, group: '4', team: 'B' },
+  { top: 62.6, left: 23.6, seg: 2, group: '4', team: 'A' },
+  { top: 62.6, left: 76.2, seg: 2, group: '4', team: 'B' },
   // bottom side quarterfinal
-  { top: 68.6, left: 6.5, seg: 3, group: '8', team: 'A' },
-  { top: 68.6, left: 33.6, seg: 3, group: '8', team: 'B' },
-  { top: 68.6, left: 58.8, seg: 4, group: '8', team: 'A' },
-  { top: 68.6, left: 86 , seg: 4, group: '8', team: 'B'},
+  { top: 75, left: 10.2, seg: 3, group: '8', team: 'A' },
+  { top: 75, left: 37.2, seg: 3, group: '8', team: 'B' },
+  { top: 75, left: 62.7, seg: 4, group: '8', team: 'A' },
+  { top: 75, left: 90.1 , seg: 4, group: '8', team: 'B'},
   // bottom side round of 16
-  { top: 84.3, left: -0.3, seg: 5, group: '16', team: 'A' },
-  { top: 84.3, left: 13.4, seg: 5, group: '16', team: 'B' },
-  { top: 84.3, left: 27, seg: 6, group: '16', team: 'A' },
-  { top: 84.3, left: 40.1, seg: 6, group: '16', team: 'B' },
-  { top: 84.3, left: 52.1, seg: 7, group: '16', team: 'A' },
-  { top: 84.3, left: 66, seg: 7, group: '16', team: 'B' },
-  { top: 84.3, left: 79.3, seg: 8, group: '16', team: 'A' },
-  { top: 84.3, left: 92.8, seg: 8, group: '16', team: 'B' }
+  { top: 92.3, left: 3.3, seg: 5, group: '16', team: 'A' },
+  { top: 92.3, left: 17, seg: 5, group: '16', team: 'B' },
+  { top: 92.3, left: 30.5, seg: 6, group: '16', team: 'A' },
+  { top: 92.3, left: 44.2, seg: 6, group: '16', team: 'B' },
+  { top: 92.3, left: 55.8, seg: 7, group: '16', team: 'A' },
+  { top: 92.3, left: 69.5, seg: 7, group: '16', team: 'B' },
+  { top: 92.3, left: 82.9, seg: 8, group: '16', team: 'A' },
+  { top: 92.3, left: 96.5, seg: 8, group: '16', team: 'B' }
 ]);
 const teams = ref([
 ])
@@ -104,12 +104,12 @@ const populateTeams = () => {
         } else {
           console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
         }
-        
+
         if (team.teamGroup === '2' || team.teamGroup === 2) {
           finalDate.value = team.matchTime
         }
       });
-      
+
       pageLoading.value = false
     }
   })
@@ -130,16 +130,16 @@ populateTeams();
 onMounted(() => {
   resizeDom();
   window.addEventListener("resize", resizeDom, true);
-  
+
   populateTeams()
 });
 
 const resizeDom = () => {
   if (!refBracketWrapper.value) return;
   const currentWidth = window.innerWidth;
-  if (currentWidth < 500) {
-    const scaleRatio = currentWidth / 500;
-    flagWidth.value = currentWidth * 0.062;
+  if (currentWidth < 550) {
+    const scaleRatio = currentWidth / 550;
+    flagWidth.value = currentWidth * 0.06;
     domHeight.value = 770 * scaleRatio;
   }
 };
@@ -163,6 +163,7 @@ const resizeDom = () => {
     align-items: center;
     gap: 0.25rem;
     width: 24px;
+    transform: translateX(-50%);
 
     &.top {
       flex-direction: column-reverse;
