@@ -4,8 +4,10 @@
 <!--  </div>-->
 
   <div class="redpacket">
-    <div class="hongbao"><img src="../images/hongbao.png"></div>
-    <div class="claim-button" @click="claimPromo"></div>
+<!--    <div class="hongbao"><img src="../images/hongbao.png"></div>-->
+    <div class="claim-button" @click="claimPromo">
+      立即领取
+    </div>
   </div>
 
   <div class="emergency-intro">
@@ -85,6 +87,8 @@ const claimPromo = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin:20px auto;
+
   .hongbao {
     width: 180px;
 
@@ -94,11 +98,20 @@ const claimPromo = () => {
   }
   .claim-button {
     background-repeat: no-repeat;
-    background-image: url(../images/claim-btn.png);
-    background-size: contain;
-    width: 140px;
-    height: 65px;
+    background-image: url(../images/claim-btn2.png);
+    background-size: 100% 100%;
+    width: 160px;
+    height: 50px;
     cursor: pointer;
+    color:#fff;
+    aspect-ratio: 278/86;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 50px;
 
     &:hover{
       opacity: 0.9;
