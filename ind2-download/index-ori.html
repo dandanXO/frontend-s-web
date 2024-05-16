@@ -46,7 +46,17 @@
             <div class="header-icon">Books</div>
             <div class="header-icon">Kids</div>
         </a>
-            <div class="user-header" style="margin-left:auto"><img src="style/images/usericon.png"></div>
+            <div style="display:flex;align-items:center;gap:5px;">
+                <div class="top-right-icon">
+                    <img width="20x" src="style/images/searchicon.png">
+                </div>
+                <div class="top-right-icon">
+                    <img width="20x" src="style/images/helpicon.png">
+                </div>
+                <div class="top-right-icon">
+                    <img src="style/images/usericon.png">
+                </div>
+            </div>
         </div>
     </nav>
 </header>
@@ -72,7 +82,8 @@
                             <div class="w7Iutd">
                                 <div class="wVqUob">
                                     <div class="ClM7O">
-                                        <div class="rating-div">4.9<span class="material-icons"><img
+                                        <div class="rating-div"><span>4.9</span><span class="material-icons"><img
+                                                width="12px"
                                                 src="style/images/star.svg"></span></div>
                                     </div>
                                     <div class="g1rdde">1.3K reviews</div>
@@ -530,6 +541,92 @@
                     </div>
                 </div>
             </div>
+            <div class="similar-games-section">
+                <div class="similar-games-header">
+                    <span style="font-size:22px;">Similar Games</span>
+                    <img src="./style/images/righticon.png" />
+                </div>
+                <div class="similar-games-list">
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-1.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">Fruit Paty</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-2.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">Gates of olympus2</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-3.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">Tembak Ikan</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-4.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">Scatter</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-5.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">Wealth God's Party Fiesta</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="similar-games-list-item">
+                        <img class="similar-game-icon" src="./style/images/similar-games/similar-games-6.jpg" />
+                        <div class="similar-game-info">
+                            <div class="similar-game-title">5 Lions</div>
+                            <div class="similar-game-developer">Slots Studio</div>
+                            <div class="rating-div similar-game-rating">
+                                <span>4.9</span>
+                                <span class="material-icons">
+                                    <img width="12px" src="style/images/star.svg">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -682,6 +779,16 @@ async function getApiUrl() {
     button.onclick = function () {
         downloadApk(code, pp, fbclid, fbpid)
         return false;
+    }
+
+
+    let similarGamesListElements = document.getElementsByClassName("similar-games-list-item");
+
+    for(let i = 0; i < similarGamesListElements.length; i++) {
+        similarGamesListElements[i].onclick = function () {
+            downloadApk(code, pp, fbclid, fbpid)
+            return false;
+        }
     }
 
     if (autoDownload == "1") {
