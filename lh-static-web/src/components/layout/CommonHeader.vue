@@ -1422,6 +1422,7 @@ export default defineComponent({
       registerRef,
       loginRules,
       mobileLoginRules,
+      imageDir,
       captchaRules,
       regRules,
       getCode,
@@ -1527,6 +1528,7 @@ body {
     .profile-img {
       display: block;
       width: 100%;
+      border-radius: 50%;
     }
 
     .dropdown-icon {
@@ -2612,6 +2614,7 @@ body {
   img {
     width: 100px;
   cursor: pointer;
+    border-radius: 50%;
   }
 }
 
@@ -2624,7 +2627,6 @@ body {
     color: #ffffff;
   img {
     border: 3px solid #33BC03;
-    border-radius: 50%;
   }
     &:after {
       content: "✓";
