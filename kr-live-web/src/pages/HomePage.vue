@@ -622,7 +622,7 @@
       </div>
     </Transition>
 
-    
+
 
 <!--    <Transition style="display:none">-->
 <!--      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">-->
@@ -1383,13 +1383,8 @@ export default defineComponent({
             });
             let games = [];
             minis.forEach((mini) => {
-              if (mini.icon.startsWith("10/")) {
-                mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
-              } else {
-                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-                  mini.code
-                }.png`;
-              }
+              mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
+
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
               } else {
