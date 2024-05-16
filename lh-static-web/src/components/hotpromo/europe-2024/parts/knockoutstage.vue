@@ -165,6 +165,7 @@ onMounted(() => {
   background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
   background-position: center top;
   color: #ffffff;
+  margin: auto;
 
   .bracket-team {
     position: absolute;
@@ -183,7 +184,7 @@ onMounted(() => {
   .bracket-final {
     position: absolute;
     top: 610px;
-    left: 648px;
+    left: 590px;
     display: flex;
     flex-direction: column;
     gap: 20px;
