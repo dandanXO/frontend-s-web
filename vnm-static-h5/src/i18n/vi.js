@@ -456,7 +456,7 @@ export default {
 
     // promo -- upgradeHongbao
     congrats: "Chúc mừng",
-    claim: "Nhấn",
+    claim: "Nhận",
     // slot
     slot_search: "Tìm kiếm trò chơi",
 
@@ -987,7 +987,6 @@ export default {
     welcome: "Chào mừng",
     tnc: "Điều khoản và điều kiện",
     agree: "Đồng ý",
-    claim: "Nhận",
     select_date: "Chọn ngày",
     invite_friend_to_receive_prize: "Mời bạn bè để nhận giải thưởng",
     event_time: "Thời gian sự kiện",

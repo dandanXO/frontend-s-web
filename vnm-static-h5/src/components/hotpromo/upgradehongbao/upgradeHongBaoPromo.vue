@@ -37,7 +37,7 @@
       </div>-->
     </div>
   </div>
-<!-- 
+<!--
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr>
@@ -362,11 +362,12 @@ onMounted(() => {
     color: #f23b1d;
     border-radius: 30px;
     background: linear-gradient(180deg, #fdf4ee 0%, #fff3c0 100%);
-    position: absolute;
-    margin-top: 180px;
     font-size: 14px;
     padding: 5px 25px;
     cursor: pointer;
+    position:absolute;
+    z-index:2;
+    bottom: 20%;
 
     &:hover {
       filter: brightness(0.9);

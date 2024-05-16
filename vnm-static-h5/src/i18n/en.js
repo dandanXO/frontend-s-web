@@ -982,7 +982,6 @@ export default {
     welcome: "Welcome",
     tnc: "Terms and Conditions",
     agree: "Agree",
-    claim: "Claim",
     select_date: "Select Date",
     invite_friend_to_receive_prize: "Invite Friends to Receive Prize",
     event_time: "Event Date",
