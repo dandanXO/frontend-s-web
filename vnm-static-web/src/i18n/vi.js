@@ -273,7 +273,7 @@ export default {
     
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
-    claim: "Nhấn",
+    claim: "Nhận",
   },
   mail: {
     inbox: "Hộp thư đến",
