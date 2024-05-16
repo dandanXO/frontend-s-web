@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-matches-wrapper" v-if="store.memberType==='TEST'">
+  <div class="hot-matches-wrapper" >
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
