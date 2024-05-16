@@ -424,7 +424,7 @@ onMounted(() => {
   --main-bg-color: #030303;
   // top: 80px;
   // position: absolute;
-  padding: 0 0 0 140px;
+  // padding: 0 0 0 140px;
   box-sizing: content-box;
   width: 860px;
   max-width: 860px;
@@ -546,7 +546,7 @@ onMounted(() => {
   }
 
   .header-close-btn {
-    margin-right: 25px; 
+    margin-right: 25px;
     width: 30px;
     cursor: pointer;
 
