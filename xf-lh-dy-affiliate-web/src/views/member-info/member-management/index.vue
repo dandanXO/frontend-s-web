@@ -244,7 +244,7 @@
                 {{ '$' + formatMoney(item.totalWithdraw) }}
               </td>
               <td :data-label="t('fields.netProfit')">
-                {{ '$' + formatMoney(item.netProfit) }}
+                {{ '$' + formatMoney(item.revenueShare) }}
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
