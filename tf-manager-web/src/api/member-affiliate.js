@@ -249,3 +249,19 @@ export const updateViewLoginName = (id, view) => {
     ContentType.form
   )
 }
+
+export const getAffiliateShareRatio = (id) => {
+  return https().request(
+    `/affiliate/${id}/shareRatio`,
+    Method.GET
+  )
+}
+
+export const updateAffiliateShareRatio = (id, shareRatio) => {
+  return https().request(
+    `/affiliate/${id}/shareRatio?_method=PUT`,
+    Method.POST,
+    { shareRatio: shareRatio },
+    ContentType.form
+  )
+}
