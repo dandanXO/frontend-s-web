@@ -81,7 +81,6 @@
       </div>
     </div> -->
 
-
     <div class="grid-wrapper">
       <div class="items-center grid" ref="gameBoardRef">
         <div
@@ -92,107 +91,48 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
+          <!-- <div class="item-bg" :style="getBackgroundImageStyle(e.name)"></div> -->
           <!-- <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" /> -->
           <!-- <img :src="require(`../assets/images/index/${e.imgName}`)" /> -->
 
-          <img :src="require(`../assets/home/menu/menu-${e.name}.png`)" />
+          <div class="item-bg"><img :src="require(`../assets/home/menu/menu-${e.name}.png`)" /></div>
 
-          <!-- <span class="home-board-item-text">{{ e.label }}</span> -->
-          <!-- <span class="home-board-item-text__en">{{ e.enLabel }}</span> -->
+          <img :src="require(`../assets/home/menu/menu-empty.png`)" />
+
+          <div class="home-board-label">
+            <span class="home-board-item-text">{{ e.label }}</span>
+            <span class="home-board-item-text__en">{{ e.enLabel }}</span>
+          </div>
         </div>
       </div>
     </div>
 
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'live'" :games="liveCasinoGames" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'live'"
+        :games="liveCasinoGames"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
-
-    <!--    <Transition style="display:none">-->
-    <!--      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">-->
-    <!--        <template v-for="p in liveCasinoGames" :key="p">-->
-    <!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
-    <!--            <div-->
-    <!--              class="platform-img"-->
-    <!--              :style="{-->
-    <!--                backgroundImage: (() => {-->
-    <!--                  try {-->
-    <!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                  } catch (e) {-->
-    <!--                    return `url(${comingSoonImg})`;-->
-    <!--                  }-->
-    <!--                })()-->
-    <!--              }"-->
-    <!--            ></div>-->
-    <!--            <div class="plat-form-box">-->
-    <!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-    <!--            </div>-->
-    <!--            <div class="platform-company-box">-->
-    <!--              <div-->
-    <!--                class="company-image"-->
-    <!--                :style="{-->
-    <!--                  backgroundImage: (() => {-->
-    <!--                    try {-->
-    <!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                    } catch (e) {-->
-    <!--                      return '';-->
-    <!--                    }-->
-    <!--                  })()-->
-    <!--                }"-->
-    <!--              ></div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </template>-->
-    <!--      </div>-->
-    <!--    </Transition>-->
 
     <!-- slot start -->
     <Transition>
       <GameItem
         v-if="currentSelectedMenu === 'slots' && !isShow"
         :games="platforms"
+        :gameType="currentSelectedMenu"
         :onClickGameItem="selectSlotPlat"
       />
     </Transition>
 
-    <!--    <Transition style="display:none">-->
-    <!--      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">-->
-    <!--        <template v-for="p in platforms" :key="p">-->
-    <!--          <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">-->
-    <!--            <div-->
-    <!--              class="platform-img"-->
-    <!--              :style="{-->
-    <!--                backgroundImage: (() => {-->
-    <!--                  try {-->
-    <!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                  } catch (e) {-->
-    <!--                    return `url(${comingSoonImg})`;-->
-    <!--                  }-->
-    <!--                })()-->
-    <!--              }"-->
-    <!--            ></div>-->
-    <!--            <div class="plat-form-box">-->
-    <!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-    <!--            </div>-->
-    <!--            <div class="platform-company-box">-->
-    <!--              <div-->
-    <!--                class="company-image"-->
-    <!--                :style="{-->
-    <!--                  backgroundImage: (() => {-->
-    <!--                    try {-->
-    <!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                    } catch (e) {-->
-    <!--                      return '';-->
-    <!--                    }-->
-    <!--                  })()-->
-    <!--                }"-->
-    <!--              ></div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </template>-->
-    <!--      </div>-->
-    <!--    </Transition>-->
     <Transition>
-      <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
+      <div
+        class="game-scroll-lists"
+        id="id-slot-board"
+        v-if="currentSelectedMenu === 'slots' && isShow"
+        :gameType="currentSelectedMenu"
+      >
         <q-scroll-area
           style="height: 500px"
           :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
@@ -360,7 +300,12 @@
     <!-- slot end -->
 
     <Transition>
-      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && !isShow">
+      <div
+        class="game-grid-lists"
+        id="id-fish-board"
+        v-if="currentSelectedMenu === 'fish' && !isShow"
+        :gameType="currentSelectedMenu"
+      >
         <template v-for="p in fishPlatforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
             <div
@@ -397,7 +342,12 @@
       </div>
     </Transition>
     <Transition>
-      <div class="game-scroll-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && isShow">
+      <div
+        class="game-scroll-lists"
+        id="id-fish-board"
+        v-if="currentSelectedMenu === 'fish' && isShow"
+        :gameType="currentSelectedMenu"
+      >
         <q-scroll-area
           style="height: 500px"
           :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
@@ -564,13 +514,19 @@
     </Transition>
 
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'esport'" :games="esportPlatform" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'esport'"
+        :games="esportPlatform"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
 
     <Transition>
       <GameItem
         v-if="currentSelectedMenu === 'casual' && !isShow"
         :games="platformMinigame"
+        :gameType="currentSelectedMenu"
         :onClickGameItem="selectCasualPlat"
       />
     </Transition>
@@ -635,46 +591,13 @@
       </div>
     </Transition>
 
-    <!--    <Transition style="display:none">-->
-    <!--      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">-->
-    <!--        <template v-for="p in esportPlatform" :key="p">-->
-    <!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
-    <!--            <div-->
-    <!--              class="platform-img"-->
-    <!--              :style="{-->
-    <!--                backgroundImage: (() => {-->
-    <!--                  try {-->
-    <!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                  } catch (e) {-->
-    <!--                    return `url(${comingSoonImg})`;-->
-    <!--                  }-->
-    <!--                })()-->
-    <!--              }"-->
-    <!--            ></div>-->
-    <!--            <div class="plat-form-box">-->
-    <!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-    <!--            </div>-->
-    <!--            <div class="platform-company-box">-->
-    <!--              <div-->
-    <!--                class="company-image"-->
-    <!--                :style="{-->
-    <!--                  backgroundImage: (() => {-->
-    <!--                    try {-->
-    <!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-    <!--                    } catch (e) {-->
-    <!--                      return '';-->
-    <!--                    }-->
-    <!--                  })()-->
-    <!--                }"-->
-    <!--              ></div>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--        </template>-->
-    <!--      </div>-->
-    <!--    </Transition>-->
-
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'sport'" :games="sportPlatform" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'sport'"
+        :games="sportPlatform"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
   </div>
 
@@ -1081,6 +1004,12 @@ export default defineComponent({
     const router = useRouter();
     const store = userStore();
 
+    const getBackgroundImageStyle = (name) => {
+      return {
+        backgroundImage: `url(${require(`../assets/home/menu/menu-${name}.png`)})`
+      };
+    };
+
     const showSticky = ref(true);
     const checkSticky = () => {
       const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
@@ -1274,6 +1203,10 @@ export default defineComponent({
 
     const platforms = ref([]);
     const newsList = ref([]);
+    const depositRecordList = ref([]);
+
+    // /member/withdraw-deposit-record
+
     const selectedPlatId = ref();
     const selectedPlat = reactive({
       code: "",
@@ -1313,7 +1246,7 @@ export default defineComponent({
       { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
       { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
       { name: "sport", label: "스포츠", enLabel: "SPORTS" },
-      { name: "casual", label: "평상복", enLabel: "CASUAL" }
+      { name: "casual", label: "평상복", enLabel: "FISH" }
       // { name: "fish", label: "낚시 게임" }
     ];
 
@@ -1603,6 +1536,34 @@ export default defineComponent({
           console.log(err);
         });
     };
+
+    const loadDepositRecordList = () => {
+      api
+        .get("/member/withdraw-deposit-record")
+        .then((res) => {
+          const {
+            data: {
+              code,
+              data: { depositRecord }
+            }
+          } = res;
+
+          if (code === 0) {
+            depositRecordList.value = depositRecord;
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: "資料讀取失敗",
+              icon: "report_problem"
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
     const isStationNotice = ref(false);
@@ -1810,6 +1771,7 @@ export default defineComponent({
       loadHomeData();
       getVersionNo();
       checkSticky();
+      loadDepositRecordList();
 
       // checkSpinWheelPromo();
       // checkRedeemSpecialInviteBonusEligiblity();
@@ -1896,15 +1858,13 @@ export default defineComponent({
     };
     const selectCasualPlat = (plat) => {
       console.log(plat);
-      if(plat.code ==='Spribe'){
-        playGame(plat.name, plat.code, 'aviator')
-      }else{
+      if (plat.code === "Spribe") {
+        playGame(plat.name, plat.code, "aviator");
+      } else {
         selectedPlatId.value = plat.id;
         isShow.value = true;
         switchPlat(plat, "casual");
       }
-
-
     };
     const isGoMiniGame = ref(false);
     const showTypeH5 = (id) => {
@@ -2022,7 +1982,8 @@ export default defineComponent({
       specialInviteBonusPopupVisible,
       redeemSpecialInviteBonus,
       toggleSpecialInviteBonusPopup,
-      newsList
+      newsList,
+      getBackgroundImageStyle
     };
   }
 });
@@ -2165,6 +2126,7 @@ export default defineComponent({
   overflow: hidden;
   width: 100%;
   margin-bottom: 40px;
+  padding-top: 30px;
 }
 
 .grid {
@@ -2199,12 +2161,24 @@ export default defineComponent({
     background-size: 100% 100%;
     position: relative;
     justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
+
     filter: grayscale(1);
-    // border: 1px solid #5dd8ff;
-    // border-radius: 8px;
-    // transform: skewX(-16deg);
+    border: 1px solid #5dd8ff;
+    border-radius: 8px;
+    transform: skewX(-16deg);
+    overflow: hidden;
+
+    .item-bg {
+      img {
+        width: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: skewX(0deg) scale(1.2);
+        transition: all 0.3s;
+      }
+    }
+
     img {
       display: block;
       width: 100%;
@@ -2212,6 +2186,22 @@ export default defineComponent({
 
     &:hover {
       filter: grayscale(0);
+
+      .item-bg {
+        img {
+          transform: skewX(0deg) scale(1.3);
+        }
+      }
+    }
+
+    .home-board-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 15px 25px;
     }
 
     .home-board-item-text {
@@ -2219,7 +2209,7 @@ export default defineComponent({
       font-size: 14px;
       line-height: 19.6px;
       display: block;
-      // transform: skewX(16deg);
+      transform: skewX(16deg);
       @media (min-width: 769px) {
         font-size: 24px;
         line-height: 33.6px;
@@ -2227,7 +2217,7 @@ export default defineComponent({
     }
     .home-board-item-text__en {
       display: block;
-      // transform: skewX(16deg);
+      transform: skewX(16deg);
     }
 
     .active-flag {
@@ -2573,7 +2563,7 @@ export default defineComponent({
 .minigame-select-div {
   position: relative;
 
-  img{
+  img {
     width: 100%;
     height: auto;
     aspect-ratio: 672 / 828;
@@ -2863,7 +2853,7 @@ export default defineComponent({
 
 @media (min-width: 991px) {
   .grid {
-    padding: 0px 4px;
+    padding: 0px 12px;
   }
 
   .grid .game-board-item {
@@ -2927,7 +2917,6 @@ export default defineComponent({
   .game-grid-lists {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
-
 
     .platform-company-box {
       position: absolute;
