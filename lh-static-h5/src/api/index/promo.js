@@ -161,3 +161,7 @@ export function claimCheckInTreasure(promoCode, days) {
 export function getLOLMsiMatchRecord() {
   return eventapi.get("/game-match/upcoming/MSI");
 }
+
+export function getEurocupManualSchedule() {
+  return eventapi.get("/uefa/match/all");
+}

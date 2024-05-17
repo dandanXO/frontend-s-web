@@ -2,7 +2,8 @@
   <div>
     <q-select
       filled
-      class="q-mt-md"
+      class=""
+      ref="bankRef"
       :label="$t('lang.bank')"
       color="white"
       v-model="selectedBankId"
@@ -22,6 +23,7 @@ import { cashier } from "boot/axios";
 import { useQuasar } from "quasar";
 import {useI18n} from "vue-i18n";
 
+const bankRef= ref();
 const {t} = useI18n()
 const $q = useQuasar();
 const props = defineProps({
@@ -42,11 +44,12 @@ function selectBank() {
 }
 
 async function validateBank(value) {
-  if (value !== null && value !== "") {
-    return true;
-  } else {
-    return false;
-  }
+  bankRef.value.validate();
+  // if (value !== null && value !== "") {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
 }
 const qs = require("qs");
 async function submitDeposit(deposit) {

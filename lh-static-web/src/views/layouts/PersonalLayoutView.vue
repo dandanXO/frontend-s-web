@@ -182,6 +182,29 @@ export default defineComponent({
           width: 100%;
           height: 100%;
         }
+        .account-avatar {
+          width: 75px;
+          position: relative;
+          cursor: pointer;
+
+          img{
+            width: 100%;
+          }
+          &:hover {
+            &:after {
+              content: "";
+              border-radius: 50%;
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              left: 0;
+              top: 0;
+              background: url(../../assets/images/profile/edit.png)no-repeat center center;
+              background-size: 30%;
+              background-color: #0000008f;
+            }
+          }
+        }
       }
       .web-menu {
         .menu-box {

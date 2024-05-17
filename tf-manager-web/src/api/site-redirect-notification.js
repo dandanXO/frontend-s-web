@@ -36,3 +36,7 @@ export const deleteNotification = async ids => {
     ContentType.form
   )
 }
+
+export const createBatchMemberNotification = (notificationId, memberNotification) => {
+  return https(5 * 60 * 1000).request("/redirect-notification/importTargetBatch", Method.POST, { notificationId: notificationId, members: memberNotification.map(r => r.loginName).join(',') }, ContentType.form);
+};

@@ -165,7 +165,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -242,21 +248,25 @@ export default defineComponent({
               });
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
               ElMessage.error({
                 type: "error",
                 message: response.message
               });
+              loadingBtn.value = false;
               // message.error(response.message);
             }
           }).catch((error) => {
             console.log(error.message);
+            loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
         console.log("error", error);
+        loadingBtn.value = false;
       });
-      loadingBtn.value = false;
+
     };
     const withdrawRules = {
       amount: [
@@ -423,8 +433,8 @@ export default defineComponent({
     };
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        "KDPAY": "http://jiaocheng.kdpay123.com",
-        "EBPAY": "https://www.ebpay009.com/syjc",
+        "KDPAY": "https://kdzfxz.kdzf2345.com/home/#/transactionFlow",
+        "EBPAY": "https://www.ebpay.org/",
         "OKPAY": "https://me-qr.com/l/okpay"
       };
 
@@ -582,14 +592,14 @@ export default defineComponent({
       position: relative;
       padding: 10px;
 
-      .promo-label{
-        position:absolute;
-        bottom:-13px;
-        left:50%;
+      .promo-label {
+        position: absolute;
+        bottom: -13px;
+        left: 50%;
         transform: translate(-50%);
         width: 50px;
 
-        img{
+        img {
           width: 100%;
           height: auto;
         }

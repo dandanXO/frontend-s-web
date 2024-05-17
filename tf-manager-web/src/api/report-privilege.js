@@ -20,3 +20,7 @@ export const getPrivilegeMemberDetailReport = (data) => {
 export const getExportPrivilegeMemberDetailReport = (data) => {
   return https().request("/report/requestPrivilegeMemberDetailExport", Method.GET, data, ContentType.form);
 };
+
+export const getPrivilegeReportExport = (data) => {
+  return https().request("/report/privilegeReportListExport", Method.GET, data, ContentType.form);
+};

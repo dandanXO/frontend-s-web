@@ -11,11 +11,11 @@
           : { top: team.top + '%', left: team.left + '%' }
       "
     >
-      <img v-if="team.teamIcon" :src="team.teamIcon ? imgUrl + team.teamIcon : null" :style="`max-width:${flagWidth}px`" />
+      <img v-if="team.teamIcon" :src="team.teamIcon ? imgUrl + team.teamIcon :null" :style="`max-width:${flagWidth}px`" />
       <span v-else style="color: #000000; display: flex;
     justify-content: center;
     align-items: center;
-    width: 28px;
+    width: 22px;
     padding-bottom: 2px;">?</span>
       <span v-if="team.teamIcon" class="bracket-team__name">{{team.teamName}}</span>
     </div>
@@ -27,86 +27,92 @@
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
+import { eventapi } from "boot/axios";
 const pageLoading = ref(false);
 const refBracketWrapper = ref(null);
-const flagWidth = ref(36);
+const flagWidth = ref(30);
 const domHeight = ref(770);
 const finalDate = ref('');
 const imgUrl = process.env.IMAGE_CDN + '/promo/';
 const bracketTeamList = ref([
   // top side round of 16
-  { bottom: 96, left: -0.7, seg: 1, group: '16', team: 'A' },
-  { bottom: 96, left: 13, seg: 1, group: '16', team: 'B' },
-  { bottom: 96, left: 26.6, seg: 2, group: '16', team: 'A' },
-  { bottom: 96, left: 40.3, seg: 2, group: '16', team: 'B' },
-  { bottom: 96, left: 51.8, seg: 3, group: '16', team: 'A' },
-  { bottom: 96, left: 65.3, seg: 3, group: '16', team: 'B' },
-  { bottom: 96, left: 78.9, seg: 4, group: '16', team: 'A' },
-  { bottom: 96, left: 92.5, seg: 4, group: '16', team: 'B' },
+  { bottom: 96, left: 3.3, seg: 1, group: '16', team: 'A' },
+  { bottom: 96, left: 17, seg: 1, group: '16', team: 'B' },
+  { bottom: 96, left: 30.5, seg: 2, group: '16', team: 'A' },
+  { bottom: 96, left: 44.2, seg: 2, group: '16', team: 'B' },
+  { bottom: 96, left: 55.8, seg: 3, group: '16', team: 'A' },
+  { bottom: 96, left: 69.5, seg: 3, group: '16', team: 'B' },
+  { bottom: 96, left: 82.9, seg: 4, group: '16', team: 'A' },
+  { bottom: 96, left: 96.5, seg: 4, group: '16', team: 'B' },
   // top side quarterfinal
-  { bottom: 80, left: 6.3 , seg: 1, group: '8', team: 'A'},
-  { bottom: 80, left: 33.3, seg: 1, group: '8', team: 'B' },
-  { bottom: 80, left: 58.7, seg: 2, group: '8', team: 'A' },
-  { bottom: 80, left: 86  , seg: 2, group: '8', team: 'B'},
+  { bottom: 78.5, left: 10.2 , seg: 1, group: '8', team: 'A'},
+  { bottom: 78.5, left: 37.2, seg: 1, group: '8', team: 'B' },
+  { bottom: 78.5, left: 62.7, seg: 2, group: '8', team: 'A' },
+  { bottom: 78.5, left: 90.1, seg: 2, group: '8', team: 'B'},
   // top side semifinal
-  { bottom: 69, left: 19.6, seg: 1, group: '4', team: 'A' },
-  { bottom: 69, left: 72.2, seg: 1, group: '4', team: 'B' },
+  { bottom: 66, left: 23.6, seg: 1, group: '4', team: 'A' },
+  { bottom: 66, left: 76.2, seg: 1, group: '4', team: 'B' },
   // top side final
-  { bottom: 64.3, left: 46, seg: 1, group: '2', team: 'A' },
+  { bottom: 61, left: 50, seg: 1, group: '2', team: 'A' },
   // bottom side final
-  { top: 51.6, left: 46, seg: 1, group: '2', team: 'B' },
+  { top: 57.8, left: 50, seg: 1, group: '2', team: 'B' },
   // bottom side semifinal
-  { top: 56.3, left: 19.6, seg: 2, group: '4', team: 'A' },
-  { top: 56.3, left: 72.2, seg: 2, group: '4', team: 'B' },
+  { top: 62.6, left: 23.6, seg: 2, group: '4', team: 'A' },
+  { top: 62.6, left: 76.2, seg: 2, group: '4', team: 'B' },
   // bottom side quarterfinal
-  { top: 67.6, left: 6.1 , seg: 3, group: '8', team: 'A' },
-  { top: 67.6, left: 33.3, seg: 3, group: '8', team: 'B' },
-  { top: 67.6, left: 58.7, seg: 4, group: '8', team: 'A' },
-  { top: 67.6, left: 86  , seg: 4, group: '8', team: 'B'},
+  { top: 75, left: 10.2, seg: 3, group: '8', team: 'A' },
+  { top: 75, left: 37.2, seg: 3, group: '8', team: 'B' },
+  { top: 75, left: 62.7, seg: 4, group: '8', team: 'A' },
+  { top: 75, left: 90.1 , seg: 4, group: '8', team: 'B'},
   // bottom side round of 16
-  { top: 83.3, left: -0.7, seg: 5, group: '16', team: 'A' },
-  { top: 83.3, left: 13  , seg: 5, group: '16', team: 'B' },
-  { top: 83.3, left: 26.6, seg: 6, group: '16', team: 'A' },
-  { top: 83.3, left: 40.3, seg: 6, group: '16', team: 'B' },
-  { top: 83.3, left: 51.8, seg: 7, group: '16', team: 'A' },
-  { top: 83.3, left: 65.3, seg: 7, group: '16', team: 'B' },
-  { top: 83.3, left: 78.9, seg: 8, group: '16', team: 'A' },
-  { top: 83.3, left: 92.5, seg: 8, group: '16', team: 'B' }
+  { top: 92.3, left: 3.3, seg: 5, group: '16', team: 'A' },
+  { top: 92.3, left: 17, seg: 5, group: '16', team: 'B' },
+  { top: 92.3, left: 30.5, seg: 6, group: '16', team: 'A' },
+  { top: 92.3, left: 44.2, seg: 6, group: '16', team: 'B' },
+  { top: 92.3, left: 55.8, seg: 7, group: '16', team: 'A' },
+  { top: 92.3, left: 69.5, seg: 7, group: '16', team: 'B' },
+  { top: 92.3, left: 82.9, seg: 8, group: '16', team: 'A' },
+  { top: 92.3, left: 96.5, seg: 8, group: '16', team: 'B' }
 ]);
 const teams = ref([
 ])
 const populateTeams = () => {
   pageLoading.value = true
-  teams.value.forEach(team => {
-    const teamEntry = {
-      teamIcon: null,
-      teamName: null
-    };
+  eventapi.get("/uefa/match/all").then((res) => {
+    if (res.code === 0) {
+      teams.value = res.data
+      teams.value.forEach(team => {
+        const teamEntry = {
+          teamIcon: null,
+          teamName: null
+        };
 
-    const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
-    const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
-    // Update Team A entry
-    if (indexA !== -1) {
-      bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
-      bracketTeamList.value[indexA].teamName = team.teamOneName;
-    } else {
-      console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
-    }
+        const indexA = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'A');
+        const indexB = bracketTeamList.value.findIndex(entry => entry.seg === team.sequence && entry.group === team.teamGroup && entry.team === 'B');
+        // Update Team A entry
+        if (indexA !== -1) {
+          bracketTeamList.value[indexA].teamIcon = team.teamOneIcon;
+          bracketTeamList.value[indexA].teamName = team.teamOneName;
+        } else {
+          console.error(`Unable to find suitable entry for Team A of team: ${team.teamOneName}`);
+        }
 
-    // Update Team B entry
-    if (indexB !== -1) {
-      bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
-      bracketTeamList.value[indexB].teamName = team.teamTwoName;
-    } else {
-      console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
+        // Update Team B entry
+        if (indexB !== -1) {
+          bracketTeamList.value[indexB].teamIcon = team.teamTwoIcon;
+          bracketTeamList.value[indexB].teamName = team.teamTwoName;
+        } else {
+          console.error(`Unable to find suitable entry for Team B of team: ${team.teamTwoName}`);
+        }
+
+        if (team.teamGroup === '2' || team.teamGroup === 2) {
+          finalDate.value = team.matchTime
+        }
+      });
+
+      pageLoading.value = false
     }
-    
-    if (team.teamGroup === '2' || team.teamGroup === 2) {
-      finalDate.value = team.matchTime
-    }
-  });
-  
-  pageLoading.value = false
+  })
 };
 const formatDate = (matchTime) => {
       if (!matchTime) return ''; // Return empty string if matchTime is not available
@@ -124,16 +130,16 @@ populateTeams();
 onMounted(() => {
   resizeDom();
   window.addEventListener("resize", resizeDom, true);
-  
+
   populateTeams()
 });
 
 const resizeDom = () => {
   if (!refBracketWrapper.value) return;
   const currentWidth = window.innerWidth;
-  if (currentWidth < 500) {
-    const scaleRatio = currentWidth / 500;
-    flagWidth.value = currentWidth * 0.072;
+  if (currentWidth < 550) {
+    const scaleRatio = currentWidth / 550;
+    flagWidth.value = currentWidth * 0.06;
     domHeight.value = 770 * scaleRatio;
   }
 };
@@ -156,13 +162,15 @@ const resizeDom = () => {
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
+    width: 24px;
+    transform: translateX(-50%);
 
     &.top {
       flex-direction: column-reverse;
     }
 
     img {
-      max-width: 36px;
+      max-width: 30px;
       width: unset !important;
       margin-bottom: 0 !important;
     }
@@ -171,6 +179,7 @@ const resizeDom = () => {
       font-size: 0.7rem;
       line-height: 1.1rem;
       letter-spacing: 0.12rem;
+      word-break: keep-all;
     }
   }
 

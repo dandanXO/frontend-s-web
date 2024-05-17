@@ -230,6 +230,7 @@ export default defineComponent({
           isPromoDetail.value = true;
           selectedPromo.value = promo;
         }
+        window.scroll({ behavior: "smooth", left: 0, top: 0 });
       }
     };
     const switchPromoType = (type) => {
@@ -618,7 +619,7 @@ export default defineComponent({
       }
 
       &.bg__xf-deposit-award {
-        background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg.png");
+        background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg.jpg");
         // background-size: cover;
         background-size: 100% auto;
         background-repeat: no-repeat;

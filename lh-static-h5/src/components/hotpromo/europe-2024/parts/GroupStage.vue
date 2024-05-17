@@ -51,6 +51,9 @@ const imgUrl = process.env.IMAGE_CDN + '/promo/';
 const groupedMatches = computed(() => {
   const groups = {};
   matches.value.forEach(match => {
+    if(match.teamGroup === '2' || match.teamGroup === '4'|| match.teamGroup === '8' || match.teamGroup === '16') { 
+      return
+    }
     if (!groups[match.teamGroup]) {
       groups[match.teamGroup] = [];
     }
@@ -158,6 +161,7 @@ onMounted(() => {
         letter-spacing: 0.12em;
         display: flex;
         gap: 5px;
+        flex-direction: column;
 
         align-items: center;
         img {
@@ -169,7 +173,7 @@ onMounted(() => {
         }
         &.teamB {
           justify-content: flex-end;
-          flex-direction: row-reverse;
+          flex-direction: column-reverse;
         }
 
       }
@@ -193,6 +197,7 @@ onMounted(() => {
           font-size: 10px;
           font-weight: 400;
           color: #FFFFFFCC;
+          text-align: center;
         }
       }
     }

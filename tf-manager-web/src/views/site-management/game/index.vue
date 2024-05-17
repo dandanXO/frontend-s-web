@@ -720,6 +720,7 @@ const gameLabel = reactive({
     { key: 2, displayName: 'HOT', value: 'HOT' },
     { key: 3, displayName: 'RECOMMEND', value: 'RECOMMEND' },
     { key: 4, displayName: 'LIST', value: 'LIST' },
+    { key: 5, displayName: 'JACKPOT', value: 'JACKPOT' },
   ],
 })
 

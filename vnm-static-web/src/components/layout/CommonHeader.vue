@@ -1862,9 +1862,9 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 16px;
+        gap: 8px;
         text-align: center;
-        padding: 0px 15px;
+        padding: 0px 10px;
 
         &.second-nav {
           margin-left: auto;
@@ -1889,7 +1889,8 @@ body {
           }
 
           .menu-icon {
-            width: 50px;
+            width: 68px;
+            height: 71px;
           }
 
           span:first-child {
@@ -2651,9 +2652,9 @@ body {
   .nav-title {
     position: absolute;
     margin: 0px;
-    bottom: 15px;
-    font-size: 8px;
-    line-height: 8px;
+    bottom: 17px;
+    font-size: 11px;
+    line-height: 10px;
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
@@ -2663,7 +2664,7 @@ body {
     font-weight: bold;
 
     &.active {
-      font-weight: 500;
+      //font-weight: 500;
       color: #fff;
     }
   }
