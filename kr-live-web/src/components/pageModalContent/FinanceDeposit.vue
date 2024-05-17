@@ -261,7 +261,7 @@ const copyMessage = (position) => {
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "Copied";
+  copybtntxt[position].value = "복사";
 };
 
 const blurCode = () => {
@@ -811,6 +811,9 @@ onMounted(() => {
   :deep(.q-field__control){
     background:#252E43;
   }
+  :deep(.q-field__prepend){
+    padding-left: 10px;
+  }
 }
 .deposit-select-bank{
   :deep(.q-field__control){
@@ -822,7 +825,8 @@ onMounted(() => {
   background: #38F3FF;
   margin-right: 8px;
   color: #000;
-
 }
+
+
 
 </style>

@@ -110,12 +110,13 @@ const iconInfo = reactive([
 
 <style scoped lang="scss">
 .container {
-  background: transparent;
+  // background: transparent;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
+  background: rgba(18, 17, 33, 1);
 
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
@@ -150,8 +151,11 @@ const iconInfo = reactive([
   border-style: solid;
   border-color: #333333;
   padding-left: 8px;
+
+  display: none;
   @media (min-width: 769px) {
-    width: 70%;
+    display: flex;
+    width: 58%;
     height: 100%;
     border: none;
   }
@@ -166,7 +170,7 @@ const iconInfo = reactive([
   padding-right: 8px;
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
-    width: 30%;
+    width: 42%;
     justify-content: flex-end;
     margin-top: 0px;
   }
@@ -180,8 +184,8 @@ const iconInfo = reactive([
   margin-left: 5px;
 
   @media (min-width: 769px) {
-    font-size: 20px;
-    line-height: 19.6px;
+    font-size: 16px;
+    line-height: 1;
   }
 }
 

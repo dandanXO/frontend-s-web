@@ -2,16 +2,15 @@
   <div class="item_list">
     <a v-for="p in props.games" :key="p.id" class="game_item" @click="() => props.onClickGameItem(p)">
       <div class="game_box">
-        <!-- <pre>{{ p }}</pre> -->
         <div class="game_thumb_platform">
           <div class="platform_game_bg">
             <img
               :src="
                 (() => {
                   try {
-                    return `${require(`../../assets/home/games/game-bg-${p.name.toLowerCase()}.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-bg-${p.name.toLowerCase()}.png`)}`;
                   } catch (e) {
-                    return `${require(`../../assets/home/games/game-bg-dg.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-bg-empty.png`)}`;
                   }
                 })()
               "
@@ -26,9 +25,9 @@
                 :src="
                   (() => {
                     try {
-                      return `${require(`../../assets/home/games/game-logo-${p.name.toLowerCase()}.png`)}`;
+                      return `${require(`../../assets/home/games/logo/game-logo-${p.name.toLowerCase()}.png`)}`;
                     } catch (e) {
-                      return `${require(`../../assets/home/games/game-logo-dg.png`)}`;
+                      return `${require(`../../assets/home/games/logo/game-logo-empty.png`)}`;
                     }
                   })()
                 "
@@ -41,9 +40,9 @@
               :src="
                 (() => {
                   try {
-                    return `${require(`../../assets/home/games/game-rounded-${p.name.toLowerCase()}.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-rounded-${p.name.toLowerCase()}.png`)}`;
                   } catch (e) {
-                    return `${require(`../../assets/home/games/game-rounded-dg.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-rounded-empty.png`)}`;
                   }
                 })()
               "
@@ -55,9 +54,9 @@
               :src="
                 (() => {
                   try {
-                    return `${require(`../../assets/home/games/game-${p.name.toLowerCase()}.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-${p.name.toLowerCase()}.png`)}`;
                   } catch (e) {
-                    return `${require(`../../assets/home/games/game-dg.png`)}`;
+                    return `${require(`../../assets/home/games/${gameType}/game-empty.png`)}`;
                   }
                 })()
               "
@@ -104,11 +103,13 @@
   </div>
 </template>
 <script setup>
-const props = defineProps(["games", "onClickGameItem"]);
+import { ref } from "vue";
+const props = defineProps(["games", "onClickGameItem", "gameType"]);
+const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .item_list {
-  padding: 20px 0px 30px 0px;
+  // padding: 20px 0px 30px 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -118,7 +119,13 @@ const props = defineProps(["games", "onClickGameItem"]);
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
+  justify-content: space-around;
   gap: 15px;
+  padding: 0 16px;
+  @media (min-width: 769px) {
+    justify-content: flex-start;
+    // padding: 0px;
+  }
 }
 
 a {
@@ -190,7 +197,7 @@ a:hover {
     }
 
     .platform_game_img {
-      transform: scale(1.15);
+      transform: scale(1.1);
     }
 
     .platform_game_bg .activated {
