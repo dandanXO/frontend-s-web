@@ -64,7 +64,7 @@
       </div>
     </div> -->
 
-    <div class="midd">
+    <!-- <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
           <div class="box">
@@ -77,10 +77,10 @@
               {{ a.content }}
             </span>
           </div>
-          <!--          <div>XX 가 XX 게임에서 2000000 원 땄어요!</div>-->
         </marquee-text>
       </div>
-    </div>
+    </div> -->
+
     <div class="grid-wrapper">
       <div class="items-center grid" ref="gameBoardRef">
         <div
@@ -91,99 +91,48 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
+          <!-- <div class="item-bg" :style="getBackgroundImageStyle(e.name)"></div> -->
           <!-- <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" /> -->
           <!-- <img :src="require(`../assets/images/index/${e.imgName}`)" /> -->
-          <span class="home-board-item-text">{{ e.label }}</span>
+
+          <div class="item-bg"><img :src="require(`../assets/home/menu/menu-${e.name}.png`)" /></div>
+
+          <img :src="require(`../assets/home/menu/menu-empty.png`)" />
+
+          <div class="home-board-label">
+            <span class="home-board-item-text">{{ e.label }}</span>
+            <span class="home-board-item-text__en">{{ e.enLabel }}</span>
+          </div>
         </div>
       </div>
     </div>
 
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'live'" :games="liveCasinoGames" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'live'"
+        :games="liveCasinoGames"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
-
-<!--    <Transition style="display:none">-->
-<!--      <div class="game-grid-lists" id="id-live-board" v-if="currentSelectedMenu === 'live'">-->
-<!--        <template v-for="p in liveCasinoGames" :key="p">-->
-<!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
-<!--            <div-->
-<!--              class="platform-img"-->
-<!--              :style="{-->
-<!--                backgroundImage: (() => {-->
-<!--                  try {-->
-<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-<!--                  } catch (e) {-->
-<!--                    return `url(${comingSoonImg})`;-->
-<!--                  }-->
-<!--                })()-->
-<!--              }"-->
-<!--            ></div>-->
-<!--            <div class="plat-form-box">-->
-<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-<!--            </div>-->
-<!--            <div class="platform-company-box">-->
-<!--              <div-->
-<!--                class="company-image"-->
-<!--                :style="{-->
-<!--                  backgroundImage: (() => {-->
-<!--                    try {-->
-<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-<!--                    } catch (e) {-->
-<!--                      return '';-->
-<!--                    }-->
-<!--                  })()-->
-<!--                }"-->
-<!--              ></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </div>-->
-<!--    </Transition>-->
 
     <!-- slot start -->
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'slots' && !isShow" :games="platforms" :onClickGameItem="selectSlotPlat" />
+      <GameItem
+        v-if="currentSelectedMenu === 'slots' && !isShow"
+        :games="platforms"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="selectSlotPlat"
+      />
     </Transition>
 
-<!--    <Transition style="display:none">-->
-<!--      <div class="game-grid-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && !isShow">-->
-<!--        <template v-for="p in platforms" :key="p">-->
-<!--          <div class="game-item btn-pointer btn-slot-game" @click="selectSlotPlat(p)">-->
-<!--            <div-->
-<!--              class="platform-img"-->
-<!--              :style="{-->
-<!--                backgroundImage: (() => {-->
-<!--                  try {-->
-<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-<!--                  } catch (e) {-->
-<!--                    return `url(${comingSoonImg})`;-->
-<!--                  }-->
-<!--                })()-->
-<!--              }"-->
-<!--            ></div>-->
-<!--            <div class="plat-form-box">-->
-<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-<!--            </div>-->
-<!--            <div class="platform-company-box">-->
-<!--              <div-->
-<!--                class="company-image"-->
-<!--                :style="{-->
-<!--                  backgroundImage: (() => {-->
-<!--                    try {-->
-<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-<!--                    } catch (e) {-->
-<!--                      return '';-->
-<!--                    }-->
-<!--                  })()-->
-<!--                }"-->
-<!--              ></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </div>-->
-<!--    </Transition>-->
     <Transition>
-      <div class="game-scroll-lists" id="id-slot-board" v-if="currentSelectedMenu === 'slots' && isShow">
+      <div
+        class="game-scroll-lists"
+        id="id-slot-board"
+        v-if="currentSelectedMenu === 'slots' && isShow"
+        :gameType="currentSelectedMenu"
+      >
         <q-scroll-area
           style="height: 500px"
           :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
@@ -351,7 +300,12 @@
     <!-- slot end -->
 
     <Transition>
-      <div class="game-grid-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && !isShow">
+      <div
+        class="game-grid-lists"
+        id="id-fish-board"
+        v-if="currentSelectedMenu === 'fish' && !isShow"
+        :gameType="currentSelectedMenu"
+      >
         <template v-for="p in fishPlatforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
             <div
@@ -388,7 +342,12 @@
       </div>
     </Transition>
     <Transition>
-      <div class="game-scroll-lists" id="id-fish-board" v-if="currentSelectedMenu === 'fish' && isShow">
+      <div
+        class="game-scroll-lists"
+        id="id-fish-board"
+        v-if="currentSelectedMenu === 'fish' && isShow"
+        :gameType="currentSelectedMenu"
+      >
         <q-scroll-area
           style="height: 500px"
           :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
@@ -555,11 +514,21 @@
     </Transition>
 
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'esport'" :games="esportPlatform" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'esport'"
+        :games="esportPlatform"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
 
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'casual' && !isShow" :games="platformMinigame" :onClickGameItem="selectCasualPlat" />
+      <GameItem
+        v-if="currentSelectedMenu === 'casual' && !isShow"
+        :games="platformMinigame"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="selectCasualPlat"
+      />
     </Transition>
     <Transition>
       <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
@@ -602,14 +571,14 @@
                     id="copper-type"
                     @click="playGame(game.name, 'TFGaming', game.copper)"
                   >
-                    10 - 3,000
+                    1,000 - 65K
                   </div>
                   <div
                     class="game-type btn-pointer"
                     id="silver-type"
                     @click="playGame(game.id, 'TFGaming', game.silver)"
                   >
-                    500 - 100K
+                    100K - 130K
                   </div>
                   <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
                     1,000 - 20K
@@ -622,50 +591,14 @@
       </div>
     </Transition>
 
-    
-
-<!--    <Transition style="display:none">-->
-<!--      <div class="game-grid-lists" id="id-esport-board" v-if="currentSelectedMenu === 'esport'">-->
-<!--        <template v-for="p in esportPlatform" :key="p">-->
-<!--          <div class="game-item btn-pointer btn-slot-game" @click="openGame(p)">-->
-<!--            <div-->
-<!--              class="platform-img"-->
-<!--              :style="{-->
-<!--                backgroundImage: (() => {-->
-<!--                  try {-->
-<!--                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;-->
-<!--                  } catch (e) {-->
-<!--                    return `url(${comingSoonImg})`;-->
-<!--                  }-->
-<!--                })()-->
-<!--              }"-->
-<!--            ></div>-->
-<!--            <div class="plat-form-box">-->
-<!--              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>-->
-<!--            </div>-->
-<!--            <div class="platform-company-box">-->
-<!--              <div-->
-<!--                class="company-image"-->
-<!--                :style="{-->
-<!--                  backgroundImage: (() => {-->
-<!--                    try {-->
-<!--                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;-->
-<!--                    } catch (e) {-->
-<!--                      return '';-->
-<!--                    }-->
-<!--                  })()-->
-<!--                }"-->
-<!--              ></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </div>-->
-<!--    </Transition>-->
-
     <Transition>
-      <GameItem v-if="currentSelectedMenu === 'sport'" :games="sportPlatform" :onClickGameItem="openGame" />
+      <GameItem
+        v-if="currentSelectedMenu === 'sport'"
+        :games="sportPlatform"
+        :gameType="currentSelectedMenu"
+        :onClickGameItem="openGame"
+      />
     </Transition>
-
   </div>
 
   <div class="news-section">
@@ -685,6 +618,78 @@
       </div>
       <div class="news-item-right">
         <div class="news-item-date">{{ item.createTime }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-split">
+    <div class="news-section">
+      <div class="news-title news-title__sub">
+        <div class="title-text">이벤트</div>
+        <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-section">
+      <div class="news-title news-title__sub">
+        <div class="title-text">이벤트</div>
+        <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">
+            카***팟
+            <span style="color: #01e1ff">6,660,220원</span>
+            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">
+            카***팟
+            <span style="color: #01e1ff">6,660,220원</span>
+            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">
+            카***팟
+            <span style="color: #01e1ff">6,660,220원</span>
+            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title">
+            카***팟
+            <span style="color: #01e1ff">6,660,220원</span>
+            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -999,6 +1004,12 @@ export default defineComponent({
     const router = useRouter();
     const store = userStore();
 
+    const getBackgroundImageStyle = (name) => {
+      return {
+        backgroundImage: `url(${require(`../assets/home/menu/menu-${name}.png`)})`
+      };
+    };
+
     const showSticky = ref(true);
     const checkSticky = () => {
       const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
@@ -1192,6 +1203,10 @@ export default defineComponent({
 
     const platforms = ref([]);
     const newsList = ref([]);
+    const depositRecordList = ref([]);
+
+    // /member/withdraw-deposit-record
+
     const selectedPlatId = ref();
     const selectedPlat = reactive({
       code: "",
@@ -1227,11 +1242,11 @@ export default defineComponent({
       return lotteryGames.value;
     });
     const gameBoardItemData = [
-      { name: "live", label: "라이브카지노" },
-      { name: "slots", label: "슬롯게임" },
-      { name: "esport", label: "E-스포츠" },
-      { name: "sport", label: "스포츠" },
-      { name: "casual", label: "평상복" }
+      { name: "live", label: "라이브카지노", enLabel: "LIVE CASINO" },
+      { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
+      { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
+      { name: "sport", label: "스포츠", enLabel: "SPORTS" },
+      { name: "casual", label: "평상복", enLabel: "FISH" }
       // { name: "fish", label: "낚시 게임" }
     ];
 
@@ -1458,8 +1473,8 @@ export default defineComponent({
 
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
 
-          console.log("SORT")
-          console.log(sportPlatform.value)
+          console.log("SORT");
+          console.log(sportPlatform.value);
 
           platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
 
@@ -1521,6 +1536,34 @@ export default defineComponent({
           console.log(err);
         });
     };
+
+    const loadDepositRecordList = () => {
+      api
+        .get("/member/withdraw-deposit-record")
+        .then((res) => {
+          const {
+            data: {
+              code,
+              data: { depositRecord }
+            }
+          } = res;
+
+          if (code === 0) {
+            depositRecordList.value = depositRecord;
+          } else {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: "資料讀取失敗",
+              icon: "report_problem"
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
     const isStationNotice = ref(false);
@@ -1728,6 +1771,7 @@ export default defineComponent({
       loadHomeData();
       getVersionNo();
       checkSticky();
+      loadDepositRecordList();
 
       // checkSpinWheelPromo();
       // checkRedeemSpecialInviteBonusEligiblity();
@@ -1813,9 +1857,14 @@ export default defineComponent({
       switchPlat(plat, "lottery");
     };
     const selectCasualPlat = (plat) => {
-      selectedPlatId.value = plat.id;
-      isShow.value = true;
-      switchPlat(plat, "casual");
+      console.log(plat);
+      if (plat.code === "Spribe") {
+        playGame(plat.name, plat.code, "aviator");
+      } else {
+        selectedPlatId.value = plat.id;
+        isShow.value = true;
+        switchPlat(plat, "casual");
+      }
     };
     const isGoMiniGame = ref(false);
     const showTypeH5 = (id) => {
@@ -1933,7 +1982,8 @@ export default defineComponent({
       specialInviteBonusPopupVisible,
       redeemSpecialInviteBonus,
       toggleSpecialInviteBonusPopup,
-      newsList
+      newsList,
+      getBackgroundImageStyle
     };
   }
 });
@@ -2019,7 +2069,8 @@ export default defineComponent({
   }
 }
 
-.slot-grid, .fish-grid {
+.slot-grid,
+.fish-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 0px auto 10px;
@@ -2028,7 +2079,8 @@ export default defineComponent({
   row-gap: 10px;
   width: calc(100% - 20px);
 
-  .inner-slot-game, .inner-fish-game {
+  .inner-slot-game,
+  .inner-fish-game {
     position: relative;
   }
 
@@ -2044,7 +2096,8 @@ export default defineComponent({
     }
   }
 
-  .slot-name, .fish-name {
+  .slot-name,
+  .fish-name {
     text-align: center;
     padding: 5px 2px 0px;
     font-size: 10px;
@@ -2072,6 +2125,8 @@ export default defineComponent({
 .grid-wrapper {
   overflow: hidden;
   width: 100%;
+  margin-bottom: 40px;
+  padding-top: 30px;
 }
 
 .grid {
@@ -2079,12 +2134,12 @@ export default defineComponent({
   justify-content: center;
   margin: 0px auto 0px;
   flex-wrap: wrap;
-  column-gap: 0px;
-  row-gap: 0px;
-  width: calc(100% - 20px);
+  column-gap: 10px;
+  row-gap: 10px;
+  // width: calc(100% - 20px);
   border-radius: 12px;
   overflow-x: auto;
-  width: 240px;
+  // width: 240px;
 
   @media (min-width: 769px) {
     margin: 10px auto;
@@ -2092,32 +2147,90 @@ export default defineComponent({
     column-gap: 20px;
     row-gap: 14px;
     width: calc(100% - 20px);
+    flex-wrap: nowrap;
+    // column-gap: 0px;
+    // row-gap: 0px;
   }
 
   .game-board-item {
-    border-radius: 8px;
-    width: 112px;
+    // width: 210px;
     height: 100%;
     display: flex;
     text-align: center;
-    padding: 16px 12px 20px;
+    // padding: 24px 36px 20px;
+    padding: 0;
     white-space: nowrap;
-    background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
+    // background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
     background-size: 100% 100%;
     position: relative;
     justify-content: center;
-    align-items: center;
-    @media (min-width: 769px) {
-      width: 21%;
+
+    filter: grayscale(1);
+    border: 1px solid #5dd8ff;
+    border-radius: 8px;
+    transform: skewX(-16deg);
+    overflow: hidden;
+
+    img {
+      display: block;
+      width: 100%;
+
+      @media (max-width: 769px) {
+        max-width: 120px;
+      }
     }
+
+    .item-bg {
+      img {
+        width: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: skewX(0deg) scale(1.2);
+        transition: all 0.3s;
+      }
+    }
+
+    &:hover {
+      filter: grayscale(0);
+
+      .item-bg {
+        img {
+          transform: skewX(0deg) scale(1.3);
+        }
+      }
+    }
+
+    .home-board-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      padding: 15px 25px;
+      @media (max-width: 769px) {
+        padding: 5px 15px;
+      }
+    }
+
     .home-board-item-text {
-      color: #fff;
+      color: #01d9ab;
       font-size: 14px;
       line-height: 19.6px;
+      display: block;
+      font-weight: bold;
+      transform: skewX(16deg);
       @media (min-width: 769px) {
         font-size: 24px;
         line-height: 33.6px;
       }
+    }
+    .home-board-item-text__en {
+      display: block;
+      transform: skewX(16deg);
+      color: #fff;
+      margin-top: 2px;
     }
 
     .active-flag {
@@ -2126,9 +2239,9 @@ export default defineComponent({
 
     &.active-board {
       // background: $linear-bg-4;
-      background: url("../assets/images/home-board/home-board-btn-light-old.png") no-repeat center center;
+      // background: url("../assets/images/home-board/home-board-btn-light-old.png") no-repeat center center;
+      filter: grayscale(0);
       background-size: 100% 100%;
-      margin-top: 2px;
 
       .active-flag {
         display: block;
@@ -2154,10 +2267,10 @@ export default defineComponent({
       font-size: 0.9em;
     }
 
-    img {
-      width: auto;
-      max-height: 40px;
-    }
+    // img {
+    //   width: auto;
+    //   max-height: 40px;
+    // }
   }
 }
 
@@ -2463,6 +2576,12 @@ export default defineComponent({
 .minigame-select-div {
   position: relative;
 
+  img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 672 / 828;
+  }
+
   &:hover {
   }
 
@@ -2595,14 +2714,46 @@ export default defineComponent({
   }
 }
 
+.news-section {
+  margin-top: 20px;
+  padding: 0 16px;
+}
+
+.news-split {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media (min-width: 769px) {
+    gap: 10px;
+  }
+
+  .news-section {
+    width: 100%;
+    @media (min-width: 769px) {
+      width: calc(50% - 5px);
+    }
+  }
+
+  .news-item-left {
+    width: 100% !important;
+  }
+}
+
 .news-title {
-  background: linear-gradient(#3f4146, #202226);
+  // background: linear-gradient(#3f4146, #202226);
+  background: linear-gradient(180deg, #384a70 0%, #121c31 100%);
+
   height: 61px;
   border: 1px #454545 solid;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 15px;
+
+  &__sub {
+    background: linear-gradient(180deg, #385f70 0%, #122931 100%);
+  }
+
   @media (min-width: 769px) {
     padding: 0px 40x;
   }
@@ -2629,14 +2780,22 @@ export default defineComponent({
 .news-item-box {
   width: 100%;
   height: 60px;
-  background-color: #272a30;
+  background-color: #192235;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 15px;
+  padding: 0px 25px;
   font-size: 12px;
   line-height: 16.8px;
   border-bottom: 1px solid #3f3f3f;
+
+  &:hover {
+    .news-item-title,
+    .news-item-date {
+      transform: scale(1.02);
+      color: #01e1ff !important;
+    }
+  }
 
   @media (min-width: 769px) {
     padding: 0px 40x;
@@ -2653,6 +2812,7 @@ export default defineComponent({
       padding-right: 8px;
     }
     .news-item-title {
+      transition: 0.3s all;
       padding-right: 8px;
       padding-left: 8px;
       @media (max-width: 769px) {
@@ -2670,6 +2830,7 @@ export default defineComponent({
   }
   .news-item-right {
     .news-item-date {
+      transition: 0.3s all;
       color: #92959f;
     }
   }
@@ -2682,8 +2843,8 @@ export default defineComponent({
   .grid {
     .game-board-item {
       img {
-        width: auto;
-        max-height: 40px;
+        // width: auto;
+        // max-height: 40px;
       }
     }
   }
@@ -2706,7 +2867,8 @@ export default defineComponent({
     }
   }
 
-  .slot-grid, .fish-grid {
+  .slot-grid,
+  .fish-grid {
     grid-template-columns: repeat(4, 1fr);
     column-gap: 14px;
     row-gap: 14px;
@@ -2715,12 +2877,12 @@ export default defineComponent({
 
 @media (min-width: 991px) {
   .grid {
-    padding: 0px 170px;
+    padding: 0px 12px;
   }
 
   .grid .game-board-item {
     cursor: pointer;
-    border-radius: 10px;
+    // border-radius: 10px;
     // max-width: 110px;
     // max-height: 125px;
     // aspect-ratio: 110/125;
@@ -2766,7 +2928,8 @@ export default defineComponent({
     grid-template-columns: repeat(4, 1fr);
   }
 
-  .slot-grid, .fish-grid {
+  .slot-grid,
+  .fish-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 
@@ -2778,26 +2941,6 @@ export default defineComponent({
   .game-grid-lists {
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
-    //.plat-form-box {
-    //  position: absolute;
-    //  /* position: relative; */
-    //  left: 0px;
-    //  bottom: 0px;
-    //  z-index: -1;
-    //  width: 100%;
-    //  height: 60px;
-    //  background-color: #1f2833;
-    //  display: flex;
-    //  justify-content: center;
-    //  align-items: center;
-    //
-    //  .plat-form-text {
-    //    color: #fff;
-    //    font-size: 20px;
-    //    line-height: 28px;
-    //    position: relative;
-    //  }
-    //}
 
     .platform-company-box {
       position: absolute;
