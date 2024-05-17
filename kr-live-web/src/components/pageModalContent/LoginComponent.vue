@@ -2,9 +2,10 @@
   <div class="main-section">
     <q-form class="login-window-form" @keypress.enter="onSubmit">
       <div>
-        <label>계정</label>
+        <!-- <label>계정</label> -->
         <q-input
           ref="loginNameRef"
+          label="계정"
           filled
           color="white"
           clearable
@@ -18,9 +19,10 @@
         ></q-input>
       </div>
       <div>
-        <label>암호</label>
+        <!-- <label>암호</label> -->
         <q-input
           ref="pwdRef"
+          label="암호"
           filled
           color="white"
           clearable
@@ -34,10 +36,11 @@
         ></q-input>
       </div>
       <div>
-        <label>암호</label>
+        <!-- <label>암호</label> -->
         <div class="captcha-code">
           <q-input
             ref="captchaRef"
+            label="암호"
             filled
             color="white"
             clearable
@@ -49,14 +52,15 @@
           <img class="captcha-img" :src="verificationImg" @click.prevent="getCode" />
         </div>
       </div>
-      <div class="btn" style="margin-top: 35px">
-        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded />
+      <div class="btn" style="margin-top: 15px">
+        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded flat />
         <q-btn
           @click.prevent="onSubmit"
           :label="'로그인'"
           type="button"
           class="common-large-btn form-button yellow"
           rounded
+          flat
         />
       </div>
     </q-form>
@@ -100,7 +104,7 @@ export default defineComponent({
 
     const openRegister = () => {
       router.push("/?page=register");
-    }
+    };
 
     const getCode = () => {
       api
@@ -196,10 +200,11 @@ export default defineComponent({
   .q-field--filled.q-field--dark .q-field__control:before {
     width: 100%;
     font-size: 14px;
-    border-radius: 3px;
-    border: 1px solid #5c5c5c;
+    border: 1px solid #48b5b5;
     line-height: 40px;
     color: #fff;
+    background: #252e43;
+    border-radius: 8px;
   }
 }
 
@@ -207,6 +212,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   row-gap: 24px;
+  margin-top: 24px;
 }
 </style>
 <style lang="scss" scoped>
@@ -224,11 +230,15 @@ export default defineComponent({
   margin: auto 10px;
 
   &.blue {
-    background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+    // background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+    background: url("../../assets/home/btn-blue.png") no-repeat center center;
+    background-size: 100% 100%;
   }
 
   &.yellow {
-    background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+    // background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+    background: url("../../assets/home/btn-orange.png") no-repeat center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -249,5 +259,6 @@ h5 {
 
 .captcha-code-input {
   margin-right: 16px;
+  width: 100%;
 }
 </style>

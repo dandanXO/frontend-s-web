@@ -31,18 +31,18 @@
           v-model="withdrawInfo.cardId"
           option-value="id"
           emit-value
-          :label="'选择' + chooseLabel()"
+          :label="'선택' + chooseLabel()"
           class="withdraw-selection q-mt-sm q-mb-sm"
           :options="withdrawState.bankCardList"
           map-options
-          :rules="[(val) => !!val || '请选择' + chooseLabel()]"
+          :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]"
         >
           <template v-slot:no-option>
             <q-item>
               <q-item-section class="text-grey">
-                {{ "没有可用的" + chooseCard() }}
+                {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
                 <router-link class="text-bright" to="/account/withdraw">
-                  {{ isUSDT || isEWALLET ? "加" + chooseCard() : "绑定" + chooseCard() }}
+                  {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
                 </router-link>
               </q-item-section>
             </q-item>
@@ -85,10 +85,10 @@
           label="출금금액"
           class="withdraw-field"
           :rules="[
-              (val) => (val && val.length > 0) || '请输入提款金额',
-              (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
-              (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
-              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
+              (val) => (val && val.length > 0) || '출금 금액을 입력해주세요',
+              (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
+              (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
+              (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
               isValidUSDTAmt
             ]"
           clearable
@@ -99,17 +99,17 @@
               </span>
           </template>
           <template v-slot:append>
-              <span style="font-size: 26px" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="전액 인출" color="brightbtn" />
+              <span style="font-size: 26px;" class="text-bright">
+                <q-btn @click="updateWithdrawAmt" label="전액 인출" color="brightbtn" text-color="black" />
               </span>
           </template>
         </q-input>
 
-        <p class="option-btns">
-          <q-btn v-for="(item, index) in countOptions" :key="index" size="md" class="" :label="item + '원'"
+        <div class="option-btns">
+          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="item + '원'"
                  @click="updateWithdrawItem(item)"
           ></q-btn>
-        </p>
+        </div>
 
         <div
           class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
@@ -118,43 +118,43 @@
         >
           <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
             {{
-              "单笔提款: " +
+              "단일 출금: " +
               selectedWithdrawalMethod.withdrawMin +
-              "RMB - " +
+              "WON - " +
               selectedWithdrawalMethod.withdrawMax +
-              "RMB"
+              "WON"
             }}
             <br />
           </template>
           <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-            {{ "今日提款: " + selectedWithdrawalMethod.withdrawMaxAmount + "RMB" }}
+            {{ "오늘 출금: " + selectedWithdrawalMethod.withdrawMaxAmount + "WON" }}
           </template>
           <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-            {{ " 剩余: " + selectedWithdrawalMethod.withdrawMaxTimes + " 次" }}
+            {{ " 잔여: " + selectedWithdrawalMethod.withdrawMaxTimes + " 회" }}
           </template>
         </div>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
           <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">实时汇率：</span>
+            <span style="flex: 1">실시간 환율：</span>
             <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
                 {{ store.currency.value }}
               </span>
           </div>
           <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">预计到帐：</span>
+            <span style="flex: 1">예상 입금：</span>
             <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
                 {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
                 USDT
               </span>
           </div>
-          <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
+          <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
         </div>
         <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
         <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
         <!--          </div>-->
         <div v-else-if="isEWALLET">
-          <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
+          <div class="q-mt-sm text-neontb">*특별히 언급합니다: 출금 지갑과 게임 계정의 이름은 반드시 일치해야 합니다</div>
           <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
             <q-btn
               style="border: 1px solid #33bcd4; color: #33bcd4"
@@ -164,7 +164,7 @@
           </div>
         </div>
 
-        <div class="flex-box flex-justify-center">
+        <div class="flex-box-c-c">
           <q-btn
             class="q-mt-md form-button blue quick-withdraw-btn"
             @click="submitWithdraw"
@@ -180,26 +180,11 @@
             v-html="selectedWithdrawalMethod.tips"
           ></div>
           <div v-if="isALIPAY" class="selected-tip">
-            “支付宝提款” 可用时间：早10点-晚12点，其他时间提交系统会自动取消！
+            "알리페이 인출" 사용 가능 시간: 오전 10시 ~ 오후 12시, 다른 시간에 제출하면 시스템이 자동으로 취소됩니다！
           </div>
         </div>
       </q-form>
 
-<!--      <form class="withdraw-form content-form">-->
-<!--        <p>-->
-<!--          <label>은행 카드</label>-->
-<!--          <q-select-->
-<!--            filled-->
-<!--            ref="bankCardRef"-->
-<!--            v-model="withdrawInfo.cardId"-->
-<!--            :options="bankCardList"-->
-<!--            option-value="id"-->
-<!--            option-label="bankName"-->
-<!--            emit-value-->
-<!--            map-options-->
-<!--          />-->
-<!--        </p>-->
-<!--      </form>-->
     </q-card-section>
   </div>
 </template>
@@ -229,7 +214,7 @@ const isALIPAY = ref(false);
 const withdrawLoading = ref(false);
 
 const activeItem = ref(0);
-const countOptions = ref([1,5,10,50,100]);
+const countOptions = ref([1000,5000,10000,20000,50000,100000]);
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
 const withdrawInfo = reactive({
@@ -283,7 +268,8 @@ const loadCards = () => {
 };
 
 const updateWithdrawItem = (amt) => {
-  withdrawInfo.amount= amt;
+  // debugger;
+  withdrawInfo.amount= amt.toString();
 }
 
 const selectMethod = (method, index) => {
@@ -355,11 +341,11 @@ const updateWithdrawAmt = () => {
 
 const tutorialLabel = () => {
   if (selectedWithdrawalMethod.value.code === 'KDPAY') {
-    return 'K豆教程视频'
+    return 'KDPAY 튜토리얼 비디오'
   } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-    return 'EB教程视频'
+    return 'EBPAY 튜토리얼 비디오'
   } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
-    return 'OK教程视频'
+    return 'OKPAY 튜토리얼 비디오'
   }
 }
 const openEWalletTutorial = (code) => {
@@ -380,7 +366,7 @@ const isValidUSDTAmt = (val) => {
     return true;
   }
   const usdtPattern = /^([1-9][0-9]*)$/;
-  return usdtPattern.test(withdrawInfo.amount) || "金额应为正数";
+  return usdtPattern.test(withdrawInfo.amount) || "금액은 양수 여야합니다";
 }
 
 const getWithdrawalMethods = () => {
@@ -490,21 +476,22 @@ onMounted(() => {
       background: #212121;
       padding: 5px 15px;
     }
+  }
 
-    .option-btns {
-      display: grid;
-      grid-template-columns: auto auto auto auto auto auto auto;
-      grid-row-gap: 12px;
-      grid-column-gap: 12px;
-      :deep(.q-btn) {
-        height: 40px;
-        color: #fff;
-        font-size: 14px;
-        border-radius: 3px;
-        background: #18324A;
-        &.active {
-          background: #237BFF;
-        }
+  .option-btns {
+    display: grid;
+    margin-top: 10px;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-row-gap: 12px;
+    grid-column-gap: 12px;
+    :deep(.q-btn) {
+      height: 40px;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 3px;
+      background: #18324A;
+      &.active {
+        background: #237BFF;
       }
     }
   }
@@ -618,6 +605,27 @@ onMounted(() => {
   color: #ffa031;
 }
 
+.withdraw-field{
+  margin-top: 15px;
+  :deep(.q-field__control){
+    background:#252E43;
+  }
+  :deep(.q-field__prepend){
+    padding-left: 10px;
+  }
+}
+.withdraw-selection{
+  :deep(.q-field__control){
+    background:#252E43;
+  }
+}
+
+.bg-brightbtn{
+  background: #38F3FF;
+  color: #131313;
+  margin-right: 8px;
+}
+
 @media (max-width: 768px) {
   .modal-body-content {
     .content-form {
@@ -643,6 +651,12 @@ onMounted(() => {
       }
     }
   }
+}
+
+.flex-box-c-c{
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
 

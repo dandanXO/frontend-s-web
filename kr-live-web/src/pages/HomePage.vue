@@ -2133,9 +2133,9 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   margin: 0px auto 0px;
-  // flex-wrap: wrap;
-  column-gap: 0px;
-  row-gap: 0px;
+  flex-wrap: wrap;
+  column-gap: 10px;
+  row-gap: 10px;
   // width: calc(100% - 20px);
   border-radius: 12px;
   overflow-x: auto;
@@ -2147,6 +2147,9 @@ export default defineComponent({
     column-gap: 20px;
     row-gap: 14px;
     width: calc(100% - 20px);
+    flex-wrap: nowrap;
+    // column-gap: 0px;
+    // row-gap: 0px;
   }
 
   .game-board-item {
@@ -2168,6 +2171,15 @@ export default defineComponent({
     transform: skewX(-16deg);
     overflow: hidden;
 
+    img {
+      display: block;
+      width: 100%;
+
+      @media (max-width: 769px) {
+        max-width: 120px;
+      }
+    }
+
     .item-bg {
       img {
         width: auto;
@@ -2177,11 +2189,6 @@ export default defineComponent({
         transform: skewX(0deg) scale(1.2);
         transition: all 0.3s;
       }
-    }
-
-    img {
-      display: block;
-      width: 100%;
     }
 
     &:hover {
@@ -2202,13 +2209,17 @@ export default defineComponent({
       align-items: flex-start;
       flex-direction: column;
       padding: 15px 25px;
+      @media (max-width: 769px) {
+        padding: 5px 15px;
+      }
     }
 
     .home-board-item-text {
-      color: #fff;
+      color: #01d9ab;
       font-size: 14px;
       line-height: 19.6px;
       display: block;
+      font-weight: bold;
       transform: skewX(16deg);
       @media (min-width: 769px) {
         font-size: 24px;
@@ -2218,6 +2229,8 @@ export default defineComponent({
     .home-board-item-text__en {
       display: block;
       transform: skewX(16deg);
+      color: #fff;
+      margin-top: 2px;
     }
 
     .active-flag {
@@ -2701,13 +2714,24 @@ export default defineComponent({
   }
 }
 
+.news-section {
+  margin-top: 20px;
+  padding: 0 16px;
+}
+
 .news-split {
   display: flex;
-  margin-top: 20px;
-  gap: 20px;
+  flex-wrap: wrap;
+
+  @media (min-width: 769px) {
+    gap: 10px;
+  }
 
   .news-section {
-    width: calc(50% - 10px);
+    width: 100%;
+    @media (min-width: 769px) {
+      width: calc(50% - 5px);
+    }
   }
 
   .news-item-left {
