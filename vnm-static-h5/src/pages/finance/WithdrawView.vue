@@ -562,6 +562,7 @@ export default defineComponent({
         window.open(url);
       }
     };
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,

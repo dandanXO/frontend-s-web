@@ -26,7 +26,7 @@
             <div v-if="i === 0"></div>
             <div v-if="i !== 0">
               {{ num.amt }} 元
-              <img :src="require(`../images/daily-fund-ranking-${i + 1}.png`)" />
+              <img :src="require(`../images/daily-fund-ranking-${i}.png`)" />
             </div>
           </div>
         </div>
@@ -441,8 +441,10 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
 
 @for $i from 1 through length($ranking-list) {
   .ranking-#{$i} {
-    width: nth($ranking-list, $i) !important;
+    // width: nth($ranking-list, $i) !important;
+    width: 2.7rem;
     text-align: center;
+    font-size: 12px;
   }
 }
 
@@ -541,8 +543,10 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
       margin-left: -30px;
       .fund-progress-ranking-wrapper {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: end;
+        padding-right: 10px;
+        gap: 20px;
         width: 100%;
 
         &:last-child {

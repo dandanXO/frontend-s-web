@@ -1,7 +1,7 @@
 export default {
   menu: {
     home: "Trang chủ",
-    esports: "E-sport",
+    esports: "eSport",
     sports: "Thể Thao",
     liveCasino: "Casino",
     poker: "Poker",
@@ -105,6 +105,7 @@ export default {
     maintenanceTime: "Thời gian bảo trì",
     viewnow: "Xem ngay",
     playnow: "Chơi Ngay",
+    betnow: "Cược Ngay",
     systemError: "Lỗi hệ thống",
     loginTitle: "Thông báo",
     bankName: "Ngân hàng ",
@@ -151,7 +152,8 @@ export default {
     futureGaming: "Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.",
     scanToDownload: "Quét để tải ứng dụng",
     moreDetails: "Chi tiết thêm",
-    announcementList: "Danh sách thông báo"
+    announcementList: "Danh sách thông báo",
+    hotMatches: "Trận Đấu Hot",
   },
   personal: {
     personalInfo: "Thông tin cá nhân",
@@ -266,8 +268,12 @@ export default {
     btn_claim_now: "Yêu cầu ngay",
     net_work_bonus: "Tiền thưởng",
 
-    bonus: "Phần thưởng"
+    bonus: "Phần thưởng",
     // vi-daily-checkin end
+    
+    // vi-mualixi-redpacket
+    congrats: "Chúc mừng",
+    claim: "Nhận",
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -906,6 +912,7 @@ export default {
     30004: "Nạp tiền thành viên không đáp ứng yêu cầu",
     30005: "Doanh số chưa đạt yêu cầu",
     30006: "Những thành viên được liệt kê là chủ tài khoản bị cấm nhận đặc quyền này",
+    30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     31000: "Không tìm thấy ưu đãi",
     32000: "Không tìm thấy cấp bậc VIP",
     32003: "Chưa đạt cấp VIP yêu cầu",

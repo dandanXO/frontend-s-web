@@ -1,7 +1,7 @@
 export default {
   menu: {
     home: "Home",
-    esports: "Esports",
+    esports: "eSports",
     sports: "Sports",
     liveCasino: "Live Casino",
     poker: "Poker",
@@ -105,6 +105,7 @@ export default {
     maintenanceTime: "Time of maintenance",
     viewnow: "View Now",
     playnow: "Play Now",
+    betnow: "Bet Now",
     systemError: "System error",
     loginTitle: "Announcement",
     bankName: "Bank Name",
@@ -151,7 +152,9 @@ export default {
     futureGaming: "The future of gaming is here.Great games on all devices.TF88 App",
     scanToDownload: "Scan to download the APP",
     moreDetails: "More details",
-    announcementList: "Announcement List"
+    announcementList: "Announcement List",
+    playNow: "Play now",
+    hotMatches: "Hot Matches",
   },
   personal: {
     personalInfo: "Personal information",
@@ -267,8 +270,12 @@ export default {
     btn_lottery_now: "Lottery Now",
     btn_claim_now: "Claim Now",
     net_work_bonus: "Net loss bonus",
-    bonus: "Bonus"
+    bonus: "Bonus",
     // vi-daily-checkin end
+    
+    // vi-mualixi-redpacket
+    congrats: "Congratulations",
+    claim: "Claim",
   },
   mail: {
     inbox: "Inbox",
@@ -912,6 +919,7 @@ export default {
     30004: "Member deposit does not meet the requirements",
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
+    30007: "The user's deposit history does not meet the requirements",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

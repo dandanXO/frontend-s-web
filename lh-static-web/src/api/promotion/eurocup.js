@@ -59,6 +59,10 @@ export function firstBet(gameType) {
   return server.EVENT.post("/first-bet/claim", {gameType: gameType});
 }
 
+export function claimSaveBonus(gameType) {
+  return server.EVENT.post("/first-bet/refund", {});
+}
+
 // export function firstBet(gameType) {
 //     const requestOptions = {
 //         method: 'POST',

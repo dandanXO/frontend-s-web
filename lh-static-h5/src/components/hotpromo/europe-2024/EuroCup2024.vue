@@ -46,6 +46,9 @@ function activateTab(index) {
   width: 100%;
   max-width: 1500px;
   margin: 10px auto;
+  .rule-title {
+    text-align: center;
+  }
   .tab-buttons {
     width: 100%;
     display: flex;

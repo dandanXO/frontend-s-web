@@ -8,7 +8,7 @@
         <div class="content-main">
           <img src="../../../assets/images/promotion/hotpromo/deposit-award/activity-period.png" />
           <p>
-            活动时间：5月9日起
+            活动时间：5月17日起
           </p>
 
           <img style="padding-top: 20px;" src="../../../assets/images/promotion/hotpromo/deposit-award/activity-content.png" />

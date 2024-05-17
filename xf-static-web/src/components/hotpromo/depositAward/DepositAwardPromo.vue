@@ -3,11 +3,12 @@
     <div class="deposit-award-content">
       <div class="content-main">
         <img src="../../../assets/images/promotion/hotpromo/deposit-award/activity-period.png" />
-        <p>
-          活动时间：5月9日起
-        </p>
+        <p>活动时间：5月17日起</p>
 
-        <img style="padding-top: 30px;" src="../../../assets/images/promotion/hotpromo/deposit-award/activity-content.png" />
+        <img
+          style="padding-top: 30px"
+          src="../../../assets/images/promotion/hotpromo/deposit-award/activity-content.png"
+        />
         <p>
           活动内容：活动期间，会员存款≥500元即可获得对应彩金，若当日投注金额达到存款金额3倍或 以上则可获得对应加赠彩金
         </p>

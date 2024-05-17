@@ -3,7 +3,7 @@
     <linkable-button :to="isLogin ? '/account' : '/login'" class="profile-link-button">
       <div class="profile-info">
         <div class="avatar">
-          <img :src="isLogin && profilePicture ? profilePicture : DefaultAvatarImg" />
+          <img :src="isLogin && profilePhoto ? require(`../../../assets/images/profile/${profilePhoto}.png`) : DefaultAvatarImg" />
         </div>
         <span>{{ isLogin ? nickName : "未登录" }}</span>
       </div>
@@ -38,9 +38,12 @@ import DrawerWithdraw from "assets/images/home/drawer-withdraw.png";
 
 const isLogin = ref(false);
 
+var qs = require('qs')
 const store = userStore();
-const { profilePicture, nickName } = storeToRefs(store);
+const { profilePhoto, nickName } = storeToRefs(store);
 const { hasToken } = store;
+
+console.log(profilePhoto);
 
 onMounted(() => {
   isLogin.value = hasToken();

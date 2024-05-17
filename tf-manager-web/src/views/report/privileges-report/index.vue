@@ -56,6 +56,14 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:report:privilege:export']"
+          @click="requestExportExcel"
+          style="float: right;"
+        >{{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
 
@@ -151,6 +159,17 @@
       :page-count="page.pages"
       :current-page="request.current"
     />
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -161,6 +180,7 @@ import {
   getPrivilegeReport,
   getDailyReport,
   getTotalPrivilegeAmount,
+  getPrivilegeReportExport,
 } from '../../../api/report-privilege'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -199,6 +219,10 @@ const request = reactive({
   siteId: null,
 })
 
+const uiControl = reactive({
+  messageVisible: false
+});
+
 const shortcuts = getShortcuts(t)
 async function loadDaily(row, expandedRows) {
   // 该处是用于判断是展开还是收起行，只有展开的时候做请求，避免多次请求！
@@ -230,6 +254,27 @@ async function loadDaily(row, expandedRows) {
         console.log(page.records)
       }
     })
+  }
+}
+
+async function requestExportExcel() {
+  const requestCopy = { ...request }
+  const query = {}
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value
+    }
+  })
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = request.recordTime.join(',')
+    }
+  }
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getPrivilegeReportExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
   }
 }
 
