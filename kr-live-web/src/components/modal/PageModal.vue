@@ -1,7 +1,6 @@
 <template>
-    <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
-      <q-card style="max-width: none; background: transparent; box-shadow: none;">
-
+  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
+    <q-card style="max-width: none; background: transparent; box-shadow: none">
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
             <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
@@ -10,6 +9,9 @@
             </div>
           </div>
       </div> -->
+      <p style="text-align: right">
+        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" />
+      </p>
 
       <div class="page-dialog-main">
         <!-- <LangToggle v-if="showLangToggle"/> -->
@@ -18,16 +20,21 @@
             <p class="header-info-description">{{ headerInfo.description }}</p>
             <p class="header-title">
               <span>{{ headerInfo.title }}</span>
-              <br />
-              <span>{{ headerInfo.subTitle }}</span>
+              <!-- <br /> -->
+              <!-- <span>{{ headerInfo.subTitle }}</span> -->
             </p>
             <p>
-              <img src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" style="margin-right: 25px; width: 30px;"/>
+              <img
+                class="header-close-btn"
+                src="../../assets/images/index/modal-close-btn.png"
+                @click="closeDialog()"
+                style="opacity: 0"
+              />
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
             <p class="header-info-description">{{ headerInfo.description }}</p>
-            <div class="left-group">
+            <!-- <div class="left-group">
               <div
                 v-for="item in leftLinks"
                 :key="item.key"
@@ -36,11 +43,11 @@
               >
                 <div @click="item.clickHandler()" class="register-text">{{ item.info }}</div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="page-dialog-tabs">
             <template v-if="!isMinimalMode">
-              <q-tabs style="padding: 0px 30px" v-model="page" align="justify">
+              <q-tabs style="padding: 0px 30px; background-color: #212632" v-model="page" align="justify">
                 <template v-for="item in formattedPagesInfo" :key="item.page">
                   <q-tab
                     @click="tabClick(item.page)"
@@ -49,7 +56,11 @@
                     class="page-dialog-tab"
                     v-if="item.tabIndex === tabIndex"
                   >
-                    <img style="padding-right:5px;" :src="page === item.page ? item.iconActiveUrl : item.iconUrl" :alt="item.info" />
+                    <img
+                      style="padding-right: 5px"
+                      :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                      :alt="item.info"
+                    />
                   </q-tab>
                 </template>
               </q-tabs>
@@ -66,7 +77,7 @@
         </div>
       </div>
     </q-card>
-    </q-dialog>
+  </q-dialog>
 </template>
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
@@ -86,6 +97,7 @@ import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
 import LangToggle from "components/LangToggle.vue";
+import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -168,7 +180,7 @@ const pagesInfo = reactive([
     headerInfo: {
       title: "송금신청",
       subTitle: "DEPOSIT",
-      description: "입금시 꼭 계좌문의를 하세요!",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
@@ -234,6 +246,19 @@ const pagesInfo = reactive([
       title: "공지사항",
       subTitle: "NOTICE",
       description: "입금시 꼭 계좌문의를 하세요!"
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "withdrawcard",
+    info: "은행카드추가",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: AddWithdrawBankCard,
+    headerInfo: {
+      title: "은행카드추가",
+      subTitle: "ADD BANK CARD",
+      description: "출금 계좌에 새 은행 카드 추가"
     }
   },
   {
@@ -421,14 +446,16 @@ onMounted(() => {
   top: 8px;
 }
 .page-dialog-main {
-  --main-bg-color: #030303;
+  --main-bg-color: #212632;
   // top: 80px;
   // position: absolute;
-  padding: 0 0 0 140px;
+  // padding: 0 0 0 140px;
   box-sizing: content-box;
-  width: 860px;
+  // width: 860px;
+  width: 100%;
   max-width: 860px;
   max-height: 100%;
+  border-radius: 8px;
   :deep(.q-panel) {
   }
   &,
@@ -483,7 +510,7 @@ onMounted(() => {
 
 :deep(.q-tab--active) {
   border-bottom: 1px solid #767676;
-  border-image: linear-gradient(to right, #767676, #0075FE, #767676) 0.8;
+  border-image: linear-gradient(to right, #767676, #0075fe, #767676) 0.8;
   .q-tab__label {
     color: #fff;
     font-weight: unset;
@@ -510,12 +537,15 @@ onMounted(() => {
   margin-top: 10px;
   margin-bottom: 10px;
   // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
-  background: linear-gradient(180deg, #E1E1E1 0%, #525252 100%);
+  background: linear-gradient(180deg, #e1e1e1 0%, #525252 100%);
   border: 2px solid #0000008c;
   color: #000;
   border-radius: 2px;
+  &:hover {
+    filter: brightness(1.1);
+  }
   &.active {
-    background: linear-gradient(180deg, #A7E1FF 0%, #275FFF 100%);
+    background: linear-gradient(180deg, #a7e1ff 0%, #275fff 100%);
     color: #fff;
     border: 2px solid rgb(104 146 255 / 40%);
   }
@@ -525,9 +555,20 @@ onMounted(() => {
   }
 }
 
+.header-close-btn {
+  // margin-right: 25px;
+  width: 40px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+    filter: brightness(1.1);
+  }
+}
+
 .page-dialog-main-header {
   justify-content: space-between;
-  height: 75px;
+  height: 56px;
   width: 100%;
   padding: unset;
   background-image: url("../../assets/images/pages-modal/modal-header.svg");
@@ -535,12 +576,16 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
   .header-title {
     text-align: center;
     white-space: nowrap;
+    color: #161822;
+    font-weight: bold;
   }
+
   p {
     flex: 1;
     margin: auto;
@@ -564,18 +609,20 @@ onMounted(() => {
 }
 .page-dialog-tabs {
   min-height: calc(100vh - 240px);
-  background: var(--main-bg-color);
+  // background: var(--main-bg-color);
 
   :deep(.q-tab) {
     padding-bottom: 10px;
   }
   .q-tab-panels {
     overflow-y: hidden;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
 }
 .q-panel {
   .q-tab-panel {
-    padding: 10px 60px 120px;
+    padding: 10px 20px 60px;
     box-sizing: border-box;
     overflow-y: scroll;
     max-height: calc(90vh - 200px);

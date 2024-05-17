@@ -1,8 +1,8 @@
 <template>
   <div class="account-menu-container">
     <div class="account-info-wrapper">
-      <div class="account-info-bg" @click="onShowProfile">
-        <div  class="account-avatar">
+      <div class="account-info-bg" >
+        <div @click="onShowProfile" class="account-avatar">
           <img v-if="!store.profilePhoto" src="../../assets/images/home/profile-pic.png" />
           <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
           <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto" />
@@ -15,7 +15,7 @@
             <span v-if="isLoadingBalance">加载中...</span>
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
           </span>
-          <el-icon>
+          <el-icon style="cursor: pointer;">
             <RiRefreshLine color="#468CFF" />
           </el-icon>
         </div>
@@ -116,6 +116,8 @@ import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
 import { RiRefreshLine } from "vue-remix-icons";
+import { uploadImage, saveImage } from '@/api/personal/common';
+import { ElMessage } from "element-plus";
 
 const inputImage = ref(null)
 const selectedImage = ref(null)

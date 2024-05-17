@@ -3,13 +3,13 @@
     <div class="information">
       <div class="member">
         <img src="../../assets/images/login/member.svg" alt="" />
-        <div>{{store.nickName}}</div>
+        <div>{{ store.nickName }}</div>
       </div>
       <div class="letter">
         <img src="../../assets/images/login/letter.svg" alt="" />
         <div>
           쪽지
-          <span>（0）</span>
+          <span>(0)</span>
         </div>
       </div>
       <div class="money">
@@ -57,12 +57,12 @@ const store = userStore();
 const router = useRouter();
 
 const goToPersonalInfo = () => {
-  router.push('/?page=personal/info');
-}
+  router.push("/?page=personal/info");
+};
 
 const goToTransactions = () => {
-  router.push('/?page=transaction/records');
-}
+  router.push("/?page=transaction/records");
+};
 
 const onLogoutSubmit = () => {
   store.memberLogout();
@@ -125,21 +125,26 @@ const onLogoutSubmit = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: 10px;
+  row-gap: 2px;
+
+  @media (max-width: 769px) {
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
 }
 .right-group {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-left: 12px;
-  row-gap: 16px;
+  row-gap: 8px;
 }
 
 .points-conversion,
 .my-page {
   width: 80px;
-  height: 28px;
-  background-image: url("../../assets/images/login/loggin-after-btn-1.png");
+  height: 36px;
+  background-image: url("../../assets/home/btn-blue.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -154,16 +159,16 @@ const onLogoutSubmit = () => {
     line-height: 16.8px;
     color: #fff;
     @media (min-width: 1200px) {
-      font-size: 16px;
-      line-height: 22.4px;
+      font-size: 14px;
+      line-height: 1;
     }
   }
 }
 
 .other-points-conversion {
   width: 80px;
-  height: 28px;
-  background-image: url("../../assets/images/login/loggin-after-btn-2.png");
+  height: 36px;
+  background-image: url("../../assets/home/btn-orange.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -179,8 +184,8 @@ const onLogoutSubmit = () => {
     line-height: 16.8px;
     color: #fff;
     @media (min-width: 1200px) {
-      font-size: 16px;
-      line-height: 22.4px;
+      font-size: 14px;
+      line-height: 1;
     }
   }
 }
