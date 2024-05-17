@@ -97,6 +97,7 @@ import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
 import LangToggle from "components/LangToggle.vue";
+import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -245,6 +246,19 @@ const pagesInfo = reactive([
       title: "공지사항",
       subTitle: "NOTICE",
       description: "입금시 꼭 계좌문의를 하세요!"
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "withdrawcard",
+    info: "은행카드추가",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: AddWithdrawBankCard,
+    headerInfo: {
+      title: "은행카드추가",
+      subTitle: "ADD BANK CARD",
+      description: "출금 계좌에 새 은행 카드 추가"
     }
   },
   {

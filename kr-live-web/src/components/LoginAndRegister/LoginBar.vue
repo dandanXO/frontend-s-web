@@ -1,7 +1,11 @@
 <template>
   <div class="container">
+    <div class="top-header">
+      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.png" /></div>
+    </div>
+
     <div class="content">
-      <div class="left-content">
+      <div class="left-content" :class="navActive && 'active'" @click="navActive = false">
         <div
           v-for="(item, index) in iconInfo"
           :key="index"
@@ -23,7 +27,7 @@
 <script setup>
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
@@ -31,6 +35,11 @@ const store = userStore();
 const $q = useQuasar();
 
 const router = useRouter();
+
+const navActive = ref(false);
+const toggleNav = () => {
+  navActive.value = !navActive.value;
+};
 
 const showNotify = () => {
   $q.notify({
@@ -109,6 +118,21 @@ const iconInfo = reactive([
 </script>
 
 <style scoped lang="scss">
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  background: salmon;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 12px;
+  background: rgba(18, 17, 33, 0.6);
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
 .container {
   // background: transparent;
   width: 100%;
@@ -151,8 +175,33 @@ const iconInfo = reactive([
   border-style: solid;
   border-color: #333333;
   padding-left: 8px;
-
   display: none;
+
+  &.active {
+    display: flex;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 17, 33, 0.9);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 12px;
+    gap: 16px;
+    z-index: 9;
+
+    .credit-info {
+      flex-direction: row;
+
+      .info-text {
+        font-size: 16px;
+      }
+    }
+  }
+
+  // display: none;
   @media (min-width: 769px) {
     display: flex;
     width: 58%;
