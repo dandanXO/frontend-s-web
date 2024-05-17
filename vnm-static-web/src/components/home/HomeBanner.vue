@@ -194,7 +194,8 @@ onMounted(() => {
 <style lang="scss">
 .imptann-modal {
   background: transparent;
-  max-width: 800px;
+  max-width: 600px;
+  margin-top: 50px !important;
 
   .el-dialog__body {
     padding: 0 !important;

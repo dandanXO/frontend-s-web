@@ -52,10 +52,10 @@ export default {
     // side menu
     menu_sports: "Thể Thao",
     menu_esports: "eSports",
-    menu_livecasino: "Live Casino",
+    menu_livecasino: "Casino",
     menu_poker: "Poker",
     menu_lottery: "Xổ Số",
-    menu_slots: "NỔ HŨ",
+    menu_slots: "Nổ Hũ",
     menu_fishing: "Bắn Cá",
     menu_cockfighting: "ĐÁ GÀ",
     menu_rebate: "Hoàn Trả",
