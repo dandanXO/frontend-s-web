@@ -5,7 +5,7 @@
         <div  class="account-avatar">
           <img v-if="!store.profilePhoto" src="../../assets/images/home/profile-pic.png" />
           <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto" />
+          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
         </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
@@ -140,6 +140,7 @@
 </template>
 
 <script setup>
+import moment from "moment"
 import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
@@ -153,6 +154,8 @@ components: {
   Cropper,
   CircleStencil
 }
+
+const timestamp = moment().unix();
 
 const cropperRef = ref(null);
 const croppedImg = ref(null);
