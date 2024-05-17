@@ -49,13 +49,12 @@ export default {
     // side menu
     menu_sports: "Sports",
     menu_esports: "eSports",
-    menu_livecasino: "Live Casino",
+    menu_livecasino: "Casino",
     menu_poker: "Poker",
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
-
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
