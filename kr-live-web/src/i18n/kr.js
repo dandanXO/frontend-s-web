@@ -35,7 +35,7 @@ export default {
     enter_account_number: "Please enter Bank Account Number",
     withdraw_methods: "Withdraw Options",
     choose_a_bank: "Choose A Bank",
-    please_select_bank: "Please Select A Bank",
+    please_select_bank: "은행을 선택해주세요",
     next_page: "Next Step",
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",

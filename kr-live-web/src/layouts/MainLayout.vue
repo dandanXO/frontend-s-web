@@ -8,7 +8,9 @@
 
     <q-page-container>
       <div class="home-banner-wrapper">
-        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" />
+        <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
+
+        <div class="jackpot"><img src="../assets/home/jackpot.png" /></div>
       </div>
 
       <div class="main">
@@ -83,6 +85,7 @@ export default defineComponent({
       { imgUrl: require("../assets/images/footer/logo-nlc.png") },
       { imgUrl: require("../assets/images/footer/logo-pg.png") },
       { imgUrl: require("../assets/images/footer/logo-bti.png") },
+      { imgUrl: require("../assets/images/footer/logo-spribe.png") }
     ]);
 
     const route = useRoute();
@@ -548,30 +551,31 @@ svg path {
   width: calc(100%);
 }
 
-.top-logo{
+.top-logo {
   width: 33%;
   @media (max-width: 768px) {
-    width : 66%;
+    width: 66%;
   }
 }
 
 .home-banner-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   position: relative;
   width: 100%;
   height: 200px;
-  background-image: url("../assets/images/headerBanner/banner-phone.png");
-  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url("../assets/home/home-banner.png");
+  // background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 
   @media (min-width: 1200px) {
-    background-image: url("../assets/images/headerBanner/banner.svg");
-    height: 440px;
+    background-image: url("../assets/home/home-banner.png");
+    background-position: top center;
+    height: 480px;
   }
 }
 
@@ -660,6 +664,19 @@ footer {
   }
   .header-vip-btn {
     margin-left: 130px;
+  }
+}
+
+.jackpot {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  img {
+    display: block;
+    width: 100%;
+    max-width: 880px;
   }
 }
 </style>

@@ -2,7 +2,12 @@
   <div class="container">
     <div class="content">
       <div class="left-content">
-        <div v-for="(item, index) in iconInfo" :key="index" @click="store.token ? item.goPage() : showNotify()" class="credit-info cursor-pointer">
+        <div
+          v-for="(item, index) in iconInfo"
+          :key="index"
+          @click="store.token ? item.goPage() : showNotify()"
+          class="credit-info cursor-pointer"
+        >
           <img :src="item.iconUrl" alt="" />
           <div class="info-text">{{ item.info }}</div>
         </div>
@@ -23,7 +28,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 const store = userStore();
-const $q= useQuasar()
+const $q = useQuasar();
 
 const router = useRouter();
 
@@ -34,7 +39,7 @@ const showNotify = () => {
     message: "로그인 해주세요",
     icon: "report_problem"
   });
-}
+};
 
 const iconInfo = reactive([
   // {
@@ -45,26 +50,61 @@ const iconInfo = reactive([
   //   }
   // },
   {
-    info: "출금신청",
-    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/withdraw`);
-    }
-  },
-  {
     info: "공지사항",
-    iconUrl: require("../../assets/icon/notify.svg"),
+    iconUrl: require("../../assets/icon/icon-notify.svg"),
     goPage: () => {
       router.push(`/?page=notify`);
     }
   },
   {
-    info: "고객센터",
-    iconUrl: require("../../assets/icon/customerService.svg"),
+    info: "이벤트",
+    iconUrl: require("../../assets/icon/icon-promo.svg"),
     goPage: () => {
-      router.push(`/?page=customer/service`);
+      router.push(`/`);
+    }
+  },
+  {
+    info: "문의함",
+    iconUrl: require("../../assets/icon/icon-service.svg"),
+    goPage: () => {
+      router.push(`/`);
+    }
+  },
+  {
+    info: "입금신청",
+    iconUrl: require("../../assets/icon/icon-deposit.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/deposit`);
+    }
+  },
+  {
+    info: "출금신청",
+    iconUrl: require("../../assets/icon/icon-withdrawal.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/withdraw`);
+    }
+  },
+  {
+    info: "배팅내역",
+    iconUrl: require("../../assets/icon/icon-betting.svg"),
+    goPage: () => {
+      router.push(`/`);
+    }
+  },
+  {
+    info: "쪽지함",
+    iconUrl: require("../../assets/icon/icon-message.svg"),
+    goPage: () => {
+      router.push(`/`);
     }
   }
+  // {
+  //   info: "고객센터",
+  //   iconUrl: require("../../assets/icon/icon-service.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=customer/service`);
+  //   }
+  // }
 ]);
 </script>
 
@@ -78,10 +118,12 @@ const iconInfo = reactive([
   border: none;
 
   @media (min-width: 769px) {
-    background: linear-gradient(#292b31, #191b1e);
-    border-width: 1px 0px 1px 0px;
+    // background: linear-gradient(#292b31, #191b1e);
+    background: rgba(18, 17, 33, 0.6);
+    border-width: 2px 0px 2px 0px;
     border-style: solid;
-    border-color: #333333;
+    border-color: #2a306c;
+    backdrop-filter: blur(6px);
   }
 }
 
@@ -103,13 +145,13 @@ const iconInfo = reactive([
   justify-content: space-around;
   width: 100%;
   height: 68px;
-  background: linear-gradient(#292b31, #191b1e);
+  // background: linear-gradient(#292b31, #191b1e);
   border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: #333333;
   padding-left: 8px;
   @media (min-width: 769px) {
-    width: 40%;
+    width: 70%;
     height: 100%;
     border: none;
   }
@@ -123,8 +165,8 @@ const iconInfo = reactive([
   margin-top: 16px;
   padding-right: 8px;
   @media (min-width: 769px) {
-    background: linear-gradient(#292b31, #191b1e);
-    width: 60%;
+    // background: linear-gradient(#292b31, #191b1e);
+    width: 30%;
     justify-content: flex-end;
     margin-top: 0px;
   }
@@ -133,7 +175,7 @@ const iconInfo = reactive([
 .info-text {
   font-size: 14px;
   font-weight: 500;
-  color: #a5a6a7;
+  color: #ffffff;
   line-height: 28px;
   margin-left: 5px;
 
@@ -148,6 +190,9 @@ const iconInfo = reactive([
   display: flex;
   flex-direction: column;
   align-items: center;
+  &:hover .info-text {
+    color: #01d9ab;
+  }
 
   img {
     width: 20px;
