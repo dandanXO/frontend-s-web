@@ -248,15 +248,15 @@
               maxlength="50"
             />
           </el-form-item>
+          <el-form-item :label="t('fields.commission')" prop="commission" v-loading="uiControl.shareRatioSettingLoading">
+            <el-input
+              v-model="form.commission"
+              style="width: 350px;"
+              :maxlength="uiControl.commissionMax"
+              @keypress="restrictCommissionDecimalInput($event)"
+            />
+          </el-form-item>
           <div v-if="!uiControl.shareRatioSettingVisible">
-            <el-form-item :label="t('fields.commission')" prop="commission" v-loading="uiControl.shareRatioSettingLoading">
-              <el-input
-                v-model="form.commission"
-                style="width: 350px;"
-                :maxlength="uiControl.commissionMax"
-                @keypress="restrictCommissionDecimalInput($event)"
-              />
-            </el-form-item>
             <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
               <el-input
                 v-model="form.revenueShare"
@@ -812,10 +812,8 @@ const validateReEnterPassword = (rule, value, callback) => {
 }
 
 const validateCommission = (rule, value, callback) => {
-  if (form.commissionModel !== 'DETAILS') {
-    if (value !== '' && (form.commission < 0 || form.commission > 1)) {
-      callback(new Error(t('message.validateCommissionFormat')))
-    }
+  if (value !== '' && (form.commission < 0 || form.commission > 1)) {
+    callback(new Error(t('message.validateCommissionFormat')))
   }
   callback()
 }
@@ -902,6 +900,7 @@ const formRules = reactive({
   ],
   siteId: [required(t('message.validateSiteRequired'))],
   commission: [
+    required(t('message.validateCommissionRequired')),
     { validator: validateCommission, trigger: 'blur' },
   ],
   revenueShare: [{ validator: validateRevenue, trigger: 'blur' }],
