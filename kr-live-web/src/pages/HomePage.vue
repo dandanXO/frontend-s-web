@@ -91,10 +91,6 @@
           :class="currentSelectedMenu == e.name ? 'active-board' : ''"
           @click="switchMenu(e.name, i)"
         >
-          <!-- <div class="item-bg" :style="getBackgroundImageStyle(e.name)"></div> -->
-          <!-- <img class="active-flag" :src="require(`../assets/home/game-board-item-bg-active-flag.png`)" /> -->
-          <!-- <img :src="require(`../assets/images/index/${e.imgName}`)" /> -->
-
           <div class="item-bg"><img :src="require(`../assets/home/menu/menu-${e.name}.png`)" /></div>
 
           <img :src="require(`../assets/home/menu/menu-empty.png`)" />
@@ -112,6 +108,7 @@
         v-if="currentSelectedMenu === 'live'"
         :games="liveCasinoGames"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
         :onClickGameItem="openGame"
       />
     </Transition>
@@ -122,6 +119,7 @@
         v-if="currentSelectedMenu === 'slots' && !isShow"
         :games="platforms"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectSlotPlat"
       />
     </Transition>
@@ -132,6 +130,7 @@
         id="id-slot-board"
         v-if="currentSelectedMenu === 'slots' && isShow"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
       >
         <q-scroll-area
           style="height: 500px"
@@ -305,6 +304,7 @@
         id="id-fish-board"
         v-if="currentSelectedMenu === 'fish' && !isShow"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
       >
         <template v-for="p in fishPlatforms" :key="p">
           <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
@@ -341,12 +341,14 @@
         </template>
       </div>
     </Transition>
+
     <Transition>
       <div
         class="game-scroll-lists"
         id="id-fish-board"
         v-if="currentSelectedMenu === 'fish' && isShow"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
       >
         <q-scroll-area
           style="height: 500px"
@@ -518,6 +520,7 @@
         v-if="currentSelectedMenu === 'esport'"
         :games="esportPlatform"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
         :onClickGameItem="openGame"
       />
     </Transition>
@@ -527,6 +530,7 @@
         v-if="currentSelectedMenu === 'casual' && !isShow"
         :games="platformMinigame"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectCasualPlat"
       />
     </Transition>
@@ -596,6 +600,7 @@
         v-if="currentSelectedMenu === 'sport'"
         :games="sportPlatform"
         :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
         :onClickGameItem="openGame"
       />
     </Transition>
@@ -1250,8 +1255,16 @@ export default defineComponent({
       // { name: "fish", label: "낚시 게임" }
     ];
 
+    const gameItemLoad = ref(false);
+
     const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
+      gameItemLoad.value = true;
+
+      setTimeout(() => {
+        gameItemLoad.value = false;
+      }, 2500);
+
       currentSelectedMenu.value = menu;
       isShow.value = false;
 
@@ -1983,7 +1996,8 @@ export default defineComponent({
       redeemSpecialInviteBonus,
       toggleSpecialInviteBonusPopup,
       newsList,
-      getBackgroundImageStyle
+      getBackgroundImageStyle,
+      gameItemLoad
     };
   }
 });
