@@ -109,7 +109,7 @@ const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .item_list {
-  padding: 20px 0px 30px 0px;
+  // padding: 20px 0px 30px 0px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -119,7 +119,13 @@ const gameType = ref(props.gameType);
   -ms-flex-align: center;
   align-items: center;
   text-align: center;
+  justify-content: space-around;
   gap: 15px;
+  padding: 0 16px;
+  @media (min-width: 769px) {
+    justify-content: flex-start;
+    // padding: 0px;
+  }
 }
 
 a {

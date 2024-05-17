@@ -10,8 +10,8 @@
       <div class="home-banner-wrapper">
         <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
         <div class="jackpot">
-          <img src="../assets/home/jackpot.png" />
-
+          <img class="desktop" src="../assets/home/jackpot.png" />
+          <img class="mobile" src="../assets/home/jackpot-mobile.png" />
           <div class="jackpot-txt">987,654,321.23</div>
         </div>
 
@@ -569,13 +569,13 @@ svg path {
   flex-direction: column;
   position: relative;
   width: 100%;
-  height: 200px;
-  background-image: url("../assets/home/home-banner.png");
+  background-image: url("../assets/home/home-banner-mobile.png");
   // background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 380px;
 
   @media (min-width: 1200px) {
     background-image: url("../assets/home/home-banner.png");
@@ -677,22 +677,41 @@ footer {
   justify-content: center;
   margin: 30px auto;
   position: relative;
+  padding-left: 16px;
+  padding-right: 16px;
 
   .jackpot-txt {
     display: flex;
     position: absolute;
-    top: 70px;
+    bottom: 9%;
     font-size: 34px;
     font-weight: bold;
     color: #f1b252;
     text-shadow: 0 0 5px #ff0000;
     letter-spacing: 3px;
+
+    @media (max-width: 991px) {
+      font-size: 16px;
+    }
   }
 
-  img {
+  img.desktop {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    @media (min-width: 991px) {
+      display: block;
+      max-width: 880px;
+    }
+  }
+
+  img.mobile {
     display: block;
     width: 100%;
-    max-width: 880px;
+    max-width: 500px;
+    @media (min-width: 991px) {
+      display: none;
+    }
   }
 }
 </style>
