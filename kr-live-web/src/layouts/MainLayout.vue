@@ -9,12 +9,16 @@
     <q-page-container>
       <div class="home-banner-wrapper">
         <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
+        <div class="jackpot">
+          <img src="../assets/home/jackpot.png" />
 
-        <div class="jackpot"><img src="../assets/home/jackpot.png" /></div>
+          <div class="jackpot-txt">987,654,321.23</div>
+        </div>
+
+        <LoginBar />
       </div>
 
       <div class="main">
-        <LoginBar />
         <div class="main-content">
           <router-view v-slot="{ Component }">
             <KeepAlive :max="8">
@@ -560,8 +564,9 @@ svg path {
 
 .home-banner-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
+  flex-direction: column;
   position: relative;
   width: 100%;
   height: 200px;
@@ -670,8 +675,19 @@ footer {
 .jackpot {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin: 30px auto;
+  position: relative;
+
+  .jackpot-txt {
+    display: flex;
+    position: absolute;
+    top: 70px;
+    font-size: 34px;
+    font-weight: bold;
+    color: #f1b252;
+    text-shadow: 0 0 5px #ff0000;
+    letter-spacing: 3px;
+  }
 
   img {
     display: block;
