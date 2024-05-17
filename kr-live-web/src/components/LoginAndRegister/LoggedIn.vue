@@ -87,7 +87,7 @@ const onLogoutSubmit = () => {
   flex-wrap: wrap;
   row-gap: 8px;
   column-gap: 24px;
-  width: 63%;
+  width: 60%;
   font-size: 16px;
   justify-content: center;
   align-items: center;
@@ -111,7 +111,7 @@ const onLogoutSubmit = () => {
 
 .btn-group {
   display: flex;
-  width: 37%;
+  width: 40%;
   height: 100%;
   align-items: flex-start;
   justify-content: center;
@@ -126,6 +126,11 @@ const onLogoutSubmit = () => {
   flex-direction: column;
   justify-content: space-between;
   row-gap: 2px;
+
+  @media (max-width: 769px) {
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
 }
 .right-group {
   display: flex;

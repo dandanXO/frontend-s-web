@@ -41,7 +41,7 @@
             <q-item>
               <q-item-section class="text-grey">
                 {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
-                <router-link class="text-bright" to="/account/withdraw">
+                <router-link class="text-bright" to="/?page=withdrawcard">
                   {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
                 </router-link>
               </q-item-section>

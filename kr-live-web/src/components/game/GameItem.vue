@@ -1,73 +1,76 @@
 <template>
   <div class="item_list">
-    <a v-for="p in props.games" :key="p.id" class="game_item" @click="() => props.onClickGameItem(p)">
-      <div class="game_box">
-        <div class="game_thumb_platform">
-          <div class="platform_game_bg">
-            <img
-              :src="
-                (() => {
-                  try {
-                    return `${require(`../../assets/home/games/${gameType}/game-bg-${p.name.toLowerCase()}.png`)}`;
-                  } catch (e) {
-                    return `${require(`../../assets/home/games/${gameType}/game-bg-empty.png`)}`;
-                  }
-                })()
-              "
-            />
-            <div class="activated"><img src="../../assets/home/games/game-bg--active.png" /></div>
-          </div>
+    <q-spinner v-if="props.gameItemLoad" class="center" color="teal" size="50px" />
 
-          <div class="platform_game_title">
-            <div>{{ p.name }}</div>
-            <div>
+    <template v-else>
+      <a v-for="p in props.games" :key="p.id" class="game_item" @click="() => props.onClickGameItem(p)">
+        <div class="game_box">
+          <div class="game_thumb_platform">
+            <div class="platform_game_bg">
               <img
                 :src="
                   (() => {
                     try {
-                      return `${require(`../../assets/home/games/logo/game-logo-${p.name.toLowerCase()}.png`)}`;
+                      return `${require(`../../assets/home/games/${gameType}/game-bg-${p.name.toLowerCase()}.png`)}`;
                     } catch (e) {
-                      return `${require(`../../assets/home/games/logo/game-logo-empty.png`)}`;
+                      return `${require(`../../assets/home/games/${gameType}/game-bg-empty.png`)}`;
+                    }
+                  })()
+                "
+              />
+              <div class="activated"><img src="../../assets/home/games/game-bg--active.png" /></div>
+            </div>
+
+            <div class="platform_game_title">
+              <div>{{ p.name }}</div>
+              <div>
+                <img
+                  :src="
+                    (() => {
+                      try {
+                        return `${require(`../../assets/home/games/logo/game-logo-${p.name.toLowerCase()}.png`)}`;
+                      } catch (e) {
+                        return `${require(`../../assets/home/games/logo/game-logo-empty.png`)}`;
+                      }
+                    })()
+                  "
+                />
+              </div>
+            </div>
+
+            <div class="platform_game_rounded">
+              <img
+                :src="
+                  (() => {
+                    try {
+                      return `${require(`../../assets/home/games/${gameType}/game-rounded-${p.name.toLowerCase()}.png`)}`;
+                    } catch (e) {
+                      return `${require(`../../assets/home/games/${gameType}/game-rounded-empty.png`)}`;
                     }
                   })()
                 "
               />
             </div>
-          </div>
 
-          <div class="platform_game_rounded">
-            <img
-              :src="
-                (() => {
-                  try {
-                    return `${require(`../../assets/home/games/${gameType}/game-rounded-${p.name.toLowerCase()}.png`)}`;
-                  } catch (e) {
-                    return `${require(`../../assets/home/games/${gameType}/game-rounded-empty.png`)}`;
-                  }
-                })()
-              "
-            />
-          </div>
+            <div class="platform_game_img">
+              <img
+                :src="
+                  (() => {
+                    try {
+                      return `${require(`../../assets/home/games/${gameType}/game-${p.name.toLowerCase()}.png`)}`;
+                    } catch (e) {
+                      return `${require(`../../assets/home/games/${gameType}/game-empty.png`)}`;
+                    }
+                  })()
+                "
+              />
+            </div>
 
-          <div class="platform_game_img">
-            <img
-              :src="
-                (() => {
-                  try {
-                    return `${require(`../../assets/home/games/${gameType}/game-${p.name.toLowerCase()}.png`)}`;
-                  } catch (e) {
-                    return `${require(`../../assets/home/games/${gameType}/game-empty.png`)}`;
-                  }
-                })()
-              "
-            />
-          </div>
+            <div class="platform_game_btn">
+              <div class="btn-w-blue">게임입장</div>
+            </div>
 
-          <div class="platform_game_btn">
-            <div class="btn-w-blue">게임입장</div>
-          </div>
-
-          <!-- <img
+            <!-- <img
             class="platform-img"
             :src="
               (() => {
@@ -79,7 +82,7 @@
               })()
             "
           /> -->
-          <!-- <div class="platform-company-box">
+            <!-- <div class="platform-company-box">
                         <div class="company-image" :style="{
                             backgroundImage: (() => {
                                 try {
@@ -90,21 +93,23 @@
                             })()
                         }"></div>
                     </div> -->
-          <!-- <div class="thumb_cover">
+            <!-- <div class="thumb_cover">
             <img src="../../assets/images/index/kr-logo.png" class="icon_play" />
           </div> -->
-        </div>
-        <!-- <div class="game_info">
+          </div>
+          <!-- <div class="game_info">
           <h2>게임입장</h2>
           <h3>{{ p.alias ? p.alias : p.name }}</h3>
         </div> -->
-      </div>
-    </a>
+        </div>
+      </a>
+    </template>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
-const props = defineProps(["games", "onClickGameItem", "gameType"]);
+import { QSpinner } from "quasar";
+const props = defineProps(["games", "onClickGameItem", "gameType", "gameItemLoad"]);
 const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>

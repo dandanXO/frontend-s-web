@@ -3,13 +3,11 @@
     <div class="deposit-options">
       <div class="lil-title">결제 채널</div>
       <div class="deposit-option-container">
-
         <div class="node-wrapper">
           <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
         </div>
       </div>
     </div>
-
   </div>
 
   <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
@@ -44,7 +42,6 @@
         </q-btn>
       </div>
     </div>
-
   </div>
   <div class="deposit-container" v-else>
     <q-form ref="depositForm" class="q-gutter-y-xs content-form">
@@ -64,10 +61,10 @@
         clearable
       >
         <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              <template v-if="isUSDT">USDT</template>
-              <template v-else>{{ store.currency.value }}</template>
-            </span>
+          <span style="font-size: 26px" class="text-bright">
+            <template v-if="isUSDT">USDT</template>
+            <template v-else>{{ store.currency.value }}</template>
+          </span>
         </template>
       </q-input>
 
@@ -85,9 +82,9 @@
         padding="none"
       >
         <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              {{ store.currency.value }}
-            </span>
+          <span style="font-size: 26px" class="text-bright">
+            {{ store.currency.value }}
+          </span>
         </template>
       </q-select>
 
@@ -100,14 +97,20 @@
       </div>
 
       <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
-          <span class="text-positive">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
-            {{ store.currency.value }}
-          </span>
+        <span class="text-positive">
+          1.00 USDT ≈ {{ activeMethod.currencyRate }}
+          {{ store.currency.value }}
+        </span>
       </div>
 
       <p class="option-btns">
-        <q-btn class="select-amt-btn" v-for="(item, index) in countOptions" :key="index" :label="item + '원'" @click="selectAmt(item)"></q-btn>
+        <q-btn
+          class="select-amt-btn"
+          v-for="(item, index) in countOptions"
+          :key="index"
+          :label="item + '원'"
+          @click="selectAmt(item)"
+        ></q-btn>
         <q-btn class="select-amt-btn active" label="정정하기" @click="clearInfo"></q-btn>
       </p>
 
@@ -147,17 +150,13 @@
         </template>
       </q-select>
 
-      <div  class="modal-body-buttons q-mt-md" align="center">
-        <q-btn class="form-button blue" label="입금하기"
-               :loading="btnLoading"
-               @click="confirmDeposit"></q-btn>
+      <div class="modal-body-buttons q-mt-md" align="center">
+        <q-btn class="form-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
       </div>
 
       <div class="q-mt-sm" v-html="activeMethod.msg"></div>
-
     </q-form>
   </div>
-
 
   <!--  <q-dialog class="modal-common-div" width="100%" v-model="isDeposited">-->
   <!--    <q-card style="width: 100%; padding: 1rem 0.5rem">-->
@@ -175,12 +174,10 @@
   <!--      </q-card-section>-->
   <!--    </q-card>-->
   <!--  </q-dialog>-->
-
 </template>
 
 <script setup id="FinanceDeposit">
-
-import { ref, onMounted, reactive,shallowRef } from "vue";
+import { ref, onMounted, reactive, shallowRef } from "vue";
 import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
@@ -189,10 +186,9 @@ import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 
-
 var qs = require("qs");
-const $q = useQuasar()
-const store= userStore();
+const $q = useQuasar();
+const store = userStore();
 const route = useRoute();
 const router = useRouter();
 
@@ -203,9 +199,9 @@ const payTypeClass = ref();
 const payMethods = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
-const countOptions = ref([1000,2000,5000,10000,20000,50000]);
+const countOptions = ref([1000, 2000, 5000, 10000, 20000, 50000]);
 const amountList = ref([]);
-const isDisplay= ref(false);
+const isDisplay = ref(false);
 const submitMessage = ref([]);
 const subMsg0 = ref();
 const subMsg1 = ref();
@@ -226,7 +222,6 @@ const copybtntxt0 = ref("복사");
 const copybtntxt1 = ref("복사");
 const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
-
 
 const depositAmtRef = ref("");
 const currentPath = ref(route.path);
@@ -281,7 +276,6 @@ const verifyDepositAmount = ref([
     val < activeMethod.value.depositMax + 1 ||
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
-
 
 async function confirmDeposit() {
   // debugger;
@@ -354,10 +348,9 @@ async function pDepo(deposit) {
   await cashier
     .post("/session/payment/submit", qs.stringify(obj))
     .then((ret) => {
-      const res = ret.data
+      const res = ret.data;
       // console.log(res)
       if (res.code === 0) {
-
         const response = res.data.result;
         if (res.data.result.payResultType === "OFFLINE") {
           btnLoading.value = false;
@@ -396,7 +389,8 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: '충전 페이지를 열 수 없습니다. 브라우저가 팝업 차단을 하는지 확인하고 팝업 허용으로 변경한 후 충전 작업을 다시 진행하십시오。',
+                  message:
+                    "충전 페이지를 열 수 없습니다. 브라우저가 팝업 차단을 하는지 확인하고 팝업 허용으로 변경한 후 충전 작업을 다시 진행하십시오。",
                   icon: "report_problem"
                 });
                 btnLoading.value = false;
@@ -487,10 +481,9 @@ async function pDepo(deposit) {
     });
 }
 
-
 const isLoadingInitPay = ref(true);
 const initPay = () => {
-  isDisplay.value= false;
+  isDisplay.value = false;
   // debugger;
   $q.loading.show({
     message: "로딩 중... 잠시만 기다려 주세요..."
@@ -499,42 +492,45 @@ const initPay = () => {
   isFetchingApi.value = window.location.pathname === "/deposit";
 
   payMethods.value = [];
-  cashier.get("/session/deposit/index/").then((resp) => {
-    $q.loading.hide();
-    const res = resp.data;
-    if (res.code === 0) {
-      const d = res.data;
-      d.payments.forEach((element) => {
-        element.promoValue = "";
-        element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
-        payMethods.value.push(element);
-      });
-      if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
-        bankCardList.value = payMethods.value[0].extra.banks;
+  cashier
+    .get("/session/deposit/index/")
+    .then((resp) => {
+      $q.loading.hide();
+      const res = resp.data;
+      if (res.code === 0) {
+        const d = res.data;
+        d.payments.forEach((element) => {
+          element.promoValue = "";
+          element.promoStyle = "right: -5px; top: 0px; padding: 20px;";
+          payMethods.value.push(element);
+        });
+        if (payMethods.value[0].extra && payMethods.value[0].extra.banks) {
+          bankCardList.value = payMethods.value[0].extra.banks;
+        }
+
+        console.log(payMethods.value);
       }
 
-      console.log(payMethods.value);
-    }
-
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
-      let isBacked = localStorage.getItem("isBacked");
-      isBacked = isBacked ? JSON.parse(isBacked) : false;
-      if (isBacked === true) {
-        isDeposited.value = true;
+      if (
+        !(
+          (Platform.is.desktop || Platform.is.webkit) &&
+          !Platform.is.capacitor &&
+          Platform.is.name !== "webkit" &&
+          !liff.isInClient()
+        )
+      ) {
+        let isBacked = localStorage.getItem("isBacked");
+        isBacked = isBacked ? JSON.parse(isBacked) : false;
+        if (isBacked === true) {
+          isDeposited.value = true;
+        }
       }
-    }
-    localStorage.removeItem("isBacked");
-    isFetchingApi.value = false;
-  }).catch((err) => {
-    isFetchingApi.value = false;
-  })
+      localStorage.removeItem("isBacked");
+      isFetchingApi.value = false;
+    })
+    .catch((err) => {
+      isFetchingApi.value = false;
+    });
 };
 
 async function onSelect(value) {
@@ -582,7 +578,7 @@ async function loadPrivilege(val) {
             unselectedPrivileges.value.push(p);
             hasPrivilege.value = true;
 
-            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === "") {
+            if (p.code === route.query?.privilegeCode && selectedPrivilege.value === "") {
               selectedPrivilege.value = p;
             }
           }
@@ -594,7 +590,6 @@ async function loadPrivilege(val) {
     }
   });
 }
-
 
 function selectPayType(value) {
   if (value) {
@@ -618,7 +613,7 @@ function selectPayType(value) {
 
 const selectAmt = (amt) => {
   form.localAmount = amt;
-}
+};
 
 function clearInfo() {
   // isDeposited.value = false;
@@ -633,7 +628,6 @@ function clearInfo() {
 function selectedBank(value) {
   form.bankId = value.value.id;
 }
-
 
 function checkMinDepositAmt() {
   if (!selectedPrivilege.value) {
@@ -651,19 +645,16 @@ function checkPrivilege(v) {
   }
 }
 
-
 onMounted(() => {
   initPay();
   // checkNewUser();
 });
-
 </script>
 
 <style lang="scss" scoped>
 .modal-body-wrap {
 }
 .modal-body-buttons {
-
   width: 100%;
   .form-button {
     height: 70px;
@@ -695,13 +686,14 @@ onMounted(() => {
       font-size: 14px;
       color: #fff;
     }
-    label, input {
+    label,
+    input {
       width: 100%;
     }
     input {
       font-size: 14px;
       border-radius: 3px;
-      border: 1px solid #5C5C5C;
+      border: 1px solid #5c5c5c;
       line-height: 40px;
       color: #fff;
       background: #212121;
@@ -718,15 +710,14 @@ onMounted(() => {
         color: #fff;
         font-size: 14px;
         border-radius: 3px;
-        background: #18324A;
+        background: #18324a;
         &.active {
-          background: #237BFF;
+          background: #237bff;
         }
       }
     }
   }
 }
-
 
 @media (max-width: 768px) {
   .modal-body-content {
@@ -807,26 +798,24 @@ onMounted(() => {
   font-size: 14px;
 }
 
-.deposit-field{
-  :deep(.q-field__control){
-    background:#252E43;
+.deposit-field {
+  :deep(.q-field__control) {
+    background: #252e43;
   }
-  :deep(.q-field__prepend){
+  :deep(.q-field__prepend) {
     padding-left: 10px;
   }
 }
-.deposit-select-bank{
-  :deep(.q-field__control){
-    background:#252E43;
+.deposit-select-bank {
+  :deep(.q-field__control) {
+    background: #252e43;
   }
 }
 
-.select-amt-btn{
-  background: #38F3FF;
+.select-amt-btn {
+  background: #38f3ff;
   margin-right: 8px;
   color: #000;
+  margin-bottom: 8px;
 }
-
-
-
 </style>
