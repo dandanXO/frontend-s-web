@@ -108,6 +108,9 @@
         <el-form-item :label="t('fields.title')" prop="title">
           <el-input v-model="form.title" style="width: 350px;" maxlength="100" />
         </el-form-item>
+        <el-form-item :label="t('fields.platformMatchId')" prop="platformMatchId">
+          <el-input v-model="form.platformMatchId" style="width: 350px;" maxlength="20" />
+        </el-form-item>
         <el-form-item :label="t('fields.teamGroup')" prop="teamGroup">
           <el-select
             v-model="form.teamGroup"
@@ -133,7 +136,7 @@
             class="filter-item"
             style="width: 350px;"
             default-first-option
-            @focus="loadTeamWithSite"
+            @focus="loadTeamWithSite(form.siteId)"
             :disabled="uiControl.dialogType === 'EDIT'"
           >
             <el-option
@@ -157,7 +160,7 @@
             class="filter-item"
             style="width: 350px;"
             default-first-option
-            @focus="loadTeamWithSite"
+            @focus="loadTeamWithSite(form.siteId)"
             :disabled="uiControl.dialogType === 'EDIT'"
           >
             <el-option
@@ -218,6 +221,11 @@
           </el-form-item>
         </el-row>
         <el-row>
+          <el-form-item :label="t('fields.platformMatchId')" prop="platformMatchId">
+            <span>{{ endForm.platformMatchId }}</span>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item :label="t('fields.teamGroup')" prop="teamGroup">
             <span>{{ endForm.teamGroup }}</span>
           </el-form-item>
@@ -264,6 +272,7 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
+      <el-table-column prop="platformMatchId" :label="t('fields.platformMatchId')" width="140" />
       <el-table-column prop="teamGroup" :label="t('fields.teamGroup')" width="120" />
       <el-table-column prop="teamOneName" :label="t('fields.teamOne')" width="120">
         <template #default="scope">
@@ -626,6 +635,7 @@ const form = reactive({
   id: null,
   siteId: null,
   title: null,
+  platformMatchId: null,
   teamGroup: null,
   teamOneId: null,
   teamTwoId: null,
@@ -637,6 +647,7 @@ const endForm = reactive({
   id: null,
   siteId: null,
   title: null,
+  platformMatchId: null,
   teamGroup: null,
   teamOneId: null,
   teamOneName: null,
@@ -660,9 +671,14 @@ const endFormRules = reactive({
   winner: [required(t('message.validateWinnerRequired'))]
 })
 
-async function loadTeamWithSite() {
-  const { data: team } = await getTeamBySite(request.siteId);
-  teams.list = team;
+async function loadTeamWithSite(siteId) {
+  if (siteId) {
+    const { data: team } = await getTeamBySite(siteId);
+    teams.list = team;
+  } else {
+    const { data: team } = await getTeamBySite(request.siteId);
+    teams.list = team;
+  }
 }
 
 async function loadUefaMatch() {
@@ -862,6 +878,10 @@ function restrictInput(event) {
   if (charCode < 48 || charCode > 57) {
     event.preventDefault()
   }
+}
+
+async function siteChanged() {
+  await loadTeamWithSite(form.siteId);
 }
 
 onMounted(async () => {
