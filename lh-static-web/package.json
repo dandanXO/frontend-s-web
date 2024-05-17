@@ -32,6 +32,7 @@
     "sweetalert2": "^11.7.12",
     "swiper": "^11.0.7",
     "vue": "^3.4.19",
+    "vue-advanced-cropper": "^2.8.8",
     "vue-qrcode-component": "^2.1.1",
     "vue-qrious": "^3.1.0",
     "vue-remix-icons": "^1.1.1",

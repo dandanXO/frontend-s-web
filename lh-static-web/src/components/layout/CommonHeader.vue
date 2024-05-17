@@ -117,7 +117,7 @@
               <div class="profile-img-wrapper">
                 <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto" />
+                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
@@ -505,6 +505,8 @@ export default defineComponent({
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
+
+    const timestamp = moment().unix();
 
     let cachedTelephone = lsGet(registerTelephoneKey);
     let initialRegisterSendOtpDisabledTimeout = false;
@@ -1462,6 +1464,7 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       isDark,
+      timestamp
     };
   }
 });
