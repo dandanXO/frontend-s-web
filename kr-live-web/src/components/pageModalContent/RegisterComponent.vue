@@ -1,109 +1,63 @@
 <template>
   <div class="main-section">
     <q-form class="register-form" @keypress.enter="onSubmit">
-      <div class="form-item">
-        <label>추천인</label>
-        <q-input
-          dense
-          placeholder="추천인입력"
-          ref="codeAffiliate"
-          filled
-          v-model="regForm.codeAffiliate"
-          color="white"
-          :disable="hasAffiliate"
-          clearable
-        ></q-input>
-      </div>
 
-      <div class="form-item">
-        <label>휴대폰번호</label>
-        <q-input
-          dense
-          placeholder="없이 숫자 만 입력"
-          ref="telRef"
-          filled
-          v-model="regForm.telephone"
-          lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
-            // isValidPhone
-          ]"
-          color="white"
-          clearable
-        >
-          <template v-slot:append>
-            <q-btn
-              class="primary-btn"
-              :label="'인증 코드'"
-              @click="openTelephoneVerificationModal"
-              :disabled="!regForm.telephone"
-            />
-          </template>
-        </q-input>
-      </div>
-
-      <div class="form-item">
-        <label>아이디</label>
-        <q-input
-          dense
-          ref="loginNameRef"
-          filled
-          v-model="regForm.loginName"
-          lazy-rules
-          :rules="[
+      <div class="form-grid-list">
+        <div class="form-item">
+          <label>추천인</label>
+          <q-input
+            dense
+            placeholder="추천인입력"
+            ref="codeAffiliate"
+            filled
+            v-model="regForm.codeAffiliate"
+            color="white"
+            :disable="hasAffiliate"
+            clearable
+          ></q-input>
+        </div>
+        <div class="form-item">
+          <label>아이디</label>
+          <q-input
+            dense
+            ref="loginNameRef"
+            filled
+            v-model="regForm.loginName"
+            lazy-rules
+            :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
             (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
           ]"
-          color="white"
-          clearable
-        />
-      </div>
-
-      <div class="form-item">
-        <label>인증 코드</label>
-        <div class="telephone-otp-row">
-          <q-input
-            dense
-            ref="telOtpCodeRef"
-            v-model="regForm.smsCode"
-            :placeholder="'6자리 숫자'"
-            stack-label
+            color="white"
             clearable
-            autocomplete="off"
-            filled
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
           />
         </div>
-      </div>
-
-      <div class="form-item">
-        <label>비밀번호</label>
-        <div>
-          <q-input
-            dense
-            placeholder="비밀번호입력"
-            ref="pwdRef"
-            filled
-            v-model="regForm.password"
-            :type="isPwd ? 'password' : 'text'"
-            lazy-rules
-            :rules="[
+        <div class="form-item">
+          <label>비밀번호</label>
+          <div>
+            <q-input
+              dense
+              placeholder="비밀번호입력"
+              ref="pwdRef"
+              filled
+              v-model="regForm.password"
+              :type="isPwd ? 'password' : 'text'"
+              lazy-rules
+              :rules="[
               (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
               (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
               // (val) =>
               //   (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
             ]"
-            color="white"
-            clearable
-          >
-            <template v-slot:append>
-              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-            </template>
-          </q-input>
-          <div v-if="regForm.password" class="password-str-div">
+              color="white"
+              clearable
+            >
+              <template v-slot:append>
+                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+              </template>
+            </q-input>
+            <div v-if="regForm.password" class="password-str-div" style="display:none;">
             <span
               :class="{
                 'weak-pwd': pwdStrength == 'weak',
@@ -113,111 +67,154 @@
             >
               {{ $t("lang.weak_level") }}
             </span>
-            <span
-              :class="{
+              <span
+                :class="{
                 'normal-pwd': pwdStrength == 'normal',
                 'strong-pwd': pwdStrength == 'strong'
               }"
-            >
+              >
               {{ $t("lang.medium_level") }}
             </span>
-            <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
+              <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="form-item">
-        <label>은행명</label>
-        <q-select
-          dense
-          filled
-          label="은행선택"
-          ref="bankCardRef"
-          v-model="regForm.bankId"
-          :options="banksList"
-          option-value="id"
-          option-label="name"
-          emit-value
-          map-options
-          lazy-rules
-          :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
-        />
-      </div>
-
-      <div class="form-item">
-        <label>비밀번호확인</label>
-        <q-input
-          dense
-          placeholder="비밀번호확인입력"
-          ref="confirmPwdRef"
-          filled
-          :type="isCfmPwd ? 'password' : 'text'"
-          v-model="regForm.confirmPwd"
-          lazy-rules
-          :rules="[
+        <div class="form-item">
+          <label>비밀번호확인</label>
+          <q-input
+            dense
+            placeholder="비밀번호확인입력"
+            ref="confirmPwdRef"
+            filled
+            :type="isCfmPwd ? 'password' : 'text'"
+            v-model="regForm.confirmPwd"
+            lazy-rules
+            :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
             (val) => val === regForm.password || $t('lang.password_do_not_match'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
           ]"
-          color="white"
-          clearable
-        >
-          <template v-slot:append>
-            <q-icon
-              :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isCfmPwd = !isCfmPwd"
+            color="white"
+            clearable
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isCfmPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isCfmPwd = !isCfmPwd"
+              />
+            </template>
+          </q-input>
+        </div>
+        <div class="form-item">
+          <label>이메일</label>
+          <q-input
+            dense
+            placeholder="이메일"
+            ref="emailRef"
+            type="email"
+            filled
+            v-model="regForm.email"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]"
+            color="white"
+            clearable
+          />
+        </div>
+      </div>
+      <div class="form-grid-list">
+        <div class="form-item">
+          <label>휴대폰번호</label>
+          <q-input
+            dense
+            placeholder="없이 숫자 만 입력"
+            ref="telRef"
+            filled
+            v-model="regForm.telephone"
+            lazy-rules
+            :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
+            // isValidPhone
+          ]"
+            color="white"
+            clearable
+          >
+            <template v-slot:append>
+              <q-btn
+                class="primary-btn"
+                :label="'인증 코드'"
+                @click="openTelephoneVerificationModal"
+                :disabled="!regForm.telephone"
+              />
+            </template>
+          </q-input>
+        </div>
+        <div class="form-item">
+          <label>인증 코드</label>
+          <div class="telephone-otp-row">
+            <q-input
+              dense
+              ref="telOtpCodeRef"
+              v-model="regForm.smsCode"
+              :placeholder="'6자리 숫자'"
+              stack-label
+              clearable
+              autocomplete="off"
+              filled
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
             />
-          </template>
-        </q-input>
+          </div>
+        </div>
+        <div class="form-item">
+          <label>은행명</label>
+          <q-select
+            dense
+            filled
+            label="은행선택"
+            ref="bankCardRef"
+            v-model="regForm.bankId"
+            :options="banksList"
+            option-value="id"
+            option-label="name"
+            emit-value
+            map-options
+            lazy-rules
+            :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
+          />
+        </div>
+        <div class="form-item">
+          <label>계좌번호</label>
+          <q-input
+            dense
+            type="number"
+            placeholder="'-'없이숫자만입력."
+            ref="cardNumRef"
+            filled
+            v-model="regForm.cardNumber"
+            lazy-rules
+            color="white"
+            clearable
+            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"
+          ></q-input>
+        </div>
+        <div class="form-item">
+          <label>예금주</label>
+          <q-input
+            dense
+            placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
+            ref="cardAccRef"
+            filled
+            v-model="regForm.cardAccount"
+            lazy-rules
+            color="white"
+            clearable
+            :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"
+          ></q-input>
+        </div>
       </div>
 
-      <div class="form-item">
-        <label>계좌번호</label>
-        <q-input
-          dense
-          type="number"
-          placeholder="'-'없이숫자만입력."
-          ref="cardNumRef"
-          filled
-          v-model="regForm.cardNumber"
-          lazy-rules
-          color="white"
-          clearable
-          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"
-        ></q-input>
-      </div>
-
-      <div class="form-item">
-        <label>이메일</label>
-        <q-input
-          dense
-          placeholder="이메일"
-          ref="emailRef"
-          type="email"
-          filled
-          v-model="regForm.email"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]"
-          color="white"
-          clearable
-        />
-      </div>
-
-      <div class="form-item">
-        <label>예금주</label>
-        <q-input
-          dense
-          placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
-          ref="cardAccRef"
-          filled
-          v-model="regForm.cardAccount"
-          lazy-rules
-          color="white"
-          clearable
-          :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"
-        ></q-input>
-      </div>
     </q-form>
 
     <div class="row justify-center items-center gap-8" style="margin-top: 35px">
@@ -329,6 +326,7 @@ export default defineComponent({
       telephone: "",
       smsCode: "",
       smsCodeId: "",
+      realName: "",
       email: "",
       cardNumber: "",
       cardAccount: "",
@@ -477,6 +475,8 @@ export default defineComponent({
         (async () => {
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
+          regForm.realName= regForm.cardAccount
+
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
           } else {
@@ -726,8 +726,13 @@ function charType(num) {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
-  row-gap: 30px;
 }
+.form-grid-list{
+  display:flex;
+  flex-direction: column;
+  row-gap: 25px;
+}
+
 .primary-btn {
   background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
   border: 1px solid #2260ff66;
@@ -821,6 +826,7 @@ h5 {
 @media (max-width: 768px) {
   .register-form {
     display: grid;
+    gap: 0px;
     grid-template-columns: 1fr;
   }
 }
