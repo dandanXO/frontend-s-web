@@ -311,7 +311,8 @@ const submitWithdraw = () => {
     $q.loading.hide();
     withdrawLoading.value = false;
   } else {
-    api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
+    api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((resp) => {
+      const response= resp.data;
       if (response.code === 0) {
         $q.notify({
           color: "positive",
