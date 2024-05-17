@@ -1150,6 +1150,7 @@ export default {
     platformCode: 'Platform Code',
     platformFee: 'Platform Fee',
     platformFundTransfer: 'Platform Fund Transfer',
+    platformMatchId: 'Platform Match ID',
     platformName: 'Platform Name',
     playerName: 'Player Name',
     pleaseChoose: 'Please choose',
