@@ -9,21 +9,23 @@
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
-              <div class="header-menu-item">
+              <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
                 <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                    <img
+                    <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    />
-                    <h2 class="nav-title active">{{ nav.name }}</h2>
+                    /> -->
+                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
+                    <h2 class="nav-title active">{{ nav.enName }}</h2>
                   </template>
                   <template v-else>
-                    <img
+                    <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
-                    />
-                    <h2 class="nav-title">{{ nav.name }}</h2>
+                    /> -->
+                    <h2 class="nav-title cn">{{ nav.name }}</h2>
+                    <h2 class="nav-title">{{ nav.enName }}</h2>
                   </template>
                 </a>
               </div>
@@ -1422,6 +1424,7 @@ export default defineComponent({
       registerRef,
       loginRules,
       mobileLoginRules,
+      imageDir,
       captchaRules,
       regRules,
       getCode,
@@ -1527,6 +1530,7 @@ body {
     .profile-img {
       display: block;
       width: 100%;
+      border-radius: 50%;
     }
 
     .dropdown-icon {
@@ -1785,7 +1789,7 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 16px;
+        gap: 30px;
         text-align: center;
         padding: 0px 15px;
 
@@ -2504,28 +2508,45 @@ body {
 
 .header-menu-item {
   position: relative;
+    &.active {
+      &:after {
+        content: "";
+        background: #468CFF;
+        width: 80%;
+        height: 5px;
+        bottom: -24px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border-radius: 4px;
+      }
+    }
   // display: flex;
   a {
     position: relative;
   }
 
   .nav-title {
-    position: absolute;
-    margin: 0px;
-    bottom: 12px;
-    font-size: 14px;
+    // position: absolute;
+    // margin: 0px;
+    // bottom: 12px;
     width: 100%;
-    padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #000;
-    letter-spacing: 1px;
     text-align: center;
     font-family: PingFang SC;
-    line-height: 18px;
+    color: #7A80A1;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0;
+    &.cn {
+      font-weight: 600;
+    font-size: 16px;
+    }
 
     &.active {
-      font-weight: 500;
-      color: #fff;
+
+      color: #468CFF;
     }
   }
 }
@@ -2612,6 +2633,7 @@ body {
   img {
     width: 100px;
   cursor: pointer;
+    border-radius: 50%;
   }
 }
 
@@ -2624,7 +2646,6 @@ body {
     color: #ffffff;
   img {
     border: 3px solid #33BC03;
-    border-radius: 50%;
   }
     &:after {
       content: "✓";
