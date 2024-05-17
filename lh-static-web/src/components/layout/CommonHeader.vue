@@ -2424,8 +2424,8 @@ body {
       }
 
       .acc-dialog-right {
-        width: 450px;
-        padding: 24px 24px 24px 40px;
+        width: 460px;
+        padding: 24px 24px 24px 24px;
 
         .acc-dialog-content {
           padding-top: 26px;
