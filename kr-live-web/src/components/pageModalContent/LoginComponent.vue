@@ -1,6 +1,6 @@
 <template>
   <div class="main-section">
-    <q-form class="login-window-form" @submit="onSubmit">
+    <q-form class="login-window-form" @keypress.enter="onSubmit">
       <div>
         <label>계정</label>
         <q-input
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="btn" style="margin-top: 35px">
-        <q-btn :label="'등록'" type="button" class="common-large-btn form-button blue" rounded />
+        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded />
         <q-btn
           @click.prevent="onSubmit"
           :label="'로그인'"
@@ -97,6 +97,10 @@ export default defineComponent({
     onMounted(() => {
       getCode();
     });
+
+    const openRegister = () => {
+      router.push("/?page=register");
+    }
 
     const getCode = () => {
       api
@@ -166,7 +170,8 @@ export default defineComponent({
       onSubmit,
       loginNameRef,
       pwdRef,
-      captchaRef
+      captchaRef,
+      openRegister
     };
   }
 });

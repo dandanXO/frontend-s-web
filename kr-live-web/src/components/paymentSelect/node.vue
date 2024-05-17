@@ -352,7 +352,6 @@ $node-color: #dd4645;
     .node-item {
       display: flex;
       justify-content: center;
-      min-width: 6rem;
       .payment-method-wrapper {
         display: none;
       }

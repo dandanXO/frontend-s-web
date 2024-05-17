@@ -74,7 +74,7 @@ const iconInfo = reactive([
     info: "입금신청",
     iconUrl: require("../../assets/icon/icon-deposit.svg"),
     goPage: () => {
-      router.push(`/`);
+      router.push(`/?page=finance/deposit`);
     }
   },
   {

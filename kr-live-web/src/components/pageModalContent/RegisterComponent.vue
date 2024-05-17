@@ -1,6 +1,6 @@
 <template>
   <div class="main-section">
-    <q-form class="register-form" @submit="onSubmit">
+    <q-form class="register-form" @keypress.enter="onSubmit">
       <div>
           <label>추천인</label>
           <q-input
@@ -129,7 +129,7 @@
 
         <div>
           <label>은행명</label>
-          <q-select 
+          <q-select
             dense
             filled
             label="은행선택"
@@ -137,7 +137,7 @@
             v-model="regForm.bankId"
             :options="banksList"
             option-value="id"
-            option-label="name" 
+            option-label="name"
             emit-value
             map-options
             lazy-rules
@@ -239,7 +239,7 @@
         rounded
       />
       <q-btn
-        @click.prevent="onSubmit"
+        @click="openLogin"
         :label="'로그인'"
         type="button"
         class="common-large-btn form-button yellow"
@@ -344,6 +344,10 @@ export default defineComponent({
       telephoneVerifyCaptchaCode: "",
       telephoneVerificationCaptchaCodeId: ""
     });
+
+    const openLogin = () => {
+      router.push("/?page=login");
+    }
 
     const telephoneVerificationCaptchaImg = ref("");
     const isOtpSending = ref(false);
@@ -498,7 +502,7 @@ export default defineComponent({
                 SessionStorage.set("TOKEN", res.data);
 
                 emit('closeModal');
-                
+
                 $q.notify({
                   color: "positive",
                   position: "top",
@@ -648,7 +652,8 @@ export default defineComponent({
       getTelephoneVerificationImgCode,
       isOtpSending,
       getOtpCode,
-      verifyTelephoneForm
+      verifyTelephoneForm,
+      openLogin
     };
   }
 });
