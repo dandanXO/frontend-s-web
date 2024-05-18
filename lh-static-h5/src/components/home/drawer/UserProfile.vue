@@ -3,7 +3,10 @@
     <linkable-button :to="isLogin ? '/account' : '/login'" class="profile-link-button">
       <div class="profile-info">
         <div class="avatar">
-          <img :src="isLogin && profilePhoto ? require(`../../../assets/images/profile/${profilePhoto}.png`) : DefaultAvatarImg" />
+          <img v-if="!store.token" :src="DefaultAvatarImg" />
+          <img v-if="isLogin && profilePhoto && profilePhoto.includes('default')" :src="require(`../../../assets/images/profile/${store.profilePhoto}.png`)" />
+          <img v-if="isLogin && profilePhoto && !profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
+
         </div>
         <span>{{ isLogin ? nickName : "未登录" }}</span>
       </div>
@@ -29,6 +32,7 @@
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { userStore } from "stores/index";
+import moment from "moment"
 
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import FinanceButton from "components/home/drawer/FinanceButton.vue";
@@ -37,6 +41,9 @@ import DrawerDeposit from "assets/images/home/drawer-deposit.png";
 import DrawerWithdraw from "assets/images/home/drawer-withdraw.png";
 
 const isLogin = ref(false);
+
+const imageDir = process.env.IMAGE_CDN + "/profile/";
+const timestamp= moment().unix();
 
 var qs = require('qs')
 const store = userStore();
@@ -75,6 +82,7 @@ onMounted(() => {
       min-width: 60px;
       img {
         width: 100%;
+        border-radius:50%;
       }
     }
   }
