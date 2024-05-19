@@ -135,6 +135,7 @@ export default {
       BET_N_PAYOUT: '投注并派彩',
       AFFILIATE_TRANSFER: '代理代存',
       VIP_REBATE: 'VIP返水',
+      AFFILIATE_BET_REBATE: '返水佣金',
     },
     subType: {
       DEPOSIT: '主账号转入平台',
@@ -1689,6 +1690,9 @@ export default {
     unbind: '解绑',
     winloss: '总输赢',
     profit2: '存提差',
+    affiliateBetRebateRecord: '代理投注返水记录',
+    affiliateBetRebateDetails: '代理投注返水详情',
+    adjustRebateAmount: '调整返水金额',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2326,6 +2330,7 @@ export default {
     'Redirect Notification': '页面跳转通知',
     'Member Summon Event': '精英召唤活动',
     'Member Summon List': '召唤列表',
+    'Affiliate Bet Rebate Record': '代理投注返水记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
