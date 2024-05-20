@@ -43,6 +43,14 @@
       </div>
     </div>
   </div>
+
+  <GameModal ref="gameMenu" />
+  <div v-if="showRocket" class="rocket-wrapper" @click="openGame('TFGaming', 'TFGaming', '20')">
+    <div class="rocket-container">
+      <div class="rocket"><img src="../../assets/images/home/rocket.png" /></div>
+      <div class="blue-smoke"><img src="../../assets/images/home/blue-smoke.svg" /></div>
+    </div>
+  </div>
 </template>
 <script>
 import { defineComponent, onMounted, ref } from "vue";
@@ -50,9 +58,10 @@ import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
 import { useDark } from "@vueuse/core";
+import GameModal from "@/components/modal/GameModal.vue";
 
 export default defineComponent({
-  components: {},
+  components: { GameModal },
   setup() {
     const customerHovered = ref(false);
     const scrollToTop = () => {
@@ -63,6 +72,18 @@ export default defineComponent({
     const isDark = useDark();
 
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
+
+    const gameMenu = ref(null);
+    const openGame = (gameName, platType, gameCode, scrollingState) => {
+      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+    };
+
+    const showRocket = ref(false);
+    const checkShowRocket = () => {
+      if (store.token) {
+        showRocket.value = true;
+      }
+    };
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -78,6 +99,7 @@ export default defineComponent({
 
     onMounted(() => {
       getAppDownloadUrl();
+      checkShowRocket();
     });
 
     return {
@@ -86,13 +108,132 @@ export default defineComponent({
       scrollToTop,
       downloadUrl,
       isDark,
-      handleDarkModeClick
+      handleDarkModeClick,
+      gameMenu,
+      openGame,
+      showRocket,
+      checkShowRocket
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+// rocket animation
+.rocket-wrapper {
+  position: fixed;
+  top: 180px;
+  right: -50px;
+  z-index: 280;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .rocket-container {
+    position: relative;
+    animation: fly 3s linear infinite;
+    display: flex;
+    flex-direction: column;
+
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: -30px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   width: 20px;
+    //   height: 40px;
+    //   background: radial-gradient(circle, rgb(192, 192, 192) 0%, rgba(0, 0, 0, 0) 70%);
+    //   animation: smoke 0.5s linear infinite;
+    // }
+  }
+  .rocket {
+    transform: rotate(10deg);
+    z-index: 282;
+
+    img {
+      display: block;
+      width: 100px;
+    }
+  }
+  .blue-smoke {
+    margin-left: -135px;
+    margin-top: -2px;
+    transform: rotate(-10deg);
+    animation: smokeMove 0.5s linear infinite;
+    z-index: 281;
+    img {
+      display: block;
+      width: 200px;
+    }
+  }
+}
+
+@keyframes rocketMove {
+  0%,
+  100% {
+    transform: rotate(-10deg) translateY(-50px) scale(0.85);
+  }
+
+  70% {
+    transform: rotate(10deg) translateY(50px) scale(1);
+  }
+}
+
+@keyframes smokeMove {
+  0%,
+  100% {
+    opacity: 1;
+    transform: rotate(-10deg);
+  }
+
+  70% {
+    opacity: 0.5;
+    transform: rotate(-10deg);
+  }
+}
+
+@keyframes fly {
+  0% {
+    bottom: -100px;
+    transform: translateX(-50%) rotate(0deg) scale(1);
+  }
+  25% {
+    bottom: 30%;
+    transform: translateX(-50%) rotate(2deg) scale(0.95);
+  }
+  50% {
+    bottom: 60%;
+    transform: translateX(-50%) rotate(-2deg) scale(1);
+  }
+  75% {
+    bottom: 90%;
+    transform: translateX(-50%) rotate(2deg) scale(0.95);
+  }
+  100% {
+    bottom: 110%;
+    transform: translateX(-50%) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes smoke {
+  0% {
+    opacity: 0.7;
+    transform: translate(-50%, 0) scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: translate(-50%, -50px) scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100px) scale(2);
+  }
+}
+
 .additional-info-items {
   display: flex;
   flex-direction: column;
