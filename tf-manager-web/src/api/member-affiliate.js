@@ -90,11 +90,11 @@ export const listDisableAffiliate = (id, member) => {
   )
 }
 
-export const updateCommissionModel = (id, model) => {
+export const updateCommissionModel = (id, model, shareRatio) => {
   return https().request(
     `/affiliate/${id}/commissionModel?_method=PUT`,
     Method.POST,
-    { model: model },
+    { model: model, shareRatio: shareRatio },
     ContentType.form
   )
 }
@@ -247,5 +247,12 @@ export const updateViewLoginName = (id, view) => {
     Method.POST,
     { view: view },
     ContentType.form
+  )
+}
+
+export const getAffiliateShareRatio = (id) => {
+  return https().request(
+    `/affiliate/${id}/shareRatio`,
+    Method.GET
   )
 }
