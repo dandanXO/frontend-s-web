@@ -186,6 +186,8 @@ export default defineComponent({
           width: 75px;
           position: relative;
           cursor: pointer;
+          border-radius: 50%;
+          overflow: hidden;
 
           img{
             width: 100%;

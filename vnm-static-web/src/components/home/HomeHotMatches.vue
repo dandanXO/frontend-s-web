@@ -48,7 +48,7 @@
               <div class="match-btn">
                 <a
                   class="standard-button lg-btn btn-color-blue"
-                  @click="goToSportPage"
+                  @click="goToSportPage(item)"
                 >
                   {{ $t("common.playnow") }}
                 </a>
@@ -102,8 +102,12 @@ const loadHotMatches = () => {
   });
 };
 
-const goToSportPage = () => {
-  router.push("/sports");
+const goToSportPage = (item) => {
+  if(!store.token){
+    router.push("/login");
+  }else{
+    openGame(item.platformName, item.platformCode, item.gameCode)
+  }
 }
 
 const formattedTime = (timeString) => {

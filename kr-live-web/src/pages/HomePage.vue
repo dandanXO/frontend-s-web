@@ -657,7 +657,7 @@
 
     <div class="news-section">
       <div class="news-title news-title__sub">
-        <div class="title-text">이벤트</div>
+        <div class="title-text">출금현황</div>
         <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
       </div>
       <div class="news-item-box">
@@ -1251,7 +1251,7 @@ export default defineComponent({
       { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
       { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
       { name: "sport", label: "스포츠", enLabel: "SPORTS" },
-      { name: "casual", label: "평상복", enLabel: "FISH" }
+      { name: "casual", label: "미니게임", enLabel: "FISH" }
       // { name: "fish", label: "낚시 게임" }
     ];
 

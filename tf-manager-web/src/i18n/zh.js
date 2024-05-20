@@ -1155,6 +1155,7 @@ export default {
     platformCode: '平台代码',
     platformFee: '场馆费',
     platformFundTransfer: '平台转账',
+    platformMatchId: '平台赛事ID',
     platformName: '平台名',
     playerName: '玩家名',
     pleaseChoose: '请选择',

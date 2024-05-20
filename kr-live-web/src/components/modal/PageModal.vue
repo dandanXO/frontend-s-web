@@ -91,6 +91,7 @@ import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import MyMessages from "components/pageModalContent/MyMessages.vue";
+import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
@@ -211,6 +212,19 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "log",
+    page: "promo/all",
+    info: "이벤트",
+    iconUrl: require("../../assets/icon/promo.svg"),
+    iconActiveUrl: require("../../assets/icon/promo-active.svg"),
+    component: PromoComponent,
+    headerInfo: {
+      title: "이벤트",
+      subTitle: "EVENT",
+      description: ""
+    }
+  },
+  {
+    tabIndex: "log",
     page: "customer/service",
     info: "고객센터",
     iconUrl: require("../../assets/icon/customerService.svg"),
@@ -225,12 +239,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "personal/info",
-    info: "나의정보",
+    info: "개인정보",
     iconUrl: require("../../assets/icon/personal-info.svg"),
     iconActiveUrl: require("../../assets/icon/personal-info-active.svg"),
     component: MyPersonalInfo,
     headerInfo: {
-      title: "나의정보",
+      title: "개인정보",
       subTitle: "PERSONAL INFO",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
