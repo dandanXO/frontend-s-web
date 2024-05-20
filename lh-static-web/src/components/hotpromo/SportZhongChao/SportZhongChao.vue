@@ -293,7 +293,7 @@
 
 <script setup>
 import { ref } from "vue";
-const tab = ref("third");
+const tab = ref("first");
 </script>
 <style lang="scss" scoped>
 .sport-zhongchao-container {
