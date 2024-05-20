@@ -239,12 +239,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "personal/info",
-    info: "나의정보",
+    info: "개인정보",
     iconUrl: require("../../assets/icon/personal-info.svg"),
     iconActiveUrl: require("../../assets/icon/personal-info-active.svg"),
     component: MyPersonalInfo,
     headerInfo: {
-      title: "나의정보",
+      title: "개인정보",
       subTitle: "PERSONAL INFO",
       description: "입금시 꼭 계좌문의를 하세요!"
     }

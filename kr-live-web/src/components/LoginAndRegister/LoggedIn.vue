@@ -5,13 +5,13 @@
         <img src="../../assets/images/login/member.svg" alt="" />
         <div>{{ store.nickName }}</div>
       </div>
-      <div class="letter">
+      <!-- <div class="letter">
         <img src="../../assets/images/login/letter.svg" alt="" />
         <div>
           쪽지
           <span>(0)</span>
         </div>
-      </div>
+      </div> -->
       <div class="money">
         <img src="../../assets/images/login/money.svg" alt="" />
         <div>
@@ -19,20 +19,20 @@
           <span>원</span>
         </div>
       </div>
-      <div class="item">
+      <!-- <div class="item">
         <img src="../../assets/images/login/item.svg" alt="" />
         <div>
           0
           <span>P</span>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="btn-group">
       <div class="left-group">
-        <div class="points-conversion">
+        <!-- <div class="points-conversion">
           <div class="register-text" @click="goToTransactions">포인트전환</div>
-        </div>
+        </div> -->
         <div class="my-page">
           <div class="register-text" @click="goToPersonalInfo">마이페이지</div>
         </div>
@@ -112,10 +112,10 @@ const onLogoutSubmit = () => {
 .btn-group {
   display: flex;
   width: 40%;
-  height: 100%;
+  // height: 100%;
   align-items: flex-start;
-  justify-content: center;
-  margin-top: 16px;
+  // justify-content: center;
+  // margin-top: 16px;
   @media (min-width: 1200px) {
     margin-top: 10px;
   }

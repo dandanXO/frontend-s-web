@@ -65,48 +65,48 @@ const iconInfo = reactive([
       router.push(`/?page=notify`);
     }
   },
+  // {
+  //   info: "이벤트",
+  //   iconUrl: require("../../assets/icon/icon-promo.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=promo/all`);
+  //   }
+  // },
   {
-    info: "이벤트",
-    iconUrl: require("../../assets/icon/icon-promo.svg"),
-    goPage: () => {
-      router.push(`/?page=promo/all`);
-    }
-  },
-  {
-    info: "문의함",
-    iconUrl: require("../../assets/icon/icon-service.svg"),
-    goPage: () => {
-      router.push(`/?page=customer/service`);
-    }
-  },
-  {
-    info: "입금신청",
+    info: "충전",
     iconUrl: require("../../assets/icon/icon-deposit.svg"),
     goPage: () => {
       router.push(`/?page=finance/deposit`);
     }
   },
   {
-    info: "출금신청",
+    info: "환전",
     iconUrl: require("../../assets/icon/icon-withdrawal.svg"),
     goPage: () => {
       router.push(`/?page=finance/withdraw`);
     }
   },
-  {
-    info: "배팅내역",
-    iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records`);
-    }
-  },
+  // {
+  //   info: "배팅내역",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=transaction/records`);
+  //   }
+  // },
   {
     info: "쪽지함",
     iconUrl: require("../../assets/icon/icon-message.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
-  }
+  },
+  {
+    info: "고객센터",
+    iconUrl: require("../../assets/icon/icon-service.svg"),
+    goPage: () => {
+      router.push(`/?page=customer/service`);
+    }
+  },
   // {
   //   info: "고객센터",
   //   iconUrl: require("../../assets/icon/icon-service.svg"),

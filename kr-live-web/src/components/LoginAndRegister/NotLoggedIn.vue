@@ -51,7 +51,7 @@
 
       <div class="right-container">
         <div class="register" @click="goToRegister">
-          <div class="register-text">등록</div>
+          <div class="register-text">회원가입</div>
         </div>
         <div class="login" @click="goToLogin">
           <!-- @click.prevent="onLoginSubmit" -->
