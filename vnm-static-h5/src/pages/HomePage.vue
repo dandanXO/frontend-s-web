@@ -106,6 +106,10 @@
   </div>
 
   <div class="hot-matches-wrapper">
+    <div class="euro-countdown">
+      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
+    </div>
+
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -121,9 +125,6 @@
       <!--      </div>-->
     </div>
 
-    <div class="euro-countdown">
-      {{ `${$t("lang.euroCountdown01")}${countDay}${$t("lang.euroCountdown02")}` }}
-    </div>
 
     <div class="hot-matches-container">
       <swiper
@@ -1433,6 +1434,11 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
+
+      // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
+      //   console.log(resp);
+      // })
+
     });
 
     onActivated(() => {
@@ -2523,11 +2529,46 @@ export default defineComponent({
   .euro-countdown {
     display: flex;
     justify-content: center;
-    align-items: center;
     font-weight: bold;
     font-size: 16px;
-    padding-top: 10px;
-    padding-bottom: 8px;
+    padding-top: 6px;
+    padding-bottom: 12px;
+    line-height: 21px;
+    color: #0258A5;
+    display:flex;
+    align-items: flex-end;
+
+    img{
+      height: 36px;
+      padding:0px 4px 0px 6px;
+    }
+
+    strong{
+      padding:0px 3px;
+      font-style: normal;
+      color: blue;
+      background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: .1px;
+      -webkit-text-stroke-color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+    }
+
+    em{
+      padding:0px 3px;
+      font-style: normal;
+      background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: .1px;
+      -webkit-text-stroke-color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+    }
   }
 
   .hot-matches-container {

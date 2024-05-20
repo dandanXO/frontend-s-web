@@ -154,7 +154,8 @@ export default {
     moreDetails: "Chi tiết thêm",
     announcementList: "Danh sách thông báo",
     hotMatches: "Trận Đấu Hot",
-    euroCountdown01: "ĐƯỜNG TỚI EURO 2024 - CÒN ",
+    euroCountdown01: "ĐƯỜNG TỚI ",
+    euroCountdown01a: "EURO 2024 - CÒN ",
     euroCountdown02: " NGÀY",
   },
   personal: {

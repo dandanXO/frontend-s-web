@@ -155,7 +155,8 @@ export default {
     announcementList: "Announcement List",
     playNow: "Play now",
     hotMatches: "Hot Matches",
-    euroCountdown01: "ROAD TO EURO 2024 - ",
+    euroCountdown01: "ROAD TO ",
+    euroCountdown01a: "EURO 2024 - ",
     euroCountdown02: " DAYS LEFT"
   },
   personal: {

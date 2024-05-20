@@ -8,7 +8,7 @@
         {{ $t("home.hotMatches") }}
 
         <div class="euro-countdown">
-          {{ `${$t("home.euroCountdown01")}${countDay}${$t("home.euroCountdown02")}` }}
+          {{ $t("home.euroCountdown01")}}<img src="../../assets/home/eurocup-logo.png" /><em>{{ $t("home.euroCountdown01a")}}</em><strong>{{ countDay }}</strong>{{$t("home.euroCountdown02")}}
         </div>
       </div>
       <!--      <div>-->
@@ -144,13 +144,16 @@ onMounted(() => {
 <style lang="scss">
 .hot-matches-wrapper {
   max-width: 1350px;
-  margin: 50px auto 0px;
+  margin: 25px auto 0px;
+
+  position:relative;
 
   .hot-matches-title-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    padding-top: 60px;
     position: relative;
   }
 
@@ -170,11 +173,48 @@ onMounted(() => {
     .euro-countdown {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: baseline;
       position: absolute;
+      padding-bottom: 10px;
       top: 0;
       left: 50%;
+      font-size: 30px;
       transform: translateX(-50%);
+      color: #0258A5;
+      line-height: 19px;
+      width: max-content;
+
+      img{
+        height: 60px;
+        width: auto;
+        padding:0px 6px 0px 8px;
+      }
+      strong{
+        padding:0px 5px;
+        font-style: normal;
+        color: blue;
+        background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: .1px;
+        -webkit-text-stroke-color: #fff;
+        font-size: 40px;
+        line-height: 40px;
+      }
+
+      em{
+        padding:0px 5px;
+        font-style: normal;
+        background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: .1px;
+        -webkit-text-stroke-color: #fff;
+        font-size: 40px;
+        line-height: 40px;
+      }
     }
   }
 
