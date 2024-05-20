@@ -2,8 +2,13 @@
 <!--    <div class="emergency-intro">-->
 <!--        活动期间，会员当日场馆有效投注额满足且产生对应负盈利金额，即可获得最高<span>388元</span>返还。-->
 <!--    </div>-->
+
+  <div class="redpacket">
+<!--    <div class="hongbao"><img src="../images/hongbao.png" /></div>-->
+    <div class="claim-button" @click="claimPromo">立即领取</div>
+  </div>
   <div class="emergency-intro">
-    如果会员领取电竞与体育的新秀享头彩，那么领取彩金当日如果有负盈利即可在次日24小时内点击领取。
+    如果会员领取相应场馆的新秀享头彩，那么领取彩金当日如果有负盈利即可在次日24小时内点击领取。
   </div>
     <table cellpadding="0" cellspacing="0" border="0">
         <tr>
@@ -51,7 +56,79 @@
         </ol>
     </div>
 </template>
+<script setup>
+
+import { eventapi } from "boot/axios";
+
+const claimPromo= () => {
+  eventapi
+    .post("/first-bet/refund" , {})
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "领取成功！",
+          icon: "check_circle_outline"
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+</script>
+
 <style lang="scss">
+
+.redpacket {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+
+  .hongbao {
+    width: 180px;
+
+    img {
+      width: 100%;
+    }
+  }
+  .claim-button {
+    background-repeat: no-repeat;
+    background-image: url(../images/claim-btn2.png);
+    background-size: 100% 100%;
+    width: 160px;
+    height: 50px;
+    cursor: pointer;
+
+    color:#fff;
+    aspect-ratio: 278/86;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 50px;
+
+    &:hover{
+      opacity: 0.9;
+    }
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px , 1px);
+    }
+  }
+}
 
 .emergency-intro {
         font-family: Microsoft YaHei UI;
@@ -61,7 +138,7 @@
         letter-spacing: 0.12em;
         text-align: center;
         color: #ffffff;
-        margin: 50px auto;
+        margin: 15px auto;
         span {
             color: #60B3FF;
 
@@ -75,7 +152,7 @@
         letter-spacing: 0.12em;
         text-align: left;
         color: #ffffff;
-        margin: 30px 0 60px;
+        margin: 20px 0 20px;
         &__rule-title {
             margin: 10px 0;
             text-align: center;
@@ -96,5 +173,3 @@
 
     }
 </style>
-<script setup>
-</script>

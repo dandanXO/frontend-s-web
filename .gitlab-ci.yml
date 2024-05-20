@@ -458,6 +458,13 @@ deploy-lh-landing-v3-3:
 
 #===============================================================================================
 
+deploy-lh-landing-v4:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v4
+
+#===============================================================================================
+
 deploy-lh-cesu:
   extends: .s3-deploy
   variables:

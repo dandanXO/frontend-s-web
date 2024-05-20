@@ -9,21 +9,23 @@
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
-              <div class="header-menu-item">
+              <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
                 <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                    <img
+                    <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    />
-                    <h2 class="nav-title active">{{ nav.name }}</h2>
+                    /> -->
+                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
+                    <h2 class="nav-title active">{{ nav.enName }}</h2>
                   </template>
                   <template v-else>
-                    <img
+                    <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
-                    />
-                    <h2 class="nav-title">{{ nav.name }}</h2>
+                    /> -->
+                    <h2 class="nav-title cn">{{ nav.name }}</h2>
+                    <h2 class="nav-title">{{ nav.enName }}</h2>
                   </template>
                 </a>
               </div>
@@ -115,7 +117,7 @@
               <div class="profile-img-wrapper">
                 <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
                 <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto" />
+                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
                 <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
@@ -489,7 +491,7 @@ export default defineComponent({
       { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
       { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
@@ -503,6 +505,8 @@ export default defineComponent({
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
+
+    const timestamp = moment().unix();
 
     let cachedTelephone = lsGet(registerTelephoneKey);
     let initialRegisterSendOtpDisabledTimeout = false;
@@ -1422,6 +1426,7 @@ export default defineComponent({
       registerRef,
       loginRules,
       mobileLoginRules,
+      imageDir,
       captchaRules,
       regRules,
       getCode,
@@ -1459,6 +1464,7 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       isDark,
+      timestamp
     };
   }
 });
@@ -1527,6 +1533,7 @@ body {
     .profile-img {
       display: block;
       width: 100%;
+      border-radius: 50%;
     }
 
     .dropdown-icon {
@@ -1785,7 +1792,7 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 16px;
+        gap: 30px;
         text-align: center;
         padding: 0px 15px;
 
@@ -2417,8 +2424,8 @@ body {
       }
 
       .acc-dialog-right {
-        width: 450px;
-        padding: 24px 24px 24px 40px;
+        width: 460px;
+        padding: 24px 24px 24px 24px;
 
         .acc-dialog-content {
           padding-top: 26px;
@@ -2504,28 +2511,45 @@ body {
 
 .header-menu-item {
   position: relative;
+    &.active {
+      &:after {
+        content: "";
+        background: #468CFF;
+        width: 80%;
+        height: 5px;
+        bottom: -24px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border-radius: 4px;
+      }
+    }
   // display: flex;
   a {
     position: relative;
   }
 
   .nav-title {
-    position: absolute;
-    margin: 0px;
-    bottom: 12px;
-    font-size: 14px;
+    // position: absolute;
+    // margin: 0px;
+    // bottom: 12px;
     width: 100%;
-    padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #000;
-    letter-spacing: 1px;
     text-align: center;
     font-family: PingFang SC;
-    line-height: 18px;
+    color: #7A80A1;
+    font-weight: 400;
+    font-size: 12px;
+    margin: 0;
+    &.cn {
+      font-weight: 600;
+    font-size: 16px;
+    }
 
     &.active {
-      font-weight: 500;
-      color: #fff;
+
+      color: #468CFF;
     }
   }
 }
@@ -2612,6 +2636,7 @@ body {
   img {
     width: 100px;
   cursor: pointer;
+    border-radius: 50%;
   }
 }
 
@@ -2624,7 +2649,6 @@ body {
     color: #ffffff;
   img {
     border: 3px solid #33BC03;
-    border-radius: 50%;
   }
     &:after {
       content: "✓";

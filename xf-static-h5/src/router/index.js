@@ -1,6 +1,9 @@
 import { route, store } from "quasar/wrappers";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+import { SessionStorage } from "quasar";
+
 
 import {
   createRouter,
@@ -45,6 +48,19 @@ export default route(function (/* { store, ssrContext } */) {
     } else {
       ui.showFooter()
     }
+
+    if (
+      to.path === "/promotion"
+    ) {
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      user.token = to.query.token;
+    }
+
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);

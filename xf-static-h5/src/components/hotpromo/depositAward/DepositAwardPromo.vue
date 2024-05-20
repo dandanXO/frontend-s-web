@@ -8,7 +8,7 @@
         <div class="content-main">
           <img src="../../../assets/images/promotion/hotpromo/deposit-award/activity-period.png" />
           <p>
-            活动时间：5月9日起
+            活动时间：5月17日起
           </p>
 
           <img style="padding-top: 20px;" src="../../../assets/images/promotion/hotpromo/deposit-award/activity-content.png" />
@@ -20,7 +20,7 @@
             <thead>
               <tr>
                 <td rowspan="2">存款金额</td>
-                <td rowspan="2">存款彩金</td>
+                <td rowspan="2">赠送彩金</td>
                 <td colspan="2">流水加赠</td>
                 <td rowspan="2">流水备注</td>
               </tr>
@@ -65,13 +65,13 @@
                 <td>≥50,000</td>
                 <td>588</td>
                 <td>888</td>
-                <td>1088</td>
+                <td>1,088</td>
               </tr>
               <tr>
                 <td>≥100,000</td>
-                <td>1088</td>
-                <td>1588</td>
-                <td>1888</td>
+                <td>1,088</td>
+                <td>1,588</td>
+                <td>1,888</td>
               </tr>
             </tbody>
           </table>

@@ -116,6 +116,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/kr/login',
+    name: 'KR Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/kr/login/index.vue'
+      ),
+  },
+  {
+    path: '/kr/register',
+    name: 'KR Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/kr/register/index.vue'
+      ),
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
