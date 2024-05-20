@@ -244,7 +244,7 @@ a:hover {
     text-align: center;
     position: absolute;
     flex-direction: column;
-    top: 40px;
+    top: 5%;
     transform: translateX(-50%);
     left: 50%;
     color: #ffffff;

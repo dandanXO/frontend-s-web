@@ -32,7 +32,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 var qs = require("qs");
@@ -44,18 +44,7 @@ const serviceForm = reactive({
   content: ""
 });
 
-const articleData = ref([
-  {
-    number: 2,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
-    date: "2024/01/13"
-  },
-  {
-    number: 1,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
-    date: "2024/01/13"
-  }
-]);
+const feedbackData = ref([]);
 
 const sendMessage = () => {
   api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
@@ -80,6 +69,20 @@ const sendMessage = () => {
     }
   });
 };
+
+const initFeedbackReplies = () => {
+  api.get('/session/feedback/replies').then((res) => {
+    const { code, data } = res.data
+
+    if(code === 0) {
+      feedbackData.value = data.records;
+    }
+  })
+}
+
+onMounted(() => {
+  initFeedbackReplies();
+})
 </script>
 
 <style lang="scss" scoped>
