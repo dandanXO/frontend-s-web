@@ -55,7 +55,7 @@ export const translateRecord = (rec, type = "") => {
     return "QQ支付"; // QQ支付
   } else if (rec === "KDPAY") {
     return "K豆"; // K豆
-  } else if (depositType === 'BLBPAY') {
+  } else if (rec === 'BLBPAY') {
     return '808钱包' // 808钱包
   } else if (rec === "DDPAY") {
     return "钉钉"; // 钉钉
