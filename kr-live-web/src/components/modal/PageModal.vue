@@ -91,6 +91,7 @@ import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import MyMessages from "components/pageModalContent/MyMessages.vue";
+import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
@@ -207,6 +208,19 @@ const pagesInfo = reactive([
       title: "쪽지",
       subTitle: "MESSAGES",
       description: "입금시 꼭 계좌문의를 하세요!"
+    }
+  },
+  {
+    tabIndex: "log",
+    page: "promo/all",
+    info: "이벤트",
+    iconUrl: require("../../assets/icon/promo.svg"),
+    iconActiveUrl: require("../../assets/icon/promo-active.svg"),
+    component: PromoComponent,
+    headerInfo: {
+      title: "이벤트",
+      subTitle: "EVENT",
+      description: ""
     }
   },
   {

@@ -69,14 +69,14 @@ const iconInfo = reactive([
     info: "이벤트",
     iconUrl: require("../../assets/icon/icon-promo.svg"),
     goPage: () => {
-      router.push(`/`);
+      router.push(`/?page=promo/all`);
     }
   },
   {
     info: "문의함",
     iconUrl: require("../../assets/icon/icon-service.svg"),
     goPage: () => {
-      router.push(`/`);
+      router.push(`/?page=customer/service`);
     }
   },
   {
@@ -97,14 +97,14 @@ const iconInfo = reactive([
     info: "배팅내역",
     iconUrl: require("../../assets/icon/icon-betting.svg"),
     goPage: () => {
-      router.push(`/`);
+      router.push(`/?page=transaction/records`);
     }
   },
   {
     info: "쪽지함",
     iconUrl: require("../../assets/icon/icon-message.svg"),
     goPage: () => {
-      router.push(`/`);
+      router.push(`/?page=personal/messages`);
     }
   }
   // {
@@ -160,6 +160,9 @@ const iconInfo = reactive([
     width: 1280px;
     flex-direction: row;
     height: 80px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -204,7 +207,6 @@ const iconInfo = reactive([
   // display: none;
   @media (min-width: 769px) {
     display: flex;
-    width: 58%;
     height: 100%;
     border: none;
   }
@@ -219,7 +221,6 @@ const iconInfo = reactive([
   padding-right: 8px;
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
-    width: 42%;
     justify-content: flex-end;
     margin-top: 0px;
   }
