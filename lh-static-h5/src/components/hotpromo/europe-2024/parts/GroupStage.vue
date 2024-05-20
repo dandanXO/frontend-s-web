@@ -14,12 +14,12 @@
       <template v-for="(gp, idx) in groupedMatches[groupActiveTab].items" :key="idx">
         <div class="gpbar">
           <div class="group-head">
-            <div class="team-name">
-              {{ groupedMatches[groupActiveTab].teamGroup }} 组
-            </div>
             <div class="smalltxt">
-              Group<br>
-              小组赛
+              <div class="team-name">
+                Group<br>
+                小组赛
+              </div>
+              <span class="date">{{ gp.matchTime }}</span>
             </div>
           </div>
           <div class="group-section">
@@ -29,7 +29,9 @@
             </div>
             <div class="versus">
               <span class="vs">VS</span>
-              <span class="date">{{ gp.matchTime }}</span>
+              <button class="bracket-team-select__button">
+                点击投注
+              </button>
             </div>
             <div class="team teamB">
               {{ gp.teamTwoName }}
@@ -51,7 +53,7 @@ const imgUrl = process.env.IMAGE_CDN + '/promo/';
 const groupedMatches = computed(() => {
   const groups = {};
   matches.value.forEach(match => {
-    if(match.teamGroup === '2' || match.teamGroup === '4'|| match.teamGroup === '8' || match.teamGroup === '16') { 
+    if(match.teamGroup === '2' || match.teamGroup === '4'|| match.teamGroup === '8' || match.teamGroup === '16') {
       return
     }
     if (!groups[match.teamGroup]) {
@@ -126,21 +128,32 @@ onMounted(() => {
       background-size: cover;
       justify-content: space-evenly;
       align-items: center;
-      padding: 5px 25px 5px 0;
+      padding: 5px 40px 5px 0;
       flex-direction: column;
-      .team-name {
-        color: #FFFFFF33;
-        font-family: Microsoft YaHei UI;
-        font-size: 15px;
-        font-weight: 700;
-      }
+
       .smalltxt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: .25rem;
         font-family: Microsoft YaHei UI;
         font-size: 8px;
         font-weight: 400;
-        text-align: left;
+        text-align: center;
         color: #ffffff;
 
+        .team-name {
+          color: #FFFFFF33;
+          font-family: Microsoft YaHei UI;
+          font-size: 15px;
+          font-weight: 700;
+        }
+
+        .date {
+          color: #FFFFFFCC;
+          text-align: center;
+        }
       }
     }
     .group-section {
@@ -192,12 +205,22 @@ onMounted(() => {
           font-weight: 700;
           letter-spacing: 0.12em;
         }
-        .date {
-          font-family: Microsoft YaHei UI;
-          font-size: 10px;
-          font-weight: 400;
-          color: #FFFFFFCC;
-          text-align: center;
+
+        .bracket-team-select__button {
+          background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
+          padding: 6px 20px;
+          border-radius: 33px;
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1.3rem;
+          letter-spacing: 0.12em;
+          color: #333333;
+
+          &:hover,
+          &.active {
+            background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
+            color: #ffffff;
+          }
         }
       }
     }
