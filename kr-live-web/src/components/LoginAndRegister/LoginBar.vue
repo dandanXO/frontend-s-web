@@ -104,7 +104,7 @@ const iconInfo = reactive([
     info: "고객센터",
     iconUrl: require("../../assets/icon/icon-service.svg"),
     goPage: () => {
-      router.push(`/?page=customer/service`);
+      window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
     }
   },
   // {

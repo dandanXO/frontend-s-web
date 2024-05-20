@@ -22,7 +22,11 @@
                         type="password"
                         filled
                         v-model="updatePwdInfo.password"
-                        :rules="pwdRules"
+                        :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                '는 6자 이상이어야 합니다.'
+                        ]"
                         clearable
                         stack-label
                     />
@@ -35,7 +39,13 @@
                         type="password"
                         filled
                         v-model="updatePwdInfo.confirm_pass"
-                        :rules="pwdRules"
+                        :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                '는 6자 이상이어야 합니다.',
+                            (val) =>
+                                val === updatePwdInfo.password || '비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다.'
+                        ]"
                         clearable
                         stack-label
                     />
@@ -106,13 +116,24 @@ const submitUpdatePwd = () => {
 
 <style lang="scss">
 .update-pwd-form {
-    .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
-        width: 100%;
-        font-size: 14px;
-        border-radius: 3px;
-        border: 1px solid #5C5C5C;
-        line-height: 40px;
-        color: #fff;
+//     .q-field--filled.q-field--dark .q-field__control, .q-field--filled.q-field--dark .q-field__control:before {
+//         width: 100%;
+//         font-size: 14px;
+//         border-radius: 3px;
+//         border: 1px solid #5C5C5C;
+//         line-height: 40px;
+//         color: #fff;
+//   }
+
+  .q-field--filled.q-field--dark .q-field__control,
+  .q-field--filled.q-field--dark .q-field__control:before {
+    width: 100%;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #48b5b5;
+    background: #252e43;
+    line-height: 40px;
+    color: #fff;
   }
 }
 </style>
