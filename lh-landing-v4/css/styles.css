@@ -38,7 +38,7 @@ a:hover {
 
 .main-wrapper {
   background-image: url(../img/bg-mobile.jpg);
-  background-position: top center;
+  background-position: 0px 45px;
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
@@ -67,12 +67,15 @@ a:hover {
 
 .pop-btns-wrapper {
   padding: 0 16px;
+  height: calc(100% - 180px);
 }
 
 .pop-btns-container {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  justify-content: space-evenly;
+  height: 100%;
   max-width: 410px;
   margin: auto;
 }
