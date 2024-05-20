@@ -17,7 +17,7 @@
           <img src="img/lh-logo.png" alt="雷火 TFGAMING" title="雷火 TFGAMING" />
         </div>
         <div class="top-cs">
-          <img src="img/cs-contact-btn.png" alt="" />
+          <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img src="img/cs-contact-btn.png" alt="" /></a>
         </div>
       </div>
 
@@ -69,13 +69,13 @@
         <div class="contact-btns-container">
           <div class="contact-btn w-50"><img src="img/contact-btn-01.png" /></div>
           <div class="contact-btn w-50"><img src="img/contact-btn-02.png" /></div>
-          <div class="contact-btn w-100"><img src="img/contact-btn-03.png" /></div>
+          <div class="contact-btn w-100"><a href="https://vo06.cc" target="_blank"><img src="img/contact-btn-03.png" /></a></div>
           <div class="contact-btn w-50"><img src="img/contact-btn-04.png" /></div>
           <div class="contact-btn w-50"><img src="img/contact-btn-05.png" /></div>
         </div>
       </div>
 
-      <div class="main-sticky-btn">申请联系方式</div>
+      <div class="main-sticky-btn" id="scrolldown-tbn">申请联系方式</div>
     </div>
 
     <div class="overlay">
@@ -83,29 +83,29 @@
         <div class="pop-overlay-1 hidden">
           <img src="img/pop-overlay-01.png" />
           <div class="pop-overlay-btns">
-            <a href="#"><img src="img/pop-overlay-btn-01.png" /></a>
-            <a href="#" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
+            <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img src="img/pop-overlay-btn-01.png" /></a>
+            <a href="https://www.lh49839.com:9971" target="_blank" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
           </div>
         </div>
         <div class="pop-overlay-2 hidden">
           <img src="img/pop-overlay-02.png" />
           <div class="pop-overlay-btns">
-            <a href="#"><img src="img/pop-overlay-btn-01.png" /></a>
-            <a href="#" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
+            <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img src="img/pop-overlay-btn-01.png" /></a>
+            <a href="https://www.lh49839.com:9971" target="_blank" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
           </div>
         </div>
         <div class="pop-overlay-3 hidden">
           <img src="img/pop-overlay-03.png" />
           <div class="pop-overlay-btns">
-            <a href="#"><img src="img/pop-overlay-btn-01.png" /></a>
-            <a href="#" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
+            <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img src="img/pop-overlay-btn-01.png" /></a>
+            <a href="https://www.lh56939.com:9971" target="_blank" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
           </div>
         </div>
         <div class="pop-overlay-4 hidden">
           <img src="img/pop-overlay-04.png" />
           <div class="pop-overlay-btns">
-            <a href="#"><img src="img/pop-overlay-btn-01.png" /></a>
-            <a href="#" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
+            <a href="https://csweb.mh98q4u1yq.com/?partnerCode=LHCS&way=WEB&lang=zh-CN" target="_blank"><img src="img/pop-overlay-btn-01.png" /></a>
+            <a href="https://www.lh56939.com:9971" target="_blank" style="margin-top: 5px"><img src="img/pop-overlay-btn-02.png" /></a>
           </div>
         </div>
         <span class="close-overlay"><img src="img/overlay-close.png" /></span>
@@ -118,6 +118,15 @@
         const closeOverlay = document.querySelector(".close-overlay");
         const popButtons = document.querySelectorAll(".pop-btn");
         const overlayContents = document.querySelectorAll(".overlay-content > div");
+
+        const scrolLDown= document.getElementById("scrolldown-tbn");
+
+        scrolLDown.addEventListener("click", function(e){
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth' // This makes the scroll smooth
+          });
+        })
 
         popButtons.forEach((button) => {
           button.addEventListener("click", function () {
