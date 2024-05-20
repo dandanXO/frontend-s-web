@@ -1,6 +1,6 @@
 <template>
   <div class="item_list">
-    <q-spinner v-if="props.gameItemLoad" class="center" color="teal" size="50px" />
+    <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" />
 
     <template v-else>
       <a v-for="p in props.games" :key="p.id" class="game_item" @click="() => props.onClickGameItem(p)">
@@ -113,6 +113,12 @@ const props = defineProps(["games", "onClickGameItem", "gameType", "gameItemLoad
 const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
+.spin-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .item_list {
   // padding: 20px 0px 30px 0px;
   display: -webkit-box;
@@ -130,6 +136,9 @@ const gameType = ref(props.gameType);
   @media (min-width: 769px) {
     justify-content: flex-start;
     // padding: 0px;
+  }
+  @media (min-width: 769px) {
+    min-height: 505px;
   }
 }
 
