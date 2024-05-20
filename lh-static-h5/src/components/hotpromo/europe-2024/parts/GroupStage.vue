@@ -29,7 +29,9 @@
             </div>
             <div class="versus">
               <span class="vs">VS</span>
-              <button class="bracket-team-select__button">
+              <button class="bracket-team-select__button"
+                      @click="betNow(gp.platformMatchId)"
+              >
                 点击投注
               </button>
             </div>
@@ -42,14 +44,23 @@
       </template>
     </div>
   </transition>
+  <GameModal ref="platformGame"></GameModal>
 </template>
 <script setup>
 
 import { onMounted, computed } from 'vue';
 import { ref } from 'vue';
 import { eventapi } from "boot/axios";
+import GameModal from "components/modal/GameModal.vue";
 const matches = ref([]);
 const imgUrl = process.env.IMAGE_CDN + '/promo/';
+const platformGame = ref(null);
+
+const betNow = (platformMatchId) => {
+  var matchId= platformMatchId ?? "";
+  platformGame.value.open('FB体育', 'FB', matchId);
+}
+
 const groupedMatches = computed(() => {
   const groups = {};
   matches.value.forEach(match => {
@@ -148,6 +159,7 @@ onMounted(() => {
           font-family: Microsoft YaHei UI;
           font-size: 15px;
           font-weight: 700;
+          line-height: 18px;
         }
 
         .date {
@@ -183,6 +195,7 @@ onMounted(() => {
         }
         &.teamA{
           justify-content: flex-end;
+          flex-direction: column-reverse;
         }
         &.teamB {
           justify-content: flex-end;
@@ -215,6 +228,7 @@ onMounted(() => {
           line-height: 1.3rem;
           letter-spacing: 0.12em;
           color: #333333;
+          white-space: nowrap;
 
           &:hover,
           &.active {

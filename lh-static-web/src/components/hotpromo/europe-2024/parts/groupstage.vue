@@ -34,6 +34,7 @@
               <span class="vs">VS</span>
               <button
                 class="bracket-team-select__button"
+                @click="betNow(gp.platformMatchId)"
               >
                 点击投注
               </button>
@@ -47,12 +48,15 @@
       </template>
     </div>
   </transition>
+
+  <GameModal ref="platformGame"></GameModal>
 </template>
 <script setup>
 
 import { onMounted, computed } from 'vue';
 import { ref } from 'vue';
 import { euroMatchAll } from '@/api/promotion/eurocup';
+import GameModal from "@/components/modal/GameModal.vue";
 const matches = ref([]);
 const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
 const groupedMatches = computed(() => {
@@ -72,9 +76,15 @@ const groupedMatches = computed(() => {
   }));
 });
 const groupActiveTab = ref(0);
+const platformGame = ref(null);
 function activateTeamsTab(index) {
   groupActiveTab.value = index;
 }
+const betNow = (platformMatchId) => {
+  var matchId= platformMatchId ?? "";
+  platformGame.value.open('FB体育', 'FB', matchId);
+}
+
 onMounted(() => {
   euroMatchAll().then((res) => {
     if (res.code === 0) {
