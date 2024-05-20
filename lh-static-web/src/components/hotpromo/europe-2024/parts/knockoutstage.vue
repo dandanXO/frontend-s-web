@@ -34,72 +34,72 @@ const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([
   // left side round of 16
-  { top: -2,   left:-2, seg: 1, group: '16', team: 'A' },
-  { top: 151,  left:-2, seg: 1, group: '16', team: 'B' },
-  { top: 299,  left:-2, seg: 2, group: '16', team: 'A' },
-  { top: 452,  left:-2, seg: 2, group: '16', team: 'B' },
-  { top: 575,  left:-2, seg: 3, group: '16', team: 'A' },
-  { top: 728, left: -2, seg: 3, group: '16', team: 'B' },
-  { top: 876, left: -2, seg: 4, group: '16', team: 'A' },
-  { top: 1029, left:-2, seg: 4, group: '16', team: 'B' },
+  { top: -9,   left:-2, seg: 1, group: '16', team: 'A' },
+  { top: 144,  left:-2, seg: 1, group: '16', team: 'B' },
+  { top: 292,  left:-2, seg: 2, group: '16', team: 'A' },
+  { top: 445,  left:-2, seg: 2, group: '16', team: 'B' },
+  { top: 568,  left:-2, seg: 3, group: '16', team: 'A' },
+  { top: 721, left: -2, seg: 3, group: '16', team: 'B' },
+  { top: 869, left: -2, seg: 4, group: '16', team: 'A' },
+  { top: 1022, left:-2, seg: 4, group: '16', team: 'B' },
   // left side quarterfinal
-  { top: 76,   left: 178, seg: 1, group: '8', team: 'A' },
-  { top: 377,  left: 178, seg: 1, group: '8', team: 'B' },
-  { top: 653,  left: 178, seg: 2, group: '8', team: 'A' },
-  { top: 954,  left: 178, seg: 2, group: '8', team: 'B' },
+  { top: 69,   left: 178, seg: 1, group: '8', team: 'A' },
+  { top: 370,  left: 178, seg: 1, group: '8', team: 'B' },
+  { top: 646,  left: 178, seg: 2, group: '8', team: 'A' },
+  { top: 947,  left: 178, seg: 2, group: '8', team: 'B' },
   // left side semifinal
-  { top: 226,  left: 380, seg: 1, group: '4', team: 'A' },
-  { top: 803,  left: 380, seg: 1, group: '4', team: 'B' },
+  { top: 219,  left: 376, seg: 1, group: '4', team: 'A' },
+  { top: 796,  left: 376, seg: 1, group: '4', team: 'B' },
   // left side final
-  { top: 508,  left: 545, seg: 1, group: '2', team: 'A' },
+  { top: 501,  left: 543, seg: 1, group: '2', team: 'A' },
   // right side final
-  { top: 508,  left: 743, seg: 1, group: '2', team: 'B' },
+  { top: 501,  left: 743, seg: 1, group: '2', team: 'B' },
   // right side semifinal
-  { top: 226,  left: 913, seg: 2, group: '4', team: 'A' },
-  { top: 803,  left: 913, seg: 2, group: '4', team: 'B' },
+  { top: 219,  left: 913, seg: 2, group: '4', team: 'A' },
+  { top: 796,  left: 913, seg: 2, group: '4', team: 'B' },
   // right side quarterfinal
-  { top: 76,   left: 1110, seg: 3, group: '8', team: 'A' },
-  { top: 377,  left: 1110, seg: 3, group: '8', team: 'B' },
-  { top: 653,  left: 1110, seg: 4, group: '8', team: 'A' },
-  { top: 954,  left: 1110, seg: 4, group: '8', team: 'B' },
+  { top: 69,   left: 1110, seg: 3, group: '8', team: 'A' },
+  { top: 370,  left: 1110, seg: 3, group: '8', team: 'B' },
+  { top: 646,  left: 1110, seg: 4, group: '8', team: 'A' },
+  { top: 947,  left: 1110, seg: 4, group: '8', team: 'B' },
   // right side round of 16
-  { top: -2,   left: 1290, seg: 5, group: '16', team: 'A' },
-  { top: 151,  left: 1290, seg: 5, group: '16', team: 'B' },
-  { top: 299,  left: 1290, seg: 6, group: '16', team: 'A' },
-  { top: 452,  left: 1290, seg: 6, group: '16', team: 'B' },
-  { top: 575,  left: 1290, seg: 7, group: '16', team: 'A' },
-  { top: 728,  left: 1290, seg: 7, group: '16', team: 'B' },
-  { top: 876,  left: 1290, seg: 8, group: '16', team: 'A' },
-  { top: 1029, left: 1290, seg: 8, group: '16', team: 'B' }
+  { top: -9,   left: 1290, seg: 5, group: '16', team: 'A' },
+  { top: 144,  left: 1290, seg: 5, group: '16', team: 'B' },
+  { top: 292,  left: 1290, seg: 6, group: '16', team: 'A' },
+  { top: 445,  left: 1290, seg: 6, group: '16', team: 'B' },
+  { top: 568,  left: 1290, seg: 7, group: '16', team: 'A' },
+  { top: 721,  left: 1290, seg: 7, group: '16', team: 'B' },
+  { top: 869,  left: 1290, seg: 8, group: '16', team: 'A' },
+  { top: 1022, left: 1290, seg: 8, group: '16', team: 'B' }
 ]);
 
 const bracketDateList = ref([
   // left side round of 16
-  { top: 100,  left: 24, seg: 1, group: '16' },
-  { top: 390,  left: 24, seg: 2, group: '16' },
-  { top: 670,  left: 24, seg: 3, group: '16' },
-  { top: 975,  left: 24, seg: 4, group: '16' },
+  { top: 100,  left: 45, seg: 1, group: '16' },
+  { top: 390,  left: 45, seg: 2, group: '16' },
+  { top: 670,  left: 45, seg: 3, group: '16' },
+  { top: 975,  left: 45, seg: 4, group: '16' },
   // left side quarterfinal
-  { top: 240,  left: 190, seg: 1, group: '8' },
-  { top: 815,  left: 190, seg: 2, group: '8' },
+  { top: 240,  left: 212, seg: 1, group: '8' },
+  { top: 815,  left: 212, seg: 2, group: '8' },
   // left side semifinal
-  { top: 520,  left: 390, seg: 1, group: '4' },
+  { top: 520,  left: 406, seg: 1, group: '4' },
   // right side semifinal
-  { top: 520,  left: 855, seg: 2, group: '4' },
+  { top: 520,  left: 833, seg: 2, group: '4' },
   // right side quarterfinal
-  { top: 240,  left: 1050, seg: 3, group: '8' },
-  { top: 815,  left: 1050, seg: 4, group: '8' },
+  { top: 240,  left: 1028, seg: 3, group: '8' },
+  { top: 815,  left: 1028, seg: 4, group: '8' },
   // right side round of 16
-  { top: 100,  left: 1220, seg: 5, group: '16' },
-  { top: 390,  left: 1220, seg: 6, group: '16' },
-  { top: 670,  left: 1220, seg: 7, group: '16' },
-  { top: 975,  left: 1220, seg: 8, group: '16' }
+  { top: 100,  left: 1192, seg: 5, group: '16' },
+  { top: 390,  left: 1192, seg: 6, group: '16' },
+  { top: 670,  left: 1192, seg: 7, group: '16' },
+  { top: 975,  left: 1192, seg: 8, group: '16' }
 ]);
 const teams = ref([
 ])
 const populateTeams = () => {
   pageLoading.value = true
-  
+
   euroMatchAll().then((res) => {
     if (res.code === 0) {
       teams.value = res.data
@@ -138,7 +138,7 @@ const populateTeams = () => {
       pageLoading.value = false
     }
   })
-  
+
 };
 const formatDate = (matchTime) => {
       if (!matchTime) return ''; // Return empty string if matchTime is not available
@@ -176,8 +176,8 @@ onMounted(() => {
     position: absolute;
     width: 122px;
     font-family: Microsoft YaHei UI;
-    font-size: 18px;
-    line-height: 20.92px;
+    font-size: 16px;
+    line-height: 18px;
     letter-spacing: 0.12em;
     text-align: center;
   }
