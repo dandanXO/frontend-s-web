@@ -45,7 +45,11 @@
   </div>
 
   <GameModal ref="gameMenu" />
-  <div class="rocket-wrapper" :class="store.token && 'show-rocket'" @click="openGame('TFGaming', 'TFGaming', '20')">
+  <div
+    class="rocket-wrapper"
+    :class="store.token && store.memberType === 'TEST' && 'show-rocket'"
+    @click="openGame('TFGaming', 'TFGaming', '20')"
+  >
     <div class="rocket-container">
       <div class="rocket"><img src="../../assets/images/home/rocket.png" /></div>
       <div class="blue-smoke"><img src="../../assets/images/home/blue-smoke.svg" /></div>
@@ -78,13 +82,6 @@ export default defineComponent({
       gameMenu.value.open(gameName, platType, gameCode, scrollingState);
     };
 
-    const showRocket = ref(false);
-    const checkShowRocket = () => {
-      if (store.token && store.memberType === "TEST") {
-        showRocket.value = true;
-      }
-    };
-
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
       getAppDownloadUrlFromServer()
@@ -99,7 +96,6 @@ export default defineComponent({
 
     onMounted(() => {
       getAppDownloadUrl();
-      checkShowRocket();
     });
 
     return {
@@ -111,8 +107,6 @@ export default defineComponent({
       handleDarkModeClick,
       gameMenu,
       openGame,
-      showRocket,
-      checkShowRocket
     };
   }
 });
