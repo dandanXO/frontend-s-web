@@ -1,3 +1,4 @@
+import { Platform, useQuasar } from "quasar";
 
 export function doIt(resp) {
   return new Promise((resolve) => {
@@ -21,7 +22,23 @@ export function doIt(resp) {
 }
 
 function locationUrl(resp) {
-  location.href = resp.requestUrl;
+  if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
+    const newWin = window.open(`/`, `_self`);
+    if (newWin) {
+      newWin.location.href = resp.requestUrl;
+    } else {
+      const $q = useQuasar();
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message:
+          'ไม่สามารถเปิดหน้าเติมเงินได้ กรุณาตรวจสอบว่าเบราว์เซอร์บล็อกหน้าต่างป๊อปอัพหรือไม่ และแก้ไขเป็น "อนุญาตให้แสดงหน้าต่างป๊อปอัพ" ก่อนทำการเติมเงิน',
+        icon: "report_problem"
+      });
+    }
+  } else {
+    location.href = resp.requestUrl;
+  }
 }
 
 function postSubmit(resp) {

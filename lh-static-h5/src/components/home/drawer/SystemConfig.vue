@@ -12,7 +12,7 @@ import { useLocalStorage } from "@vueuse/core";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 
-const store= userStore
+const store= userStore();
 const isDarkMode = useLocalStorage("DARK_MODE", false);
 const $q = useQuasar();
 

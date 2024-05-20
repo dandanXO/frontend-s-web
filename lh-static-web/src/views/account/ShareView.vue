@@ -224,6 +224,7 @@ export default defineComponent({
   .share-content {
     width: 100%;
     .desc {
+      height:90px;
       padding: 0 10px;
       p {
         width: 60%;
