@@ -73,7 +73,8 @@
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
-            selectedPromo.promoCode !== 'lh1-ftd-promo'
+            selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+            selectedPromo.promoCode !== 'lh-eurocup-manual'
           "
         >
           <div class="promo-bg isDesktop">
@@ -101,8 +102,9 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo',
-            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -118,6 +120,9 @@
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
+            v-if="
+            selectedPromo.promoCode !== 'lh-eurocup-manual'
+          "
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
@@ -241,6 +246,8 @@ export default defineComponent({
           //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
           // }
           // isPromoDetail.value = true;
+
+          console.log(promo)
           selectedPromo.value = promo
         }
       }
@@ -798,11 +805,19 @@ export default defineComponent({
         gap: 20px;
         background-repeat: no-repeat;
 
+        &.bgautosize{
+          background-size: 100% auto;
+        }
+
         &.fullwidth {
           width: 100%;
           max-width: 100%;
           margin: 0;
           padding: 0;
+
+          .hot-promo{
+            border-radius: 0px
+          }
 
           .promo-view-container {
             display: none;

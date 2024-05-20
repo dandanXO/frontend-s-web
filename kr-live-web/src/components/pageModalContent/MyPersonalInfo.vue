@@ -3,7 +3,7 @@
         <q-card-section class="modal-body-content">
             <form class="personal-info-form">
                 <div>
-                    <label>아이디(닉네임)</label>
+                    <label>아이디(개인정보)</label>
                     <input 
                       :value="store.nickName || ''" 
                       :readonly="store.token ? 'readonly' : false"
@@ -11,7 +11,7 @@
                     />
                 </div>
                 <div>
-                    <label>보유금액</label>
+                    <label>잔액</label>
                     <input 
                       :value="store.token ? mainWallet : ''"
                       :readonly="store.token ?  'readonly' : false"
@@ -36,7 +36,7 @@
                 </div>
             </form>
             <div class="action-buttons">
-                <q-btn class="form-button blue" label="입금하기"></q-btn>
+                <q-btn class="form-button blue" label="닫기"></q-btn>
             </div>
         </q-card-section>
     </div>

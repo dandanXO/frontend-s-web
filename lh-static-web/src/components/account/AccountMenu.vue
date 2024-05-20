@@ -1,11 +1,11 @@
 <template>
   <div class="account-menu-container">
     <div class="account-info-wrapper">
-      <div class="account-info-bg" @click="onShowProfile">
-        <div  class="account-avatar">
+      <div class="account-info-bg" >
+        <div @click="onShowProfile" class="account-avatar">
           <img v-if="!store.profilePhoto" src="../../assets/images/home/profile-pic.png" />
           <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
-          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto" />
+          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
         </div>
         <div class="account-name">欢迎您 {{ loginName }}</div>
         <span class="account-vip-label">{{ vip }}</span>
@@ -15,7 +15,7 @@
             <span v-if="isLoadingBalance">加载中...</span>
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ store.balance }}</span>
           </span>
-          <el-icon>
+          <el-icon style="cursor: pointer;">
             <RiRefreshLine color="#468CFF" />
           </el-icon>
         </div>
@@ -70,20 +70,29 @@
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
           <img :src="require(`../../assets/images/profile/default-${profIndex + 1}.png`)">
         </div>
-        <!-- <div class="grid-item" v-if="uploadedImage.url"
-          :class="selectedImage === imageForm.path ? 'selected' : ''"
-        >
-          <el-image
-            v-if="uploadedImage.url"
-            :src="uploadedImage.url"
-            fit="contain"
-            @click="selectImage(imageForm.path)"
-          />
-        </div> -->
+      <div class="grid-item">
+              <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
+              </div>
+    </div>
       </div>
-      <!-- <el-form-item prop="path">
-        <el-row :gutter="10">
-          <el-col :span="5">
+      <div class="dialog-footer">
+        <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
+        <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
+      </div>
+    </el-form>
+  </el-dialog>
+  <el-dialog 
+    v-model="updateDialogVisible"
+    append-to-body
+    :close-on-press-escape="false"
+    class="profile-dialog update"
+  >
+    <div class="header">
+      上传头像
+    </div>
+    <div class="uploader">
+      <div class="leftBox">
+          <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0;" prop="path">
             <!- eslint-disable ->
             <input
               id="uploadFile"
@@ -93,30 +102,75 @@
               accept="image/*"
               @change="attachImage"
             />
-            <el-button :icon="Upload" type="success" @click="$refs.inputImage.click()">
-              上传
-              <el-icon>
-                <RiChatUploadLine />
-              </el-icon>
-            </el-button>
-          </el-col>
-          <el-col :span="1" />
-        </el-row>
-      </el-form-item> -->
-      <div class="dialog-footer">
-        <!-- <el-button type="primary" @click="profileDialogVisible = false">取消</el-button> -->
-        <el-button :loading="submitPhotoLoading" type="submit" class="standard-button btn-color-blue" size="large" @click.prevent="submitPhoto">确认</el-button>
+            <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
+              
+          </el-form-item>
+          <cropper 
+            v-if="uploadedImage.url" 
+              background-class="cropper-background"
+              ref="cropperRef"
+              class="cropper"
+              :src="uploadedImage.url ? uploadedImage.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'"
+              circle-stencil
+              :stencil-props="{
+                handlers: {},
+                movable: false,
+                resizable: false,
+            aspectRatio: 1/1
+              }"
+              :stencil-size="{
+                width:250,
+                height: 250
+              }"
+              image-restriction="stencil"
+              @change="change"
+            />
+          </div>
+      <div class="rightBox">
+        <div class="cropped_title">头像预览</div>
+        <div v-if="!croppedImg" class="croppedImgHolder"></div>
+        <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px;" :src="croppedImg">
       </div>
-    </el-form>
-  </el-dialog>
+    </div>
+    
+    <el-button :loading="isLoadingUpload" class="standard-button btn-color-blue" size="large" v-if="croppedImg" @click="saveCroppedImage()">保存</el-button>
+
+  </el-dialog>  
 </template>
 
 <script setup>
+import moment from "moment"
 import { computed, ref, reactive, onMounted } from "vue";
 import { userStore } from "@/store";
 import { getUnreadTotal } from "@/api/personal/mailbox";
-import { RiRefreshLine } from "vue-remix-icons";
+import { RiRefreshLine, RiAddLine } from "vue-remix-icons";
+import { uploadImage, saveImage } from '@/api/personal/common';
+import { ElMessage } from "element-plus";
+import { Cropper, CircleStencil } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
+import 'vue-advanced-cropper/dist/theme.compact.css';
+components: {
+  Cropper,
+  CircleStencil
+}
 
+const timestamp = moment().unix();
+
+const cropperRef = ref(null);
+const croppedImg = ref(null);
+const getImageFromCropper = () => {
+  if (cropperRef.value) {
+    // Access the cropper instance using the value of cropperRef
+    const { coordinates, canvas } = cropperRef.value.getResult();
+    croppedImg.value = canvas.toDataURL();
+  }
+};
+const change = ({ coordinates, canvas }) => {
+  console.log(coordinates, canvas)
+  getImageFromCropper()
+
+}
 const inputImage = ref(null)
 const selectedImage = ref(null)
 const store = userStore();
@@ -175,6 +229,7 @@ const uploadedImage = reactive({
 const imageForm = reactive({
   path: null,
 })
+const isLoadingUpload = ref(false)
 const onShowProfile = () => {
   if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
     return;
@@ -183,35 +238,81 @@ const onShowProfile = () => {
   imageForm.path = null
   inputImage.value = null
   uploadedImage.url = null
+  croppedImg.value = null
   profileDialogVisible.value = true
 };
+async function saveCroppedImage() {
+  isLoadingUpload.value = true
+  if (croppedImg.value) {
+    const data = await attachPhoto(croppedImg.value)
+  if (data.code === 0) {
+    selectedImage.value = data.data
+    inputImage.value = ''
+    isLoadingUpload.value = false
+    
+    submitPhoto();
+  } else {
+    // Handle case when croppedImg is not available
+    console.error('No cropped image available');
+    isLoadingUpload.value = false
+  }
+}
+}
 
 async function attachImage(event) {
-  const data = await attachPhoto(event)
-  if (data.code === 0) {
-    imageForm.path = data.data
-    selectedImage.value = imageForm.path
-    inputImage.value = ''
-  } else {
-    ElMessage({ message: '照片上传失败', type: 'error' })
-  }
-};
+  const file = event.target.files[0];
+  uploadedImage.url = URL.createObjectURL(file); 
+}
 
-async function attachPhoto(event) {
-  const files = event.target.files[0]
+function isBase64(str) {
+  // Regular expression to match Base64 encoding pattern
+  const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
 
-  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
-  const dir = 'temp'
-  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
-    ElMessage({ message: '照片格式错误', type: 'error' })
+  // Test if the string matches the Base64 pattern
+  return base64Regex.test(str);
+}
+async function attachPhoto(fileImg) {
+  var file = null;
+  if (typeof fileImg === 'string' && isBase64(fileImg)) {
+    console.log("Treating input as base64");
+    // Extract the MIME type from the base64 string
+    const mimeType = fileImg.split(';')[0].split(':')[1];
+    var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
+    // Decode the Base64 string
+    const byteCharacters = atob(data);
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    // Convert to an ArrayBuffer
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Create a Blob from the ArrayBuffer
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    // Create a File object from the Blob
+    file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
   } else {
-    var formData = new FormData()
-    formData.append('files', files)
-    formData.append('dir', dir)
-    formData.append('overwrite', false)
-    uploadedImage.url = URL.createObjectURL(files)
-    return await uploadImage(formData)
+    file = fileImg; 
   }
+  // Use the File object for further processing
+  const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  const dir = 'temp';
+
+  if (!file || !allowFileTypes.includes(file.type)) {
+    ElMessage({ message: '照片格式错误', type: 'error' });
+    isLoadingUpload.value = false;
+    return null; // Exit the function if file is not valid
+  }
+
+  var formData = new FormData();
+  formData.append('files', file);
+  formData.append('dir', dir);
+  formData.append('overwrite', false);
+  selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
+
+  return await uploadImage(formData);
 }
 const submitPhotoLoading = ref(false)
 async function submitPhoto() {
@@ -219,17 +320,21 @@ async function submitPhoto() {
     return ElMessage.warning('请选择图片');
   }
   submitPhotoLoading.value = true
+  isLoadingUpload.value = true
   const data = await saveImage(selectedImage.value);
   profileDialogVisible.value = false
+  updateDialogVisible.value = false
   ElMessage({ message: '修改成功', type: 'success' })
   store.profilePhoto = data.data
   submitPhotoLoading.value = false
+  isLoadingUpload.value = false
 }
 
 const selectImage = (item) => {
   selectedImage.value = item
 }
 
+const updateDialogVisible = ref(false);
 onMounted(() => {
   checkMailboxUnread();
   setInterval(checkMailboxUnread, 60000);
@@ -238,7 +343,6 @@ onMounted(() => {
   }
 });
 </script>
-
 <style lang="scss">
 .account-container {
   background-size: cover;
@@ -331,5 +435,92 @@ onMounted(() => {
     font-size: 16px;
     line-height: 25px;
   }
+}
+
+.uploader {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 50px 0;
+    .leftBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+      .upload-box {
+        gap: 10px;
+        padding: 10px;
+        width: 250px;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #A4AABB;
+        background: #E7F3FF;
+        border-radius: 20px;
+        .el-form-item__content {
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          padding: 50px 0;
+          text-align: center;
+          gap: 10px;
+        }
+
+
+        .upload-btn {
+          cursor: pointer;
+           padding: 8px 20px;
+          background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
+
+          box-shadow: 0px -0.96px 3.51px 0px #A2BFF4 inset;
+
+        }
+      }
+    } 
+    .rightBox {
+      display: flex;
+      justify-content: center; 
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+      .cropped_title {
+        color: #7A80A1;
+        font-family: PingFang SC;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+        text-align: center;
+
+
+      }
+      .croppedImgHolder {
+        border: 3px dotted #7A80A1;
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+      }
+    }
+  }
+.cropper {
+	height: 250px;
+	width: 250px;
+  border-radius: 10px;
+	background: aliceblue;
+}
+.vue-preview__wrapper {
+  border-radius: 20px;
+}
+.vue-bounding-box {
+  border-radius: 50%;
+}
+.cropper-background {
+	background: aliceblue;
+}
+.profile-dialog.update {
+
 }
 </style>

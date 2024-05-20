@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="70" size="large">
+  <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="80" size="large">
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
       <el-form-item label="姓名" prop="realName">
@@ -252,7 +252,11 @@ let validatePass = async (r, v) => {
 const regRules = {
   realName: [
     {
-      required: false,
+      required: true,
+      message: "请输入姓名",
+      trigger: "blur"
+    },
+    {
       min: 2,
       max: 12,
       message: "长度应为 2 至 12",
@@ -264,6 +268,11 @@ const regRules = {
     }
   ],
   loginName: [
+    {
+      required: true,
+      message: "请输入用户名",
+      trigger: "blur"
+    },
     {
       min: 6,
       max: 12,
@@ -277,6 +286,11 @@ const regRules = {
   ],
   password: [
     {
+      required: true,
+      message: "请输入密码",
+      trigger: "blur"
+    },
+    {
       min: 6,
       max: 12,
       message: "长度应为 6 至 12",
@@ -288,6 +302,11 @@ const regRules = {
     }
   ],
   confirmPwd: [
+    {
+      required: true,
+      message: "请输入密码",
+      trigger: "blur"
+    },
     {
       min: 6,
       max: 12,
@@ -338,7 +357,7 @@ const regRules = {
   captchaCode: [
     {
       required: true,
-      message: "需要验证码",
+      message: "请输入验证码",
       trigger: "blur"
     },
     {

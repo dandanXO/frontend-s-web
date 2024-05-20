@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-matches-wrapper" v-if="store.memberType==='TEST'">
+  <div class="hot-matches-wrapper" >
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -48,7 +48,7 @@
               <div class="match-btn">
                 <a
                   class="standard-button lg-btn btn-color-blue"
-                  @click="goToSportPage"
+                  @click="goToSportPage(item)"
                 >
                   {{ $t("common.playnow") }}
                 </a>
@@ -102,8 +102,12 @@ const loadHotMatches = () => {
   });
 };
 
-const goToSportPage = () => {
-  router.push("/sports");
+const goToSportPage = (item) => {
+  if(!store.token){
+    router.push("/login");
+  }else{
+    openGame(item.platformName, item.platformCode, item.gameCode)
+  }
 }
 
 const formattedTime = (timeString) => {
@@ -215,7 +219,7 @@ onMounted(() => {
         top: 16px;
       }
       .match-time {
-        color: #7a80a1;
+        color: #444444;
         font-size: 20px;
         text-align: center;
         margin-top: 12px;
@@ -271,7 +275,7 @@ onMounted(() => {
       .team-name {
         font-size: 18px;
         text-align: center;
-        color: #7a80a1;
+        color: #444444;
       }
     }
   }

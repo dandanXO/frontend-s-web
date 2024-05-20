@@ -8,11 +8,17 @@
 
     <q-page-container>
       <div class="home-banner-wrapper">
-        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" />
+        <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
+        <div class="jackpot">
+          <img class="desktop" src="../assets/home/jackpot.png" />
+          <img class="mobile" src="../assets/home/jackpot-mobile.png" />
+          <div class="jackpot-txt">987,654,321.23</div>
+        </div>
+
+        <LoginBar />
       </div>
 
       <div class="main">
-        <LoginBar />
         <div class="main-content">
           <router-view v-slot="{ Component }">
             <KeepAlive :max="8">
@@ -82,6 +88,8 @@ export default defineComponent({
       { imgUrl: require("../assets/images/footer/logo-wm.png") },
       { imgUrl: require("../assets/images/footer/logo-nlc.png") },
       { imgUrl: require("../assets/images/footer/logo-pg.png") },
+      { imgUrl: require("../assets/images/footer/logo-bti.png") },
+      { imgUrl: require("../assets/images/footer/logo-spribe.png") }
     ]);
 
     const route = useRoute();
@@ -547,30 +555,32 @@ svg path {
   width: calc(100%);
 }
 
-.top-logo{
+.top-logo {
   width: 33%;
   @media (max-width: 768px) {
-    width : 66%;
+    width: 66%;
   }
 }
 
 .home-banner-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
   position: relative;
   width: 100%;
-  height: 200px;
-  background-image: url("../assets/images/headerBanner/banner-phone.png");
-  background-color: rgba(0, 0, 0, 0.3);
+  background-image: url("../assets/home/home-banner-mobile.png");
+  // background-color: rgba(0, 0, 0, 0.3);
   background-blend-mode: multiply;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 380px;
 
   @media (min-width: 1200px) {
-    background-image: url("../assets/images/headerBanner/banner.svg");
-    height: 440px;
+    background-image: url("../assets/home/home-banner.png");
+    background-position: top center;
+    height: 480px;
   }
 }
 
@@ -659,6 +669,49 @@ footer {
   }
   .header-vip-btn {
     margin-left: 130px;
+  }
+}
+
+.jackpot {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  position: relative;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  .jackpot-txt {
+    display: flex;
+    position: absolute;
+    bottom: 9%;
+    font-size: 34px;
+    font-weight: bold;
+    color: #f1b252;
+    text-shadow: 0 0 5px #ff0000;
+    letter-spacing: 3px;
+
+    @media (max-width: 991px) {
+      font-size: 16px;
+    }
+  }
+
+  img.desktop {
+    display: none;
+    width: 100%;
+    max-width: 500px;
+    @media (min-width: 991px) {
+      display: block;
+      max-width: 880px;
+    }
+  }
+
+  img.mobile {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    @media (min-width: 991px) {
+      display: none;
+    }
   }
 }
 </style>

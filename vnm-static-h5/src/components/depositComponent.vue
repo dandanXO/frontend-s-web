@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
-    <div class="q-mb-lg">
+    <!-- <div class="q-mb-lg">
       <span class="additional-tips">
         {{ $t("lang.deposit_encounterproblem") }}
       </span>
-    </div>
+    </div> -->
 
     <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
@@ -600,7 +600,7 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1) {
+        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1) {
           otag("event", "deposit");
         }
 

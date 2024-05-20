@@ -46,6 +46,9 @@ function activateTab(index) {
     width: 100%;
     max-width: 1500px;
     margin: 10px auto;
+    .rule-title {
+      text-align: center;
+    }
     .tab-buttons {
       width: 100%;
       display: flex;
@@ -55,7 +58,7 @@ function activateTab(index) {
       margin: 10px auto;
       button {
         background: url(images/inactive-tab.png)no-repeat center center;
-        width: 240px;
+        width: 320px;
         height: 86px;
         background-size: contain;
         color: #ffffff;
@@ -74,7 +77,7 @@ function activateTab(index) {
       }
     }
     .tab-content {
-      min-height: 1400px;
+      min-height: 350px;
       .tab-title {
         display: flex;
         justify-content: center;
@@ -84,7 +87,7 @@ function activateTab(index) {
         line-height: 59.57px;
         letter-spacing: 0.12em;
         text-align: left;
-        margin: 30px auto;
+        margin: 50px auto 40px;
         background: linear-gradient(360deg, #BCF3FF 10.4%, #FFFFFF 100%);
         border: none;
         color: transparent; /* Hide the original text */

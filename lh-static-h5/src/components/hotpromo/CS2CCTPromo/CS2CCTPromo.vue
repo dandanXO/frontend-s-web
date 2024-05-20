@@ -396,7 +396,7 @@ onMounted(() => {
 .cs2 {
   text-align: center;
   .title {
-    margin: 20px auto;
+    margin: 10px auto;
   }
 
   .tips {
@@ -471,10 +471,14 @@ onMounted(() => {
     .middle-row {
       .item-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, 165px);
+        grid-template-columns: repeat(3, 1fr);
         gap: 6px;
         justify-content: space-evenly;
         margin: 25px auto;
+
+        @media (max-width: 400px){
+          grid-template-columns: repeat(2, 1fr);
+        }
 
         .item {
           cursor: pointer;
@@ -482,6 +486,7 @@ onMounted(() => {
           flex-direction: column;
           gap: 6px;
           background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/treasure-bg.png) no-repeat center center;
+          background-size: 100% 100%;
 
           img {
             margin-bottom: 0;
@@ -496,6 +501,11 @@ onMounted(() => {
             background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/treasure-bg-active.png) no-repeat center
               center;
             color: #01f8f9;
+            background-size: 100% 100%;
+
+            @media (max-width: 400px){
+              order: -1;
+            }
           }
         }
       }
@@ -522,10 +532,14 @@ onMounted(() => {
       }
       .sign-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, 165px);
+        grid-template-columns: repeat(3,1fr);
         justify-content: space-around;
         row-gap: 56px;
         margin: 25px auto;
+
+        @media (max-width: 375px){
+          grid-template-columns: repeat(2,1fr);
+        }
 
         .item {
           display: flex;

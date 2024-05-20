@@ -848,7 +848,9 @@ async function loadFinancialLevels() {
   const { data: financial } = await getFinancialLevels({
     siteId: searchCondition.siteId,
   })
-  page.financials = financial
+  if (financial && financial.length > 0) {
+    page.financials = financial
+  }
 }
 async function loadPayments() {
   const { data: records } = await getAllPayments({

@@ -350,11 +350,16 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           })
           .then((response) => {
             $q.loading.hide();
+            let srcData = response.data;
 
-            if (way === "ANDROID") {
-              var ref = cordova.InAppBrowser.open(response.data, "_blank", "location=no,zoom=no");
+            if (platformCode === "PG") {
+              srcData = srcData.replaceAll(/\\\"/g, '"').replaceAll(/\n/g, "");
+              src.value = srcData;
+              visible.value = true;
+            }else if (way === "ANDROID") {
+              var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
-              window.location.href = response.data;
+              window.location.href = srcData;
             }
 
             // src.value = response.data;
@@ -386,7 +391,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             });
           return;
         }
-      // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
+        // ,headers: platformCode === 'PG' ? { 'Cache-Control': 'no-cache, no-store, must-revalidate' } : {}
         api
           .get(`/session/launch?_time=${new Date().getTime()}`, {
             params: {
@@ -524,21 +529,21 @@ defineExpose({
       display: none;
       top: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, transparent 20%, #db7e42 20%, transparent 30%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
     }
 
     &:after {
       bottom: -95%;
       background-image: radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
-        radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
+      radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, #db7e42 15%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%),
+      radial-gradient(circle, #db7e42 20%, transparent 20%), radial-gradient(circle, #db7e42 20%, transparent 20%);
       background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
     }
 

@@ -49,13 +49,12 @@ export default {
     // side menu
     menu_sports: "Sports",
     menu_esports: "eSports",
-    menu_livecasino: "Live Casino",
+    menu_livecasino: "Casino",
     menu_poker: "Poker",
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
-
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
@@ -448,6 +447,10 @@ export default {
     won: "Won",
     didnt_win: "Didn't win",
     please_select_query_time: "Please select the query time",
+
+    // promo -- upgradeHongbao
+    congrats: "Congratulations",
+    claim: "Claim",
 
     // slot
     slot_search: "Search for games",
@@ -978,7 +981,6 @@ export default {
     welcome: "Welcome",
     tnc: "Terms and Conditions",
     agree: "Agree",
-    claim: "Claim",
     select_date: "Select Date",
     invite_friend_to_receive_prize: "Invite Friends to Receive Prize",
     event_time: "Event Date",

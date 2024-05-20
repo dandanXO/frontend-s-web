@@ -1,8 +1,17 @@
 <template>
   <div class="container">
+    <div class="top-header">
+      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.png" /></div>
+    </div>
+
     <div class="content">
-      <div class="left-content">
-        <div v-for="(item, index) in iconInfo" :key="index" @click="store.token ? item.goPage() : showNotify()" class="credit-info cursor-pointer">
+      <div class="left-content" :class="navActive && 'active'" @click="navActive = false">
+        <div
+          v-for="(item, index) in iconInfo"
+          :key="index"
+          @click="store.token ? item.goPage() : showNotify()"
+          class="credit-info cursor-pointer"
+        >
           <img :src="item.iconUrl" alt="" />
           <div class="info-text">{{ item.info }}</div>
         </div>
@@ -18,14 +27,19 @@
 <script setup>
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 const store = userStore();
-const $q= useQuasar()
+const $q = useQuasar();
 
 const router = useRouter();
+
+const navActive = ref(false);
+const toggleNav = () => {
+  navActive.value = !navActive.value;
+};
 
 const showNotify = () => {
   $q.notify({
@@ -34,7 +48,7 @@ const showNotify = () => {
     message: "로그인 해주세요",
     icon: "report_problem"
   });
-}
+};
 
 const iconInfo = reactive([
   // {
@@ -45,43 +59,96 @@ const iconInfo = reactive([
   //   }
   // },
   {
-    info: "출금신청",
-    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/withdraw`);
-    }
-  },
-  {
     info: "공지사항",
-    iconUrl: require("../../assets/icon/notify.svg"),
+    iconUrl: require("../../assets/icon/icon-notify.svg"),
     goPage: () => {
       router.push(`/?page=notify`);
     }
   },
+  // {
+  //   info: "이벤트",
+  //   iconUrl: require("../../assets/icon/icon-promo.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=promo/all`);
+  //   }
+  // },
+  {
+    info: "충전",
+    iconUrl: require("../../assets/icon/icon-deposit.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/deposit`);
+    }
+  },
+  {
+    info: "환전",
+    iconUrl: require("../../assets/icon/icon-withdrawal.svg"),
+    goPage: () => {
+      router.push(`/?page=finance/withdraw`);
+    }
+  },
+  // {
+  //   info: "배팅내역",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=transaction/records`);
+  //   }
+  // },
+  {
+    info: "쪽지함",
+    iconUrl: require("../../assets/icon/icon-message.svg"),
+    goPage: () => {
+      router.push(`/?page=personal/messages`);
+    }
+  },
   {
     info: "고객센터",
-    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconUrl: require("../../assets/icon/icon-service.svg"),
     goPage: () => {
       router.push(`/?page=customer/service`);
     }
-  }
+  },
+  // {
+  //   info: "고객센터",
+  //   iconUrl: require("../../assets/icon/icon-service.svg"),
+  //   goPage: () => {
+  //     router.push(`/?page=customer/service`);
+  //   }
+  // }
 ]);
 </script>
 
 <style scoped lang="scss">
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  background: salmon;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 12px;
+  background: rgba(18, 17, 33, 0.6);
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
 .container {
-  background: transparent;
+  // background: transparent;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
+  background: rgba(18, 17, 33, 1);
 
   @media (min-width: 769px) {
-    background: linear-gradient(#292b31, #191b1e);
-    border-width: 1px 0px 1px 0px;
+    // background: linear-gradient(#292b31, #191b1e);
+    background: rgba(18, 17, 33, 0.6);
+    border-width: 2px 0px 2px 0px;
     border-style: solid;
-    border-color: #333333;
+    border-color: #2a306c;
+    backdrop-filter: blur(6px);
   }
 }
 
@@ -93,6 +160,9 @@ const iconInfo = reactive([
     width: 1280px;
     flex-direction: row;
     height: 80px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -103,13 +173,40 @@ const iconInfo = reactive([
   justify-content: space-around;
   width: 100%;
   height: 68px;
-  background: linear-gradient(#292b31, #191b1e);
+  // background: linear-gradient(#292b31, #191b1e);
   border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: #333333;
   padding-left: 8px;
+  display: none;
+
+  &.active {
+    display: flex;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 17, 33, 0.9);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 12px;
+    gap: 16px;
+    z-index: 9;
+
+    .credit-info {
+      flex-direction: row;
+
+      .info-text {
+        font-size: 16px;
+      }
+    }
+  }
+
+  // display: none;
   @media (min-width: 769px) {
-    width: 40%;
+    display: flex;
     height: 100%;
     border: none;
   }
@@ -123,8 +220,7 @@ const iconInfo = reactive([
   margin-top: 16px;
   padding-right: 8px;
   @media (min-width: 769px) {
-    background: linear-gradient(#292b31, #191b1e);
-    width: 60%;
+    // background: linear-gradient(#292b31, #191b1e);
     justify-content: flex-end;
     margin-top: 0px;
   }
@@ -133,13 +229,13 @@ const iconInfo = reactive([
 .info-text {
   font-size: 14px;
   font-weight: 500;
-  color: #a5a6a7;
+  color: #ffffff;
   line-height: 28px;
   margin-left: 5px;
 
   @media (min-width: 769px) {
-    font-size: 20px;
-    line-height: 19.6px;
+    font-size: 16px;
+    line-height: 1;
   }
 }
 
@@ -148,6 +244,9 @@ const iconInfo = reactive([
   display: flex;
   flex-direction: column;
   align-items: center;
+  &:hover .info-text {
+    color: #01d9ab;
+  }
 
   img {
     width: 20px;

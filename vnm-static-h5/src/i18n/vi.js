@@ -52,10 +52,10 @@ export default {
     // side menu
     menu_sports: "Thể Thao",
     menu_esports: "eSports",
-    menu_livecasino: "Live Casino",
+    menu_livecasino: "Casino",
     menu_poker: "Poker",
     menu_lottery: "Xổ Số",
-    menu_slots: "NỔ HŨ",
+    menu_slots: "Nổ Hũ",
     menu_fishing: "Bắn Cá",
     menu_cockfighting: "ĐÁ GÀ",
     menu_rebate: "Hoàn Trả",
@@ -454,6 +454,9 @@ export default {
     didnt_win: "Không thắng",
     please_select_query_time: "Vui lòng chọn thời gian truy vấn",
 
+    // promo -- upgradeHongbao
+    congrats: "Chúc mừng",
+    claim: "Nhận",
     // slot
     slot_search: "Tìm kiếm trò chơi",
 
@@ -984,7 +987,6 @@ export default {
     welcome: "Chào mừng",
     tnc: "Điều khoản và điều kiện",
     agree: "Đồng ý",
-    claim: "Nhận",
     select_date: "Chọn ngày",
     invite_friend_to_receive_prize: "Mời bạn bè để nhận giải thưởng",
     event_time: "Thời gian sự kiện",
@@ -1282,7 +1284,7 @@ export default {
     cockfight: "Cockfight",
     copy_success: "Liên kết đã được sao chép thành công!",
     enter_transfer_amount: "Nhập số tiền chuyển",
-    choose_later: "Tham Gia Sa",
+    choose_later: "Tham Gia Sau",
     // about
     about: {
       affiliate: "Đại Lý",
@@ -1511,6 +1513,7 @@ export default {
     30004: "Số tiền nạp thành viên không đúng theo điều kiện",
     30005: "Chưa hoàn thành số lượng quay lại theo điều kiện",
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
+    30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",

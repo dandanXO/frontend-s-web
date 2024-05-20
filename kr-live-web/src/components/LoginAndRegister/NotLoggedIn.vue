@@ -1,16 +1,16 @@
 <template>
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
-      <div class="left-container">
+      <!-- <div class="left-container">
         <div class="account">
-          <q-input 
+          <q-input
             ref="loginNameRef"
             dense
             borderless
-            type="text" 
-            class="account-input" 
-            placeholder="계정" 
-            v-model="loginForm.loginName" 
+            type="text"
+            class="account-input"
+            placeholder="계정"
+            v-model="loginForm.loginName"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')
@@ -18,13 +18,13 @@
           />
         </div>
         <div class="password">
-          <q-input 
+          <q-input
             ref="pwdRef"
             dense
             borderless
-            type="password" 
-            class="password-input" 
-            placeholder="암호" 
+            type="password"
+            class="password-input"
+            placeholder="암호"
             v-model="loginForm.password"
             lazy-rules
             :rules="[
@@ -32,13 +32,13 @@
            />
         </div>
         <div class="captcha-code">
-          <q-input 
+          <q-input
             dense
             borderless
             ref="captchaRef"
-            type="text" 
-            class="captcha-code-input" 
-            placeholder="암호" 
+            type="text"
+            class="captcha-code-input"
+            placeholder="암호"
             v-model="loginForm.captchaCode"
             lazy-rules
             :rules="[
@@ -47,13 +47,14 @@
           />
         </div>
         <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
-      </div>
+      </div> -->
 
       <div class="right-container">
         <div class="register" @click="goToRegister">
-          <div class="register-text">등록</div>
+          <div class="register-text">회원가입</div>
         </div>
-        <div class="login" @click.prevent="onLoginSubmit">
+        <div class="login" @click="goToLogin">
+          <!-- @click.prevent="onLoginSubmit" -->
           <div class="login-text">로그인</div>
         </div>
       </div>
@@ -93,6 +94,10 @@ const goToRegister = () => {
   router.push("/?page=register");
 };
 
+const goToLogin = () => {
+  router.push("/?page=login");
+};
+
 const toGetCode = () => {
   getCode();
 };
@@ -109,20 +114,21 @@ const onLoginSubmit = () => {
       if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
         // has error
       } else {
-        store.memberLogin({
-          loginName: loginForm.loginName.trim(),
-          password: loginForm.password,
-          sid: store.visitorId,
-          captchaCode: loginForm.captchaCode,
-          codeId: loginForm.codeId
-        })
-        .then(() => {
-          location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-          getCode();
-        });
+        store
+          .memberLogin({
+            loginName: loginForm.loginName.trim(),
+            password: loginForm.password,
+            sid: store.visitorId,
+            captchaCode: loginForm.captchaCode,
+            codeId: loginForm.codeId
+          })
+          .then(() => {
+            location.reload();
+          })
+          .catch((error) => {
+            console.log(error);
+            getCode();
+          });
       }
     })();
   }
@@ -136,7 +142,7 @@ const getCode = () => {
       if (response.code === 0) {
         verificationImg.value = "data:image/png;base64," + response.data.img;
         loginForm.codeId = response.data.id;
-        loginForm.captchaCode = '';
+        loginForm.captchaCode = "";
       }
     })
     .catch((e) => {
@@ -163,7 +169,7 @@ onMounted(() => {
   flex-direction: column;
   @media (min-width: 1200px) {
     flex-direction: row;
-    width: 700px;
+    // width: 700px;
     justify-content: flex-end;
   }
 }
@@ -190,7 +196,7 @@ onMounted(() => {
   justify-content: flex-end;
   align-items: center;
   margin-left: 0px;
-  
+
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;
@@ -201,7 +207,7 @@ onMounted(() => {
   background: #080a0e;
   display: flex;
   align-items: center;
-  border: 1px solid #2D2D2D;
+  border: 1px solid #2d2d2d;
 }
 
 .password {
@@ -213,7 +219,7 @@ onMounted(() => {
   background: #080a0e;
   display: flex;
   margin-right: 4px;
-  border: 1px solid #2D2D2D;
+  border: 1px solid #2d2d2d;
 }
 
 .captcha-img {
@@ -241,34 +247,31 @@ onMounted(() => {
 
 .register {
   width: 100px;
-  min-height: 35px;
-  background: linear-gradient(180deg, #ffe2a0 0%, #FF7421 100%);
-  border: 2px solid rgb(201 128 0);
-  border-radius: 2px;
+  min-height: 50px;
+  background-image: url("../../assets/home/btn-blue.png");
+  background-size: 100px 50px;
+  background-repeat: no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  @media (min-width: 1200px) {
-    width: 100px;
-    height: 100%;
-  }
   .register-text {
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1;
+    padding-bottom: 6px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
     }
-    line-height: 22.4px;
   }
 }
 
 .login {
-  width: 80px;
-  min-height: 35px;
-  background: linear-gradient(180deg, #83d2f9 0%, #2659FF 100%);
-  border: 2px solid #2a4486;
+  width: 100px;
+  min-height: 50px;
+  background-image: url("../../assets/home/btn-orange.png");
+  background-size: 100px 50px;
+  background-repeat: no-repeat;
   border-radius: 2px;
   display: flex;
   align-items: center;
@@ -281,11 +284,11 @@ onMounted(() => {
   }
   .login-text {
     font-size: 12px;
-    line-height: 16px;
+    line-height: 1;
+    padding-bottom: 6px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
-      line-height: 22.4px;
     }
   }
 }

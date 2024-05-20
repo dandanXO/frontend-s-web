@@ -86,6 +86,11 @@
     />
   </q-carousel>
 
+  <PushNotification
+    :pushNotificationData="pushNotificationData"
+    v-if="Platform.is.android && Platform.is.capacitor"
+  />
+
   <div class="mid-announcement-section">
     <div class="midd">
       <div class="station-notice-wrapper">
@@ -103,7 +108,7 @@
     </div>
   </div>
 
-  <div class="hot-matches-wrapper" v-if="store.token && store.memberType==='TEST'">
+  <div class="hot-matches-wrapper">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -112,15 +117,15 @@
         {{ $t("lang.hotMatches") }}
       </div>
 
-<!--      <div>-->
-<!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
-<!--          {{ $t("lang.bet_now") }}-->
-<!--        </q-btn>-->
-<!--      </div>-->
+      <!--      <div>-->
+      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+      <!--          {{ $t("lang.bet_now") }}-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1"
+        :slides-per-view="1.2"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
@@ -151,7 +156,7 @@
                   no-caps
                   color="brightbtn"
                   class="sm-screen-txt"
-                  @click="playGame(item.platformName, item.platformCode, '')"
+                  @click="openHotMatch(item)"
                 >
                   {{ $t("lang.play_now") }}
                 </q-btn>
@@ -168,34 +173,34 @@
       </swiper>
     </div>
   </div>
-  <div class="details-bar" v-else>
-    <div class="message" @click="refreshBalance">
-      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{
-          store.token
-            ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
-              : $t("lang.loading")
-            : $t("lang.not_logged_in")
-        }}
-      </span>
-      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
-    </div>
-    <div class="menulist">
-      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
-        <div class="">{{ $t("lang.deposit") }}</div>
-      </router-link>
-      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
-        <div class="">{{ $t("lang.withdraw") }}</div>
-      </router-link>
-      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
-        <div class="">{{ $t("lang.vip") }}</div>
-      </router-link>
-    </div>
-  </div>
+  <!--  <div class="details-bar">-->
+  <!--    <div class="message" @click="refreshBalance">-->
+  <!--      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">-->
+  <!--        {{-->
+  <!--          store.token-->
+  <!--            ? !isLoadingBalance-->
+  <!--              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })-->
+  <!--              : $t("lang.loading")-->
+  <!--            : $t("lang.not_logged_in")-->
+  <!--        }}-->
+  <!--      </span>-->
+  <!--      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>-->
+  <!--    </div>-->
+  <!--    <div class="menulist">-->
+  <!--      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/deposit-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.deposit") }}</div>-->
+  <!--      </router-link>-->
+  <!--      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/withdraw-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.withdraw") }}</div>-->
+  <!--      </router-link>-->
+  <!--      <router-link to="/account/vip?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/vip-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.vip") }}</div>-->
+  <!--      </router-link>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
   <div class="home-game-section">
     <div class="game-left-list">
@@ -751,7 +756,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
@@ -782,10 +787,12 @@ import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
 import { useLocalStorage } from '@vueuse/core'
+import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
 import { Swiper, SwiperSlide } from "swiper/vue";
+import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
 
 export default defineComponent({
@@ -796,7 +803,8 @@ export default defineComponent({
     MarqueeText,
     LangOptions,
     Swiper,
-    SwiperSlide
+    SwiperSlide,
+    PushNotification
   },
   setup() {
     const fabPos = ref([18, 18]);
@@ -1398,6 +1406,40 @@ export default defineComponent({
       }
     };
 
+    const pushNotificationData = ref();
+    const populatePushNotificationData = (data) => {
+      pushNotificationData.value = data;
+    };
+
+    const initOneSignal = () => {
+      OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
+
+      let myClickListener = async function (event) {
+        console.log("CLICK PUSH");
+        let notificationData = event;
+        console.log(notificationData);
+        console.log(notificationData.notification.title);
+        console.log(notificationData.notification.body);
+        console.log(notificationData.notification.additionalData);
+        populatePushNotificationData(notificationData.notification);
+        // alert(notificationData.notification.title + notificationData.notification.body);
+      };
+      OneSignal.Notifications.addEventListener("click", myClickListener);
+
+      // Prompts the user for notification permissions.
+      //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+      OneSignal.Notifications.requestPermission(true).then((accepted) => {
+        console.log("User accepted notifications: " + accepted);
+      });
+    };
+
+    onMounted(()=>{
+      if (Platform.is.android && Platform.is.capacitor) {
+        initOneSignal();
+      }
+
+    })
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1413,7 +1455,7 @@ export default defineComponent({
     });
 
     const runMenuFloat = () => {
-        toggleMenuFloat()
+      toggleMenuFloat()
       setTimeout(() => {
         toggleMenuFloat()
       }, 2000);
@@ -1504,21 +1546,33 @@ export default defineComponent({
 
     const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
 
+    const openHotMatch= (item) => {
+      if(!store.token){
+        router.push("/login")
+      }else{
+        console.log(item);
+        playGame(item.platformName, item.platformCode, item.gameCode)
+      }
+    }
+
     const formattedTime = (timeString) => {
       if (!timeString) {
         return "";
       }
 
-      const dateTime = new Date(timeString);
-      const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}`;
-      const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
-        .getMinutes()
-        .toString()
-        .padStart(2, "0")}`;
+      const dateTime= moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
+      return dateTime;
 
-      return `${formattedDate} ${formattedTime}`;
+      // const dateTime = new Date(timeString);
+      // const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
+      //   .toString()
+      //   .padStart(2, "0")}`;
+      // const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
+      //   .getMinutes()
+      //   .toString()
+      //   .padStart(2, "0")}`;
+      //
+      // return `${formattedDate} ${formattedTime}`;
     };
 
     const onSwiper = (swiper) => {};
@@ -1628,8 +1682,11 @@ export default defineComponent({
       hotMatchesImgURL,
       slideHotMatches: ref(0),
       formattedTime,
+      openHotMatch,
       onSwiper,
-      modulesHot
+      modulesHot,
+      Platform,
+      pushNotificationData
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1732,6 +1789,7 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  z-index: 99;
 
   .float-btn {
     margin-right: -5px;
@@ -2531,7 +2589,7 @@ export default defineComponent({
         text-align: center;
       }
       .match-time {
-        color: #7a80a1;
+        color: #444444;
         font-size: 14px;
         text-align: center;
         margin-top: 12px;
@@ -2572,7 +2630,7 @@ export default defineComponent({
 
       .team-name {
         text-align: center;
-        color: #7a80a1;
+        color: #444444;
       }
     }
   }
