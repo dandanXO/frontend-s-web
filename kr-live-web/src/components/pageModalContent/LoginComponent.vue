@@ -52,8 +52,7 @@
           <img class="captcha-img" :src="verificationImg" @click.prevent="getCode" />
         </div>
       </div>
-      <div class="btn" style="margin-top: 15px">
-        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded flat />
+      <div class="btn" style="margin-top: 15px;display:flex;flex-direction: column;">
         <q-btn
           @click.prevent="onSubmit"
           :label="'로그인'"
@@ -62,6 +61,7 @@
           rounded
           flat
         />
+        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded flat />
       </div>
     </q-form>
   </div>
