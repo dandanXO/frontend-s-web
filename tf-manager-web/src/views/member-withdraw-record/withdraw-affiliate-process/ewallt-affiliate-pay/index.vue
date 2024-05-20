@@ -822,7 +822,7 @@ async function loadRecord() {
     }
   }
   query.memberType = "AFFILIATE";
-  query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY";
+  query.withdrawCode = "KDPAY,EBPAY,OKPAY,SZPAY,BLBPAY,JDPAY";
   const { data: ret } = await getAffiliateWithdrawRecordEwalltPay(query)
   page.pages = ret.pages
   ret.records.forEach(data => {
