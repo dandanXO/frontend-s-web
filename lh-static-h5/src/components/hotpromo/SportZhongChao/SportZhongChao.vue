@@ -284,7 +284,7 @@
 
 <script setup>
 import { ref } from "vue";
-const tab = ref("third");
+const tab = ref("first");
 </script>
 <style lang="scss" scoped>
 .sport-zhongchao-container {
@@ -292,6 +292,7 @@ const tab = ref("third");
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 0px 30px;
   .sport-zhongchao-tab {
     width: 400px;
     display: flex;
@@ -323,7 +324,7 @@ const tab = ref("third");
   }
 
   .sport-zhongchao-title {
-    width: 500px;
+    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
@@ -335,7 +336,7 @@ const tab = ref("third");
   }
 
   .sport-zhongchao-content-info {
-    width: 500px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -347,7 +348,7 @@ const tab = ref("third");
   }
 
   .sport-zhongchao-content {
-    width: 500px;
+    width: 100%;
     margin-bottom: 36px;
   }
 
@@ -383,7 +384,7 @@ const tab = ref("third");
   }
 
   .sport-zhongchao-notice {
-    width: 500px;
+    width: 100%;
     font-size: 14px;
     line-height: 28px;
     font-weight: 500;
