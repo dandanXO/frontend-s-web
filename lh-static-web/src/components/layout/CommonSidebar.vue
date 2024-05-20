@@ -45,7 +45,7 @@
   </div>
 
   <GameModal ref="gameMenu" />
-  <div v-if="showRocket" class="rocket-wrapper" @click="openGame('TFGaming', 'TFGaming', '20')">
+  <div class="rocket-wrapper" :class="store.token && 'show-rocket'" @click="openGame('TFGaming', 'TFGaming', '20')">
     <div class="rocket-container">
       <div class="rocket"><img src="../../assets/images/home/rocket.png" /></div>
       <div class="blue-smoke"><img src="../../assets/images/home/blue-smoke.svg" /></div>
@@ -80,7 +80,7 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.token) {
+      if (store.token && store.memberType === "TEST") {
         showRocket.value = true;
       }
     };
@@ -127,6 +127,11 @@ export default defineComponent({
   z-index: 280;
   transition: all 0.3s;
   cursor: pointer;
+  display: none;
+
+  &.show-rocket {
+    display: block;
+  }
 
   &:hover {
     filter: brightness(0.9);

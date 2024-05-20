@@ -1823,7 +1823,7 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.token) {
+      if (store.token && store.memberType === "TEST") {
         showRocket.value = true;
       }
     };
