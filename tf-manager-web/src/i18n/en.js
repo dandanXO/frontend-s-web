@@ -135,6 +135,7 @@ export default {
       BET_N_PAYOUT: 'BET AND PAYOUT',
       AFFILIATE_TRANSFER: 'AFFILIATE TRANSFER',
       VIP_REBATE: 'VIP REBATE',
+      AFFILIATE_BET_REBATE: 'AFFILIATE BET REBATE',
     },
     subType: {
       DEPOSIT: 'Wallet to Game',
@@ -1688,6 +1689,9 @@ export default {
     unbind: 'unbind',
     winloss: 'winloss',
     profit2: 'Dep-With',
+    affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
+    affiliateBetRebateDetails: 'Affiliate Bet Rebate Details',
+    adjustRebateAmount: 'Adjust Rebate Amount',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2366,6 +2370,7 @@ export default {
     'Redirect Notification': 'Redirect Notification',
     'Member Summon Event': 'Member Summon Event',
     'Member Summon List': 'Member Summon List',
+    'Affiliate Bet Rebate Record': 'Affiliate Bet Rebate Record',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
