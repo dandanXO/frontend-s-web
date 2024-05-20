@@ -103,7 +103,8 @@
           "
           :class="{
             fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
-            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -803,6 +804,10 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+
+        &.bgautosize{
+          background-size: 100% auto;
+        }
 
         &.fullwidth {
           width: 100%;
