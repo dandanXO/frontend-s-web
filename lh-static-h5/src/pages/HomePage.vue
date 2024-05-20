@@ -845,14 +845,26 @@
     </div>
   </div>
 
-  <div v-if="showRocket" class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
+  <!-- <div v-if="showRocket" class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
     <div class="rocket-container">
       <div class="rocket"><img src="../assets/images/home/rocket.png" /></div>
       <div class="blue-smoke"><img src="../assets/images/home/blue-smoke.svg" /></div>
     </div>
-  </div>
+  </div> -->
 
   <GameModal ref="allGames"></GameModal>
+
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div v-if="showRocket" class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+      <div class="close-btn" @click="hideRocket()">X</div>
+      <div class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket-container">
+          <div class="rocket"><img src="../assets/images/home/rocket.png" /></div>
+          <div class="blue-smoke"><img src="../assets/images/home/blue-smoke.svg" /></div>
+        </div>
+      </div>
+    </div>
+  </q-page-sticky>
 
   <q-dialog
     width="100%"
@@ -1828,6 +1840,29 @@ export default defineComponent({
       }
     };
 
+    const hideRocket = () => {
+      showRocket.value = false;
+    };
+
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+
+    const moveFab = (ev) => {
+      const maxX = window.innerWidth - 135;
+      const maxY = window.innerHeight - 200;
+      if (ev.isFirst) {
+        draggingFab.value = true;
+      }
+      if (ev.isFinal) {
+        draggingFab.value = false;
+      }
+      let newX = fabPos.value[0] + ev.delta.x;
+      let newY = fabPos.value[1] + ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1908,7 +1943,11 @@ export default defineComponent({
       rightPlatformContainer,
       handleScroll,
       showRocket,
-      checkShowRocket
+      checkShowRocket,
+      fabPos,
+      draggingFab,
+      moveFab,
+      hideRocket
     };
   }
 });
@@ -1916,8 +1955,37 @@ export default defineComponent({
 
 <style scoped lang="scss">
 // rocket animation
+.rebates-absolute {
+  background-size: contain;
+  // height: 100px;
+  // width: 135px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // padding-top: 40px;
+  font-weight: bold;
+}
+
+.close-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 400;
+}
+
 .rocket-wrapper {
-  position: fixed;
+  // position: fixed;
   bottom: 100px;
   right: -29px;
   z-index: 280;

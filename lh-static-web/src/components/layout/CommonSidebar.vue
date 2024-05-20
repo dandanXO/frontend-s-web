@@ -45,12 +45,9 @@
   </div>
 
   <GameModal ref="gameMenu" />
-  <div
-    class="rocket-wrapper"
-    :class="store.token && store.memberType === 'TEST' && 'show-rocket'"
-    @click="openGame('TFGaming', 'TFGaming', '20')"
-  >
-    <div class="rocket-container">
+  <div class="rocket-wrapper" v-if="showRocket" :class="store.token && store.memberType === 'TEST' && 'show-rocket'">
+    <div class="close-btn" @click="hideRocket()">X</div>
+    <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
       <div class="rocket"><img src="../../assets/images/home/rocket.png" /></div>
       <div class="blue-smoke"><img src="../../assets/images/home/blue-smoke.svg" /></div>
     </div>
@@ -94,6 +91,11 @@ export default defineComponent({
         });
     };
 
+    const showRocket = ref(true);
+    const hideRocket = () => {
+      showRocket.value = false;
+    };
+
     onMounted(() => {
       getAppDownloadUrl();
     });
@@ -107,6 +109,8 @@ export default defineComponent({
       handleDarkModeClick,
       gameMenu,
       openGame,
+      showRocket,
+      hideRocket
     };
   }
 });
@@ -129,6 +133,20 @@ export default defineComponent({
 
   &:hover {
     filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 24px;
   }
 
   .rocket-container {
