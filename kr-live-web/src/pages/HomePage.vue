@@ -1251,7 +1251,7 @@ export default defineComponent({
       { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
       { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
       { name: "sport", label: "스포츠", enLabel: "SPORTS" },
-      { name: "casual", label: "미니게임", enLabel: "FISH" }
+      { name: "casual", label: "미니게임", enLabel: "MINI GAME" }
       // { name: "fish", label: "낚시 게임" }
     ];
 
