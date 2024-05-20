@@ -491,7 +491,7 @@ export default defineComponent({
       { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
       { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
       { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
