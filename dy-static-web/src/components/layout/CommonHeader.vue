@@ -1,7 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-bar-wrapper">
-      <div class="top-bar-inner">
+      <div class="top-bar-inner" :class="store.token ? 'login-bar-inner' : ''">
         <div class="timebox">{{ todayDate() }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
@@ -89,6 +89,9 @@
           </a>
           <div class="top-deposit">
             <router-link to="/center/deposit" class="common-btn">充值</router-link>
+          </div>
+          <div class="top-deposit">
+            <router-link to="/center/withdraw" class="common-btn">提款</router-link>
           </div>
         </div>
       </div>
@@ -2253,7 +2256,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 16px;
 
   .balance-amt {
     display: flex;
@@ -2338,6 +2341,10 @@ body {
         justify-content: flex-start;
         align-items: center;
         gap: 5px;
+
+        &.login-bar-inner {
+          max-width: 1420px;
+        }
 
         .timebox {
           // flex: 1;
