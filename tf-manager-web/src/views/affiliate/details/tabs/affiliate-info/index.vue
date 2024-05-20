@@ -327,15 +327,6 @@
           >
             {{ t('fields.update') }}
           </el-button>
-          <el-button
-            type="info"
-            size="mini"
-            style="float: right;"
-            v-permission="['sys:affiliate:update:commission-model']"
-            @click="showRatioDialog"
-          >
-            {{ t('fields.shareRatio') }}
-          </el-button>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -1014,40 +1005,6 @@
     </el-card>
     <el-dialog
       :title="uiControl.dialogTitle"
-      v-model="uiControl.shareRatioVisible"
-      append-to-body
-      width="580px"
-    >
-      <el-form
-        ref="shareRatioFormRef"
-        :model="shareRatioForm"
-        :rules="shareRatioFormRules"
-        :inline="true"
-        size="small"
-        label-width="150px"
-      >
-        <el-form-item :label="t('fields.shareRatio')" prop="shareRatio">
-          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
-            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
-          </div>
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.shareRatioVisible=false">
-            {{ t('fields.cancel') }}
-          </el-button>
-          <el-button type="primary" @click="updateShareRatio" v-if="hasPermission(['sys:affiliate:update:share-ratio'])">
-            {{ t('fields.confirm') }}
-          </el-button>
-        </div>
-      </el-form>
-    </el-dialog>
-    <el-dialog
-      :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
       width="580px"
@@ -1246,6 +1203,16 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item v-if="modelForm.commissionModel === 'DETAILS'" :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+            <el-input
+              :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
+              v-model="item.value"
+              style=" width:100px; margin-left: auto; order: 2"
+            />
+          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -1503,8 +1470,7 @@ import {
   updateTimeType,
   updateBelongType,
   updateViewLoginName,
-  getAffiliateShareRatio,
-  updateAffiliateShareRatio
+  getAffiliateShareRatio
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1541,7 +1507,6 @@ const selectedRiskColor = reactive({
 });
 const uiControl = reactive({
   dialogVisible: false,
-  shareRatioVisible: false,
   dialogTitle: '',
   dialogType: '',
   commissionModelType: [
@@ -1600,7 +1565,6 @@ const editRemarkForm = ref(null)
 const commissionForm = ref(null)
 const updateTimeTypeModel = ref(null)
 const updateBelongTypeModel = ref(null)
-const shareRatioFormRef = ref(null)
 const changeAffForm = ref(null)
 const riskForm = reactive({
   risk: null
@@ -1704,17 +1668,13 @@ const unfreezeForm = reactive({
   site: null
 });
 
-const shareRatioForm = reactive({
-  id: null,
-  shareRatio: null,
-})
-
 const financialForm = reactive({
   financial: null,
 })
 
 const modelForm = reactive({
   commissionModel: null,
+  shareRatio: null,
 })
 
 const commForm = reactive({
@@ -1804,6 +1764,12 @@ const commFormRules = reactive({
   ],
 })
 
+const modelFormRules = reactive({
+  shareRatio: [
+    { validator: validateShareRatio, trigger: 'blur' },
+  ],
+})
+
 const remarkFormRules = reactive({
   remark: [required(t('message.validateRemarkRequired'))],
 })
@@ -1815,12 +1781,6 @@ const affFormRules = reactive({
 const riskFormRules = reactive({
   risk: [required(t('message.validateRiskLevelRequired'))]
 });
-
-const shareRatioFormRules = reactive({
-  shareRatio: [
-    { validator: validateShareRatio, trigger: 'blur' },
-  ],
-})
 
 const loadAffiliateRemark = async () => {
   loading.remark = true
@@ -1874,11 +1834,6 @@ async function loadReferralLink() {
 async function loadMemberStatus() {
   const { data: status } = await getMemberStatus(props.affId, memberDetail.siteId)
   memberDetail.status = status
-}
-
-function showRatioDialog() {
-  uiControl.dialogTitle = t('fields.shareRatio')
-  uiControl.shareRatioVisible = true
 }
 
 function showDialog(type) {
@@ -2063,7 +2018,12 @@ async function syncMember() {
 function updateModel() {
   updateModelForm.value.validate(async valid => {
     if (valid) {
-      await updateCommissionModel(props.affId, modelForm.commissionModel)
+      if (modelForm.commissionModel === 'DETAILS' && hasPermission(['sys:affiliate:update:share-ratio'])) {
+        const shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+        await updateCommissionModel(props.affId, modelForm.commissionModel, shareRatio)
+      } else {
+        await updateCommissionModel(props.affId, modelForm.commissionModel, null)
+      }
       const data = await getAffiliateRecord(props.affId)
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
@@ -2178,20 +2138,6 @@ function updateMemberBelongType() {
       uiControl.dialogVisible = false
       ElMessage({
         message: t('message.updateBelongTypeSuccess'),
-        type: 'success',
-      })
-    }
-  })
-}
-
-function updateShareRatio() {
-  shareRatioFormRef.value.validate(async valid => {
-    if (valid) {
-      const shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
-      await updateAffiliateShareRatio(memberDetail.id, shareRatio)
-      uiControl.shareRatioVisible = false
-      ElMessage({
-        message: t('message.updateShareRatioSuccess'),
         type: 'success',
       })
     }
@@ -2368,9 +2314,7 @@ onMounted(async () => {
   Object.keys({ ...data.data }).forEach(detailField => {
     memberDetail[detailField] = data.data[detailField]
   })
-  if (memberDetail.commissionModel === 'DETAILS') {
-    await loadShareRatio()
-  }
+  await loadShareRatio()
   const { data: aff } = await getAffiliateInfo(props.affId, site.id)
   Object.keys({ ...aff }).forEach(detailField => {
     superiorAffiliateDetail[detailField] = aff[detailField]
@@ -2386,7 +2330,6 @@ onMounted(async () => {
   loading.loginInfo = false
   loading.affiliateInfo = false
   loading.superiorAffiliateInfo = false
-  console.log("share ratio list : ", shareRatioList.list)
 })
 </script>
 
