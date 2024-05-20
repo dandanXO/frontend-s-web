@@ -245,6 +245,10 @@ const validateBankLength = (val) => {
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "OKPAY":
       return (val.length > 15 && val.length < 17) || "长度应为16个字符";
+    case "BLBPAY":
+      return (val.length > 31 && val.length < 33) || "长度应为32个字符";
+    case "JDPAY":
+      return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "SZPAY":
       return (val.length > 10 && val.length < 13) || "长度应为11个字符";
     default:
@@ -400,7 +404,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: "已添加电子钱包",
             icon: "check_circle_outline"
           });
           router.push("/account/withdraw");

@@ -324,7 +324,13 @@ export default defineComponent({
         } else if (selectedCode === "OKPAY") {
           min = 16;
           max = 16;
-        } else if (selectedCode === "SZPAY") {
+        } else if (selectedCode === "JDOAY") {
+          min = 34;
+          max = 34;
+        } else if (selectedCode === "BLBPAY") {
+          min = 32;
+          max = 32;
+        }  else if (selectedCode === "SZPAY") {
           min = 11;
           max = 11;
         }
