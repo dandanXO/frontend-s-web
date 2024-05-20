@@ -1,17 +1,21 @@
 <template>
-  <div class="hot-matches-wrapper" >
+  <div class="hot-matches-wrapper">
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
           <img src="../../assets/images/home/icon-hot-matches.png" />
         </div>
         {{ $t("home.hotMatches") }}
+
+        <div class="euro-countdown">
+          {{ `${$t("home.euroCountdown01")}${countDay}${$t("home.euroCountdown02")}` }}
+        </div>
       </div>
-<!--      <div>-->
-<!--        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">-->
-<!--          {{ $t("common.betnow") }}-->
-<!--        </router-link>-->
-<!--      </div>-->
+      <!--      <div>-->
+      <!--        <router-link class="standard-button sm-btn btn-color-blue" to="/sports">-->
+      <!--          {{ $t("common.betnow") }}-->
+      <!--        </router-link>-->
+      <!--      </div>-->
     </div>
     <div class="hot-matches-container">
       <swiper
@@ -46,10 +50,7 @@
               <div class="match-vs"><img src="../../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
-                <a
-                  class="standard-button lg-btn btn-color-blue"
-                  @click="goToSportPage(item)"
-                >
+                <a class="standard-button lg-btn btn-color-blue" @click="goToSportPage(item)">
                   {{ $t("common.playnow") }}
                 </a>
               </div>
@@ -80,9 +81,10 @@ import "swiper/css/pagination";
 import GameModal from "@/components/modal/GameModal";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
-const router= useRouter();
-const store= userStore();
+const router = useRouter();
+const store = userStore();
 const { t } = useI18n();
 const hotMatches = ref([]);
 const hotMatchesImgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
@@ -103,12 +105,12 @@ const loadHotMatches = () => {
 };
 
 const goToSportPage = (item) => {
-  if(!store.token){
+  if (!store.token) {
     router.push("/login");
-  }else{
-    openGame(item.platformName, item.platformCode, item.gameCode)
+  } else {
+    openGame(item.platformName, item.platformCode, item.gameCode);
   }
-}
+};
 
 const formattedTime = (timeString) => {
   if (!timeString) {
@@ -127,6 +129,13 @@ const formattedTime = (timeString) => {
   return `${formattedDate} ${formattedTime}`;
 };
 
+const countDay = ref(25);
+const euroCupStartDate = moment("2024-06-15");
+countDay.value = euroCupStartDate.diff(moment(), "days");
+if (countDay.value <= 0) {
+  countDay.value = 0;
+}
+
 onMounted(() => {
   loadHotMatches();
 });
@@ -142,6 +151,7 @@ onMounted(() => {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    position: relative;
   }
 
   .hot-matches-title {
@@ -155,6 +165,16 @@ onMounted(() => {
     img {
       display: block;
       width: 30px;
+    }
+
+    .euro-countdown {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 

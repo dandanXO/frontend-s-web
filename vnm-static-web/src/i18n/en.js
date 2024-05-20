@@ -155,6 +155,8 @@ export default {
     announcementList: "Announcement List",
     playNow: "Play now",
     hotMatches: "Hot Matches",
+    euroCountdown01: "ROAD TO EURO 2024 - ",
+    euroCountdown02: " DAYS LEFT"
   },
   personal: {
     personalInfo: "Personal information",
@@ -272,10 +274,10 @@ export default {
     net_work_bonus: "Net loss bonus",
     bonus: "Bonus",
     // vi-daily-checkin end
-    
+
     // vi-mualixi-redpacket
     congrats: "Congratulations",
-    claim: "Claim",
+    claim: "Claim"
   },
   mail: {
     inbox: "Inbox",

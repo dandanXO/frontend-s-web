@@ -48,6 +48,8 @@ export default {
     play_now: "Chơi Ngay",
     bet_now: "Cược Ngay",
     hotMatches: "Trận Đấu Hot",
+    euroCountdown01: "ĐƯỜNG TỚI EURO 2024 - CÒN ",
+    euroCountdown02: " NGÀY",
 
     // side menu
     menu_sports: "Thể Thao",
