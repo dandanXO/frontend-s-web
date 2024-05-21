@@ -1,8 +1,8 @@
 <template>
 
-  <div class="game-list">
-    <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" />
-    <div v-else :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"  @click="() => props.onClickGameItem(game)">
+  <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" />
+  <div class="game-list" v-else>
+    <div :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"  @click="() => props.onClickGameItem(game)">
       <div class="game-item-content">
         <img
           class="bg-overlay"
@@ -73,9 +73,10 @@ const gameType = ref(props.gameType);
 <style lang="scss" scoped>
 .game-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 170px));
+  gap: 10px;
   padding: 20px;
+  width: 100%;
 
   .game-item {
     aspect-ratio: 290 / 530;
@@ -85,7 +86,7 @@ const gameType = ref(props.gameType);
     cursor: pointer;
     transition: 0.3s all;
     padding: 20px;
-    max-width: 250px;
+    max-width: 170px;
     width: 100%;
 
     .active-overlay, .bg-overlay {
@@ -163,6 +164,14 @@ const gameType = ref(props.gameType);
           }
         }
       }
+    }
+  }
+
+  @media (min-width: 769px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
+
+    .game-item {
+      max-width: 220px;
     }
   }
 }
