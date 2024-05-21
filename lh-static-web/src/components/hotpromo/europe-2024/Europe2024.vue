@@ -88,7 +88,7 @@ function activateTab(index) {
         line-height: 59.57px;
         letter-spacing: 0.12em;
         text-align: left;
-        margin: 50px auto 40px;
+        margin: 4vh auto 5vh;
         background: linear-gradient(360deg, #BCF3FF 10.4%, #FFFFFF 100%);
         border: none;
         color: transparent; /* Hide the original text */
