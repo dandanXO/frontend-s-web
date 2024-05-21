@@ -618,68 +618,6 @@
     </el-form>
   </el-dialog>
   <el-dialog
-    :title="t('fields.createMember')"
-    v-model="uiControl.createMemberDialogVisible"
-    append-to-body
-    width="580px"
-  >
-    <el-form
-      ref="createForm"
-      class="create-form"
-      :model="createMemberForm"
-      :rules="createFormRules"
-      inline="true"
-      size="normal"
-      label-width="150px"
-    >
-      <el-form-item :label="t('fields.loginName')" prop="loginName">
-        <el-input
-          v-model="createMemberForm.loginName"
-          style="width: 350px;"
-          maxlength="11"
-        />
-      </el-form-item>
-      <el-form-item :label="t('fields.password')" prop="password">
-        <el-input
-          v-model="createMemberForm.password"
-          type="password"
-          style="width: 350px;"
-          maxlength="11"
-        />
-      </el-form-item>
-      <el-form-item
-        :label="t('fields.reenterPassword')"
-        prop="reEnterPassword"
-      >
-        <el-input
-          v-model="createMemberForm.reEnterPassword"
-          type="password"
-          style="width: 350px;"
-          maxlength="11"
-        />
-      </el-form-item>
-      <el-form-item :label="t('fields.telephone')" prop="telephone">
-        <el-input
-          v-model="createMemberForm.telephone"
-          style="width: 350px;"
-          maxlength="20"
-        />
-      </el-form-item>
-      <el-form-item :label="t('fields.email')" prop="email">
-        <el-input
-          v-model="createMemberForm.email"
-          style="width: 350px;"
-        />
-      </el-form-item>
-      <div class="dialog-footer">
-        <el-button @click="uiControl.createMemberDialogVisible = false">
-          {{ $t('fields.cancel') }}
-        </el-button>
-        <el-button type="primary" @click="createMember()">
-          {{ $t('fields.confirm') }}
-        </el-button>
-      </div>
-      <el-dialog
     :title="t('fields.privilegeRecord')"
     v-model="uiControl.privilegeDialogVisible"
     width="1100px"
@@ -738,6 +676,64 @@
         :page-count="memberPrivilegeInfo.page.pages"
         :current-page="privilegeRequest.current"
       />
+    </el-form>
+  </el-dialog>
+  <el-dialog
+    :title="t('fields.createMember')"
+    v-model="uiControl.createMemberDialogVisible"
+    append-to-body
+    width="580px"
+  >
+    <el-form
+      ref="createForm"
+      class="create-form"
+      :model="createMemberForm"
+      :rules="createFormRules"
+      inline="true"
+      size="normal"
+      label-width="150px"
+    >
+      <el-form-item :label="t('fields.loginName')" prop="loginName">
+        <el-input
+          v-model="createMemberForm.loginName"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.password')" prop="password">
+        <el-input
+          v-model="createMemberForm.password"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
+        <el-input
+          v-model="createMemberForm.reEnterPassword"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.telephone')" prop="telephone">
+        <el-input
+          v-model="createMemberForm.telephone"
+          style="width: 350px;"
+          maxlength="20"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.email')" prop="email">
+        <el-input v-model="createMemberForm.email" style="width: 350px;" />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.createMemberDialogVisible = false">
+          {{ $t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="createMember()">
+          {{ $t('fields.confirm') }}
+        </el-button>
+      </div>
     </el-form>
   </el-dialog>
 </template>
