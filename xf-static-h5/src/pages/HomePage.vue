@@ -236,9 +236,16 @@
             />
           </template>
 
-          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+          <template v-if="fish.code === 'AGF' && fish.name === 'AGF'">
             <PlatformBlock
                 @click="playGame(fish.name, fish.code, '6')"
+                dataType="fish"
+                :data="fish"
+            />
+          </template>
+          <template v-if="fish.code === 'SG' && fish.name === 'SG'">
+            <PlatformBlock
+                @click="playGame(fish.name, fish.code, 'F-SF01')"
                 dataType="fish"
                 :data="fish"
             />
@@ -926,12 +933,13 @@ export default defineComponent({
                   slot.value.push(slotObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1  && element.code !=='AGF') {
+              if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);
                 fishObj.title = fishObj.name + " 捕鱼";
                 fishObj.icon = "fish";
                 fishObj.subtitle = "捕鱼游戏";
                 fishing.value.push(fishObj);
+                console.log(fishObj)
               }
               if (platTypes.indexOf("POKER") > -1) {
                 var pokerObj = Object.assign({}, element);
