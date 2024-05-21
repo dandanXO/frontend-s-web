@@ -1057,7 +1057,7 @@ export default defineComponent({
     };
 
     const getCheckRedPacket = () => {
-        if(store && store.token) {
+        if(store && store.token && store.memberType==='TEST') {
           eventapi("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
             .then((res) => {
               console.log(res);
