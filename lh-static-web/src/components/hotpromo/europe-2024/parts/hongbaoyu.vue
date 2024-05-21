@@ -60,7 +60,7 @@ const store = userStore();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
   const getPromotion = () => {
-    claimDailyRainItem("lh1-eurocup-2024")
+    claimDailyRainItem("lh1-eurocup-hongbao")
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
