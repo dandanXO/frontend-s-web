@@ -86,7 +86,7 @@ a:hover {
   background: rgba(27, 29, 38, 0.6);
   padding: 6px 12px;
   border-radius: 10px;
-  margin-left: 10%;
+  margin-left: 5%;
   box-shadow: 0px 1px 8px 1px rgba(0, 240, 255, 0.2);
   border: 1px solid rgba(0, 240, 255, 1);
 }
@@ -102,22 +102,28 @@ a:hover {
   max-width: 110px;
 }
 
+@media screen and (max-width: 380px) {
+  .pop-btns-item .item-icon img {
+    max-width: 90px;
+  }
+
+  .pop-btns-item .item-icon {
+    min-width: 90px;
+  }
+}
+
 .pop-btns-item .item-details {
   margin-left: 12px;
 }
 
 .pop-btns-item .item-details .details-title img {
   display: block;
-  height: 100%;
-  max-height: 28px;
-  width: auto;
+  width: 100%;
 }
 
 .pop-btns-item .item-details .details-desc img {
   display: block;
-  height: 100%;
-  max-height: 24px;
-  width: auto;
+  width: 100%;
   margin-top: 4px;
 }
 
