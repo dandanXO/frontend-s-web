@@ -108,7 +108,7 @@ export default defineComponent({
       showRocket.value = false;
     };
 
-    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 250 });
+    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const isDragging = ref(false);
     const shiftX = ref(0);
     const shiftY = ref(0);
@@ -180,8 +180,8 @@ export default defineComponent({
   // right: 0px;
   transition: all 0.3s;
   display: none;
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 100px;
   user-select: none; /* Disable text selection */
 
   &.show-rocket {
@@ -213,7 +213,7 @@ export default defineComponent({
     user-select: none;
     img {
       display: block;
-      width: 130px;
+      width: 100px;
       cursor: pointer;
     }
   }
