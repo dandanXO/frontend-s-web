@@ -17,7 +17,8 @@ export default {
     register_affi: '대리 등록',
     back_login: '로그인으로 돌아가기',
     contact_us: '문의하기',
-    affiliateaccountcanonlycontainnumchar: '대리 계정은 밑줄(_), 숫자 및 문자만 포함할 수 있습니다.',
+    affiliateaccountcanonlycontainnumchar:
+      '대리 계정은 밑줄(_), 숫자 및 문자만 포함할 수 있습니다.',
     confirmpassword: '비밀번호 확인',
     affiliateaccount: '합영 계정',
     forgetpass: '비밀번호를 잊으셨나요?',
@@ -132,7 +133,8 @@ export default {
     affiliateCommissionInfo: '대리 커미션 정보',
     commissionCalculator: '커미션 계산기',
     monthlyTotalEffectiveTurnover: '이번 달 총 수익 (￥)',
-    pleaseInsertMonthlyTotalEffectiveTurnover: '이번 달 총 수익을 입력해주세요 (￥)',
+    pleaseInsertMonthlyTotalEffectiveTurnover:
+      '이번 달 총 수익을 입력해주세요 (￥)',
     monthlySettlement: '이번 달 정산',
     pleaseInsertMonthlySettlement: '이번 달 정산을 입력해주세요',
     monthlyDividen: '이번 달 배당금',
@@ -144,7 +146,8 @@ export default {
     pleaseInsertMonthlyTotalWithdrawal: '이번 달 회원 출금을 입력해주세요 (￥)',
     totalCommissionAbleClaim: '이번 달 받을 수 있는 커미션 (￥)',
     calculate: '계산',
-    commissionCalculatorNote: '주의: 계산기는 평균 리베이트 및 배당금을 기준으로 하며, 결과는 참고용으로만 사용됩니다.',
+    commissionCalculatorNote:
+      '주의: 계산기는 평균 리베이트 및 배당금을 기준으로 하며, 결과는 참고용으로만 사용됩니다.',
   },
   sortType: {
     ASC: '오름차순',
@@ -277,7 +280,8 @@ export default {
     memberCommission: '회원 배당',
     memberInfo: '회원 정보',
     memberProfit: '대리 이익',
-    memberProfitDownlineProfitUnsettleCommission: '대리 이익/하위 이익/지난 달 잔액',
+    memberProfitDownlineProfitUnsettleCommission:
+      '대리 이익/하위 이익/지난 달 잔액',
     minActiveMemberCount: '최소 활성 회원 수',
     month: '월',
     monthlyAffiliateCommission: '이번 달 대리 커미션',
@@ -304,6 +308,8 @@ export default {
     payout: '배당금',
     personal: '개인 정보',
     personalInfo: '개인 정보',
+    privilegeRecord: '제안 목록',
+    privilegeName: '제안 이름',
     platform: '플랫폼',
     platformFee: '플랫폼 수수료',
     profit: '총 이익',
@@ -343,7 +349,8 @@ export default {
     status: '상태',
     subtotal: '소계',
     systemAlert: '시스템 알림',
-    affiliateSuccessSubmit: '존경하는 파트너님, 귀하의 자료 제출이 성공적으로 완료되었습니다. 저희 에이전트 전문가는 24시간 이내에 귀하에게 심사 결과를 알려 드릴 것입니다. 궁금한 점이 있으시면 저희 에이전트 전문가 또는 온라인 고객 서비스에 문의해 주십시오. 감사합니다.',
+    affiliateSuccessSubmit:
+      '존경하는 파트너님, 귀하의 자료 제출이 성공적으로 완료되었습니다. 저희 에이전트 전문가는 24시간 이내에 귀하에게 심사 결과를 알려 드릴 것입니다. 궁금한 점이 있으시면 저희 에이전트 전문가 또는 온라인 고객 서비스에 문의해 주십시오. 감사합니다.',
     systemAnnouncement: '시스템 공지',
     telephone: '전화번호',
     thirdLevelAffiliateCommission: '3급 에이전트 커미션',
@@ -377,6 +384,7 @@ export default {
     usdtWallet: '지갑 계정',
     usdtWalletAddress: '지갑 주소',
     unsettleCommission: '지난달 잔여 커미션',
+    updateBy: '업데이터',
     viewDetails: '자세히 보기',
     vipLevel: 'VIP 등급',
     visitsNo: '방문 수',
@@ -490,7 +498,8 @@ export default {
     add_key: '키 추가',
     bind_verify: '바인딩 확인',
     popup_title: '인증기',
-    popup_msg: '인증기는 구글의 동적 비밀번호 도구로, 30초마다 자동으로 갱신됩니다. 에이전트 백엔드에서 이체, 출금, 보안 설정 등의 민감한 작업을 수행할 때 이 6자리 인증 코드를 입력하여 신원을 확인하십시오.',
+    popup_msg:
+      '인증기는 구글의 동적 비밀번호 도구로, 30초마다 자동으로 갱신됩니다. 에이전트 백엔드에서 이체, 출금, 보안 설정 등의 민감한 작업을 수행할 때 이 6자리 인증 코드를 입력하여 신원을 확인하십시오.',
     popup_hint: '인증기는 에이전트 계정과 함께 사용해야 합니다.',
     i_know: '알겠습니다',
     download_way: '다운로드 방법:',
@@ -499,26 +508,32 @@ export default {
     android_download: 'Android 다운로드',
     ios_scan_download: 'IOS QR 코드 다운로드',
     android_scan_download: 'Android QR 코드 다운로드',
-    if_cannot_download_you_can: '2. 다운로드할 수 없는 경우, Apple Store에서 "구글 인증기"를 검색하거나, Android 앱 스토어에서 검색하여 다운로드 및 설치하십시오.',
+    if_cannot_download_you_can:
+      '2. 다운로드할 수 없는 경우, Apple Store에서 "구글 인증기"를 검색하거나, Android 앱 스토어에서 검색하여 다운로드 및 설치하십시오.',
     keyin_pass: '비밀번호를 입력하고 다음 단계로 이동하십시오',
     keyin_your_password: '로그인 비밀번호를 입력하십시오',
     next_step: '다음 단계',
-    tips_installed: '팁: 설치가 완료되었으면 "다음 단계"를 클릭하여 계속 진행하십시오.',
+    tips_installed:
+      '팁: 설치가 완료되었으면 "다음 단계"를 클릭하여 계속 진행하십시오.',
     qr_code: 'QR 코드',
     secret_key: '비밀 키',
     add_step: '추가 단계',
-    add_step_desc: '구글 인증기를 열고 오른쪽 하단의 "+"를 클릭한 다음 "비밀 키 직접 입력"을 선택하고 임의의 계정과 위의 비밀 키를 입력하여 바인딩하십시오 (QR 코드를 스캔하면 자동으로 추가할 수 있습니다)',
+    add_step_desc:
+      '구글 인증기를 열고 오른쪽 하단의 "+"를 클릭한 다음 "비밀 키 직접 입력"을 선택하고 임의의 계정과 위의 비밀 키를 입력하여 바인딩하십시오 (QR 코드를 스캔하면 자동으로 추가할 수 있습니다)',
     check_example: '예시 보기',
     back: '뒤로',
     small_tips: '작은 팁:',
-    small_tips_info_1: '1. 핸드폰을 분실하거나 인증기를 제거한 후에도 비밀 키를 사용하여 인증기를 복구할 수 있으므로 안전하게 보관하십시오.',
-    small_tips_info_2: '2. 귀하의 계정을 안전하게 유지하려면 바인딩 시 에이전트 계정 및 에이전트 백엔드 주소를 표시하지 마십시오.',
+    small_tips_info_1:
+      '1. 핸드폰을 분실하거나 인증기를 제거한 후에도 비밀 키를 사용하여 인증기를 복구할 수 있으므로 안전하게 보관하십시오.',
+    small_tips_info_2:
+      '2. 귀하의 계정을 안전하게 유지하려면 바인딩 시 에이전트 계정 및 에이전트 백엔드 주소를 표시하지 마십시오.',
     keyin_6_digit_google: '6자리 구글 인증 코드를 입력하십시오',
     auth_code: '인증 코드',
     bind_now: '지금 바인딩',
     please_enter_password: '비밀번호를 입력하십시오',
     added_success: '구글 인증 코드가 성공적으로 추가되었습니다.',
-    if_not_google_auth_then: '구글 인증기를 바인딩하지 않은 경우 입력할 필요가 없습니다',
+    if_not_google_auth_then:
+      '구글 인증기를 바인딩하지 않은 경우 입력할 필요가 없습니다',
     google_auth_code: '6자리 구글 인증 코드를 입력하십시오',
   },
   forgetPassword: {
@@ -532,7 +547,8 @@ export default {
     messageAuth: '사용자 이름과 구글 인증 코드를 입력하십시오',
     messageQues: '다음 보안 질문에 답하십시오',
     messageReset: '새 비밀번호를 재설정하십시오',
-    noSecurityQuestionSet: '이 계정에는 보안 질문이 설정되어 있지 않습니다. 고객 서비스에 문의하십시오.',
+    noSecurityQuestionSet:
+      '이 계정에는 보안 질문이 설정되어 있지 않습니다. 고객 서비스에 문의하십시오.',
     resetSuccess: '비밀번호가 성공적으로 재설정되었습니다.',
   },
   message: {
@@ -542,7 +558,8 @@ export default {
     bindUsdtWallet: '먼저 가상 화폐 지갑을 바인딩하십시오',
     chineseCharacters: '중국어 문자를 입력하십시오',
     commissionPaySuccess: '커미션 지급 성공',
-    confirmToAdjust: '조정을 진행하시겠습니까? 조정을 진행하면 변경할 수 없습니다',
+    confirmToAdjust:
+      '조정을 진행하시겠습니까? 조정을 진행하면 변경할 수 없습니다',
     confirmToPay: '커미션을 지급하시겠습니까?',
     deleteSuccess: '삭제 성공',
     domainAppCopied: '모바일 전용 도메인이 클립보드에 복사되었습니다',
@@ -557,7 +574,8 @@ export default {
     length6To12: '문자열은 6~12자여야 합니다',
     lengthShouldBe: '길이는 ',
     passwordLength: '비밀번호는 6자 이상, 12자 이하이어야 합니다',
-    redirectBankDeposit: '입금을 계속하려면 지정된 은행으로 리디렉션됩니다. 입금이 성공하면 여기에서 확인할 수 있습니다.',
+    redirectBankDeposit:
+      '입금을 계속하려면 지정된 은행으로 리디렉션됩니다. 입금이 성공하면 여기에서 확인할 수 있습니다.',
     reenterPassword: '비밀번호를 다시 입력하십시오',
     referralLinkCopied: '추천 링크가 클립보드에 복사되었습니다',
     remaining: '남은 횟수',
