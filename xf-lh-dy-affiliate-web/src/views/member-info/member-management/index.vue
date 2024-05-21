@@ -172,11 +172,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col
-              :xl="8"
-              :lg="8"
-              :md="8"
-            >
+            <el-col :xl="8" :lg="8" :md="8">
               <div
                 style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center"
               >
@@ -286,6 +282,9 @@
                       </el-dropdown-item>
                       <el-dropdown-item @click="showGameRecord(item.loginName)">
                         {{ t('fields.betRecord') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showPrivilegeRecord(item)">
+                        {{ t('fields.promoRecord') }}
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -608,6 +607,68 @@
       />
     </el-form>
   </el-dialog>
+
+  <el-dialog
+    :title="t('fields.privilegeRecord')"
+    v-model="uiControl.privilegeDialogVisible"
+    width="1100px"
+    append-to-body
+  >
+    <el-form label-suffix=" : " style="margin-top: -20px;">
+      <div class="info-row-container">
+        <el-form-item :label="t('fields.loginName')">
+          {{ memberPrivilegeInfo.loginName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.realName')">
+          {{ memberPrivilegeInfo.realName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.registerTime')">
+          {{ memberPrivilegeInfo.regTime }}
+        </el-form-item>
+      </div>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.sequence') }}</th>
+            <th scope="col">{{ t('fields.privilegeName') }}</th>
+            <th scope="col">{{ t('fields.privilegeType') }}</th>
+            <th scope="col">{{ t('fields.amount') }}</th>
+            <th scope="col">{{ t('fields.rollover') }}</th>
+            <th scope="col">{{ t('fields.recordTime') }}</th>
+            <th scope="col">{{ t('fields.updateBy') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="memberPrivilegeInfo.page.records.length > 0">
+          <tr
+            v-for="(item, index) in memberPrivilegeInfo.page.records"
+            :key="item.id"
+          >
+            <td>{{ (privilegeRequest.current - 1) * 10 + index + 1 }}</td>
+            <td>{{ item.privilegeName }}</td>
+            <td>{{ item.privielegeType }}</td>
+            <td>${{ item.amount.toFixed(2) }}</td>
+            <td>{{ item.rollover }}</td>
+            <td>
+              {{ formatDate(item.recordTime) }}
+            </td>
+            <td>{{ item.updateBy }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="memberPrivilegeInfo.page.records.length === 0">
+        <emptyComp />
+      </div>
+      <el-pagination
+        class="pagination"
+        @current-change="changePrivilegePage"
+        layout="total, prev, pager, next"
+        :total="memberPrivilegeInfo.page.total"
+        :page-size="privilegeRequest.size"
+        :page-count="memberPrivilegeInfo.page.pages"
+        :current-page="privilegeRequest.current"
+      />
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -625,6 +686,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
+import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-record'
 import emptyComp from '@/components/empty'
 const store = useStore()
 const { t } = useI18n()
@@ -659,12 +721,12 @@ const uiControl = reactive({
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
     { display: 'lastLoginTime', value: 'last_login_time' },
+    { display: 'registerTime', value: 'reg_time' },
   ],
   sortType: [
     { display: 'DESC', value: 'DESC' },
     { display: 'ASC', value: 'ASC' },
   ],
-
 })
 
 const memberInfo = reactive({
@@ -699,7 +761,25 @@ const memberDepositInfo = reactive({
   },
 })
 
+const memberPrivilegeInfo = reactive({
+  loginName: '',
+  realName: '',
+  regTime: '',
+  page: {
+    pages: 0,
+    records: [],
+    loading: false,
+    total: 0,
+  },
+})
+
 const depositRequest = reactive({
+  size: 10,
+  current: 1,
+  loginName: null,
+})
+
+const privilegeRequest = reactive({
   size: 10,
   current: 1,
   loginName: null,
@@ -719,7 +799,10 @@ const formatMoney = value => {
     return '-'
   }
   // Assuming you want to format to two decimal places
-  return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
 }
 
 const formatDateTime = value => {
@@ -964,6 +1047,13 @@ function changeDepositPage(page) {
   }
 }
 
+function changePrivilegePage(page) {
+  if (privilegeRequest.current >= 1) {
+    privilegeRequest.current = page
+    loadDepositRecords()
+  }
+}
+
 function formatTag(tags) {
   if (tags.length > 0) {
     tags = tagList.list.filter(function(obj) {
@@ -1020,6 +1110,27 @@ async function loadDepositRecords() {
   )
   memberDepositInfo.page = ret
   memberDepositInfo.page.loading = false
+}
+
+function showPrivilegeRecord(member) {
+  memberPrivilegeInfo.loginName = member.loginName
+  memberPrivilegeInfo.realName = member.realName
+  memberPrivilegeInfo.regTime = member.regTime
+  uiControl.depositDialogVisible = true
+  privilegeRequest.current = 1
+  privilegeRequest.loginName = member.loginName
+  privilegeRequest.siteId = store.state.user.siteId
+  loadPrivilegeRecords()
+}
+
+async function loadPrivilegeRecords() {
+  memberPrivilegeInfo.page.loading = true
+  const { data: ret } = await getMemberPrivilegeRecords(
+    store.state.user.id,
+    privilegeRequest
+  )
+  memberPrivilegeInfo.page = ret
+  memberPrivilegeInfo.page.loading = false
 }
 
 function handleCheckAll(val) {
