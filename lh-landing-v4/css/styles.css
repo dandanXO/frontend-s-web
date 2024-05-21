@@ -39,7 +39,7 @@ a:hover {
 
 .main-wrapper {
   background-image: url(../imgs/bg-mobile.jpg);
-  background-position: 0px 45px;
+  background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 100vh;
