@@ -519,7 +519,7 @@
       <div
         class="game-scroll-lists"
         id="id-slot-board"
-        v-if="currentSelectedMenu === 'casual' && !isShow && selectedPlat.code === 'CQ9'"
+        v-if="currentSelectedMenu === 'casual' && isShow && selectedPlat.code === 'CQ9'"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
       >
@@ -530,7 +530,7 @@
           <div class="bookmarks">
             <div
               class="plat-item"
-              v-for="p in platforms"
+              v-for="p in fishPlatforms"
               :class="{ active: p.id === selectedPlatId }"
               :key="p"
               @click="switchPlat(p, 'slots')"
@@ -1471,7 +1471,7 @@ export default defineComponent({
       } else if (menuType === "live") {
         selectedLiveTab.value = plat.name;
         liveTabs.value = plat.name;
-      } else if (menuType === "fish") {
+      } else if (menuType === "fish" || (menuType === "casual" && plat.code === "CQ9")) {
         selectedPlat.code = plat.code;
         selectedPlat.status = plat.status;
         selectedPlatId.value = plat.id;
@@ -1559,7 +1559,7 @@ export default defineComponent({
           isLoading.value = false;
 
           // debugger;
-          if (currentSelectedMenu.value === "casual") {
+          if (currentSelectedMenu.value === "casual" && selectedPlat.code !== 'CQ9') {
             miniGames.value = [];
             let minis = _.orderBy(res, "sequence");
             minis.forEach((mini) => {
