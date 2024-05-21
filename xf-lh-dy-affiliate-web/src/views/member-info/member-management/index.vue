@@ -200,8 +200,18 @@
             </el-col>
           </el-row>
         </div>
-        <div class="inputs-wrap" v-if="store.state.user.siteCode !== 'VNM'">
+        <div class="inputs-wrap">
           <el-button
+            v-if="store.state.user.siteCode === 'KRW'"
+            icon="el-icon-plus"
+            size="normal"
+            type="primary"
+            @click="showCreateMember()"
+          >
+            {{ $t('fields.createMember') }}
+          </el-button>
+          <el-button
+            v-if="store.state.user.siteCode !== 'VNM'"
             size="normal"
             type="primary"
             :disabled="uiControl.editBtn"
@@ -608,6 +618,70 @@
       />
     </el-form>
   </el-dialog>
+  <el-dialog
+    :title="t('fields.createMember')"
+    v-model="uiControl.createMemberDialogVisible"
+    append-to-body
+    width="580px"
+  >
+    <el-form
+      ref="createForm"
+      class="create-form"
+      :model="createMemberForm"
+      :rules="createFormRules"
+      inline="true"
+      size="normal"
+      label-width="150px"
+    >
+      <el-form-item :label="t('fields.loginName')" prop="loginName">
+        <el-input
+          v-model="createMemberForm.loginName"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.password')" prop="password">
+        <el-input
+          v-model="createMemberForm.password"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item
+        :label="t('fields.reenterPassword')"
+        prop="reEnterPassword"
+      >
+        <el-input
+          v-model="createMemberForm.reEnterPassword"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.telephone')" prop="telephone">
+        <el-input
+          v-model="createMemberForm.telephone"
+          style="width: 350px;"
+          maxlength="20"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.email')" prop="email">
+        <el-input
+          v-model="createMemberForm.email"
+          style="width: 350px;"
+        />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.createMemberDialogVisible = false">
+          {{ $t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="createMember()">
+          {{ $t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -619,6 +693,7 @@ import {
   loadMemberInfo,
   assignTag,
   assignRemark,
+  registerMember,
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
@@ -626,6 +701,7 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
 import emptyComp from '@/components/empty'
+import { required, size } from '../../../utils/validate'
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -653,6 +729,7 @@ const uiControl = reactive({
   tagDialogVisible: false,
   remarkDialogVisible: false,
   depositDialogVisible: false,
+  createMemberDialogVisible: false,
   editBtn: true,
   editType: 'One',
   orderBy: [
@@ -873,6 +950,48 @@ const page = reactive({
   pages: 0,
   records: [],
   loading: false,
+})
+
+const createForm = ref(null)
+const createMemberForm = reactive({
+  id: null,
+  loginName: null,
+  password: null,
+  reEnterPassword: null,
+  telephone: null,
+  email: null,
+  siteId: null,
+})
+
+const validatePassword = (rule, value, callback) => {
+  if (value !== '' && createMemberForm.reEnterPassword !== '') {
+    createForm.value.validateField('reEnterPassword')
+  }
+  callback()
+}
+
+const validateReEnterPassword = (rule, value, callback) => {
+  if (value !== createMemberForm.password) {
+    callback(new Error(t('message.twoPasswordNotMatch')))
+  }
+  callback()
+}
+
+const createFormRules = reactive({
+  loginName: [
+    required(t('message.requiredLoginName')),
+    size(6, 12, t('message.length6To12')),
+  ],
+  password: [
+    required(t('message.requiredPassword')),
+    size(6, 12, t('message.length6To12')),
+    { validator: validatePassword, trigger: 'blur' },
+  ],
+  reEnterPassword: [
+    required(t('message.reenterPassword')),
+    { validator: validateReEnterPassword, trigger: 'blur' },
+  ],
+  telephone: [required(t('message.requiredTelephone'))],
 })
 
 function convertDate(date) {
@@ -1135,6 +1254,25 @@ function formatDate(date) {
   return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
 
+function showCreateMember() {
+  if (createForm.value) {
+    createForm.value.resetFields()
+  }
+  createMemberForm.siteId = store.state.user.siteId
+  uiControl.createMemberDialogVisible = true
+}
+
+async function createMember() {
+  createForm.value.validate(async valid => {
+    if (valid) {
+      await registerMember(createMemberForm)
+      uiControl.createMemberDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      await loadAffiliateMembers()
+    }
+  })
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
@@ -1235,6 +1373,10 @@ onMounted(async () => {
 .el-form-item {
   flex: 1;
   margin-bottom: 0;
+}
+
+.create-form > * {
+  margin-bottom: 22px;
 }
 
 .info-row-container:not(:first-child) {

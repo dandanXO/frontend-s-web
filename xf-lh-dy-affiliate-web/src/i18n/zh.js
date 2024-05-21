@@ -486,6 +486,7 @@ export default {
     forgetPassword: '忘记密码',
     authenticator: '身份验证器',
     withdrawRecord: '银行提款',
+    createMember: '新增会员',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -705,6 +706,8 @@ export default {
   },
   affiliate: {
     level: {
+      JUNIOR_AFFILIATE: '五级代理',
+      SUB_AFFILIATE: '四级代理',
       AFFILIATE: '三级代理',
       SUPER_AFFILIATE: '二级代理',
       MASTER_AFFILIATE: '一级代理',
