@@ -66,7 +66,7 @@ const bonusOpened = ref(false);
 const winAmount = ref(0);
 const getPromotion = () => {
   eventapi
-    .get("/redPacketVip/claim?promoCode=lh1-eurocup-2024")
+    .get("/redPacketVip/claim?promoCode=lh1-eurocup-hongbao")
     .then((res) => {
       if (res.code === 0) {
         winAmount.value = res.data;
