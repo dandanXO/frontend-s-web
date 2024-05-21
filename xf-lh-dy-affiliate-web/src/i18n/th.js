@@ -160,6 +160,7 @@ export default {
     affiliateStatus: 'สถานะตัวแทน',
     affiliateWithdraw: 'การถอนเงินจากธนาคาร',
     affiliateWithdrawRecord: 'บันทึกการถอนเงินของธนาคาร',
+    amount: 'จำนวน',
     amountOfFirstDeposit: 'จำนวนการเติมเงินครั้งแรก',
     answerOne: 'คำตอบ 1',
     answerTwo: 'คำตอบ 2',

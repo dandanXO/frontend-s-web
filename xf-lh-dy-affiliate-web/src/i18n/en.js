@@ -179,6 +179,7 @@ export default {
     affiliateStatus: 'Affiliate Status',
     affiliateWithdraw: 'Bank Withdraw',
     affiliateWithdrawRecord: 'Bank Withdraw Record',
+    amount: 'Amount',
     amountOfFirstDeposit: 'Amount of First Deposit',
     answerOne: 'Answer One',
     answerTwo: 'Answer Two',

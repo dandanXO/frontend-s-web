@@ -294,7 +294,7 @@
                         {{ t('fields.betRecord') }}
                       </el-dropdown-item>
                       <el-dropdown-item @click="showPrivilegeRecord(item)">
-                        {{ t('fields.promoRecord') }}
+                        {{ t('fields.privilegeRecord') }}
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>

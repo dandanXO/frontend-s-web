@@ -178,6 +178,7 @@ export default {
     affiliateStatus: 'Trạng thái Đại lý',
     affiliateWithdraw: 'Rút tiền đại lí',
     affiliateWithdrawRecord: 'Hồ sơ rút tiền ngân hàng',
+    amount: 'Số lượng',
     amountOfFirstDeposit: 'Số tiền Gửi tiền Lần đầu',
     answerOne: 'Câu trả lời 1',
     answerTwo: 'Câu trả lời 2',
