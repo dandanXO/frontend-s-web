@@ -45,16 +45,27 @@
   </div>
 
   <GameModal ref="gameMenu" />
-  <div class="rocket-wrapper" v-if="showRocket" :class="store.token && store.memberType === 'TEST' && 'show-rocket'">
-    <div class="close-btn" @click="hideRocket()">X</div>
-    <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
-      <div class="rocket"><img src="../../assets/images/home/rocket.png" /></div>
-      <div class="blue-smoke"><img src="../../assets/images/home/blue-smoke.svg" /></div>
+
+  <div
+    class="rocket-wrapper"
+    v-if="showRocket"
+    :class="store.token && store.memberType === 'TEST' && 'show-rocket'"
+    :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
+    @mousedown="startDragging"
+    @click="openGame('TFGaming', 'TFGaming', '20')"
+  >
+    <div style="position: relative">
+      <div class="close-btn" @click="hideRocket()">X</div>
+      <div class="rocket-container">
+        <div class="rocket">
+          <img src="../../assets/images/home/rocket.gif" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, onBeforeUnmount } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
@@ -62,7 +73,9 @@ import { useDark } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 
 export default defineComponent({
-  components: { GameModal },
+  components: {
+    GameModal
+  },
   setup() {
     const customerHovered = ref(false);
     const scrollToTop = () => {
@@ -96,8 +109,49 @@ export default defineComponent({
       showRocket.value = false;
     };
 
+    const rocketPosition = ref({ top: 220, left: window.innerWidth - 150 });
+    const isDragging = ref(false);
+    const shiftX = ref(0);
+    const shiftY = ref(0);
+
+    const startDragging = (event) => {
+      const rect = event.target.getBoundingClientRect();
+      shiftX.value = event.clientX - rect.left;
+      shiftY.value = event.clientY - rect.top;
+      isDragging.value = true;
+
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", stopDragging);
+
+      // Change cursor to dragging
+      document.body.style.cursor = "pointer";
+      event.target.style.cursor = "pointer";
+    };
+
+    const onMouseMove = (event) => {
+      if (isDragging.value) {
+        rocketPosition.value.left = event.clientX - shiftX.value;
+        rocketPosition.value.top = event.clientY - shiftY.value;
+      }
+    };
+
+    const stopDragging = () => {
+      isDragging.value = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
+
+      // Reset cursor to default
+      document.body.style.cursor = "default";
+    };
+
     onMounted(() => {
       getAppDownloadUrl();
+      document.addEventListener("mouseup", stopDragging);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
     });
 
     return {
@@ -110,22 +164,25 @@ export default defineComponent({
       gameMenu,
       openGame,
       showRocket,
-      hideRocket
+      rocketPosition,
+      hideRocket,
+      startDragging
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
-// rocket animation
+/* rocket animation */
 .rocket-wrapper {
   position: fixed;
-  top: 180px;
-  right: -50px;
-  z-index: 280;
+  top: 220px;
+  right: 0px;
   transition: all 0.3s;
-  cursor: pointer;
   display: none;
+  width: 130px;
+  height: 130px;
+  user-select: none; /* Disable text selection */
 
   &.show-rocket {
     display: block;
@@ -146,108 +203,19 @@ export default defineComponent({
     line-height: 1;
     font-size: 12px;
     font-weight: bold;
-    margin-left: 24px;
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
-  .rocket-container {
-    position: relative;
-    animation: fly 3s linear infinite;
-    display: flex;
-    flex-direction: column;
-
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   bottom: -30px;
-    //   left: 50%;
-    //   transform: translateX(-50%);
-    //   width: 20px;
-    //   height: 40px;
-    //   background: radial-gradient(circle, rgb(192, 192, 192) 0%, rgba(0, 0, 0, 0) 70%);
-    //   animation: smoke 0.5s linear infinite;
-    // }
-  }
   .rocket {
-    transform: rotate(10deg);
-    z-index: 282;
-
+    pointer-events: none;
+    user-select: none;
     img {
       display: block;
-      width: 100px;
+      width: 130px;
+      cursor: pointer;
     }
-  }
-  .blue-smoke {
-    margin-left: -135px;
-    margin-top: -2px;
-    transform: rotate(-10deg);
-    animation: smokeMove 0.5s linear infinite;
-    z-index: 281;
-    img {
-      display: block;
-      width: 200px;
-    }
-  }
-}
-
-@keyframes rocketMove {
-  0%,
-  100% {
-    transform: rotate(-10deg) translateY(-50px) scale(0.85);
-  }
-
-  70% {
-    transform: rotate(10deg) translateY(50px) scale(1);
-  }
-}
-
-@keyframes smokeMove {
-  0%,
-  100% {
-    opacity: 1;
-    transform: rotate(-10deg);
-  }
-
-  70% {
-    opacity: 0.5;
-    transform: rotate(-10deg);
-  }
-}
-
-@keyframes fly {
-  0% {
-    bottom: -100px;
-    transform: translateX(-50%) rotate(0deg) scale(1);
-  }
-  25% {
-    bottom: 30%;
-    transform: translateX(-50%) rotate(2deg) scale(0.95);
-  }
-  50% {
-    bottom: 60%;
-    transform: translateX(-50%) rotate(-2deg) scale(1);
-  }
-  75% {
-    bottom: 90%;
-    transform: translateX(-50%) rotate(2deg) scale(0.95);
-  }
-  100% {
-    bottom: 110%;
-    transform: translateX(-50%) rotate(0deg) scale(1);
-  }
-}
-
-@keyframes smoke {
-  0% {
-    opacity: 0.7;
-    transform: translate(-50%, 0) scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: translate(-50%, -50px) scale(1.5);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -100px) scale(2);
   }
 }
 
