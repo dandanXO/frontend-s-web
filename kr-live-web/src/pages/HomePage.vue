@@ -514,6 +514,180 @@
         :onClickGameItem="selectCasualPlat"
       />
     </Transition>
+    <!-- cq9 start -->
+    <Transition>
+      <div
+        class="game-scroll-lists"
+        id="id-slot-board"
+        v-if="currentSelectedMenu === 'casual' && !isShow && selectedPlat.code === 'CQ9'"
+        :gameType="currentSelectedMenu"
+        :gameItemLoad="gameItemLoad"
+      >
+        <q-scroll-area
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
+        >
+          <div class="bookmarks">
+            <div
+              class="plat-item"
+              v-for="p in platforms"
+              :class="{ active: p.id === selectedPlatId }"
+              :key="p"
+              @click="switchPlat(p, 'slots')"
+            >
+              <div
+                class="platform-img"
+                :style="{
+                  backgroundImage: (() => {
+                    try {
+                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                    } catch (e) {
+                      return `url(${comingSoonImg})`;
+                    }
+                  })()
+                }"
+              ></div>
+            </div>
+          </div>
+          <q-scroll-observer axis="vertical" />
+        </q-scroll-area>
+
+        <div class="loading-div" v-if="isLoading">
+          <q-spinner-hourglass :color="'blue'" size="8em" />
+        </div>
+
+        <q-scroll-area
+          v-if="!isLoading && selectedPlatId === -99"
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+        >
+          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
+            <div
+              v-for="(game, index) in sortedFavGamesList"
+              :key="index"
+              :data-id="index"
+              v-intersection="onIntersection"
+              style="height: auto"
+              class="btn-pointer inner-slot-game"
+            >
+              <transition name="in-view">
+                <q-list
+                  class="btn-slot-game q-col-gutter-none"
+                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
+                >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
+                    <div class="slot-name">
+                      {{ game.name }}
+                    </div>
+                  </div>
+                </q-list>
+              </transition>
+            </div>
+          </div>
+
+          <div class="coming-soon-div" v-else>
+            <img src="../assets/home/coming-soon-img.png" />
+            <span>{{ $t("lang.no_fav_game_yet") }}</span>
+          </div>
+        </q-scroll-area>
+
+        <q-scroll-area
+          v-if="!isLoading && selectedPlatId !== -99"
+          ref="scrollSlotRef"
+          style="height: 500px"
+          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
+        >
+          <div class="search-list">
+            <q-form @submit="searchList">
+              <q-input
+                color="white"
+                filled
+                class="search-input"
+                v-model="gamePage.searchKey"
+                :label="$t('lang.keyin_keyword')"
+              >
+                <template v-slot:append>
+                  <q-icon
+                    style="margin-right: 5px"
+                    @click="clearSearchInput"
+                    class="clear-input-icon btn-pointer"
+                    name="close"
+                  ></q-icon>
+
+                  <q-icon
+                    color="brightbtn"
+                    name="search"
+                    style=""
+                    @click="searchList"
+                    class="clear-input-icon btn-pointer"
+                  ></q-icon>
+                </template>
+              </q-input>
+            </q-form>
+          </div>
+          <div class="slot-grid" style="padding-bottom: 20px">
+            <div
+              v-for="(game, index) in gamePage.gameList"
+              :key="index"
+              :data-id="index"
+              v-intersection="onIntersection"
+              style="height: auto"
+              class="btn-pointer inner-slot-game"
+            >
+              <transition name="in-view">
+                <q-list
+                  class="btn-slot-game q-col-gutter-none"
+                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
+                >
+                  <div>
+                    <q-img
+                      loading="lazy"
+                      :src="game.icon"
+                      :placeholder-src="game.default"
+                      fit="fill"
+                      height="auto"
+                      spinner-color="white"
+                      position="50% 20%"
+                      style="border-radius: 20px; overflow: hidden"
+                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
+                    >
+                      <template v-slot:loading>
+                        <img
+                          :src="game.default"
+                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
+                        />
+                      </template>
+                    </q-img>
+                    <div class="slot-name">{{ game.name }}</div>
+                  </div>
+                </q-list>
+              </transition>
+            </div>
+          </div>
+          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+          <q-scroll-observer @scroll="scrolling" />
+        </q-scroll-area>
+      </div>
+    </Transition>
+    <!-- cq9 end -->
     <Transition>
       <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
         <div class="loading-div" v-if="isLoading">
@@ -1475,7 +1649,7 @@ export default defineComponent({
           console.log("SORT");
           console.log(sportPlatform.value);
 
-          platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL"));
+          platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL") || (element.gameType.includes("FISH") && element.code === "CQ9"));
 
           // xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
           // lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
@@ -1859,6 +2033,10 @@ export default defineComponent({
       console.log(plat);
       if (plat.code === "Spribe") {
         playGame(plat.name, plat.code, "aviator");
+      } else if(plat.code === "CQ9") {
+        selectedPlatId.value = plat.id;
+        isShow.value = true;
+        switchPlat(plat, "fish");
       } else {
         selectedPlatId.value = plat.id;
         isShow.value = true;
