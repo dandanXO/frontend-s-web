@@ -40,7 +40,7 @@
         <div class="captcha-code">
           <q-input
             ref="captchaRef"
-            label="암호"
+            label="보안 문자"
             filled
             color="white"
             clearable
