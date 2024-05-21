@@ -16,5 +16,5 @@ export function getCSAFromServer() {
 }
 
 export function getRedEnvelopeFromServer() {
-  return server.REST.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket");
+  return server.EVENT.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket");
 }

@@ -44,7 +44,7 @@
         <div>{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
-    <div class="red-envelope" @click="getRedEnvelope">
+    <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../../assets/home/red_envelope.png" />
     </div>
   </div>
@@ -80,20 +80,32 @@ export default defineComponent({
     };
 
     const getRedEnvelope = () => {
-      getRedEnvelopeFromServer()
-        .then((res) => {
-          if (true) {
-            router.push("/promotion?name=vi-mualixi-redpacket");
-          }
-        })
-        .catch((err) => {
-          router.push("/promotion?name=vi-mualixi-redpacket");
-        });
-
+      router.push("/promotion?name=vi-mualixi-redpacket");
     };
 
+    const getCheckRedPacket = () => {
+      isPacketChecked.value= setInterval(() => {
+        if(store && store.token) {
+          getRedEnvelopeFromServer()
+            .then((res) => {
+              clearInterval(isPacketChecked.value);
+              console.log(res);
+              if (res.code === 0) {
+                isRedPacketShow.value = true;
+              }
+            })
+            .catch((err) => {
+              clearInterval(isPacketChecked.value);
+            });
+        }
+      },10000)
+    }
+
+    const isRedPacketShow= ref(false);
+    const isPacketChecked= ref(null);
     onMounted(() => {
       getAppDownloadUrl();
+      getCheckRedPacket();
     });
 
     return {
@@ -101,7 +113,8 @@ export default defineComponent({
       customerHovered,
       scrollToTop,
       downloadUrl,
-      getRedEnvelope
+      getRedEnvelope,
+      isRedPacketShow
     };
   }
 });
