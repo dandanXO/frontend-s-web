@@ -830,6 +830,7 @@ export default defineComponent({
 
         &.europe-first-shoot {
           background-color: #0d3173;
+          background-image: none !important;
         }
 
         .hot-promo {
