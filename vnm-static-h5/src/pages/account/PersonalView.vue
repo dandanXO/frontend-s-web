@@ -223,7 +223,7 @@ export default defineComponent({
       personalState.memberInfo = userStore();
       // console.log(personalState.memberInfo.realName);
       if (personalState.memberInfo.birthday > 0) {
-        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).utcOffset('+08:00').format("YYYY-MM-DD");
       }
       formDetail.nickName = personalState.memberInfo.nickName;
       formDetail.realName = personalState.memberInfo.realName;
