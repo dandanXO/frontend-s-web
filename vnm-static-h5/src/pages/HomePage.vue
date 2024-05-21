@@ -596,7 +596,10 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
+  <q-page-sticky position="bottom-right"  :offset="fabPos" style="z-index:999">
+    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+      <img src="../assets/images/home/red-envelope.png" class="red-envelope"/>
+    </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -1047,6 +1050,26 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
+
+    const isRedPacketShow= ref(false);
+    const getRedEnvelope = () => {
+      router.push("/promo?name=vi-mualixi-redpacket");
+    };
+
+    const getCheckRedPacket = () => {
+        if(store && store.token && store.memberType==='TEST') {
+          eventapi("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
+            .then((res) => {
+              console.log(res);
+              if (res.code === 0) {
+                isRedPacketShow.value = true;
+              }
+            })
+            .catch((err) => {
+            });
+        }
+    };
+
     const getWithExpiry = (key) => {
       const itemStr = localStorage.getItem(key);
       if (!itemStr) {
@@ -1452,6 +1475,7 @@ export default defineComponent({
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
+      getCheckRedPacket();
     });
 
     const runMenuFloat = () => {
@@ -1686,7 +1710,9 @@ export default defineComponent({
       onSwiper,
       modulesHot,
       Platform,
-      pushNotificationData
+      pushNotificationData,
+      getRedEnvelope,
+      isRedPacketShow
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2492,6 +2518,11 @@ export default defineComponent({
   }
 }
 
+.red-envelope{
+    width:135px;
+    cursor: pointer;
+  }
+
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
   margin: 20px auto 0px;
@@ -2540,6 +2571,8 @@ export default defineComponent({
     // padding-left: 6px;
     // padding-right: 6px;
   }
+
+
 
   .hot-matches-item {
     background: #f4f9fe;

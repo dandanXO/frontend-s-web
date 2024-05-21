@@ -133,6 +133,9 @@ export default boot(({ app, router }) => {
       if (res.code === ResponseCode.EMPTY_PROMO_POPOUT) {
         return res;
       }
+      if(res.code === ResponseCode.ERROR_PROMO_NOT_POUND && response.config.url.indexOf("nextRainTime") > -1){
+        return res;
+      }
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {
