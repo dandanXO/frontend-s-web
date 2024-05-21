@@ -1163,7 +1163,7 @@ function changeDepositPage(page) {
 function changePrivilegePage(page) {
   if (privilegeRequest.current >= 1) {
     privilegeRequest.current = page
-    loadDepositRecords()
+    loadPrivilegeRecords()
   }
 }
 
