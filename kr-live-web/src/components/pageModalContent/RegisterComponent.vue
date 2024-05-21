@@ -711,13 +711,13 @@ function charType(num) {
 
   &.blue {
     // background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-    background: url("../../assets/home/btn-blue.png") no-repeat center center;
+    background: url("../../assets/home/btn-blue.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 
   &.yellow {
     // background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-    background: url("../../assets/home/btn-orange.png") no-repeat center center;
+    background: url("../../assets/home/btn-orange.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 }

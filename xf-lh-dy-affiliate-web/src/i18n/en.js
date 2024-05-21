@@ -490,6 +490,7 @@ export default {
     mobileWay: 'Mobile',
     forgetPassword: 'Forget Password',
     authenticator: 'Authenticator',
+    createMember: 'Create Member',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -716,6 +717,8 @@ export default {
   },
   affiliate: {
     level: {
+      JUNIOR_AFFILIATE: 'Junior Affiliate',
+      SUB_AFFILIATE: 'Sub Affiliate',
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
