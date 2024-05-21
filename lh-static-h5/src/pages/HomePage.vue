@@ -847,15 +847,10 @@
 
   <GameModal ref="allGames"></GameModal>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
-    <div
-      class="rebates-absolute"
-      :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab"
-      @click="playGame('TFGaming', 'TFGaming', '20')"
-    >
+  <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
-      <div class="rocket-wrapper">
+      <div class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
         <div class="rocket"><img src="../assets/images/home/rocket.gif" /></div>
       </div>
     </div>
@@ -1971,11 +1966,11 @@ export default defineComponent({
 
 .rocket-wrapper {
   transition: all 0.3s;
-  pointer-events: none;
   // cursor: pointer;
 
   img {
     width: 130px;
+    pointer-events: none;
   }
 
   &:hover {

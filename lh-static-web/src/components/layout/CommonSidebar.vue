@@ -52,11 +52,10 @@
     :class="store.token && store.memberType === 'TEST' && 'show-rocket'"
     :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
     @mousedown="startDragging"
-    @click="openGame('TFGaming', 'TFGaming', '20')"
   >
     <div style="position: relative">
       <div class="close-btn" @click="hideRocket()">X</div>
-      <div class="rocket-container">
+      <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
         <div class="rocket">
           <img src="../../assets/images/home/rocket.gif" />
         </div>
@@ -176,6 +175,7 @@ export default defineComponent({
 /* rocket animation */
 .rocket-wrapper {
   position: fixed;
+  z-index: 999;
   top: 220px;
   right: 0px;
   transition: all 0.3s;
