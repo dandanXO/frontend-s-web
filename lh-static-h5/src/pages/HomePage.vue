@@ -1825,7 +1825,7 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.token && store.memberType === "TEST") {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
         showRocket.value = true;
       }
     };
