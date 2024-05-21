@@ -310,6 +310,7 @@ export default {
     payout: 'Payout',
     personal: 'Personal',
     personalInfo: 'Personal Info',
+    privilegeSerialNumber: 'Serial Number',
     privilegeRecord: 'Privilege Records',
     privilegeName: 'Privilege Name',
     platform: 'Platform',
