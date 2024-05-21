@@ -573,7 +573,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
-import krLogo from '@/assets/images/kr/kr-logo.svg'
+import krLogo from '@/assets/images/kr/kr-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1308,12 +1308,12 @@ export default defineComponent({
         setLanguage('vi')
       }
       if (props.siteId === '10') {
-        currentSite.value.firstLiner = 'Start From BET2WON'
+        currentSite.value.firstLiner = 'Start From CITY8'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = krLogo
         state.loginForm.site = 'KRW'
-        setLanguage('en')
+        setLanguage('kr')
       }
     }
     onMounted(() => {
