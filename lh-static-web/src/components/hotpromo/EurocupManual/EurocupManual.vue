@@ -22,57 +22,89 @@
       </div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
-          <div class="game-team" v-for="team in groupStageTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+          <div class="game-team" v-for="team in groupStageTeamsList"
+            @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'roundOf16'">
-          <div class="game-team" v-for="team in roundOf16TeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+          <div class="game-team" v-for="team in roundOf16TeamsList"
+               @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'quarterFinal'">
-          <div class="game-team" v-for="team in quarterFinalTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+          <div class="game-team" v-for="team in quarterFinalTeamsList"
+               @click="openPlat(team.platformMatchId)"
+            >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'semiFinalAndFinal'">
-          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList"
+               @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="alert-box">
         <div class="alert-line" v-if="tab === 'groupStage'">
-        轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+          轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+        </div>
+        <div class="alert-line" v-if="tab === 'roundOf16'">
+          第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+        <div class="alert-line" v-if="tab === 'quarterFinal'">
+          第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+        <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
       </div>
-      <div class="alert-line" v-if="tab === 'roundOf16'">
-        第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      <div class="alert-line" v-if="tab === 'quarterFinal'">
-        第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      </div>
-    
+
       <div class="money-table">
         <table v-if="tab === 'groupStage'">
           <tr>
@@ -266,6 +298,8 @@
       </div>
     </div>
   </div>
+
+  <GameModal ref="platformGame"></GameModal>
 </template>
 
 <script setup>
@@ -273,6 +307,7 @@ import { onMounted } from "vue";
 import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
+import GameModal from "@/components/modal/GameModal.vue";
 
 const tab = ref("groupStage");
 
@@ -281,6 +316,12 @@ const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
 const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+
+const platformGame= ref(null);
+const openPlat= (platformMatchId) => {
+  var matchId= platformMatchId ?? "";
+  platformGame.value.open('FB体育', 'FB', matchId);
+}
 
 const init = () => {
   getEurocupManualSchedule().then((res) => {
@@ -337,6 +378,7 @@ onMounted(() => {
   position: absolute;
   top: 0px;
   left: 0px;
+  pointer-events: none;
 }
 
 .container {
@@ -480,7 +522,33 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 205px;
+  width: 216px;
+  padding: 8px 8px;
+  gap: 5px;
+  cursor: pointer;
+
+  &:hover{
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+  }
+
+  &:active{
+    filter:brightness(0.9);
+  }
+
+  .game-flag-div{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+
+    span{
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+
   .game-time {
     display: flex;
     align-items: center;
@@ -511,7 +579,7 @@ onMounted(() => {
   width: 1305px;
   margin-bottom: 99px;
   ul {
- padding: 0px;
+    padding: 0px;
     list-style: none;
     li {
       font-size: 20px;
