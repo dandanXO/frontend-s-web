@@ -559,7 +559,7 @@ svg path {
   position: absolute;
   top: 20px;
   left: 50%;
-  width: 200px;
+  width: 325px;
   transform: translate(-50%, 0%);
 
   @media (max-width: 991px) {
