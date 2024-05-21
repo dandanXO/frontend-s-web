@@ -405,7 +405,6 @@
         </template>
       </div>
 
-
       <div class="game-lists" id="lottery-lists">
         <template v-for="(item, index) in lottery" :key="index">
           <div
@@ -438,7 +437,6 @@
         </template>
       </div>
 
-
       <div class="game-lists" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
@@ -470,8 +468,6 @@
           </div>
         </template>
       </div>
-
-
     </div>
   </div>
 
@@ -672,7 +668,7 @@ export default defineComponent({
     };
 
     const onHomeScroll = (position) => {
-      if (isSelecting.value===true) {
+      if (isSelecting.value === true) {
         return;
       }
       // console.log("SCROLL");
@@ -806,7 +802,6 @@ export default defineComponent({
         });
       }
       if (tab === "others") {
-
       }
       if (tab === "lottery") {
         gameRightPlatform.scrollTo({
@@ -1209,7 +1204,7 @@ export default defineComponent({
 
     const tab = ref("esport");
     const isSelecting = ref(false);
-    const timerTimeout= ref(null);
+    const timerTimeout = ref(null);
     const selectTab = (item) => {
       if (timerTimeout.value) {
         clearTimeout(timerTimeout.value);
@@ -1218,9 +1213,9 @@ export default defineComponent({
       tab.value = item;
       setSelectedSwiper(item);
 
-      timerTimeout.value = setTimeout(()=>{
-        isSelecting.value= false;
-      },750)
+      timerTimeout.value = setTimeout(() => {
+        isSelecting.value = false;
+      }, 750);
     };
 
     const liveTabs = ref("");
@@ -1457,8 +1452,8 @@ export default defineComponent({
     const draggingFab = ref(false);
 
     const moveFab = (ev) => {
-      const maxX = window.innerWidth - 130;
-      const maxY = window.innerHeight - 130;
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
       draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
       let newX = fabPos.value[0] - ev.delta.x;
       let newY = fabPos.value[1] - ev.delta.y;
@@ -1566,15 +1561,17 @@ export default defineComponent({
 }
 
 .close-btn {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+  min-height: 14px;
   border-radius: 50%;
   border: 1px solid #333333;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 1;
-  font-size: 10px;
+  font-size: 6px;
   font-weight: bold;
   margin-left: 24px;
   position: absolute;
@@ -1588,7 +1585,7 @@ export default defineComponent({
   // cursor: pointer;
 
   img {
-    width: 130px;
+    width: 70px;
     pointer-events: none;
   }
 

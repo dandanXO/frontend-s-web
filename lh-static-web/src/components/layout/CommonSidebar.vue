@@ -108,7 +108,7 @@ export default defineComponent({
       showRocket.value = false;
     };
 
-    const rocketPosition = ref({ top: 220, left: window.innerWidth - 150 });
+    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 250 });
     const isDragging = ref(false);
     const shiftX = ref(0);
     const shiftY = ref(0);
@@ -176,8 +176,8 @@ export default defineComponent({
 .rocket-wrapper {
   position: fixed;
   z-index: 999;
-  top: 220px;
-  right: 0px;
+  // bottom: 220px;
+  // right: 0px;
   transition: all 0.3s;
   display: none;
   width: 130px;
