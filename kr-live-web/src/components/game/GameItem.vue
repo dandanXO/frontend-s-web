@@ -124,6 +124,11 @@ const gameType = ref(props.gameType);
           color: #fff;
           font-size: 24px;
         }
+
+        .game-logo {
+          max-width: 160px;
+          width: 100%;
+        }
       }
 
       .avatar-wrapper {
