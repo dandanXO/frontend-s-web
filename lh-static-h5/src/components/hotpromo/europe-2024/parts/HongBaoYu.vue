@@ -69,7 +69,7 @@ const getPromotion = () => {
     .get("/redPacketVip/claim?promoCode=lh1-eurocup-hongbao")
     .then((res) => {
       if (res.code === 0) {
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
 
         // this.privilegeClaimedModalVisible = true;
         // this.loadingClaim = false;

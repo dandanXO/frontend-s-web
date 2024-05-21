@@ -99,6 +99,7 @@ function activateTab(index) {
       color: transparent; /* Hide the original text */
       -webkit-background-clip: text; /* Apply background gradient to the text */
       background-clip: text;
+      white-space:nowrap;
 
       &:before,
       &:after {
