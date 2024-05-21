@@ -557,18 +557,16 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 20px;
+  top: 0px;
   left: 50%;
   width: 325px;
   transform: translate(-50%, 0%);
 
   @media (max-width: 991px) {
-    top: 10px;
     width: 100px;
   }
 
   @media (max-width: 768px) {
-    top: 50px;
     width: 100px;
   }
 }
@@ -587,7 +585,7 @@ svg path {
   @media (min-width: 991px) {
     background: url("../assets/home/home-banner.png") no-repeat top center;
     background-size: cover;
-    height: 480px;
+    height: 430px;
   }
 }
 
@@ -683,6 +681,7 @@ footer {
   display: flex;
   justify-content: center;
   margin: 30px auto;
+  margin-top: 0px;
   position: relative;
   padding-left: 16px;
   padding-right: 16px;
