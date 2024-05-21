@@ -82,12 +82,14 @@ export default defineComponent({
     const getRedEnvelope = () => {
       getRedEnvelopeFromServer()
         .then((res) => {
-          console.log(res);
+          if (true) {
+            router.push("/promotion?name=vi-mualixi-redpacket");
+          }
         })
         .catch((err) => {
-          console.log(err);
+          router.push("/promotion?name=vi-mualixi-redpacket");
         });
-        router.push("/promotion?name=vi-mualixi-redpacket");
+
     };
 
     onMounted(() => {

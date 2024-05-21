@@ -597,6 +597,9 @@
   </div>
 
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
+    <div @click="getRedEnvelope">
+      <img src="../assets/images/home/red-envelope.png" class="red-envelope"/>
+    </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -1045,6 +1048,20 @@ export default defineComponent({
         frequency: homePopupFrequency.value
       };
       localStorage.setItem(key, JSON.stringify(item));
+    };
+
+    const getRedEnvelope = () => {
+      api("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
+        .then((res) => {
+        if (true) {
+          router.push("/promo?name=vi-mualixi-redpacket");
+          }
+        })
+        .catch((err) => {
+          if (true) {
+          router.push("/promo?name=vi-mualixi-redpacket");
+          }
+        });
     };
 
     const getWithExpiry = (key) => {
@@ -1686,7 +1703,8 @@ export default defineComponent({
       onSwiper,
       modulesHot,
       Platform,
-      pushNotificationData
+      pushNotificationData,
+      getRedEnvelope
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2492,6 +2510,11 @@ export default defineComponent({
   }
 }
 
+.red-envelope{
+    width:135px;
+    cursor: pointer;
+  }
+
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
   margin: 20px auto 0px;
@@ -2540,6 +2563,8 @@ export default defineComponent({
     // padding-left: 6px;
     // padding-right: 6px;
   }
+
+
 
   .hot-matches-item {
     background: #f4f9fe;
