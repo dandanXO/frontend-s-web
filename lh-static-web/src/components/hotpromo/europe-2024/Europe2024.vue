@@ -78,6 +78,7 @@ function activateTab(index) {
     }
     .tab-content {
       min-height: 350px;
+      padding-top:20px;
       .tab-title {
         display: flex;
         justify-content: center;
