@@ -27,7 +27,9 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
 <style lang="scss" scoped>
 .category-list {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
     flex-wrap: wrap;
     padding: 20px;
     justify-content: center;
@@ -38,7 +40,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 220px;
+    width: 100%;
+    min-width: 180px;
     height: 80px;
     white-space: nowrap;
     cursor: pointer;
@@ -52,15 +55,14 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     .category-labels {
         position: absolute;
         top: 50%;
-        left: 55%;
+        left: 50%;
         transform: translate(-50%, -50%) skewX(16deg);
-        width: 200px;
         overflow: auto;
+        width: 180px;
 
         .category-kr-label {
             color: #01d9ab;
             font-size: 24px;
-            line-height: 35px;
             font-weight: bold;
         }
 
