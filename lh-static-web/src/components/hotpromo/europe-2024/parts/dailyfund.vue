@@ -297,7 +297,7 @@ const matchSubmit = (match, id, name) => {
 const confirmMatchSelect = () => {
   euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("提交成功");
+      ElMessage.success("投票成功");
       confirmDialog.value = false;
       getMatches();
     }
