@@ -492,6 +492,7 @@ export default {
     forgetPassword: '비밀번호 분실',
     authenticator: '인증기',
     withdrawRecord: '은행 출금',
+    createMember: '회원 생성',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -711,6 +712,8 @@ export default {
   },
   affiliate: {
     level: {
+      JUNIOR_AFFILIATE: '5급 대리점',
+      SUB_AFFILIATE: '4급 대리점',
       AFFILIATE: '3급 대리점',
       SUPER_AFFILIATE: '2급 대리점',
       MASTER_AFFILIATE: '1급 대리점',
