@@ -596,8 +596,8 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
-    <div @click="getRedEnvelope">
+  <q-page-sticky position="bottom-right"  :offset="fabPos" style="z-index:999">
+    <div v-if="store && store.token " @click="getRedEnvelope">
       <img src="../assets/images/home/red-envelope.png" class="red-envelope"/>
     </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
@@ -1050,18 +1050,24 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
+
+    const isRedPacketShow= ref(false);
     const getRedEnvelope = () => {
-      api("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
-        .then((res) => {
-        if (true) {
-          router.push("/promo?name=vi-mualixi-redpacket");
-          }
-        })
-        .catch((err) => {
-          if (true) {
-          router.push("/promo?name=vi-mualixi-redpacket");
-          }
-        });
+      router.push("/promo?name=vi-mualixi-redpacket");
+    };
+
+    const getCheckRedPacket = () => {
+        if(store && store.token) {
+          eventapi("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
+            .then((res) => {
+              console.log(res);
+              if (res.code === 0) {
+                isRedPacketShow.value = true;
+              }
+            })
+            .catch((err) => {
+            });
+        }
     };
 
     const getWithExpiry = (key) => {
@@ -1469,6 +1475,7 @@ export default defineComponent({
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
+      getCheckRedPacket();
     });
 
     const runMenuFloat = () => {
@@ -1704,7 +1711,8 @@ export default defineComponent({
       modulesHot,
       Platform,
       pushNotificationData,
-      getRedEnvelope
+      getRedEnvelope,
+      isRedPacketShow
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
