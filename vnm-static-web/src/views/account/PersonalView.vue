@@ -553,7 +553,7 @@ const loadInfo = () => {
     if (response.code === 0) {
       personalState.memberInfo = response.data;
       if (personalState.memberInfo.birthday) {
-        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).utcOffset('+08:00').format("DD-MM-YYYY");
       }
     }
   }).catch((error) => {
