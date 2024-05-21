@@ -246,10 +246,10 @@ onMounted(() => {
 }
 
 .register {
-  width: 100px;
-  min-height: 50px;
-  background-image: url("../../assets/home/btn-blue.png");
-  background-size: 100px 50px;
+  width: 124px;
+  min-height: 36px;
+  background-image: url("../../assets/home/btn-blue.svg");
+  background-size: 124px 36px;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
@@ -258,7 +258,6 @@ onMounted(() => {
   .register-text {
     font-size: 12px;
     line-height: 1;
-    padding-bottom: 6px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
@@ -267,10 +266,10 @@ onMounted(() => {
 }
 
 .login {
-  width: 100px;
-  min-height: 50px;
-  background-image: url("../../assets/home/btn-orange.png");
-  background-size: 100px 50px;
+  width: 124px;
+  min-height: 36px;
+  background-image: url("../../assets/home/btn-orange.svg");
+  background-size: 124px 36px;
   background-repeat: no-repeat;
   border-radius: 2px;
   display: flex;
@@ -278,14 +277,9 @@ onMounted(() => {
   justify-content: center;
   cursor: pointer;
   margin-left: 16px;
-  @media (min-width: 1200px) {
-    width: 100px;
-    height: 100%;
-  }
   .login-text {
     font-size: 12px;
     line-height: 1;
-    padding-bottom: 6px;
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;

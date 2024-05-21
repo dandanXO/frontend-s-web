@@ -557,14 +557,19 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 5px;
-  left: 20px;
+  top: 20px;
+  left: 50%;
   width: 200px;
+  transform: translate(-50%, 0%);
+
+  @media (max-width: 991px) {
+    top: 10px;
+    width: 100px;
+  }
 
   @media (max-width: 768px) {
+    top: 50px;
     width: 100px;
-    left: 20px;
-    top: 20px;
   }
 }
 
@@ -579,7 +584,7 @@ svg path {
   background-size: cover;
   height: 250px;
 
-  @media (min-width: 1000px) {
+  @media (min-width: 991px) {
     background: url("../assets/home/home-banner.png") no-repeat top center;
     background-size: cover;
     height: 480px;
