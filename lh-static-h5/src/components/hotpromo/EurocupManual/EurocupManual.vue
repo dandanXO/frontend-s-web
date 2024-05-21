@@ -556,7 +556,8 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-width: 130px;
+  width: 100%;
+  max-width: 150px;
   padding: 4px;
 
   &:hover {
@@ -580,6 +581,7 @@ onMounted(() => {
       line-height: 15.24px;
       color: #fff;
       font-family: Microsoft YaHei UI;
+      text-align: center;
     }
   }
   .game-item {
@@ -587,7 +589,8 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 30px;
+    width: 40px;
+    margin-bottom: auto;
   }
   .game-country {
     font-size: 10px;
