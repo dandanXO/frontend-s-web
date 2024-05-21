@@ -20,45 +20,90 @@
           半/总决赛
         </div>
       </div>
+      <!-- <pre>team{{ groupStageTeamsList }}</pre> -->
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
-          <div class="game-team" v-for="team in groupStageTeamsList" v-bind:key="team.id">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+          <div
+            class="game-team"
+            v-for="team in groupStageTeamsList"
+            v-bind:key="team.id"
+            @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <div class="game-country" v-html="team.teamOneName" />
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <div class="game-country" v-html="team.teamTwoName" />
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'roundOf16'">
-          <div class="game-team" v-for="team in roundOf16TeamsList" v-bind:key="team.id">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+          <div
+            class="game-team"
+            v-for="team in roundOf16TeamsList"
+            v-bind:key="team.id"
+            @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <div class="game-country" v-html="team.teamOneName" />
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <div class="game-country" v-html="team.teamTwoName" />
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'quarterFinal'">
-          <div class="game-team" v-for="team in quarterFinalTeamsList" v-bind:key="team.id">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+          <div
+            class="game-team"
+            v-for="team in quarterFinalTeamsList"
+            v-bind:key="team.id"
+            @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <div class="game-country" v-html="team.teamOneName" />
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <div class="game-country" v-html="team.teamTwoName" />
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'semiFinalAndFinal'">
-          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList" v-bind:key="team.id">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+          <div
+            class="game-team"
+            v-for="team in semiFinalAndFinalTeamsList"
+            v-bind:key="team.id"
+            @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <div class="game-country" v-html="team.teamOneName" />
+            </div>
             <div class="game-time">
               <div class="vs">VS</div>
               <div class="time">{{ team.startTime }}</div>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+            <div class="game-item">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <div class="game-country" v-html="team.teamTwoName" />
+            </div>
           </div>
         </div>
       </div>
@@ -258,21 +303,32 @@
       </div>
       <div class="notice">
         <ul>
-          <li>1.活动期间，会员投注赛程任意赛事有效投注额≥500 即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；</li>
-          <li>2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
-          <li>3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
+          <li>
+            1.活动期间，会员投注赛程任意赛事有效投注额≥500
+            即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；
+          </li>
+          <li>
+            2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；
+          </li>
+          <li>
+            3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+          </li>
           <li>4.达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
           <li>5.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
-          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
+          <li>
+            6.任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+          </li>
           <li>7.为避免文字理解差异，本站保留本活动最终解释权。</li>
         </ul>
       </div>
     </div>
   </div>
+  <GameModal ref="platformGame"></GameModal>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
 import { getEurocupManualSchedule } from "../../../api/index/promo";
+import GameModal from "components/modal/GameModal.vue";
 import moment from "moment";
 const tab = ref("groupStage");
 
@@ -320,6 +376,12 @@ function filterTeamsByStage(teams) {
     semiFinalAndFinalTeams: teamsMoment.filter((team) => stages.semiFinalAndFinal.includes(team.teamGroup))
   };
 }
+
+const platformGame = ref(null);
+const openPlat = (platformMatchId) => {
+  var matchId = platformMatchId ?? "";
+  platformGame.value.open("FB体育", "FB", matchId);
+};
 
 onMounted(() => {
   console.log("123456789");
@@ -494,7 +556,14 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 130px;
+  min-width: 130px;
+  padding: 4px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+
   .game-time {
     display: flex;
     align-items: center;
@@ -512,6 +581,19 @@ onMounted(() => {
       color: #fff;
       font-family: Microsoft YaHei UI;
     }
+  }
+  .game-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 30px;
+  }
+  .game-country {
+    font-size: 10px;
+    color: #ffffff;
+    margin-top: 2px;
+    text-align: center;
   }
   .game-logo {
     width: 30px !important;
