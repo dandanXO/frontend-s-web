@@ -638,29 +638,22 @@
       <table class="custom-table">
         <thead>
           <tr>
-            <th scope="col">{{ t('fields.sequence') }}</th>
+            <th scope="col">{{ t('fields.serialNumber') }}</th>
             <th scope="col">{{ t('fields.privilegeName') }}</th>
-            <th scope="col">{{ t('fields.privilegeType') }}</th>
             <th scope="col">{{ t('fields.amount') }}</th>
             <th scope="col">{{ t('fields.rollover') }}</th>
             <th scope="col">{{ t('fields.recordTime') }}</th>
-            <th scope="col">{{ t('fields.updateBy') }}</th>
           </tr>
         </thead>
         <tbody v-if="memberPrivilegeInfo.page.records.length > 0">
-          <tr
-            v-for="(item, index) in memberPrivilegeInfo.page.records"
-            :key="item.id"
-          >
-            <td>{{ (privilegeRequest.current - 1) * 10 + index + 1 }}</td>
+          <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
+            <td>{{ item.serialNumber }}</td>
             <td>{{ item.privilegeName }}</td>
-            <td>{{ item.privielegeType }}</td>
             <td>${{ item.amount.toFixed(2) }}</td>
             <td>{{ item.rollover }}</td>
             <td>
               {{ formatDate(item.recordTime) }}
             </td>
-            <td>{{ item.updateBy }}</td>
           </tr>
         </tbody>
       </table>
@@ -854,6 +847,7 @@ const privilegeRequest = reactive({
   size: 10,
   current: 1,
   loginName: null,
+  memberId: null,
 })
 
 const checkAll = ref(false)
@@ -1231,6 +1225,7 @@ function showPrivilegeRecord(member) {
   memberPrivilegeInfo.regTime = member.regTime
   uiControl.privilegeDialogVisible = true
   privilegeRequest.current = 1
+  privilegeRequest.memberId = member.id
   privilegeRequest.loginName = member.loginName
   privilegeRequest.siteId = store.state.user.siteId
   loadPrivilegeRecords()

@@ -307,6 +307,7 @@ export default {
     payout: '派彩金额',
     personal: '个人资料',
     personalInfo: '个人信息',
+    privilegeSerialNumber: '编码',
     privilegeRecord: '优惠记录',
     privilegeName: '优惠名',
     platform: '平台',
