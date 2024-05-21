@@ -33,7 +33,7 @@ a:hover {
 }
 
 .full-container {
-  height: 100vh;
+  height: 95vh;
 }
 
 .main-wrapper {
@@ -84,7 +84,7 @@ a:hover {
   display: flex;
   align-items: center;
   background: rgba(27, 29, 38, 0.6);
-  padding: 0px 12px;
+  padding: 6px 12px;
   border-radius: 10px;
   margin-left: 10%;
   box-shadow: 0px 1px 8px 1px rgba(0, 240, 255, 0.2);
@@ -92,20 +92,24 @@ a:hover {
 }
 
 .pop-btns-item .item-icon {
-  min-width: 100px;
-  margin-left: calc(-10% - 16px);
+  min-width: 110px;
+  margin-left: calc(-8% - 16px);
 }
 
 .pop-btns-item .item-icon img {
   display: block;
   width: 100%;
-  max-width: 100px;
+  max-width: 110px;
+}
+
+.pop-btns-item .item-details {
+  margin-left: 12px;
 }
 
 .pop-btns-item .item-details .details-title img {
   display: block;
   height: 100%;
-  max-height: 24px;
+  max-height: 28px;
   width: auto;
 }
 
