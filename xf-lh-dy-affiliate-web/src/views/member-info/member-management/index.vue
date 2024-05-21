@@ -715,6 +715,7 @@ const uiControl = reactive({
   tagDialogVisible: false,
   remarkDialogVisible: false,
   depositDialogVisible: false,
+  privilegeDialogVisible: false,
   editBtn: true,
   editType: 'One',
   orderBy: [
@@ -1116,7 +1117,7 @@ function showPrivilegeRecord(member) {
   memberPrivilegeInfo.loginName = member.loginName
   memberPrivilegeInfo.realName = member.realName
   memberPrivilegeInfo.regTime = member.regTime
-  uiControl.depositDialogVisible = true
+  uiControl.privilegeDialogVisible = true
   privilegeRequest.current = 1
   privilegeRequest.loginName = member.loginName
   privilegeRequest.siteId = store.state.user.siteId

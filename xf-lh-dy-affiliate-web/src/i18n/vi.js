@@ -307,6 +307,7 @@ export default {
     payout: 'Thanh toán',
     personal: 'Cá nhân',
     personalInfo: 'Thông tin Cá nhân',
+    privilegeRecord: 'Danh sách ưu đãi',
     privilegeName: 'Tên ưu đãi',
     platform: 'Nền tảng',
     platformFee: 'Phí Nền tảng',

@@ -308,6 +308,7 @@ export default {
     payout: '배당금',
     personal: '개인 정보',
     personalInfo: '개인 정보',
+    privilegeRecord: '제안 목록',
     privilegeName: '제안 이름',
     platform: '플랫폼',
     platformFee: '플랫폼 수수료',

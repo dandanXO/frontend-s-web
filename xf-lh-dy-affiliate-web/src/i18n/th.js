@@ -284,6 +284,7 @@ export default {
     payout: 'จำนวนการจ่ายเงิน',
     personal: 'ข้อมูลส่วนตัว',
     personalInfo: 'ข้อมูลส่วนตัว',
+    privilegeRecord: 'รายการข้อเสนอ',
     privilegeName: 'ชื่อข้อเสนอ',
     privilegeType: 'ประเภทข้อเสนอ',
     platform: 'แพลตฟอร์ม',

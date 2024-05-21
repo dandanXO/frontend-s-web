@@ -309,6 +309,7 @@ export default {
     payout: 'Payout',
     personal: 'Personal',
     personalInfo: 'Personal Info',
+    privilegeRecord: 'Privilege Records',
     privilegeName: 'Privilege Name',
     platform: 'Platform',
     platformFee: 'Platform Fee',
