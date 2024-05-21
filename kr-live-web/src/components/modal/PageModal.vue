@@ -1,5 +1,5 @@
 <template>
-  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss full-height>
+  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent full-height>
     <q-card style="max-width: none; background: transparent; box-shadow: none">
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">

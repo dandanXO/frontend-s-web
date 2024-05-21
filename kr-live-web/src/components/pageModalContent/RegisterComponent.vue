@@ -220,20 +220,20 @@
     <div class="row justify-center items-center gap-8" style="margin-top: 35px">
       <q-btn
         @click.prevent="onSubmit"
-        :label="'등록'"
+        :label="'가입완료'"
         type="submit"
         class="common-large-btn form-button blue"
         rounded
         flat
       />
-      <q-btn
-        @click="openLogin"
-        :label="'로그인'"
-        type="button"
-        class="common-large-btn form-button yellow"
-        rounded
-        flat
-      />
+<!--      <q-btn-->
+<!--        @click="openLogin"-->
+<!--        :label="'로그인'"-->
+<!--        type="button"-->
+<!--        class="common-large-btn form-button yellow"-->
+<!--        rounded-->
+<!--        flat-->
+<!--      />-->
     </div>
 
     <q-dialog
@@ -711,13 +711,13 @@ function charType(num) {
 
   &.blue {
     // background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-    background: url("../../assets/home/btn-blue.png") no-repeat center center;
+    background: url("../../assets/home/btn-blue.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 
   &.yellow {
     // background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-    background: url("../../assets/home/btn-orange.png") no-repeat center center;
+    background: url("../../assets/home/btn-orange.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 }

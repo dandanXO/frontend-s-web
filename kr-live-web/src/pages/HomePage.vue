@@ -81,27 +81,7 @@
       </div>
     </div> -->
 
-    <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef">
-        <div
-          v-for="(e, i) in gameBoardItemData"
-          :key="`gbi-${i}`"
-          ref="gameBoardItemRef"
-          class="game-board-item"
-          :class="currentSelectedMenu == e.name ? 'active-board' : ''"
-          @click="switchMenu(e.name, i)"
-        >
-          <div class="item-bg"><img :src="require(`../assets/home/menu/menu-${e.name}.png`)" /></div>
-
-          <img :src="require(`../assets/home/menu/menu-empty.png`)" />
-
-          <div class="home-board-label">
-            <span class="home-board-item-text">{{ e.label }}</span>
-            <span class="home-board-item-text__en">{{ e.enLabel }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
     <Transition>
       <GameItem
@@ -955,6 +935,7 @@ import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import GameItem from "components/game/GameItem";
+import GameCategory from "components/game/GameCategory";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
@@ -978,7 +959,8 @@ export default defineComponent({
     Vue3Marquee,
     RiStarLine,
     RiStarFill,
-    GameItem
+    GameItem,
+    GameCategory
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -1483,6 +1465,10 @@ export default defineComponent({
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
           liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
+
+          //TODO:: HArdcoded.
+          console.log(liveCasinoGames.value);
+          liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
 
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
 
@@ -2136,157 +2122,7 @@ export default defineComponent({
   }
 }
 
-.grid-wrapper {
-  overflow: hidden;
-  width: 100%;
-  margin-bottom: 40px;
-  padding-top: 30px;
-}
 
-.grid {
-  display: flex;
-  justify-content: center;
-  margin: 0px auto 0px;
-  flex-wrap: wrap;
-  column-gap: 10px;
-  row-gap: 10px;
-  // width: calc(100% - 20px);
-  border-radius: 12px;
-  overflow-x: auto;
-  // width: 240px;
-
-  @media (min-width: 769px) {
-    margin: 10px auto;
-    justify-content: space-between;
-    column-gap: 20px;
-    row-gap: 14px;
-    width: calc(100% - 20px);
-    flex-wrap: nowrap;
-    // column-gap: 0px;
-    // row-gap: 0px;
-  }
-
-  .game-board-item {
-    // width: 210px;
-    height: 100%;
-    display: flex;
-    text-align: center;
-    // padding: 24px 36px 20px;
-    padding: 0;
-    white-space: nowrap;
-    // background: url("../assets/images/home-board/home-board-btn-dark.png") no-repeat center center;
-    background-size: 100% 100%;
-    position: relative;
-    justify-content: center;
-
-    filter: grayscale(1);
-    border: 1px solid #5dd8ff;
-    border-radius: 8px;
-    transform: skewX(-16deg);
-    overflow: hidden;
-
-    img {
-      display: block;
-      width: 100%;
-
-      @media (max-width: 769px) {
-        max-width: 120px;
-      }
-    }
-
-    .item-bg {
-      img {
-        width: auto;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transform: skewX(0deg) scale(1.2);
-        transition: all 0.3s;
-      }
-    }
-
-    &:hover {
-      filter: grayscale(0);
-
-      .item-bg {
-        img {
-          transform: skewX(0deg) scale(1.3);
-        }
-      }
-    }
-
-    .home-board-label {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      padding: 15px 25px;
-      @media (max-width: 769px) {
-        padding: 5px 15px;
-      }
-    }
-
-    .home-board-item-text {
-      color: #01d9ab;
-      font-size: 14px;
-      line-height: 19.6px;
-      display: block;
-      font-weight: bold;
-      transform: skewX(16deg);
-      @media (min-width: 769px) {
-        font-size: 24px;
-        line-height: 33.6px;
-      }
-    }
-    .home-board-item-text__en {
-      display: block;
-      transform: skewX(16deg);
-      color: #fff;
-      margin-top: 2px;
-    }
-
-    .active-flag {
-      display: none;
-    }
-
-    &.active-board {
-      // background: $linear-bg-4;
-      // background: url("../assets/images/home-board/home-board-btn-light-old.png") no-repeat center center;
-      filter: grayscale(0);
-      background-size: 100% 100%;
-
-      .active-flag {
-        display: block;
-        position: absolute;
-        top: -38px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        width: 40px;
-        height: 40px;
-      }
-    }
-
-    &:hover {
-      filter: brightness(0.88);
-    }
-
-    &:active {
-      opacity: 0.95;
-      filter: brightness(0.86);
-    }
-
-    span {
-      font-size: 0.9em;
-    }
-
-    // img {
-    //   width: auto;
-    //   max-height: 40px;
-    // }
-  }
-}
 
 .game-grid-lists {
   position: relative;
@@ -2296,8 +2132,6 @@ export default defineComponent({
   margin: 6px auto 20px;
   padding-bottom: 30px;
   // padding-top: 15px;
-  column-gap: 15px;
-  row-gap: 10px;
   transition: 1s ease-in;
 
   @media (min-width: 769px) {

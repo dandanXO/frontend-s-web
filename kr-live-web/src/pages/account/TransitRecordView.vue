@@ -54,6 +54,7 @@
             :rows="dataState.deposit"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           >
             <template v-slot:item="props">
@@ -153,6 +154,7 @@
             :rows="dataState.turnover"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           >
             <template v-slot:item="props">
@@ -232,6 +234,7 @@
             :rows="dataState.withdraw"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           >
             <template v-slot:item="props">
@@ -348,6 +351,7 @@
             :rows="dataState.transfer"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           >
             <template v-slot:item="props">
@@ -426,6 +430,7 @@
             :rows="dataState.rebates"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           />
         </q-tab-panel>
@@ -495,6 +500,7 @@
             :rows="dataState.gameBetRecord"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="serialNumber"
           >
             <!-- <template v-slot:body-cell-actions="props">
@@ -545,6 +551,7 @@
             :rows="dataState.reminderRecord"
             :no-data-label="noDataLabel"
             :rows-per-page-label="rowPerPageLabel"
+            :rows-per-page-options="[]"
             row-key="orderNo"
           >
             <template v-slot:item="props">
@@ -588,6 +595,7 @@
           :rows="dataState.betRecord"
           :no-data-label="noDataLabel"
           :rows-per-page-label="rowPerPageLabel"
+          :rows-per-page-options="[]"
           row-key="serialNumber"
         ></q-table>
       </q-dialog>

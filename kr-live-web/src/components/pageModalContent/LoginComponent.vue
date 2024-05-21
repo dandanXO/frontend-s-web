@@ -40,7 +40,7 @@
         <div class="captcha-code">
           <q-input
             ref="captchaRef"
-            label="암호"
+            label="보안 문자"
             filled
             color="white"
             clearable
@@ -52,8 +52,7 @@
           <img class="captcha-img" :src="verificationImg" @click.prevent="getCode" />
         </div>
       </div>
-      <div class="btn" style="margin-top: 15px">
-        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded flat />
+      <div class="btn" style="margin-top: 15px;display:flex;flex-direction: column;">
         <q-btn
           @click.prevent="onSubmit"
           :label="'로그인'"
@@ -62,6 +61,7 @@
           rounded
           flat
         />
+        <q-btn :label="'등록'" type="button" @click="openRegister" class="common-large-btn form-button blue" rounded flat />
       </div>
     </q-form>
   </div>
@@ -231,13 +231,13 @@ export default defineComponent({
 
   &.blue {
     // background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-    background: url("../../assets/home/btn-blue.png") no-repeat center center;
+    background: url("../../assets/home/btn-blue.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 
   &.yellow {
     // background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-    background: url("../../assets/home/btn-orange.png") no-repeat center center;
+    background: url("../../assets/home/btn-orange.svg") no-repeat center center;
     background-size: 100% 100%;
   }
 }
