@@ -527,7 +527,7 @@
   <el-dialog
     :title="t('fields.depositRecord')"
     v-model="uiControl.depositDialogVisible"
-    width="900px"
+    width="1100px"
     append-to-body
   >
     <el-form label-suffix=" : " style="margin-top: -20px;">
@@ -547,6 +547,7 @@
           <tr>
             <th scope="col">{{ t('fields.sequence') }}</th>
             <th scope="col">{{ t('fields.serialNumber') }}</th>
+            <th scope="col">{{ t('fields.paymentType') }}</th>
             <th scope="col">{{ t('fields.depositAmount') }}</th>
             <th scope="col">{{ t('fields.depositDate') }}</th>
             <th scope="col">{{ t('fields.finishDate') }}</th>
@@ -560,6 +561,7 @@
           >
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
+            <td>{{ item.paymentType }}</td>
             <td>${{ item.depositAmount.toFixed(2) }}</td>
             <td>
               {{ formatDate(item.depositDate) }}

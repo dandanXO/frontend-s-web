@@ -312,6 +312,7 @@ export default {
     selectBankCard: 'เลือกบัตรธนาคาร',
     selectUsdtWallet: 'กรุณาเลือกบัญชีกระเป๋า USDT',
     serialNumber: 'หมายเลขคำสั่ง',
+    paymentType: "ประเภท",
     settleTime: 'เวลาประมวลผล',
     settleView: 'ดู',
     settlePay: 'จ่าย',

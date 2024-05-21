@@ -338,6 +338,7 @@ export default {
     selectBankCard: 'Select bank card',
     selectUsdtWallet: 'Please select a USDT wallet',
     serialNumber: 'Serial Number',
+    paymentType: "Payment Type",
     settleTime: 'Settle Time',
     settleView: 'View',
     settlePay: 'Pay',

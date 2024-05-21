@@ -335,6 +335,7 @@ export default {
     selectBankCard: '选择银行卡',
     selectUsdtWallet: '请选择虚拟钱包账号',
     serialNumber: '订单号',
+    paymentType: "类型",
     settleTime: '结算时间',
     settleView: '查看',
     settlePay: '发放',

@@ -336,6 +336,7 @@ export default {
     selectBankCard: 'Chọn thẻ ngân hàng',
     selectUsdtWallet: 'Vui lòng chọn ví USDT',
     serialNumber: 'Số Seri',
+    paymentType: "Loại",
     settleTime: 'Thời gian thanh toán',
     settleView: 'Xem',
     settlePay: 'Thanh toán',
