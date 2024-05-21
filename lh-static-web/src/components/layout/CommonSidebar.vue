@@ -49,7 +49,7 @@
   <div
     class="rocket-wrapper"
     v-if="showRocket"
-    :class="store.token && store.memberType === 'TEST' && 'show-rocket'"
+    :class="(store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') && 'show-rocket'"
     :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
     @mousedown="startDragging"
   >
