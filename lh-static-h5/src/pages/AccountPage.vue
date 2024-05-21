@@ -382,7 +382,7 @@
               @change="attachImage"
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
               
           </el-form-item>
           <cropper 
@@ -409,7 +409,7 @@
       <div class="rightBox">
         <div class="cropped_title">头像预览</div>
         <div v-if="!croppedImg" class="croppedImgHolder"></div>
-        <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px;" :src="croppedImg">
+        <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px;" :src="croppedImg">
       </div>
     </div>
       <div v-if="croppedImg" class="dialog-footer">
@@ -684,8 +684,18 @@ async function saveCroppedImage() {
 }
 
 async function attachImage(event) {
-  const file = event.target.files[0];
-  uploadedImage.url = URL.createObjectURL(file); 
+  console.log(event.target.files[0].size)
+  if (event.target.files[0].size > 1000000) {
+    return $q.notify({
+      type: "negative",
+      position: "top",
+      message: "图片必须小于1MB,请重新上传",
+      icon: "report_problem"
+    });
+  } else {
+    const file = event.target.files[0];
+    uploadedImage.url = URL.createObjectURL(file); 
+  }
 }
 
 function isBase64(str) {
@@ -780,6 +790,7 @@ const updateDialogVisible = ref(false);
         profileDialogVisible.value = false
         isLoadingUpload.value = false
         updateDialogVisible.value = false
+        window.location.reload();
       })
     }
     return {
@@ -1527,8 +1538,8 @@ const updateDialogVisible = ref(false);
       .upload-box {
         gap: 10px;
         padding: 10px;
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1536,6 +1547,7 @@ const updateDialogVisible = ref(false);
         background: #E7F3FF;
         border-radius: 20px;
     flex-direction: column;
+    text-align: center;
         .el-form-item__content {
           display: flex;
           justify-content: center;
@@ -1574,15 +1586,15 @@ const updateDialogVisible = ref(false);
       }
       .croppedImgHolder {
         border: 3px dotted #7A80A1;
-        width: 250px;
-        height: 250px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
       }
     }
   }
 .cropper {
-	height: 250px;
-	width: 250px;
+	height: 150px;
+	width: 150px;
   border-radius: 10px;
 	background: aliceblue;
 }

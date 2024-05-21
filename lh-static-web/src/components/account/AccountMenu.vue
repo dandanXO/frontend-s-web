@@ -103,7 +103,7 @@
               @change="attachImage"
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
               
           </el-form-item>
           <cropper 
@@ -260,8 +260,12 @@ async function saveCroppedImage() {
 }
 
 async function attachImage(event) {
-  const file = event.target.files[0];
-  uploadedImage.url = URL.createObjectURL(file); 
+  if (event.target.files[0].size > 1000000) {
+    return ElMessage.error('图片必须小于1MB,请重新上传');
+  } else {
+    const file = event.target.files[0];
+    uploadedImage.url = URL.createObjectURL(file); 
+  }
 }
 
 function isBase64(str) {
