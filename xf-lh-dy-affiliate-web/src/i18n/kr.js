@@ -176,6 +176,7 @@ export default {
     affiliateStatus: '대리 상태',
     affiliateWithdraw: '은행 출금',
     affiliateWithdrawRecord: '은행 출금 기록',
+    amount: '양',
     amountOfFirstDeposit: '첫 입금 금액',
     answerOne: '답변 1',
     answerTwo: '답변 2',

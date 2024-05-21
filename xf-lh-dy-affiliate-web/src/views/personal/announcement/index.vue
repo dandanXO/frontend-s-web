@@ -35,7 +35,12 @@
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="normal" type="primary" plain @click="resetQuery()">
+              <el-button
+                size="normal"
+                type="primary"
+                plain
+                @click="resetQuery()"
+              >
                 {{ $t('fields.reset') }}
               </el-button>
               <el-button
@@ -269,12 +274,14 @@ function resetQuery() {
 
 async function loadAffiliateAnnouncementType() {
   const { data: ret } = await getActiveAffAnnouncementType()
-  type.getTypeList = ret
-  type.getActiveTab = ret[0].id
-  type.getCurrentTab = ret[0].id
+  if (ret && ret.length > 0) {
+    type.getTypeList = ret
+    type.getActiveTab = ret[0].id
+    type.getCurrentTab = ret[0].id
 
-  activeName.value = ret[0].id
-  loadAffiliateAnnouncement(type.getCurrentTab)
+    activeName.value = ret[0].id
+    loadAffiliateAnnouncement(type.getCurrentTab)
+  }
 }
 
 async function handleTabClick(tab) {
