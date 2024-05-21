@@ -475,14 +475,16 @@
     </div>
   </div>
 
-  <div v-if="showRocket" class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
-    <div class="rocket-container">
-      <div class="rocket"><img src="../assets/images/home/rocket.png" /></div>
-      <div class="blue-smoke"><img src="../assets/images/home/blue-smoke.svg" /></div>
-    </div>
-  </div>
-
   <GameModal ref="allGames"></GameModal>
+
+  <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <div class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket"><img src="../assets/images/home/rocket.gif" /></div>
+      </div>
+    </div>
+  </q-page-sticky>
 
   <q-dialog
     width="100%"
@@ -1447,6 +1449,24 @@ export default defineComponent({
       }
     };
 
+    const hideRocket = () => {
+      showRocket.value = false;
+    };
+
+    const fabPos = ref([18, 18]);
+    const draggingFab = ref(false);
+
+    const moveFab = (ev) => {
+      const maxX = window.innerWidth - 130;
+      const maxY = window.innerHeight - 130;
+      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1527,7 +1547,11 @@ export default defineComponent({
       rightPlatformContainer,
       handleScroll,
       showRocket,
-      checkShowRocket
+      checkShowRocket,
+      fabPos,
+      draggingFab,
+      moveFab,
+      hideRocket
     };
   }
 });
@@ -1535,117 +1559,41 @@ export default defineComponent({
 
 <style scoped lang="scss">
 // rocket animation
+.rebates-absolute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 10px;
+  font-weight: bold;
+  margin-left: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 400;
+}
+
 .rocket-wrapper {
-  position: fixed;
-  bottom: 100px;
-  right: -29px;
-  z-index: 280;
   transition: all 0.3s;
-  cursor: pointer;
+  // cursor: pointer;
+
+  img {
+    width: 130px;
+    pointer-events: none;
+  }
 
   &:hover {
     filter: brightness(0.9);
-  }
-
-  .rocket-container {
-    position: relative;
-    animation: fly 3s linear infinite;
-    display: flex;
-    flex-direction: column;
-
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   bottom: -30px;
-    //   left: 50%;
-    //   transform: translateX(-50%);
-    //   width: 20px;
-    //   height: 40px;
-    //   background: radial-gradient(circle, rgb(192, 192, 192) 0%, rgba(0, 0, 0, 0) 70%);
-    //   animation: smoke 0.5s linear infinite;
-    // }
-  }
-  .rocket {
-    transform: rotate(10deg);
-    z-index: 282;
-
-    img {
-      display: block;
-      width: 60px;
-    }
-  }
-  .blue-smoke {
-    margin-left: -66px;
-    margin-top: -2px;
-    transform: rotate(-10deg);
-    animation: smokeMove 0.5s linear infinite;
-    z-index: 281;
-    img {
-      display: block;
-      width: 100px;
-    }
-  }
-}
-
-@keyframes rocketMove {
-  0%,
-  100% {
-    transform: rotate(-10deg) translateY(-50px) scale(0.85);
-  }
-
-  70% {
-    transform: rotate(10deg) translateY(50px) scale(1);
-  }
-}
-
-@keyframes smokeMove {
-  0%,
-  100% {
-    opacity: 1;
-    transform: rotate(-10deg);
-  }
-
-  70% {
-    opacity: 0.5;
-    transform: rotate(-10deg);
-  }
-}
-
-@keyframes fly {
-  0% {
-    bottom: -100px;
-    transform: translateX(-50%) rotate(0deg) scale(1);
-  }
-  25% {
-    bottom: 30%;
-    transform: translateX(-50%) rotate(2deg) scale(0.95);
-  }
-  50% {
-    bottom: 60%;
-    transform: translateX(-50%) rotate(-2deg) scale(1);
-  }
-  75% {
-    bottom: 90%;
-    transform: translateX(-50%) rotate(2deg) scale(0.95);
-  }
-  100% {
-    bottom: 110%;
-    transform: translateX(-50%) rotate(0deg) scale(1);
-  }
-}
-
-@keyframes smoke {
-  0% {
-    opacity: 0.7;
-    transform: translate(-50%, 0) scale(1);
-  }
-  50% {
-    opacity: 0.4;
-    transform: translate(-50%, -50px) scale(1.5);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -100px) scale(2);
   }
 }
 
