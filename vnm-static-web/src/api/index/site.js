@@ -14,3 +14,7 @@ export function getAppDownloadUrlFromServer() {
 export function getCSAFromServer() {
   return server.REST.get("/config/customerAddress/v2");
 }
+
+export function getRedEnvelopeFromServer() {
+  return server.REST.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket");
+}
