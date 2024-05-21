@@ -431,6 +431,39 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="rebate"
+          :label="t('fields.rebate')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="paymentFee"
+          :label="t('fields.paymentFee')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="platformFee"
+          :label="t('fields.platformFee')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="bet"
           :label="t('fields.totalBet')"
           align="center"
