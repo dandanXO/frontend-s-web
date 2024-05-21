@@ -73,7 +73,7 @@ const gameType = ref(props.gameType);
 <style lang="scss" scoped>
 .game-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 20px;
   padding: 20px;
 
@@ -138,9 +138,12 @@ const gameType = ref(props.gameType);
 
       .game-entry-btn {
         position: absolute;
-        bottom: 5%;
+        bottom: 2%;
         left: 50%;
         transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        justify-content: center;
 
         &:hover {
           filter: brightness(0.9);
