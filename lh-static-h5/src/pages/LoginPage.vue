@@ -300,8 +300,8 @@ export default defineComponent({
     const showCaptchaDialog = ref(false);
     const toggleInnerCode = () => {
       telephoneRef.value.validate();
-      showCaptchaDialog.value = true;
       if (!telephoneRef.value.hasError) {
+        showCaptchaDialog.value = true;
         getInnerCode();
       }
     };
