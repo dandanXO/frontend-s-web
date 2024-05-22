@@ -98,13 +98,19 @@
           class="inner"
           :style="{
             backgroundImage:
-              selectedPromo?.desktopImgBackgroundUrl || selectedPromo?.promoCode === 'lh-sport-zhongchao'
+              selectedPromo?.desktopImgBackgroundUrl ||
+              selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
+              selectedPromo?.promoCode === 'lh-nba24-match'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
-            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : ''
+            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : ''
           }"
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
+            fullwidth:
+              selectedPromo.promoCode === 'lh1-game-steps' ||
+              selectedPromo.promoCode === 'lh1-ftd-promo' ||
+              selectedPromo.promoCode === 'lh-eurocup-manual',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
@@ -805,7 +811,7 @@ export default defineComponent({
         gap: 20px;
         background-repeat: no-repeat;
 
-        &.bgautosize{
+        &.bgautosize {
           background-size: 100% auto;
         }
 
