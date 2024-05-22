@@ -816,6 +816,8 @@ onMounted(async () => {
   if (LOGIN_USER_SITEID.value != null) {
     searchCondition.siteId = LOGIN_USER_SITEID.value
   }
+  await loadFinancialLevels()
+  await loadPayments()
   bus.on('addNodesToSelectedGroup', addNodesToSelectedGroup)
   bus.on('exportChildItem', getSelectedChild)
   bus.on('exportNodes', showNodesUpdated)
