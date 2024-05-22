@@ -353,14 +353,12 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
-      // TODO: write back
-      const hasPromoList = promoState.promoList.filter(p => p.hasPromo)
       if (type.value !== "ALL") {
-        filteredArray.value = hasPromoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = hasPromoList;
+        filteredArray.value = promoState.promoList;
       }
     };
 
