@@ -162,7 +162,7 @@
       />
 
       <div class="modal-body-buttons q-mt-md" align="center">
-        <q-btn class="form-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
+        <q-btn rounded flat class="primary-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
       </div>
 
       <div class="q-mt-sm" v-html="activeMethod.msg"></div>
