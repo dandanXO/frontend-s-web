@@ -46,7 +46,7 @@ export default {
     bet_now: "Bet Now",
     hotMatches: "Hot Matches",
     euroCountdown01: "ROAD TO ",
-    euroCountdown01a: "EURO 2024 - ",
+    euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
 
     // side menu

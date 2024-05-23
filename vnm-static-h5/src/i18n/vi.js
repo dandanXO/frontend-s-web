@@ -49,7 +49,7 @@ export default {
     bet_now: "Cược Ngay",
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",
-    euroCountdown01a: "EURO 2024 - CÒN ",
+    euroCountdown01a: "CÒN ",
     euroCountdown02: " NGÀY",
 
     // side menu
