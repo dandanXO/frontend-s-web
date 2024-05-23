@@ -1,7 +1,21 @@
 <template>
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
-      <div class="">
+      <div class="" v-if="isCreateMode">
+        <q-btn :label="'뒤쪽에'" @click="isCreateMode = false" color="blue" />
+        <form class="content-form">
+          <p>
+            <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
+          </p>
+          <p>
+            <textarea rows="4" v-model="serviceForm.content" />
+          </p>
+        </form>
+      </div>
+      <div v-else>
+        <div style="width:100%;display:flex;justify-content:flex-end;">
+          <q-btn :label="'글쓰기'" @click="isCreateMode = true" style="margin-left:auto" color="blue" />
+        </div>
         <q-item-section class="table-row-head">
           <q-item-label>번호</q-item-label>
           <q-item-label>제목</q-item-label>
@@ -15,18 +29,10 @@
           </q-item-section>
         </template>
       </div>
-      <form class="content-form">
-        <p>
-          <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
-        </p>
-        <p>
-          <textarea rows="4" v-model="serviceForm.content" />
-        </p>
-      </form>
     </q-card-section>
     <q-card-actions class="modal-body-buttons" align="center">
-      <q-btn class="form-button blue" label="입금하기" @click.prevent="sendMessage"></q-btn>
-      <q-btn class="form-button yellow" label="전체확인"></q-btn>
+      <q-btn class="form-button blue" label="확신하는" @click.prevent="sendMessage"></q-btn>
+      <!-- <q-btn class="form-button yellow" label="전체확인"></q-btn> -->
     </q-card-actions>
   </div>
 </template>
@@ -38,6 +44,7 @@ import { api } from "boot/axios";
 var qs = require("qs");
 
 const $q = useQuasar();
+const isCreateMode = ref(false);
 
 const serviceForm = reactive({
   title: "",
