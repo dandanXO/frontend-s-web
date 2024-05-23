@@ -685,17 +685,17 @@ export default defineComponent({
 
     async function attachImage(event) {
       console.log(event.target.files[0].size)
-      if (event.target.files[0].size > 1000000) {
-        return $q.notify({
-          type: "negative",
-          position: "top",
-          message: "图片必须小于1MB,请重新上传",
-          icon: "report_problem"
-        });
-      } else {
+      // if (event.target.files[0].size > 1000000) {
+      //   return $q.notify({
+      //     type: "negative",
+      //     position: "top",
+      //     message: "图片必须小于1MB,请重新上传",
+      //     icon: "report_problem"
+      //   });
+      // } else {
         const file = event.target.files[0];
         uploadedImage.url = URL.createObjectURL(file);
-      }
+      // }
     }
 
     function isBase64(str) {
