@@ -165,3 +165,7 @@ export function getLOLMsiMatchRecord() {
 export function getEurocupManualSchedule() {
   return eventapi.get("/uefa/match/all");
 }
+
+export function getSportMatch() {
+  return eventapi.get('/sport-match/today')
+}

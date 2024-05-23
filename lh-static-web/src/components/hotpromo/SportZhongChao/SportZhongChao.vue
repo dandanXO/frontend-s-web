@@ -1,5 +1,10 @@
 <template>
   <div class="sport-zhongchao-container">
+
+    <div class="sport-zhongchao-match-game-wrapper">
+      <match-game v-for="match in matchList" :key="match.id" :match="match"/>
+    </div>
+
     <div class="sport-zhongchao-tab">
       <div
         class="sport-zhongchao-tab-item"
@@ -292,8 +297,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { getSportMatch } from "@/api/index/promo";
+import MatchGame from './components/MatchGame.vue';
+
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+
 const tab = ref("first");
+const matchList = ref([]);
+
+onMounted(async () => {
+  const apiRes = await getSportMatch()
+  matchList.value = apiRes.data.map(match => ({
+    ...match,
+    awayTeamIcon: imgURL + match.awayTeamIcon,
+    homeTeamIcon: imgURL + match.homeTeamIcon
+  }))
+})
+
 </script>
 <style lang="scss" scoped>
 .sport-zhongchao-container {
@@ -301,6 +322,17 @@ const tab = ref("first");
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  .sport-zhongchao-match-game-wrapper {
+    width: 1200px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+
   .sport-zhongchao-tab {
     width: 776px;
     display: flex;

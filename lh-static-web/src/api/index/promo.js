@@ -280,3 +280,7 @@ export function getSummonRewardRecord(page) {
 export function getLOLMsiMatchRecord() {
   return server.EVENT.get("/game-match/upcoming/MSI");
 }
+
+export function getSportMatch() {
+  return server.EVENT.get('/sport-match/today')
+}
