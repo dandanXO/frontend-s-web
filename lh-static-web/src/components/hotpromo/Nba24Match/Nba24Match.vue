@@ -29,7 +29,7 @@
         <div class="nba24-match-game-bottom-left-title">
           例：用户当日投注NBA季后赛总决赛30,000元，且用户参与活动选择队伍胜利，用户则获得188元。
         </div>
-        <div class="nba24-match-game-bottom-left-btn">[投票记录]</div>
+        <div class="nba24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
       </div>
       <div class="nba24-match-game-info">
         <div class="title"></div>
@@ -60,43 +60,43 @@
           </tr>
           <tr>
             <td>≥3,000</td>
+            <td>28</td>
             <td>8</td>
-            <td>-</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥5,000</td>
+            <td>38</td>
+            <td>18</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥10,000</td>
+            <td>88</td>
+            <td>58</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥30,000</td>
+            <td>188</td>
+            <td>88</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥80,000</td>
+            <td>388</td>
+            <td>188</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥150,000</td>
+            <td>588</td>
+            <td>288</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥500,000</td>
+            <td>1,088</td>
+            <td>888</td>
           </tr>
           <tr>
-            <td>≥1,000</td>
-            <td>8</td>
-            <td>-</td>
+            <td>≥1,000,000</td>
+            <td>2,888</td>
+            <td>1,888</td>
           </tr>
         </table>
       </div>
@@ -126,11 +126,44 @@
           <div class="item">7.为避免文字理解差异，本站保留此活动最终解释权；</div>
         </div>
       </div>
+
+      <el-dialog v-model="tableRecordDialog" width="800px" align-center :close-on-click-modal="false">
+        <div class="record-dialog-container">
+          <div class="promo-records-count">
+            <div>总竞猜次数:</div>
+            <div>总竞猜正确次数:</div>
+            <div>今日正确次数:</div>
+          </div>
+
+          <table class="promo-table record-table">
+            <thead>
+              <tr>
+                <th>投票时间</th>
+                <th>参赛队伍</th>
+                <th>投票队伍</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <template v-for="(record, index) in answeredRecords" :key="index">
+            <tr>
+              <td>{{ record.createTime }}</td>
+              <td>{{ record.quizTitle }}</td>
+              <td>{{ record.answerOne === 'draw' ? '平局' : record.answerOne }}</td>
+            </tr>
+          </template> -->
+            </tbody>
+          </table>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const tableRecordDialog = ref(false);
+</script>
 
 <style scoped lang="scss">
 .nba24-match-box {
@@ -386,4 +419,5 @@
     }
   }
 }
+
 </style>
