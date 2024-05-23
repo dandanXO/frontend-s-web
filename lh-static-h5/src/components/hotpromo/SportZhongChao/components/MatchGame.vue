@@ -1,6 +1,6 @@
 <template>
   <div class="sport-zhongchao-match-game">
-    <div class="sport-zhongchao-match-game-status">{{ getMatchStatusText(match.status) }}</div>
+<!--    <div class="sport-zhongchao-match-game-status">{{ getMatchStatusText(match.status) }}</div>-->
     <div class="sport-zhongchao-match-game-content">
       <div class="sport-zhongchao-match-game-content-item left">
         <div class="sport-zhongchao-match-game-content-team">
@@ -9,10 +9,13 @@
         </div>
       </div>
       <div class="sport-zhongchao-match-game-content-item center">
-        <div class="sport-zhongchao-match-game-content-center-time">
-          {{ moment(match.matchTime).format("MM月DD日 hh:mm:ss") }}
+        <div class="sport-zhongchao-vs">
+          <img src="../../../../assets/promo/lh-sport-zhongchao/vs.png"/>
         </div>
-        <div class="sport-zhongchao-match-game-content-center-schedule">{{ match.title }}</div>
+        <div class="sport-zhongchao-match-game-content-center-time">
+          {{ moment(match.matchTime).format("MM/DD hh:mm") }}
+        </div>
+<!--        <div class="sport-zhongchao-match-game-content-center-schedule">{{ match.title }}</div>-->
       </div>
       <div class="sport-zhongchao-match-game-content-item right">
         <div class="sport-zhongchao-match-game-content-team">
@@ -73,7 +76,7 @@ const getMatchStatusText = (status) => {
   align-items: center;
 
   .sport-zhongchao-match-game-content-item {
-    margin: 24px 0 16px;
+    margin: 15px 0 15px;
 
     &.left,
     &.right {
@@ -109,10 +112,10 @@ const getMatchStatusText = (status) => {
 
       .sport-zhongchao-match-game-content-center-time {
         color: #479af7;
-        border-radius: 30px;
-        padding: 4px 8px;
+        border-radius: 20px;
+        padding: 4px 10px;
         background: #edf4ff;
-        margin-top: 12px;
+        margin-top: 4px;
       }
       .sport-zhongchao-match-game-content-center-schedule {
         color: #1b1b1b99;
