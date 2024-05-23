@@ -80,6 +80,7 @@
     />
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
+    <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -136,6 +137,7 @@ import Europe2024FirstShoot from "../components/hotpromo/europe-2024-first-shoot
 import CS2CCTPromo from "../components/hotpromo/CS2CCTPromo/CS2CCTPromo.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
+import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -183,7 +185,8 @@ export default defineComponent({
     Europe2024FirstShoot,
     CS2CCTPromo,
     EurocupManual,
-    SportZhongChao
+    SportZhongChao,
+    Nba24Match,
     // DailyBonus
   },
   props: {
@@ -463,7 +466,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-eurocup-firstshoot" ||
       this.list.redirectUrl === "lh-cs2-cct-major-2024" ||
       this.list.redirectUrl === "lh-eurocup-manual" ||
-      this.list.redirectUrl === "lh-sport-zhongchao"
+      this.list.redirectUrl === "lh-sport-zhongchao" ||
+      this.list.redirectUrl === "lh-nba24-match"
     ) {
       this.isCommonPromo = false;
     } else {
