@@ -1,6 +1,6 @@
 <template>
   <div class="sport-zhongchao-match-game">
-    <div class="sport-zhongchao-match-game-status">{{ getMatchStatusText(match.status) }}</div>
+<!--    <div class="sport-zhongchao-match-game-status">{{ getMatchStatusText(match.status) }}</div>-->
     <div class="sport-zhongchao-match-game-content">
       <div class="sport-zhongchao-match-game-content-item left">
         <div class="sport-zhongchao-match-game-content-team">
@@ -9,10 +9,13 @@
         </div>
       </div>
       <div class="sport-zhongchao-match-game-content-item center">
-        <div class="sport-zhongchao-match-game-content-center-time">
-          {{ moment(match.matchTime).format("MM月DD日 hh:mm:ss") }}
+        <div class="sport-zhongchao-vs">
+          <img src="../../../../assets/promo/lh-sport-zhongchao/vs.png" />
         </div>
-        <div class="sport-zhongchao-match-game-content-center-schedule">{{ match.title }}</div>
+        <div class="sport-zhongchao-match-game-content-center-time">
+          {{ moment(match.matchTime).format("MM/DD hh:mm") }}
+        </div>
+<!--        <div class="sport-zhongchao-match-game-content-center-schedule">{{ match.title }}</div>-->
       </div>
       <div class="sport-zhongchao-match-game-content-item right">
         <div class="sport-zhongchao-match-game-content-team">
@@ -41,7 +44,7 @@ const getMatchStatusText = (status) => {
 </script>
 <style scoped lang="scss">
 .sport-zhongchao-match-game {
-  width: 100%;
+  width: 390px;
   border-radius: 12px;
   border: 1px solid #51acff;
   background-color: #fff;
@@ -74,7 +77,7 @@ const getMatchStatusText = (status) => {
 
   .sport-zhongchao-match-game-content-item {
     flex: 1;
-    margin: 60px 0 30px;
+    margin: 20px 0 20px;
 
     &.left,
     &.right {
@@ -93,7 +96,7 @@ const getMatchStatusText = (status) => {
         }
 
         img {
-          max-width: 120px;
+          max-width: 60px;
         }
       }
     }
@@ -105,12 +108,12 @@ const getMatchStatusText = (status) => {
       justify-content: center;
       gap: 0;
       .sport-zhongchao-match-game-content-center-time {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
-        line-height: 33.6px;
+        line-height: 20px;
         color: #479af7;
-        border-radius: 30px;
-        padding: 8px 44px;
+        border-radius: 10px;
+        padding: 8px 10px;
         background: #edf4ff;
         margin-top: 12px;
       }

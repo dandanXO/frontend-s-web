@@ -1,10 +1,6 @@
 <template>
   <div class="sport-zhongchao-container">
 
-    <div class="sport-zhongchao-match-game-wrapper">
-      <match-game v-for="match in matchList" :key="match.id" :match="match"/>
-    </div>
-
     <div class="sport-zhongchao-tab">
       <div
         class="sport-zhongchao-tab-item"
@@ -28,6 +24,31 @@
         逢八必发
       </div>
     </div>
+
+    <div class="sport-zhongchao-match-game-wrapper">
+      <q-carousel
+        v-model="slide"
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        swipeable
+        animated
+        padding
+        arrows
+        infinite
+        control-color="black"
+        class="bg-transparent"
+      >
+        <q-carousel-slide
+          v-for="(match, vipIndex) in matchList"
+          :key="`${match}-${vipIndex}`"
+          :name="vipIndex"
+          class="column no-wrap flex-center"
+        >
+          <match-game :key="match.id" :match="match"/>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+
     <div
       class="sport-zhongchao-title"
       :style="{ backgroundImage: 'url(' + require('src/assets/promo/lh-sport-zhongchao/title-' + tab + '.png') + ')' }"
@@ -114,10 +135,11 @@
               line-height: 60px;
               font-size: 14px;
               color: #ff5454;
+                             background-color: #FFCBCB;
               text-align: start;
               padding-left: 30px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
@@ -200,11 +222,12 @@
               line-height: 26px;
               font-size: 14px;
               color: #ff5454;
+                             background-color: #FFCBCB;
               text-align: start;
               padding-left: 30px;
               padding-right: 30px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
@@ -253,15 +276,16 @@
               height: 104px;
               font-size: 14px;
               color: #ff5454;
+                             background-color: #FFCBCB;
               text-align: start;
               padding-left: 30px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
-            <div style="line-height: 32px">注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。</div>
-            <div style="line-height: 40px; text-indent: 2em">
+            <div style="line-height: 20px">注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。</div>
+            <div style="line-height: 20px; text-indent: 2em">
               注单申请时间为三天有效期，若逾期视为自动放弃不予发放。
             </div>
           </td>
@@ -294,6 +318,8 @@ import MatchGame from './components/MatchGame.vue';
 
 const imgURL = process.env.IMAGE_CDN + "/promo/";
 
+const slide = ref(0);
+
 const tab = ref("first");
 const matchList = ref([]);
 
@@ -312,7 +338,30 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0px 30px;
+  margin: 0px 16px;
+
+  :deep(.q-carousel) {
+    height: unset;
+    padding-left:0px;
+    padding-right:0px;
+    width: 100%;
+  }
+
+  :deep(.q-carousel__slide){
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+
+  :deep(.q-carousel__prev-arrow--horizontal) {
+    left: 0;
+  }
+  :deep(.q-carousel__next-arrow--horizontal) {
+    right: 0;
+  }
+
+  .q-panel {
+    overflow: hidden;
+  }
 
   .sport-zhongchao-match-game-wrapper {
     width: 100%;
@@ -329,7 +378,7 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
     margin-top: 20px;
     .sport-zhongchao-tab-item {
       width: 122px;
@@ -394,13 +443,13 @@ onMounted(async () => {
       height: 40px;
       color: #fff;
       font-size: 14px;
-      line-height: 40px;
+      line-height: 20px;
       font-weight: 500;
       &:first-child {
-        border-top-left-radius: 12px;
+        border-top-left-radius: 0px;
       }
       &:last-child {
-        border-top-right-radius: 12px;
+        border-top-right-radius: 0px;
       }
     }
     td {

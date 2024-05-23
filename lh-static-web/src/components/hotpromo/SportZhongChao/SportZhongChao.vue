@@ -1,9 +1,7 @@
 <template>
   <div class="sport-zhongchao-container">
 
-    <div class="sport-zhongchao-match-game-wrapper">
-      <match-game v-for="match in matchList" :key="match.id" :match="match"/>
-    </div>
+
 
     <div class="sport-zhongchao-tab">
       <div
@@ -28,6 +26,11 @@
         逢八必发
       </div>
     </div>
+
+    <div class="sport-zhongchao-match-game-wrapper">
+      <match-game v-for="match in matchList" :key="match.id" :match="match"/>
+    </div>
+
     <div
       class="sport-zhongchao-title"
       :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/title-${tab}.png`) + ')' }"
@@ -114,10 +117,11 @@
               line-height: 60px;
               font-size: 20px;
               color: #ff5454;
+              background-color: #FFCBCB;
               text-align: start;
               padding-left: 56px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
@@ -200,10 +204,11 @@
               line-height: 60px;
               font-size: 20px;
               color: #ff5454;
+               background-color: #FFCBCB;
               text-align: start;
               padding-left: 56px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
@@ -261,9 +266,10 @@
               font-size: 20px;
               color: #ff5454;
               text-align: start;
+               background-color: #FFCBCB;
               padding-left: 56px;
-              border-bottom-left-radius: 12px;
-              border-bottom-right-radius: 12px;
+              border-bottom-left-radius: 0px;
+              border-bottom-right-radius: 0px;
               border-bottom: none;
             "
           >
@@ -327,10 +333,11 @@ onMounted(async () => {
     width: 1200px;
     margin-bottom: 60px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: 15px;
+    flex-wrap: wrap;
   }
 
   .sport-zhongchao-tab {
@@ -363,7 +370,7 @@ onMounted(async () => {
   }
 
   .sport-zhongchao-title {
-    width: 1147px;
+    width: 1200px;
     height: 109px;
     display: flex;
     align-items: center;
@@ -387,13 +394,14 @@ onMounted(async () => {
   }
 
   .sport-zhongchao-content {
-    width: 1000px;
+    width: 1200px;
     margin-bottom: 36px;
   }
 
   .first-table,
   .second-table,
   .third-table {
+    border-radius: 0px;
     width: 100%;
     text-align: center;
     vertical-align: middle;
@@ -405,10 +413,10 @@ onMounted(async () => {
       line-height: 40px;
       font-weight: 500;
       &:first-child {
-        border-top-left-radius: 12px;
+        border-top-left-radius: 0px;
       }
       &:last-child {
-        border-top-right-radius: 12px;
+        border-top-right-radius: 0px;
       }
     }
     td {
