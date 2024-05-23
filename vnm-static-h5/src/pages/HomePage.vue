@@ -1769,7 +1769,6 @@ export default defineComponent({
       modulesHot,
       Platform,
       pushNotificationData,
-      countDay,
       euroCupStartDate,
       getRedEnvelope,
       isRedPacketShow,
