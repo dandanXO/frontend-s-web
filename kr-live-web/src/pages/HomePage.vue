@@ -81,6 +81,10 @@
       </div>
     </div> -->
 
+    <div class="jackpot">
+      <div class="jackpot-txt">987,654,321.23</div>
+    </div>
+
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
     <Transition>
@@ -787,7 +791,7 @@
         <div class="title-text">이벤트</div>
         <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : ''">+ 더보기</router-link>
       </div>
-      <div class="news-item-box">
+      <!-- <div class="news-item-box">
         <div class="news-item-left">
           <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
         </div>
@@ -806,7 +810,7 @@
         <div class="news-item-left">
           <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="news-section">
@@ -814,7 +818,7 @@
         <div class="title-text">출금현황</div>
         <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
       </div>
-      <div class="news-item-box">
+      <!-- <div class="news-item-box">
         <div class="news-item-left">
           <div class="news-item-title">
             카***팟
@@ -849,7 +853,7 @@
             <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -2374,6 +2378,30 @@ export default defineComponent({
     /* img {
       width: 100%;
     } */
+  }
+}
+
+.jackpot {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 816px;
+  height: 130px;
+  background: url('../assets/home/jackpot.png') no-repeat center center;
+  background-size: 100% 100%;
+  position: relative;
+
+  .jackpot-txt {
+    display: flex;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 34px;
+    font-weight: bold;
+    color: #f1b252;
+    text-shadow: 0 0 5px #ff0000;
+    letter-spacing: 3px;
   }
 }
 

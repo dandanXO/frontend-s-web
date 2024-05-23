@@ -9,11 +9,6 @@
     <q-page-container>
       <div class="home-banner-wrapper">
         <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.png" />
-        <div class="jackpot">
-          <img class="desktop" src="../assets/home/jackpot.png" />
-          <img class="mobile" src="../assets/home/jackpot-mobile.png" />
-          <div class="jackpot-txt">987,654,321.23</div>
-        </div>
 
         <LoginBar />
       </div>
@@ -557,17 +552,24 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 0px;
+  top: 50%;
+  margin-top: -42px;
   left: 50%;
-  width: 325px;
-  transform: translate(-50%, 0%);
+  width: 425px;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 991px) {
-    width: 100px;
+    width: 300px;
   }
 
   @media (max-width: 768px) {
-    width: 100px;
+    width: 250px;
+    margin-top:0px;
+  }
+
+  @media (max-width: 500px) {
+    width: 200px;
+    margin-top:0px;
   }
 }
 
@@ -674,50 +676,6 @@ footer {
   }
   .header-vip-btn {
     margin-left: 130px;
-  }
-}
-
-.jackpot {
-  display: flex;
-  justify-content: center;
-  margin: 30px auto;
-  margin-top: 0px;
-  position: relative;
-  padding-left: 16px;
-  padding-right: 16px;
-
-  .jackpot-txt {
-    display: flex;
-    position: absolute;
-    bottom: 9%;
-    font-size: 34px;
-    font-weight: bold;
-    color: #f1b252;
-    text-shadow: 0 0 5px #ff0000;
-    letter-spacing: 3px;
-
-    @media (max-width: 991px) {
-      font-size: 16px;
-    }
-  }
-
-  img.desktop {
-    display: none;
-    width: 100%;
-    max-width: 500px;
-    @media (min-width: 991px) {
-      display: block;
-      max-width: 880px;
-    }
-  }
-
-  img.mobile {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    @media (min-width: 991px) {
-      display: none;
-    }
   }
 }
 </style>

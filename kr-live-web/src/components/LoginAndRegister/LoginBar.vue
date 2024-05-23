@@ -9,7 +9,7 @@
         <div
           v-for="(item, index) in iconInfo"
           :key="index"
-          @click="store.token ? item.goPage() : showNotify()"
+          @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
           class="credit-info cursor-pointer"
         >
           <img :src="item.iconUrl" alt="" />
@@ -105,15 +105,9 @@ const iconInfo = reactive([
     iconUrl: require("../../assets/icon/icon-service.svg"),
     goPage: () => {
       window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-    }
+    },
+    requireLogin: false
   },
-  // {
-  //   info: "고객센터",
-  //   iconUrl: require("../../assets/icon/icon-service.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=customer/service`);
-  //   }
-  // }
 ]);
 </script>
 
@@ -128,6 +122,11 @@ const iconInfo = reactive([
   left: 0;
   padding: 12px;
   background: rgba(18, 17, 33, 0.6);
+
+  img{
+    width: 40px;
+    height: 40px;
+  }
 
   @media (min-width: 769px) {
     display: none;

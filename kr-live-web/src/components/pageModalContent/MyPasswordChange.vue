@@ -52,7 +52,7 @@
                 </div>
             </q-form>
             <div class="action-buttons">
-                <q-btn class="form-button blue" label="확인하다"  @click="submitUpdatePwd"></q-btn>
+                <q-btn rounded flat class="primary-button blue" label="변경완료"  @click="submitUpdatePwd"></q-btn>
             </div>
         </q-card-section>
     </div>
@@ -102,8 +102,8 @@ const submitUpdatePwd = () => {
                 icon: "check_circle_outline"
             });
             
-            // router.push('/');
-            // store.memberLogout();
+            router.push('/');
+            store.memberLogout();
         } else {
 
         }
@@ -179,27 +179,6 @@ const submitUpdatePwd = () => {
         justify-content: center;
         align-items: center;
         gap: 25px;
-        padding: 20px 10px 10px;
-
-        .form-button {
-            height: 70px;
-            width: 200px;
-            background-size: contain;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 18px;
-            padding-bottom: 5px;
-
-            &.blue {
-                background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-            }
-
-            &.yellow {
-                background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-            }
-        }
     }
 }
 </style>

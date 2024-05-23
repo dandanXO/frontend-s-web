@@ -28,7 +28,7 @@
         </q-btn>
       </div>
       <div class="line">
-        <span>은행 카드 번호:</span>
+        <span>이름:</span>
         <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
         <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
           {{ copybtntxt2 }}
@@ -89,11 +89,11 @@
       </q-select>
 
       <div class="q-mt-sm q-mb-sm text-grey text-bold">
-        단일 예금：{{
-          calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
+        입금단위：{{
+          calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : 0
         }}
         -
-        {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
+        {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : " " }}
       </div>
 
       <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
@@ -111,10 +111,10 @@
           :label="item + '원'"
           @click="selectAmt(item)"
         ></q-btn>
-        <q-btn class="select-amt-btn active" label="정정하기" @click="clearInfo"></q-btn>
+        <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
       </p>
 
-      <label v-show="selectedPayType && bankCardList.length">입금금액</label>
+      <label v-show="selectedPayType && bankCardList.length">입금계좌</label>
       <BankComponent
         v-show="selectedPayType && bankCardList.length"
         ref="payTypeClass"
@@ -150,8 +150,19 @@
         </template>
       </q-select>
 
+      <label>입금금액</label>
+      <q-input
+        hide-bottom-space
+        label="입금자명"
+        v-model="depositAccName"
+        class="account-name-field"
+        padding="none"
+        color="white"
+        readonly
+      />
+
       <div class="modal-body-buttons q-mt-md" align="center">
-        <q-btn class="form-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
+        <q-btn rounded flat class="primary-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
       </div>
 
       <div class="q-mt-sm" v-html="activeMethod.msg"></div>
@@ -199,7 +210,7 @@ const payTypeClass = ref();
 const payMethods = ref([]);
 const activeMethod = ref({});
 const bankCardList = ref([]);
-const countOptions = ref([1000, 2000, 5000, 10000, 20000, 50000]);
+const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
 const amountList = ref([]);
 const isDisplay = ref(false);
 const submitMessage = ref([]);
@@ -224,6 +235,8 @@ const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
 
 const depositAmtRef = ref("");
+const depositAccName = ref(store.realName);
+
 const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
@@ -798,7 +811,7 @@ onMounted(() => {
   font-size: 14px;
 }
 
-.deposit-field {
+.deposit-field, .account-name-field {
   :deep(.q-field__control) {
     background: #252e43;
   }

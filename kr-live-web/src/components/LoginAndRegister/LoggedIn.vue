@@ -5,13 +5,6 @@
         <img src="../../assets/images/login/member.svg" alt="" />
         <div>{{ store.nickName }}</div>
       </div>
-      <!-- <div class="letter">
-        <img src="../../assets/images/login/letter.svg" alt="" />
-        <div>
-          쪽지
-          <span>(0)</span>
-        </div>
-      </div> -->
       <div class="money">
         <img src="../../assets/images/login/money.svg" alt="" />
         <div>
@@ -19,31 +12,14 @@
           <span>원</span>
         </div>
       </div>
-      <!-- <div class="item">
-        <img src="../../assets/images/login/item.svg" alt="" />
-        <div>
-          0
-          <span>P</span>
-        </div>
-      </div> -->
     </div>
 
     <div class="btn-group">
       <div class="left-group">
-        <!-- <div class="points-conversion">
-          <div class="register-text" @click="goToTransactions">포인트전환</div>
-        </div> -->
-        <div class="my-page">
-          <div class="register-text" @click="goToPersonalInfo">마이페이지</div>
-        </div>
+        <q-btn class="primary-button blue" rounded flat style="width:100px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
       </div>
       <div class="right-group">
-        <div class="other-points-conversion" @click.prevent="onLogoutSubmit">
-          <div class="register-text">로그 아웃</div>
-        </div>
-        <!-- <div class="other-points-conversion">
-          <div class="register-text" @click="goToTransfer">포인트전환</div>
-        </div> -->
+        <q-btn class="primary-button yellow" rounded flat style="width:100px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
       </div>
     </div>
   </div>

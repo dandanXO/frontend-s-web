@@ -269,7 +269,7 @@ export default {
 
     // TransitRecordView
     deposit_title: "입금",
-    turnover: "수익",
+    turnover: "지갑잔액변동기록",
     withdraw: "출금",
     transfer: "이체",
     rebates: "리베이트",
