@@ -666,7 +666,6 @@ onMounted(async() => {
   await loadBankCard()
   await loadCurrency()
   await loadBank()
-  await loadFinancialLevel()
   await loadPayTypes()
   siteChange()
 })
