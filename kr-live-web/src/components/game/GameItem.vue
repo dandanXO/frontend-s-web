@@ -1,7 +1,7 @@
 <template>
 
-  <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" />
-  <div class="game-list" v-else>
+  <!-- <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" /> -->
+  <div class="game-list">
     <div :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"  @click="() => props.onClickGameItem(game)">
       <div class="game-item-content">
         <img

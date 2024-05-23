@@ -1,5 +1,10 @@
 export default {
   lang: {
+    // login start
+    login_account: "Account",
+    login_password: "Password",
+    login_captcha: "Captcha",
+    // login end
     // register start
     reg_login_name: "Login Name",
     reg_phone_num: "Phone Number",
