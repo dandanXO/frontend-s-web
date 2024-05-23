@@ -52,7 +52,7 @@
                 </div>
             </q-form>
             <div class="action-buttons">
-                <q-btn class="form-button blue" label="확인하다"  @click="submitUpdatePwd"></q-btn>
+                <q-btn class="form-button blue" label="변경완료"  @click="submitUpdatePwd"></q-btn>
             </div>
         </q-card-section>
     </div>
@@ -102,8 +102,8 @@ const submitUpdatePwd = () => {
                 icon: "check_circle_outline"
             });
             
-            // router.push('/');
-            // store.memberLogout();
+            router.push('/');
+            store.memberLogout();
         } else {
 
         }

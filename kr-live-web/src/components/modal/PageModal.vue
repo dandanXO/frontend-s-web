@@ -49,19 +49,36 @@
             <template v-if="!isMinimalMode">
               <q-tabs style="padding: 0px 30px; background-color: #212632" v-model="page" align="justify">
                 <template v-for="item in formattedPagesInfo" :key="item.page">
-                  <q-tab
-                    @click="tabClick(item.page)"
-                    :name="item.page"
-                    :label="item.info"
-                    class="page-dialog-tab"
-                    v-if="item.tabIndex === tabIndex"
-                  >
-                    <img
-                      style="padding-right: 5px"
-                      :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
-                      :alt="item.info"
-                    />
-                  </q-tab>
+                  <template v-if="item.page === 'customer/service'">
+                    <q-route-tab
+                      :href="item?.href"
+                      target="_blank"
+                      :label="item.info"
+                      class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex"
+                    >
+                      <img
+                        style="padding-right: 5px"
+                        :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info"
+                      />
+                    </q-route-tab>
+                  </template>
+                  <template v-else>
+                    <q-tab
+                      @click="tabClick(item.page)"
+                      :name="item.page"
+                      :label="item.info"
+                      class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex"
+                    >
+                      <img
+                        style="padding-right: 5px"
+                        :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info"
+                      />
+                    </q-tab>
+                  </template>
                 </template>
               </q-tabs>
             </template>
@@ -225,6 +242,7 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "log",
+    href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
     page: "customer/service",
     info: "고객센터",
     iconUrl: require("../../assets/icon/customerService.svg"),
@@ -278,12 +296,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "transaction/records",
-    info: "배팅/윈",
+    info: "입출금기록",
     iconUrl: require("../../assets/icon/transaction-record.svg"),
     iconActiveUrl: require("../../assets/icon/transaction-record-active.svg"),
     component: TransitRecord,
     headerInfo: {
-      title: "배팅/윈",
+      title: "입출금기록",
       subTitle: "TRANSACTIONS",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -345,12 +363,12 @@ const pagesInfo = reactive([
 const minimalModePagesInfo = reactive([
   {
     page: "register",
-    info: "등록",
+    info: "회원가입",
     iconUrl: require("../../assets/icon/customerService.svg"),
     iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
     component: RegisterComponent,
     headerInfo: {
-      title: "등록",
+      title: "회원가입",
       subTitle: "REGISTER",
       description: ""
     }

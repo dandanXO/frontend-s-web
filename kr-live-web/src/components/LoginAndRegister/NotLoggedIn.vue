@@ -255,6 +255,13 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: translateY(2px);
+  }
   .register-text {
     font-size: 12px;
     line-height: 1;
@@ -277,6 +284,12 @@ onMounted(() => {
   justify-content: center;
   cursor: pointer;
   margin-left: 16px;
+  &:hover {
+    filter: brightness(1.1);
+  }
+  &:active {
+    transform: translateY(2px);
+  }
   .login-text {
     font-size: 12px;
     line-height: 1;

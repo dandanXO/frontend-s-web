@@ -19,7 +19,7 @@
           />
         </div>
         <div>
-          <label>연락처</label>
+          <label>이메일</label>
           <input
             :value="store.email || ''"
             :readonly="store.token ? 'readonly' : false"
@@ -27,7 +27,7 @@
           />
         </div>
         <div>
-          <label>가입일시</label>
+          <label>전화</label>
           <input
             :value="store.telephone || ''"
             :readonly="store.token ? 'readonly' : false"
