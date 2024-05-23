@@ -34,9 +34,9 @@
         </div>
       </div>
       <div class="action-buttons">
-        <PrimaryButton style="width:200px;height:70px;" :onClickButton="onSubmit" :label="'로그인'" :color="'yellow'" :loading="isLoading" />
+        <q-btn rounded flat style="width:200px;height:70px;" @click="onSubmit" :label="'로그인'" class="primary-button yellow" :loading="isLoading" />
         <router-link to="/?page=register">
-          <PrimaryButton style="width:200px;height:70px;" :label="'회원가입'" :color="'blue'" :loading="isLoading"/>
+          <q-btn rounded flat style="width:200px;height:70px;" :label="'회원가입'" class="primary-button blue" :loading="isLoading"/>
         </router-link>
       </div>
     </q-form>
@@ -49,14 +49,10 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import PrimaryButton from 'components/modal/PrimaryButton.vue';
 
 export default defineComponent({
   name: "LoginPage",
   emits: ["closeModal"],
-  components: {
-    PrimaryButton
-  },
   setup(props, { emit }) {
     const store = userStore();
     const router = useRouter();

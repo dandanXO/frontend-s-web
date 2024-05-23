@@ -218,7 +218,7 @@
     </q-form>
 
     <div class="row justify-center items-center gap-8" style="margin-top: 35px">
-      <PrimaryButton :onClickButton="onSubmit" :label="'가입완료'" color="blue" />
+      <q-btn rounded flat @click="onSubmit" :label="'가입완료'" class="primary-button blue" />
     </div>
 
     <q-dialog
@@ -275,14 +275,10 @@ import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
-import PrimaryButton from "../modal/PrimaryButton.vue";
 
 export default defineComponent({
   name: "RegisterPage",
   emits: ["closeModal"],
-  components: {
-    PrimaryButton
-  },
   setup(props, { emit }) {
     const { t } = useI18n();
     const store = userStore();
