@@ -598,7 +598,7 @@
 
   <q-page-sticky position="bottom-right"  :offset="fabPos" style="z-index:999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
-      <img src="../assets/images/home/red-envelope.png" class="red-envelope"/>
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope"/>
     </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
