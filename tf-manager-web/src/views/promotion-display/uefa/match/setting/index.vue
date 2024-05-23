@@ -248,6 +248,11 @@
                 size="small"
               >{{ endForm.teamTwoName }}
               </el-radio-button>
+              <el-radio-button
+                label="0"
+                size="small"
+              >{{ t('fields.draw') }}
+              </el-radio-button>
             </el-radio-group>
           </el-form-item>
         </el-row>
@@ -296,6 +301,9 @@
           <div v-if="scope.row.winnerTeam" style="display: flex; align-items: center">
             <img :src="promoDir + scope.row.winnerTeamIcon" style="width: 20px; height: 20px; margin-right: 10px">
             <span>{{ scope.row.winnerTeam }}</span>
+          </div>
+          <div v-else-if="scope.row.status === 'ENDED' && !scope.row.winnerTeam" style="display: flex; align-items: center">
+            <el-tag size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
           </div>
           <span v-else>-</span>
         </template>

@@ -131,6 +131,62 @@
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+      <el-form
+        v-if="uiControl.dialogType === 'SCORE'"
+        ref="scoreFormRef"
+        :model="scoreForm"
+        :rules="scoreFormRules"
+        :inline="true"
+        size="small"
+        label-width="200px"
+      >
+        <el-form-item :label="t('fields.site')" prop="siteId" v-if="!hasRole(['TENANT'])">
+          <el-select
+            v-model="scoreForm.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            style="width: 350px;"
+            default-first-option
+            disabled
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.total')" prop="total">
+          <el-input v-model="scoreForm.total" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.win')" prop="win">
+          <el-input v-model="scoreForm.win" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.loss')" prop="loss">
+          <el-input v-model="scoreForm.loss" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.draw')" prop="draw">
+          <el-input v-model="scoreForm.draw" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.goalScored')" prop="goalScored">
+          <el-input v-model="scoreForm.goalScored" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.goalAgainst')" prop="goalAgainst">
+          <el-input v-model="scoreForm.goalAgainst" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.goalDifference')" prop="goalDifference">
+          <el-input v-model="scoreForm.goalDifference" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.score')" prop="score">
+          <el-input v-model="scoreForm.score" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
     </el-dialog>
     <el-table
       :data="page.records"
@@ -146,7 +202,7 @@
           <span>{{ t('fields.team' + scope.row.teamGroup) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="teamName" :label="t('fields.teamName')" width="250">
+      <el-table-column prop="teamName" :label="t('fields.teamName')" width="230">
         <template #default="scope">
           <div style="display: flex; align-items: center">
             <img :src="promoDir + scope.row.teamIcon" style="width: 20px; height: 20px; margin-right: 10px">
@@ -154,6 +210,14 @@
           </div>
         </template>
       </el-table-column>
+      <el-table-column prop="total" :label="t('fields.total')" width="110" />
+      <el-table-column prop="win" :label="t('fields.win')" width="110" />
+      <el-table-column prop="loss" :label="t('fields.loss')" width="110" />
+      <el-table-column prop="draw" :label="t('fields.draw')" width="110" />
+      <el-table-column prop="goalScored" :label="t('fields.goalScored')" width="110" />
+      <el-table-column prop="goalAgainst" :label="t('fields.goalAgainst')" width="110" />
+      <el-table-column prop="goalDifference" :label="t('fields.goalDifference')" width="110" />
+      <el-table-column prop="score" :label="t('fields.score')" width="110" />
       <el-table-column prop="createTime" :label="t('fields.createTime')" width="200">
         <template #default="scope">
           <span v-if="scope.row.createTime === null">-</span>
@@ -188,7 +252,7 @@
         fixed="right"
         :label="t('fields.operate')"
         align="center"
-        width="400"
+        width="250"
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:uefa-team:update']) || hasPermission(['sys:uefa-team:list']))"
       >
         <template #default="scope">
@@ -200,6 +264,15 @@
             style="cursor: pointer"
           >
             {{ t('fields.edit') }}
+          </el-button>
+          <el-button
+            size="small"
+            type="success"
+            v-permission="['sys:uefa-team:update']"
+            @click="showEditScore(scope.row)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.editScore') }}
           </el-button>
         </template>
       </el-table-column>
@@ -330,7 +403,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getUefaTeam, createUefaTeam, updateUefaTeam } from "@/api/uefa";
+import { getUefaTeam, createUefaTeam, updateUefaTeam, updateUefaTeamScore } from "@/api/uefa";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -373,6 +446,7 @@ const imageRequest = reactive({
 })
 
 const formRef = ref(null);
+const scoreFormRef = ref(null);
 const sites = reactive({
   list: []
 });
@@ -409,11 +483,35 @@ const form = reactive({
   teamIcon: null
 });
 
+const scoreForm = reactive({
+  id: null,
+  siteId: null,
+  total: null,
+  win: null,
+  loss: null,
+  draw: null,
+  goalScored: null,
+  goalAgainst: null,
+  goalDifference: null,
+  score: null
+});
+
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   teamGroup: [required(t('message.validateTeamGroupRequired'))],
   teamName: [required(t('message.validateTeamNameRequired'))],
   teamIcon: [required(t('message.validateTeamIconRequired'))]
+});
+
+const scoreFormRules = reactive({
+  total: [required(t('message.validateTotalRequired'))],
+  win: [required(t('message.validateWinRequired'))],
+  loss: [required(t('message.validateLossRequired'))],
+  draw: [required(t('message.validateDrawRequired'))],
+  goalScored: [required(t('message.validateGoalScoredRequired'))],
+  goalAgainst: [required(t('message.validateGoalAgainstRequired'))],
+  goalDifference: [required(t('message.validateGoalDifferenceRequired'))],
+  score: [required(t('message.validateScoreRequired'))]
 });
 
 async function loadUefaTeam() {
@@ -441,7 +539,7 @@ function showDialog(type) {
     form.id = null;
     form.siteId = request.siteId;
     uiControl.dialogTitle = t('fields.add');
-  } else if (type === 'EDIT') {
+  } else if (type === 'EDIT' || type === 'SCORE') {
     uiControl.dialogTitle = t('fields.edit');
   }
   uiControl.dialogType = type;
@@ -459,11 +557,24 @@ function showEdit(team) {
   });
 }
 
+function showEditScore(team) {
+  showDialog('SCORE');
+  nextTick(() => {
+    for (const key in team) {
+      if (Object.keys(scoreForm).find(k => k === key)) {
+        scoreForm[key] = team[key];
+      }
+    }
+  });
+}
+
 function submit() {
   if (uiControl.dialogType === 'CREATE') {
     create();
   } else if (uiControl.dialogType === 'EDIT') {
     edit();
+  } else if (uiControl.dialogType === 'SCORE') {
+    editScore();
   }
 }
 
@@ -482,6 +593,17 @@ function edit() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       await updateUefaTeam(form.id, form);
+      uiControl.dialogVisible = false;
+      await loadUefaTeam();
+      ElMessage({ message: t('message.updateSuccess'), type: "success" });
+    }
+  });
+}
+
+function editScore() {
+  scoreFormRef.value.validate(async (valid) => {
+    if (valid) {
+      await updateUefaTeamScore(scoreForm.id, scoreForm);
       uiControl.dialogVisible = false;
       await loadUefaTeam();
       ElMessage({ message: t('message.updateSuccess'), type: "success" });
@@ -535,6 +657,13 @@ async function loadSiteImage() {
 function submitImage() {
   form.teamIcon = selectedImage.path
   uiControl.imageSelectionVisible = false
+}
+
+function restrictInput(event) {
+  var charCode = (event.which) ? event.which : event.keyCode;
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
 }
 
 onMounted(async () => {

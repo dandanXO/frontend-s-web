@@ -13,6 +13,10 @@ export const updateUefaTeam = (id, team) => {
   return https().request(`/uefa/team/${id}?_method=PUT`, Method.POST, team, ContentType.form);
 };
 
+export const updateUefaTeamScore = (id, team) => {
+  return https().request(`/uefa/team/score/${id}?_method=PUT`, Method.POST, team, ContentType.form);
+};
+
 export const getTeamBySite = (siteId) => {
   return https().request("/uefa/teamBySite", Method.GET, { siteId: siteId }, ContentType.form);
 };
