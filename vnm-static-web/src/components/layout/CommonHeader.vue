@@ -317,7 +317,8 @@
     >
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
+          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -341,7 +342,8 @@
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" />
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
+          <img src="../../assets/home/acc-dialog-img-signup-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <RegisterAccount
@@ -404,7 +406,8 @@
     >
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
+          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -1922,7 +1925,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-              contrast(102%);
+                contrast(102%);
             }
           }
         }
@@ -2471,17 +2474,15 @@ body {
       .acc-dialog-container {
         display: flex;
         background: url(../../assets/home/acc-dialog-bg-full.png) no-repeat left center;
-        min-height: 600px;
-        align-items: center;
-        padding-top: 30px;
-        padding-bottom: 30px;
+        // min-height: 500px;
+        // align-items: center;
+        padding-top: 0px;
+        padding-bottom: 0px;
       }
 
       .acc-dialog-left {
-        width:60%;
-        background-size: 100% 100%;
-        background-position: center center;
-        background-color: transparent;
+        width: 60%;
+
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         // background-color: #ffffff;
@@ -2505,31 +2506,45 @@ body {
         }
       }
 
-      .login-container{
+      .login-container {
         .acc-dialog-left {
+          display: flex;
+          align-items: flex-end;
+          background-image: url(../../assets/home/acc-dialog-bg-login-eurocup.png);
+          background-size: 100% 100%;
+          background-position: center center;
+          min-height: 500px;
+
           img {
             display: block;
-            width: auto;
-            height: 500px;
-            margin: auto;
+            // width: 100%;
+            width: calc(100% + 90px);
+            margin: -50px 0px -45px -90px;
           }
         }
       }
 
-      .signup-container{
-        padding-top: 10px;
-        padding-bottom: 10px;
+      .signup-container {
+        // padding-top: 10px;
+        // padding-bottom: 10px;
 
         .acc-dialog-left {
+          display: flex;
+          align-items: flex-end;
+          background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
+          background-size: 100% 100%;
+          background-position: center center;
+          // min-height: 750px;
+          // background-color:salmon;
+
           img {
             display: block;
-            width: auto;
-            max-height: 750px;
-            margin: auto;
+            // width: 100%;
+            width: calc(100% + 70px);
+            margin: -50px 0px -10px -60px;
           }
         }
       }
-
 
       .acc-dialog-right {
         width: 40%;
