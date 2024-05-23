@@ -492,6 +492,7 @@ export default {
     forgetPassword: 'Forget Password',
     authenticator: 'Authenticator',
     createMember: 'Create Member',
+    shareRatio: 'Share Ratio',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -653,6 +654,7 @@ export default {
     channelPackUrlCopied: 'Channel Pack Url has been copied to clipboard.',
     validateAppNameRequired: 'App Name is required',
     validateAppIconRequired: 'App Icon is required',
+    validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
   },
   menu: {
     undefined: '',
@@ -735,6 +737,18 @@ export default {
     ANDROID: 'ANDROID',
     IOS: 'IOS',
   },
+  affiliateShareRatio: {
+    AGENT_SHARE_BET_RATIO_FISH: 'Bet Ratio-FISH',
+    AGENT_SHARE_BET_RATIO_SLOT: 'Bet Ratio-SLOT',
+    AGENT_SHARE_BET_RATIO_ESPORT: 'Bet Ratio-ESPORT',
+    AGENT_SHARE_BET_RATIO_LIVE: 'Bet Ratio-LIVE',
+    AGENT_SHARE_BET_RATIO_SPORT: 'Bet Ratio-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_FISH: 'Profit Ratio-FISH',
+    AGENT_SHARE_PROFIT_RATIO_SLOT: 'Profit Ratio-SLOT',
+    AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
+    AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
+    AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
+  },
   error: {
     400: 'Bad Request',
     403: 'Forbidden',
@@ -783,5 +797,8 @@ export default {
     24000: 'Verification Failed',
     1009: 'Incorrect Google authentication code',
     900: 'Account does not exist',
+    11011: 'Superior share ratio not set',
+    11012: 'Superior share ratio not set for game type: ',
+    11013: 'Affiliate share ratio cannot exceed superior ratio',
   },
 }

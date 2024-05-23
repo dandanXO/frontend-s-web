@@ -491,6 +491,7 @@ export default {
     authenticator: '身份验证器',
     withdrawRecord: '银行提款',
     createMember: '新增会员',
+    shareRatio: '佣金比例',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -645,6 +646,7 @@ export default {
     channelPackUrlCopied: '渠道打包链接已复制到剪贴板',
     validateAppNameRequired: '应用名必填',
     validateAppIconRequired: '应用图标必填',
+    validateShareRatioFormat: '佣金比例必须介于 0 至 1 之间',
   },
   menu: {
     undefined: '',
@@ -726,6 +728,18 @@ export default {
     ANDROID: '安卓',
     IOS: 'IOS',
   },
+  affiliateShareRatio: {
+    AGENT_SHARE_BET_RATIO_FISH: '有效投注佣金-捕鱼',
+    AGENT_SHARE_BET_RATIO_SLOT: '有效投注佣金-老虎机',
+    AGENT_SHARE_BET_RATIO_ESPORT: '有效投注佣金-电竞',
+    AGENT_SHARE_BET_RATIO_LIVE: '有效投注佣金-真人',
+    AGENT_SHARE_BET_RATIO_SPORT: '有效投注佣金-体育',
+    AGENT_SHARE_PROFIT_RATIO_FISH: '净盈利佣金-捕鱼',
+    AGENT_SHARE_PROFIT_RATIO_SLOT: '净盈利佣金-老虎机',
+    AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
+    AGENT_SHARE_PROFIT_RATIO_LIVE: '净盈利佣金-真人',
+    AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
+  },
   error: {
     400: '请求无效',
     403: '禁止访问',
@@ -774,5 +788,8 @@ export default {
     24000: '验证失败',
     1009: '谷歌验证码输入错误',
     900: '用户不存在',
+    11011: '上级游戏佣金未设置',
+    11012: '上级游戏佣金未设置: ',
+    11013: '下级佣金比例不能大于上级',
   },
 }

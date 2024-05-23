@@ -493,6 +493,7 @@ export default {
     authenticator: '인증기',
     withdrawRecord: '은행 출금',
     createMember: '회원 생성',
+    shareRatio: '지분율',
   },
   google: {
     google_auth_menu: '구글 인증',
@@ -647,6 +648,7 @@ export default {
     channelPackUrlCopied: '채널 패킹 링크가 클립보드에 복사되었습니다',
     validateAppNameRequired: '앱 이름은 필수입니다',
     validateAppIconRequired: '앱 아이콘은 필수입니다',
+    validateShareRatioFormat: '공유 비율은 0에서 1 사이여야 합니다.',
   },
   menu: {
     undefined: '',
@@ -728,6 +730,18 @@ export default {
     ANDROID: '안드로이드',
     IOS: 'IOS',
   },
+  affiliateShareRatio: {
+    AGENT_SHARE_BET_RATIO_FISH: '배팅비율-FISH',
+    AGENT_SHARE_BET_RATIO_SLOT: '배팅비율-SLOT',
+    AGENT_SHARE_BET_RATIO_ESPORT: '배팅비율-ESPORT',
+    AGENT_SHARE_BET_RATIO_LIVE: '배팅비율-LIVE',
+    AGENT_SHARE_BET_RATIO_SPORT: '배팅비율-SPORT',
+    AGENT_SHARE_PROFIT_RATIO_FISH: '이익률-FISH',
+    AGENT_SHARE_PROFIT_RATIO_SLOT: '이익률-SLOT',
+    AGENT_SHARE_PROFIT_RATIO_ESPORT: '이익률-ESPORT',
+    AGENT_SHARE_PROFIT_RATIO_LIVE: '이익률-LIVE',
+    AGENT_SHARE_PROFIT_RATIO_SPORT: '이익률-SPORT',
+  },
   error: {
     400: '잘못된 요청',
     403: '접근 금지',
@@ -776,5 +790,8 @@ export default {
     24000: '검증 실패',
     1009: 'Google 인증 코드가 잘못 입력됨',
     900: '사용자가 존재하지 않음',
+    11011: '우량주 비율 미설정',
+    11012: '게임 유형에 대해 우수한 공유 비율이 설정되지 않았습니다: ',
+    11013: '계열사 지분 비율은 우월 비율을 초과할 수 없습니다.',
   },
 }
