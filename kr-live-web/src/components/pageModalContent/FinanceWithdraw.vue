@@ -31,7 +31,7 @@
           v-model="withdrawInfo.cardId"
           option-value="id"
           emit-value
-          :label="'선택' + chooseLabel()"
+          :label="chooseLabel()"
           class="withdraw-selection q-mt-sm q-mb-sm"
           :options="withdrawState.bankCardList"
           map-options
@@ -100,7 +100,7 @@
           </template>
           <template v-slot:append>
               <span style="font-size: 26px;" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="전액 인출" color="brightbtn" text-color="black" />
+                <q-btn @click="updateWithdrawAmt" label="삭제" color="brightbtn" text-color="black" />
               </span>
           </template>
         </q-input>
@@ -118,19 +118,16 @@
         >
           <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
             {{
-              "단일 출금: " +
+              "출금금액/건: " +
               selectedWithdrawalMethod.withdrawMin +
-              "WON - " +
+              "만 - " +
               selectedWithdrawalMethod.withdrawMax +
-              "WON"
+              "만"
             }}
             <br />
           </template>
-          <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-            {{ "오늘 출금: " + selectedWithdrawalMethod.withdrawMaxAmount + "WON" }}
-          </template>
-          <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
-            {{ " 잔여: " + selectedWithdrawalMethod.withdrawMaxTimes + " 회" }}
+          <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
+            {{ `출금금액/일:${selectedWithdrawalMethod.withdrawMaxTimes}회 총 ${selectedWithdrawalMethod.withdrawMaxAmount}억` }}
           </template>
         </div>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
@@ -165,12 +162,15 @@
         </div>
 
         <div class="flex-box-c-c">
-          <q-btn
-            class="q-mt-md form-button blue quick-withdraw-btn"
-            @click="submitWithdraw"
+          <q-btn 
             :loading="withdrawLoading"
             :disable="withdrawLoading"
-            label="정정하기"
+            @click="submitWithdraw"
+            :label="'환전신청'" 
+            type="button" 
+            class="common-large-btn form-button blue"
+            rounded 
+            flat 
           />
         </div>
         <div class="q-py-md">
@@ -214,7 +214,7 @@ const isALIPAY = ref(false);
 const withdrawLoading = ref(false);
 
 const activeItem = ref(0);
-const countOptions = ref([1000,5000,10000,20000,50000,100000]);
+const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
 const isLoadingBankCard = ref(false);
 const bankCardList = ref([]);
 const withdrawInfo = reactive({
@@ -394,11 +394,11 @@ const getWithdrawalMethods = () => {
 
 const chooseLabel = () => {
   if (isUSDT.value) {
-    return '가상 화폐'
+    return '선택 가상 화폐'
   } else if (isEWALLET.value) {
-    return '전자 지갑'
+    return '선택 전자 지갑'
   } else {
-    return '은행 카드'
+    return '환전 은행카드 선택'
   }
 }
 
@@ -437,7 +437,6 @@ onMounted(() => {
   .form-button {
     height: 70px;
     width: 200px;
-    background-size: contain;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -445,11 +444,15 @@ onMounted(() => {
     font-size: 18px;
     padding-bottom: 5px;
     margin: auto 10px;
+
     &.blue {
-      background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+      background: url("../../assets/home/btn-blue.svg") no-repeat center center;
+      background-size: 100% 100%;
     }
+
     &.yellow {
-      background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+      background: url("../../assets/home/btn-orange.svg") no-repeat center center;
+      background-size: 100% 100%;
     }
   }
   .content-form {
@@ -658,7 +661,5 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
 }
-
-
 
 </style>

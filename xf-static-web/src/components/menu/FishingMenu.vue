@@ -8,7 +8,7 @@
         @click="$emit('loadModal', nav.name, nav.code, nav.gameCode)"
       >
         <img :src="require('../../assets/fishing/header_fish_' + nav.image + '.png')" style="height: 40px" />
-        <p class="platform-title">{{ nav.code }}捕鱼</p>
+        <p class="platform-title">{{ nav.code === "AGF" ? "AG" : nav.code }}捕鱼</p>
         <div class="platform-img" :class="'fish-' + nav.image"></div>
       </div>
     </div>
@@ -16,8 +16,8 @@
 </template>
 <script>
 import { defineComponent, onMounted, ref } from "vue";
-import { getPlatformList } from "@/api/platform/platform";
-
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
+import { userStore } from "@/store";
 export default defineComponent({
   setup() {
     const navigations = ref([
@@ -32,7 +32,7 @@ export default defineComponent({
       {
         gameCode: "6",
         name: "AG捕鱼王",
-        code: "AG",
+        code: "AGF",
         image: "ag",
         message:
           "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
@@ -45,22 +45,39 @@ export default defineComponent({
         message: "全新鱼种与创新玩法，搭配丰富游戏场景， 享受全屏激战，满屏爆金的震撼体验。"
       }
     ]);
+    const store = userStore();
+    const getPlatList = () => {
+      if (store.token) {
+        getLoggedInPlatformList().then((data) => {
+          let fishlists = data.filter((element) => element.gameType.includes("FISH") || element.name === "SG");
+
+          for (let i = navigations.value.length - 1; i >= 0; i--) {
+            const hasNameX = fishlists.some((obj) => obj.name === navigations.value[i].code);
+            console.log(hasNameX);
+            if (!hasNameX) {
+              navigations.value.splice(i, 1);
+            }
+          }
+          console.log(navigations.value);
+        });
+      } else {
+        getPlatformListDisplay().then((data) => {
+          let fishlists = data.filter((element) => element.gameType.includes("FISH") || element.name === "SG");
+
+          for (let i = navigations.value.length - 1; i >= 0; i--) {
+            const hasNameX = fishlists.some((obj) => obj.name === navigations.value[i].code);
+            console.log(hasNameX);
+            if (!hasNameX) {
+              navigations.value.splice(i, 1);
+            }
+          }
+          console.log(navigations.value);
+        });
+      }
+    };
 
     onMounted(() => {
-      getPlatformList().then((data) => {
-        let fishlists = data.filter(
-          (element) => (element.gameType.includes("FISH") || element.name === "SG") && element.name !== "AGF"
-        );
-
-        for (let i = navigations.value.length - 1; i >= 0; i--) {
-          const hasNameX = fishlists.some((obj) => obj.name === navigations.value[i].code);
-          // console.log(hasNameX);
-          if (!hasNameX) {
-            navigations.value.splice(i, 1);
-          }
-        }
-        console.log(navigations.value);
-      });
+      getPlatList();
     });
 
     return {

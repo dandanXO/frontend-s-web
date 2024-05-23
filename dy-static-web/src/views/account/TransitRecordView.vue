@@ -1432,6 +1432,8 @@ export default defineComponent({
         return 'QQ支付' // QQ支付
       } else if (depositType === 'KDPAY') {
         return 'K豆' // K豆
+      } else if (depositType === 'BLBPAY') {
+        return '808钱包' // 808钱包
       } else if (depositType === 'DDPAY') {
         return '钉钉' // 钉钉
       } else if (depositType === 'HBPAY') {
@@ -1444,7 +1446,7 @@ export default defineComponent({
         return '云闪付' // 云闪付
       }  else if (depositType === 'DYPAY') {
         return '抖音' // 抖音
-      }   else if (depositType === 'AUTOPAY') {
+      } else if (depositType === 'AUTOPAY') {
         return '自动支付' // 自动支付
       } else {
         return depositType

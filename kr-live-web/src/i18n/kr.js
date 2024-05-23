@@ -1,5 +1,10 @@
 export default {
   lang: {
+    // login start
+    login_account: "계정",
+    login_password: "암호",
+    login_captcha: "보안 문자",
+    // login end
     // register start
     reg_login_name: "로그인 이름",
     reg_phone_num: "전화 번호",
@@ -37,7 +42,7 @@ export default {
     choose_a_bank: "Choose A Bank",
     please_select_bank: "은행을 선택해주세요",
     next_page: "Next Step",
-    username_between_6_12: "Username should contain 6-12 characters",
+    username_between_6_12: "사용자 이름은 6~12자여야 합니다.",
     first_digit_must_be_0: "First digit must be 0",
 
     // vip
@@ -264,7 +269,7 @@ export default {
 
     // TransitRecordView
     deposit_title: "입금",
-    turnover: "수익",
+    turnover: "지갑잔액변동기록",
     withdraw: "출금",
     transfer: "이체",
     rebates: "리베이트",

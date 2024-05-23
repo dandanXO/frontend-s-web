@@ -1,7 +1,21 @@
 <template>
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
-      <div class="">
+      <div class="" v-if="isCreateMode">
+        <q-btn :label="'뒤쪽에'" @click="isCreateMode = false" color="blue" />
+        <form class="content-form">
+          <p>
+            <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
+          </p>
+          <p>
+            <textarea rows="4" v-model="serviceForm.content" />
+          </p>
+        </form>
+      </div>
+      <div v-else>
+        <div style="width:100%;display:flex;justify-content:flex-end;">
+          <q-btn :label="'글쓰기'" @click="isCreateMode = true" style="margin-left:auto" color="blue" />
+        </div>
         <q-item-section class="table-row-head">
           <q-item-label>번호</q-item-label>
           <q-item-label>제목</q-item-label>
@@ -15,47 +29,29 @@
           </q-item-section>
         </template>
       </div>
-      <form class="content-form">
-        <p>
-          <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
-        </p>
-        <p>
-          <textarea rows="4" v-model="serviceForm.content" />
-        </p>
-      </form>
     </q-card-section>
     <q-card-actions class="modal-body-buttons" align="center">
-      <q-btn class="form-button blue" label="입금하기" @click.prevent="sendMessage"></q-btn>
-      <q-btn class="form-button yellow" label="전체확인"></q-btn>
+      <q-btn class="form-button blue" label="확신하는" @click.prevent="sendMessage"></q-btn>
+      <!-- <q-btn class="form-button yellow" label="전체확인"></q-btn> -->
     </q-card-actions>
   </div>
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref } from "vue";
+import { reactive, ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 var qs = require("qs");
 
 const $q = useQuasar();
+const isCreateMode = ref(false);
 
 const serviceForm = reactive({
   title: "",
   content: ""
 });
 
-const articleData = ref([
-  {
-    number: 2,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
-    date: "2024/01/13"
-  },
-  {
-    number: 1,
-    title: "[필독] ※ 카지노 잭팟, 고배당 양방성 ※",
-    date: "2024/01/13"
-  }
-]);
+const feedbackData = ref([]);
 
 const sendMessage = () => {
   api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
@@ -80,6 +76,20 @@ const sendMessage = () => {
     }
   });
 };
+
+const initFeedbackReplies = () => {
+  api.get('/session/feedback/replies').then((res) => {
+    const { code, data } = res.data
+
+    if(code === 0) {
+      feedbackData.value = data.records;
+    }
+  })
+}
+
+onMounted(() => {
+  initFeedbackReplies();
+})
 </script>
 
 <style lang="scss" scoped>

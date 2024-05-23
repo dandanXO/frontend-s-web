@@ -1815,7 +1815,12 @@ body {
           }
 
           &:hover {
-            filter: brightness(0.85);
+            //filter: brightness(0.85);
+
+            .nav-title{
+              color: #333;
+              font-weight: bold;
+            }
           }
 
           .menu-icon {
@@ -2538,8 +2543,9 @@ body {
     z-index: 2;
     text-align: center;
     font-family: PingFang SC;
-    color: #7A80A1;
-    font-weight: 400;
+    //color: #7A80A1;
+    color: #52597d;
+    font-weight: 600;
     font-size: 12px;
     margin: 0;
     &.cn {

@@ -92,7 +92,7 @@
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyEurocupHongbao: selectedPromo.promoCode === 'dy-eurocup-hongbao'
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -113,7 +113,10 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241" v-html="selectedPromo.pageContent"></div>
+                  <div
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
               </div>
             </div>

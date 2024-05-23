@@ -53,17 +53,17 @@
 
   <script setup>
   import { defineProps, ref } from 'vue';
-import { claimBonusItem } from "@/api/index/promo";
+  import { claimBonusItem, claimDailyRainItem } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { userStore } from '@/store';
 const store = userStore();
 const bonusOpened = ref(false);
 const winAmount = ref(0);
   const getPromotion = () => {
-  claimBonusItem("red-packet-rain")
+    claimDailyRainItem("lh1-eurocup-hongbao")
     .then((res) => {
       if (res.code === 0) {
-        winAmount.value = res.data;
+        winAmount.value = res.data.lastDigitAmount + res.data.vipAmount;
 
         // this.privilegeClaimedModalVisible = true;
         // this.loadingClaim = false;

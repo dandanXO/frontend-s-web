@@ -77,7 +77,8 @@ function activateTab(index) {
       }
     }
     .tab-content {
-      min-height: 1400px;
+      min-height: 350px;
+      padding-top:20px;
       .tab-title {
         display: flex;
         justify-content: center;
@@ -87,7 +88,7 @@ function activateTab(index) {
         line-height: 59.57px;
         letter-spacing: 0.12em;
         text-align: left;
-        margin: 30px auto;
+        margin: 4vh auto 5vh;
         background: linear-gradient(360deg, #BCF3FF 10.4%, #FFFFFF 100%);
         border: none;
         color: transparent; /* Hide the original text */

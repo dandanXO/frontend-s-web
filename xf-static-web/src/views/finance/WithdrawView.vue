@@ -142,7 +142,7 @@
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <div
             style="margin: 15px 0px; color: #ff7f10"
-            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
+            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
             *特别说明：提款钱包和游戏账号的姓名务必一致
           </div>
@@ -154,6 +154,8 @@
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
           </el-button>
         </div>
 
@@ -416,7 +418,9 @@ export default defineComponent({
       const urlMap = {
         'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
         'EBPAY': 'https://www.ebpay.org/',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];

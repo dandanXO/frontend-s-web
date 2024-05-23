@@ -322,7 +322,7 @@ const confirmMatchSelect = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "领取成功",
+          message: "投票成功",
           icon: "report_problem"
         });
         confirmDialog.value = false;

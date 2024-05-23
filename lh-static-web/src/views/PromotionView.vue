@@ -96,14 +96,23 @@
         </div>
         <div
           class="inner"
-          :style="
-            selectedPromo?.desktopImgBackgroundUrl
-              ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
-          "
+          :style="{
+            backgroundImage:
+              selectedPromo?.desktopImgBackgroundUrl ||
+              selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
+              selectedPromo?.promoCode === 'lh-nba24-match'
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
+            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : ''
+          }"
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
-            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            fullwidth:
+              selectedPromo.promoCode === 'lh1-game-steps' ||
+              selectedPromo.promoCode === 'lh1-ftd-promo' ||
+              selectedPromo.promoCode === 'lh-eurocup-manual',
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -119,9 +128,7 @@
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
-            v-if="
-            selectedPromo.promoCode !== 'lh-eurocup-manual'
-          "
+            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
@@ -804,14 +811,18 @@ export default defineComponent({
         gap: 20px;
         background-repeat: no-repeat;
 
+        &.bgautosize {
+          background-size: 100% auto;
+        }
+
         &.fullwidth {
           width: 100%;
           max-width: 100%;
           margin: 0;
           padding: 0;
 
-          .hot-promo{
-            border-radius: 0px
+          .hot-promo {
+            border-radius: 0px;
           }
 
           .promo-view-container {
@@ -825,6 +836,7 @@ export default defineComponent({
 
         &.europe-first-shoot {
           background-color: #0d3173;
+          background-image: none !important;
         }
 
         .hot-promo {

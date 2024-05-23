@@ -59,7 +59,7 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy-eurocup-hongbao' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
     />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
@@ -285,7 +285,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy-eurocup-hongbao"
+      this.list.redirectUrl === "dy2-eurocup-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {

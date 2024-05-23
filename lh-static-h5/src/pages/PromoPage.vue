@@ -163,7 +163,7 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh-sport-zhongchao',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
@@ -353,14 +353,12 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
-      // TODO: write back
-      const hasPromoList = promoState.promoList.filter(p => p.hasPromo)
       if (type.value !== "ALL") {
-        filteredArray.value = hasPromoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = hasPromoList;
+        filteredArray.value = promoState.promoList;
       }
     };
 

@@ -8,7 +8,7 @@
 
     <q-page-container>
       <div class="home-banner-wrapper">
-        <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
+        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.png" />
         <div class="jackpot">
           <img class="desktop" src="../assets/home/jackpot.png" />
           <img class="mobile" src="../assets/home/jackpot-mobile.png" />
@@ -556,9 +556,18 @@ svg path {
 }
 
 .top-logo {
-  width: 33%;
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 325px;
+  transform: translate(-50%, 0%);
+
+  @media (max-width: 991px) {
+    width: 100px;
+  }
+
   @media (max-width: 768px) {
-    width: 66%;
+    width: 100px;
   }
 }
 
@@ -569,18 +578,14 @@ svg path {
   flex-direction: column;
   position: relative;
   width: 100%;
-  background-image: url("../assets/home/home-banner-mobile.png");
-  // background-color: rgba(0, 0, 0, 0.3);
-  background-blend-mode: multiply;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: url("../assets/home/home-banner.png") no-repeat top center;
   background-size: cover;
-  height: 380px;
+  height: 250px;
 
-  @media (min-width: 1200px) {
-    background-image: url("../assets/home/home-banner.png");
-    background-position: top center;
-    height: 480px;
+  @media (min-width: 991px) {
+    background: url("../assets/home/home-banner.png") no-repeat top center;
+    background-size: cover;
+    height: 430px;
   }
 }
 
@@ -676,6 +681,7 @@ footer {
   display: flex;
   justify-content: center;
   margin: 30px auto;
+  margin-top: 0px;
   position: relative;
   padding-left: 16px;
   padding-right: 16px;

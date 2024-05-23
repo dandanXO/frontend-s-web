@@ -43,16 +43,38 @@
       </div>
     </div>
   </div>
+
+  <GameModal ref="gameMenu" />
+
+  <div
+    class="rocket-wrapper"
+    v-if="showRocket"
+    :class="(store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') && 'show-rocket'"
+    :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
+    @mousedown="startDragging"
+  >
+    <div style="position: relative">
+      <div class="close-btn" @click="hideRocket()">X</div>
+      <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket">
+          <img src="../../assets/images/home/rocket.gif" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, onBeforeUnmount } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
 import { useDark } from "@vueuse/core";
+import GameModal from "@/components/modal/GameModal.vue";
 
 export default defineComponent({
-  components: {},
+  components: {
+    GameModal
+  },
   setup() {
     const customerHovered = ref(false);
     const scrollToTop = () => {
@@ -63,6 +85,11 @@ export default defineComponent({
     const isDark = useDark();
 
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
+
+    const gameMenu = ref(null);
+    const openGame = (gameName, platType, gameCode, scrollingState) => {
+      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+    };
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -76,8 +103,54 @@ export default defineComponent({
         });
     };
 
+    const showRocket = ref(true);
+    const hideRocket = () => {
+      showRocket.value = false;
+    };
+
+    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
+    const isDragging = ref(false);
+    const shiftX = ref(0);
+    const shiftY = ref(0);
+
+    const startDragging = (event) => {
+      const rect = event.target.getBoundingClientRect();
+      shiftX.value = event.clientX - rect.left;
+      shiftY.value = event.clientY - rect.top;
+      isDragging.value = true;
+
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", stopDragging);
+
+      // Change cursor to dragging
+      document.body.style.cursor = "pointer";
+      event.target.style.cursor = "pointer";
+    };
+
+    const onMouseMove = (event) => {
+      if (isDragging.value) {
+        rocketPosition.value.left = event.clientX - shiftX.value;
+        rocketPosition.value.top = event.clientY - shiftY.value;
+      }
+    };
+
+    const stopDragging = () => {
+      isDragging.value = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
+
+      // Reset cursor to default
+      document.body.style.cursor = "default";
+    };
+
     onMounted(() => {
       getAppDownloadUrl();
+      document.addEventListener("mouseup", stopDragging);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
     });
 
     return {
@@ -86,13 +159,66 @@ export default defineComponent({
       scrollToTop,
       downloadUrl,
       isDark,
-      handleDarkModeClick
+      handleDarkModeClick,
+      gameMenu,
+      openGame,
+      showRocket,
+      rocketPosition,
+      hideRocket,
+      startDragging
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+/* rocket animation */
+.rocket-wrapper {
+  position: fixed;
+  z-index: 999;
+  // bottom: 220px;
+  // right: 0px;
+  transition: all 0.3s;
+  display: none;
+  width: 100px;
+  height: 100px;
+  user-select: none; /* Disable text selection */
+
+  &.show-rocket {
+    display: block;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .rocket {
+    pointer-events: none;
+    user-select: none;
+    img {
+      display: block;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+}
+
 .additional-info-items {
   display: flex;
   flex-direction: column;

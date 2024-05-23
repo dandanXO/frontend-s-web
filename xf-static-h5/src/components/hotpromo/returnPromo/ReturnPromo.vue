@@ -36,20 +36,20 @@
               <tbody>
                 <tr>
                   <td>VIP1</td>
-                  <td>8</td>
+                  <td>5</td>
                   <td rowspan="12">3倍/不限场馆</td>
                 </tr>
                 <tr>
                   <td>VIP2</td>
-                  <td>15</td>
+                  <td>10</td>
                 </tr>
                 <tr>
                   <td>VIP3</td>
-                  <td>38</td>
+                  <td>25</td>
                 </tr>
                 <tr>
                   <td>VIP4</td>
-                  <td>68</td>
+                  <td>50</td>
                 </tr>
                 <tr>
                   <td>VIP5</td>

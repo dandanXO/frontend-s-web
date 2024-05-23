@@ -1,7 +1,7 @@
 <template>
   <div class="fishing-container">
     <div class="fishing-container-inner">
-      <template v-for="(det, idx) in platforms" :key="idx">
+      <template v-for="(det, idx) in filteredPlatforms" :key="idx">
         <template v-if="selectedPlat === det.code">
           <div class="fishing-left" data-aos="fade-right" data-aos-duration="4000">
             <img :src="require('../assets/fishing/title_fish_' + det.image + '.png')" style="margin-bottom: 54px" />
@@ -16,7 +16,7 @@
           </div>
           <div class="fishing-right" data-aos="fade-left" data-aos-duration="4000">
             <img v-if="det.name === 'GPS'" class="absolute" src="../assets/fishing/fish_right.png" />
-            <img v-if="det.name === 'AT'" class="absolute" src="../assets/fishing/fish_right_bg3.png" />
+            <img v-if="det.name === 'AGF'" class="absolute" src="../assets/fishing/fish_right_bg3.png" />
             <img v-if="det.name === 'SG'" class="absolute sg" src="../assets/fishing/fish_right_sgover.png" />
             <img
               :class="det.name"
@@ -30,12 +30,12 @@
     <div class="platform-list-box">
       <span
         class="platform-list-item platform"
-        v-for="(plat, i) in platforms"
+        v-for="(plat, i) in filteredPlatforms"
         :key="i"
         @click="clickPlat(plat)"
         :class="{ active: selectedPlat === plat.code }"
       >
-        {{ plat.code }}捕鱼
+        {{ plat.code === "AGF" ? "AG" : plat.code }}捕鱼
       </span>
     </div>
   </div>
@@ -45,7 +45,9 @@
 import { defineComponent, onMounted, ref } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import aos from "aos";
-import { getPlatformList } from "@/api/platform/platform";
+import { getLoggedInPlatformList, getPlatformList, getPlatformListDisplay } from "@/api/platform/platform";
+import { userStore } from "@/store";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -53,6 +55,9 @@ export default defineComponent({
   },
   setup() {
     const fishingGame = ref(null);
+    const store = userStore();
+    const route = useRoute();
+
     const platforms = ref([
       {
         gameCode: "7202",
@@ -72,7 +77,7 @@ export default defineComponent({
       {
         gameCode: "6",
         name: "AG捕鱼王",
-        code: "AG",
+        code: "AGF",
         image: "ag",
         message:
           "最受欢迎的AG捕鱼，游戏设计简单但富有变化，更有多种风格做选择，游戏过程有趣令人爱不释手，是游戏娱乐的上佳选择。"
@@ -85,40 +90,86 @@ export default defineComponent({
         message: "全新鱼种与创新玩法，搭配丰富游戏场景， 享受全屏激战，满屏爆金的震撼体验。"
       }
     ]);
-    const selectedPlat = ref(platforms.value[0].code);
+
     const clickPlat = (plat) => {
       selectedPlat.value = plat.code;
     };
 
+    const filteredPlatforms = ref([]);
+    const platformsList = ref([]);
+    const platformsListDisplay = ref([]);
+
     const openGame = (gameName, gameCode) => {
       fishingGame.value.open(gameName, selectedPlat.value, gameCode);
     };
+
+    const getPlatList = () => {
+      if (store.token) {
+        getLoggedInPlatformList().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("FISH"));
+          setFilteredPlatforms();
+        });
+      } else {
+        getPlatformListDisplay().then((res) => {
+          platformsList.value = res;
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("FISH"));
+          setFilteredPlatforms();
+        });
+      }
+    };
+
+    const setFilteredPlatforms = () => {
+      filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
+      );
+
+      filteredPlatforms.value.forEach((element) => {
+        if (element.code === route.query.plat) {
+          clickPlat(element);
+        }
+      });
+      setSelectedPlat();
+    };
+
+    const selectedPlat = ref(null);
+    const setSelectedPlat = () => {
+      if (filteredPlatforms.value.length > 0) {
+        selectedPlat.value = filteredPlatforms.value[0].code;
+      } else {
+        selectedPlat.value = null;
+      }
+    };
+
     onMounted(() => {
       aos.refresh();
+      getPlatList();
 
-      getPlatformList().then((data) => {
-        let fishlists = data.filter(
-          (element) => (element.gameType.includes("FISH") || element.name === "SG") && element.code !== "AGF"
-        );
-        // console.log(fishlists);
-
-        for (let i = platforms.value.length - 1; i >= 0; i--) {
-          const hasNameX = fishlists.some((obj) => obj.name === platforms.value[i].code);
-          // console.log(hasNameX);
-          if (!hasNameX) {
-            platforms.value.splice(i, 1);
-          }
-        }
-
-        console.log(platforms.value);
-      });
+      // getPlatformList().then((data) => {
+      //   let fishlists = data.filter((element) => element.gameType.includes("FISH"));
+      //   console.log(fishlists);
+      //
+      //   for (let i = platforms.value.length - 1; i >= 0; i--) {
+      //     const hasNameX = fishlists.some((obj) => obj.name === platforms.value[i].code);
+      //     // console.log(hasNameX);
+      //     if (!hasNameX) {
+      //       platforms.value.splice(i, 1);
+      //     }
+      //   }
+      //
+      //   console.log(platforms.value);
+      // });
     });
     return {
       platforms,
       selectedPlat,
       clickPlat,
       openGame,
-      fishingGame
+      fishingGame,
+      filteredPlatforms,
+      setSelectedPlat,
+      getPlatList,
+      setFilteredPlatforms
     };
   }
 });

@@ -5,6 +5,7 @@
       (props.siteId !== '5' && props.siteId !== '9') ? '' : 'ind-firstPage',
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
+      props.siteId !== '10' ? '' : 'kr',
     ]"
   >
     <div class="inner">
@@ -185,6 +186,17 @@
                       />
                     </el-form-item>
                   </el-tooltip>
+                  <el-form-item prop="codeAffiliate" v-if="props.siteId === '10'">
+                    <el-input
+                      ref="codeAffiliateRef"
+                      v-model="regForm.codeAffiliate"
+                      :placeholder="$t('fields.referralCode')"
+                      name="codeAffiliate"
+                      type="text"
+                      tabindex="8"
+                      autocomplete="on"
+                    />
+                  </el-form-item>
                   <el-form-item prop="captchaCode">
                     <el-input
                       ref="verificationRef"
@@ -561,6 +573,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
+import krLogo from '@/assets/images/kr/kr-logo.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -729,6 +742,7 @@ export default defineComponent({
         captchaCode: '',
         regHost: location.hostname,
         codeId: '',
+        codeAffiliate: '',
       },
       regRules: {
         userName: [
@@ -1101,7 +1115,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' ? 1 : 0
+        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' ? 1 : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
@@ -1292,6 +1306,14 @@ export default defineComponent({
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
         setLanguage('vi')
+      }
+      if (props.siteId === '10') {
+        currentSite.value.firstLiner = 'Start From CITY8'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = krLogo
+        state.loginForm.site = 'KRW'
+        setLanguage('kr')
       }
     }
     onMounted(() => {

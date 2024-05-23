@@ -58,7 +58,9 @@
       </div>
       <div class="btn-group">
         <el-button
-          v-if="affiliateLevel !== 'AFFILIATE'"
+          v-if="store.state.user.siteId === 10
+            ? affiliateLevel === 'JUNIOR_AFFILIATE' ? false : true
+            : affiliateLevel === 'AFFILIATE' ? false : true"
           icon="el-icon-plus"
           size="normal"
           type="primary"
@@ -401,10 +403,12 @@ const uiControl = reactive({
   commissionMax: 2,
   revenueMax: 2,
   affiliateLevel: [
-    { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 3, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
+    { key: 1, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
+    { key: 2, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
+    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 4, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 5, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 6, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
   ],
 })
 const affiliateLevel = ref(null)

@@ -108,3 +108,7 @@ export const validPwd2GoogleKey = (id, siteId, password) => {
 export const bindGoogleKey = (id, siteId, code) => {
   return https().request(`/affiliate/${id}/bindGoogleKey?_method=PUT`, Method.POST, { siteId: siteId, code: code }, ContentType.form);
 }
+
+export const registerMember = (form) => {
+  return https().request(`/downline/registerMember`, Method.POST, form, ContentType.form);
+}
