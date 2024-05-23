@@ -120,8 +120,8 @@
             aspectRatio: 1/1
               }"
               :stencil-size="{
-                width:250,
-                height: 250
+                width:150,
+                height: 150
               }"
               image-restriction="stencil"
               @change="change"
@@ -163,7 +163,7 @@ const getImageFromCropper = () => {
   if (cropperRef.value) {
     // Access the cropper instance using the value of cropperRef
     const { coordinates, canvas } = cropperRef.value.getResult();
-    croppedImg.value = canvas.toDataURL();
+    croppedImg.value = canvas.toDataURL('image/jpeg', 0.7);
   }
 };
 const change = ({ coordinates, canvas }) => {
@@ -306,6 +306,11 @@ async function attachPhoto(fileImg) {
 
   if (!file || !allowFileTypes.includes(file.type)) {
     ElMessage({ message: '照片格式错误', type: 'error' });
+    isLoadingUpload.value = false;
+    return null; // Exit the function if file is not valid
+  }
+  if(file && file.size > 1024000){
+    ElMessage({ message: '上传的图片已大于1mb，请刷新页面重新上传', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }
