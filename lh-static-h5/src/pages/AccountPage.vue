@@ -159,7 +159,7 @@
     <q-item-section class="acct-nav">
       <div class="acct-title">
         <div class="acct-title-1">功能区</div>
-        
+
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
@@ -270,7 +270,7 @@
     <router-link to="/account/invite">
       <div class="acct-nav-item">
         <img src="../assets/images/account/account-share-icon.png" />
-        <div class="acct-nav-label">推广分享</div>
+        <div class="acct-nav-label">分享赚钱</div>
       </div>
     </router-link>
 
@@ -377,7 +377,7 @@
         <q-tooltip>Close</q-tooltip>
       </q-btn>
         </div>
-        
+
       <div class="grid-container">
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
           <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)">
@@ -417,10 +417,10 @@
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
             上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
-              
+
           </el-form-item>
-          <cropper 
-            v-if="uploadedImage.url" 
+          <cropper
+            v-if="uploadedImage.url"
               background-class="cropper-background"
               ref="cropperRef"
               class="cropper"
@@ -450,7 +450,7 @@
           <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
         </div>
       </q-card>
-      
+
     </q-dialog>
 </template>
 
@@ -488,7 +488,7 @@ export default defineComponent({
       getImageFromCropper()
 
     }
-    const inputImage = ref(null)  
+    const inputImage = ref(null)
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
@@ -707,7 +707,7 @@ async function saveCroppedImage() {
     selectedImage.value = data.data
     inputImage.value = ''
     isLoadingUpload.value = false
-    
+
     submitPhoto();
   } else {
     // Handle case when croppedImg is not available
@@ -719,7 +719,7 @@ async function saveCroppedImage() {
 
 async function attachImage(event) {
   const file = event.target.files[0];
-  uploadedImage.url = URL.createObjectURL(file); 
+  uploadedImage.url = URL.createObjectURL(file);
 }
 
 function isBase64(str) {
@@ -752,7 +752,7 @@ async function attachPhoto(fileImg) {
     // Create a File object from the Blob
     file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
   } else {
-    file = fileImg; 
+    file = fileImg;
   }
   // Use the File object for further processing
   const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -1599,10 +1599,10 @@ const updateDialogVisible = ref(false);
 
         }
       }
-    } 
+    }
     .rightBox {
       display: flex;
-      justify-content: center; 
+      justify-content: center;
       align-items: center;
       flex-direction: column;
       gap: 10px;
