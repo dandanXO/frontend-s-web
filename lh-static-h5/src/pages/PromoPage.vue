@@ -150,8 +150,7 @@
                   selectedPromo &&
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
-                  selectedPromo.promoCode !== 'lh1-ftd-promo'&&
-                  selectedPromo.promoCode !== 'lh-eurocup-manual'
+                  selectedPromo.promoCode !== 'lh1-ftd-promo'
                 "
               >
                 <img
@@ -163,7 +162,7 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh-sport-zhongchao',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
