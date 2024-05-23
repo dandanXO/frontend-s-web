@@ -1,6 +1,6 @@
 <template>
   <div class="hot-matches-wrapper">
-    <div class="euro-countdown">
+    <div class="euro-countdown" v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'">
       <div class="euro-countdown-fly-01">
         <img src="../../assets/home/eurocup-countdown-fly-01.png" />
       </div>
