@@ -787,7 +787,7 @@
         <div class="title-text">이벤트</div>
         <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : ''">+ 더보기</router-link>
       </div>
-      <div class="news-item-box">
+      <!-- <div class="news-item-box">
         <div class="news-item-left">
           <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
         </div>
@@ -806,7 +806,7 @@
         <div class="news-item-left">
           <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="news-section">
@@ -814,7 +814,7 @@
         <div class="title-text">출금현황</div>
         <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
       </div>
-      <div class="news-item-box">
+      <!-- <div class="news-item-box">
         <div class="news-item-left">
           <div class="news-item-title">
             카***팟
@@ -849,7 +849,7 @@
             <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 
