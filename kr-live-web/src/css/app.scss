@@ -695,3 +695,34 @@ input:internal-autofill-selected {
   //   background-size: 100% 100%;
   // }
 }
+
+.primary-button {
+  width: 200px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  padding-bottom: 5px;
+  margin: auto 10px;
+  white-space: nowrap;
+
+  &:hover {
+      filter: brightness(1.1);
+  }
+
+  &:active {
+      transform: translateY(2px);
+  }
+
+  &.blue {
+      background: url("../assets/home/btn-blue.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+
+  &.yellow {
+      background: url("../assets/home/btn-orange.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+}

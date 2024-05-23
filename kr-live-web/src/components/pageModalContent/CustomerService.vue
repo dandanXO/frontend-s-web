@@ -31,7 +31,7 @@
       </div>
     </q-card-section>
     <q-card-actions class="modal-body-buttons" align="center">
-      <q-btn class="form-button blue" label="확신하는" @click.prevent="sendMessage"></q-btn>
+      <q-btn rounded flat class="primary-button blue" label="확신하는" @click.prevent="sendMessage"></q-btn>
       <!-- <q-btn class="form-button yellow" label="전체확인"></q-btn> -->
     </q-card-actions>
   </div>

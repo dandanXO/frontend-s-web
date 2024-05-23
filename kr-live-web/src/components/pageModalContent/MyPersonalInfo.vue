@@ -36,7 +36,7 @@
         </div>
       </form>
       <div class="action-buttons">
-        <q-btn class="form-button blue" @click="closetheModal" label="닫기"></q-btn>
+        <q-btn rounded flat style="width:200px;height:70px;" @click="closetheModal" :label="'닫기'" class="primary-button blue" />
       </div>
     </q-card-section>
   </div>
@@ -104,26 +104,6 @@ const closetheModal = () => {
     align-items: center;
     gap: 25px;
     padding: 20px 10px 10px;
-
-    .form-button {
-      height: 70px;
-      width: 200px;
-      background-size: contain;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 18px;
-      padding-bottom: 5px;
-
-      &.blue {
-        background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-      }
-
-      &.yellow {
-        background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-      }
-    }
   }
 }
 </style>

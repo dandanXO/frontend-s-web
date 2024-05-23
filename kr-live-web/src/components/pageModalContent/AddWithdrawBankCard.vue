@@ -152,7 +152,7 @@
         <div class="note">결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다.</div>
         <div class="note">안내: 카드 소지자 이름이 일치하지 않을 경우 온라인 고객 서비스에 문의하여 정보를 수정할 수 있습니다. 지원과 이해에 감사드립니다！</div>
         <div class="flex-box-c-c">
-        <q-btn class="form-button blue" label="제출" @click="submitBankCard()" />
+        <q-btn class="primary-button blue" label="제출" @click="submitBankCard()" rounded flat />
         </div>
       </div>
     </q-card-section>
@@ -418,45 +418,6 @@ onMounted(() => {
     align-items: center;
     gap: 25px;
     padding: 20px 10px 10px;
-
-    .form-button {
-      height: 70px;
-      width: 200px;
-      background-size: contain;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      font-size: 18px;
-      padding-bottom: 5px;
-
-      &.blue {
-        background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-      }
-
-      &.yellow {
-        background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-      }
-    }
-  }
-}
-
-.form-button {
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  &.blue {
-    background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-  }
-  &.yellow {
-    background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
   }
 }
 

@@ -168,7 +168,7 @@
             @click="submitWithdraw"
             :label="'환전신청'" 
             type="button" 
-            class="common-large-btn form-button blue"
+            class="primary-button blue"
             rounded 
             flat 
           />

@@ -81,6 +81,10 @@
       </div>
     </div> -->
 
+    <div class="jackpot">
+      <div class="jackpot-txt">987,654,321.23</div>
+    </div>
+
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
     <Transition>
@@ -2374,6 +2378,30 @@ export default defineComponent({
     /* img {
       width: 100%;
     } */
+  }
+}
+
+.jackpot {
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 816px;
+  height: 130px;
+  background: url('../assets/home/jackpot.png') no-repeat center center;
+  background-size: 100% 100%;
+  position: relative;
+
+  .jackpot-txt {
+    display: flex;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 34px;
+    font-weight: bold;
+    color: #f1b252;
+    text-shadow: 0 0 5px #ff0000;
+    letter-spacing: 3px;
   }
 }
 

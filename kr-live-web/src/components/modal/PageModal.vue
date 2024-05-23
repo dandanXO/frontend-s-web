@@ -153,7 +153,7 @@ watch(
         open(route.query.page);
       });
     } else {
-      router.push("/");
+      // router.push("/");
       visible.value = false;
     }
   },
