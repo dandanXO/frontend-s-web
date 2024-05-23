@@ -295,6 +295,14 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       margin-left: 60px;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
     }
   }
 

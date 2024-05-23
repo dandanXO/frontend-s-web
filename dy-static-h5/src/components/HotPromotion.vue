@@ -24,7 +24,7 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy-eurocup-hongbao'"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao'"
     />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
@@ -236,7 +236,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy-eurocup-hongbao"
+      this.list.redirectUrl === "dy2-eurocup-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
