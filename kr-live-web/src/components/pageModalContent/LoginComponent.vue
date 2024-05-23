@@ -27,7 +27,10 @@
           <q-input ref="captchaRef" :label="$t('lang.login_captcha')" filled clearable class="captcha-code-input"
             v-model="loginForm.captchaCode" lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
-          <img class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+            <div class="captcha-img-wrapper">
+              <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+              <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+            </div>
         </div>
       </div>
       <div class="action-buttons">
@@ -63,6 +66,7 @@ export default defineComponent({
     const pwdRef = ref();
     const captchaRef = ref();
     const isLoading = ref(false);
+    const captchaLoading = ref(false);
 
     const loginForm = reactive({
       loginName: "",
@@ -76,6 +80,8 @@ export default defineComponent({
     });
 
     const getCode = () => {
+      captchaLoading.value = true;
+
       api
         .get("/member/verificationEasyCode")
         .then((res) => {
@@ -85,14 +91,19 @@ export default defineComponent({
             loginForm.codeId = response.data.id;
             loginForm.captchaCode = '';
           }
+
+          captchaLoading.value = false;
         })
         .catch((e) => {
+          captchaLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
           //   message: res.data.message,
           //   icon: "report_problem"
           //     });
+        }).finally(() => {
+          captchaLoading.value = false;
         });
     };
 
@@ -150,7 +161,8 @@ export default defineComponent({
       getCode,
       onSubmit,
       isPwd: ref(true),
-      isLoading
+      isLoading,
+      captchaLoading
     };
   }
 });
@@ -186,6 +198,14 @@ export default defineComponent({
   .captcha-code-input {
     margin-right: 16px;
     width: 100%;
+  }
+
+  .captcha-img-wrapper {
+    width:150px;
+    height:56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .action-buttons {
