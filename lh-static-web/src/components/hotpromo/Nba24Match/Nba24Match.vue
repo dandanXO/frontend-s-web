@@ -127,30 +127,45 @@
         </div>
       </div>
 
-      <el-dialog v-model="tableRecordDialog" width="800px" align-center :close-on-click-modal="false">
+      <el-dialog
+        v-model="tableRecordDialog"
+        width="800px"
+        align-center
+        :close-on-click-modal="false"
+        class="nba24-match-table-record-dialog"
+      >
+        <template #header>
+          <div class="title"></div>
+        </template>
         <div class="record-dialog-container">
-          <div class="promo-records-count">
-            <div>总竞猜次数:</div>
-            <div>总竞猜正确次数:</div>
-            <div>今日正确次数:</div>
-          </div>
-
-          <table class="promo-table record-table">
+          <table class="record-table">
             <thead>
               <tr>
                 <th>投票时间</th>
                 <th>参赛队伍</th>
                 <th>投票队伍</th>
+                <th>投票结果</th>
               </tr>
             </thead>
             <tbody>
-              <!-- <template v-for="(record, index) in answeredRecords" :key="index">
-            <tr>
-              <td>{{ record.createTime }}</td>
-              <td>{{ record.quizTitle }}</td>
-              <td>{{ record.answerOne === 'draw' ? '平局' : record.answerOne }}</td>
-            </tr>
-          </template> -->
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>平局</td>
+                <td style="color: #51acff">正确</td>
+              </tr>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>老鹰胜</td>
+                <td style="color: #ff5151">错误</td>
+              </tr>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>平局</td>
+                <td style="color: #7a8eb9">未出结果</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -420,4 +435,111 @@ const tableRecordDialog = ref(false);
   }
 }
 
+:deep(.nba24-match-table-record-dialog) {
+  width: 1000px;
+  height: 652px;
+  .el-dialog__header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .el-dialog__header .el-dialog__headerbtn {
+    background: url(../../../assets/promo/lh-nba24-match/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 24px;
+  }
+  .el-dialog__body {
+    padding: 20px;
+  }
+
+  .record-dialog-container {
+    width: 960px;
+    height: 100%;
+  }
+
+  .title {
+    background-image: url("../../../assets/promo/lh-nba24-match/record-title.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 536px;
+    height: 32px;
+    margin-top: 20px;
+  }
+
+  .record-table {
+    width: 100%;
+    height: 100%;
+    th {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #fff;
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+      vertical-align: middle;
+      text-align: left;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+      }
+      &:last-child {
+        border-top-right-radius: 6px;
+      }
+    }
+    tr {
+      height: 56px;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      color: #7a8eb9;
+      vertical-align: middle;
+      text-align: left;
+      &:nth-child(odd) {
+        background: #f2f8fe;
+      }
+      &:nth-child(even) {
+        background: #fff;
+      }
+      th {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      td {
+        &:first-child {
+          padding-left: 20px;
+        }
+        &:last-child {
+          text-align: right;
+          padding-right: 14px;
+        }
+      }
+
+      &:last-child {
+        td {
+          &:first-child {
+            border-bottom-left-radius: 6px;
+          }
+        }
+      }
+      &:last-child {
+        td {
+          &:last-child {
+            border-bottom-right-radius: 6px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
