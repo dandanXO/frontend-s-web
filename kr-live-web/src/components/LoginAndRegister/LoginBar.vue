@@ -123,6 +123,11 @@ const iconInfo = reactive([
   padding: 12px;
   background: rgba(18, 17, 33, 0.6);
 
+  img{
+    width: 40px;
+    height: 40px;
+  }
+
   @media (min-width: 769px) {
     display: none;
   }

@@ -552,17 +552,24 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 0px;
+  top: 50%;
+  margin-top: -42px;
   left: 50%;
-  width: 325px;
-  transform: translate(-50%, 0%);
+  width: 425px;
+  transform: translate(-50%, -50%);
 
   @media (max-width: 991px) {
-    width: 100px;
+    width: 300px;
   }
 
   @media (max-width: 768px) {
-    width: 100px;
+    width: 250px;
+    margin-top:0px;
+  }
+
+  @media (max-width: 500px) {
+    width: 200px;
+    margin-top:0px;
   }
 }
 
