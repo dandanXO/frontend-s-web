@@ -48,6 +48,9 @@ export default {
     play_now: "Chơi Ngay",
     bet_now: "Cược Ngay",
     hotMatches: "Trận Đấu Hot",
+    euroCountdown01: "ĐƯỜNG TỚI ",
+    euroCountdown01a: "CÒN ",
+    euroCountdown02: " NGÀY",
 
     // side menu
     menu_sports: "Thể Thao",
