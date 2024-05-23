@@ -218,22 +218,7 @@
     </q-form>
 
     <div class="row justify-center items-center gap-8" style="margin-top: 35px">
-      <q-btn
-        @click.prevent="onSubmit"
-        :label="'가입완료'"
-        type="submit"
-        class="common-large-btn form-button blue"
-        rounded
-        flat
-      />
-<!--      <q-btn-->
-<!--        @click="openLogin"-->
-<!--        :label="'로그인'"-->
-<!--        type="button"-->
-<!--        class="common-large-btn form-button yellow"-->
-<!--        rounded-->
-<!--        flat-->
-<!--      />-->
+      <PrimaryButton :onClickButton="onSubmit" :label="'가입완료'" color="blue" />
     </div>
 
     <q-dialog
@@ -290,10 +275,14 @@ import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
+import PrimaryButton from "../modal/PrimaryButton.vue";
 
 export default defineComponent({
   name: "RegisterPage",
   emits: ["closeModal"],
+  components: {
+    PrimaryButton
+  },
   setup(props, { emit }) {
     const { t } = useI18n();
     const store = userStore();

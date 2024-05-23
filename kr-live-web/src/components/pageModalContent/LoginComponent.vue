@@ -27,15 +27,16 @@
           <q-input ref="captchaRef" :label="$t('lang.login_captcha')" filled clearable class="captcha-code-input"
             v-model="loginForm.captchaCode" lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
-          <img class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+            <div class="captcha-img-wrapper">
+              <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+              <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+            </div>
         </div>
       </div>
       <div class="action-buttons">
-        <q-btn @click.prevent="onSubmit" :label="'로그인'" type="button" class="common-large-btn form-button yellow"
-          rounded flat />
+        <PrimaryButton style="width:200px;height:70px;" :onClickButton="onSubmit" :label="'로그인'" :color="'yellow'" :loading="isLoading" />
         <router-link to="/?page=register">
-          <q-btn :label="'등록'" type="button" class="common-large-btn form-button blue" rounded
-            flat />
+          <PrimaryButton style="width:200px;height:70px;" :label="'회원가입'" :color="'blue'" :loading="isLoading"/>
         </router-link>
       </div>
     </q-form>
@@ -48,10 +49,14 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
+import PrimaryButton from 'components/modal/PrimaryButton.vue';
 
 export default defineComponent({
   name: "LoginPage",
   emits: ["closeModal"],
+  components: {
+    PrimaryButton
+  },
   setup(props, { emit }) {
     const store = userStore();
     const router = useRouter();
@@ -60,6 +65,8 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const captchaRef = ref();
+    const isLoading = ref(false);
+    const captchaLoading = ref(false);
 
     const loginForm = reactive({
       loginName: "",
@@ -73,6 +80,8 @@ export default defineComponent({
     });
 
     const getCode = () => {
+      captchaLoading.value = true;
+
       api
         .get("/member/verificationEasyCode")
         .then((res) => {
@@ -80,15 +89,21 @@ export default defineComponent({
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
             loginForm.codeId = response.data.id;
+            loginForm.captchaCode = '';
           }
+
+          captchaLoading.value = false;
         })
         .catch((e) => {
+          captchaLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
           //   message: res.data.message,
           //   icon: "report_problem"
           //     });
+        }).finally(() => {
+          captchaLoading.value = false;
         });
     };
 
@@ -103,6 +118,8 @@ export default defineComponent({
 
         if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
         } else {
+          isLoading.value = true;
+
           store
             .memberLogin({
               loginName: loginForm.loginName.trim(),
@@ -127,6 +144,9 @@ export default defineComponent({
             .catch((error) => {
               console.log(error);
               getCode();
+              isLoading.value = false;
+            }).finally(() => {
+              isLoading.value = false;
             });
         }
       })();
@@ -141,6 +161,8 @@ export default defineComponent({
       getCode,
       onSubmit,
       isPwd: ref(true),
+      isLoading,
+      captchaLoading
     };
   }
 });
@@ -168,28 +190,6 @@ export default defineComponent({
   row-gap: 24px;
   margin-top: 24px;
 
-  .form-button {
-    height: 70px;
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 18px;
-    padding-bottom: 5px;
-    margin: auto 10px;
-
-    &.blue {
-      background: url("../../assets/home/btn-blue.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    &.yellow {
-      background: url("../../assets/home/btn-orange.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-  }
-
   .captcha-code {
     width: 100%;
     display: flex;
@@ -198,6 +198,14 @@ export default defineComponent({
   .captcha-code-input {
     margin-right: 16px;
     width: 100%;
+  }
+
+  .captcha-img-wrapper {
+    width:150px;
+    height:56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .action-buttons {
