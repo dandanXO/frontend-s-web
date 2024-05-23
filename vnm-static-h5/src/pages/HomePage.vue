@@ -86,10 +86,7 @@
     />
   </q-carousel>
 
-  <PushNotification
-    :pushNotificationData="pushNotificationData"
-    v-if="Platform.is.android && Platform.is.capacitor"
-  />
+  <PushNotification :pushNotificationData="pushNotificationData" v-if="Platform.is.android && Platform.is.capacitor" />
 
   <div class="mid-announcement-section">
     <div class="midd">
@@ -109,6 +106,10 @@
   </div>
 
   <div class="hot-matches-wrapper">
+    <div class="euro-countdown">
+      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
+    </div>
+
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
@@ -123,6 +124,8 @@
       <!--        </q-btn>-->
       <!--      </div>-->
     </div>
+
+
     <div class="hot-matches-container">
       <swiper
         :slides-per-view="1.2"
@@ -151,13 +154,7 @@
               <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
-                <q-btn
-                  rounded
-                  no-caps
-                  color="brightbtn"
-                  class="sm-screen-txt"
-                  @click="openHotMatch(item)"
-                >
+                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="openHotMatch(item)">
                   {{ $t("lang.play_now") }}
                 </q-btn>
               </div>
@@ -789,7 +786,7 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage } from "@vueuse/core";
 import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
@@ -1022,7 +1019,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL =useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -1456,12 +1453,16 @@ export default defineComponent({
       });
     };
 
-    onMounted(()=>{
+    onMounted(() => {
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
 
-    })
+      // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
+      //   console.log(resp);
+      // })
+
+    });
 
     onActivated(() => {
       getPlatList();
@@ -1479,11 +1480,11 @@ export default defineComponent({
     });
 
     const runMenuFloat = () => {
-      toggleMenuFloat()
+      toggleMenuFloat();
       setTimeout(() => {
-        toggleMenuFloat()
+        toggleMenuFloat();
       }, 2000);
-    }
+    };
 
     const imageLoading = ref(false);
 
@@ -1570,21 +1571,21 @@ export default defineComponent({
 
     const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
 
-    const openHotMatch= (item) => {
-      if(!store.token){
-        router.push("/login")
-      }else{
+    const openHotMatch = (item) => {
+      if (!store.token) {
+        router.push("/login");
+      } else {
         console.log(item);
-        playGame(item.platformName, item.platformCode, item.gameCode)
+        playGame(item.platformName, item.platformCode, item.gameCode);
       }
-    }
+    };
 
     const formattedTime = (timeString) => {
       if (!timeString) {
         return "";
       }
 
-      const dateTime= moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
+      const dateTime = moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
       return dateTime;
 
       // const dateTime = new Date(timeString);
@@ -1602,6 +1603,13 @@ export default defineComponent({
     const onSwiper = (swiper) => {};
 
     const modulesHot = [Navigation, Pagination];
+
+    const countDay = ref(25);
+    const euroCupStartDate = moment("2024-06-15");
+    countDay.value = euroCupStartDate.diff(moment(), "days");
+    if (countDay.value <= 0) {
+      countDay.value = 0;
+    }
 
     return {
       imageLoading,
@@ -1645,7 +1653,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar,Pagination],
+      modules: [Scrollbar, Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -1711,6 +1719,8 @@ export default defineComponent({
       modulesHot,
       Platform,
       pushNotificationData,
+      countDay,
+      euroCupStartDate,
       getRedEnvelope,
       isRedPacketShow
 
@@ -2475,7 +2485,7 @@ export default defineComponent({
     box-shadow: none;
   }
   .q-card__section {
-    background:none;
+    background: none;
     box-shadow: none;
   }
   .q-card-section {
@@ -2547,11 +2557,55 @@ export default defineComponent({
     }
   }
 
-  .hot-matches-container {
+  .euro-countdown {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    padding-top: 6px;
+    padding-bottom: 12px;
+    line-height: 21px;
+    color: #0258A5;
+    display:flex;
+    align-items: flex-end;
 
-    :deep(.swiper-pagination){
+    img{
+      height: 36px;
+      padding:0px 4px 0px 6px;
+    }
+
+    strong{
+      padding:0px 3px;
+      font-style: normal;
+      color: blue;
+      background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: .1px;
+      -webkit-text-stroke-color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+    }
+
+    em{
+      padding:0px 3px;
+      font-style: normal;
+      background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke-width: .1px;
+      -webkit-text-stroke-color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .hot-matches-container {
+    :deep(.swiper-pagination) {
       //bottom: -20px;
-      position:relative;
+      position: relative;
       margin-top: 10px;
     }
   }
