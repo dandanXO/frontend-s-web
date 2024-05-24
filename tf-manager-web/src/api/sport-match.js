@@ -24,3 +24,15 @@ export const settleSportMatch = (sportMatch) => {
 export const deleteSportMatch = (id) => {
   return https().request(`/sport-match/${id}?_method=DELETE`, Method.POST);
 };
+
+export const getSportMatchRecord = (query) => {
+  return https().request("/sport-match/record", Method.GET, query, ContentType.form);
+};
+
+export const settleSportMatchRecord = (id) => {
+  return https().request(`/sport-match/record/settle/${id}?_method=PUT`, Method.POST);
+};
+
+export const cancelSportMatchRecord = (id) => {
+  return https().request(`/sport-match/record/cancel/${id}?_method=PUT`, Method.POST);
+};

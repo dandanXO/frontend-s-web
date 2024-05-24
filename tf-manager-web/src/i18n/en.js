@@ -1334,6 +1334,8 @@ export default {
     sortType: 'Sort Type',
     sourceType: 'Source Type',
     sportBetResult: 'Sport Bet Result',
+    sportMatchRecord: 'Sport Match Record',
+    sportMatchSetting: 'Sport Match Setting',
     stage: 'Stage',
     state: 'State',
     startCopy: 'Start Copy',
@@ -1718,6 +1720,7 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
+    confirmCancel: 'Confirm that you want to cancel this record, the operation cannot be undone',
     confirmCancelBbDacha:
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelMatch:
