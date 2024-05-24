@@ -625,7 +625,9 @@ function selectPayType(value) {
 }
 
 const selectAmt = (amt) => {
-  form.localAmount = amt;
+  const multiple = 10000;
+  // 1원 = 10000;
+  form.localAmount += amt * multiple;
 };
 
 function clearInfo() {

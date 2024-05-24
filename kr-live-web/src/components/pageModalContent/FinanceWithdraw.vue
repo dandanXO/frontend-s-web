@@ -269,7 +269,10 @@ const loadCards = () => {
 
 const updateWithdrawItem = (amt) => {
   // debugger;
-  withdrawInfo.amount= amt.toString();
+  const multiple = 10000;
+  // 1원 = 10000;
+
+  withdrawInfo.amount = (Number(withdrawInfo.amount) + (amt * multiple)).toString();
 }
 
 const selectMethod = (method, index) => {
