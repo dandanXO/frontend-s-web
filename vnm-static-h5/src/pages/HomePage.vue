@@ -2617,9 +2617,33 @@ export default defineComponent({
   }
 }
 
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
 .red-envelope {
   width: 135px;
   cursor: pointer;
+  animation: shake 1s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shake-with-pause {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.red-envelope {
+  animation: shake-with-pause 2s infinite;
 }
 
 .hot-matches-wrapper {
