@@ -101,7 +101,7 @@ export default defineComponent({
       },10000)
     }
 
-    const isRedPacketShow= ref(false);
+    const isRedPacketShow= ref(true);
     const isPacketChecked= ref(null);
     onMounted(() => {
       getAppDownloadUrl();
@@ -214,7 +214,13 @@ export default defineComponent({
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
 }
-
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
 @keyframes shake-with-pause {
   0% { transform: translateX(0); }
   10% { transform: translateX(-10px); }
@@ -225,8 +231,8 @@ export default defineComponent({
   100% { transform: translateX(0); }
 }
 
-.red-envelope {
-  animation: shake-with-pause 2s infinite;
+.red-envelope { 
+  animation: tilt-shaking 1s infinite;
 
 }
 </style>
