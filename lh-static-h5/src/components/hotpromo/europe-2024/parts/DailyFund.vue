@@ -108,13 +108,25 @@
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
+          <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
           <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
-          <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-VS">VS</div>
+          <button
+            @click="matchSubmit(match, 0, '平局')"
+            v-if="!match.selectedTeamId"
+            class="bracket-team-select__button"
+          >
+            平局
+          </button>
+          <button v-else-if="match.selectedTeamId === 0" class="bracket-team-select__button active">已选</button>
+          <div v-else class="bracket-team-select__button pseudo" />
         </div>
       </div>
       <div class="bracket-team-select">
@@ -126,7 +138,10 @@
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
     </div>
   </div>
@@ -573,13 +588,14 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
 
 .bracket-wrapper {
   display: flex;
+  align-items: end;
   justify-content: space-between;
   color: #ffffff;
   background: #051d4766;
   border: 1px solid #ffffff66;
   border-radius: 8px;
   margin-bottom: 15px;
-  padding-bottom: 22px;
+  padding: 22px;
   font-family: Microsoft YaHei UI;
 
   .bracket-team-select {
@@ -588,23 +604,28 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    padding-top: 25px;
     gap: 18px;
-    .bracket-team-select__button {
-      background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
-      padding: 6px 23px;
-      border-radius: 33px;
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.3rem;
-      letter-spacing: 0.12em;
-      color: #333333;
+  }
 
-      &:hover,
-      &.active {
-        background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
-        color: #ffffff;
-      }
+  .bracket-team-select__button {
+    background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
+    padding: 6px 23px;
+    border-radius: 33px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3rem;
+    letter-spacing: 0.12em;
+    color: #333333;
+
+    &:hover,
+    &.active {
+      background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
+      color: #ffffff;
+    }
+
+    &.pseudo {
+      background: transparent;
+      padding-top: calc(1.3rem + 6px);
     }
   }
 
@@ -633,25 +654,33 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
     .bracket-info__info-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 8px;
       align-items: center;
 
-      .bracket-info__info-wrapper-date {
-        background-color: #458bff1a;
-        padding: 3.5px 19px 7px 19px;
-        border-radius: 100px;
-        font-size: 1rem;
+      .bracket-info__info-wrapper-title {
+        font-family: Microsoft YaHei UI;
+        font-size: 1.2rem;
         font-weight: 700;
-        line-height: 1.3rem;
+        line-height: 1.5rem;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .bracket-info__info-wrapper-date {
+        font-size: 0.8rem;
+        font-weight: 700;
+        line-height: 1rem;
         letter-spacing: 0.12em;
         text-align: center;
       }
 
-      .bracket-info__info-wrapper-contest {
-        font-size: 1rem;
-        line-height: 1.3rem;
-        letter-spacing: 0.12em;
-        color: #ffffff99;
+      .bracket-info__info-wrapper-VS {
+        font-family: Poppins;
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 4rem;
+        text-align: center;
+        color: #73b2ff1a;
       }
     }
   }

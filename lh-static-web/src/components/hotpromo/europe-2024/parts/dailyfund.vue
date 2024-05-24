@@ -109,7 +109,10 @@
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
       <div class="bracket-info">
         <div class="bracket-info__info-wrapper">
@@ -123,7 +126,8 @@
           >
             平局
           </button>
-          <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+          <button v-else-if="match.selectedTeamId === 0" class="bracket-team-select__button active">已选</button>
+          <div v-else class="bracket-team-select__button pseudo" />
         </div>
       </div>
       <div class="bracket-team-select">
@@ -135,7 +139,10 @@
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
     </div>
   </div>
@@ -428,7 +435,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-      width: 100px;
+    width: 100px;
     div {
       display: flex;
       gap: 5px;
@@ -438,7 +445,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       font-size: 20px;
     }
     img {
-      width:90px;
+      width: 90px;
     }
   }
 }
@@ -594,6 +601,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
     align-items: center;
     justify-content: start;
     gap: 35px;
+    flex: 1;
   }
 
   .bracket-team-select__button {
@@ -612,11 +620,17 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
       color: #ffffff;
     }
+
+    &.pseudo {
+      background: transparent;
+      padding-top: 44px;
+    }
   }
 
   .bracket-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
 
     .bracket-info__info-wrapper {
       display: flex;
@@ -647,7 +661,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
         font-weight: 900;
         line-height: 106.07px;
         text-align: center;
-        color: #73B2FF1A;
+        color: #73b2ff1a;
       }
     }
   }
