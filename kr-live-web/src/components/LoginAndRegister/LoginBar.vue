@@ -46,6 +46,9 @@
           <img :src="item.iconUrl" alt="" />
           <div class="info-text">{{ item.info }}</div>
         </div>
+        <div class="sidebar-logout-button">
+          <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+        </div>
       </div>
       <div class="right-content">
         <div v-if="store.hasToken()" class="login-box"><LoggedIn /></div>
@@ -80,6 +83,10 @@ const showNotify = () => {
     icon: "report_problem"
   });
 };
+
+const logout = () => {
+  store.memberLogout();
+}
 
 const iconInfo = reactive([
   // {
@@ -295,6 +302,13 @@ const iconInfo = reactive([
     }
   }
 
+  .sidebar-logout-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto auto 0;
+  }
+
   // display: none;
   @media (min-width: 769px) {
     display: flex;
@@ -312,7 +326,7 @@ const iconInfo = reactive([
       width: 100%;
     }
     
-    .sidebar-section-wrapper {
+    .sidebar-section-wrapper, .sidebar-logout-button {
       display: none;
     }
   }
