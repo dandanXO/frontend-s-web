@@ -11,28 +11,49 @@
             Welcome
           </div>
           <div class="sidebar-section top">
-            <template v-for="(item, index) in iconInfo" :key="index">
-              <div
-                class="sidebar-section-item"
-                v-if="index < 2"
-              >
-                <img :src="item.iconUrl" alt="" />
-                <div class="info-text">{{ item.info }}</div>
-              </div>
-              <div class="separator vertical" v-if="index === 0" />
-            </template>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=personal/info"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
+              <div class="info-text">입금</div>
+            </router-link>
+            <div class="separator vertical" />
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=transaction/records"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
+              <div class="info-text">출금</div>
+            </router-link>
           </div>
           <div class="sidebar-section middle">
-            <template v-for="(item, index) in iconInfo">
-              <div
-                :key="index"
-                class="sidebar-section-item"
-                v-if="index < 4"
-              >
-                <img :src="item.iconUrl" alt="" />
-                <div class="info-text">{{ item.info }}</div>
-              </div>
-            </template>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=finance/deposit"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
+              <div class="info-text">입금</div>
+            </router-link>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=finance/withdraw"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
+              <div class="info-text">출금</div>
+            </router-link>
+            <div
+              class="sidebar-section-item"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
+              <div class="info-text">포인트전환</div>
+            </div>
+            <div
+              class="sidebar-section-item"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
+              <div class="info-text">알전환</div>
+            </div>
           </div>
           <div class="separator"/>
           <div class="icon-section-label">메뉴</div>
@@ -274,6 +295,12 @@ const iconInfo = reactive([
           padding: 5px;
           border-radius: 4px;
         }
+      }
+
+      &.middle {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        white-space: nowrap;
       }
 
       .sidebar-section-item {
