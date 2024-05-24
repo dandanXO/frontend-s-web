@@ -63,7 +63,7 @@
           <div class="team-num">{{ team.name }} 组</div>
           <div class="chosen-items">
             <div class="selection">
-              {{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}
+              <span class="selection-prefix">{{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}</span>
               <div class="selected-items">
                 <div v-for="t in team.selection">
                   {{ t.name }}
@@ -683,9 +683,8 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 .doubling-gold {
   .teams {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    column-gap: 60px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 60px;
     margin: 20px auto;
 
     .team {
@@ -716,24 +715,30 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           align-items: center;
           color: #ffffff;
           font-family: Microsoft YaHei UI;
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 400;
-          line-height: 31.92px;
+          line-height: 23.94px;
           letter-spacing: 0.12em;
+          text-align: left;
           padding: 10px;
 
           .selection {
             color: #ffffffcc;
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
+            align-self: flex-start;
+
+            .selection-prefix {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 18.62px;
+            }
 
             .selected-items {
               display: flex;
-              gap: 10px;
-              justify-content: center;
               align-items: center;
+              gap: 10px;
               color: #ffffff;
             }
           }
@@ -741,9 +746,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .unselectedbtn {
             background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #1a396f;
             cursor: disabled;
@@ -755,9 +760,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .selectedbtn {
             background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #ffffff;
             padding: 5px 20px;
