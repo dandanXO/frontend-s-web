@@ -329,7 +329,7 @@ export default {
     // WithdrawBankView
     choose_a_card: "Choose a card",
     register_bank_acc_para: "Please register your bank account below to receive updates",
-    add_a_card: "Add card",
+    add_a_card: "카드 추가",
     bank_card_unbind_record: "Bank card binding record",
     add_a_virtual_currency: "Add virtual currency",
     select_account_add_different_banks: "Select account (add different banks)",
