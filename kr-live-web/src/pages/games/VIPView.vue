@@ -842,34 +842,34 @@ export default defineComponent({
     justify-content: flex-end;
     color: #3a375e;
 
-    &.vipitem-classic {
-      background: url("../../assets/vip/vip-sec-classic.png") no-repeat top center;
-    }
-
-    &.vipitem-bronze {
-      background: url("../../assets/vip/vip-sec-bronze.png") no-repeat top center;
-    }
-
-    &.vipitem-silver {
-      background: url("../../assets/vip/vip-sec-silver.png") no-repeat top center;
-    }
-
-    &.vipitem-gold {
-      background: url("../../assets/vip/vip-sec-gold.png") no-repeat top center;
-    }
-
-    &.vipitem-platinium {
-      background: url("../../assets/vip/vip-sec-platinium.png") no-repeat top center;
-    }
-
-    &.vipitem-diamond {
-      background: url("../../assets/vip/vip-sec-diamond.png") no-repeat top center;
-    }
-
-    &.vipitem-ruby {
-      background: url("../../assets/vip/vip-sec-ruby.png") no-repeat top center;
-      color: #eed290;
-    }
+    //&.vipitem-classic {
+    //  background: url("../../assets/vip/vip-sec-classic.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-bronze {
+    //  background: url("../../assets/vip/vip-sec-bronze.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-silver {
+    //  background: url("../../assets/vip/vip-sec-silver.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-gold {
+    //  background: url("../../assets/vip/vip-sec-gold.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-platinium {
+    //  background: url("../../assets/vip/vip-sec-platinium.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-diamond {
+    //  background: url("../../assets/vip/vip-sec-diamond.png") no-repeat top center;
+    //}
+    //
+    //&.vipitem-ruby {
+    //  background: url("../../assets/vip/vip-sec-ruby.png") no-repeat top center;
+    //  color: #eed290;
+    //}
 
     .viplevelcircle {
       img {
@@ -1378,7 +1378,7 @@ button {
   padding: 20px;
 
   box-sizing: content-box;
-  background: url(../../assets/vip/nextprev.png) no-repeat center center;
+  //background: url(../../assets/vip/nextprev.png) no-repeat center center;
   background-size: contain;
   top: 20%;
 

@@ -339,7 +339,7 @@ const submitBankCard = () => {
             message: "은행 카드가 추가되었습니다",
             icon: "check_circle_outline"
           });
-          router.push("/account/withdraw");
+          router.push("/?page=bankcardlist");
         }
       })
       .catch((error) => {

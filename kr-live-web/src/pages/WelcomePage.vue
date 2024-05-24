@@ -1,14 +1,14 @@
 <template>
   <div class="welcome-page">
     <div class="logo">
-      <img src="../assets/welcome/logo.png">
+<!--      <img src="../assets/welcome/logo.png">-->
     </div>
     <div class="promotionlist">
       <span v-for="(promo, i) in promoList" :key="i">
-        <img
+        <!-- <img
           @click="checkPromo(promo.promoImg)"
           :src="require(`../assets/welcome/promo-${promo.promoImg}.png`)"
-        />
+        /> -->
       </span>
     </div>
     <router-link to="/register"> สมัคร </router-link>
@@ -81,7 +81,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: url('../assets/welcome/welcome-bg-h5.png')no-repeat center center;
+    //background: url('../assets/welcome/welcome-bg-h5.png')no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     width: 100%;
@@ -121,7 +121,7 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       align-items: center;
-      background: url('../assets/welcome/button.png')no-repeat center center;
+      //background: url('../assets/welcome/button.png')no-repeat center center;
       background-size: cover;
       color: #000000;
       font-size: 20px;

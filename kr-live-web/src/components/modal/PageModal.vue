@@ -116,6 +116,7 @@ import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
 import LangToggle from "components/LangToggle.vue";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
+import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -291,6 +292,19 @@ const pagesInfo = reactive([
       title: "은행카드추가",
       subTitle: "ADD BANK CARD",
       description: "출금 계좌에 새 은행 카드 추가"
+    }
+  },
+  {
+    tabIndex: "my",
+    page: "bankcardlist",
+    info: "은행 카드 목록",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: WithdrawBankView,
+    headerInfo: {
+      title: "은행 카드 목록",
+      subTitle: "BANK CARD LIST",
+      description: ""
     }
   },
   {

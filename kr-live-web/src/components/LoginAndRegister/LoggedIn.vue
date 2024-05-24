@@ -16,10 +16,10 @@
 
     <div class="btn-group">
       <div class="left-group">
-        <q-btn class="primary-button blue" rounded flat style="width:100px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
+        <q-btn class="primary-button blue" rounded flat style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
       </div>
       <div class="right-group">
-        <q-btn class="primary-button yellow" rounded flat style="width:100px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
+        <q-btn class="primary-button yellow" rounded flat style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
       </div>
     </div>
   </div>
@@ -47,14 +47,14 @@ const onLogoutSubmit = () => {
 
 <style scoped lang="scss">
 .logginedin-container {
-  width: 528px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  @media (min-width: 760px) {
-    flex-direction: row;
-    justify-content: space-between;
+
+  @media (max-width: 769px) {
+    flex-direction: column;
   }
 }
 
@@ -87,33 +87,7 @@ const onLogoutSubmit = () => {
 
 .btn-group {
   display: flex;
-  width: 40%;
-  // height: 100%;
   align-items: flex-start;
-  // justify-content: center;
-  // margin-top: 16px;
-  @media (min-width: 1200px) {
-    margin-top: 10px;
-  }
-}
-
-.left-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  row-gap: 2px;
-
-  @media (max-width: 769px) {
-    flex-direction: row;
-    margin-bottom: 10px;
-  }
-}
-.right-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: 12px;
-  row-gap: 8px;
 }
 
 .points-conversion,

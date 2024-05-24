@@ -11,28 +11,49 @@
             Welcome
           </div>
           <div class="sidebar-section top">
-            <template v-for="(item, index) in iconInfo" :key="index">
-              <div
-                class="sidebar-section-item"
-                v-if="index < 2"
-              >
-                <img :src="item.iconUrl" alt="" />
-                <div class="info-text">{{ item.info }}</div>
-              </div>
-              <div class="separator vertical" v-if="index === 0" />
-            </template>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=personal/info"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
+              <div class="info-text">입금</div>
+            </router-link>
+            <div class="separator vertical" />
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=transaction/records"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
+              <div class="info-text">출금</div>
+            </router-link>
           </div>
           <div class="sidebar-section middle">
-            <template v-for="(item, index) in iconInfo">
-              <div
-                :key="index"
-                class="sidebar-section-item"
-                v-if="index < 4"
-              >
-                <img :src="item.iconUrl" alt="" />
-                <div class="info-text">{{ item.info }}</div>
-              </div>
-            </template>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=finance/deposit"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
+              <div class="info-text">입금</div>
+            </router-link>
+            <router-link
+              class="sidebar-section-item"
+              to="/?page=finance/withdraw"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
+              <div class="info-text">출금</div>
+            </router-link>
+            <div
+              class="sidebar-section-item"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
+              <div class="info-text">포인트전환</div>
+            </div>
+            <div
+              class="sidebar-section-item"
+            >
+              <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
+              <div class="info-text">알전환</div>
+            </div>
           </div>
           <div class="separator"/>
           <div class="icon-section-label">메뉴</div>
@@ -51,8 +72,8 @@
         </div>
       </div>
       <div class="right-content">
-        <div v-if="store.hasToken()" class="login-box"><LoggedIn /></div>
-        <div v-if="!store.hasToken()" class="login-box"><NotLoggedIn /></div>
+        <LoggedIn v-if="store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" />
       </div>
     </div>
   </div>
@@ -181,13 +202,13 @@ const iconInfo = reactive([
   border: none;
   background: rgba(18, 17, 33, 1);
   z-index: 1;
+  border-width: 2px 0px 2px 0px;
+  border-style: solid;
+  border-color: #2a306c;
 
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
     background: rgba(18, 17, 33, 0.6);
-    border-width: 2px 0px 2px 0px;
-    border-style: solid;
-    border-color: #2a306c;
     backdrop-filter: blur(6px);
   }
 }
@@ -276,6 +297,12 @@ const iconInfo = reactive([
         }
       }
 
+      &.middle {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        white-space: nowrap;
+      }
+
       .sidebar-section-item {
         display: flex;
         flex-direction: column;
@@ -337,12 +364,7 @@ const iconInfo = reactive([
   justify-content: center;
   width: 100%;
   background-color: transparent;
-  margin-top: 16px;
-  padding-right: 8px;
   @media (min-width: 769px) {
-    // background: linear-gradient(#292b31, #191b1e);
-    justify-content: flex-end;
-    margin-top: 0px;
   }
 }
 
@@ -377,14 +399,6 @@ const iconInfo = reactive([
     img {
       width: 24px;
     }
-  }
-}
-
-.login-box {
-  display: flex;
-  justify-content: center;
-  @media (min-width: 769px) {
-    justify-content: flex-end;
   }
 }
 </style>

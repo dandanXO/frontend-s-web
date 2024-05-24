@@ -94,7 +94,7 @@
         rounded
         size="md"
       >
-        <img src="../assets/images/common/line-official.svg" />
+<!--        <img src="../assets/images/common/line-official.svg" />-->
         <span>LINE Login</span>
       </q-btn>
     </div>

@@ -171,12 +171,12 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.deposit_header");
-          headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
+          // headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.withdraw_header");
-          headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
+          // headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
         } else if (route.path === "/account/transit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -185,7 +185,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.account_header");
-          headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
+          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/display") {
           prevPage.value = "finance/deposit";
@@ -196,7 +196,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.personal_header");
-          headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
+          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "/";
@@ -251,36 +251,7 @@ export default defineComponent({
         }
       }
     };
-    const footers = reactive({
-      home: {
-        icon: require("../assets/images/menu/home-icon-thai-theme.png"),
-        active: require("../assets/images/menu/home-icon-active-thai-theme.png")
-      },
-      deposit: {
-        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
-        active: require("../assets/images/menu/deposit-icon-thai-theme.png")
-      },
-      withdraw: {
-        icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
-        active: require("../assets/images/menu/withdraw-icon-active-thai-theme.png")
-      },
-      cs: {
-        icon: require("../assets/images/menu/cs-icon-thai-theme.png"),
-        active: require("../assets/images/menu/cs-icon-active-thai-theme.png")
-      },
-      notice: {
-        icon: require("../assets/images/menu/notice-icon-thai-theme.png"),
-        active: require("../assets/images/menu/notice-icon-active-thai-theme.png")
-      },
-      affiliate: {
-        icon: require("../assets/images/menu/affiliate-icon.png"),
-        active: require("../assets/images/menu/affiliate-icon-active.png")
-      },
-      app: {
-        icon: require("../assets/images/menu/download-icon-thai-theme.png"),
-        active: require("../assets/images/menu/download-icon-active-thai-theme.png")
-      }
-    });
+
 
     const closeWindowOrBack = () => {
       if (prevPage.value) {
@@ -332,7 +303,6 @@ export default defineComponent({
       prevPage,
       closeWindowOrBack,
       outOfApp,
-      footers,
       hasHeader,
       headerIcon,
       languageVal,
@@ -432,20 +402,6 @@ svg path {
     aspect-ratio: 58 / 58;
   }
 
-  .footer-icon-wrapper {
-    // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),
-    //   linear-gradient(94.81deg, #fb3ca9 7.45%, #ffa9ab 95.9%);
-    background: url("../assets/images/menu/middle-btn-wrap.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
 }
 
 // .q-footer .q-tabs {
@@ -552,7 +508,7 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 50%;
+  top: 40%;
   margin-top: -42px;
   left: 50%;
   width: 425px;
@@ -582,7 +538,7 @@ svg path {
   width: 100%;
   background: url("../assets/home/home-banner.png") no-repeat top center;
   background-size: cover;
-  height: 250px;
+  height: 350px;
 
   @media (min-width: 991px) {
     background: url("../assets/home/home-banner.png") no-repeat top center;

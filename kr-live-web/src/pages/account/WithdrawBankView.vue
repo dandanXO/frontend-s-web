@@ -5,13 +5,13 @@
     </div>
     <div class="q-pa-md">
       <div class="account-title-container">
-        <span class="account-title">{{ $t("lang.choose_a_card") }}</span>
+        <!-- <span class="account-title">{{ $t("lang.choose_a_card") }}</span> -->
       </div>
       <div class="account-content">
-        <div class="account-tip-text wbot">
+        <!-- <div class="account-tip-text wbot">
           <RiSpamLine />
           {{ $t("lang.register_bank_acc_para") }}
-        </div>
+        </div> -->
         <div class="addbuttons"></div>
         <div class="flex-box flex-wrap bank-card-list">
           <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
@@ -30,55 +30,22 @@
               <div class="cardname">
                 <div class="txt-center">
                   <strong>{{ bc.bankName }}</strong>
-                  <!-- <div>Bank Account Number</div> -->
                 </div>
               </div>
-              <!--              <div class="unlink-btn" @click="unbindBankCard(bc)">-->
-              <!--                <RiLinkUnlink />-->
-              <!--              </div>-->
-
               <div class="flex-box cards">
                 <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
                   {{ b }}
                 </div>
-                <!-- <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  {{ b.slice(0, 4) }}
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  ****
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  ****
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  {{ b.slice(b.length - 4, b.length) }}
-                </div> -->
               </div>
             </div>
           </template>
-          <div
+          <router-link
+            to="/?page=withdrawcard"
             class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-            @click="bankCardModal('bank')"
           >
             <RiLink />
             {{ $t("lang.add_a_card") }}
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -117,15 +84,10 @@
             </q-input>
           </div>
           <q-btn label="ค้นหา" />
-          <!-- <q-form-item>
-            <button class="common-btn outline search-btn" type="submit">
-              Search For
-            </button>
-          </q-form-item> -->
         </q-form>
       </div>
       <div class="unbind-record-wrapper">
-        <q-table :columns="columns"></q-table>
+        <!-- <q-table :columns="columns"></q-table> -->
       </div>
     </div>
     <q-dialog v-model="bankCardModalState.visible" persistent>
@@ -311,55 +273,12 @@
         </div>
       </q-card>
     </q-dialog>
-
-    <!-- <q-dialog
-      wrap-class-name="bankModal"
-      width="100%"
-      v-model:visible="virtualCurrencyModalState.visible"
-      :footer="null"
-    >
-      <div class="modal-head-title">Add a virtual currency</div>
-      <q-form
-        ref="virtualCurrencyFormRef"
-        :hideRequiredMark="true"
-        :model="bankCardInfo"
-        :colon="false"
-        :label-col="{ span: 8 }"
-      >
-        <q-input
-          v-model:value="virtualCurrencyInfo.wallet"
-          label="Card Account"
-          placeholder="Enter card account"
-        />
-        <q-input
-          v-model:value="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-        />
-        <q-input
-          v-model="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-          disable
-        />
-
-        <q-input
-          v-model="virtualCurrencyInfo.protocol"
-          label="Protocol"
-          placeholder="Enter protocol"
-          disable
-        />
-        <q-btn color="brand" type="submit" @click="submitVirtualCurrency">
-          Confirm
-        </q-btn>
-      </q-form>
-    </q-dialog> -->
   </div>
 </template>
 
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
-import {RiSpamLine, RiLink} from "vue-remix-icons";
+import { RiLink} from "vue-remix-icons";
 // RiLinkUnlink
 // import moment from "moment";
 import {api} from "boot/axios"
@@ -373,7 +292,6 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    RiSpamLine,
     RiLink
   },
   setup() {
@@ -709,67 +627,6 @@ export default defineComponent({
         getInnerCode();
       })
     }
-
-
-    //add virtual card
-    // const virtualCurrencyModalState = reactive({
-    //   visible: false,
-    //   banks: []
-    // });
-    // const virtualCurrencyFormRef = ref();
-    // const virtualCurrencyInfo = reactive({
-    //   wallet: undefined,
-    //   digitalCurrency: 'SGD',
-    //   protocol: 'protocol_01'
-    // });
-    // const virtualCurrencyModal = () => {
-    //   virtualCurrencyInfo.bankId = undefined;
-    //   virtualCurrencyInfo.cardNumber = "";
-    //   virtualCurrencyInfo.cardAccount = "";
-    //   virtualCurrencyInfo.cardAddress = "";
-    //   virtualCurrencyModalState.visible = true;
-    //   if (virtualCurrencyModalState.banks.length === 0) {
-    //     loadBanks(3).then((res) => {
-    //       if (res.code === 0) {
-    //         virtualCurrencyModalState.banks.push(...res.data);
-    //       }
-    //     }).catch((e) => {
-    //       console.log("error", e);
-    //     });
-    //   }
-    // };
-    // const submitvirtualCurrency = () => {
-
-    // };
-    // const virtualCurrencyRules = {
-    //   cardNumber: [
-    //     {
-    //       required: true,
-    //       message: "card number is required",
-    //       trigger: "blur",
-    //     },
-    //     {
-    //       min: 6,
-    //       max: 12,
-    //       message: "Length should be 6 to 12",
-    //       trigger: "blur",
-    //     }
-    //   ],
-    //   cardAccount: [
-    //     {
-    //       required: true,
-    //       message: "card account is required",
-    //       trigger: "blur"
-    //     }
-    //   ],
-    //   cardAddress: [
-    //     {
-    //       required: true,
-    //       message: "card address is required",
-    //       trigger: "blur"
-    //     }
-    //   ]
-    // };
     let validateBankLength = (val) => {
       if (selectedBankType.value === 'Bank') {
         return (val.length > 5 && val.length < 13) || t('lang.length_between_6_12')
