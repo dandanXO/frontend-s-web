@@ -649,8 +649,7 @@ export default defineComponent({
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
-      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      const chineseCharOnly = /^([\u4e00-\u9fa5]·*)$/u;
+      const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
       return v.match(chineseCharOnly);
     };
     let validatePass2 = async (r, v) => {
