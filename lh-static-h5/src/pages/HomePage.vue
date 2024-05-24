@@ -377,7 +377,7 @@
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
-            @click="router.push({ path: '/slot', query: { platform: item.code } })"
+            @click="item.gameType ==='CASUAL' ? playGame(item.gameName, item.code,'casual',  item.gameCode) : router.push({ path: '/slot', query: { platform: item.code } })"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
@@ -1198,6 +1198,25 @@ export default defineComponent({
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
+          
+          var casualObj = {
+            id: 99,
+            name: "TFGaming",
+            code: "TFGaming",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "CASUAL",
+            followType: "NEW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: "小游戏",
+            sequence: 200,
+            title: "小游戏",
+            icon: "casual",
+            subtitle: "小游戏"
+          }
+          slot.value.push(casualObj);
         })
         .catch((err) => {});
     };

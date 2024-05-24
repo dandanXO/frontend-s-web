@@ -10,7 +10,11 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon">
               <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
-                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+                <a @click="openMiniGame" v-if="nav.code==='minigame'" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                  <h2 class="nav-title cn">{{ nav.name }}</h2>
+                  <h2 class="nav-title">{{ nav.enName }}</h2>
+                </a>
+                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <!-- <img
                       class="menu-icon"
@@ -490,6 +494,7 @@ export default defineComponent({
       { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
       { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
       { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
+      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
       { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
@@ -1297,7 +1302,9 @@ export default defineComponent({
     //   })
     // }
     const pwdStrength = ref();
-
+    const openMiniGame = () => {
+      openGame("TFGaming", "TFGaming", "casual")
+    };
     function charType(num) {
       if (num >= 48 && num <= 57) {
         return 1;
@@ -1464,7 +1471,8 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       isDark,
-      timestamp
+      timestamp,
+      openMiniGame
     };
   }
 });
@@ -1793,7 +1801,7 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 30px;
+        gap: 20px;
         text-align: center;
         padding: 0px 15px;
 
