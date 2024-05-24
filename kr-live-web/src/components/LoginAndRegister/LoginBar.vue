@@ -6,6 +6,37 @@
 
     <div class="content">
       <div class="left-content" :class="navActive && 'active'" @click="navActive = false">
+        <div class="sidebar-section-wrapper">
+          <div class="sidebar-section-title">
+            Welcome
+          </div>
+          <div class="sidebar-section top">
+            <template v-for="(item, index) in iconInfo" :key="index">
+              <div
+                class="sidebar-section-item"
+                v-if="index < 2"
+              >
+                <img :src="item.iconUrl" alt="" />
+                <div class="info-text">{{ item.info }}</div>
+              </div>
+              <div class="separator vertical" v-if="index === 0" />
+            </template>
+          </div>
+          <div class="sidebar-section middle">
+            <template v-for="(item, index) in iconInfo">
+              <div
+                :key="index"
+                class="sidebar-section-item"
+                v-if="index < 4"
+              >
+                <img :src="item.iconUrl" alt="" />
+                <div class="info-text">{{ item.info }}</div>
+              </div>
+            </template>
+          </div>
+          <div class="separator"/>
+          <div class="icon-section-label">메뉴</div>
+        </div>
         <div
           v-for="(item, index) in iconInfo"
           :key="index"
@@ -117,11 +148,11 @@ const iconInfo = reactive([
   justify-content: space-between;
   background: salmon;
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   padding: 12px;
-  background: rgba(18, 17, 33, 0.6);
+  background: #12112199;
 
   img{
     width: 40px;
@@ -130,6 +161,8 @@ const iconInfo = reactive([
 
   @media (min-width: 769px) {
     display: none;
+    position: absolute;
+    background: rgba(18, 17, 33, 0.6);
   }
 }
 .container {
@@ -140,6 +173,7 @@ const iconInfo = reactive([
   align-items: center;
   border: none;
   background: rgba(18, 17, 33, 1);
+  z-index: 1;
 
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
@@ -178,19 +212,21 @@ const iconInfo = reactive([
   border-color: #333333;
   padding-left: 8px;
   display: none;
+  border-right: 1px solid #454F63;
 
   &.active {
     display: flex;
-    position: absolute;
-    top: 54px;
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 100%;
+    width: 70%;
     height: 100%;
-    background: rgba(18, 17, 33, 0.9);
+    background: #000000B2;
+    backdrop-filter: blur(5px);
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    padding-left: 12px;
+    justify-content: flex-start;
+    padding: 20px;
     gap: 16px;
     z-index: 9;
 
@@ -203,11 +239,82 @@ const iconInfo = reactive([
     }
   }
 
+  .sidebar-section-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+
+    .sidebar-section-title {
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 28px;
+
+    }
+    .sidebar-section {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px;
+
+      &.top {
+        border-radius: 6px;
+        background-color: #1D243D;
+        padding: 20px;
+
+        .sidebar-section-item img {
+          background-color: #00FFFF1A;
+          padding: 5px;
+          border-radius: 4px;
+        }
+      }
+
+      .sidebar-section-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+    }
+
+    .separator {
+      border: 0.5px solid #ffffff9e;
+      border-image: linear-gradient(to right, #ffffff12, #dfdfdfa1, #ffffff12) 0.8;
+      width: 100%;
+
+      &.vertical {
+        border: 0.5px solid #ffffff9e;
+        border-image: linear-gradient(to bottom, #374b7c32, #374B7CCC, #374b7c32) 0.8;
+        width: 1px;
+      }
+    }
+
+    .icon-section-label {
+      color: #7D87A1;
+    }
+  }
+
   // display: none;
   @media (min-width: 769px) {
     display: flex;
     height: 100%;
     border: none;
+
+    &.active {
+      position: unset;
+      background: none;
+      backdrop-filter: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      width: 100%;
+    }
+    
+    .sidebar-section-wrapper {
+      display: none;
+    }
   }
 }
 

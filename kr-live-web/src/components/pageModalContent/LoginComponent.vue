@@ -132,8 +132,9 @@ export default defineComponent({
                 icon: "check_circle_outline"
               });
 
+              router.push("/");
+              
               setTimeout(() => {
-                router.push("/");
                 location.reload();
               }, 1000);
             })
