@@ -862,10 +862,10 @@ export default defineComponent({
         }
         .promo-view-container {
           margin: 0 auto;
-          max-width: $maxwidth;
-          width: 95%;
+          max-width: 1050px;
+          width: 100%;
           text-align: left;
-          padding: 20px;
+          padding: 10px 0;
           color: $font-5;
           font-size: 20px;
           ol {
