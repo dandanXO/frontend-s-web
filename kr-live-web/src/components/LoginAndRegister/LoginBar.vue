@@ -72,8 +72,8 @@
         </div>
       </div>
       <div class="right-content">
-        <div v-if="store.hasToken()" class="login-box"><LoggedIn /></div>
-        <div v-if="!store.hasToken()" class="login-box"><NotLoggedIn /></div>
+        <LoggedIn v-if="store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" />
       </div>
     </div>
   </div>
@@ -364,12 +364,7 @@ const iconInfo = reactive([
   justify-content: center;
   width: 100%;
   background-color: transparent;
-  margin-top: 16px;
-  padding-right: 8px;
   @media (min-width: 769px) {
-    // background: linear-gradient(#292b31, #191b1e);
-    justify-content: flex-end;
-    margin-top: 0px;
   }
 }
 
@@ -404,14 +399,6 @@ const iconInfo = reactive([
     img {
       width: 24px;
     }
-  }
-}
-
-.login-box {
-  display: flex;
-  justify-content: center;
-  @media (min-width: 769px) {
-    justify-content: flex-end;
   }
 }
 </style>
