@@ -25,19 +25,19 @@
       <td rowspan="5">1倍</td>
     </tr>
     <tr>
-      <td>1000</td>
+      <td>1,000</td>
       <td>18</td>
     </tr>
     <tr>
-      <td>5000</td>
+      <td>5,000</td>
       <td>58</td>
     </tr>
     <tr>
-      <td>10000</td>
+      <td>10,000</td>
       <td>188</td>
     </tr>
     <tr>
-      <td>30000</td>
+      <td>30,000</td>
       <td>388</td>
     </tr>
   </table>
