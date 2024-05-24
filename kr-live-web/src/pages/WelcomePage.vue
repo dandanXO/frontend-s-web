@@ -5,10 +5,10 @@
     </div>
     <div class="promotionlist">
       <span v-for="(promo, i) in promoList" :key="i">
-        <img
+        <!-- <img
           @click="checkPromo(promo.promoImg)"
           :src="require(`../assets/welcome/promo-${promo.promoImg}.png`)"
-        />
+        /> -->
       </span>
     </div>
     <router-link to="/register"> สมัคร </router-link>
