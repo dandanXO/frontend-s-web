@@ -53,7 +53,7 @@ const onLogoutSubmit = () => {
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 769px) {
+  @media (max-width: 768px) {
     flex-direction: column;
   }
 }
