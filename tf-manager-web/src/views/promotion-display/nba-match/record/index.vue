@@ -69,7 +69,12 @@
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="180" />
       <el-table-column prop="title" :label="t('fields.title')" width="250" />
-      <el-table-column prop="teamChosen" :label="t('fields.selectedTeam')" width="150" />
+      <el-table-column prop="teamChosen" :label="t('fields.selectedTeam')" width="150">
+        <template #default="scope">
+          <span v-if="scope.row.teamChosen === 'DRAW'">{{ t('fields.draw') }}</span>
+          <span v-else>{{ scope.row.teamChosen }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" min-width="180">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.bonus,type: 'money'}" />
