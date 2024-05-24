@@ -6,7 +6,11 @@
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img src="../../../assets/promo/lh-nba24-match/team1.png" alt="" />
+              <img
+                src="../../../assets/promo/lh-nba24-match/team1.png"
+                alt=""
+                class="nba24-match-game-content-team-img"
+              />
               <div class="nba24-match-game-content-team-name">老鷹</div>
               <div class="nba24-match-game-content-btn">投票</div>
             </div>
@@ -18,7 +22,11 @@
           </div>
           <div class="nba24-match-game-content-right">
             <div class="nba24-match-game-content-team">
-              <img src="../../../assets/promo/lh-nba24-match/team2.png" alt="" />
+              <img
+                src="../../../assets/promo/lh-nba24-match/team2.png"
+                alt=""
+                class="nba24-match-game-content-team-img"
+              />
               <div class="nba24-match-game-content-team-name">火箭</div>
               <div class="nba24-match-game-content-btn">投票</div>
             </div>
@@ -34,7 +42,6 @@
       <div class="nba24-match-game-info">
         <div class="title"></div>
         <div class="little-title">
-          <div class="left">活动内容</div>
           <div class="right">
             活动期间，用户投注NBA季后赛总决赛当日有效投注≥1,000元后参与本活动竞猜，根据竞猜结果派发对应彩金。
             每日最高可获1,888元。
@@ -127,7 +134,7 @@
         </div>
       </div>
 
-      <el-dialog
+      <!-- <el-dialog
         v-model="tableRecordDialog"
         width="800px"
         align-center
@@ -169,7 +176,47 @@
             </tbody>
           </table>
         </div>
-      </el-dialog>
+      </el-dialog> -->
+      <q-dialog v-model="tableRecordDialog" full-width position="bottom" class="nba24-match-table-record-dialog">
+        <div class="record-dialog-container">
+          <div class="record-header-container">
+            <div class="title"></div>
+            <div class="record-close-btn" v-close-popup>
+              <img src="../../../assets/promo/lh-nba24-match/close-btn.png" />
+            </div>
+          </div>
+          <table class="record-table">
+            <thead>
+              <tr>
+                <th>投票时间</th>
+                <th>参赛队伍</th>
+                <th>投票队伍</th>
+                <th>投票结果</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>平局</td>
+                <td style="color: #51acff">正确</td>
+              </tr>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>老鹰胜</td>
+                <td style="color: #ff5151">错误</td>
+              </tr>
+              <tr>
+                <td>2024-05-11 16:00</td>
+                <td>老鷹vs火箭</td>
+                <td>平局</td>
+                <td style="color: #7a8eb9">未出结果</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </q-dialog>
     </div>
   </div>
 </template>
@@ -190,24 +237,24 @@ const tableRecordDialog = ref(false);
   align-items: center;
 }
 .nba24-match-container {
-  width: 1200px;
+  width: 100%;
   height: 100%;
 }
 
 .nba24-match-game {
   width: 100%;
-  height: 302px;
+  height: 144px;
   border-radius: 12px;
   border: 1px solid #51acff;
   background-color: #fff;
   position: relative;
   .nba24-match-game-status {
-    width: 240px;
-    height: 40px;
+    width: 120px;
+    height: 24px;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 28px;
+    line-height: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -229,17 +276,21 @@ const tableRecordDialog = ref(false);
   align-items: center;
   .nba24-match-game-content-left,
   .nba24-match-game-content-right {
+    :deep(.nba24-match-game-content-team-img) {
+      width: 44px !important;
+      height: 44px;
+    }
     .nba24-match-game-content-team {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       .nba24-match-game-content-team-name {
-        font-size: 20px;
+        font-size: 14px;
         font-weight: 600;
-        line-height: 28px;
-        margin-top: 12px;
-        margin-bottom: 24px;
+        line-height: 16.6px;
+        margin-top: 4px;
+        margin-bottom: 12px;
       }
     }
   }
@@ -248,38 +299,38 @@ const tableRecordDialog = ref(false);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0px 120px;
+    margin: 0px 40px;
     .nba24-match-game-content-center-time {
-      font-size: 24px;
+      font-size: 12px;
       font-weight: 600;
-      line-height: 33.6px;
+      line-height: 18px;
       color: #479af7;
       border-radius: 30px;
-      padding: 8px 44px;
+      padding: 4px 10px;
       background: #edf4ff;
       margin-top: 12px;
     }
     .nba24-match-game-content-center-schedule {
-      font-size: 20px;
+      font-size: 12px;
       font-weight: 600;
-      line-height: 28px;
+      line-height: 18px;
       color: #1b1b1b99;
-      margin-top: 23px;
-      margin-bottom: 33px;
+      margin-top: 12px;
+      margin-bottom: 14px;
     }
   }
 }
 
 .nba24-match-game-content-btn {
-  font-size: 20px;
+  font-size: 12px;
   font-weight: 500;
-  line-height: 28px;
+  line-height: 16.8px;
   color: #00000066;
   background-image: url("../../../assets/promo/lh-nba24-match/btn.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 180px;
-  height: 58px;
+  width: 72px;
+  height: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -292,27 +343,30 @@ const tableRecordDialog = ref(false);
   align-items: center;
   margin-top: 12px;
   .nba24-match-game-bottom-left-title {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 22.4px;
+    line-height: 16.8px;
     color: #000000;
+    width: calc(100% - 61px);
   }
   .nba24-match-game-bottom-left-btn {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 600;
-    line-height: 22.4px;
+    line-height: 18px;
     color: #479af7;
     cursor: pointer;
+    width: 61px;
+    margin-left: 24px;
   }
 }
 
 .nba24-match-game-info {
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 20px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 40px;
+  padding: 16px 8px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
@@ -323,34 +377,19 @@ const tableRecordDialog = ref(false);
     background-image: url("../../../assets/promo/lh-nba24-match/info-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 738px;
-    height: 44px;
-    margin-bottom: 40px;
+    width: 335px;
+    height: 20px;
+    margin-bottom: 16px;
   }
   .little-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    .left {
-      background-image: url("../../../assets/promo/lh-nba24-match/info-little-title-bg.png");
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      width: 120px;
-      height: 46px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      font-weight: 600;
-      line-height: 23.33px;
-      color: #ffffff;
-      margin-right: 16px;
-    }
     .right {
-      font-size: 20px;
+      font-size: 12px;
       font-weight: 400;
-      line-height: 28px;
+      line-height: 18px;
       color: #000000;
     }
   }
@@ -359,15 +398,15 @@ const tableRecordDialog = ref(false);
 .nba24-match-game-info-table {
   width: 100%;
   height: 100%;
-  border-collapse: separate;
+  border-collapse: separate !important;
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
   th {
-    height: 56px;
-    font-size: 20px;
+    height: 32px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 18px;
     color: #fff;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     &:first-child {
@@ -395,10 +434,10 @@ const tableRecordDialog = ref(false);
   }
   td {
     border: 1px solid #acd4f6;
-    height: 56px;
-    font-size: 20px;
+    height: 32px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 18px;
     color: #000000;
   }
 }
@@ -406,10 +445,10 @@ const tableRecordDialog = ref(false);
 .nba24-match-game-bottom-rule {
   width: 100%;
   height: 100%;
-  margin-top: 40px;
+  margin-top: 20px;
   background: #f2f8fe;
   border-radius: 12px;
-  padding: 40px;
+  padding: 16px 0px;
   border: 1px solid #acd4f6;
   box-shadow: 0px 0px 4px 0px #01497b0f;
   display: flex;
@@ -419,46 +458,34 @@ const tableRecordDialog = ref(false);
     background-image: url("../../../assets/promo/lh-nba24-match/rule-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 738px;
-    height: 44px;
-    margin-bottom: 20px;
+    width: 335px;
+    height: 20px;
+    margin-bottom: 16px;
   }
   .content {
-    font-size: 20px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 36px;
+    line-height: 18px;
     color: #000000;
     .item {
-      text-indent: -16px;
+      text-indent: -11px;
       padding-left: 24px;
+      padding-right: 8px;
     }
   }
 }
 
-:deep(.nba24-match-table-record-dialog) {
+.nba24-match-table-record-dialog {
   width: 1000px;
   height: 652px;
-  .el-dialog__header {
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .el-dialog__header .el-dialog__headerbtn {
-    background: url(../../../assets/promo/lh-nba24-match/close-btn.png);
-    content-visibility: hidden;
-    background-size: contain;
-    width: 24px;
-    height: 24px;
-    top: 20px;
-    right: 24px;
-  }
-  .el-dialog__body {
-    padding: 20px;
-  }
 
   .record-dialog-container {
-    width: 960px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+
+    width: 100%;
     height: 100%;
   }
 
@@ -466,19 +493,22 @@ const tableRecordDialog = ref(false);
     background-image: url("../../../assets/promo/lh-nba24-match/record-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 536px;
-    height: 32px;
+    width: 265px;
+    height: 20px;
     margin-top: 20px;
   }
 
   .record-table {
-    width: 100%;
+    width: 96%;
     height: 100%;
+    margin-top: 12px;
+    margin-bottom: 20px;
+    border-collapse: collapse !important;
     th {
-      height: 56px;
-      font-size: 20px;
+      height: 32px;
+      font-size: 12px;
       font-weight: 600;
-      line-height: 28px;
+      line-height: 18px;
       color: #fff;
       background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
       vertical-align: middle;
@@ -492,10 +522,10 @@ const tableRecordDialog = ref(false);
       }
     }
     tr {
-      height: 56px;
-      font-size: 20px;
+      height: 32px;
+      font-size: 12px;
       font-weight: 600;
-      line-height: 28px;
+      line-height: 18px;
       color: #7a8eb9;
       vertical-align: middle;
       text-align: left;
@@ -541,5 +571,20 @@ const tableRecordDialog = ref(false);
       }
     }
   }
+}
+
+.record-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-close-btn {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  right: 12px;
 }
 </style>
