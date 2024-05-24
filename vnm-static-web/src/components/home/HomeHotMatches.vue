@@ -310,25 +310,25 @@ onMounted(() => {
         position: relative;
         img {
           display: block;
-          width: 210px;
-
-          margin-top: -40px;
+          width: 145px;
+          margin-top: -25px;
         }
         span {
           background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-weight: 800;
-          font-size: 80px;
+          font-size: 50px;
           position: absolute;
-          top: -20px;
+          top: -12px;
+          font-family: Arial;
 
           &.num1 {
-            left: 31px;
+            left: 22px;
           }
 
           &.num2 {
-            left: 130px;
+            left: 90px;
           }
         }
       }
