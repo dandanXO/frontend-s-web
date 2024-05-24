@@ -55,7 +55,7 @@ const goToUrl = (redirectUrl) => {
   if(urlSplit.length >= 2){
     const type= urlSplit[0];
     if(type==='page'){
-      router.push(`/${redirectUrl}`);
+      router.push(`/${urlSplit[1]}`);
     }else{
       router.push(`/promotion?name=${redirectUrl}`);
     }
