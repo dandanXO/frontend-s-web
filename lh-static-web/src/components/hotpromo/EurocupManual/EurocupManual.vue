@@ -408,7 +408,7 @@ onMounted(() => {
     font-family: Play;
     font-size: 32px;
     font-weight: 700;
-    margin: 30px auto 0;
+    margin: 15px auto 0;
     color: #0099D8;
     display: flex; justify-content: center;
     align-items: center;
@@ -603,8 +603,10 @@ onMounted(() => {
     gap: 10px;
     justify-content: center;
     align-items: center;
+    flex:1;
   }
   .game-time {
+    flex:2;
     display: flex;
     align-items: center;
     justify-content: center;
