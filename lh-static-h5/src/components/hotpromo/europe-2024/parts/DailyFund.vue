@@ -103,7 +103,7 @@
         <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
         <button
           @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
@@ -120,7 +120,7 @@
           <div class="bracket-info__info-wrapper-VS">VS</div>
           <button
             @click="matchSubmit(match, 0, '平局')"
-            v-if="!match.selectedTeamId"
+            v-if="match.selectedTeamId === null"
             class="bracket-team-select__button"
           >
             平局
@@ -133,7 +133,7 @@
         <bracket-team :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
         <button
           @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
