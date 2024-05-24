@@ -31,12 +31,6 @@
           :clearable="false"
         />
         <el-input
-          v-model="request.title"
-          size="small"
-          style="width: 200px; margin-left: 10px;"
-          :placeholder="t('fields.title')"
-        />
-        <el-input
           v-model="request.loginName"
           size="small"
           style="width: 200px; margin-left: 10px;"
@@ -53,7 +47,7 @@
           <el-option
             v-for="item in uiControl.status"
             :key="item.key"
-            :label="t('status.uefaMatchRecord.' + item.displayName)"
+            :label="t('status.gameMatchRecord.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
@@ -173,7 +167,6 @@ const request = reactive({
   size: 20,
   current: 1,
   siteId: null,
-  title: null,
   loginName: null,
   status: null,
   createTime: [convertStartDate(new Date()), convertDate(new Date())]
@@ -189,12 +182,9 @@ const uiControl = reactive({
   dialogType: "UPDATE",
   removeBtn: true,
   status: [
-    { key: 1, displayName: 'PENDING', value: 'PENDING' },
-    { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
-    { key: 3, displayName: 'WIN_MATCH', value: 'WIN_MATCH' },
-    { key: 4, displayName: 'WIN_TEAM', value: 'WIN_TEAM' },
-    { key: 5, displayName: 'WIN_ALL', value: 'WIN_ALL' },
-    { key: 6, displayName: 'LOSE', value: 'LOSE' }
+    { key: 1, displayName: 'PENDING_SETTLE', value: 'PENDING_SETTLE' },
+    { key: 2, displayName: 'SETTLED', value: 'SETTLED' },
+    { key: 3, displayName: 'CANCEL', value: 'CANCEL' }
   ]
 });
 
@@ -233,7 +223,6 @@ async function loadSites() {
 
 function resetQuery() {
   request.siteId = site.value.id;
-  request.title = null;
   request.status = null;
   request.loginName = null;
   request.createTime = [convertStartDate(new Date()), convertDate(new Date())];
