@@ -32,7 +32,7 @@
           <img :src="items.imgUrl" alt="" />
         </div>
       </div>
-      <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
+      <div class="copyright-text">ⓒ 2024 City 8 All right reserved</div>
     </footer>
   </q-layout>
 </template>

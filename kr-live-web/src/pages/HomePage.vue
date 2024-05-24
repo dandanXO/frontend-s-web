@@ -64,9 +64,10 @@
       </div>
     </div> -->
 
-    <!-- <div class="midd">
+    <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
+          <img src="../assets/icon/icon-announcement.svg" />
           <div class="box">
             <div class="text">공지</div>
           </div>
@@ -79,7 +80,7 @@
           </div>
         </marquee-text>
       </div>
-    </div> -->
+    </div>
 
     <div class="jackpot">
       <div class="jackpot-txt">987,654,321.23</div>
@@ -2202,7 +2203,7 @@ export default defineComponent({
   .station-notice-wrapper {
     display: flex;
     border-radius: 8px;
-    background-color: #000;
+    background-color: #151324;
     gap: 10px;
     padding: 6px;
     justify-content: center;
@@ -2215,13 +2216,14 @@ export default defineComponent({
 
     .volume {
       height: 24px;
-      background-color: #ff3c3c;
+      // background-color: #ff3c3c;
       display: flex;
       align-items: center;
       @media (min-width: 769px) {
         height: 32px;
       }
       .box {
+        color: #00FFFF;
         width: 48px;
         font-size: 16px;
         line-height: 22.4px;

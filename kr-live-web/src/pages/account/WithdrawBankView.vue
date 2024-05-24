@@ -826,7 +826,7 @@ export default defineComponent({
 
   .bank-card-item {
     border-radius: 5px;
-    background-image: $linear-bg-2;
+    background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -924,6 +924,7 @@ export default defineComponent({
       align-items: center;
       padding: 0;
       filter: none;
+      color: #fff;
     }
 
     .unlink-btn {
