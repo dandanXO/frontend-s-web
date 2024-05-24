@@ -81,6 +81,8 @@ const getMatchStatusText = (status) => {
     &.left,
     &.right {
       align-self: flex-end;
+      flex:3;
+
       .sport-zhongchao-match-game-content-team {
         display: flex;
         flex-direction: column;
@@ -101,6 +103,7 @@ const getMatchStatusText = (status) => {
     }
 
     &.center {
+      flex: 4;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -116,6 +119,7 @@ const getMatchStatusText = (status) => {
         padding: 4px 10px;
         background: #edf4ff;
         margin-top: 4px;
+        text-align: center;
       }
       .sport-zhongchao-match-game-content-center-schedule {
         color: #1b1b1b99;
