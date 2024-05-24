@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="shade">
         <div class="common-title">活动详情</div>
         <div class="alert-box">
@@ -395,12 +395,12 @@ onMounted(() => {
 .eurocup-manual-container {
   position: relative;
   width: 100%;
-  
-  .common-title { 
+
+  .common-title {
     font-family: Play;
     font-size: 20px;
     font-weight: 700;
-    margin: 30px auto 0;
+    margin: 15px auto 0;
     color: #0099D8;
     display: flex; justify-content: center;
     align-items: center;
@@ -549,7 +549,7 @@ onMounted(() => {
     .title {
       display: flex;
       align-items: center;
-      justify-content: center;  
+      justify-content: center;
       color: #fff;
       font-family: Play;
       font-size: 12px;
@@ -582,7 +582,7 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 150px;
+  max-width: 165px;
   padding: 4px;
 
   &:hover {
@@ -595,6 +595,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    flex:2;
     .vs {
       font-size: 24px;
       line-height: 20px;
@@ -638,6 +639,7 @@ onMounted(() => {
     align-items: center;
     flex-direction: column;
     gap: 5px;
+    flex:1;
   }
 }
 
