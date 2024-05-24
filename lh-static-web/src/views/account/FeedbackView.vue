@@ -255,7 +255,7 @@
                       @click="btnClick('final')"
                       style="display: none"
                       :disabled="!input && optionModal.length === 0"
-                      :class="!input || optionModal.length === 0 ? 'next-disabled' : ''"
+                      :class="!input || optionModal.length === 0 ? '' : ''"
                     >
                       完成
                     </button>
@@ -462,6 +462,24 @@ const getSelected = (item, ans) => {
   };
   cacheChoices[item.sequence - 1] = cacheObj;
 };
+
+function removeEmojis(str) {
+  return str.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 表情符号块
+    .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 杂项符号和象形文字
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 交通和地图符号
+    .replace(/[\u{1F700}-\u{1F77F}]/gu, '')  // 阿尔化学符号
+    .replace(/[\u{1F780}-\u{1F7FF}]/gu, '')  // 地球和天气符号
+    .replace(/[\u{1F800}-\u{1F8FF}]/gu, '')  // 装饰符号
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '')  // 动物、自然和家居符号
+    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '')  // 手势和姿势
+    .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 杂项符号
+    .replace(/[\u{2700}-\u{27BF}]/gu, '')    // Dingbats
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')    // 变化选择器
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, ''); // 国旗符号
+}
+
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
@@ -543,6 +561,10 @@ const btnClick = (btnType) => {
       ...field,
       choice: Array.isArray(field.choice) ? field.choice.join(",") : field.choice
     }));
+
+    choicesLockedIn.forEach((item) => {
+      item.choice = removeEmojis(item.choice);
+    })
 
     // const questionDiv = document.getElementById("questionContainer");
     // const QRDiv = document.getElementById("QRContainer");

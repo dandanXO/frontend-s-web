@@ -78,10 +78,13 @@ onMounted(() => {
 
     .avatar {
       width: 50px;
+      height: 50px;
       max-width: 60px;
       min-width: 60px;
       img {
-        width: 100%;
+        aspect-ratio: 1/1;
+        width:50px;
+        height: 50px;
         border-radius:50%;
       }
     }
