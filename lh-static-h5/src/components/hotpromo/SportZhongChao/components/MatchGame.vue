@@ -13,7 +13,7 @@
           <img src="../../../../assets/promo/lh-sport-zhongchao/vs.png"/>
         </div>
         <div class="sport-zhongchao-match-game-content-center-time">
-          {{ moment(match.matchTime).format("MM/DD hh:mm") }}
+          {{ moment(match.matchTime).format("MM/DD HH:mm") }}
         </div>
 <!--        <div class="sport-zhongchao-match-game-content-center-schedule">{{ match.title }}</div>-->
       </div>
