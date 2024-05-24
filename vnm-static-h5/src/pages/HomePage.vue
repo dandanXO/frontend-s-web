@@ -1554,7 +1554,7 @@ export default defineComponent({
       if (urlSplit.length >= 2) {
         const type = urlSplit[0];
         if (type === "page") {
-          router.push(`/${banner.redirectUrl}`);
+          router.push(`/${urlSplit[1]}`);
         } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }

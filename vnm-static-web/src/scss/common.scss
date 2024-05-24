@@ -81,6 +81,9 @@ body {
     justify-content: center;
     align-items: center;
   }
+  .el-carousel__indicators--outside{
+    transform: translateX(-50%);
+  }
   .el-input__wrapper,
   .el-textarea__inner {
     background-color: #f7f8fb;

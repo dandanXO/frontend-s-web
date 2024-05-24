@@ -208,7 +208,7 @@
               <span class="role-span">{{ $t('fields.affiliateInfo') }}</span>
             </div>
           </template>
-          <el-form label-suffix=" : " label-width="150px" label-position="left">
+          <el-form label-suffix=" : " label-width="200px" label-position="left">
             <el-row class="info">
               <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />
@@ -251,6 +251,18 @@
                 :label="t('fields.affiliateCode')"
               >
                 {{ affInfo.affiliateCode }}
+              </el-form-item>
+            </el-row>
+
+            <el-row class="info">
+              <el-icon color="#7D8792">
+                <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                label="Platform Commission"
+              >
+                {{ affInfo.revenueShare }}
               </el-form-item>
             </el-row>
           </el-form>
