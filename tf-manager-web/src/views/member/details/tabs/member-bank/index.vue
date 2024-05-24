@@ -115,6 +115,7 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="operator" :label="t('fields.operator')" align="center" min-width="180" />
       </el-table>
       <el-pagination
         class="pagination"
