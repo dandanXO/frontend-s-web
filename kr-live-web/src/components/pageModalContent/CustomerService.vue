@@ -5,10 +5,15 @@
         <q-btn :label="'뒤쪽에'" @click="isCreateMode = false" color="blue" />
         <form class="content-form">
           <p>
-            <input placeholder="제목을 입력해주세요." v-model="serviceForm.title" />
+            <q-input ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" filled clearable
+            lazy-rules :rules="[
+            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+          ]" />
           </p>
           <p>
-            <textarea rows="4" v-model="serviceForm.content" />
+            <q-input ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" filled clearable lazy-rules :rules="[
+            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+          ]" />
           </p>
         </form>
       </div>
@@ -45,6 +50,8 @@ var qs = require("qs");
 
 const $q = useQuasar();
 const isCreateMode = ref(false);
+const titleRef = ref();
+const contentRef = ref();
 
 const serviceForm = reactive({
   title: "",
@@ -54,27 +61,33 @@ const serviceForm = reactive({
 const feedbackData = ref([]);
 
 const sendMessage = () => {
-  api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
-    const resCode = res.data.code;
-    const resMessage = res.data.message
-    if (resCode === 0) {
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "성공적으로 보냈습니다",
-        icon: "check_circle_outline"
-      });
-      serviceForm.title = "";
-      serviceForm.content = "";
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: resMessage,
-        icon: "report_problem"
-      });
-    }
-  });
+  titleRef.value.validate();
+  contentRef.value.validate();
+
+  if (titleRef.value.hasError || contentRef.value.hasError) {
+  } else {
+    api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
+      const resCode = res.data.code;
+      const resMessage = res.data.message
+      if (resCode === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "성공적으로 보냈습니다",
+          icon: "check_circle_outline"
+        });
+        serviceForm.title = "";
+        serviceForm.content = "";
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: resMessage,
+          icon: "report_problem"
+        });
+      }
+    }); 
+  }
 };
 
 const initFeedbackReplies = () => {
