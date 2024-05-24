@@ -51,7 +51,7 @@
 
     <div
       class="sport-zhongchao-title"
-      :style="{ backgroundImage: 'url(' + require('src/assets/promo/lh-sport-zhongchao/title-' + tab + '.png') + ')' }"
+      :style="{ backgroundImage: 'url(' + require('src/assets/promo/lh-sport-zhongchao/' + tab + '-title.png') + ')' }"
     ></div>
     <div class="sport-zhongchao-content-info">
       <div class="sport-zhongchao-content-info-item">活动时间：2024中国足球超级联赛新赛季</div>
@@ -83,8 +83,8 @@
               color: #05a5ff;
               line-height: 60px;
               font-size: 14px;
-              border-left: 2px solid #d7d7d77d;
-              border-right: 2px solid #d7d7d77d;
+              border-left: 2px solid #05A5FF !important;
+              border-right: 2px solid #05A5FF !important;
             "
           >
             <div>角球+1分</div>
@@ -128,171 +128,174 @@
           <td>788</td>
           <td>888</td>
         </tr>
-        <tr>
-          <td
-            colspan="5"
-            style="
-              line-height: 60px;
+      </table>
+
+
+      <div
+        v-if="tab === 'first'"
+        style="
+              line-height: 20px;
+              padding: 16px;
               font-size: 14px;
               color: #ff5454;
-                             background-color: #FFCBCB;
               text-align: start;
-              padding-left: 30px;
-              border-bottom-left-radius: 0px;
-              border-bottom-right-radius: 0px;
-              border-bottom: none;
+               background: #FFEFEF;
+              margin-top: 15px;
+              border: 1px solid #FFCBCB;
             "
-          >
-            注：奖金不累积，根据当场指定赛事触发事件总分派发。
-          </td>
-        </tr>
-      </table>
+      >
+        注：奖金不累积，根据当场指定赛事触发事件总分派发。
+      </div>
 
       <table class="second-table" v-if="tab === 'second'">
         <tr>
           <th rowspan="2">累计有效投注</th>
-          <th colspan="2" style="border-right: 2px solid #d7d7d77d; border-left: 2px solid #d7d7d77d">投注指定一场</th>
+          <th colspan="2" style="border-right: 2px solid #05A5FF !important; border-left: 2px solid #05A5FF !important">投注指定一场</th>
           <th colspan="2">投注指定两场</th>
         </tr>
         <tr>
-          <td style="color: #05a5ff; font-size: 14px; line-height: 28px; font-weight: 500">
+          <td style="color: #05A5FF !important; font-size: 14px; line-height: 28px; font-weight: 500">
             <div>两队总比分</div>
             <div>双数彩金</div>
           </td>
           <td
             style="
-              color: #05a5ff;
+              color: #05A5FF !important;
               font-size: 14px;
               line-height: 28px;
               font-weight: 500;
-              border-right: 2px solid #d7d7d77d;
+              border-right: 2px solid #05A5FF !important;
             "
           >
             <div>两队总比分</div>
             <div>单数彩金</div>
           </td>
-          <td style="color: #05a5ff; font-size: 14px; line-height: 28px; font-weight: 500">
+          <td style="color: #05A5FF !important; font-size: 14px; line-height: 28px; font-weight: 500">
             <div>四队总比分</div>
             <div>单数彩金</div>
           </td>
-          <td style="color: #05a5ff; font-size: 14px; line-height: 28px">
+          <td style="color: #05A5FF !important; font-size: 14px; line-height: 28px">
             <div>四队总比分</div>
             <div>单数彩金</div>
           </td>
         </tr>
         <tr>
           <td>≥1,000</td>
-          <td style="border-left: 2px solid #d7d7d77d">5</td>
-          <td style="border-right: 2px solid #d7d7d77d">6</td>
+          <td style="border-left: 2px solid #05A5FF !important">5</td>
+          <td style="border-right: 2px solid #05A5FF !important">6</td>
           <td>8</td>
           <td>10</td>
         </tr>
         <tr>
           <td>≥5,000</td>
-          <td style="border-left: 2px solid #d7d7d77d">18</td>
-          <td style="border-right: 2px solid #d7d7d77d">26</td>
+          <td style="border-left: 2px solid #05A5FF !important">18</td>
+          <td style="border-right: 2px solid #05A5FF !important">26</td>
           <td>28</td>
           <td>38</td>
         </tr>
         <tr>
           <td>≥10,000</td>
-          <td style="border-left: 2px solid #d7d7d77d">28</td>
-          <td style="border-right: 2px solid #d7d7d77d">38</td>
+          <td style="border-left: 2px solid #05A5FF !important">28</td>
+          <td style="border-right: 2px solid #05A5FF !important">38</td>
           <td>58</td>
           <td>68</td>
         </tr>
         <tr>
           <td>≥50,000</td>
-          <td style="border-left: 2px solid #d7d7d77d">158</td>
-          <td style="border-right: 2px solid #d7d7d77d">188</td>
+          <td style="border-left: 2px solid #05A5FF !important">158</td>
+          <td style="border-right: 2px solid #05A5FF !important">188</td>
           <td>288</td>
           <td>388</td>
         </tr>
         <tr>
           <td>≥100,000</td>
-          <td style="border-left: 2px solid #d7d7d77d">328</td>
-          <td style="border-right: 2px solid #d7d7d77d">388</td>
+          <td style="border-left: 2px solid #05A5FF !important">328</td>
+          <td style="border-right: 2px solid #05A5FF !important">388</td>
           <td>588</td>
           <td>888</td>
         </tr>
-        <tr>
-          <td
-            colspan="5"
-            style="
-              line-height: 26px;
+
+      </table>
+
+
+      <div
+        v-if="tab === 'second'"
+        style="
+              line-height: 20px;
+              padding: 16px;
               font-size: 14px;
               color: #ff5454;
-                             background-color: #FFCBCB;
               text-align: start;
-              padding-left: 30px;
-              padding-right: 30px;
-              border-bottom-left-radius: 0px;
-              border-bottom-right-radius: 0px;
-              border-bottom: none;
+               background: #FFEFEF;
+              margin-top: 15px;
+              border: 1px solid #FFCBCB;
             "
-          >
-            注：彩金奖励不叠加，根据会员所投注的场次以及档位进行派彩；若比分为0:0按双数计算
-          </td>
-        </tr>
-      </table>
+      >
+        注：彩金奖励不叠加，根据会员所投注的场次以及档位进行派彩；若比分为0:0按双数计算
+      </div>
+
       <table class="third-table" v-if="tab === 'third'">
         <tr>
           <th style="width: 160px">指定赛事</th>
-          <th style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d; width: 210px">注单条件</th>
+          <th style="width: 210px">注单条件</th>
           <th>逢8奖金</th>
         </tr>
         <tr>
-          <td rowspan="6" style="color: #05a5ff; line-height: 60px; font-size: 14px; border-right: 2px solid #d7d7d77d">
+          <td rowspan="6" style="color: #05A5FF !important; line-height: 60px; font-size: 14px; border-right: 2px solid #05A5FF !important">
             <div>首战告捷</div>
             <div>乘胜追击</div>
           </td>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续两个8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续两个8</td>
           <td>28</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续三个8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续三个8</td>
           <td>88</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续四个8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续四个8</td>
           <td>188</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续五个8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续五个8</td>
           <td>688</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续六个8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续六个8</td>
           <td>1,888</td>
         </tr>
         <tr>
-          <td style="border-left: 2px solid #d7d7d77d; border-right: 2px solid #d7d7d77d">尾号连续七个或以上8</td>
+          <td style="border-left: 2px solid #05A5FF !important; border-right: 2px solid #05A5FF !important">尾号连续七个或以上8</td>
           <td>2,888</td>
         </tr>
-        <tr>
-          <td
-            colspan="3"
-            style="
-              height: 104px;
+      </table>
+
+      <div
+        v-if="tab === 'third'"
+        style="
+              line-height: 20px;
+              padding: 16px;
               font-size: 14px;
               color: #ff5454;
-                             background-color: #FFCBCB;
               text-align: start;
-              padding-left: 30px;
-              border-bottom-left-radius: 0px;
-              border-bottom-right-radius: 0px;
-              border-bottom: none;
+               background: #FFEFEF;
+              margin-top: 15px;
+              border: 1px solid #FFCBCB;
             "
-          >
-            <div style="line-height: 20px">注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。</div>
-            <div style="line-height: 20px; text-indent: 2em">
-              注单申请时间为三天有效期，若逾期视为自动放弃不予发放。
-            </div>
-          </td>
-        </tr>
-      </table>
+      >
+        <div style="line-height: 20px;padding-bottom:8px;">注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。</div>
+        <div style="line-height: 20px;">
+          注单申请时间为三天有效期，若逾期视为自动放弃不予发放。
+        </div>
+      </div>
+
+
     </div>
 
+    <div
+      class="sport-zhongchao-title"
+      :style="{ backgroundImage: 'url(' + require('src/assets/promo/lh-sport-zhongchao/rules-title.png') + ')' }"
+    ></div>
     <div class="sport-zhongchao-notice">
       <div class="sport-zhongchao-notice-item">
         1.活动期间，符合条件的会员彩金于次日24点前派发至账户，仅需一倍流水即可提款；
@@ -333,6 +336,10 @@ onMounted(async () => {
 });
 </script>
 <style lang="scss" scoped>
+.promo-container .selected-promo .selected-promo-wrapper .inner table td{
+  border:none;
+}
+
 .sport-zhongchao-container {
   display: flex;
   flex-direction: column;
@@ -438,8 +445,12 @@ onMounted(async () => {
     width: 100%;
     text-align: center;
     vertical-align: middle;
+    border-left:1px solid #05A5FF;
+    border-right:1px solid #05A5FF;
+    border-color:#05A5FF;
+
     th {
-      background-color: #05a5ff !important;
+      background-color:initial !important;
       height: 40px;
       color: #fff;
       font-size: 14px;
@@ -459,7 +470,21 @@ onMounted(async () => {
       font-weight: 500;
       color: #333;
       background-color: #fff;
-      border-bottom: 2px solid #d7d7d77d;
+      border-bottom: 2px solid #05A5FF !important;
+    }
+  }
+
+  .first-table,.third-table{
+    tr:first-child{
+      background: linear-gradient(180deg, #05D2FF 0%, #0070F4 100%);
+    }
+  }
+
+  .second-table{
+    tr:first-child{
+      th{
+        background: linear-gradient(180deg, #05D2FF 0%, #0070F4 100%);
+      }
     }
   }
 
@@ -469,6 +494,8 @@ onMounted(async () => {
     line-height: 28px;
     font-weight: 500;
     color: #333;
+    border: 1px solid #01A4FF;
+    padding: 16px;
   }
 }
 </style>
