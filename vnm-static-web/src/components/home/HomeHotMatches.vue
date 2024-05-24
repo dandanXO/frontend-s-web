@@ -26,9 +26,12 @@
       <div class="euro-countdown-txt">
         {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}
         <div class="euro-countdown-num">
-          <img src="../../assets/home/eurocup-countdown-numbers.png" />
-          <span class="num1">{{ countDay01 }}</span>
-          <span class="num2">{{ countDay02 }}</span>
+          <div class="num">
+            <span>{{ countDay01 }}</span>
+          </div>
+          <div class="num">
+            <span>{{ countDay02 }}</span>
+          </div>
         </div>
         {{ $t("home.euroCountdown02") }}
       </div>
@@ -308,28 +311,36 @@ onMounted(() => {
 
       .euro-countdown-num {
         position: relative;
+        display: flex;
+        align-items: center;
         img {
           display: block;
           width: 145px;
           margin-top: -25px;
         }
+
+        .num {
+          background-image: url(../../assets/home/eurocup-countdown-number.png);
+          height: 80px;
+          width: 80px;
+          background-size: 100% 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: -23px;
+
+          &:last-child {
+            margin-left: -5px;
+          }
+        }
         span {
           background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          font-weight: 800;
+          font-weight: bold;
           font-size: 50px;
-          position: absolute;
-          top: -12px;
-          font-family: Arial;
-
-          &.num1 {
-            left: 22px;
-          }
-
-          &.num2 {
-            left: 90px;
-          }
+          line-height: 1;
+          font-family: Arial, Helvetica, sans-serif;
         }
       }
     }

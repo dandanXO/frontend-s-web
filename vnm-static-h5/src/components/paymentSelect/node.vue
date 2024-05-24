@@ -402,8 +402,8 @@ $node-color: #468cff;
 
     .promo {
       position: absolute;
-      right: -15px;
-      top: -10px;
+      right: -5px;
+      top: -5px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
@@ -411,8 +411,8 @@ $node-color: #468cff;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 64px;
-        width: 64px;
+        max-width: 40px;
+        width: 40px;
       }
       ::after {
         position: relative;
