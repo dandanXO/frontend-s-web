@@ -233,6 +233,5 @@ export default defineComponent({
 
 .red-envelope { 
   animation: tilt-shaking 1s infinite;
-
 }
 </style>

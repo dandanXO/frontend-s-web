@@ -2641,9 +2641,15 @@ export default defineComponent({
   50% { transform: translateX(0); }
   100% { transform: translateX(0); }
 }
-
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
 .red-envelope {
-  animation: shake-with-pause 2s infinite;
+  animation: tilt-shaking 1s infinite;
 }
 
 .hot-matches-wrapper {
