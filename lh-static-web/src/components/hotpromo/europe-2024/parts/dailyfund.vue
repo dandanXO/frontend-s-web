@@ -63,7 +63,7 @@
           <div class="team-num">{{ team.name }} 组</div>
           <div class="chosen-items">
             <div class="selection">
-              {{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}
+              <span class="selection-prefix">{{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}</span>
               <div class="selected-items">
                 <div v-for="t in team.selection">
                   {{ t.name }}
@@ -104,12 +104,15 @@
         <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
         <button
           @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
       <div class="bracket-info">
         <div class="bracket-info__info-wrapper">
@@ -118,24 +121,28 @@
           <div class="bracket-info__info-wrapper-VS">VS</div>
           <button
             @click="matchSubmit(match, 0, '平局')"
-            v-if="!match.selectedTeamId"
+            v-if="match.selectedTeamId === null"
             class="bracket-team-select__button"
           >
             平局
           </button>
-          <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+          <button v-else-if="match.selectedTeamId === 0" class="bracket-team-select__button active">已选</button>
+          <div v-else class="bracket-team-select__button pseudo" />
         </div>
       </div>
       <div class="bracket-team-select">
         <bracket-team :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
         <button
           @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
     </div>
   </div>
@@ -428,7 +435,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-      width: 100px;
+    width: 100px;
     div {
       display: flex;
       gap: 5px;
@@ -438,7 +445,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       font-size: 20px;
     }
     img {
-      width:90px;
+      width: 90px;
     }
   }
 }
@@ -594,6 +601,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
     align-items: center;
     justify-content: start;
     gap: 35px;
+    flex: 1;
   }
 
   .bracket-team-select__button {
@@ -612,11 +620,17 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
       color: #ffffff;
     }
+
+    &.pseudo {
+      background: transparent;
+      padding-top: 44px;
+    }
   }
 
   .bracket-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
 
     .bracket-info__info-wrapper {
       display: flex;
@@ -647,7 +661,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
         font-weight: 900;
         line-height: 106.07px;
         text-align: center;
-        color: #73B2FF1A;
+        color: #73b2ff1a;
       }
     }
   }
@@ -669,9 +683,8 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 .doubling-gold {
   .teams {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    column-gap: 60px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 60px;
     margin: 20px auto;
 
     .team {
@@ -702,24 +715,30 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           align-items: center;
           color: #ffffff;
           font-family: Microsoft YaHei UI;
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 400;
-          line-height: 31.92px;
+          line-height: 23.94px;
           letter-spacing: 0.12em;
+          text-align: left;
           padding: 10px;
 
           .selection {
             color: #ffffffcc;
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
+            align-self: flex-start;
+
+            .selection-prefix {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 18.62px;
+            }
 
             .selected-items {
               display: flex;
-              gap: 10px;
-              justify-content: center;
               align-items: center;
+              gap: 10px;
               color: #ffffff;
             }
           }
@@ -727,9 +746,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .unselectedbtn {
             background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #1a396f;
             cursor: disabled;
@@ -741,9 +760,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .selectedbtn {
             background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #ffffff;
             padding: 5px 20px;

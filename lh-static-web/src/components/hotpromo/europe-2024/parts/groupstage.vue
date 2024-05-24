@@ -34,7 +34,7 @@
           </div>
         </div>
       </template>
-      <span>暂无赛程</span>
+      <span v-else>暂无赛程</span>
     </tab-view>
   </transition>
 
