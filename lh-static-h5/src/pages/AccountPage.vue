@@ -877,14 +877,18 @@ export default defineComponent({
 
   .avatar {
     width: 50px;
+    height:50px;
     max-width: 60px;
     min-width: 60px;
+    max-height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-      width: 100%;
+      width:50px;
+      height: 50px;
+      aspect-ratio: 1/1;
       border-radius: 50%;
     }
 

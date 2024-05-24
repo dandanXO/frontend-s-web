@@ -10,7 +10,7 @@
 
   <el-carousel class="banner-slider" indicator-position="outside" :autoplay="false" :interval="5000">
     <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-      <router-link :to="`/promotion?name=${banner.redirectUrl}`">
+      <a @click="goBannerPage(banner.redirectUrl)">
         <div class="banner-background">
           <div
             v-if="!banner.isLocal"
@@ -19,12 +19,12 @@
           ></div>
           <div v-else class="promo-bg isDesktop"
                :style="'background-image: url(' + require(`../../assets/home/bannerTest/IM-img.png`) + ')'"
-               >
+          >
           </div>
 
           <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
         </div>
-      </router-link>
+      </a>
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -35,12 +35,23 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark } from "@vueuse/core";
 import { userStore } from "@/store";
+import { useRouter } from "vue-router";
+
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const banners = ref([]);
 
 const isDark = useDark();
 const store= userStore()
+const router= useRouter()
+
+const goBannerPage = (redirectUrl) => {
+  if(redirectUrl=="app://deposit"){
+    router.push("/center/deposit");
+  }else{
+    router.push(`/promotion?name=${redirectUrl}`)
+  }
+}
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
