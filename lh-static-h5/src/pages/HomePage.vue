@@ -1198,8 +1198,8 @@ export default defineComponent({
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
-          
-          var casualObj = {
+          if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
+            var casualObj = {
             id: 99,
             name: "TFGaming",
             code: "TFGaming",
@@ -1217,6 +1217,7 @@ export default defineComponent({
             subtitle: "小游戏"
           }
           slot.value.push(casualObj);
+          }
         })
         .catch((err) => {});
     };

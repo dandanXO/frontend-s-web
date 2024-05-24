@@ -8,9 +8,9 @@
 
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="!nav.hasicon">
+            <template v-if="!nav.hasicon && !nav.isTest">
               <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
-                <a @click="openMiniGame" v-if="nav.code==='minigame'" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
                   <h2 class="nav-title cn">{{ nav.name }}</h2>
                   <h2 class="nav-title">{{ nav.enName }}</h2>
                 </a>
@@ -485,24 +485,6 @@ export default defineComponent({
     RegisterAccount,
     RiChatUploadLine
   },
-  data: () => ({
-    // carousel settings
-    navigations: [
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
-      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true },
-      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
-      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
-      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
-      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false },
-      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
-      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
-      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
-      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
-    ]
-  }),
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
@@ -530,6 +512,32 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
+    
+    const checkToken = () => {
+      if (store.token) {
+        if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+          return false
+        }
+        return true
+      } else {
+        return true
+      }
+    }
+    const navigations = reactive([
+      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
+      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
+      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
+      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
+      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: checkToken() },
+      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
+      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },
+      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
+      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
+    ])
     const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
@@ -1472,7 +1480,9 @@ export default defineComponent({
       openForgotpwdDialog,
       isDark,
       timestamp,
-      openMiniGame
+      openMiniGame,
+      navigations,
+      checkToken
     };
   }
 });
