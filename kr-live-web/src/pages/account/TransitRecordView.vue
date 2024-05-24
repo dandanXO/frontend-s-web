@@ -474,7 +474,7 @@
                   color="white"
                   label-color="grey"
                   option-label="name"
-                  option-value="name"
+                  option-value="code"
                   emit-value
                   map-options
                 />
@@ -503,11 +503,6 @@
             :rows-per-page-options="[]"
             row-key="serialNumber"
           >
-            <!-- <template v-slot:body-cell-actions="props">
-              <q-td :props="props">
-                <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
-              </q-td>
-            </template> -->
           </q-table>
         </q-tab-panel>
         <q-tab-panel name="reminderRecord">
@@ -933,7 +928,8 @@ export default defineComponent({
         },
         {
           label: t('lang.platform'),
-          field: "platform"
+          field: "platform",
+          format: (val, row) => val === 'WCEvo' ? 'Evo' : val,
         },
         {
           label: t('lang.bet'),
