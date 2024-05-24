@@ -231,6 +231,7 @@ onMounted(() => {
     align-items: baseline;
     padding-bottom: 10px;
     position: relative;
+    margin-top: -20px;
 
     .euro-countdown-fly-01 {
       position: absolute;
