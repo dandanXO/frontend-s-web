@@ -91,38 +91,44 @@ const loadInfo = () => {
 const updateState = () => {
   const updateInfo = {};
 
-  if (!personalState.memberInfo.realName) {
+  if (personalState.memberInfo.realName !== formDetail.realName) {
     realNameRef.value.validate();
     if (realNameRef.value.hasError) {
       return;
     }
+
+    updateInfo.realName = formDetail.realName;
+
+    api.post("/session/account", qs.stringify(updateInfo)).then(({data}) => {
+      const res = data
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "업데이트 완료",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    });
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '변경 사항 없음',
+      icon: "report_problem"
+    });
   }
-  
-  updateInfo.realName = formDetail.realName;
-
-  api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
-    if (r.code === 0) {
-      profileFormRef.value.reset();
-
-      $q.notify({
-        color: "positive",
-        position: "top",
-        message: "更新成功",
-        icon: "check_circle_outline"
-      });
-
-      store.getMemberInfo().then(() => {
-        loadInfo();
-      });
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: r.message,
-        icon: "report_problem"
-      });
-    }
-  });
 };
 
 onMounted(() => {
