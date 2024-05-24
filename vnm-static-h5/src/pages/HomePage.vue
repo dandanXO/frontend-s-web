@@ -126,17 +126,28 @@
         <img src="../assets/images/home/eurocup-countdown-fly-06.png" />
       </div>
       <div class="euro-countdown-content">
-        <img src="../assets/images/home/eurocup-countdown-content.png" />
-      </div>
+        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />
 
-      <div class="euro-countdown-txt">
-        {{ $t("lang.euroCountdown01a") }}
-        <div class="euro-countdown-num">
-          <img src="../assets/images/home/eurocup-countdown-numbers.png" />
-          <span class="num1">{{ countDay01 }}</span>
-          <span class="num2">{{ countDay02 }}</span>
+        <div class="euro-countdown-txt">
+          <div class="txt-logo">
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 100px" />
+          </div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
+
+          <div class="euro-countdown-num-wrap">
+            {{ $t("lang.euroCountdown01a") }}
+            <div class="euro-countdown-num">
+              <!-- <img src="../assets/images/home/eurocup-countdown-numbers.png" /> -->
+              <div class="num">
+                <span>{{ countDay01 }}</span>
+              </div>
+              <div class="num">
+                <span>{{ countDay02 }}</span>
+              </div>
+            </div>
+            {{ $t("lang.euroCountdown02") }}
+          </div>
         </div>
-        {{ $t("lang.euroCountdown02") }}
       </div>
     </div>
 
@@ -626,9 +637,9 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right"  :offset="fabPos" style="z-index:999">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
-      <img src="../assets/images/home/red_envelope.png" class="red-envelope"/>
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
     </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
@@ -1080,24 +1091,22 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
-
-    const isRedPacketShow= ref(false);
+    const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
       router.push("/promo?name=vi-mualixi-redpacket");
     };
 
     const getCheckRedPacket = () => {
-        if(store && store.token && store.memberType==='TEST') {
-          eventapi("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
-            .then((res) => {
-              console.log(res);
-              if (res.code === 0) {
-                isRedPacketShow.value = true;
-              }
-            })
-            .catch((err) => {
-            });
-        }
+      if (store && store.token && store.memberType === "TEST") {
+        eventapi("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket")
+          .then((res) => {
+            console.log(res);
+            if (res.code === 0) {
+              isRedPacketShow.value = true;
+            }
+          })
+          .catch((err) => {});
+      }
     };
 
     const getWithExpiry = (key) => {
@@ -2608,10 +2617,10 @@ export default defineComponent({
   }
 }
 
-.red-envelope{
-    width:135px;
-    cursor: pointer;
-  }
+.red-envelope {
+  width: 135px;
+  cursor: pointer;
+}
 
 .hot-matches-wrapper {
   width: calc(100% - 2rem);
@@ -2621,7 +2630,8 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-bottom: 10px;
+    padding-bottom: 35px;
+    padding-top: 15px;
     position: relative;
 
     img {
@@ -2631,17 +2641,14 @@ export default defineComponent({
     .euro-countdown-fly-01 {
       position: absolute;
       left: -6px;
-      // top: 50px;
       top: -10px;
       width: 30px;
-      // animation-delay: 0s;
       animation: fly 8s linear infinite;
     }
 
     .euro-countdown-fly-02 {
       position: absolute;
       left: 4px;
-      // top: 100px;
       top: -10px;
       width: 30px;
       animation: fly 7s linear infinite;
@@ -2650,7 +2657,6 @@ export default defineComponent({
     .euro-countdown-fly-03 {
       position: absolute;
       left: -6px;
-      // top: 120px;
       top: -10px;
       width: 30px;
       animation: fly 6s linear infinite;
@@ -2659,7 +2665,6 @@ export default defineComponent({
     .euro-countdown-fly-04 {
       position: absolute;
       right: -7px;
-      // top: 43px;
       top: -10px;
       width: 30px;
       animation: fly 7s linear infinite;
@@ -2668,7 +2673,6 @@ export default defineComponent({
     .euro-countdown-fly-05 {
       position: absolute;
       right: 0px;
-      // top: 93px;
       top: -10px;
       width: 30px;
       animation: fly 8s linear infinite;
@@ -2677,7 +2681,6 @@ export default defineComponent({
     .euro-countdown-fly-06 {
       position: absolute;
       right: -6px;
-      // top: 120px;
       top: -10px;
       width: 30px;
       animation: fly 10s linear infinite;
@@ -2688,6 +2691,10 @@ export default defineComponent({
       justify-content: center;
       width: max-content;
       position: relative;
+      background-image: url(../assets/images/home/eurocup-countdown-content-frame.png);
+      background-size: 100% 100%;
+      padding: 4px;
+      margin-left: 12px;
 
       img {
         display: block;
@@ -2698,35 +2705,85 @@ export default defineComponent({
     .euro-countdown-txt {
       position: absolute;
       display: flex;
-      top: 54px;
-      right: 10px;
-      font-size: 16px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
       font-weight: bold;
       color: #ffffff;
       line-height: 1;
+      align-items: center;
+      width: 100%;
+      padding: 0px 10px;
+
+      @media (min-width: 440px) {
+        font-size: 20px;
+      }
+
+      @media (min-width: 500px) {
+        font-size: 28px;
+      }
+
+      .txt-logo {
+        margin-left: -30px;
+      }
+
+      .txt-2024 {
+        margin-right: 10px;
+        @media (min-width: 440px) {
+          margin: 0 auto;
+        }
+      }
+
+      .euro-countdown-num-wrap {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
 
       .euro-countdown-num {
         position: relative;
-        img {
-          display: block;
-          width: 120px;
-          margin-top: -25px;
+        display: flex;
+
+        .num {
+          background-image: url(../assets/images/home/eurocup-countdown-number.png);
+          height: 40px;
+          width: 40px;
+          background-size: 100% 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @media (min-width: 440px) {
+            height: 50px;
+            width: 50px;
+          }
+
+          @media (min-width: 500px) {
+            height: 60px;
+            width: 60px;
+          }
+
+          &:last-child {
+            margin-left: -5px;
+          }
         }
         span {
           background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-weight: 800;
-          font-size: 36px;
-          position: absolute;
-          top: -10px;
+          font-size: 22px;
+          line-height: 1;
+          font-family: Arial;
 
-          &.num1 {
-            left: 20px;
+          @media (min-width: 440px) {
+            font-size: 32px;
           }
 
-          &.num2 {
-            left: 77px;
+          @media (min-width: 440px) {
+            font-size: 36px;
           }
         }
       }
@@ -2776,8 +2833,6 @@ export default defineComponent({
     // padding-left: 6px;
     // padding-right: 6px;
   }
-
-
 
   .hot-matches-item {
     background: #f4f9fe;
