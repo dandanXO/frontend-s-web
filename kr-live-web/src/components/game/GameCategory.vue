@@ -42,6 +42,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     justify-content: center;
     width: 100%;
     min-width: 180px;
+    max-width: 200px;
     height: 80px;
     white-space: nowrap;
     cursor: pointer;

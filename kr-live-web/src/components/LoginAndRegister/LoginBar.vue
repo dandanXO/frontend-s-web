@@ -202,13 +202,13 @@ const iconInfo = reactive([
   border: none;
   background: rgba(18, 17, 33, 1);
   z-index: 1;
+  border-width: 2px 0px 2px 0px;
+  border-style: solid;
+  border-color: #2a306c;
 
   @media (min-width: 769px) {
     // background: linear-gradient(#292b31, #191b1e);
     background: rgba(18, 17, 33, 0.6);
-    border-width: 2px 0px 2px 0px;
-    border-style: solid;
-    border-color: #2a306c;
     backdrop-filter: blur(6px);
   }
 }
