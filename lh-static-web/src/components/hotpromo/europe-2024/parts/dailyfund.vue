@@ -112,10 +112,18 @@
         <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
+          <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
           <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
-          <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-VS">VS</div>
+          <button
+            @click="matchSubmit(match, 0, '平局')"
+            v-if="!match.selectedTeamId"
+            class="bracket-team-select__button"
+          >
+            平局
+          </button>
+          <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
         </div>
       </div>
       <div class="bracket-team-select">
@@ -447,7 +455,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
   letter-spacing: 0.12em;
   text-align: center;
   color: #faff00;
-  margin-bottom: 31.92px;
+  margin: 40px auto !important;
 }
 
 .fund-wrapper {
@@ -571,87 +579,75 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 
 .bracket-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: end;
+  padding: 20px 0;
   color: #ffffff;
   background: #051d4766;
   border: 1px solid #ffffff66;
   border-radius: 8px;
   font-family: Microsoft YaHei UI;
-  justify-content: space-evenly;
 
   .bracket-team-select {
-    height: 317px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    padding-top: 50px;
     gap: 35px;
+  }
 
-    .bracket-team-select__button {
-      background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
-      padding: 12px 52px;
-      border-radius: 33px;
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 42.56px;
-      letter-spacing: 0.12em;
-      color: #333333;
-      word-break: keep-all;
+  .bracket-team-select__button {
+    background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
+    padding: 12px 52px;
+    border-radius: 33px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: 0.12em;
+    color: #333333;
+    word-break: keep-all;
 
-      &:hover,
-      &.active {
-        background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
-        color: #ffffff;
-      }
+    &:hover,
+    &.active {
+      background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
+      color: #ffffff;
     }
   }
 
   .bracket-info {
     display: flex;
     flex-direction: column;
-    align-self: flex-start;
-    gap: 45px;
-    flex-basis: 33%;
-
-    .bracket-info__status {
-      background: linear-gradient(180deg, #00d1ff 0%, #0d70d6 100%);
-      padding: 20px 59px;
-      border-radius: 0px 0px 20px 20px;
-      font-family: FZHanZhenGuangBiaoS-GB;
-      font-size: 32px;
-      line-height: 38px;
-      letter-spacing: 0.12em;
-      text-align: center;
-
-      &.finished {
-        background: linear-gradient(180deg, #f99500 0%, #b34b00 100%);
-      }
-    }
 
     .bracket-info__info-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 10px;
       align-items: center;
 
-      .bracket-info__info-wrapper-date {
-        background-color: #458bff1a;
-        padding: 7px 36px 7px 36px;
-        border-radius: 100px;
-        font-size: 22px;
+      .bracket-info__info-wrapper-title {
+        font-family: Microsoft YaHei UI;
+        font-size: 36px;
         font-weight: 700;
-        line-height: 36.56px;
-        letter-spacing: 0.12em;
+        line-height: 47.88px;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .bracket-info__info-wrapper-date {
+        font-family: Microsoft YaHei UI;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26.6px;
         text-align: center;
       }
 
-      .bracket-info__info-wrapper-contest {
-        font-size: 32px;
-        line-height: 42.56px;
-        letter-spacing: 0.12em;
-        color: #ffffff99;
+      .bracket-info__info-wrapper-VS {
+        font-family: Poppins;
+        font-size: 70.71px;
+        font-weight: 900;
+        line-height: 106.07px;
         text-align: center;
+        color: #73B2FF1A;
       }
     }
   }
@@ -760,7 +756,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           gap: 10px;
           align-items: center;
           justify-content: space-evenly;
-          padding: 50px 0;
+          padding: 25px 0;
           .choice {
             display: flex;
             flex-direction: column;
@@ -818,7 +814,6 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 .rule-title,
 .rule-content {
   font-family: Microsoft YaHei UI;
-  line-height: 31.95px;
   letter-spacing: 0.12em;
   text-align: left;
   color: #ffffff;
@@ -830,7 +825,8 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
   line-height: 42.6px;
 }
 .rule-content {
-  font-size: 24px;
+  font-size: 20px;
+  line-height: 24px;
   font-weight: 400;
 }
 </style>
