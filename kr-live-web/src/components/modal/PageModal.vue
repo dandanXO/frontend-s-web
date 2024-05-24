@@ -228,19 +228,19 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
-  // {
-  //   tabIndex: "log",
-  //   page: "promo/all",
-  //   info: "이벤트",
-  //   iconUrl: require("../../assets/icon/promo.svg"),
-  //   iconActiveUrl: require("../../assets/icon/promo-active.svg"),
-  //   component: PromoComponent,
-  //   headerInfo: {
-  //     title: "이벤트",
-  //     subTitle: "EVENT",
-  //     description: ""
-  //   }
-  // },
+  {
+    tabIndex: "log",
+    page: "promo/all",
+    info: "이벤트",
+    iconUrl: require("../../assets/icon/promo.svg"),
+    iconActiveUrl: require("../../assets/icon/promo-active.svg"),
+    component: PromoComponent,
+    headerInfo: {
+      title: "이벤트",
+      subTitle: "EVENT",
+      description: ""
+    }
+  },
   {
     tabIndex: "log",
     href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",

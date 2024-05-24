@@ -460,7 +460,7 @@ export default defineComponent({
         (async () => {
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          regForm.realName= regForm.cardAccount
+          // regForm.realName= regForm.cardAccount
 
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
