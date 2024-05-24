@@ -184,6 +184,11 @@
           </span>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="operator"
+        :label="t('fields.operator')"
+        width="120"
+      />
     </el-table>
 
     <el-pagination
