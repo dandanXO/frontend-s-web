@@ -101,7 +101,7 @@ export default defineComponent({
       },10000)
     }
 
-    const isRedPacketShow= ref(true);
+    const isRedPacketShow= ref(false);
     const isPacketChecked= ref(null);
     onMounted(() => {
       getAppDownloadUrl();
