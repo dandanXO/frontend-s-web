@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-header">
-      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.png" /></div>
+      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.svg" /></div>
     </div>
 
     <div class="content">
@@ -183,8 +183,8 @@ const iconInfo = reactive([
   background: #12112199;
 
   img{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
   }
 
   @media (min-width: 769px) {
@@ -217,6 +217,8 @@ const iconInfo = reactive([
   width: 100%;
   display: flex;
   flex-direction: column;
+  padding: 10px;
+  
   @media (min-width: 769px) {
     width: 1280px;
     flex-direction: row;
