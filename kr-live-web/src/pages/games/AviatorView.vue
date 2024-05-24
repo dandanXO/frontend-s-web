@@ -353,7 +353,7 @@ export default defineComponent({
 
 .fishing-container {
   background: linear-gradient(to top, #23263c, #244764);
-  background-image: url("../../assets/images/games/aviator/aviator_bg.png");
+  //background-image: url("../../assets/images/games/aviator/aviator_bg.png");
   background-attachment: fixed;
   background-size: cover;
   position: relative;
@@ -560,7 +560,7 @@ export default defineComponent({
           top: 12px;
           width: 46px;
           height: 36px;
-          background-image: url("../../assets/images/common/title_large.png");
+          //background-image: url("../../assets/images/common/title_large.png");
           background-repeat: no-repeat;
         }
 
@@ -587,7 +587,7 @@ export default defineComponent({
           position: absolute;
           width: 26px;
           height: 16px;
-          background-image: url("../../assets/images/common/title_small.png");
+          //background-image: url("../../assets/images/common/title_small.png");
           background-repeat: no-repeat;
           right: -36px;
           top: 10px;

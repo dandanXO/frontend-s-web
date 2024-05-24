@@ -2749,7 +2749,7 @@ export default defineComponent({
     height: 110px;
     margin: 0 auto 15px;
     padding: 9px;
-    background-image: url("../assets/images/index/thai-tcg-bg.png");
+    //background-image: url("../assets/images/index/thai-tcg-bg.png");
     background-size: 100% 100%;
 
     .platform-img {
@@ -3143,7 +3143,7 @@ export default defineComponent({
 }
 
 .special-invite-bonus-sticky {
-  background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
+  //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 115px;
@@ -3211,7 +3211,7 @@ export default defineComponent({
   }
 
   .special-invite-bonus-content {
-    background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
+    //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     margin: 30px;
@@ -3249,7 +3249,7 @@ export default defineComponent({
     }
 
     .special-invite-bonus-popup-confirm-btn {
-      background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
+      //background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
       max-width: 200px;
@@ -3315,7 +3315,7 @@ export default defineComponent({
       // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
-      background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
+      //background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
       background-size: 100% 100%;
 
       &:hover {
@@ -3384,8 +3384,7 @@ export default defineComponent({
 
     width: 125px;
     aspect-ratio: 184/518;
-    background: url("../assets/home/line-board.png");
-    //background: url(../assets/home/xmas-line-btn.png);
+    //background: url("../assets/home/line-board.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     //padding: 10px 0;
@@ -3449,7 +3448,7 @@ export default defineComponent({
   z-index: 0;
   width: 23px;
   height: 23px;
-  background: url(../assets/images/common/snow.png);
+  //background: url(../assets/images/common/snow.png);
   background-repeat: no-repeat;
 
   @for $i from 1 through $total {
