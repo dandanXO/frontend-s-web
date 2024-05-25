@@ -1021,8 +1021,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      if(banner.redirectUrl=="app://deposit"){
+        router.push("/finance/deposit");
+      }else{
+        const redirectU = "/promo?name=" + banner.redirectUrl;
+        router.push(`${redirectU}`);
+      }
     };
 
     const download_url = ref("");
