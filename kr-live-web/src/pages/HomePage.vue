@@ -2386,7 +2386,7 @@ export default defineComponent({
 .jackpot {
   display: flex;
   margin: 0 auto;
-  width: 100%;
+  width: calc(100% - 40px);
   max-width: 816px;
   background: url('../assets/home/jackpot.png') no-repeat center center;
   background-size: 100% 100%;

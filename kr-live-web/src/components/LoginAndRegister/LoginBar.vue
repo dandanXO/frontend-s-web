@@ -226,9 +226,7 @@ const iconInfo = reactive([
     width: 1280px;
     flex-direction: row;
     height: 80px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
   }
 }
 
