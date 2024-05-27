@@ -48,6 +48,7 @@ export default {
     euroCountdown01: "ROAD TO ",
     euroCountdown01a: "",
     euroCountdown02: " DAYS LEFT",
+    helloUsername: "Hi,",
 
     // side menu
     menu_sports: "Sports",

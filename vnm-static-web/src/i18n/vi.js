@@ -423,7 +423,7 @@ export default {
     betTime: "Thời gian đặt cược",
     gamePlatform: "Nền tảng game",
     time: "Thời gian",
-    privilegeName: "Tên đặc quyền",
+    privilegeName: "Tên khuyến mãi",
     bet: "Cược",
     payout: "Thanh toán",
     orderNo: "Số đơn hàng",
