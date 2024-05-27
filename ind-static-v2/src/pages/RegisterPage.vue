@@ -361,6 +361,7 @@ export default defineComponent({
             regForm.sid = store.aaid;
           } else {
             regForm.sid = sidParam;
+            regForm.isfinger= "1";
           }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -399,18 +400,18 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 // debugger;
-                if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  var adjustEvent = new AdjustEvent(affRegEvent.value);
-                  // alert(affRegEvent.value);
-                  Adjust.trackEvent(adjustEvent);
-                } else {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: affRegEvent.value
-                  });
-                }
+                // if (Platform.is.android && Platform.is.capacitor) {
+                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
+                //   // alert(affRegEvent.value);
+                //   Adjust.trackEvent(adjustEvent);
+                // } else {
+                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                //   AdjustWeb.trackEvent({
+                //     eventToken: affRegEvent.value
+                //   });
+                // }
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
