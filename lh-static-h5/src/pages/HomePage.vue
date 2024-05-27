@@ -377,7 +377,7 @@
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
-            @click="item.gameType ==='CASUAL' ? playGame(item.gameName, item.code,'casual',  item.gameCode) : router.push({ path: '/slot', query: { platform: item.code } })"
+            @click="item.gameType ==='CASUAL' ? playGame(item.gameName, item.code,0,  item.gameCode) : router.push({ path: '/slot', query: { platform: item.code } })"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
