@@ -1310,7 +1310,7 @@ export default defineComponent({
     // }
     const pwdStrength = ref();
     const openMiniGame = () => {
-      openGame("TFGaming", "TFGaming", "casual")
+      openGame("TFGaming", "TFGaming", 0)
     };
     function charType(num) {
       if (num >= 48 && num <= 57) {
