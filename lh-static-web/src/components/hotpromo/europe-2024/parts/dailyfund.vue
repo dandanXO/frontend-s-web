@@ -38,16 +38,11 @@
             {{ num.points }}
             <div v-if="i !== 0">
               <div class="claim">
-                <img
-                  @click="claimPoint(num.points)"
-                  v-if="
-                    matchPoints.currentPoints >= num.points &&
-                    matchPoints.pointsClaimed &&
-                    !matchPoints.pointsClaimed.includes(num.points)
-                  "
-                  src="../images/daily-fund-claim.png"
-                />
-                <img v-else src="../images/daily-fund-claimed.png" />
+                <template v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed">
+                  <img v-if="matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claimed.png" />
+                  <img v-else @click="claimPoint(num.points)" src="../images/daily-fund-claim.png" />
+                </template>
+                <img v-else src="../images/daily-fund-wait-for-claim.png" />
               </div>
             </div>
           </div>
