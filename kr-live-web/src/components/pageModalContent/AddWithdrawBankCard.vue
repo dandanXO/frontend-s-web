@@ -274,7 +274,7 @@ const loadBankCards = () => {
         message: "진짜 이름을 입력해주세요",
         icon: "report_problem"
       });
-      router.push("/account/personal");
+      router.push("/?page=personal/info");
     } else if (!store.telephone) {
       $q.notify({
         color: "negative",
