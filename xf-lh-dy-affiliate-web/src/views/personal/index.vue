@@ -254,7 +254,7 @@
               </el-form-item>
             </el-row>
 
-            <el-row class="info">
+            <el-row class="info" v-if="store.state.user.siteCode !== 'KRW'">
               <el-icon color="#7D8792">
                 <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
               </el-icon>
