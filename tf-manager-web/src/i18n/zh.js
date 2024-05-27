@@ -1502,6 +1502,7 @@ export default {
     type: '类型',
     uefaMatchRecord: '欧洲杯赛事记录',
     uefaMatchSetting: '欧洲杯赛事设置',
+    uefaSettlement: '欧洲杯结算记录',
     uefaTeamRecord: '欧洲杯队伍记录',
     uefaTeamSetting: '欧洲杯队伍设置',
     undefined: '未定义',
