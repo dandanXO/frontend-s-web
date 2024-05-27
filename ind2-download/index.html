@@ -266,6 +266,14 @@ function downloadApk(code, pp, fbvar, fbpid) {
     document.body.removeChild(link);
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function isIOS() {
     var u = navigator.userAgent;
     var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
@@ -310,22 +318,41 @@ theleftbtn.onclick = function () {
 // const scrollListing = document.querySelector('.scroll-listing');
 const defaultScrollList = document.querySelector('#scroll-list');
 
+var fileCountLists = [16,19,23,22]
+var fileNum = Math.floor(Math.random() * 4) + 1;
+var fileDirec= 'img' +  fileNum;
+
+var fileLength = fileCountLists[fileNum-1];
+console.log(fileDirec);
+var fileArray= [];
+for(var i=0;i < fileLength;i++){
+    fileArray.push(i+1);
+}
+shuffleArray(fileArray);
+// console.log(fileArray);
+
+var fileLists= fileArray.slice(0,5);
+console.log(fileLists);
+
+
 var imageUrls = [];
 var extraStyle = '';
-if (affidValue === '09F5B4') {
-    imageUrls = ['style/images/706/01-new.jpg', 'style/images/706/02-new.jpg', 'style/images/706/03-new.jpg',
-        'style/images/706/04-new.jpg', 'style/images/706/05-new.jpg'];
-    extraStyle = `style="height:400px;"`
 
-} else if (affidValue === 'CCF46E') {
-    imageUrls = ['style/images/705/01-new.jpg', 'style/images/705/02-new.jpg', 'style/images/705/03-new.jpg',
-        'style/images/705/04-new.jpg', 'style/images/705/05-new.jpg'];
-    extraStyle = `style="height:400px;"`
-} else {
-    imageUrls = ['style/images/101/101.png', 'style/images/101/102.png', 'style/images/101/103.png', 'style/images/101/104.png',
-        'style/images/101/105.png', 'style/images/101/106.png', 'style/images/101/107.png'];
-    extraStyle = '';
+
+fileLists.forEach((file) => {
+    var fileName = `style/images/${fileDirec}/${file}.jpg`;
+    imageUrls.push(fileName);
+})
+
+if(fileNum===2 || fileNum===4){
+    extraStyle = `style="height:400px;"`;
+}else{
+    extraStyle = `style="height:200px;"`;
 }
+
+// imageUrls = ['style/images/101/101.png', 'style/images/101/102.png', 'style/images/101/103.png', 'style/images/101/104.png',
+//     'style/images/101/105.png', 'style/images/101/106.png', 'style/images/101/107.png'];
+//
 
 imageUrls.forEach((imageUrl) => {
     var innerHtml = `
