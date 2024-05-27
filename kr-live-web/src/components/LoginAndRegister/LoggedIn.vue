@@ -60,7 +60,7 @@ const onLogoutSubmit = () => {
 
 .information {
   display: flex;
-  flex-wrap: wrap;
+  white-space: nowrap;
   row-gap: 8px;
   column-gap: 24px;
   width: 60%;

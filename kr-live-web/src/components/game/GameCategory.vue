@@ -43,7 +43,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
 .category {
     margin: 5px;
-    filter: grayscale(1);
+    filter: grayscale(1) brightness(1.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +63,10 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     @media (max-width: 768px) {
         min-width: 50px;
         max-width: 80px;
-        transform: skewX(-10deg);
+        transform: skewX(-8deg);
+        border-radius: 4px;
+        border: 1px solid #4b4b4b;
+        height: 70px;
     }
 
     .category-labels {
@@ -75,10 +78,10 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         width: 180px;
 
         @media (max-width: 768px) {
-            width: 70px;
+            width: 60px;
             white-space: pre-wrap;
             text-align: center;
-            transform: translate(-45%, -50%) skewX(10deg);
+            transform: translate(-45%, -50%) skewX(8deg);
         }
 
         .category-kr-label {
@@ -87,7 +90,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             font-weight: bold;
 
             @media (max-width: 768px) {
-                font-size: 20px;
+                font-size: 18px;
             }
         }
 
@@ -124,6 +127,33 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     &.casual {
         background: url('../../assets/home/menu/menu-casual.png') no-repeat center center;
         background-size: 120% 120%;
+    }
+
+    @media (max-width: 768px) {
+        &.slots {
+            background: url('../../assets/home/menu/menu-slots-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.live {
+            background: url('../../assets/home/menu/menu-live-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.esport {
+            background: url('../../assets/home/menu/menu-esport-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.sport {
+            background: url('../../assets/home/menu/menu-sport-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.casual {
+            background: url('../../assets/home/menu/menu-casual-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
     }
 
     &:hover, &.active {

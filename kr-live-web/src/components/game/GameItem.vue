@@ -79,6 +79,11 @@ const gameType = ref(props.gameType);
   padding: 20px;
   width: 100%;
 
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
+
   .game-item {
     aspect-ratio: 290 / 530;
     background: url('../../assets/home/games/live/game-bg-empty.png') no-repeat center center;
@@ -89,6 +94,10 @@ const gameType = ref(props.gameType);
     padding: 20px;
     max-width: 170px;
     width: 100%;
+
+    @media (max-width: 769px) {
+      max-width: 130px;
+    }
 
     .active-overlay, .bg-overlay {
       transition: 0.3s all;
@@ -121,9 +130,17 @@ const gameType = ref(props.gameType);
         justify-content: center;
         align-items: center;
 
+        @media (max-width: 769px) {
+          top: 12%;
+        }
+
         .game-name {
           color: #fff;
           font-size: 24px;
+
+          @media (max-width: 769px) {
+            font-size: 20px;
+          }
         }
 
         .game-logo {
@@ -151,6 +168,15 @@ const gameType = ref(props.gameType);
         width: 100%;
         display: flex;
         justify-content: center;
+
+        @media (max-width: 769px) {
+
+          .btn-w-blue {
+            width: 100px;
+            height: 40px;
+            font-size: 12px;
+          }
+        }
 
         &:hover {
           filter: brightness(0.9);
