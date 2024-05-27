@@ -195,7 +195,15 @@ export default defineComponent({
   gap: 15px;
 }
 
-.red-envelope {
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.red-envelope{
   width: 211px;
   height: 211px;
   cursor: pointer;
@@ -203,5 +211,27 @@ export default defineComponent({
   position: absolute;
   right: -70px;
   bottom: -185px;
+  animation: shake 1s ease-in-out infinite;
+  animation-delay: 2s;
+}
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes shake-with-pause {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.red-envelope { 
+  animation: tilt-shaking 1s infinite;
 }
 </style>
