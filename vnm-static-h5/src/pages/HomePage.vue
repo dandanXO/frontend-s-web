@@ -36,6 +36,11 @@
         {{ $t("lang.register") }}
       </q-btn>
     </div>
+    <div class="header-middle" v-else>
+      <div @click="router.push('/account')">
+        {{ $t("lang.helloUsername") }} {{ store.nickName }}
+      </div>
+    </div>
     <div class="header-lang">
       <LangOptions />
     </div>
@@ -2583,6 +2588,8 @@ export default defineComponent({
 
   .home-header {
     .header-middle {
+      color: #313441;
+
       :deep(.q-btn) {
         min-width: 75px;
       }
@@ -2957,5 +2964,10 @@ export default defineComponent({
       }
     }
   }
+}
+
+.alert-img {
+  width: 70% !important;
+  margin: auto;
 }
 </style>
