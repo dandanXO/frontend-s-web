@@ -72,8 +72,9 @@ const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .game-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 170px));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
   padding: 20px;
   width: 100%;

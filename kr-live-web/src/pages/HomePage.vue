@@ -2394,7 +2394,10 @@ export default defineComponent({
   aspect-ratio: 816 / 130;
 
   @media (max-width: 768px) {
-    width: calc(100% - 40px);
+    background: url('../assets/home/jackpot-mobile.png') no-repeat center center;
+    background-size: 100% 100%;
+    aspect-ratio: 288 / 68;
+    max-width: 288px;
   }
 
   .jackpot-txt {
