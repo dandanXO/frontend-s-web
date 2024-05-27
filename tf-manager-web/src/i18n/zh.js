@@ -1893,6 +1893,7 @@ export default {
     validateColorRequired: '颜色必填',
     validateCommissionRequired: '比率必填',
     validateCommissionFormat: '比率必须介于 0 至 1 之间',
+    validateCommissionModelRequired: '需要佣金模式',
     validateConfirmPasswordRequired: '确认密码必填',
     validateConfirmPasswordSize: '确认密码必须在 6-12 个字之间',
     validateContentRequired: '内容必填',

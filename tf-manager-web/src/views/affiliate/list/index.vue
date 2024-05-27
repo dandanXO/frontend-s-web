@@ -598,7 +598,7 @@
               icon="el-icon-check"
               size="mini"
               type="success"
-              v-if="scope.row.affiliateStatus === 'APPLY'"
+              v-show="scope.row.affiliateStatus === 'APPLY'"
               v-permission="['sys:affiliate:update:approval']"
               @click="approve(scope.row)"
             >
@@ -608,7 +608,7 @@
               icon="el-icon-close"
               size="mini"
               type="danger"
-              v-if="scope.row.affiliateStatus === 'NORMAL'"
+              v-show="scope.row.affiliateStatus === 'NORMAL'"
               v-permission="['sys:affiliate:update:approval']"
               @click="showDialog('DISABLE', scope.row)"
             >
