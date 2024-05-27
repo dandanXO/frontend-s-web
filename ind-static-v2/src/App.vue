@@ -97,9 +97,7 @@ export default defineComponent({
                 Adjust.getAttribution().then((attribution) => {
                   console.log("Attribution 2");
                   console.log(attribution);
-                  if(store.aaid===""){
-                    store.aaid = attribution.adid;
-                  }
+                  store.aaid = attribution.adid;
                 });
               })();
             }else{
