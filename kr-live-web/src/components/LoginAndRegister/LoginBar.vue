@@ -6,69 +6,71 @@
 
     <div class="content">
       <div class="left-content" :class="navActive && 'active'" @click="navActive = false">
-        <div class="sidebar-section-wrapper">
-          <div class="sidebar-section-title">
-            Welcome
-          </div>
-          <div class="sidebar-section top">
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=personal/info"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
-              <div class="info-text">입금</div>
-            </router-link>
-            <div class="separator vertical" />
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=transaction/records"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
-              <div class="info-text">출금</div>
-            </router-link>
-          </div>
-          <div class="sidebar-section middle">
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=finance/deposit"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
-              <div class="info-text">입금</div>
-            </router-link>
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=finance/withdraw"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
-              <div class="info-text">출금</div>
-            </router-link>
-            <div
-              class="sidebar-section-item"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
-              <div class="info-text">포인트전환</div>
+        <div class="left-content-items">
+          <div class="sidebar-section-wrapper">
+            <div class="sidebar-section-title">
+              Welcome
             </div>
-            <div
-              class="sidebar-section-item"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
-              <div class="info-text">알전환</div>
+            <div class="sidebar-section top">
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=personal/info"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
+                <div class="info-text">입금</div>
+              </router-link>
+              <div class="separator vertical" />
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=transaction/records"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
+                <div class="info-text">출금</div>
+              </router-link>
             </div>
+            <div class="sidebar-section middle">
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=finance/deposit"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
+                <div class="info-text">입금</div>
+              </router-link>
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=finance/withdraw"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
+                <div class="info-text">출금</div>
+              </router-link>
+              <div
+                class="sidebar-section-item"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
+                <div class="info-text">포인트전환</div>
+              </div>
+              <div
+                class="sidebar-section-item"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
+                <div class="info-text">알전환</div>
+              </div>
+            </div>
+            <div class="separator"/>
+            <div class="icon-section-label">메뉴</div>
           </div>
-          <div class="separator"/>
-          <div class="icon-section-label">메뉴</div>
-        </div>
-        <div
-          v-for="(item, index) in iconInfo"
-          :key="index"
-          @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
-          class="credit-info cursor-pointer"
-        >
-          <img :src="item.iconUrl" alt="" />
-          <div class="info-text">{{ item.info }}</div>
-        </div>
-        <div class="sidebar-logout-button">
-          <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+          <div
+            v-for="(item, index) in iconInfo"
+            :key="index"
+            @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
+            class="credit-info cursor-pointer"
+          >
+            <img :src="item.iconUrl" alt="" />
+            <div class="info-text">{{ item.info }}</div>
+          </div>
+          <div class="sidebar-logout-button">
+            <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+          </div>
         </div>
       </div>
       <div class="right-content">
@@ -240,25 +242,33 @@ const iconInfo = reactive([
   border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: #333333;
-  padding-left: 8px;
   display: none;
   border-right: 1px solid #454F63;
+
+  .left-content-items {
+    width: 70%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #000000B2;
+    backdrop-filter: blur(5px);
+  }
 
   &.active {
     display: flex;
     position: fixed;
     top: 0;
     left: 0;
-    width: 70%;
+    width: 100%;
     height: 100%;
-    background: #000000B2;
-    backdrop-filter: blur(5px);
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 20px;
     gap: 16px;
     z-index: 9;
+    background: #4040406d;
 
     .credit-info {
       flex-direction: row;
@@ -354,9 +364,17 @@ const iconInfo = reactive([
       justify-content: space-around;
       width: 100%;
     }
-    
-    .sidebar-section-wrapper, .sidebar-logout-button {
-      display: none;
+
+    .left-content-items {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      background: none;
+      backdrop-filter: none;
+
+      .sidebar-section-wrapper, .sidebar-logout-button {
+        display: none;
+      }
     }
   }
 }

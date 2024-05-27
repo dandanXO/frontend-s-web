@@ -2388,10 +2388,14 @@ export default defineComponent({
   margin: 0 auto;
   width: 100%;
   max-width: 816px;
-  height: 130px;
   background: url('../assets/home/jackpot.png') no-repeat center center;
   background-size: 100% 100%;
   position: relative;
+  aspect-ratio: 816 / 130;
+
+  @media (max-width: 768px) {
+    width: calc(100% - 40px);
+  }
 
   .jackpot-txt {
     display: flex;
@@ -2404,6 +2408,10 @@ export default defineComponent({
     color: #f1b252;
     text-shadow: 0 0 5px #ff0000;
     letter-spacing: 3px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
   }
 }
 

@@ -36,7 +36,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     
     @media (max-width: 768px) {
         padding: 5px;
-        gap: 5px;
+        gap: 0px;
+        flex-wrap: nowrap;
     }
 }
 
@@ -60,8 +61,9 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     position: relative;
 
     @media (max-width: 768px) {
-        min-width: 100px;
-        max-width: 130px;
+        min-width: 50px;
+        max-width: 80px;
+        transform: skewX(-10deg);
     }
 
     .category-labels {
@@ -72,13 +74,20 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         overflow: auto;
         width: 180px;
 
+        @media (max-width: 768px) {
+            width: 70px;
+            white-space: pre-wrap;
+            text-align: center;
+            transform: translate(-45%, -50%) skewX(10deg);
+        }
+
         .category-kr-label {
             color: #01d9ab;
             font-size: 24px;
             font-weight: bold;
 
             @media (max-width: 768px) {
-                font-size: 16px;
+                font-size: 20px;
             }
         }
 
@@ -87,12 +96,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             color: #fff;
 
             @media (max-width: 768px) {
-                width: 130px;
+                display: none;
             }
-        }
-
-        @media (max-width: 768px) {
-            width: 130px;
         }
     }
 
