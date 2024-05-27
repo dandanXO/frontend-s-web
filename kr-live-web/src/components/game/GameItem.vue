@@ -170,11 +170,11 @@ const gameType = ref(props.gameType);
         justify-content: center;
 
         @media (max-width: 769px) {
-          bottom: 10%;
 
           .btn-w-blue {
             width: 100px;
             height: 40px;
+            font-size: 12px;
           }
         }
 
