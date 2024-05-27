@@ -1105,9 +1105,8 @@ export default defineComponent({
       if (store && store.token && store.memberType === "TEST") {
         eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
           .then((res) => {
-            console.log(res);
             if (res.code === 0) {
-              isRedPacketShow.value = true;
+              isRedPacketShow.value = res.data.nowIsRain;
             }
           })
           .catch((err) => {});
