@@ -485,9 +485,9 @@ onMounted(() => {
   }
 
   .option-btns {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
-    grid-template-columns: auto auto auto auto auto auto auto;
     grid-row-gap: 12px;
     grid-column-gap: 12px;
     :deep(.q-btn) {
