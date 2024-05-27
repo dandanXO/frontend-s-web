@@ -204,6 +204,22 @@
           />
         </template>
       </div>
+
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/casual-icon-active.png" />
+        </template>
+        <template v-else>
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/casual-icon-dark.png')
+                : require('../assets/images/home/games/casual-icon.png')
+            "
+          />
+        </template>
+      </div>
+
       <!--
       <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
@@ -377,7 +393,39 @@
         <template v-for="(item, index) in slot" :key="index">
           <div
             class="platform-block"
-            @click="item.gameType ==='CASUAL' ? playGame(item.gameName, item.code,0,  item.gameCode) : router.push({ path: '/slot', query: { platform: item.code } })"
+            @click="router.push({ path: '/slot', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-label"></div>
+              <div class="platform-content">
+                <div class="platform-logo">
+                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                </div>
+                <div class="platform-title">{{ item.title }}</div>
+                <div class="platform-subtitle">{{ item.subtitle }}</div>
+                <div class="platform-rebate">
+                  最高返水
+                  <span>8%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="game-lists " id="casual-lists">
+        <template v-for="(item, index) in casuals" :key="index">
+          <div
+            class="platform-block"
+            @click="playGame(item.gameName, item.code,0,  item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
@@ -688,7 +736,7 @@ export default defineComponent({
           var checkItem3 = document.getElementById("live-lists");
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("slot-lists");
-          // var checkItem6 = document.getElementById("others-lists");
+          var checkItem55 = document.getElementById("casual-lists");
           var checkItem6 = document.getElementById("lottery-lists");
           var checkItem7 = document.getElementById("fishing-lists");
 
@@ -697,6 +745,7 @@ export default defineComponent({
           var positionTop3 = checkItem3.getBoundingClientRect().top - 335;
           var positionTop4 = checkItem4.getBoundingClientRect().top - 335;
           var positionTop5 = checkItem5.getBoundingClientRect().top - 335;
+          var positionTop55 = checkItem55.getBoundingClientRect().top - 335;
           var positionTop6 = checkItem6.getBoundingClientRect().top - 335;
           var positionTop7 = checkItem7.getBoundingClientRect().top - 335;
 
@@ -719,6 +768,8 @@ export default defineComponent({
             tab.value = "fishing";
           } else if (0 > positionTop6 - 5) {
             tab.value = "lottery";
+          } else if (0 > positionTop55 - 5) {
+            tab.value = "casual";
           } else if (0 > positionTop5 - 5) {
             tab.value = "slot";
             gameLeftList.scrollTo({
@@ -756,6 +807,7 @@ export default defineComponent({
       const scrollItem3 = document.getElementById("live-lists");
       const scrollItem4 = document.getElementById("poker-lists");
       const scrollItem5 = document.getElementById("slot-lists");
+      const scrollItem55 = document.getElementById("casual-lists");
       const scrollItem6 = document.getElementById("lottery-lists");
       const scrollItem7 = document.getElementById("fishing-lists");
 
@@ -801,6 +853,17 @@ export default defineComponent({
           behavior: "smooth"
         });
       }
+      if (tab === "casual") {
+        gameRightPlatform.scrollTo({
+          top: scrollItem55.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: gameLeftList.scrollHeight,
+          behavior: "smooth"
+        });
+      }
       if (tab === "others") {
       }
       if (tab === "lottery") {
@@ -833,7 +896,7 @@ export default defineComponent({
       const activeSlideClassName = activeSlide.className;
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "slot", "lottery", "fishing"];
+      const keywords = ["slot", "live", "sport", "esport", "casual", "lottery", "fishing"];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
@@ -1216,7 +1279,7 @@ export default defineComponent({
             icon: "casual",
             subtitle: "小游戏"
           }
-          slot.value.push(casualObj);
+            casuals.value.push(casualObj);
           }
         })
         .catch((err) => {});
