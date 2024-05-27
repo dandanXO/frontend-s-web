@@ -243,7 +243,6 @@ const iconInfo = reactive([
   border-style: solid;
   border-color: #333333;
   display: none;
-  border-right: 1px solid #454F63;
 
   .left-content-items {
     width: 70%;
@@ -254,6 +253,7 @@ const iconInfo = reactive([
     gap: 20px;
     background: #000000B2;
     backdrop-filter: blur(5px);
+    border-right: 1px solid #454F63;
   }
 
   &.active {
