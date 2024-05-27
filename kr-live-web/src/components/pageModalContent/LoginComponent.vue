@@ -135,7 +135,7 @@ export default defineComponent({
               router.push("/");
               
               setTimeout(() => {
-                location.reload();
+                // location.reload();
               }, 1000);
             })
             .catch((error) => {

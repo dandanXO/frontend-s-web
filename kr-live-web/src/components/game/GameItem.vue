@@ -200,8 +200,6 @@ const gameType = ref(props.gameType);
   }
 
   @media (min-width: 769px) {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
-
     .game-item {
       max-width: 220px;
     }

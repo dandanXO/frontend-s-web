@@ -768,7 +768,7 @@
   <div class="news-section">
     <div class="news-title">
       <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
     </div>
     <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
       <div class="news-item-left">
@@ -790,7 +790,7 @@
     <div class="news-section">
       <div class="news-title news-title__sub">
         <div class="title-text">이벤트</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : ''">+ 더보기</router-link>
+        <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : '/?page=login'">+ 더보기</router-link>
       </div>
       <!-- <div class="news-item-box">
         <div class="news-item-left">
@@ -817,7 +817,7 @@
     <div class="news-section">
       <div class="news-title news-title__sub">
         <div class="title-text">출금현황</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+        <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
       </div>
       <!-- <div class="news-item-box">
         <div class="news-item-left">
@@ -2409,12 +2409,16 @@ export default defineComponent({
     transform: translate(-50%, -50%);
     font-size: 34px;
     font-weight: bold;
-    color: #f1b252;
-    text-shadow: 0 0 5px #ff0000;
+    font-family: monospace;
+    color: #f5c681;
+    // text-shadow: 0 0 5px #ff0000;
+    text-shadow: 2px 0 #ff3c3c, -2px 0 #ff3c3c, 0 2px #ff3c3c, 0 -2px #ff3c3c,
+               1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
     letter-spacing: 3px;
 
     @media (max-width: 768px) {
-      font-size: 20px;
+      font-size: 18px;
+      text-shadow: 1px 0 #ff3c3c, -1px 0 #ff3c3c, 0 1px #ff3c3c, 0 -1px #ff3c3c, 1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
     }
   }
 }
