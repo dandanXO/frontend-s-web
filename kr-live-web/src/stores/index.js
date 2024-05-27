@@ -67,6 +67,7 @@ export const userStore = defineStore("userStore", {
       return api.post("/member/login", string).then((ret) => {
         if (ret.data.code === 0) {
           SessionStorage.set("TOKEN", ret.data.data);
+          this.token = ret.data.data;
         } else {
           Notify.create({
             color: "negative",
