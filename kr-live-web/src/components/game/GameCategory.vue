@@ -43,7 +43,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
 .category {
     margin: 5px;
-    filter: grayscale(1);
+    filter: grayscale(1) brightness(1.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,8 +63,10 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     @media (max-width: 768px) {
         min-width: 50px;
         max-width: 80px;
-        transform: skewX(-10deg);
+        transform: skewX(-8deg);
         border-radius: 4px;
+        border: 1px solid #4b4b4b;
+        height: 70px;
     }
 
     .category-labels {
@@ -79,7 +81,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             width: 60px;
             white-space: pre-wrap;
             text-align: center;
-            transform: translate(-45%, -50%) skewX(10deg);
+            transform: translate(-45%, -50%) skewX(8deg);
         }
 
         .category-kr-label {

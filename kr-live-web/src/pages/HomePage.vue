@@ -2193,7 +2193,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 15px;
+  padding: 10px 15px;
   /* margin: 10px 10px 5px; */
 
   @media (min-width: 769px) {
@@ -2398,7 +2398,7 @@ export default defineComponent({
     background-size: 100% 100%;
     aspect-ratio: 288 / 68;
     max-width: 288px;
-    margin: 0px auto 20px;
+    margin: 0px auto 10px;
   }
 
   .jackpot-txt {
