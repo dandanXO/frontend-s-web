@@ -116,7 +116,7 @@
       <div class="bracket-info">
         <div class="bracket-info__info-wrapper">
           <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
-          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM HH:mm") }}</div>
           <div class="bracket-info__info-wrapper-VS">VS</div>
           <button
             @click="matchSubmit(match, 0, '平局')"
@@ -185,7 +185,7 @@
     </li>
     <li>此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；</li>
     <li>
-      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
+      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.7、香港盘0.7赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
     </li>
     <li>
       每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关 
