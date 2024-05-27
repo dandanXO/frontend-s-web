@@ -337,32 +337,22 @@ console.log(fileLists);
 
 var imageUrls = [];
 var extraStyle = '';
-if (affidValue === '09F5B4') {
-    imageUrls = ['style/images/706/01-new.jpg', 'style/images/706/02-new.jpg', 'style/images/706/03-new.jpg',
-        'style/images/706/04-new.jpg', 'style/images/706/05-new.jpg'];
-    extraStyle = `style="height:400px;"`
 
-} else if (affidValue === 'CCF46E') {
-    imageUrls = ['style/images/705/01-new.jpg', 'style/images/705/02-new.jpg', 'style/images/705/03-new.jpg',
-        'style/images/705/04-new.jpg', 'style/images/705/05-new.jpg'];
-    extraStyle = `style="height:400px;"`
-} else {
 
-    fileLists.forEach((file) => {
-        var fileName = `style/images/${fileDirec}/${file}.jpg`;
-        imageUrls.push(fileName);
-    })
+fileLists.forEach((file) => {
+    var fileName = `style/images/${fileDirec}/${file}.jpg`;
+    imageUrls.push(fileName);
+})
 
-    if(fileNum===2 || fileNum===4){
-        extraStyle = `style="height:400px;"`;
-    }else{
-        extraStyle = `style="height:200px;"`;
-    }
-
-    // imageUrls = ['style/images/101/101.png', 'style/images/101/102.png', 'style/images/101/103.png', 'style/images/101/104.png',
-    //     'style/images/101/105.png', 'style/images/101/106.png', 'style/images/101/107.png'];
-    //
+if(fileNum===2 || fileNum===4){
+    extraStyle = `style="height:400px;"`;
+}else{
+    extraStyle = `style="height:200px;"`;
 }
+
+// imageUrls = ['style/images/101/101.png', 'style/images/101/102.png', 'style/images/101/103.png', 'style/images/101/104.png',
+//     'style/images/101/105.png', 'style/images/101/106.png', 'style/images/101/107.png'];
+//
 
 imageUrls.forEach((imageUrl) => {
     var innerHtml = `
