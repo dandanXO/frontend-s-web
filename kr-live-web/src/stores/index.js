@@ -69,6 +69,7 @@ export const userStore = defineStore("userStore", {
           SessionStorage.set("TOKEN", ret.data.data);
           this.token = ret.data.data;
           this.getMemberInfo();
+          this.getBalance();
         } else {
           Notify.create({
             color: "negative",
