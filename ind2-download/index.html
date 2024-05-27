@@ -20,98 +20,138 @@ async function getApiUrl() {
     var button;
 
     let affiliateLists = {
-        "8742C2": {
-            "adCode": "1bgpvarh",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781249177791840257/android/apk/1.0.6_20240524181500.apk"
-        },
-        "6B990E": {
-            "adCode": "1b1300zf",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945424033173505/android/apk/1.0.6_20240524175047.apk"
-        },
         "7BD5FB": {
-            "adCode": "1b9gr9x3",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945785162874881/android/apk/1.0.6_20240524175000.apk"
-        },
-        "FDD924": {
-            "adCode": "1bpqeynt",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780865997996034/android/apk/1.0.6_20240524182000.apk"
+            adCode: "1b9gr9x3",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945785162874881/android/apk/1.0.6_20240524175000.apk",
         },
         "7EF855": {
-            "adCode": "1crf6f0f",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788141687250784258/android/apk/1.0.6_20240524174023.apk"
-        },
-        "EA2139": {
-            "adCode": "1b3hvu7k",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780777449799681/android/apk/1.0.6_20240524182024.apk"
+            adCode: "1crf6f0f",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788141687250784258/android/apk/1.0.6_20240524174023.apk",
         },
         "9C9F7F": {
-            "adCode": "1bm1sbqw",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780693645656065/android/apk/1.0.6_20240524182047.apk"
+            adCode: "1bm1sbqw",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780693645656065/android/apk/1.0.6_20240524182047.apk",
         },
-        "451D99": {
-            "adCode": "1cis5c98",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148425312079873/android/apk/1.0.6_20240524172550.apk"
+        "8AC53C": {
+            adCode: "1c92ixqn",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794871547443511297/android/apk/1.0.6_20240527075500.apk",
         },
-        "554DF4": {
-            "adCode": "1bgd3v7w",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781243352866025474/android/apk/1.0.6_20240524181633.apk"
+        A6D7BC: {
+            adCode: "1c546wn3",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794871934275780610/android/apk/1.0.6_20240527081000.apk",
         },
-        "031E9B": {
-            "adCode": "1cf9yvqr",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148566588993538/android/apk/1.0.6_20240524172527.apk"
+        CA7909: {
+            adCode: "1ch5k7st",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794871690942599169/android/apk/1.0.6_20240527080000.apk",
         },
         "82E92D": {
-            "adCode": "1bd239l7",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781249367405559809/android/apk/1.0.6_20240524175110.apk"
+            adCode: "1bd239l7",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781249367405559809/android/apk/1.0.6_20240524175110.apk",
         },
-        "35CD52": {
-            "adCode": "1ck9rwv5",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148689609814017/android/apk/1.0.6_20240524172500.apk"
+        C3E67F: {
+            adCode: "1cf38xzb",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872619741859841/android/apk/1.0.6_20240527082544.apk",
         },
-        "2F0135": {
-            "adCode": "1cromuog",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148271680974850/android/apk/1.0.6_20240524172613.apk"
+        A5A284: {
+            adCode: "1cmlxvy3",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872391123566593/android/apk/1.0.6_20240527082028.apk",
         },
-        "4117E3": {
-            "adCode": "1bsifejm",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780141547175937/android/apk/1.0.6_20240524183523.apk"
+        B4CCB4: {
+            adCode: "1bk8daye",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945607710134273/android/apk/1.0.6_20240524175024.apk",
         },
-        "B4CCB4": {
-            "adCode": "1bk8daye",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945607710134273/android/apk/1.0.6_20240524175024.apk"
-        },
-        "B5D55D": {
-            "adCode": "1bk0aw18",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781248992510279681/android/apk/1.0.6_20240524181523.apk"
-        },
-        "D859C9": {
-            "adCode": "1bz6p9ej",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781243608286556161/android/apk/1.0.6_20240524181609.apk"
-        },
-        "CB7C32": {
-            "adCode": "1cv8m1vg",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148028719665154/android/apk/1.0.6_20240524174000.apk"
-        },
-        "F3F227": {
-            "adCode": "1buhmiyu",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780367339143169/android/apk/1.0.6_20240524183500.apk"
+        D859C9: {
+            adCode: "1bz6p9ej",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781243608286556161/android/apk/1.0.6_20240524181609.apk",
         },
         "3B1BFB": {
-            "adCode": "1bsifejm",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1777586669942005762/android/apk/1.0.6_20240524183546.apk"
+            adCode: "1bsifejm",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1777586669942005762/android/apk/1.0.6_20240524183546.apk",
         },
-        "F78CF3": {
-            "adCode": "1b8b8g74",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945920260091906/android/apk/1.0.6_20240524174110.apk"
+        "59B7C8": {
+            adCode: "1cy223l8",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872195140517889/android/apk/1.0.6_20240527081523.apk",
         },
-        "DFE947": {
-            "adCode": "1bxie52w",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781248847685156865/android/apk/1.0.6_20240524181546.apk"
+        DFE947: {
+            adCode: "1bxie52w",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781248847685156865/android/apk/1.0.6_20240524181546.apk",
         },
         "49CB40": {
-            "adCode": "1bisr42t",
-            "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780456747171841/android/apk/1.0.6_20240524182111.apk"
-        }
+            adCode: "1bisr42t",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780456747171841/android/apk/1.0.6_20240524182111.apk",
+        },
+        "8742C2": {
+            adCode: "1bgpvarh",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781249177791840257/android/apk/1.0.6_20240524181500.apk",
+        },
+        "6B990E": {
+            adCode: "1b1300zf",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945424033173505/android/apk/1.0.6_20240524175047.apk",
+        },
+        FDD924: {
+            adCode: "1bpqeynt",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780865997996034/android/apk/1.0.6_20240524182000.apk",
+        },
+        EA2139: {
+            adCode: "1b3hvu7k",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780777449799681/android/apk/1.0.6_20240524182024.apk",
+        },
+        "399F93": {
+            adCode: "1c4ngzz8",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872034167324673/android/apk/1.0.6_20240527081500.apk",
+        },
+        "451D99": {
+            adCode: "1cis5c98",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148425312079873/android/apk/1.0.6_20240524172550.apk",
+        },
+        "554DF4": {
+            adCode: "1bgd3v7w",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781243352866025474/android/apk/1.0.6_20240524181633.apk",
+        },
+        "031E9B": {
+            adCode: "1cf9yvqr",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148566588993538/android/apk/1.0.6_20240524172527.apk",
+        },
+        "35CD52": {
+            adCode: "1ck9rwv5",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148689609814017/android/apk/1.0.6_20240524172500.apk",
+        },
+        "2A4DB2": {
+            adCode: "1c6qi1tu",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872301482266625/android/apk/1.0.6_20240527082000.apk",
+        },
+        "2F0135": {
+            adCode: "1cromuog",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148271680974850/android/apk/1.0.6_20240524172613.apk",
+        },
+        "4117E3": {
+            adCode: "1bsifejm",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780141547175937/android/apk/1.0.6_20240524183523.apk",
+        },
+        E6338B: {
+            adCode: "1cwkkmbd",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794872535927717890/android/apk/1.0.6_20240527082500.apk",
+        },
+        B5D55D: {
+            adCode: "1bk0aw18",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1781248992510279681/android/apk/1.0.6_20240524181523.apk",
+        },
+        CB7C32: {
+            adCode: "1cv8m1vg",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1788148028719665154/android/apk/1.0.6_20240524174000.apk",
+        },
+        "4ED40B": {
+            adCode: "1c5c75kg",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1794871819716755457/android/apk/1.0.6_20240527080103.apk",
+        },
+        F3F227: {
+            adCode: "1buhmiyu",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1779780367339143169/android/apk/1.0.6_20240524183500.apk",
+        },
+        F78CF3: {
+            adCode: "1b8b8g74",
+            url: "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1784945920260091906/android/apk/1.0.6_20240524174110.apk",
+        },
     }
     adjustUrlCode = affiliateLists[affidValue]["adCode"];
     apiUrl = affiliateLists[affidValue]["url"];
