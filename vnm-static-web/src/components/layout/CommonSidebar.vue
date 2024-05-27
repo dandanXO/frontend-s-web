@@ -91,7 +91,7 @@ export default defineComponent({
               clearInterval(isPacketChecked.value);
               console.log(res);
               if (res.code === 0) {
-                isRedPacketShow.value = true;
+                isRedPacketShow.value = res.data.nowIsRain;
               }
             })
             .catch((err) => {
