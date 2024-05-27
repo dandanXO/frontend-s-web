@@ -35,7 +35,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
     
     @media (max-width: 768px) {
-        padding: 5px;
+        padding: 5px 10px;
         gap: 0px;
         flex-wrap: nowrap;
     }
@@ -53,12 +53,13 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     height: 80px;
     white-space: nowrap;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out, box-shadow 0.3s ease-out;
     overflow: hidden;
-    border: 1px solid #5dd8ff;
+    border: 1px solid #4b4b4b;
     transform: skewX(-16deg);
     border-radius: 10px;
     position: relative;
+    box-shadow: rgba(50, 50, 50, 0.2) 0px 7px 29px 0px;
 
     @media (max-width: 768px) {
         min-width: 50px;
@@ -78,7 +79,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         width: 180px;
 
         @media (max-width: 768px) {
-            width: 60px;
+            width: 50px;
             white-space: pre-wrap;
             text-align: center;
             transform: translate(-45%, -50%) skewX(8deg);
@@ -90,7 +91,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             font-weight: bold;
 
             @media (max-width: 768px) {
-                font-size: 18px;
+                font-size: 14px;
             }
         }
 
@@ -159,6 +160,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     &:hover, &.active {
         filter: grayscale(0);
         background-size: 130% 130%;
+        border: 1px solid #5dd8ff;
+        box-shadow: #5dd9ff63 0px 7px 29px 0px;
     }
 }
 </style>
