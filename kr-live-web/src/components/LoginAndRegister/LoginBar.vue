@@ -371,6 +371,7 @@ const iconInfo = reactive([
       width: 100%;
       background: none;
       backdrop-filter: none;
+      border: none;
 
       .sidebar-section-wrapper, .sidebar-logout-button {
         display: none;

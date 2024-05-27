@@ -2398,6 +2398,7 @@ export default defineComponent({
     background-size: 100% 100%;
     aspect-ratio: 288 / 68;
     max-width: 288px;
+    margin: 0px auto 20px;
   }
 
   .jackpot-txt {

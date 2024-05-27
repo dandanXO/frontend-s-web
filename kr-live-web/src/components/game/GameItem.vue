@@ -90,6 +90,10 @@ const gameType = ref(props.gameType);
     max-width: 170px;
     width: 100%;
 
+    @media (max-width: 769px) {
+      max-width: 130px;
+    }
+
     .active-overlay, .bg-overlay {
       transition: 0.3s all;
       position: absolute;
@@ -121,9 +125,17 @@ const gameType = ref(props.gameType);
         justify-content: center;
         align-items: center;
 
+        @media (max-width: 769px) {
+          top: 12%;
+        }
+
         .game-name {
           color: #fff;
           font-size: 24px;
+
+          @media (max-width: 769px) {
+            font-size: 20px;
+          }
         }
 
         .game-logo {
@@ -151,6 +163,15 @@ const gameType = ref(props.gameType);
         width: 100%;
         display: flex;
         justify-content: center;
+
+        @media (max-width: 769px) {
+          bottom: 10%;
+
+          .btn-w-blue {
+            width: 100px;
+            height: 40px;
+          }
+        }
 
         &:hover {
           filter: brightness(0.9);

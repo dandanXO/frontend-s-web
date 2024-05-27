@@ -64,6 +64,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         min-width: 50px;
         max-width: 80px;
         transform: skewX(-10deg);
+        border-radius: 4px;
     }
 
     .category-labels {
@@ -75,7 +76,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         width: 180px;
 
         @media (max-width: 768px) {
-            width: 70px;
+            width: 60px;
             white-space: pre-wrap;
             text-align: center;
             transform: translate(-45%, -50%) skewX(10deg);
@@ -87,7 +88,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             font-weight: bold;
 
             @media (max-width: 768px) {
-                font-size: 20px;
+                font-size: 18px;
             }
         }
 
@@ -124,6 +125,33 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     &.casual {
         background: url('../../assets/home/menu/menu-casual.png') no-repeat center center;
         background-size: 120% 120%;
+    }
+
+    @media (max-width: 768px) {
+        &.slots {
+            background: url('../../assets/home/menu/menu-slots-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.live {
+            background: url('../../assets/home/menu/menu-live-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.esport {
+            background: url('../../assets/home/menu/menu-esport-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.sport {
+            background: url('../../assets/home/menu/menu-sport-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
+
+        &.casual {
+            background: url('../../assets/home/menu/menu-casual-mobile.png') no-repeat center center;
+            background-size: 120% 120%;
+        }
     }
 
     &:hover, &.active {
