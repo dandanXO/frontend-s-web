@@ -360,7 +360,7 @@ export default defineComponent({
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = sidParam;
+            regForm.sid = "fp-" + sidParam;
             regForm.isfinger= "1";
           }
 

@@ -81,27 +81,19 @@ export default defineComponent({
         Adjust.create(adjustConfig);
         setTimeout(() => {
 
+          // Adjust.getAdid().then((aaid) => {
+          //   console.log("aaid");
+          //   console.log(aaid);
+          //   if(store.aaid===""){
+          //     store.aaid = aaid;
+          //   }
+          // });
+
           Adjust.getGoogleAdId().then((googleid) => {
             console.log("Google AdID");
             console.log(googleid);
             if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-              var adjustConfig2 = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-              adjustConfig2.setLogLevel(AdjustLogLevel.Verbose);
-              const fpPromise = FingerprintJS.load();
               (async () => {
-                const fp = await fpPromise;
-                const result = await fp.get();
-                const excludes = { value: ["timezone", "timeZoneOffset"] };
-                const allComponents = { ...result.components };
-                excludes.value.forEach((element) => {
-                  delete allComponents[element];
-                });
-                const sidParam = FingerprintJS.hashComponents(allComponents);
-                console.log("my SID")
-                console.log(sidParam);
-
-                adjustConfig2.setExternalDeviceId(sidParam);
-                Adjust.create(adjustConfig2);
                 Adjust.getAttribution().then((attribution) => {
                   console.log("Attribution 2");
                   console.log(attribution);
@@ -109,20 +101,12 @@ export default defineComponent({
                     store.aaid = attribution.adid;
                   }
                 });
-
-                // Adjust.getAdid().then((aaid) => {
-                //   console.log("aaid");
-                //   console.log(aaid);
-                //   if(store.aaid===""){
-                //     store.aaid = aaid;
-                //   }
-                // });
               })();
             }else{
               store.googleadid = googleid;
             }
           });
-        }, 1500);
+        }, 0);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
