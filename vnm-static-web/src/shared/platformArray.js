@@ -242,7 +242,7 @@ export const lotteryPlatforms = [
     name: "TCG",
     image: "tcg",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép khách hàng định cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. Ngoài ra, khách hàng cũng có thể hiển thị các trò chơi xổ số theo các thị trường khác nhau để đạt được phương pháp bản địa hóa trò chơi tốt nhất.",
+    vimessage: "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép người chơi cài đặt cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. ",
     caption: "",
     gameCode: ""
   },
@@ -251,7 +251,7 @@ export const lotteryPlatforms = [
     name: "GPI",
     image: "gpi",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng TC Gaming, ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
+    vimessage: "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
     caption: "",
     gameCode: "sode"
   },
