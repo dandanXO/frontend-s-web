@@ -282,5 +282,9 @@ export function getLOLMsiMatchRecord() {
 }
 
 export function getSportMatch() {
-  return server.EVENT.get('/sport-match/today')
+  return server.EVENT.get("/sport-match/today");
+}
+
+export function getLplSummer24Match() {
+  return server.EVENT.get("game-match/upcoming/MSI");
 }

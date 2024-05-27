@@ -13,44 +13,18 @@
       <div class="lpl-summer-2024-first-container" v-if="activeTab === 'first'">
         <div class="lpl-summer-2024-fisrt-title"></div>
         <div class="lpl-summer-2024-team-box">
-          <div class="lpl-summer-2024-game-team">
+          <div class="lpl-summer-2024-game-team" v-for="(match, index) in matchList" :key="index">
             <div class="lpl-summer-2024-game-team-item">
-              <div
-                class="lpl-summer-2024-game-team-icon"
-                :style="{ backgroundImage: 'url(' + require('@/assets/promo/lh-lpl-summer-24/team1.png') + ')' }"
-              ></div>
-              <div class="lpl-summer-2024-game-team-name">JDG</div>
+              <img class="lpl-summer-2024-game-team-icon" :src="match.teamOneIcon" />
+              <div class="lpl-summer-2024-game-team-name">{{ match.teamOne }}</div>
             </div>
             <div class="lpl-summer-2024-info">
               <div class="vs-icon"></div>
-              <div class="vs-time">5月30日 15:30</div>
+              <div class="vs-time">{{ match.matchTime }}</div>
             </div>
             <div class="lpl-summer-2024-game-team-item">
-              <div
-                class="lpl-summer-2024-game-team-icon"
-                :style="{ backgroundImage: 'url(' + require('@/assets/promo/lh-lpl-summer-24/team2.png') + ')' }"
-              ></div>
-              <div class="lpl-summer-2024-game-team-name">JDG</div>
-            </div>
-          </div>
-          <div class="lpl-summer-2024-game-team">
-            <div class="lpl-summer-2024-game-team-item">
-              <div
-                class="lpl-summer-2024-game-team-icon"
-                :style="{ backgroundImage: 'url(' + require('@/assets/promo/lh-lpl-summer-24/team3.png') + ')' }"
-              ></div>
-              <div class="lpl-summer-2024-game-team-name">JDG</div>
-            </div>
-            <div class="lpl-summer-2024-info">
-              <div class="vs-icon"></div>
-              <div class="vs-time">5月30日 15:30</div>
-            </div>
-            <div class="lpl-summer-2024-game-team-item">
-              <div
-                class="lpl-summer-2024-game-team-icon"
-                :style="{ backgroundImage: 'url(' + require('@/assets/promo/lh-lpl-summer-24/team4.png') + ')' }"
-              ></div>
-              <div class="lpl-summer-2024-game-team-name">JDG</div>
+              <img class="lpl-summer-2024-game-team-icon" :src="match.teamTwoIcon" />
+              <div class="lpl-summer-2024-game-team-name">{{ match.teamTwo }}</div>
             </div>
           </div>
         </div>
@@ -79,24 +53,24 @@
               <td rowspan="5">一倍流水</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
+              <td>≥5,888</td>
+              <td>58</td>
+              <td>88</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
+              <td>≥18,888</td>
+              <td>188</td>
+              <td>288</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
+              <td>≥58,888</td>
+              <td>588</td>
+              <td>888</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
+              <td>≥128,888</td>
+              <td>1,288</td>
+              <td>1,888</td>
             </tr>
           </tbody>
         </table>
@@ -177,32 +151,32 @@
             <tr>
               <td>≥1,888</td>
               <td>18</td>
-              <td>38</td>
+              <td>58</td>
               <td>88</td>
             </tr>
             <tr>
               <td>≥1,888</td>
               <td>18</td>
-              <td>38</td>
               <td>88</td>
+              <td>58</td>
             </tr>
             <tr>
               <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
-              <td>88</td>
+              <td>58</td>
+              <td>158</td>
+              <td>288</td>
             </tr>
             <tr>
               <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
               <td>88</td>
+              <td>188</td>
+              <td>328</td>
             </tr>
             <tr>
               <td>≥1,888</td>
-              <td>18</td>
-              <td>38</td>
-              <td>88</td>
+              <td>188</td>
+              <td>288</td>
+              <td>588</td>
             </tr>
           </tbody>
         </table>
@@ -223,7 +197,7 @@
             <tr>
               <td>≥1,888</td>
               <td>18</td>
-              <td>38</td>
+              <td>58</td>
               <td>88</td>
             </tr>
           </tbody>
@@ -275,9 +249,23 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { getLplSummer24Match } from "@/api/index/promo.js";
+import moment from "moment";
 
 const activeTab = ref("first");
+const matchList = ref([]);
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+onMounted(async () => {
+  const apiRes = await getLplSummer24Match();
+  console.log(apiRes);
+  matchList.value = apiRes.data.map((res) => ({
+    ...res,
+    matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
+    teamOneIcon: imgURL + res.teamOneIcon,
+    teamTwoIcon: imgURL + res.teamTwoIcon
+  }));
+});
 </script>
 
 <style scoped lang="scss">
