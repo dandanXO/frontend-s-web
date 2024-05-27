@@ -183,10 +183,11 @@ const iconInfo = reactive([
   left: 0;
   padding: 12px;
   background: #12112199;
+  border-bottom: 1px solid #3f3f3f;
 
   img{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
   @media (min-width: 769px) {
@@ -202,7 +203,7 @@ const iconInfo = reactive([
   justify-content: center;
   align-items: center;
   border: none;
-  background: rgba(18, 17, 33, 1);
+  background: #121121e6;
   z-index: 1;
   border-width: 2px 0px 2px 0px;
   border-style: solid;
@@ -251,8 +252,8 @@ const iconInfo = reactive([
     display: flex;
     flex-direction: column;
     gap: 20px;
-    background: #000000B2;
-    backdrop-filter: blur(5px);
+    background: #00000080;
+    backdrop-filter: blur(10px);
     border-right: 1px solid #454F63;
   }
 
@@ -310,9 +311,9 @@ const iconInfo = reactive([
       }
 
       &.middle {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        display: flex;
         white-space: nowrap;
+        flex-wrap: wrap;
       }
 
       .sidebar-section-item {
@@ -321,6 +322,7 @@ const iconInfo = reactive([
         align-items: center;
         justify-content: center;
         gap: 5px;
+        width: 70px;
       }
     }
 

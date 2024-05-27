@@ -79,6 +79,11 @@ const gameType = ref(props.gameType);
   padding: 20px;
   width: 100%;
 
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
+
   .game-item {
     aspect-ratio: 290 / 530;
     background: url('../../assets/home/games/live/game-bg-empty.png') no-repeat center center;

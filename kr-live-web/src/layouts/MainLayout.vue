@@ -508,7 +508,7 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 40%;
+  top: 50%;
   margin-top: -42px;
   left: 50%;
   width: 425px;
@@ -538,7 +538,7 @@ svg path {
   width: 100%;
   background: url("../assets/home/home-banner.png") no-repeat top center;
   background-size: cover;
-  height: 350px;
+  height: 250px;
 
   @media (min-width: 991px) {
     background: url("../assets/home/home-banner.png") no-repeat top center;
