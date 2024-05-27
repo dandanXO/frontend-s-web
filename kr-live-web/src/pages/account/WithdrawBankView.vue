@@ -413,7 +413,7 @@ export default defineComponent({
             message: t('lang.fill_in_information'),
             icon: "report_problem"
           });
-          router.push("/account/personal");
+          router.push("/?page=personal/info");
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
