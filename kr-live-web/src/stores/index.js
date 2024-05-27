@@ -48,7 +48,7 @@ export const userStore = defineStore("userStore", {
       });
     },
     hasToken() {
-      return !!SessionStorage.getItem("TOKEN");
+      return !!SessionStorage.getItem("TOKEN") || !!this.token;
     },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
