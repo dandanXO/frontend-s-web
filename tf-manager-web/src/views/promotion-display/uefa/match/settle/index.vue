@@ -32,12 +32,6 @@
           :default-time="defaultTime"
         />
         <el-input
-          v-model="request.title"
-          size="small"
-          style="width: 200px; margin-left: 10px;"
-          :placeholder="t('fields.title')"
-        />
-        <el-input
           v-model="request.loginName"
           size="small"
           style="width: 200px; margin-left: 10px;"
@@ -49,16 +43,15 @@
           :placeholder="t('fields.status')"
           class="filter-item"
           style="width: 200px; margin-left: 10px;"
-          @focus="loadSites"
         >
           <el-option
             v-for="item in uiControl.status"
             :key="item.key"
-            :label="t('status.uefaMatchRecord.' + item.displayName)"
+            :label="t('status.gameMatchRecord.' + item.displayName)"
             :value="item.value"
           />
         </el-select>
-        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadMatchRecord">
+        <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadUefaSettlement">
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
@@ -77,47 +70,16 @@
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="180" />
       <el-table-column prop="title" :label="t('fields.title')" width="180" />
-      <el-table-column prop="teamOneName" :label="t('fields.teamOne')" width="180">
+      <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" min-width="180">
         <template #default="scope">
-          <div style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.teamOneIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.teamOneName }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="teamTwoName" :label="t('fields.teamTwo')" width="180">
-        <template #default="scope">
-          <div style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.teamTwoIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.teamTwoName }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="teamName" :label="t('fields.selectedTeam')" width="180">
-        <template #default="scope">
-          <div v-if="scope.row.teamName" style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.teamIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.teamName }}</span>
-          </div>
-          <el-tag v-else size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="winnerTeamName" :label="t('fields.winner')" width="180">
-        <template #default="scope">
-          <div v-if="scope.row.winnerTeamName" style="display: flex; align-items: center">
-            <img :src="promoDir + scope.row.winnerTeamIcon" style="width: 20px; height: 20px; margin-right: 10px">
-            <span>{{ scope.row.winnerTeamName }}</span>
-          </div>
-          <el-tag v-else-if="scope.row.winnerTeamId === 0 && scope.row.matchStatus === 'ENDED'" size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
-          <span v-else>-</span>
+          $ <span v-formatter="{data: scope.row.bonus,type: 'money'}" />
         </template>
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" width="140">
         <template #default="scope">
-          <el-tag v-if="scope.row.status === 'PENDING'" size="mini">{{ t('status.uefaMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.uefaMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'WIN_MATCH' || scope.row.status === 'WIN_TEAM' || scope.row.status === 'WIN_ALL'" type="success" size="mini">{{ t('status.uefaMatchRecord.' + scope.row.status) }}</el-tag>
-          <el-tag v-if="scope.row.status === 'LOSE'" type="warning" size="mini">{{ t('status.uefaMatchRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'PENDING_SETTLE'" type="warning" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'SETTLED'" type="success" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
+          <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :label="t('fields.recordTime')" min-width="200">
@@ -134,6 +96,30 @@
           />
         </template>
       </el-table-column>
+      <el-table-column :label="t('fields.operate')" align="center" v-if="!hasRole(['SUB_TENANT']) && hasPermission(['sys:uefa-settlement:update'])" fixed="right" width="280">
+        <template #default="scope">
+          <el-button
+            v-if="scope.row.status === 'PENDING_SETTLE'"
+            size="small"
+            type="success"
+            v-permission="['sys:uefa-settlement:update']"
+            @click="settle(scope.row.id)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.settle') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'PENDING_SETTLE'"
+            size="small"
+            type="danger"
+            v-permission="['sys:uefa-settlement:update']"
+            @click="cancel(scope.row.id)"
+            style="cursor: pointer"
+          >
+            {{ t('fields.cancel') }}
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :total="page.total"
@@ -143,8 +129,8 @@
       v-model:page-size="request.size"
       v-model:page-count="page.pages"
       v-model:current-page="request.current"
-      @current-change="loadMatchRecord"
-      @size-change="loadMatchRecord"
+      @current-change="loadUefaSettlement"
+      @size-change="loadUefaSettlement"
     />
   </div>
 </template>
@@ -157,14 +143,15 @@ import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getUefaMatchRecord } from "@/api/uefa";
+import { getUefaSettlement, settleUefa, cancelUefaSettlement } from "@/api/uefa";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { hasRole, hasPermission } from '@/utils/util'
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
-const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const site = ref(null);
 
 const defaultTime = [
@@ -201,12 +188,9 @@ const uiControl = reactive({
   dialogType: "UPDATE",
   removeBtn: true,
   status: [
-    { key: 1, displayName: 'PENDING', value: 'PENDING' },
-    { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
-    { key: 3, displayName: 'WIN_MATCH', value: 'WIN_MATCH' },
-    { key: 4, displayName: 'WIN_TEAM', value: 'WIN_TEAM' },
-    { key: 5, displayName: 'WIN_ALL', value: 'WIN_ALL' },
-    { key: 6, displayName: 'LOSE', value: 'LOSE' }
+    { key: 1, displayName: 'PENDING_SETTLE', value: 'PENDING_SETTLE' },
+    { key: 2, displayName: 'SETTLED', value: 'SETTLED' },
+    { key: 3, displayName: 'CANCEL', value: 'CANCEL' }
   ]
 });
 
@@ -217,7 +201,7 @@ const page = reactive({
   loading: false
 });
 
-async function loadMatchRecord() {
+async function loadUefaSettlement() {
   page.loading = true;
   const requestCopy = { ...request };
   const query = {};
@@ -231,11 +215,35 @@ async function loadMatchRecord() {
       query.createTime = request.createTime.join(",");
     }
   }
-  const { data: ret } = await getUefaMatchRecord(query);
+  const { data: ret } = await getUefaSettlement(query);
   page.pages = ret.pages;
   page.records = ret.records;
   page.total = ret.total;
   page.loading = false;
+}
+
+async function settle(id) {
+  ElMessageBox.confirm(t('message.confirmSettlement'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await settleUefa(id)
+    await loadUefaSettlement()
+    ElMessage({ message: t('message.settled'), type: 'success' })
+  })
+}
+
+async function cancel(id) {
+  ElMessageBox.confirm(t('message.confirmCancel'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await cancelUefaSettlement(id)
+    await loadUefaSettlement()
+    ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  })
 }
 
 async function loadSites() {
