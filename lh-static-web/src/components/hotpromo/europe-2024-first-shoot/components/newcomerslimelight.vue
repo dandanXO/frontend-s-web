@@ -59,7 +59,6 @@
     <div class="hongbao-angbao">{{ winAmount }} 元</div>
     <img src="../images/hongbaobonus.png">
     <div class="confirm" @click="refreshBal"><img src="../images/hongbao-confirm.png"></div>
-
   </el-dialog>
 </template>
 <script setup>

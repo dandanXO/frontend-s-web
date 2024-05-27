@@ -169,3 +169,10 @@ export function getEurocupManualSchedule() {
 export function getSportMatch() {
   return eventapi.get('/sport-match/today')
 }
+
+export function duanwuVipUpgrade() {
+  return eventapi.post("/duan-wu/vip-upgrade");
+}
+export function duanwuDepositBet() {
+  return eventapi.post("/duan-wu/deposit-bet");
+}

@@ -116,6 +116,7 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
+    <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -179,6 +180,7 @@ import CS2CCTPromo from "../components/hotpromo/CS2CCTPromo/CS2CCTPromo.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
+import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -221,7 +223,8 @@ export default defineComponent({
     CS2CCTPromo,
     EurocupManual,
     SportZhongChao,
-    Nba24Match
+    Nba24Match,
+    DuanWuJiePromo
   },
   props: {
     list: {
@@ -320,7 +323,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-cs2-cct-major-2024" ||
       this.list.redirectUrl === "lh-eurocup-manual" ||
       this.list.redirectUrl === "lh-sport-zhongchao"||
-      this.list.redirectUrl === "lh-nba24-match"
+      this.list.redirectUrl === "lh-nba24-match"||
+      this.list.redirectUrl === "lh-duanwujie24"
     ) {
       this.isCommonPromo = false;
     } else {
