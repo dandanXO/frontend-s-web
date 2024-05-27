@@ -27,13 +27,20 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
 <style lang="scss" scoped>
 .category-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 10px;
+    display: flex;
     flex-wrap: wrap;
+    gap: 10px;
     padding: 20px;
     justify-content: center;
+
+    
+    @media (max-width: 768px) {
+        padding: 5px;
+        gap: 0px;
+        flex-wrap: nowrap;
+    }
 }
+
 .category {
     margin: 5px;
     filter: grayscale(1);
@@ -53,6 +60,12 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     border-radius: 10px;
     position: relative;
 
+    @media (max-width: 768px) {
+        min-width: 50px;
+        max-width: 80px;
+        transform: skewX(-10deg);
+    }
+
     .category-labels {
         position: absolute;
         top: 50%;
@@ -61,15 +74,30 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         overflow: auto;
         width: 180px;
 
+        @media (max-width: 768px) {
+            width: 70px;
+            white-space: pre-wrap;
+            text-align: center;
+            transform: translate(-45%, -50%) skewX(10deg);
+        }
+
         .category-kr-label {
             color: #01d9ab;
             font-size: 24px;
             font-weight: bold;
+
+            @media (max-width: 768px) {
+                font-size: 20px;
+            }
         }
 
         .category-en-label {
             font-size: 10px;
             color: #fff;
+
+            @media (max-width: 768px) {
+                display: none;
+            }
         }
     }
 
