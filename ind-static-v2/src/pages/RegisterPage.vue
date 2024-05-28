@@ -136,19 +136,21 @@
             <!--              </template>-->
             <!--            </InputField>-->
 
-            <InputField :label="'Invitation Code (Optional)'">
-              <template #input>
-                <q-input
-                  v-if="!hasAffiliate"
-                  ref="affiliateCodeRef"
-                  hide-bottom-space
-                  v-model="regForm.referrer"
-                  label-color="brand"
-                  outlined
-                  color="white"
-                />
-              </template>
-            </InputField>
+            <div  style="display:none;">
+              <InputField :label="'Invitation Code (Optional)'">
+                <template #input>
+                  <q-input
+                    v-if="!hasAffiliate"
+                    ref="affiliateCodeRef"
+                    hide-bottom-space
+                    v-model="regForm.referrer"
+                    label-color="brand"
+                    outlined
+                    color="white"
+                  />
+                </template>
+              </InputField>
+            </div>
           </template>
         </InputRowGrid>
 
@@ -682,7 +684,7 @@ function charType(num) {
 
   span.normal-pwd {
     background: var(--q-warning);
-    color: var(--q-primary);
+    color: #000;
   }
 
   span.strong-pwd {
