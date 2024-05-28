@@ -58,6 +58,16 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div class="btn-group">
+        <el-button
+          size="mini"
+          type="success"
+          v-permission="['sys:uefa-settlement:update']"
+          @click="settleAllPending"
+        >
+          {{ t('fields.settleAllPending') }}
+        </el-button>
+      </div>
     </div>
     <el-table
       :data="page.records"
@@ -143,7 +153,7 @@ import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getUefaSettlement, settleUefa, cancelUefaSettlement } from "@/api/uefa";
+import { getUefaSettlement, settleUefa, cancelUefaSettlement, settleAllPendingUefa } from "@/api/uefa";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -243,6 +253,18 @@ async function cancel(id) {
     await cancelUefaSettlement(id)
     await loadUefaSettlement()
     ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  })
+}
+
+async function settleAllPending() {
+  ElMessageBox.confirm(t('message.confirmSettlement'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await settleAllPendingUefa()
+    await loadUefaSettlement()
+    ElMessage({ message: t('message.settled'), type: 'success' })
   })
 }
 
