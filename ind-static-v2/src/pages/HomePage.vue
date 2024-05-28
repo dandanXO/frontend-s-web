@@ -144,7 +144,7 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isPlatLoading">
+            <template v-if="isHotGameLoading">
               <div class="skeleton-lists">
                 <q-skeleton class="slot-skeleton" />
                 <q-skeleton class="slot-skeleton" />
@@ -1260,6 +1260,7 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 
 const isGameLoading = ref(true);
 const isPlatLoading= ref(false);
+const isHotGameLoading= ref(false);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
@@ -1378,6 +1379,7 @@ const loadHotGameList = () => {
           console.log(hotGameList.value);
           // console.log(livecasino.value);
 
+          isHotGameLoading.value= false;
         });
     });
 
@@ -1852,6 +1854,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  isHotGameLoading.value= true;
   isPlatLoading.value = true;
   getPlatList();
   loadData();
