@@ -192,7 +192,7 @@ export default defineComponent({
     EurocupManual,
     SportZhongChao,
     Nba24Match,
-    LPLSummer2024
+    LPLSummer2024,
     DuanWuJiePromo
     // DailyBonus
   },
