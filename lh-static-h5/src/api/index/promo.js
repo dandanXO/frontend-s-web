@@ -169,3 +169,7 @@ export function getEurocupManualSchedule() {
 export function getSportMatch() {
   return eventapi.get('/sport-match/today')
 }
+
+export function getLplSummer24Match() {
+  return eventapi.get("game-match/upcoming/MSI");
+}

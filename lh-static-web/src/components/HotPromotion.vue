@@ -81,6 +81,7 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
+    <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -121,7 +122,7 @@ import UpgradeHongBao from "../components/hotpromo/upgradeHongBao/UpgradeHongBao
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import AsianCup2024 from "../components/hotpromo/asian-cup-2024/AsianCup2024.vue";
 import BasketballHot from "../components/hotpromo/basketball-hot/BasketballHot.vue";
-import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue";
+import LPLSummer from "../components/hotpromo/lpl-summer/LPLSummer.vue"; 
 import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
@@ -138,11 +139,12 @@ import CS2CCTPromo from "../components/hotpromo/CS2CCTPromo/CS2CCTPromo.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
+import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 
-export default defineComponent({
+export default defineComponent({     
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
@@ -187,6 +189,7 @@ export default defineComponent({
     EurocupManual,
     SportZhongChao,
     Nba24Match,
+    LPLSummer2024
     // DailyBonus
   },
   props: {
@@ -467,7 +470,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-cs2-cct-major-2024" ||
       this.list.redirectUrl === "lh-eurocup-manual" ||
       this.list.redirectUrl === "lh-sport-zhongchao" ||
-      this.list.redirectUrl === "lh-nba24-match"
+      this.list.redirectUrl === "lh-nba24-match" ||
+      this.list.redirectUrl === "lh-lpl-summer24"
     ) {
       this.isCommonPromo = false;
     } else {
