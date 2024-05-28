@@ -213,3 +213,7 @@ export function claimCheckInTreasure(promoCode, days) {
 export function getLOLMsiMatchRecord() {
   return server.EVENT.get("/game-match/upcoming/MSI");
 }
+
+export function getLplSummer24Match() {
+  return server.EVENT.get("game-match/upcoming/MSI");
+}
