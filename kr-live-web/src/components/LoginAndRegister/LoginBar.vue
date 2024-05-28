@@ -5,7 +5,7 @@
         <img src="../../assets/home/menu-icon.svg" />
       </div>
       <div class="right-content-sidebar">
-        <LoggedIn v-if="store.hasToken()" />
+        <LoggedIn v-if="store.hasToken()" :isH5TopBar="true" />
         <NotLoggedIn v-else-if="!store.hasToken()" />
       </div>
     </div>
@@ -78,7 +78,7 @@
       </div>
       <div class="right-content">
         <LoggedIn v-if="store.hasToken()" />
-        <NotLoggedIn v-else-if="!store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" :isH5Banner="true" />
       </div>
     </div>
   </div>
@@ -406,7 +406,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
-  display: none;
+  .actions-topbar-controls {
+    display: none;
+  }
   
   @media (min-width: 769px) {
     display: flex;
