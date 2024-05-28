@@ -118,7 +118,7 @@
     const vipupgrade = () => {
         duanwuVipUpgrade().then((res) => {
             if (res.code === 0) {
-                amount.value = res.amount
+                amount.value = res.data
                 isBonusDialog.value = true
             } else {
                 ElMessage.error(res.message);
@@ -128,7 +128,7 @@
     const depositBet = () => {
         duanwuDepositBet().then((res) => {
             if (res.code === 0) {
-                amount.value = res.amount
+                amount.value = res.data
                 isBonusDialog.value = true
             } else {
                 ElMessage.error(res.message);

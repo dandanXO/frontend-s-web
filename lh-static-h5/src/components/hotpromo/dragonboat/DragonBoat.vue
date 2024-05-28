@@ -1,6 +1,6 @@
 <template>
     <div>
-      
+
     <q-tabs v-model="tabPosition" class="dragonboat-tabs">
       <q-tab name="duanwu" label="端午粽情"></q-tab>
       <q-tab name="fangzong" label="放粽不羁"></q-tab>
@@ -117,13 +117,13 @@
   import { userStore } from "stores/index";
   const store = userStore();
   const $q = useQuasar();
-    const tabPosition = ref("duanwu"); 
+    const tabPosition = ref("duanwu");
     const amount = ref(0);
     const isBonusDialog = ref(false);
     const vipupgrade = async () => {
       const res = await duanwuVipUpgrade();
       if (res.code === 0) {
-        amount.value = res.amount
+        amount.value = res.data;
         isBonusDialog.value = true
       } else {
         $q.notify({
@@ -137,7 +137,7 @@
     const depositBet = async () => {
       const res = await duanwuDepositBet();
       if (res.code === 0) {
-        amount.value = res.amount
+        amount.value = res.data
         isBonusDialog.value = true
       } else {
         $q.notify({
@@ -163,7 +163,7 @@
   max-width: 1250px;
   margin: auto;
   .section {
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -179,7 +179,7 @@
   }
   .dragon-title {
     background: url(images/dragonboat-title.png) no-repeat center center;
-    display: flex; 
+    display: flex;
     justify-content: center;
     align-items: center;
     margin: 25px auto;
@@ -193,7 +193,7 @@
     -webkit-text-fill-color: transparent;
     }
   }
-  .centertxt { 
+  .centertxt {
     text-align: center;
   }
   table {
@@ -240,7 +240,7 @@
     padding-top: 0.25rem;
     padding: 20px;
     :deep(.q-tab__label) {
-      
+
       font-size: 20px !important;
     }
 
