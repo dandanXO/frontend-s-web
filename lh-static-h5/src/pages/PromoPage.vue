@@ -185,11 +185,11 @@
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div
-                  v-if="['lh-cs2-cct-major-2024'].includes(selectedPromo.promoCode)"
+                  v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)"
                   class="corner-decor"
                 >
                   <img
-                    v-if="selectedPromo.promoCode === 'lh-cs2-cct-major-2024'"
+                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
                 </div>
