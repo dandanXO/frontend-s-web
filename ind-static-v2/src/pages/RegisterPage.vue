@@ -319,35 +319,20 @@ export default defineComponent({
     });
 
     const trackRegisterClickEvent= () => {
-      if(ui.adjust_click_register_event){
-        if (isAndroid()) {
-          var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
-          Adjust.trackEvent(adjustEvent);
-        }else{
-          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-          AdjustWeb.trackEvent({
-            eventToken: ui.adjust_click_register_event
-          });
-        }
+      if(ui.adjust_click_register_event && isAndroid()){
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
       }
     }
 
     const trackRegisterFailedEvent = () => {
-      if(ui.adjust_register_fail_event) {
-        if (isAndroid()) {
-          var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
-          Adjust.trackEvent(adjustEvent);
-        }else{
-          const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-          AdjustWeb.trackEvent({
-            eventToken: ui.adjust_register_fail_event
-          });
-        }
+      if(ui.adjust_register_fail_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
+        Adjust.trackEvent(adjustEvent);
       }
     }
 
     const onSubmit = () => {
-      trackRegisterClickEvent();
       loginNameRef.value.validate();
       pwdRef.value.validate();
       // confirmPwdRef.value.validate();
@@ -373,9 +358,9 @@ export default defineComponent({
         isAgreeReg.value === false
       ) {
         isLoading.value = false;
-        trackRegisterFailedEvent();
         $q.loading.hide();
       } else {
+        trackRegisterClickEvent();
         var qs = require("qs");
         const fpPromise = FingerprintJS.load();
         (async () => {

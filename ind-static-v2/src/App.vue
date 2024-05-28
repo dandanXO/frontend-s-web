@@ -80,14 +80,6 @@ export default defineComponent({
         Adjust.create(adjustConfig);
         setTimeout(() => {
 
-          // Adjust.getAdid().then((aaid) => {
-          //   console.log("aaid");
-          //   console.log(aaid);
-          //   if(store.aaid===""){
-          //     store.aaid = aaid;
-          //   }
-          // });
-
           Adjust.getGoogleAdId().then((googleid) => {
             console.log("Google AdID");
             console.log(googleid);
@@ -127,12 +119,6 @@ export default defineComponent({
           console.log("Web Adid");
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
-
-          if(ui.adjust_open_app_event) {
-            AdjustWeb.trackEvent({
-              eventToken: ui.adjust_open_app_event
-            });
-          }
 
         }, 1500);
       }
