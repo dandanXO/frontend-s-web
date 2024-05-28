@@ -264,8 +264,7 @@
                 {{ affInfo.affiliateCode }}
               </el-form-item>
             </el-row>
-
-            <el-row class="info" v-if="store.state.user.siteCode !== 'KRW'">
+            <el-row class="info">
               <el-icon color="#7D8792">
                 <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
               </el-icon>
@@ -274,6 +273,19 @@
                 label="Platform Commission"
               >
                 {{ affInfo.revenueShare }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info" v-if="affInfo.shareRatio !== null && affInfo.shareRatio.length > 0">
+              <el-icon color="#7D8792">
+                <Icon :icon="documentPercent20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                :label="t('fields.shareRatio')"
+              >
+                <div v-for="item in affInfo.shareRatio" :key="item.code">
+                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ item.value }}</el-row>
+                </div>
               </el-form-item>
             </el-row>
           </el-form>
@@ -690,6 +702,7 @@ const affInfo = reactive({
   downlineMember: 0,
   commission: 0,
   revenueShare: 0,
+  shareRatio: [],
 })
 
 const eForm = reactive({
