@@ -298,7 +298,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .lpl-summer-2024 {
-  font-family: FZLanTingHeiS-EB-GB;
   width: 100%;
   height: 100%;
   display: flex;
