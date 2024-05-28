@@ -188,7 +188,7 @@ export default defineComponent({
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
                     api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
                       if (res.code === 0) {
-                        debugger;
+                        // debugger;
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
                         if(res.data.adjust_register_event){
                           ui.adjust_register_event = res.data.adjust_register_event;
