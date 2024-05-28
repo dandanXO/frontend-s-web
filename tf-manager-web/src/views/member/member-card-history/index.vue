@@ -166,7 +166,7 @@
         prop="action"
         :label="t('fields.action')"
         align="center"
-        min-width="100"
+        width="120"
       >
         <template #default="scope">
           <span
