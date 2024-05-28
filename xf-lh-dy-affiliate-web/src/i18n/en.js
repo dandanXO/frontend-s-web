@@ -215,6 +215,7 @@ export default {
     changeWithdrawPw: 'Change Withdraw Password',
     clearingSum: 'Clearing Sum',
     commission: 'Commission',
+    gamecommission: "Platform Commission",
     commissionBalance: 'Commission Balance',
     commissionPercent: 'Commission Percent',
     commissionRate: 'Commission Rate',

@@ -208,7 +208,18 @@
               <span class="role-span">{{ $t('fields.affiliateInfo') }}</span>
             </div>
           </template>
-          <el-form label-suffix=" : " label-width="150px" label-position="left">
+          <el-form label-suffix=" : " label-width="180px" label-position="left">
+            <el-row class="info" v-if="parseInt(store.state.user.siteId) === 10">
+              <el-icon color="#7D8792">
+                <Icon :icon="documentPercent20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                :label="t('fields.gamecommission')"
+              >
+                {{ (affInfo.revenueShare * 100).toFixed() }} %
+              </el-form-item>
+            </el-row>
             <el-row class="info">
               <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />

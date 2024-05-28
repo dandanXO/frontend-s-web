@@ -211,6 +211,7 @@ export default {
     changeWithdrawPw: '更改支付密码',
     clearingSum: '结算总和',
     commission: '佣金',
+    gamecommission: "游戏平台佣金",
     commissionBalance: '佣金余额',
     commissionPercent: '分红 %',
     commissionRate: '佣金比例',

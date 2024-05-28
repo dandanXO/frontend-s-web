@@ -212,6 +212,7 @@ export default {
     changeWithdrawPw: '출금 비밀번호 변경',
     clearingSum: '정산 총합',
     commission: '커미션',
+    gamecommission: "플랫폼 수수료",
     commissionBalance: '커미션 잔액',
     commissionPercent: '배당 %',
     commissionRate: '커미션 비율',
