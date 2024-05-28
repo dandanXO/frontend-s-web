@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="top-header">
-      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.svg" /></div>
+      <div @click="toggleNav()" class="hamburger-wrapper">
+        <img src="../../assets/home/menu-icon.svg" />
+      </div>
       <div class="right-content-sidebar">
         <LoggedIn v-if="store.hasToken()" />
         <NotLoggedIn v-else-if="!store.hasToken()" />
@@ -13,20 +15,20 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              Welcome
+              환영 {{ store.nickName }}
             </div>
             <div class="sidebar-section top">
               <router-link
                 class="sidebar-section-item"
                 to="/?page=personal/info"
               >
-                <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
-                <div class="info-text">입금</div>
+                <img :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
+                <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
               </router-link>
               <div class="separator vertical" />
               <router-link
                 class="sidebar-section-item"
-                to="/?page=transaction/records"
+                to="/?page=personal/info"
               >
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
                 <div class="info-text">출금</div>
@@ -188,6 +190,12 @@ const iconInfo = reactive([
   padding: 12px;
   background: #12112199;
   border-bottom: 1px solid #3f3f3f;
+
+  .hamburger-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   img{
     width: 20px;
@@ -400,6 +408,7 @@ const iconInfo = reactive([
   color: #ffffff;
   line-height: 28px;
   margin-left: 5px;
+  white-space: nowrap;
 
   @media (min-width: 769px) {
     font-size: 16px;
