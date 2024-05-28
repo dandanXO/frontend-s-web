@@ -4,8 +4,12 @@ export default {
     login_account: "계정",
     login_password: "암호",
     login_captcha: "보안 문자",
+    login_submit: "로그인",
+    login_register: "회원가입",
     // login end
     // register start
+    reg_referrer: "추천인",
+    reg_userid: "아이디",
     reg_login_name: "로그인 이름",
     reg_phone_num: "전화 번호",
     reg_pass: "비밀번호",
@@ -14,6 +18,7 @@ export default {
     reg_code_affiliate: "코드 제휴사",
     reg_bank_id: "은행 ID",
     reg_card_acc: "카드 계좌",
+    reg_submit: "가입완료",
     // register end
     langVal: "en",
     login: "Login",
@@ -194,7 +199,7 @@ export default {
     already_a_member_signin_now: "Already a member? Sign In now.",
     invalid_email: "Invalid Email",
     invalid_phone_num: "Invalid Phone Number",
-    loading: "Loading...",
+    loading: "로드 중...",
     register_successful: "Registered Successfully.",
     length_between_6_12: "Length should be between 6 - 12.",
     length_between_34_37: "Length should be between 34 - 37.",
