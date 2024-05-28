@@ -1,7 +1,7 @@
 <template>
   <div class="cs2">
     <div class="section first">
-      <div class="title"><img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/section-1.png" /></div>
+      <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-1.png" /></div>
       <div class="tips">
         <div class="tips-inner">
           参与BLAST Premier 春季总决赛当日投注金额100元注单结算后，次日可获得一个开箱钥匙，每投注100元即可获得一个钥匙。 
@@ -10,7 +10,7 @@
       <div class="content">
         <div class="top-row">
           <div class="lft">
-            <img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/key.png" />
+            <img src="../../../assets/images/promo/hotpromo/blastpremier/key.png" />
             钥匙数量：
             <span class="number">{{ keyNumber }}</span>
           </div>
@@ -31,12 +31,12 @@
               <img
                 v-if="item.treasureLevel"
                 :src="
-                  require(`../../../assets/images/promo/hotpromo/CS2CCTPromo/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
+                  require(`../../../assets/images/promo/hotpromo/blastpremier/treasure-level-${item.treasureLevel.toLowerCase()}.png`)
                 "
               />
               <div v-else class="img-placeholder"/>
               <div class="required-key">
-                <img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/key.png" />
+                <img src="../../../assets/images/promo/hotpromo/blastpremier/key.png" />
                 <span>x{{ item.quantity }}</span>
               </div>
             </div>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="section second">
-      <div class="title"><img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/section-2.png" /></div>
+      <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-2.png" /></div>
       <div class="tips">
         <div class="tips-inner">
           活动期间，连续投注BLAST Premier 春季总决赛≥1000元则视为签到成功，根据对应累计的签到天数开启宝箱
@@ -58,7 +58,7 @@
       <div class="content">
         <div class="top-row">
           <div class="lft">
-            <img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/gun.png" />
+            <img src="../../../assets/images/promo/hotpromo/blastpremier/gun.png" />
             签到天数：
             <span class="number">{{ signNumber }}</span>
           </div>
@@ -67,7 +67,7 @@
           <div class="sign-container">
             <div v-for="(day, i) in dayList" :key="i" class="item" :class="{ isDotted: !day.claimed && !day.toClaim }">
               <div class="sign-day">累计签到 {{ day.no }} 天</div>
-              <img :src="require(`../../../assets/images/promo/hotpromo/CS2CCTPromo/daily-bonus-${i + 1}.png`)" />
+              <img :src="require(`../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-${i + 1}.png`)" />
               <div class="btn claimed" v-if="day.claimed">已开启</div>
               <div class="btn to-claim" v-if="day.toClaim" @click="openModal('claim', day, i)">开启</div>
               <div class="btn not-complete" v-if="!day.claimed && !day.toClaim">未完成签到</div>
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="section third">
-      <div class="title"><img src="../../../assets/images/promo/hotpromo/CS2CCTPromo/section-3.png" /></div>
+      <div class="title"><img src="../../../assets/images/promo/hotpromo/blastpremier/section-3.png" /></div>
       <div class="content">
         <p>1.活动期间,每日投注BLAST Premier 春季总决赛达到100元有效投注即可获得1个开箱钥匙,开箱钥匙与开箱次数每日不设上限</p>
         <p>2.活动期间,开箱钥匙可积攒使用,获得开箱钥匙满足开箱条件可在活动期间任意时间开启宝箱,超出活动时间未开启宝箱则不予补偿</p>
@@ -455,7 +455,7 @@ onMounted(() => {
         gap: 10px;
         .btn {
           cursor: pointer;
-          background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/btn-active.png) no-repeat center center;
+          background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
           padding: 5px 20px;
           color: #ffffff;
           background-size: cover;
@@ -479,7 +479,7 @@ onMounted(() => {
           display: flex;
           flex-direction: column;
           gap: 6px;
-          background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/treasure-bg.png) no-repeat center center;
+          background: url(../../../assets/images/promo/hotpromo/blastpremier/treasure-bg.png) no-repeat center center;
           background-size: 100% 100%;
 
           img {
@@ -492,7 +492,7 @@ onMounted(() => {
           }
 
           &.active {
-            background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/treasure-bg-active.png) no-repeat center
+            background: url(../../../assets/images/promo/hotpromo/blastpremier/treasure-bg-active.png) no-repeat center
               center;
             color: #01f8f9;
             background-size: 100% 100%;
@@ -514,7 +514,7 @@ onMounted(() => {
       }
 
       .use-Keys {
-        background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/open-btn-bg.png) no-repeat center center;
+        background: url(../../../assets/images/promo/hotpromo/blastpremier/open-btn-bg.png) no-repeat center center;
         color: #003434;
         padding: 15px 15px;
         background-size: contain;
@@ -550,7 +550,7 @@ onMounted(() => {
           .sign-day {
             color: #01f8f9;
             padding: 8px 12px;
-            background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/daily-bonus-title.png) no-repeat center
+            background: url(../../../assets/images/promo/hotpromo/blastpremier/daily-bonus-title.png) no-repeat center
               center;
             font-weight: bold;
             font-family: "Microsoft YaHei UI";
@@ -573,7 +573,7 @@ onMounted(() => {
           }
         }
         .btn {
-          background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/btn.png) no-repeat center center;
+          background: url(../../../assets/images/promo/hotpromo/blastpremier/btn.png) no-repeat center center;
           padding: 10px 20px;
           align-self: normal;
           font-size: 14px;
@@ -589,7 +589,7 @@ onMounted(() => {
 
           &.to-claim {
             cursor: pointer;
-            background: url(../../../assets/images/promo/hotpromo/CS2CCTPromo/btn-active.png) no-repeat center center;
+            background: url(../../../assets/images/promo/hotpromo/blastpremier/btn-active.png) no-repeat center center;
             background-size: contain;
           }
         }
