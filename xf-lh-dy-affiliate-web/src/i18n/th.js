@@ -190,6 +190,7 @@ export default {
     changeWithdrawPw: 'เปลี่ยนรหัสผ่านการถอน',
     clearingSum: 'ยอดการเคลียร์',
     commission: 'คอมมิชชัน',
+    gamecommission: "ค่าคอมมิชชั่นแพลตฟอร์ม",
     commissionBalance: 'ยอดคงเหลือคอมมิชชัน',
     commissionPercent: 'ร้อยละคอมมิชชัน',
     commissionRate: 'อัตราคอมมิชชัน',
