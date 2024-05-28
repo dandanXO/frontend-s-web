@@ -1499,6 +1499,7 @@ export default {
     type: 'Type',
     uefaMatchRecord: 'UEFA Match Record',
     uefaMatchSetting: 'UEFA Match Setting',
+    uefaSettlement: 'UEFA Settlement',
     uefaTeamRecord: 'UEFA Team Record',
     uefaTeamSetting: 'UEFA Team Setting',
     undefined: 'Undefined',

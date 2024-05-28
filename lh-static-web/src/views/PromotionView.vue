@@ -99,17 +99,20 @@
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
-              selectedPromo?.promoCode === 'lh-nba24-match'
+              selectedPromo?.promoCode === 'lh-nba24-match' ||
+              selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
             backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : ''
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : ''
           }"
           :class="{
             fullwidth:
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
-              selectedPromo.promoCode === 'lh-eurocup-manual',
+              selectedPromo.promoCode === 'lh-eurocup-manual' ||
+              selectedPromo.promoCode === 'lh-lpl-summer24',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"

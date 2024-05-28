@@ -45,10 +45,26 @@ export const endUefaMatch = (id, winner) => {
   return https().request(`/uefa/matchEnd/${id}?_method=PUT`, Method.POST, { winner: winner }, ContentType.form);
 };
 
+export const endUefaMatchResettle = (id, winner) => {
+  return https().request(`/uefa/matchEndResettle/${id}?_method=PUT`, Method.POST, { winner: winner }, ContentType.form);
+};
+
 export const cancelUefaMatch = (id, match) => {
   return https().request(`/uefa/matchCancel/${id}?_method=PUT`, Method.POST, match, ContentType.form);
 };
 
 export const getUefaMatchRecord = (query) => {
   return https().request("/uefa/match-record", Method.GET, query, ContentType.form);
+};
+
+export const getUefaSettlement = (query) => {
+  return https().request("/uefa/settlement", Method.GET, query, ContentType.form);
+};
+
+export const settleUefa = (id, winner) => {
+  return https().request(`/uefa/settlement/${id}?_method=PUT`, Method.POST);
+};
+
+export const cancelUefaSettlement = (id, winner) => {
+  return https().request(`/uefa/settlementCancel/${id}?_method=PUT`, Method.POST);
 };

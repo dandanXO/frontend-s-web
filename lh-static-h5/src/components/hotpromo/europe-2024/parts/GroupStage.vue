@@ -37,7 +37,7 @@
             <div class="group-by-date-tab__match-divider" />
             <div class="group-by-date-tab__match-info">
               <span style="white-space: pre">
-                {{ moment(match.matchTime).locale("zh-cn").format("MMMDo[\n]hh:mm") }}
+                {{ moment(match.matchTime).locale("zh-cn").format("MMMDo[\n]HH:mm") }}
               </span>
               <button class="group-by-dat-tab__match-btn" @click="betNow(match.platformMatchId)">点击投注</button>
             </div>

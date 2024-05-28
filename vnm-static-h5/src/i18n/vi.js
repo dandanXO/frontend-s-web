@@ -51,6 +51,7 @@ export default {
     euroCountdown01: "ĐƯỜNG TỚI ",
     euroCountdown01a: "CÒN ",
     euroCountdown02: " NGÀY",
+    helloUsername: "Xin chào,",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -870,7 +871,7 @@ export default {
     withdraw_date: "Ngày rút",
     type: "Loại",
     transfer_date: "Ngày chuyển khoản",
-    privilege_name: "Tên đặc quyền",
+    privilege_name: "Tên khuyến mãi",
     record_time: "Thời gian ghi chú",
     sub_type: "Loại phụ",
     bet_code: "Mã cược",
@@ -1207,7 +1208,7 @@ export default {
     col_finacneremark: "Ghi Chú Tài Chính",
     col_feedbacktime: "Thời Gian Phản Hồi",
     col_type: "Loại",
-    col_privilegename: "Tên Đặc Quyền",
+    col_privilegename: "Tên khuyến mãi",
     str_alipay: "ALIPAY",
     str_alipaycode: "ALIPAYCODE",
     str_wechatpay: "WECHATPAY",

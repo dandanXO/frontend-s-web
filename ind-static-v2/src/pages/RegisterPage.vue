@@ -84,57 +84,57 @@
               </template>
             </InputField>
 
-            <InputField :label="'Confirm Password'">
-              <template #input>
-                <q-input
-                  ref="confirmPwdRef"
-                  hide-bottom-space
-                  :type="isCfmPwd ? 'password' : 'text'"
-                  v-model="regForm.confirmPwd"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val === regForm.password || 'Password does not match'
-                  ]"
-                  color="white"
-                  outlined
-                  label-color="brand"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isCfmPwd = !isCfmPwd"
-                    />
-                  </template>
-                </q-input>
+<!--            <InputField :label="'Confirm Password'">-->
+<!--              <template #input>-->
+<!--                <q-input-->
+<!--                  ref="confirmPwdRef"-->
+<!--                  hide-bottom-space-->
+<!--                  :type="isCfmPwd ? 'password' : 'text'"-->
+<!--                  v-model="regForm.confirmPwd"-->
+<!--                  lazy-rules-->
+<!--                  :rules="[-->
+<!--                    (val) => (val && val.length > 0) || 'Please insert password',-->
+<!--                    (val) => val === regForm.password || 'Password does not match'-->
+<!--                  ]"-->
+<!--                  color="white"-->
+<!--                  outlined-->
+<!--                  label-color="brand"-->
+<!--                >-->
+<!--                  <template v-slot:append>-->
+<!--                    <q-icon-->
+<!--                      color="gray-3"-->
+<!--                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"-->
+<!--                      class="cursor-pointer"-->
+<!--                      @click="isCfmPwd = !isCfmPwd"-->
+<!--                    />-->
+<!--                  </template>-->
+<!--                </q-input>-->
 
-                <!--      <q-input-->
-                <!--        ref="verificationRef"-->
-                <!--        hide-bottom-space-->
-                <!--        clearable-->
-                <!--        type="text"-->
-                <!--        v-model="regForm.captchaCode"-->
-                <!--        label="Verification Code"-->
-                <!--        lazy-rules-->
-                <!--        :rules="[-->
-                <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
-                <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-                <!--        ]"-->
-                <!--        placeholder="Please enter verification Code"-->
-                <!--        label-color="brand"-->
-                <!--        rounded-->
-                <!--        outlined-->
-                <!--        color="white"-->
-                <!--        class="landing-input"-->
-                <!--      >-->
-                <!--        <template v-slot:append>-->
-                <!--          <img :src="verificationImg" @click="getCode()" />-->
-                <!--        </template>-->
-                <!--      </q-input>-->
-              </template>
-            </InputField>
+<!--                &lt;!&ndash;      <q-input&ndash;&gt;-->
+<!--                &lt;!&ndash;        ref="verificationRef"&ndash;&gt;-->
+<!--                &lt;!&ndash;        hide-bottom-space&ndash;&gt;-->
+<!--                &lt;!&ndash;        clearable&ndash;&gt;-->
+<!--                &lt;!&ndash;        type="text"&ndash;&gt;-->
+<!--                &lt;!&ndash;        v-model="regForm.captchaCode"&ndash;&gt;-->
+<!--                &lt;!&ndash;        label="Verification Code"&ndash;&gt;-->
+<!--                &lt;!&ndash;        lazy-rules&ndash;&gt;-->
+<!--                &lt;!&ndash;        :rules="[&ndash;&gt;-->
+<!--                &lt;!&ndash;          (val) => (val && val.length > 0) || 'Please insert verification code',&ndash;&gt;-->
+<!--                &lt;!&ndash;          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'&ndash;&gt;-->
+<!--                &lt;!&ndash;        ]"&ndash;&gt;-->
+<!--                &lt;!&ndash;        placeholder="Please enter verification Code"&ndash;&gt;-->
+<!--                &lt;!&ndash;        label-color="brand"&ndash;&gt;-->
+<!--                &lt;!&ndash;        rounded&ndash;&gt;-->
+<!--                &lt;!&ndash;        outlined&ndash;&gt;-->
+<!--                &lt;!&ndash;        color="white"&ndash;&gt;-->
+<!--                &lt;!&ndash;        class="landing-input"&ndash;&gt;-->
+<!--                &lt;!&ndash;      >&ndash;&gt;-->
+<!--                &lt;!&ndash;        <template v-slot:append>&ndash;&gt;-->
+<!--                &lt;!&ndash;          <img :src="verificationImg" @click="getCode()" />&ndash;&gt;-->
+<!--                &lt;!&ndash;        </template>&ndash;&gt;-->
+<!--                &lt;!&ndash;      </q-input>&ndash;&gt;-->
+<!--              </template>-->
+<!--            </InputField>-->
 
             <InputField :label="'Invitation Code (Optional)'">
               <template #input>
@@ -201,7 +201,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
     const isLoading = ref(false);
@@ -319,7 +319,7 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
@@ -334,13 +334,14 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
         // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
+        isLoading.value = false;
         $q.loading.hide();
       } else {
         var qs = require("qs");
@@ -360,7 +361,8 @@ export default defineComponent({
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = sidParam;
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger= "1";
           }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -399,18 +401,18 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 // debugger;
-                if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  var adjustEvent = new AdjustEvent(affRegEvent.value);
-                  // alert(affRegEvent.value);
-                  Adjust.trackEvent(adjustEvent);
-                } else {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: affRegEvent.value
-                  });
-                }
+                // if (Platform.is.android && Platform.is.capacitor) {
+                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
+                //   // alert(affRegEvent.value);
+                //   Adjust.trackEvent(adjustEvent);
+                // } else {
+                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
+                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                //   AdjustWeb.trackEvent({
+                //     eventToken: affRegEvent.value
+                //   });
+                // }
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");

@@ -1,74 +1,82 @@
 <template>
   <div class="container">
     <div class="top-header">
-      <div @click="toggleNav()"><img src="../../assets/home/menu-icon.svg" /></div>
+      <div @click="toggleNav()" class="hamburger-wrapper">
+        <img src="../../assets/home/menu-icon.svg" />
+      </div>
+      <div class="right-content-sidebar">
+        <LoggedIn v-if="store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" />
+      </div>
     </div>
 
     <div class="content">
       <div class="left-content" :class="navActive && 'active'" @click="navActive = false">
-        <div class="sidebar-section-wrapper">
-          <div class="sidebar-section-title">
-            Welcome
-          </div>
-          <div class="sidebar-section top">
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=personal/info"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-personal.svg')" alt="" />
-              <div class="info-text">입금</div>
-            </router-link>
-            <div class="separator vertical" />
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=transaction/records"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
-              <div class="info-text">출금</div>
-            </router-link>
-          </div>
-          <div class="sidebar-section middle">
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=finance/deposit"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
-              <div class="info-text">입금</div>
-            </router-link>
-            <router-link
-              class="sidebar-section-item"
-              to="/?page=finance/withdraw"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
-              <div class="info-text">출금</div>
-            </router-link>
-            <div
-              class="sidebar-section-item"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
-              <div class="info-text">포인트전환</div>
+        <div class="left-content-items">
+          <div class="sidebar-section-wrapper">
+            <div class="sidebar-section-title">
+              환영 {{ store.nickName }}
             </div>
-            <div
-              class="sidebar-section-item"
-            >
-              <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
-              <div class="info-text">알전환</div>
+            <div class="sidebar-section top">
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=personal/info"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
+                <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
+              </router-link>
+              <div class="separator vertical" />
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=personal/info"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
+                <div class="info-text">출금</div>
+              </router-link>
             </div>
+            <div class="sidebar-section middle">
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=finance/deposit"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
+                <div class="info-text">입금</div>
+              </router-link>
+              <router-link
+                class="sidebar-section-item"
+                to="/?page=finance/withdraw"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
+                <div class="info-text">출금</div>
+              </router-link>
+              <!-- <div
+                class="sidebar-section-item"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
+                <div class="info-text">포인트전환</div>
+              </div>
+              <div
+                class="sidebar-section-item"
+              >
+                <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
+                <div class="info-text">알전환</div>
+              </div> -->
+            </div>
+            <div class="separator"/>
+            <div class="icon-section-label">메뉴</div>
           </div>
-          <div class="separator"/>
-          <div class="icon-section-label">메뉴</div>
-        </div>
-        <div
-          v-for="(item, index) in iconInfo"
-          :key="index"
-          @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
-          class="credit-info cursor-pointer"
-        >
-          <img :src="item.iconUrl" alt="" />
-          <div class="info-text">{{ item.info }}</div>
-        </div>
-        <div class="sidebar-logout-button">
-          <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+          <div
+            v-for="(item, index) in iconInfo"
+            :key="index"
+            @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
+            class="credit-info cursor-pointer"
+          >
+            <img :src="item.iconUrl" alt="" />
+            <div class="info-text">{{ item.info }}</div>
+          </div>
+          <div class="sidebar-logout-button" v-if="store.token">
+            <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+          </div>
         </div>
       </div>
       <div class="right-content">
@@ -181,10 +189,17 @@ const iconInfo = reactive([
   left: 0;
   padding: 12px;
   background: #12112199;
+  border-bottom: 1px solid #3f3f3f;
+
+  .hamburger-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   img{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
   @media (min-width: 769px) {
@@ -200,7 +215,7 @@ const iconInfo = reactive([
   justify-content: center;
   align-items: center;
   border: none;
-  background: rgba(18, 17, 33, 1);
+  background: #121121e6;
   z-index: 1;
   border-width: 2px 0px 2px 0px;
   border-style: solid;
@@ -217,15 +232,12 @@ const iconInfo = reactive([
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
   
   @media (min-width: 769px) {
     width: 1280px;
     flex-direction: row;
     height: 80px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
   }
 }
 
@@ -240,25 +252,33 @@ const iconInfo = reactive([
   border-width: 1px 0px 1px 0px;
   border-style: solid;
   border-color: #333333;
-  padding-left: 8px;
   display: none;
-  border-right: 1px solid #454F63;
+
+  .left-content-items {
+    width: 70%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #00000080;
+    backdrop-filter: blur(10px);
+    border-right: 1px solid #454F63;
+  }
 
   &.active {
     display: flex;
     position: fixed;
     top: 0;
     left: 0;
-    width: 70%;
+    width: 100%;
     height: 100%;
-    background: #000000B2;
-    backdrop-filter: blur(5px);
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: 20px;
     gap: 16px;
     z-index: 9;
+    background: #4040406d;
 
     .credit-info {
       flex-direction: row;
@@ -300,9 +320,9 @@ const iconInfo = reactive([
       }
 
       &.middle {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        display: flex;
         white-space: nowrap;
+        flex-wrap: wrap;
       }
 
       .sidebar-section-item {
@@ -311,6 +331,7 @@ const iconInfo = reactive([
         align-items: center;
         justify-content: center;
         gap: 5px;
+        width: 70px;
       }
     }
 
@@ -354,19 +375,30 @@ const iconInfo = reactive([
       justify-content: space-around;
       width: 100%;
     }
-    
-    .sidebar-section-wrapper, .sidebar-logout-button {
-      display: none;
+
+    .left-content-items {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      background: none;
+      backdrop-filter: none;
+      border: none;
+
+      .sidebar-section-wrapper, .sidebar-logout-button {
+        display: none;
+      }
     }
   }
 }
 
 .right-content {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background-color: transparent;
+  display: none;
+  
   @media (min-width: 769px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent;
   }
 }
 
@@ -376,6 +408,7 @@ const iconInfo = reactive([
   color: #ffffff;
   line-height: 28px;
   margin-left: 5px;
+  white-space: nowrap;
 
   @media (min-width: 769px) {
     font-size: 16px;

@@ -57,9 +57,14 @@ body {
 }
 
 .main {
-  background-image: url("../assets/home/background-phone2.png");
-  background-repeat: no-repeat;
-  background-size: contain;
+  background: #1C1C2D;
+  
+  @media (min-width: 768px) {
+    background-image: url("../assets/home/background-phone2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
   @media (min-width: 1200px) {
     background-image: url("../assets/home/home-background.jpg");
     background-size: cover;
@@ -632,8 +637,8 @@ input:internal-autofill-selected {
   background-image: url("../assets/home/btn-blue.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 154px;
-  height: 56px;
+  width: 104px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -721,8 +726,18 @@ input:internal-autofill-selected {
       background-size: 100% 100%;
   }
 
+  &.blue-square {
+    background: url("../assets/home/btn-blue-square.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+
   &.yellow {
       background: url("../assets/home/btn-orange.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+
+  &.yellow-square {
+    background: url("../assets/home/btn-yellow-square.svg") no-repeat center center;
       background-size: 100% 100%;
   }
 

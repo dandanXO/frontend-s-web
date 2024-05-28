@@ -264,6 +264,18 @@
                 {{ affInfo.affiliateCode }}
               </el-form-item>
             </el-row>
+
+            <el-row class="info" v-if="store.state.user.siteCode !== 'KRW'">
+              <el-icon color="#7D8792">
+                <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                label="Platform Commission"
+              >
+                {{ affInfo.revenueShare }}
+              </el-form-item>
+            </el-row>
           </el-form>
         </el-card>
       </el-row>
