@@ -3,7 +3,7 @@
         <div :class="`category ${category.name} ${props.selectedCategory === category.name ? 'active' : ''}`" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex" 
             @click="() => props.onClickGameCategory(category.name, categoryIndex)">
             <div class="category-labels">
-                <div class="category-kr-label">{{ category.label }}</div>
+                <div class="category-kr-label" v-html="category.label"></div>
                 <div class="category-en-label">{{ category.enLabel }}</div>
             </div>
         </div>
@@ -14,7 +14,7 @@
 import { ref } from 'vue';
 
 const categoryList = [
-    { name: "live", label: "라이브카지노", enLabel: "LIVE CASINO" },
+    { name: "live", label: "라이브<br/>카지노", enLabel: "LIVE CASINO" },
     { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
     { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
     { name: "sport", label: "스포츠", enLabel: "SPORTS" },
@@ -89,9 +89,11 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
             color: #01d9ab;
             font-size: 24px;
             font-weight: bold;
+            line-height: 1;
 
             @media (max-width: 768px) {
                 font-size: 14px;
+                line-height: 1.5;
             }
         }
 

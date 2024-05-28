@@ -2,7 +2,7 @@
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
       <div class="" v-if="isCreateMode">
-        <q-btn :label="'뒤쪽에'" @click="isCreateMode = false" color="blue" />
+        <q-btn :label="'전 페이지로 이동'" @click="isCreateMode = false" color="blue" />
         <form class="content-form">
           <p>
             <q-input ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" filled clearable

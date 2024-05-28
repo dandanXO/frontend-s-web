@@ -64,7 +64,7 @@
       </div>
     </div> -->
 
-    <div class="midd">
+    <router-link class="midd" to="/?page=notify">
       <div class="station-notice-wrapper">
         <div class="volume">
           <img src="../assets/icon/icon-announcement.svg" />
@@ -74,13 +74,13 @@
         </div>
         <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
           <div v-if="store.announcementList">
-            <span v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
+            <span style="color: #fff;" v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
             </span>
           </div>
         </marquee-text>
       </div>
-    </div>
+    </router-link>
 
     <div class="jackpot">
       <div class="jackpot-txt">987,654,321.23</div>
