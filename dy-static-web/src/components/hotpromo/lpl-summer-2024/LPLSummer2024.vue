@@ -50,7 +50,7 @@
               <td>≥1,888</td>
               <td>18</td>
               <td>38</td>
-              <td rowspan="5">一倍流水</td>
+              <td rowspan="5">3倍流水</td>
             </tr>
             <tr>
               <td>≥5,888</td>
@@ -96,7 +96,7 @@
             <div class="item-text">
               2.活动期间，每场特殊事件判定标准为如下：
               速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场MSI赛事第一局比赛为准；
+              特殊事件以当日第一场LPL赛事第一局比赛为准；
             </div>
           </div>
           <div class="item-content">
@@ -133,7 +133,7 @@
       <div class="lpl-summer-2024-second-container" v-if="activeTab === 'second'">
         <div class="lpl-summer-2024-second-title"></div>
         <div class="lpl-summer-2024-activities">
-          活动内容：当日投注LPL夏季赛当日滚球盘累计投注≥1,000且最终结算盈利≥500以上即可获得对应的盈利彩金。若MSI季中冠军赛最终结算为负盈利≥1,000也可获得对应负盈利返比。
+          活动内容：当日投注LPL夏季赛当日滚球盘累计投注≥1,000且最终结算盈利≥500以上即可获得对应的盈利彩金。若LPL夏季赛最终结算为负盈利≥1,000也可获得对应负盈利返比。
         </div>
         <table class="lpl-summer-2024-table">
           <thead>
@@ -149,31 +149,31 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
+              <td>≥500</td>
+              <td>8</td>
               <td>58</td>
               <td>88</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
+              <td>≥1,000​</td>
               <td>18</td>
               <td>88</td>
-              <td>58</td>
+              <td>188</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
+              <td>≥5,000</td>
               <td>58</td>
               <td>158</td>
               <td>288</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
+              <td>≥10,000</td>
               <td>88</td>
               <td>188</td>
               <td>328</td>
             </tr>
             <tr>
-              <td>≥1,888</td>
+              <td>≥50,000</td>
               <td>188</td>
               <td>288</td>
               <td>588</td>
@@ -195,10 +195,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>≥1,888</td>
-              <td>18</td>
-              <td>58</td>
-              <td>88</td>
+              <td>≥1,000</td>
+              <td>负盈利金额3%​</td>
+              <td>888元</td>
+              <td>3倍​</td>
             </tr>
           </tbody>
         </table>
