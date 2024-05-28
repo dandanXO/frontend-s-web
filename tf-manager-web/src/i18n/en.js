@@ -1312,6 +1312,7 @@ export default {
     sequence: 'Sequence',
     serialNo: 'Serial Number',
     settle: 'Settle',
+    settleAllPending: 'Settle All Pending',
     settleGameMatch: 'Settle Game Match',
     settlement: 'Settlement',
     settleTime: 'Settle Time',

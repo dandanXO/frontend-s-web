@@ -1315,6 +1315,7 @@ export default {
     sequence: '排序',
     serialNo: '平台订单号',
     settle: '结算',
+    settleAllPending: '结算所有待审核',
     settleGameMatch: '结算赛事',
     settlement: '结算',
     settleTime: '结算时间',
