@@ -108,7 +108,7 @@
           class="select-amt-btn"
           v-for="(item, index) in countOptions"
           :key="index"
-          :label="item + '원'"
+          :label="item + '원만'"
           @click="selectAmt(item)"
         ></q-btn>
         <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>

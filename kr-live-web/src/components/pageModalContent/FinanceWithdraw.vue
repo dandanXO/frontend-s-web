@@ -106,7 +106,7 @@
         </q-input>
 
         <div class="option-btns">
-          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="item + '원'"
+          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="item + '원만'"
                  @click="updateWithdrawItem(item)"
           ></q-btn>
         </div>
