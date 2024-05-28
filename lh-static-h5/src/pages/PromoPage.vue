@@ -13,6 +13,7 @@
       "
     >
       <q-tabs
+        scroll-target=".q-tab--active"
         v-if="!isPromoDetail"
         v-model="tab"
         align="justify"
