@@ -641,7 +641,7 @@ body {
   width: 500px;
   height: 1px;
   top: 68px;
-  left: 150px;
+  left: -132px;
   color: #454b62;
   border: none;
 }
