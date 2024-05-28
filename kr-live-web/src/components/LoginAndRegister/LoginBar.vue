@@ -2,6 +2,10 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()"><img src="../../assets/home/menu-icon.svg" /></div>
+      <div class="right-content-sidebar">
+        <LoggedIn v-if="store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" />
+      </div>
     </div>
 
     <div class="content">
@@ -220,7 +224,6 @@ const iconInfo = reactive([
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px;
   
   @media (min-width: 769px) {
     width: 1280px;
@@ -381,11 +384,13 @@ const iconInfo = reactive([
 }
 
 .right-content {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  background-color: transparent;
+  display: none;
+  
   @media (min-width: 769px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: transparent;
   }
 }
 

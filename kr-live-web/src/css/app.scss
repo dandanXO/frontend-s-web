@@ -726,8 +726,18 @@ input:internal-autofill-selected {
       background-size: 100% 100%;
   }
 
+  &.blue-square {
+    background: url("../assets/home/btn-blue-square.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+
   &.yellow {
       background: url("../assets/home/btn-orange.svg") no-repeat center center;
+      background-size: 100% 100%;
+  }
+
+  &.yellow-square {
+    background: url("../assets/home/btn-yellow-square.svg") no-repeat center center;
       background-size: 100% 100%;
   }
 
