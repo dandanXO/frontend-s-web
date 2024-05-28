@@ -1,34 +1,38 @@
 <template>
   <div class="nba24-match-box">
     <div class="nba24-match-container">
-      <div class="nba24-match-game">
+      <div class="nba24-match-game" v-for="(match, index) in matchList" :key="index">
         <div class="nba24-match-game-status">进行中</div>
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img
-                src="../../../assets/promo/lh-nba24-match/team1.png"
-                alt=""
-                class="nba24-match-game-content-team-img"
-              />
-              <div class="nba24-match-game-content-team-name">老鷹</div>
-              <div class="nba24-match-game-content-btn">投票</div>
+              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-content-team-img" />
+              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <div
+                class="nba24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+              >
+                投票
+              </div>
             </div>
           </div>
           <div class="nba24-match-game-content-center">
-            <div class="nba24-match-game-content-center-time">05月11日 16:00:00</div>
+            <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
             <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
-            <div class="nba24-match-game-content-btn">平局</div>
+            <div class="nba24-match-game-content-btn" @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })">
+              平局
+            </div>
           </div>
           <div class="nba24-match-game-content-right">
             <div class="nba24-match-game-content-team">
-              <img
-                src="../../../assets/promo/lh-nba24-match/team2.png"
-                alt=""
-                class="nba24-match-game-content-team-img"
-              />
-              <div class="nba24-match-game-content-team-name">火箭</div>
-              <div class="nba24-match-game-content-btn">投票</div>
+              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-content-team-img" />
+              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+              <div
+                class="nba24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+              >
+                投票
+              </div>
             </div>
           </div>
         </div>
@@ -217,14 +221,70 @@
           </table>
         </div>
       </q-dialog>
+      <q-dialog v-model="confirmVoteDialog" persistent>
+        <q-card class="confirm-vote-card">
+          <q-card-section class="q-mb-md row justify-center">
+            <div class="text-h6" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
+            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+          </q-card-section>
+
+          <q-card-actions align="center">
+            <div class="flex flex-center">
+              <q-btn class="q-mr-md" label="取消" color="warning" v-close-popup />
+              <q-btn color="blue" label="确定" @click="handleSubmitVote" />
+            </div>
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
+import moment from "moment";
+import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 
 const tableRecordDialog = ref(false);
+const confirmVoteDialog = ref(false);
+
+const matchList = ref([]);
+
+const recordList = ref([]);
+
+let submitParam = reactive({ matchId: 0, team: "" });
+
+const handleVoteClick = (selectedData) => {
+  submitParam = selectedData;
+  confirmVoteDialog.value = true;
+};
+
+const handleSubmitVote = () => {
+  console.log(submitParam);
+  submitNbaMatch(submitParam).then((res) => {
+    console.log(res);
+  });
+};
+
+const imgURL = process.env.IMAGE_CDN + "/promo/";
+
+onMounted(async () => {
+  const res = await getNbaMatch();
+  matchList.value = res.data.map((res) => ({
+    ...res,
+    matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
+    awayTeamIcon: imgURL + res.awayTeamIcon,
+    homeTeamIcon: imgURL + res.homeTeamIcon
+  }));
+});
+
+watch(tableRecordDialog, async () => {
+  console.log("1234");
+  if (tableRecordDialog.value) {
+    const res = await getNbaRecord();
+    console.log(res);
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -248,6 +308,7 @@ const tableRecordDialog = ref(false);
   border: 1px solid #51acff;
   background-color: #fff;
   position: relative;
+  margin-bottom: 12px;
   .nba24-match-game-status {
     width: 120px;
     height: 24px;
@@ -341,7 +402,6 @@ const tableRecordDialog = ref(false);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
   .nba24-match-game-bottom-left-title {
     font-size: 12px;
     font-weight: 500;
