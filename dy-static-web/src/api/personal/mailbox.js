@@ -111,6 +111,6 @@ export function deleteFeedback(param) {
 
 // POST /session/feedback?feedbackType={type}&title={title}&content={content}
 export function submitFeedback(param) {
-  const { feedbackType, title, content } = param;
-  return server.REST.post("/session/feedback", { feedbackType, title, content });
+  const { feedbackType, title, content, photo } = param;
+  return server.REST.post("/session/feedback", { feedbackType, title, content, photo });
 }
