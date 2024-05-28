@@ -603,10 +603,13 @@ svg {
   color: $text-footer;
 }
 
-.q-field--filled.q-field--dark .q-field__control,
-.q-field--filled.q-field--dark .q-field__control:before {
+.q-field--outlined.q-field--dark .q-field__control,
+.q-field--outlined.q-field--dark .q-field__control:before {
   // background: #5d0d0d;
-  background: #212121;
+  border-color: $primary;
+  border-width: 2px;
+  border-radius: 8px;
+  background: #252e43;
 }
 
 .verification-input:hover :before {

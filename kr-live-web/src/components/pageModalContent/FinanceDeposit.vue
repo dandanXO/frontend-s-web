@@ -102,13 +102,13 @@
           {{ store.currency.value }}
         </span>
       </div>
-
+      
       <p class="option-btns">
         <q-btn
           class="select-amt-btn"
           v-for="(item, index) in countOptions"
           :key="index"
-          :label="item + '원만'"
+          :label="isUSDT ? `${item} USDT` : item + '만원'"
           @click="selectAmt(item)"
         ></q-btn>
         <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
@@ -625,7 +625,7 @@ function selectPayType(value) {
 }
 
 const selectAmt = (amt) => {
-  const multiple = 10000;
+  const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
   form.localAmount += amt * multiple;
 };

@@ -740,7 +740,7 @@ onMounted(() => {
 
   .q-panel {
     .q-tab-panel {
-      padding: 10px 20px 100px;
+      // padding: 10px 20px 100px;
       // max-height: calc(95vh - 250px);
     }
   }
