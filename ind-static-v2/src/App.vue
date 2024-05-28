@@ -147,6 +147,9 @@ export default defineComponent({
           sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
           // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
           // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          if(res.data.adjust_register_event){
+            ui.adjust_register_event = res.data.adjust_register_event;
+          }
           if(res.data.adjust_open_app_event){
             ui.adjust_open_app_event = res.data.adjust_open_app_event;
           }
@@ -185,7 +188,11 @@ export default defineComponent({
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
                     api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
                       if (res.code === 0) {
+                        debugger;
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                        if(res.data.adjust_register_event){
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
                         if(res.data.adjust_open_app_event){
                           ui.adjust_open_app_event = res.data.adjust_open_app_event;
                         }

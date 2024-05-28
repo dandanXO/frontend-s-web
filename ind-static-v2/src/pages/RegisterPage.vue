@@ -409,27 +409,19 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
+                //ADJUST TRACKEVENT.
+                // debugger;
+                if (ui.adjust_register_event && isAndroid()) {
+                  var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+                  Adjust.trackEvent(adjustEvent);
+                }
+
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: "Registered successfully",
                   icon: "check_circle_outline"
                 });
-
-                //ADJUST TRACKEVENT.
-                // debugger;
-                // if (Platform.is.android && Platform.is.capacitor) {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   var adjustEvent = new AdjustEvent(affRegEvent.value);
-                //   // alert(affRegEvent.value);
-                //   Adjust.trackEvent(adjustEvent);
-                // } else {
-                //   affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                //   const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                //   AdjustWeb.trackEvent({
-                //     eventToken: affRegEvent.value
-                //   });
-                // }
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
