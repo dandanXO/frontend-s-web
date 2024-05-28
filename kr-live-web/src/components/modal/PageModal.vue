@@ -9,9 +9,6 @@
             </div>
           </div>
       </div> -->
-      <p style="text-align: right">
-        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" />
-      </p>
 
       <div class="page-dialog-main">
         <!-- <LangToggle v-if="showLangToggle"/> -->
@@ -28,7 +25,7 @@
                 class="header-close-btn"
                 src="../../assets/images/index/modal-close-btn.png"
                 @click="closeDialog()"
-                style="opacity: 0"
+                style="padding-right:10px"
               />
             </p>
           </q-toolbar>
