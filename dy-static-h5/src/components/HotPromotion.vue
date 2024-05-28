@@ -81,6 +81,8 @@
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
+    
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -130,6 +132,7 @@ import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGameProm
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -158,7 +161,8 @@ export default defineComponent({
     CS2Sign,
     BonusSpinWheel,
     LOLMsi2024Promo,
-    HongBaoYuEurocupPromo
+    HongBaoYuEurocupPromo,
+    LPLSummer24
   },
   props: {
     list: {
@@ -236,7 +240,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao"
+      this.list.redirectUrl === "dy2-eurocup-hongbao" || 
+      this.list.redirectUrl === "dy2-lpl-summer24"
     ) {
       this.isCommonPromo = false;
     } else {
