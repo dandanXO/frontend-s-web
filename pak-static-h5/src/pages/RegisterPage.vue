@@ -77,7 +77,7 @@
                     />
                   </template>
                 </q-input>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
@@ -96,7 +96,7 @@
                     Good
                   </span>
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div>
+                </div> -->
               </template>
             </InputField>
 
@@ -483,42 +483,42 @@ export default defineComponent({
       }
     };
 
-    watch(
-      () => regForm.password,
-      () => {
-        pwdStrength.value = "";
+    // watch(
+    //   () => regForm.password,
+    //   () => {
+    //     pwdStrength.value = "";
 
-        var pwd = regForm.password;
-        var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
-        }
+    //     var pwd = regForm.password;
+    //     var result = 0;
+    //     for (var i = 0, len = pwd.length; i < len; ++i) {
+    //       result |= charType(pwd.charCodeAt(i));
+    //     }
 
-        var level = 0;
-        for (var i = 0; i <= 4; i++) {
-          if (result & 1) {
-            level++;
-          }
-          result = result >>> 1;
-        }
-        if (pwd.length >= 6) {
-          switch (level) {
-            case 1:
-              pwdStrength.value = "weak";
-              break;
-            case 2:
-              pwdStrength.value = "normal";
-              break;
-            case 3:
-            case 4:
-              pwdStrength.value = "strong";
-              break;
-          }
-        } else {
-          pwdStrength.value = "weak";
-        }
-      }
-    );
+    //     var level = 0;
+    //     for (var i = 0; i <= 4; i++) {
+    //       if (result & 1) {
+    //         level++;
+    //       }
+    //       result = result >>> 1;
+    //     }
+    //     if (pwd.length >= 6) {
+    //       switch (level) {
+    //         case 1:
+    //           pwdStrength.value = "weak";
+    //           break;
+    //         case 2:
+    //           pwdStrength.value = "normal";
+    //           break;
+    //         case 3:
+    //         case 4:
+    //           pwdStrength.value = "strong";
+    //           break;
+    //       }
+    //     } else {
+    //       pwdStrength.value = "weak";
+    //     }
+    //   }
+    // );
 
     const openPhoneVeriDialog = () => {
       telRef.value.validate();

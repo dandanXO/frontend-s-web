@@ -2,14 +2,13 @@
   <div class="withdrawal-modal-view">
     <div class="withdrawal-summary">
       <div class="balance">
-        <div class="title">Cash Balance</div>
         <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
+        <div class="title">Cash Balance</div>
       </div>
 
       <div class="separator"></div>
 
       <div class="withdrawable">
-        <div class="title">Withdrawable</div>
         <span class="amount">
           {{
             withdrawalMethods[withdrawalDialogTab].withdrawableBalance >= 0
@@ -17,6 +16,7 @@
               : "0.00"
           }}
         </span>
+        <div class="title">Withdrawable</div>
       </div>
     </div>
 
@@ -31,7 +31,6 @@
             <q-select
               ref="cardRef"
               filled
-              dense
               clearable
               v-model="withdrawInfo.cardId"
               @update:model-value="onCardChanged"
@@ -96,26 +95,66 @@
     <div class="withdrawal-amount-container">
       <template v-if="bankCardList.length === 0">
         <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
-          <div class="top-wrapper">
+          <!-- <div class="top-wrapper">
             <div class="title">Account Number</div>
-          </div>
-          <div class="mid-wrapper">
-            <q-input
-              filled
+          </div> -->
+          <!-- <div class="mid-wrapper"> -->
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="`Account Number`">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    lazy-rules
+                    ref="bankNumberRef"
+                    placeholder="Enter Account Number"
+                    v-model="withdrawReadOnlyInfo.cardNumber"
+                    :rules="[(_) => isValidCardNumber()]"
+                    :readonly="bankCardList.length > 0 ? true : false"
+                    hide-bottom-space
+                  ></q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+
+          <!-- <q-input
+              outlined
               dense
               clearable
               lazy-rules
               ref="bankNumberRef"
-              placeholder="Enter Account Number"
+              placeholder="1"
               v-model="withdrawReadOnlyInfo.cardNumber"
               :rules="[(_) => isValidCardNumber()]"
               :readonly="bankCardList.length > 0 ? true : false"
               hide-bottom-space
-            ></q-input>
-          </div>
+            ></q-input> -->
+          <!-- </div> -->
         </div>
         <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
-          <div class="top-wrapper">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="`Bank IFSC Code`">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    lazy-rules
+                    ref="bankAddressRef"
+                    placeholder="Enter Bank IFSC Code"
+                    v-model="withdrawReadOnlyInfo.cardAddress"
+                    :rules="[(_) => isValidCardAddress()]"
+                    :readonly="bankCardList.length > 0 ? true : false"
+                    hide-bottom-space
+                  ></q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+
+          <!-- <div class="top-wrapper">
             <div class="title">Bank IFSC Code</div>
           </div>
           <div class="mid-wrapper">
@@ -131,15 +170,16 @@
               :readonly="bankCardList.length > 0 ? true : false"
               hide-bottom-space
             ></q-input>
-          </div>
+          </div> -->
         </div>
       </template>
 
-
       <InputRowGrid>
         <template #fields>
-          <InputField :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
-          ${ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) } RS)`">
+          <InputField
+            :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
+          ${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax)} RS)`"
+          >
             <template #input>
               <q-input
                 type="number"
@@ -151,7 +191,8 @@
                 :rules="[
                   (val) => !!val || 'Please Enter Withdraw Amount',
                   (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-                  (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                  (val) =>
+                    val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
                   (val) =>
                     (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                       val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -220,34 +261,36 @@
     </div>
 
     <template v-if="bankCardList.length > 0">
-      <PrimaryButton :label="'Submit'" :onClick="submitWithdraw" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
-      <!-- <div :class="`btn-submit`" @click="submitWithdraw">
-        <q-spinner
-          v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          color="white"
-          size="2em"
-          :thickness="2"
-        ></q-spinner>
-        <template v-else>Submit</template>
-      </div> -->
+      <div class="bottom-btn">
+        <q-btn
+          no-caps
+          unelevated
+          class="btn-primary btn-primary__full"
+          :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+          @click="submitWithdraw"
+        >
+          SUBMIT
+        </q-btn>
+      </div>
     </template>
     <template v-else>
-      <PrimaryButton :label="'Submit'" :onClick="submitWithdrawBank" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
-      <!-- <div :class="`btn-submit`" @click="submitWithdrawBank">
-        <q-spinner
-          v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
-          color="white"
-          size="2em"
-          :thickness="2"
-        ></q-spinner>
-        <template v-else>Submit</template>
-      </div> -->
+      <div class="bottom-btn">
+        <q-btn
+          no-caps
+          unelevated
+          class="btn-primary btn-primary__full"
+          :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+          @click="submitWithdrawBank"
+        >
+          SUBMIT
+        </q-btn>
+      </div>
     </template>
 
-    <div class="bottom-tnc q-mt-md">
+    <!-- <div class="bottom-tnc q-mt-md">
       Note: 3%+6Rs of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
       information, if withdrawal failed or you have any other questions, please contact CS 24/7
-    </div>
+    </div> -->
   </div>
 
   <q-dialog width="100%" v-model="isShowRedirectAddBankModal">
@@ -265,7 +308,7 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
-import PrimaryButton from '../../components/auth/PrimaryButton.vue';
+import PrimaryButton from "../../components/auth/PrimaryButton.vue";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
@@ -592,16 +635,20 @@ const isValidCardAddress = () => {
 <style scoped lang="scss">
 .withdrawal-modal-view {
   margin: auto;
-  width: 95%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 152px);
 
   .withdrawal-summary {
-    padding: 1rem;
+    padding: 16px;
     margin-top: 0;
     display: flex;
     align-items: center;
     justify-content: space-around;
     border-radius: 0.625rem;
-    background: #2E303466;
+    background: #2e303466;
+    width: 100%;
 
     text-align: center;
     font-family: "Manrope", sans-serif;
@@ -613,14 +660,18 @@ const isValidCardAddress = () => {
       margin: 0 0 0 1rem;
     }
 
+    .amount {
+      font-size: 140%;
+    }
+
     .withdrawable {
       margin: 0 1rem 0 0;
     }
 
     .separator {
       width: 2px;
-      height: 3rem;
-      background: #2f3e57;
+      height: 90%;
+      background: rgba(255, 255, 255, 0.05);
     }
 
     .title {
@@ -655,7 +706,7 @@ const isValidCardAddress = () => {
       font-size: 1rem;
       font-weight: 700;
       line-height: 2.25rem;
-      background: rgba(21, 0, 37, 0.5);
+      background: rgba(46, 48, 52, 0.4);
       margin: 0 -1rem 0.5rem -1rem;
       padding: 0 1rem;
     }
@@ -670,7 +721,7 @@ const isValidCardAddress = () => {
       .bank-card-item {
         padding: 3px;
         border-radius: 1.25rem;
-        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+        background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
         position: relative;
         transition: 0.3s all;
         width: 100%;
@@ -697,7 +748,7 @@ const isValidCardAddress = () => {
   .withdrawal-amount-container {
     border-radius: 0.5rem;
     background: rgba(21, 0, 37, 0.2);
-    padding: 1rem 0;
+    padding: 8px 0;
     margin-top: 0;
 
     .top-wrapper {
@@ -737,8 +788,10 @@ const isValidCardAddress = () => {
         color: white;
         border-radius: 3.125rem;
         opacity: 0.8;
-        background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+        // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+        background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
         padding: 5px 10px;
+        text-transform: uppercase;
 
         .desc-wrapper {
           display: flex;
@@ -784,5 +837,10 @@ const isValidCardAddress = () => {
     font-size: 80%;
     opacity: 0.5;
   }
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px 0;
 }
 </style>

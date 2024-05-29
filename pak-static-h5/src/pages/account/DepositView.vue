@@ -177,10 +177,10 @@
         no-caps
         unelevated
         class="btn-primary btn-primary__full"
-        loading="isLoadingInitPay || btnLoading"
+        :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
       >
-        Confirm
+        SUBMIT
       </q-btn>
     </div>
   </div>
@@ -764,7 +764,8 @@ onMounted(() => {
 
 :deep(.q-field--filled.q-field--dark .q-field__control) {
   border-radius: 0.5rem;
-  background: #263349 !important;
+  background: #0b0e0d !important;
+  border: 1px solid #072a19;
 }
 
 :deep(.q-tab__label) {
@@ -834,7 +835,7 @@ onMounted(() => {
       margin: 20px auto 0 auto;
 
       .deposit-input {
-        background-color: rgba(21, 0, 37, 0.5);
+        background-color: #0b0e0d;
         border-radius: 5px;
         width: 100%;
         height: 46px;
@@ -845,7 +846,7 @@ onMounted(() => {
       }
 
       .currency {
-        color: #698fd0;
+        color: #5f6061;
         font-weight: 400;
       }
     }

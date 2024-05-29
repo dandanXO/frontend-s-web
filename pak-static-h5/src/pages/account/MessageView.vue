@@ -112,14 +112,15 @@ onActivated(() => {
   padding: 1rem;
   margin: 0;
   border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   background: #2e30344f;
   position: relative;
   box-shadow: none;
+  backdrop-filter: blur(4px);
 
   &:has(.new-message-ribbon) {
     //background: #2e30344f;
-    border: 1px solid #00AE00
+    // border: 1px solid #00AE00
   }
 
   .new-message-ribbon {
@@ -178,9 +179,10 @@ onActivated(() => {
     }
 
     .detail-btn {
-      border-radius: 10px;
-      background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-      border: 1px solid #5D8956;
+      border-radius: 30px;
+      // background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+      border: 1px solid #5d8956;
       font-size: 1rem;
       // font-weight: 700;
       padding: 0.2rem 1rem;

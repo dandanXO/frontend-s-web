@@ -6,39 +6,27 @@
       <ProfileProgressBanner />
 
       <q-form ref="profileFormRef" class="pc-form">
-          <InputRowGrid>
-            <template #fields>
-              <div class="pc-form-item" @click="openPersonalCenterDialog">
-                <InputField :label="'Full Name'">
-                  <template #input>
-                    <q-input
-                      v-model="formDetail.realName"
-                      outlined
-                      clearable
-                      hide-bottom-space
-                      readonly
-                    ></q-input>
-                  </template>
-                </InputField>
-              </div>
+        <InputRowGrid>
+          <template #fields>
+            <div class="pc-form-item" @click="openPersonalCenterDialog">
+              <InputField :label="'Full Name'">
+                <template #input>
+                  <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
+                </template>
+              </InputField>
+            </div>
 
-              <div class="pc-form-item" @click="openPersonalCenterDialog">
-                <InputField :label="'Phone'">
-                  <template #input>
-                    <q-input
-                      v-model="formDetail.phone"
-                      outlined
-                      clearable
-                      hide-bottom-space
-                      readonly
-                    ></q-input>
-                  </template>
-                </InputField>
-              </div>
-            </template>
-          </InputRowGrid>
+            <div class="pc-form-item" @click="openPersonalCenterDialog">
+              <InputField :label="'Phone'">
+                <template #input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly></q-input>
+                </template>
+              </InputField>
+            </div>
+          </template>
+        </InputRowGrid>
 
-          <!--
+        <!--
           <div class="pc-form-label">Full Name</div>
           <div class="pc-form-input">
             <q-input
@@ -107,17 +95,17 @@
               @click="startRefresh"
             >
               <template v-slot:loading>
-                <q-spinner class="on-left" style="color: #00AE00" />
+                <q-spinner class="on-left" style="color: #00ae00" />
                 Updating...
               </template>
             </q-btn>
           </div>
         </div>
 
-        <div class="q-mt-md">
-          <PrimaryButton :label="'Sign Out'" :onClick="openConfirmSignOutDialog" />
-          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn> -->
-        </div>
+        <!-- <div class="q-mt-md"> -->
+        <!-- <PrimaryButton :label="'Sign Out'" :onClick="openConfirmSignOutDialog" /> -->
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="openConfirmSignOutDialog">Sign Out</q-btn> -->
+        <!-- </div> -->
 
         <!-- <div class="text-center q-mt-md" v-if="canEdit">
           <q-btn size="md" color="brightbtn" @click="updateState" label="保存信息" />
@@ -276,8 +264,8 @@
       />
       <div class="popout-dialog-container">
         <div class="txt-title">Change Password</div>
-          <div class="pc-form">
-            <InputRowGrid>
+        <div class="pc-form">
+          <InputRowGrid>
             <template #fields>
               <InputField :label="'Password'">
                 <template #input>
@@ -315,7 +303,8 @@
                     :rules="[
                       (val) => (val && val.length > 0) || 'Please insert new password',
                       (val) =>
-                        (val.length >= 6 && val.length <= 11) || 'The characters of new password must be between 6 and 11',
+                        (val.length >= 6 && val.length <= 11) ||
+                        'The characters of new password must be between 6 and 11',
                       () => isAlphanumeric(updatePwdInfo.password, 'New password')
                     ]"
                   >
@@ -359,10 +348,14 @@
           </InputRowGrid>
         </div>
 
-        <div class="q-mt-md q-pl-lg q-pr-lg">
-          <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd"/>
-          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePwd">Confirm</q-btn>
         </div>
+
+        <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
+        <!-- <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd" /> -->
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
+        <!-- </div> -->
       </div>
     </div>
   </q-dialog>
@@ -1349,7 +1342,7 @@ const openConfirmSignOutDialog = () => {
 }
 
 .pc-tip-chg-pwd {
-  color: #00AE00;
+  color: #00ae00;
 }
 
 .pc-tip {
@@ -1368,21 +1361,21 @@ const openConfirmSignOutDialog = () => {
 }
 
 .btn-refresh {
-  background: #00AE001A;
+  background: #00ae001a;
   border-radius: 8px;
   font-weight: 400;
   margin-top: auto;
-  color: #00AE00;
+  color: #00ae00;
   padding: 10px 20px;
 
   :deep(.q-icon) {
-    color: #00AE00;
+    color: #00ae00;
   }
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-  border: 1px solid #5D8956;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  border: 1px solid #5d8956;
   font-weight: 700;
   color: #fff;
   border: 1px solid #ffffff80;
@@ -1391,12 +1384,18 @@ const openConfirmSignOutDialog = () => {
   height: 42px;
 }
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
-  border: 1px solid #5D8956;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+  border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
   color: #fff;
   border-radius: 8px;
+}
+
+.bottom-btn {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
 }
 </style>
