@@ -712,9 +712,9 @@ input:internal-autofill-selected {
   align-items: center;
   color: #fff;
   font-size: 18px;
-  padding-bottom: 5px;
   margin: auto 10px;
   white-space: nowrap;
+  cursor: pointer;
 
   &:hover {
       filter: brightness(1.1);
