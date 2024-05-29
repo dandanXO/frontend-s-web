@@ -36,6 +36,11 @@
         {{ $t("lang.register") }}
       </q-btn>
     </div>
+    <div class="header-middle" v-else>
+      <div @click="router.push('/account')">
+        {{ $t("lang.helloUsername") }} {{ store.nickName }}
+      </div>
+    </div>
     <div class="header-lang">
       <LangOptions />
     </div>
@@ -1100,9 +1105,8 @@ export default defineComponent({
       if (store && store.token && store.memberType === "TEST") {
         eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
           .then((res) => {
-            console.log(res);
             if (res.code === 0) {
-              isRedPacketShow.value = true;
+              isRedPacketShow.value = res.data.nowIsRain;
             }
           })
           .catch((err) => {});
@@ -2583,6 +2587,8 @@ export default defineComponent({
 
   .home-header {
     .header-middle {
+      color: #313441;
+
       :deep(.q-btn) {
         min-width: 75px;
       }
@@ -2617,9 +2623,39 @@ export default defineComponent({
   }
 }
 
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
 .red-envelope {
   width: 135px;
   cursor: pointer;
+  animation: shake 1s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shake-with-pause {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+.red-envelope {
+  animation: tilt-shaking 1s infinite;
 }
 
 .hot-matches-wrapper {
@@ -2927,5 +2963,10 @@ export default defineComponent({
       }
     }
   }
+}
+
+.alert-img {
+  width: 70% !important;
+  margin: auto;
 }
 </style>

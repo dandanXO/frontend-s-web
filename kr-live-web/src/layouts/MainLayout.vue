@@ -508,19 +508,20 @@ svg path {
 
 .top-logo {
   position: absolute;
-  top: 40%;
+  top: 50%;
   margin-top: -42px;
   left: 50%;
   width: 425px;
   transform: translate(-50%, -50%);
 
   @media (max-width: 991px) {
-    width: 300px;
+    width: 200px;
   }
 
   @media (max-width: 768px) {
-    width: 250px;
+    width: 200px;
     margin-top:0px;
+    top: calc(50% - 15px);
   }
 
   @media (max-width: 500px) {
@@ -538,12 +539,13 @@ svg path {
   width: 100%;
   background: url("../assets/home/home-banner.png") no-repeat top center;
   background-size: cover;
-  height: 350px;
+  height: 250px;
 
   @media (min-width: 991px) {
     background: url("../assets/home/home-banner.png") no-repeat top center;
-    background-size: cover;
-    height: 430px;
+    background-size: 100% 100%;
+    background-color: #0e0536;
+    height: 375px;
   }
 }
 

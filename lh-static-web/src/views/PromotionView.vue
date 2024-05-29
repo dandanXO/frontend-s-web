@@ -99,17 +99,20 @@
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
-              selectedPromo?.promoCode === 'lh-nba24-match'
+              selectedPromo?.promoCode === 'lh-nba24-match' ||
+              selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
             backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : ''
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : ''
           }"
           :class="{
             fullwidth:
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
-              selectedPromo.promoCode === 'lh-eurocup-manual',
+              selectedPromo.promoCode === 'lh-eurocup-manual' ||
+              selectedPromo.promoCode === 'lh-lpl-summer24',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
@@ -132,7 +135,7 @@
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
-            v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-cct-major-2024'].includes(selectedPromo.redirectUrl)"
+            v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
             class="corner-decor"
             style="position: absolute; left: 0px; bottom: 0px"
           >
@@ -142,8 +145,8 @@
               src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
             />
             <img
-              v-if="selectedPromo.redirectUrl === 'lh-cs2-cct-major-2024'"
-              src="@/assets/images/promotion/hotpromo/CS2CCTPromo/bg.png"
+              v-if="selectedPromo.redirectUrl === 'lh-cs2-blast-2024'"
+              src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
             />
           </div>
         </div>

@@ -13,6 +13,7 @@
       "
     >
       <q-tabs
+        scroll-target=".q-tab--active"
         v-if="!isPromoDetail"
         v-model="tab"
         align="justify"
@@ -162,7 +163,7 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
                 }"
@@ -184,11 +185,11 @@
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div
-                  v-if="['lh-cs2-cct-major-2024'].includes(selectedPromo.promoCode)"
+                  v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)"
                   class="corner-decor"
                 >
                   <img
-                    v-if="selectedPromo.promoCode === 'lh-cs2-cct-major-2024'"
+                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
                 </div>

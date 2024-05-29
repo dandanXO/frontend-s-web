@@ -32,6 +32,9 @@
                   <strong>{{ bc.bankName }}</strong>
                 </div>
               </div>
+              <div class="unlink-btn" @click="unbindBankCard(bc)">
+                 <RiLinkUnlink />
+              </div>
               <div class="flex-box cards">
                 <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
                   {{ b }}
@@ -278,7 +281,7 @@
 
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
-import { RiLink} from "vue-remix-icons";
+import { RiLink, RiLinkUnlink } from "vue-remix-icons";
 // RiLinkUnlink
 // import moment from "moment";
 import {api} from "boot/axios"
@@ -292,7 +295,8 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    RiLink
+    RiLink,
+    RiLinkUnlink
   },
   setup() {
     const store = userStore();
@@ -409,7 +413,7 @@ export default defineComponent({
             message: t('lang.fill_in_information'),
             icon: "report_problem"
           });
-          router.push("/account/personal");
+          router.push("/?page=personal/info");
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";

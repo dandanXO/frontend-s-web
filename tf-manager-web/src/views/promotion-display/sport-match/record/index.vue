@@ -58,6 +58,16 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div class="btn-group">
+        <el-button
+          size="mini"
+          type="success"
+          v-permission="['sys:sport-match-record:update']"
+          @click="settleAllPending"
+        >
+          {{ t('fields.settleAllPending') }}
+        </el-button>
+      </div>
     </div>
     <el-table
       :data="page.records"
@@ -143,7 +153,7 @@ import { onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getSportMatchRecord, settleSportMatchRecord, cancelSportMatchRecord } from "@/api/sport-match";
+import { getSportMatchRecord, settleSportMatchRecord, cancelSportMatchRecord, settleAllSportMatchRecord } from "@/api/sport-match";
 import { getShortcuts } from "@/utils/datetime";
 import { hasRole, hasPermission } from '@/utils/util'
 import moment from "moment";
@@ -249,6 +259,18 @@ async function cancel(id) {
     await cancelSportMatchRecord(id)
     await loadMatchRecord()
     ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  })
+}
+
+async function settleAllPending() {
+  ElMessageBox.confirm(t('message.confirmSettlement'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await settleAllSportMatchRecord()
+    await loadMatchRecord()
+    ElMessage({ message: t('message.settled'), type: 'success' })
   })
 }
 

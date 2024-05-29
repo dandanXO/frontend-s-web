@@ -108,7 +108,8 @@
             <img :src="promoDir + scope.row.winnerTeamIcon" style="width: 20px; height: 20px; margin-right: 10px">
             <span>{{ scope.row.winnerTeamName }}</span>
           </div>
-          <el-tag v-else size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
+          <el-tag v-else-if="scope.row.winnerTeamId === 0 && scope.row.matchStatus === 'ENDED'" size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
+          <span v-else>-</span>
         </template>
       </el-table-column>
       <el-table-column prop="status" :label="t('fields.status')" width="140">

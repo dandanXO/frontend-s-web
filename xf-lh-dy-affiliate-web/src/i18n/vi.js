@@ -214,6 +214,7 @@ export default {
     changeWithdrawPw: 'Thay đổi Mật khẩu Rút tiền',
     clearingSum: 'Tổng số rõ',
     commission: 'Hoa hồng',
+    gamecommission: "Hoa hồng nền tản",
     commissionBalance: 'Số dư Hoa hồng',
     commissionPercent: 'Phần trăm Hoa hồng',
     commissionRate: 'Tỷ lệ Hoa hồng',

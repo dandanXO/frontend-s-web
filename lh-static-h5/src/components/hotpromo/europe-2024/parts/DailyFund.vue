@@ -36,16 +36,11 @@
             {{ num.points }}
             <div v-if="i !== 0">
               <div class="claim">
-                <img
-                  @click="claimPoint(num.points)"
-                  v-if="
-                    matchPoints.currentPoints >= num.points &&
-                    matchPoints.pointsClaimed &&
-                    !matchPoints.pointsClaimed.includes(num.points)
-                  "
-                  src="../images/daily-fund-claim.png"
-                />
-                <img v-else src="../images/daily-fund-claimed.png" />
+                <template v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed">
+                  <img v-if="matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claimed.png" />
+                  <img v-else @click="claimPoint(num.points)" src="../images/daily-fund-claim.png" />
+                </template>
+                <img v-else src="../images/daily-fund-wait-for-claim.png" />
               </div>
             </div>
           </div>
@@ -116,7 +111,7 @@
       <div class="bracket-info">
         <div class="bracket-info__info-wrapper">
           <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
-          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM HH:mm") }}</div>
           <div class="bracket-info__info-wrapper-VS">VS</div>
           <button
             @click="matchSubmit(match, 0, '平局')"
@@ -145,52 +140,53 @@
       </div>
     </div>
   </div>
-  <table>
-    <tr>
-      <th>有效投注</th>
-      <th>投注彩金</th>
-      <th>专属队伍彩金</th>
-      <th>彩金倍数</th>
-    </tr>
-    <tr>
-      <td>≥3,000</td>
-      <td>8</td>
-      <td>18</td>
-      <td rowspan="4">3倍</td>
-    </tr>
-    <tr>
-      <td>≥6,000</td>
-      <td>28</td>
-      <td>58</td>
-    </tr>
-    <tr>
-      <td>≥10,000</td>
-      <td>68</td>
-      <td>88</td>
-    </tr>
-    <tr>
-      <td>≥100,000</td>
-      <td>158</td>
-      <td>188</td>
-    </tr>
-  </table>
+<!--  <table>-->
+<!--    <tr>-->
+<!--      <th>有效投注</th>-->
+<!--      <th>投注彩金</th>-->
+<!--      <th>专属队伍彩金</th>-->
+<!--      <th>彩金倍数</th>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥3,000</td>-->
+<!--      <td>8</td>-->
+<!--      <td>18</td>-->
+<!--      <td rowspan="4">3倍</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥6,000</td>-->
+<!--      <td>28</td>-->
+<!--      <td>58</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥10,000</td>-->
+<!--      <td>68</td>-->
+<!--      <td>88</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥100,000</td>-->
+<!--      <td>158</td>-->
+<!--      <td>188</td>-->
+<!--    </tr>-->
+<!--  </table>-->
 
   <div class="rule-title">活动规则</div>
   <ol class="rule-content">
     <li>
-      活动期间，会员在A组~F组每组选出一只队伍作为用户参赛队伍，若用户选择的队伍胜利且有效投注≥3,000元即可获的专属队伍奖金；
+      活动期间，会员当日任意存款即可获得参与竞猜机会，参与竞猜且竞猜结果正确即可获得100积分；
     </li>
     <li>
-      活动期间，用户参与免费竞猜，竞猜正确可获100积分，若用户选择的参与队伍获胜可额外加赠100积分，积分对应彩金仅限领取1次，积分≥6000分是可获188元；
+      活动期间，会员可在A组~F组各选出一只专属队伍，若当日参与竞猜后专属队伍获胜即可获得100专属加赠积分；
     </li>
-    <li>此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；</li>
+    <li>活动期间，积攒够对应积分总数即可兑换相应彩金，可点击领取按钮，彩金3倍流水即可出款；</li>
     <li>
-      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
+      此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；
     </li>
     <li>
-      每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关 
-      闭相关账户的权利，并不退还款项，且用户列入黑名单；
+      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.7、香港盘0.7赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
     </li>
+    <li>每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关闭相关账户的权利，
+      并不退还款项，且用户列入黑名单；</li>
     <li>为避免文字理解差异，本站保留最终解释权。</li>
   </ol>
 

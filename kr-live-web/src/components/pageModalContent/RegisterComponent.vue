@@ -4,24 +4,23 @@
 
       <div class="form-grid-list">
         <div class="form-item">
-          <label>추천인</label>
+          <label>{{ $t('lang.reg_referrer') }}</label>
           <q-input
             dense
             placeholder="추천인입력"
             ref="codeAffiliate"
-            filled
+            outlined
             v-model="regForm.codeAffiliate"
-            color="white"
             :disable="hasAffiliate"
             clearable
           ></q-input>
         </div>
         <div class="form-item">
-          <label>아이디</label>
+          <label>{{ $t('lang.reg_userid') }}</label>
           <q-input
             dense
             ref="loginNameRef"
-            filled
+            outlined
             v-model="regForm.loginName"
             lazy-rules
             :rules="[
@@ -29,7 +28,6 @@
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
             (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
           ]"
-            color="white"
             clearable
           />
         </div>
@@ -40,7 +38,7 @@
               dense
               placeholder="비밀번호입력"
               ref="pwdRef"
-              filled
+              outlined
               v-model="regForm.password"
               :type="isPwd ? 'password' : 'text'"
               lazy-rules
@@ -50,7 +48,6 @@
               // (val) =>
               //   (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
             ]"
-              color="white"
               clearable
             >
               <template v-slot:append>
@@ -85,7 +82,7 @@
             dense
             placeholder="비밀번호확인입력"
             ref="confirmPwdRef"
-            filled
+            outlined
             :type="isCfmPwd ? 'password' : 'text'"
             v-model="regForm.confirmPwd"
             lazy-rules
@@ -94,7 +91,6 @@
             (val) => val === regForm.password || $t('lang.password_do_not_match'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
           ]"
-            color="white"
             clearable
           >
             <template v-slot:append>
@@ -113,11 +109,10 @@
             placeholder="이메일"
             ref="emailRef"
             type="email"
-            filled
+            outlined
             v-model="regForm.email"
             lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]"
-            color="white"
             clearable
           />
         </div>
@@ -129,7 +124,7 @@
             dense
             placeholder="없이 숫자 만 입력"
             ref="telRef"
-            filled
+            outlined
             v-model="regForm.telephone"
             lazy-rules
             :rules="[
@@ -137,7 +132,6 @@
             (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
             // isValidPhone
           ]"
-            color="white"
             clearable
           >
             <template v-slot:append>
@@ -161,7 +155,7 @@
               stack-label
               clearable
               autocomplete="off"
-              filled
+              outlined
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
             />
@@ -171,7 +165,7 @@
           <label>은행명</label>
           <q-select
             dense
-            filled
+            outlined
             label="은행선택"
             ref="bankCardRef"
             v-model="regForm.bankId"
@@ -191,10 +185,9 @@
             type="number"
             placeholder="'-'없이숫자만입력."
             ref="cardNumRef"
-            filled
+            outlined
             v-model="regForm.cardNumber"
             lazy-rules
-            color="white"
             clearable
             :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"
           ></q-input>
@@ -205,10 +198,9 @@
             dense
             placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
             ref="cardAccRef"
-            filled
+            outlined
             v-model="regForm.cardAccount"
             lazy-rules
-            color="white"
             clearable
             :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"
           ></q-input>
@@ -217,8 +209,8 @@
 
     </q-form>
 
-    <div class="row justify-center items-center gap-8" style="margin-top: 35px">
-      <q-btn rounded flat @click="onSubmit" :label="'가입완료'" class="primary-button blue" />
+    <div class="action-buttons">
+      <q-btn rounded @click="onSubmit" :label="$t('lang.reg_submit')" class="primary-button blue register-submit-btn" />
     </div>
 
     <q-dialog
@@ -235,13 +227,12 @@
           <q-input
             class="verification-input"
             ref="telephoneVerifyCaptchaCodeRef"
-            filled
+            outlined
             type="text"
             maxlength="4"
             v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode"
             :label="$t('lang.captcha_code')"
             :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
-            color="white"
           >
             <template v-slot:append>
               <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
@@ -254,7 +245,7 @@
             <q-btn
               :disabled="isOtpSending"
               :style="isOtpSending ? 'opacity: .6' : ''"
-              class="common-btn form-button blue"
+              class="primary-button blue"
               @click.prevent="getOtpCode"
             >
               {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
@@ -654,29 +645,25 @@ function charType(num) {
 }
 </script>
 
-<style lang="scss">
-.register-form,
-.register-form-captcha-dialog {
-  .q-field--filled.q-field--dark .q-field__control,
-  .q-field--filled.q-field--dark .q-field__control:before {
+<style lang="scss" scoped>
+.register-form {
+  :deep(.q-field--filled.q-field--dark .q-field__control),
+  :deep(.q-field--filled.q-field--dark .q-field__control:before) {
     width: 100%;
     font-size: 14px;
-    border-radius: 8px;
     border: 1px solid #48b5b5;
-    background: #252e43;
     line-height: 40px;
     color: #fff;
+    background: #252e43;
+    border-radius: 8px;
   }
 
   .form-item {
-    // display: flex;
-    // gap: 12px;
-    // align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
 }
-</style>
-
-<style lang="scss" scoped>
 .main-section {
   margin-top: 24px;
 }
@@ -786,7 +773,7 @@ function charType(num) {
   max-width: 768px;
   margin: auto;
 
-  .q-field--filled .q-field__control {
+  .q-field--outlined .q-field__control {
     border-radius: 8px;
   }
 
@@ -813,6 +800,20 @@ h5 {
     display: grid;
     gap: 0px;
     grid-template-columns: 1fr;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+
+  .register-submit-btn {
+    width: 145px;
+    height: 36px;
   }
 }
 </style>

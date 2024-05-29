@@ -28,7 +28,7 @@
             </div>
             <div class="group-by-date-tab__match-divider" />
             <div class="group-by-date-tab__match-info">
-              <span>{{ moment(match.matchTime).locale("zh-cn").format("MMMDo hh:mm") }}</span>
+              <span>{{ moment(match.matchTime).locale("zh-cn").format("MMMDo HH:mm") }}</span>
               <button class="group-by-dat-tab__match-btn" @click="betNow(match.platformMatchId)">点击投注</button>
             </div>
           </div>
@@ -193,12 +193,12 @@ onMounted(() => {
   }
 
   .group-by-date-tab__matches-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px 37px;
+    display: flex;
+    gap: 37px;
 
     .group-by-date-tab__match-item {
       display: flex;
+      flex: 1;
       align-items: center;
       justify-content: space-evenly;
       border: 2px solid #bfd7ff;

@@ -143,6 +143,16 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isHotGameLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -303,6 +313,14 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="1.5"
               :spaceBetween="0"
@@ -353,6 +371,14 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-downs">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <div class="platform-game-container">
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
@@ -400,6 +426,16 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -448,6 +484,21 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <div
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -499,6 +550,16 @@
           </div>
 
           <div class="platform-game-wrapper">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -672,6 +733,7 @@
         </div>
 
         <div class="platform-game-container grid-view" v-else>
+
           <template v-for="(item, index) in fishGameJILIList" :key="index">
             <div
               class="platform-game-item btn-effect"
@@ -717,6 +779,15 @@
             <!-- <span class="txt-style">Sports</span> -->
           </div>
           <div class="platform-game-container sport-platform">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+              </div>
+            </template>
+
             <template v-for="(item, index) in sport" :key="index">
               <div
                 class="platform-game-item btn-effect"
@@ -1188,6 +1259,8 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 };
 
 const isGameLoading = ref(true);
+const isPlatLoading= ref(false);
+const isHotGameLoading= ref(false);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
@@ -1306,6 +1379,7 @@ const loadHotGameList = () => {
           console.log(hotGameList.value);
           // console.log(livecasino.value);
 
+          isHotGameLoading.value= false;
         });
     });
 
@@ -1546,6 +1620,8 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
+      isPlatLoading.value= false;
+
       // console.log("After");
       // console.log(sport.value);
       loadHotGameList();
@@ -1778,6 +1854,8 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  isHotGameLoading.value= true;
+  isPlatLoading.value = true;
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -2674,6 +2752,59 @@ onMounted(() => {
     }
   }
 }
+
+.skeleton-lists{
+  overflow-x: auto;
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+
+  .casino-skeleton{
+    height: 150px;
+    width: calc((100vw - 20px) /2);
+    border-radius: 12px;
+  }
+
+  .slot-skeleton{
+    height: 150px;
+    width: calc((100vw - 20px) / 3);
+    border-radius: 12px;
+  }
+}
+
+.skeleton-downs{
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .casino-skeleton{
+    height: 150px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+.skeleton-grid{
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .slot-skeleton{
+    height: 150px;
+    width: calc(33% - 15px);
+    border-radius: 12px;
+  }
+
+  .sport-skeleton{
+    height: 125px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+
 
 .platform-game-container {
   display: grid;

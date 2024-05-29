@@ -62,6 +62,7 @@
       v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
     />
 
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -104,6 +105,7 @@ import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
+import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 
@@ -136,7 +138,8 @@ export default defineComponent({
     CS2Sign,
     BonusSpinWheel,
     LOLMsi2024Promo,
-    HongBaoYuEurocupPromo
+    HongBaoYuEurocupPromo,
+    LPLSummer24
   },
   props: {
     list: {
@@ -285,7 +288,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao"
+      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
+      this.list.redirectUrl === "dy2-lpl-summer24"
     ) {
       this.isCommonPromo = false;
     } else {

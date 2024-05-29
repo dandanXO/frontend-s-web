@@ -58,6 +58,15 @@
           <div class="login-text">로그인</div>
         </div>
       </div>
+      <div class="actions-topbar" v-if="!props.isH5Banner">
+        <div class="register" @click="goToRegister">
+          <div class="register-text">회원가입</div>
+        </div>
+        <div class="login" @click="goToLogin">
+          <!-- @click.prevent="onLoginSubmit" -->
+          <div class="login-text">로그인</div>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -89,6 +98,8 @@ const loginForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+
+const props = defineProps(['isH5Banner']);
 
 const goToRegister = () => {
   router.push("/?page=register");
@@ -196,10 +207,15 @@ onMounted(() => {
   justify-content: flex-end;
   align-items: center;
   margin-left: 0px;
+  gap: 10px;
 
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 .account,
@@ -283,7 +299,6 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  margin-left: 16px;
   &:hover {
     filter: brightness(1.1);
   }
@@ -296,6 +311,24 @@ onMounted(() => {
     color: #fff;
     @media (min-width: 1200px) {
       font-size: 16px;
+    }
+  }
+}
+
+.actions-topbar {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+
+    .register {
+      background-image: url("../../assets/home/btn-blue-square.svg");
+      background-size: 100% 100%;
+    }
+
+    .login {
+      background-image: url("../../assets/home/btn-yellow-square.svg");
+      background-size: 100% 100%; 
     }
   }
 }

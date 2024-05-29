@@ -95,7 +95,8 @@
         >
           <template v-slot:prepend>
               <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
               </span>
           </template>
           <template v-slot:append>
@@ -106,7 +107,7 @@
         </q-input>
 
         <div class="option-btns">
-          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="item + '원'"
+          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="isUSDT ? `${item} USDT` : item + '만원'"
                  @click="updateWithdrawItem(item)"
           ></q-btn>
         </div>
@@ -269,7 +270,7 @@ const loadCards = () => {
 
 const updateWithdrawItem = (amt) => {
   // debugger;
-  const multiple = 10000;
+  const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
 
   withdrawInfo.amount = (Number(withdrawInfo.amount) + (amt * multiple)).toString();
@@ -485,9 +486,9 @@ onMounted(() => {
   }
 
   .option-btns {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
-    grid-template-columns: auto auto auto auto auto auto auto;
     grid-row-gap: 12px;
     grid-column-gap: 12px;
     :deep(.q-btn) {

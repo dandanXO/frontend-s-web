@@ -70,24 +70,23 @@
             :rules="[(val) => (val && val.length > 0) || '은행 카드 번호를 입력하세요', validateBankLength]"
           ></q-input>
 
-<!--          <q-label>-->
-<!--            이름을 입력하세요-->
-<!--            <em>*</em>-->
-<!--          </q-label>-->
-<!--          <q-input-->
-<!--            standout-->
-<!--            v-model="bankCardInfo.cardAccount"-->
-<!--            class="q-pb-xs"-->
-<!--            hide-bottom-space-->
-<!--            label="이름을 입력하세요"-->
-<!--            lazy-rules-->
-<!--            clearable-->
-<!--            readonly-->
-<!--          ></q-input>-->
+          <q-label> 
+            카드 계좌
+             <em>*</em> 
+           </q-label> 
+           <q-input 
+             standout 
+             v-model="bankCardInfo.cardAccount" 
+             class="q-pb-xs" 
+             hide-bottom-space 
+             label="카드 계좌" 
+             lazy-rules 
+             clearable 
+             readonly 
+           ></q-input> 
 
           <q-label>
-            계좌 소유자 이름
-            <em>*</em>
+            카드 주소
           </q-label>
           <q-input
             ref="cardAddressRef"
@@ -95,10 +94,8 @@
             v-model="bankCardInfo.cardAddress"
             class="q-pb-xs"
             hide-bottom-space
-            label="계좌 개설 은행 주소를 입력하세요"
-            lazy-rules
+            label="계좌 개설 은행 주소를"
             clearable
-            :rules="[(val) => (val && val.length > 0) || '계좌 개설 은행 주소를 입력하세요']"
           ></q-input>
 
           <!-- since onMount API forced update name & phone, hence no validation needed. -->
@@ -165,6 +162,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import { storeToRefs } from "pinia";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -176,11 +174,12 @@ const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
 const phoneVerificationRef = ref();
+const { realName } = storeToRefs(store);
 
 const bankCardInfo = reactive({
   bankId: undefined,
   cardNumber: "",
-  cardAccount: store.realName,
+  cardAccount: realName,
   cardAddress: "",
   telephone: store.telephone
 });
@@ -274,7 +273,7 @@ const loadBankCards = () => {
         message: "진짜 이름을 입력해주세요",
         icon: "report_problem"
       });
-      router.push("/account/personal");
+      router.push("/?page=personal/info");
     } else if (!store.telephone) {
       $q.notify({
         color: "negative",
@@ -307,7 +306,6 @@ const loadBankCards = () => {
 const submitBankCard = () => {
   bankCardRef.value.validate();
   cardNumberRef.value.validate();
-  cardAddressRef.value.validate();
 
   // if (!phoneVerificationRef.value) {
   //   $q.notify({
@@ -323,8 +321,7 @@ const submitBankCard = () => {
   if (
     !(
       bankCardRef.value.hasError ||
-      cardNumberRef.value.hasError ||
-      cardAddressRef.value.hasError
+      cardNumberRef.value.hasError
       // || phoneVerificationRef.value.hasError
     )
   ) {
