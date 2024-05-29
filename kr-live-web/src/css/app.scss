@@ -704,19 +704,19 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 200px;
-  height: 70px;
+  width: 145px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 18px;
+  line-height: 1;
   margin: auto 10px;
   white-space: nowrap;
   cursor: pointer;
 
   &:hover {
-      filter: brightness(1.1);
+      filter: brightness(1.2);
   }
 
   &:active {

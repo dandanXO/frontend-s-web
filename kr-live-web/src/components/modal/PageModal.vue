@@ -23,7 +23,7 @@
             <p>
               <img
                 class="header-close-btn"
-                src="../../assets/images/index/modal-close-btn.png"
+                src="../../assets/images/index/modal-close-btn.svg"
                 @click="closeDialog()"
                 style="padding-right:10px"
               />
@@ -604,8 +604,7 @@ onMounted(() => {
   cursor: pointer;
 
   &:hover {
-    opacity: 0.9;
-    filter: brightness(1.1);
+    filter: invert(1);
   }
 }
 

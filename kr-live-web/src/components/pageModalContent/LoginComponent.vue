@@ -217,9 +217,6 @@ export default defineComponent({
     .login-register-btn {
       width: 145px;
       height: 36px;
-      font-size: 14px;
-      line-height: 1;
-      color: #fff;
     }
   }
 }
