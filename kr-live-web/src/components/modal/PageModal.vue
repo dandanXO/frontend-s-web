@@ -44,7 +44,7 @@
           </div>
           <div class="page-dialog-tabs">
             <template v-if="!isMinimalMode">
-              <q-tabs style="padding: 0px 30px; background-color: #212632" v-model="page" align="justify">
+              <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
                 <template v-for="item in formattedPagesInfo" :key="item.page">
                   <template v-if="item.page === 'customer/service'">
                     <q-route-tab
@@ -191,7 +191,7 @@ const pagesInfo = reactive([
     page: "finance/deposit",
     info: "송금신청",
     iconUrl: require("../../assets/icon/deposit.svg"),
-    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     component: FinanceDeposit,
     headerInfo: {
       title: "송금신청",
@@ -204,7 +204,7 @@ const pagesInfo = reactive([
     page: "finance/withdraw",
     info: "출금신청",
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: FinanceWithdraw,
     headerInfo: {
       title: "출금신청",
@@ -217,7 +217,7 @@ const pagesInfo = reactive([
     page: "personal/messages",
     info: "쪽지",
     iconUrl: require("../../assets/icon/messages.svg"),
-    iconActiveUrl: require("../../assets/icon/messages-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MyMessages,
     headerInfo: {
       title: "쪽지",
@@ -230,7 +230,7 @@ const pagesInfo = reactive([
     page: "promo/all",
     info: "이벤트",
     iconUrl: require("../../assets/icon/promo.svg"),
-    iconActiveUrl: require("../../assets/icon/promo-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
     component: PromoComponent,
     headerInfo: {
       title: "이벤트",
@@ -244,7 +244,7 @@ const pagesInfo = reactive([
     page: "customer/service",
     info: "고객센터",
     iconUrl: require("../../assets/icon/customerService.svg"),
-    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
     component: CustomerService,
     headerInfo: {
       title: "고객센터",
@@ -257,7 +257,7 @@ const pagesInfo = reactive([
     page: "personal/info",
     info: "개인정보",
     iconUrl: require("../../assets/icon/personal-info.svg"),
-    iconActiveUrl: require("../../assets/icon/personal-info-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
@@ -270,7 +270,7 @@ const pagesInfo = reactive([
     page: "notify",
     info: "공지사항",
     iconUrl: require("../../assets/icon/notify.svg"),
-    iconActiveUrl: require("../../assets/icon/notify-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     component: NotifyComponent,
     headerInfo: {
       title: "공지사항",
@@ -283,7 +283,7 @@ const pagesInfo = reactive([
     page: "withdrawcard",
     info: "은행카드추가",
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: AddWithdrawBankCard,
     headerInfo: {
       title: "은행카드추가",
@@ -296,7 +296,7 @@ const pagesInfo = reactive([
     page: "bankcardlist",
     info: "은행 카드 목록",
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: WithdrawBankView,
     headerInfo: {
       title: "은행 카드 목록",
@@ -309,7 +309,7 @@ const pagesInfo = reactive([
     page: "transaction/records",
     info: "입출금기록",
     iconUrl: require("../../assets/icon/transaction-record.svg"),
-    iconActiveUrl: require("../../assets/icon/transaction-record-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
     component: TransitRecord,
     headerInfo: {
       title: "입출금기록",
@@ -335,7 +335,7 @@ const pagesInfo = reactive([
     page: "personal/updatePwd",
     info: "비밀번호",
     iconUrl: require("../../assets/icon/password-update.svg"),
-    iconActiveUrl: require("../../assets/icon/password-update-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
     component: MyPasswordChange,
     headerInfo: {
       title: "비밀번호",
@@ -548,14 +548,13 @@ onMounted(() => {
 }
 
 :deep(.q-tab) {
-  border-bottom: 1px solid #767676;
+  border-bottom: 2px solid #32394B;
 }
 
 :deep(.q-tab--active) {
-  border-bottom: 1px solid #767676;
-  border-image: linear-gradient(to right, #767676, #0075fe, #767676) 0.8;
+  border-bottom: 2px solid #00FFFF;
   .q-tab__label {
-    color: #fff;
+    color: #00FFFF;
     font-weight: unset;
     font-size: unset;
   }
@@ -652,10 +651,10 @@ onMounted(() => {
 .page-dialog-tabs {
   height: 600px;
   // min-height: calc(100vh - 240px);
-  // background: var(--main-bg-color);
+  background: var(--main-bg-color);
 
   :deep(.q-tab) {
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
   }
   .q-tab-panels {
     overflow-y: hidden;
@@ -673,7 +672,7 @@ onMounted(() => {
 }
 
 .q-tab-panels {
-  background-color: var(--main-bg-color);
+  background-color: transparent;
   height: 100%;
 }
 :deep(.modal-body-buttons) {
