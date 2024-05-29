@@ -77,9 +77,9 @@ const onRequest = (config) => {
   }
   // console.log(store.token);
   config.headers["Authorization"] = process.env.VUE_APP_SITE;
-  // if (config.data) {
-  //   config.data = stringify(config.data);
-  // }
+  if (config.data) {
+    config.data = stringify(config.data);
+  }
   return config;
 };
 
