@@ -30,7 +30,7 @@
       icon="el-icon-plus"
       size="mini"
       type="primary"
-      v-permission="['sys:privilege:add']"
+      v-permission="['sys:refer-rebate:setting:update']"
       @click="showDialog('CREATE')"
     >
       {{ t('fields.add') }}
@@ -136,7 +136,7 @@
     <el-table-column
       :label="t('fields.operate')"
       align="right"
-      v-if="hasPermission(['sys:privilege:update'])"
+      v-if="hasPermission(['sys:refer-rebate:setting:update'])"
     >
       <template #default="scope">
         <el-button

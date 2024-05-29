@@ -30,7 +30,7 @@
       icon="el-icon-plus"
       size="mini"
       type="primary"
-      v-permission="['sys:privilege:add']"
+      v-permission="['sys:refer-rebate:setting:update']"
       @click="showCreate"
     >
       {{ t('fields.add') }}
@@ -102,11 +102,11 @@
               :controls="false"
               @keypress="restrictInput($event)"
             />
-            <el-button v-if="index === bonusRuleList.length - 1 && hasPermission(['sys:piggy-bank:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
+            <el-button v-if="index === bonusRuleList.length - 1 && hasPermission(['sys:refer-rebate:setting:update'])" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                        @click="addRule" plain
             >{{ t('fields.add') }}
             </el-button>
-            <el-button v-if="bonusRuleList.length > 1 && hasPermission(['sys:piggy-bank:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
+            <el-button v-if="bonusRuleList.length > 1 && hasPermission(['sys:refer-rebate:setting:update'])" icon="el-icon-remove" size="mini" type="danger" style="margin-left: 20px"
                        @click="delRule(index)" plain
             >{{ t('fields.delete') }}
             </el-button>
@@ -144,7 +144,7 @@
     <el-table-column
       :label="t('fields.operate')"
       align="right"
-      v-if="hasPermission(['sys:privilege:update'])"
+      v-if="hasPermission(['sys:refer-rebate:setting:update'])"
     >
       <template #default="scope">
         <el-button

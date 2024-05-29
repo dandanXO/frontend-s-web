@@ -1,15 +1,15 @@
 <template>
   <el-tabs v-model="activeName">
-    <el-tab-pane :label="t('fields.refereeEligibility')" name="referee-eligibility-setting" v-if="hasPermission(['sys:refer-rebate:list'])">
+    <el-tab-pane :label="t('fields.refereeEligibility')" name="referee-eligibility-setting" v-if="hasPermission(['sys:refer-rebate:setting:list'])">
       <EligibilityTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.oneTimeBonusSetting')" name="one-time-bonus-setting" v-if="hasPermission(['sys:refer-rebate:list'])">
+    <el-tab-pane :label="t('fields.oneTimeBonusSetting')" name="one-time-bonus-setting" v-if="hasPermission(['sys:refer-rebate:setting:list'])">
       <OneTimeBonusSettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.depositRebateSetting')" name="deposit-rebate-setting" v-if="hasPermission(['sys:refer-rebate:list'])">
+    <el-tab-pane :label="t('fields.depositRebateSetting')" name="deposit-rebate-setting" v-if="hasPermission(['sys:refer-rebate:setting:list'])">
       <DepositRebateSettingTab />
     </el-tab-pane>
-    <el-tab-pane :label="t('fields.betRebateSetting')" name="bet-rebate-setting" v-if="hasPermission(['sys:refer-rebate:list'])">
+    <el-tab-pane :label="t('fields.betRebateSetting')" name="bet-rebate-setting" v-if="hasPermission(['sys:refer-rebate:setting:list'])">
       <BetRebateSettingTab />
     </el-tab-pane>
   </el-tabs>
