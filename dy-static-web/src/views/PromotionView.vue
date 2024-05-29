@@ -328,7 +328,6 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
-
       &:not(:has(thead)) {
         tr:first-child td {
           background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -342,6 +341,8 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+        p { margin: 0;
+    line-height: 21px; }
       }
 
       tbody {
