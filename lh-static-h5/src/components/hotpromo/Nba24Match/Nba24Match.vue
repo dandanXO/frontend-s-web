@@ -199,6 +199,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr v-for="(record, index) in recordList" :key="index">
+                <td>{{ record.updateTime }}</td>
+                <td>{{ record.title }}</td>
+                <td>{{ record.teamChosen === "DRAW" ? "平局" : record.teamChosen }}</td>
+                <td style="color: #51acff">正确</td>
+              </tr>
               <tr>
                 <td>2024-05-11 16:00</td>
                 <td>老鷹vs火箭</td>
@@ -279,10 +285,12 @@ onMounted(async () => {
 });
 
 watch(tableRecordDialog, async () => {
-  console.log("1234");
   if (tableRecordDialog.value) {
     const res = await getNbaRecord();
-    console.log(res);
+    recordList.value = res.data.map((res) => ({
+      ...res,
+      updateTime: moment(res.updateTime).format("M月DD日 HH:mm")
+    }));
   }
 });
 </script>
