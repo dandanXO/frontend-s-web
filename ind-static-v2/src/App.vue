@@ -66,39 +66,39 @@ export default defineComponent({
     const affAppToken = ref("");
 
     const initAdjustEventTrack = () => {
-      if (isAndroid()) {
-        //Android App.
-        console.log("Init Adjust Sdk");
-        console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-        adjustConfig.setAttributionCallbackListener(function (e) {
-          console.log("setAttributionCallbackListener");
-          console.log(e);
-        });
-
-        Adjust.create(adjustConfig);
-        setTimeout(() => {
-
-          Adjust.getGoogleAdId().then((googleid) => {
-            console.log("Google AdID");
-            console.log(googleid);
-            if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-              (async () => {
-                Adjust.getAttribution().then((attribution) => {
-                  console.log("Attribution 2");
-                  console.log(attribution);
-                  store.aaid = attribution.adid;
-                  trackAppStartEvent();
-                });
-              })();
-            }else{
-              store.googleadid = googleid;
-              trackAppStartEvent();
-            }
-          });
-        }, 0);
-      } else {
+      // if (isAndroid()) {
+      //   //Android App.
+      //   console.log("Init Adjust Sdk");
+      //   console.log(affAppToken.value);
+      //   var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
+      //   adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+      //   adjustConfig.setAttributionCallbackListener(function (e) {
+      //     console.log("setAttributionCallbackListener");
+      //     console.log(e);
+      //   });
+      //
+      //   Adjust.create(adjustConfig);
+      //   setTimeout(() => {
+      //
+      //     Adjust.getGoogleAdId().then((googleid) => {
+      //       console.log("Google AdID");
+      //       console.log(googleid);
+      //       if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
+      //         (async () => {
+      //           Adjust.getAttribution().then((attribution) => {
+      //             console.log("Attribution 2");
+      //             console.log(attribution);
+      //             store.aaid = attribution.adid;
+      //             trackAppStartEvent();
+      //           });
+      //         })();
+      //       }else{
+      //         store.googleadid = googleid;
+      //         trackAppStartEvent();
+      //       }
+      //     });
+      //   }, 0);
+      // } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
         console.log(affAppToken.value);
@@ -121,7 +121,7 @@ export default defineComponent({
           store.aaid = attribution ? attribution.adid : "";
 
         }, 1500);
-      }
+      // }
     };
 
     const trackAppStartEvent = () => {
