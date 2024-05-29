@@ -10,15 +10,15 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
+const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835"];
 console.log(window.location.hostname);
-const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
 if (isGlobalLH) {
   var rstApi = "https://aptvpnubglgl.conoibue6er.com";
   var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
   var crtApi = "https://caxlzwt2glgl.inc8ozys5we.com";
-} else if(window.location.hostname.includes("leihuo")){
+} else if (window.location.hostname.includes("leihuo")) {
   var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
   var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
   var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
@@ -26,7 +26,6 @@ if (isGlobalLH) {
   var rstApi = getInitApi(rstGlobalArray, "LH_WEB_RST_URL");
   var evtApi = getInitApi(evtGlobalArray, "LH_WEB_EVT_URL");
   var crtApi = getInitApi(crGlobalArray, "LH_WEB_CRT_URL");
-
 } else {
   var rstApi = getInitApi(rstArray, "LH_WEB_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_WEB_EVT_URL");
@@ -36,15 +35,18 @@ if (isGlobalLH) {
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
   if (successRstUrl) {
-    axios.get(successRstUrl + "/ping").then((res) => {
-      console.log(res);
-      if (res.status !== 200) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem(urlLsName);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         localStorage.removeItem(urlLsName);
-      }
-    }).catch((err) => {
-      console.log(err);
-      localStorage.removeItem(urlLsName);
-    });
+      });
 
     return successRstUrl;
   } else {
@@ -68,7 +70,6 @@ function getInitApi(apiLinks, urlLsName) {
   }
 }
 
-
 const onRequest = (config) => {
   const store = userStore();
   if (store.token) {
@@ -76,9 +77,9 @@ const onRequest = (config) => {
   }
   // console.log(store.token);
   config.headers["Authorization"] = process.env.VUE_APP_SITE;
-  if (config.data) {
-    config.data = stringify(config.data);
-  }
+  // if (config.data) {
+  //   config.data = stringify(config.data);
+  // }
   return config;
 };
 
@@ -116,7 +117,8 @@ const onResponse = (response) => {
       store.token = null;
       location.reload();
     } else {
-      if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+      if (
+        res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
         res.code === ResponseCode.ERROR_TOKEN_MISSED ||
         res.code === ResponseCode.ERROR_NAME_EXIST
       ) {
@@ -138,7 +140,7 @@ const onResponse = (response) => {
       // ElMessage.error(res.message);
     }
     // throw new Error(res.message || "Error");
-    return res
+    return res;
   } else {
     return response.data;
   }
