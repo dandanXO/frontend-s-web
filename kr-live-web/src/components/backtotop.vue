@@ -33,7 +33,7 @@ export default defineComponent({
 </script>
 <style lang="scss" >
 .back-to-top-btn {
-  border: 3px solid #D92515;
-  color: #D92515;
+  color: #fff;
+  background: linear-gradient(312deg, #0286FF 0%, #00FF85 100%);
 }
 </style>

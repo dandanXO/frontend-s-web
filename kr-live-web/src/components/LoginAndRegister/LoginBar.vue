@@ -124,7 +124,7 @@ const iconInfo = reactive([
   // },
   {
     info: "공지사항",
-    iconUrl: require("../../assets/icon/icon-notify.svg"),
+    iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     goPage: () => {
       router.push(`/?page=notify`);
     }
@@ -138,14 +138,14 @@ const iconInfo = reactive([
   // },
   {
     info: "충전",
-    iconUrl: require("../../assets/icon/icon-deposit.svg"),
+    iconUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     goPage: () => {
       router.push(`/?page=finance/deposit`);
     }
   },
   {
     info: "환전",
-    iconUrl: require("../../assets/icon/icon-withdrawal.svg"),
+    iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     goPage: () => {
       router.push(`/?page=finance/withdraw`);
     }
@@ -159,14 +159,14 @@ const iconInfo = reactive([
   // },
   {
     info: "쪽지함",
-    iconUrl: require("../../assets/icon/icon-message.svg"),
+    iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
   },
   {
     info: "고객센터",
-    iconUrl: require("../../assets/icon/icon-service.svg"),
+    iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
     goPage: () => {
       window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
     },
@@ -229,6 +229,7 @@ const iconInfo = reactive([
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow-x: auto;
   
   @media (min-width: 769px) {
     width: 1280px;
@@ -438,7 +439,8 @@ const iconInfo = reactive([
   flex-direction: column;
   align-items: center;
   &:hover .info-text {
-    color: #01d9ab;
+    color: #00FFFF;
+    font-weight: bold;
   }
 
   img {
@@ -448,7 +450,7 @@ const iconInfo = reactive([
     flex-direction: row;
     align-items: center;
     img {
-      width: 24px;
+      width: 22px;
     }
   }
 }
