@@ -693,65 +693,10 @@
       </div>
     </Transition>
     <!-- cq9 end -->
+    
+
     <Transition>
-      <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
-        </div>
-        <template v-if="!isLoading">
-          <template v-for="(game, index) in miniGames" :key="index">
-            <div class="game-item btn-pointer btn-slot-game" @click="playGame(game.name, selectedPlat.code, game.code)">
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${game.icon})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </template>
-
-          <template v-if="selectedPlat.code === 'TFGaming'">
-            <div
-              class="game-item minigame-select-div"
-              v-for="(game, index) in miniGamesMore"
-              :key="index"
-              @click="showTypeH5(game.id)"
-              @mouseover="showTypeWeb(game.id)"
-              @mouseleave="showTypeWeb(0)"
-            >
-              <img :src="game.logo" />
-
-              <transition appear>
-                <div class="select-type-div" v-if="showMiniType == game.id">
-                  <div
-                    class="game-type btn-pointer"
-                    id="copper-type"
-                    @click="playGame(game.name, 'TFGaming', game.copper)"
-                  >
-                    1,000 - 65K
-                  </div>
-                  <div
-                    class="game-type btn-pointer"
-                    id="silver-type"
-                    @click="playGame(game.id, 'TFGaming', game.silver)"
-                  >
-                    100K - 130K
-                  </div>
-                  <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
-                    1,000 - 20K
-                  </div>
-                </div>
-              </transition>
-            </div>
-          </template>
-        </template>
-      </div>
+      <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
 
     <Transition>
@@ -1128,6 +1073,7 @@ import liff from "@line/liff";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import MinigamesGrid from 'components/game/MinigamesGrid';
 
 export default defineComponent({
   name: "IndexPage",
@@ -1139,7 +1085,8 @@ export default defineComponent({
     RiStarLine,
     RiStarFill,
     GameItem,
-    GameCategory
+    GameCategory,
+    MinigamesGrid
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
