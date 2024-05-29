@@ -668,7 +668,7 @@ onMounted(() => {
   .q-tab-panel {
     // padding: 10px 20px 60px;
     box-sizing: border-box;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     // max-height: calc(90vh - 200px);
   }
 }

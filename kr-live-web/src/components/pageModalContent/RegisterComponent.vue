@@ -108,7 +108,9 @@
     </q-form>
 
     <div class="action-buttons">
-      <q-btn rounded @click="onSubmit" :label="$t('lang.reg_submit')" class="primary-button blue register-submit-btn" />
+      <div @click="onSubmit" class="primary-button blue register-submit-btn">
+        {{ $t('lang.reg_submit') }}
+      </div>
     </div>
 
     <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down"
