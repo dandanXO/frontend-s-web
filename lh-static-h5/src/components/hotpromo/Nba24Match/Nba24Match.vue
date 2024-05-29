@@ -269,6 +269,8 @@ const handleSubmitVote = () => {
   console.log(submitParam);
   submitNbaMatch(submitParam).then((res) => {
     console.log(res);
+  }).finally(()=>{
+    confirmVoteDialog.value = false
   });
 };
 
