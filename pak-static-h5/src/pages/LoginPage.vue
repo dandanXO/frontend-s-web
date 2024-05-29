@@ -106,10 +106,10 @@
           <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
         </div>
 
-        <div style="margin-top: 30px">
-          <!-- <PrimaryButton :onClick="onSubmit" :label="'Login'" /> -->
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn>
-        </div>
+        <!-- <div style="padding-top: 30px"> -->
+        <!-- <PrimaryButton :onClick="onSubmit" :label="'Login'" /> -->
+        <!-- <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn> -->
+        <!-- </div> -->
 
         <!-- <div class="q-mt-sm">
           <q-btn @click="goRegister()" rounded flat no-caps class="btn-purple" label="Register" />
@@ -123,6 +123,10 @@
         &nbsp;
         <router-link class="form-text" to="/register" style="color: #00ae00">Create account</router-link>
       </div> -->
+    </div>
+
+    <div class="bottom-btn">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn>
     </div>
   </div>
 
@@ -603,7 +607,7 @@ export default defineComponent({
 }
 
 .login-container {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   // justify-content: center;
@@ -631,7 +635,7 @@ export default defineComponent({
 }
 
 .login-form-wrapper {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .forgot-password {
@@ -669,5 +673,10 @@ export default defineComponent({
 
 :deep(.q-tab__label) {
   color: #ffffff;
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px;
 }
 </style>

@@ -16,11 +16,15 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
   },
-
   {
     path: "/register",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/RegisterPage.vue") }]
+  },
+  {
+    path: "/verification",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/VerificationCodePage.vue") }]
   },
   {
     path: "/forgot-password",

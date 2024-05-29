@@ -1,18 +1,7 @@
 <template>
   <div class="forgot-password-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/login'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
-    <!--
-      <div class="text-blue-grey">
-      Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-    </div>
-  -->
-
     <div class="forgot-password-form-logo-img">
-      <img src="../assets/images/auth/auth-logo-text-only.png" />
+      <img src="../assets/images/auth/login-img.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -50,7 +39,6 @@
           Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
         </span>
 
-
         <InputRowGrid>
           <template #fields>
             <InputField :label="'Phone Number'">
@@ -69,7 +57,7 @@
                   ]"
                   outlined
                   label-color="brand"
-                  color="white"
+                  color="green"
                 ></q-input>
               </template>
             </InputField>
@@ -85,7 +73,7 @@
                   :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
                   outlined
                   label-color="brand"
-                  color="white"
+                  color="green"
                 >
                   <template v-slot:append>
                     <img :src="verificationImg" @click="getCode()" />
@@ -94,19 +82,18 @@
               </template>
             </InputField>
 
-            <div style="margin-top: 30px;">
+            <!-- <div style="margin-top: 30px">
               <PrimaryButton :onClick="onSubmitForgotPwd" :label="'Submit'" />
-            </div>
-
+            </div> -->
           </template>
         </InputRowGrid>
       </div>
     </q-form>
+
     <q-form v-else class="q-gutter-y-md rounded-borders">
       <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
       <InputRowGrid>
         <template #fields>
-
           <InputField>
             <template #input>
               <q-input
@@ -136,7 +123,8 @@
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please Enter New Password',
                   (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
-                  (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
+                  (val) =>
+                    (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
                 ]"
                 rounded
                 outlined
@@ -231,6 +219,12 @@
         </template>
       </InputRowGrid>
     </q-form>
+
+    <div class="bottom-btn">
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd">
+        Confirm
+      </q-btn>
+    </div>
   </div>
 </template>
 
@@ -241,9 +235,9 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { SessionStorage } from "quasar";
 import ConfirmButton from "src/atoms/ConfirmButton.vue";
-import PrimaryButton from '../components/auth/PrimaryButton.vue';
-import InputField from '../components/auth/InputField.vue';
-import InputRowGrid from '../components/auth/InputRowGrid.vue';
+import PrimaryButton from "../components/auth/PrimaryButton.vue";
+import InputField from "../components/auth/InputField.vue";
+import InputRowGrid from "../components/auth/InputRowGrid.vue";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -505,12 +499,12 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .forgot-password-container {
-  min-height: 100vh;
-  padding: 16px;
+  min-height: 100dvh;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  background: url("../assets/images/index/auth-bg.png");
+  // justify-content: center;
+  background: url("../assets/images/auth/bg-login.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -522,17 +516,20 @@ onMounted(() => {
 }
 
 .forgot-password-form-logo-img {
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
   img {
     display: block;
-    width: 95%;
-    margin: 20px auto;
-    max-width: 250px;
+    width: 100%;
+    max-width: 300px;
   }
 }
 .forgot-password-form-grid {
   display: grid;
   grid-auto-flow: row;
   gap: 7px;
+  margin-top: 20px;
 
   .forgot-password-form-title {
     font-size: 22px;
@@ -548,7 +545,6 @@ onMounted(() => {
     width: 80%;
   }
 }
-
 
 .password-str-div {
   display: flex;
@@ -580,5 +576,10 @@ onMounted(() => {
     background: var(--q-positive);
     font-weight: 600;
   }
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px 0 0;
 }
 </style>

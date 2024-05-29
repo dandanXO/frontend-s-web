@@ -1,7 +1,10 @@
 <template>
   <div class="deposit-wrapper">
     <div class="deposit-options">
-      <div class="lil-title">Payment Channel</div>
+      <div class="lil-title">
+        Payment Channel
+        <span>*</span>
+      </div>
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
           <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
@@ -151,13 +154,13 @@
       </q-form>
     </div>
 
-    <div class="q-mt-lg">
-      <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" />
-      <!-- <div :class="`btn-submit`" @click="confirmDeposit">
+    <!-- <div class="q-mt-lg"> -->
+    <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
+    <!-- <div :class="`btn-submit`" @click="confirmDeposit">
         <q-spinner v-if="isLoadingInitPay || btnLoading" color="white" size="2em" :thickness="2"></q-spinner>
         <template v-else>Submit</template>
       </div> -->
-    </div>
+    <!-- </div> -->
 
     <div class="q-mt-lg" style="color: #576373" v-if="activeMethod.privilegeId">
       <div class="q-mt-sm">Wager requirement (to withdrawal): 10 times of your deposit amount</div>
@@ -167,6 +170,19 @@
     <!--    <div class="node-wrapper" style="display: none">-->
     <!--      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />-->
     <!--    </div>-->
+
+    <div class="bottom-btn">
+      <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
+      <q-btn
+        no-caps
+        unelevated
+        class="btn-primary btn-primary__full"
+        loading="isLoadingInitPay || btnLoading"
+        @click="confirmDeposit"
+      >
+        Confirm
+      </q-btn>
+    </div>
   </div>
 
   <q-dialog width="100%" v-model="isDeposited">
@@ -307,11 +323,11 @@ const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
-  { amount: 2000, hotLabel: 100, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
   { amount: 10000, hotLabel: 500, isActive: false },
-  { amount: 20000, hotLabel: 1000, isActive: false }
+  { amount: 30000, hotLabel: 2000, isActive: false },
+  { amount: 50000, hotLabel: 4000, isActive: false }
   // { amount: 30000, hotLabel: 1500, isActive: false },
   // { amount: 50000, hotLabel: 2500, isActive: false }
 ]);
@@ -496,9 +512,10 @@ async function confirmDeposit() {
 
           pDepo(data);
         }
-      }).catch((e) => {
-        btnLoading.value = false;
       })
+      .catch((e) => {
+        btnLoading.value = false;
+      });
   }
 }
 
@@ -682,8 +699,8 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .deposit-tabs {
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 16px;
   border-radius: 0.5rem;
   background: #1b2232;
 }
@@ -767,19 +784,21 @@ onMounted(() => {
 
     .deposit-amt {
       border-radius: 4px;
-      background: #1d2635;
+      background: #0b0e0d;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       line-height: 1;
-      padding: 3px;
+      padding: 3px 16px;
       width: 100%;
-      height: 4.1rem;
+      height: 4rem;
       font-weight: 600;
       aspect-ratio: 106/64;
 
       &.active {
-        background: #00B900;
+        // background: #00b900;
+        color: #000a01;
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
       }
     }
 
@@ -790,7 +809,7 @@ onMounted(() => {
       display: none;
 
       svg {
-        background: #30bb1a;
+        // background: #30bb1a;
         border-radius: 3px;
       }
 
@@ -855,7 +874,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #00AE00;
+      background: #b81212;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -883,7 +902,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #00AE00;
+      background: #b81212;
       border-radius: 3px;
     }
 
@@ -923,12 +942,24 @@ onMounted(() => {
 }
 
 .lil-title {
-  color: #576373;
+  color: #d0d0d0;
   font-weight: 600;
+
+  span {
+    color: #b81212;
+  }
 }
 
 .deposit-wrapper {
-  width: 95%;
+  // width: 95%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 168px);
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px 0;
 }
 </style>

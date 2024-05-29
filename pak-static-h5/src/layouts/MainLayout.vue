@@ -17,7 +17,7 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" :class="pageName === '' && 'page-title__empty'" v-if="hasPage">
-        <router-link :to="prevPage || '/'">
+        <router-link :to="prevPage || '/'" class="q-mt-sm">
           <img src="../assets/images/index/btn-back.png" width="30" />
           <!-- <q-icon class="header-icon" name="arrow_back_ios"></q-icon> -->
           <!-- <span v-if="route.path === '/deposit' || route.path === '/withdraw'" class="header-back">Back</span> -->
@@ -211,6 +211,10 @@ export default defineComponent({
           prevPage.value = "/home";
           hasPage.value = true;
           pageName.value = "";
+        } else if (route.path === "/verification") {
+          prevPage.value = "/register";
+          hasPage.value = true;
+          pageName.value = "Register";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "/login";
           hasPage.value = true;
@@ -218,7 +222,7 @@ export default defineComponent({
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
           hasPage.value = true;
-          pageName.value = "Forgot Password";
+          pageName.value = "";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
           pageName.value = "Live Casino";
@@ -391,14 +395,14 @@ export default defineComponent({
         } else if (route.path === "/deposit") {
           prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = "Deposit";
           if (route.query.from) {
             prevPage.value = route.query.from;
           }
         } else if (route.path === "/withdraw") {
           prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "";
+          pageName.value = "Withdraw";
         }
       }
     };
@@ -567,6 +571,7 @@ svg path {
     width: 14rem;
     margin: 0 0.5rem;
     font-size: 16px;
+    font-weight: bold;
   }
 
   svg {

@@ -18,7 +18,7 @@
     </div>
 
     <div class="register-form-wrapper">
-      <q-form class="q-gutter-y-md rounded-borders">
+      <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
             <InputField :label="'Phone'">
@@ -30,7 +30,6 @@
                   ref="loginNameRef"
                   hide-bottom-space
                   v-model="regForm.loginName"
-                  lazy-rules
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
                     (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
@@ -54,7 +53,6 @@
                   ref="pwdRef"
                   hide-bottom-space
                   v-model="regForm.password"
-                  lazy-rules
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert password',
@@ -142,10 +140,9 @@
                   ref="nricRef"
                   hide-bottom-space
                   v-model="regForm.nric"
-                  lazy-rules
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert NRIC',
-                    (val) => (val && val.length === 10) || 'The NRIC must have 13 digits'
+                    (val) => (val && val.length === 13) || 'The NRIC must have 13 digits'
                   ]"
                   color="green"
                   outlined
@@ -187,25 +184,24 @@
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div> -->
 
-        <div style="margin-top: 30px">
-          <!-- <PrimaryButton :onClick="onSubmit" :label="'Login'" /> -->
-          <q-btn
-            no-caps
-            unelevated
-            class="btn-primary btn-primary__full"
-            :disabled="!isAgreeReg"
-            :loading="isLoading"
-            @click="onSubmit"
-          >
-            Confirm
-          </q-btn>
-        </div>
-
         <!--
           <div class="tip-container">
           <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
         </div>
       --></q-form>
+    </div>
+
+    <div class="bottom-btn">
+      <q-btn
+        no-caps
+        unelevated
+        class="btn-primary btn-primary__full"
+        :disabled="!isAgreeReg"
+        :loading="isLoading"
+        @click="onSubmit"
+      >
+        Confirm
+      </q-btn>
     </div>
   </div>
 </template>
@@ -359,12 +355,7 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      nricRefRef.value.validate();
-      // confirmPwdRef.value.validate();
-      // telRef.value.validate();
-      // phoneVerificationRef.value.validate();
-      // emailRef.value.validate();
-      // verificationRef.value.validate();
+      nricRef.value.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -384,6 +375,7 @@ export default defineComponent({
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
+        isLoading.value = false;
       } else {
         var qs = require("qs");
         const fpPromise = FingerprintJS.load();
@@ -433,12 +425,12 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: "Registered successfully",
-                  icon: "check_circle_outline"
-                });
+                // $q.notify({
+                //   color: "positive",
+                //   position: "top",
+                //   message: "Registered successfully",
+                //   icon: "check_circle_outline"
+                // });
 
                 //ADJUST TRACKEVENT.
                 // debugger;
@@ -455,12 +447,19 @@ export default defineComponent({
                 //   });
                 // }
 
-                store.autoLogin(res.data);
+                // store.autoLogin(res.data);
+                // router.go("/verification");
+
+                router.push("/verification");
+                store.autoLogin(res.data).then(() => {
+                  router.go("/verification");
+                });
+
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   // router.go(jumpUrl);
-                  router.go("/");
+                  router.go("/verification");
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -688,7 +687,7 @@ function charType(num) {
 }
 
 .register-container {
-  min-height: 100vh;
+  min-height: 100dvh;
   // padding: 16px;
   padding-top: 20px;
   display: flex;
@@ -717,7 +716,7 @@ function charType(num) {
 }
 
 .register-form-wrapper {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .page-header {
@@ -825,5 +824,10 @@ function charType(num) {
 
 :deep(.q-tab__label) {
   color: #ffffff;
+}
+
+.bottom-btn {
+  margin-top: auto;
+  padding: 20px;
 }
 </style>

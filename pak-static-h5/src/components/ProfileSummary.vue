@@ -4,15 +4,16 @@
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
+      <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
+        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
+      </div>
+      <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
       <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
       <div class="download-count">({{ topDownloadCount }}s)</div>
-      <div class="download-close" :style="!topDownloadcloseBtn && 'opacity:0'">
-        <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
-      </div>
     </div>
   </div>
 
@@ -413,11 +414,12 @@ onMounted(() => {
     .download-count {
       color: #97a6b4;
       font-size: 20px;
+      width: 50px;
     }
 
     .download-btn {
       // margin-left: auto;
-      margin-right: auto;
+      margin-left: auto;
 
       img {
         width: 100%;
@@ -729,7 +731,7 @@ onMounted(() => {
     display: flex;
 
     img {
-      max-width: 95px;
+      max-width: 115px;
       width: 100%;
       text-align: center;
     }

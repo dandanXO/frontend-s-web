@@ -3,6 +3,10 @@
 
   <q-page>
     <div class="top-setting-section">
+      <div class="top-total-score">
+        <div class="score-txt">Total Score</div>
+        <div class="score-amount">2333.44</div>
+      </div>
       <div class="top-section-inner">
         <router-link to="/withdraw">
           <div class="acct-nav-item">
@@ -35,23 +39,17 @@
             </div>
             <div class="acct-nav-label">Personal Centre</div>
           </router-link>
-          <router-link to="/account/discount">
-            <div class="acct-nav-item">
-              <img src="../assets/images/account/discount-svg.svg" />
-            </div>
-            <div class="acct-nav-label">Discount</div>
-          </router-link>
           <router-link to="/account/record">
             <div class="acct-nav-item">
               <img src="../assets/images/account/record-svg.svg" />
             </div>
             <div class="acct-nav-label">Record</div>
           </router-link>
-          <router-link to="/account/order">
+          <router-link to="/account/discount">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/order-svg.svg" />
+              <img src="../assets/images/account/discount-svg.svg" />
             </div>
-            <div class="acct-nav-label">Order</div>
+            <div class="acct-nav-label">Discount</div>
           </router-link>
           <router-link to="/account/bank">
             <div class="acct-nav-item">
@@ -59,11 +57,23 @@
             </div>
             <div class="acct-nav-label">Bank</div>
           </router-link>
+          <router-link to="/account/order">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/order-svg.svg" />
+            </div>
+            <div class="acct-nav-label">Order</div>
+          </router-link>
           <router-link to="/account/message">
             <div class="acct-nav-item">
               <img src="../assets/images/account/message-svg.svg" />
             </div>
             <div class="acct-nav-label">Message</div>
+          </router-link>
+          <router-link to="/vip">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/vip-svg.svg" />
+            </div>
+            <div class="acct-nav-label">VIP</div>
           </router-link>
         </div>
       </div>
@@ -152,7 +162,7 @@ const slide = ref(0);
 const imgURL = "";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-2.jpg")
+    mobileImageUrl: require("../assets/images/account/account-banner-3.png")
   }
 ]);
 
@@ -184,13 +194,37 @@ const logout = () => {
 <style scoped lang="scss">
 .top-setting-section {
   position: relative;
-  background: #2e30344f;
-  border-radius: 4px;
+
   margin: 20px;
 
+  .top-total-score {
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    padding: 20px 12px 30px;
+    margin: 0 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .score-txt {
+    }
+    .score-amount {
+      font-weight: bold;
+      font-size: 20px;
+
+      &:before {
+        content: "RS";
+        font-size: 14px;
+        margin-right: 4px;
+      }
+    }
+  }
+
   .top-section-inner {
+    background: #2e30344f;
+    border-radius: 4px;
     width: 100%;
-    margin: 0px auto;
+    margin: -20px auto 0px;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -201,6 +235,7 @@ const logout = () => {
     height: auto;
     margin-bottom: 10px;
 
+    backdrop-filter: blur(4px);
     a {
       text-decoration: none;
       font-size: 14px;
@@ -260,12 +295,11 @@ const logout = () => {
     // width: calc(330px + 100px);
     text-transform: uppercase;
 
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-size: 20px;
     font-weight: 700;
     line-height: 16px;
     letter-spacing: -0.0008em;
-
   }
 }
 
@@ -295,7 +329,7 @@ const logout = () => {
     background: #2e30344f;
     border-radius: 4px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 30px;
     gap: 10px;
@@ -393,17 +427,17 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   font-weight: 700;
   color: #fff;
-  border: 1px solid #5D8956;
+  border: 1px solid #5d8956;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
-  border: 1px solid #5D8956;
+  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+  border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
