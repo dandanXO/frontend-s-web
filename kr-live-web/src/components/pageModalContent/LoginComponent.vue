@@ -1,14 +1,14 @@
 <template>
   <div class="main-section">
     <q-form class="login-form" @keypress.enter="onSubmit">
-      <q-input ref="loginNameRef" :label="$t('lang.login_account')" outlined clearable v-model="loginForm.loginName"
+      <q-input dense ref="loginNameRef" :label="$t('lang.login_account')" outlined clearable v-model="loginForm.loginName"
         lazy-rules :rules="[
           (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
           (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
           (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
         ]" />
 
-      <q-input ref="pwdRef" :label="$t('lang.login_password')" outlined clearable v-model="loginForm.password"
+      <q-input dense ref="pwdRef" :label="$t('lang.login_password')" outlined clearable v-model="loginForm.password"
         :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
           (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
           (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
@@ -19,7 +19,7 @@
       </q-input>
 
       <div class="captcha-code">
-        <q-input ref="captchaRef" :label="$t('lang.login_captcha')" outlined clearable class="captcha-code-input"
+        <q-input dense ref="captchaRef" :label="$t('lang.login_captcha')" outlined clearable class="captcha-code-input"
           v-model="loginForm.captchaCode" lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
         <div class="captcha-img-wrapper">
@@ -29,21 +29,13 @@
       </div>
 
       <div class="action-buttons">
-        <q-btn rounded @click="onSubmit" :label="$t('lang.login_submit')" class="primary-button yellow login-submit-btn"
-          :loading="isLoading">
-          <template v-slot:loading>
-            <q-spinner-hourglass class="on-left" />
-            {{ $t('lang.loading') }}
-          </template>
-        </q-btn>
+        <div @click="onSubmit" class="primary-button yellow login-submit-btn">
+          {{ isLoading ? $t('lang.loading') : $t('lang.login_submit') }}
+        </div>
         <router-link to="/?page=register">
-          <q-btn rounded :label="$t('lang.login_register')" class="primary-button blue login-register-btn"
-            :loading="isLoading">
-            <template v-slot:loading>
-              <q-spinner-hourglass class="on-left" />
-              {{ $t('lang.loading') }}
-            </template>
-          </q-btn>
+          <div class="primary-button blue login-register-btn">
+            {{ isLoading ? $t('lang.loading') : $t('lang.login_register') }}
+          </div>
         </router-link>
       </div>
     </q-form>
@@ -201,14 +193,16 @@ export default defineComponent({
   }
 
   .captcha-img-wrapper {
-    min-width: 150px;
-    height: 56px;
+    min-width: 120px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .captcha-img {
       border-radius: 8px;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -217,7 +211,7 @@ export default defineComponent({
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 
     .login-submit-btn,
     .login-register-btn {
