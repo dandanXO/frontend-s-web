@@ -72,7 +72,9 @@
             <div class="info-text">{{ item.info }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
-            <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+            <div class="primary-button red" @click.stop="logout">
+              로그아웃
+            </div>
           </div>
         </div>
       </div>
