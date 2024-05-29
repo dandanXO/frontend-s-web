@@ -189,62 +189,62 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.modal-container {
-  .q-dialog__inner {
-    max-width: 500px;
-    margin: 0 auto;
-  }
+// .modal-container {
+//   .q-dialog__inner {
+//     max-width: 500px;
+//     margin: 0 auto;
+//   }
 
-  .close-btn-div {
-    position: absolute;
-    background: #cfcfcf;
-    border-radius: 50%;
-    color: #787878;
-    padding: 8px;
-    width: 40px;
-    height: 40px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0px;
-    right: 0;
-    z-index: 10;
-  }
+//   .close-btn-div {
+//     position: absolute;
+//     background: #cfcfcf;
+//     border-radius: 50%;
+//     color: #787878;
+//     padding: 8px;
+//     width: 40px;
+//     height: 40px;
+//     text-align: center;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     top: 0px;
+//     right: 0;
+//     z-index: 10;
+//   }
 
-  .input-title {
-    color: #fff;
+//   .input-title {
+//     color: #fff;
 
-    font-family: Helvetica;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 2.25rem; /* 100% */
-    text-transform: capitalize;
-  }
+//     font-family: Helvetica;
+//     font-size: 1rem;
+//     font-style: normal;
+//     font-weight: 700;
+//     line-height: 2.25rem; /* 100% */
+//     text-transform: capitalize;
+//   }
 
-  .dialog-input {
-    border-radius: 1.25rem;
-    min-height: 46px;
+//   .dialog-input {
+//     border-radius: 1.25rem;
+//     min-height: 46px;
 
-    :deep(.q-field__control) {
-      min-height: 46px;
-    }
-  }
+//     :deep(.q-field__control) {
+//       min-height: 46px;
+//     }
+//   }
 
-  .q-card {
-    padding: 1.5rem;
-    border-radius: 8px;
-    background: #19202D;
-    width: calc(100% - 16px);
-  }
+//   .q-card {
+//     padding: 1.5rem;
+//     border-radius: 8px;
+//     background: #19202D;
+//     width: calc(100% - 16px);
+//   }
 
-  .q-card__section {
-    background: transparent;
-  }
+//   .q-card__section {
+//     background: transparent;
+//   }
 
-  .q-dialog__inner > div {
-    overflow: hidden;
-  }
-}
+//   .q-dialog__inner > div {
+//     overflow: hidden;
+//   }
+// }
 </style>

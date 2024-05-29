@@ -100,7 +100,7 @@
         </q-card-section>
 
         <ConfirmButton
-          label="Confirm"
+          label="CONFIRM"
           :confirmFunc="addCard"
           :isDisabled="
             !(
@@ -352,7 +352,7 @@ defineExpose({
   .q-card {
     padding: 1.5rem;
     border-radius: 8px;
-    background: #19202D;
+    background: #131313;
     width: calc(100% - 16px);
   }
 

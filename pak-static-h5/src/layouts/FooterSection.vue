@@ -26,7 +26,7 @@
           <img class="inactive" src="../assets/images/index/menu/icon-wallet.png" />
           <img class="hover" src="../assets/images/index/menu/icon-wallet-hover.png" />
         </div>
-        <span class="footer-label">Earn Money</span>
+        <span class="footer-label">Wallet</span>
       </q-route-tab>
       <q-route-tab to="/account" name="account" :ripple="false">
         <div class="footer-img">
