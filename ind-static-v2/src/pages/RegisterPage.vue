@@ -61,7 +61,7 @@
                     />
                   </template>
                 </q-input>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
@@ -80,7 +80,7 @@
                     Good
                   </span>
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div>
+                </div> -->
               </template>
             </InputField>
 
