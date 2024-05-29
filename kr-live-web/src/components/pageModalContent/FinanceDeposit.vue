@@ -167,7 +167,7 @@
     </div>
 
     <div class="action-buttons">
-      <div class="primary-button blue" :loading="btnLoading" @click="confirmDeposit">입금하기</div>
+      <div class="primary-button blue" :class="btnLoading ? 'disabled' : ''" @click="confirmDeposit">{{ btnLoading ? $t('lang.loading') : '입금하기' }}</div>
     </div>
   </div>
 </template>
@@ -276,6 +276,10 @@ const verifyDepositAmount = ref([
 ]);
 
 async function confirmDeposit() {
+  if(btnLoading.value) {
+    return;
+  }
+  
   // debugger;
   btnLoading.value = true;
   depositAmtRef.value.validate();

@@ -18,7 +18,7 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
+          <div class="node-icon"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div
             class="promo"
