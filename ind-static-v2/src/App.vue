@@ -70,7 +70,7 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Sandbox);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
         adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
