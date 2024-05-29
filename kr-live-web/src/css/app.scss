@@ -611,6 +611,12 @@ svg {
   background: #252e43;
 }
 
+.q-field--outlined.q-field--readonly .q-field__control:before {
+  border-color: grey;
+  border-style: solid;
+  background: #2d3039;
+}
+
 .verification-input:hover :before {
   opacity: 0 !important;
 }
@@ -703,6 +709,12 @@ input:internal-autofill-selected {
   // }
 }
 
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .primary-button {
   width: 145px;
   height: 36px;
@@ -715,11 +727,15 @@ input:internal-autofill-selected {
   white-space: nowrap;
   cursor: pointer;
 
-  &:hover {
+  &.disabled {
+    filter: grayscale(1);
+  }
+
+  &:hover + :not(.disabled) {
       filter: brightness(1.2);
   }
 
-  &:active {
+  &:active + :not(.disabled) {
       transform: translateY(2px);
   }
 

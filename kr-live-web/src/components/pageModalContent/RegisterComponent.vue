@@ -548,12 +548,6 @@ function charType(num) {
     border-radius: 8px;
   }
 
-  .form-item {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-
   @media (max-width: 768px) {
     grid-auto-flow: row;
     grid-template-columns: none;

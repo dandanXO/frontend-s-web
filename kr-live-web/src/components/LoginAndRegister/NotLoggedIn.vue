@@ -1,60 +1,11 @@
 <template>
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
-      <!-- <div class="left-container">
-        <div class="account">
-          <q-input
-            ref="loginNameRef"
-            dense
-            borderless
-            type="text"
-            class="account-input"
-            placeholder="계정"
-            v-model="loginForm.loginName"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')
-            ]"
-          />
-        </div>
-        <div class="password">
-          <q-input
-            ref="pwdRef"
-            dense
-            borderless
-            type="password"
-            class="password-input"
-            placeholder="암호"
-            v-model="loginForm.password"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
-           />
-        </div>
-        <div class="captcha-code">
-          <q-input
-            dense
-            borderless
-            ref="captchaRef"
-            type="text"
-            class="captcha-code-input"
-            placeholder="암호"
-            v-model="loginForm.captchaCode"
-            lazy-rules
-            :rules="[
-                (val) => (val && val.length > 0) || $t('lang.enter_captcha_code')
-              ]"
-          />
-        </div>
-        <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
-      </div> -->
-
       <div class="right-container">
         <div class="register" @click="goToRegister">
           <div class="register-text">회원가입</div>
         </div>
         <div class="login" @click="goToLogin">
-          <!-- @click.prevent="onLoginSubmit" -->
           <div class="login-text">로그인</div>
         </div>
       </div>
@@ -63,7 +14,6 @@
           <div class="register-text">회원가입</div>
         </div>
         <div class="login" @click="goToLogin">
-          <!-- @click.prevent="onLoginSubmit" -->
           <div class="login-text">로그인</div>
         </div>
       </div>
@@ -107,10 +57,6 @@ const goToRegister = () => {
 
 const goToLogin = () => {
   router.push("/?page=login");
-};
-
-const toGetCode = () => {
-  getCode();
 };
 
 const onLoginSubmit = () => {
