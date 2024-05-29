@@ -672,7 +672,7 @@ onMounted(() => {
 }
 
 .q-tab-panels {
-  background-color: transparent;
+  background: var(--main-bg-color);
   height: 100%;
 }
 :deep(.modal-body-buttons) {

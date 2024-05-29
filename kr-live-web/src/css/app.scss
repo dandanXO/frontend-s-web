@@ -731,11 +731,11 @@ input:internal-autofill-selected {
     filter: grayscale(1);
   }
 
-  &:hover + :not(.disabled) {
+  &:hover:not(.disabled) {
       filter: brightness(1.2);
   }
 
-  &:active + :not(.disabled) {
+  &:active:not(.disabled) {
       transform: translateY(2px);
   }
 
@@ -750,7 +750,7 @@ input:internal-autofill-selected {
   }
 
   &.yellow {
-      background: url("../assets/home/btn-orange.svg") no-repeat center center;
+      background: url("../assets/home/btn-yellow.svg") no-repeat center center;
       background-size: 100% 100%;
   }
 
