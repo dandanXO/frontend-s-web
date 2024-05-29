@@ -212,8 +212,8 @@
           <div class="search-list">
             <q-form @submit="searchList">
               <q-input
-                color="white"
-                filled
+                dense
+                outlined
                 class="search-input"
                 v-model="gamePage.searchKey"
                 :label="$t('lang.keyin_keyword')"
@@ -2484,13 +2484,11 @@ export default defineComponent({
   }
 
   .bookmarks {
-    width: 70px;
+    width: 60px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     grid-gap: 0px;
-    margin: 0px auto 10px 0px;
-    padding: 0px 10px 10px;
     justify-content: flex-start;
 
     .plat-item {
@@ -2501,7 +2499,7 @@ export default defineComponent({
       padding: 10px 10px;
       justify-content: center;
       align-items: center;
-      background: $third-color;
+      background: #4f4f4f36;
 
       .platform-img {
         max-width: 85px;
@@ -2525,11 +2523,11 @@ export default defineComponent({
       }
 
       &:first-of-type {
-        border-radius: 10px 10px 0px 0px;
+        // border-radius: 10px 10px 0px 0px;
       }
 
       &:last-of-type {
-        border-radius: 0px 0px 10px 10px;
+        // border-radius: 0px 0px 10px 10px;
       }
 
       span {
@@ -2539,7 +2537,7 @@ export default defineComponent({
       }
 
       &.active {
-        background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
+        background: linear-gradient(312deg, #0286FF 0%, #00FF85 100%);
         box-shadow: inset 0 0 5px #ffffff;
 
         img {
@@ -2878,7 +2876,7 @@ export default defineComponent({
 
   .game-scroll-lists {
     .bookmarks {
-      width: 100px;
+      width: 80px;
 
       .plat-item {
         img {

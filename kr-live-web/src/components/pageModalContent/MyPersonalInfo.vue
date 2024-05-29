@@ -1,37 +1,39 @@
 <template>
-  <form class="personal-info-form">
-    <div class="form-item">
-      <label>아이디(개인정보)</label>
-      <q-input dense v-model="formDetail.nickName" :readonly="!!store.token" outlined
-        @update:model-value="updateTouch" />
-    </div>
-    <div class="form-item">
-      <label>실제 이름</label>
-      <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
-        :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
-        @update:model-value="updateTouch" />
-    </div>
-    <div class="form-item">
-      <label>잔액</label>
-      <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
-        @update:model-value="updateTouch" />
-    </div>
-    <div class="form-item">
-      <label>이메일</label>
-      <q-input dense outlined v-model="formDetail.email" :readonly="!!store.token" @update:model-value="updateTouch" />
-    </div>
-    <div class="form-item">
-      <label>전화</label>
-      <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.token"
-        @update:model-value="updateTouch" />
-    </div>
-  </form>
-  <div class="action-buttons">
-    <div @click="closetheModal" class="primary-button blue">
-      닫기
-    </div>
-    <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
-      제출하다
+  <div class="form-wrapper">
+    <form class="personal-info-form form-template">
+      <div class="form-item">
+        <label>아이디(개인정보)</label>
+        <q-input dense v-model="formDetail.nickName" :readonly="!!store.token" outlined
+          @update:model-value="updateTouch" />
+      </div>
+      <div class="form-item">
+        <label>실제 이름</label>
+        <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
+          @update:model-value="updateTouch" />
+      </div>
+      <div class="form-item">
+        <label>잔액</label>
+        <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
+          @update:model-value="updateTouch" />
+      </div>
+      <div class="form-item">
+        <label>이메일</label>
+        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.token" @update:model-value="updateTouch" />
+      </div>
+      <div class="form-item">
+        <label>전화</label>
+        <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.token"
+          @update:model-value="updateTouch" />
+      </div>
+    </form>
+    <div class="action-buttons">
+      <div @click="closetheModal" class="primary-button blue">
+        닫기
+      </div>
+      <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
+        제출하다
+      </div>
     </div>
   </div>
 </template>
@@ -131,16 +133,4 @@ const closetheModal = () => {
 </script>
 
 <style lang="scss" scoped>
-.personal-info-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 20px;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 10px 10px;
-}
 </style>

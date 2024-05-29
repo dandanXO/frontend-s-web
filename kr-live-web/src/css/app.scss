@@ -715,6 +715,27 @@ input:internal-autofill-selected {
   gap: 5px;
 }
 
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 550px;
+
+  .form-template {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px 10px;
+    margin: 0 auto;
+  }
+}
+
 .primary-button {
   width: 124px;
   height: 36px;
