@@ -73,8 +73,9 @@
           // isValidPhone
         ]" clearable>
           <template v-slot:append>
-            <q-btn class="primary-btn" :label="'인증 코드'" @click="openTelephoneVerificationModal"
-              :disabled="!regForm.telephone" />
+            <div class="primary-button blue-square" :class="!regForm.telephone ? 'disabled' : ''" @click="openTelephoneVerificationModal">
+              인증 코드
+            </div>
           </template>
         </q-input>
       </div>
@@ -117,24 +118,28 @@
       class="register-form-captcha-dialog">
       <q-card class="q-pa-md">
         <div class="modal-head-title q-pb-md">
-          {{ $t("lang.check_your_captcha_code") }}
+          {{ $t("lang.reg_check_captcha") }}
         </div>
         <q-form class="q-gutter-sm">
-          <q-input class="verification-input" ref="telephoneVerifyCaptchaCodeRef" outlined type="text" maxlength="4"
-            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
-            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]">
-            <template v-slot:append>
-              <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
-            </template>
-            <template v-slot:prepend>
-              <q-icon name="security" />
-            </template>
-          </q-input>
+
+          <div class="captcha-code">
+            <q-input dense class="captcha-code-input" ref="telephoneVerifyCaptchaCodeRef" outlined type="text" maxlength="4"
+              v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.reg_enter_captcha')]">
+              <template v-slot:prepend>
+                <q-icon name="security" />
+              </template>
+            </q-input>
+            <div class="captcha-img-wrapper">
+              <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+              <img v-else class="captcha-img" height="56px" :src="telephoneVerificationCaptchaImg" @click.prevent="getTelephoneVerificationImgCode" />
+            </div>
+          </div>
           <div class="row justify-center items-center gap-8" style="margin-top: 25px">
-            <q-btn :disabled="isOtpSending" :style="isOtpSending ? 'opacity: .6' : ''" class="primary-button blue"
+            <div :style="isOtpSending ? 'opacity: .6' : ''" class="primary-button blue" :class="isOtpSending ? 'disabled' : ''"
               @click.prevent="getOtpCode">
-              {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
-            </q-btn>
+              {{ isOtpSending ? $t("lang.reg_captcha_verifying") : $t("lang.reg_captcha_confirm") }}
+          </div>
           </div>
         </q-form>
       </q-card>
@@ -159,6 +164,7 @@ export default defineComponent({
     const store = userStore();
     const siteId = process.env.SITEID;
     const qs = require("qs");
+    const captchaLoading = ref(false);
 
     onMounted(() => {
       //getCode();
@@ -209,6 +215,10 @@ export default defineComponent({
 
     const isTelephoneVerificationModalVisible = ref(false);
     const openTelephoneVerificationModal = () => {
+      if(!regForm.telephone) {
+        return;
+      }
+
       telRef.value.validate();
 
       if (telRef.value.hasError) {
@@ -220,6 +230,8 @@ export default defineComponent({
     };
 
     const getTelephoneVerificationImgCode = () => {
+      captchaLoading.value = true;
+
       api
         .get("/member/verificationEasyCode")
         .then((res) => {
@@ -228,6 +240,8 @@ export default defineComponent({
             telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
             verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
           }
+
+          captchaLoading.value = false;
         })
         .catch((e) => {
           $q.notify({
@@ -236,10 +250,18 @@ export default defineComponent({
             message: e.message,
             icon: "report_problem"
           });
-        });
+
+          captchaLoading.value = false;
+        }).finally(() => {
+          captchaLoading.value = false;
+        });;
     };
 
     const getOtpCode = () => {
+      if(isOtpSending.value) {
+        return;
+      }
+
       const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
 
       if (!isTelephoneVerifyCaptchaCodeValid) {
@@ -510,7 +532,8 @@ export default defineComponent({
       isOtpSending,
       getOtpCode,
       verifyTelephoneForm,
-      openLogin
+      openLogin,
+      captchaLoading
     };
   }
 });
@@ -553,12 +576,6 @@ function charType(num) {
     grid-template-columns: none;
     grid-template-rows: none;
   }
-}
-
-.primary-btn {
-  background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
-  border: 1px solid #2260ff66;
-  color: #ffffff;
 }
 
 .verification {
@@ -642,4 +659,28 @@ function charType(num) {
     height: 36px;
   }
 }
+
+.captcha-code {
+    width: 100%;
+    display: flex;
+  }
+
+  .captcha-code-input {
+    margin-right: 16px;
+    width: 100%;
+  }
+
+  .captcha-img-wrapper {
+    min-width: 120px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .captcha-img {
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>

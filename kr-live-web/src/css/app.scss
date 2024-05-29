@@ -716,16 +716,18 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 145px;
+  width: 124px;
   height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
   line-height: 1;
-  margin: auto 10px;
+  margin: auto 5px;
   white-space: nowrap;
+  font-size: 14px;
   cursor: pointer;
+  z-index: 1;
 
   &.disabled {
     filter: grayscale(1);
@@ -747,6 +749,7 @@ input:internal-autofill-selected {
   &.blue-square {
     background: url("../assets/home/btn-blue-square.svg") no-repeat center center;
       background-size: 100% 100%;
+      width: 100px;
   }
 
   &.yellow {
@@ -756,7 +759,8 @@ input:internal-autofill-selected {
 
   &.yellow-square {
     background: url("../assets/home/btn-yellow-square.svg") no-repeat center center;
-      background-size: 100% 100%;
+    background-size: 100% 100%;
+    width: 100px;
   }
 
   &.red {

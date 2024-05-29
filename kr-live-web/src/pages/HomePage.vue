@@ -2210,6 +2210,8 @@ export default defineComponent({
     align-items: center;
     width: 85%;
     flex: 1;
+    border: 1px solid #24213f;
+
     @media (min-width: 769px) {
       padding: 8px 12px;
     }
