@@ -211,10 +211,11 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     gap: 15px;
+    margin: 10px auto 20px;
 
     .login-submit-btn,
     .login-register-btn {
-      width: 145px;
+      width: 200px;
       height: 36px;
     }
   }

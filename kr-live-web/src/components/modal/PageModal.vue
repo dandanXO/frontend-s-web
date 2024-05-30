@@ -1,14 +1,6 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
     <q-card style="max-width: none; background: transparent; box-shadow: none">
-      <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
-          <div class="left-group">
-            <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
-                 :class="tabIndex === item.key ? 'active' : ''">
-              <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
-            </div>
-          </div>
-      </div> -->
 
       <div style="text-align: right;">
         <img
@@ -39,16 +31,6 @@
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
             <p class="header-info-description">{{ headerInfo.description }}</p>
-            <!-- <div class="left-group">
-              <div
-                v-for="item in leftLinks"
-                :key="item.key"
-                class="page-dialog-links-btn"
-                :class="tabIndex === item.key ? 'active' : ''"
-              >
-                <div @click="item.clickHandler()" class="register-text">{{ item.info }}</div>
-              </div>
-            </div> -->
           </div>
           <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
             <template v-if="!isMinimalMode">
@@ -506,7 +488,6 @@ onMounted(() => {
   width: 100%;
   max-width: 860px;
   max-height: 100%;
-  border-radius: 8px;
   :deep(.q-panel) {
   }
   &,
@@ -575,36 +556,6 @@ onMounted(() => {
   padding-right: 10px;
 }
 
-.page-dialog-links-btn {
-  width: 120px;
-  height: 36px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
-  background: linear-gradient(180deg, #e1e1e1 0%, #525252 100%);
-  border: 2px solid #0000008c;
-  color: #000;
-  border-radius: 2px;
-  &:hover {
-    filter: brightness(1.1);
-  }
-  &.active {
-    background: linear-gradient(180deg, #a7e1ff 0%, #275fff 100%);
-    color: #fff;
-    border: 2px solid rgb(104 146 255 / 40%);
-  }
-  .register-text {
-    font-size: 16px;
-    line-height: 22.4px;
-  }
-}
-
 .header-close-btn {
   // margin-right: 25px;
   width: 40px;
@@ -625,8 +576,8 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 
   .header-title {
     text-align: center;

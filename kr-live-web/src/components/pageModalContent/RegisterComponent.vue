@@ -109,7 +109,7 @@
     </q-form>
 
     <div class="action-buttons">
-      <div @click="onSubmit" class="primary-button blue register-submit-btn">
+      <div @click="onSubmit" class="primary-button blue register-submit-btn" style="width:200px;">
         {{ $t('lang.reg_submit') }}
       </div>
     </div>
@@ -652,7 +652,7 @@ function charType(num) {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 20px;
 
   .register-submit-btn {
     width: 145px;
