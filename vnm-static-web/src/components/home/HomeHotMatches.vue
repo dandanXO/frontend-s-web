@@ -90,7 +90,7 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -479,8 +479,8 @@ onMounted(() => {
         justify-content: center;
 
         img {
-          width: 100%;
-          max-width: 90px;
+          width: unset;
+          height: 80px;
         }
       }
 
@@ -488,6 +488,10 @@ onMounted(() => {
         font-size: 18px;
         text-align: center;
         color: #444444;
+        min-height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
