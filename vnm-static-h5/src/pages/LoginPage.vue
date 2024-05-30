@@ -594,7 +594,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-
+    filter: brightness(100);
     img {
       width: 10px;
 
@@ -794,6 +794,7 @@ export default defineComponent({
       // width: auto;
       width: 100%;
       max-width: 135px;
+    opacity: 0;
     }
   }
 
