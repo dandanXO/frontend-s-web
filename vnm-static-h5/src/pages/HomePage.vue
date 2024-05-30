@@ -164,7 +164,7 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -2614,7 +2614,7 @@ export default defineComponent({
         justify-content: center;
         img {
           width: 100%;
-          max-width: 70px;
+    height: 60px;
         }
       }
 
