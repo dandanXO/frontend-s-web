@@ -43,12 +43,12 @@
         </div>
       </div>
       <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
-        <div class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit">
+        <router-link class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit">
           송금신청
-        </div>
-        <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw">
+        </router-link>
+        <router-link class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw">
           출금신청
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

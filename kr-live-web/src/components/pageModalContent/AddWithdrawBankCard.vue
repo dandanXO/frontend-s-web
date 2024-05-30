@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-body-wrap">
+  <div class="modal-body-wrap form-wrapper">
     <q-card-section class="modal-body-content">
       <div class="bind-wrapper">
         <q-form class="bind-item q-my-sm">
@@ -148,11 +148,13 @@
         </q-form>
         <div class="note">결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다.</div>
         <div class="note">안내: 카드 소지자 이름이 일치하지 않을 경우 온라인 고객 서비스에 문의하여 정보를 수정할 수 있습니다. 지원과 이해에 감사드립니다！</div>
-        <div class="flex-box-c-c">
-        <q-btn class="primary-button blue" label="제출" @click="submitBankCard()" rounded flat />
-        </div>
       </div>
     </q-card-section>
+    <div class="action-buttons">
+      <div class="primary-button blue" @click="submitBankCard()">
+        제출
+      </div>
+    </div>
   </div>
 </template>
 

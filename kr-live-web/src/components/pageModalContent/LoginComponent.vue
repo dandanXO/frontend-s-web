@@ -1,30 +1,39 @@
 <template>
-  <div class="main-section">
+  <div class="">
     <q-form class="login-form" @keypress.enter="onSubmit">
-      <q-input dense ref="loginNameRef" :label="$t('lang.login_account')" outlined clearable v-model="loginForm.loginName"
-        lazy-rules :rules="[
-          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
-        ]" />
+      <div class="form-item">
+        <label>{{ $t('lang.login_account') }}</label>
+        <q-input dense ref="loginNameRef" outlined clearable v-model="loginForm.loginName"
+          lazy-rules :rules="[
+            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+          ]" />
+      </div>
 
-      <q-input dense ref="pwdRef" :label="$t('lang.login_password')" outlined clearable v-model="loginForm.password"
-        :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
-          (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-          (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-        ]">
-        <template v-slot:append>
-          <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-        </template>
-      </q-input>
+      <div class="form-item">
+        <label>{{ $t('lang.login_password') }}</label>
+        <q-input dense ref="pwdRef" outlined clearable v-model="loginForm.password"
+          :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
+            (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+          ]">
+          <template v-slot:append>
+            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+          </template>
+        </q-input>
+      </div>
 
-      <div class="captcha-code">
-        <q-input dense ref="captchaRef" :label="$t('lang.login_captcha')" outlined clearable class="captcha-code-input"
-          v-model="loginForm.captchaCode" lazy-rules
-          :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
-        <div class="captcha-img-wrapper">
-          <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
-          <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+      <div class="form-item">
+        <label>{{ $t('lang.login_captcha') }}</label>
+        <div class="captcha-code">
+          <q-input dense ref="captchaRef" outlined clearable class="captcha-code-input"
+            v-model="loginForm.captchaCode" lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
+          <div class="captcha-img-wrapper">
+            <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+            <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+          </div>
         </div>
       </div>
 
@@ -169,7 +178,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   row-gap: 24px;
-  margin-top: 24px;
 
   :deep(.q-field--filled.q-field--dark .q-field__control),
   :deep(.q-field--filled.q-field--dark .q-field__control:before) {
@@ -212,10 +220,11 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
     gap: 15px;
+    margin: 10px auto 20px;
 
     .login-submit-btn,
     .login-register-btn {
-      width: 145px;
+      width: 200px;
       height: 36px;
     }
   }

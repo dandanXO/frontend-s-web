@@ -109,7 +109,7 @@
     </q-form>
 
     <div class="action-buttons">
-      <div @click="onSubmit" class="primary-button blue register-submit-btn">
+      <div @click="onSubmit" class="primary-button blue register-submit-btn" style="width:200px;">
         {{ $t('lang.reg_submit') }}
       </div>
     </div>
@@ -554,11 +554,14 @@ function charType(num) {
 
 <style lang="scss" scoped>
 .register-form {
-  display: grid;
-  grid-auto-flow: column;
-  grid-gap: 20px;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(5, auto);
+  // display: grid;
+  // grid-auto-flow: column;
+  // grid-gap: 20px;
+  // grid-template-columns: repeat(2, 1fr);
+  // grid-template-rows: repeat(5, auto);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   :deep(.q-field--filled.q-field--dark .q-field__control),
   :deep(.q-field--filled.q-field--dark .q-field__control:before) {
@@ -571,10 +574,21 @@ function charType(num) {
     border-radius: 8px;
   }
 
-  @media (max-width: 768px) {
-    grid-auto-flow: row;
-    grid-template-columns: none;
-    grid-template-rows: none;
+  // @media (max-width: 768px) {
+  //   grid-auto-flow: row;
+  //   grid-template-columns: none;
+  //   grid-template-rows: none;
+  // }
+}
+
+.form-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  gap: 20px;
+
+  label {
+    text-align: right;
   }
 }
 
@@ -652,7 +666,7 @@ function charType(num) {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 20px;
 
   .register-submit-btn {
     width: 145px;

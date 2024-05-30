@@ -56,8 +56,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     transition: background 0.3s ease-in-out, box-shadow 0.3s ease-out;
     overflow: hidden;
     border: 2px solid #4b4b4b;
-    transform: skewX(-16deg);
-    border-radius: 10px;
+    transform: skewX(-12deg);
+    border-radius: 6px;
     position: relative;
     box-shadow: rgba(50, 50, 50, 0.2) 0px 7px 29px 0px;
 
@@ -87,7 +87,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
         .category-kr-label {
             color: #01d9ab;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             line-height: 1;
 

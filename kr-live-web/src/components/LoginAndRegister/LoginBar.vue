@@ -72,7 +72,9 @@
             <div class="info-text">{{ item.info }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
-            <q-btn class="primary-button red" rounded flat :label="'로그아웃'" @click.stop="logout" />
+            <div class="primary-button red" @click.stop="logout">
+              로그아웃
+            </div>
           </div>
         </div>
       </div>
@@ -262,6 +264,7 @@ const iconInfo = reactive([
     background: #00000080;
     backdrop-filter: blur(10px);
     border-right: 1px solid #454F63;
+    overflow-y: auto;
   }
 
   &.active {
