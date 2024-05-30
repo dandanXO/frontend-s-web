@@ -70,7 +70,7 @@
         :label="t('fields.operate')"
         align="right"
         fixed="right"
-        width="350"
+        width="200"
       >
         <template #default="scope">
           <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:redirect:update']" @click="showEdit(scope.row)" />
@@ -94,7 +94,7 @@
     :title="uiControl.dialogTitle"
     v-model="uiControl.dialogVisible"
     append-to-body
-    width="1000px"
+    width="700px"
   >
     <el-form
       v-if="uiControl.dialogType === 'CREATE' || uiControl.dialogType === 'EDIT'"
@@ -179,11 +179,164 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item v-if="form.type" :label="t('fields.icon')" prop="icon">
+        <el-row :gutter="5">
+          <el-col v-if="form.icon" :span="18" style="width: 350px">
+            <el-image
+              v-if="form.icon && form.type === 'PROMO'"
+              :src="promoDir + form.icon"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[promoDir + form.icon]"
+            />
+            <el-image
+              v-if="form.icon && form.type === 'GAME'"
+              :src="gameDir + form.icon"
+              fit="contain"
+              class="preview"
+              :preview-src-list="[gameDir + form.icon]"
+            />
+          </el-col>
+          <el-col :span="6">
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage()"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-form-item>
       <div class="dialog-footer">
         <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
         <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
       </div>
     </el-form>
+  </el-dialog>
+
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in sites.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          v-if="imageRequest.category === 'PROMO'"
+          :src="promoDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+        <el-image
+          v-if="imageRequest.category === 'GAME'"
+          :src="gameDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            v-if="imageRequest.category === 'PROMO'"
+            :src="promoDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[promoDir + selectedImage.path]"
+          />
+          <el-image
+            v-if="imageRequest.category === 'GAME'"
+            :src="gameDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[gameDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
   </el-dialog>
 </template>
 
@@ -201,18 +354,33 @@ import { getPlatformsBySite } from "@/api/platform";
 import { getActivePrivilegeInfoBySiteId } from "@/api/privilege-info"
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { getSiteImage } from "@/api/site-image";
 
 const { t } = useI18n();
 const store = useStore();
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 const site = ref(null);
 const formRef = ref(null);
+const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
+const gameDir = process.env.VUE_APP_IMAGE + '/game/'
 const selectedId = ref(null);
 const platforms = reactive({
   list: []
 })
 const privileges = reactive({
   list: []
+})
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
 })
 
 const uiControl = reactive({
@@ -222,8 +390,19 @@ const uiControl = reactive({
   type: [
     { key: 0, displayName: 'gameCode', value: 'GAME' },
     { key: 1, displayName: 'promo', value: 'PROMO' }
-  ]
+  ],
+  imageSelectionTitle: '',
+  imageSelectionType: '',
+  imageSelectionVisible: false
 });
+
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'PROMO'
+})
 
 const request = reactive({
   size: 20,
@@ -245,13 +424,16 @@ const form = reactive({
   siteId: null,
   type: null,
   code: null,
-  platform: null
+  platform: null,
+  icon: null
 });
 
 const formRules = reactive({
   siteId: [required(t('message.validateSiteRequired'))],
   type: [required(t('message.validateTypeRequired'))],
   code: [required(t('message.validateCodeRequired'))],
+  platform: [required(t('message.validatePlatformRequired'))],
+  icon: [required(t('message.validateIconRequired'))]
 });
 
 async function loadRedirect() {
@@ -287,6 +469,8 @@ async function loadPrivileges() {
 function showDialog(type) {
   if (formRef.value) {
     formRef.value.resetFields();
+    form.platform = null;
+    form.icon = null;
   }
   if (type === "CREATE") {
     form.siteId = request.siteId;
@@ -299,7 +483,6 @@ function showDialog(type) {
 }
 
 function showEdit(redirect) {
-  debugger;
   showDialog('EDIT');
   nextTick(() => {
     for (const key in redirect) {
@@ -339,6 +522,54 @@ function edit() {
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage() {
+  switch (form.type) {
+    case 'PROMO':
+      imageRequest.category = 'PROMO';
+      break;
+    case 'GAME':
+      imageRequest.category = 'GAME';
+      break;
+  }
+  imageRequest.current = 1
+  await loadSiteImage()
+  uiControl.imageSelectionTitle = t('fields.icon')
+  uiControl.imageSelectionType = form.type
+  uiControl.imageSelectionVisible = true
+}
+
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  form.icon = selectedImage.path
+  uiControl.imageSelectionVisible = false
 }
 
 async function removeRedirect(id) {
