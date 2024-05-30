@@ -10,6 +10,14 @@
           </div>
       </div> -->
 
+      <div style="text-align: right;">
+        <img
+          class="header-close-btn"
+          src="../../assets/images/index/modal-close-btn.svg"
+          @click="closeDialog()"
+        />
+      </div>
+
       <div class="page-dialog-main">
         <!-- <LangToggle v-if="showLangToggle"/> -->
         <div class="page-dialog-main-container">
@@ -21,12 +29,12 @@
               <!-- <span>{{ headerInfo.subTitle }}</span> -->
             </p>
             <p>
-              <img
+              <!-- <img
                 class="header-close-btn"
                 src="../../assets/images/index/modal-close-btn.svg"
                 @click="closeDialog()"
                 style="padding-right:10px"
-              />
+              /> -->
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
@@ -42,7 +50,7 @@
               </div>
             </div> -->
           </div>
-          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'height:600px'">
+          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
             <template v-if="!isMinimalMode">
               <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
                 <template v-for="item in formattedPagesInfo" :key="item.page">
@@ -603,7 +611,7 @@ onMounted(() => {
   cursor: pointer;
 
   &:hover {
-    filter: invert(1);
+    filter: brightness(0.8);
   }
 }
 
@@ -673,7 +681,7 @@ onMounted(() => {
 
 .q-tab-panels {
   background: var(--main-bg-color);
-  // height: 100%;
+  height: 100%;
 }
 :deep(.modal-body-buttons) {
   background-color: var(--main-bg-color);
