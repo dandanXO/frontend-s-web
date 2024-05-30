@@ -88,7 +88,7 @@
               </q-tabs>
             </template>
 
-            <q-tab-panels v-model="page" animated class="">
+            <q-tab-panels v-model="page" animated  :style="isMinimalMode ? '' : 'min-height:600px;'">
               <template v-for="item in formattedPagesInfo" :key="item.page">
                 <q-tab-panel :name="item.page">
                   <component :is="item.component" @closeModal="closeDialog"></component>
@@ -665,7 +665,6 @@ onMounted(() => {
     // padding-bottom: 10px;
   }
   .q-tab-panels {
-    height: 600px;
     overflow-y: auto;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
