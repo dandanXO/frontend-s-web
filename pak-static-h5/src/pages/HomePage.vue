@@ -296,7 +296,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="1.5"
-              :spaceBetween="0"
+              :spaceBetween="15"
               :scrollbar="{
                 hide: true
               }"
@@ -1680,15 +1680,15 @@ const cancelUpdate = () => {
 const truncateText = (text, maxLength) => {
   if (text === "JiliGames") {
     text = "JILI";
-  } else if (text.startsWith("WC")) {
-    return text.substring(2);
+    // } else if (text.startsWith("WC")) {
+    //   return text.substring(2);
   }
 
-  if (window.innerWidth <= 450) {
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-  } else {
-    return text;
-  }
+  // if (window.innerWidth <= 450) {
+  //   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  // } else {
+  //   return text;
+  // }
 };
 
 const closeDepositDialog = () => {
@@ -2554,6 +2554,9 @@ onMounted(() => {
 }
 
 .games-selection-wrapper {
+  &#live {
+    margin-bottom: 10px;
+  }
   .hot-games-pattern-top {
     background-size: cover;
     background-repeat: no-repeat;
@@ -2581,7 +2584,7 @@ onMounted(() => {
   .title-game {
     margin-left: -8px;
     margin-right: -8px;
-    padding: 0px 12px 8px;
+    padding: 0px 12px 0px;
     display: flex;
     gap: 8px;
     align-items: center;

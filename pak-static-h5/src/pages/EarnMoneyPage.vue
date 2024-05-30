@@ -157,6 +157,44 @@
           <span>159,930.00</span>
         </div>
       </div>
+
+      <div class="earn-money-friendcount">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <tr>
+            <td style="color: #8c968f; font-size: 120%">Player</td>
+            <td style="color: #8c968f; font-size: 120%">Money</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="player-details">
+                <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                23****2313
+              </div>
+            </td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="player-details">
+                <img src="../assets/images/earn-money/profile-img-2.png" width="30" />
+                23****2313
+              </div>
+            </td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>
+              <div class="player-details">
+                <img src="../assets/images/earn-money/profile-img-3.png" width="30" />
+                23****2313
+              </div>
+            </td>
+            <td>Rs 120.0</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -383,6 +421,13 @@ const copyHrefLink = () => {
         tr {
           &:nth-child(even) {
             background: #ffffff0d;
+          }
+
+          .player-details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
           }
 
           td:last-child {

@@ -131,7 +131,7 @@
               </template>
             </InputField> -->
 
-            <InputField :label="'NRIC'">
+            <!-- <InputField :label="'NRIC'">
               <template #input>
                 <q-input
                   type="tel"
@@ -154,7 +154,7 @@
                   </template>
                 </q-input>
               </template>
-            </InputField>
+            </InputField> -->
 
             <InputField :label="'Invitation Code (Optional)'">
               <template #input>
@@ -245,7 +245,7 @@ export default defineComponent({
       password: "",
       confirmPwd: "",
       telephone: "",
-      nric: "",
+      // nric: "",
       // email: "",
       captchaCode: "0000",
       regHost: location.hostname,
@@ -312,7 +312,7 @@ export default defineComponent({
     const loginNameRef = ref();
     const pwdRef = ref();
     const confirmPwdRef = ref();
-    const nricRef = ref();
+    // const nricRef = ref();
     // const telRef = ref();
     const emailRef = ref();
     const verificationRef = ref();
@@ -355,7 +355,7 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      nricRef.value.validate();
+      // nricRef.value.validate();
 
       $q.loading.show({
         message: "Registering in progress"
@@ -366,7 +366,7 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        nricRef.value.hasError ||
+        // nricRef.value.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
@@ -657,7 +657,7 @@ export default defineComponent({
       loginNameRef,
       pwdRef,
       confirmPwdRef,
-      nricRef,
+      // nricRef,
       // telRef,
       emailRef,
       verificationRef,
