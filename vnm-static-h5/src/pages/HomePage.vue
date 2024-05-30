@@ -2666,8 +2666,10 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-bottom: 35px;
-    padding-top: 15px;
+    // padding-bottom: 35px;
+    // padding-top: 15px;
+    padding-bottom: 20px;
+    padding-top: 10px;
     position: relative;
 
     img {

@@ -229,9 +229,9 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-bottom: 10px;
     position: relative;
-    margin-top: -20px;
+    margin-top: -40px;
+    margin-bottom: -30px;
 
     .euro-countdown-fly-01 {
       position: absolute;
