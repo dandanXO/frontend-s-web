@@ -5,7 +5,8 @@
         <div class="topActions">
           <q-icon name="chevron_left" size="30px" @click="onExitClick" />
           <div class="game-logo-img">
-            <img src="../../assets/logo.png" />
+            <img src="../../assets/images/auth/auth-logo-text-only.png" />
+            <!-- <img src="../../assets/logo.png" /> -->
             <!-- <div
               class="game-logo"
               :style="{
@@ -840,16 +841,16 @@ defineExpose({
   }
 
   .btn-cancel {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-    border: 1px solid #5D8956;
+    background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+    border: 1px solid #5d8956;
     font-weight: 700;
     color: #ffffff;
     border-radius: 8px;
   }
 
   .btn-confirm {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
-    border: 1px solid #5D8956;
+    background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+    border: 1px solid #5d8956;
     font-weight: 700;
     color: #fff;
     border-radius: 8px;

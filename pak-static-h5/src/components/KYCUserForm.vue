@@ -22,7 +22,7 @@
       rounded
       flat
       no-caps
-      class="style-btn-confirm"
+      class="btn-primary btn-primary__full"
       :disable="!(isValidName() === true)"
       @click="submitKYCNewUser"
     >

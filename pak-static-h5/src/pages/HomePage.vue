@@ -126,6 +126,8 @@
       </swiper-slide>
     </swiper>
 
+    <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
+
     <template v-for="category in categoriesList" :key="category.title">
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
@@ -265,7 +267,7 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
                             }
                           })()
                         }"
@@ -1004,7 +1006,7 @@
     </div>
   </q-dialog> -->
 
-  <q-dialog width="100%" v-model="guestKYCDialog" presistent>
+  <!-- <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <KYCGuestForm @closeGuestKYCDialog="closeGuestKYCDialog" />
@@ -1016,7 +1018,7 @@
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
-  </q-dialog>
+  </q-dialog> -->
 </template>
 
 <script setup>

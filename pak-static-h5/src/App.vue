@@ -137,7 +137,8 @@ export default defineComponent({
       if (omitSites.includes(window.location.host)) {
         affiliateCode = "E4B265";
       } else {
-        affiliateCode = "3B1BFB";
+        // affiliateCode = "3B1BFB";
+        affiliateCode = "";
       }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
@@ -147,7 +148,7 @@ export default defineComponent({
           sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
           sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
           affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
+          // initAdjustEventTrack();
           // alert(affAppToken.value);
         }
       });
@@ -179,7 +180,7 @@ export default defineComponent({
                         sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
                         sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
                         affAppToken.value = res.data.adjust_app_token;
-                        initAdjustEventTrack();
+                        // initAdjustEventTrack();
                         // alert(affAppToken.value);
                       }
                     });

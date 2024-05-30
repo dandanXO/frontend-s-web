@@ -27,13 +27,13 @@
                 <q-input
                   type="tel"
                   pattern="\d*"
-                  maxlength="10"
+                  maxlength="11"
                   hide-bottom-space
                   ref="loginNameRef"
                   v-model="loginForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
                   ]"
                   label-color="brand"
                   autocomplete="username"

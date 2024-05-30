@@ -75,6 +75,87 @@
             Complete deposit after registration
           </div>
         </div>
+
+        <div class="invite-share-link">
+          <div class="link-href">https://b9.game/refer/JnAlZ6</div>
+          <div class="link-copy" @click="copyHrefLink">Copy Link</div>
+        </div>
+
+        <div class="invite-share-social">
+          <div class="social-item"><img src="../assets/images/earn-money/social-whatsapp.png" /></div>
+          <div class="social-item"><img src="../assets/images/earn-money/social-instagram.png" /></div>
+          <div class="social-item"><img src="../assets/images/earn-money/social-tiktok.png" /></div>
+          <div class="social-item"><img src="../assets/images/earn-money/social-more.png" /></div>
+        </div>
+      </div>
+
+      <div class="earn-money-friendcount">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <tr>
+            <td style="color: #8c968f; font-size: 120%">Friend Count</td>
+            <td style="color: #8c968f; font-size: 120%">Invite Bonus</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>2~4</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>5~10</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>11~30</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>31~50</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>51~500</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>501~999</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>1000~3000</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>3001~9999</td>
+            <td>Rs 120.0</td>
+          </tr>
+
+          <tr>
+            <td>10000~999999</td>
+            <td>Rs 120.0</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="earn-money-sent-ytd">
+        <div class="sent-ytd-icon">
+          <img src="../assets/images/earn-money/sent-ytd-icon.png" />
+        </div>
+
+        <div class="sent-ytd-amount">
+          Total amount sent as of yesterday
+          <span>159,930.00</span>
+        </div>
       </div>
     </div>
   </div>
@@ -83,6 +164,31 @@
 <script setup>
 import { ref } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
+import { useQuasar } from "quasar";
+
+const hrefLink = ref("https://b9.game/refer/JnAlZ6");
+const $q = useQuasar();
+
+const copyHrefLink = () => {
+  navigator.clipboard
+    .writeText(hrefLink.value)
+    .then(() => {
+      $q.notify({
+        message: "Link copied to clipboard",
+        color: "positive",
+        position: "top",
+        timeout: 2000
+      });
+    })
+    .catch(() => {
+      $q.notify({
+        message: "Failed to copy link",
+        color: "negative",
+        position: "top",
+        timeout: 2000
+      });
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -224,6 +330,101 @@ import ProfileSummary from "components/ProfileSummary.vue";
             color: #ffd600;
             font-weight: bold;
           }
+        }
+      }
+
+      .invite-share-link {
+        margin-top: 12px;
+        background-color: #0f0b0b;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+
+        .link-href {
+          padding: 16px;
+        }
+        .link-copy {
+          color: #0f0b0b;
+          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 90px;
+          font-weight: bold;
+          border-radius: 12px;
+          letter-spacing: -1px;
+          padding: 4px;
+        }
+      }
+
+      .invite-share-social {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 12px;
+        margin-top: 16px;
+        // display: none !important;
+        .social-item {
+          img {
+            display: block;
+            width: 100%;
+            max-width: 50px;
+            margin: auto;
+          }
+        }
+      }
+    }
+
+    .earn-money-friendcount {
+      margin-top: 16px;
+      width: calc(100% + 40px);
+      margin-left: -20px;
+      margin-right: -20px;
+      table {
+        tr {
+          &:nth-child(even) {
+            background: #ffffff0d;
+          }
+
+          td:last-child {
+            color: #70bc62;
+          }
+        }
+      }
+    }
+
+    .earn-money-sent-ytd {
+      margin-top: 16px;
+      background: #ffffff0d;
+      padding: 8px 16px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 16px;
+
+      .sent-ytd-icon {
+        img {
+          display: block;
+          max-width: 80px;
+          width: 100%;
+        }
+      }
+
+      .sent-ytd-amount {
+        color: #8c968f;
+        font-size: 14px;
+        span {
+          display: block;
+          width: 100%;
+          color: #ffd600;
+          font-size: 140%;
+          font-weight: bold;
+          background: #ffffff05;
+          text-align: center;
+          padding: 2px;
+          margin-top: 8px;
+          border: 1px solid #ffffff0d;
+          border-radius: 8px;
         }
       }
     }

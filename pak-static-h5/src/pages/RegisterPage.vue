@@ -26,13 +26,13 @@
                 <q-input
                   type="tel"
                   pattern="\d*"
-                  maxlength="10"
+                  maxlength="11"
                   ref="loginNameRef"
                   hide-bottom-space
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
                   ]"
                   color="green"
                   outlined
@@ -367,11 +367,6 @@ export default defineComponent({
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
         nricRef.value.hasError ||
-        // confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
-        // phoneVerificationRef.value.hasError ||
-        // emailRef.value.hasError ||
-        // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
         $q.loading.hide();
@@ -418,19 +413,19 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
 
+          console.log(regForm.loginName, "--telephone");
+
           api
             .post("/member/indRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret;
-              // console.log("RET");
-              // console.log(ret);
               if (res.code === 0) {
-                // $q.notify({
-                //   color: "positive",
-                //   position: "top",
-                //   message: "Registered successfully",
-                //   icon: "check_circle_outline"
-                // });
+                $q.notify({
+                  color: "positive",
+                  position: "top",
+                  message: "Registered successfully",
+                  icon: "check_circle_outline"
+                });
 
                 //ADJUST TRACKEVENT.
                 // debugger;
@@ -447,19 +442,12 @@ export default defineComponent({
                 //   });
                 // }
 
-                // store.autoLogin(res.data);
-                // router.go("/verification");
-
-                router.push("/verification");
-                store.autoLogin(res.data).then(() => {
-                  router.go("/verification");
-                });
+                store.autoLogin(res.data);
 
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  // router.go(jumpUrl);
-                  router.go("/verification");
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -478,6 +466,70 @@ export default defineComponent({
               $q.loading.hide();
               isLoading.value = false;
             });
+
+          // register to check phone exist and sms OTP -- start
+          // api
+          //   .get(`/member/checkPhoneRegisterStatus?siteId=11&phone=${regForm.loginName}`)
+          //   .then((ret) => {
+          //     const res = ret;
+
+          //     if (res.code === 0 && !res.data) {
+          //       $q.notify({
+          //         color: "positive",
+          //         position: "top",
+          //         message: "Please proceed to OTP",
+          //         icon: "check_circle_outline"
+          //       });
+          //       console.log(res, "-ressss");
+          //       sessionStorage.setItem("REG_FORM", qs.stringify(regForm));
+          //       sessionStorage.removeItem("REFERRAL_CODE");
+
+          //       api
+          //         .post(
+          //           `/otp/sendSms`,
+          //           qs.stringify({
+          //             telephone: regForm.loginName,
+          //             captchaCode: '0000',
+          //             codeId: '0000'
+          //           })
+          //         )
+          //         .then((res) => {
+          //           getCode();
+          //           let message = res.message || "Phone verification code sent successfully",
+          //             color = "positive";
+
+          //           if (res.code === 0) {
+          //             console.log(res.data.codeId);
+          //           }
+          //           if (message) {
+          //             $q.notify({ message, color });
+          //           }
+
+          //           console.log("onCaptchaSubmit", res);
+          //         })
+          //         .catch(() => {
+          //           console.log("Err");
+          //           getInnerCode();
+          //         });
+
+          //       router.push("/verification");
+          //     } else {
+          //       $q.notify({
+          //         color: "negative",
+          //         position: "top",
+          //         message: res.message,
+          //         icon: "report_problem"
+          //       });
+          //     }
+          //     $q.loading.hide();
+          //     isLoading.value = false;
+          //   })
+          //   .catch((error) => {
+          //     $q.loading.hide();
+          //     isLoading.value = false;
+          //   });
+          // register to check phone exist and sms OTP -- end
+
           getCode();
         })();
       }
@@ -583,7 +635,7 @@ export default defineComponent({
       const phoneRegex = /^\d{10,20}$/;
       const isValid = phoneRegex.test(phone);
 
-      return isValid ? true : "Phone Number must be 10 digits or more";
+      return isValid ? true : "Phone Number must be 11 digits or more";
     };
 
     const regLoginTab = ref("register");

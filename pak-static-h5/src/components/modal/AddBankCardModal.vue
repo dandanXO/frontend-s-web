@@ -5,6 +5,8 @@
         <q-icon name="close"></q-icon>
       </q-btn>
 
+      <!-- <pre>{{ bankCardField }}</pre> -->
+
       <q-card>
         <DialogHeader :title="dialogDisplays.title"></DialogHeader>
 

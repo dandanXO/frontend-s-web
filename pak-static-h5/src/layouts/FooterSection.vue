@@ -15,13 +15,13 @@
         </div>
         <span class="footer-label">Promo</span>
       </q-route-tab>
-      <q-route-tab class="center-menu" :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
+      <q-route-tab to="/earn-money" name="earn-money" class="center-menu" :ripple="false">
         <div class="footer-big-img">
           <img src="../assets/images/index/menu/icon-earnmoney.png" />
         </div>
-        <span class="footer-label" style="padding-top: 0">Deposit</span>
+        <span class="footer-label" style="padding-top: 0">Earn Money</span>
       </q-route-tab>
-      <q-route-tab to="/earn-money" name="earn-money" :ripple="false">
+      <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-wallet.png" />
           <img class="hover" src="../assets/images/index/menu/icon-wallet-hover.png" />
