@@ -24,7 +24,7 @@
                             <td>18</td>
                         </tr>
                         <tr>
-                            <td>VIP1</td>
+                            <td>VIP0</td>
                             <td>注册日两天内晋级≥VIP2</td>
                             <td>58</td>
                         </tr>
