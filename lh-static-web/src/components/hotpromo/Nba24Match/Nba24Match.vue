@@ -8,7 +8,11 @@
             <div class="nba24-match-game-content-team">
               <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
               <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <div v-if="match.teamChosen!=null && match.teamChosen == match.awayTeam" class="nba24-match-game-content-btn">
+                已投票
+              </div>
               <div
+              v-else-if="match.teamChosen==null"
                 class="nba24-match-game-content-btn"
                 @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
               >
@@ -19,7 +23,12 @@
           <div class="nba24-match-game-content-center">
             <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
             <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
-            <div class="nba24-match-game-content-btn" @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })">
+            <div v-if="match.teamChosen!=null && match.teamChosen == 'DRAW' " class="nba24-match-game-content-btn">
+              已投平局
+            </div>
+            <div 
+            v-else-if="match.teamChosen==null"
+            class="nba24-match-game-content-btn" @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })">
               平局
             </div>
           </div>
@@ -27,7 +36,11 @@
             <div class="nba24-match-game-content-team">
               <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
               <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+              <div v-if="match.teamChosen!=null && match.teamChosen == match.homeTeam" class="nba24-match-game-content-btn">
+                已投票
+              </div>
               <div
+                v-esle-if="match.teamChosen==null"
                 class="nba24-match-game-content-btn"
                 @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
               >
