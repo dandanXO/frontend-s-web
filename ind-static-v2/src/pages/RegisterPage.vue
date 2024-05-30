@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -43,11 +43,7 @@
                   v-model="regForm.password"
                   lazy-rules
                   :type="isPwd ? 'password' : 'text'"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-                    () => isAlphanumeric(regForm.password, 'Password')
-                  ]"
+                  :rules="[(val) => (val.length >= 6) || 'The characters of password must be above 6']"
                   color="white"
                   outlined
                   label-color="brand"
@@ -608,7 +604,7 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;
