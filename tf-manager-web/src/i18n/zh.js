@@ -2271,7 +2271,7 @@ export default {
     'Refer Friend Manager': '邀请好友管理',
     'Sport Match': '中超角逐',
     'Nba Match': 'NBA季后赛',
-    Redirect: '跳转页面管理',
+    Redirect: '浮窗管理',
     Permission: '权限',
     Menu: '菜单',
     Roles: '角色',
