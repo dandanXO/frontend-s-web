@@ -203,7 +203,8 @@ body.body--dark .q-footer {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    aspect-ratio: 22 / 9;
+    border-radius: 12px;
+    aspect-ratio: 22 / 7;
   }
   .q-carousel__navigation--bottom {
     bottom: -5px;

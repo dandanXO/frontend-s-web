@@ -6,6 +6,7 @@
       </q-btn>
 
       <!-- <pre>{{ bankCardField }}</pre> -->
+      <!-- <pre>{{currBankList}}-currBankList</pre> -->
 
       <q-card>
         <DialogHeader :title="dialogDisplays.title"></DialogHeader>
@@ -180,9 +181,9 @@ const onAddCardClick = () => {
             if (res.code === 0) {
               res.data.forEach((e) => {
                 const bankType = e.bankType;
-                if (bankType === "BANK") bankList.push(e);
+                if (bankType === "EWALLET") bankList.push(e);
                 else if (bankType === "CRYPTO") cryptoList.push(e);
-                else if (bankType === "EWALLET") ewalletList.push(e);
+                else if (bankType === "BANK") ewalletList.push(e);
               });
               selectBankType();
               bankCardField.bankId = currBankList.value[0].id;

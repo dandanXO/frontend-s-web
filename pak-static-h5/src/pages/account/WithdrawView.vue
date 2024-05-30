@@ -326,8 +326,8 @@ const refreshBalance = () => {
 };
 
 const isLoadingWithdrawalMethod = ref(false);
-const withdrawalDialogTab = ref("BANK");
-const withdrawalMethods = reactive({ BANK: {}, UPI: {} });
+const withdrawalDialogTab = ref("EASYPAISA");
+const withdrawalMethods = reactive({ BANK: {}, UPI: {}, EASYPAISA: {} });
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;

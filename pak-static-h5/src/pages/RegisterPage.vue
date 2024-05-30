@@ -155,25 +155,26 @@
                 </q-input>
               </template>
             </InputField> -->
-
-            <InputField :label="'Invitation Code (Optional)'">
-              <template #input>
-                <q-input
-                  v-if="!hasAffiliate"
-                  ref="affiliateCodeRef"
-                  hide-bottom-space
-                  v-model="regForm.referrer"
-                  label-color="brand"
-                  outlined
-                  color="green"
-                  placeholder="Enter Invitation Code (Optional)"
-                />
-              </template>
-            </InputField>
+            <div style="visibility: hidden; position: absolute">
+              <InputField :label="'Invitation Code (Optional)'">
+                <template #input>
+                  <q-input
+                    v-if="!hasAffiliate"
+                    ref="affiliateCodeRef"
+                    hide-bottom-space
+                    v-model="regForm.referrer"
+                    label-color="brand"
+                    outlined
+                    color="green"
+                    placeholder="Enter Invitation Code (Optional)"
+                  />
+                </template>
+              </InputField>
+            </div>
           </template>
         </InputRowGrid>
 
-        <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
+        <div class="mui-row q-mt-sm" :class="isAgreeReg ? 'checked' : ''">
           <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
             I have Agree To The
             <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
@@ -412,8 +413,6 @@ export default defineComponent({
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";
           }
-
-          console.log(regForm.loginName, "--telephone");
 
           api
             .post("/member/indRegister", qs.stringify(regForm))
