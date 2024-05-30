@@ -1,5 +1,5 @@
 <template>
-  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent full-height>
+  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
     <q-card style="max-width: none; background: transparent; box-shadow: none">
       <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <div class="left-group">
@@ -42,7 +42,7 @@
               </div>
             </div> -->
           </div>
-          <div class="page-dialog-tabs">
+          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'height:600px'">
             <template v-if="!isMinimalMode">
               <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
                 <template v-for="item in formattedPagesInfo" :key="item.page">
@@ -649,7 +649,7 @@ onMounted(() => {
   }
 }
 .page-dialog-tabs {
-  height: 600px;
+  // height: 600px;
   // min-height: calc(100vh - 240px);
   background: var(--main-bg-color);
 
@@ -673,7 +673,7 @@ onMounted(() => {
 
 .q-tab-panels {
   background: var(--main-bg-color);
-  height: 100%;
+  // height: 100%;
 }
 :deep(.modal-body-buttons) {
   background-color: var(--main-bg-color);

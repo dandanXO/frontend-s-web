@@ -169,7 +169,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   row-gap: 24px;
-  margin-top: 24px;
 
   :deep(.q-field--filled.q-field--dark .q-field__control),
   :deep(.q-field--filled.q-field--dark .q-field__control:before) {
