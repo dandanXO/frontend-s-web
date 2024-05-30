@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -604,7 +604,7 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;
