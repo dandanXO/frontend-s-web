@@ -1732,6 +1732,8 @@ export default {
     allMembers: '所有会员',
     selectedVipLevels: '指定VIP等级',
     selectedAffiliates: '指定代理',
+    virtualAmount: '虚拟奖金金额',
+    virtualMultiplier: '虚拟奖金倍数',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

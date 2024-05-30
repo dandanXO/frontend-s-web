@@ -216,6 +216,7 @@ async function loadOneTimeBonusSetting() {
 
 async function showCreate() {
   // formRef.value.resetFields();
+  form.id = null;
   if (bonusRuleList.value.length > 0) {
     bonusRuleList.value = [];
   }

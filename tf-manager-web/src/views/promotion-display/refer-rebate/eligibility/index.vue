@@ -101,6 +101,28 @@
         <el-input v-model="form.minTotalBet" />
       </el-form-item>
     </el-row>
+    <el-row>
+      <el-form-item :label="t('fields.virtualAmount')" prop="virtualAmount">
+        <el-input-number
+          v-model="form.virtualAmount"
+          style="width: 145px"
+          :min="0"
+          :max="9999999999"
+          :controls="false"
+          @keypress="restrictDecimalInput($event)"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.virtualMultiplier')" prop="virtualMultiplier">
+        <el-input-number
+          v-model="form.virtualMultiplier"
+          style="width: 145px"
+          :min="1"
+          :max="99999"
+          :controls="false"
+          @keypress="restrictInput($event)"
+        />
+      </el-form-item>
+    </el-row>
     <div class="dialog-footer">
       <el-button v-permission="['sys:refer-rebate:setting:update']" type="primary" @click="edit">{{ t('fields.confirm') }}</el-button>
     </div>
@@ -167,6 +189,8 @@ const form = reactive({
   oneTimeBonusStatus: false,
   depositRebateStatus: false,
   betRebateStatus: false,
+  virtualAmount: 0,
+  virtualMultiplier: 1,
 });
 
 const validateRules = (rule, value, callback) => {
@@ -294,6 +318,36 @@ function constructParam() {
     json.refereeEligibleParam = uiControl.refereeParamPlaceHolder
   }
   return JSON.stringify(json);
+}
+
+function restrictInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault()
+  }
+}
+
+function restrictDecimalInput(event) {
+  var charCode = event.which ? event.which : event.keyCode
+  if (
+    (charCode < 48 || charCode > 57) &&
+    charCode !== 46 &&
+    form.rebateRate.toString().indexOf('.') > -1
+  ) {
+    event.preventDefault()
+  }
+
+  if (
+    form.rebateRate !== null &&
+    form.rebateRate.toString().indexOf('.') > -1
+  ) {
+    if (form.rebateRate.split('.')[1].length > 1) {
+      event.preventDefault()
+    }
+    uiControl.bonusAmountRatioMax = 16
+  } else {
+    uiControl.bonusAmountRatioMax = 15
+  }
 }
 
 onMounted(async() => {

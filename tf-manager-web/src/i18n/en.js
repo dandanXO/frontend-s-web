@@ -1731,6 +1731,8 @@ export default {
     allMembers: 'All Members',
     selectedVipLevels: 'Selected VIP Levels',
     selectedAffiliates: 'Selected Affiliates',
+    virtualAmount: 'Virtual Amount',
+    virtualMultiplier: 'Virtual Multiplier',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
