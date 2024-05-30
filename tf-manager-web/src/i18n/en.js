@@ -430,6 +430,22 @@ export default {
       'Member and summoner same register detail',
     MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
   },
+  memberReferStatus: {
+    PENDING: 'PENDING',
+    SUCCESS: 'SUCCESS',
+    FAILED: 'FAILED',
+  },
+  memberReferFailReason: {
+    PRIVI_IS_CLOSED: 'Privilege is closed',
+    PRIVI_HAS_ENDED: 'Privilge has ended',
+    VIP_LEVEL_IS_NOT_ALLOWED: 'VIP level is not allowed',
+    AFFILIATE_IS_NOT_ALLOWED: 'Affiliate is not allowed',
+  },
+  rewardType: {
+    BET: "BET",
+    DEPOSIT: "DEPOSIT",
+    ONE_TIME: "ONE TIME",
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1704,6 +1720,8 @@ export default {
     affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
     affiliateBetRebateDetails: 'Affiliate Bet Rebate Details',
     adjustRebateAmount: 'Adjust Rebate Amount',
+    finalAmount: 'Final Amount',
+    rewardType: 'Reward Type',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2385,6 +2403,9 @@ export default {
     'Member Summon Event': 'Member Summon Event',
     'Member Summon List': 'Member Summon List',
     'Affiliate Bet Rebate Record': 'Affiliate Bet Rebate Record',
+    'Member Refer Event': 'Member Refer Event',
+    'Member Refer Record': 'Member Refer Record',
+    'Member Refer Reward List': 'Member Refer Reward List',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

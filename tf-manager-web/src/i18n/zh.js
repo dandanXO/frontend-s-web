@@ -434,6 +434,22 @@ export default {
     MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL: '唤醒人和被唤醒人相同注册信息',
     MEMBER_ALREADY_SUMMONED: '会员已被唤醒',
   },
+  memberReferStatus: {
+    PENDING: '核实中',
+    SUCCESS: '合格',
+    FAILED: '失败',
+  },
+  memberReferFailReason: {
+    PRIVI_IS_CLOSED: '优惠已关闭',
+    PRIVI_HAS_ENDED: '优惠已结束',
+    VIP_LEVEL_IS_NOT_ALLOWED: 'VIP等级不允许',
+    AFFILIATE_IS_NOT_ALLOWED: '代理不允许',
+  },
+  rewardType: {
+    BET: "投注",
+    DEPOSIT: "存款",
+    ONE_TIME: "一次",
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1706,6 +1722,8 @@ export default {
     affiliateBetRebateRecord: '代理投注返水记录',
     affiliateBetRebateDetails: '代理投注返水详情',
     adjustRebateAmount: '调整返水金额',
+    finalAmount: '最终金额',
+    rewardType: '奖励类别',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2347,6 +2365,9 @@ export default {
     'Member Summon Event': '精英召唤活动',
     'Member Summon List': '召唤列表',
     'Affiliate Bet Rebate Record': '代理投注返水记录',
+    'Member Refer Event': '会员邀请活动',
+    'Member Refer Record': '会员邀请记录',
+    'Member Refer Reward List': '会员邀请奖励记录',
   },
   google: {
     google_auth_menu: '谷歌验证',
