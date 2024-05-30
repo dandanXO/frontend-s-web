@@ -72,13 +72,19 @@
             <div class="text">공지</div>
           </div>
         </div>
-        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
-          <div v-if="store.announcementList">
+        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20" v-if="store.announcementList && store.announcementList.length > 0">
+          <div>
             <span style="color: #fff;" v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
             </span>
           </div>
+          
         </marquee-text>
+        <div v-else style="width:100%;text-align:center;">
+          <span style="color: #fff;">
+            아직 콘텐츠가 없습니다
+          </span>
+        </div>
       </div>
     </router-link>
 
@@ -715,19 +721,24 @@
       <div class="title-text">공지사항</div>
       <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
     </div>
-    <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
-      <div class="news-item-left">
-        <div class="news-item-title">
-          [
-          {{ item.title }}
-          ] ※
-          {{ item.content }}
-          ※
+    <template v-if="newsList.length > 0">
+      <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title" :title="item.title">
+            [
+            {{ item.title }}
+            ] ※
+            {{ item.content }}
+            ※
+          </div>
+        </div>
+        <div class="news-item-right">
+          <div class="news-item-date">{{ item.createTime }}</div>
         </div>
       </div>
-      <div class="news-item-right">
-        <div class="news-item-date">{{ item.createTime }}</div>
-      </div>
+    </template>
+    <div v-else class="news-item-box" style="justify-content: center;">
+      아직 콘텐츠가 없습니다
     </div>
   </div>
 
@@ -2834,6 +2845,9 @@ export default defineComponent({
       transition: 0.3s all;
       padding-right: 8px;
       padding-left: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       @media (max-width: 769px) {
         overflow: hidden;
         text-overflow: ellipsis;

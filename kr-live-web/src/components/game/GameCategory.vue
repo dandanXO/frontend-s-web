@@ -87,7 +87,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
 
         .category-kr-label {
             color: #01d9ab;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             line-height: 1;
 
