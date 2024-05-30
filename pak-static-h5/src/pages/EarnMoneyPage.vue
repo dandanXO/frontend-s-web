@@ -45,14 +45,14 @@
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-03.png" /></div>
         </div>
 
-        <div class="details-item">
+        <!-- <div class="details-item">
           <div class="item-amount">
             Rs
             <span>0</span>
           </div>
           <div class="item-title">Achievement</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-04.png" /></div>
-        </div>
+        </div> -->
       </div>
 
       <div class="earn-money-invite">
@@ -200,9 +200,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useQuasar } from "quasar";
+import { api } from "boot/axios";
 
 const hrefLink = ref("https://b9.game/refer/JnAlZ6");
 const $q = useQuasar();
@@ -227,6 +228,25 @@ const copyHrefLink = () => {
       });
     });
 };
+
+const oneTimeBonusSetting = ref([]);
+
+const getOneTimeBonusSetting = () => {
+  api
+    .get("/session/refer-rebate/one-time-bonus-setting")
+    .then((response) => {
+      if (response.code === 0) {
+        oneTimeBonusSetting.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+onMounted(() => {
+  getOneTimeBonusSetting();
+});
 </script>
 
 <style scoped lang="scss">
@@ -288,13 +308,15 @@ const copyHrefLink = () => {
     }
 
     .earn-money-details-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 12px;
+      display: flex;
+      // grid-template-columns: repeat(2, 1fr);
+      // grid-gap: 12px;
+      gap: 12px;
       margin-top: 16px;
 
       .details-item {
         display: flex;
+        width: 50%;
         flex-direction: column;
         min-height: 100px;
         align-items: center;

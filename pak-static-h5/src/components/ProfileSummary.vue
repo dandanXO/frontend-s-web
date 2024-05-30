@@ -19,6 +19,16 @@
 
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
     <div class="side-menu" @click.stop>
+      <div class="side-menu-item side-menu-item__invite" @click="router.push('/earn-money')">
+        <div>
+          Invite to Earn
+          <span>share your exclusive QR code</span>
+        </div>
+        <div class="item-icon">
+          <img src="../assets/images/auth/menu-invite.png" />
+        </div>
+      </div>
+
       <div class="side-menu-item side-menu-item__checkin">
         <div>
           CHECK
@@ -39,23 +49,23 @@
         </div>
       </div>
 
-      <div class="side-menu-item">
+      <div class="side-menu-item" @click="activateSlide('Slot')">
         <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
         Slots
       </div>
-      <div class="side-menu-item">
+      <div class="side-menu-item" @click="activateSlide('Live')">
         <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
         Live Casino
       </div>
-      <div class="side-menu-item">
+      <div class="side-menu-item" @click="activateSlide('Fish')">
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
         Fishing
       </div>
-      <div class="side-menu-item">
+      <div class="side-menu-item" @click="activateSlide('Card')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
         Poker
       </div>
-      <div class="side-menu-item">
+      <div class="side-menu-item" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
         Sport
       </div>
@@ -228,11 +238,19 @@ import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
 
+import { defineEmits } from "vue";
+
 const props = defineProps(["homeProfile"]);
-const emits = defineEmits(["closeslot"]);
+const emits = defineEmits(["closeslot", "activateSlide"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+
+const activateSlide = (item) => {
+  emits("activateSlide", item);
+  router.push("/home");
+  menuOpen.value = false;
+};
 
 const profileImg = [
   {
@@ -494,6 +512,7 @@ onMounted(() => {
         padding-left: 18px;
         font-size: 80%;
         color: #ffffff;
+        display: none !important;
         span {
           display: block;
           color: #61ff00;
@@ -510,9 +529,28 @@ onMounted(() => {
         padding-left: 18px;
         font-size: 80%;
         color: #ffffff;
+        display: none !important;
         span {
           display: block;
           color: #ff00f5;
+        }
+
+        .item-icon {
+          margin-left: auto;
+          margin-top: -8px;
+        }
+      }
+
+      &__invite {
+        background: linear-gradient(270deg, #7a1683 0%, #171719 100%);
+        padding-left: 18px;
+        font-size: 80%;
+        color: #ffffff;
+        span {
+          font-size: 9px;
+          padding-top: 4px;
+          display: block;
+          color: #ffe500;
         }
 
         .item-icon {

@@ -1,5 +1,5 @@
 <template>
-  <ProfileSummary :homeProfile="true" />
+  <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
   <q-carousel
     class="home"
     id="home"
@@ -59,11 +59,11 @@
   </q-carousel>
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
-    <!-- <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
       <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="cs-icon-wrapper"></div>
       </div>
-    </q-page-sticky> -->
+    </q-page-sticky>
 
     <PushNotification
       :pushNotificationData="pushNotificationData"
@@ -157,6 +157,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
+                    <!-- <pre>{{ item }}</pre> -->
                     <div
                       data-aos="zoom-in"
                       :data-aos-delay="100 * index"
@@ -267,7 +268,8 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                              // return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                              return `url(https://m.indwin7.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -330,7 +332,7 @@
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
                         "
                         class="burning-hot"
                       >
@@ -366,7 +368,7 @@
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCPT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
                         "
                         class="burning-hot"
                       >
@@ -1069,10 +1071,22 @@ const categoriesList = ref([
   { title: "Card", icon: "card", active: false }
 ]);
 
-const activateSlide = (clickedItem) => {
-  categoriesList.value.forEach((item) => {
-    item.active = item === clickedItem;
-  });
+// const activateSlide = (clickedItem) => {
+//   categoriesList.value.forEach((item) => {
+//     item.active = item === clickedItem;
+//   });
+// };
+
+const activateSlide = (item) => {
+  categoriesList.value.forEach((category) => (category.active = false));
+  item.active = true;
+};
+
+const handleActivateSlide = (slot) => {
+  const item = categoriesList.value.find((cat) => cat.title === slot);
+  if (item) {
+    activateSlide(item);
+  }
 };
 
 const csDragPos = ref([10, 0]);
@@ -1462,7 +1476,7 @@ function loadData() {
         banners.value = [
           {
             promoPageId: null,
-            mobileImageUrl: "home-banner-01.png",
+            mobileImageUrl: "home-banner-01.jpg",
             redirectUrl: "",
             category: "HOME"
           }
@@ -2498,7 +2512,6 @@ onMounted(() => {
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
-  filter: hue-rotate(200deg);
 }
 
 .home-divider {
@@ -2687,7 +2700,7 @@ onMounted(() => {
 .platform-game-container {
   display: grid;
   padding-top: 12px;
-  margin-bottom: 12px;
+  // margin-bottom: 12px;
   column-gap: 8px;
   row-gap: 16px;
   padding-bottom: 10px;

@@ -50,7 +50,7 @@ npx cap run android
 4(b). Build on Android Studio/ Build .apk
 npx cap open android
 
-4(c). Rename - ind-app-1.0.x
+4(c). Rename - pak-app-1.0.x
 
 ```
 

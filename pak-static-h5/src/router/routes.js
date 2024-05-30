@@ -45,7 +45,7 @@ const routes = [
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }],
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: false }
   },
   {
     path: "/agency-policy",
