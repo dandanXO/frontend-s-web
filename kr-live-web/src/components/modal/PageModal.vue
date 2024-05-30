@@ -478,7 +478,7 @@ onMounted(() => {
 }
 .page-dialog {
   .q-dialog__inner--minimized > div {
-    max-height: unset;
+    // max-height: unset;
   }
 }
 
@@ -665,7 +665,8 @@ onMounted(() => {
     // padding-bottom: 10px;
   }
   .q-tab-panels {
-    overflow-y: hidden;
+    height: 600px;
+    overflow-y: auto;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }

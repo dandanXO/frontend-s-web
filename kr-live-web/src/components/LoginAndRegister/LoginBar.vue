@@ -264,6 +264,7 @@ const iconInfo = reactive([
     background: #00000080;
     backdrop-filter: blur(10px);
     border-right: 1px solid #454F63;
+    overflow-y: auto;
   }
 
   &.active {
