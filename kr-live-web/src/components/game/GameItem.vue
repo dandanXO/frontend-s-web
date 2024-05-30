@@ -186,7 +186,7 @@ const gameType = ref(props.gameType);
         @media (max-width: 769px) {
           bottom: 7%;
           .primary-button.blue {
-            width: 85px;
+            width: 100px;
             height: 30px;
           }
         }
