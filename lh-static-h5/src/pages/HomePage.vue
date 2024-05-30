@@ -1261,7 +1261,7 @@ export default defineComponent({
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
-          if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
+          // if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
             var casualObj = {
             id: 99,
             name: "TFGaming",
@@ -1280,7 +1280,7 @@ export default defineComponent({
             subtitle: "小游戏"
           }
             casuals.value.push(casualObj);
-          }
+          // }
         })
         .catch((err) => {});
     };
