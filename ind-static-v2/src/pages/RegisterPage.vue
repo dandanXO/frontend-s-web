@@ -43,7 +43,7 @@
                   v-model="regForm.password"
                   lazy-rules
                   :type="isPwd ? 'password' : 'text'"
-                  :rules="[(val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11']"
+                  :rules="[(val) => (val.length >= 6) || 'The characters of password must be above 6']"
                   color="white"
                   outlined
                   label-color="brand"
