@@ -32,7 +32,7 @@
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length >= 10 && val.length <= 11 ) || 'The phone number must have 10 to 11 digits'
+                    (val) => (val && val.length >= 11) || 'The phone number must have 11 digits'
                   ]"
                   color="green"
                   outlined
