@@ -54,6 +54,8 @@ onMounted(() => {
       window.location.pathname = '/vi/login'
     }else if (window.location.host.indexOf('krw') > -1 || window.location.hostname.indexOf("krw-") > -1 || window.location.href.includes('krw-')) {
       window.location.pathname = '/kr/login'
+    } else if (window.location.host.indexOf('pak') > -1 || window.location.hostname.indexOf("pak-") > -1 || window.location.href.includes('pak-')) {
+      window.location.pathname = '/pak/login'
     } else {
       window.location.pathname = '/dy/login'
     }

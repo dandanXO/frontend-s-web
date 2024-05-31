@@ -69,6 +69,8 @@ const onResponse = (response) => {
         router.go("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         router.go("/vi/login")
+      } else if (siteId === "11" || siteId === 11) {
+        router.go("/pak/login")
       }
       location.reload()
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
@@ -93,6 +95,8 @@ const onResponse = (response) => {
         router.go("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         router.go("/vi/login")
+      } else if (siteId === "11" || siteId === 11) {
+        router.go("/pak/login")
       }
       location.reload()
     } else {
@@ -111,6 +115,8 @@ const onResponse = (response) => {
           router.go("/lh/login")
         } else if (siteId === "8" || siteId === 8) {
           router.go("/vi/login")
+        } else if (siteId === "11" || siteId === 11) {
+          router.go("/pak/login")
         }
         location.reload()
       }
