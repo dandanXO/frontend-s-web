@@ -608,6 +608,9 @@ onMounted(async () => {
         th {
           border: 1px solid #ffdba633;
           background: #ffdba633 !important;
+          white-space: pre-wrap;
+          font-size: 14px;
+          line-height: 18px;
         }
       }
     }
