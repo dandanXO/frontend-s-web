@@ -63,7 +63,7 @@
       </div>
       <div class="side-menu-item" @click="activateSlide('Card')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        Poker
+        Card
       </div>
       <div class="side-menu-item" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
@@ -247,8 +247,15 @@ const router = useRouter();
 const store = userStore();
 
 const activateSlide = (item) => {
-  emits("activateSlide", item);
-  router.push("/home");
+  router
+    .push(`/home#${item}`)
+    .then(() => {
+      emits("activateSlide", item);
+      menuOpen.value = false;
+    })
+    .catch((error) => {
+      console.error("Navigation error:", error);
+    });
   menuOpen.value = false;
 };
 

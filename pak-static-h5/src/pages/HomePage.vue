@@ -289,7 +289,7 @@
       <template
         v-if="(category.title === 'Live' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="live">
+        <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" />
             <!-- <span class="txt-style">Live Casino</span> -->
@@ -386,7 +386,7 @@
       <template
         v-if="(category.title === 'Slot' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="slotsgames">
+        <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" />
             <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
@@ -404,16 +404,60 @@
               class="platform-game-container"
             >
               <template v-for="(item, index) in slot" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
-                >
+                <template v-if="item.code !== 'JILI'">
+                  <swiper-slide
+                    class="platform-game-item btn-effect"
+                    @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+                  >
+                    <div
+                      data-aos="zoom-in"
+                      :data-aos-delay="100 * index"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#slotsgames"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            })()
+                          }"
+                        ></div>
+                      </div>
+
+                      <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
+                      <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                    </div>
+                  </swiper-slide>
+                </template>
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <div
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container grid-view"
+            >
+              <template v-for="(item, index) in slot" :key="index">
+                <template v-if="item.code !== 'JILI'">
                   <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#slotsgames"
+                    class="platform-game-item btn-effect"
+                    @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
                   >
                     <div class="platform-game-img">
                       <div
@@ -436,47 +480,7 @@
 
                     <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                   </div>
-                </swiper-slide>
-              </template>
-            </swiper>
-          </div>
-
-          <div class="platform-game-wrapper" v-else>
-            <div
-              :slidesPerView="3.5"
-              :spaceBetween="10"
-              :scrollbar="{
-                hide: true
-              }"
-              :modules="gameModules"
-              class="platform-game-container grid-view"
-            >
-              <template v-for="(item, index) in slot" :key="index">
-                <div
-                  class="platform-game-item btn-effect"
-                  @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
-                >
-                  <div class="platform-game-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: (() => {
-                          try {
-                            return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
-                          } catch (e) {
-                            return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
-                          }
-                        })()
-                      }"
-                    ></div>
-                  </div>
-
-                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
-                    <img src="../assets/images/index/hot.png" />
-                  </div>
-
-                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
-                </div>
+                </template>
               </template>
             </div>
           </div>
@@ -486,7 +490,7 @@
       <template
         v-if="(category.title === 'Fish' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
+        <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
             <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
@@ -710,9 +714,111 @@
       </template>
 
       <template
+        v-if="(category.title === 'Card' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="Card">
+          <div class="title-game">
+            <img src="../assets/images/index/menu-label-card.png" class="label-img" />
+          </div>
+
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <swiper
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container"
+            >
+              <template v-for="(item, index) in slot" :key="index">
+                <template v-if="item.code === 'JILI'">
+                  <swiper-slide
+                    class="platform-game-item btn-effect"
+                    @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+                  >
+                    <div
+                      data-aos="zoom-in"
+                      :data-aos-delay="100 * index"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#slotsgames"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            })()
+                          }"
+                        ></div>
+                      </div>
+
+                      <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
+                      <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                    </div>
+                  </swiper-slide>
+                </template>
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <div
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container grid-view"
+            >
+              <template v-for="(item, index) in slot" :key="index">
+                <template v-if="item.code === 'JILI'">
+                  <div
+                    class="platform-game-item btn-effect"
+                    @click="openGame(item.name, item.code, '', item.status, 'SLOT', item.id)"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            }
+                          })()
+                        }"
+                      ></div>
+                    </div>
+
+                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
+                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                  </div>
+                </template>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="sport">
+        <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-sport.png" class="label-img" />
             <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
@@ -1067,8 +1173,8 @@ const categoriesList = ref([
   { title: "Live", icon: "live", active: false },
   { title: "Fish", icon: "fish", active: false },
   { title: "Slot", icon: "slot", active: false },
-  { title: "Sport", icon: "sport", active: false },
-  { title: "Card", icon: "card", active: false }
+  { title: "Card", icon: "card", active: false },
+  { title: "Sport", icon: "sport", active: false }
 ]);
 
 // const activateSlide = (clickedItem) => {
@@ -1086,6 +1192,15 @@ const handleActivateSlide = (slot) => {
   const item = categoriesList.value.find((cat) => cat.title === slot);
   if (item) {
     activateSlide(item);
+  }
+};
+
+const checkHash = () => {
+  const hash = route.hash.replace("#", "");
+  if (hash) {
+    handleActivateSlide(hash);
+  } else {
+    handleActivateSlide("Lobby");
   }
 };
 
@@ -1782,6 +1897,7 @@ const loadCustomerAddress = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  checkHash();
 });
 
 onMounted(() => {
@@ -1792,6 +1908,7 @@ onMounted(() => {
   loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
+
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
@@ -1799,6 +1916,15 @@ onMounted(() => {
     initOneSignal();
   }
 });
+
+watch(
+  () => route.hash,
+  (newHash) => {
+    if (newHash) {
+      checkHash();
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">
