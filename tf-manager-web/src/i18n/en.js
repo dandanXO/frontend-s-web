@@ -1234,6 +1234,7 @@ export default {
     regTime: 'Register Time',
     redPacketMinDayDeposit: 'Min Day Deposit Amount for Red Packet Rain',
     redPacketMinTotalDeposit: 'Min Total Deposit Amount for Red Packet Rain',
+    redPacketMinTotalDepositDays: 'Days for Total Deposit Calculation',
     redPacketMinDayBetAmount: 'Min Day Bet Amount for Red Packet Rain',
     rule: 'Rule',
     maxRebate: 'Max Rebate',

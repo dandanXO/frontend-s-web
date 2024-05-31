@@ -349,7 +349,7 @@
             @keypress="restrictInput($event)"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.redPacketMinTotalDeposit')" prop="redPacketMinTotalDeposit" style="width: 600px;">
+        <el-form-item :label="t('fields.redPacketMinTotalDeposit')" prop="redPacketMinTotalDeposit" style="width: 350px;">
           $
           <el-input-number
             v-model="form.redPacketMinTotalDeposit"
@@ -357,6 +357,30 @@
             :controls="false"
             @keypress="restrictInput($event)"
           />
+        </el-form-item>
+        <el-form-item :label="t('fields.redPacketMinTotalDepositDays')" prop="redPacketMinTotalDepositDays" style="width: 200px;">
+          <el-input-number
+            v-if="form.redPacketMinTotalDepositDays > -1"
+            v-model="form.redPacketMinTotalDepositDays"
+            style="width: 135px"
+            :controls="false"
+            @keypress="restrictInput($event)"
+          />
+          <el-tag
+            v-else
+          >
+            {{ t('fields.noLimit') }}
+          </el-tag>
+          <el-button v-if="form.redPacketMinTotalDepositDays >= 0" type="warning" class="button-new-tag ml-1 el-button--success" @click="form.redPacketMinTotalDepositDays = -1"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.noLimit') }}
+          </el-button>
+          <el-button v-else type="success" class="button-new-tag ml-1 el-button--success" @click="form.redPacketMinTotalDepositDays = 0"
+                     style="display:block;margin-top:4px;"
+          >
+            {{ t('fields.addLimit') }}
+          </el-button>
         </el-form-item>
         <el-form-item :label="t('fields.lastDigitMinDayDeposit')" prop="lastDigitMinDayDeposit" style="width: 600px;">
           $
@@ -727,6 +751,7 @@ const form = reactive({
   lastDigitMinDayDeposit: 0,
   redPacketMinDayDeposit: 0,
   redPacketMinTotalDeposit: 0,
+  redPacketMinTotalDepositDays: -1,
   lastDigitRules: [],
   eligibleWays: [],
   status: null,
