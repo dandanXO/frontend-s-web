@@ -31,7 +31,7 @@
       size="mini"
       type="primary"
       v-permission="['sys:refer-rebate:setting:update']"
-      @click="showDialog('CREATE')"
+      @click="showCreate"
     >
       {{ t('fields.add') }}
     </el-button>
@@ -169,6 +169,7 @@ const request = reactive({
   settingStatus: false
 });
 const form = reactive({
+  id: null,
   rebateRate: 0,
   bonusRollover: 1,
   maxTotalBonusAmount: 0,
@@ -204,6 +205,14 @@ async function loadDepositRebateSetting() {
   request.settingStatus = ret.bonusStatus;
   page.loading = false;
   uiControl.loaded = true;
+}
+
+async function showCreate() {
+  if (formRef.value) {
+    formRef.value.resetFields()
+  }
+  form.id = null
+  showDialog('CREATE')
 }
 
 async function showEdit(setting) {
