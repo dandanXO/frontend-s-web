@@ -272,6 +272,10 @@ async function changeSettingStatus(state) {
 function showDialog(type) {
   if (type === 'CREATE') {
     uiControl.dialogTitle = t('fields.add')
+    if (formRef.value) {
+      formRef.value.resetFields()
+    }
+    form.id = null;
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editPrivilegeInfo')
   }
