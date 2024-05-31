@@ -1621,7 +1621,7 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
-      if ((store.token)) {
+      if ((store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
         initFloating();
       }
 

@@ -81,7 +81,7 @@
     </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, onBeforeUnmount } from "vue";
+import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
@@ -205,7 +205,7 @@ export default defineComponent({
     };
     onMounted(() => {
       getAppDownloadUrl();
-      if ((store.token)) {
+      if ((store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'))) {
         initFloating();
       }
       document.addEventListener("mouseup", stopDragging);
@@ -215,7 +215,7 @@ export default defineComponent({
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
     });
-
+    
     return {
       store,
       customerHovered,
