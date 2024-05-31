@@ -20,7 +20,6 @@
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
             (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
@@ -36,11 +35,10 @@
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
-          lazy-rules
-          :type="isPwd ? 'password' : 'text'"
-          :rules="[
-            (val) => (val.length > 6) || 'The characters of password must be above 6'
+          :rules="[(val) => (val && val.length > 0) || 'Please insert password',
+            (val) => (val && val.length > 6) || 'The characters of password must be above 6'
           ]"
+          :type="isPwd ? 'password' : 'text'"
           color="white"
           class="landing-input"
           outlined
@@ -55,7 +53,7 @@
             />
           </template>
         </q-input>
-        <div v-if="regForm.password" class="password-str-div">
+        <!-- <div v-if="regForm.password" class="password-str-div">
           <span
             :class="{
               'weak-pwd': pwdStrength == 'weak',
@@ -74,7 +72,7 @@
             Good
           </span>
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-        </div>
+        </div> -->
 
         <!-- <span class="register-form-field-label">Confirm Password</span>
         <q-input
@@ -126,7 +124,7 @@
         <!--        </template>-->
         <!--      </q-input>-->
 
-        <span class="register-form-field-label">Invitation Code (Optional)</span>
+        <!-- <span class="register-form-field-label">Invitation Code (Optional)</span>
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"
@@ -136,7 +134,7 @@
           outlined
           color="white"
           class="landing-input"
-        />
+        /> -->
       </div>
 
       <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
@@ -296,11 +294,12 @@ export default defineComponent({
       getReferralCode();
       getAffiliateCode();
     });
+    
 
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
@@ -313,7 +312,7 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
@@ -550,7 +549,7 @@ export default defineComponent({
       isAlphanumeric,
       isValidName,
       isValidPhone,
-      affRegEvent
+      affRegEvent,
     };
   }
 });
