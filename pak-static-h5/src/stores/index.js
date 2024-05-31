@@ -44,7 +44,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "http://pak-h5.psnaback.com/",
+      h5Url: "http://b9mega1.com/",
       hasUpdatedOneSignal: false
     };
   },
@@ -104,7 +104,7 @@ export const userStore = defineStore("userStore", {
       }
       loginInfo.way = regDevice;
       var string = qs.stringify(loginInfo);
-      return api.post("/member/login", string).then((ret) => {
+      return api.post("/member/pakLogin", string).then((ret) => {
         if (ret.code === 0) {
           if (isAndroid()) {
             LocalStorage.set("TOKEN", ret.data, 86400);
