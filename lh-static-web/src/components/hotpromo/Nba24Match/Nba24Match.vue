@@ -240,10 +240,14 @@ const handleSubmitVote = () => {
   console.log(submitParam);
   submitNbaMatch(submitParam)
     .then((res) => {
-      ElMessage.success({
-        type: "success",
-        message: "成功投票"
-      });
+      if(res.code === 0) {
+        ElMessage.success({
+          type: "success",
+          message: "成功投票"
+        });
+      }else {
+        ElMessage.error(res.message);
+      }
     })
     .catch(() => {
       ElMessage.error(res.message);
