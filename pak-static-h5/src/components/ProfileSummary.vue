@@ -13,7 +13,7 @@
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
-      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
@@ -347,10 +347,10 @@ const checkTopDownloadAppear = () => {
       topDownload.value = false;
     } else {
       topDownload.value = true;
-      countdown();
-      setTimeout(() => {
-        topDownload.value = false;
-      }, 6000);
+      // countdown();
+      // setTimeout(() => {
+      //   topDownload.value = false;
+      // }, 6000);
     }
   }
 };
