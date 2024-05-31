@@ -294,13 +294,21 @@ const handleSubmitVote = () => {
   console.log(submitParam);
   submitNbaMatch(submitParam)
     .then((res) => {
-      console.log(res);
-      $q.notify({
+      if (res.code === 0) {
+        $q.notify({
           color: "positive",
           position: "top",
           message: "投票成功！",
           icon: "check_circle_outline"
         });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
     })
     .finally(() => {
       confirmVoteDialog.value = false;
