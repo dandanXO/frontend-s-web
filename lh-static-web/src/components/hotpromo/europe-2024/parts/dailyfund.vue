@@ -311,6 +311,8 @@ const confirmMatchSelect = () => {
       ElMessage.success("投票成功");
       confirmDialog.value = false;
       getMatches();
+    } else {
+      ElMessage.error(res.message)
     }
   });
 };
@@ -360,6 +362,8 @@ function confirmSelection(team, choiceName) {
       if (res.code === 0) {
         team.isSelectionConfirmed = true;
         getTeamsData();
+      } else {
+        ElMessage.error(res.message)
       }
     });
   }
