@@ -37,11 +37,11 @@
       </q-form>
     </q-card>
 
-    <q-tabs v-model="selectedRange" @update:model-value="updateDateRange" active-color="green" indicator-color="green">
+    <!-- <q-tabs v-model="selectedRange" @update:model-value="updateDateRange" active-color="green" indicator-color="green">
       <q-tab name="1" label="1 Day" />
       <q-tab name="7" label="7 Days" />
       <q-tab name="30" label="30 Days" />
-    </q-tabs>
+    </q-tabs> -->
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
