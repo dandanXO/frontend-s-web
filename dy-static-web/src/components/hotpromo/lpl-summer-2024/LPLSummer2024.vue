@@ -94,9 +94,7 @@
           <div class="item-content">
             <div class="item-icon"></div>
             <div class="item-text">
-              2.活动期间，每场特殊事件判定标准为如下：
-              速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场LPL赛事第一局比赛为准；
+              2. 活动期间，每场特殊事件判定标准为如下：完胜奖金:赛制中零封对手；逆转奖金:赛事中先输一局，最终逆转取胜；
             </div>
           </div>
           <div class="item-content">
