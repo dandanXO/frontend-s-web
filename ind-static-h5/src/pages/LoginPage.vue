@@ -6,9 +6,9 @@
       </router-link>
     </div>
 
-    <div class="login-form-logo-img">
+    <!-- <div class="login-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
-    </div>
+    </div> -->
 
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div v-if="!loginType" class="login-form-grid">
@@ -534,8 +534,8 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .login-container {
-  min-height: 100vh;
-  padding: 16px;
+  // min-height: 100vh;
+  padding: 60px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;

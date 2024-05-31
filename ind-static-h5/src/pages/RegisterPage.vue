@@ -6,9 +6,9 @@
       </router-link>
     </div>
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
-    </div>
+    </div> -->
 
     <q-form class="q-gutter-y-md rounded-borders">
       <div class="register-form-grid">
@@ -39,9 +39,7 @@
           lazy-rules
           :type="isPwd ? 'password' : 'text'"
           :rules="[
-            (val) => (val && val.length > 0) || 'Please insert password',
-            (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-            () => isAlphanumeric(regForm.password, 'Password')
+            (val) => (val.length > 6) || 'The characters of password must be above 6'
           ]"
           color="white"
           class="landing-input"
@@ -78,7 +76,7 @@
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
         </div>
 
-        <span class="register-form-field-label">Confirm Password</span>
+        <!-- <span class="register-form-field-label">Confirm Password</span>
         <q-input
           ref="confirmPwdRef"
           hide-bottom-space
@@ -102,7 +100,7 @@
               @click="isCfmPwd = !isCfmPwd"
             />
           </template>
-        </q-input>
+        </q-input> -->
 
         <!--      <q-input-->
         <!--        ref="verificationRef"-->
@@ -128,7 +126,7 @@
         <!--        </template>-->
         <!--      </q-input>-->
 
-        <span class="register-form-field-label">Invitation Code (Optional)</span>
+        <!-- <span class="register-form-field-label">Invitation Code (Optional)</span>
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"
@@ -138,7 +136,7 @@
           outlined
           color="white"
           class="landing-input"
-        />
+        /> -->
       </div>
 
       <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
@@ -185,7 +183,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
 
@@ -572,8 +570,8 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
-  padding: 16px;
+  // min-height: 100vh;
+  padding: 60px 16px 16px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
