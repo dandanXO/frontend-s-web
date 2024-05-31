@@ -61,8 +61,8 @@ export default defineComponent({
 }
 .light-theme,
 .dark-theme {
-  background-image: linear-gradient(to bottom, #f8fcff 30%, #88d9ff, #203e5c, #141d26 80%);
-  color: #333;
+  background-color: var(--body-background-color);
+  color: #ffffff;
   background-size: 100% 400%;
   background-position: 100% 0%;
   .light-theme,

@@ -1,0 +1,11 @@
+.ant-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 70px;
+  color: #ffffff;
+
+  .ant-form-item {
+    margin-bottom: 20px;
+  }
+}
