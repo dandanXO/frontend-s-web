@@ -99,9 +99,7 @@
               <div class="item-icon"></div>
             </div>
             <div class="item-text">
-              2.活动期间，每场特殊事件判定标准为如下：
-              速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场LPL赛事第一局比赛为准；
+              2. 活动期间，每场特殊事件判定标准为如下：完胜奖金:赛制中零封对手；逆转奖金:赛事中先输一局，最终逆转取胜；
             </div>
           </div>
           <div class="item-content">
@@ -155,12 +153,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
@@ -610,6 +608,9 @@ onMounted(async () => {
         th {
           border: 1px solid #ffdba633;
           background: #ffdba633 !important;
+          white-space: pre-wrap;
+          font-size: 14px;
+          line-height: 18px;
         }
       }
     }

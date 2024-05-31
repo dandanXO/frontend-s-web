@@ -430,6 +430,22 @@ export default {
       'Member and summoner same register detail',
     MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
   },
+  memberReferStatus: {
+    PENDING: 'PENDING',
+    SUCCESS: 'SUCCESS',
+    FAILED: 'FAILED',
+  },
+  memberReferFailReason: {
+    PRIVI_IS_CLOSED: 'Privilege is closed',
+    PRIVI_HAS_ENDED: 'Privilge has ended',
+    VIP_LEVEL_IS_NOT_ALLOWED: 'VIP level is not allowed',
+    AFFILIATE_IS_NOT_ALLOWED: 'Affiliate is not allowed',
+  },
+  rewardType: {
+    BET: "BET",
+    DEPOSIT: "DEPOSIT",
+    ONE_TIME: "ONE TIME",
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1062,6 +1078,7 @@ export default {
     memberRemark: 'Member Remark',
     minActiveMemberCount: 'Minimum Active Member Count',
     minBalance: 'Minimum Balance',
+    minBonus: 'Minimum Bonus',
     minDeposit: 'Minimum Deposit',
     minTotalCommission: 'Minimum Total Commission',
     minWithdrawAmount: 'Minimum Withdraw Amount',
@@ -1709,7 +1726,8 @@ export default {
     affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
     affiliateBetRebateDetails: 'Affiliate Bet Rebate Details',
     adjustRebateAmount: 'Adjust Rebate Amount',
-
+    finalAmount: 'Final Amount',
+    rewardType: 'Reward Type',
     refereeEligibility: 'Referee Eligibility',
     oneTimeBonusSetting: 'One Time Bonus Setting',
     depositRebateSetting: 'Deposit Rebate Setting',
@@ -2316,6 +2334,7 @@ export default {
     'Bet Wheel': 'Bet Wheel',
     'Piggy Bank': 'Piggy Bank',
     'Loss Rebate Record': 'Loss Rebate Record',
+    'Fish Red Packet': 'Fish Red Packet Config',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
@@ -2420,6 +2439,9 @@ export default {
     'Member Summon Event': 'Member Summon Event',
     'Member Summon List': 'Member Summon List',
     'Affiliate Bet Rebate Record': 'Affiliate Bet Rebate Record',
+    'Member Refer Event': 'Member Refer Event',
+    'Member Refer Record': 'Member Refer Record',
+    'Member Refer Reward List': 'Member Refer Reward List',
     'Refer Rebate': 'Refer Rebate',
   },
   google: {

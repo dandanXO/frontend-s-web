@@ -32,7 +32,8 @@
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
+                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits',
+                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
                   ]"
                   color="green"
                   outlined
@@ -56,9 +57,7 @@
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) =>
-                      (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-                    () => isAlphanumeric(regForm.password, 'Password')
+                    (val) => val.length > 6 || 'The characters of password must be above 6'
                   ]"
                   color="green"
                   outlined
@@ -343,6 +342,12 @@ export default defineComponent({
       // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
       return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
     };
+
+    // const phoneNumberRules = [
+    //   (val) => (val && val.length > 0) || "Please insert Phone number",
+    //   (val) => (val && val.length === 11) || "The phone number must have 11 digits",
+    //   (val) => (val && val.startsWith("03")) || 'The phone number must start with "03"'
+    // ];
 
     const router = useRouter();
 

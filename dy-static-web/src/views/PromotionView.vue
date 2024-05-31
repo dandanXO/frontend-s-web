@@ -93,7 +93,8 @@
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
-              selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+              selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
+              selectedPromo.promoCode === 'dy2-lpl-summer24'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -671,6 +672,10 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
           }
         }
         &.isCS {
