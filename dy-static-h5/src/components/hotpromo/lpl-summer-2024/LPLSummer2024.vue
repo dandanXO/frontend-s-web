@@ -153,12 +153,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
