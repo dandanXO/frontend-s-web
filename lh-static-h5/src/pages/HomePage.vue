@@ -522,10 +522,20 @@
   <GameModal ref="allGames"></GameModal>
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
-    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+    <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
-      <div class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
-        <div class="rocket"><img src="../assets/images/home/rocket.gif" /></div>
+      <div v-for="(game, gameIndex) in gamePromo" :key="gameIndex"  class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket">
+          <img :src="`${imgURLFloat}/game/${game.icon}`" />
+        </div>
+      </div>
+    </div>
+  </q-page-sticky>
+  <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <div class="rocket-wrapper" @click="gotoFloatPromo(currentPromo.code)">
+        <div class="rocket"><img :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
       </div>
     </div>
   </q-page-sticky>
@@ -616,7 +626,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref } from "vue";
+import { computed, defineComponent, onActivated, onUnmounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
@@ -965,7 +975,7 @@ export default defineComponent({
     };
 
     const imgURL = process.env.IMAGE_CDN + "/promo/";
-
+    const imgURLFloat = process.env.IMAGE_CDN
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -1507,20 +1517,47 @@ export default defineComponent({
         });
       }
     };
-
-    onActivated(() => {
-      getPlatList();
-      loadData();
-      loadAnnouncement();
-      checkPlatform();
-      getVersionNo();
-      checkShowImgTop();
-      getAppDownloadUrl();
-      getUnreadTotal();
-      checkShowRocket();
-
-      rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
-    });
+    const gotoFloatPromo = (code) => {
+      
+      router.push(`/promo?name=${code}`)
+    }
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      api
+        .get("/session/redirect")
+        .then((res) => {
+            if (res.code === 0) {
+              res.data.forEach(element => {
+                if (element.type === 'PROMO') {
+                  floatPromo.push(element);
+                  showFloatPromo.value = true;
+                }
+                if (element.type === 'GAME') {  
+                  gamePromo.push(element)
+                  showRocket.value = true;
+                }
+              });
+              checkShowRocket();
+              checkFloatPromo();
+              updatePromo(); // Initially update the displayed promo
+              // Update the displayed promo every 5 seconds
+              setInterval(updatePromo, 5000);
+            } else {
+              ElMessage.error(res.message);
+            }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
 
@@ -1533,21 +1570,67 @@ export default defineComponent({
 
     const hideRocket = () => {
       showRocket.value = false;
+      promoPos.value = [18, 18]
     };
 
-    const fabPos = ref([18, 18]);
-    const draggingFab = ref(false);
+    const showFloatPromo = ref(false);
+    const checkFloatPromo = () => {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        showFloatPromo.value = true;
+      }
+    };
 
-    const moveFab = (ev) => {
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const fabPos = ref([18, 18]);
+    const promoPos = ref([18, 96]);
+    const draggingRocketFab = ref(false);
+    const draggingPromoFab = ref(false);
+
+    const currentElement = ref(null);
+    const moveRocketFab = (ev) => {
+      console.log(ev)
       const maxX = window.innerWidth - 70;
       const maxY = window.innerHeight - 70;
-      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
       let newX = fabPos.value[0] - ev.delta.x;
       let newY = fabPos.value[1] - ev.delta.y;
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       fabPos.value = [newX, newY];
     };
+    const movePromoFab = (ev) => {
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingPromoFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = promoPos.value[0] - ev.delta.x;
+      let newY = promoPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      promoPos.value = [newX, newY];
+
+    }
+
+    onActivated(() => {
+      getPlatList();
+      loadData();
+      loadAnnouncement();
+      checkPlatform();
+      getVersionNo();
+      checkShowImgTop();
+      getAppDownloadUrl();
+      getUnreadTotal();
+      if ((store.token)) {
+        initFloating();
+      }
+
+      rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
+  });
+    // Clear interval on unmounted
+    onUnmounted(() => {
+      clearInterval(intervalId);
+    });
 
     return {
       imageLoading,
@@ -1631,9 +1714,21 @@ export default defineComponent({
       showRocket,
       checkShowRocket,
       fabPos,
-      draggingFab,
-      moveFab,
-      hideRocket
+      draggingRocketFab,
+      draggingPromoFab,
+      moveRocketFab,
+      movePromoFab,
+      hideRocket,
+      promoPos,
+      hideFloatPromo,
+      showFloatPromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoFloatPromo,
+      floatPromo,
+      gamePromo,
+      currentElement,
+      imgURLFloat
     };
   }
 });
