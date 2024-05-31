@@ -278,6 +278,7 @@ onMounted(async () => {
   position: relative;
   padding-top: 40px;
   padding-bottom: 80px;
+  background-color: #1d1d1e;
   .lpl-summer-2024-background-img {
     position: absolute;
     bottom: 0;
@@ -351,6 +352,7 @@ onMounted(async () => {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 27px;
+    gap: 40px;
     .lpl-summer-2024-game-team {
       width: 567px;
       height: 184px;
