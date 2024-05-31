@@ -538,7 +538,8 @@ export default defineComponent({
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
