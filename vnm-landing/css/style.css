@@ -12,6 +12,10 @@ body {
     width: 100%;
     position: relative;
 }
+.wrapper .flex-container .logo {
+    max-width: 500px;
+    width: 80%;
+}
 .abs {
     position: absolute;
     z-index: 0;
@@ -83,6 +87,8 @@ body {
     padding: 10px;
     border-radius: 10px;
     width: 100%;
+    text-align: center;
+    color: #F45837;
 }
 
 .hongbao-input:focus, 
@@ -240,4 +246,53 @@ body {
     font-size: 24px;
     font-weight: 400;
     margin: 0 0 10px;
+}
+@media screen and (max-width: 768px) {
+    
+    .wrapper .flex-container .logo img {
+        width: 100%;
+    }
+    .main-header {
+        font-size: 32px;
+        line-height: 35px;
+        margin-bottom: 10px;
+    }
+    .sub-header {
+        font-size: 20px;
+        line-height: 25px;
+    }
+    .tab-content .matches {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .content-bar {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .tab-content .matches {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .tab-btn {
+        
+    font-size: 10px;
+    }
+    .hongbao {
+        height: 310px;
+        padding: 25px;
+        gap: 30px;
+    }
+    .hongbao .hongbao-btn {
+        font-size: 14px;
+        padding: 20px;
+    }
+    .hongbao .top {
+        font-size: 12px;
+    }
+    .hongbao .hongbao-label {
+        font-size: 20px;
+    }
+    .content-bar .secinner-content {
+        flex-direction: column;
+    }
 }
