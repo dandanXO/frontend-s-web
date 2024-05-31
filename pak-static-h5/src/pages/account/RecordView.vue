@@ -37,6 +37,12 @@
       </q-form>
     </q-card>
 
+    <q-tabs v-model="selectedRange" @update:model-value="updateDateRange" active-color="green" indicator-color="green">
+      <q-tab name="1" label="1 Day" />
+      <q-tab name="7" label="7 Days" />
+      <q-tab name="30" label="30 Days" />
+    </q-tabs>
+
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
 
@@ -116,13 +122,22 @@ const isActiveSlide = (e) => {
   return false;
 };
 
+const selectedRange = ref("1");
+
+const updateDateRange = (range) => {
+  searchRecord();
+  const days = parseInt(range);
+  searchForm.startDate = updateDate(days);
+  searchForm.endDate = updateDate(0);
+};
+
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 const isNoInfoAtEnd = ref(false);
 
 const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
+  searchForm.startDate = updateDate(1);
   searchForm.endDate = updateDate(0);
 };
 
@@ -313,8 +328,11 @@ onActivated(() => {
   }
 }
 .record-container {
-  border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
+  border-radius: 0;
+  // background: rgba(21, 0, 37, 0.2);
+  box-shadow: none;
+  border-bottom: 1px solid #ffffff33;
+  background: transparent;
   padding: 1rem;
   margin-top: 0;
 
@@ -330,24 +348,24 @@ onActivated(() => {
     }
 
     .bet-btn {
-      color: #fae576;
+      color: #5bf25c;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
+      padding: 4px 10px;
+      border-radius: 4px;
       background: rgba(250, 229, 118, 0.2);
-      padding: 0 1rem;
       min-height: unset;
     }
 
     .loss-btn {
-      color: #bc66ff;
+      color: #b81212;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
-      background: rgba(188, 102, 255, 0.2);
-      padding: 0 1rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
       min-height: unset;
     }
   }
@@ -364,7 +382,7 @@ onActivated(() => {
     font-size: 1rem;
     font-weight: 700;
     line-height: 2.25rem;
-    background: rgba(21, 0, 37, 0.5);
+    // background: rgba(21, 0, 37, 0.5);
     margin: 0 -1rem;
     padding: 0 1rem;
 
@@ -425,7 +443,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #7c28bd;
+    background: #58b475;
     font-size: 20px;
     width: 40px;
     height: 40px;
