@@ -1,10 +1,10 @@
 <template>
   <div class="login-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
     <!-- <div class="login-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
@@ -535,7 +535,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-container {
   // min-height: 100vh;
-  padding: 60px 16px 16px 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;

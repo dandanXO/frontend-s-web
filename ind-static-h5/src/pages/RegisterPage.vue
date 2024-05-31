@@ -1,10 +1,10 @@
 <template>
   <div class="register-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
     <!-- <div class="register-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
@@ -126,7 +126,7 @@
         <!--        </template>-->
         <!--      </q-input>-->
 
-        <!-- <span class="register-form-field-label">Invitation Code (Optional)</span>
+        <span class="register-form-field-label">Invitation Code (Optional)</span>
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"
@@ -136,7 +136,7 @@
           outlined
           color="white"
           class="landing-input"
-        /> -->
+        />
       </div>
 
       <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
@@ -571,7 +571,7 @@ function charType(num) {
 <style scoped lang="scss">
 .register-container {
   // min-height: 100vh;
-  padding: 60px 16px 16px 16px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
