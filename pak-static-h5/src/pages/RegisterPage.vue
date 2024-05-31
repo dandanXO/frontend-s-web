@@ -235,7 +235,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
     const isLoading = ref(false);
