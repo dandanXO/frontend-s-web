@@ -9,10 +9,10 @@
           小组赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'roundOf16' }" @click="tab = 'roundOf16'">
-          十六強賽
+          十六强赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'quarterFinal' }" @click="tab = 'quarterFinal'">
-          4/1決賽
+          4/1决赛
         </div>
         <div
           class="btn btn-active"
