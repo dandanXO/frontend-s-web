@@ -38,7 +38,7 @@ a:hover {
 }
 
 .main-wrapper {
-  background-image: url(../imgs/bg-mobile.jpg);
+  background-image: url(../imgs/bg-mobile.png);
   background-position: top center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -94,7 +94,7 @@ a:hover {
 
 .pop-btns-item .item-icon {
   min-width: 110px;
-  margin-left: calc(-8% - 16px);
+  
 }
 
 .pop-btns-item .item-icon img {
@@ -120,11 +120,17 @@ a:hover {
 .pop-btns-item .item-details .details-title img {
   display: block;
   width: 100%;
+  max-width: 202px;
 }
 
+.pop-btns-item .item-details .details-desc {
+  display: flex;
+  justify-content: center;
+}
 .pop-btns-item .item-details .details-desc img {
   display: block;
   width: 100%;
+  max-width: 96px;
   margin-top: 4px;
 }
 
