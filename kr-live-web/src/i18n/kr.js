@@ -19,6 +19,10 @@ export default {
     reg_bank_id: "은행 ID",
     reg_card_acc: "카드 계좌",
     reg_submit: "가입완료",
+    reg_captcha_confirm: "확인하다",
+    reg_captcha_verifying: "확인 중",
+    reg_check_captcha: "Captcha 코드 확인",
+    reg_enter_captcha: "입력하다 Captcha",
     // register end
     langVal: "en",
     login: "Login",

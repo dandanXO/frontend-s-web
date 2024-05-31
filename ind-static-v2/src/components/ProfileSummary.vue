@@ -4,7 +4,6 @@
 
   <div class="top-download" v-if="topDownload">
     <div class="download-container">
-
       <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
@@ -81,7 +80,7 @@
             </div>
           </template>
 
-          <q-list style="background: #19242E" dense unelevated flat class="dropdown-list">
+          <q-list style="background: #19242e" dense unelevated flat class="dropdown-list">
             <q-item clickable v-close-popup @click="onVipClick">
               <q-item-section avatar>
                 <q-avatar icon="diamond" />
@@ -135,8 +134,8 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <PrimaryButton :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')"/>
-        <q-btn no-caps unelevated @click="goLogin" style="color:#98A7B5">Login</q-btn>
+        <q-btn no-caps unelevated @click="goLogin" style="color: #98a7b5">Login</q-btn>
+        <PrimaryButton :isHot="true" :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')" />
       </div>
     </div>
   </div>
@@ -236,7 +235,7 @@ const countdown = () => {
 };
 
 const checkTopDownloadAppear = () => {
-  const omitSites = ['bw3.genoortisy.com'];
+  const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
     if (
@@ -325,7 +324,7 @@ onMounted(() => {
     }
 
     .download-count {
-      color: #97A6B4;
+      color: #97a6b4;
       font-size: 20px;
     }
 
@@ -419,7 +418,7 @@ onMounted(() => {
       position: absolute;
       right: 0px;
       top: 0px;
-      background: #00AE00;
+      background: #00ae00;
       border-radius: 100px;
       padding: 0px 3px;
       z-index: 1;
@@ -498,7 +497,7 @@ onMounted(() => {
       font-size: 14px;
       color: #fff;
       font-weight: bold;
-      border: 1px solid #2C323B;
+      border: 1px solid #2c323b;
 
       &:active {
         filter: brightness(0.75);
@@ -569,7 +568,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 4px;
     z-index: 3;
-    color: #00AE00;
+    color: #00ae00;
     font-weight: 700;
     font-style: italic;
   }
@@ -590,7 +589,7 @@ onMounted(() => {
 
 .style-blue-btn {
   background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
-  background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+  background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
   border-radius: 5px;
 }
 
@@ -613,7 +612,7 @@ onMounted(() => {
 }
 
 .message-amt {
-  background-color: #00AE00;
+  background-color: #00ae00;
   border-radius: 30px;
   width: 20px;
   height: 20px;

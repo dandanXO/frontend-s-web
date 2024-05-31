@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="login-form-logo-img">
+    <!-- <div class="login-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
@@ -526,7 +526,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .login-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;

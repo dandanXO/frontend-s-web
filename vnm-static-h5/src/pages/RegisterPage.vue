@@ -77,11 +77,11 @@
           </span>
         </div>
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.confirm_password") }}
           <em>*</em>
-        </q-label>
-        <q-input
+        </q-label> -->
+        <!-- <q-input
           ref="confirmPwdRef"
           rounded
           standout
@@ -106,7 +106,7 @@
               @click="isCfmPwd = !isCfmPwd"
             />
           </template>
-        </q-input>
+        </q-input> -->
 
         <q-label>
           {{ $t("lang.real_name") }}
@@ -156,7 +156,7 @@
           </template>
         </q-input>
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.email") }}
         </q-label>
         <q-input
@@ -174,7 +174,7 @@
               <img src="../assets/images/login/mail-icon.png" width="27" />
             </div>
           </template>
-        </q-input>
+        </q-input> -->
 
         <q-label>
           {{ $t("lang.verification_code") }}
@@ -422,11 +422,11 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       telRef.value.validate();
       realNameRef.value.validate();
       // phoneVerificationRef.value.validate();
-      emailRef.value.validate();
+      // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.register_in_progress")
@@ -434,10 +434,10 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
-        emailRef.value.hasError ||
+        // emailRef.value.hasError ||
         realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -700,7 +700,7 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center center;
+  background: url(../assets/images/login/reg-bg.png) no-repeat center center;
   background-size: cover;
   height: 100%;
   padding: 12px 0px 0px;

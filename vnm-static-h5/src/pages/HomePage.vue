@@ -210,7 +210,7 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -2666,8 +2666,10 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-bottom: 35px;
-    padding-top: 15px;
+    // padding-bottom: 35px;
+    // padding-top: 15px;
+    padding-bottom: 20px;
+    padding-top: 10px;
     position: relative;
 
     img {
@@ -2953,7 +2955,7 @@ export default defineComponent({
         justify-content: center;
         img {
           width: 100%;
-          max-width: 70px;
+    height: 60px;
         }
       }
 

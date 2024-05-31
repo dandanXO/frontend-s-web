@@ -78,9 +78,14 @@
                   </el-option>
                 </el-select>
               </el-form-item>
-
               <el-form-item ref="title" prop="title" label="标题" :wrapperCol="{ span: 6 }">
                 <el-input v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" />
+              </el-form-item>
+              <el-form-item ref="photo" prop="photo" label="上传图片" :wrapperCol="{ span: 6 }">
+                
+                <div class="input-fill">
+                  <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
+                </div>
               </el-form-item>
               <el-form-item ref="content" prop="content" label="内容">
                 <el-input
@@ -117,6 +122,7 @@ import {
 } from "@/api/personal/mailbox";
 import { ElMessage } from "element-plus";
 import { Calendar, Delete, MessageBox, ArrowDown } from "@element-plus/icons-vue";
+import FileUpload from "@/components/feedback/FileUpload.vue";
 
 const feedbackTypes = ref("");
 const loadFeedbackType = () => {
@@ -128,6 +134,16 @@ const loadFeedbackType = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailboxState.mailboxList.write.photo = linkId;
+  if (linkId) {
+    ElMessage.success({
+      type: "success",
+      message: "上传成功"
+    });
+  }
 };
 
 const mailboxState = reactive({
@@ -142,7 +158,8 @@ const mailboxState = reactive({
     write: {
       feedbackType: "",
       title: "",
-      content: ""
+      content: "",
+      photo: ""
     }
   }
 });
@@ -243,6 +260,7 @@ const onSubmit = () => {
             mailboxState.mailboxList.write.feedbackType = "";
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
+            uploadFileRef.value.clear();
           }
         })
         .catch((error) => {

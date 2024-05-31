@@ -85,10 +85,10 @@ export default defineComponent({
             console.log(googleid);
             if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
               (async () => {
-                Adjust.getAttribution().then((attribution) => {
+                Adjust.getAdid().then((adid) => {
                   console.log("Attribution 2");
-                  console.log(attribution);
-                  store.aaid = attribution.adid;
+                  console.log(adid);
+                  store.aaid = adid;
                   trackAppStartEvent();
                 });
               })();

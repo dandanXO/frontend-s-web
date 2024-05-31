@@ -317,6 +317,10 @@ const loadPlatformLists = () => {
 
 const tableHeaders = [
   {
+    key: "betId",
+    label: "注单号"
+  },
+  {
     key: "betTime",
     label: "游戏时间"
   },
