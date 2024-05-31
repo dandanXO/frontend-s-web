@@ -5,7 +5,7 @@
     <div class="top-setting-section">
       <div class="top-total-score">
         <div class="score-txt">Total Score</div>
-        <div class="score-amount">2333.44</div>
+        <div class="score-amount">{{ store.balance.toFixed(2) }}</div>
       </div>
       <div class="top-section-inner">
         <router-link to="/withdraw">

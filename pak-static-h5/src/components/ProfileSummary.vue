@@ -301,7 +301,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.indwin7.com/", "_blank");
+    window.open("http://pak-h5.psnaback.com/", "_blank");
     return;
   }
 
