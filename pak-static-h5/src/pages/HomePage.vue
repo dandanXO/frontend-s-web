@@ -198,7 +198,7 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(https://b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -269,7 +269,7 @@
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
                               // return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                              return `url(https://m.indwin7.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(https://b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -325,7 +325,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(http://pak-h5.psnaback.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(http://b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -361,7 +361,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -424,7 +424,7 @@
                               try {
                                 return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -467,7 +467,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -714,11 +714,11 @@
       </template>
 
       <template
-        v-if="(category.title === 'Card' && category.active) || (category.title === 'Lobby' && category.active)"
+        v-if="(category.title === 'Poker' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="Card">
+        <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-card.png" class="label-img" />
+            <img src="../assets/images/index/menu-label-poker.png" class="label-img" />
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -752,7 +752,7 @@
                               try {
                                 return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                                return `url(https://b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -795,7 +795,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -838,7 +838,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.indwin7.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1173,7 +1173,7 @@ const categoriesList = ref([
   { title: "Live", icon: "live", active: false },
   { title: "Fish", icon: "fish", active: false },
   { title: "Slot", icon: "slot", active: false },
-  { title: "Card", icon: "card", active: false },
+  { title: "Poker", icon: "poker", active: false },
   { title: "Sport", icon: "sport", active: false }
 ]);
 

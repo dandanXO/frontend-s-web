@@ -61,9 +61,9 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
         Fishing
       </div>
-      <div class="side-menu-item" @click="activateSlide('Card')">
+      <div class="side-menu-item" @click="activateSlide('Poker')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        Card
+        Poker
       </div>
       <div class="side-menu-item" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
@@ -301,7 +301,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("http://pak-h5.psnaback.com/", "_blank");
+    window.open("http://b9mega1.com/", "_blank");
     return;
   }
 
