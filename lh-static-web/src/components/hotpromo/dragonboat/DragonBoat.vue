@@ -1,5 +1,8 @@
 <template>
     <div>
+      <div class="period">
+        活动时间: 2024/6/10-2024/6/20 23:59:59
+      </div>
       <el-tabs v-model="tabPosition" class="dragonboat-tabs">
         <el-tab-pane name="duawwu" label="端午粽情">
             <div class="section">
@@ -21,7 +24,7 @@
                             <td>18</td>
                         </tr>
                         <tr>
-                            <td>VIP1</td>
+                            <td>VIP0</td>
                             <td>注册日两天内晋级≥VIP2</td>
                             <td>58</td>
                         </tr>
@@ -144,6 +147,24 @@
 @font-face {
   font-family: hyagi;
   src: url('@/components/hotpromo/dragonboat/fonts/hya0gj.ttf');
+}
+
+.period {
+  background: url("@/components/hotpromo/dragonboat/images/period-bg.png");
+  background-size: 100% 100%;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 20px;
+  color: #fff;
+  width: 400px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 20px;
+  text-align: center;
+  font-family: 'Microsoft YaHei UI';
 }
 
 .dragonboat-tabs {

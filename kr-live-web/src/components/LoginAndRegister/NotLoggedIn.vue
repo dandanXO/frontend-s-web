@@ -1,70 +1,20 @@
 <template>
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
-      <!-- <div class="left-container">
-        <div class="account">
-          <q-input
-            ref="loginNameRef"
-            dense
-            borderless
-            type="text"
-            class="account-input"
-            placeholder="계정"
-            v-model="loginForm.loginName"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')
-            ]"
-          />
-        </div>
-        <div class="password">
-          <q-input
-            ref="pwdRef"
-            dense
-            borderless
-            type="password"
-            class="password-input"
-            placeholder="암호"
-            v-model="loginForm.password"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
-           />
-        </div>
-        <div class="captcha-code">
-          <q-input
-            dense
-            borderless
-            ref="captchaRef"
-            type="text"
-            class="captcha-code-input"
-            placeholder="암호"
-            v-model="loginForm.captchaCode"
-            lazy-rules
-            :rules="[
-                (val) => (val && val.length > 0) || $t('lang.enter_captcha_code')
-              ]"
-          />
-        </div>
-        <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
-      </div> -->
-
       <div class="right-container">
-        <div class="register" @click="goToRegister">
-          <div class="register-text">회원가입</div>
+        <div class="primary-button blue" @click="goToRegister">
+          회원가입
         </div>
-        <div class="login" @click="goToLogin">
-          <!-- @click.prevent="onLoginSubmit" -->
-          <div class="login-text">로그인</div>
+        <div class="primary-button yellow" @click="goToLogin">
+          로그인
         </div>
       </div>
       <div class="actions-topbar" v-if="!props.isH5Banner">
-        <div class="register" @click="goToRegister">
-          <div class="register-text">회원가입</div>
+        <div class="primary-button blue-square" @click="goToRegister">
+          회원가입
         </div>
-        <div class="login" @click="goToLogin">
-          <!-- @click.prevent="onLoginSubmit" -->
-          <div class="login-text">로그인</div>
+        <div class="primary-button yellow-square" @click="goToLogin">
+          로그인
         </div>
       </div>
     </form>
@@ -107,10 +57,6 @@ const goToRegister = () => {
 
 const goToLogin = () => {
   router.push("/?page=login");
-};
-
-const toGetCode = () => {
-  getCode();
 };
 
 const onLoginSubmit = () => {
@@ -279,33 +225,6 @@ onMounted(() => {
     transform: translateY(2px);
   }
   .register-text {
-    font-size: 12px;
-    line-height: 1;
-    color: #fff;
-    @media (min-width: 1200px) {
-      font-size: 16px;
-    }
-  }
-}
-
-.login {
-  width: 124px;
-  min-height: 36px;
-  background-image: url("../../assets/home/btn-orange.svg");
-  background-size: 124px 36px;
-  background-repeat: no-repeat;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  &:hover {
-    filter: brightness(1.1);
-  }
-  &:active {
-    transform: translateY(2px);
-  }
-  .login-text {
     font-size: 12px;
     line-height: 1;
     color: #fff;

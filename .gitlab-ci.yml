@@ -497,4 +497,29 @@ build-image-telegram-web:
     PROJECT: telegram-web
   needs:
     - build-telegram-web
+#===============================================================================================
 
+build-pak-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-web
+
+build-image-pak-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-web
+  needs:
+    - build-pak-static-web
+#===============================================================================================
+
+build-pak-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-h5
+
+build-image-pak-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-h5
+  needs:
+    - build-pak-static-h5

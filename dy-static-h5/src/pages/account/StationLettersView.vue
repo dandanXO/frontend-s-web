@@ -35,12 +35,12 @@ export default defineComponent({
       {
         code: "outbox",
         icon: "outbox",
-        name: "发件箱"
+        name: "我的反馈"
       },
       {
         code: "write",
         icon: "write",
-        name: "写信"
+        name: "意见反馈"
       }
     ]);
 

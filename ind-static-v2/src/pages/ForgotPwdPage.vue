@@ -182,7 +182,7 @@
                 </template>
               </q-input>
 
-              <div v-if="verificationForm.newPassword" class="password-str-div">
+              <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
                 <span
                   :class="{
                     'weak-pwd': pwdStrength == 'weak',
@@ -201,7 +201,7 @@
                   Normal
                 </span>
                 <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-              </div>
+              </div> -->
             </template>
           </InputField>
 

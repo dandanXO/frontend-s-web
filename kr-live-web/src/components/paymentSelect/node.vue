@@ -18,7 +18,7 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
+          <div class="node-icon"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow">{{ item.nodeName }}</div>
           <div
             class="promo"
@@ -278,7 +278,7 @@ $node-color: #dd4645;
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: solid 1px #484460;
+    border: 2px solid #4b4b4b;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
@@ -336,7 +336,7 @@ $node-color: #dd4645;
       text-align: center;
       padding: 10px 8px;
       cursor: pointer;
-      background: #2b2b4b;
+      background: #252e43;
       box-shadow: 6px 6px #161b23;
 
       &:hover {

@@ -20,7 +20,7 @@
                   <div class="row items-center justify-between">
                     <div>{{ det[obj] }}</div>
                     <div v-if="recordType === 'deposit' || recordType === 'withdraw'" class="buttons">
-                      <q-btn @click="copyText(det.serialNumber)" round size="xs" class="btn-deposit" color="bright">
+                      <q-btn @click="copyText(det.serialNumber, '存款编码')" round size="xs" class="btn-deposit" color="bright">
                         <img src="../assets/records/copy-icon.png" />
                       </q-btn>
                     </div>
@@ -36,6 +36,15 @@
                       </q-btn>
                     </div>
                   </div>
+                </div>
+                <div v-else-if="obj === 'betId'">
+                  <q-link @click="copyText(det[obj], '注单号')">
+                    <span style="color: #468CFF">复制</span>
+                    {{ det[obj].slice(0,1) }}...
+                    <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
+                    {{ det[obj] }}
+                    </q-tooltip>
+                  </q-link>
                 </div>
                 <div v-else-if="obj === 'status'">
                   <div class="row items-center justify-between">
@@ -411,7 +420,7 @@ export default defineComponent({
 
     const copyinput = ref(null);
     const text_copied = ref("");
-    const copyText = (text) => {
+    const copyText = (text, msgTitle) => {
       text_copied.value = text;
       setTimeout(() => {
         const copyText = copyinput.value;
@@ -422,7 +431,7 @@ export default defineComponent({
         $q.notify({
           color: "positive",
           position: "top",
-          message: "存款编码复制成功！",
+          message: `${msgTitle}复制成功！`,
           icon: "check_circle_outline"
         });
       }, 100);
