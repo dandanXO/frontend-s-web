@@ -9,9 +9,6 @@
             </div>
           </div>
       </div> -->
-      <p style="text-align: right">
-        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" />
-      </p>
 
       <div class="page-dialog-main">
         <!-- <LangToggle v-if="showLangToggle"/> -->
@@ -28,7 +25,7 @@
                 class="header-close-btn"
                 src="../../assets/images/index/modal-close-btn.png"
                 @click="closeDialog()"
-                style="opacity: 0"
+                style="padding-right:10px"
               />
             </p>
           </q-toolbar>
@@ -669,10 +666,10 @@ onMounted(() => {
 }
 .q-panel {
   .q-tab-panel {
-    padding: 10px 20px 60px;
+    // padding: 10px 20px 60px;
     box-sizing: border-box;
     overflow-y: scroll;
-    max-height: calc(90vh - 200px);
+    // max-height: calc(90vh - 200px);
   }
 }
 
@@ -743,8 +740,8 @@ onMounted(() => {
 
   .q-panel {
     .q-tab-panel {
-      padding: 10px 20px 100px;
-      max-height: calc(95vh - 250px);
+      // padding: 10px 20px 100px;
+      // max-height: calc(95vh - 250px);
     }
   }
   .modal-body-buttons {

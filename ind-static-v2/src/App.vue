@@ -9,14 +9,13 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
-import { getAttribution } from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -81,14 +80,6 @@ export default defineComponent({
         Adjust.create(adjustConfig);
         setTimeout(() => {
 
-          // Adjust.getAdid().then((aaid) => {
-          //   console.log("aaid");
-          //   console.log(aaid);
-          //   if(store.aaid===""){
-          //     store.aaid = aaid;
-          //   }
-          // });
-
           Adjust.getGoogleAdId().then((googleid) => {
             console.log("Google AdID");
             console.log(googleid);
@@ -98,10 +89,12 @@ export default defineComponent({
                   console.log("Attribution 2");
                   console.log(attribution);
                   store.aaid = attribution.adid;
+                  trackAppStartEvent();
                 });
               })();
             }else{
               store.googleadid = googleid;
+              trackAppStartEvent();
             }
           });
         }, 0);
@@ -126,9 +119,17 @@ export default defineComponent({
           console.log("Web Adid");
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
+
         }, 1500);
       }
     };
+
+    const trackAppStartEvent = () => {
+      if(ui.adjust_open_app_event) {
+        var adjustEvent = new AdjustEvent(ui.adjust_open_app_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
@@ -144,8 +145,20 @@ export default defineComponent({
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
         if (res.code === 0) {
           sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          if(res.data.adjust_register_event){
+            ui.adjust_register_event = res.data.adjust_register_event;
+          }
+          if(res.data.adjust_open_app_event){
+            ui.adjust_open_app_event = res.data.adjust_open_app_event;
+          }
+          if(res.data.adjust_register_fail_event){
+            ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+          }
+          if(res.data.adjust_click_register_event){
+            ui.adjust_click_register_event = res.data.adjust_click_register_event;
+          }
           affAppToken.value = res.data.adjust_app_token;
           initAdjustEventTrack();
           // alert(affAppToken.value);
@@ -175,9 +188,22 @@ export default defineComponent({
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
                     api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
                       if (res.code === 0) {
+                        // debugger;
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if(res.data.adjust_register_event){
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
+                        if(res.data.adjust_open_app_event){
+                          ui.adjust_open_app_event = res.data.adjust_open_app_event;
+                        }
+                        if(res.data.adjust_register_fail_event){
+                          ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+                        }
+                        if(res.data.adjust_click_register_event){
+                          ui.adjust_click_register_event = res.data.adjust_click_register_event;
+                        }
+                        // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                        // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
                         // alert(affAppToken.value);

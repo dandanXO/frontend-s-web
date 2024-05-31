@@ -1,26 +1,38 @@
 <template>
   <div class="nba24-match-box">
     <div class="nba24-match-container">
-      <div class="nba24-match-game">
+      <div class="nba24-match-game" v-for="(match, index) in matchList" :key="index">
         <div class="nba24-match-game-status">进行中</div>
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img src="../../../assets/promo/lh-nba24-match/team1.png" alt="" />
-              <div class="nba24-match-game-content-team-name">老鷹</div>
-              <div class="nba24-match-game-content-btn">投票</div>
+              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <div
+                class="nba24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+              >
+                投票
+              </div>
             </div>
           </div>
           <div class="nba24-match-game-content-center">
-            <div class="nba24-match-game-content-center-time">05月11日 16:00:00</div>
+            <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
             <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
-            <div class="nba24-match-game-content-btn">平局</div>
+            <div class="nba24-match-game-content-btn" @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })">
+              平局
+            </div>
           </div>
           <div class="nba24-match-game-content-right">
             <div class="nba24-match-game-content-team">
-              <img src="../../../assets/promo/lh-nba24-match/team2.png" alt="" />
-              <div class="nba24-match-game-content-team-name">火箭</div>
-              <div class="nba24-match-game-content-btn">投票</div>
+              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+              <div
+                class="nba24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+              >
+                投票
+              </div>
             </div>
           </div>
         </div>
@@ -170,14 +182,63 @@
           </table>
         </div>
       </el-dialog>
+      <el-dialog v-model="confirmVoteDialog" width="500px" align-center persistent title="投票">
+        <div class="dialog-header" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
+        <div class="dialog-header" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
+        <div class="dialog-footer">
+          <el-button color="grey" @click="confirmVoteDialog = false">取消</el-button>
+          <el-button type="primary" @click="handleSubmitVote()">确定</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
+import moment from "moment";
+import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 
 const tableRecordDialog = ref(false);
+const confirmVoteDialog = ref(false);
+
+const matchList = ref([]);
+
+const recordList = ref([]);
+
+let submitParam = reactive({ matchId: 0, team: "" });
+
+const handleVoteClick = (selectedData) => {
+  submitParam = selectedData;
+  confirmVoteDialog.value = true;
+};
+
+const handleSubmitVote = () => {
+  console.log(submitParam);
+  submitNbaMatch(submitParam).then((res) => {
+    console.log(res);
+  });
+};
+
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+
+onMounted(async () => {
+  const res = await getNbaMatch();
+  matchList.value = res.data.map((res) => ({
+    ...res,
+    matchTime: moment(res.matchTime).format("M月DD日 HH:mm"),
+    awayTeamIcon: imgURL + res.awayTeamIcon,
+    homeTeamIcon: imgURL + res.homeTeamIcon
+  }));
+});
+
+watch(tableRecordDialog, async () => {
+  console.log("1234");
+  if (tableRecordDialog.value) {
+    const res = await getNbaRecord();
+    console.log(res);
+  }
+});
 </script>
 
 <style scoped lang="scss">
@@ -201,6 +262,7 @@ const tableRecordDialog = ref(false);
   border: 1px solid #51acff;
   background-color: #fff;
   position: relative;
+  margin-bottom: 12px;
   .nba24-match-game-status {
     width: 240px;
     height: 40px;
@@ -234,6 +296,10 @@ const tableRecordDialog = ref(false);
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      .nba24-match-game-icon {
+        width: 80px;
+        height: 80px;
+      }
       .nba24-match-game-content-team-name {
         font-size: 20px;
         font-weight: 600;
@@ -290,7 +356,6 @@ const tableRecordDialog = ref(false);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
   .nba24-match-game-bottom-left-title {
     font-size: 16px;
     font-weight: 500;

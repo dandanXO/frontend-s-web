@@ -10,8 +10,12 @@
                         filled
                         v-model="updatePwdInfo.oldPassword"
                         stack-label
-                        :rules="oldPwdRules"
                         clearable
+                        :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                '는 6자 이상이어야 합니다.'
+                        ]"
                     />
                 </div>
 

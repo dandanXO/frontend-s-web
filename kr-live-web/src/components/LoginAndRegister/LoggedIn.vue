@@ -22,13 +22,22 @@
       </div>
     </div>
     <div class="actions-topbar">
-      <div class="money-topbar">
-        <span>₩</span>
-        <span class="balance">{{ store.balance }}</span>
-        <span>원</span>
+      <div class="name-balance-info" v-if="props.isH5TopBar">
+        <div>{{ store.nickName }}</div>
+        <div class="money-topbar">
+          <span>₩</span>
+          <span class="balance">{{ store.balance }}</span>
+          <span>원</span>
+        </div>
       </div>
-      <q-btn class="primary-button blue-square" flat style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
-      <q-btn class="primary-button yellow-square" flat style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
+      <div class="actions-topbar-controls">
+        <q-btn class="primary-button blue-square" flat style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
+        <q-btn class="primary-button yellow-square" flat style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
+      </div>
+      <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
+        <q-btn class="primary-button blue-square" flat style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit" :label="'송금신청'" />
+        <q-btn class="primary-button yellow-square" flat style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw" :label="'출금신청'" />
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +46,7 @@
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
+const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();
 
@@ -140,9 +150,24 @@ const onLogoutSubmit = () => {
   display: none;
   flex-wrap: wrap;
   justify-content: flex-end;
-
+  align-items: center;
+  
+  .name-balance-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .actions-topbar-controls, .actions-bottombar-controls {
+    display: none;
+  }
+  
   @media (max-width: 768px) {
     display: flex;
+
+    .actions-bottombar-controls {
+      display: flex;
+      padding: 10px 0;
+    }
   }
 
   .money-topbar {

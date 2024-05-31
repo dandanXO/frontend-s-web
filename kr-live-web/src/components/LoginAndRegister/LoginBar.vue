@@ -5,7 +5,7 @@
         <img src="../../assets/home/menu-icon.svg" />
       </div>
       <div class="right-content-sidebar">
-        <LoggedIn v-if="store.hasToken()" />
+        <LoggedIn v-if="store.hasToken()" :isH5TopBar="true" />
         <NotLoggedIn v-else-if="!store.hasToken()" />
       </div>
     </div>
@@ -15,17 +15,14 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              환영 {{ store.nickName }}
+              <span v-if="store.token">님 환영합니다 {{ store.nickName }}</span>
+              <span v-else>로그인</span>
+              <div class="balance-info">
+                <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
+                <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
+              </div>
             </div>
             <div class="sidebar-section top">
-              <router-link
-                class="sidebar-section-item"
-                to="/?page=personal/info"
-              >
-                <img :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
-                <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
-              </router-link>
-              <div class="separator vertical" />
               <router-link
                 class="sidebar-section-item"
                 to="/?page=personal/info"
@@ -81,7 +78,7 @@
       </div>
       <div class="right-content">
         <LoggedIn v-if="store.hasToken()" />
-        <NotLoggedIn v-else-if="!store.hasToken()" />
+        <NotLoggedIn v-else-if="!store.hasToken()" :isH5Banner="true" />
       </div>
     </div>
   </div>
@@ -299,8 +296,25 @@ const iconInfo = reactive([
       font-size: 28px;
       font-weight: 500;
       line-height: 28px;
-
+      display: flex;
+      justify-content: space-between;
     }
+
+    .balance-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 70px;
+
+      img.balance-info-icon {
+        background-color: #00FFFF1A;
+        padding: 5px;
+        border-radius: 4px;
+      }
+    }
+    
     .sidebar-section {
       width: 100%;
       display: flex;
@@ -392,7 +406,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
-  display: none;
+  .actions-topbar-controls {
+    display: none;
+  }
   
   @media (min-width: 769px) {
     display: flex;

@@ -2,7 +2,7 @@
   <div class="modal-body-wrap">
     <q-card-section class="modal-body-content">
       <div class="" v-if="isCreateMode">
-        <q-btn :label="'뒤쪽에'" @click="isCreateMode = false" color="blue" />
+        <q-btn :label="'전 페이지로 이동'" @click="isCreateMode = false" color="blue" />
         <form class="content-form">
           <p>
             <q-input ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" filled clearable
@@ -22,15 +22,15 @@
           <q-btn :label="'글쓰기'" @click="isCreateMode = true" style="margin-left:auto" color="blue" />
         </div>
         <q-item-section class="table-row-head">
-          <q-item-label>번호</q-item-label>
           <q-item-label>제목</q-item-label>
-          <q-item-label>날짜</q-item-label>
+          <q-item-label>콘텐츠</q-item-label>
+          <q-item-label>날짜 시간</q-item-label>
         </q-item-section>
-        <template v-for="item in articleData" :key="item.page">
+        <template v-for="item in outboxData" :key="item.page">
           <q-item-section class="table-row table-row-title">
-            <q-item-label>{{ item.number }}</q-item-label>
             <q-item-label>{{ item.title }}</q-item-label>
-            <q-item-label>{{ item.date }}</q-item-label>
+            <q-item-label>{{ item.content }}</q-item-label>
+            <q-item-label>{{ moment(item.createTime).format('YYYY-MM-DD HH:mm:ss') }}</q-item-label>
           </q-item-section>
         </template>
       </div>
@@ -46,6 +46,7 @@
 import { reactive, ref, onMounted } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
+import moment from 'moment'
 var qs = require("qs");
 
 const $q = useQuasar();
@@ -58,7 +59,7 @@ const serviceForm = reactive({
   content: ""
 });
 
-const feedbackData = ref([]);
+const outboxData = ref([]);
 
 const sendMessage = () => {
   titleRef.value.validate();
@@ -90,18 +91,18 @@ const sendMessage = () => {
   }
 };
 
-const initFeedbackReplies = () => {
-  api.get('/session/feedback/replies').then((res) => {
+const initOutbox = () => {
+  api.get('/session/outbox').then((res) => {
     const { code, data } = res.data
 
     if(code === 0) {
-      feedbackData.value = data.records;
+      outboxData.value = data.records;
     }
   })
 }
 
 onMounted(() => {
-  initFeedbackReplies();
+  initOutbox();
 })
 </script>
 

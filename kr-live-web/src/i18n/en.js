@@ -4,9 +4,12 @@ export default {
     login_account: "Account",
     login_password: "Password",
     login_captcha: "Captcha",
+    login_submit: "Login",
+    login_register: "Register",
     // login end
     // register start
-    reg_login_name: "Login Name",
+    reg_referrer: "Referrer",
+    reg_userid: "User ID",
     reg_phone_num: "Phone Number",
     reg_pass: "Password",
     reg_confirm_pass: "Confirm Password",
@@ -14,6 +17,7 @@ export default {
     reg_code_affiliate: "Code Affiliate",
     reg_bank_id: "Bank ID",
     reg_card_acc: "Card Account",
+    reg_submit: "Register",
     // register end
     langVal: "en",
     login: "Login",

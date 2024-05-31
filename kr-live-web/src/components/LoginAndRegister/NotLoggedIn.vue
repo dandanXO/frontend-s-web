@@ -58,7 +58,7 @@
           <div class="login-text">로그인</div>
         </div>
       </div>
-      <div class="actions-topbar">
+      <div class="actions-topbar" v-if="!props.isH5Banner">
         <div class="register" @click="goToRegister">
           <div class="register-text">회원가입</div>
         </div>
@@ -98,6 +98,8 @@ const loginForm = reactive({
   captchaCode: "",
   codeId: ""
 });
+
+const props = defineProps(['isH5Banner']);
 
 const goToRegister = () => {
   router.push("/?page=register");

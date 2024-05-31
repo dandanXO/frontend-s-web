@@ -1,42 +1,49 @@
 <template>
   <div class="main-section">
     <q-form class="login-form" @keypress.enter="onSubmit">
-      <div>
-        <q-input ref="loginNameRef" :label="$t('lang.login_account')" filled clearable v-model="loginForm.loginName"
-          lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
-          ]" />
-      </div>
-      <div>
-        <q-input ref="pwdRef" :label="$t('lang.login_password')" filled clearable v-model="loginForm.password"
-        :type="isPwd ? 'password' : 'text'"
-        lazy-rules
-          :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-          ]">
-            <template v-slot:append>
-              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-          </template>
-          </q-input>
-      </div>
-      <div>
-        <div class="captcha-code">
-          <q-input ref="captchaRef" :label="$t('lang.login_captcha')" filled clearable class="captcha-code-input"
-            v-model="loginForm.captchaCode" lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
-            <div class="captcha-img-wrapper">
-              <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
-              <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
-            </div>
+      <q-input ref="loginNameRef" :label="$t('lang.login_account')" outlined clearable v-model="loginForm.loginName"
+        lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+        ]" />
+
+      <q-input ref="pwdRef" :label="$t('lang.login_password')" outlined clearable v-model="loginForm.password"
+        :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+        ]">
+        <template v-slot:append>
+          <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+        </template>
+      </q-input>
+
+      <div class="captcha-code">
+        <q-input ref="captchaRef" :label="$t('lang.login_captcha')" outlined clearable class="captcha-code-input"
+          v-model="loginForm.captchaCode" lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
+        <div class="captcha-img-wrapper">
+          <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+          <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
         </div>
       </div>
+
       <div class="action-buttons">
-        <q-btn rounded flat style="width:200px;height:70px;" @click="onSubmit" :label="'로그인'" class="primary-button yellow" :loading="isLoading" />
+        <q-btn rounded @click="onSubmit" :label="$t('lang.login_submit')" class="primary-button yellow login-submit-btn"
+          :loading="isLoading">
+          <template v-slot:loading>
+            <q-spinner-hourglass class="on-left" />
+            {{ $t('lang.loading') }}
+          </template>
+        </q-btn>
         <router-link to="/?page=register">
-          <q-btn rounded flat style="width:200px;height:70px;" :label="'회원가입'" class="primary-button blue" :loading="isLoading"/>
+          <q-btn rounded :label="$t('lang.login_register')" class="primary-button blue login-register-btn"
+            :loading="isLoading">
+            <template v-slot:loading>
+              <q-spinner-hourglass class="on-left" />
+              {{ $t('lang.loading') }}
+            </template>
+          </q-btn>
         </router-link>
       </div>
     </q-form>
@@ -53,11 +60,11 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   name: "LoginPage",
   emits: ["closeModal"],
-  setup(props, { emit }) {
+  setup(_props) {
     const store = userStore();
     const router = useRouter();
     const $q = useQuasar();
-    
+
     const loginNameRef = ref();
     const pwdRef = ref();
     const captchaRef = ref();
@@ -92,12 +99,12 @@ export default defineComponent({
         })
         .catch((e) => {
           captchaLoading.value = false;
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: res.data.message,
-          //   icon: "report_problem"
-          //     });
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.data.message,
+            icon: "report_problem"
+          });
         }).finally(() => {
           captchaLoading.value = false;
         });
@@ -105,7 +112,7 @@ export default defineComponent({
 
     const verificationImg = ref("");
 
-    
+
     const onSubmit = () => {
       (async () => {
         loginNameRef.value.validate();
@@ -133,7 +140,7 @@ export default defineComponent({
               });
 
               router.push("/");
-              
+
               setTimeout(() => {
                 // location.reload();
               }, 1000);
@@ -165,10 +172,15 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login-form {
-  .q-field--filled.q-field--dark .q-field__control,
-  .q-field--filled.q-field--dark .q-field__control:before {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  margin-top: 24px;
+
+  :deep(.q-field--filled.q-field--dark .q-field__control),
+  :deep(.q-field--filled.q-field--dark .q-field__control:before) {
     width: 100%;
     font-size: 14px;
     border: 1px solid #48b5b5;
@@ -177,15 +189,6 @@ export default defineComponent({
     background: #252e43;
     border-radius: 8px;
   }
-}
-</style>
-
-<style lang="scss" scoped>
-.login-form {
-  display: flex;
-  flex-direction: column;
-  row-gap: 24px;
-  margin-top: 24px;
 
   .captcha-code {
     width: 100%;
@@ -198,19 +201,29 @@ export default defineComponent({
   }
 
   .captcha-img-wrapper {
-    width:150px;
-    height:56px;
+    min-width: 150px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .captcha-img {
+      border-radius: 8px;
+    }
   }
 
   .action-buttons {
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    gap: 10px;
+
+    .login-submit-btn,
+    .login-register-btn {
+      width: 145px;
+      height: 36px;
+    }
   }
 }
 </style>
