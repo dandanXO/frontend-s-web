@@ -53,8 +53,8 @@ const isNoInfo = ref(true);
 
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
-  searchForm.endDate = updateDate(0);
+  searchForm.startDate = updateDate(6);
+  searchForm.endDate = updateDate(-1);
 };
 
 const discountData = ref([]);
