@@ -6,7 +6,7 @@
     <div class="container">
       <div class="btn-group">
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'groupStage' }" @click="tab = 'groupStage'">
-          小組賽
+          小组赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'roundOf16' }" @click="tab = 'roundOf16'">
           十六強賽
@@ -107,7 +107,7 @@
           <div class="alert-contents"><img src="../../../assets/promo/lh-eurocup-manual/alert-contents.png"></div>
           <div class="alert-box">
             <div class="alert-line" v-if="tab === 'groupStage'">
-            首轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            小组赛赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
           </div>
           <div class="alert-line" v-if="tab === 'roundOf16'">
             第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
