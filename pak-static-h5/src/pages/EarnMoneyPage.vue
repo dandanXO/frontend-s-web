@@ -1,17 +1,24 @@
 <template>
   <ProfileSummary :homeProfile="true" />
 
+  <!-- <pre>oneTimeBonusSetting--{{ oneTimeBonusSetting }}</pre> -->
+  <!-- <pre>memberDetail--{{ memberDetail }}</pre> -->
+  <!-- <pre>latestInvitees--{{ latestInvitees }}</pre> -->
+  <!-- <pre>selfTgurl{{ selfTgurl }}</pre> -->
+
   <div class="earn-money-wrapper">
     <div class="earn-money-container">
       <div class="earn-money-title">Bonus Pot Arrived</div>
       <div class="earn-money-pots">
         <div class="pot-item">
-          <div class="item-amount">RS 0.00</div>
+          <div class="item-amount">
+            RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+          </div>
           <div class="item-desc">My Total Income</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-01.png" /></div>
         </div>
         <div class="pot-item pot-item__2">
-          <div class="item-amount">0</div>
+          <div class="item-amount">{{ memberDetail.totalRefer }}</div>
           <div class="item-desc">My Total Number Of Invites</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-02.png" /></div>
         </div>
@@ -21,7 +28,7 @@
         <div class="details-item">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("ONE_TIME") }}</span>
           </div>
           <div class="item-title">Invite</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-01.png" /></div>
@@ -30,16 +37,16 @@
         <div class="details-item">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("DEPOSIT") }}</span>
           </div>
           <div class="item-title">Top Up</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-02.png" /></div>
         </div>
 
-        <div class="details-item">
+        <div class="details-item details-item__full">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("BET") }}</span>
           </div>
           <div class="item-title">Bet</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-03.png" /></div>
@@ -77,7 +84,7 @@
         </div>
 
         <div class="invite-share-link">
-          <div class="link-href">https://b9.game/refer/JnAlZ6</div>
+          <div class="link-href">{{ selfTgurl }}</div>
           <div class="link-copy" @click="copyHrefLink">Copy Link</div>
         </div>
 
@@ -95,7 +102,14 @@
             <td style="color: #8c968f; font-size: 120%">Friend Count</td>
             <td style="color: #8c968f; font-size: 120%">Invite Bonus</td>
           </tr>
-          <tr>
+
+          <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <tr>
+              <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+              <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
+            </tr>
+          </template>
+          <!-- <tr>
             <td>1</td>
             <td>Rs 120.0</td>
           </tr>
@@ -143,7 +157,7 @@
           <tr>
             <td>10000~999999</td>
             <td>Rs 120.0</td>
-          </tr>
+          </tr> -->
         </table>
       </div>
 
@@ -154,7 +168,7 @@
 
         <div class="sent-ytd-amount">
           Total amount sent as of yesterday
-          <span>159,930.00</span>
+          <span>{{ oneTimeBonusSetting.totalAmount }}</span>
         </div>
       </div>
 
@@ -164,35 +178,25 @@
             <td style="color: #8c968f; font-size: 120%">Player</td>
             <td style="color: #8c968f; font-size: 120%">Money</td>
           </tr>
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
 
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-2.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-3.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
+          <template v-if="latestInvitees.records && latestInvitees.records.length === 0">
+            <tr>
+              <td colspan="2">No Records</td>
+            </tr>
+          </template>
+          <template v-else>
+            <template v-for="(item, index) in latestInvitees.records" :key="index">
+              <tr>
+                <td>
+                  <div class="player-details">
+                    <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                    {{ item.loginName }}
+                  </div>
+                </td>
+                <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+              </tr>
+            </template>
+          </template>
         </table>
       </div>
     </div>
@@ -204,13 +208,15 @@ import { onMounted, ref } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
+import { userStore } from "stores/index";
 
 const hrefLink = ref("https://b9.game/refer/JnAlZ6");
 const $q = useQuasar();
+const store = userStore();
 
 const copyHrefLink = () => {
   navigator.clipboard
-    .writeText(hrefLink.value)
+    .writeText(selfTgurl.value)
     .then(() => {
       $q.notify({
         message: "Link copied to clipboard",
@@ -230,6 +236,8 @@ const copyHrefLink = () => {
 };
 
 const oneTimeBonusSetting = ref([]);
+const memberDetail = ref([]);
+const latestInvitees = ref([]);
 
 const getOneTimeBonusSetting = () => {
   api
@@ -244,8 +252,56 @@ const getOneTimeBonusSetting = () => {
     });
 };
 
+const getMemberDetail = () => {
+  api
+    .get("/session/refer-rebate/member-detail")
+    .then((response) => {
+      if (response.code === 0) {
+        memberDetail.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const getLatestInvitees = () => {
+  api
+    .get("/session/refer-rebate/latest-invitees")
+    .then((response) => {
+      if (response.code === 0) {
+        latestInvitees.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const selfTgurl = ref("");
+
+const getRewardAmount = (type) => {
+  const rewards = memberDetail.value.rewardAmountByType;
+  if (rewards && Array.isArray(rewards)) {
+    const reward = rewards.find((reward) => reward.rewardType === type);
+    return reward ? reward.totalAmount : 0;
+  }
+  return 0;
+};
+
 onMounted(() => {
   getOneTimeBonusSetting();
+  getMemberDetail();
+  getLatestInvitees();
+
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.h5Url;
+  }
+
+  api.get("/session/member/referralCode").then((res) => {
+    if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
+  });
 });
 </script>
 
@@ -313,10 +369,11 @@ onMounted(() => {
       // grid-gap: 12px;
       gap: 12px;
       margin-top: 16px;
+      flex-wrap: wrap;
 
       .details-item {
         display: flex;
-        width: 50%;
+        width: calc(50% - 6px);
         flex-direction: column;
         min-height: 100px;
         align-items: center;
@@ -324,6 +381,10 @@ onMounted(() => {
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         position: relative;
+
+        &__full {
+          width: 100%;
+        }
 
         .item-amount {
           span {
@@ -402,6 +463,8 @@ onMounted(() => {
 
         .link-href {
           padding: 16px;
+          word-break: break-all;
+          font-size: 11px;
         }
         .link-copy {
           color: #0f0b0b;
