@@ -1,7 +1,7 @@
 <template>
-    <div class="europe-2024-promo-period">
+<!--    <div class="europe-2024-promo-period">
       活动时间：2024/6/1 - 2024/7/15 23:59:59
-    </div>
+    </div>-->
     <div class="europe-container">
       <div class="tab-buttons">
         <button
