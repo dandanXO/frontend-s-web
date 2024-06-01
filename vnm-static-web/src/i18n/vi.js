@@ -151,7 +151,7 @@ export default {
     productServicePt3: "Lựa chọn đa dạng",
     futureGaming: "Tương lai của trò chơi đã đến. Các trò chơi tuyệt vời trên tất cả các thiết bị.",
     scanToDownload: "Quét để tải ứng dụng",
-    moreDetails: "Chi tiết thêm",
+    moreDetails: "Đọc thêm",
     announcementList: "Danh sách thông báo",
     hotMatches: "Trận Đấu Hot",
     euroCountdown01: "ĐƯỜNG TỚI ",

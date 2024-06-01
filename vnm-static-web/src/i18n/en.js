@@ -151,7 +151,7 @@ export default {
     productServicePt3: "Diverse selection",
     futureGaming: "The future of gaming is here.Great games on all devices.TF88 App",
     scanToDownload: "Scan to download the APP",
-    moreDetails: "More details",
+    moreDetails: "Read more",
     announcementList: "Announcement List",
     playNow: "Play now",
     hotMatches: "Hot Matches",
