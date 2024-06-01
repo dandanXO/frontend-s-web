@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  
+
     <div
       class="rocket-wrapper"
       v-if="showFloatPromo"
@@ -143,14 +143,14 @@ export default defineComponent({
               floatPromo.push(element);
               showFloatPromo.value = true;
             }
-            if (element.type === 'GAME') {  
+            if (element.type === 'GAME') {
               gamePromo.push(element)
               showRocket.value = true;
             }
           });
           updatePromo(); // Initially update the displayed promo
           // Update the displayed promo every 5 seconds
-          setInterval(updatePromo, 5000);
+          setInterval(updatePromo, 3000);
         } else {
           ElMessage.error(res.message);
         }
@@ -198,7 +198,7 @@ export default defineComponent({
     const currentPromo = ref(null)
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
-      
+
       router.push(`/promotion?name=${code}`)
     }
     const updatePromo = () => {
@@ -217,7 +217,7 @@ export default defineComponent({
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
     });
-    
+
     return {
       store,
       customerHovered,
