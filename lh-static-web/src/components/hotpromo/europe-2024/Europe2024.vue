@@ -66,7 +66,7 @@ function activateTab(index) {
   .europe-container {
     width: 100%;
     max-width: 1500px;
-    margin: 35px auto;
+    margin: 85px auto;
     .rule-title {
       text-align: center;
     }
