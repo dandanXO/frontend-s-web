@@ -1518,7 +1518,7 @@ export default defineComponent({
       }
     };
     const gotoFloatPromo = (code) => {
-      
+
       router.push(`/promo?name=${code}`)
     }
     const floatPromo = ([]);
@@ -1533,7 +1533,7 @@ export default defineComponent({
                   floatPromo.push(element);
                   showFloatPromo.value = true;
                 }
-                if (element.type === 'GAME') {  
+                if (element.type === 'GAME') {
                   gamePromo.push(element)
                   showRocket.value = true;
                 }
@@ -1542,7 +1542,7 @@ export default defineComponent({
               checkFloatPromo();
               updatePromo(); // Initially update the displayed promo
               // Update the displayed promo every 5 seconds
-              setInterval(updatePromo, 5000);
+              setInterval(updatePromo, 3000);
             } else {
               ElMessage.error(res.message);
             }
@@ -1551,7 +1551,7 @@ export default defineComponent({
           console.log(err);
         });
     }
-    
+
     const currentPromo = ref(null)
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
@@ -1584,7 +1584,7 @@ export default defineComponent({
       showFloatPromo.value = false;
     };
     const fabPos = ref([18, 18]);
-    const promoPos = ref([18, 118]);
+    const promoPos = ref([18, 128]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
