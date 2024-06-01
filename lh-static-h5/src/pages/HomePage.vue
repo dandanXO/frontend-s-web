@@ -1563,9 +1563,9 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showRocket.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showRocket.value = true;
+      // }
     };
 
     const hideRocket = () => {
@@ -1575,16 +1575,16 @@ export default defineComponent({
 
     const showFloatPromo = ref(false);
     const checkFloatPromo = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showFloatPromo.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showFloatPromo.value = true;
+      // }
     };
 
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
     const fabPos = ref([18, 18]);
-    const promoPos = ref([18, 96]);
+    const promoPos = ref([18, 118]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
@@ -1621,7 +1621,7 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
-      if ((store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
+      if ((store.token)) {
         initFloating();
       }
 
@@ -1767,7 +1767,7 @@ export default defineComponent({
   // cursor: pointer;
 
   img {
-    width: 70px;
+    width: 105px;
     pointer-events: none;
   }
 

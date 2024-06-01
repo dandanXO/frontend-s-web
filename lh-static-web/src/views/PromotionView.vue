@@ -329,11 +329,11 @@ export default defineComponent({
       loadAll();
     });
 
-    // watch(() => route.query.name, () => {
-    //   if (!route.query.name) {
-    //     isPromoDetail.value = false
-    //   }
-    // });
+    watch(() => route.query.name, () => {
+      if (route.query.name) {
+        loadAll();
+      }
+    });
 
     return {
       promoState,

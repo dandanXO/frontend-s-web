@@ -49,7 +49,7 @@
   <div
     class="rocket-wrapper"
     v-if="showRocket"
-    :class="(store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') && 'show-rocket'"
+    :class="'show-rocket'"
     :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
     @mousedown="startDragging('rocket', $event)"
   >
@@ -66,7 +66,7 @@
     <div
       class="rocket-wrapper"
       v-if="showFloatPromo"
-      :class="(store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') && 'show-promo'"
+      :class="'show-promo'"
       :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
       @mousedown="startDragging('promo', $event)"
     >
@@ -88,12 +88,13 @@ import { uiStore } from "@/store/ui";
 import { useDark } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { ElMessage } from "element-plus";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   components: {
     GameModal
   },
   setup() {
+    const route = useRoute();
     const router = useRouter();
     const imgURL = process.env.VUE_APP_IMAGE_CDN
     const customerHovered = ref(false);
@@ -197,6 +198,7 @@ export default defineComponent({
     const currentPromo = ref(null)
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
+      
       router.push(`/promotion?name=${code}`)
     }
     const updatePromo = () => {
@@ -205,7 +207,7 @@ export default defineComponent({
     };
     onMounted(() => {
       getAppDownloadUrl();
-      if ((store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'))) {
+      if ((store.token)) {
         initFloating();
       }
       document.addEventListener("mouseup", stopDragging);
