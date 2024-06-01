@@ -1096,7 +1096,7 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
-    const isRedPacketShow = ref(false);
+    const isRedPacketShow = ref(true);
     const getRedEnvelope = () => {
       router.push("/promo?name=vi-mualixi-redpacket");
     };
@@ -2632,7 +2632,8 @@ export default defineComponent({
 }
 
 .red-envelope {
-  width: 135px;
+  width: 85px;
+  margin-left: 30px;
   cursor: pointer;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
