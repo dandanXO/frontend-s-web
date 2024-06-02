@@ -239,7 +239,7 @@ export default defineComponent({
           pageName.value = "Forgot Account";
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          // hasPage.value = true;
+          hasPage.value = true;
           pageName.value = "Forgot Password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;
