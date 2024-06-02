@@ -1,7 +1,7 @@
 <template>
   <div class="privilege-invite-container">
     <div>
-      <img class="banner" src="../assets/images/privilege-invite/top-banner.jpg" />
+      <img class="banner" src="../assets/images/privilege-invite/web.jpg" />
     </div>
     <div style="filter: hue-rotate(530deg)">
       <!-- tabs -->
