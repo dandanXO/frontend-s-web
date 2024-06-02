@@ -74,7 +74,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-45%, -50%) skewX(16deg);
+        transform: translate(-45%, -50%) skewX(12deg);
         overflow: auto;
         width: 180px;
 
