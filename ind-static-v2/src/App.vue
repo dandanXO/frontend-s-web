@@ -12,8 +12,8 @@ import { userStore } from "src/stores";
 import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+// import { StatusBar, Style } from "@capacitor/status-bar";
+// import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 
@@ -231,10 +231,10 @@ export default defineComponent({
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
-        await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
-        await StatusBar.setBackgroundColor({ color: "#3E1474" });
-        await StatusBar.setStyle({ style: Style.Dark });
+        // await StatusBar.hide();
+        // await StatusBar.setOverlaysWebView({ overlay: true });
+        // await StatusBar.setBackgroundColor({ color: "#3E1474" });
+        // await StatusBar.setStyle({ style: Style.Dark });
 
         // setTimeout(() => {
         //   getInsetHeight();
@@ -242,26 +242,26 @@ export default defineComponent({
       }
     };
 
-    const getInsetHeight = async () => {
-      const ua = navigator.userAgent.toLowerCase();
-      console.log(ua);
-      const isAndroidPixel = ua.indexOf("android") > -1;
-      // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
-      if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
-        const insets = await SafeArea.getSafeAreaInsets();
-        console.log(insets);
-        // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
-        if (insets.bottom > 0) {
-          // console.log("HERe");
-          ui.bottomInsetHeight = insets.bottom;
-        }
-      }
-    };
+    // const getInsetHeight = async () => {
+    //   const ua = navigator.userAgent.toLowerCase();
+    //   console.log(ua);
+    //   const isAndroidPixel = ua.indexOf("android") > -1;
+    //   // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+    //   if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
+    //     const insets = await SafeArea.getSafeAreaInsets();
+    //     console.log(insets);
+    //     // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
+    //     if (insets.bottom > 0) {
+    //       // console.log("HERe");
+    //       ui.bottomInsetHeight = insets.bottom;
+    //     }
+    //   }
+    // };
 
     const handleVisibilityChange = (status) => {
-      if (Platform.is.capacitor && Platform.is.android) {
-        StatusBar.hide();
-      }
+      // if (Platform.is.capacitor && Platform.is.android) {
+      //   StatusBar.hide();
+      // }
     };
 
     const getOnlineStatApi = async () => {
