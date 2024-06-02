@@ -2955,7 +2955,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         img {
-          width: 100%;
+          width: unset;
     height: 60px;
         }
       }
