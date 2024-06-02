@@ -524,19 +524,55 @@
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
-      <div v-for="(game, gameIndex) in gamePromo" :key="gameIndex"  class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
-        <div class="rocket">
-          <img :src="`${imgURLFloat}/game/${game.icon}`" />
-        </div>
-      </div>
+      <q-carousel
+        class="float"
+        :navigation="gamePromo.length > 1 ? true : false"
+        v-model="rocketSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(game, i) in gamePromo"
+          :key="i"
+          :name="i"
+          @click="playGame(game.platform, game.platform, game.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
     </div>
   </q-page-sticky>
   <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
-      <div class="rocket-wrapper" @click="gotoFloatPromo(currentPromo.code)">
-        <div class="rocket"><img :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
-      </div>
+      <q-carousel
+        class="float"
+        :navigation="floatPromo.length > 1 ? true : false"
+        v-model="promoSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="i"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
     </div>
   </q-page-sticky>
 
@@ -1546,6 +1582,9 @@ export default defineComponent({
               updatePromo(); // Initially update the displayed promo
               // Update the displayed promo every 5 seconds
               setInterval(updatePromo, 3000);
+              updateRocket(); // Initially update the displayed promo
+              // Update the displayed promo every 5 seconds
+              setInterval(updateRocket, 3000);
             } else {
               ElMessage.error(res.message);
             }
@@ -1560,6 +1599,13 @@ export default defineComponent({
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
+    
+    const currentRocket = ref(null)
+    const currentRocketIndex = ref(0);
+    const updateRocket = () => {
+      currentRocket.value = gamePromo[currentRocketIndex.value];
+      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.length;
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
@@ -1581,6 +1627,9 @@ export default defineComponent({
       // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
       //   showFloatPromo.value = true;
       // }
+      if (gamePromo.length === 0) {
+        promoPos.value = [18, 18]
+      }
     };
 
     const hideFloatPromo = () => {
@@ -1733,7 +1782,12 @@ export default defineComponent({
       floatPromo,
       gamePromo,
       currentElement,
-      imgURLFloat
+      imgURLFloat,
+      updateRocket,
+      currentRocket,
+      currentRocketIndex,
+      rocketSlide: ref(0),
+      promoSlide: ref(0)
     };
   }
 });
@@ -1863,6 +1917,17 @@ export default defineComponent({
   }
 }
 
+:deep(.q-carousel.float) {
+  height: unset;
+  background: transparent;
+  
+}
+  :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
+    margin: 0;
+    padding: 0;
+    font-size: 4px !important;
+    color: #3382f4;
+  }
 .home-header {
   display: flex;
   align-items: center;
