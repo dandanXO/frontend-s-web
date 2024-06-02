@@ -649,6 +649,7 @@ import MaintenanceBox from "components/MaintenanceBox.vue";
 import UserProfile from "components/home/drawer/UserProfile.vue";
 import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
+import { onMounted } from "vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1524,6 +1525,8 @@ export default defineComponent({
     const floatPromo = ([]);
     const gamePromo = ([]);
     const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
       api
         .get("/session/redirect")
         .then((res) => {
@@ -1621,12 +1624,14 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
-      if ((store.token)) {
-        initFloating();
-      }
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
   });
+  onMounted(() => {
+    if ((store.token)) {
+        initFloating();
+      }
+  })
     // Clear interval on unmounted
     onUnmounted(() => {
       clearInterval(intervalId);
