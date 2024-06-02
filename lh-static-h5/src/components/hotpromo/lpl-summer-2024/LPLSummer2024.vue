@@ -82,7 +82,7 @@
           <div class="title">*逆转奖金</div>
           <div class="content">赛事中先输一局，最终逆转取胜</div>
         </div>
-        <div class="lpl-summer-2024-example">例：档位奖金不累计，指定赛事场数投注额按多场馆有效投注额累计。</div>
+        <div class="lpl-summer-2024-example">例：档位奖金不累计，若触发多个特殊事件按最高档位派发，指定赛事场数投注额按多场馆有效投注额累计。</div>
         <div class="lpl-summer-2024-rule-title"></div>
         <div class="lpl-summer-2024-rule-content">
           <div class="item-content">
@@ -509,7 +509,7 @@ onMounted(async () => {
     }
     .content {
       width: 60%;
-      padding: 25px; 
+      padding: 25px;
     }
   }
 
