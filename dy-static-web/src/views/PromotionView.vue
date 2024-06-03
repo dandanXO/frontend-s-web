@@ -94,7 +94,8 @@
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
-              selectedPromo.promoCode === 'dy2-lpl-summer24'
+              selectedPromo.promoCode === 'dy2-lpl-summer24' ||
+              selectedPromo.promoCode === 'dy-duanwujie24'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
