@@ -19,10 +19,13 @@ defineProps({
   }
 });
 
+const emit = defineEmits(["change"]);
+
 const activateTab = defineModel();
 
 const handleClick = (tab) => {
   activateTab.value = tab;
+  emit("change", tab);
 };
 </script>
 <style scoped lang="scss">

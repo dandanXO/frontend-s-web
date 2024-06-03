@@ -336,7 +336,7 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex: 1;
+    flex: 2;
 
     .share-summary-wrapper {
       display: flex;

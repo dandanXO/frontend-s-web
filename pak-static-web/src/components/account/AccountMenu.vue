@@ -71,7 +71,7 @@ const links = ref([
   { name: "Discount", img: DiscountSvg, path: "/center/withdraw" },
   { name: "Bank", img: BankSvg, path: "/center/withdrawbank" },
   { name: "Message", img: MessageSvg, path: "/center/mailbox" },
-  { name: "VIP", img: VIPSvg, path: "/center/withdraw" }
+  { name: "VIP", img: VIPSvg, path: "/center/vip" }
 ]);
 </script>
 
