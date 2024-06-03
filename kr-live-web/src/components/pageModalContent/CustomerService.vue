@@ -139,7 +139,7 @@ const readFeedback = (id) => {
 
     if (code === 0) {
       $q.notify({
-        message: "已读消息",
+        message: "메시지 읽기",
         type: "positive",
         position: "top",
         icon: "check_circle_outline"

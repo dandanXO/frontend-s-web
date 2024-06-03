@@ -1,19 +1,10 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <!-- <span class="menu-title">ถอนไปยังบัญชีธนาคาร</span> -->
-    </div>
-    <div class="q-pa-md">
-      <div class="account-title-container">
-        <!-- <span class="account-title">{{ $t("lang.choose_a_card") }}</span> -->
+    <div class="">
+      <div class="">
       </div>
       <div class="account-content">
-        <!-- <div class="account-tip-text wbot">
-          <RiSpamLine />
-          {{ $t("lang.register_bank_acc_para") }}
-        </div> -->
-        <div class="addbuttons"></div>
-        <div class="flex-box flex-wrap bank-card-list">
+        <div class="bank-card-list">
           <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
             <div
               class="bank-card-item"
@@ -22,7 +13,7 @@
                 inactive: index > isCardActive
               }"
               v-if="bc.bankName"
-              @click="showCard(bc, index)"
+              @mouseover="showCard(bc, index)"
             >
               <div class="icon">
                 <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
@@ -35,7 +26,7 @@
               <div class="unlink-btn" @click="unbindBankCard(bc)">
                  <RiLinkUnlink />
               </div>
-              <div class="flex-box cards">
+              <div class="">
                 <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
                   {{ b }}
                 </div>
@@ -1128,10 +1119,10 @@ export default defineComponent({
 
     .txt-center {
       transform: none;
-      padding-top: 13px;
+      // padding-top: 13px;
       width: 250px;
       text-align: center;
-      margin-left: 30px;
+      // margin-left: 30px;
     }
 
     &.active {
