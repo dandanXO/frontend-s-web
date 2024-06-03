@@ -84,7 +84,6 @@
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
-    
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -246,9 +245,10 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao" || 
+      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
       this.list.redirectUrl === "dy2-lpl-summer24" ||
-      this.list.redirectUrl === "dy-duanwujie24"
+      this.list.redirectUrl === "dy-duanwujie24" ||
+      this.list.redirectUrl === "dy2-nba24-match"
     ) {
       this.isCommonPromo = false;
     } else {

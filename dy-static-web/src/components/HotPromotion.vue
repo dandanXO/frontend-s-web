@@ -103,7 +103,7 @@ import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
 import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGamePromo.vue";
-import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue"
+import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
@@ -297,7 +297,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-msi-promo" ||
       this.list.redirectUrl === "dy2-eurocup-hongbao" ||
       this.list.redirectUrl === "dy2-lpl-summer24" ||
-      this.list.redirectUrl === "dy-duanwujie24"
+      this.list.redirectUrl === "dy-duanwujie24" ||
+      this.list.redirectUrl === "dy2-nba24-match"
     ) {
       this.isCommonPromo = false;
     } else {
