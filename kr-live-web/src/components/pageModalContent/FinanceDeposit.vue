@@ -16,28 +16,28 @@
       <div class="submit-message">
         <div class="line">
           <span>은행 이름:</span>
-          <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
+          <input readonly class="info" ref="subMsg0" :value="submitMessage[0]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
             {{ copybtntxt0 }}
           </q-btn>
         </div>
         <div class="line">
           <span>은행 계좌:</span>
-          <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
+          <input readonly class="info" ref="subMsg1" :value="submitMessage[1]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
             {{ copybtntxt1 }}
           </q-btn>
         </div>
         <div class="line">
           <span>이름:</span>
-          <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
+          <input readonly class="info" ref="subMsg2" :value="submitMessage[2]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
             {{ copybtntxt2 }}
           </q-btn>
         </div>
         <div class="line">
           <span>입금 금액:</span>
-          <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
+          <input readonly class="info" ref="subMsg3" :value="submitMessage[3]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
             {{ copybtntxt3 }}
           </q-btn>
@@ -240,21 +240,20 @@ const checkAmount = reactive({
 });
 
 const copyMessage = (position) => {
-  let copyText = null;
-  copyText = eval(`subMsg${position}.value.innerText`);
-  // Create a temporary textarea element
-  const tempTextarea = document.createElement("textarea");
-  tempTextarea.value = copyText;
-  document.body.appendChild(tempTextarea);
+  if(position === '0') {
+    subMsg0.value.focus();
+  } else if(position === '1') {
+    subMsg1.value.focus();
+  } else if(position === '2') {
+    subMsg2.value.focus();
+  } else if(position === '3') {
+    subMsg3.value.focus();
+  }
 
-  // Select the text and copy it
-  tempTextarea.select();
-  document.execCommand("copy");
+  document.execCommand('copy');
 
-  // Remove the temporary textarea element
-  document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "복사";
+  copybtntxt[position].value = "복사됨";
 };
 
 const blurCode = () => {
@@ -780,6 +779,17 @@ onMounted(() => {
       // flex: 1;
       color: #4fb2ff;
       width: 80px;
+    }
+
+    input.info {
+      background: transparent;
+      border: none;
+      flex: 3;
+      color: #fff;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     span.info {
