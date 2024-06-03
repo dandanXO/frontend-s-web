@@ -184,6 +184,7 @@ import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "RegisterPage",
