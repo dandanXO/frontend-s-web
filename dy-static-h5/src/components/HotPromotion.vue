@@ -81,6 +81,7 @@
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
     
@@ -133,6 +134,7 @@ import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGameProm
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 
@@ -141,6 +143,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Nba24Match,
     ClaimPromo,
     TigerCardPromo,
     PrizePoolVotePromo,
