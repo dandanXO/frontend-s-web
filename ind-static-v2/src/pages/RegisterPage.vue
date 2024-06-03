@@ -42,7 +42,7 @@
                   hide-bottom-space
                   v-model="regForm.password"
                   :rules="[(val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val && val.length >= 6) || 'The characters of password must be above 5'
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
                   ]"
                   :type="isPwd ? 'password' : 'text'"
                   color="white"

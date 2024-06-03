@@ -26,26 +26,26 @@ export default defineComponent({
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
-      const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        const obj = {
-          identifier: sidParam,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
-      })();
+      // const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
+      // const fpPromise = FingerprintJS.load();
+      // (async () => {
+      //   const fp = await fpPromise;
+      //   const result = await fp.get();
+      //   const excludes = { value: ["timezone", "timeZoneOffset"] };
+      //   const allComponents = { ...result.components };
+      //   excludes.value.forEach((element) => {
+      //     delete allComponents[element];
+      //   });
+      //   const sidParam = FingerprintJS.hashComponents(allComponents);
+      //   const obj = {
+      //     identifier: sidParam,
+      //     affiliateCode: affiliateItem
+      //   };
+      //   api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+      //     if (res.code === 0) {
+      //     }
+      //   });
+      // })();
     };
 
     const getAppInfo = async () => {
@@ -119,7 +119,7 @@ export default defineComponent({
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
 
-        }, 1500);
+        }, 500);
       }
     };
 
@@ -307,7 +307,7 @@ export default defineComponent({
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
-      checkSID();
+      // checkSID();
       // getCSA();
       getAppInfo();
       initOrientation();
