@@ -145,9 +145,14 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="amount" :label="t('fields.amount')">
+      <el-table-column prop="amount" :label="t('fields.amount') + '/' + t('dashboard.memberCount')">
         <template #default="scope">
-          $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+          <div v-if="scope.row.rewardType !== 'ONE_TIME'">
+            $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
+          </div>
+          <div v-else>
+            {{ scope.row.amount }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="commissionAmount" :label="t('fields.commission')">
@@ -171,6 +176,7 @@
             v-if="scope.row.recordTime !== null"
             v-formatter="{
               data: scope.row.recordTime,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -197,7 +203,7 @@ import moment from 'moment'
 import { getMemberReferRewardRecord } from '../../../../api/member-refer-event'
 import { useI18n } from 'vue-i18n'
 import { hasPermission } from '../../../../utils/util'
-import { getShortcuts } from '@/utils/datetime'
+import { convertDateToEnd, convertDateToStart, getShortcuts } from '@/utils/datetime'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
@@ -207,11 +213,12 @@ const shortcuts = getShortcuts(t)
 
 const startDate = new Date()
 startDate.setDate(startDate.getDate() - 2)
-const defaultStartDate = convertDate(startDate)
-const defaultEndDate = convertDate(new Date())
+const defaultStartDate = convertDateToStart(startDate)
+const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+let timeZone = null
 
 const sites = reactive({
   list: [],
@@ -249,10 +256,6 @@ const request = reactive({
   gameType: null,
 })
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
-
 function disabledDate(time) {
   return (
     time.getTime() <
@@ -280,14 +283,40 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(
+        query.recordTime[0],
+        timeZone,
+        'start'
+      )
+      query.recordTime[1] = formatInputTimeZone(
+        query.recordTime[1],
+        timeZone,
+        'end'
+      )
       query.recordTime = query.recordTime.join(',')
     }
   }
 
   return query
+}
+
+function formatInputTimeZone(time, timezone, type = '') {
+  if (!timezone) {
+    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+  }
+
+  var oriTimeZone = moment(time).add(8, 'hour');
+  var hourDifferent = timezone.substring(1);
+
+  var formattedTimeZone = timezone.charAt(0) === '+'
+    ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
+    : moment(oriTimeZone).add(hourDifferent, 'hours');
+
+  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
 }
 
 async function loadRecord() {

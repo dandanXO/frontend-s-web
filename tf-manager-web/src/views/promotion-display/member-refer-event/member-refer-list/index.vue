@@ -150,6 +150,7 @@
             v-if="scope.row.recordTime !== null"
             v-formatter="{
               data: scope.row.recordTime,
+              timeZone: timeZone,
               type: 'date',
             }"
           />
@@ -191,6 +192,7 @@ const defaultEndDate = convertDateToEnd(new Date())
 const site = ref(null)
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+let timeZone = null
 
 const sites = reactive({
   list: [],
@@ -239,14 +241,40 @@ function checkQuery() {
       query[key] = value
     }
   })
+  timeZone = sites.list.find(e => e.id === request.siteId).timeZone
   if (request.recordTime !== null) {
     if (request.recordTime.length === 2) {
       query.recordTime = JSON.parse(JSON.stringify(request.recordTime))
+      query.recordTime[0] = formatInputTimeZone(
+        query.recordTime[0],
+        timeZone,
+        'start'
+      )
+      query.recordTime[1] = formatInputTimeZone(
+        query.recordTime[1],
+        timeZone,
+        'end'
+      )
       query.recordTime = query.recordTime.join(',')
     }
   }
 
   return query
+}
+
+function formatInputTimeZone(time, timezone, type = '') {
+  if (!timezone) {
+    return moment(time).format('YYYY-MM-DD HH:mm:ss');
+  }
+
+  var oriTimeZone = moment(time).add(8, 'hour');
+  var hourDifferent = timezone.substring(1);
+
+  var formattedTimeZone = timezone.charAt(0) === '+'
+    ? moment(oriTimeZone).subtract(hourDifferent, 'hours')
+    : moment(oriTimeZone).add(hourDifferent, 'hours');
+
+  return moment(formattedTimeZone).format('YYYY-MM-DD HH:mm:ss');
 }
 
 async function loadRecord() {
