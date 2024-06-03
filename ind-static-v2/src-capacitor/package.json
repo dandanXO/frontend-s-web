@@ -1,6 +1,6 @@
 {
   "name": "IndWin7",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "IndWin7.com",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
+    "@awesome-cordova-plugins/adjust": "^6.7.0",
     "@capacitor/android": "^5.6.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
