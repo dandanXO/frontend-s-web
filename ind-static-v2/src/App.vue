@@ -265,15 +265,15 @@ export default defineComponent({
     };
 
     const addCloudWiseTrackCode = () => {
-      const script0 = document.createElement('script');
-      script0.innerHTML = "var CWRUMLICENCE = 'wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';";
+      // const script0 = document.createElement('script');
+      // script0.innerHTML = "var CWRUMLICENCE = 'wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';";
+      //
+      // const script = document.createElement('script');
+      // script.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';
+      // script.async = true;
 
-      const script = document.createElement('script');
-      script.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';
-      script.async = true;
-
-      document.head.appendChild(script0);
-      document.head.appendChild(script);
+      // document.head.appendChild(script0);
+      // document.head.appendChild(script);
     }
 
     const getOnlineStatApi = async () => {
