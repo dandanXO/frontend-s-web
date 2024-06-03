@@ -4,7 +4,7 @@
       <div class="wrapper">
         <span class="logo">LOGO</span>
         <div class="grid">
-          <router-link class="footer-link" to="/about">About Play4Win</router-link>
+          <router-link class="footer-link" to="/about">About B9.Game</router-link>
 
           <router-link class="footer-link" to="/about?id=data-collection">Data Collection</router-link>
 
@@ -21,35 +21,54 @@
       </div>
 
       <div class="partners">
-        <img src="../../assets/images/common/logo/JOKER.png" alt="JOKER" />
+        <img src="@/assets/images/common/logo/logo-ag.png" alt="AG" />
+        <img src="@/assets/images/common/logo/logo-cmd.png" alt="CMD368" />
+        <img src="@/assets/images/common/logo/logo-rich88.png" alt="RICH88" />
+        <img src="@/assets/images/common/logo/logo-tian-cheng.png" alt="TAIN-CHEN" />
+        <img src="@/assets/images/common/logo/logo-10016.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10017.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10018.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10019.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-acb.png" alt="ACB" />
+        <img src="@/assets/images/common/logo/logo-10015.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-world.png" alt="WORLD" />
+        <img src="@/assets/images/common/logo/logo-sb.png" alt="SB" />
+        <img src="@/assets/images/common/logo/logo-wm.png" alt="WM" />
+        <img src="@/assets/images/common/logo/logo-10009.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10010.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10011.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-kp.png" alt="KP" />
+        <img src="@/assets/images/common/logo/logo-10013.png" alt="" />
+        <img src="@/assets/images/common/logo/logo-10014.png" alt="" />
+        <!-- <img src="../../assets/images/common/logo/JOKER.png" alt="JOKER" />
         <img src="../../assets/images/common/logo/MGP.png" alt="MGP" />
         <img src="../../assets/images/common/logo/BNG.png" alt="BNG" />
-        <img src="../../assets/images/common/logo/JILI.png" alt="JILI" />
+        <img src="../../assets/images/common/logo/JILI.png" alt="JILI" /> -->
 
         <!-- Playstar -->
-        <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/fa-chai-logo.png" alt="FC" />
-        <img v-else src="../../assets/images/common/logo/FC.png" alt="FC" />
+        <!-- <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/fa-chai-logo.png" alt="FC" />
+        <img v-else src="../../assets/images/common/logo/FC.png" alt="FC" /> -->
 
-        <img src="../../assets/images/common/logo/CQ9.png" alt="CQ9" />
-        <img src="../../assets/images/common/logo/JDB.png" alt="JDB" />
+        <!-- <img src="../../assets/images/common/logo/CQ9.png" alt="CQ9" />
+        <img src="../../assets/images/common/logo/JDB.png" alt="JDB" /> -->
 
         <!-- KA Gaming -->
-        <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/ka-gaming-logo.png" alt="KA" />
-        <img v-else src="../../assets/images/common/logo/KA.png" alt="KA" />
+        <!-- <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/ka-gaming-logo.png" alt="KA" />
+        <img v-else src="../../assets/images/common/logo/KA.png" alt="KA" /> -->
 
-        <img src="../../assets/images/common/logo/RICH88.png" alt="RICH88" />
+        <!-- <img src="../../assets/images/common/logo/RICH88.png" alt="RICH88" /> -->
 
         <!-- Play Star -->
-        <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/playstar-logo.png" alt="PS" />
-        <img v-else src="../../assets/images/common/logo/PS.png" alt="PS" />
+        <!-- <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/playstar-logo.png" alt="PS" />
+        <img v-else src="../../assets/images/common/logo/PS.png" alt="PS" /> -->
 
         <!-- Ezugi -->
-        <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/ezugi-logo.png" alt="ezugi" />
-        <img v-else src="../../assets/images/common/logo/ezugi.png" alt="ezugi" />
+        <!-- <img v-if="globalStore.isDarkMode" src="../../assets/images/common/logo/dark/ezugi-logo.png" alt="ezugi" />
+        <img v-else src="../../assets/images/common/logo/ezugi.png" alt="ezugi" /> -->
 
-        <img src="../../assets/images/common/logo/AWS.png" alt="AWS" />
+        <!-- <img src="../../assets/images/common/logo/AWS.png" alt="AWS" /> -->
         <!-- <img src="../../assets/images/common/logo/EVO.png" alt="EVO" /> -->
-        <img src="../../assets/images/common/logo/KingMaker.png" alt="KingMaker" />
+        <!-- <img src="../../assets/images/common/logo/KingMaker.png" alt="KingMaker" /> -->
       </div>
     </div>
 
@@ -139,6 +158,10 @@ import { globalStore } from "@/store";
   img {
     height: 1.35rem;
     padding: 0px 8px;
+    filter: grayscale(100%);
+    &:hover {
+      filter: none;
+    }
   }
 }
 

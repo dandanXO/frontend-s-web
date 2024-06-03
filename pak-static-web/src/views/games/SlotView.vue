@@ -32,7 +32,7 @@
           :class="{ active: p.id === selectedPlatId }"
           @click="switchPlat(p)"
         >
-          <img :src="require('../../assets/images/common/logo/' + p.code + '.png')" />
+          <!-- <img :src="require('../../assets/images/common/logo/' + p.code + '.png')" /> -->
           <!-- <img
             v-if="p.name === 'PG'"
             src="../../assets/images/common/logo/PG.png"
@@ -134,145 +134,125 @@
   </div>
 </template>
 
-<script lang="js">
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
-import {SearchOutlined} from "@ant-design/icons-vue";
-import {getPlatformGames, getPlatformList} from "@/api/platform/platform";
+<script setup>
+import { defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { SearchOutlined } from "@ant-design/icons-vue";
+import { getPlatformGames, getPlatformList } from "@/api/platform/platform";
 import GameModal from "@/components/modal/GameModal";
-import {useRoute, useRouter} from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 // import { message } from "ant-design-vue";
-import {loadPromoBanner} from "@/api/index/promo";
+import { loadPromoBanner } from "@/api/index/promo";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/'
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
-export default defineComponent({
-  components: {
-    SearchOutlined, GameModal
-  },
-  setup() {
-    const banner = ref([]);
-    const route = useRoute();
-    const router = useRouter();
-    const slotsGame = ref(null);
-    const jpNumber = "123,456,789.88";
-    const platforms = ref([]);
-    const selectedPlatId = ref();
-    const selectedPlat = ref(platforms.value[0]);
-    const gamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
-    const gameListData = ref([]);
-
-    const switchPlat = (plat) => {
-      router.push({path: 'slot', query: {plat: plat.code}})
-      selectedPlat.value = plat
-      selectedPlatId.value = plat.id;
-      gamePage.currentPage = 1;
-      loadGameList();
-    };
-    const getPlatList = () => {
-      getPlatformList().then((data) => {
-        platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-        if (!route.query.plat) {
-          switchPlat(platforms.value[0]);
-        } else {
-          platforms.value.forEach(element => {
-            if (route.query.plat === element.code) {
-              switchPlat(element)
-            }
-          });
-        }
-      }).catch((err) => {
-        console.log(err.message);
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
-    };
-    const searchList = () => {
-      if (gamePage.searchKey) {
-        gamePage.gameList = gameListData.value.filter((game) => {
-          return (((game.name).toLowerCase()).includes((gamePage.searchKey).toLowerCase()));
-        });
-      } else {
-        changePage(1, gamePage.pageSize);
-      }
-    };
-    const loadBanner = () => {
-      loadPromoBanner("SLOT").then((res) => {
-        if (res.code === 0) {
-          banner.value = res.data[0]
-        }
-      })
-    }
-    const loadGameList = () => {
-      getPlatformGames(selectedPlatId.value, "SLOT").then((data) => {
-        data.forEach(element => {
-          element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/games/slot/${selectedPlat.value.code}/${element.icon}.png`;
-        });
-        gameListData.value = data;
-        gamePage.total = data.length;
-        changePage(1, gamePage.pageSize);
-      }).catch((err) => {
-        console.log(err.message);
-        // message.error(
-        //   err.message,
-        //   4
-        // );
-      });
-    };
-
-    const changePage = (page, pageSize) => {
-      gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
-    };
-    const onShowSizeChange = (current, size) => {
-      current = 1;
-      gamePage.currentPage = 1;
-      changePage(current, size);
-    };
-
-    const openGame = (gameName, gameCode) => {
-      slotsGame.value.open(gameName, selectedPlat.value.code, gameCode, selectedPlat.value.status);
-    };
-
-    onMounted(() => {
-      getPlatList();
-      loadBanner();
-    });
-    watch(
-        () => route.query.plat,
-        // () => {
-        //   if (route.path === '/slot') {
-        //     getPlatList();
-        //   }
-        // }
-    );
-    return {
-      jpNumber,
-      platforms,
-      selectedPlatId,
-      selectedPlat,
-      switchPlat,
-      gamePage,
-      openGame,
-      loadGameList,
-      changePage,
-      searchList,
-      gameListData,
-      onShowSizeChange,
-      slotsGame,
-      banner,
-      imgURL
-    };
-  }
+const banner = ref([]);
+const route = useRoute();
+const router = useRouter();
+const slotsGame = ref(null);
+const jpNumber = "123,456,789.88";
+const platforms = ref([]);
+const selectedPlatId = ref();
+const selectedPlat = ref(platforms.value[0]);
+const gamePage = reactive({
+  gameList: [],
+  currentPage: 1,
+  pageSize: 40,
+  searchType: "",
+  searchKey: "",
+  total: 0
 });
+const gameListData = ref([]);
+
+const switchPlat = (plat) => {
+  router.push({ path: "slot", query: { plat: plat.code } });
+  selectedPlat.value = plat;
+  selectedPlatId.value = plat.id;
+  gamePage.currentPage = 1;
+  loadGameList();
+};
+const getPlatList = () => {
+  getPlatformList()
+    .then((data) => {
+      platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
+      if (!route.query.plat) {
+        switchPlat(platforms.value[0]);
+      } else {
+        platforms.value.forEach((element) => {
+          if (route.query.plat === element.code) {
+            switchPlat(element);
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // message.error(
+      //   err.message,
+      //   4
+      // );
+    });
+};
+const searchList = () => {
+  if (gamePage.searchKey) {
+    gamePage.gameList = gameListData.value.filter((game) => {
+      return game.name.toLowerCase().includes(gamePage.searchKey.toLowerCase());
+    });
+  } else {
+    changePage(1, gamePage.pageSize);
+  }
+};
+const loadBanner = () => {
+  loadPromoBanner("SLOT").then((res) => {
+    if (res.code === 0) {
+      banner.value = res.data[0];
+    }
+  });
+};
+const loadGameList = () => {
+  getPlatformGames(selectedPlatId.value, "SLOT")
+    .then((data) => {
+      data.forEach((element) => {
+        element.default = require("../../assets/images/games/aviator/default.png");
+        element.icon = `${process.env.VUE_APP_IMAGE_CDN}/games/slot/${selectedPlat.value.code}/${element.icon}.png`;
+      });
+      gameListData.value = data;
+      gamePage.total = data.length;
+      changePage(1, gamePage.pageSize);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      // message.error(
+      //   err.message,
+      //   4
+      // );
+    });
+};
+
+const changePage = (page, pageSize) => {
+  gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
+};
+const onShowSizeChange = (current, size) => {
+  current = 1;
+  gamePage.currentPage = 1;
+  changePage(current, size);
+};
+
+const openGame = (gameName, gameCode) => {
+  slotsGame.value.open(gameName, selectedPlat.value.code, gameCode, selectedPlat.value.status);
+};
+
+onMounted(() => {
+  getPlatList();
+  loadBanner();
+});
+watch(
+  () => route.query.plat
+  // () => {
+  //   if (route.path === '/slot') {
+  //     getPlatList();
+  //   }
+  // }
+);
 </script>
 <style scoped lang="scss">
 @-webkit-keyframes scale {
