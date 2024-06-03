@@ -5,7 +5,7 @@
 
         <div class="withdrawalmethod">
           <div
-            v-for="(method, i) in [...withdrawalMethods, ...withdrawalMethods]"
+            v-for="(method, i) in withdrawalMethods"
             :key="i"
             class="withdraw-type-item"
             @click="selectMethod(method, i)"
