@@ -358,7 +358,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=05067F").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
