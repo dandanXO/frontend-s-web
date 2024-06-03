@@ -187,7 +187,6 @@ var qs = require("qs");
 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 const store = userStore();
 const router = useRouter();

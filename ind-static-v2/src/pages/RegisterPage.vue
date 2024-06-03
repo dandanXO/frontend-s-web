@@ -179,12 +179,13 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+
 export default defineComponent({
   name: "RegisterPage",
   components: {

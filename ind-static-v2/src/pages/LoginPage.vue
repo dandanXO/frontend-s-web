@@ -59,7 +59,7 @@
                 </q-input>
               </template>
             </InputField>
-            
+
             <!--        <q-input-->
             <!--          ref="verificationRef"-->
             <!--          hide-bottom-space-->
@@ -143,7 +143,7 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
@@ -556,7 +556,7 @@ export default defineComponent({
 .forgot-password {
   margin: 8px 0px 0px;
   text-align: right;
-  
+
   .form-text {
     color: #C1DFFC;
   }
