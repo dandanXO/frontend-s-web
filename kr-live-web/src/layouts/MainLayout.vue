@@ -522,11 +522,13 @@ svg path {
     width: 200px;
     margin-top:0px;
     top: calc(50% + 30px);
+    display: none; // temp
   }
 
   @media (max-width: 500px) {
     width: 200px;
     margin-top:0px;
+    display: none; // temp
   }
 }
 

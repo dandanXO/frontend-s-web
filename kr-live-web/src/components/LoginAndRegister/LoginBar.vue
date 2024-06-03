@@ -2,7 +2,8 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
-        <img src="../../assets/home/menu-icon.svg" />
+        <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
       </div>
       <div class="right-content-sidebar">
         <LoggedIn v-if="store.hasToken()" :isH5TopBar="true" />
@@ -194,11 +195,17 @@ const iconInfo = reactive([
     display: flex;
     align-items: center;
     justify-content: center;
-  }
 
-  img{
-    width: 20px;
-    height: 20px;
+    .hamburger-img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .logo-img {
+      width: 35px;
+      height: 35px;
+      margin-left: 10px;
+    }
   }
 
   @media (min-width: 769px) {
