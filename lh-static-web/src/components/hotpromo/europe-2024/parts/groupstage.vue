@@ -6,7 +6,7 @@
       </template>
 
       <div class="group-by-date-tab__date">
-        {{ moment(currentGroupedMatches.date).locale("zh-cn").format("MMMDo dddd") }}
+        {{ currentGroupedMatches.date ? moment(currentGroupedMatches.date).locale("zh-cn").format("MMMDo dddd") : "" }}
       </div>
       <template v-if="currentGroupedMatches.matchList">
         <div class="group-by-date-tab__match-title">{{ currentGroupedMatches.title }}</div>

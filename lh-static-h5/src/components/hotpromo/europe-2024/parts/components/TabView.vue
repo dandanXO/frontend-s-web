@@ -60,7 +60,7 @@ const handleScrollClick = (type) => {
   const pageDirection = type === "next" ? 1 : -1;
   const newPageNumber = currentPage.value + pageDirection;
 
-  if (newPageNumber > maximumPage.value || newPageNumber < 0) return;
+  if (newPageNumber >= maximumPage.value || newPageNumber < 0) return;
   currentPage.value = newPageNumber;
 };
 </script>
