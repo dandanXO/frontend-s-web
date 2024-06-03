@@ -8,3 +8,7 @@ export const getMemberReferRecord = (form) => {
 export const getMemberReferRewardRecord = (form) => {
   return https().request("/refer-friend-reward", Method.GET, form, ContentType.form);
 };
+
+export const getMemberReferParent = (form) => {
+  return https().request("/refer-friend/parent", Method.GET, form, ContentType.form);
+};

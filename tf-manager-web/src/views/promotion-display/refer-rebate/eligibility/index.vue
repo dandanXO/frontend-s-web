@@ -94,6 +94,17 @@
       </el-form-item>
     </el-row>
     <el-row>
+      <el-form-item :label="t('fields.needUniqueDevice')" prop="needUniqueDevice">
+        <el-switch
+          v-model="form.needUniqueDevice"
+          active-text="Yes"
+          inactive-text="No"
+          active-value="true"
+          inactive-value="false"
+        />
+      </el-form-item>
+    </el-row>
+    <el-row>
       <el-form-item :label="t('fields.refereeMinTotalDeposit')" prop="minTotalDeposit">
         <el-input v-model="form.minTotalDeposit" />
       </el-form-item>
@@ -184,6 +195,7 @@ const form = reactive({
   refereeEligibleParam: null,
   needPhoneVerified: false,
   needIpUniqueInMonth: false,
+  needUniqueDevice: false,
   minTotalDeposit: 0,
   minTotalBet: 0,
   oneTimeBonusStatus: false,
