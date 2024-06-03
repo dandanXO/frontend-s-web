@@ -165,7 +165,7 @@ deploy-dy-tutorials:
 deploy-dy-landing-v6:
   extends: .s3-deploy
   variables:
-    PROJECT: dy-landing-v
+    PROJECT: dy-landing-v6
 
 #===============================================================================================
 
