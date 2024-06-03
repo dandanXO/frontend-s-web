@@ -6,10 +6,10 @@
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
+                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
                 class="nba24-match-game-content-btn"
               >
                 已投票
@@ -17,7 +17,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
               >
                 投票
               </div>
@@ -40,11 +40,12 @@
             <div v-else class="nba2-match-game-content-btn__pseudo" />
           </div>
           <div class="nba24-match-game-content-right">
+
             <div class="nba24-match-game-content-team">
-              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
+                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
                 class="nba24-match-game-content-btn"
               >
                 已投票
@@ -52,7 +53,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
               >
                 投票
               </div>
