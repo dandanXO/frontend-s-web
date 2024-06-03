@@ -42,7 +42,7 @@
                   hide-bottom-space
                   v-model="regForm.password"
                   :rules="[(val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val && val.length > 6) || 'The characters of password must be above 6'
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 5'
                   ]"
                   :type="isPwd ? 'password' : 'text'"
                   color="white"
@@ -172,7 +172,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -425,9 +425,9 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  // router.go(jumpUrl);
-                  router.go("/");
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
+                  // location.href = "/";
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

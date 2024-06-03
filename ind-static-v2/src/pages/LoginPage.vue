@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, nextTick } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -320,7 +320,6 @@ export default defineComponent({
               })
               .then(() => {
                 $q.loading.hide();
-                getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
@@ -336,6 +335,7 @@ export default defineComponent({
                 }
 
                 loginFormRef.value.reset();
+
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
