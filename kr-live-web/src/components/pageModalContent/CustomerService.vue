@@ -39,28 +39,30 @@
 
     <div class="feedback-replies-list">
       <q-list bordered class="rounded-borders">
-        <q-expansion-item icon="mail" :label="'제목'" :caption="'날짜 시간'" disable>
-          <q-card style="background:transparent;">
-            <q-card-section>
-              콘텐츠
-            </q-card-section>
-          </q-card>
-        </q-expansion-item>
-        <q-expansion-item
-          v-for="item in outboxData" :key="item.page"
-          @click="readFeedback(item.id)"
-          expand-separator
-          icon="mail"
-          :label="item.title"
-          :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
-        >
-          <q-card style="background:transparent;">
-            <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
-              {{ item.content }}
-            </q-card-section>
-          </q-card>
-        </q-expansion-item>
-      </q-list>
+          <div style="max-height: 500px;overflow-y:auto;">
+            <q-expansion-item icon="info" :label="'제목'" :caption="'날짜 시간'" disable>
+              <q-card style="background:transparent;">
+                <q-card-section>
+                  콘텐츠
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+            <q-expansion-item
+              v-for="item in outboxData" :key="item.page"
+              @click="readFeedback(item.id)"
+              expand-separator
+              :icon="item.readTime ? 'mark_email_read' : 'mark_email_unread'"
+              :label="item.title"
+              :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
+            >
+              <q-card style="background:transparent;padding:10px;margin:0px;">
+                <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
+                  {{ item.content }}
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+          </div>
+        </q-list>
     </div>
     </div>
   </div>
@@ -134,27 +136,28 @@ const initOutbox = () => {
 }
 
 const readFeedback = (id) => {
-  api.get(`/session/feedback/${id}/read`).then((res) => {
-    const { code, data } = res.data
+  const currentMail = outboxData.value.find((data) => data.id === id);
 
-    if (code === 0) {
-      $q.notify({
-        message: "메시지 읽기",
-        type: "positive",
-        position: "top",
-        icon: "check_circle_outline"
-      });
+  if(!currentMail?.content) {
+    api.get(`/session/feedback/${id}/read`).then((res) => {
+      const { code, data } = res.data
 
-      const currentMail = outboxData.value.find((data) => data.id === id);
-
-      if(currentMail) {
-        currentMail.content = data.content;
+      if (code === 0 && !currentMail.readTime) {
+        $q.notify({
+          message: "메시지 읽기",
+          type: "positive",
+          position: "top",
+          icon: "check_circle_outline"
+        });
       }
-    }
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+
+      currentMail.content = data.content;
+      currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 onMounted(() => {
