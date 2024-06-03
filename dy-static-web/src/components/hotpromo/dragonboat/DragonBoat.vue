@@ -1,8 +1,8 @@
 <template>
     <div>
-      <div class="period">
+      <!-- <div class="period">
         活动时间: 2024/6/10-2024/6/20 23:59:59
-      </div>
+      </div> -->
       <el-tabs v-model="tabPosition" class="dragonboat-tabs">
         <el-tab-pane name="duawwu" label="端午粽情">
             <div class="section">
