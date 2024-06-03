@@ -55,7 +55,7 @@
           :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
         >
           <q-card style="background:transparent;">
-            <q-card-section>
+            <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
               {{ item.content }}
             </q-card-section>
           </q-card>
