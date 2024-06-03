@@ -261,7 +261,7 @@ onMounted(async () => {
   await loadSites()
   if (router.currentRoute.value.query.id) {
     request.siteId = Number(router.currentRoute.value.query.site)
-    request.referrerId = Number(router.currentRoute.value.query.id)
+    request.referrerId = router.currentRoute.value.query.id
     uiControl.referrer = router.currentRoute.value.query.referrer
   } else {
     request.siteId = siteList.list[0].id
