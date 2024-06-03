@@ -211,7 +211,7 @@ export default {
     receive_by_phone: "Receive account by phone",
     email_address: "Email",
     enter_your_email: "Please enter your email address.",
-    send: "Send",
+    send: "보내다",
     an_otp_has_been_sent_to_email: "An OTP code has been sent to your email.",
     an_otp_has_been_sent_to_phone: "An OTP code has been sent to your phone.",
     one_time_otp: "One Time OTP",

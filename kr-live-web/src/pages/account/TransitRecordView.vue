@@ -652,7 +652,9 @@
                 :rows="2"
                 :max-rows="5"
               />
-              <q-btn class="common-btn q-mt-md" color="brand" :label="$t('lang.send')" @click="submitReminder" />
+              <div class="primary-button blue-square" @click="submitReminder" style="margin:15px 0px;">
+                {{ $t('lang.send') }}
+              </div>
             </q-form>
           </q-card-section>
 
@@ -1375,7 +1377,6 @@ export default defineComponent({
 }
 
 .account-content.transit {
-  min-height: 740px;
   margin: 10px;
   padding: 0;
 
