@@ -62,7 +62,7 @@
             clearable
           >
             <template v-slot:prepend>
-              <span style="z-index:1" class="text-bright">
+              <span style="z-index:1;font-size:16px;" class="text-bright">
                 <template v-if="isUSDT">USDT</template>
                 <template v-else>{{ store.currency.value }}</template>
               </span>
@@ -153,10 +153,9 @@
         </q-select>
 
         <div class="form-item">
-          <label>입금금액</label>
+          <label>입금자명</label>
           <q-input
             dense
-            label="입금자명"
             v-model="depositAccName"
             class="account-name-field"
             outlined
@@ -183,6 +182,7 @@ import BankComponent from "../../components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
+import { storeToRefs } from "pinia";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -222,7 +222,8 @@ const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
 
 const depositAmtRef = ref("");
-const depositAccName = ref(store.realName);
+const { realName } = storeToRefs(store);
+const depositAccName = realName;
 
 const currentPath = ref(route.path);
 const extensionState = ref(false);
@@ -761,11 +762,11 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  gap: 8px;
 }
 
 .select-amt-btn {
   background: #38f3ff;
-  margin-right: 8px;
   color: #000;
   white-space: nowrap;
 }
