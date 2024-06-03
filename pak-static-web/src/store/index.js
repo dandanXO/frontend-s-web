@@ -75,14 +75,16 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
-    getCurrentDeposit() {
-      return this.currentDeposit;
-    },
     getLevelUpDeposit() {
       return this.levelUpDeposit;
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
+    }
+  },
+  getters: {
+    currentDepositNumber() {
+      return Number(this.currentDeposit);
     }
   }
 });

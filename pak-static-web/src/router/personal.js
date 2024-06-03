@@ -74,5 +74,10 @@ export default [
     meta: { requiresAuth: true },
     component: () =>
       import(/* webpackChunkName: "security-verification" */ "../views/account/SecurityVerificationView.vue")
+  },
+  {
+    path: "vip",
+    name: "vip",
+    component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
   }
 ];

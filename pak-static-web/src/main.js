@@ -21,6 +21,7 @@ import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import { i18n } from "./i18n/index";
+import { register } from "swiper/element/bundle";
 
 const app = createApp(App);
 Object.keys(directives).forEach((key) => {
@@ -30,6 +31,8 @@ Object.keys(directives).forEach((key) => {
 watchEffect(() => {
   document.body.classList.toggle("dark-theme", globalStore.isDarkMode);
 });
+
+register();
 
 app.provide("globalStore", globalStore);
 app
