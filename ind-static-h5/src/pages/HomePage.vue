@@ -1794,6 +1794,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  isPlatLoading.value = true;
   getPlatList();
   loadData();
   loadAnnouncement();
@@ -2682,6 +2683,57 @@ onMounted(() => {
       // justify-content: center;
       // background: linear-gradient(270deg, #370f59 -0.1%, #57009d 50.22%, #340c56 97.6%);
     }
+  }
+}
+
+.skeleton-lists {
+  overflow-x: auto;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+
+  .casino-skeleton {
+    height: 150px;
+    width: calc((100vw - 20px) / 2);
+    border-radius: 12px;
+  }
+
+  .slot-skeleton {
+    height: 150px;
+    width: calc((100vw - 20px) / 3);
+    border-radius: 12px;
+  }
+}
+
+.skeleton-downs {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .casino-skeleton {
+    height: 150px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+.skeleton-grid {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .slot-skeleton {
+    height: 150px;
+    width: calc(33% - 15px);
+    border-radius: 12px;
+  }
+
+  .sport-skeleton {
+    height: 125px;
+    width: 100%;
+    border-radius: 12px;
   }
 }
 
