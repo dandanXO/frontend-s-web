@@ -10,12 +10,12 @@
           <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
           <img
             class="deposit-option-btn q-mt-sm"
-            :src="`${imgURL}/payment/${item.paymentIcon}`"
+            :src="`${imgURL}/payment/${item.nodeIcon}`"
             @click="handleDepositNodeClick(item)"
-            :class="{ active: activeMethod.paymentIcon === item.paymentIcon }"
+            :class="{ active: activeMethod.nodeIcon === item.nodeIcon }"
             style="width: 100%"
           />
-          <div :class="['selected-svg', activeMethod.paymentIcon === item.paymentIcon && 'active']">
+          <div :class="['selected-svg', activeMethod.nodeIcon === item.nodeIcon && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
                 d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
@@ -354,7 +354,7 @@ function initPay() {
 
   payMethods.value = [];
 
-  cashier.get("/session/ind/deposit/index/").then((res) => {
+  cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 

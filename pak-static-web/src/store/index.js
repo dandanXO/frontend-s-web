@@ -29,7 +29,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       isAffiliateA: false,
       isAffiliate2: false,
-      isAffiliate3: false
+      isAffiliate3: false,
+      profilePhoto: ""
     };
   },
   actions: {
@@ -61,6 +62,7 @@ export const userStore = defineStore("userStore", {
           this.vip = ret.data.vip;
           this.currentDeposit = ret.data.currentDeposit;
           this.levelUpDeposit = ret.data.levelUpDeposit;
+          this.profilePhoto = ret.data.profilePhoto;
         } else {
           throw new Error(ret.message);
         }

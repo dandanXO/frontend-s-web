@@ -166,6 +166,12 @@ const routes = [
         path: "app-tutorial",
         name: "appTutorial",
         component: () => import(/* webpackChunkName: "agentRegGuide" */ "../views/AppTutorial.vue")
+      },
+      {
+        path: "share",
+        name: "share",
+        component: () => import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue"),
+        meta: { requiresAuth: true }
       }
     ]
   },
