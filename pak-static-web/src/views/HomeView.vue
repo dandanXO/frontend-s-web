@@ -42,7 +42,8 @@
     <div class="main-wrapper">
       <!-- Hero Slider-->
       <div class="top-container-wrapper">
-        <div class="top-container">
+        <BannerCarousel :banners="banners" />
+        <!-- <div class="top-container">
           <div class="banner-slider">
             <a-carousel ref="refCarousel" autoplay :slides-to-show="1">
               <div v-for="(banner, i) in banners" :key="i" class="banner-container">
@@ -65,7 +66,7 @@
               <img src="../assets/images/index/arrow-forward.svg" />
             </el-button>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Tabs / Links -->
       <!--      <div class="container">-->
@@ -100,10 +101,54 @@
         </div>
       </div> -->
       <div class="center-content">
-        <!-- Marquee -->
-        <div class="station-notice-wrapper container">
+        <SectionWrapper title="🔥HOT" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 6"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-hot-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Live Casino" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 3"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-casino-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="SLOT" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 5"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-slot-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Fish" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 6"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-fish-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Sport" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 3"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-sport-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <!-- <div class="station-notice-wrapper container">
           <div class="station-notice-container">
-            <RiVolumeUpLine />
+            <img src="@/assets/images/common/volume-up.svg" />
             <div class="station-notice-box">
               <div class="station-notice">
                 <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
@@ -116,7 +161,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!--Jackpot-->
         <!-- <div class="jackpot container">
@@ -124,14 +169,14 @@
         </div> -->
 
         <!-- Content -->
-        <div class="og-tab-content container" v-if="['casino', 'Poker'].indexOf(platform.code) === -1">
-          <!-- Content Header -->
-          <h2 class="hot-game-header">
+        <!-- <div class="og-tab-content container" v-if="['casino', 'Poker'].indexOf(platform.code) === -1"> -->
+        <!-- Content Header -->
+        <!-- <h2 class="hot-game-header">
             <img src="../assets/images/common/submenu/menu-icons/hot-icon.png" />
             <span>Hot game</span>
-          </h2>
+          </h2> -->
 
-          <div class="hot-games-section">
+        <!-- <div class="hot-games-section">
             <img
               @click="openGame(hot, hot.platformCode, hot.code)"
               v-for="(hot, index) in hotGames"
@@ -157,10 +202,10 @@
                 </button>
               </template>
             </div>
-          </div>
+          </div> -->
 
-          <!-- Content Body -->
-          <div v-if="isGameLoading" style="display: flex; justify-content: center; align-items: center; display: none">
+        <!-- Content Body -->
+        <!-- <div v-if="isGameLoading" style="display: flex; justify-content: center; align-items: center; display: none">
             <a-spin />
           </div>
           <div
@@ -182,15 +227,15 @@
                 <img v-image="game.icon" :src="game.default" />
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <!-- End -->
-        </div>
-        <div class="og-tab-content container" v-else>
+        <!-- End -->
+        <!-- </div> -->
+        <!-- <div class="og-tab-content container" v-else>
           <LiveCasinoView v-if="platform.code == 'casino'" no-banner />
           <PokerView v-if="platform.code == 'Poker'" no-banner />
-        </div>
-        <div class="ribbonbar container">
+        </div> -->
+        <!-- <div class="ribbonbar container">
           <div
             v-for="(win, wini) in topWinners.slice(0, 4)"
             class="rib"
@@ -211,12 +256,12 @@
               <div class="rib-plus">+{{ win.amount }}</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Download Apps -->
-        <DownloadApp />
+        <!-- <DownloadApp /> -->
         <!-- Services Advantages -->
-        <ServicesAdvantages />
+        <!-- <ServicesAdvantages /> -->
       </div>
     </div>
 
@@ -321,6 +366,8 @@ import LiveCasinoView from "@/views/games/LiveCasinoView.vue";
 import PokerView from "@/views/games/PokerView.vue";
 import { userStore } from "@/store";
 import AdsPopupList from "@/components/hotpromo/adsPopupList.vue";
+import BannerCarousel from "@/components/home/BannerCarousel.vue";
+import SectionWrapper from "@/components/home/SectionWrapper.vue";
 const store = userStore();
 const winners = [
   {
@@ -1100,8 +1147,10 @@ $link-color: #db7e42;
 
   .main-wrapper {
     width: 100%;
+    padding: 27px 39px;
 
     .top-container-wrapper {
+      margin-bottom: 24px;
       animation-duration: 0.5s;
 
       .top-container {
@@ -1175,25 +1224,24 @@ $link-color: #db7e42;
 
     .station-notice-wrapper {
       color: inherit;
-      width: 98%;
-      margin-top: 10px;
+      width: 100%;
+      margin-bottom: 28px;
       border-radius: 12px;
       overflow: hidden;
     }
 
     .station-notice-container {
       width: 100%;
-      color: #83a3ca;
-      max-width: $container-width;
+      color: #8c968f;
       margin: 0 auto;
       display: flex;
       justify-content: flex-start;
-      background: #ffffff;
+      background: #ffffff0d;
       padding: 0.45rem 1rem;
       border-radius: 5rem;
 
       svg {
-        fill: currentColor;
+        fill: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         aspect-ratio: 1/1;
         height: 1.4rem;
       }
@@ -2199,7 +2247,6 @@ $link-color: #db7e42;
   }
 }
 .center-content {
-  background: url(../assets/images/index/centerbg.png) no-repeat center top;
   background-size: cover;
   overflow: hidden;
   .jackpot {
@@ -2235,6 +2282,16 @@ $link-color: #db7e42;
     img {
       width: 100%;
       mix-blend-mode: plus-lighter;
+    }
+  }
+
+  .section-wrapper {
+    margin-bottom: 37px;
+
+    .section-wrapper-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
   }
 }

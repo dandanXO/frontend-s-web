@@ -10,8 +10,8 @@
 .logo {
   display: block;
   overflow: hidden;
-  width: 130px;
-  max-width: 130px;
+  width: 162px;
+  max-width: 162px;
 
   @media (min-width: 768px) {
     margin-block: 0.25rem;

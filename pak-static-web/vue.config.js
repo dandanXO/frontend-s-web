@@ -9,7 +9,7 @@ module.exports = defineConfig({
   runtimeCompiler: true,
   devServer: {
     hot: true,
-    port: 8089,
+    port: 8089
   },
   // publicPath:
   //   process.env.NODE_ENV === "production" ? "https://asdfdsa.com/" : "/",
@@ -20,6 +20,15 @@ module.exports = defineConfig({
       args[0].title = defaultSettings.title;
       return args;
     });
+    config.module
+      .rule("vue")
+      .use("vue-loader")
+      .tap((options) => ({
+        ...options,
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("swiper-")
+        }
+      }));
   },
   css: {
     loaderOptions: {
@@ -28,8 +37,8 @@ module.exports = defineConfig({
         additionalData: `
                 @import "@/assets/css/variables.scss";
                 @import "@/assets/css/mixin.scss";
-                `,
-      },
-    },
-  },
+                `
+      }
+    }
+  }
 });
