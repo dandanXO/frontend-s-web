@@ -10,7 +10,7 @@ export function register(regForm) {
 export function login(loginInfo) {
   const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
   loginInfo.way = regDevice;
-  return server.REST.post("/member/login", loginInfo);
+  return server.REST.post("/member/pakLogin", loginInfo);
 }
 
 export function logout() {

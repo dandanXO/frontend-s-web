@@ -72,7 +72,7 @@ const loginForm = ref({
 });
 const loginFormRules = ref({
   loginName: [
-    { len: 10, message: t("layout.header.accountModal.login.form.loginName.error.len") },
+    { len: 11, message: t("layout.header.accountModal.login.form.loginName.error.len") },
     { required: true, message: t("layout.header.accountModal.login.form.loginName.error.required") }
   ],
   password: [{ required: true, message: t("layout.header.accountModal.login.form.password.error.required") }]
