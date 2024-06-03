@@ -154,7 +154,7 @@
       </span>
     </div> -->
 
-    <div class="node-wrapper" style="display: none">
+    <div class="node-wrapper">
       <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
   </div>

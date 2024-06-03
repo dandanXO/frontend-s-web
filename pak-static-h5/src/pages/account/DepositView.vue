@@ -1,13 +1,14 @@
 <template>
+  <!-- <DepositComponent /> -->
+
   <div class="deposit-wrapper">
-    <div class="deposit-options">
+    <!-- <div class="deposit-options">
       <div class="lil-title">
         Payment Channel
         <span>*</span>
       </div>
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
-          <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
           <img
             class="deposit-option-btn q-mt-sm"
             :src="`${imgURL}/payment/${item.nodeIcon}`"
@@ -25,9 +26,15 @@
           </div>
         </div>
       </div>
+
+
+    </div> -->
+
+    <div class="node-wrapper">
+      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-lg">Select Amount</div>
+    <div class="lil-title q-mt-sm">Select Amount</div>
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -167,10 +174,6 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <!--    <div class="node-wrapper" style="display: none">-->
-    <!--      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />-->
-    <!--    </div>-->
-
     <div class="bottom-btn">
       <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
       <q-btn
@@ -228,6 +231,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+import DepositComponent from "../../components/depositComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
