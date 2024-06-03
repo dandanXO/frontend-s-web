@@ -171,6 +171,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "RegisterPage",

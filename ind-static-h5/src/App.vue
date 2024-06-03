@@ -10,6 +10,7 @@ import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
+import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { AddressbarColor } from "quasar";
 // import { StatusBar, Style } from "@capacitor/status-bar";
 // import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
@@ -69,8 +70,8 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentSandbox);
-        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
+        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
           console.log(e);
@@ -78,39 +79,23 @@ export default defineComponent({
 
         Adjust.create(adjustConfig);
         setTimeout(() => {
-          Adjust.getGoogleAdId(function (googleid) {
+          Adjust.getGoogleAdId().then((googleid) => {
             console.log("Google AdID");
             console.log(googleid);
             if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
               (async () => {
-                Adjust.getAdid(function (adid) {
+                Adjust.getAdid().then((adid) => {
                   console.log("Attribution 2");
                   console.log(adid);
                   store.aaid = adid;
+                  // trackAppStartEvent();
                 });
               })();
             } else {
               store.googleadid = googleid;
+              // trackAppStartEvent();
             }
           });
-
-          // Adjust.getAdid().then((aaid) => {
-          //   console.log("aaid");
-          //   console.log(aaid);
-          //   store.aaid = aaid;
-          // });
-          //
-          // Adjust.getAttribution().then((attribution) => {
-          //   console.log("GeT attribution");
-          //   console.log(attribution);
-          //   store.aaid = attribution.adid;
-          // });
-          //
-          // Adjust.getGoogleAdId().then((googleid) => {
-          //   console.log("Google AdID");
-          //   console.log(googleid);
-          //   store.googleadid = googleid;
-          // });
         }, 500);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
