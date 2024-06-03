@@ -172,7 +172,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
@@ -427,7 +427,9 @@ export default defineComponent({
                 if (store.hasToken()) {
                   // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
                   // router.go(jumpUrl);
-                  router.go("/");
+                  setTimeout(()=>{
+                    router.push("/");
+                  },100)
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

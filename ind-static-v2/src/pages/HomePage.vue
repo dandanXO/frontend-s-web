@@ -1115,7 +1115,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
