@@ -22,7 +22,7 @@ export default {
               label: "password",
               placeholder: "Please enter password",
               error: {
-                required: "Phone is required"
+                required: "Password is required"
               }
             }
           },
@@ -44,7 +44,7 @@ export default {
               label: "password",
               placeholder: "Please enter password",
               error: {
-                required: "Phone is required"
+                required: "Password is required"
               }
             },
             codeAffiliate: {

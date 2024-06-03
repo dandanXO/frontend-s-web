@@ -110,7 +110,7 @@
             />
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Live Casino" to="" class="section-wrapper">
+        <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
           <div class="section-wrapper-content">
             <img
               v-for="index in 3"
@@ -119,7 +119,7 @@
             />
           </div>
         </SectionWrapper>
-        <SectionWrapper title="SLOT" to="" class="section-wrapper">
+        <SectionWrapper title="SLOT" to="/slot" class="section-wrapper">
           <div class="section-wrapper-content">
             <img
               v-for="index in 5"
@@ -137,7 +137,7 @@
             />
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Sport" to="" class="section-wrapper">
+        <SectionWrapper title="Sport" to="/sport" class="section-wrapper">
           <div class="section-wrapper-content">
             <img
               v-for="index in 3"
