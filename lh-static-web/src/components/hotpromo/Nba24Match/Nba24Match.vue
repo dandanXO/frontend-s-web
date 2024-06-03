@@ -267,7 +267,7 @@ const displayTeamVictory = (record) => {
   return record.teamChosen + '胜'
 };
 const displayGuessResult = (record) => {
-  if (record.status !== "SETTLED") {
+  if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
     return { text: "结果未出", color: "#7a8eb9" };
   } else if (record.teamChosen === "DRAW") {
     if (record.homeTeamResult === record.awayTeamResult) {
