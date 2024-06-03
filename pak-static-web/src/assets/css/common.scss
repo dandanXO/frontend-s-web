@@ -1370,7 +1370,8 @@ li.ant-calendar-time-picker-select-option-selected {
 }
 
 .container {
-  max-width: $container-width;
+  // max-width: $container-width;
+  width: 100%;
   margin-inline: auto;
   padding-inline: 0px;
 }

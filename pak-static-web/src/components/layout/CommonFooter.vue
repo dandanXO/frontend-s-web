@@ -53,12 +53,12 @@
       </div>
     </div>
 
-    <div class="text-center footer-notes">
+    <!-- <div class="text-center footer-notes">
       <div class="container">
         Play4win is a legal gaming company. It has an inland gaming license issued by the PAGCOR Philippines subject to
         it's supervision.
       </div>
-    </div>
+    </div> -->
   </footer>
 
   <StickyMenu />
@@ -75,7 +75,7 @@ import { globalStore } from "@/store";
   background: var(--footer-background-color);
   color: #000;
   line-height: 2.5;
-  padding-top: 2rem;
+  padding: 45px 0;
   font-family: "Baloo Bhaina";
 
   &.menuactive {

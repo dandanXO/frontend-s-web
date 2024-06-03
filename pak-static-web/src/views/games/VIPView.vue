@@ -14,8 +14,8 @@
       </div>
     </div> -->
     <swiper-container slides-per-view="3.5" space-between="24" class="vip-badge-swiper">
-      <swiper-slide v-for="level in 12" :key="level">
-        <vip-badge class="slide-badge" :level="level" :current-deposit="currentDepositNumber" />
+      <swiper-slide v-for="(_, index) in 13" :key="index">
+        <vip-badge class="slide-badge" :level="index" :current-deposit="currentDepositNumber" />
       </swiper-slide>
     </swiper-container>
 
