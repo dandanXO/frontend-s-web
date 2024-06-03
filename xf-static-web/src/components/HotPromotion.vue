@@ -177,7 +177,7 @@ import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskProm
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import ReturnPromo from "../components/hotpromo/returnPromo/ReturnPromo.vue";
 import DepositAwardPromo from "../components/hotpromo/depositAward/DepositAwardPromo.vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
 
@@ -327,6 +327,20 @@ export default defineComponent({
   },
   methods: {
     handleSlot() {
+      const store = userStore();
+      if (!store.token) {
+        ElMessageBox.alert("请登录后再操作", "系统提示", {
+          // if you want to disable its autofocus
+          // autofocus: false,
+          center: true,
+          confirmButtonText: "确认",
+          showClose: false,
+          buttonSize: "large"
+        }).then(() => {
+          store.loginPageVisible = true;
+        });
+        return;
+      }
       this.loadingClaim = true;
       const bonusItem = this.list.promoCode;
 
