@@ -35,8 +35,9 @@
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert password',
-            (val) => (val && val.length > 6) || 'The characters of password must be above 6'
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert password',
+            (val) => (val && val.length >= 6) || 'The characters of password must be above 5'
           ]"
           :type="isPwd ? 'password' : 'text'"
           color="white"
@@ -168,8 +169,6 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -294,7 +293,6 @@ export default defineComponent({
       getReferralCode();
       getAffiliateCode();
     });
-    
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -549,7 +547,7 @@ export default defineComponent({
       isAlphanumeric,
       isValidName,
       isValidPhone,
-      affRegEvent,
+      affRegEvent
     };
   }
 });

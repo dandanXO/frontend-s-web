@@ -109,21 +109,6 @@
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
-          <!-- <div
-            class="menu-category-btn"
-            :class="`cat-${item.icon.toLowerCase()} ${item.active && 'active'}`"
-            @click="activateSlide(item)"
-          ></div> -->
-          <!-- <div class="cat-menu-item" @click="activateSlide(item)">
-            <img
-              :src="
-                require(`../assets/images/index/category/cat-menu-${item.icon.toLowerCase()}${
-                  item.active ? '-active' : ''
-                }.png`)
-              "
-              alt=""
-            />
-          </div> -->
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
@@ -142,6 +127,15 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <template v-if="isHotGameLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -274,6 +268,13 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="1.5"
               :spaceBetween="0"
@@ -324,6 +325,13 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+            <template v-if="isPlatLoading">
+              <div class="skeleton-downs">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <div class="platform-game-container">
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
@@ -370,6 +378,15 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -418,6 +435,20 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <div
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -468,6 +499,15 @@
           </div>
 
           <div class="platform-game-wrapper">
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -685,6 +725,14 @@
             <span class="txt-style">Sports</span>
           </div>
           <div class="platform-game-container sport-platform">
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+              </div>
+            </template>
+
             <template v-for="(item, index) in sport" :key="index">
               <div
                 class="platform-game-item btn-effect"
@@ -1010,8 +1058,6 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { isAndroid } from "boot/utils";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1156,6 +1202,8 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 };
 
 const isGameLoading = ref(true);
+const isPlatLoading = ref(false);
+const isHotGameLoading = ref(false);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
@@ -1275,6 +1323,7 @@ const loadHotGameList = () => {
           console.log("End");
           console.log(hotGameList.value);
           // console.log(livecasino.value);
+          isHotGameLoading.value = false;
         });
     });
 };
@@ -1514,6 +1563,7 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
+      isPlatLoading.value = false;
       // console.log("After");
       // console.log(sport.value);
       loadHotGameList();

@@ -9,14 +9,12 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
-import { StatusBar, Style } from "@capacitor/status-bar";
-import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+// import { StatusBar, Style } from "@capacitor/status-bar";
+// import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
-import { getAttribution } from "@adjustcom/adjust-web-sdk";
 
 export default defineComponent({
   name: "App",
@@ -71,8 +69,8 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentSandbox);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
           console.log(e);
@@ -80,24 +78,40 @@ export default defineComponent({
 
         Adjust.create(adjustConfig);
         setTimeout(() => {
-          Adjust.getAdid().then((aaid) => {
-            console.log("aaid");
-            console.log(aaid);
-            store.aaid = aaid;
-          });
-
-          Adjust.getAttribution().then((attribution) => {
-            console.log("GeT attribution");
-            console.log(attribution);
-            store.aaid = attribution.adid;
-          });
-
-          Adjust.getGoogleAdId().then((googleid) => {
+          Adjust.getGoogleAdId(function (googleid) {
             console.log("Google AdID");
             console.log(googleid);
-            store.googleadid = googleid;
+            if (!googleid || googleid === "00000000-0000-0000-0000-000000000000") {
+              (async () => {
+                Adjust.getAdid(function (adid) {
+                  console.log("Attribution 2");
+                  console.log(adid);
+                  store.aaid = adid;
+                });
+              })();
+            } else {
+              store.googleadid = googleid;
+            }
           });
-        }, 1500);
+
+          // Adjust.getAdid().then((aaid) => {
+          //   console.log("aaid");
+          //   console.log(aaid);
+          //   store.aaid = aaid;
+          // });
+          //
+          // Adjust.getAttribution().then((attribution) => {
+          //   console.log("GeT attribution");
+          //   console.log(attribution);
+          //   store.aaid = attribution.adid;
+          // });
+          //
+          // Adjust.getGoogleAdId().then((googleid) => {
+          //   console.log("Google AdID");
+          //   console.log(googleid);
+          //   store.googleadid = googleid;
+          // });
+        }, 500);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -137,8 +151,11 @@ export default defineComponent({
       api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
         if (res.code === 0) {
           sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+          if (res.data.adjust_register_event) {
+            ui.adjust_register_event = res.data.adjust_register_event;
+          }
           affAppToken.value = res.data.adjust_app_token;
           initAdjustEventTrack();
           // alert(affAppToken.value);
@@ -169,8 +186,9 @@ export default defineComponent({
                     api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
                       if (res.code === 0) {
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                        if (res.data.adjust_register_event) {
+                          ui.adjust_register_event = res.data.adjust_register_event;
+                        }
                         affAppToken.value = res.data.adjust_app_token;
                         initAdjustEventTrack();
                         // alert(affAppToken.value);
@@ -197,38 +215,37 @@ export default defineComponent({
     const setStatusBarColor = async () => {
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
-        console.log("STATUSBARR");
-        await StatusBar.hide();
-        await StatusBar.setOverlaysWebView({ overlay: true });
-        await StatusBar.setBackgroundColor({ color: "#3E1474" });
-        await StatusBar.setStyle({ style: Style.Dark });
-
+        // console.log("STATUSBARR");
+        // await StatusBar.hide();
+        // await StatusBar.setOverlaysWebView({ overlay: true });
+        // await StatusBar.setBackgroundColor({ color: "#3E1474" });
+        // await StatusBar.setStyle({ style: Style.Dark });
         // setTimeout(() => {
         //   getInsetHeight();
         // }, 250);
       }
     };
 
-    const getInsetHeight = async () => {
-      const ua = navigator.userAgent.toLowerCase();
-      console.log(ua);
-      const isAndroidPixel = ua.indexOf("android") > -1;
-      // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
-      if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
-        const insets = await SafeArea.getSafeAreaInsets();
-        console.log(insets);
-        // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
-        if (insets.bottom > 0) {
-          // console.log("HERe");
-          ui.bottomInsetHeight = insets.bottom;
-        }
-      }
-    };
+    // const getInsetHeight = async () => {
+    //   const ua = navigator.userAgent.toLowerCase();
+    //   console.log(ua);
+    //   const isAndroidPixel = ua.indexOf("android") > -1;
+    //   // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+    //   if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
+    //     const insets = await SafeArea.getSafeAreaInsets();
+    //     console.log(insets);
+    //     // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
+    //     if (insets.bottom > 0) {
+    //       // console.log("HERe");
+    //       ui.bottomInsetHeight = insets.bottom;
+    //     }
+    //   }
+    // };
 
     const handleVisibilityChange = (status) => {
-      if (Platform.is.capacitor && Platform.is.android) {
-        StatusBar.hide();
-      }
+      // if (Platform.is.capacitor && Platform.is.android) {
+      //   StatusBar.hide();
+      // }
     };
 
     const getOnlineStatApi = async () => {
