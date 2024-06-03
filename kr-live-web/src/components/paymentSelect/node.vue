@@ -275,6 +275,14 @@ $node-color: #dd4645;
   flex-wrap: wrap;
   padding-bottom: 10px;
 
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    .node-item {
+      width: 100%;
+    }
+  }
+
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
@@ -353,6 +361,7 @@ $node-color: #dd4645;
       display: flex;
       justify-content: center;
       min-width: 100px;
+
       .payment-method-wrapper {
         display: none;
       }
