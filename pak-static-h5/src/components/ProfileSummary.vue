@@ -358,7 +358,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=IW2&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=3B1BFB").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
@@ -401,7 +401,8 @@ onMounted(() => {
   width: 100%;
   height: 55px; /* adjust the height as needed */
   padding: 12px 16px 28px;
-  background: linear-gradient(rgba(131, 131, 131, 0.2117647059), rgba(131, 131, 131, 0.2117647059));
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(6px);
   z-index: 98;
 
   .download-container {
