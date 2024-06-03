@@ -205,8 +205,7 @@ export default defineComponent({
     //   }
     // }
     const showPromoDetails = (promo) => {
-
-      if (!store.token) {
+      if (!store.token && !(promo.redirectUrl.includes("xf-return-promo") || promo.redirectUrl.includes("xf-deposit-award"))) {
         ElMessageBox.alert("请登录后再操作", "系统提示", {
           // if you want to disable its autofocus
           // autofocus: false,

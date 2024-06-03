@@ -280,7 +280,7 @@ export default defineComponent({
         store.token = extensionToken.value;
 
       }else {
-        if (!store.token) {
+        if (!store.token && !(promo.redirectUrl.includes("xf-return-promo") || promo.redirectUrl.includes("xf-deposit-award"))) {
           isDisplayLogin.value = true
         } else {
           if (promo.redirectUrl.includes("page-vip")) {
