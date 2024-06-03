@@ -217,3 +217,44 @@ export function getLOLMsiMatchRecord() {
 export function getLplSummer24Match() {
   return server.EVENT.get("game-match/upcoming/MSI");
 }
+
+export function duanwuVipUpgrade() {
+  return server.EVENT.post("/duan-wu/vip-upgrade");
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
+  };
+  var evtUrl = localStorage.getItem("DY_WEB_EVT_URL");
+
+  return fetch(evtUrl + "/duan-wu/vip-upgrade", requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+}
+
+export function duanwuDepositBet() {
+  return server.EVENT.post("/duan-wu/deposit-bet");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
+  };
+  var evtUrl = localStorage.getItem("DY_WEB_EVT_URL");
+
+  return fetch(evtUrl + "/duan-wu/deposit-bet", requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+}

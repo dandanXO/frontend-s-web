@@ -162,5 +162,12 @@ export function getLOLMsiMatchRecord() {
 }
 
 export function getLplSummer24Match() {
-  return server.EVENT.get("game-match/upcoming/MSI");
+  return eventapi.get("game-match/upcoming/MSI");
+}
+
+export function duanwuVipUpgrade() {
+  return eventapi.post("/duan-wu/vip-upgrade");
+}
+export function duanwuDepositBet() {
+  return eventapi.post("/duan-wu/deposit-bet");
 }
