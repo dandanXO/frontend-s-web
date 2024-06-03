@@ -251,7 +251,7 @@ a:hover {
   max-width: 60%;
   margin: auto;
   position: absolute;
-  bottom: 96px;
+  bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
   gap: 10px;
