@@ -323,9 +323,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 800, hotLabel: 40, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
