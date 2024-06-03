@@ -51,6 +51,7 @@ const handleClick = (tab) => {
 
     &.active {
       background: var(--primary-linear-background-color);
+      color: #000000;
     }
   }
 }

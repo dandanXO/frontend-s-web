@@ -20,7 +20,7 @@
           v-for="(action, index) in actions"
           :key="`action-${index}`"
           :to="action.path"
-          :class="{ active: route.path === action.path }"
+          :class="{ active: route.fullPath === action.path }"
           class="account-info-action-link"
         >
           <img :src="require(`@/assets/images/account/${action.name.toLocaleLowerCase()}-icon.svg`)" />
@@ -60,7 +60,7 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
 const route = useRoute();
 
 const actions = ref([
-  { name: "Withdraw", path: "/center/withdraw" },
+  { name: "Withdraw", path: "/center/top-up?tab=withdraw" },
   { name: "Deposit", path: "/center/top-up" },
   { name: "Promo", path: "/center/personal" }
 ]);
@@ -68,7 +68,7 @@ const actions = ref([
 const links = ref([
   { name: "Personal center", img: PersonalSvg, path: "/center/personal" },
   { name: "Record", img: RecordSvg, path: "/center/transit-record" },
-  { name: "Discount", img: DiscountSvg, path: "/center/withdraw" },
+  { name: "Discount", img: DiscountSvg, path: "/center/top-up?tab=withdraw" },
   { name: "Bank", img: BankSvg, path: "/center/withdrawbank" },
   { name: "Message", img: MessageSvg, path: "/center/mailbox" },
   { name: "VIP", img: VIPSvg, path: "/center/vip" }

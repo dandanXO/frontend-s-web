@@ -15,7 +15,7 @@
 
       <div class="deposit-container">
         <div class="deposit-amt-quick-select-wrapper" v-if="allowedDepositAmtOptions.length > 0">
-          <div class="deposit-amt-quick-select-title">Deposit Amounts</div>
+          <div class="deposit-amt-quick-select-title">Recharge amount</div>
           <div class="deposit-amt-quick-select-list">
             <div
               :class="`deposit-amt-quick-select-item ${depositAmtOption === Number(form.localAmount) ? 'active' : ''}`"
@@ -38,9 +38,16 @@
           autocomplete="off"
           label-align="left"
         >
-          <a-form-item class="helptxt" label="Deposit Amount" name="localAmount">
-            <a-input v-model:value="form.localAmount" placeholder="Enter an amount" allowClear />
-            <div class="account-tip" style="flex-direction: column; align-items: flex-start">
+          <div class="deposit-amt-quick-select-title">Amount</div>
+          <a-form-item class="helptxt" name="localAmount">
+            
+            <a-input
+              :prefix="store.currency.value"
+              v-model:value="form.localAmount"
+              placeholder="Enter an amount"
+              allowClear
+            />
+            <!-- <div class="account-tip" style="flex-direction: column; align-items: flex-start">
               <span class="account-tip-text">
                 Min amount one time :
                 {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
@@ -54,7 +61,7 @@
                     : "No Limit"
                 }}
               </span>
-            </div>
+            </div> -->
           </a-form-item>
 
           <a-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="Exchange Rate">
@@ -75,7 +82,7 @@
               @selected="selectedBank"
             />
           </a-form-item>
-          <a-form-item
+          <!-- <a-form-item
             class="helptxt"
             v-if="hasPrivilege"
             ref="privilegeId"
@@ -105,21 +112,21 @@
             >
               {{ promoRollOver }}X turnover
             </div>
-          </a-form-item>
-          <a-form-item v-if="selectedPayType" class="tip">
+          </a-form-item> -->
+          <!-- <a-form-item v-if="selectedPayType" class="tip">
             <span v-if="activeMethod.msg" class="account-tip-text activemethod" style="margin-bottom: 10px">
               <div v-html="activeMethod.msg" />
             </span>
             <div class="account-tip-text">
-              <!-- <RiSpamLine /> -->
+              <!- <RiSpamLine /> ->
               New accounts that have updated personal information can participate in promotions
             </div>
 
             <div v-if="isIOSGCash" class="account-tip-text" style="color: #f1bb34">
-              <!-- <RiSpamLine /> -->
+              <!- <RiSpamLine /> ->
               iOS only supports scanning QR codes through screenshots.
             </div>
-          </a-form-item>
+          </a-form-item> -->
         </a-form>
         <div class="txt-center">
           <button class="common-btn confirm-btn" @click="confirmDeposit">Confirm Deposit</button>
@@ -467,15 +474,25 @@ onMounted(() => {
 </style>
 <style lang="scss">
 .dark-theme {
+  .confirm-btn {
+    
+    width: 100%;
+    max-width: 500px;
+    color: #000000;
+  }
+  .ant-input-affix-wrapper .ant-input-prefix {
+    color: #5F6061;
+
+  }
   .account-content .deposit-container .deposit-amt-quick-select-item {
-    background: #ffffff0f;
+    // background: #ffffff0f;
+    background: #0B0E0D99;
     color: #ffffff;
     &.active {
-      background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-        linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-      border: 1px solid #48a7ff;
+      background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
       filter: none;
-      color: #ffffff;
+      color: #000A01;
+
     }
   }
 }
@@ -544,7 +561,8 @@ onMounted(() => {
     .ant-form-item-control-input-content {
     .ant-input-affix-wrapper,
     > .ant-input {
-      border: 1px solid rgba(72, 167, 255, 0.1607843137);
+      border: 1px solid #072A19;
+      background: #0B0E0D99;
     }
   }
 }
@@ -595,20 +613,23 @@ onMounted(() => {
     }
     .deposit-amt-quick-select-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr));
+      // grid-template-columns: repeat(auto-fit, minmax(10vw, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       grid-gap: 10px;
       margin-top: 20px;
       flex-wrap: wrap;
       padding-bottom: 20px;
+    max-width: 500px;
     }
     .deposit-amt-quick-select-item {
-      border-radius: 40px;
-      border: 1px solid #eaeaea;
+      border-radius: 4px;
+      // border: 1px solid #eaeaea;
       font-weight: normal;
-      background: #ecf5ff;
-      color: #2b2b82;
-      padding: 10px 8px;
-      text-align: center;
+      // background: #ecf5ff;
+      background: #0B0E0D99;
+      color: #ffffff;
+      padding: 20px;
+      text-align: left;
       cursor: pointer;
 
       &.active {

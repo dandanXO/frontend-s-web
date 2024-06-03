@@ -207,7 +207,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <div class="icon icon-quick"></div>
                       Quick Withdraw
                     </router-link>
@@ -261,7 +261,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <RiBankCardLine />
                       Quick Withdraw
                     </router-link>
@@ -688,7 +688,7 @@ $link-color: #ffffff;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
-      color: #ffffff;
+      color: #000000;
     }
   }
 }

@@ -348,7 +348,7 @@ export default defineComponent({
       height: 8px;
       position: absolute;
       transform: rotate(45deg);
-      background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+      background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
       margin-left: -20px;
       margin-top: 5px;
     }

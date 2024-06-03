@@ -24,7 +24,7 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-      currency: { value: "₱", label: "peso" },
+      currency: { value: "₹", label: "RS" },
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       isAffiliateA: false,
