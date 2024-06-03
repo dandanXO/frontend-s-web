@@ -338,9 +338,8 @@ export default defineComponent({
 
 
                 if (store.hasToken()) {
-                  nextTick(() => {
-                    router.push("/home");
-                  });
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
+                  router.go(jumpUrl);
                 }
               })
               .catch((error) => {
