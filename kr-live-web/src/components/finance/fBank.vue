@@ -1,16 +1,17 @@
 <template>
   <div>
     <q-select
-      filled
+      dense
+      outlined
       class=""
       ref="bankRef"
       :label="$t('lang.bank')"
-      color="white"
       v-model="selectedBankId"
       :options="bankList"
       option-value="id"
       option-label="name"
       :rules="verifyBank"
+      clearable
       @update:model-value="$event => selectBank()"
     />
   </div>

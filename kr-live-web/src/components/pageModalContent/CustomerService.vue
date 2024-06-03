@@ -1,44 +1,68 @@
 <template>
-  <div class="modal-body-wrap">
-    <q-card-section class="modal-body-content">
-      <div class="" v-if="isCreateMode">
-        <q-btn :label="'전 페이지로 이동'" @click="isCreateMode = false" color="blue" />
-        <form class="content-form">
-          <p>
-            <q-input ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" filled clearable
-            lazy-rules :rules="[
-            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
-          ]" />
-          </p>
-          <p>
-            <q-input ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" filled clearable lazy-rules :rules="[
-            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
-          ]" />
-          </p>
-        </form>
-      </div>
-      <div v-else>
-        <div style="width:100%;display:flex;justify-content:flex-end;">
-          <q-btn :label="'글쓰기'" @click="isCreateMode = true" style="margin-left:auto" color="blue" />
+  <div class="feedback-form">
+    <div class="form-wrapper" v-if="isCreateMode">
+      <form class="content-form form-template">
+        <div class="primary-button blue-square back-btn" @click="isCreateMode = false">
+          전 페이지로 이동
         </div>
-        <q-item-section class="table-row-head">
-          <q-item-label>제목</q-item-label>
-          <q-item-label>콘텐츠</q-item-label>
-          <q-item-label>날짜 시간</q-item-label>
-        </q-item-section>
-        <template v-for="item in outboxData" :key="item.page">
-          <q-item-section class="table-row table-row-title">
-            <q-item-label>{{ item.title }}</q-item-label>
-            <q-item-label>{{ item.content }}</q-item-label>
-            <q-item-label>{{ moment(item.createTime).format('YYYY-MM-DD HH:mm:ss') }}</q-item-label>
-          </q-item-section>
-        </template>
+        <div class="form-item">
+          <label>유형</label>
+          <q-select outlined dense name="title" v-model="serviceForm.feedbackType" :options="feedbackTypes" ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
+        </div>
+        <div class="form-item">
+          <label>제목을</label>
+          <q-input dense outlined ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" clearable
+            lazy-rules :rules="[
+              (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+            ]" />
+        </div>
+        <div class="form-item">
+          <label>내용물</label>
+
+          <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" clearable
+            lazy-rules :rules="[
+              (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+            ]" />
+        </div>
+      </form>
+
+      <div class="action-buttons">
+        <div class="primary-button blue" @click.prevent="sendMessage">확신하는</div>
       </div>
-    </q-card-section>
-    <q-card-actions class="modal-body-buttons" align="center">
-      <q-btn rounded flat class="primary-button blue" label="확신하는" @click.prevent="sendMessage"></q-btn>
-      <!-- <q-btn class="form-button yellow" label="전체확인"></q-btn> -->
-    </q-card-actions>
+    </div>
+    <div class="feedback-compose-form" v-else>
+      <div class="primary-button blue-square compose-btn" @click="isCreateMode = true" style="margin-left:auto">
+        글쓰기
+      </div>
+
+
+
+    <div class="feedback-replies-list">
+      <q-list bordered class="rounded-borders">
+        <q-expansion-item icon="mail" :label="'제목'" :caption="'날짜 시간'" disable>
+          <q-card style="background:transparent;">
+            <q-card-section>
+              콘텐츠
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+        <q-expansion-item
+          v-for="item in outboxData" :key="item.page"
+          @click="readFeedback(item.id)"
+          expand-separator
+          icon="mail"
+          :label="item.title"
+          :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
+        >
+          <q-card style="background:transparent;">
+            <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
+              {{ item.content }}
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+      </q-list>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -56,8 +80,11 @@ const contentRef = ref();
 
 const serviceForm = reactive({
   title: "",
-  content: ""
+  content: "",
+  feedbackType: ""
 });
+
+const feedbackTypes = ref([]);
 
 const outboxData = ref([]);
 
@@ -67,7 +94,7 @@ const sendMessage = () => {
 
   if (titleRef.value.hasError || contentRef.value.hasError) {
   } else {
-    api.post("/session/writeOutbox", qs.stringify(serviceForm)).then((res) => {
+    api.post("/session/feedback", qs.stringify(serviceForm)).then((res) => {
       const resCode = res.data.code;
       const resMessage = res.data.message
       if (resCode === 0) {
@@ -87,18 +114,47 @@ const sendMessage = () => {
           icon: "report_problem"
         });
       }
-    }); 
+    });
   }
 };
 
 const initOutbox = () => {
-  api.get('/session/outbox').then((res) => {
+  api.get('/session/feedback/replies').then((res) => {
     const { code, data } = res.data
 
-    if(code === 0) {
+    if (code === 0) {
       outboxData.value = data.records;
     }
   })
+
+  api.get("/session/feedback/types").then((res) => {
+    const { code, data } = res.data
+    feedbackTypes.value = data;
+  })
+}
+
+const readFeedback = (id) => {
+  api.get(`/session/feedback/${id}/read`).then((res) => {
+    const { code, data } = res.data
+
+    if (code === 0) {
+      $q.notify({
+        message: "메시지 읽기",
+        type: "positive",
+        position: "top",
+        icon: "check_circle_outline"
+      });
+
+      const currentMail = outboxData.value.find((data) => data.id === id);
+
+      if(currentMail) {
+        currentMail.content = data.content;
+      }
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 }
 
 onMounted(() => {
@@ -107,14 +163,42 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.feedback-form {
+  .feedback-compose-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+  }
+  .back-btn {
+    width: 100px;
+    height: 30px;
+    font-size: 12px;
+    letter-spacing: -1px;
+  }
+
+  .compose-btn {
+    width: 60px;
+    height: 30px;
+    font-size: 12px;
+    letter-spacing: -1px;
+  }
+
+  .feedback-replies-list {
+    max-width: 485px;
+  }
+}
+
 .modal-body-content {
   .table-row-head {
     padding-top: 4px;
     display: grid;
     grid-template-columns: 50px 1fr 100px;
+
     .q-item__label {
       margin: auto;
       padding-bottom: 12px;
+
       &:nth-child(2) {
         text-align: left;
         margin-left: unset;
@@ -122,12 +206,15 @@ onMounted(() => {
       }
     }
   }
+
   .table-row {
     padding: 0 10px 0 10px;
     display: grid;
     grid-template-columns: 50px 1fr 100px;
+
     .q-item__label {
       margin: auto;
+
       //padding-bottom: 12px;
       &:nth-child(2) {
         text-align: left;
@@ -139,15 +226,18 @@ onMounted(() => {
       }
     }
   }
+
   .table-row-title {
     background: #212121;
     margin-bottom: 5px;
     padding: 10px 0;
   }
+
   .content-form {
     p {
       margin-top: 20px;
     }
+
     input,
     textarea {
       width: 100%;
@@ -161,15 +251,18 @@ onMounted(() => {
     }
   }
 }
+
 .modal-body-buttons {
   position: absolute;
   bottom: 0;
   left: 0;
 }
-.modal-body-content {
-}
+
+.modal-body-content {}
+
 .modal-body-buttons {
   width: 100%;
+
   .form-button {
     //display: inline-block;
     height: 70px;
@@ -181,9 +274,11 @@ onMounted(() => {
     color: #fff;
     font-size: 18px;
     padding-bottom: 5px;
+
     &.blue {
       background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
     }
+
     &.yellow {
       background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
     }

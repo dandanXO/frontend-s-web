@@ -15,10 +15,14 @@
     </div>
     <div class="btn-group">
       <div class="left-group">
-        <q-btn class="primary-button blue" rounded flat style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
+        <div class="primary-button blue" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
+          마이페이지
+        </div>
       </div>
       <div class="right-group">
-        <q-btn class="primary-button yellow" rounded flat style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
+        <div class="primary-button yellow" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
+          로그 아웃
+        </div>
       </div>
     </div>
     <div class="actions-topbar">
@@ -31,12 +35,20 @@
         </div>
       </div>
       <div class="actions-topbar-controls">
-        <q-btn class="primary-button blue-square" flat style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo" :label="'마이페이지'" />
-        <q-btn class="primary-button yellow-square" flat style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit" :label="'로그 아웃'" />
+        <div class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
+          마이페이지
+        </div>
+        <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
+          로그 아웃
+        </div>
       </div>
       <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
-        <q-btn class="primary-button blue-square" flat style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit" :label="'송금신청'" />
-        <q-btn class="primary-button yellow-square" flat style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw" :label="'출금신청'" />
+        <router-link class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit">
+          송금신청
+        </router-link>
+        <router-link class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw">
+          출금신청
+        </router-link>
       </div>
     </div>
   </div>

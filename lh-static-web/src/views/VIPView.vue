@@ -133,7 +133,7 @@
               <td rowspan="3">黄金</td>
               <td>黄金Ⅲ</td>
               <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金1888元</td>
+              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金888元</td>
               <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
@@ -151,7 +151,7 @@
             <tr>
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
+              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金2888元</td>
               <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
@@ -170,7 +170,7 @@
             <tr>
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金18888元</td>
+              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金5888元</td>
               <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>

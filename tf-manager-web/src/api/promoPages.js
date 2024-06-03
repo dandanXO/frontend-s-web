@@ -34,3 +34,7 @@ export const getPromoPageById = (id, siteId) => {
     return https().request(`/promo-pages/${id}/promoPage`, Method.GET);
   }
 };
+
+export const getActivePromoPageList = (siteId) => {
+  return https().request("/promo-pages/list", Method.GET, { siteId: siteId }, ContentType.form);
+};

@@ -1,4 +1,7 @@
 <template>
+<!--    <div class="europe-2024-promo-period">
+      活动时间：2024/6/1 - 2024/7/15 23:59:59
+    </div>-->
     <div class="europe-container">
       <div class="tab-buttons">
         <button
@@ -28,8 +31,8 @@ import VenueFund from "@/components/hotpromo/europe-2024/parts/venuefund.vue"
 // import { ElMessage } from "element-plus";
 
 const tabs = ref([
-  { name: '欧洲杯赛程', content: ScheduleDisplay },
   { name: '欧洲杯庆赛礼', content: DoublingGold},
+  { name: '欧洲杯赛程', content: ScheduleDisplay },
   { name: '欧洲杯专属豪礼', content: DailyFund },
   // { name: '首投场馆助威金', content: VenueFund },
   { name: '欧洲杯进球红包雨', content: EuropeHongBaoYu },
@@ -42,10 +45,28 @@ function activateTab(index) {
 }
 </script>
 <style lang="scss">
+.europe-2024-promo-period {
+  background: url("@/components/hotpromo/europe-2024/images/period-bg.png");
+  background-size: 100% 100%;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 20px;
+  color: #fff;
+  width: 400px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 20px;
+  text-align: center;
+  font-family: 'Microsoft YaHei UI';
+}
+
   .europe-container {
     width: 100%;
     max-width: 1500px;
-    margin: 10px auto;
+    margin: 85px auto;
     .rule-title {
       text-align: center;
     }
@@ -54,22 +75,19 @@ function activateTab(index) {
       display: flex;
       justify-content: space-evenly;
       align-items: center;
-      max-width: 1400px;
-      margin: 10px auto;
+      max-width: 1000px;
+      margin: 0px auto;
       button {
         background: url(images/inactive-tab.png)no-repeat center center;
-        width: 320px;
-        height: 86px;
+        width: 250px;
+        height: 60px;
         background-size: contain;
         color: #ffffff;
         font-weight: bold;
         font-family: 'PingFang SC';
-        font-size: 25px;
+        font-size: 20px;
         font-weight: 800;
-        line-height: 34.75px;
-        letter-spacing: 0.12em;
         text-align: center;
-        padding-bottom: 10px;
 
         &.active {
           background-image: url(images/active-tab.png);
@@ -78,7 +96,7 @@ function activateTab(index) {
     }
     .tab-content {
       min-height: 350px;
-      padding-top:20px;
+      // padding-top:20px;
       .tab-title {
         display: flex;
         justify-content: center;
@@ -88,7 +106,7 @@ function activateTab(index) {
         line-height: 59.57px;
         letter-spacing: 0.12em;
         text-align: left;
-        margin: 4vh auto 5vh;
+        margin: 2vh auto 5vh;
         background: linear-gradient(360deg, #BCF3FF 10.4%, #FFFFFF 100%);
         border: none;
         color: transparent; /* Hide the original text */

@@ -204,8 +204,8 @@ export default defineComponent({
 }
 
 .red-envelope{
-  width: 211px;
-  height: 211px;
+  width: 150px;
+  height: 150px;
   cursor: pointer;
   margin-right: 94px;
   position: absolute;
@@ -213,6 +213,9 @@ export default defineComponent({
   bottom: -185px;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
+  img {
+    width: 100%;
+  }
 }
 @keyframes tilt-shaking {
   0% { transform: rotate(0deg); }

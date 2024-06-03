@@ -2540,8 +2540,10 @@ body {
           img {
             display: block;
             // width: 100%;
-            width: calc(100% + 70px);
-            margin: -50px 0px -10px -60px;
+            // width: calc(100% + 70px);
+            // margin: -50px 0px -10px -60px;
+            width: calc(80% + 70px);
+            margin: -190px 0px -10px -20px;
           }
         }
       }

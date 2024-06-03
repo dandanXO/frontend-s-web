@@ -128,6 +128,28 @@
       >
         注：奖金不累积，根据当场指定赛事触发事件总分派发。
       </div>
+      <div v-if="tab === 'first'">
+        <div
+          class="sport-zhongchao-title"
+          :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/rules.png`) + ')' }"
+        ></div>
+
+        <div class="sport-zhongchao-notice">
+          <div class="sport-zhongchao-notice-item">
+            1.活动期间，符合条件的会员彩金于次日24点前派发至账户，仅需一倍流水即可提款；​
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            2.本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；​
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            3.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；​
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            4.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；​
+          </div>
+          <div class="sport-zhongchao-notice-item">5.为避免文字理解差异，本站保留本活动最终解释权。</div>
+        </div>
+      </div>
 
 
       <table class="second-table" v-if="tab === 'second'">
@@ -217,6 +239,28 @@
         注：彩金奖励不叠加，根据会员所投注的场次以及档位进行派彩；若比分为0:0按双数计算
       </div>
 
+      <div v-if="tab === 'second'">
+        <div
+          class="sport-zhongchao-title"
+          :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/rules.png`) + ')' }"
+        ></div>
+
+        <div class="sport-zhongchao-notice">
+          <div class="sport-zhongchao-notice-item">
+            1.活动期间，符合条件的会员彩金于次日24点前派发至账户,彩金于次日24点前派发至福利中心，仅需一倍流水即可提款；​
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            2.本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；​
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            3.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            4.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+          </div>
+          <div class="sport-zhongchao-notice-item">5.为避免文字理解差异，本站保留本活动最终解释权。​</div>
+        </div>
+      </div>
       <table class="third-table" v-if="tab === 'third'">
         <tr>
           <th style="width: 340px">指定赛事</th>
@@ -278,33 +322,32 @@
         <div style="line-height: 32px">
           注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。
         </div>
-        <div style="line-height: 40px;text-indent: 2em">
-          注单申请时间为三天有效期，若逾期视为自动放弃不予发放。
+      </div>
+
+      <div v-if="tab === 'third'">
+        <div
+          class="sport-zhongchao-title"
+          :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/rules.png`) + ')' }"
+        ></div>
+
+        <div class="sport-zhongchao-notice">
+          <div class="sport-zhongchao-notice-item">
+            1.活动期间，符合条件的会员彩金于次日24点前派发至账户,彩金于次日24点前派发至福利中心，仅需一倍流水即可提款；
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            2.本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            3.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
+          </div>
+          <div class="sport-zhongchao-notice-item">
+            4.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+          </div>
+          <div class="sport-zhongchao-notice-item">5.为避免文字理解差异，本站体育保留本活动最终解释权。</div>
         </div>
       </div>
 
 
-    </div>
-    <div
-      class="sport-zhongchao-title"
-      :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/rules.png`) + ')' }"
-    ></div>
-
-    <div class="sport-zhongchao-notice">
-      <div class="sport-zhongchao-notice-item">
-        1.活动期间，参与中国超级联赛指定赛事，单场有效投注≥888元且触发事件总分≥55分，即可获得对应档位奖金。
-      </div>
-      <div class="sport-zhongchao-notice-item">
-        2.活动期间，每场指定赛事仅可领取一次彩金，早盘有效投注每一场指定赛事单独计算；
-      </div>
-      <div class="sport-zhongchao-notice-item">
-        3.本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；
-      </div>
-      <div class="sport-zhongchao-notice-item">
-        4.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
-      </div>
-      <div class="sport-zhongchao-notice-item">5.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</div>
-      <div class="sport-zhongchao-notice-item">6.为避免文字理解差异，本站保留本活动最终解释权。</div>
     </div>
   </div>
 

@@ -72,13 +72,19 @@
             <div class="text">공지</div>
           </div>
         </div>
-        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
-          <div v-if="store.announcementList">
+        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20" v-if="store.announcementList && store.announcementList.length > 0">
+          <div>
             <span style="color: #fff;" v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
               {{ a.content }}
             </span>
           </div>
+          
         </marquee-text>
+        <div v-else style="width:100%;text-align:center;">
+          <span style="color: #fff;">
+            아직 콘텐츠가 없습니다
+          </span>
+        </div>
       </div>
     </router-link>
 
@@ -212,8 +218,8 @@
           <div class="search-list">
             <q-form @submit="searchList">
               <q-input
-                color="white"
-                filled
+                dense
+                outlined
                 class="search-input"
                 v-model="gamePage.searchKey"
                 :label="$t('lang.keyin_keyword')"
@@ -693,65 +699,10 @@
       </div>
     </Transition>
     <!-- cq9 end -->
+    
+
     <Transition>
-      <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
-        </div>
-        <template v-if="!isLoading">
-          <template v-for="(game, index) in miniGames" :key="index">
-            <div class="game-item btn-pointer btn-slot-game" @click="playGame(game.name, selectedPlat.code, game.code)">
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${game.icon})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </template>
-
-          <template v-if="selectedPlat.code === 'TFGaming'">
-            <div
-              class="game-item minigame-select-div"
-              v-for="(game, index) in miniGamesMore"
-              :key="index"
-              @click="showTypeH5(game.id)"
-              @mouseover="showTypeWeb(game.id)"
-              @mouseleave="showTypeWeb(0)"
-            >
-              <img :src="game.logo" />
-
-              <transition appear>
-                <div class="select-type-div" v-if="showMiniType == game.id">
-                  <div
-                    class="game-type btn-pointer"
-                    id="copper-type"
-                    @click="playGame(game.name, 'TFGaming', game.copper)"
-                  >
-                    1,000 - 65K
-                  </div>
-                  <div
-                    class="game-type btn-pointer"
-                    id="silver-type"
-                    @click="playGame(game.id, 'TFGaming', game.silver)"
-                  >
-                    100K - 130K
-                  </div>
-                  <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
-                    1,000 - 20K
-                  </div>
-                </div>
-              </transition>
-            </div>
-          </template>
-        </template>
-      </div>
+      <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
 
     <Transition>
@@ -770,19 +721,24 @@
       <div class="title-text">공지사항</div>
       <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
     </div>
-    <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
-      <div class="news-item-left">
-        <div class="news-item-title">
-          [
-          {{ item.title }}
-          ] ※
-          {{ item.content }}
-          ※
+    <template v-if="newsList.length > 0">
+      <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title" :title="item.title">
+            [
+            {{ item.title }}
+            ] ※
+            {{ item.content }}
+            ※
+          </div>
+        </div>
+        <div class="news-item-right">
+          <div class="news-item-date">{{ item.createTime }}</div>
         </div>
       </div>
-      <div class="news-item-right">
-        <div class="news-item-date">{{ item.createTime }}</div>
-      </div>
+    </template>
+    <div v-else class="news-item-box" style="justify-content: center;">
+      아직 콘텐츠가 없습니다
     </div>
   </div>
 
@@ -1128,6 +1084,7 @@ import liff from "@line/liff";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import MinigamesGrid from 'components/game/MinigamesGrid';
 
 export default defineComponent({
   name: "IndexPage",
@@ -1139,7 +1096,8 @@ export default defineComponent({
     RiStarLine,
     RiStarFill,
     GameItem,
-    GameCategory
+    GameCategory,
+    MinigamesGrid
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -2210,6 +2168,8 @@ export default defineComponent({
     align-items: center;
     width: 85%;
     flex: 1;
+    border: 1px solid #24213f;
+
     @media (min-width: 769px) {
       padding: 8px 12px;
     }
@@ -2535,13 +2495,11 @@ export default defineComponent({
   }
 
   .bookmarks {
-    width: 70px;
+    width: 60px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     grid-gap: 0px;
-    margin: 0px auto 10px 0px;
-    padding: 0px 10px 10px;
     justify-content: flex-start;
 
     .plat-item {
@@ -2552,7 +2510,7 @@ export default defineComponent({
       padding: 10px 10px;
       justify-content: center;
       align-items: center;
-      background: $third-color;
+      background: #4f4f4f36;
 
       .platform-img {
         max-width: 85px;
@@ -2576,11 +2534,11 @@ export default defineComponent({
       }
 
       &:first-of-type {
-        border-radius: 10px 10px 0px 0px;
+        // border-radius: 10px 10px 0px 0px;
       }
 
       &:last-of-type {
-        border-radius: 0px 0px 10px 10px;
+        // border-radius: 0px 0px 10px 10px;
       }
 
       span {
@@ -2590,7 +2548,7 @@ export default defineComponent({
       }
 
       &.active {
-        background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
+        background: linear-gradient(312deg, #0286FF 0%, #00FF85 100%);
         box-shadow: inset 0 0 5px #ffffff;
 
         img {
@@ -2887,6 +2845,9 @@ export default defineComponent({
       transition: 0.3s all;
       padding-right: 8px;
       padding-left: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       @media (max-width: 769px) {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -2929,7 +2890,7 @@ export default defineComponent({
 
   .game-scroll-lists {
     .bookmarks {
-      width: 100px;
+      width: 80px;
 
       .plat-item {
         img {

@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register']
+const whiteList = ['/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {
@@ -45,6 +45,8 @@ router.beforeEach(async (to, _, next) => {
           next(`/vi/login?redirect=${to.path}`)
         } else if (siteCode === 'krw') {
           next(`/kr/login?redirect=${to.path}`)
+        } else if (siteCode === 'pak') {
+          next(`/pak/login?redirect=${to.path}`)
         } else {
           next(`/login?redirect=${to.path}`);
         }

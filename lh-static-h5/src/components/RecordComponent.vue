@@ -17,6 +17,15 @@
                 <div v-if="obj === 'type'">
                   {{ translateRecord(det[obj], recordType) }}
                 </div>
+                <div v-else-if="obj === 'betId'">
+                  <q-link @click="copyText(det[obj], '注单号')">
+                    <span style="color: #468CFF">复制</span>
+                    {{ det[obj].slice(0,1) }}...
+                    <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
+                    {{ det[obj] }}
+                    </q-tooltip>
+                  </q-link>
+                </div>
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
                 </div>
@@ -441,7 +450,6 @@ export default defineComponent({
         }
       });
     };
-
     return {
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");

@@ -82,7 +82,9 @@
           <div class="title">*逆转奖金</div>
           <div class="content">赛事中先输一局，最终逆转取胜</div>
         </div>
-        <div class="lpl-summer-2024-example">例：档位奖金不累计，指定赛事场数投注额机多场馆有效投注额累计；</div>
+        <div class="lpl-summer-2024-example">
+          例：档位奖金不累计，若触发多个特殊事件按最高档位派发，指定赛事场数投注额按多场馆有效投注额累计。
+        </div>
         <div class="lpl-summer-2024-rule-title"></div>
         <div class="lpl-summer-2024-rule-content">
           <div class="item-content">
@@ -99,9 +101,7 @@
               <div class="item-icon"></div>
             </div>
             <div class="item-text">
-              2.活动期间，每场特殊事件判定标准为如下：
-              速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场LPL赛事第一局比赛为准；
+              2. 活动期间，每场特殊事件判定标准为如下：完胜奖金:赛制中零封对手；逆转奖金:赛事中先输一局，最终逆转取胜；
             </div>
           </div>
           <div class="item-content">
@@ -155,12 +155,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
@@ -298,7 +298,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .lpl-summer-2024 {
-  font-family: FZLanTingHeiS-EB-GB;
   width: 100%;
   height: 100%;
   display: flex;
@@ -335,6 +334,7 @@ onMounted(async () => {
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
+  width: 100%;
 }
 .lpl-summer-2024-tab-item {
   font-family: FZLanTingHeiS-EB-GB;
@@ -345,7 +345,8 @@ onMounted(async () => {
   background-image: url("../../../assets/promo/dy-lpl-summer-24/inactive-btn.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 200px;
+  max-width: 200px;
+  width: 100%;
   height: 60px;
   display: flex;
   justify-content: center;
@@ -366,7 +367,8 @@ onMounted(async () => {
     height: 71px;
     background-image: url("../../../assets/promo/dy-lpl-summer-24/special-gift-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
     margin-bottom: 29px;
   }
   .lpl-summer-2024-rule-title {
@@ -374,7 +376,8 @@ onMounted(async () => {
     height: 71px;
     background-image: url("../../../assets/promo/dy-lpl-summer-24/rule-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
     margin-bottom: 28px;
   }
 
@@ -392,7 +395,6 @@ onMounted(async () => {
       display: flex;
       align-items: center;
       justify-content: space-around;
-      padding: 0 87px;
       margin-bottom: 36px;
       .lpl-summer-2024-game-team-item {
         display: flex;
@@ -400,11 +402,11 @@ onMounted(async () => {
         justify-content: center;
         flex-direction: column;
         .lpl-summer-2024-game-team-icon {
-          width: 91px;
-          height: 91px;
+          width: 65px;
+          height: 65px;
         }
         .lpl-summer-2024-game-team-name {
-          font-size: 20px;
+          font-size: 16px;
           font-weight: 400;
           line-height: 24.82px;
           color: #fff;
@@ -427,7 +429,7 @@ onMounted(async () => {
         .vs-time {
           color: #aeafa2;
           margin-top: 8px;
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 400;
           line-height: 25.4px;
         }
@@ -436,7 +438,7 @@ onMounted(async () => {
   }
 
   .lpl-summer-2024-activities {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
@@ -453,7 +455,7 @@ onMounted(async () => {
     height: 100%;
     text-align: center;
     vertical-align: middle;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 25.4px;
     border-collapse: collapse;
@@ -485,7 +487,7 @@ onMounted(async () => {
 
   .winning-bonus,
   .reversal-bonus {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
@@ -494,9 +496,10 @@ onMounted(async () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
+    height: 105px;
+    justify-content: flex-start;
     .title {
-      width: 176px;
+      width: 40%;
       height: 100%;
       background: linear-gradient(90deg, #ff4d00 0%, #ffc700 100%);
       display: flex;
@@ -507,13 +510,13 @@ onMounted(async () => {
       font-weight: 700;
     }
     .content {
-      width: calc(100% - 176px);
-      padding-left: 27px;
+      width: 60%;
+      padding: 25px;
     }
   }
 
   .lpl-summer-2024-example {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
@@ -524,36 +527,38 @@ onMounted(async () => {
 
   .lpl-summer-2024-rule-content {
     border: 3px solid #3d3d3d;
-    padding-left: 16px;
-    padding-right: 45px;
-    padding-top: 41px;
-    padding-bottom: 30px;
-    height: 861px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
     .item-content {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
+      font-size: 16px;
       .item-icon-box {
         display: flex;
         align-items: start;
         height: 100%;
+        padding-top: 10px;
       }
       .item-icon {
-        width: 20px;
-        height: 20px;
+        width: 12px;
+        height: 12px;
         background-image: url("../../../assets/promo/dy-lpl-summer-24/rule-icon.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        margin-right: 17px;
+        margin-right: 10px;
       }
       .item-text {
         width: calc(100% - 40px);
-        font-size: 20px;
         font-weight: 400;
         line-height: 25.4px;
         color: #fdffe9;
@@ -571,11 +576,12 @@ onMounted(async () => {
     height: 71px;
     background-image: url("../../../assets/promo/dy-lpl-summer-24/back-money-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
     margin-bottom: 29px;
   }
   .lpl-summer-2024-activities {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
@@ -603,6 +609,9 @@ onMounted(async () => {
         th {
           border: 1px solid #ffdba633;
           background: #ffdba633 !important;
+          white-space: pre-wrap;
+          font-size: 14px;
+          line-height: 18px;
         }
       }
     }
@@ -646,7 +655,7 @@ onMounted(async () => {
     }
   }
   .lpl-summer-2024-notice {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
@@ -661,42 +670,45 @@ onMounted(async () => {
     height: 71px;
     background-image: url("../../../assets/promo/dy-lpl-summer-24/rule-title.png");
     background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center;
     margin-bottom: 28px;
   }
 
   .lpl-summer-2024-rule-content {
     border: 3px solid #3d3d3d;
-    padding-left: 16px;
-    padding-right: 45px;
-    padding-top: 41px;
-    padding-bottom: 30px;
-    height: 784px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
     .item-content {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
+      font-size: 16px;
       .item-icon-box {
         display: flex;
         align-items: start;
         height: 100%;
+        padding-top: 10px;
       }
       .item-icon {
-        width: 20px;
-        height: 20px;
+        width: 12px;
+        height: 12px;
         background-image: url("../../../assets/promo/dy-lpl-summer-24/rule-icon.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        margin-right: 17px;
+        margin-right: 10px;
       }
       .item-text {
         width: calc(100% - 40px);
-        font-size: 20px;
         font-weight: 400;
         line-height: 25.4px;
         color: #fdffe9;

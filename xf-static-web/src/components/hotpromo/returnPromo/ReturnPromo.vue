@@ -22,7 +22,11 @@
         <div class="content-main">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
           <p>兴發娱乐回馈老会员，老会员登录账号后可免费领取对应VIP等级奖金，点击“立即领取”奖金自动派发至主钱包。</p>
-
+          <div class="return-claim-btn">
+            <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
+              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+            </div>
+          </div>
           <table class="return-table" border="0" cellpadding="0" cellspacing="0">
             <thead>
               <tr>
@@ -83,12 +87,6 @@
               <!--              </tr>-->
             </tbody>
           </table>
-
-          <div class="return-claim-btn">
-            <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
-              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-            </div>
-          </div>
         </div>
 
         <div class="content-rules">

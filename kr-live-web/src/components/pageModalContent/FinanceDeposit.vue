@@ -1,190 +1,176 @@
 <template>
-  <div class="modal-body-wrap" v-if="!isDisplay">
-    <div class="deposit-options">
-      <div class="lil-title">결제 채널</div>
-      <div class="deposit-option-container">
-        <div class="node-wrapper">
-          <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+  <div class="form-wrapper">
+    <div class="modal-body-wrap" v-if="!isDisplay">
+      <div class="deposit-options">
+        <div class="lil-title">결제 채널</div>
+        <div class="deposit-option-container">
+          <div class="node-wrapper">
+            <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
-    <div style="text-align: center">입금하기</div>
-    <div class="submit-message">
-      <div class="line">
-        <span>은행 이름:</span>
-        <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-          {{ copybtntxt0 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>은행 계좌:</span>
-        <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-          {{ copybtntxt1 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>이름:</span>
-        <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-          {{ copybtntxt2 }}
-        </q-btn>
-      </div>
-      <div class="line">
-        <span>입금 금액:</span>
-        <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-        <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-          {{ copybtntxt3 }}
-        </q-btn>
+    <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
+      <div style="text-align: center">입금하기</div>
+      <div class="submit-message">
+        <div class="line">
+          <span>은행 이름:</span>
+          <input readonly class="info" ref="subMsg0" :value="submitMessage[0]" v-on:focus="$event.target.select()" />
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+            {{ copybtntxt0 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>은행 계좌:</span>
+          <input readonly class="info" ref="subMsg1" :value="submitMessage[1]" v-on:focus="$event.target.select()" />
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+            {{ copybtntxt1 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>이름:</span>
+          <input readonly class="info" ref="subMsg2" :value="submitMessage[2]" v-on:focus="$event.target.select()" />
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+            {{ copybtntxt2 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>입금 금액:</span>
+          <input readonly class="info" ref="subMsg3" :value="submitMessage[3]" v-on:focus="$event.target.select()" />
+          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+            {{ copybtntxt3 }}
+          </q-btn>
+        </div>
       </div>
     </div>
+    <div class="deposit-container" v-else>
+      <q-form ref="depositForm" class="content-form form-template">
+        <div class="form-item">
+          <label>입금금액</label>
+          <q-input
+            dense
+            outlined
+            v-if="amountList.length === 0"
+            ref="depositAmtRef"
+            :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'"
+            class="deposit-field"
+            name="localAmount"
+            v-model="form.localAmount"
+            placeholder="입금 금액을 입력하세요"
+            :rules="verifyDepositAmount"
+            clearable
+          >
+            <template v-slot:prepend>
+              <span style="z-index:1;font-size:16px;" class="text-bright">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
+            </template>
+          </q-input>
+          <q-select
+            v-else
+            ref="depositAmtRef"
+            label="금액 선택"
+            name="localAmount"
+            class="deposit-selection"
+            outlined
+            color="accent"
+            :options="amountList"
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            padding="none"
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 26px" class="text-bright">
+                {{ store.currency.value }}
+              </span>
+            </template>
+          </q-select>
+
+          <div class="text-grey text-bold">
+            입금단위：{{
+              calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : 0
+            }}
+            -
+            {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : " " }}
+          </div>
+
+          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
+            <span class="text-positive">
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+          
+          <div class="select-amt-btn-wrapper">
+            <q-btn
+              class="select-amt-btn"
+              v-for="(item, index) in countOptions"
+              :key="index"
+              :label="isUSDT ? `${item} USDT` : item + '만원'"
+              @click="selectAmt(item)"
+            ></q-btn>
+            <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+          </div>
+        </div>
+
+        <div class="form-item" v-if="selectedPayType && bankCardList.length">
+          <label>입금계좌</label>
+          <BankComponent
+            ref="payTypeClass"
+            :is="selectedPayType"
+            class="deposit-select-bank"
+            v-model="form.bankId"
+            :bank-list="bankCardList"
+            @selected="selectedBank"
+            @successful="isDeposited = true"
+          ></BankComponent>
+        </div>
+
+        <q-select
+          ref="offerRef"
+          class="deposit-selection q-mt-xs"
+          label="할인 선택"
+          outlined
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && !isUSDT"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+          @update:model-value="checkMinDepositAmt"
+        >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                  {{ scope.opt.name }}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-select>
+
+        <div class="form-item">
+          <label>입금자명</label>
+          <q-input
+            dense
+            v-model="depositAccName"
+            class="account-name-field"
+            outlined
+            readonly
+          />
+        </div>
+
+        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+      </q-form>
+    </div>
+
+    <div class="action-buttons">
+      <div class="primary-button blue" :class="btnLoading ? 'disabled' : ''" @click="confirmDeposit">{{ btnLoading ? $t('lang.loading') : '입금하기' }}</div>
+    </div>
   </div>
-  <div class="deposit-container" v-else>
-    <q-form ref="depositForm" class="q-gutter-y-xs content-form">
-      <label>입금금액</label>
-      <q-input
-        v-if="amountList.length === 0"
-        hide-bottom-space
-        ref="depositAmtRef"
-        :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'"
-        class="deposit-field"
-        color="accent"
-        name="localAmount"
-        v-model="form.localAmount"
-        placeholder="입금 금액을 입력하세요"
-        :rules="verifyDepositAmount"
-        padding="none"
-        clearable
-      >
-        <template v-slot:prepend>
-          <span style="font-size: 26px" class="text-bright">
-            <template v-if="isUSDT">USDT</template>
-            <template v-else>{{ store.currency.value }}</template>
-          </span>
-        </template>
-      </q-input>
-
-      <q-select
-        v-else
-        ref="depositAmtRef"
-        label="금액 선택"
-        name="localAmount"
-        class="deposit-selection"
-        filled
-        color="accent"
-        :options="amountList"
-        v-model="form.localAmount"
-        :rules="verifyDepositAmount"
-        padding="none"
-      >
-        <template v-slot:prepend>
-          <span style="font-size: 26px" class="text-bright">
-            {{ store.currency.value }}
-          </span>
-        </template>
-      </q-select>
-
-      <div class="q-mt-sm q-mb-sm text-grey text-bold">
-        입금단위：{{
-          calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : 0
-        }}
-        -
-        {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" : store.currency.value) : " " }}
-      </div>
-
-      <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
-        <span class="text-positive">
-          1.00 USDT ≈ {{ activeMethod.currencyRate }}
-          {{ store.currency.value }}
-        </span>
-      </div>
-      
-      <p class="option-btns">
-        <q-btn
-          class="select-amt-btn"
-          v-for="(item, index) in countOptions"
-          :key="index"
-          :label="isUSDT ? `${item} USDT` : item + '만원'"
-          @click="selectAmt(item)"
-        ></q-btn>
-        <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
-      </p>
-
-      <label v-show="selectedPayType && bankCardList.length">입금계좌</label>
-      <BankComponent
-        v-show="selectedPayType && bankCardList.length"
-        ref="payTypeClass"
-        :is="selectedPayType"
-        class="deposit-select-bank"
-        v-model="form.bankId"
-        :bank-list="bankCardList"
-        @selected="selectedBank"
-        @successful="isDeposited = true"
-      ></BankComponent>
-
-      <q-select
-        ref="offerRef"
-        class="deposit-selection q-mt-xs"
-        label="할인 선택"
-        filled
-        :options="unselectedPrivileges"
-        v-model="selectedPrivilege"
-        emit-value
-        v-if="hasPrivilege && !isUSDT"
-        :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-        clearable
-        @update:model-value="checkMinDepositAmt"
-      >
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section>
-              <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
-                {{ scope.opt.name }}
-              </q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
-
-      <label>입금금액</label>
-      <q-input
-        hide-bottom-space
-        label="입금자명"
-        v-model="depositAccName"
-        class="account-name-field"
-        padding="none"
-        color="white"
-        readonly
-      />
-
-      <div class="modal-body-buttons q-mt-md" align="center">
-        <q-btn rounded flat class="primary-button blue" label="입금하기" :loading="btnLoading" @click="confirmDeposit"></q-btn>
-      </div>
-
-      <div class="q-mt-sm" v-html="activeMethod.msg"></div>
-    </q-form>
-  </div>
-
-  <!--  <q-dialog class="modal-common-div" width="100%" v-model="isDeposited">-->
-  <!--    <q-card style="width: 100%; padding: 1rem 0.5rem">-->
-  <!--      <q-card-section class="contents q-pa-md">-->
-  <!--        <strong class="black-titles">已存款</strong>-->
-  <!--        <br />-->
-  <!--        <div style="padding: 20px">-->
-  <!--          <q-card-section class="q-mb-md q-pa-md">-->
-  <!--            您将被重定向到您的银行页面以完成存款。-->
-  <!--            <br />-->
-  <!--            入金成功后会反映这里。-->
-  <!--          </q-card-section>-->
-  <!--          <q-btn class="common-md-btn" @click="clearInfo" label="明白" color="brightbtn" />-->
-  <!--        </div>-->
-  <!--      </q-card-section>-->
-  <!--    </q-card>-->
-  <!--  </q-dialog>-->
 </template>
 
 <script setup id="FinanceDeposit">
@@ -196,6 +182,7 @@ import BankComponent from "../../components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
+import { storeToRefs } from "pinia";
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -235,7 +222,8 @@ const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
 
 const depositAmtRef = ref("");
-const depositAccName = ref(store.realName);
+const { realName } = storeToRefs(store);
+const depositAccName = realName;
 
 const currentPath = ref(route.path);
 const extensionState = ref(false);
@@ -255,21 +243,20 @@ const checkAmount = reactive({
 });
 
 const copyMessage = (position) => {
-  let copyText = null;
-  copyText = eval(`subMsg${position}.value.innerText`);
-  // Create a temporary textarea element
-  const tempTextarea = document.createElement("textarea");
-  tempTextarea.value = copyText;
-  document.body.appendChild(tempTextarea);
+  if(position === '0') {
+    subMsg0.value.focus();
+  } else if(position === '1') {
+    subMsg1.value.focus();
+  } else if(position === '2') {
+    subMsg2.value.focus();
+  } else if(position === '3') {
+    subMsg3.value.focus();
+  }
 
-  // Select the text and copy it
-  tempTextarea.select();
-  document.execCommand("copy");
+  document.execCommand('copy');
 
-  // Remove the temporary textarea element
-  document.body.removeChild(tempTextarea);
   const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
-  copybtntxt[position].value = "복사";
+  copybtntxt[position].value = "복사됨";
 };
 
 const blurCode = () => {
@@ -291,6 +278,10 @@ const verifyDepositAmount = ref([
 ]);
 
 async function confirmDeposit() {
+  if(btnLoading.value) {
+    return;
+  }
+  
   // debugger;
   btnLoading.value = true;
   depositAmtRef.value.validate();
@@ -690,77 +681,6 @@ onMounted(() => {
   }
 }
 
-.modal-body-content {
-  .content-form {
-    p {
-      margin-top: 20px;
-    }
-    label {
-      margin-bottom: 10px;
-      display: block;
-      font-size: 14px;
-      color: #fff;
-    }
-    label,
-    input {
-      width: 100%;
-    }
-    input {
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5c5c5c;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
-    }
-
-    .option-btns {
-      display: grid;
-      grid-template-columns: auto auto auto auto auto auto auto;
-      grid-row-gap: 12px;
-      grid-column-gap: 12px;
-      :deep(.q-btn) {
-        height: 40px;
-        color: #fff;
-        font-size: 14px;
-        border-radius: 3px;
-        background: #18324a;
-        &.active {
-          background: #237bff;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .modal-body-content {
-    .content-form {
-      p {
-        margin-top: 10px;
-      }
-      label {
-        margin-bottom: 8px;
-        font-size: 13px;
-      }
-      input {
-        font-size: 13px;
-        line-height: 30px;
-        color: #fff;
-        padding: 3px 12px;
-      }
-      .option-btns {
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        :deep(.q-btn) {
-          max-width: unset;
-        }
-      }
-    }
-  }
-}
-
 .submit-message {
   // width: calc(100% - 40px);
   border-radius: 10px;
@@ -791,6 +711,17 @@ onMounted(() => {
       // flex: 1;
       color: #4fb2ff;
       width: 80px;
+    }
+
+    input.info {
+      background: transparent;
+      border: none;
+      flex: 3;
+      color: #fff;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     span.info {
@@ -827,10 +758,16 @@ onMounted(() => {
   }
 }
 
+.select-amt-btn-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
 .select-amt-btn {
   background: #38f3ff;
-  margin-right: 8px;
   color: #000;
-  margin-bottom: 8px;
+  white-space: nowrap;
 }
 </style>

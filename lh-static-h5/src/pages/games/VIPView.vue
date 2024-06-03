@@ -309,7 +309,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少200元可申请一次再存30%最高奖金1888元",
+    benefit: "存款最少200元可申请一次再存30%最高奖金888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
@@ -323,7 +323,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少500元可申请每月一次再存35% 最高奖金8888元",
+    benefit: "存款最少500元可申请每月一次再存35% 最高奖金2888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
@@ -337,7 +337,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少500元可申请一次再存40%最高奖金18888元",
+    benefit: "存款最少500元可申请一次再存40%最高奖金5888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,

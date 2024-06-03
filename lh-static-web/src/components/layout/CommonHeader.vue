@@ -530,7 +530,7 @@ export default defineComponent({
       { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
       { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
       { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
-      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: checkToken() },
+      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
       { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
       { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
       { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },

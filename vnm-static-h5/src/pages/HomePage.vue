@@ -210,7 +210,7 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -1096,7 +1096,7 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
-    const isRedPacketShow = ref(false);
+    const isRedPacketShow = ref(true);
     const getRedEnvelope = () => {
       router.push("/promo?name=vi-mualixi-redpacket");
     };
@@ -2632,7 +2632,8 @@ export default defineComponent({
 }
 
 .red-envelope {
-  width: 135px;
+  width: 85px;
+  margin-left: 30px;
   cursor: pointer;
   animation: shake 1s ease-in-out infinite;
   animation-delay: 2s;
@@ -2666,8 +2667,10 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: baseline;
-    padding-bottom: 35px;
-    padding-top: 15px;
+    // padding-bottom: 35px;
+    // padding-top: 15px;
+    padding-bottom: 20px;
+    padding-top: 10px;
     position: relative;
 
     img {
@@ -2952,8 +2955,8 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         img {
-          width: 100%;
-          max-width: 70px;
+          width: unset;
+    height: 60px;
         }
       }
 

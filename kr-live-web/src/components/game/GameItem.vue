@@ -18,6 +18,7 @@
         />
         <img class="active-overlay" :src="require(`../../assets/home/games/game-bg--active.png`)" />
         <div class="game-info-wrapper">
+          <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
           <div class="game-name">{{ game.name }}</div>
           <img class="game-logo"
             :src="
@@ -58,7 +59,7 @@
               />
         </div>
         <div class="game-entry-btn">
-          <div class="btn-w-blue">게임입장</div>
+          <div class="primary-button blue"><img class="star" src="../../assets/home/games/game-entry-button-star.svg" />게임입장<img class="star" src="../../assets/home/games/game-entry-button-star.svg" /></div>
         </div>
       </div>
     </div>
@@ -122,7 +123,7 @@ const gameType = ref(props.gameType);
 
       .game-info-wrapper {
         position: absolute;
-        top: 10%;
+        top: 12%;
         left: 50%;
         transform: translate(-50%, -50%);
         display: flex;
@@ -134,12 +135,21 @@ const gameType = ref(props.gameType);
           top: 12%;
         }
 
+        .arrow {
+          width: 24px;
+
+          @media (max-width: 769px) {
+            width: 16px;
+          }
+        }
+
         .game-name {
           color: #fff;
           font-size: 24px;
+          line-height: 1;
 
           @media (max-width: 769px) {
-            font-size: 20px;
+            font-size: 14px;
           }
         }
 
@@ -162,19 +172,22 @@ const gameType = ref(props.gameType);
 
       .game-entry-btn {
         position: absolute;
-        bottom: 2%;
+        bottom: 11%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
         display: flex;
         justify-content: center;
 
-        @media (max-width: 769px) {
+        .star {
+          padding: 0 5px;
+        }
 
-          .btn-w-blue {
+        @media (max-width: 769px) {
+          bottom: 7%;
+          .primary-button.blue {
             width: 100px;
-            height: 40px;
-            font-size: 12px;
+            height: 30px;
           }
         }
 

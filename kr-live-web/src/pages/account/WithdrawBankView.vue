@@ -1,61 +1,46 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <!-- <span class="menu-title">ถอนไปยังบัญชีธนาคาร</span> -->
-    </div>
-    <div class="q-pa-md">
-      <div class="account-title-container">
-        <!-- <span class="account-title">{{ $t("lang.choose_a_card") }}</span> -->
-      </div>
-      <div class="account-content">
-        <!-- <div class="account-tip-text wbot">
-          <RiSpamLine />
-          {{ $t("lang.register_bank_acc_para") }}
-        </div> -->
-        <div class="addbuttons"></div>
-        <div class="flex-box flex-wrap bank-card-list">
-          <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
-            <div
-              class="bank-card-item"
-              :class="{
-                active: index === isCardActive,
-                inactive: index > isCardActive
-              }"
-              v-if="bc.bankName"
-              @click="showCard(bc, index)"
-            >
-              <div class="icon">
-                <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
-              </div>
-              <div class="cardname">
-                <div class="txt-center">
-                  <strong>{{ bc.bankName }}</strong>
-                </div>
-              </div>
-              <div class="unlink-btn" @click="unbindBankCard(bc)">
-                 <RiLinkUnlink />
-              </div>
-              <div class="flex-box cards">
-                <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
-                  {{ b }}
-                </div>
-              </div>
+    <div class="bank-card-list">
+      <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
+        <div
+          class="bank-card-item"
+          :class="{
+            active: index === isCardActive,
+            inactive: index > isCardActive
+          }"
+          v-if="bc.bankName"
+          @mouseover="showCard(bc, index)"
+        >
+          <div class="icon">
+            <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
+          </div>
+          <div class="cardname">
+            <div class="txt-center">
+              <strong>{{ bc.bankName }}</strong>
             </div>
-          </template>
-          <router-link
-            to="/?page=withdrawcard"
-            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-          >
-            <RiLink />
-            {{ $t("lang.add_a_card") }}
-          </router-link>
+          </div>
+          <div class="unlink-btn" @click="unbindBankCard(bc)">
+              <RiLinkUnlink />
+          </div>
+          <div class="">
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
+              {{ b }}
+            </div>
+          </div>
         </div>
-      </div>
+      </template>
+      <router-link
+        to="/?page=withdrawcard"
+        class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+      >
+        <RiLink />
+        {{ $t("lang.add_a_card") }}
+      </router-link>
     </div>
     <div class="account-title-container bindunbind">
       <span class="account-title">{{ $t("lang.bank_card_unbind_record") }}</span>
     </div>
-    <div class="account-content last bindunbind">
+    <div class="last bindunbind">
       <div class="searchbar">
         <q-form layout="inline" :model="searchForm">
           <div class="left">
@@ -1128,10 +1113,10 @@ export default defineComponent({
 
     .txt-center {
       transform: none;
-      padding-top: 13px;
+      // padding-top: 13px;
       width: 250px;
       text-align: center;
-      margin-left: 30px;
+      // margin-left: 30px;
     }
 
     &.active {

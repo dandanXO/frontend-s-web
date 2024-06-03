@@ -6,46 +6,58 @@
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
-              <div v-if="match.teamChosen!=null && match.teamChosen == match.awayTeam" class="nba24-match-game-content-btn">
-                已投票
-              </div>
-              <div
-              v-else-if="match.teamChosen==null"
-                class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
-              >
-                投票
-              </div>
-            </div>
-          </div>
-          <div class="nba24-match-game-content-center">
-            <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
-            <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
-            <div v-if="match.teamChosen!=null && match.teamChosen == 'DRAW' " class="nba24-match-game-content-btn">
-              已投平局
-            </div>
-            <div 
-            v-else-if="match.teamChosen==null"
-            class="nba24-match-game-content-btn" @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })">
-              平局
-            </div>
-          </div>
-          <div class="nba24-match-game-content-right">
-            <div class="nba24-match-game-content-team">
               <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
               <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
-              <div v-if="match.teamChosen!=null && match.teamChosen == match.homeTeam" class="nba24-match-game-content-btn">
+              <div
+                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
+                class="nba24-match-game-content-btn"
+              >
                 已投票
               </div>
               <div
-                v-esle-if="match.teamChosen==null"
+                v-else-if="match.teamChosen == null"
                 class="nba24-match-game-content-btn"
                 @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
               >
                 投票
               </div>
+              <div v-else class="nba2-match-game-content-btn__pseudo" />
+            </div>
+          </div>
+          <div class="nba24-match-game-content-center">
+            <div class="nba24-match-game-content-center-time">{{ match.matchTime }}</div>
+            <div class="nba24-match-game-content-center-schedule">季后总决赛</div>
+            <div v-if="match.teamChosen != null && match.teamChosen == 'DRAW'" class="nba24-match-game-content-btn">
+              已投平局
+            </div>
+            <div
+              v-else-if="match.teamChosen == null"
+              class="nba24-match-game-content-btn"
+              @click="handleVoteClick({ matchId: match.id, team: 'DRAW' })"
+            >
+              平局
+            </div>
+            <div v-else class="nba2-match-game-content-btn__pseudo" />
+          </div>
+          <div class="nba24-match-game-content-right">
+
+            <div class="nba24-match-game-content-team">
+              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <div
+                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
+                class="nba24-match-game-content-btn"
+              >
+                已投票
+              </div>
+              <div
+                v-else-if="match.teamChosen == null"
+                class="nba24-match-game-content-btn"
+                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+              >
+                投票
+              </div>
+              <div v-else class="nba2-match-game-content-btn__pseudo" />
             </div>
           </div>
         </div>
@@ -129,12 +141,13 @@
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。；
+            1.活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
           </div>
           <div class="item">2.活动期间，每日符合条件的会员彩金于次日 24 小时内派发，彩金 5 倍流水即可提款；</div>
           <div class="item">
             3.本活动有效投注额仅对已结算并产生输赢结果的投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不
-            计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70 水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+            计算在有效投注，任何低于欧洲盘 1.70 或亚洲盘 0.70
+            水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
           </div>
           <div class="item">
             4.若指定赛事发生因故改期、未开盘或其他不可控原因导致活动不能如期进行，本站保有将根据具体情况取消优惠活动或采取其
@@ -145,8 +158,8 @@
             通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一
-            账户，若有违规者，将不享受此红利；
+            6.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+            地址视为同一 账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">7.为避免文字理解差异，本站保留此活动最终解释权；</div>
         </div>
@@ -174,10 +187,10 @@
             </thead>
             <tbody>
               <tr v-for="(record, index) in recordList" :key="index">
-                <td>{{ record.updateTime }}</td>
-                <td>{{ record.title }}</td>
+                <td>{{ moment(record.createTime).format('YYYY-MM-DD HH:mm') }}</td>
+                <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
                 <td>{{ displayTeamVictory(record) }}</td>
-                <td :style="{color: displayGuessResult(record).color}">{{ displayGuessResult(record).text }}</td>
+                <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
               </tr>
               <!-- <tr>
                 <td>2024-05-11 16:00</td>
@@ -211,6 +224,7 @@
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+import { ElMessage } from "element-plus";
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -228,67 +242,68 @@ const handleVoteClick = (selectedData) => {
 
 const handleSubmitVote = () => {
   console.log(submitParam);
-  submitNbaMatch(submitParam).then((res) => {
-    
-  }).finally(()=>{
-    confirmVoteDialog.value = false
-  });
+  submitNbaMatch(submitParam)
+    .then((res) => {
+      if(res.code === 0) {
+        ElMessage.success({
+          type: "success",
+          message: "成功投票"
+        });
+        getNbaMatchData()
+      }else {
+        ElMessage.error(res.message);
+      }
+    })
+    .catch(() => {
+      ElMessage.error(res.message);
+    })
+    .finally(() => {
+      confirmVoteDialog.value = false;
+    });
 };
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
-const displayTeamVictory = (record)=>{
-  if(record.homeTeamResult > record.awayTeamResult){
-    return record.homeTeam+'胜'
-  }
-  if(record.homeTeamResult < record.awayTeamResult){
-    return record.awayTeam+'胜'
-  }
-  if(record.homeTeamResult == record.awayTeamResult){
-    return '平局'
-  }
-}
-const displayGuessResult = (record)=>{
-  if(record.status === 'ACTIVE'){
-    return {text:'结果未出', color:'#7a8eb9'}
-  }
-  else if(record.teamChosen === 'DRAW'){
-    if(record.homeTeamResult === record.awayTeamResult){
-      return {text:'正确', color:'#51acff'}
-    }else{
-      return {text:'错误', color:'#ff5151'}
+const displayTeamVictory = (record) => {
+  if(record.teamChosen === 'DRAW') return '平局'
+  return record.teamChosen + '胜'
+};
+const displayGuessResult = (record) => {
+  if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
+    return { text: "结果未出", color: "#7a8eb9" };
+  } else if (record.teamChosen === "DRAW") {
+    if (record.homeTeamResult === record.awayTeamResult) {
+      return { text: "正确", color: "#51acff" };
+    } else {
+      return { text: "错误", color: "#ff5151" };
     }
-  }
-  else if(record.homeTeam === record.teamChosen){
-    if(record.homeTeamResult > record.awayTeamResult){
-      return {text:'正确', color:'#51acff'}
-    }else{
-      return {text:'错误', color:'#ff5151'}
+  } else if (record.homeTeam === record.teamChosen) {
+    if (record.homeTeamResult > record.awayTeamResult) {
+      return { text: "正确", color: "#51acff" };
+    } else {
+      return { text: "错误", color: "#ff5151" };
     }
-  }
-  else if(record.awayTeam === record.teamChosen){
-    if(record.homeTeamResult < record.awayTeamResult){
-      return {text:'正确', color:'#51acff'}
-    }else{
-      return {text:'错误', color:'#ff5151'}
+  } else if (record.awayTeam === record.teamChosen) {
+    if (record.homeTeamResult < record.awayTeamResult) {
+      return { text: "正确", color: "#51acff" };
+    } else {
+      return { text: "错误", color: "#ff5151" };
     }
+  } else {
+    return { text: "", color: "#51acff" };
   }
-  else{
-    return {text:'', color:'#51acff'}
-  }
-  
-}
-onMounted(async () => {
+};
+
+const getNbaMatchData = async () => {
   const res = await getNbaMatch();
   matchList.value = res.data.map((res) => ({
     ...res,
-    matchTime: moment(res.matchTime).format("M 月 DD 日 HH:mm"),
+    matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
     awayTeamIcon: imgURL + res.awayTeamIcon,
     homeTeamIcon: imgURL + res.homeTeamIcon
   }));
+}
 
-  
-
-});
+onMounted(getNbaMatchData);
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {
@@ -349,9 +364,12 @@ watch(tableRecordDialog, async () => {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
+  padding-bottom: 40px;
+
   .nba24-match-game-content-left,
   .nba24-match-game-content-right {
+    flex: 1;
     .nba24-match-game-content-team {
       display: flex;
       flex-direction: column;
@@ -375,7 +393,8 @@ watch(tableRecordDialog, async () => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0px 120px;
+    flex: 1;
+
     .nba24-match-game-content-center-time {
       font-size: 24px;
       font-weight: 600;
@@ -384,14 +403,13 @@ watch(tableRecordDialog, async () => {
       border-radius: 30px;
       padding: 8px 44px;
       background: #edf4ff;
-      margin-top: 12px;
+      margin-bottom: 15px;
     }
     .nba24-match-game-content-center-schedule {
       font-size: 20px;
       font-weight: 600;
       line-height: 28px;
       color: #1b1b1b99;
-      margin-top: 23px;
       margin-bottom: 33px;
     }
   }
@@ -411,6 +429,10 @@ watch(tableRecordDialog, async () => {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.nba2-match-game-content-btn__pseudo {
+  height: 58px;
 }
 
 .nba24-match-game-bottom {
@@ -667,5 +689,15 @@ watch(tableRecordDialog, async () => {
       }
     }
   }
+}
+
+.dialog-header {
+  text-align: center;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
 }
 </style>

@@ -14,3 +14,7 @@ export function getAppDownloadUrlFromServer() {
 export function getCSAFromServer() {
   return server.REST.get("/config/customerAddress/v2");
 }
+
+export function getFloatingItems() {
+  return server.REST.get("/session/redirect");
+}

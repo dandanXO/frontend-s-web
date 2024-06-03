@@ -78,9 +78,11 @@ const handleScrollClick = (type) => {
     }
 
     .tab-view-tabs__inner-wrapper {
+      display: flex;
       border: 1px solid #ffffff66;
       border-radius: 20px 20px 0 0;
       overflow: hidden;
+      overflow: auto;
 
       .tab-view-tabs__tab {
         background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);

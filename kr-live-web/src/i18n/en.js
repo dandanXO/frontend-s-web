@@ -18,6 +18,10 @@ export default {
     reg_bank_id: "Bank ID",
     reg_card_acc: "Card Account",
     reg_submit: "Register",
+    reg_captcha_confirm: "Confirm",
+    reg_captcha_verifying: "Verifying",
+    reg_check_captcha: "Captcha Code Check",
+    reg_enter_captcha: "Enter captcha code",
     // register end
     langVal: "en",
     login: "Login",

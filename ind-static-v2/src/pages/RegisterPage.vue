@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -41,13 +41,10 @@
                   ref="pwdRef"
                   hide-bottom-space
                   v-model="regForm.password"
-                  lazy-rules
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-                    () => isAlphanumeric(regForm.password, 'Password')
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert password',
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 5'
                   ]"
+                  :type="isPwd ? 'password' : 'text'"
                   color="white"
                   outlined
                   label-color="brand"
@@ -61,7 +58,7 @@
                     />
                   </template>
                 </q-input>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
@@ -80,7 +77,7 @@
                     Good
                   </span>
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div>
+                </div> -->
               </template>
             </InputField>
 
@@ -175,19 +172,19 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+
 export default defineComponent({
   name: "RegisterPage",
   components: {
@@ -428,9 +425,9 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  // router.go(jumpUrl);
-                  router.go("/");
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
+                  // location.href = "/";
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -608,7 +605,7 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;

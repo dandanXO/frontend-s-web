@@ -93,7 +93,9 @@
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
-              selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+              selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
+              selectedPromo.promoCode === 'dy2-lpl-summer24' ||
+              selectedPromo.promoCode === 'dy-duanwujie24'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -328,7 +330,6 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
-
       &:not(:has(thead)) {
         tr:first-child td {
           background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -342,6 +343,8 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+        p { margin: 0;
+    line-height: 21px; }
       }
 
       tbody {
@@ -670,6 +673,10 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
           }
         }
         &.isCS {

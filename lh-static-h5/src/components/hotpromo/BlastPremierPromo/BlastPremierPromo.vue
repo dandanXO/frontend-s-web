@@ -603,6 +603,10 @@ onMounted(() => {
     &.second {
     }
     &.third {
+      background: url(../../../assets/images/promo/hotpromo/blastpremier/rules-bg.png) no-repeat center center;
+      background-size: 100% 100%;
+      padding: 20px;
+      
       color: #00dede;
       text-align: left;
     }

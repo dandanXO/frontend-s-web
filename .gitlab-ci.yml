@@ -121,6 +121,12 @@ deploy-xf-landing-v2:
 
 #===============================================================================================
 
+deploy-xf-landing-v6:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-landing-v6
+
+#===============================================================================================
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -153,6 +159,13 @@ deploy-dy-tutorials:
   extends: .s3-deploy
   variables:
     PROJECT: dy-tutorials
+
+#===============================================================================================
+
+deploy-dy-landing-v6:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-landing-v
 
 #===============================================================================================
 
@@ -202,6 +215,13 @@ deploy-vnm-download:
   extends: .s3-deploy
   variables:
     PROJECT: vnm-download
+
+#===============================================================================================
+
+deploy-vnm-landing:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing
 
 #===============================================================================================
 
@@ -465,6 +485,13 @@ deploy-lh-landing-v4:
 
 #===============================================================================================
 
+deploy-lh-landing-v6:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v6
+
+#===============================================================================================
+
 deploy-lh-cesu:
   extends: .s3-deploy
   variables:
@@ -497,4 +524,29 @@ build-image-telegram-web:
     PROJECT: telegram-web
   needs:
     - build-telegram-web
+#===============================================================================================
 
+build-pak-static-web:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-web
+
+build-image-pak-static-web:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-web
+  needs:
+    - build-pak-static-web
+#===============================================================================================
+
+build-pak-static-h5:
+  extends: .build-projects
+  variables:
+    PROJECT: pak-static-h5
+
+build-image-pak-static-h5:
+  extends: .docker-build
+  variables:
+    PROJECT: pak-static-h5
+  needs:
+    - build-pak-static-h5

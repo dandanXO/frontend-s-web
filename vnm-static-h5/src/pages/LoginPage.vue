@@ -594,7 +594,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-
+    filter: brightness(100);
     img {
       width: 10px;
 
@@ -631,14 +631,16 @@ export default defineComponent({
   }
 
   .login-img {
-    padding: 0 0px 16px 0px;
-    display: flex;
-    justify-content: center;
-    position: relative;
+    // padding: 0 0px 16px 0px;
+    // display: flex;
+    // justify-content: center;
+    // position: relative;
+    height: 160px;
     img {
-      display: block;
-      width: 110%;
-      margin-right: -15%;
+      // display: block;
+      // width: 110%;
+      // margin-right: -15%;
+      display: none;
     }
 
     .login-text {
@@ -792,6 +794,7 @@ export default defineComponent({
       // width: auto;
       width: 100%;
       max-width: 135px;
+    opacity: 0;
     }
   }
 

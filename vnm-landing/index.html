@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>TF88 Hái lộc Mưa lì xì</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="abs ftball"><img src="images/ftball.png"></div>
+        <div class="abs badge"><img src="images/badge.png"></div>
+        <div class="flex-container">
+            <div class="logo"><img src="images/logo.png"></div>
+            <div class="main-header">TF88 Hái lộc Mưa lì xì</div>
+            <div class="sub-header">TF88 Chào mừng ngày hội Euro 2024 Mỗi tuần thưởng lên đến 1 tỷ</div>
+            <form class="hongbao">
+                <div class="top">
+                    <div class="hongbao-label">Nhập mã nhận lì xì</div>
+                    <input id="hongbao" class="hongbao-input">
+                </div>
+                <input id="submit" type="submit" value="Nhận" class="hongbao-btn">
+            </form>
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <div class="tab-btn active" onclick="openTab(event, 'tab1')">Vòng đầu tiên</div>
+                    <div class="tab-btn" onclick="openTab(event, 'tab2')">Vòng thứ hai</div>
+                    <div class="tab-btn" onclick="openTab(event, 'tab3')">Vòng thứ ba</div>
+                </div>
+
+                <div id="tab1" class="tab-content active">
+                    <h3>UEFA Euro 2024</h3>
+                    <p>Vòng bảng: Ngày thi đấu 1/3</p>
+                    <div id="matches-one" class="matches"></div>
+                </div>
+
+                <div id="tab2" class="tab-content">
+                    <h3>UEFA Euro 2024</h3>
+                    <p>Vòng bảng: Ngày thi đấu 2/3</p>
+                    <div id="matches-two" class="matches"></div>
+                </div>
+
+                <div id="tab3" class="tab-content">
+                    <h3>UEFA Euro 2024</h3>
+                    <p>Vòng bảng: Ngày thi đấu 3/3</p>
+                    <div id="matches-three" class="matches"></div>
+                </div>
+            </div>
+            <div class="content-bar">
+                <div class="secinner-content">
+
+                    <div class="left-contents">
+                        <div class="caption">Đăng ký tài khoản không nhận lì xì ? </div>
+                        <a href="https://www.tf88vip.com/login" class="login-btn" target="_blank">Đăng ký</a>
+                    </div>
+                    <div class="right-contents">
+                        <img src="images/sports-icon.png">
+                    </div>
+                </div>
+            </div>
+            <div class="content-bar">
+                <div class="thirdinner-content">
+                    <div class="center-title">
+                        Quy tắc hoạt động
+                    </div>
+                    <ol>
+                        <li>Nhập mã nhận lì xì.</li>
+                        <li>Bấm nút hoàn thành để chuyển đến</li>
+                        <li>Đăng ký tài khoản trên trang đăng ký. Tiền thưởng ì xì sẽ cập nhật ngày khi đăng ký thành
+                            công.
+                        </li>
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabContent, tabButtons;
+            tabContent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = "none";
+            }
+            tabButtons = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        // By default, open the first tab
+        document.getElementById("tab1").style.display = "block";
+
+
+
+        // JSON object containing match data
+        const data = {
+            "tab1": {
+                "matches": [
+                    {
+                        "teamOne": {
+                            "name": "Germany",
+                            "img": "germany"
+                        },
+                        "teamTwo": {
+                            "name": "Scotland",
+                            "img": "scotland"
+                        },
+                        "date": "15 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Hungary",
+                            "img": "hungary"
+                        },
+                        "teamTwo": {
+                            "name": "Switzerland",
+                            "img": "switzerland"
+                        },
+                        "date": "15 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Spain",
+                            "img": "spain"
+                        },
+                        "teamTwo": {
+                            "name": "Croatia",
+                            "img": "croatia"
+                        },
+                        "date": "16 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Italy",
+                            "img": "italy"
+                        },
+                        "teamTwo": {
+                            "name": "Albania",
+                            "img": "albania"
+                        },
+                        "date": "16 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Poland",
+                            "img": "poland"
+                        },
+                        "teamTwo": {
+                            "name": "Netherlands",
+                            "img": "netherlands"
+                        },
+                        "date": "16 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Slovenia",
+                            "img": "slovenia"
+                        },
+                        "teamTwo": {
+                            "name": "Denmark",
+                            "img": "denmark"
+                        },
+                        "date": "17 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Serbia",
+                            "img": "serbia"
+                        },
+                        "teamTwo": {
+                            "name": "England",
+                            "img": "england"
+                        },
+                        "date": "17 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Romania",
+                            "img": "romania"
+                        },
+                        "teamTwo": {
+                            "name": "Ukraine",
+                            "img": "ukraine"
+                        },
+                        "date": "17 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Belgium",
+                            "img": "belgium"
+                        },
+                        "teamTwo": {
+                            "name": "England",
+                            "img": "england"
+                        },
+                        "date": "17 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Austria",
+                            "img": "austria"
+                        },
+                        "teamTwo": {
+                            "name": "France",
+                            "img": "france"
+                        },
+                        "date": "18 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Türkiye",
+                            "img": "turkiye"
+                        },
+                        "teamTwo": {
+                            "name": "Georgia",
+                            "img": "georgia"
+                        },
+                        "date": "19 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Portugal",
+                            "img": "portugal"
+                        },
+                        "teamTwo": {
+                            "name": "Czechia",
+                            "img": "czechia"
+                        },
+                        "date": "19 Jun",
+                        "time": "3:00 am"
+                    },
+                ]
+            },
+            "tab2": {
+                "matches": [
+                    {
+                        "teamOne": {
+                            "name": "Croatia",
+                            "img": "croatia"
+                        },
+                        "teamTwo": {
+                            "name": "Albania",
+                            "img": "albania"
+                        },
+                        "date": "19 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Germany",
+                            "img": "germany"
+                        },
+                        "teamTwo": {
+                            "name": "Hungary",
+                            "img": "hungary"
+                        },
+                        "date": "20 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Scotland",
+                            "img": "scotland"
+                        },
+                        "teamTwo": {
+                            "name": "Switzerland",
+                            "img": "switzerland"
+                        },
+                        "date": "20 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Slovenia",
+                            "img": "slovenia"
+                        },
+                        "teamTwo": {
+                            "name": "Serbia",
+                            "img": "serbia"
+                        },
+                        "date": "20 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Denmark",
+                            "img": "denmark"
+                        },
+                        "teamTwo": {
+                            "name": "England",
+                            "img": "england"
+                        },
+                        "date": "21 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Spain",
+                            "img": "spain"
+                        },
+                        "teamTwo": {
+                            "name": "Italy",
+                            "img": "italy"
+                        },
+                        "date": "21 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Slovakia",
+                            "img": "slovakia"
+                        },
+                        "teamTwo": {
+                            "name": "Ukraine",
+                            "img": "ukraine"
+                        },
+                        "date": "21 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Poland",
+                            "img": "poland"
+                        },
+                        "teamTwo": {
+                            "name": "Austria",
+                            "img": "austria"
+                        },
+                        "date": "22 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Netherlands",
+                            "img": "netherlands"
+                        },
+                        "teamTwo": {
+                            "name": "France",
+                            "img": "france"
+                        },
+                        "date": "22 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Georgia",
+                            "img": "georgia"
+                        },
+                        "teamTwo": {
+                            "name": "Czechia",
+                            "img": "czechia"
+                        },
+                        "date": "22 Jun",
+                        "time": "9:00 pm"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Türkiye",
+                            "img": "turkiye"
+                        },
+                        "teamTwo": {
+                            "name": "Portugal",
+                            "img": "portugal"
+                        },
+                        "date": "23 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Belgium",
+                            "img": "belgium"
+                        },
+                        "teamTwo": {
+                            "name": "Romania",
+                            "img": "romania"
+                        },
+                        "date": "23 Jun",
+                        "time": "3:00 am"
+                    },
+                ]
+            },
+            "tab3": {
+                "matches": [
+                    {
+                        "teamOne": {
+                            "name": "Switzerland",
+                            "img": "switzerland"
+                        },
+                        "teamTwo": {
+                            "name": "Germany",
+                            "img": "germany"
+                        },
+                        "date": "24 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Scotland",
+                            "img": "scotland"
+                        },
+                        "teamTwo": {
+                            "name": "Hungary",
+                            "img": "hungary"
+                        },
+                        "date": "24 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Albania",
+                            "img": "albania"
+                        },
+                        "teamTwo": {
+                            "name": "Spain",
+                            "img": "spain"
+                        },
+                        "date": "25 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Croatia",
+                            "img": "croatia"
+                        },
+                        "teamTwo": {
+                            "name": "Italy",
+                            "img": "italy"
+                        },
+                        "date": "25 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "France",
+                            "img": "france"
+                        },
+                        "teamTwo": {
+                            "name": "Poland",
+                            "img": "poland"
+                        },
+                        "date": "26 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Netherlands",
+                            "img": "netherlands"
+                        },
+                        "teamTwo": {
+                            "name": "Austria",
+                            "img": "austria"
+                        },
+                        "date": "26 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Denmark",
+                            "img": "denmark"
+                        },
+                        "teamTwo": {
+                            "name": "Serbia",
+                            "img": "serbia"
+                        },
+                        "date": "26 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "England",
+                            "img": "england"
+                        },
+                        "teamTwo": {
+                            "name": "Slovenia",
+                            "img": "slovenia"
+                        },
+                        "date": "26 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Slovakia",
+                            "img": "slovakia"
+                        },
+                        "teamTwo": {
+                            "name": "Romania",
+                            "img": "romania"
+                        },
+                        "date": "27 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Ukraine",
+                            "img": "ukraine"
+                        },
+                        "teamTwo": {
+                            "name": "Belgium",
+                            "img": "belgium"
+                        },
+                        "date": "27 Jun",
+                        "time": "12:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Georgia",
+                            "img": "georgia"
+                        },
+                        "teamTwo": {
+                            "name": "Portugal",
+                            "img": "portugal"
+                        },
+                        "date": "27 Jun",
+                        "time": "3:00 am"
+                    },
+                    {
+                        "teamOne": {
+                            "name": "Czechia",
+                            "img": "czechia"
+                        },
+                        "teamTwo": {
+                            "name": "Türkiye",
+                            "img": "turkiye"
+                        },
+                        "date": "27 Jun",
+                        "time": "3:00 am"
+                    },
+                ]
+            }
+        };
+
+
+        function populateMatches(tabId, matches) {
+            const matchesContainer = document.getElementById(tabId);
+            matches.forEach(match => {
+                const matchDiv = document.createElement('div');
+                matchDiv.classList.add('match');
+                matchDiv.innerHTML = `
+                    <div class="match-team">
+                        <div class="team team-one">
+                            <div class="team-one__img"><img src="images/country-flag/${match.teamOne.img}.png" alt="${match.teamOne.name}"></div>
+                            <div class="team-one__name">${match.teamOne.name}</div>
+                        </div>
+                        <div class="team team-two">
+                            <div class="team-two__img"><img src="images/country-flag/${match.teamTwo.img}.png" alt="${match.teamTwo.name}"></div>
+                            <div class="team-two__name">${match.teamTwo.name}</div>
+                        </div>
+                    </div>
+                    <div class="match-date">
+                        <span class="date">${match.date}</span>
+                        <span class="time">${match.time}</span>
+                    </div>
+                `;
+                matchesContainer.appendChild(matchDiv);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            populateMatches("matches-one", data.tab1.matches);
+            populateMatches("matches-two", data.tab2.matches);
+            populateMatches("matches-three", data.tab3.matches);
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('.hongbao').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting in the traditional way
+
+                const correctWord = 'lixicode'; // Replace with the correct word
+                const input = document.getElementById('hongbao').value.trim();
+
+                if (input === correctWord) {
+                    window.location.href = 'https://www.tf88vip.com/home'; // Replace with your redirect URL
+                } else {
+                    alert('Mã không đúng, vui lòng thử lại!');
+                }
+            });
+        });
+    </script>
+</body>
+
+
+</html>

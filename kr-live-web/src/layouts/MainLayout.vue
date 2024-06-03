@@ -511,22 +511,24 @@ svg path {
   top: 50%;
   margin-top: -42px;
   left: 50%;
-  width: 425px;
+  width: 300px;
   transform: translate(-50%, -50%);
 
   @media (max-width: 991px) {
-    width: 200px;
+    width: 150px;
   }
 
   @media (max-width: 768px) {
     width: 200px;
     margin-top:0px;
-    top: calc(50% - 15px);
+    top: calc(50% + 30px);
+    display: none; // temp
   }
 
   @media (max-width: 500px) {
     width: 200px;
     margin-top:0px;
+    display: none; // temp
   }
 }
 

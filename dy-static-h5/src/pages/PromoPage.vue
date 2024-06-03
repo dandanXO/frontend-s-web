@@ -92,7 +92,8 @@
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
                   cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -716,6 +717,15 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lplSummer2024 {
+          margin: 0;
+          width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
 
         &.dyEurocupHongbao {
           margin: 0;

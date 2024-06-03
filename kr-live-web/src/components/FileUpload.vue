@@ -1,5 +1,5 @@
 <template>
-  <q-file name="upload_img" v-model="file" class="q-pt-md" filled :label="$t('lang.upload_img')" color="white">
+  <q-file dense name="upload_img" v-model="file" class="q-pt-md" outlined :label="$t('lang.upload_img')" color="white">
     <template v-slot:prepend>
       <q-icon name="cloud_upload" />
     </template>

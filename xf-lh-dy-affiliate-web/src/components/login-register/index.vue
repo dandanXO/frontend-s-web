@@ -6,6 +6,7 @@
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
+      props.siteId !== '11' ? '' : 'pak',
     ]"
   >
     <div class="inner">
@@ -574,6 +575,7 @@ import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
 import krLogo from '@/assets/images/kr/kr-logo.png'
+import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -1314,6 +1316,14 @@ export default defineComponent({
         currentSite.value.logo = krLogo
         state.loginForm.site = 'KRW'
         setLanguage('kr')
+      }
+      if (props.siteId === '11') {
+        currentSite.value.firstLiner = 'Start From B9'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = pakLogo
+        state.loginForm.site = 'PAK'
+        setLanguage('zh')
       }
     }
     onMounted(() => {

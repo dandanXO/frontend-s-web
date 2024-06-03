@@ -217,6 +217,9 @@
       <el-table-column prop="title" :label="t('fields.title')" width="280" />
       <el-table-column prop="homeTeam" :label="t('fields.homeTeam')" width="180" />
       <el-table-column prop="awayTeam" :label="t('fields.awayTeam')" width="180" />
+      <el-table-column prop="points" :label="t('fields.points')" width="120" />
+      <el-table-column prop="homeTeamResult" :label="t('fields.homeTeamResult')" width="120" />
+      <el-table-column prop="awayTeamResult" :label="t('fields.awayTeamResult')" width="120" />
       <el-table-column prop="status" :label="t('fields.status')" width="140">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'ACTIVE'" size="mini">{{ t('status.sportMatch.' + scope.row.status) }}</el-tag>

@@ -1,6 +1,8 @@
 <template>
     <div>
-
+      <div class="period">
+        活动时间: 2024/6/10-2024/6/20 23:59:59
+      </div>
     <q-tabs v-model="tabPosition" class="dragonboat-tabs">
       <q-tab name="duanwu" label="端午粽情"></q-tab>
       <q-tab name="fangzong" label="放粽不羁"></q-tab>
@@ -13,7 +15,7 @@
                 </div>
                 <div class="duanwudetails">
                     <div class="dragon-title"><div class="gradient">活动内容</div></div>
-                    <div class="centertxt">VIP0在注册日的两天内成功晋级≥VIP1后，可申请豪华晋级体验金18或58元，礼金三倍流水即可提款。</div>
+                    <div class="centertxt">自注册日两天后可点击领取豪华晋级体验金，礼金三倍流水即可提款。</div>
                     <table cellpadding="0" cellspacing="0" border="0">
                         <tr>
                             <th>VIP等级</th>
@@ -26,7 +28,7 @@
                             <td>18</td>
                         </tr>
                         <tr>
-                            <td>VIP1</td>
+                            <td>VIP0</td>
                             <td>注册日两天内晋级≥VIP2</td>
                             <td>58</td>
                         </tr>
@@ -37,7 +39,7 @@
                     <div class="dragon-title"><div class="gradient">活动规则</div></div>
                     <ol>
                         <li>本活动仅限在活动期间内注册的VIP0会员参与，在注册日的两天内成功达成晋级条件，可享豪华晋级体验金；</li>
-                        <li>活动期间，符合条件的会员需在本活动页面点击【立即领取】即可领取彩金，彩金仅需3倍流水即可提款；</li>
+                        <li>活动期间，符合条件的会员需在注册日两天后再本活动页面点击【立即领取】即可领取彩金，彩金按对应参与条件符合最高档位派发，彩金仅需3倍流水即可提款；</li>
                         <li>任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；</li>
                         <li>根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；</li>
                         <li>此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及IP地址视为同一账户，若有违规者，将不享受此红利；</li>
@@ -157,6 +159,34 @@
 @font-face {
   font-family: hyagi;
   src: url('fonts/hya0gj.ttf');
+}
+
+.period {
+  background: url("./images/period-bg.png");
+  background-size: 100% 100%;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 20px;
+  color: #fff;
+  width: 400px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto 10px;
+  text-align: center;
+  font-family: 'Microsoft YaHei UI';
+  width: 100%;
+  white-space: nowrap;
+  
+  @media (max-width: 400px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 10px;
+  }
 }
 
 .dragonboat-tabs {
