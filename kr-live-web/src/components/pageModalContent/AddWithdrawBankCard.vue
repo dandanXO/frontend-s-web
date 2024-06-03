@@ -1,102 +1,109 @@
 <template>
   <div class="modal-body-wrap form-wrapper">
     <q-card-section class="modal-body-content">
-      <div class="bind-wrapper">
-        <q-form class="bind-item q-my-sm">
-          <q-label>
-            개설 은행
-            <em>*</em>
-          </q-label>
-          <q-select
-            ref="bankCardRef"
-            standout
-            v-model="bankCardInfo.bankId"
-            class="q-pb-xs"
-            hide-bottom-space
-            label="선택하세요"
-            lazy-rules
-            clearable
-            :options="bankList"
-            option-value="id"
-            option-label="name"
-            emit-value
-            map-options
-            :rules="[(val) => val || '선택하세요']"
-          >
-            <template v-slot:selected-item="scope">
-              <q-item-section avatar>
-                <img
-                  v-if="scope.opt.bankIcon"
-                  style="width: 24px; margin-top: 3px; margin-bottom:0px"
-                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                  {{ scope.opt.name }}
-                </q-item-label>
-              </q-item-section>
-            </template>
-            <template v-slot:option="scope">
-              <q-item v-bind="scope.itemProps">
+        <q-form class="form-template">
+          <div class="">
+            <q-label>
+              개설 은행
+              <em>*</em>
+            </q-label>
+            <q-select
+              dense
+              ref="bankCardRef"
+              outlined
+              v-model="bankCardInfo.bankId"
+              class="q-pb-xs"
+              label="선택하세요"
+              lazy-rules
+              clearable
+              :options="bankList"
+              option-value="id"
+              option-label="name"
+              emit-value
+              map-options
+              :rules="[(val) => val || '선택하세요']"
+            >
+              <template v-slot:selected-item="scope">
                 <q-item-section avatar>
                   <img
                     v-if="scope.opt.bankIcon"
-                    style="width: 24px; margin-top: 3px; margin-bottom: 0px"
+                    style="width: 24px; margin-top: 3px; margin-bottom:0px"
                     :src="imgURL + '/payment/' + scope.opt.bankIcon"
                   />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>{{ scope.opt.name }}</q-item-label>
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
                 </q-item-section>
-              </q-item>
-            </template>
-          </q-select>
+              </template>
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <img
+                      v-if="scope.opt.bankIcon"
+                      style="width: 24px; margin-top: 3px; margin-bottom: 0px"
+                      :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                    />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>{{ scope.opt.name }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </template>
+            </q-select>
+          </div>
 
-          <q-label>
-            은행 카드 번호
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="cardNumberRef"
-            type="number"
-            standout
-            v-model="bankCardInfo.cardNumber"
-            class="q-pb-xs"
-            hide-bottom-space
-            label="은행 카드 번호를 입력하세요"
-            lazy-rules
-            clearable
-            :rules="[(val) => (val && val.length > 0) || '은행 카드 번호를 입력하세요', validateBankLength]"
-          ></q-input>
+          <div class="">
+            <q-label>
+              은행 카드 번호
+              <em>*</em>
+            </q-label>
+            <q-input
+              dense
+              ref="cardNumberRef"
+              type="number"
+              outlined
+              v-model="bankCardInfo.cardNumber"
+              class="q-pb-xs"
+              label="은행 카드 번호를 입력하세요"
+              lazy-rules
+              clearable
+              :rules="[(val) => (val && val.length > 0) || '은행 카드 번호를 입력하세요', validateBankLength]"
+            ></q-input>
+          </div>
 
-          <q-label> 
-            카드 계좌
-             <em>*</em> 
-           </q-label> 
-           <q-input 
-             standout 
-             v-model="bankCardInfo.cardAccount" 
-             class="q-pb-xs" 
-             hide-bottom-space 
-             label="카드 계좌" 
-             lazy-rules 
-             clearable 
-             readonly 
-           ></q-input> 
+          <div class="">
+            <q-label> 
+              카드 계좌
+              <em>*</em> 
+            </q-label> 
+            <q-input 
+              dense
+              outlined 
+              v-model="bankCardInfo.cardAccount" 
+              class="q-pb-xs"
+              label="카드 계좌" 
+              lazy-rules 
+              clearable 
+              readonly 
+            ></q-input> 
+          </div>
 
-          <q-label>
-            카드 주소
-          </q-label>
-          <q-input
-            ref="cardAddressRef"
-            standout
-            v-model="bankCardInfo.cardAddress"
-            class="q-pb-xs"
-            hide-bottom-space
-            label="계좌 개설 은행 주소를"
-            clearable
-          ></q-input>
+          <div class="">
+            <q-label>
+              카드 주소
+            </q-label>
+            <q-input
+              ref="cardAddressRef"
+              dense
+              outlined
+              v-model="bankCardInfo.cardAddress"
+              class="q-pb-xs"
+              label="계좌 개설 은행 주소를"
+              clearable
+            ></q-input>
+          </div>
 
           <!-- since onMount API forced update name & phone, hence no validation needed. -->
 <!--          <q-label>-->
@@ -148,7 +155,6 @@
         </q-form>
         <div class="note">결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다.</div>
         <div class="note">안내: 카드 소지자 이름이 일치하지 않을 경우 온라인 고객 서비스에 문의하여 정보를 수정할 수 있습니다. 지원과 이해에 감사드립니다！</div>
-      </div>
     </q-card-section>
     <div class="action-buttons">
       <div class="primary-button blue" @click="submitBankCard()">

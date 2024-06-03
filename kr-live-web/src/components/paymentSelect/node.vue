@@ -329,8 +329,6 @@ $node-color: #dd4645;
 }
 .node {
   .node {
-    margin: 0 -30px;
-    padding: 0 30px;
     .account-title-container {
       // margin: 0 -30px;
       padding: 15px 0;

@@ -55,7 +55,7 @@
           :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
         >
           <q-card style="background:transparent;">
-            <q-card-section>
+            <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
               {{ item.content }}
             </q-card-section>
           </q-card>
@@ -139,7 +139,7 @@ const readFeedback = (id) => {
 
     if (code === 0) {
       $q.notify({
-        message: "已读消息",
+        message: "메시지 읽기",
         type: "positive",
         position: "top",
         icon: "check_circle_outline"

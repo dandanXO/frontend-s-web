@@ -11,12 +11,12 @@
         <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>
       <q-separator />
-      <q-tab-panels v-model="recordActive" animated>
+      <q-tab-panels v-model="recordActive" animated style="background: #212632;">
         <q-tab-panel name="deposit">
           <div>
             <q-form layout="inline" :model="searchForm.deposit">
               <div class="left">
-                <q-input filled v-model="searchForm.deposit.startDate">
+                <q-input dense outlined v-model="searchForm.deposit.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -29,7 +29,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.deposit.endDate">
+                <q-input dense outlined v-model="searchForm.deposit.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -42,7 +42,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square"  @click="searchRecord">{{ $t('lang.search') }}</div>
               </div>
             </q-form>
           </div>
@@ -79,13 +79,13 @@
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
-                      <q-btn
+                      <div
+                        class="primary-button blue-square"
                         v-if="props.row.status === 'PENDING'"
-                        size="sm"
-                        :label="$t('lang.reminder')"
-                        color="brand"
                         @click="($event) => openReminder(props)"
-                      />
+                      >
+                      {{ $t('lang.reminder') }}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -102,13 +102,14 @@
 
             <template v-slot:body-cell-operation="props">
               <q-td :props="props">
-                <q-btn
+                <div
+                  class="primary-button blue-square"
                   v-if="props.row.status === 'PENDING'"
-                  size="sm"
-                  :label="$t('lang.reminder')"
-                  color="brand"
                   @click="($event) => openReminder(props)"
-                />
+                  style="width: 75px;height: 30px; font-size: 12px"
+                >
+                  {{ $t('lang.reminder') }}
+                </div>
               </q-td>
             </template>
           </q-table>
@@ -117,7 +118,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.turnover">
               <div class="left">
-                <q-input filled v-model="searchForm.turnover.startDate">
+                <q-input dense outlined v-model="searchForm.turnover.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -130,7 +131,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.turnover.endDate">
+                <q-input dense outlined v-model="searchForm.turnover.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -143,7 +144,9 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
@@ -197,7 +200,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
-                <q-input filled v-model="searchForm.withdraw.startDate">
+                <q-input dense outlined v-model="searchForm.withdraw.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -210,7 +213,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.withdraw.endDate">
+                <q-input dense outlined v-model="searchForm.withdraw.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -223,7 +226,9 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
@@ -314,7 +319,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.transfer">
               <div class="left">
-                <q-input filled v-model="searchForm.transfer.startDate">
+                <q-input dense outlined v-model="searchForm.transfer.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -327,7 +332,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.transfer.endDate">
+                <q-input dense outlined v-model="searchForm.transfer.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -340,7 +345,9 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
@@ -393,7 +400,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.rebates">
               <div class="left">
-                <q-input filled v-model="searchForm.rebates.startDate">
+                <q-input dense outlined v-model="searchForm.rebates.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -406,7 +413,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.rebates.endDate">
+                <q-input dense outlined v-model="searchForm.rebates.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -419,7 +426,9 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
@@ -438,7 +447,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left wrap-box">
-                <q-input filled v-model="searchForm.gameBetRecord.startDate">
+                <q-input dense outlined v-model="searchForm.gameBetRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -451,7 +460,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.gameBetRecord.endDate">
+                <q-input dense outlined v-model="searchForm.gameBetRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -467,7 +476,8 @@
                 <q-select
                   style="width: 100%; max-width: 175px"
                   v-model="searchForm.gameBetRecord.platform"
-                  filled
+                  dense
+                  outlined
                   clearable
                   :options="platformsList"
                   label="게임 플랫폼"
@@ -478,7 +488,9 @@
                   emit-value
                   map-options
                 />
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
 
               <div class="payout-total">
@@ -509,7 +521,7 @@
           <div>
             <q-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
-                <q-input filled v-model="searchForm.reminderRecord.startDate">
+                <q-input dense outlined v-model="searchForm.reminderRecord.startDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -522,7 +534,7 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input filled v-model="searchForm.reminderRecord.endDate">
+                <q-input dense outlined v-model="searchForm.reminderRecord.endDate">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -535,7 +547,9 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
@@ -617,7 +631,8 @@
             >
               <q-input
                 :label="$t('lang.order_number')"
-                filled
+                dense
+                outlined
                 v-model="reminderForm.orderNo"
                 color="white"
                 padding="none"
@@ -629,14 +644,17 @@
                 type="textarea"
                 v-model="reminderForm.memberRemark"
                 :label="$t('lang.finance_remark')"
-                filled
+                dense
+                outlined
                 autogrow
                 color="white"
                 class="q-mt-md"
                 :rows="2"
                 :max-rows="5"
               />
-              <q-btn class="common-btn q-mt-md" color="brand" :label="$t('lang.send')" @click="submitReminder" />
+              <div class="primary-button blue-square" @click="submitReminder" style="margin:15px 0px;">
+                {{ $t('lang.send') }}
+              </div>
             </q-form>
           </q-card-section>
 
@@ -1359,9 +1377,24 @@ export default defineComponent({
 }
 
 .account-content.transit {
-  min-height: 740px;
   margin: 10px;
   padding: 0;
+
+  :deep(.q-table__container), :deep(.q-table__grid-item-card) {
+    background: #212632;
+  }
+
+  .q-table__grid-item-card {
+    .primary-button {
+      width: 70px;
+      height: 30px;
+      font-size: 12px;
+    }
+  }
+
+  :deep(.q-tab) {
+    color: #fff;
+  }
 
   .form-wrapped {
     :deep(.ant-tabs-top-bar) {
