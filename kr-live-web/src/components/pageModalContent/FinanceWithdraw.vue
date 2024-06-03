@@ -5,7 +5,7 @@
 
         <div class="withdrawalmethod">
           <div
-            v-for="(method, i) in withdrawalMethods"
+            v-for="(method, i) in [...withdrawalMethods, ...withdrawalMethods]"
             :key="i"
             class="withdraw-type-item"
             @click="selectMethod(method, i)"
@@ -531,25 +531,26 @@ onMounted(() => {
   background:#fff;
 }
 .withdrawalmethod {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  overflow-x: unset;
-  padding: 0px 5px;
+  display: flex;
   grid-gap: 10px;
-  grid-column-gap: 10px;
-  grid-row-gap: 5px;
-  padding: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 
   .withdraw-type-item {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    min-width: 150px;
+    width: 200px;
     text-align: center;
     position: relative;
     cursor: pointer;
+
+    background: #252e43;
+    border-radius: 6px;
+    border: 2px solid #4b4b4b;
+    color: #ffffff;
 
     .promo-label {
       position: absolute;
@@ -568,7 +569,8 @@ onMounted(() => {
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 10px;
-      max-width: 4.5rem;
+      // max-width: 4.5rem;
+      max-width: 50px;
     }
 
     img {
@@ -620,6 +622,14 @@ onMounted(() => {
       ::after {
         position: relative;
       }
+    }
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    .withdraw-type-item {
+      width: 100%;
     }
   }
 
