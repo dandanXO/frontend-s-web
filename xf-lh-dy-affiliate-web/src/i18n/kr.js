@@ -7,14 +7,14 @@ export default {
     verification_title: '보안 인증, 순서대로 클릭해주세요:',
     signup: '가입',
     username: '파트너 가입',
-    loginnow: '지금 로그인',
+    loginnow: '로그인',
     password: '비밀번호',
     apply: '신청',
     verificationcode: '인증 코드',
     verify_success: '인증 성공',
     refresh: '새로고침',
     submit: '제출',
-    register_affi: '로그인',
+    register_affi: '파트너가입',
     back_login: '로그인으로 돌아가기',
     contact_us: '문의하기',
     affiliateaccountcanonlycontainnumchar:
@@ -716,11 +716,11 @@ export default {
   },
   affiliate: {
     level: {
-      JUNIOR_AFFILIATE: '5급 대리점',
-      SUB_AFFILIATE: '4급 대리점',
-      AFFILIATE: '3급 대리점',
-      SUPER_AFFILIATE: '2급 대리점',
-      MASTER_AFFILIATE: '1급 대리점',
+      JUNIOR_AFFILIATE: '플레이어',
+      SUB_AFFILIATE: '매장',
+      AFFILIATE: '부본사',
+      SUPER_AFFILIATE: '본사',
+      MASTER_AFFILIATE: '총판',
     },
     status: {
       APPLY: '신청',
