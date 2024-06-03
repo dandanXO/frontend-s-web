@@ -91,22 +91,8 @@
     </div>
   </div>
 
-
-  <q-dialog
-    v-model="isAppPromo"
-    persistent
-    :maximized="true"
-    transition-show="slide-up"
-    transition-hide="slide-down"
-  >
-    <iframe
-      :src="appPromoUrl"
-      id="promo-iframe"
-      scrolling="auto"
-      frameborder="0"
-      class="game-iframe"
-    >
-    </iframe>
+  <q-dialog v-model="isAppPromo" persistent :maximized="true" transition-show="slide-up" transition-hide="slide-down">
+    <iframe :src="appPromoUrl" id="promo-iframe" scrolling="auto" frameborder="0" class="game-iframe"></iframe>
   </q-dialog>
 
   <q-dialog width="100%" v-model="isDisplayLogin">
@@ -280,9 +266,6 @@ export default defineComponent({
         store.token = extensionToken.value;
 
       }else {
-        if (!store.token) {
-          isDisplayLogin.value = true
-        } else {
           if (promo.redirectUrl.includes("page-vip")) {
             router.push({path: '/account/vip'});
           } else {
@@ -294,7 +277,6 @@ export default defineComponent({
             isPromoDetail.value = true
             selectedPromo.value = promo
           }
-        }
       }
     }
     const switchPromoType = (type) => {
@@ -923,5 +905,4 @@ export default defineComponent({
     top: 26px;
   }
 }
-
 </style>
