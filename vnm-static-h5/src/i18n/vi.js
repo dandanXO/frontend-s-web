@@ -528,8 +528,9 @@ export default {
     vip_lottery_rebate: "Xổ Số",
     vip_unachieved: "Chưa đạt được",
     vip_achieved: "Đã đạt được",
-    vip_cumulative_deposits: "Tiền gửi tích lũy:",
-
+    vip_cumulative_deposits: "YÊU CẦU DUY TRÌ CẤP ĐỘ VIP:",
+    vip_3timedeposit: "NẠP THÀNH CÔNG 03 LẦN TRONG THÁNG",
+    totalBetMonth: "TỔNG CƯỢC TRONG THÁNG",
     have_one_successful_deposit: "Có một giao dịch nạp tiền thành công",
     accumulated_deposits: "Tổng số tiền nạp",
     turnover_requirements: "Yêu cầu doanh số",

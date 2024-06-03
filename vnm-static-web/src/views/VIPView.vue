@@ -10,14 +10,32 @@
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
+            <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3" @click="store.openLiveChat()" class="claimBtn vipBirthday">
+                <RiCake2Line />
+                {{ $t('vip.birthday') }}
+              </a>
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel !== Number(vip.vipLevel) || !canClaimMonthly}"
+                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
+                <RiCalendar2Line />
+                {{ $t('vip.monthly') }}
+              </a>
+              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
+                 @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
+                <RiMoneyDollarCircleLine />
+                {{ $t('vip.upgrade') }}
+              </a>
+            </div>
             <div class="vipcontents">
               <div class="title">
                 VIP{{ vip.vipLevel }}
                 <span class="type">{{ vip.vipTitle }}</span>
               </div>
               <div class="description">
-                {{ $t('vip.accumulatedDeposit') }}:
-                <span style="color: #424f72">{{ vip.upgrade }}</span>
+                {{ $t('vip.vipMaintainRequired') }}:
+                <span style="color: #424f72"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
+                <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.upgrade }}</span>
+              </span>
               </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
@@ -47,22 +65,6 @@
               :class="`vipLevelReachStatus ${getVipLevelProgress(vip) === 100 && !!vipLevel ? 'vipLevelReached' : ''}`"
             >
               <span>{{ getVipLevelProgress(vip) === 100 && !!vipLevel ? $t('vip.achieved') : $t('vip.unachieved') }}</span>
-            </div>
-            <div class="claimButtons" v-if="currentSlide === vipIndex && store.token">
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2 && vipIndex + 1 !== 3" @click="store.openLiveChat()" class="claimBtn vipBirthday">
-                <RiCake2Line />
-                {{ $t('vip.birthday') }}
-              </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable': vipLevel !== Number(vip.vipLevel) || !canClaimMonthly}"
-                 @click="canClaimMonthly && vipLevel + 1 === Number(vip.vipLevel) ? claimBonus('monthly'): null" class="claimBtn vipMonthly">
-                <RiCalendar2Line />
-                {{ $t('vip.monthly') }}
-              </a>
-              <a v-if="vipIndex + 1 !== 1 && vipIndex + 1 !== 2" :class="{'unavailable':vip.unavailable, 'claimed':vip.claimed}"
-                 @click="!vip.unavailable && !vip.claimed?claimBonus('welcome', vipIndex + 1): null" class="claimBtn vipWelcome">
-                <RiMoneyDollarCircleLine />
-                {{ $t('vip.upgrade') }}
-              </a>
             </div>
           </div>
           <!-- <router-link
@@ -532,8 +534,8 @@ export default defineComponent({
     const vipItems = reactive([
       {
         vipLevel: "1",
-        // upgrade: t('vip.3timedeposit'),
         upgrade: "100",
+        // upgrade: "Nạp thành công 03 lần trong tháng",
         vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -798,48 +800,54 @@ $border-settings: 1px solid #e5e7eb;
     height: 284px;
     background: url("../assets/vip/badge/banner-1.png") no-repeat top center;
     background-size: contain;
-
+    margin-bottom: 90px;
     .claimButtons {
       display: flex;
       position: absolute;
-      right: 34%;
+      // right: 34%;
       gap: 10px;
-      top: 25px;
+      // top: 25px;
+      bottom: -50px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
       z-index: 99;
       .claimBtn {
         cursor: pointer;
-        width: 55px;
-        height: 55px;
         gap: 2px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 50%;
-        font-size: 7px;
+        font-size: 12px;
+        border-radius: 15px;
         padding: 8px;
         line-height: 9px;
-        flex-direction: column;
-        color: #cdae77;
-        box-shadow: 0px 2px 5px 0px #cdae77 inset;
+        // color: #cdae77;
+        // box-shadow: 0px 2px 5px 0px #cdae77 inset;
+        background: linear-gradient(360deg, #E29100 0%, #F8D79D 70%, #F2E4B6 80%, #ffb42a 100%);
+        color: #000000;
         &.unavailable {
           cursor: unset;
+          pointer-events: none;
           color: #b1b1b1;
-          box-shadow: 0px 2px 5px 0px #b1b1b1 inset;
+          background: linear-gradient(360deg, #D3D3D3 0%, #E6E6E6 70%, #F2F2F2 80%, #ffffff 100%);
           svg {
             fill: #b1b1b1;
           }
         }
         &.claimed {
-          box-shadow: 0px 2px 5px 0px #78634a inset;
-          color: #78634a;
+          // box-shadow: 0px 2px 5px 0px #78634a inset;
+          pointer-events: none;
+          background: linear-gradient(360deg, #D4AF37 0%, #FFD700 70%, #E6C200 80%, #ffc532 100%);
+          color: #8f8f8f;
           cursor: unset;
           svg {
-            fill: #78634a;
+            fill: #8f8f8f;
           }
         }
         svg{
           width: 18px;
-          fill: #cdae77;
+          fill: #000000;
         }
       }
     }
