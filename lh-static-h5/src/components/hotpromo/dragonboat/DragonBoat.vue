@@ -177,6 +177,16 @@
   margin: 0px auto 10px;
   text-align: center;
   font-family: 'Microsoft YaHei UI';
+  width: 100%;
+  white-space: nowrap;
+  
+  @media (max-width: 400px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 10px;
+  }
 }
 
 .dragonboat-tabs {
