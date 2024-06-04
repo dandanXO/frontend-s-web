@@ -2023,9 +2023,9 @@ onMounted(() => {
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-  if (Platform.is.android && Platform.is.capacitor) {
-    initOneSignal();
-  }
+  // if (Platform.is.android && Platform.is.capacitor) {
+  //   initOneSignal();
+  // }
 });
 
 watch(
