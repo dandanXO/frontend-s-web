@@ -80,7 +80,7 @@
     </div> -->
   </footer>
 
-  <StickyMenu />
+<!--  <StickyMenu />-->
 </template>
 
 <script setup>

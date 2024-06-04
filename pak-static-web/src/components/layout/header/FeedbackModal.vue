@@ -71,7 +71,9 @@ onMounted(() => {
         feedbackTypes.value = res.data;
       }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error)
+    });
 });
 </script>
 <style scoped lang="scss">

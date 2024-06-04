@@ -111,7 +111,7 @@
         <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
           <div class="section-wrapper-content wide">
             <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game, game.code, game.name)">
-              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
+              <img style="max-height: 228px;" :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
             </a>
           </div>
         </SectionWrapper>
@@ -2390,6 +2390,7 @@ $link-color: #db7e42;
 
       img {
         max-width: 230px;
+        max-height: 280px;
       }
 
       &.wide {
