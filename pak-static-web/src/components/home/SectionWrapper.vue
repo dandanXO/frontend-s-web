@@ -4,7 +4,7 @@
       <span class="section-header__title">{{ title }}</span>
       <router-link class="section-header__link" :to="to">View All</router-link>
     </div>
-    <div>
+    <div class="section-content-wrapper">
       <slot />
     </div>
   </div>

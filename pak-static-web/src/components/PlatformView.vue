@@ -229,11 +229,11 @@
                     lazy
                   >
                     <template #placeholder>
-                      <img src="@/assets/images/games/aviator/default.png" />
+                      <img src="@/assets/images/platform/slot/default.png" />
                     </template>
                     <template #error>
                       <div class="image-slot">
-                        <img src="@/assets/images/games/aviator/default.png" />
+                        <img src="@/assets/images/platform/slot/default.png" />
                       </div>
                     </template>
                   </el-image>
@@ -364,6 +364,7 @@ const clickPlat = (plat) => {
 };
 
 const openGame = (item, platformCode, gameCode) => {
+  console.log(platformCode, gameCode);
   const platName = item.alias ?? item.cnname ?? item.name;
   platformGame.value.open(platName, platformCode, gameCode);
 };
@@ -465,7 +466,7 @@ const loadGameIcon = (path) => {
   try {
     return require(`@/assets/images/platform/${path}`);
   } catch (e) {
-    return require("@/assets/images/games/aviator/default.png");
+    return require("@/assets/images/platform/slot/default.png");
   }
 };
 
