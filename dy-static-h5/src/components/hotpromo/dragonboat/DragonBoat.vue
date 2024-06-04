@@ -206,6 +206,10 @@ const closeDialog = () => {
   max-width: 1250px;
   margin: auto;
 
+  .duanwudetails {
+    padding: 10px 10px;
+  }
+
   .section {
     display: flex;
     justify-content: center;
@@ -225,7 +229,7 @@ const closeDialog = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 25px auto;
+    margin: 12px auto;
     .gradient {
       font-family: hyagi;
       font-size: 30px;
@@ -269,6 +273,7 @@ const closeDialog = () => {
   height: auto !important;
   background-color: transparent;
   box-shadow: none;
+  margin-bottom: 0px;
 }
 
 .q-tabs.dragonboat-tabs .q-tab {

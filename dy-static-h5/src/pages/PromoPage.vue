@@ -94,7 +94,8 @@
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
-                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual'
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
                 }"
                 :style="{
                   backgroundImage: selectedPromo?.mobileImgBackgroundUrl
@@ -730,6 +731,13 @@ export default defineComponent({
           background-size: 100% 100%;
           background-repeat: no-repeat;
           background-position: center center;
+        }
+
+        &.duanwujie {
+          margin: 0px;
+          width: 100%;
+          background-size: 100% 100% !important;
+          padding-top: 38px !important;
         }
 
         &.lplSummer2024 {
