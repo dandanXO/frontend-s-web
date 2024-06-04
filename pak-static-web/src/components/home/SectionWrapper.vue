@@ -25,7 +25,7 @@ defineProps({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-family: Inter;
+    font-family: sans-serif;
     font-size: 20px;
     font-weight: 700;
     line-height: 24.2px;
