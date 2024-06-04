@@ -10,6 +10,10 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon && !nav.isTest">
               <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
+                 <img v-if="nav.code === 'sports'"
+                      class="hot-label"
+                      :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
+                    />
                 <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
                   <h2 class="nav-title cn">{{ nav.name }}</h2>
                   <h2 class="nav-title">{{ nav.enName }}</h2>
@@ -2553,6 +2557,7 @@ body {
 }
 
 .header-menu-item {
+  min-width: 40px;
   position: relative;
     &.active {
       &:after {
@@ -2572,7 +2577,13 @@ body {
   a {
     position: relative;
   }
-
+  .hot-label {
+    width: 12px;
+    height:12px;
+    position: absolute;
+    right: -10px;
+    top: -7px;
+  }
   .nav-title {
     // position: absolute;
     // margin: 0px;
