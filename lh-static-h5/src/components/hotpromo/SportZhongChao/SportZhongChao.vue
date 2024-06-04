@@ -81,7 +81,7 @@
             rowspan="6"
             style="
               color: #05a5ff;
-              line-height: 60px;
+              line-height: 35px;
               font-size: 14px;
               border-left: 2px solid #05A5FF !important;
               border-right: 2px solid #05A5FF !important;
@@ -461,7 +461,7 @@ onMounted(async () => {
     // background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 36px auto;
+    margin: 0px auto 20px;
   }
 
   .sport-zhongchao-content-info {
