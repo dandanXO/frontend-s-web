@@ -4,7 +4,7 @@
       <q-icon name="close" @click="closeTopBox" />
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
-        <span class="download-title">雷火电竞app下载</span>
+        <span class="download-title">雷火电竞 app 下载</span>
         <span>亚洲第一实时滚球</span>
       </div>
       <div class="buttons">
@@ -609,14 +609,14 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal">
-    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
-      <q-card-section>
+    <q-card style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+      <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
         <div class="promo-banner-container">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
-          <div class="promo-banner-img" v-else>
+          <div class="promo-banner-img" @click="clickHomePopupImg(homePopupPath)" v-else>
             <img :src="homePopupImg" class="alert-img" />
           </div>
         </div>
@@ -982,6 +982,7 @@ export default defineComponent({
     const homePopupImg = ref("");
     const homePopupContent = ref("");
     const homePopupType = ref("");
+    const homePopupPath = ref("");
     const homePopupId = ref(0);
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
@@ -1003,7 +1004,18 @@ export default defineComponent({
       };
       sessionStorage.setItem(key, JSON.stringify(item));
     };
-
+    const apiMockData = {
+    "code": 0,
+      "data": {
+          "title": "雷火 欧洲杯 TEST",
+          "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+          "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+          "content": null,
+          "type": "IMG",
+          "path": "?name=lh1-eurocup-2024",
+          "frequency": "EVERYDAY"
+      }
+    }
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
       if (!itemStr) {
@@ -1014,6 +1026,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
+          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {  
+            res = apiMockData
+          }
+          
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
@@ -1025,7 +1041,21 @@ export default defineComponent({
     };
 
     const isImpt = getWithExpiry("isImpt");
+    const clickHomePopupImg = (urlString)=>{
+      let regexUrl = new RegExp(/^(https:\/\/)/g)
+      if(regexUrl.test(urlString)){
+        // 跳轉
+        location.href = urlString;
+        return
+      }
+      let regexName = new RegExp(/^(name|\?name)/g)
+      if(regexName.test(urlString)){
+        //去優惠
+        router.push(`/promo${urlString}`);
+        return
+      }
 
+    }
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -1037,6 +1067,9 @@ export default defineComponent({
         api
           .get("/member/ads-popout")
           .then((res) => {
+            if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {  
+              res = apiMockData
+            }
             if (res.code === 0) {
               // if (res.data[id] !== null) {
               if (isImpt === null) {
@@ -1055,9 +1088,10 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+                homePopupImg.value = process.env.IMAGE_CDN + "/promo/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
+                homePopupPath.value = res.data["path"];
                 homePopupId.value = res.data["id"];
                 homePopupFrequency.value = res.data["frequency"];
                 // if (homePopupImg.value) {
@@ -1134,7 +1168,7 @@ export default defineComponent({
                 espObj.title = "小艾电竞";
               }
               if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
+                espObj.title = "IM 电竞";
               }
               if (!espObj.title) {
                 espObj.title = espObj.code + "电竞";
@@ -1156,7 +1190,7 @@ export default defineComponent({
             if (platTypes.indexOf("SPORT") > -1) {
               var spObj = Object.assign({}, element);
               if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+                spObj.title = "IM 体育";
               }
               if (spObj.code === "IA") {
                 spObj.title = "小艾体育";
@@ -1165,13 +1199,13 @@ export default defineComponent({
                 spObj.title = "熊猫体育";
               }
               if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+                spObj.title = "CR 体育";
               }
               if (spObj.code === "SABA") {
                 spObj.title = "沙巴体育";
               }
               if (spObj.code === "FB") {
-                spObj.title = "FB体育";
+                spObj.title = "FB 体育";
               }
               if (spObj.code === "PINNACLE") {
                 spObj.title = "平博体育";
@@ -1190,11 +1224,11 @@ export default defineComponent({
               // }
 
               if (liveObj.code === "PMLIVE") {
-                liveObj.title = "DB真人";
+                liveObj.title = "DB 真人";
               } else if (liveObj.code === "EBET") {
-                liveObj.title = "WE真人";
+                liveObj.title = "WE 真人";
               } else if (liveObj.code === "BBINDY") {
-                liveObj.title = "BBIN真人";
+                liveObj.title = "BBIN 真人";
               } else {
                 liveObj.title = translateRecord(liveObj.name) + "真人";
               }
@@ -1212,7 +1246,7 @@ export default defineComponent({
               var slotObj = Object.assign({}, element);
 
               if (slotObj.code === "AG") {
-                slotObj.title = "XIN电子";
+                slotObj.title = "XIN 电子";
               } else if (slotObj.alias) {
                 slotObj.title = translateRecord(slotObj.alias);
               } else {
@@ -1627,6 +1661,7 @@ export default defineComponent({
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
   });
+
   onMounted(() => {
     if ((store.token)) {
         initFloating();
@@ -1640,6 +1675,7 @@ export default defineComponent({
     return {
       imageLoading,
       slide: ref(0),
+      clickHomePopupImg,
       tab,
       selectTab,
       imgNotFound,
@@ -1703,6 +1739,7 @@ export default defineComponent({
       setExpiryBanner,
       homePopupContent,
       homePopupType,
+      homePopupPath,
       homePopupId,
       homePopupFrequency,
       homePopupFrequencyNum,
