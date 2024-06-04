@@ -133,15 +133,20 @@
             </li>
           </ul>
           <ul class="header-menu-list">
-            <li v-for="nav in contacts" :key="nav.name" class="header-menu-item">
-              <router-link
-                :to="nav.path"
-                class="header-nav"
-                @mouseover="hoveredMenu = nav.code"
-                :class="[nav.code.toLowerCase(), nav.submenu ? 'suffix' : '']"
+            <li class="header-menu-item">
+              <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
+                Live Support
+              </a>
+              <a class="header-nav feedback" @click="() => (feedbackModalVisible = true)">Feedback</a>
+              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
+              <a
+                class="header-nav whatsapp"
+                href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+                target="_blank"
               >
-                {{ nav.name }}
-              </router-link>
+                Whatsapp
+              </a>
+              <a class="header-nav language" href="" target="_blank">Language</a>
             </li>
           </ul>
           <bet-ranking />
@@ -334,6 +339,7 @@
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
       <AccountModal v-model="accountModalVisible" />
+      <FeedbackModal v-model="feedbackModalVisible" />
     </div>
   </header>
 </template>
@@ -373,6 +379,7 @@ import DailyLoginCashBonusPromoPopup from "@/components/hotpromo/DAILY-LOGIN-CAS
 import NotificationSvg from "@/assets/images/layout/header/notification.svg";
 import AccountModal from "@/components/layout/header/AccountModal.vue";
 import BetRanking from "@/components/layout/header/BetRanking.vue";
+import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
 
 const navigations = [
   // { code: "VIP", name: "VIP", path: "/vip" },
@@ -383,15 +390,6 @@ const navigations = [
   // { code: "Promotion", name: "Promotion", path: "/promotion" },
   // { code: "Affiliates", name: "Affiliates", path: "/affiliate" },
   // { code: "AppTutorial", name: "App Tutorial", path: "/app-tutorial" }
-];
-
-// TODO: route path ?
-const contacts = [
-  { code: "live-support", name: "Live Support", path: "/test" },
-  { code: "feedback", name: "Feedback", path: "/test" },
-  { code: "telegram", name: "Telegram", path: "/test" },
-  { code: "whatsapp", name: "Whatsapp", path: "/test" },
-  { code: "language", name: "Language", path: "/test", submenu: [] }
 ];
 
 const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
@@ -407,7 +405,7 @@ const appPromo = ref(null);
 const dailyLoginPromoPopup = ref();
 const adsPopupListRef = ref();
 const activateTab = ref("casino");
-const accountModalVisible = ref(false);
+const feedbackModalVisible = ref(false);
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -447,7 +445,8 @@ function playGame(gameName, platformCode, gameCode, status) {
 }
 
 const store = userStore();
-const { token } = storeToRefs(store);
+const { token, accountModalVisible } = storeToRefs(store);
+const { openAccountModal } = store;
 const triggerMenu = ref(null);
 onMounted(() => {
   if (store.token) {
@@ -573,8 +572,6 @@ const toggleTheme = () => {
     localStorage.setItem(DARK_MODE, false);
   }
 };
-
-const openAccountModal = () => (accountModalVisible.value = true);
 
 const handleSwitchChange = (value) => {
   if (value === "casino") {

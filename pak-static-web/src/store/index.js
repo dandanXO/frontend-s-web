@@ -30,7 +30,8 @@ export const userStore = defineStore("userStore", {
       isAffiliateA: false,
       isAffiliate2: false,
       isAffiliate3: false,
-      profilePhoto: ""
+      profilePhoto: "",
+      accountModalVisible: false
     };
   },
   actions: {
@@ -80,6 +81,9 @@ export const userStore = defineStore("userStore", {
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
+    },
+    openAccountModal() {
+      this.accountModalVisible = true;
     }
   },
   getters: {
