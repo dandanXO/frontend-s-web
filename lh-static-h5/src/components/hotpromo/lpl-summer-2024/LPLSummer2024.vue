@@ -400,8 +400,8 @@ onMounted(async () => {
         justify-content: center;
         flex-direction: column;
         .lpl-summer-2024-game-team-icon {
-          width: 65px;
-          height: 65px;
+          width: 50px;
+          height: 50px;
         }
         .lpl-summer-2024-game-team-name {
           font-size: 16px;
@@ -425,7 +425,7 @@ onMounted(async () => {
         }
         .vs-time {
           color: #aeafa2;
-          margin-top: 8px;
+          margin-top: 5px;
           font-size: 18px;
           font-weight: 400;
           line-height: 25.4px;
