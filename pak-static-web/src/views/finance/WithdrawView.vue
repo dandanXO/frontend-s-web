@@ -7,7 +7,7 @@
       </div>
       <div class="withdrawable">
         <div class="amt">{{ selectedWithdrawalMethod.withdrawableBalance }}</div>
-        <div class="words">Cash balance</div>
+        <div class="words">Withdrawable</div>
       </div>
     </div>
 
