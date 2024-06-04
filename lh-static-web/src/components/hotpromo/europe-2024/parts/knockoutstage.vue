@@ -153,7 +153,6 @@ const formatDate = (matchTime) => {
       return `${month}月${day}日<br>${hour}:${minute}`;
     }
 
-populateTeams();
 onMounted(() => {
   populateTeams()
 })

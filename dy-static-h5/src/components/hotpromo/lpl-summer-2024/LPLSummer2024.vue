@@ -369,7 +369,7 @@ onMounted(async () => {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    margin-bottom: 29px;
+    margin-bottom: 10px;
   }
   .lpl-summer-2024-rule-title {
     width: 100%;
@@ -388,29 +388,28 @@ onMounted(async () => {
     justify-content: space-between;
     .lpl-summer-2024-game-team {
       width: 100%;
-      height: 184px;
+      height: 110px;
       background-image: url("../../../assets/promo/dy-lpl-summer-24/team-back.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      margin-bottom: 36px;
+      margin-bottom: 20px;
       .lpl-summer-2024-game-team-item {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         .lpl-summer-2024-game-team-icon {
-          width: 65px;
-          height: 65px;
+          width: 50px;
+          height: 50px;
         }
         .lpl-summer-2024-game-team-name {
           font-size: 16px;
           font-weight: 400;
           line-height: 24.82px;
           color: #fff;
-          margin-top: 16px;
         }
       }
 
@@ -420,15 +419,15 @@ onMounted(async () => {
         justify-content: center;
         flex-direction: column;
         .vs-icon {
-          width: 91px;
-          height: 91px;
+          width: 60px;
+          height: 60px;
           background-image: url("../../../assets/promo/dy-lpl-summer-24/vs.png");
           background-repeat: no-repeat;
           background-size: 100% 100%;
         }
         .vs-time {
           color: #aeafa2;
-          margin-top: 8px;
+          margin-top: 5px;
           font-size: 18px;
           font-weight: 400;
           line-height: 25.4px;
@@ -492,14 +491,14 @@ onMounted(async () => {
     line-height: 25.4px;
     color: #fdffe9;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 105px;
+    height: 50px;
     justify-content: flex-start;
     .title {
-      width: 40%;
+      width: 25%;
       height: 100%;
       background: linear-gradient(90deg, #ff4d00 0%, #ffc700 100%);
       display: flex;
@@ -510,7 +509,7 @@ onMounted(async () => {
       font-weight: 700;
     }
     .content {
-      width: 60%;
+      width: 75%;
       padding: 25px;
     }
   }
@@ -587,7 +586,7 @@ onMounted(async () => {
     color: #fdffe9;
     padding: 16px 24px;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
   }
   .lpl-summer-2024-table {
     width: 100%;

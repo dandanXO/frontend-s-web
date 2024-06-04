@@ -293,7 +293,7 @@ function checkQuery() {
         'start'
       )
       query.recordTime[1] = formatInputTimeZone(
-        query.recordTime[1],
+        convertDateToEnd(query.recordTime[1]),
         timeZone,
         'end'
       )

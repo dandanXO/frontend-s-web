@@ -1730,43 +1730,22 @@ const openPopup = (noticeType) => {
     isStationNotice.value = true;
   }
 };
+
 const gotoPromo = (banner) => {
-  const urlPattern = /^\/url\/(.*)/;
-  const platformPattern = /^\/platform\/(.*)/;
-  const gamePattern = /^\/game\/(.*)/;
-  const openPattern = /^\/open\/(.*)/;
-
-  if (banner.redirectUrl.match(urlPattern)) {
-    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
-    router.push(`${extractedUrl}`);
-  } else if (banner.redirectUrl.match(platformPattern)) {
-    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
-
-    if (extractedUrl === "SABA") {
-      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-    } else if (extractedUrl === "Evo") {
-      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-    } else if (extractedUrl === "JILI") {
-      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+  const urlSplit = banner.redirectUrl.split("|");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(gamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
-    switch (extractedUrl) {
-      case "spribe/aviator":
-        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
-        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
-      default:
-        return null;
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(openPattern)) {
-    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
-    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
-    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.slice(0, 4) === "http") {
-    window.open(banner.redirectUrl, "_blank");
   }
 };
 
