@@ -9,7 +9,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite
       v-if="
         !isCommonPromo &&
@@ -31,7 +31,7 @@
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
     />
 
-    <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
+    <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
       <div class="tabs">
         <q-card-section>
           <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
