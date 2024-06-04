@@ -141,7 +141,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps @click="goLogin()">Login</q-btn>
-        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
+        <q-btn class="btn-style-crimson" no-caps @click="router.push('/register')">Register</q-btn>
       </div>
     </div>
   </div>
@@ -240,7 +240,7 @@ const countdown = () => {
 };
 
 const checkTopDownloadAppear = () => {
-  const omitSites = ['bw3.genoortisy.com'];
+  const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
     if (
