@@ -308,6 +308,7 @@ input:-webkit-autofill:active {
   .ant-input-affix-wrapper > input.ant-input {
     color: #ffffff;
     background: none;
+    border: 0;
     &::placeholder {
       color: #ffffff99;
     }
@@ -481,6 +482,9 @@ $glow-clr: #ff5a00;
 
 .ant-select {
   max-width: 280px;
+  border: 1px solid #072a19;
+  background: #0b0e0d;
+  border-radius: 10px;
 }
 .ant-select-clear {
   right: 30px;
@@ -1623,6 +1627,13 @@ a {
 
       &::after {
         display: none;
+      }
+    }
+  }
+  .ant-form-item-has-error {
+    .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input) {
+      .ant-select-selector {
+        background-color: #0b0e0d;
       }
     }
   }

@@ -24,10 +24,13 @@ import WithdrawPage from "@/views/finance/WithdrawView.vue";
 import { watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { onMounted } from "vue";
+import { userStore } from "@/store/index";
+import { ElMessage } from "element-plus";
 components: {
     DepositComponent,
     WithdrawPage
 }
+const store = userStore();
 const route = useRoute();
 const router = useRouter()
 const activeName = ref('Deposit');
@@ -39,15 +42,22 @@ const checkRoute = () => {
     activeName.value = 'Deposit'
   }
 }
-
+const checkNewUser = () => {
+  if (store.realName == "" || store.realName == null) {
+    ElMessage.error('Please fill in your personal details')
+    router.push(`/center/personal`);
+  }
+};
 // Initial check on mounted
 onMounted(() => {
   checkRoute()
+  checkNewUser()
 })
 
 // Watch for changes in the route query parameter
 watch(() => route.query.tab, (newTab) => {
   checkRoute()
+  checkNewUser()
 })
 watch(() => activeName.value, () => {
   if(activeName.value === 'Withdraw') {

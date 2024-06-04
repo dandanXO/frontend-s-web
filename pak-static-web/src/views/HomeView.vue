@@ -540,6 +540,10 @@ const platformSection = computed(() => {
 });
 
 const openGame = (game, platformCode, gameCode) => {
+  if (!store.token) {
+    store.openAccountModal();
+    return;
+  }
   const platName = game.alias ?? game.cnname ?? game.name;
   slotsGame.value.open(platName, platformCode, gameCode);
   // if (game.gameType && (game.gameType === "SLOT" || game.gameType === "FISH" || game.gameType === "BINGO")) {
