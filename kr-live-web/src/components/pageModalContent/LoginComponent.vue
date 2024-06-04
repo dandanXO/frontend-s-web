@@ -81,7 +81,12 @@ const verificationImg = ref("");
 const isPwd = ref(true);
 
 onMounted(() => {
-  getCode();
+  // prevent visiting Login form when logged in
+  if (store.hasToken()) {
+    router.push("/");
+  } else {
+    getCode();
+  }
 });
 
 const getCode = () => {
