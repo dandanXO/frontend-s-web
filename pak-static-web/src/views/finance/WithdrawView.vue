@@ -280,6 +280,12 @@ import { convertToCommaAmount } from "@/utils/utils";
         }
       })
     }
+    const checkNewUser = () => {
+      if (store.realName == "" || store.realName == null) {
+        ElMessage.error("Please fill in your personal details.")
+        router.push(`/center/top-up`);
+      }
+    };
 </script>
 
 <style scoped lang="scss">

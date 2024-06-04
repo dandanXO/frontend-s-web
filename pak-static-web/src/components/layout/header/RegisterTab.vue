@@ -37,7 +37,7 @@
           </template>
         </a-input>
       </a-form-item>
-      <a-form-item
+      <!-- <a-form-item
         name="codeAffiliate"
         :label="$t('layout.header.accountModal.register.form.codeAffiliate.label')"
         label-align="left"
@@ -52,7 +52,7 @@
             <img :src="InvitationIcon" />
           </template>
         </a-input>
-      </a-form-item>
+      </a-form-item> -->
       <!-- TODO: action? -->
       <div class="privacy-agreement">
         <a-checkbox v-model:checked="agreePrivacy">
@@ -79,6 +79,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useRouter } from "vue-router";
 import InvitationIcon from "@/assets/images/layout/header/invitation-icon.svg";
 import { register } from "@/api/index/login";
+import { ElMessage } from "element-plus"
 
 const emit = defineEmits(["close-modal"]);
 
@@ -87,7 +88,7 @@ const store = userStore();
 const router = useRouter();
 
 const formRef = ref();
-const agreePrivacy = ref(false);
+const agreePrivacy = ref(true);
 const loadingRegister = ref(false);
 const registerForm = ref({
   loginName: "",
@@ -96,14 +97,34 @@ const registerForm = ref({
 });
 const registerFormRules = ref({
   loginName: [
-    { len: 10, message: t("layout.header.accountModal.register.form.loginName.error.len") },
+    { len: 11, message: t("layout.header.accountModal.register.form.loginName.error.len") },
     { required: true, message: t("layout.header.accountModal.register.form.loginName.error.required") }
   ],
   password: [{ required: true, message: t("layout.header.accountModal.register.form.password.error.required") }]
 });
 
 const onSubmit = () => {
-  emit("close-modal");
+  formRef.value.validate().then(() => {
+    
+        register(registerForm.value)
+          .then((response) => {
+            const regResult = response.code;
+            if (regResult === 0) {
+              loadingRegister.value = false;
+              ElMessage.success("Successfully Registered");
+              store.autoLogin(response.data);
+              emit("close-modal");
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+            // getCode()
+            loadingRegister.value = false;
+          });
+  })
+    .catch((error) => {
+      console.log("error", error);
+    });
   // formRef.value
   //   .validate()
   //   .then(() => {
