@@ -171,3 +171,7 @@ export function duanwuVipUpgrade() {
 export function duanwuDepositBet() {
   return eventapi.post("/duan-wu/deposit-bet");
 }
+
+export function getEurocupManualSchedule() {
+  return eventapi.get("/uefa/match/all");
+}
