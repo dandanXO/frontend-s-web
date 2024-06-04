@@ -11,6 +11,14 @@ export function getPlatformList() {
   return cached.get(platformApiKey, () => server.REST.get(platformApiUrl));
 }
 
+export function getLoggedInPlatformList() {
+  return cached.get("LOGGEDINPLATFORMS", () => server.REST.get("/session/loggedInPlatform"));
+}
+
+export function getPlatformListDisplay() {
+  return cached.get("PLATFORMS", () => server.REST.get("/platform"));
+}
+
 export function getPlatformGames(code, gameType) {
   const regDevice = getDevice();
   var way = null;
@@ -71,7 +79,7 @@ export function hotGame(gameLabel) {
       }
     };
 
-    let respond = await server.REST.get("/platformGamesByGameLabel", requestBody);
+    let respond = await server.REST.get("member/hot?device=WEB");
 
     return respond;
   });

@@ -1,12 +1,17 @@
 <template>
   <div class="platform-section">
-    <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
+    <div class="platform-breadcrumb">
+      <span>Home</span>
+      <span>{{ platformType }}</span>
+      <span v-if="currentPlat">{{ currentPlat }}</span>
+    </div>
+    <!-- <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
       <div class="platform-container-slot" v-if="platformType === 'slot'">
         <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
         <img v-else src="../assets/slot/slot-top-bg.png" />
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot'">
-        <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
+        <template v-for="(item, index) in filteredPlatforms" :key="index">
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
             <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
@@ -36,13 +41,13 @@
               </div>
 
               <div class="platform-list-box">
-                <!-- <span
+                <span
                   class="platform-list-item"
                   v-for="(plat, platIndex) in filteredPlatforms"
                   :key="platIndex"
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
-                > -->
+                >
                 <span
                   class="platform-list-item"
                   v-for="(plat, platIndex) in filteredPlatforms"
@@ -69,9 +74,9 @@
                 </span>
               </div>
 
-              <!--            data-aos="fade-in"-->
-              <!--            data-aos-delay="300"-->
-              <!--            data-aos-duration="500"-->
+                         data-aos="fade-in"
+                         data-aos-delay="300"
+                         data-aos-duration="500"
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
                 <div
                   class="btn-blue"
@@ -101,7 +106,7 @@
           </template>
         </template>
       </div>
-    </div>
+    </div> -->
 
     <div class="margin-center game-container" v-if="platformExpandable">
       <div class="all-game-container">
@@ -127,12 +132,7 @@
         </div>
 
         <div class="plat-games-container">
-          <div class="grid-items flex-box flex-align-center search-container web-only-box">
-            <!--          <el-tabs v-model="gameCat" @tab-click="handleClick" class="game-cat-tabs">-->
-            <!--            <el-tab-pane label="全部游戏" name="allGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="热门游戏" name="hotGame"></el-tab-pane>-->
-            <!--            <el-tab-pane label="最新游戏" name="newGame"></el-tab-pane>-->
-            <!--          </el-tabs>-->
+          <!-- <div class="grid-items flex-box flex-align-center search-container web-only-box">
 
             <el-input
               class="search-input"
@@ -148,9 +148,9 @@
                 </el-icon>
               </template>
             </el-input>
-          </div>
+          </div> -->
 
-          <div class="game-list-wrapper">
+          <div class="game-list-wrapper" :class="platformGameType.toLowerCase()">
             <div
               class="game-slot animate__animated animate__fadeInRight"
               v-for="game in gamePage.gameList"
@@ -170,20 +170,20 @@
                   </el-image>
                 </div>
 
-                <div class="slot-details">
+                <!-- <div class="slot-details">
                   <div class="slot-name">
                     {{ game.name }}
                   </div>
 
-                  <div class="slot-fav">
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartLine />-->
-                    <!--                  </el-icon>-->
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartFill />-->
-                    <!--                  </el-icon>-->
-                  </div>
-                </div>
+                  <div class="slot-fav"> -->
+                <!--                  <el-icon>-->
+                <!--                    <RiHeartLine />-->
+                <!--                  </el-icon>-->
+                <!--                  <el-icon>-->
+                <!--                    <RiHeartFill />-->
+                <!--                  </el-icon>-->
+                <!-- </div>
+                </div> -->
 
                 <!-- <div class="slot-name">
                   <img src="../assets/images/games/play-icon.png" />
@@ -209,6 +209,39 @@
               v-model:pageSize="gamePage.pageSize"
               default-page-size="30"
             />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="margin-center game-container" v-else>
+      <div class="all-game-container">
+        <div class="plat-games-container">
+          <div class="game-list-wrapper" :class="platformGameType.toLowerCase()">
+            <div
+              class="game-slot animate__animated animate__fadeInRight"
+              v-for="platform in filteredPlatforms"
+              :key="platform.id"
+            >
+              <a @click="openGame(platform, platform.code, platform.gameCode)">
+                <div class="slot-img">
+                  <el-image
+                    :src="
+                      require(`@/assets/images/platform/${platform.gameType.toLowerCase()}/${platform.code.toLowerCase()}.png`)
+                    "
+                    lazy
+                  >
+                    <template #placeholder>
+                      <img src="@/assets/images/games/aviator/default.png" />
+                    </template>
+                    <template #error>
+                      <div class="image-slot">
+                        <img src="@/assets/images/games/aviator/default.png" />
+                      </div>
+                    </template>
+                  </el-image>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -252,6 +285,7 @@ const props = defineProps({
 const filteredPlatforms = ref([]);
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
+const currentPlat = ref();
 
 const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
@@ -341,7 +375,7 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType) {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
     getFn()
       .then((data) => {
@@ -378,7 +412,7 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT") {
+  if (props.platformGameType) {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
@@ -406,6 +440,9 @@ const gameCat = ref("allGame");
 onMounted(() => {
   getPlatList();
   getPlatGameList();
+  if (["SLOT", "FISH"].includes(props.platformType)) {
+    currentPlat.value = route.query.plat;
+  }
 });
 
 watch(
@@ -420,8 +457,11 @@ watch(
         }
       });
     }
+    if (["SLOT", "FISH"].includes(props.platformType)) {
+      currentPlat.value = route.query.plat;
+    }
   }
 );
 </script>
 
-<style scoped lang="scss" src="../scss/pages/platform.scss" />
+<style scoped lang="scss" src="@/assets/css/pages/platform.scss" />

@@ -807,7 +807,7 @@ const redirectToPromo = () => {
 onMounted(async () => {
   loadAnnouncement();
   getPlatList();
-  // getHotGames();
+  getHotGames();
   // getTopWinners();
   loadBanners();
   checkShowImgTop();
