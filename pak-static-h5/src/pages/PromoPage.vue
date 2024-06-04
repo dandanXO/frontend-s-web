@@ -105,10 +105,10 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
+                  <!-- <div class="top-float">
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
+                  </div> -->
                   <div class="promo-content-inner">
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>

@@ -883,7 +883,7 @@ function charType(num) {
 }
 
 .bottom-btn {
-  margin-top: auto;
+  // margin-top: auto;
   padding: 20px;
 }
 </style>

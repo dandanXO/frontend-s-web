@@ -8,10 +8,34 @@
       <q-form ref="profileFormRef" class="pc-form">
         <InputRowGrid>
           <template #fields>
-            <div class="pc-form-item" @click="openPersonalCenterDialog">
+            <div class="pc-form-item">
               <InputField :label="'Full Name'">
                 <template #input>
                   <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
+                </template>
+              </InputField>
+            </div>
+
+            <div class="pc-form-item item-click" @click="openBindEmailDialog">
+              <InputField :label="'Email'">
+                <template #input>
+                  <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
+                    <template v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </div>
+
+            <div class="pc-form-item item-click" @click="openChangePasswordDialog">
+              <InputField :label="'Password'">
+                <template #input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly type="password">
+                    <template v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -248,6 +272,74 @@
             Submit
           </q-btn>
         </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-black popout-close" @click="openBindEmailDialog()" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Bind Email</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="'Email'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter email"
+                    v-model="updateEmailInfo.email"
+                    ref="updateEmailRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => /.+@.+\..+/.test(val) || 'Please enter valid email']"
+                  >
+                    <template v-slot:append>
+                      <div class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && 'Send'"
+                          :disable="!formDetail.phone || startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <InputField :label="'Code'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter verification code"
+                    v-model="updateEmailInfo.code"
+                    ref="updateEmailCode"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => val.length !== 0 || 'Verification code is required']"
+                  >
+                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePwd">Confirm</q-btn>
+        </div>
+
+        <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
+        <!-- <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd" /> -->
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
+        <!-- </div> -->
       </div>
     </div>
   </q-dialog>
@@ -500,8 +592,9 @@
           </div>
         </div>
 
-        <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">Confirm</q-btn>
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
         </div>
       </div>
     </div>
@@ -611,6 +704,11 @@ const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
   resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const bindEmailDialog = ref(false);
+const openBindEmailDialog = () => {
+  bindEmailDialog.value = !bindEmailDialog.value;
 };
 
 const userKYCDialog = ref(false);
@@ -1072,9 +1170,9 @@ const countdownOTP = ref();
 const onCaptchaSubmit = () => {
   api
     .post(
-      `/otp/sendSms`,
+      `/otp/sendNewEmail`,
       qs.stringify({
-        telephone: formDetail.phone,
+        email: updateEmailInfo.email,
         captchaCode: captchaRef.value,
         codeId: updateSecurityVerified.codeId
       })
@@ -1087,7 +1185,6 @@ const onCaptchaSubmit = () => {
         showCaptchaDialog.value = false;
         showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
-
         startCountdownResendOTP.value = true;
 
         countdownOTP.value = 59;
@@ -1116,6 +1213,14 @@ const updatePwdInfo = reactive({
   password: "",
   confirmNewPwd: ""
 });
+
+const updateEmailInfo = reactive({
+  email: "",
+  code: ""
+});
+
+const updateEmailRef = ref();
+const updateEmailCode = ref();
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
@@ -1283,7 +1388,20 @@ const openConfirmSignOutDialog = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 25px;
+    position: relative;
+
+    &.item-click {
+      &:after {
+        content: "";
+        background: rgba(255, 255, 255, 0.05);
+        height: calc(100% - 45px);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: 8px;
+      }
+    }
   }
   .pc-form-label {
     color: rgba(255, 255, 255, 1);
@@ -1348,6 +1466,7 @@ const openConfirmSignOutDialog = () => {
 .pc-tip {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
   // flex-direction: column;
   // align-items: flex-end;
 }
