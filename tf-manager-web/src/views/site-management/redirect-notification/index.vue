@@ -97,26 +97,38 @@
         </el-form-item>
         <el-form-item :label="t('fields.popUpTime')" prop="popUpTimes">
           <el-tag
-            v-for="item in JSON.parse(form.popUpTimes)"
+            v-for="(item,index) in JSON.parse(form.popUpTimes)"
             :key="item"
             class="ml-1"
             closable
-            @close="removePopUpTime(item)"
+            @close="removePopUpTime(index)"
             :type="isExpiredTime(item) ? 'danger' : ''"
             style="margin-right: 5px; margin-bottom: 5px"
           >
-            {{ formatPopUpTime(item) }}
+            {{ item }}
           </el-tag>
           <el-date-picker
             v-if="uiControl.popUpTimePickerVisible"
             v-model="popUpTime"
             type="datetime"
-            placeholder="Pick a Date"
+            :placeholder="t('fields.startDate')"
+            format="YYYY-MM-DD HH:mm:ss"
+            @change="addPopUpTime"
+            :disabled-date="disabledTime"
+          />
+          <el-date-picker
+            v-if="uiControl.popUpTimePickerVisible"
+            v-model="popUpTimeEnd"
+            type="datetime"
+            :placeholder="t('fields.endDate')"
             format="YYYY-MM-DD HH:mm:ss"
             @change="addPopUpTime"
             :disabled-date="disabledTime"
           />
           <el-button type="primary" @click="uiControl.popUpTimePickerVisible = true">{{ t('fields.add') }}</el-button>
+        </el-form-item>
+        <el-form-item :label="t('fields.popUpDurationSeconds')" prop="popUpDuration">
+          <el-input-number :precision="0" :step="1" :min="0" v-model="form.popUpDuration" style="width: 100px" />
         </el-form-item>
         <el-form-item :label="t('fields.notificationType')" prop="notificationType">
           <el-select
@@ -147,11 +159,95 @@
         <el-form-item :label="t('fields.redirectUrlWeb')" prop="redirectUrlWeb">
           <el-input v-model="form.redirectUrlWeb" style="width: 350px" />
         </el-form-item>
+        <el-form-item :label="t('fields.targetType')" prop="targetType">
+          <el-radio-group
+            v-model="form.targetType"
+            class="form-input"
+            style="width: 540px"
+          >
+            <el-radio
+              v-for="r in uiControl.targetType"
+              :label="r.value"
+              :key="r.value"
+            >
+              {{ t('fields.' + r.typeName) }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
           <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
+    </el-dialog>
+    <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.importDialogVisible" append-to-body width="500px">
+      <el-form
+        ref="importRefForm"
+        :model="importForm"
+        :rules="importRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+        style="float: right;"
+      />
+      <el-button
+        icon="el-icon-download"
+        size="mini"
+        type="primary"
+        @click="downloadTemplate"
+      >
+        {{ t('fields.downloadTemplate') }}
+      </el-button>
+      <el-button
+        icon="el-icon-upload"
+        size="mini"
+        type="success"
+        @click="chooseFile"
+      >
+        {{ t('fields.import') }}
+      </el-button>
+      <!-- eslint-disable -->
+      <input
+        id="importFile"
+        type="file"
+        accept=".xlsx, .xls"
+        @change="importToTable"
+        hidden
+      />
+      <el-table
+        :data="
+        importedPage.records.slice(
+          importedPage.size * (importedPage.current - 1),
+          importedPage.size * importedPage.current
+        )
+      "
+        v-loading="importedPage.loading"
+        ref="table"
+        row-key="id"
+        size="small"
+        :empty-text="t('fields.noData')"
+      >
+        <el-table-column prop="loginName" :label="t('fields.loginName')" width="230" />
+      </el-table>
+      <el-pagination
+        class="pagination"
+        @current-change="changeImportedPage"
+        layout="prev, pager, next"
+        :page-size="importedPage.size"
+        :page-count="importedPage.pages"
+        :current-page="importedPage.current"
+      />
+      <div class="dialog-footer">
+        <el-button
+          type="primary"
+          :disabled="importedPage.records.length === 0"
+          @click="confirmImport"
+          :loading="importedPage.buttonLoading"
+        >
+          {{ t('fields.confirmAndImport') }}
+        </el-button>
+        <el-button @click="clearImport(); uiControl.importDialogVisible = false;">{{ t('fields.cancel') }}</el-button>
+      </div>
     </el-dialog>
     <el-table
       :data="page.records"
@@ -187,6 +283,11 @@
           >{{ item }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="targetType" :label="t('fields.targetType')" width="200">
+        <template #default="scope">
+          <span>{{ t('fields.' + scope.row.targetType.toLowerCase()) }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="redirectUrlApp" :label="t('fields.redirectUrlApp')" width="200" />
       <el-table-column prop="redirectUrlH5" :label="t('fields.redirectUrlH5')" width="200" />
       <el-table-column prop="redirectUrlWeb" :label="t('fields.redirectUrlWeb')" width="200" />
@@ -202,20 +303,29 @@
         v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:redirect-notification:update']) || hasPermission(['sys:redirect-notification:del']) )"
       >
         <template #default="scope">
-          <el-button
-            icon="el-icon-edit"
-            size="mini"
-            type="success"
-            v-permission="['sys:redirect-notification:update']"
-            @click="showEdit(scope.row)"
-          />
-          <el-button
-            icon="el-icon-remove"
-            size="mini"
-            type="danger"
-            v-permission="['sys:redirect-notification:del']"
-            @click="removeSetting(scope.row)"
-          />
+          <div>
+            <el-button
+              :disabled="scope.row.targetType === 'ALL'"
+              icon="el-icon-upload"
+              size="mini"
+              type="primary"
+              @click="showImport(scope.row)"
+            />
+            <el-button
+              icon="el-icon-edit"
+              size="mini"
+              type="success"
+              v-permission="['sys:redirect-notification:update']"
+              @click="showEdit(scope.row)"
+            />
+            <el-button
+              icon="el-icon-remove"
+              size="mini"
+              type="danger"
+              v-permission="['sys:redirect-notification:del']"
+              @click="removeSetting(scope.row)"
+            />
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -238,7 +348,7 @@ import {
   getNotifications,
   createNotification,
   updateNotification,
-  deleteNotification
+  deleteNotification, createBatchMemberNotification
 } from '../../../api/site-redirect-notification'
 import { getWays } from '../../../api/privilege-red-packet-rain'
 import { getSiteListSimple } from '../../../api/site'
@@ -247,6 +357,7 @@ import { useStore } from '../../../store';
 import { TENANT } from "../../../store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import * as XLSX from "xlsx";
 
 const { t } = useI18n();
 const store = useStore();
@@ -259,9 +370,13 @@ const uiControl = reactive({
   dialogType: 'CREATE',
   editBtn: true,
   removeBtn: true,
-  importDialogVisible: false,
   notificationTypes: ['PRIVILEGE'],
   popUpTimePickerVisible: false,
+  targetType: [
+    { typeName: 'all', value: 'ALL' },
+    { typeName: 'selectedMembers', value: 'MEMBER' },
+  ],
+  importDialogVisible: false,
 })
 const page = reactive({
   pages: 0,
@@ -281,10 +396,13 @@ const form = reactive({
   notificationContent: null,
   eligibleWays: [],
   popUpTimes: null,
+  popUpDuration: null,
   redirectUrlApp: null,
   redirectUrlH5: null,
   redirectUrlWeb: null,
   lastPopUpTime: null,
+  targetType: 'ALL',
+  targets: null,
 })
 
 const formRules = reactive({
@@ -295,6 +413,14 @@ const formRules = reactive({
   popUpTimes: [required(t('message.validateTimeRequired'))],
 })
 
+const importForm = reactive({
+  notificationId: null
+});
+
+const importRules = reactive({
+  notificationId: [required(t('message.validateNotificationIdRequired'))]
+});
+
 const sites = reactive({
   list: [],
 })
@@ -304,8 +430,41 @@ const ways = reactive({
 })
 
 const popUpTime = ref(null)
+const popUpTimeEnd = ref(null);
+
+const hasDateError = computed(() => {
+  if (form.popUpTimes === null) {
+    return -1;
+  } else {
+    const listsing = JSON.parse(form.popUpTimes);
+    var isExpired = 0;
+    listsing.forEach((list) => {
+      if (isExpiredTime(list)) {
+        isExpired = 1;
+      }
+    })
+    return isExpired;
+  }
+})
 
 let chooseSetting = []
+
+const EXPORT_MEMBER_HEADER = [
+  'Login Name'
+]
+
+const IMPORT_MEMBER_LIST_JSON = [
+  'loginName'
+]
+
+const importedPage = reactive({
+  pages: 0,
+  records: [],
+  loading: false,
+  size: 10,
+  current: 1,
+  buttonLoading: false,
+})
 
 function resetQuery() {
   request.siteId = site.value ? site.value.id : null;
@@ -353,14 +512,21 @@ function changePage(page) {
   loadNotifcations()
 }
 
-function removePopUpTime(item) {
+function changeImportedPage(page) {
+  importedPage.current = page;
+}
+
+function removePopUpTime(index) {
   const popUpTimeList = form.popUpTimes === null ? [] : JSON.parse(form.popUpTimes);
-  popUpTimeList.splice(popUpTimeList.indexOf(item), 1);
+  popUpTimeList.splice(index, 1);
   form.popUpTimes = JSON.stringify(popUpTimeList);
 }
 
 function isExpiredTime(dateTime) {
-  if (dateTime < moment().format("YYYY-MM-DD-HH:mm")) {
+  const startDate = dateTime[0];
+  const endDate = dateTime[1];
+  // console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
+  if (endDate < moment().format("YYYY-MM-DD HH:mm:ss") || endDate < startDate) {
     return true;
   }
   return false;
@@ -370,16 +536,21 @@ function formatPopUpTime(date) {
   return moment(date).format("YYYY-MM-DD HH:mm:ss");
 }
 
+function formatFullTime(startDate, endDate) {
+  return [moment(startDate).format("YYYY-MM-DD HH:mm:ss"), moment(endDate).format("YYYY-MM-DD HH:mm:ss")];
+}
+
 function addPopUpTime() {
-  if (popUpTime.value) {
+  if (popUpTime.value && popUpTimeEnd.value) {
     const popUpTimeList = form.popUpTimes === null ? [] : JSON.parse(form.popUpTimes);
-    if (popUpTimeList.includes(formatPopUpTime(popUpTime.value))) {
+    if (popUpTimeList.includes(formatFullTime(popUpTime.value, popUpTimeEnd.value))) {
       ElMessage({ message: t('message.timeExist'), type: 'error' });
     } else {
-      popUpTimeList.push(formatPopUpTime(popUpTime.value));
+      popUpTimeList.push(formatFullTime(popUpTime.value, popUpTimeEnd.value));
       form.popUpTimes = JSON.stringify(popUpTimeList.sort());
     }
     popUpTime.value = null;
+    popUpTimeEnd.value = null;
     uiControl.popUpTimePickerVisible = false;
   }
 }
@@ -410,6 +581,8 @@ function showDialog(type) {
     form.redirectUrlWeb = null
     form.notificationType = null
     form.notificationContent = null
+    form.targetType = 'ALL'
+    form.targets = null
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.edit')
   }
@@ -433,6 +606,21 @@ function showEdit(setting) {
     }
   })
   showDialog('EDIT')
+}
+
+function showImport(notification) {
+  uiControl.importDialogVisible = true
+  uiControl.dialogTitle = t('fields.massImport');
+  importForm.notificationId = notification.id;
+  clearImport()
+}
+
+function clearImport() {
+  importedPage.buttonLoading = false;
+  importedPage.loading = false;
+  importedPage.records = [];
+  importedPage.pages = 0;
+  importedPage.current = 1;
 }
 
 function create(formCopy) {
@@ -477,9 +665,17 @@ async function removeSetting(setting) {
 }
 
 function submit() {
-  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0] : null
+  if (hasDateError.value === -1) {
+    ElMessage({ message: t('message.selectPopupTime'), type: 'error' })
+    return;
+  } else if (hasDateError.value === 1) {
+    ElMessage({ message: t('message.wrongPopupTime'), type: 'error' })
+    return;
+  }
+  form.lastPopUpTime = form.popUpTimes ? JSON.parse(form.popUpTimes).sort().reverse()[0][1] : null
   const formCopy = { ...form }
   formCopy.eligibleWays = JSON.stringify(formCopy.eligibleWays)
+
   if (uiControl.dialogType === 'CREATE') {
     create(formCopy)
   } else if (uiControl.dialogType === 'EDIT') {
@@ -487,8 +683,113 @@ function submit() {
   }
 }
 
+async function confirmImport() {
+  importedPage.buttonLoading = true;
+  const recordCopy = { ...importedPage.records };
+  const data = [];
+  Object.entries(recordCopy).forEach(([key, value]) => {
+    const item = {};
+    if (value) {
+      item.notificationId = importForm.notificationId;
+      Object.entries(value).forEach(([k, v]) => {
+        item[k] = v;
+      });
+    }
+    data.push(item);
+  });
+
+  const records = [...data];
+  do {
+    if (records.length > 10000) {
+      await createBatchMemberNotification(importForm.notificationId, records.slice(0, 10000));
+      records.splice(0, 10000);
+    } else {
+      await createBatchMemberNotification(importForm.notificationId, records);
+      records.splice(0, records.length);
+    }
+  } while (records.length > 0)
+  importedPage.buttonLoading = false;
+  ElMessage({ message: t('message.importSuccess'), type: 'success' });
+  clearImport();
+  loadNotifcations()
+}
+
 function disabledTime(time) {
   return time.getTime() <= moment(Date.now()).subtract(1, 'days')
+}
+
+async function downloadTemplate() {
+  const exportMemberPrivilege = [EXPORT_MEMBER_HEADER];
+  const maxLengthMemberPrivilege = [];
+  const wsMemberPrivilege = XLSX.utils.aoa_to_sheet(exportMemberPrivilege);
+  setWidth(exportMemberPrivilege, maxLengthMemberPrivilege);
+  const wsMemberPrivilegeCols = maxLengthMemberPrivilege.map(w => {
+    return { width: w };
+  });
+  wsMemberPrivilege['!cols'] = wsMemberPrivilegeCols;
+
+  const wb = XLSX.utils.book_new();
+  wb.SheetNames.push('Member');
+  wb.Sheets.Member_Privileges = wsMemberPrivilege;
+  XLSX.writeFile(wb, 'member_redirect_notification.xlsx');
+}
+
+function setWidth(exportData, maxLength) {
+  exportData.map(data => {
+    Object.keys(data).map(key => {
+      const value = data[key];
+
+      maxLength[key] =
+        typeof value === 'number'
+          ? maxLength[key] >= 10
+            ? maxLength[key]
+            : 10
+          : maxLength[key] >= value.length + 2
+            ? maxLength[key]
+            : value.length + 2
+    });
+  });
+}
+
+function chooseFile() {
+  document.getElementById('importFile').click();
+}
+
+function importToTable(file) {
+  importedPage.loading = true;
+  importedPage.buttonLoading = false;
+  const files = file.target.files[0];
+  const allowFileType = [
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-excel',
+  ];
+  if (allowFileType.find(ftype => ftype.includes(files.type))) {
+    const fileReader = new FileReader();
+
+    fileReader.onload = async event => {
+      const { result } = event.target;
+      const workbook = XLSX.read(result, { type: 'binary' });
+      let data = [];
+      for (const sheet in workbook.Sheets) {
+        data = data.concat(
+          XLSX.utils.sheet_to_json(workbook.Sheets[sheet], {
+            header: IMPORT_MEMBER_LIST_JSON,
+            range: 1,
+          })
+        );
+        break;
+      }
+      importedPage.records = data;
+      importedPage.pages = Math.ceil(
+        importedPage.records.length / importedPage.size
+      );
+    }
+    fileReader.readAsBinaryString(files);
+    document.getElementById('importFile').value = '';
+  } else {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' });
+  }
+  importedPage.loading = false;
 }
 
 onMounted(async () => {

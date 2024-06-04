@@ -34,8 +34,8 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
-  margin: 40px auto;
+  gap: 10px;
+  margin: 8px auto 30px;
   width: 100%;
   max-width: 600px;
 }
@@ -47,7 +47,7 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 .card-bg {
   background-color: #F7F9FC;
   box-shadow: 0px 0px 10px 0px #0000001A;
-  padding: 16px 30px 20px;
+  padding: 10px 30px 16px;
   border-radius: 10px;
 }
 </style>

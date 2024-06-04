@@ -24,6 +24,7 @@
     "@capacitor/app": "^4.0.1",
     "@capacitor/browser": "^4.0.1",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
+    "@fingerprintjs/fingerprintjs-pro-vue-v3": "1.4.0",
     "@ionic-native/screen-orientation": "^5.36.0",
     "@koas/v-hscroll": "^1.0.3",
     "@line/liff": "^2.21.3",

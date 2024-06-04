@@ -228,12 +228,23 @@
           />
         </template>
       </el-table-column>
-      <el-table-column prop="profit" :label="t('fields.profit')" width="200">
+      <el-table-column prop="profit" :label="t('fields.profit2')" width="200">
         <template #default="scope1">
           $
           <span
             v-formatter="{
               data: scope1.row.profit,
+              type: 'money',
+            }"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column prop="winLoss" :label="t('fields.winloss')" width="200">
+        <template #default="scope1">
+          $
+          <span
+            v-formatter="{
+              data: scope1.row.winLoss,
               type: 'money',
             }"
           />
@@ -269,6 +280,11 @@
       <el-table-column
         prop="lastLoginIp"
         :label="t('fields.lastLoginIp')"
+        width="200"
+      />
+      <el-table-column
+        prop="firstDepositTime"
+        :label="t('fields.ftdTime')"
         width="200"
       />
     </el-table>
@@ -597,12 +613,12 @@ function getSummaries(param) {
         } else {
           if (
             index !== 1 &&
-            index !== 11 &&
             index !== 12 &&
             index !== 13 &&
             index !== 14 &&
             index !== 15 &&
             index !== 16 &&
+            index !== 17 &&
             index !== 2
           ) {
             var prop = column.property

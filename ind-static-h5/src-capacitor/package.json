@@ -1,6 +1,6 @@
 {
   "name": "55Ace",
-  "version": "1.0.12",
+  "version": "1.0.17",
   "description": "55Ace App",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
+    "@awesome-cordova-plugins/adjust": "^6.7.0",
     "@capacitor/android": "^5.6.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
@@ -20,11 +21,11 @@
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
-    "com.adjust.sdk": "4.23.0",
+    "com.adjust.sdk": "^4.38.1",
     "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "es6-promise-plugin": "^4.1.0",
-    "onesignal-cordova-plugin": "^5.0.4"
+    "onesignal-cordova-plugin": "^5.1.3"
   }
 }

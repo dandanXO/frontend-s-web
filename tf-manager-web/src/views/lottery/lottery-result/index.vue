@@ -130,17 +130,18 @@ const request = reactive({
   current: 1,
   resultTime: null,
   affiliateCode: null,
-  siteId: null
+  siteId: -1,
 });
 
 const form = reactive({
   resultTime: null,
-  number: null
+  number: null,
+  siteId: -1,
 });
 
 const formRules = reactive({
   resultTime: [required(t('message.validateResultDateRequired'))],
-  number: [required(t('message.validateResultNumber'))]
+  number: [required(t('message.validateResultNumber'))],
 });
 
 function resetQuery() {

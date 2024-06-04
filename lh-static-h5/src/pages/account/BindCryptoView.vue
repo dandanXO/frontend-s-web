@@ -29,7 +29,12 @@
         </q-input>
       </div>
 
-      <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
+      <q-card-actions
+        style="margin: 0 auto"
+        align="center"
+        class="text-teal"
+        :class="$q.dark.isActive ? '' : 'bg-white'"
+      >
         <q-btn style="width: 100%" class="common-md-btn" flat label="发送验证码" @click="onCaptchaSubmit()" />
       </q-card-actions>
     </q-card>
@@ -47,7 +52,7 @@
         <p>操作成功，请查看手机验证码！</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="text-teal" :class="$q.dark.isActive ? '' : 'bg-white'">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -65,7 +70,7 @@
         <p>{{ captchaFailedMessage || "验证码校验失败，请刷新" }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="text-teal" :class="$q.dark.isActive ? '' : 'bg-white'">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -103,7 +108,7 @@
             @click="onTypeToggleBtnClick(bankIndex)"
           >
             <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name === 'USDTTRC' ? 'USDT' : bank.name }}</div>
+            <div>{{ bank.name === "USDTTRC" ? "USDT" : bank.name }}</div>
           </q-btn>
         </div>
 
@@ -229,8 +234,8 @@ const validateBankLength = (val) => {
 const validateCryptoNumber = (val) => {
   var regex = /^[a-zA-Z0-9]+$/;
 
-  return (regex.test(val)) || "请输入有效的虚拟账户号码";
-}
+  return regex.test(val) || "请输入有效的虚拟账户号码";
+};
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
 // const isValidCnPhone = () => {
@@ -484,6 +489,20 @@ onMounted(() => {
       font-size: 0.8rem;
       font-weight: 400;
       margin: 1rem 0;
+    }
+  }
+}
+
+.body--dark {
+  .bind-container {
+    .bind-wrapper {
+      .bind-item {
+        @include content-block-dark-with-border;
+        .q-field__control {
+          background: $background-dark;
+          box-shadow: none;
+        }
+      }
     }
   }
 }

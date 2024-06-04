@@ -106,9 +106,9 @@
                         <Calendar />
                       </el-icon>
                       <div>{{ new Date(m.createTime).toLocaleString(languageVal) }}</div>
-                      <el-icon class="delete-btn">
-                        <Delete @click="deleteMsg(m.id, mi)" />
-                      </el-icon>
+<!--                      <el-icon class="delete-btn">-->
+<!--                        <Delete @click="deleteMsg(m.id, mi)" />-->
+<!--                      </el-icon>-->
                     </div>
                   </div>
                 </template>

@@ -526,7 +526,8 @@ body .transferinout .el-dialog__header .el-dialog__title {
   font-size: 20px;
   font-weight: 700;
   font-family: "Microsoft Yahei";
-  .deposit-btn, .join-btn {
+  .deposit-btn,
+  .join-btn {
     color: #548cf9;
     padding: 10px;
     border-radius: 20px;
@@ -712,6 +713,44 @@ body .transferinout .el-dialog__header .el-dialog__title {
   .transfer-plat-wrapper {
     .transfer-plat-item {
       flex-direction: column;
+    }
+  }
+}
+
+.dark {
+  .card {
+    @include content-block-dark;
+    color: $font-3-dark;
+
+    .balance-wrapper {
+      color: $color-white;
+
+      .currency {
+        color: $font-3-dark;
+      }
+    }
+  }
+
+  .balance-plat-item {
+    background-color: $background-content-block-lighter-dark;
+  }
+
+  .transfer-plat-wrapper {
+    .transfer-plat-item {
+      border-color: #ecedf01a;
+    }
+  }
+
+  .blue-btn {
+    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
+  }
+
+  .transfer-info-form {
+    .transfer-info-amount {
+      :deep(.el-input__wrapper) {
+        box-shadow: none;
+        background-color: $background-content-block-lighter-dark;
+      }
     }
   }
 }

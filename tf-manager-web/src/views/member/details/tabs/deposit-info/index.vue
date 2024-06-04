@@ -322,6 +322,8 @@ async function loadDepositInfo() {
   if (page.records.length !== 0) {
     const { data: amount } = await getMemberDepositRecordTotalAmount(props.mbrId, query);
     page.totalDepositAmount = amount;
+  } else {
+    page.totalDepositAmount = 0;
   }
   const { data: success } = await getMemberDepositSuccessRecord(props.mbrId, query);
   page.totalSuccessDepositAmount = success.totalAmount

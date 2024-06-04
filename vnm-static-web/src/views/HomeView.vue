@@ -3,6 +3,7 @@
     <HomeBanner></HomeBanner>
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
+      <HomeHotMatches></HomeHotMatches>
       <NewsSection></NewsSection>
       <HomeDownload></HomeDownload>
       <HomeService></HomeService>
@@ -13,12 +14,12 @@
 
 <script setup>
 import GameModal from "@/components/modal/GameModal.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
 import NewsSection from "@/components/home/NewsSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeDownload from "@/components/home/HomeDownload.vue";
-// import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
+import HomeHotMatches from "@/components/home/HomeHotMatches.vue";
 import HomeService from "@/components/home/HomeService.vue";
 
 const gameMenu = ref(null);
@@ -26,7 +27,6 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
   gameMenu.value.open(gameName, platType, gameCode, scrollingState);
 };
 
-onMounted(() => {});
 </script>
 
 <style scoped lang="scss">

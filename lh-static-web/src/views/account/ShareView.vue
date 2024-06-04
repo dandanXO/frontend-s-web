@@ -2,100 +2,100 @@
   <div class="share-container">
     <div class="share-content left">
       <div class="desc">
-    <div class="form-field">
-      <div class="label label-grad">推广分享</div>
-    </div>
-    <p style="margin:1em 0px;">
-      您通过推广链接邀请的用户注册并存款，您将获得最高累计<span class="number">2,000</span>元的奖励。<router-link to="/promotion?name=lh1-invite">活动详情</router-link>
-    </p>
-
-
+        <div class="form-field">
+          <div class="label label-grad">推广分享</div>
+        </div>
+        <p style="margin: 1em 0px">
+          您通过推广链接邀请的用户注册并存款，您将获得最高累计
+          <span class="number">2,000</span>
+          元的奖励。
+          <router-link to="/promotion?name=lh1-invite">活动详情</router-link>
+        </p>
       </div>
-    <hr class="divider-style" />
+      <hr class="divider-style" />
 
-    <div class="form-field share-input">
-      <div class="label">推广链接</div>
+      <div class="form-field share-input">
+        <div class="label">推广链接</div>
 
-      <div class="content">
-        <input class="referral-link-input" @blur="blurCode" ref="copyinput" v-model="referralLink" />
+        <div class="content">
+          <input class="referral-link-input" @blur="blurCode" ref="copyinput" v-model="referralLink" />
           <el-button class="common-btn copy-btn" @blur="blurCode" @click="copyCode('refer')">
             {{ copybtntxt }}
           </el-button>
+        </div>
       </div>
-    </div>
 
-    <hr class="divider-style" />
+      <hr class="divider-style" />
 
-    <div class="form-field qr-bg">
-      <div class="label qrtitle">推广二维码</div>
+      <div class="form-field qr-bg">
+        <div class="label qrtitle">推广二维码</div>
 
-      <VueQRCodeComponent :size="180" :text="referralLink" />
-      <div class="content">
-        <div class="qr-code-and-stats-wrapper">
-
-          <div class="share-info-div">
-            <div class="share-info-box">
-              <span class="label">累计注册</span>
-              <div class="total-info-div">
-                <span class="total-span" id="total-signup-no">{{ referredMember }}</span>
-                人
+        <VueQRCodeComponent :size="180" :text="referralLink" />
+        <div class="content">
+          <div class="qr-code-and-stats-wrapper">
+            <div class="share-info-div">
+              <div class="share-info-box">
+                <span class="label">累计注册</span>
+                <div class="total-info-div">
+                  <span class="total-span" id="total-signup-no">{{ referredMember }}</span>
+                  人
+                </div>
               </div>
-            </div>
 
-            <div class="share-info-box">
-              <span class="label">累计充值</span>
-              <div class="total-info-div">
-                <span class="total-span" id="total-topup-no">{{ depositMember }}</span>
-                人
+              <div class="share-info-box">
+                <span class="label">累计充值</span>
+                <div class="total-info-div">
+                  <span class="total-span" id="total-topup-no">{{ depositMember }}</span>
+                  人
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
     </div>
-    <div class="share-content right" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+    <div class="share-content right">
       <div class="desc">
-    <div class="form-field">
-      <div class="label label-grad">唤醒分享</div>
-    </div>
-    <p style="margin:1em 0px;">
-      您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。<router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
-    </p>
-  </div>
-    <hr class="divider-style" />
+        <div class="form-field">
+          <div class="label label-grad">唤醒分享</div>
+        </div>
+        <p style="margin: 1em 0px">
+          您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。
+          <router-link to="/promotion?name=lh1-summon-event">活动详情</router-link>
+        </p>
+      </div>
+      <hr class="divider-style" />
 
-    <div class="form-field share-input">
-      <div class="label">唤醒链接</div>
+      <div class="form-field share-input">
+        <div class="label">唤醒链接</div>
 
-      <div class="content">
-        <input class="referral-link-input" @blur="blurCode" ref="copyinput2" v-model="summonerLink" />
+        <div class="content">
+          <input class="referral-link-input" @blur="blurCode" ref="copyinput2" v-model="summonerLink" />
           <el-button class="common-btn copy-btn" @blur="blurCode" @click="copyCode('summon')">
             {{ copybtntxt2 }}
           </el-button>
+        </div>
       </div>
-    </div>
 
-    <hr class="divider-style" />
+      <hr class="divider-style" />
 
-    <div class="form-field qr-bg" >
-      <div class="label qrtitle">唤醒二维码</div>
+      <div class="form-field qr-bg">
+        <div class="label qrtitle">唤醒二维码</div>
 
-      <VueQRCodeComponent :size="180" :text="summonerLink" />
-      <div class="content">
-        <div class="qr-code-and-stats-wrapper">
-
-          <div class="share-info-div">
-            <div class="share-info-box">
-              <span class="label">成功唤醒</span>
-              <div class="total-info-div">
-                <span class="total-span" id="total-topup-no">{{ summonMember }}</span>
-                人
+        <VueQRCodeComponent :size="180" :text="summonerLink" />
+        <div class="content">
+          <div class="qr-code-and-stats-wrapper">
+            <div class="share-info-div">
+              <div class="share-info-box">
+                <span class="label">成功唤醒</span>
+                <div class="total-info-div">
+                  <span class="total-span" id="total-topup-no">{{ summonMember }}</span>
+                  人
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -223,29 +223,29 @@ export default defineComponent({
   display: flex;
   .share-content {
     width: 100%;
-      .desc {
-        padding: 0 10px;
-        p {
-          width: 60%;
-          .number {
-            color: #4C88F8;
-            font-family: Microsoft YaHei;
-font-size: 16px;
-font-weight: 700;
-line-height: 21.12px;
-letter-spacing: 0.07em;
-text-align: left;
-
-          }
+    .desc {
+      height:90px;
+      padding: 0 10px;
+      p {
+        width: 60%;
+        .number {
+          color: #4c88f8;
+          font-family: Microsoft YaHei;
+          font-size: 16px;
+          font-weight: 700;
+          line-height: 21.12px;
+          letter-spacing: 0.07em;
+          text-align: left;
         }
       }
+    }
     &.left {
-      .desc{
-        border-right: 1px solid #ECEDF0;
+      .desc {
+        border-right: 1px solid #ecedf0;
       }
       .form-field {
         &.share-input {
-          border-right: 1px solid #ECEDF0;
+          border-right: 1px solid #ecedf0;
         }
       }
     }
@@ -256,13 +256,13 @@ text-align: left;
     align-items: center;
     position: relative;
     &.share-input {
-    padding: 0 10px;
+      padding: 0 10px;
       .label {
         min-width: 110px;
       }
     }
     &.qr-bg {
-      background: url(../../assets/images/account/qrbg.png)no-repeat center center;
+      background: url(../../assets/images/account/qrbg.png) no-repeat center center;
       flex-direction: column;
       height: 500px;
       padding: 20px;
@@ -276,15 +276,13 @@ text-align: left;
       }
     }
     .label {
-
       display: flex;
       gap: 20px;
       font-size: 18px;
       &.label-grad {
-
-        font-family: 'PingFang SC';
+        font-family: "PingFang SC";
         font-weight: 600;
-        background: linear-gradient(180deg, #488AEE 0%, #4768EB 100%);
+        background: linear-gradient(180deg, #488aee 0%, #4768eb 100%);
 
         -webkit-background-clip: text;
         -moz-background-clip: text;
@@ -306,9 +304,9 @@ text-align: left;
         border: none;
         border: 1px solid #c7c7c7;
         padding: 15px 20px;
-        box-shadow: 0px 0px 7.31px 0px #A9C9EA inset;
-        background: #F7F8FB;
-        color: #3F8CFF;
+        box-shadow: 0px 0px 7.31px 0px #a9c9ea inset;
+        background: #f7f8fb;
+        color: #3f8cff;
         border-radius: 10px;
       }
 
@@ -353,7 +351,7 @@ text-align: left;
 .share-info-box {
   width: 155px;
   height: 100px;
-  background: linear-gradient(180deg, #518BF7 0%, #64ACFF 100%);
+  background: linear-gradient(180deg, #518bf7 0%, #64acff 100%);
   background-blend-mode: normal, normal;
   border-radius: 10px;
   position: relative;
@@ -376,7 +374,7 @@ text-align: left;
     color: #fff;
     font-size: 18px;
   }
-  
+
   .total-span {
     font-size: 24px;
     color: #fff;
@@ -385,12 +383,50 @@ text-align: left;
   }
 }
 
-.copy-btn{
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+.copy-btn {
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   border-radius: 30px;
-    position: absolute;
-    right: 22px;
-    height: 30px;
-    top: 8px;
+  position: absolute;
+  right: 22px;
+  height: 30px;
+  top: 8px;
+}
+
+.dark {
+  .share-container {
+    @include content-block-dark;
+
+    .share-content {
+      .desc {
+        .form-field {
+          .label {
+            background: none;
+            color: $color-white;
+            -webkit-text-fill-color: unset;
+          }
+        }
+      }
+
+      p {
+        color: $font-3-dark;
+      }
+
+      .share-input {
+        .label {
+          color: $color-white;
+        }
+      }
+    }
+
+    .form-field {
+      .content {
+        input.referral-link-input {
+          box-shadow: none;
+          background-color: $background-content-block-lighter-dark;
+          border: none;
+        }
+      }
+    }
+  }
 }
 </style>

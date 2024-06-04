@@ -13,7 +13,7 @@
     <script src="js/jquery-3.6.1.min.js?v=5" type="text/javascript"></script>
     <script type="text/javascript" src="/style/js/download.js?v=5"></script>
     <script type="text/javascript" src="/style/js/clipboard.min.js?v=5"></script>
-<!--    <script type="text/javascript" src="https://village.muinegoodview.com/tf-website.txt"></script>-->
+    <!--    <script type="text/javascript" src="https://village.muinegoodview.com/tf-website.txt"></script>-->
     <style type="text/css">
         html,body {
             height: 100%;
@@ -68,7 +68,7 @@
                 ứng dụng Hỗ trợ tải xuống cho tất cả các dòng điện thoại Androi và IOS
             </div>
             <div class="load">
-                <a class="install" id="download">tải xuống</a>
+                <a class="install" id="installButton">tải xuống</a>
             </div>
             <p class="tuto">kéo xuống để xem chỉ dẫn</p>
             <span id="consult"></span>
@@ -83,7 +83,7 @@
     </div>
 </div>
 <div class="weixin_tip" style="display: none;">
-<!--    <img id="tips" src="/style/images/wxtips_android.png" alt="" style="width:100%;height:auto;"/>-->
+    <!--    <img id="tips" src="/style/images/wxtips_android.png" alt="" style="width:100%;height:auto;"/>-->
     <!-- <div class="wx_title">
         <span>由于腾讯的安全机制，阁下无法直接下载我们的产品，请跟随下列步骤进行下载。</span>
         <div class="under-line"></div>
@@ -92,7 +92,8 @@
     </div> -->
 </div>
 <script>
-    var versionNo= "1.0.2";
+    //NEED TO CHANGE THIS VERSION NO.
+    var versionNo= "1.0.5";
 
     var andList=[
         {imgurl:'/style/images/web/android/1.png'},
@@ -111,9 +112,91 @@
         {imgurl:'/style/images/web/ios/6.png'}
     ];
     var type = "ALL_AND";
+
+    const searchParams = new URLSearchParams(window.location.search);
+    let affidValue = searchParams.get('id');
+    const campaignname = searchParams.get('campaignname');
+    const campaignid = searchParams.get('campaignid');
+    const adsetid = searchParams.get('adsetid');
+    const adsetname = searchParams.get('adsetname');
+    const adname = searchParams.get('adname');
+    const adid = searchParams.get('adid');
+    const fbclid = searchParams.get('fbclid');
+    const fbpid = searchParams.get('fbpid');
+    const autoDownload = searchParams.get("autoDownload");
+
+    affidValue = affidValue ?? '';
+    console.log(window.location.href)
+    // *** Add AffiliateCode By Url Here.
+
+    // if (affidValue === '' && (window.location.hostname.indexOf("jo2.app") > -1)) {
+    //     affidValue = "75DC1D";
+    // } else if (affidValue === '' && window.location.hostname.indexOf("jo3.app") > -1) {
+    //     affidValue = "C128A1";
+    // }else if (affidValue === '' && window.location.hostname.indexOf("d83za.cu9.app") > -1) {
+    //     affidValue = "5443AD";
+    // }else if (affidValue === '' && window.location.hostname.indexOf("g4r6k.xu5.app") > -1) {
+    //     affidValue = "14965A";
+    // }
+
+    var apiUrl = '';
+
+    async function getApiUrl() {
+        var button;
+        var apkUrl = '';
+
+        if (!affidValue) {
+            apiUrl = `https://uxz7l.vqeah3flhb.com/app/download/url?siteCode=vnm&appType=ALL_SITE`;
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                });
+                const data = await response.json();
+                if (data) {
+                    console.log("data", data);
+                    apkUrl = data.data;
+                    button = document.getElementById("installButton");
+                    // //Android or Browser.
+                    // //Change URL ./download/jb_app.apk when go Live.
+                    button.classList.remove("disabled-btn");
+                    button.onclick = function () {
+                        downloadApk(apkUrl, affidValue)
+                        return false;
+                    }
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        } else {
+            apiUrl = `https://tljwn.plan2wtion.com/app/download/affiliate/vnm/${affidValue}`;
+            button = document.getElementById("installButton");
+            // //Android or Browser.
+            // //Change URL ./download/jb_app.apk when go Live.
+            button.classList.remove("disabled-btn");
+            button.onclick = function () {
+                downloadApk(apiUrl, affidValue)
+                return false;
+            }
+        }
+    }
+
+    function downloadApk(apkUrl) {
+        console.log(apkUrl);
+
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = apkUrl;
+        link.download = `tf88-app-${versionNo}.apk`
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
     $(document).ready(function (e) {
-        var suffixAgent= "";
         $("#ver-no").html("(v" + versionNo + ")");
+
         var agentCode = getQueryString("agentCode");
         console.log(agentCode);
 
@@ -140,9 +223,11 @@
                 getIosPath();
             }else if (/(Android)/i.test(navigator.userAgent)){
                 showAndroid();
+                getApiUrl();
             }else {
-                //window.location.href="downloadty_com.html";
                 showAndroid();
+                getApiUrl();
+
             };
             // var host = window.location.host;
             // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
@@ -154,13 +239,15 @@
         for(var i=0;i<andList.length;i++){
             $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
         };
-        $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/tf88-app-${versionNo}.apk?v=`+Math.random());
+        // $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/tf88-app-${versionNo}.apk?v=`+Math.random());
     }
 
     function showIOS()
     {
-        $("#download").attr("href", "./download/TF88.mobileconfig");
-        $("#download").attr("download", "TF88.mobileconfig");
+        $("#ver-no").html("(iOS " + versionNo + ")");
+
+        $("#installButton").attr("href", "./download/TF88.mobileconfig");
+        $("#installButton").attr("download", "TF88.mobileconfig");
     }
     function getIosPath()
     {
@@ -171,7 +258,6 @@
             };
             if(getIsPath())
             {
-                console.log("HERE");
                 showIOS();
                 // var path=getTestFlightIosPath();
                 // $('#download').attr('href',path);

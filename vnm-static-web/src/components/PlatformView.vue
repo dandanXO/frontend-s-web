@@ -1,7 +1,7 @@
 <template>
   <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
     <div v-if="platformsListDisplay.length > 0" class="platform-container"
-      :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
+         :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
     >
       <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'">
         <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
@@ -21,7 +21,7 @@
             </div>
 
             <div class="platform-item">
-                <div class="platform-title"><img style="height: 60px;" :src="require('../assets/' + platformType + '/' + platformType + '-biglogo-' + item.code.toLowerCase() + '.png')" /></div>
+              <div class="platform-title"><img style="height: 60px;" :src="require('../assets/' + platformType + '/' + platformType + '-biglogo-' + item.code.toLowerCase() + '.png')" /></div>
               <div class="platform-title-wrap" data-aos="fade-left" data-aos-delay="100">
                 <div class="platform-subtitle">{{ $t(`menu.${platformName}`) }}</div>
               </div>
@@ -83,8 +83,8 @@
 
                 <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
                    class="maintenance-p">
-                   {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                  {{$t('common.maintenanceTime')}}: <em>{{ moment(item.maintenanceStartTime).format("DD/MM/YYYY hh:mm A") }} -
+                  {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY hh:mm A") }}</em>
                 </p>
                 <p v-else>
                   &nbsp;
@@ -118,7 +118,7 @@
                 <div class="text">
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else>{{ item.code }}</span>
-              </div>
+                </div>
               </div>
             </template>
           </div>
@@ -174,27 +174,14 @@
                   </div>
 
                   <div class="slot-fav">
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartLine />-->
-                    <!--                  </el-icon>-->
-                    <!--                  <el-icon>-->
-                    <!--                    <RiHeartFill />-->
-                    <!--                  </el-icon>-->
                   </div>
                 </div>
 
-                <!-- <div class="slot-name">
-                  <img src="../assets/images/games/play-icon.png" />
-                  {{ game.name }}
-
-                  <div class="slot-fav">
-                    <el-icon :width="30">
-                      <RiHeartLine />
-                      <RiHeartFill />
-                    </el-icon>
-                  </div>
-                </div> -->
               </a>
+
+              <div @click="openGame(game, selectedPlat, game.code)" class="play-btn">
+                {{ $t('common.playnow') }}
+              </div>
             </div>
           </div>
           <div class="pagination-wrapper">
@@ -233,6 +220,7 @@ import moment from "moment/moment";
 
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
+import { useLocalStorage } from "@vueuse/core";
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 const platformGame = ref(null);
@@ -284,7 +272,7 @@ const setFilteredPlatforms = () => {
     platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
   );
 
-  filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+  filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
     return { ...matchingItem, ...item1 };
   });
@@ -343,24 +331,24 @@ const switchPlat = (plat) => {
 
 const getPlatGameList = () => {
   if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
-    getPlatformList()
-      .then((data) => {
-        platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
-        platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
-          const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-          return { ...matchingItem, ...item1 };
-        });
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+    getFn().then((data) => {
+      platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+      platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
+        const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
+        return { ...matchingItem, ...item1 };
+      });
 
-        if (!route.query.plat) {
-          switchPlat(platformsListDisplay.value[0]);
-        } else {
-          platformsListDisplay.value.forEach((element) => {
-            if (route.query.plat === element.code) {
-              switchPlat(element);
-            }
-          });
-        }
-      })
+      if (!route.query.plat) {
+        switchPlat(platformsListDisplay.value[0]);
+      } else {
+        platformsListDisplay.value.forEach((element) => {
+          if (route.query.plat === element.code) {
+            switchPlat(element);
+          }
+        });
+      }
+    })
       .catch((err) => {
         console.log(err.message);
       });
@@ -380,7 +368,8 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+          var imageUrl= useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value ;
+          element.icon = `${imageUrl}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;

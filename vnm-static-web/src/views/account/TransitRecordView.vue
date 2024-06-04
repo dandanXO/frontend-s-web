@@ -688,6 +688,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   components: {
@@ -1255,7 +1256,7 @@ export default defineComponent({
       });
     };
 
-    const imgURL = process.env.VUE_APP_IMAGE_CDN;
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value;
     const getImageLink = (linkId) => {
       // reminderForm.photos = linkId;
       reminderForm.photos = imgURL + "/" + linkId;

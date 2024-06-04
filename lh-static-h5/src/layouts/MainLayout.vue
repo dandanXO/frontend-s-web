@@ -16,7 +16,14 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link v-if="prevPage" :to="prevPage ? '/' + prevPage : '/'">
-          <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
+          <img
+            class="back-icon"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/common/left-back-icon-dark.svg')
+                : require('../assets/images/common/left-back-icon.svg')
+            "
+          />
         </router-link>
         {{ pageName }}
         <q-btn
@@ -54,31 +61,109 @@
       </router-view>
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
-      <q-tabs v-model="tab" no-caps class="bg-white text-primary" :breakpoint="0" align="justify">
+      <q-tabs
+        v-model="tab"
+        no-caps
+        class="footer-tabs text-primary"
+        :breakpoint="0"
+        :class="$q.dark.isActive ? '' : 'bg-white'"
+        align="justify"
+      >
         <q-route-tab to="/" name="home" exact>
-          <img class="inactive" src="../assets/images/footer/home-icon.svg" />
-          <img class="hover" src="../assets/images/footer/home-icon-active.svg" />
+          <img
+            class="inactive"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/home-icon-dark.svg')
+                : require('../assets/images/footer/home-icon.svg')
+            "
+          />
+          <img
+            class="hover"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/home-icon-active-dark.svg')
+                : require('../assets/images/footer/home-icon-active.svg')
+            "
+          />
           <span>首页</span>
         </q-route-tab>
         <q-route-tab to="/account/transfer" name="transfer">
-          <img class="inactive" src="../assets/images/footer/withdraw-icon.svg" />
-          <img class="hover" src="../assets/images/footer/withdraw-icon-active.svg" />
+          <img
+            class="inactive"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/withdraw-icon-dark.svg')
+                : require('../assets/images/footer/withdraw-icon.svg')
+            "
+          />
+          <img
+            class="hover"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/withdraw-icon-active-dark.svg')
+                : require('../assets/images/footer/withdraw-icon-active.svg')
+            "
+          />
           <span>账户</span>
         </q-route-tab>
         <q-route-tab to="/promo" name="promo">
-          <img class="inactive" src="../assets/images/footer/promo-icon.svg" />
-          <img class="hover" src="../assets/images/footer/promo-icon-active.svg" />
+          <img
+            class="inactive"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/promo-icon-dark.svg')
+                : require('../assets/images/footer/promo-icon.svg')
+            "
+          />
+          <img
+            class="hover"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/promo-icon-active-dark.svg')
+                : require('../assets/images/footer/promo-icon-active.svg')
+            "
+          />
           <span>优惠</span>
         </q-route-tab>
         <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-          <img class="inactive" src="../assets/images/footer/chat-icon.svg" />
-          <img class="hover" src="../assets/images/footer/chat-icon-active.svg" />
+          <img
+            class="inactive"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/chat-icon-dark.svg')
+                : require('../assets/images/footer/chat-icon.svg')
+            "
+          />
+          <img
+            class="hover"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/chat-icon-active-dark.svg')
+                : require('../assets/images/footer/chat-icon-active.svg')
+            "
+          />
           <span>客服</span>
         </q-route-tab>
 
         <q-route-tab to="/account" name="account">
-          <img class="inactive" src="../assets/images/footer/account-icon.svg" />
-          <img class="hover" src="../assets/images/footer/account-icon-active.svg" />
+          <img
+            class="inactive"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/account-icon-dark.svg')
+                : require('../assets/images/footer/account-icon.svg')
+            "
+          />
+          <img
+            class="hover"
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/footer/account-icon-active-dark.svg')
+                : require('../assets/images/footer/account-icon-active.svg')
+            "
+          />
+
           <span>我的</span>
         </q-route-tab>
       </q-tabs>
@@ -219,12 +304,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "提款";
-
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "转账";
-
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -419,9 +502,9 @@ export default defineComponent({
       checkRoute();
 
       if (isSafari12OrLower()) {
-        isLowSafari.value= true;
+        isLowSafari.value = true;
       } else {
-        isLowSafari.value= false
+        isLowSafari.value = false;
       }
     });
 
@@ -432,16 +515,15 @@ export default defineComponent({
 
     function getSafariVersion() {
       var ua = navigator.userAgent.toLowerCase();
-      if (ua.indexOf('safari') !== -1) {
-        if (ua.indexOf('version') !== -1) {
-          return parseInt(ua.split('version/')[1].split(' ')[0]);
+      if (ua.indexOf("safari") !== -1) {
+        if (ua.indexOf("version") !== -1) {
+          return parseInt(ua.split("version/")[1].split(" ")[0]);
         } else {
-          return parseInt(ua.split('safari/')[1].split(' ')[0]);
+          return parseInt(ua.split("safari/")[1].split(" ")[0]);
         }
       }
       return -1; // 非 Safari 浏览器
     }
-
 
     return {
       tab: ref("home"),

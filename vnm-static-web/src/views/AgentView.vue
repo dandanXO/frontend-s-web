@@ -11,7 +11,7 @@
         <img src="../assets/images/affiliate/official-partner.png" height="55">
       </div>
       <div class="buttons">
-        <a :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
+        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' + (affCode ? affCode : '')">{{ $t('affiliate.joinus') }}</a>
         <a class="outline" :href="affiliateUrl + 'vi/login?agent=' + (affCode ? affCode : '')">{{ $t('affiliate.login') }}</a>
         <a class="outline" :href="affiliateUrl + 'vi/login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
           {{ $t('affiliate.contactus') }}
@@ -214,7 +214,7 @@
           </ul>
         </div></div>
       <div>
-        <a :href="affiliateUrl + 'vi/login?agent=' +
+        <a :href="affiliateUrl + 'vi/login?isreg=1&agent=' +
           (affCode ? affCode : '')
           " class="agent-reg-btn">{{ $t('affiliate.applyAgentNow') }}</a>
 
@@ -332,7 +332,7 @@ export default defineComponent({
       gap: 10px;
       display: flex;
       flex-direction: column;
-      color: #424F72;
+      color: $font-5;
       // font-family: Poppins;
       font-size: 40.79px;
       font-weight: 700;
@@ -429,7 +429,7 @@ export default defineComponent({
           border-radius: 15px;
           padding: 30px;
           box-shadow: 0px 0px 10px 0px #0000001A;
-          color: #424F72;
+          color: $font-5;
           width: 100%;
           .affiliate-subtitle {
             font-size: 20px;
@@ -437,7 +437,7 @@ export default defineComponent({
             color: #2e84f5;
           }
           .affiliate-terms {
-            color: #424F72;
+            color: $font-5;
             font-size: 18px;
             font-weight: 700;
           }
@@ -473,7 +473,7 @@ export default defineComponent({
         height: 60px;
       }
       .agent-content-item table th {
-        color: #424F72;
+        color: $font-5;
         height: 56px;
         font-weight: 700;
         background-color: #E7F3FF;
@@ -491,7 +491,7 @@ export default defineComponent({
         padding: 10px 0px;
       }
       .agent-demo-example-text {
-        color: #424F72;
+        color: $font-5;
         font-size: 18px;
         font-weight: 700;
       }
@@ -514,7 +514,7 @@ export default defineComponent({
         padding: 10px 20px;
         font-weight: 500;
         font-size: 14px;
-        color: #424F72;
+        color: $font-5;
       }
       .txt-left {
         text-align: left !important;

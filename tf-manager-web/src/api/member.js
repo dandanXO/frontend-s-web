@@ -169,6 +169,10 @@ export const refreshBalance = (id, site) => {
   return https().request(`/member/balance/${id}/${site}`, Method.GET, {}, ContentType.form);
 };
 
+export const getDnW = (id, site) => {
+  return https().request(`/member/dnw/${id}/${site}`, Method.GET, {}, ContentType.form);
+};
+
 export const forceLogout = (id, siteId) => {
   return https().request(`/member/logoutPLayer/${id}`, Method.POST, { siteId: siteId }, ContentType.form);
 };
@@ -187,4 +191,21 @@ export const getMemberWithdrawSuccessRecord = (id, query) => {
 
 export const syncMemberDetail = (id, siteId) => {
   return https().request(`/member/sync/${id}`, Method.GET, { siteId: siteId }, ContentType.form);
+};
+
+export const showAlert = (siteId) => {
+  return https().request("/member/alert", Method.GET, siteId, ContentType.form);
+};
+
+export const requestMemberMoneyChangeExport = query => {
+  return https().request(
+    '/member/requestMemberMoneyChangeExport',
+    Method.GET,
+    query,
+    ContentType.form
+  )
+}
+
+export const unbindBankCard = (cardId) => {
+  return https().request(`/member/bankCard/${cardId}?_method=PUT`, Method.POST, ContentType.form);
 };

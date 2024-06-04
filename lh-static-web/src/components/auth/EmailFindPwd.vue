@@ -90,7 +90,7 @@ const submitForm = () => {
       findAccount(forgotPwdForm).then((res) => {
         if (res.code === 0) {
           ElMessage.success("您的帐号已经发送到注册邮箱");
-          emits("close-dialog")
+          emits("close-dialog");
         } else {
           ElMessage.error({
             type: "error",
@@ -165,6 +165,13 @@ onMounted(() => {
 .primary-btn {
   margin-top: 20px;
   width: 100%;
+}
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
 }
 </style>
 

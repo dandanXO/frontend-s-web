@@ -101,9 +101,11 @@
         size="small"
         :resizable="true"
         :data="page.records"
-        @selection-change="handleSelectionChange"
+        @select="handleSelectionChange"
+        @select-all="handleSelectAll"
         v-loading="page.loading"
         :empty-text="t('fields.noData')"
+        ref="tableRef"
       >
         <el-table-column type="selection" width="40" />
         <el-table-column
@@ -426,6 +428,7 @@ const checkBtnRef = ref();
 const checkBtnsRef = ref();
 const suspendBtnRef = ref();
 const suspendBtnsRef = ref();
+const tableRef = ref();
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
@@ -501,14 +504,35 @@ function resetQuery() {
 }
 
 function handleSelectionChange(val) {
-  chooseRecord = val
-  if (chooseRecord.length === 0 || chooseRecord.length > 3) {
+  if (val.length >= 4) {
+    ElMessage.warning("最多只能选择三条记录");
+    tableRef.value.toggleRowSelection(val[3]);
+    return;
+  }
+  chooseRecord = val;
+  if (chooseRecord.length > 3) {
     uiControl.toCheckBtn = true
     uiControl.toPendingBtn = true
-    ElMessage.warning("最多只能选择三条记录");
+    tableRef.value.toggleRowSelection(val[3]);
   } else {
     uiControl.toCheckBtn = false
     uiControl.toPendingBtn = false
+  }
+}
+
+function handleSelectAll() {
+  console.log("handleSelectAll");
+  console.log(chooseRecord);
+  if (chooseRecord.length === 3) {
+    tableRef.value.clearSelection();
+    chooseRecord = [];
+  } else {
+    const firstThreeRows = page.records.slice(0, 3);
+    tableRef.value.clearSelection();
+    chooseRecord = firstThreeRows;
+    firstThreeRows.forEach((row) => {
+      tableRef.value.toggleRowSelection(row, true);
+    });
   }
 }
 

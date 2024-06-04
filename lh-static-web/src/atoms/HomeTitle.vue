@@ -1,19 +1,23 @@
 <template>
   <div class="home-title-container">
     <div class="home-title">
-      <img class="title-img-left" src="../assets/home/title/title-section.png" />
+      <img class="title-img-left" :src="require(`../assets/home/title/title-section${isDark ? '-dark' : ''}.png`)" />
       <div class="title">
-        <img class="title-bg" src="../assets/home/title/title-ball.png" />
+        <img class="title-bg" :src="require(`../assets/home/title/title-ball${isDark ? '-dark' : ''}.png`)" />
         <div class="title-text">{{ title }}</div>
       </div>
-      <img class="title-img-right" src="../assets/home/title/title-section.png" />
+      <img class="title-img-right" :src="require(`../assets/home/title/title-section${isDark ? '-dark' : ''}.png`)" />
     </div>
     <div class="subtitle-text">{{ subtitle }}</div>
   </div>
 </template>
 
 <script setup>
+import { useDark } from "@vueuse/core";
+
 defineProps(["title", "subtitle"]);
+
+const isDark = useDark();
 </script>
 
 <style scoped lang="scss">
@@ -48,16 +52,15 @@ defineProps(["title", "subtitle"]);
         letter-spacing: 0.14144rem;
 
         //background: linear-gradient(180deg, #C2E9FB 0%, #A1C4FC 100%);
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%),
-        linear-gradient(0deg, #FFFFFF, #FFFFFF);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%), linear-gradient(0deg, #ffffff, #ffffff);
 
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         text-fill-color: transparent;
-        filter: drop-shadow(2px 1px #C4EFFA);
-        position:relative;
-        z-index:2;
+        filter: drop-shadow(2px 1px #c4effa);
+        position: relative;
+        z-index: 2;
 
         margin: 0 2.5rem;
       }
@@ -78,6 +81,28 @@ defineProps(["title", "subtitle"]);
     font-weight: 400;
     line-height: normal;
     letter-spacing: 0.05869rem;
+  }
+}
+
+.dark {
+  .home-title-container {
+    .home-title {
+      .title {
+        .title-text {
+          background: linear-gradient(180deg, #c9e1ff 0%, #ffffff 100%);
+          background-clip: text;
+        }
+
+        .title-bg {
+          opacity: 20%;
+        }
+      }
+    }
+
+    .subtitle-text {
+      color: $color-white;
+      opacity: 20%;
+    }
   }
 }
 </style>

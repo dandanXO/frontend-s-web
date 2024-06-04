@@ -5,9 +5,9 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-     <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
-       <img :src="homePopupImg" class="alert-img" />
-     </a>
+    <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+      <img :src="homePopupImg" class="alert-img" />
+    </a>
   </el-dialog>
 
   <el-carousel
@@ -44,9 +44,10 @@ import { ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useLocalStorage } from '@vueuse/core'
 
 const router= useRouter();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 
 const goToUrl = (redirectUrl) => {
@@ -54,7 +55,7 @@ const goToUrl = (redirectUrl) => {
   if(urlSplit.length >= 2){
     const type= urlSplit[0];
     if(type==='page'){
-      router.push(`/${redirectUrl}`);
+      router.push(`/${urlSplit[1]}`);
     }else{
       router.push(`/promotion?name=${redirectUrl}`);
     }
@@ -71,9 +72,9 @@ const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
     if (res.code === 0) banners.value = res.data;
     else ElMessage.error({
-                type: "error",
-                message: res.message
-              });
+      type: "error",
+      message: res.message
+    });
   });
 };
 
@@ -144,7 +145,7 @@ const checkShowImgTop = () => {
             } else {
               homePopupPath.value = "/promotion?name=" + data["path"];
             }
-            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/promo/" + data["desktopImgUrl"];
+            homePopupImg.value = imgURL  + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
             homePopupId.value = data["id"];
@@ -192,10 +193,12 @@ onMounted(() => {
 </style>
 <style lang="scss">
 .imptann-modal {
-  max-width: 800px;
+  background: transparent;
+  max-width: 450px;
+  margin-top: 170px !important;
 
   .el-dialog__body {
-    padding: 0 !important;
+    padding: 20px !important;
     border-radius:12px;
   }
 

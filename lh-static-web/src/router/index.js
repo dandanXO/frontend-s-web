@@ -5,6 +5,7 @@ import PersonalLayoutView from "@/views/layouts/PersonalLayoutView.vue";
 import PersonalRouter from "./personal";
 import { userStore } from "@/store/index";
 import { ElMessageBox } from "element-plus";
+import { useDark } from "@vueuse/core";
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
   {
     path: "/forgotPwd",
     name: "forgotPwd",
-    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue"),
+    component: () => import(/* webpackChunkName: "ForgotPwd" */ "../views/ForgotPwdView.vue")
   },
   {
     path: "/",
@@ -154,6 +155,11 @@ const routes = [
         path: "/app-tutorial",
         name: "appTutorial",
         component: () => import(/* webpackChunkName: "appTutorial" */ "../views/AppTutorial.vue")
+      },
+      {
+        path: "/mailnew",
+        name: "mail",
+        component: () => import(/* webpackChunkName: "appTutorial" */ "../views/Mail.vue")
       }
     ]
   },
@@ -180,16 +186,24 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = userStore();
+  const isDark = useDark();
   if (to.name === "agentCode") {
     sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+    sessionStorage.removeItem("REFERRAL_CODE");
+    sessionStorage.removeItem("SUMMON_CODE");
+
     next(`/register`);
   }
   if (to.name === "referCode") {
     sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+    sessionStorage.removeItem("AFFILIATE_CODE");
+
     next(`/register?refer=1`);
   }
   if (to.name === "summonCode") {
     sessionStorage.setItem("SUMMON_CODE", to.params.summonCode);
+    sessionStorage.removeItem("AFFILIATE_CODE");
+
     next(`/login?summon=1`);
   }
 
@@ -198,14 +212,23 @@ router.beforeEach((to, from, next) => {
       next({ path: "/" });
     } else {
       if (store.nickName === "") {
-        store.getMemberInfo().then(() => next({ ...to, replace: true }));
+        store.getMemberInfo().then(() => {
+          // TODO: Remove after testing is completed.
+          if (store.memberType !== "TEST" && store.memberType !== "PROMO_TEST") isDark.value = false;
+
+          next({ ...to, replace: true });
+        });
       } else {
         next();
       }
     }
   } else {
+    // TODO: Remove after testing is completed.
+    isDark.value = false;
+
     if (to.meta.requiresAuth) {
-      ElMessageBox.alert("账号已在其他设备登录，请登录后再操作", "系统提示", {
+      // 账号已在其他设备登录，
+      ElMessageBox.alert("请登录后再操作", "系统提示", {
         // if you want to disable its autofocus
         // autofocus: false,
         center: true,

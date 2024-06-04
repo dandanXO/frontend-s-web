@@ -43,4 +43,12 @@
     }
   }
 }
+
+.dark {
+  .about-info {
+    .info-section {
+      color: inherit;
+    }
+  }
+}
 </style>

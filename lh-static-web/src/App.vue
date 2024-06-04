@@ -15,7 +15,7 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
     const store = userStore();
-    const UI= uiStore();
+    const UI = uiStore();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -28,7 +28,7 @@ export default defineComponent({
 
         const obj = {
           identifier: store.visitorId,
-          affiliateCode: affiliateItem,
+          affiliateCode: affiliateItem
         };
         memberAccessLog(obj).then((res) => {
           if (res.code === 0) {
@@ -59,18 +59,17 @@ export default defineComponent({
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);
 
-      window.addEventListener("resize",  function handleResize(e){
+      window.addEventListener("resize", function handleResize(e) {
         // console.log("RESIZE");
         UI.innerWidth = window.innerWidth;
       });
-
     });
 
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
-  },
+    });
+  }
 });
 </script>
 <style lang="scss">

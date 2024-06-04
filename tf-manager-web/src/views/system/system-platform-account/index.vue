@@ -19,6 +19,20 @@
             :value="item.id"
           />
         </el-select>
+        <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="margin-left: 5px;"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -156,7 +170,10 @@
           </el-form-item>
         </el-row>
         <el-row>
-          <el-form-item :label="t('fields.nextActivationTime')" prop="nextActivationTime">
+          <el-form-item
+            :label="t('fields.nextActivationTime')"
+            prop="nextActivationTime"
+          >
             <el-date-picker
               type="datetime"
               value-format="YYYY-MM-DD HH:mm:ss"
@@ -179,7 +196,10 @@
               @change="changeDatetimeSelection()"
             />
           </el-form-item> -->
-          <el-form-item :label="t('fields.nextGetBetStartTime')" prop="nextGetBetStartTime">
+          <el-form-item
+            :label="t('fields.nextGetBetStartTime')"
+            prop="nextGetBetStartTime"
+          >
             <el-col :span="5">
               <el-date-picker
                 type="datetime"
@@ -191,7 +211,10 @@
             <!-- :disabled-date="disabledStartDate" -->
           </el-form-item>
 
-          <el-form-item :label="t('fields.nextGetBetEndTime')" prop="nextGetBetEndTime">
+          <el-form-item
+            :label="t('fields.nextGetBetEndTime')"
+            prop="nextGetBetEndTime"
+          >
             <el-col :span="5">
               <el-date-picker
                 type="datetime"
@@ -221,7 +244,10 @@
             style="width: 190px; white-space: pre-line"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.nextGetBetIndex')" prop="nextGetBetIndex">
+        <el-form-item
+          :label="t('fields.nextGetBetIndex')"
+          prop="nextGetBetIndex"
+        >
           <el-input
             type="text"
             v-model="form.nextGetBetIndex"
@@ -248,8 +274,12 @@
           />
         </el-form-item>
         <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button @click="uiControl.dialogVisible = false">
+            {{ t('fields.cancel') }}
+          </el-button>
+          <el-button type="primary" @click="submit">
+            {{ t('fields.confirm') }}
+          </el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -262,7 +292,11 @@
       highlight-current-row
       :empty-text="t('fields.noData')"
     >
-      <el-table-column prop="platformName" :label="t('fields.platformName')" width="150" />
+      <el-table-column
+        prop="platformName"
+        :label="t('fields.platformName')"
+        width="150"
+      />
       <el-table-column prop="name" :label="t('fields.name')" width="150" />
       <!--      <el-table-column prop="nextActivationTime" :label="t('fields.nextActivationTime')" width="180">-->
       <!--        <template #default="scope">-->
@@ -292,7 +326,11 @@
       <!--        </template>-->
       <!--      </el-table-column>-->
       <!--      <el-table-column prop="nextGetBetPage" :label="t('fields.nextGetBetPage')" width="150" />-->
-      <el-table-column prop="walletType" :label="t('fields.walletType')" width="150" />
+      <el-table-column
+        prop="walletType"
+        :label="t('fields.walletType')"
+        width="150"
+      />
       <el-table-column prop="status" :label="t('fields.status')" width="120">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'OPEN'" type="success">
@@ -304,22 +342,28 @@
           <el-tag v-if="scope.row.status === 'TEST'">TEST</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="needRegister" :label="t('fields.needRegister')" width="120">
+      <el-table-column
+        prop="needRegister"
+        :label="t('fields.needRegister')"
+        width="120"
+      >
         <template #default="scope">
           <el-switch
             v-model="scope.row.needRegister"
             active-color="#409EFF"
             inactive-color="#F56C6C"
             @change="
-              changeAccountNeedRegister(
-                scope.row.id,
-                scope.row.needRegister
-              )
+              changeAccountNeedRegister(scope.row.id, scope.row.needRegister)
             "
           />
         </template>
       </el-table-column>
-      <el-table-column :label="t('fields.operate')" align="right" fixed="right" width="120">
+      <el-table-column
+        :label="t('fields.operate')"
+        align="right"
+        fixed="right"
+        width="120"
+      >
         <template #default="scope">
           <el-button
             icon="el-icon-edit"
@@ -353,12 +397,12 @@ import {
 } from '../../../api/system-platform-account'
 import { getPlatformNames } from '../../../api/platform'
 import moment from 'moment'
-import { useStore } from '../../../store';
-import { useI18n } from "vue-i18n";
+import { useStore } from '../../../store'
+import { useI18n } from 'vue-i18n'
 import { getSiteListSimple } from '../../../api/site'
 
-const store = useStore();
-const { t } = useI18n();
+const store = useStore()
+const { t } = useI18n()
 const sitePlatformForm = ref(null)
 const uiControl = reactive({
   dialogVisible: false,
@@ -367,9 +411,9 @@ const uiControl = reactive({
   editBtn: true,
   removeBtn: true,
   wallet: [
-    { key: 1, name: "TRANSFER", value: "TRANSFER" },
-    { key: 2, name: "SEAMLESS", value: "SEAMLESS" }
-  ]
+    { key: 1, name: 'TRANSFER', value: 'TRANSFER' },
+    { key: 2, name: 'SEAMLESS', value: 'SEAMLESS' },
+  ],
 })
 const page = reactive({
   pages: 0,
@@ -380,6 +424,7 @@ const request = reactive({
   size: 30,
   current: 1,
   platformId: null,
+  siteId: null,
 })
 
 const form = reactive({
@@ -414,7 +459,9 @@ const formRules = reactive({
   walletType: [required(t('message.validateWalletTypeRequired'))],
   needRegister: [required(t('message.validateNeedRegisterRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
-  nextActivationTime: [required(t('message.validateNextActivationTimeRequired'))],
+  nextActivationTime: [
+    required(t('message.validateNextActivationTimeRequired')),
+  ],
   nextGetBetStartTime: [required(t('message.validateNextGetBetStartTime'))],
   nextGetBetEndTime: [required(t('message.validateNextGetBetEndTime'))],
   nextGetBetPage: [required(t('message.validateNextGetBetPage'))],
@@ -472,7 +519,7 @@ function resetQuery() {
 // }
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+  return moment(date).format('YYYY-MM-DD HH:mm:ss')
 }
 
 async function loadPlatfromAccount() {
@@ -481,10 +528,11 @@ async function loadPlatfromAccount() {
   page.pages = ret.pages
   page.records = ret.records
   ret.records.forEach(data => {
-    data.timeZone = store.state.user.sites.find(e => e.id === data.siteId) !== undefined
-      ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
-      : null
-  });
+    data.timeZone =
+      store.state.user.sites.find(e => e.id === data.siteId) !== undefined
+        ? store.state.user.sites.find(e => e.id === data.siteId).timeZone
+        : null
+  })
   page.loading = false
 }
 
@@ -523,7 +571,7 @@ function showDialog(type) {
     }
     form.id = null
     form.status = '1'
-    const date = convertDate(new Date());
+    const date = convertDate(new Date())
     form.needRegister = true
     form.nextGetBetStartTime = date
     form.nextGetBetEndTime = date

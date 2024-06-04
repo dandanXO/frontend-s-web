@@ -3,12 +3,28 @@
     <div class="header-container">
       <div class="search">
         <el-select
+          v-model="request.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          default-first-option
+          @focus="loadSites"
+          @change="selectRequestSite"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+        <el-select
           clearable
           v-model="request.platformId"
           size="small"
           :placeholder="t('fields.platform')"
           class="filter-item"
-          style="width: 120px; margin-left: 5px"
+          style="width: 200px; margin-left: 5px"
           filterable
         >
           <el-option
@@ -117,6 +133,25 @@
         size="small"
         label-width="150px"
       >
+        <el-form-item :label="t('fields.site')" prop="siteId">
+          <el-select
+            v-model="form.siteId"
+            size="small"
+            :placeholder="t('fields.site')"
+            class="filter-item"
+            default-first-option
+            @focus="loadSites"
+            @change="selectFormSite"
+            style="width: 350px"
+          >
+            <el-option
+              v-for="item in sites.list"
+              :key="item.id"
+              :label="item.siteName"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.platform')" prop="platformId">
           <el-select
             v-model="form.platformId"
@@ -287,6 +322,22 @@
           style="width: 200px"
           :placeholder="t('fields.imageName')"
         />
+        <el-select
+          v-model="imageRequest.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          default-first-option
+          @focus="loadSites"
+          style="margin-left: 20px"
+        >
+          <el-option
+            v-for="item in sites.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -427,7 +478,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getPlatformsBySite } from '../../../../api/platform'
@@ -443,12 +494,14 @@ import {
   deleteCompetition,
   getCompetitionGameList
 } from '../../../../api/platform-competition'
+import { TENANT } from "../../../../store/modules/user/action-types";
 
 const { t } = useI18n()
 const store = useStore()
 const site = ref(null)
 const competitionForm = ref(null)
-const gameDir = process.env.VUE_APP_IMAGE + '/game/'
+const gameDir = process.env.VUE_APP_IMAGE + '/promo/'
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType);
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -488,13 +541,14 @@ const imageRequest = reactive({
   size: 10,
   current: 1,
   name: null,
-  siteId: null,
-  category: 'GAME',
+  siteId: site.value ? site.value.id : null,
+  category: 'PROMO',
+  promoType: 'TEAM_ICON',
 })
 
 const form = reactive({
   id: null,
-  siteId: site.value,
+  siteId: null,
   platformId: null,
   gameName: null,
   competitionType: null,
@@ -522,6 +576,7 @@ const selectedImage = reactive({
 })
 
 const formRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
   platformId: [required(t('message.validatePlatformRequired'))],
   competitionType: [required(t('message.validateCompetitionTypeRequired'))],
   gameName: [required(t('message.validateGameNameRequired'))],
@@ -558,14 +613,14 @@ const platformCode = ref('')
 function resetQuery() {
   request.platformId = null
   request.competitionType = null
-  request.siteId = site.value ? site.value.id : null
+  request.siteId = site.value ? site.value.id : sites.list[0].id
   request.gameName = null
   request.competitionName = null
 }
 
 function resetImageQuery() {
   imageRequest.name = null
-  imageRequest.siteId = site.value ? site.value.id : null
+  imageRequest.siteId = site.value ? site.value.id : sites.list[0].id
 }
 
 function handleSelectionChange(val) {
@@ -595,13 +650,25 @@ async function loadCompetition() {
         : null
   })
   page.records = ret.records
-  loadGameList()
   page.loading = false
 }
 
-async function loadSearchPlatforms() {
-  const { data: ret } = await getPlatformsBySite(request.siteId)
+async function selectRequestSite() {
+  await loadSearchPlatforms(request.siteId)
+}
+
+async function selectFormSite() {
+  form.platformId = null
+  await loadPlatformsForForm(form.siteId)
+}
+
+async function loadSearchPlatforms(id) {
+  const { data: ret } = await getPlatformsBySite(id)
   platforms.list = ret.filter(s => s.gameType === 'SPORT' || s.gameType === 'ESPORT')
+}
+
+async function loadPlatformsForForm(id) {
+  const { data: ret } = await getPlatformsBySite(id)
   dialogPlats.list = ret.filter(s => s.gameType === 'SPORT' || s.gameType === 'ESPORT')
 }
 
@@ -676,7 +743,7 @@ function showEdit(competition) {
       form[key] = competition[key]
       form.siteId = selectedPlatform.siteId
     }
-    loadSearchPlatforms()
+    loadPlatformsForForm(form.siteId)
   })
 }
 
@@ -765,11 +832,13 @@ async function browseImage(type) {
 
 onMounted(async () => {
   await loadSites()
-  site.value = sites.list.find(s => s.siteCode === 'LH1')
-  request.siteId = site.value.id
-  form.siteId = site.value.id
-  imageRequest.siteId = site.value.id
-  await loadSearchPlatforms()
+  request.siteId = sites.list[0].id
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = sites.list.find(s => s.siteName === store.state.user.siteName);
+    request.siteId = site.value.id;
+  }
+  await loadSearchPlatforms(request.siteId)
+  await loadGameList()
   await loadCompetition()
 })
 </script>

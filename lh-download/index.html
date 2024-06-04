@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/download_index.css">
     <link rel="stylesheet" type="text/css" href="css/swiper-3.4.1.min.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="js/swiper-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/clipboard.min.js"></script>
@@ -67,6 +68,26 @@
     <img id="tips" src="img/wxtips_android.png" alt="" style="width:100%;height:auto;">
 </div>
 
+<div class="modal-open" style="display:none;">
+    <div class="modal-div">
+        <div class="modal-inner">
+            <div class="modal-header">
+                <img src="assets/images/safari-logo.svg" style="width: 50px;height: 50px;"/>
+                <div>
+                    <span>该链接只能使用<span class="color-rose">Safari</span>打开<br/>请使用<span class="color-rose">Safari</span>游览器打开</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-input">
+                    <div id="id-url-input" class="url-input"></div>
+                    <div class="copy-btn" id="id-copy-btn">复制</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     var dateTime = "2024-01-10 7.30pm";
@@ -88,7 +109,7 @@
     var iosDownload = [];
     var androidDownload = [];
     var host = window.location.host;
-    const dataUrl='https://tfwkal.thw7l32ze9r.com'
+    const dataUrl='https://tfwkal.f6pn3tik7ps.com'
     var liveUrl1 = "";
     var liveUrl2 = "";
 
@@ -221,7 +242,47 @@
 
     }
 
+
+
+    function detectIfSafari() {
+        // console.log(navigator.userAgent)
+        if (isSafari()) {
+            // Safari detected
+            console.log("You are using Safari.");
+        } else {
+            // Not Safari
+            console.log("You are not using Safari.");
+            $("#id-url-input").text(window.location.href);
+
+            $(".modal-open").show();
+
+
+            $("#id-copy-btn").click(function(e){
+                var textToCopy= $("#id-url-input").text();
+
+                copyTextToClipboard(textToCopy);
+                alert("复制成功。")
+            })
+        }
+    }
+
+    function isSafari() {
+        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    }
+
+    function copyTextToClipboard(text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
+
+
     function showIOS() {
+        detectIfSafari();
+
         $('#desc').show();
         for (var i = 0; i < iosList.length; i++) {
             $(".swiper-wrapper").append(

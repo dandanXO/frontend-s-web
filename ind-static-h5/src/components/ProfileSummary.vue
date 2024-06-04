@@ -140,8 +140,8 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
         <q-btn no-caps @click="goLogin()">Login</q-btn>
+        <q-btn class="btn-style-purple" no-caps @click="router.push('/register')">Register</q-btn>
       </div>
     </div>
   </div>
@@ -411,6 +411,7 @@ onMounted(() => {
     padding-bottom: 10px;
     margin-bottom: 4px;
     width: 100%;
+    padding-right: 10px;
     position: relative;
 
     .unread-total {

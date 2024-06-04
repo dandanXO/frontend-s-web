@@ -5,11 +5,7 @@
     </div>
     <div class="personal-container">
       <input class="referral-link" @blur="blurCode" ref="copyinput" v-model="referralLink" readonly />
-      <button
-          class="common-btn copy-btn"
-          @blur="blurCode"
-          @click="copyCode"
-      >
+      <button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
         {{ copybtntxt }}
       </button>
     </div>
@@ -23,19 +19,13 @@
             <div class="basic-info-table">
               <div class="tbl-row">
                 <div class="basic-info-cell title">昵称</div>
-                <div
-                  v-if="personalState.memberInfo.loginName"
-                  class="basic-info-cell content"
-                >
+                <div v-if="personalState.memberInfo.loginName" class="basic-info-cell content">
                   {{ personalState.memberInfo.loginName }}
                 </div>
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">姓名</div>
-                <div
-                  v-if="personalState.memberInfo.realName"
-                  class="basic-info-cell content"
-                >
+                <div v-if="personalState.memberInfo.realName" class="basic-info-cell content">
                   {{ personalState.memberInfo.realName }}
                 </div>
 
@@ -53,30 +43,20 @@
                         }
                       ]"
                     >
-                      <el-input
-                        v-model="updateFormDetails.realName"
-                        placeholder="姓名"
-                      />
+                      <el-input v-model="updateFormDetails.realName" placeholder="姓名" />
                     </el-form-item>
                   </div>
                 </div>
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">生日</div>
-                <div
-                  v-if="personalState.memberInfo.birthday"
-                  class="basic-info-cell content"
-                >
+                <div v-if="personalState.memberInfo.birthday" class="basic-info-cell content">
                   {{ personalState.memberInfo.birthday }}
                 </div>
 
                 <div v-else class="basic-info-cell content">
                   <div class="datewsend" v-if="isEdit">
-                    <el-form-item
-                      name="birthday"
-                      prop="birthday"
-                      :rules="[{ required: true, message: '请输入生日' }]"
-                    >
+                    <el-form-item name="birthday" prop="birthday" :rules="[{ required: true, message: '请输入生日' }]">
                       <el-date-picker
                         style="max-width: 190px"
                         v-model="updateFormDetails.birthday"
@@ -89,10 +69,7 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">电话</div>
-                <div
-                  v-if="personalState.memberInfo.telephone"
-                  class="basic-info-cell content"
-                >
+                <div v-if="personalState.memberInfo.telephone" class="basic-info-cell content">
                   {{ personalState.memberInfo.telephone }}
                 </div>
 
@@ -123,26 +100,20 @@
               </div>
               <div class="tbl-row">
                 <div class="basic-info-cell title">邮箱</div>
-                <div
-                  v-if="personalState.memberInfo.email"
-                  class="basic-info-cell content"
-                >
+                <div v-if="personalState.memberInfo.email" class="basic-info-cell content">
                   {{ personalState.memberInfo.email }}
                 </div>
                 <div v-else class="basic-info-cell content">
-                   <div class="datewsend" v-if="isEdit">
+                  <div class="datewsend" v-if="isEdit">
                     <el-form-item
                       name="email"
                       prop="email"
                       :rules="[
                         { required: true, message: '请输入邮箱' },
-                        { type: 'email', message: '邮箱信息错误' },
+                        { type: 'email', message: '邮箱信息错误' }
                       ]"
                     >
-                      <el-input
-                        v-model="updateFormDetails.email"
-                        placeholder="邮箱"
-                      />
+                      <el-input v-model="updateFormDetails.email" placeholder="邮箱" />
                     </el-form-item>
                   </div>
                   <el-button
@@ -182,13 +153,7 @@
             </div>
           </div>
           <div class="buttons">
-            <el-button
-              size="large"
-              class="common-btn light"
-              @click="updatePwdModal"
-            >
-              修改密码
-            </el-button>
+            <el-button size="large" class="common-btn light" @click="updatePwdModal">修改密码</el-button>
           </div>
         </div>
         <div class="account-tip-text red">
@@ -203,41 +168,16 @@
       </el-form>
     </div>
 
-    <el-dialog
-      v-model="updatePwdModalVisible"
-      :footer="null"
-      width="500px"
-      title="修改密码"
-      align-center
-    >
-      <el-form
-        ref="updatePwdFormRef"
-        :hideRequiredMark="true"
-        :model="updatePwdInfo"
-        :rules="updatePwdRules"
-      >
+    <el-dialog v-model="updatePwdModalVisible" :footer="null" width="500px" title="修改密码" align-center>
+      <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
         <el-form-item ref="oldPassword" name="oldPassword" prop="oldPassword">
-          <el-input
-            type="password"
-            v-model="updatePwdInfo.oldPassword"
-            :placeholder="'旧密码'"
-          />
+          <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'旧密码'" />
         </el-form-item>
         <el-form-item ref="password" name="password" prop="password">
-          <el-input
-            type="password"
-            v-model="updatePwdInfo.password"
-            :placeholder="'新密码'"
-          />
+          <el-input type="password" v-model="updatePwdInfo.password" :placeholder="'新密码'" />
         </el-form-item>
         <el-form-item class="txt-center">
-          <el-button
-            class="txt-center submit-btn common-btn"
-            type="submit"
-            @click="submitUpdatePwd"
-          >
-            提交
-          </el-button>
+          <el-button class="txt-center submit-btn common-btn" type="submit" @click="submitUpdatePwd">提交</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -259,40 +199,26 @@
         :rules="updateSecurityVerifiedRules"
       >
         <el-form-item ref="emailAddress" prop="emailAddress">
-          <el-input
-            v-model="updateSecurityVerified.emailAddress"
-            placeholder="邮箱"
-          />
+          <el-input v-model="updateSecurityVerified.emailAddress" placeholder="邮箱" />
         </el-form-item>
-        <el-form-item
-          class="half"
-          ref="verificationCode"
-          prop="verificationCode"
-        >
+        <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
             <el-input
               v-model="updateSecurityVerified.verificationCode"
               :placeholder="'验证码'"
               @keyup.enter="submitUpdateSecurity"
-
             />
             <el-button
               :disabled="disableSendVerificationButton"
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">
-                已发送（倒数{{ countDown }}秒)
-              </span>
+              <span v-if="disableSendVerificationButton">已发送（倒数{{ countDown }}秒)</span>
               <span v-else>发送验证码</span>
             </el-button>
           </el-space>
         </el-form-item>
-        <el-button
-          :loading="loadingSecurityBtn"
-          class="common-btn verification-btn"
-          @click="submitUpdateSecurity"
-        >
+        <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
           提交
         </el-button>
       </el-form>
@@ -308,12 +234,8 @@
       :close-on-press-escape="false"
       @keydown.enter.prevent
     >
-      <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item
-          ref="captchaCode"
-          prop="captchaCode"
-          :rules="[{ required: true, message: '请输入验证码' }]"
-        >
+      <el-form ref="captchaUpdateRef" :model="updateSecurityVerified" @submit.prevent>
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
           <el-space>
             <el-input
               v-model="updateSecurityVerified.captchaCode"
@@ -323,18 +245,12 @@
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img :src="verificationImg" />
             </div>
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button
-        class="common-btn"
-        @click="verifyVerificationCode"
-        :loading="isEmailSending"
-      >
-        验证
-      </el-button>
+      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">验证</el-button>
     </el-dialog>
 
     <el-dialog
@@ -354,39 +270,22 @@
         :rules="updatePhoneVerifiedRules"
       >
         <el-form-item ref="phone" prop="phone">
-          <el-input
-            v-model="updatePhoneVerified.phone"
-            placeholder="手机号码"
-          />
+          <el-input v-model="updatePhoneVerified.phone" placeholder="手机号码" />
         </el-form-item>
-        <el-form-item
-          class="half"
-          ref="verificationCode"
-          prop="verificationCode"
-        >
+        <el-form-item class="half" ref="verificationCode" prop="verificationCode">
           <el-space>
-            <el-input
-              type="password"
-              v-model="updatePhoneVerified.verificationCode"
-              :placeholder="'验证码'"
-            />
+            <el-input type="password" v-model="updatePhoneVerified.verificationCode" :placeholder="'验证码'" />
             <el-button
               :disabled="disableSendPhoneButton"
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">
-                已发送（倒数{{ countDown }}秒)
-              </span>
+              <span v-if="disableSendPhoneButton">已发送（倒数{{ countDown }}秒)</span>
               <span v-else>发送验证码</span>
             </el-button>
           </el-space>
         </el-form-item>
-        <el-button
-          :loading="loadingPhoneBtn"
-          class="common-btn verification-btn"
-          @click="submitUpdatePhone"
-        >
+        <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
           提交
         </el-button>
       </el-form>
@@ -401,12 +300,8 @@
       :close-on-click-modal="false"
       :close-on-press-escape="false"
     >
-      <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item
-          ref="captchaCode"
-          prop="captchaCode"
-          :rules="[{ required: true, message: '请输入验证码' }]"
-        >
+      <el-form ref="captchaUpdateRef" :model="updatePhoneVerified" @submit.prevent>
+        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: '请输入验证码' }]">
           <el-space>
             <el-input
               @keypress.enter="verifyPhoneVerificationCode"
@@ -416,18 +311,12 @@
             />
 
             <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              <img :src="verificationImg" />
             </div>
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button
-        class="common-btn"
-        @click="verifyPhoneVerificationCode"
-        :loading="isPhoneSending"
-      >
-        验证
-      </el-button>
+      <el-button class="common-btn" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">验证</el-button>
     </el-dialog>
   </div>
 </template>
@@ -1044,5 +933,12 @@ const verificationPhoneModalVisible = ref(false)
   border: none;
   background-color: #2c444f;
   padding: 10px;
+}
+
+.verification {
+  img {
+    height: 32px;
+    display: block;
+  }
 }
 </style>

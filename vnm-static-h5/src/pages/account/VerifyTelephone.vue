@@ -137,7 +137,7 @@ export default defineComponent({
     const verificationImg = ref("");
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value =

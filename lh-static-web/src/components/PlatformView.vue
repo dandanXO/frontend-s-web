@@ -1,23 +1,25 @@
 <template>
   <div class="platform-section">
-
-    <div class="platform-container"
-         :class="(platformType === 'slot') ? 'slot-container' : ''"
-    >
+    <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
       <div class="platform-container-slot" v-if="platformType === 'slot'">
-        <img src="../assets/slot/slot-top-bg.png">
+        <img v-if="isDark" src="../assets/slot/slot-top-bg-dark.png" />
+        <img v-else src="../assets/slot/slot-top-bg.png" />
       </div>
       <div class="platform-container-inner" v-if="platformType !== 'slot'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
-            <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000"
-            >
-
+            <div class="platform-item platform-item--img" data-aos="fade-right" data-aos-duration="1000">
               <img
                 :src="
-                require('../assets/' + platformType + '/' + platformType + '-item-' + item.code.toLowerCase() + '.png')
-              "
+                  require('../assets/' +
+                    platformType +
+                    '/' +
+                    platformType +
+                    '-item-' +
+                    item.code.toLowerCase() +
+                    '.png')
+                "
               />
             </div>
 
@@ -48,48 +50,52 @@
                   @click="clickPlat(plat)"
                   :class="{ active: selectedPlat === plat.code }"
                 >
-                <div class="list-item-btn">
-                  <span>
-                    <img
-                      :src="
-                        require('../assets/' +
-                          platformType +
-                          '/' +
-                          platformType +
-                          '-logo-' +
-                          plat.code.toLowerCase() +
-                          '.png')
-                      "
-                    />
-                  </span>
-                </div>
-                <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
-              </span>
+                  <div class="list-item-btn">
+                    <span>
+                      <img
+                        :src="
+                          require('../assets/' +
+                            platformType +
+                            '/' +
+                            platformType +
+                            '-logo-' +
+                            plat.code.toLowerCase() +
+                            '.png')
+                        "
+                      />
+                    </span>
+                  </div>
+                  <div class="list-item-txt">{{ plat.alias ?? plat.cnname }}</div>
+                </span>
               </div>
 
               <!--            data-aos="fade-in"-->
               <!--            data-aos-delay="300"-->
               <!--            data-aos-duration="500"-->
               <div class="platform-play-btn" v-if="platformType !== 'slot'">
-                <div class="btn-blue" @click="openGame(item, item.code, item.gameCode)"
-                     :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
+                <div
+                  class="btn-blue"
+                  @click="openGame(item, item.code, item.gameCode)"
+                  :class="item.underMaintenance === true ? 'btn-maintenance' : ''"
                 >
-                <span class="maintenance-state" v-if="item.underMaintenance === true">
-                  <img src="../assets/svg/maintenance-icon.svg" />
-                  维护中</span>
+                  <span class="maintenance-state" v-if="item.underMaintenance === true">
+                    <img src="../assets/svg/maintenance-icon.svg" />
+                    维护中
+                  </span>
                   <span v-else>进入游戏</span>
                 </div>
 
-
-                <p v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
-                   class="maintenance-p">
-                  维护时间: <em>{{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
-                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}</em>
+                <p
+                  v-if="item.underMaintenance === true && item.maintenanceStartTime && item.maintenanceEndTime"
+                  class="maintenance-p"
+                >
+                  维护时间:
+                  <em>
+                    {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
+                    {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
+                  </em>
                 </p>
-                <p v-else>
-                  &nbsp;
-                </p>
-
+                <p v-else>&nbsp;</p>
               </div>
             </div>
           </template>
@@ -226,11 +232,13 @@ import { Search } from "@element-plus/icons-vue";
 import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
+import { useDark } from "@vueuse/core";
 
 const platformGame = ref(null);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const isDark = useDark();
 
 const props = defineProps({
   platforms: Array,
@@ -278,10 +286,10 @@ const setFilteredPlatforms = () => {
 
   filteredPlatforms.value = platformsListDisplay.value.map((item1) => {
     const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-    return { ...matchingItem, ...item1   };
+    return { ...matchingItem, ...item1 };
   });
 
-  filteredPlatforms.value.sort((a,b) => a.sequence - b.sequence);
+  filteredPlatforms.value.sort((a, b) => a.sequence - b.sequence);
   // console.log("Atend plat");
   // console.log(filteredPlatforms.value);
 
@@ -294,7 +302,6 @@ const setFilteredPlatforms = () => {
       }
     });
   }
-
 };
 
 const selectedPlat = ref(null);
@@ -335,13 +342,17 @@ const switchPlat = (plat) => {
 
 const getPlatGameList = () => {
   if (props.platformGameType === "SLOT") {
-    getPlatformList()
+    const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
+    getFn()
       .then((data) => {
         platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
         });
+
+        // console.log("SLOT")
+        // console.log(platformsListDisplay.value);
 
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
@@ -390,13 +401,11 @@ const changePage = (page, pageSize) => {
   gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
 };
 
-
 const gameCat = ref("allGame");
 
 onMounted(() => {
   getPlatList();
   getPlatGameList();
-
 });
 
 watch(

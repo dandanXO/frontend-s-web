@@ -89,7 +89,7 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>
@@ -137,7 +137,7 @@
         <div class="details-match" v-html="data.quizTitle"></div>
 
         <div class="competition-mid">
-          <div v-if="(data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam" class="team-vote">
+          <div v-if="data.status !== 'ENDED' &&  ((data.votedTeam && data.votedTeam === 'draw') || !data.votedTeam)" class="team-vote">
             <button
               class="vote-btn"
               @click="handleVoteClick({ quizId: data.id, quizTitle: data.quizTitle, answerOne: 'draw' })"
@@ -186,7 +186,7 @@
 
     <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
-  
+
 
         <div class="head-title q-mt-lg">
           <img src="../../../assets/images/promo/hotpromo/bbdacha2024/head-title-02.png" />
@@ -195,7 +195,7 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金与次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
             <li>

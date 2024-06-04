@@ -474,6 +474,7 @@ const uiControl = reactive({
     { key: 1, displayName: 'NBA', value: 'NBA' },
     { key: 2, displayName: 'SPORT', value: 'SPORT' },
     { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
+    { key: 4, displayName: 'MSI', value: 'MSI' },
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',

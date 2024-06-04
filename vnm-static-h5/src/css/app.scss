@@ -11,7 +11,7 @@ html {
 // app global css in SCSS form
 body {
   background: $white;
-  font-family: "Poppins", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "SF Pro", "Poppins", "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 #q-app {
@@ -31,6 +31,9 @@ body {
   }
   &.poppins {
     font-family: "Poppins";
+  }
+  &.sanfrancisco {
+    font-family: "SF Pro",
   }
 }
 
@@ -149,7 +152,7 @@ a:focus {
 
 .bg-lightbluebtn {
   background: #ffffff;
-  color: #7a80a1 !important;
+  color: $font-4 !important;
   box-shadow: 0px -2px 7px 0px #a2bff4 inset;
 }
 
@@ -171,7 +174,7 @@ body .q-footer {
   padding-bottom: calc(1px + env(safe-area-inset-bottom, 0));
   overflow: hidden;
   border-radius: 8px 8px 0px 0px;
-  box-shadow: 0px -4px 15px 0px #dadada66;
+  box-shadow: 0px -6px 50px 0px rgba(0, 0, 0, 0.4);
 }
 
 svg {
@@ -205,6 +208,7 @@ svg {
   color: $font-1;
   font-size: 1rem;
   flex: 1;
+  box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
 
   img {
     width: 2rem;
@@ -588,7 +592,8 @@ svg {
   span {
     margin-right: 10px;
     cursor: pointer;
-    color: $font-1;
+    // color: $font-1;
+    color: $font-4;
   }
 }
 

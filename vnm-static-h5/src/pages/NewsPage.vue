@@ -136,15 +136,17 @@ const newsItems = ref([
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    // height: 50px;
 
-    @media (max-width: 400px) {
-      height: 35px;
-    }
+    // @media (max-width: 400px) {
+    //   height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 

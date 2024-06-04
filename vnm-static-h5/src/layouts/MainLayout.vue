@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr fFf"  :class="{'roboto': languageVal === 'vn', 'poppins': languageVal === 'en' }">
+  <q-layout view="hHh Lpr fFf" :class="{ sanfrancisco: languageVal === 'vi', poppins: languageVal === 'en' }">
     <q-header v-if="hasPage" :class="hasShadow ? 'with-shadow' : ''">
       <q-card-section v-if="!hasPage" class="top-section justify-between items-center" horizontal>
         <div class="logo">
@@ -123,8 +123,8 @@ export default defineComponent({
     const hasShadow = ref(false);
     const leftDrawerOpen = ref(false);
 
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -379,6 +379,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.page_register");
+        } else if (route.path === "/about") {
+          prevPage.value = "";
+          hasPage.value = true;
+          pageName.value = t("lang.page_about");
         }
 
         if (route.query.redirect) {
@@ -418,8 +422,29 @@ export default defineComponent({
       return ui.slotLists;
     });
 
+    const isH5 = ref(false);
+    const checkPlatform = () => {
+      isH5.value = store.getDeviceType() === "H5";
+    };
+
+    const loadTrackingScript = () => {
+      const currentDomain = window.location.hostname;
+
+      // Determine the tracking script URL based on the current domain
+      let trackingScriptUrl = "https://s4.cnzz.com/z.js?id=1281348355";
+
+      if (isH5.value === true) {
+        const script = document.createElement("script");
+        script.src = trackingScriptUrl;
+        script.type = "text/javascript";
+        document.body.appendChild(script);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
+      checkPlatform();
+      loadTrackingScript();
     });
     return {
       languageVal,
@@ -454,7 +479,10 @@ export default defineComponent({
         "BindCryptoView",
         "BindEWalletView"
       ],
-      LangOptions
+      LangOptions,
+      isH5,
+      checkPlatform,
+      loadTrackingScript
     };
   }
 });

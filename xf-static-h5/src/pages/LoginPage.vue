@@ -363,7 +363,7 @@ export default defineComponent({
               sid: sidParam,
               captchaCode: loginForm.captchaCode,
               codeId: loginForm.codeId,
-              ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
+              ...(appVersionNo.value !== null ? { appVersion: appVer } : {})
             };
 
             store
@@ -445,11 +445,16 @@ export default defineComponent({
       router.push("/");
     };
 
-    const appVersionNo = ref("");
+    const appVersionNo = ref(null);
     const getVersionNo = async () => {
-      if (Platform.is.android && Platform.is.capacitor) {
+      if (store.getDeviceType() == "ANDROID") {
         const info = await App.getInfo();
-        appVersionNo.value = info.version + "." + info.build;
+        var current_version = info.version + "." + info.build;
+        appVersionNo.value = current_version;
+      } else if (store.getDeviceType() == "IOS") {
+        appVersionNo.value = "1.0.0";
+      } else {
+        appVersionNo.value = null;
       }
     };
 

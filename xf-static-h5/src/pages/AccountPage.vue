@@ -258,7 +258,7 @@ export default defineComponent({
         var current_version = info.version + "." + info.build;
         appVersionNo.value = current_version;
       } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.3";
+        appVersionNo.value = "1.0.0`";
       } else {
 
       }

@@ -428,6 +428,7 @@ export default {
     medium_level: "ดี",
     strong_level: "รัดกุม",
     fill_in_information: "กรุณาใส่ข้อมูลให้ถูกต้อง",
+    verify_phone_number: "กรุณายืนยันหมายเลขโทรศัพท์ก่อน",
     verify: "ตรวจสอบ",
     my_total_refer_friends_rebate: "ยอดเงินคืนสุทธิ จากแนะนำเพื่อน:",
     my_a_line_refer_total: "เงินคืนจากค่าแนะนำเพื่อน ระดับที่ 1:",

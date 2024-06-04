@@ -37,7 +37,12 @@
         >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
-        <q-btn :href="affiliateUrl +'login?agent=' + (affCode ? affCode : '')" label="登录" size="md" class="login-btn">
+        <q-btn
+          :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
+          label="登录"
+          size="md"
+          class="login-btn"
+        >
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
@@ -50,7 +55,7 @@
         <!--        )-->
         <!--        "-->
         <q-btn
-          :href="affiliateUrl +'login?view=2&agent=' + (affCode ? affCode : '')"
+          :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')"
           label="联系我们"
           size="md"
           class="contact-btn"
@@ -176,7 +181,12 @@
 
     <div class="contact-us">
       <div class="register-btn-wrapper">
-        <q-btn :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" label="立即申请代理" size="lg" class="register-btn">
+        <q-btn
+          :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
+          label="立即申请代理"
+          size="lg"
+          class="register-btn"
+        >
           <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
           <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
@@ -198,8 +208,10 @@
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <div class="two-four-content">
-              <a :href="affiliateUrl +'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank" ><img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
-                <span class="two-four-text">24小时在线客服</span></a>
+              <a :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
+                <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
+                <span class="two-four-text">24小时在线客服</span>
+              </a>
             </div>
           </div>
         </div>
@@ -231,9 +243,9 @@
 <script setup>
 import { userStore } from "../stores/index";
 import { Platform } from "quasar";
-import {ref} from "vue";
+import { ref } from "vue";
 
-const affiliateUrl= ref('https://lh1-affiliate.phoicynxeey.com/lh/');
+const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
 
 const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   const left = (screen.width - popupWinWidth) * 2;
@@ -306,7 +318,7 @@ const rows = [
     word-break: keep-all;
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
-    3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
+      3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
     font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
@@ -599,6 +611,54 @@ const rows = [
     font-weight: 600;
     line-height: normal;
     margin: 1rem 0;
+  }
+}
+
+.body--dark {
+  .affiliate-container {
+    .page-title {
+      -webkit-text-stroke-color: $font-3-dark;
+      text-shadow: 0px 7.8040986061px 7.8040986061px rgba(0, 0, 0, 0.47), 3.9020493031px 3.9020493031px 0px #9da6d4;
+    }
+    .branding {
+      .branding-wrapper {
+        .desc-container {
+          .title,
+          .desc {
+            color: $font-3-dark;
+            text-shadow: none;
+          }
+        }
+      }
+    }
+    .esport-commission {
+      .subtitle {
+        color: $font-3-dark;
+      }
+    }
+    .table-commission {
+      .q-table__container {
+        background: $background-dark-light;
+        thead {
+          > :first-child {
+            background: $background-dark-header;
+            th {
+              color: $font-3-dark;
+              &:not(:last-child) {
+                border-right: 1px solid $border-dark;
+              }
+            }
+          }
+        }
+        td:not(:last-child) {
+          border-color: $border-dark;
+        }
+      }
+
+      .sample-container {
+        @include content-block-dark;
+      }
+    }
   }
 }
 </style>

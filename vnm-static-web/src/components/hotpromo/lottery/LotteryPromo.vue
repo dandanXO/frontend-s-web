@@ -8,12 +8,12 @@
               <img src="../../../assets/images/promotion/hotpromo/lottery/lucky_number.png" />
             </div>
             <div class="right-container">
-              <div class="desc">{{ t('promo.please_fill_lucky_number_label', { amount: '1700VDNP' }) }}</div>
+              <div class="desc">{{ t("promo.please_fill_lucky_number_label", { amount: "1700VDNP" }) }}</div>
               <el-form>
                 <el-input v-model="luckyNumber" :placeholder="t('promo.please_fill_lucky_number')" />
               </el-form>
               <el-button class="common-btn" :loading="luckyNumberBtnLoading" @click="chooseLuckyNumber()">
-                {{ t('promo.submit') }}
+                {{ t("promo.submit") }}
               </el-button>
             </div>
           </div>
@@ -24,7 +24,7 @@
             <el-form :model="query" :layout="'inline'">
               <el-row class="firstrow">
                 <div class="date">
-                  <div>{{ $t('promo.fill_up_record_time') }}</div>
+                  <div>{{ $t("promo.fill_up_record_time") }}</div>
                   <el-date-picker
                     key="1"
                     :placeholder="$t('promo.selectDate')"
@@ -32,36 +32,23 @@
                     value-format="YYYY-MM-DD"
                     format="YYYY-MM-DD"
                   />
-
-
                 </div>
 
-
                 <div class="date">
-                  <div>{{ $t('common.record_win_status') }}</div>
-                  <el-select
-                    class="q-mt-md"
-                    style="width: 150px;"
-                    v-model="winStatusSelect"
-                  >
-                    <el-option
-                      v-for="p in winStatusOptions"
-                      :key="p.value"
-                      :value="p.value"
-                      :label="p.label"
-                    >
+                  <div>{{ $t("common.record_win_status") }}</div>
+                  <el-select class="q-mt-md" style="width: 150px" v-model="winStatusSelect">
+                    <el-option v-for="p in winStatusOptions" :key="p.value" :value="p.value" :label="p.label">
                       {{ p.label }}
                     </el-option>
                   </el-select>
                 </div>
-
 
                 <!--                <el-form-item :label="t('promo.view_myself_record')">-->
                 <!--                  <el-switch v-model="query.onlyMe" />-->
                 <!--                </el-form-item>-->
                 <div class="date">
                   <el-form-item>
-                    <div class="common-btn retrieve-btn" @click="retrieveList()">{{ t('promo.check') }}</div>
+                    <div class="common-btn retrieve-btn" @click="retrieveList()">{{ t("promo.check") }}</div>
                   </el-form-item>
                 </div>
               </el-row>
@@ -70,7 +57,7 @@
             <div class="table">
               <el-table :data="dataSource">
                 <template #empty>
-                  <p>{{ t('promo.no_data') }}</p>
+                  <p>{{ t("promo.no_data") }}</p>
                 </template>
                 <el-table-column prop="loginName" :label="t('promo.username')" />
                 <el-table-column prop="recordTime" :label="t('promo.fill_up_record_time')" />
@@ -80,7 +67,7 @@
           </div>
         </el-tab-pane>
 
-        <el-tab-pane :label="t('promo.list_of_winning_members')">
+        <!-- <el-tab-pane :label="t('promo.list_of_winning_members')">
           <div class="tab3">
             <el-form :model="winnersQuery" :layout="'inline'">
               <el-row class="firstrow">
@@ -112,7 +99,7 @@
               </el-table>
             </div>
           </div>
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
@@ -130,7 +117,7 @@ const { t } = useI18n();
 const store = userStore();
 
 const activeKey = ref("0");
-const props= defineProps(["promoCode"]);
+const props = defineProps(["promoCode"]);
 
 const winStatusSelect = ref();
 const winStatusOptions = [
@@ -148,7 +135,7 @@ function chooseLuckyNumber() {
   submitLuckyNumber(luckyNumber.value, props.promoCode)
     .then((res) => {
       if (res.code === 0) {
-        ElMessage.success(t('common.successful_sent'));
+        ElMessage.success(t("common.successful_sent"));
         luckyNumber.value = null;
       } else {
         ElMessage.error({
@@ -176,8 +163,8 @@ function retrieveList() {
   if (query.onlyMe) memberId = store.id;
   else memberId = null;
 
-  if(winStatusSelect.value) {
-    query.winStatus= winStatusSelect.value;
+  if (winStatusSelect.value) {
+    query.winStatus = winStatusSelect.value;
   }
 
   luckyNumberList(query, memberId)
@@ -303,6 +290,8 @@ function retrieveWinnerList() {
   .tabs {
     :deep(.el-tabs__nav) {
       width: 100%;
+      display: flex;
+      justify-content: center;
     }
 
     :deep(.el-tabs__item) {
@@ -387,7 +376,7 @@ function retrieveWinnerList() {
         justify-content: center;
         gap: 50px;
         padding: 10px 45px;
-        flex-wrap:nowrap;
+        flex-wrap: nowrap;
 
         :deep(.el-form-item) {
           margin-bottom: unset;

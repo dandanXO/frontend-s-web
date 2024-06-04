@@ -78,6 +78,8 @@ export default route(function (/* { store, ssrContext } */) {
 
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
+      sessionStorage.removeItem("REFERRAL_CODE")
+      sessionStorage.removeItem("SUMMON_CODE")
       if (to.query.reg) {
         next(`/login?register`);
       } else {
@@ -86,11 +88,13 @@ export default route(function (/* { store, ssrContext } */) {
     }
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
+      sessionStorage.removeItem("AFFILIATE_CODE")
       next(`/login?register`);
     }
 
     if (to.name === "summonCode") {
       sessionStorage.setItem("SUMMON_CODE", to.params.summonerCode);
+      sessionStorage.removeItem("AFFILIATE_CODE")
       next(`/login`);
     }
     // if (to.name === "RegisterPage") {

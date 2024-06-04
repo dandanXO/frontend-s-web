@@ -84,6 +84,16 @@
         <el-form-item :label="t('fields.content')" prop="content">
           <el-input type="textarea" :rows="10" disabled style="width: 350px" v-model="form.content" />
         </el-form-item>
+        <el-form-item v-if="form.photo" :label="t('fields.photo')" prop="photo">
+          <el-image
+            v-if="form.photo.endsWith('.png') || form.photo.endsWith('.jpeg') || form.photo.endsWith('.jpg')"
+            hide-on-click-modal
+            style="width: 30px; height: 30px; border: 1px solid grey"
+            :src="form.photo"
+            :preview-src-list="[form.photo]"
+            fit="cover"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.replyTitle')" prop="replyTitle">
           <el-input :disabled="uiControl.formDisabled" style="width: 350px" v-model="form.replyTitle" />
         </el-form-item>
@@ -234,6 +244,7 @@ const form = reactive({
   feedbackType: null,
   title: null,
   content: null,
+  photo: null,
   replyTitle: null,
   replyContent: null,
 })
@@ -292,6 +303,7 @@ async function showReadFeedback(feedback) {
 function submitReply() {
   feedbackForm.value.validate(async (valid) => {
     if (valid) {
+      form.replyTitle = form.replyTitle.substr(0, 100);
       await replyFeedback(form.id, form.siteId, form.replyTitle, form.replyContent);
       uiControl.formVisible = false;
       await loadFeedback();

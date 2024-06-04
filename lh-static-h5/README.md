@@ -3,6 +3,11 @@
 - Node Version >= 16.17.0
 - H5 + Android APP
 
+### You might need to install Quasar cli first:
+```bash
+npm install -g @quasar/cli
+```
+
 ## Install the dependencies
 ```bash
 npm install

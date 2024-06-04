@@ -26,17 +26,24 @@
 
         <div class="btn-group">
           <el-dropdown trigger="click">
-            <el-button type="primary" size="normal" style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;">
+            <el-button
+              type="primary"
+              size="normal"
+              style="width:100%; box-shadow: 0px 6px 12px 0px #3F8CFF43;"
+            >
               <span>{{ $t('fields.copy') }}</span>
               <el-icon class="el-icon--right"><arrow-down-bold /></el-icon>
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')">
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleLinkSelection('WEB', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
+                  {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.webLongLink)">
                   {{ $t('referralLink.affiliateLongLink') }}
@@ -45,7 +52,10 @@
             </template>
           </el-dropdown>
           <el-dropdown trigger="click">
-            <el-button size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff">
+            <el-button
+              size="normal"
+              style="margin-left: 0px; width: 100%; border-color: #409eff"
+            >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
                 <arrow-down-bold />
@@ -53,11 +63,14 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')">
+                <el-dropdown-item @click="handleQrSelection('WEB', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleQrSelection('WEB', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
+                  {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('WEB', 'NORMAL')">
                   {{ $t('referralLink.affiliateLongQRLink') }}
@@ -101,11 +114,14 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu style="width: inherit">
-                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXShortLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')">
+                <el-dropdown-item @click="handleLinkSelection('H5', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQShortLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleLinkSelection('H5', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
+                  {{ $t('referralLink.affiliateZALOShortLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="copy(page.h5LongLink)">
                   {{ $t('referralLink.affiliateLongLink') }}
@@ -115,7 +131,8 @@
           </el-dropdown>
           <el-dropdown trigger="click">
             <el-button
-              size="normal" style="margin-left: 0px; width: 100%; border-color: #409eff"
+              size="normal"
+              style="margin-left: 0px; width: 100%; border-color: #409eff"
             >
               <span style="color: #409eff;">{{ $t('fields.download') }}</span>
               <el-icon class="el-icon--right" style="color: #409eff;">
@@ -124,11 +141,14 @@
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item @click="handleQrSelection('H5', 'WX')">
+                <el-dropdown-item @click="handleQrSelection('H5', 'WX')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateWXQRLink') }}
                 </el-dropdown-item>
-                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')">
+                <el-dropdown-item @click="handleQrSelection('H5', 'QQ')" v-if="store.state.user.siteCode !== 'VNM'">
                   {{ $t('referralLink.affiliateQQQRLink') }}
+                </el-dropdown-item>
+                <el-dropdown-item @click="handleQrSelection('H5', 'ZALO')" v-if="store.state.user.siteCode === 'VNM'">
+                  {{ $t('referralLink.affiliateZALOQRLink') }}
                 </el-dropdown-item>
                 <el-dropdown-item @click="handleQrSelection('H5', 'NORMAL')">
                   {{ $t('referralLink.affiliateLongQRLink') }}
@@ -217,7 +237,7 @@
 </template>
 <script setup>
 import { useStore } from '@/store'
-import { nextTick, onMounted, reactive } from '@vue/runtime-core'
+import { nextTick, onMounted, reactive, computed } from '@vue/runtime-core'
 import { getAffiliateInfo } from '../../../../api/affiliate'
 import { getConfigs } from '../../../../api/system-config'
 import { getShortLink } from '../../../../api/affiliate-short-link'
@@ -350,6 +370,8 @@ function handleLinkSelection(linkType, urlType) {
     dialogContent = t('referralLink.copiedWXShortUrl')
   } else if (urlType === 'QQ') {
     dialogContent = t('referralLink.copiedQQShortUrl')
+  } else if (urlType === 'ZALO') {
+    dialogContent = t('referralLink.copiedZALOShortUrl')
   }
 
   request.longUrl = pageLongLink
@@ -419,6 +441,11 @@ function handleQrSelection(linkType, urlType) {
   qrDialogControl.dialogQRLink2 = qrImageLink2
 }
 
+const siteId = computed(() => {
+  return store.state.user.siteId
+})
+console.log(siteId)
+
 onMounted(() => {
   loadAffiliateInfo()
 })
@@ -434,7 +461,7 @@ onMounted(() => {
   gap: 20px;
 }
 .el-card {
-  background: #F4F9FD;
+  background: #f4f9fd;
   border: 0;
 }
 .card-container {
@@ -452,7 +479,7 @@ onMounted(() => {
   width: 270px;
 }
 
-.card-panel-description a{
+.card-panel-description a {
   width: auto;
   display: inline-block;
   white-space: normal;
@@ -505,5 +532,4 @@ onMounted(() => {
     margin-left: 0;
   }
 }
-
 </style>

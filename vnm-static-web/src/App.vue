@@ -1,9 +1,7 @@
 <template>
-  
   <el-config-provider :locale="languageVal === 'en' ? en : vi">
-    <router-view :class="{'roboto': languageVal === 'vi', 'poppins': languageVal === 'en' }" />
+    <router-view :class="{ sfpro: languageVal === 'vi', poppins: languageVal === 'en' }" />
   </el-config-provider>
-  
 </template>
 
 <script>
@@ -12,20 +10,20 @@ import { memberAccessLog } from "@/api/index/login";
 import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
-import { ElConfigProvider } from 'element-plus'
+import { ElConfigProvider } from "element-plus";
 
-import vi from 'element-plus/dist/locale/vi.mjs'
-import en from 'element-plus/dist/locale/en.mjs'
+import vi from "element-plus/dist/locale/vi.mjs";
+import en from "element-plus/dist/locale/en.mjs";
 
-import { i18nStore } from '@/store/language'
-import { storeToRefs } from 'pinia'
+import { i18nStore } from "@/store/language";
+import { storeToRefs } from "pinia";
 export default defineComponent({
   components: {
-    ElConfigProvider,
+    ElConfigProvider
   },
   setup() {
-    const i18nStoreLanguage = i18nStore()
-    const { languageVal } = storeToRefs(i18nStoreLanguage)
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const onlineStatTimeout = ref();
     const store = userStore();
     const onlineStatInterval = ref();
@@ -41,7 +39,7 @@ export default defineComponent({
 
         const obj = {
           identifier: store.visitorId,
-          affiliateCode: affiliateItem,
+          affiliateCode: affiliateItem
         };
         memberAccessLog(obj).then((res) => {
           if (res.code === 0) {
@@ -76,13 +74,13 @@ export default defineComponent({
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
+    });
     return {
       languageVal,
       vi,
       en
-    }
-  },
+    };
+  }
 });
 </script>
 <style lang="scss">

@@ -191,7 +191,7 @@
       </q-tab-panels>
     </div>
 
-    <div class="tnc-container">
+    <div class="tnc-container" v-if="tab === 'rules'">
       <div class="tnc-title">
         <img class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
         <span class="common-text">规则与条款</span>
@@ -214,6 +214,34 @@
             雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。
           </li>
           <li>雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tnc-container" v-else>
+      <div class="tnc-title">
+        <img class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
+        <span class="common-text">规则与条款</span>
+      </div>
+
+      <div class="tnc-note">
+        <ul class="common-text">
+          <li>
+            返水奖金根据北京时间每天00:00:00-23:59:59之间的有效投注额进行计算，所有游戏场馆投注额都是按照北京时间计算，返水彩金无需申请，系统会在次日下午14:00派发到您的主账户；
+          </li>
+          <li>雷火电竞夺宝、捕鱼和彩票 不参与返水优惠；</li>
+          <li>电竞/体育中的连串过关投注额返水将以注单结算时间为准。</li>
+          <li>
+            返水根据有效投注进行计算，在所有产品中，任何注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注以及在同一游戏中同时投注对等盘口，将不计算在有效投注额内，赢半和输半只计算一半流水，体育提前注单按照实际输赢金额的绝对值作为有效投注；
+          </li>
+          <li>
+            返水奖金可投注于任何平台游戏，奖金只需1倍投注额即可申请提款，最低返水1元，低于1元不予派发。
+          </li>
+          <li>
+            此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址, 电话号码, 支付方式(相同借记卡/信用卡/银行账户号码) IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。
+          </li>
+          <li>对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。</li>
+          <li>在某些未知因素超出可控范围的情况下，雷火保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。</li>
+          <li>雷火保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火将不承担任何责任。</li>
         </ul>
       </div>
     </div>
@@ -281,7 +309,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少200元可申请一次再存30%最高奖金1888元",
+    benefit: "存款最少200元可申请一次再存30%最高奖金888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
@@ -295,7 +323,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少500元可申请每月一次再存35% 最高奖金8888元",
+    benefit: "存款最少500元可申请每月一次再存35% 最高奖金2888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
@@ -309,7 +337,7 @@ const vipClaimItems = [
     depositPromoBtn: false
   },
   {
-    benefit: "存款最少500元可申请一次再存40%最高奖金18888元",
+    benefit: "存款最少500元可申请一次再存40%最高奖金5888元",
     turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
     availableBtn: false,
     claimedBtn: false,
@@ -991,6 +1019,72 @@ onActivated(() => {
 
     .vip-card-common-text {
       font-size: 1rem;
+    }
+  }
+}
+
+.body--dark {
+  .vip-container {
+    background: $background-dark;
+
+    .q-icon {
+      box-shadow: none;
+      background: $background-dark-header;
+      color: $font-3-dark;
+    }
+
+    .vip-card-container {
+      .vip-card-info {
+        .level {
+          .vip-level {
+            color: $dark;
+          }
+          .vip-card-common-text {
+            color: $font-1;
+          }
+        }
+        .amount {
+          .vip-card-common-text {
+            color: $font-1;
+          }
+        }
+      }
+    }
+
+    .level-promo-container {
+      @include content-block-dark-with-border;
+      .q-separator {
+        display: none;
+      }
+      .level-promo-header {
+        background: $background-dark-header;
+        .level-promo-title {
+          color: $font-3-dark;
+        }
+      }
+    }
+
+    .vip-detail-container {
+      .rules-content {
+        @include content-block-dark-with-border;
+        thead {
+          > :first-child {
+            background: $background-dark-header;
+          }
+          tr :not(:last-child) {
+            border-right-width: 1px;
+          }
+          th {
+            color: $font-3-dark;
+          }
+        }
+      }
+    }
+
+    .tnc-container {
+      .tnc-note {
+        @include content-block-dark;
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-bar-wrapper">
-      <div class="top-bar-inner">
+      <div class="top-bar-inner" :class="store.token ? 'login-bar-inner' : ''">
         <div class="timebox">{{ todayDate() }}</div>
         <div class="station-notice-container">
           <div class="station-notice-box">
@@ -89,6 +89,9 @@
           </a>
           <div class="top-deposit">
             <router-link to="/center/deposit" class="common-btn">充值</router-link>
+          </div>
+          <div class="top-deposit">
+            <router-link to="/center/withdraw" class="common-btn">提款</router-link>
           </div>
         </div>
       </div>
@@ -2253,7 +2256,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 16px;
 
   .balance-amt {
     display: flex;
@@ -2338,6 +2341,10 @@ body {
         justify-content: flex-start;
         align-items: center;
         gap: 5px;
+
+        &.login-bar-inner {
+          max-width: 1420px;
+        }
 
         .timebox {
           // flex: 1;
@@ -3140,10 +3147,11 @@ body {
   &.sports {
     .platform-box {
       padding: 0;
+      gap: 10px;
+      max-width: 410px;
 
       .imgbox {
         background-image: url(../../assets/home/header_sport_new_3.png);
-        // background-size: 320%;
 
         background-size: 410%;
         overflow: hidden;
@@ -3152,6 +3160,8 @@ body {
         background-position: center center;
 
         flex: 6;
+        width: 306px;
+        height: 270px;
       }
 
       .contents {
@@ -3161,13 +3171,21 @@ body {
   }
 
   &.poker {
+    .platform-title {
+      font-size: 32px;
+    }
+
+    .platform-box .contents .platform {
+      font-size: 20px;
+    }
+
     .platform-box {
       max-width: 500px;
 
       .imgbox {
         width: 225px;
         height: 250px;
-        background-image: url(../../assets/home/header_live.webp);
+        background-image: url(../../assets/home/header_live.png);
       }
     }
   }

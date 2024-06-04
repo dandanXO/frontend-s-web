@@ -86,6 +86,15 @@
                 <span v-formatter="{data: balance, type: 'money'}" />
               </el-form-item>
             </el-row>
+            <el-row class="info">
+              <el-icon color="#7D8792">
+                <Icon :icon="bookCoins20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item style="display: flex" :label="t('fields.commissionBalance')">
+                $
+                <span v-formatter="{data: commissionBalance, type: 'money'}" />
+              </el-form-item>
+            </el-row>
           </el-form>
         </el-card>
 
@@ -199,7 +208,18 @@
               <span class="role-span">{{ $t('fields.affiliateInfo') }}</span>
             </div>
           </template>
-          <el-form label-suffix=" : " label-width="150px" label-position="left">
+          <el-form label-suffix=" : " label-width="180px" label-position="left">
+            <el-row class="info" v-if="parseInt(store.state.user.siteId) === 10">
+              <el-icon color="#7D8792">
+                <Icon :icon="documentPercent20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                :label="t('fields.gamecommission')"
+              >
+                {{ (affInfo.revenueShare * 100).toFixed() }} %
+              </el-form-item>
+            </el-row>
             <el-row class="info">
               <el-icon color="#7D8792">
                 <Icon :icon="documentPercent20Filled" class="stats-icon" />
@@ -208,7 +228,7 @@
                 style="display: flex"
                 :label="t('fields.commission')"
               >
-                {{ affInfo.commission * 100 }} %
+                {{ (affInfo.commission * 100).toFixed() }} %
               </el-form-item>
             </el-row>
             <el-row class="info">
@@ -242,6 +262,30 @@
                 :label="t('fields.affiliateCode')"
               >
                 {{ affInfo.affiliateCode }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info">
+              <el-icon color="#7D8792">
+                <Icon :icon="barCodeScanner20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                label="Platform Commission"
+              >
+                {{ affInfo.revenueShare }}
+              </el-form-item>
+            </el-row>
+            <el-row class="info" v-if="affInfo.shareRatio !== null && affInfo.shareRatio.length > 0">
+              <el-icon color="#7D8792">
+                <Icon :icon="documentPercent20Filled" class="stats-icon" />
+              </el-icon>
+              <el-form-item
+                style="display: flex"
+                :label="t('fields.shareRatio')"
+              >
+                <div v-for="item in affInfo.shareRatio" :key="item.code">
+                  <el-row>{{ t('affiliateShareRatio.' + item.code) }} : {{ item.value }}</el-row>
+                </div>
               </el-form-item>
             </el-row>
           </el-form>
@@ -586,6 +630,7 @@ import {
   checkHasWithdrawPw,
   createSecurityQuestion,
   getAffiliateBalance,
+  getAffiliateCommissionBalance,
   getAffiliateInfo,
   getSecurityQuestions,
   getAuthenticator,
@@ -637,6 +682,7 @@ const uiControl = reactive({
   showPasswordDialog: false,
 })
 const balance = ref(0)
+const commissionBalance = ref(0)
 const hasWithdrawPw = ref(false)
 const hasSecurityQn = ref(false)
 const hasGoogleAuthenticator = ref(false)
@@ -656,6 +702,7 @@ const affInfo = reactive({
   downlineMember: 0,
   commission: 0,
   revenueShare: 0,
+  shareRatio: [],
 })
 
 const eForm = reactive({
@@ -874,11 +921,17 @@ async function loadAffiliateInfo() {
     affInfo[field] = aff[field]
   })
   await loadAffiliateBalance()
+  await loadAffiliateCommissionBalance()
 }
 
 async function loadAffiliateBalance() {
   const { data: bal } = await getAffiliateBalance(store.state.user.id)
   balance.value = bal
+}
+
+async function loadAffiliateCommissionBalance() {
+  const { data: bal } = await getAffiliateCommissionBalance(store.state.user.id)
+  commissionBalance.value = bal
 }
 
 async function editRealName() {

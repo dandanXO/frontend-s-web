@@ -29,7 +29,12 @@
         </q-input>
       </div>
 
-      <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
+      <q-card-actions
+        style="margin: 0 auto"
+        align="center"
+        class="text-teal"
+        :class="$q.dark.isActive ? '' : 'bg-white'"
+      >
         <q-btn style="width: 100%" class="common-md-btn" flat label="发送验证码" @click="onCaptchaSubmit()" />
       </q-card-actions>
     </q-card>
@@ -47,7 +52,7 @@
         <p>操作成功，请查看手机验证码！</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="text-teal" :class="$q.dark.isActive ? '' : 'bg-white'">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -65,7 +70,7 @@
         <p>{{ captchaFailedMessage || "验证码校验失败，请刷新" }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="text-teal" :class="$q.dark.isActive ? '' : 'bg-white'">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -240,6 +245,10 @@ const validateBankLength = (val) => {
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "OKPAY":
       return (val.length > 15 && val.length < 17) || "长度应为16个字符";
+    case "BLBPAY":
+      return (val.length > 31 && val.length < 33) || "长度应为32个字符";
+    case "JDPAY":
+      return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "SZPAY":
       return (val.length > 10 && val.length < 13) || "长度应为11个字符";
     default:
@@ -395,7 +404,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: "已添加电子钱包",
             icon: "check_circle_outline"
           });
           router.push("/account/withdraw");
@@ -513,6 +522,20 @@ onMounted(() => {
       font-size: 0.8rem;
       font-weight: 400;
       margin: 1rem 0;
+    }
+  }
+}
+
+.body--dark {
+  .bind-container {
+    .bind-wrapper {
+      .bind-item {
+        @include content-block-dark-with-border;
+        .q-field__control {
+          background: $background-dark;
+          box-shadow: none;
+        }
+      }
     }
   }
 }

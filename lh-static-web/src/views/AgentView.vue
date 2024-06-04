@@ -2,12 +2,15 @@
   <div class="wrapper">
     <div class="affiliate">
       <div class="affiliate-title">
-        <img src="../assets/images/affiliate/title.png" width="688">
+        <img :src="require(`../assets/images/affiliate/title${isDark ? '-dark' : ''}.png`)" width="688" />
       </div>
       <div class="affiliate-desc">
-        <img src="../assets/images/affiliate/professional-team.png" width="256">
-        <img src="../assets/images/affiliate/best-quality-service.png" width="256">
-        <img src="../assets/images/affiliate/official-partner.png" width="285">
+        <img :src="require(`../assets/images/affiliate/professional-team${isDark ? '-dark' : ''}.png`)" width="256" />
+        <img
+          :src="require(`../assets/images/affiliate/best-quality-service${isDark ? '-dark' : ''}.png`)"
+          width="256"
+        />
+        <img :src="require(`../assets/images/affiliate/official-partner${isDark ? '-dark' : ''}.png`)" width="285" />
       </div>
       <div class="buttons">
         <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')">加入我们</a>
@@ -17,7 +20,7 @@
         </a>
       </div>
       <div class="affiliate-join">
-        <img src="../assets/images/affiliate/join.png" width="696">
+        <img :src="require(`../assets/images/affiliate/join${isDark ? '-dark' : ''}.png`)" width="696" />
       </div>
 
       <div class="affiliate-program">
@@ -29,10 +32,14 @@
               <li>月充值金额≥200元为活跃玩家,当月需要至少五个活跃会员才能结算佣金。</li>
               <li>当月的佣金分佣发放时间为下个月的五号到十号会结算完毕.</li>
               <li>佣金有系统直接发放到代理账户，无需流水，绑定银行卡后即可申请提款。</li>
-              <li>代理佣金计算方式：<br>
+              <li>
+                代理佣金计算方式：
+                <br />
                 <span class="highlight">[（投注输赢额-优惠100%）-（存款+提款）*1.6%-平台费*8%]*佣金比例</span>
               </li>
-              <li>代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。</li>
+              <li>
+                代理推广每月至少需要新注册活跃会员达到3名，如无达到将视为无推广雷火平台，佣金减半，如果三个月累计新注册活跃会员未达到十位将会停用代理账户等待代理重新联系网站开启。
+              </li>
             </ul>
           </div>
           <div class="affiliate-sub">
@@ -77,7 +84,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠 </div>
+            <div class="agent-stress-tip">备注：盈利=线下会员在所有场馆的总输赢减去会员申请的所有优惠</div>
           </div>
         </div>
         <div class="affiliate-subgroup agent-content-item">
@@ -129,70 +136,68 @@
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
                     <div class="txt-left">代理佣金</div>
-                  <div class="txt-right">313.6</div>
+                    <div class="txt-right">313.6</div>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="agent-demo-bg">
-              <div class="agent-demo-example-text">例子2：存款130000元 提款10000元 优惠申请2000元 余额500</div>
-              <div class="agent-demo-btm">
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">平台输赢</div>
-                    <div class="txt-right">122000</div>
+              <div class="agent-demo-bg">
+                <div class="agent-demo-example-text">例子2：存款130000元 提款10000元 优惠申请2000元 余额500</div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">平台输赢</div>
+                      <div class="txt-right">122000</div>
+                    </div>
+                  </div>
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">扣除申请优惠</div>
+                      <div class="txt-right">-2000</div>
+                    </div>
+                  </div>
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">扣除存提手续费1.6%</div>
+                      <div class="txt-right">-2240</div>
+                    </div>
+                  </div>
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">平台服务费</div>
+                      <div class="txt-right">9760</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="agent-demo-btm">
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">盈利</div>
+                      <div class="txt-right">108000</div>
+                    </div>
+                  </div>
+                  <div class="agent-demo-table">
+                    <div class="agent-demo-table-tr">
+                      <div class="txt-left">乘以佣金比例</div>
+                      <div class="txt-right">*40%</div>
+                    </div>
                   </div>
                 </div>
                 <div class="agent-demo-table">
                   <div class="agent-demo-table-tr">
-                    <div class="txt-left">扣除申请优惠</div>
-                    <div class="txt-right">-2000</div>
+                    <div class="txt-left">代理佣金</div>
+                    <div class="txt-right">43200</div>
                   </div>
-                </div>
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">扣除存提手续费1.6%</div>
-                    <div class="txt-right">-2240</div>
-                  </div>
-                </div>
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">平台服务费</div>
-                    <div class="txt-right">9760</div>
-                  </div>
-                </div>
-              </div>
-              <div class="agent-demo-btm">
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">盈利</div>
-                    <div class="txt-right">108000</div>
-                  </div>
-                </div>
-                <div class="agent-demo-table">
-                  <div class="agent-demo-table-tr">
-                    <div class="txt-left">乘以佣金比例</div>
-                    <div class="txt-right">*40%</div>
-                  </div>
-                </div>
-              </div>
-              <div class="agent-demo-table">
-                <div class="agent-demo-table-tr">
-                  <div class="txt-left">代理佣金</div>
-                  <div class="txt-right">43200</div>
                 </div>
               </div>
             </div>
+            <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
           </div>
-          <div class="agent-stress-tip agent-margintop-normal">备注：存提手续费=存款加上提款总额的1.6%</div>
+        </div>
+        <div>
+          <a :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')" class="agent-reg-btn">立即申请代理</a>
         </div>
       </div>
-      <div>
-        <a :href="affiliateUrl + 'login?agent=' +
-          (affCode ? affCode : '')
-          " class="agent-reg-btn">立即申请代理</a>
-      </div>
-    </div>
     </div>
   </div>
 </template>
@@ -201,10 +206,13 @@ import { defineComponent, ref } from "vue";
 // import { useI18n } from "vue-i18n";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
+import { useDark } from "@vueuse/core";
 
 export default defineComponent({
   setup() {
-    const affiliateUrl = ref('https://lh1-affiliate.phoicynxeey.com/lh/');
+    const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
+
+    const isDark = useDark();
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
@@ -213,14 +221,7 @@ export default defineComponent({
       window.open(
         pageURL,
         pageTitle,
-        "resizable=yes, width=" +
-        popupWinWidth +
-        ", height=" +
-        popupWinHeight +
-        ", top=" +
-        top +
-        ", left=" +
-        left,
+        "resizable=yes, width=" + popupWinWidth + ", height=" + popupWinHeight + ", top=" + top + ", left=" + left
       );
     };
     const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
@@ -229,38 +230,38 @@ export default defineComponent({
       {
         title: "Total Member Nett Winloss (MYR)",
         dataIndex: "winLoss",
-        key: "winLoss",
+        key: "winLoss"
       },
       {
         title: "Total Active Player",
         dataIndex: "activePlayer",
-        key: "activePlayer",
+        key: "activePlayer"
       },
       {
         title: "Commission Rate",
         dataIndex: "commsRate",
-        key: "commsRate",
-      },
+        key: "commsRate"
+      }
     ];
     const data = [
       {
         key: "1",
         winLoss: "5 and above",
         activePlayer: "< 5",
-        commsRate: "12%",
+        commsRate: "12%"
       },
       {
         key: "2",
         winLoss: "5-66,825",
         activePlayer: "≥ 5",
-        commsRate: "28%",
+        commsRate: "28%"
       },
       {
         key: "3",
         winLoss: "66,826 and above",
         activePlayer: "≥ 5",
-        commsRate: "40%",
-      },
+        commsRate: "40%"
+      }
     ];
     const affCode = sessionStorage.getItem("AFFILIATE_CODE");
     return {
@@ -270,16 +271,17 @@ export default defineComponent({
       regDevice,
       store,
       openWindow,
-      affiliateUrl
+      affiliateUrl,
+      isDark
     };
-  },
+  }
 });
 </script>
 
 <style scoped lang="scss">
 .wrapper {
   font-size: 15px;
-  background-color: #F3F7FD;
+  background-color: #f3f7fd;
 
   .affiliate {
     background: url("../assets/images/affiliate/agent_index_top_bg_vg.png") no-repeat center top;
@@ -315,15 +317,15 @@ export default defineComponent({
         cursor: pointer;
         width: 100%;
         padding: 0px 50px;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
+        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
 
         &.outline {
-          background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-          box-shadow: 0px 2px 5px 0px #BBDCFF inset;
-          box-shadow: 0px -1px 4px 0px #A2BFF4 inset;
-          color: #424F72;
+          background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+          box-shadow: 0px 2px 5px 0px #bbdcff inset;
+          box-shadow: 0px -1px 4px 0px #a2bff4 inset;
+          color: #424f72;
         }
       }
     }
@@ -379,15 +381,15 @@ export default defineComponent({
           background: #fff;
           border-radius: 15px;
           padding: 30px;
-          box-shadow: 0px 0px 10px 0px #0000001A;
-          color: #424F72;
+          box-shadow: 0px 0px 10px 0px #0000001a;
+          color: #424f72;
           .affiliate-subtitle {
             font-size: 20px;
             font-weight: 700;
             color: #2e84f5;
           }
           .affiliate-terms {
-            color: #424F72;
+            color: #424f72;
             font-size: 18px;
             font-weight: 700;
           }
@@ -421,13 +423,13 @@ export default defineComponent({
         height: 60px;
       }
       .agent-content-item table th {
-        color: #424F72;
+        color: #424f72;
         height: 56px;
         font-weight: 700;
-        background-color: #E7F3FF;
+        background-color: #e7f3ff;
       }
       .agent-stress-tip {
-        color: #A7A5A5;
+        color: #a7a5a5;
       }
       .agent-demo {
         display: grid;
@@ -439,7 +441,7 @@ export default defineComponent({
         padding: 10px 0px;
       }
       .agent-demo-example-text {
-        color: #424F72;
+        color: #424f72;
         font-size: 18px;
         font-weight: 700;
       }
@@ -449,8 +451,7 @@ export default defineComponent({
       .agent-demo-table {
         display: table;
         width: 100%;
-        background: linear-gradient(0deg, #F3F3F3, #F3F3F3),
-          linear-gradient(0deg, #FFFFFF, #FFFFFF);
+        background: linear-gradient(0deg, #f3f3f3, #f3f3f3), linear-gradient(0deg, #ffffff, #ffffff);
         margin: 20px auto;
       }
       .agent-demo-table-tr {
@@ -462,7 +463,7 @@ export default defineComponent({
         padding: 10px 20px;
         font-weight: 500;
         font-size: 14px;
-        color: #424F72;
+        color: #424f72;
       }
       .txt-left {
         text-align: left !important;
@@ -480,10 +481,10 @@ export default defineComponent({
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
-        box-shadow: 0px -1px 4px 0px #5894FF inset;
+        box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+        box-shadow: 0px -1px 4px 0px #5894ff inset;
       }
       .agent-contact-bg {
         background-color: #f8f8f8;
@@ -527,6 +528,53 @@ export default defineComponent({
       }
       .agent-contact-ewm img {
         width: 100%;
+      }
+    }
+  }
+}
+
+.dark {
+  .wrapper {
+    .affiliate {
+      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top;
+      background-position: top center;
+      background-size: 100%;
+      background-color: $background-dark;
+
+      .affiliate-program {
+        .affiliate-subgroup {
+          .affiliate-sub {
+            @include content-block-dark;
+            color: $font-3-dark;
+
+            .affiliate-terms {
+              color: inherit;
+            }
+          }
+        }
+
+        .agent-demo-example-text {
+          color: $font-3-dark;
+        }
+
+        .agent-content-item {
+          table {
+            th {
+              background-color: rgba($color-white, 20%);
+              color: $font-3-dark;
+            }
+          }
+        }
+
+        .agent-demo-table {
+          background: $background-content-block-lighter-dark;
+
+          .agent-demo-table-tr {
+            div {
+              color: $font-3-dark;
+            }
+          }
+        }
       }
     }
   }

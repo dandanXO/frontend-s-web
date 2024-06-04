@@ -42,12 +42,24 @@
           >
             <a @click="showPromoDetails(promo)">
               <div class="promo-img-wrapper">
-                
+
                 <div class="promo-label">
-                  <div class="label-type" v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
+                  <div class="label-type"
+                       :class="{
+                          labelhot: promo.labelType === 1,
+                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                          labellimit: promo.labelType === 6,
+                          labelnew: promo.labelType === 0,
+                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
+                       }"
+                       v-if="promo.labelType !== 2">{{ getPromoLabel(promo.labelType) }}</div>
                   <div class="label-date">{{ JSON.parse(promo.param).date }}</div>
                 </div>
-                <div class="promo-details">
+                <div class="promo-details"
+                  :class="{
+                    nopaddingtop : promo.labelType === 2
+                  }"
+                >
                   <!-- <div class="front-date">{{ JSON.parse(promo.param).date }}</div> -->
                   <div class="front-title">{{ promo.title }}</div>
                   <div class="front-sub">{{ JSON.parse(promo.param).sub }}</div>
@@ -69,7 +81,7 @@
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper">
         <div class="banner-container"
-          v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
+             v-if="selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl"
         >
           <div class="promo-bg isDesktop">
             <img
@@ -88,7 +100,7 @@
             "
           ></div>
         </div>
-        
+
         <div
           class="inner"
           :style="
@@ -97,11 +109,11 @@
               : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
           "
         >
-<!--          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>-->
+          <!--          <h2 class="text-center" style="font-family: 'Roboto'; color: #0060d3; font-weight: 900; font-size: 30px;">{{selectedPromo.title}}</h2>-->
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
             <HotPromotion :list="selectedPromo" />
           </div>
-          
+
           <div
             class="promo-view-container"
             :class="{
@@ -134,6 +146,7 @@ import { storeToRefs } from 'pinia'
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
 import HotPromotion from '@/components/HotPromotion'
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -142,7 +155,7 @@ export default defineComponent({
   setup() {
     const { t } = useI18n();
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
@@ -178,7 +191,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("PROMO").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         } else {
           ElMessage.error(res.message)
         }
@@ -199,20 +212,20 @@ export default defineComponent({
       //     })
       //     return
       // } else {
-        if (promo.redirectUrl.includes("page-vip")) {
-          router.push("/vip");
-        } else if (promo.redirectUrl.includes("lh1-invite")) {
-          router.push("/privilege/invite");
-        } else {
-          router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-          // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-          //   router.push({name: 'promotion', query: {name: route.query.name}})
-          // } else {
-          //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
-          // }
-          // isPromoDetail.value = true;
-          selectedPromo.value = promo
-        }
+      if (promo.redirectUrl.includes("page-vip")) {
+        router.push("/vip");
+      } else if (promo.redirectUrl.includes("lh1-invite")) {
+        router.push("/privilege/invite");
+      } else {
+        router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+        // if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3' || route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+        //   router.push({name: 'promotion', query: {name: route.query.name}})
+        // } else {
+        //   router.push({name: 'promotion', query: {name: promo.redirectUrl}})
+        // }
+        // isPromoDetail.value = true;
+        selectedPromo.value = promo
+      }
       // }
     }
 
@@ -249,19 +262,19 @@ export default defineComponent({
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
-              if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
-                if (element.redirectUrl === 'lh1-invite') {
-                  showPromoDetails(element)
-                }
-              }
-              if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
-                if (element.redirectUrl === 'lh1-football-fight') {
-                  showPromoDetails(element)
-                }
-              }
-              if (element.redirectUrl === route.query.name) {
+            if (route.query.name === 'lh1-invite-2' || route.query.name === 'lh1-invite-3') {
+              if (element.redirectUrl === 'lh1-invite') {
                 showPromoDetails(element)
               }
+            }
+            if (route.query.name === 'lh1-football-fight-2' || route.query.name === 'lh1-football-fight-3') {
+              if (element.redirectUrl === 'lh1-football-fight') {
+                showPromoDetails(element)
+              }
+            }
+            if (element.redirectUrl === route.query.name) {
+              showPromoDetails(element)
+            }
             // }
           });
         }
@@ -270,23 +283,23 @@ export default defineComponent({
     }
 
     const getPromoLabel = (labelType) => {
-  switch (labelType) {
-    case 0:
-      return "Mới nhất";
-    case 1:
-      return "Hot";
-    case 3:
-      return "Đề xuất";
-    case 4:
-      return "Hàng ngày";
-    case 5:
-      return "Thành viên mới";
-    case 6:
-      return "TIME Thời gian giới hạn";
-    default:
-      return "";
-  }
-};
+      switch (labelType) {
+        case 0:
+          return "Mới nhất";
+        case 1:
+          return "Hot";
+        case 3:
+          return "Đề xuất";
+        case 4:
+          return "Hàng ngày";
+        case 5:
+          return "Thành viên mới";
+        case 6:
+          return "TIME Thời gian giới hạn";
+        default:
+          return "";
+      }
+    };
     onMounted(() => {
       // loadBanner();
       loadAll();
@@ -390,7 +403,7 @@ export default defineComponent({
       td {
         // background-color: #202228;
         border: 1px solid #dcdce8;
-        color: #7a8eb9;
+        color: $font-5;
       }
       tr {
         &:last-child {
@@ -481,17 +494,17 @@ export default defineComponent({
           .promo-title {
             color: #4C88F8;
             font-size: 20px;
-              color: #4C88F8;
-              font-size: 20px;
-              display: flex;
-              gap: 10px;
+            color: #4C88F8;
+            font-size: 20px;
+            display: flex;
+            gap: 10px;
 
             .linebefore {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    flex-direction: column;
-    align-items: flex-end;
+              display: flex;
+              justify-content: center;
+              gap: 5px;
+              flex-direction: column;
+              align-items: flex-end;
               &:before {
                 content: '';
                 width: 13px;
@@ -635,20 +648,64 @@ export default defineComponent({
               align-items: center;
               height: 42px;
               .label-type {
-                background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
+                //background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
                 padding: 10px 30px 10px 50px;
                 color: #ffffff;
                 position: relative;
                 &:after {
                   content: "";
-                  border-left: 0 solid transparent;
-                  border-right: 20px solid transparent;
-                  border-top: 42px solid #a89eed;
                   display: inline-block;
                   position: absolute;
                   left: 100%;
                   top: 0;
                 }
+
+                &.labelhot{
+                  background: linear-gradient(89.92deg, #D7353F 0.06%, #FEA4A4 106.89%, #A4CEFF 106.9%);
+
+                  &:after {
+                    border-left: 0 solid transparent;
+                    border-right: 20px solid transparent;
+                    border-top: 42px solid  #FEA4A4;
+                  }
+                }
+
+                &.labellimit{
+                  background: linear-gradient(89.92deg, #454BC2 0.06%, #B1A5F0 106.9%);
+                  &:after {
+                    border-left: 0 solid transparent;
+                    border-right: 20px solid transparent;
+                    border-top: 42px solid #B1A5F0;
+                  }
+                }
+
+                &.labelnew{
+                  background: linear-gradient(89.92deg, #EAA318 0.06%, #F0DBA5 106.9%);
+                  &:after {
+                    border-left: 0 solid transparent;
+                    border-right: 20px solid transparent;
+                    border-top: 42px solid #F0DBA5;
+                  }
+                }
+
+                &.labelrecommend{
+                  background: linear-gradient(89.92deg, #6DB73F 0.06%, #A5F0B6 106.9%);
+                  &:after {
+                    border-left: 0 solid transparent;
+                    border-right: 20px solid transparent;
+                    border-top: 42px solid #A5F0B6;
+                  }
+                }
+
+                &.labelother{
+                  background: linear-gradient(89.92deg, #4DA9FF 0.06%, #A4CEFF 106.9%);
+                  &:after {
+                    border-left: 0 solid transparent;
+                    border-right: 20px solid transparent;
+                    border-top: 42px solid #A4CEFF;
+                  }
+                }
+
               }
 
               .label-date {
@@ -685,6 +742,10 @@ export default defineComponent({
               flex-direction: column;
               justify-content: flex-start;
               align-items: flex-start;
+
+              &.nopaddingtop{
+                padding-top: 10px;
+              }
               .front-date {
                 color: #606479;
                 font-size: 18px;
@@ -801,11 +862,11 @@ export default defineComponent({
         }
         .promo-view-container {
           margin: 0 auto;
-          max-width: $maxwidth;
-          width: 95%;
+          max-width: 1050px;
+          width: 100%;
           text-align: left;
-          padding: 20px;
-          color: #7a8eb9;
+          padding: 10px 0;
+          color: $font-5;
           font-size: 20px;
           ol {
             li {

@@ -80,13 +80,13 @@
             <el-col :span="24">
               <span v-if="selectedWithdrawalMethod && selectedWithdrawalMethod.withdrawMin">
                 {{
-                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin} ${store.currency.label} - ${
-                    selectedWithdrawalMethod.withdrawMax
+                  `${$t("withdraw.singleLimit")}: ${selectedWithdrawalMethod.withdrawMin.toLocaleString()} ${store.currency.label} - ${
+                    selectedWithdrawalMethod.withdrawMax.toLocaleString()
                   } ${store.currency.label}`
                 }}
                 <br />
                 {{
-                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount} ${
+                  `${$t("withdraw.withdrawalToday")}: ${selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString()} ${
                     store.currency.label
                   }, ${$t("withdraw.remaining")}: ${selectedWithdrawalMethod.withdrawMaxTimes} ${$t("withdraw.times")}`
                 }}
@@ -108,7 +108,7 @@
         </el-form-item>
         <div class="values">
           <span @click="withdrawInfo.amount = amt.toString()" class="amt" v-for="amt in amounts">
-            {{ amt }}
+            {{ amt.toLocaleString() }}
           </span>
         </div>
         <el-row>
@@ -230,6 +230,7 @@ import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -241,7 +242,7 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/withdraw/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/withdraw/";
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -300,12 +301,9 @@ export default defineComponent({
                 type: "success"
               });
 
-              // FB tracking :: login-withdrawal
-              if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
-                  fbq("track", "login-withdrawal");
+              // FB tracking :: apply-withdrawal
+              if (store.isAffiliateA) {
+                  fbq("track", "apply-withdrawal");
                 }
 
               getWithdrawalMethods();
@@ -444,9 +442,9 @@ export default defineComponent({
         if (v < selectedWithdrawalMethod.value.withdrawMin || v > selectedWithdrawalMethod.value.withdrawMax) {
           return Promise.reject(
             t('withdraw.depositAmountRange') + " " +
-            selectedWithdrawalMethod.value.withdrawMin +
+            selectedWithdrawalMethod.value.withdrawMin.toLocaleString() +
             " - " +
-            selectedWithdrawalMethod.value.withdrawMax
+            selectedWithdrawalMethod.value.withdrawMax.toLocaleString()
           );
         } else {
           return Promise.resolve();

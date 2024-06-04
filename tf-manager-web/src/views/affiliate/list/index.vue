@@ -139,6 +139,7 @@
               style="width: 350px;"
               default-first-option
               @focus="loadSites"
+              @change="displayShareRatio"
             >
               <el-option
                 v-for="item in siteList.list"
@@ -181,6 +182,7 @@
               :placeholder="t('fields.commissionModel')"
               class="filter-item"
               style="width: 350px"
+              @change="displayShareRatio"
             >
               <el-option
                 v-for="item in uiControl.commissionModel"
@@ -246,7 +248,7 @@
               maxlength="50"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.commission')" prop="commission">
+          <el-form-item :label="t('fields.commission')" prop="commission" v-loading="uiControl.shareRatioSettingLoading">
             <el-input
               v-model="form.commission"
               style="width: 350px;"
@@ -254,13 +256,24 @@
               @keypress="restrictCommissionDecimalInput($event)"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
-            <el-input
-              v-model="form.revenueShare"
-              style="width: 350px;"
-              :maxlength="uiControl.reveunueMax"
-              @keypress="restrictRevenueDecimalInput($event)"
-            />
+          <div v-if="!uiControl.shareRatioSettingVisible">
+            <el-form-item :label="t('fields.revenueShare')" prop="revenueShare">
+              <el-input
+                v-model="form.revenueShare"
+                style="width: 350px;"
+                :maxlength="uiControl.reveunueMax"
+                @keypress="restrictRevenueDecimalInput($event)"
+              />
+            </el-form-item>
+          </div>
+          <el-form-item v-else :label="t('fields.shareRatio')" prop="shareRatio">
+            <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+              <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+              <el-input
+                v-model="item.value"
+                style=" width:100px; margin-left: auto; order: 2"
+              />
+            </div>
           </el-form-item>
           <el-form-item :label="t('fields.belongType')" prop="belongType">
             <el-select
@@ -279,7 +292,7 @@
             </el-select>
           </el-form-item>
           <div class="dialog-footer">
-            <el-button @click="uiControl.dialogVisible = false">
+            <el-button @click="closeDialog">
               {{ t('fields.cancel') }}
             </el-button>
             <el-button type="primary" @click="addAffiliate">
@@ -585,7 +598,7 @@
               icon="el-icon-check"
               size="mini"
               type="success"
-              v-if="scope.row.affiliateStatus === 'APPLY'"
+              v-show="scope.row.affiliateStatus === 'APPLY'"
               v-permission="['sys:affiliate:update:approval']"
               @click="approve(scope.row)"
             >
@@ -595,7 +608,7 @@
               icon="el-icon-close"
               size="mini"
               type="danger"
-              v-if="scope.row.affiliateStatus === 'NORMAL'"
+              v-show="scope.row.affiliateStatus === 'NORMAL'"
               v-permission="['sys:affiliate:update:approval']"
               @click="showDialog('DISABLE', scope.row)"
             >
@@ -640,6 +653,7 @@ import {
 import { updateRisk } from "../../../api/member";
 import { getSiteListSimple } from '../../../api/site'
 import { selectList } from "../../../api/risk-level";
+import { getConfigListByGroup } from "../../../api/config";
 import { hasPermission } from '../../../utils/util'
 import { notEmpty } from '../../../utils/common'
 import { useStore } from '../../../store'
@@ -662,7 +676,9 @@ const siteList = reactive({
 const riskList = reactive({
   list: []
 });
-
+const shareRatioList = reactive({
+  list: [],
+})
 const selectedRiskColor = reactive({
   levelColor: null,
 });
@@ -710,6 +726,7 @@ const uiControl = reactive({
   commissionModel: [
     { key: 1, displayName: 'NORMAL', value: 'NORMAL' },
     { key: 2, displayName: 'SIMPLE', value: 'SIMPLE' },
+    { key: 3, displayName: 'DETAILS', value: 'DETAILS' },
   ],
   timeType: [
     { key: 1, displayName: 'MONTHLY', value: 'MONTHLY' },
@@ -730,6 +747,8 @@ const uiControl = reactive({
   messageVisible: false,
   commissionMax: 2,
   revenueMax: 2,
+  shareRatioSettingVisible: false,
+  shareRatioSettingLoading: false,
 })
 
 const page = reactive({
@@ -763,6 +782,7 @@ const form = reactive({
   commissionModel: null,
   timeType: null,
   belongType: null,
+  shareRatio: null,
 })
 
 const freezeForm = reactive({
@@ -794,6 +814,17 @@ const validateReEnterPassword = (rule, value, callback) => {
 const validateCommission = (rule, value, callback) => {
   if (value !== '' && (form.commission < 0 || form.commission > 1)) {
     callback(new Error(t('message.validateCommissionFormat')))
+  }
+  callback()
+}
+
+const validateShareRatio = (rule, value, callback) => {
+  if (form.commissionModel === 'DETAILS') {
+    shareRatioList.list.forEach((item) => {
+      if (item.value === '' || item.value < 0 || item.value > 1) {
+        callback(new Error(t('message.validateShareRatioFormat')))
+      }
+    })
   }
   callback()
 }
@@ -875,6 +906,7 @@ const formRules = reactive({
   revenueShare: [{ validator: validateRevenue, trigger: 'blur' }],
   commissionModel: [required(t('message.validateCommissionModelRequired'))],
   timeType: [required(t('message.validateTimeTypeRequired'))],
+  shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
 })
 
 const freezeFormRules = reactive({
@@ -980,12 +1012,21 @@ function showDialog(type, affiliate) {
   uiControl.dialogVisible = true
 }
 
+function closeDialog() {
+  uiControl.shareRatioSettingVisible = false
+  uiControl.dialogVisible = false
+}
+
 function addAffiliate() {
   memberForm.value.validate(async valid => {
     if (valid) {
+      if (form.commissionModel === 'DETAILS') {
+        // join share ratio by comma
+        form.shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+      }
       await registerAffiliate(form)
       uiControl.dialogVisible = false
-      ElMessage({ message: t('message.registerSuccess'), type: 'success' })
+      ElMessage({ message: form.siteId === 5 || form.siteId === 9 ? t('message.registerSuccessInd') : t('message.registerSuccess'), type: 'success' })
       if (page.records.length !== 0) {
         await loadAffiliates()
       }
@@ -1025,7 +1066,8 @@ const populateRiskColor = () => {
 async function approve(affiliate) {
   await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
   await loadAffiliates()
-  ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+  ElMessage({ message: t('message.affiliateApproved'), type: 'success' });
+  page.loading = false;
 }
 
 function freeze() {
@@ -1037,6 +1079,19 @@ function freeze() {
       ElMessage({ message: t('message.affiliateDisabled'), type: 'success' })
     }
   })
+}
+
+function displayShareRatio() {
+  if (form.commissionModel === 'DETAILS') {
+    uiControl.shareRatioSettingVisible = true
+    uiControl.shareRatioSettingLoading = true
+    getConfigListByGroup('AGENT_SHARE_RATIO', form.siteId).then(res => {
+      shareRatioList.list = res.data;
+    });
+    uiControl.shareRatioSettingLoading = false
+  } else {
+    uiControl.shareRatioSettingVisible = false
+  }
 }
 
 onMounted(async () => {

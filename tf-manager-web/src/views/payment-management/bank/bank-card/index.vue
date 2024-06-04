@@ -20,6 +20,7 @@
           :placeholder="t('fields.site')"
           class="filter-item"
           style="width: 120px; margin-left: 5px"
+          @change="siteChange()"
         >
           <el-option
             v-for="item in list.site"
@@ -104,12 +105,12 @@
             size="small"
             :placeholder="t('fields.bankName')"
             class="filter-item"
-            style="width: 490px; margin-bottom: 10px"
+            style="width: 490px"
             @change="bankChange"
             :disabled="uiControl.changingCurrency || uiControl.changingSite"
           >
             <el-option
-              v-for="item in list.bankInfo"
+              v-for="item in list.bankInfoBySite"
               :key="item.id"
               :label="item.name"
               :value="item.id"
@@ -124,60 +125,34 @@
               size="small"
               :placeholder="t('fields.pleaseChoose')"
               class="filter-item"
-              style="width: 200px; margin-bottom: 16px"
+              style="width: 200px"
               @change="currencyChange"
               :disabled="uiControl.changingBank || uiControl.changingSite"
             >
               <el-option
-                v-for="item in list.currencies"
+                v-for="item in list.currenciesBySite"
                 :key="item.id"
                 :label="item.currencyCode"
                 :value="item.id"
               />
             </el-select>
           </el-form-item>
-          <el-form-item :label="t('fields.site')" prop="siteId" label-width="80px">
-            <el-select
-              clearable
-              v-model="form.siteId"
-              size="small"
-              :placeholder="t('fields.pleaseChoose')"
-              class="filter-item"
-              style="width: 200px; margin-bottom: 10px"
-              @change="siteChange"
-              :disabled="uiControl.changingCurrency || uiControl.changingBank"
-            >
-              <el-option
-                v-for="item in list.site"
-                :key="item.id"
-                :label="item.siteName"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
         </el-row>
         <el-form-item :label="t('fields.financialLevel')" prop="financialLevel">
-          <el-select
-            multiple
-            filterable
-            allow-create
-            default-first-option
-            :reserve-keyword="false"
+          <el-checkbox
+            v-model="checkboxes.financialLevel.checkAll"
+            :indeterminate="checkboxes.financialLevel.isIndeterminate"
+            @change="handleFinancialLevelCheckAllChange"
+          >{{ t('fields.checkall') }}</el-checkbox>
+          <el-checkbox-group
             v-model="selected.financialLevel"
-            size="small"
-            :placeholder="t('fields.financialLevel')"
-            class="filter-item"
-            style="width: 490px; margin-bottom: 10px"
             @change="handleChangeFinancialGroup()"
-            @focus="loadFinancialLevel"
+            style="width: 500px"
           >
-            <el-option
-              v-for="item in list.financialLevel"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            />
-          </el-select>
+            <el-checkbox v-for="v in list.financialLevel" :label="v.id" :key="v.id">
+              {{ v.name }}
+            </el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item :label="t('fields.cardNumber')" prop="cardNumber">
           <el-input v-model="form.cardNumber" style="width: 490px" />
@@ -232,21 +207,6 @@
               :value="item.code"
             />
           </el-select>
-          <!-- <el-select
-            v-model="form.payType"
-            :placeholder="t('fields.payType')"
-            style="width: 350px"
-            filterable
-            default-first-option
-            @focus="loadPayTypes"
-          >
-            <el-option
-              v-for="item in payTypeList.list"
-              :key="item.id"
-              :label="item.code"
-              :value="item.code"
-            />
-          </el-select> -->
         </el-form-item>
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input
@@ -406,8 +366,10 @@ const page = reactive({
 
 const list = reactive({
   currencies: [],
+  currenciesBySite: [],
   site: [],
   bankInfo: [],
+  bankInfoBySite: [],
   financialLevel: [],
 })
 
@@ -416,6 +378,40 @@ const payTypeList = reactive({
 })
 
 let chooseCard = []
+
+const checkboxes = reactive({
+  financialLevel: {
+    checkAll: ref(false),
+    isIndeterminate: ref(false),
+  }
+})
+
+const handleFinancialLevelCheckAllChange = (val) => {
+  selected.financialLevel = []
+  if (val) {
+    list.financialLevel.forEach(financiallevel => {
+      selected.financialLevel.push(financiallevel.id)
+    })
+  }
+  handleChangeFinancialGroup()
+}
+
+function handleCategoryChange(selectedList, checkboxData, dataList) {
+  const selectedCount = selectedList.filter(el => dataList.includes(el)).length
+  const listCount = dataList.length
+  checkboxData.checkAll = selectedCount === listCount
+  checkboxData.isIndeterminate = selectedCount > 0 && selectedCount < listCount
+}
+
+function handleIndividualCheckChange() {
+  const financialLevel = [...new Set(list.financialLevel.map(el => el.id))];
+  handleCategoryChange(selected.financialLevel, checkboxes.financialLevel, financialLevel)
+}
+
+function clearCheckAll() {
+  checkboxes.financialLevel.checkAll = false
+  checkboxes.financialLevel.isIndeterminate = false
+}
 
 function resetQuery() {
   request.name = null
@@ -441,6 +437,7 @@ function handleSelectionChange(val) {
 
 function handleChangeFinancialGroup() {
   form.financialLevel = selected.financialLevel.join(',')
+  handleIndividualCheckChange()
 }
 
 function handleChangePayType() {
@@ -448,6 +445,7 @@ function handleChangePayType() {
 }
 
 function showDialog(type) {
+  clearCheckAll()
   if (type === 'CREATE') {
     if (bankForm.value) {
       bankForm.value.resetFields()
@@ -473,7 +471,6 @@ function showDialog(type) {
 
 function showEdit(banner) {
   showDialog('EDIT')
-
   nextTick(() => {
     for (const key in banner) {
       if (Object.keys(form).find(k => k === key)) {
@@ -493,6 +490,7 @@ function showEdit(banner) {
         selected.payType.push(element)
       })
     }
+    handleIndividualCheckChange()
   })
 }
 
@@ -562,6 +560,7 @@ async function checkUnique(e) {
 }
 
 function submit() {
+  form.siteId = request.siteId
   if (uiControl.dialogType === 'CREATE') {
     create()
   } else {
@@ -584,7 +583,7 @@ async function loadBank() {
 }
 
 async function loadFinancialLevel() {
-  const { data: ret } = await getFinancialLevels({ siteId: form.siteId })
+  const { data: ret } = await getFinancialLevels({ siteId: request.siteId })
   list.financialLevel = ret
 }
 
@@ -594,31 +593,20 @@ async function loadPayTypes() {
 }
 
 async function resetFinancialLevel() {
-  selected.financialLevel = null;
-  form.financialLevel = null;
   await loadFinancialLevel();
 }
 
 async function bankChange() {
   uiControl.changingBank = true;
-  await loadCurrency();
-  await loadSite();
   if (form.bankId !== null && form.bankId !== "") {
     const bankInfo = list.bankInfo.filter(bank => bank.id === form.bankId);
-    list.currencies = list.currencies.filter(currency => bankInfo[0].currencyIds.includes(currency.id));
-    const siteList = ref([]);
-    list.currencies.forEach(c => list.site.forEach(s => {
-      if (s.currency.includes(c.currencyCode)) {
-        siteList.value.push(s);
-      }
-    }));
-    list.site = siteList.value;
+    list.currenciesBySite = list.currencies.filter(currency => (',' + bankInfo[0].currencyIds + ',').includes(',' + currency.id + ','));
   } else {
-    if (form.currencyId !== null && form.currencyId !== "") {
-      await currencyChange();
-    }
-    if (form.siteId !== null && form.siteId !== "") {
-      await siteChange();
+    if (form.currencyId === null || form.currencyId === "") {
+      resetBankAndCurrency()
+    } else {
+      resetCurrencyBySite()
+      list.bankInfoBySite = list.bankInfo.filter(bank => (',' + bank.currencyIds + ',').includes(',' + form.currencyId + ','));
     }
   }
   uiControl.changingBank = false;
@@ -626,28 +614,13 @@ async function bankChange() {
 
 async function currencyChange() {
   uiControl.changingCurrency = true;
-  await loadBank();
-  await loadSite();
   if (form.currencyId !== null && form.currencyId !== "") {
-    list.bankInfo = list.bankInfo.filter(bank => (',' + bank.currencyIds).includes(',' + form.currencyId));
-    const selectedCurrency = list.currencies.filter(c => c.id === form.currencyId);
-    list.site = list.site.filter(s => s.currency.includes(selectedCurrency[0].currencyCode));
-    let isSelectedSite = false;
-    list.site.forEach(s => {
-      if (s.id === form.siteId) {
-        isSelectedSite = true;
-      }
-    });
-    if (!isSelectedSite) {
-      form.siteId = null;
-      await resetFinancialLevel();
-    }
+    list.bankInfoBySite = list.bankInfo.filter(bank => (',' + bank.currencyIds + ',').includes(',' + form.currencyId + ','));
   } else {
-    if (form.bankId !== null && form.bankId !== "") {
-      await bankChange();
-    }
-    if (form.siteId !== null && form.siteId !== "") {
-      await siteChange();
+    if (form.bankId === null || form.bankId === "") {
+      resetBankAndCurrency()
+    } else {
+      resetBankBySite()
     }
   }
   uiControl.changingCurrency = false;
@@ -656,27 +629,29 @@ async function currencyChange() {
 async function siteChange() {
   await resetFinancialLevel();
   uiControl.changingSite = true;
-  await loadBank();
-  await loadCurrency();
-  if (form.siteId !== null && form.siteId !== "") {
-    const siteInfo = list.site.filter(s => s.id === form.siteId);
-    list.currencies = list.currencies.filter(currency => siteInfo[0].currency.includes(currency.currencyCode));
-    const bankList = ref([]);
-    list.currencies.forEach(c => list.bankInfo.forEach(b => {
-      if ((',' + b.currencyIds).includes(',' + c.id)) {
-        bankList.value.push(b);
-      }
-    }));
-    list.bankInfo = bankList.value;
-  } else {
-    if (form.bankId !== null && form.bankId !== "") {
-      await bankChange();
-    }
-    if (form.currencyId !== null && form.currencyId !== "") {
-      await currencyChange();
-    }
-  }
+  site.value = list.site.filter(s => s.id === request.siteId);
+  resetBankAndCurrency()
   uiControl.changingSite = false;
+}
+
+function resetBankAndCurrency() {
+  resetCurrencyBySite()
+  resetBankBySite()
+}
+
+function resetCurrencyBySite() {
+  list.currenciesBySite = list.currencies.filter(currency => site.value[0].currency.includes(currency.currencyCode));
+}
+
+function resetBankBySite() {
+  const currentList = list.currencies.filter(currency => site.value[0].currency.includes(currency.currencyCode));
+  const bankList = ref([]);
+  currentList.forEach(c => list.bankInfo.forEach(b => {
+    if ((',' + b.currencyIds + ',').includes(',' + c.id + ',')) {
+      bankList.value.push(b);
+    }
+  }));
+  list.bankInfoBySite = bankList.value;
 }
 
 onMounted(async() => {
@@ -684,12 +659,15 @@ onMounted(async() => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = list.site.find(s => s.siteName === store.state.user.siteName);
     request.siteId = site.value.id;
+  } else {
+    site.value = list.site[0];
+    request.siteId = site.value.id;
   }
   await loadBankCard()
   await loadCurrency()
   await loadBank()
-  await loadFinancialLevel()
   await loadPayTypes()
+  siteChange()
 })
 </script>
 

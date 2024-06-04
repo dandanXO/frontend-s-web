@@ -28,3 +28,7 @@ export const deleteById = async (id) => {
 export const getConfigList = (code, siteId) => {
   return https().request("/config/list", Method.GET, { code: code, siteId: siteId }, ContentType.form);
 };
+
+export const getConfigListByGroup = (group, siteId) => {
+  return https().request("/config/list-by-group", Method.GET, { configGroup: group, siteId: siteId }, ContentType.form);
+};

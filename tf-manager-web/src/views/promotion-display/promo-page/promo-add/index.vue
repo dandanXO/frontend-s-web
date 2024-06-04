@@ -216,6 +216,11 @@
           </el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item v-if="form.labelType !== null" class="label-cancel">
+        <el-button type="danger" @click="handleCancelClick">
+          {{ t('fields.labelCancel') }}
+        </el-button>
+      </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.promoType')" prop="promoType">
@@ -464,12 +469,12 @@ const form = reactive({
   backgroundImgUrl: null,
   redirectUrl: null,
   siteId: null,
-  labelType: 0,
+  labelType: null,
   promoType: null,
   sequence: 0,
   promoCode: null,
   pageContent: null,
-  status: "0",
+  status: '0',
   createTime: null,
   createBy: null,
   hasPromo: false,
@@ -507,7 +512,6 @@ const formRules = reactive({
   desktopBannerUrl: [required(t('message.validateDesktopBannerRequired'))],
   mobileBannerUrl: [required(t('message.validateMobileBannerRequired'))],
   siteId: [required(t('message.validateSiteRequired'))],
-  labelType: [required(t('message.validateLabelRequired'))],
   promoType: [required(t('message.validatePromoTypeRequired'))],
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
@@ -660,6 +664,9 @@ function constructParam() {
 }
 
 function submit() {
+  if (!form.labelType && form.labelType !== 0) {
+    form.labelType = -1;
+  }
   if (route.name.includes('Add')) {
     create()
   } else {
@@ -795,6 +802,11 @@ function submitImage() {
   }
   uiControl.imageSelectionVisible = false
 }
+
+const handleCancelClick = () => {
+  form.labelType = null
+}
+
 onMounted(() => {
   console.log('new page ')
   loadSites()
@@ -883,5 +895,9 @@ onMounted(() => {
 .smallPreview {
   width: 100px;
   height: 100px;
+}
+
+.label-cancel {
+  margin-left: 40px;
 }
 </style>

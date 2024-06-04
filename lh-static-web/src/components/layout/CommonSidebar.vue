@@ -1,13 +1,7 @@
 <template>
-  <div
-    class="sticky-sidebar"
-    @mouseleave="customerHovered = false"
-  >
+  <div class="sticky-sidebar" @mouseleave="customerHovered = false">
     <div class="additional-info-items" v-if="customerHovered">
-      <div
-        class="additional-info-item"
-        @click.stop.prevent="store.openLiveChat()"
-      >
+      <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
         <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
         <span>24小时在线客服</span>
       </div>
@@ -17,19 +11,23 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
-        <span style="margin-left: 5px"
-        ><span class="customer_phone">+85281701071</span></span
-        >
+        <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
       </div>
     </div>
     <div class="sticky-sidebar-items">
+      <div
+        v-if="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST'"
+        class="sticky-sidebar-item"
+        @click="handleDarkModeClick"
+      >
+        <img src="@/assets/images/home/sticky-sidebar-dark-mode-icon.png" />
+        <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
+      </div>
       <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
         <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
         <div>热门活动</div>
       </router-link>
-      <div class="sticky-sidebar-item"
-           @mouseover="customerHovered = true"
-      >
+      <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
         <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
         <div>客服中心</div>
       </div>
@@ -45,23 +43,74 @@
       </div>
     </div>
   </div>
+
+  <GameModal ref="gameMenu" />
+
+  <div
+    class="rocket-wrapper"
+    v-if="showRocket"
+    :class="'show-rocket'"
+    :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
+    @mousedown="startDragging('rocket', $event)"
+  >
+    <div v-for="game in gamePromo" style="position: relative">
+      <div class="close-btn" @click="hideRocket()">X</div>
+      <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket">
+          <img :src="`${imgURL}/game/${game.icon}`" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div
+      class="rocket-wrapper"
+      v-if="showFloatPromo"
+      :class="'show-promo'"
+      :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
+      @mousedown="startDragging('promo', $event)"
+    >
+      <div style="position: relative">
+        <div class="close-btn" @click="hideFloatPromo()">X</div>
+        <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
+          <div class="rocket">
+            <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
-import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
-
-
+import { useDark } from "@vueuse/core";
+import GameModal from "@/components/modal/GameModal.vue";
+import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
-  components: {},
+  components: {
+    GameModal
+  },
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const imgURL = process.env.VUE_APP_IMAGE_CDN
     const customerHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
     };
     const store = userStore();
     const ui = uiStore();
+    const isDark = useDark();
+
+    const handleDarkModeClick = () => (isDark.value = !isDark.value);
+
+    const gameMenu = ref(null);
+    const openGame = (gameName, platType, gameCode, scrollingState) => {
+      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+    };
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -75,21 +124,178 @@ export default defineComponent({
         });
     };
 
+    const showRocket = ref(false);
+    const hideRocket = () => {
+      showRocket.value = false;
+      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+    };
+    const showFloatPromo = ref(false);
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      getFloatingItems().then((res) => {
+        if (res.code === 0) {
+          res.data.forEach(element => {
+            if (element.type === 'PROMO') {
+              floatPromo.push(element);
+              showFloatPromo.value = true;
+            }
+            if (element.type === 'GAME') {
+              gamePromo.push(element)
+              showRocket.value = true;
+            }
+          });
+          updatePromo(); // Initially update the displayed promo
+          // Update the displayed promo every 5 seconds
+          setInterval(updatePromo, 3000);
+        } else {
+          ElMessage.error(res.message);
+        }
+      })
+    }
+
+    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
+    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
+    const isDragging = ref(false);
+    const shiftX = ref(0);
+    const shiftY = ref(0);
+    const currentElement = ref(null);
+    const startDragging = (element, event) => {
+      currentElement.value = element
+      const rect = event.target.getBoundingClientRect();
+      shiftX.value = event.clientX - rect.left;
+      shiftY.value = event.clientY - rect.top;
+      isDragging.value = true;
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", stopDragging);
+
+      // Change cursor to dragging
+      document.body.style.cursor = "pointer";
+      event.target.style.cursor = "pointer";
+    }
+    const onMouseMove = (event) => {
+      if (isDragging.value) {
+        if (currentElement.value === 'rocket') {
+          rocketPosition.value.left = event.clientX - shiftX.value;
+          rocketPosition.value.top = event.clientY - shiftY.value;
+        } else if (currentElement.value === 'promo') {
+          promoPosition.value.left = event.clientX - shiftX.value;
+          promoPosition.value.top = event.clientY - shiftY.value;
+        }
+      }
+    };
+    const stopDragging = () => {
+      isDragging.value = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
+
+      // Reset cursor to default
+      document.body.style.cursor = "default";
+    };
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const gotoPromo = (code) => {
+
+      router.push(`/promotion?name=${code}`)
+    }
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
     onMounted(() => {
       getAppDownloadUrl();
+      if ((store.token)) {
+        initFloating();
+      }
+      document.addEventListener("mouseup", stopDragging);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
     });
 
     return {
       store,
       customerHovered,
       scrollToTop,
-      downloadUrl
+      downloadUrl,
+      isDark,
+      handleDarkModeClick,
+      gameMenu,
+      openGame,
+      showRocket,
+      rocketPosition,
+      hideRocket,
+      startDragging,
+      showFloatPromo,
+      promoPosition,
+      hideFloatPromo,
+      imgURL,
+      floatPromo,
+      gamePromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoPromo
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+/* rocket animation */
+.rocket-wrapper {
+  position: fixed;
+  z-index: 999;
+  // bottom: 220px;
+  // right: 0px;
+  transition: all 0.3s;
+  display: none;
+  width: 100px;
+  height: 100px;
+  user-select: none; /* Disable text selection */
+
+  &.show-promo {
+    display: block;
+  }
+
+  &.show-rocket {
+    display: block;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .rocket {
+    pointer-events: none;
+    user-select: none;
+    img {
+      display: block;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+}
 
 .additional-info-items {
   display: flex;
@@ -104,13 +310,13 @@ export default defineComponent({
   .additional-info-item {
     display: flex;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
 
     &:hover {
-      background-color: #E5F5FF;
+      background-color: #e5f5ff;
     }
   }
 }
@@ -122,7 +328,7 @@ export default defineComponent({
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: 0px 0px 8px 0px #00000038;
@@ -141,7 +347,7 @@ export default defineComponent({
         filter: brightness(1.05);
       }
 
-      color: #4E93FF;
+      color: #4e93ff;
     }
   }
 }
@@ -161,5 +367,27 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+
+.dark {
+  .sticky-sidebar-items {
+    @include content-block-dark;
+
+    .sticky-sidebar-item {
+      color: $color-white;
+    }
+  }
+
+  .additional-info-items {
+    @include content-block-dark;
+
+    .additional-info-item {
+      color: $color-white;
+
+      &:hover {
+        background: rgba($font-1-dark, 10%);
+      }
+    }
+  }
 }
 </style>

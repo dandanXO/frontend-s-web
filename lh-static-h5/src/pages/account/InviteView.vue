@@ -31,7 +31,14 @@
       <div class="share-qr-section">
         <div class="share-info-div">
           <div class="share-info-box">
-            <img class="user-sign" src="../../assets/images/account/share-total.png" />
+            <img
+              class="user-sign"
+              :src="
+                $q.dark.isActive
+                  ? require('../../assets/images/account/share-total-dark.png')
+                  : require('../../assets/images/account/share-total.png')
+              "
+            />
 
             <span>累计注册</span>
             <div class="total-info-div">
@@ -41,7 +48,14 @@
           </div>
 
           <div class="share-info-box">
-            <img class="topup-sign" src="../../assets/images/account/share-topup.png" />
+            <img
+              class="topup-sign"
+              :src="
+                $q.dark.isActive
+                  ? require('../../assets/images/account/share-topup-dark.png')
+                  : require('../../assets/images/account/share-topup.png')
+              "
+            />
 
             <span>累计充值</span>
             <div class="total-info-div">
@@ -53,12 +67,13 @@
       </div>
     </div>
 
-    <div class="personal-content-box" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+    <div class="personal-content-box">
       <div class="shadow-box" id="summon-share">
         <div class="qr-title">唤醒分享</div>
         <div class="title-top-line1">
           <div class="top-line1-content">
-            您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。<router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
+            您通过唤醒链接激活的老用户存款，双方都可获得不限量彩金。
+            <router-link to="/promo?name=lh1-summon-event">活动详情</router-link>
           </div>
         </div>
       </div>
@@ -82,7 +97,14 @@
       <div class="share-qr-section">
         <div class="share-info-div">
           <div class="share-info-box">
-            <img class="user-sign" src="../../assets/images/account/share-total.png" />
+            <img
+              class="user-sign"
+              :src="
+                $q.dark.isActive
+                  ? require('../../assets/images/account/share-total-dark.png')
+                  : require('../../assets/images/account/share-total.png')
+              "
+            />
 
             <span>成功唤醒</span>
             <div class="total-info-div">
@@ -142,7 +164,7 @@ export default defineComponent({
       const duration = 0;
       setTimeout(() => {
         setVerticalScrollPosition(target, offset, duration)
-      },100)
+      },150)
     }
 
     const copyText = (text) => {
@@ -216,8 +238,12 @@ export default defineComponent({
     })
 
     onActivated(() => {
+      const isSummon =  sessionStorage.getItem("GO_SUMMON");
+      const isSummon2 =  localStorage.getItem("GO_SUMMON");
       // scroll to #summon-share section if route has hash pattern /account/invite#summon-share
-      if(route.hash === '#summon-share') {
+      if(route.hash === '#summon-share' || isSummon || isSummon2) {
+        sessionStorage.removeItem("GO_SUMMON")
+        localStorage.removeItem("GO_SUMMON")
         scrollToElement(document.getElementById('summon-share'));
       }
     })
@@ -261,7 +287,7 @@ export default defineComponent({
       line-height: 26px;
       text-align: center;
       font-size: 16px;
-      a  {
+      a {
         color: $primary;
         text-decoration: underline;
       }
@@ -378,7 +404,7 @@ export default defineComponent({
   }
 
   .personal-content-box #selfTgurl {
-    color:#458BFF;
+    color: #458bff;
     font-size: 1rem;
     display: block;
     margin-bottom: 15px;
@@ -433,6 +459,37 @@ export default defineComponent({
     padding-bottom: 10px;
     text-align: center;
     font-size: 18px;
+  }
+}
+
+.body--dark {
+  .share-container {
+    .shadow-box {
+      @include content-block-dark-with-border;
+      .qr-title {
+        color: $font-3-dark;
+      }
+      .title-top-line1 {
+        .prize-span,
+        a {
+          color: $primary-dark;
+        }
+      }
+    }
+
+    .share-qr-section {
+      .share-info-div {
+        .share-info-box {
+          @include content-block-dark-with-border;
+          .total-info-div {
+            color: #999999;
+            .total-span {
+              color: unset;
+            }
+          }
+        }
+      }
+    }
   }
 }
 </style>

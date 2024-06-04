@@ -84,6 +84,13 @@
         >
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['promo:tigerCard:export']"
+          @click="requestExportExcel"
+        >{{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
       <div class="btn-group">
         <el-button v-permission="['promo:tigerCard:updateSetting']" icon="el-icon-setting" size="mini" type="primary" @click="uiControl.settingVisible = true">
@@ -232,6 +239,17 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog :title="t('fields.exportToExcel')" v-model="uiControl.messageVisible" append-to-body width="500px"
+               :close-on-click-modal="false" :close-on-press-escape="false"
+    >
+      <span>{{ t('message.requestExportToExcelDone1') }}</span>
+      <router-link :to="`/site-management/download-manager`">
+        <el-link type="primary">
+          {{ t('menu.DownloadManager') }}
+        </el-link>
+      </router-link>
+      <span>{{ t('message.requestExportToExcelDone2') }}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -243,6 +261,7 @@ import { ElMessage } from 'element-plus'
 import {
   updateTigerCardSetting, insertTigerCardSetting,
   getTigerCardList, getTigerCardSetting,
+  getTigerCardExport,
 } from '../../../api/tiger-card'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -256,6 +275,7 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const tigerCardSettingForm = ref(null)
+
 const siteList = reactive({
   list: [],
 })
@@ -266,6 +286,7 @@ const defaultTime = [
 ];
 const shortcuts = getShortcuts(t);
 const uiControl = reactive({
+  messageVisible: false,
   settingVisible: false,
   cardTypes: [
     { key: 1, displayName: '大奖虎', value: 'goldhu' },
@@ -317,6 +338,16 @@ const form = reactive({
   cardCount: null,
   siteId: null
 })
+
+async function requestExportExcel() {
+  const query = checkQuery();
+  query.requestBy = store.state.user.name;
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+  const { data: ret } = await getTigerCardExport(query);
+  if (ret) {
+    uiControl.messageVisible = true;
+  }
+}
 
 const formRules = reactive({
   lotteryTime: [required(t('message.validateStartTimeRequired'))],

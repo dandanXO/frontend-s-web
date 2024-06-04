@@ -77,11 +77,11 @@
           </span>
         </div>
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.confirm_password") }}
           <em>*</em>
-        </q-label>
-        <q-input
+        </q-label> -->
+        <!-- <q-input
           ref="confirmPwdRef"
           rounded
           standout
@@ -106,7 +106,7 @@
               @click="isCfmPwd = !isCfmPwd"
             />
           </template>
-        </q-input>
+        </q-input> -->
 
         <q-label>
           {{ $t("lang.real_name") }}
@@ -156,9 +156,8 @@
           </template>
         </q-input>
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.email") }}
-          <em>*</em>
         </q-label>
         <q-input
           ref="emailRef"
@@ -167,7 +166,7 @@
           type="email"
           v-model="regForm.email"
           :placeholder="$t('lang.email')"
-          :rules="[(val) => (val && val.length > 0) || $t('lang.email_valid'), isValidEmail]"
+          :rules="[isValidEmail]"
           color="white"
         >
           <template v-slot:prepend>
@@ -175,7 +174,7 @@
               <img src="../assets/images/login/mail-icon.png" width="27" />
             </div>
           </template>
-        </q-input>
+        </q-input> -->
 
         <q-label>
           {{ $t("lang.verification_code") }}
@@ -335,7 +334,7 @@ export default defineComponent({
     });
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -351,7 +350,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -401,6 +400,9 @@ export default defineComponent({
 
     const pwdStrength = ref("");
     const isValidEmail = () => {
+      if (!regForm.email) {
+        return
+      }
       const emailPattern =
         /^(?=[a-zA-Z0-9@._%+-]{6,254}$)[a-zA-Z0-9._%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/;
       return emailPattern.test(regForm.email) || t("lang.email_valid");
@@ -420,11 +422,11 @@ export default defineComponent({
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       telRef.value.validate();
       realNameRef.value.validate();
       // phoneVerificationRef.value.validate();
-      emailRef.value.validate();
+      // emailRef.value.validate();
       verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.register_in_progress")
@@ -432,10 +434,10 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
-        emailRef.value.hasError ||
+        // emailRef.value.hasError ||
         realNameRef.value.hasError ||
         verificationRef.value.hasError
       ) {
@@ -477,11 +479,11 @@ export default defineComponent({
                 });
 
                 // FB tracking :: signup-success
-                if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
+                if (store.isAffiliateA) {
                   fbq("track", "signup-success");
+                }
+                if(window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1){
+                  otag("event", "registration");
                 }
 
                 store.autoLogin(res.data);
@@ -698,7 +700,7 @@ function charType(num) {
 
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center center;
+  background: url(../assets/images/login/reg-bg.png) no-repeat center center;
   background-size: cover;
   height: 100%;
   padding: 12px 0px 0px;

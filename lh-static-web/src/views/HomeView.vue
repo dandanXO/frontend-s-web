@@ -27,7 +27,7 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
 };
 
 onMounted(() => {
-  console.log("Home")
+  // console.log("Home");
 });
 </script>
 
@@ -43,5 +43,12 @@ onMounted(() => {
 .home-mid-section {
   padding-top: 20px;
   padding-bottom: 2.5rem;
+}
+
+.dark {
+  .home {
+    background-image: none;
+    background-color: $background-dark;
+  }
 }
 </style>

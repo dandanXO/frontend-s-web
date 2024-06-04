@@ -52,8 +52,9 @@
 
 <script>
 import { defineComponent, reactive } from "vue";
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.IMAGE_CDN + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
@@ -351,7 +352,7 @@ $node-color: #468cff;
       }
 
       .overflow {
-        white-space: wrap;
+        // white-space: nowrap;
       }
 
       .node-txt-img {
@@ -401,8 +402,8 @@ $node-color: #468cff;
 
     .promo {
       position: absolute;
-      right: -15px;
-      top: -10px;
+      right: -5px;
+      top: -5px;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
@@ -410,8 +411,8 @@ $node-color: #468cff;
         padding: 0;
         border: 0;
         background-color: transparent;
-        max-width: 64px;
-        width: 64px;
+        max-width: 40px;
+        width: 40px;
       }
       ::after {
         position: relative;

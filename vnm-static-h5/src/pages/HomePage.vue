@@ -36,6 +36,11 @@
         {{ $t("lang.register") }}
       </q-btn>
     </div>
+    <div class="header-middle" v-else>
+      <div @click="router.push('/account')">
+        {{ $t("lang.helloUsername") }} {{ store.nickName }}
+      </div>
+    </div>
     <div class="header-lang">
       <LangOptions />
     </div>
@@ -86,6 +91,8 @@
     />
   </q-carousel>
 
+  <PushNotification :pushNotificationData="pushNotificationData" v-if="Platform.is.android && Platform.is.capacitor" />
+
   <div class="mid-announcement-section">
     <div class="midd">
       <div class="station-notice-wrapper">
@@ -103,38 +110,143 @@
     </div>
   </div>
 
-  <div class="details-bar">
-    <div class="message" @click="refreshBalance">
-      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{
-          store.token
-            ? !isLoadingBalance
-              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })
-              : $t("lang.loading")
-            : $t("lang.not_logged_in")
-        }}
-      </span>
-      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>
+  <div class="hot-matches-wrapper">
+    <div class="euro-countdown">
+      <div class="euro-countdown-fly-01">
+        <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
+      </div>
+      <div class="euro-countdown-fly-02">
+        <img src="../assets/images/home/eurocup-countdown-fly-02.png" />
+      </div>
+      <div class="euro-countdown-fly-03">
+        <img src="../assets/images/home/eurocup-countdown-fly-03.png" />
+      </div>
+      <div class="euro-countdown-fly-04">
+        <img src="../assets/images/home/eurocup-countdown-fly-04.png" />
+      </div>
+      <div class="euro-countdown-fly-05">
+        <img src="../assets/images/home/eurocup-countdown-fly-05.png" />
+      </div>
+      <div class="euro-countdown-fly-06">
+        <img src="../assets/images/home/eurocup-countdown-fly-06.png" />
+      </div>
+      <div class="euro-countdown-content">
+        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />
+
+        <div class="euro-countdown-txt">
+          <div class="txt-logo">
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 100px" />
+          </div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
+
+          <div class="euro-countdown-num-wrap">
+            {{ $t("lang.euroCountdown01a") }}
+            <div class="euro-countdown-num">
+              <!-- <img src="../assets/images/home/eurocup-countdown-numbers.png" /> -->
+              <div class="num">
+                <span>{{ countDay01 }}</span>
+              </div>
+              <div class="num">
+                <span>{{ countDay02 }}</span>
+              </div>
+            </div>
+            {{ $t("lang.euroCountdown02") }}
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="menulist">
-      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
-        <div class="">{{ $t("lang.deposit") }}</div>
-      </router-link>
-      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
-        <div class="">{{ $t("lang.withdraw") }}</div>
-      </router-link>
-      <!-- <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
-        <div class="">{{ $t("lang.transfer") }}</div>
-      </router-link> -->
-      <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
-        <div class="">{{ $t("lang.vip") }}</div>
-      </router-link>
+
+    <!-- <div class="euro-countdown">
+      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
+    </div> -->
+
+    <div class="hot-matches-title-wrapper">
+      <div class="hot-matches-title">
+        <div>
+          <img src="../assets/images/home/icon-hot-matches.png" />
+        </div>
+        {{ $t("lang.hotMatches") }}
+      </div>
+
+      <!--      <div>-->
+      <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
+      <!--          {{ $t("lang.bet_now") }}-->
+      <!--        </q-btn>-->
+      <!--      </div>-->
+    </div>
+
+    <div class="hot-matches-container">
+      <swiper
+        :slides-per-view="1.2"
+        :modules="modules"
+        :loop="false"
+        @swiper="onSwiper"
+        effect="fade"
+        :auto-height="false"
+        :allow-slide-next="true"
+        :pagination="{ clickable: true, type: 'bullets' }"
+        :space-between="10"
+        class="hot-matches-carousel"
+      >
+        <swiper-slide v-for="(item, index) in hotMatches" :key="index" :name="index" class="hot-matches-slide">
+          <div class="hot-matches-item">
+            <div class="top-match-title">
+              <div class="title-frame">{{ item.competitionName }}</div>
+            </div>
+            <div class="team-details team-details__home">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamOneLogo" />
+              </div>
+              <div class="team-name">{{ item.teamOneName }}</div>
+            </div>
+            <div class="match-details">
+              <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
+              <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
+              <div class="match-btn">
+                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="openHotMatch(item)">
+                  {{ $t("lang.play_now") }}
+                </q-btn>
+              </div>
+            </div>
+            <div class="team-details team-details__away">
+              <div class="team-icon">
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
+              </div>
+              <div class="team-name">{{ item.teamTwoName }}</div>
+            </div>
+          </div>
+        </swiper-slide>
+      </swiper>
     </div>
   </div>
+  <!--  <div class="details-bar">-->
+  <!--    <div class="message" @click="refreshBalance">-->
+  <!--      <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">-->
+  <!--        {{-->
+  <!--          store.token-->
+  <!--            ? !isLoadingBalance-->
+  <!--              ? "VNDP " + mainWallet.toLocaleString("en-US", { maximumFractionDigits: 0 })-->
+  <!--              : $t("lang.loading")-->
+  <!--            : $t("lang.not_logged_in")-->
+  <!--        }}-->
+  <!--      </span>-->
+  <!--      <span>{{ store.token ? $t("lang.central_wallet") : $t("lang.login_register_to_view") }}</span>-->
+  <!--    </div>-->
+  <!--    <div class="menulist">-->
+  <!--      <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/deposit-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.deposit") }}</div>-->
+  <!--      </router-link>-->
+  <!--      <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/withdraw-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.withdraw") }}</div>-->
+  <!--      </router-link>-->
+  <!--      <router-link to="/account/vip?redirect=home" class="men btn-pointer">-->
+  <!--        <img src="../assets/images/home/vip-mid.png" />-->
+  <!--        <div class="">{{ $t("lang.vip") }}</div>-->
+  <!--      </router-link>-->
+  <!--    </div>-->
+  <!--  </div>-->
 
   <div class="home-game-section">
     <div class="game-left-list">
@@ -517,31 +629,26 @@
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
       <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
-      <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
+      <!-- <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a> -->
       <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
-      <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
+      <!-- <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
-      </a>
+      </a> -->
       <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
       </a>
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos">
-    <q-btn
-      rounded
-      no-caps
-      color="info"
-      :disable="draggingFab"
-      v-touch-pan.prevent.mouse="moveFab"
-      @click="getRebateAmt"
-      persistent
-    >
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+    </div>
+    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
-    </q-btn>
+    </div>
   </q-page-sticky>
 
   <q-dialog
@@ -663,7 +770,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
@@ -698,7 +805,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
 import { cached } from "boot/cache";
@@ -711,15 +818,31 @@ import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
-import SwiperCore, { A11y, Controller, HashNavigation, Keyboard, Mousewheel, Scrollbar, Thumbs } from "swiper";
+import SwiperCore, {
+  A11y,
+  Controller,
+  HashNavigation,
+  Keyboard,
+  Mousewheel,
+  Scrollbar,
+  Thumbs,
+  Pagination,
+  Navigation
+} from "swiper";
 import moment from "moment";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
+import { useLocalStorage } from "@vueuse/core";
+import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
+
+import { Swiper, SwiperSlide } from "swiper/vue";
+import PushNotification from "../components/modal/PushNotification.vue";
+import "swiper/css/pagination";
 
 export default defineComponent({
   name: "IndexPage",
@@ -727,7 +850,10 @@ export default defineComponent({
     MaintenanceBox,
     GameModal,
     MarqueeText,
-    LangOptions
+    LangOptions,
+    Swiper,
+    SwiperSlide,
+    PushNotification
   },
   setup() {
     const fabPos = ref([18, 18]);
@@ -942,7 +1068,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -956,9 +1082,6 @@ export default defineComponent({
     const homePopupLinkOut = ref(false);
 
     const setExpiryBanner = () => {
-      if (homePopupFrequencyNum.value !== 0) {
-        setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-      }
       isImportantAnnoucementModal.value = false;
     };
 
@@ -970,11 +1093,28 @@ export default defineComponent({
         id: homePopupId.value,
         frequency: homePopupFrequency.value
       };
-      sessionStorage.setItem(key, JSON.stringify(item));
+      localStorage.setItem(key, JSON.stringify(item));
+    };
+
+    const isRedPacketShow = ref(true);
+    const getRedEnvelope = () => {
+      router.push("/promo?name=vi-mualixi-redpacket");
+    };
+
+    const getCheckRedPacket = () => {
+      if (store && store.token && store.memberType === "TEST") {
+        eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
+          .then((res) => {
+            if (res.code === 0) {
+              isRedPacketShow.value = res.data.nowIsRain;
+            }
+          })
+          .catch((err) => {});
+      }
     };
 
     const getWithExpiry = (key) => {
-      const itemStr = sessionStorage.getItem(key);
+      const itemStr = localStorage.getItem(key);
       if (!itemStr) {
         return null;
       }
@@ -983,9 +1123,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
+          // debugger;
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
+            localStorage.removeItem(key);
+            // isImportantAnnoucementModal.value = true;
             return null;
           }
         })
@@ -1023,7 +1164,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value = imgURL + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -1034,6 +1175,10 @@ export default defineComponent({
                   homePopupLinkOut.value = true;
                 } else {
                   homePopupLink.value = `/promo?name=${res.data["path"]}`;
+                }
+
+                if (homePopupFrequencyNum.value !== 0) {
+                  setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
                 }
 
                 isFirstView.value = true;
@@ -1327,6 +1472,43 @@ export default defineComponent({
       }
     };
 
+    const pushNotificationData = ref();
+    const populatePushNotificationData = (data) => {
+      pushNotificationData.value = data;
+    };
+
+    const initOneSignal = () => {
+      OneSignal.initialize("4ac990ad-4330-458a-94f6-ef9e1f28639e");
+
+      let myClickListener = async function (event) {
+        console.log("CLICK PUSH");
+        let notificationData = event;
+        console.log(notificationData);
+        console.log(notificationData.notification.title);
+        console.log(notificationData.notification.body);
+        console.log(notificationData.notification.additionalData);
+        populatePushNotificationData(notificationData.notification);
+        // alert(notificationData.notification.title + notificationData.notification.body);
+      };
+      OneSignal.Notifications.addEventListener("click", myClickListener);
+
+      // Prompts the user for notification permissions.
+      //    * Since this shows a generic native prompt, we recommend instead using an In-App Message to prompt for notification permission (See step 7) to better communicate to your users what notifications they will get.
+      OneSignal.Notifications.requestPermission(true).then((accepted) => {
+        console.log("User accepted notifications: " + accepted);
+      });
+    };
+
+    onMounted(() => {
+      if (Platform.is.android && Platform.is.capacitor) {
+        initOneSignal();
+      }
+
+      // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
+      //   console.log(resp);
+      // })
+    });
+
     onActivated(() => {
       getPlatList();
       loadData();
@@ -1337,7 +1519,17 @@ export default defineComponent({
       getAppDownloadUrl();
       getUnreadTotal();
       getNewsDetails();
+      runMenuFloat();
+      loadHotMatches();
+      getCheckRedPacket();
     });
+
+    const runMenuFloat = () => {
+      toggleMenuFloat();
+      setTimeout(() => {
+        toggleMenuFloat();
+      }, 2000);
+    };
 
     const imageLoading = ref(false);
 
@@ -1362,22 +1554,22 @@ export default defineComponent({
     };
 
     const gotoPromo = (banner) => {
-      const urlSplit= banner.redirectUrl.split("|");
-      if(urlSplit.length >= 2){
-        const type= urlSplit[0];
-        if(type==='page'){
-          router.push(`/${banner.redirectUrl}`);
-        }else{
+      const urlSplit = banner.redirectUrl.split("|");
+      if (urlSplit.length >= 2) {
+        const type = urlSplit[0];
+        if (type === "page") {
+          router.push(`/${urlSplit[1]}`);
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
-      }else{
-        if(banner.redirectUrl.includes("https://")){
-          window.open(banner.redirectUrl,"_blank");
-        }else{
+      } else {
+        if (banner.redirectUrl.includes("https://")) {
+          window.open(banner.redirectUrl, "_blank");
+        } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
       }
-    }
+    };
 
     const getNewsDetails = () => {
       api.get("/news").then((res) => {
@@ -1397,6 +1589,90 @@ export default defineComponent({
     };
 
     const isPlatformComingSoon = ref(false);
+
+    const moveFab = (ev) => {
+      const maxX = window.innerWidth - 135;
+      const maxY = window.innerHeight - 200;
+      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+
+    const hotMatches = ref([]);
+
+    const loadHotMatches = () => {
+      api
+        .get("/platform-competition?type=Football")
+        .then((res) => {
+          if (res.code === 0) {
+            hotMatches.value = res.data;
+          }
+        })
+        .catch(() => {});
+    };
+
+    const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
+
+    const openHotMatch = (item) => {
+      if (!store.token) {
+        router.push("/login");
+      } else {
+        console.log(item);
+        playGame(item.platformName, item.platformCode, item.gameCode);
+      }
+    };
+
+    const formattedTime = (timeString) => {
+      if (!timeString) {
+        return "";
+      }
+
+      const dateTime = moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
+      return dateTime;
+
+      // const dateTime = new Date(timeString);
+      // const formattedDate = `${dateTime.getDate().toString().padStart(2, "0")}/${(dateTime.getMonth() + 1)
+      //   .toString()
+      //   .padStart(2, "0")}`;
+      // const formattedTime = `${dateTime.getHours().toString().padStart(2, "0")}:${dateTime
+      //   .getMinutes()
+      //   .toString()
+      //   .padStart(2, "0")}`;
+      //
+      // return `${formattedDate} ${formattedTime}`;
+    };
+
+    const onSwiper = (swiper) => {};
+
+    const modulesHot = [Navigation, Pagination];
+
+    // const countDay = ref(25);
+    const euroCupStartDate = moment("2024-06-15");
+    const daysDiff = ref(euroCupStartDate.diff(moment(), "days"));
+
+    if (daysDiff.value <= 0) {
+      daysDiff.value = 0;
+    }
+
+    const countDayString = computed(() => {
+      return daysDiff.value.toString().padStart(2, "0");
+    });
+
+    const countDay01 = computed(() => {
+      return parseInt(countDayString.value.substr(0, 1));
+    });
+
+    const countDay02 = computed(() => {
+      return parseInt(countDayString.value.substr(1, 1));
+    });
+
+    watch(countDayString, () => {
+      countDay01.value = parseInt(countDayString.value.substr(0, 1));
+      countDay02.value = parseInt(countDayString.value.substr(1, 1));
+    });
 
     return {
       imageLoading,
@@ -1440,7 +1716,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar],
+      modules: [Scrollbar, Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -1495,11 +1771,29 @@ export default defineComponent({
       newsDetail_05,
       goToNewsPage,
       isPlatformComingSoon,
+      moveFab,
+      loadHotMatches,
+      hotMatches,
+      hotMatchesImgURL,
+      slideHotMatches: ref(0),
+      formattedTime,
+      openHotMatch,
+      onSwiper,
+      modulesHot,
+      Platform,
+      pushNotificationData,
+      euroCupStartDate,
+      getRedEnvelope,
+      isRedPacketShow,
+      daysDiff,
+      countDayString,
+      countDay01,
+      countDay02
 
-      moveFab(ev) {
-        draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
-        fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
-      }
+      // moveFab(ev) {
+      //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      //   fabPos.value = [fabPos.value[0] - ev.delta.x, fabPos.value[1] - ev.delta.y];
+      // }
     };
   }
 });
@@ -1597,6 +1891,7 @@ export default defineComponent({
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  z-index: 99;
 
   .float-btn {
     margin-right: -5px;
@@ -1717,25 +2012,29 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
+    // height: 50px;
 
-    @media (max-width: 400px) {
-      height: 35px;
-    }
+    // @media (max-width: 400px) {
+    //   height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
     }
   }
 
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 
     :deep(.q-btn) {
+      min-width: 80px;
       min-height: 12px;
       font-weight: bold;
       @media (max-width: 400px) {
@@ -1745,25 +2044,7 @@ export default defineComponent({
   }
 
   .header-lang {
-    // .lang-container {
-    //   img {
-    //     display: block;
-    //     width: 30px;
-    //     height: 30px;
-    //   }
-
-    //   :deep(.q-field__marginal) {
-    //     min-height: 40px;
-    //     height: 40px;
-    //     display: none;
-    //   }
-
-    //   :deep(.q-field__native) {
-    //     min-height: 30px;
-    //     height: 30px;
-    //     padding: 0;
-    //   }
-    // }
+    margin-top: 2px;
   }
 
   .header-right {
@@ -1794,7 +2075,11 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  color: #696d70;
+  border-radius: 2.1875rem;
+  background: #fff;
+  box-shadow: 0px -20px 30px 0px rgba(158, 180, 210, 0.41) inset, 0px 4px 10px 0px;
+  font-family: "Roboto";
   .hot-match-div {
     background-image: url("../assets/images/home/match-icon.png");
     background-repeat: no-repeat;
@@ -1839,7 +2124,7 @@ export default defineComponent({
     flex: 3;
     padding: 0px 8px 0px 0px;
     //border-right: 1px dashed $font-1;
-    color: $font-1;
+    color: $font-4;
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -1849,7 +2134,7 @@ export default defineComponent({
 
   .main-balance {
     font-size: 1.6rem;
-    color: $dark;
+    color: $font-4;
 
     &.main-nologin {
       font-size: 1rem;
@@ -2194,6 +2479,7 @@ export default defineComponent({
           line-height: 1.3;
           margin-top: 10%;
           text-align: left;
+          color: $font-4;
         }
 
         .platform-subtitle {
@@ -2244,6 +2530,35 @@ export default defineComponent({
     animation: fadeIn 1.5s;
   }
 }
+.rebates-absolute {
+  background: url(../assets/images/home/rebates-absolute.png) no-repeat center center;
+  background-size: contain;
+  height: 100px;
+  width: 135px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  font-weight: bold;
+}
+
+.modal-home-popup {
+  background: transparent;
+  box-shadow: none;
+
+  .q-card {
+    background: transparent;
+    box-shadow: none;
+  }
+  .q-card__section {
+    background: none;
+    box-shadow: none;
+  }
+  .q-card-section {
+    background: transparent;
+    box-shadow: none;
+  }
+}
 
 @keyframes fadeIn {
   0% {
@@ -2259,7 +2574,7 @@ export default defineComponent({
 @media (max-width: 480px) {
 }
 
-@media (max-width: 400px) {
+@media (max-width: 410px) {
   .grid {
     .q-card {
       .q-card__section {
@@ -2269,5 +2584,392 @@ export default defineComponent({
       }
     }
   }
+
+  .home-header {
+    .header-middle {
+      color: #313441;
+
+      :deep(.q-btn) {
+        min-width: 75px;
+      }
+    }
+  }
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(5vh) translateX(20px) rotate(45deg);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translateY(10vh) translateX(-20px) rotate(90deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translateY(15vh) translateX(15px) rotate(135deg);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateY(20vh) translateX(-15px) rotate(180deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(25vh) translateX(10px) rotate(225deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.red-envelope {
+  width: 85px;
+  margin-left: 30px;
+  cursor: pointer;
+  animation: shake 1s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shake-with-pause {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+.red-envelope {
+  animation: tilt-shaking 1s infinite;
+}
+
+.hot-matches-wrapper {
+  width: calc(100% - 2rem);
+  margin: 20px auto 0px;
+
+  .euro-countdown {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    // padding-bottom: 35px;
+    // padding-top: 15px;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    position: relative;
+
+    img {
+      width: 30px;
+    }
+
+    .euro-countdown-fly-01 {
+      position: absolute;
+      left: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 8s linear infinite;
+    }
+
+    .euro-countdown-fly-02 {
+      position: absolute;
+      left: 4px;
+      top: -10px;
+      width: 30px;
+      animation: fly 7s linear infinite;
+    }
+
+    .euro-countdown-fly-03 {
+      position: absolute;
+      left: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 6s linear infinite;
+    }
+
+    .euro-countdown-fly-04 {
+      position: absolute;
+      right: -7px;
+      top: -10px;
+      width: 30px;
+      animation: fly 7s linear infinite;
+    }
+
+    .euro-countdown-fly-05 {
+      position: absolute;
+      right: 0px;
+      top: -10px;
+      width: 30px;
+      animation: fly 8s linear infinite;
+    }
+
+    .euro-countdown-fly-06 {
+      position: absolute;
+      right: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 10s linear infinite;
+    }
+
+    .euro-countdown-content {
+      display: flex;
+      justify-content: center;
+      width: max-content;
+      position: relative;
+      background-image: url(../assets/images/home/eurocup-countdown-content-frame.png);
+      background-size: 100% 100%;
+      padding: 4px;
+      margin-left: 12px;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .euro-countdown-txt {
+      position: absolute;
+      display: flex;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1;
+      align-items: center;
+      width: 100%;
+      padding: 0px 10px;
+
+      @media (min-width: 440px) {
+        font-size: 20px;
+      }
+
+      @media (min-width: 500px) {
+        font-size: 28px;
+      }
+
+      .txt-logo {
+        margin-left: -30px;
+      }
+
+      .txt-2024 {
+        margin-right: 10px;
+        @media (min-width: 440px) {
+          margin: 0 auto;
+        }
+      }
+
+      .euro-countdown-num-wrap {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .euro-countdown-num {
+        position: relative;
+        display: flex;
+
+        .num {
+          background-image: url(../assets/images/home/eurocup-countdown-number.png);
+          height: 40px;
+          width: 40px;
+          background-size: 100% 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @media (min-width: 440px) {
+            height: 50px;
+            width: 50px;
+          }
+
+          @media (min-width: 500px) {
+            height: 60px;
+            width: 60px;
+          }
+
+          &:last-child {
+            margin-left: -5px;
+          }
+        }
+        span {
+          background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 800;
+          font-size: 22px;
+          line-height: 1;
+          font-family: Arial;
+
+          @media (min-width: 440px) {
+            font-size: 32px;
+          }
+
+          @media (min-width: 440px) {
+            font-size: 36px;
+          }
+        }
+      }
+    }
+  }
+
+  .hot-matches-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hot-matches-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #313441;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    img {
+      display: block;
+      width: 30px;
+    }
+  }
+
+  .hot-matches-container {
+    :deep(.swiper-pagination) {
+      //bottom: -20px;
+      position: relative;
+      margin-top: 10px;
+    }
+  }
+
+  .hot-matches-carousel {
+    height: auto !important;
+    background: transparent;
+    //padding-bottom: 10px;
+
+    :deep(.q-carousel__navigation--bottom) {
+      bottom: 0px !important;
+    }
+  }
+
+  .hot-matches-slide {
+    // padding-top: 0;
+    // padding-left: 6px;
+    // padding-right: 6px;
+  }
+
+  .hot-matches-item {
+    background: #f4f9fe;
+    border-radius: 20px;
+    margin-top: 12px;
+    padding: 18px 18px 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+
+    .top-match-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 4px;
+      margin: -20px auto 0;
+
+      .title-frame {
+        background-image: url("../assets/images/home/top-match-title.png");
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: center center;
+        padding: 4px 12px;
+        margin: auto;
+      }
+    }
+
+    .match-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      margin-top: 12px;
+
+      img {
+        display: block;
+        width: 70px;
+      }
+
+      .match-title {
+        color: #424f72;
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+      }
+      .match-time {
+        color: #444444;
+        font-size: 14px;
+        text-align: center;
+        margin-top: 12px;
+      }
+
+      .match-btn {
+        // margin-top: auto;
+        margin-top: 6px;
+      }
+    }
+
+    .team-details {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      width: 100%;
+      max-width: 30%;
+
+      .team-details__home {
+      }
+
+      .team-details__away {
+      }
+
+      .team-icon {
+        // border-radius: 50%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: unset;
+    height: 60px;
+        }
+      }
+
+      .team-name {
+        text-align: center;
+        color: #444444;
+      }
+    }
+  }
+}
+
+.alert-img {
+  width: 70% !important;
+  margin: auto;
 }
 </style>

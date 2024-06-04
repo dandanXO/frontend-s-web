@@ -379,7 +379,7 @@ import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-// import { RiRefreshLine } from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core";
 import { api, eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import LangOptions from "components/LangOptions";
@@ -474,7 +474,7 @@ export default defineComponent({
 
     onMounted(() => {
       getBalance();
-      store.getBalance();
+      // store.getBalance();
       // store.getUnreadTotal();
       getVersionNo();
       getPromoImage();
@@ -485,7 +485,7 @@ export default defineComponent({
       getVipProgress();
     });
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api

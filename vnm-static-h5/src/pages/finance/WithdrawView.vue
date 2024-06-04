@@ -161,15 +161,15 @@
               {{
                 $t("lang.withdraw_singlewithdrawal") +
                 ": " +
-                selectedWithdrawalMethod.withdrawMin +
+                selectedWithdrawalMethod.withdrawMin.toLocaleString() +
                 "VNDP - " +
-                selectedWithdrawalMethod.withdrawMax +
+                selectedWithdrawalMethod.withdrawMax.toLocaleString() +
                 "VNDP"
               }}
               <br />
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
-              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount + "VNDP" }}
+              {{ $t("lang.withdraw_withdrawtoday") + ": " + selectedWithdrawalMethod.withdrawMaxAmount.toLocaleString() + "VNDP" }}
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
               <br />
@@ -299,6 +299,7 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
 import { useI18n } from "vue-i18n";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -308,7 +309,7 @@ export default defineComponent({
     const isNewUser = ref(false);
     const { t } = useI18n();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN;
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
     const amountRef = ref();
     const withdrawPwdRef = ref();
     const cardRef = ref();
@@ -369,8 +370,8 @@ export default defineComponent({
                 platform.isLoading = false;
               }
             }).catch((e) => {
-                  platform.isLoading = false;
-                }
+                platform.isLoading = false;
+              }
             );
 
           }
@@ -397,13 +398,10 @@ export default defineComponent({
             });
             getWithdrawalMethods();
 
-            // FB tracking :: login-withdrawal
-            if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
-                  fbq("track", "login-withdrawal");
-                }
+            // FB tracking :: apply-withdrawal
+            if (store.isAffiliateA) {
+              fbq("track", "apply-withdrawal");
+            }
 
 
             withdrawInfo.amount = "";
@@ -458,10 +456,10 @@ export default defineComponent({
           response.data.forEach(element => {
             if (element.bankType === "BANK") {
               if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push(element)
-                }
-                if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                  withdrawState.bankCardList.push(element)
+                withdrawState.bankCardList.push(element)
+              }
+              if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+                withdrawState.bankCardList.push(element)
               }
             } else {
               if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
@@ -564,6 +562,7 @@ export default defineComponent({
         window.open(url);
       }
     };
+
     return {
       noDecimalRule: (val) => /^([1-9][0-9]*)$/.test(val) || '金额应为正数',
       amountRef,

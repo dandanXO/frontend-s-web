@@ -2,19 +2,19 @@
   <div class="about-container">
     <el-card body-style="border-radius: 20px;">
       <el-tabs v-model="activeTab" tab-position="left" @tab-click="updateTab">
-      <el-tab-pane v-for="(e, i) in tabInfo" :key="`aboutus-${i}`" :label="e.label" :name="e.id">
-        <template #label>
-          <img v-if="activeTab === e.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
-          <img class="icon-img" :src="require(`../assets/about/icon_${e.id}.png`)" />
-          <div class="tab-label">{{ e.label }}</div>
-        </template>
-        <div class="about-content">
-          <div class="title">{{ e.label }}</div>
-          <div class="separator"></div>
-          <component :is="e.component"></component>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
+        <el-tab-pane v-for="(e, i) in tabInfo" :key="`aboutus-${i}`" :name="e.id">
+          <template #label>
+            <img v-if="activeTab === e.id" class="icon-selected-img" src="../assets/about/tab_selected.png" />
+            <img class="icon-img" :src="require(`../assets/about/icon_${e.id}.png`)" />
+            <div class="tab-label">{{ $t(e.labelKey) }}</div>
+          </template>
+          <div class="about-content">
+            <div class="title">{{ $t(e.labelKey) }}</div>
+            <div class="separator"></div>
+            <component :is="e.component"></component>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </el-card>
   </div>
 </template>
@@ -22,7 +22,6 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
 import AboutUs from "../components/about/AboutUs.vue";
 import AboutInfo from "../components/about/AboutInfo.vue";
 import AboutLaw from "../components/about/AboutLaw.vue";
@@ -30,13 +29,12 @@ import AboutRule from "../components/about/AboutRule.vue";
 import AboutBlame from "../components/about/AboutBlame.vue";
 
 const activeTab = ref("aboutus");
-const { t } = useI18n();
 const tabInfo = ref([
-  { id: "aboutus", label: t('about.aboutus'), component: AboutUs},
-  { id: "info", label: t('about.collectInformation'), component: AboutInfo },
-  { id: "law", label: t('about.legalBasis'), component: AboutLaw},
-  { id: "rule", label: t('about.bettingRules'), component: AboutRule},
-  { id: "blame", label: t('about.blame'), component: AboutBlame},
+  { id: "aboutus", labelKey: "about.aboutus", component: AboutUs },
+  { id: "info", labelKey: "about.collectInformation", component: AboutInfo },
+  { id: "law", labelKey: "about.legalBasis", component: AboutLaw },
+  { id: "rule", labelKey: "about.bettingRules", component: AboutRule },
+  { id: "blame", labelKey: "about.blame", component: AboutBlame }
 ]);
 
 const route = useRoute();
@@ -44,7 +42,8 @@ const router = useRouter();
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 
 const updateTab = (pane) => {
-  if (pane.props.name === "agent") window.open('https://lh1-affiliate.phoicynxeey.com/lh/login?agent=' + (affCode ? affCode : ''), "_self");
+  if (pane.props.name === "agent")
+    window.open("https://lh1-affiliate.phoicynxeey.com/lh/login?agent=" + (affCode ? affCode : ""), "_self");
   else router.push({ query: { id: pane.props.name } });
 };
 
@@ -103,8 +102,7 @@ onMounted(() => {
     min-height: 1240px;
 
     .title {
-      color: #424f72;
-      ;
+      color: $font-5;
       font-size: 1.125rem;
       font-weight: 700;
       line-height: normal;
@@ -117,7 +115,6 @@ onMounted(() => {
   }
 
   :deep(.el-tabs__content) {
-    
   }
 
   :deep(.el-tabs__item) {
@@ -128,13 +125,13 @@ onMounted(() => {
     align-items: center;
     justify-content: left;
     gap: 10px;
-    color: #A4AABB;
+    color: #a4aabb;
   }
 
   :deep(.el-tabs__item.is-active) {
     background: #e7f3ff;
     height: 50px;
-    color: #424F72;
+    color:  $font-5;
   }
 }
 </style>

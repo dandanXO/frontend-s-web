@@ -1,14 +1,14 @@
 <template>
   <div class="login-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
-    <div class="login-form-logo-img">
+    <!-- <div class="login-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
-    </div>
+    </div> -->
 
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div v-if="!loginType" class="login-form-grid">
@@ -157,7 +157,6 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "LoginPage",
@@ -534,11 +533,12 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .login-container {
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;

@@ -8,19 +8,28 @@
 
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="!nav.hasicon">
-              <div class="header-menu-item">
-                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+            <template v-if="!nav.hasicon && !nav.isTest">
+              <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
+                <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                  <h2 class="nav-title cn">{{ nav.name }}</h2>
+                  <h2 class="nav-title">{{ nav.enName }}</h2>
+                </a>
+                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
-                    <img
+                    <!-- <img
                       class="menu-icon"
                       :src="require(`../../assets/images/home/menu/${nav.code}-icon-active.png`)"
-                    />
-                    <h2 class="nav-title active">{{ nav.name }}</h2>
+                    /> -->
+                    <h2 class="nav-title cn active">{{ nav.name }}</h2>
+                    <h2 class="nav-title active">{{ nav.enName }}</h2>
                   </template>
                   <template v-else>
-                    <img class="menu-icon" :src="require(`../../assets/images/home/menu/${nav.code}-icon.png`)" />
-                    <h2 class="nav-title">{{ nav.name }}</h2>
+                    <!-- <img
+                      class="menu-icon"
+                      :src="require(`../../assets/images/home/menu/${nav.code}-icon${isDark ? '-dark' : ''}.png`)"
+                    /> -->
+                    <h2 class="nav-title cn">{{ nav.name }}</h2>
+                    <h2 class="nav-title">{{ nav.enName }}</h2>
                   </template>
                 </a>
               </div>
@@ -36,22 +45,22 @@
                   <span>
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-promo-icon.svg"
+                      :src="require(`../../assets/images/home/header-promo-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Promotion'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-affiliate-icon.svg"
+                      :src="require(`../../assets/images/home/header-affiliate-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'Agent'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-download-icon.svg"
+                      :src="require(`../../assets/images/home/header-download-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'App'"
                     />
                     <img
                       class="hover-icon"
-                      src="../../assets/images/home/header-vip-icon.svg"
+                      :src="require(`../../assets/images/home/header-vip-icon${isDark ? '-dark' : ''}.svg`)"
                       v-if="nav.code === 'VIP'"
                     />
                   </span>
@@ -110,8 +119,11 @@
           <el-dropdown trigger="click" class="profile-info-dropdown" @command="handleCommand">
             <span class="el-dropdown-link">
               <div class="profile-img-wrapper">
-                <img class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img v-if="!store.profilePhoto" class="profile-img" src="../../assets/images/home/profile-pic.png" />
+                <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" class="profile-img" :src="require(`../../assets/images/profile/${store.profilePhoto}.png`)" />
+                <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" class="profile-img" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
                 <img class="dropdown-icon" src="../../assets/images/home/header-dropdown-arrow-icon.png" />
+                <el-badge class="unread-count" v-if="store.unreadTotal" :value="store.unreadTotal" color="red" />
               </div>
             </span>
             <template #dropdown>
@@ -299,7 +311,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -328,7 +340,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -377,7 +389,7 @@
       <div class="acc-dialog-container">
         <div class="acc-dialog-left">
           <div class="acc-dialog-img">
-            <img src="../../assets/home/acc-dialog-img.png" />
+            <img src="../../assets/home/acc-dialog-img-eurocup.png" />
           </div>
         </div>
         <div class="acc-dialog-right">
@@ -430,7 +442,8 @@ import { findAccount } from "@/api/index/forgotPwd";
 import { sendSms } from "@/api/personal/personal";
 import { ElMessage } from "element-plus";
 import {
-  RiRefreshLine
+  RiRefreshLine,
+  RiChatUploadLine
 } from "vue-remix-icons";
 import GameMenu from "@/components/menu/GameMenu.vue";
 import EsportsMenu from "@/components/menu/EsportsMenu.vue";
@@ -442,7 +455,7 @@ import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
-import { useElementSize } from "@vueuse/core";
+import { useDark, useElementSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
@@ -451,6 +464,7 @@ import { getUnreadTotal } from "@/api/personal/mailbox";
 import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
+import { uploadImage, saveImage } from '@/api/personal/common'
 
 export default defineComponent({
   name: "CommonHeader",
@@ -468,31 +482,18 @@ export default defineComponent({
     GameModal,
     LoginDialog,
     ForgotPwdDialog,
-    RegisterAccount
+    RegisterAccount,
+    RiChatUploadLine
   },
-  data: () => ({
-    // carousel settings
-    navigations: [
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
-      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true },
-      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
-      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
-      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
-      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: "娱乐", enName: "Fishing", path: "/fishing", submenu: true },
-      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
-      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
-      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
-    ]
-  }),
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
+    const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
+
+    const timestamp = moment().unix();
 
     let cachedTelephone = lsGet(registerTelephoneKey);
     let initialRegisterSendOtpDisabledTimeout = false;
@@ -511,6 +512,32 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
+    
+    const checkToken = () => {
+      if (store.token) {
+        if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+          return false
+        }
+        return true
+      } else {
+        return true
+      }
+    }
+    const navigations = reactive([
+      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
+      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
+      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
+      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
+      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
+      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
+      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },
+      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
+      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
+    ])
     const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
@@ -520,10 +547,12 @@ export default defineComponent({
     const noticeDialogVisible = ref(false);
     const logoutDialogVisible = ref(false);
     const captchaDialogVisible = ref(false);
+    const profileDialogVisible = ref(false);
     const el = ref(null);
     const scroll = ref(0);
     const selectedMenu = ref(false);
     const { height } = useElementSize(el);
+    const isDark = useDark()
 
     const vipLevel = computed(() => {
       if (store.vip.toUpperCase() === "NORMAL") {
@@ -633,8 +662,7 @@ export default defineComponent({
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
-      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
       return v.match(chineseCharOnly);
     };
     let validatePass2 = async (r, v) => {
@@ -665,7 +693,12 @@ export default defineComponent({
     const hasAffiliate = ref(false);
     const regCountdown = ref(registerSendOtpDisabledTimeoutLeft);
     const loginCountdown = ref(0);
-
+    const uploadedImage = reactive({
+      url: null,
+    })
+    const imageForm = reactive({
+      path: null,
+    })
     const loginRules = {
       loginName: [
         {
@@ -1276,7 +1309,9 @@ export default defineComponent({
     //   })
     // }
     const pwdStrength = ref();
-
+    const openMiniGame = () => {
+      openGame("TFGaming", "TFGaming", 0)
+    };
     function charType(num) {
       if (num >= 48 && num <= 57) {
         return 1;
@@ -1405,6 +1440,7 @@ export default defineComponent({
       registerRef,
       loginRules,
       mobileLoginRules,
+      imageDir,
       captchaRules,
       regRules,
       getCode,
@@ -1440,7 +1476,12 @@ export default defineComponent({
       handleCommand,
       openLoginDialog,
       openRegDialog,
-      openForgotpwdDialog
+      openForgotpwdDialog,
+      isDark,
+      timestamp,
+      openMiniGame,
+      navigations,
+      checkToken
     };
   }
 });
@@ -1509,6 +1550,8 @@ body {
     .profile-img {
       display: block;
       width: 100%;
+      border-radius: 50%;
+      aspect-ratio: 1/1;
     }
 
     .dropdown-icon {
@@ -1518,6 +1561,15 @@ body {
       width: 12px;
       height: 12px;
       opacity: 0;
+    }
+
+    .unread-count {
+      position: absolute;
+      bottom: 2px;
+      right: 5px;
+      width: 12px;
+      height: 12px;
+      opacity: 1;
     }
   }
 
@@ -1758,7 +1810,7 @@ body {
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 16px;
+        gap: 20px;
         text-align: center;
         padding: 0px 15px;
 
@@ -1781,7 +1833,12 @@ body {
           }
 
           &:hover {
-            filter: brightness(0.85);
+            //filter: brightness(0.85);
+
+            .nav-title{
+              color: #333;
+              font-weight: bold;
+            }
           }
 
           .menu-icon {
@@ -2367,7 +2424,7 @@ body {
 
       .acc-dialog-left {
         width: calc(100% - 450px);
-        background-image: url(../../assets/home/acc-dialog-bg.png);
+        background-image: url(../../assets/home/acc-dialog-bg-eurocup.png);
         background-size: 100% 100%;
         background-position: center center;
         background-color: transparent;
@@ -2377,9 +2434,10 @@ body {
         padding: 8px;
 
         .acc-dialog-img {
-          margin-top: -50px;
-          margin-left: -140px;
-          margin-right: -70px;
+          margin-top: -70px;
+          margin-left: -80px;
+          margin-right: 0px;
+          margin-bottom: -7px;
 
           img {
             display: block;
@@ -2389,8 +2447,8 @@ body {
       }
 
       .acc-dialog-right {
-        width: 450px;
-        padding: 24px 24px 24px 40px;
+        width: 460px;
+        padding: 24px 24px 24px 24px;
 
         .acc-dialog-content {
           padding-top: 26px;
@@ -2476,29 +2534,183 @@ body {
 
 .header-menu-item {
   position: relative;
+    &.active {
+      &:after {
+        content: "";
+        background: #468CFF;
+        width: 80%;
+        height: 5px;
+        bottom: -24px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border-radius: 4px;
+      }
+    }
   // display: flex;
   a {
     position: relative;
   }
 
   .nav-title {
-    position: absolute;
-    margin: 0px;
-    bottom: 12px;
-    font-size: 14px;
+    // position: absolute;
+    // margin: 0px;
+    // bottom: 12px;
     width: 100%;
-    padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #000;
-    letter-spacing: 1px;
     text-align: center;
     font-family: PingFang SC;
-    line-height: 18px;
+    //color: #7A80A1;
+    color: #52597d;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 0;
+    &.cn {
+      font-weight: 600;
+    font-size: 16px;
+    }
 
     &.active {
-      font-weight: 500;
-      color: #fff;
+
+      color: #468CFF;
     }
   }
+}
+
+.dark {
+  .acc-dialog.el-dialog {
+    .el-dialog__header {
+      .el-dialog__close {
+        color: $color-white !important;
+      }
+    }
+
+    .el-dialog__body {
+      .acc-dialog-left {
+        background-image: url(../../assets/home/acc-dialog-bg-dark-eurocup.png);
+        background-size: 100% 100%;
+        background-position: center center;
+      }
+    }
+  }
+
+  .header-container {
+    .top-nav-wrapper {
+      background: $background-dark;
+      box-shadow: $shadow-header-dark;
+      .top-nav-inner {
+        .navigations {
+          a {
+            color: $font-1-dark;
+          }
+
+          .sub-menu {
+            background: $background-content-block-dark;
+            box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
+          }
+        }
+      }
+    }
+  }
+
+  .header-menu-item {
+    .nav-title {
+      color: $font-4-dark;
+      &.active {
+        color: $color-white;
+      }
+    }
+  }
+
+  .profile-actions {
+    .action-btn {
+      color: $color-white;
+
+      .icon-rounded {
+        box-shadow: none;
+        background-color: $background-content-block-lighter-dark;
+      }
+    }
+  }
+
+  .profile-info {
+    .profile-details {
+      .details-name {
+        color: $color-white;
+      }
+    }
+  }
+}
+
+.grid-container {
+  margin: 20px auto;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  transition: transform 0.5s;
+  img {
+    width: 100px;
+  cursor: pointer;
+    border-radius: 50%;
+  }
+}
+
+.grid-item .el-image:hover {
+  cursor: pointer;
+}
+
+.grid-item.selected {
+    position:relative;
+    color: #ffffff;
+  img {
+    border: 3px solid #33BC03;
+  }
+    &:after {
+      content: "✓";
+    position: absolute;
+    background: #33BC03;
+    font-size: 15px;
+    width: 25px;
+    height: 25px;
+    right: 0px;
+    bottom: 5px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    }
+}
+
+
+.profile-dialog{
+  max-width: 660px;
+}
+
+.profile-dialog .header {
+  font-size: 20px;
+}
+
+.profile-dialog .standard-button {
+    width: 400px;
+    display: block;
+    margin: 10px auto;
+    height: unset;
+    border-radius: 40px;
+}
+.profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
+  
+  background: #7A8EB966;
+  border-radius: 25px;
+  top: 8px;
 }
 </style>

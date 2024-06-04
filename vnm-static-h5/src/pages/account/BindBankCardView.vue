@@ -267,13 +267,14 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { t } from "src/boot/lang";
+import {useLocalStorage} from "@vueuse/core";
 
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = process.env.IMAGE_CDN;
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
@@ -291,7 +292,7 @@ const bankCardInfo = reactive({
 
 const validateBankLength = (val) => {
   if (!/^\d+$/.test(val)) return t("lang.bd_please_enter_digit_only");
-  // return (val.length > 15 && val.length < 20) || t("lang.bd_length_between_16_19");
+  return (val.length > 5 && val.length < 21) || t("lang.bd_length_between_8_20");
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -309,7 +310,7 @@ const getInnerCode = () => {
   innerCaptchaCode.value = "";
 
   api
-    .get("/member/verificationCode")
+    .get("/member/verificationEasyCode")
     .then((response) => {
       if (response.code === 0) {
         phoneVerificationImg.value = "data:image/png;base64," + response.data.img;

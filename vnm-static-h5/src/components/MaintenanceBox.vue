@@ -2,8 +2,8 @@
   <div class="maintenance-box" v-if="item.underMaintenance === true">
     <p class="maintenance-title"><img src="../assets/images/home/maintenance-icon.svg" />{{ $t('lang.currently_maintaining') }}</p>
     <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">
-      {{ $t('lang.maintenance_time') }}: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD HH:mm") }} -
-      {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD HH:mm") }}
+      {{ $t('lang.maintenance_time') }}: {{ moment(item.maintenanceStartTime).format("DD/MM/YYYY HH:mm") }} -
+      {{ moment(item.maintenanceEndTime).format("DD/MM/YYYY HH:mm") }}
     </p>
   </div>
 </template>
@@ -51,7 +51,7 @@ const props = defineProps({
     align-items: center;
     justify-content: center;
     width: 100%;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 
     img{
       width: 2.8rem;

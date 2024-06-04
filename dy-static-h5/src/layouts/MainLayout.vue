@@ -562,11 +562,11 @@ export default defineComponent({
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "发件箱";
+          pageName.value = "我的反馈";
         } else if (route.path === "/account/mail/write") {
           prevPage.value = "account/mail";
           hasPage.value = true;
-          pageName.value = "写信";
+          pageName.value = "意见反馈";
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "account";
           hasPage.value = true;

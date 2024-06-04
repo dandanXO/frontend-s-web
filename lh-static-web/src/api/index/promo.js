@@ -206,7 +206,6 @@ export function getKeyRecord(promoCode, page) {
   });
 }
 
-
 export function claimCheckInTreasure(promoCode, days) {
   return server.EVENT.post(`/event-check-in/open`, { promoCode, days });
 }
@@ -236,20 +235,20 @@ export function getQuestionnaireAns() {
 
 export const submitQuestionnaire = (formData) => {
   const requestOptions = {
-    method: 'POST',
+    method: "POST",
     body: JSON.stringify(formData),
     headers: {
-        token: `${userStore().token}`,
-        'Content-Type': 'application/json'
-    },
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
   };
-    var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
 
-  return fetch(evtUrl + '/questionnaire/submit', requestOptions)
-    .then(response => {
-      return response.json()
+  return fetch(evtUrl + "/questionnaire/submit", requestOptions)
+    .then((response) => {
+      return response.json();
     })
-    .catch(error => {
+    .catch((error) => {
       return Promise.reject(error);
     });
 };
@@ -261,17 +260,73 @@ export function getDailyRainListing(item) {
   return server.EVENT.get(`/redPacketVip/list?promoCode=${item}`);
 }
 export function loadSummon(promoCode) {
-  return server.EVENT.get('/member-summon/get-record', {
+  return server.EVENT.get("/member-summon/get-record", {
     params: {
       promoCode
     }
   });
-} 
+}
 export function claimSummon(promoCode) {
-  return server.EVENT.post('/member-summon/claim', { promoCode });
-} 
-export function getSummonRewardRecord(page) { 
-  return server.EVENT.get('/member-summon/get-summon-reward-record', { param: {
-    page
-  } });
+  return server.EVENT.post("/member-summon/claim", { promoCode });
+}
+export function getSummonRewardRecord(page) {
+  return server.EVENT.get("/member-summon/get-summon-reward-record", {
+    param: {
+      page
+    }
+  });
+}
+
+export function getLOLMsiMatchRecord() {
+  return server.EVENT.get("/game-match/upcoming/MSI");
+}
+
+export function getSportMatch() {
+  return server.EVENT.get("/sport-match/today");
+}
+
+export function getLplSummer24Match() {
+  return server.EVENT.get("game-match/upcoming/MSI");
+}
+
+
+export function duanwuVipUpgrade() {
+  return server.EVENT.post("/duan-wu/vip-upgrade");
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
+  };
+  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+
+  return fetch(evtUrl + "/duan-wu/vip-upgrade", requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+}
+
+export function duanwuDepositBet() {
+  return server.EVENT.post("/duan-wu/deposit-bet");
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      token: `${userStore().token}`,
+      "Content-Type": "application/json"
+    }
+  };
+  var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+
+  return fetch(evtUrl + "/duan-wu/deposit-bet", requestOptions)
+    .then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
 }

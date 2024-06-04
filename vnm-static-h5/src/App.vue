@@ -23,6 +23,7 @@ export default defineComponent({
     $q.dark.set(false);
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
+    const channelValue = ref("");
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -73,7 +74,6 @@ export default defineComponent({
           CSAUrl = "csweb01.c8nhwrqx4.com";
         });
     };
-
 
     const initCsWeb = () => {
       var regDevice = store.getDeviceType();
@@ -131,6 +131,44 @@ export default defineComponent({
       }
     };
 
+    const onDeviceReady = () => {
+      // Get the file system
+      window.resolveLocalFileSystemURL(
+        cordova.file.applicationDirectory,
+        function (applicationDirectory) {
+          applicationDirectory.getFile(
+            "channel.json",
+            { create: false, exclusive: false },
+            function (fileEntry) {
+              // Read the file
+              fileEntry.file(function (file) {
+                var reader = new FileReader();
+
+                reader.onloadend = function (evt) {
+                  console.log("Read as text: ", evt.target.result);
+                  const jsonData = evt.target.result;
+                  const json = JSON.parse(jsonData);
+                  if (json && json.channel) {
+                    sessionStorage.setItem("AFFILIATE_CODE", json.channel);
+                    channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
+                  }
+                };
+
+                // Read the file as text
+                reader.readAsText(file);
+              }, errorHandler);
+            },
+            errorHandler
+          );
+        },
+        errorHandler
+      );
+    };
+
+    const errorHandler = (error) => {
+      console.error("File error: " + error.code);
+    };
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
@@ -138,12 +176,20 @@ export default defineComponent({
 
       onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
+
+      document.addEventListener(
+        "deviceready",
+        () => {
+          onDeviceReady();
+        },
+        false
+      );
     });
 
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
+    });
   }
 });
 </script>

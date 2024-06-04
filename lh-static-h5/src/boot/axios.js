@@ -19,7 +19,16 @@ if (isGlobalLH) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
-} else {
+} else if(window.location.hostname.includes("leihuo")){
+  var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
+  var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);
+  var crGlobalArray = Object.values(process.env.GLOBAL_CR_API);
+
+  var rstApi = getInitApi(rstGlobalArray, "LH_H5_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "LH_H5_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "LH_H5_CRT_URL");
+
+}else {
   var rstApi = getInitApi(rstArray, "LH_H5_RST_URL");
   var evtApi = getInitApi(evtArray, "LH_H5_EVT_URL");
   var crtApi = getInitApi(crtArray, "LH_H5_CRT_URL");

@@ -42,17 +42,23 @@ export default {
     login_register_to_view: "Log in/Register to view",
     tf88_news: "TF88 News",
     see_all: "See all",
+    play_now: "Play now",
+    bet_now: "Bet Now",
+    hotMatches: "Hot Matches",
+    euroCountdown01: "ROAD TO ",
+    euroCountdown01a: "",
+    euroCountdown02: " DAYS LEFT",
+    helloUsername: "Hi,",
 
     // side menu
     menu_sports: "Sports",
     menu_esports: "eSports",
-    menu_livecasino: "Live Casino",
+    menu_livecasino: "Casino",
     menu_poker: "Poker",
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
-
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
@@ -183,7 +189,6 @@ export default {
     currently_maintaining: "Maintenance in progress",
     maintenance_time: "Maintenance Time",
 
-
     // personal | verify
     personal_exclusiveurl: "Exclusive URL",
     personal_username: "Username",
@@ -302,6 +307,8 @@ export default {
     deposit_between: "Deposit should be between ",
     deposit_bank: "Bank",
     deposit_insert_bank: "Please insert bank",
+    deposit_allowpopups:
+      'Unable to open the recharge page. Please check whether the browser blocks pop-up pages and change it to "Allow pop-ups" before proceeding with the recharge operation.',
 
     // withdraw
     withdraw_amount: "Amount",
@@ -342,6 +349,7 @@ export default {
     add_ewallet: "Add eWallet",
     bd_bank_card: "Bank card",
     bd_untie: "Untie",
+    bd_untie_success: "Untie successfully",
     bd_virtual_account: "Virtual account",
     bd_account_bank: "Account Bank",
     bd_please_select: "Please select",
@@ -361,6 +369,7 @@ export default {
     bd_submit: "Submit",
     bd_please_enter_digit_only: "Please enter digit only",
     bd_length_between_16_19: "Length should between 16-19",
+    bd_length_between_8_20: "Length should between 6-20",
     bd_added_bank_card: "Added bank card",
     bd_click_verification:
       "Please click to get the verification code and enter your registered mobile phone for verification",
@@ -443,6 +452,10 @@ export default {
     didnt_win: "Didn't win",
     please_select_query_time: "Please select the query time",
 
+    // promo -- upgradeHongbao
+    congrats: "Congratulations",
+    claim: "Claim",
+
     // slot
     slot_search: "Search for games",
 
@@ -510,8 +523,9 @@ export default {
     vip_lottery_rebate: "Lottery Rebate",
     vip_unachieved: "Unachieved",
     vip_achieved: "Achieved",
-    vip_cumulative_deposits: "Cumulative deposits:",
-
+    vip_cumulative_deposits: "VIP MAINTAIN REQUIRED:",
+    vip_3timedeposit: "DEPOSIT 3 TIMES",
+    totalBetMonth: "TOTAL BET OF MONTH",
     have_one_successful_deposit: "have one successful deposit",
     accumulated_deposits: "Accumulated deposits",
     turnover_requirements: "Turnover requirements",
@@ -972,7 +986,6 @@ export default {
     welcome: "Welcome",
     tnc: "Terms and Conditions",
     agree: "Agree",
-    claim: "Claim",
     select_date: "Select Date",
     invite_friend_to_receive_prize: "Invite Friends to Receive Prize",
     event_time: "Event Date",
@@ -1150,6 +1163,7 @@ export default {
     page_rescuefundrecords: "Rescue Fund Records",
     page_register: "Register",
     page_lobby: "Lobby",
+    page_about: "About TFgaming",
 
     menu_deposit: "Deposit",
     menu_withdraw: "Withdraw",
@@ -1272,7 +1286,159 @@ export default {
     fishing: "Fishing",
     cockfight: "Cockfight",
     copy_success: "Link successfully copied!",
-    enter_transfer_amount: "Enter Transfer Amount"
+    enter_transfer_amount: "Enter Transfer Amount",
+    choose_later: "Choose Later",
+    // about
+    about: {
+      affiliate: "Affiliates",
+      aboutus: "About TFgaming",
+      welcome:
+        "Welcome to TF88 Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
+      product: "PRODUCT",
+      productDescription:
+        "TF88 offers a wide range of online gambling products including online casino, sportsbook, slots, e-sports and lotteries... With these diverse products, we believe that customers will have plenty of opportunities to find games that suit your interests and entertainment needs.",
+      liquidity: "LIQUIDITY",
+      liquidityDescription:
+        "Owning a flexible and diverse payment system through local banks, e-wallets, mobile cards, Usdt... TF88 is committed to processing customer transactions as quickly as possible, on the basis of ensuring maximum information transaction.",
+      security: "SECURITY",
+      securityDescription:
+        "TF88 uses advanced security technologies to ensure that customer information is protected in the best way. We take the necessary security precautions to protect our members' personal information and privacy. So, rest assured that the information you provide is always safe in our secure data system.",
+      promotion: "PROMOTION",
+      promotionDescription:
+        "We understand that the odds may not always be what you want, that's why TF88 has created many promotions to make sure you always get the best deal on every bet. We are always looking for ways to create the best gaming environment for our customers.",
+      license: "LICENSE",
+      licenseDescription:
+        "TF88 is licensed by North Cagayan (NCGAC) under the Philippine government. The company is headquartered in Manila, Philippines.",
+      // Collect Info
+      collectInformation: "Collect information",
+      policyMessage:
+        "During your visit, the system and your browser may transmit information to our servers, this information is intended to collect and help TF88 always improve the quality for you to have a better experience.",
+      personalInformation:
+        "Your personal information when registering includes: Full name, email, phone number, date of birth and other information in order for TF88 to complete your information for account management.",
+      processingPurposes: "Your information will be processed for a variety of purposes, including:",
+      manageProcessInfo: "On TF88's website to manage and process your information.",
+      offerGames: "Offers games and approves bets for you.",
+      determineLegalAge: "To determine your legal age when participating in the game at TF88.",
+      meetProductPreferences: "Based on preferences to meet the right products.",
+      webMaintenance: "For web maintenance and problem diagnosis.",
+      improveServiceQuality: "To improve service quality.",
+      riskPrevention: "Risk prevention and website improvement.",
+      complyLegalSanctions: "Comply with relevant legal sanctions.",
+      statisticalAnalysis:
+        "In the course of serving you, we conduct statistical analysis based on different regions. We may provide 3rd parties to display ads.",
+      cooperateSuppliers:
+        "TF88 cooperates with many suppliers, so your information can be provided to the supplier to look up the results for the purpose of ensuring the fairness of the results and ensuring your interests.",
+      promotionInformation: "Promotion information",
+      marketingPromotions:
+        "In order for Marketing to conduct promotions, and announce the prize of a winning promotion, TF88 may publish your account nick information or your initials and the prize number you received.",
+      privacy: "Privacy",
+      privacyAssurance:
+        "TF88 will ensure the security of your personal information. Because TF88 uses the strongest firewall system to prevent the intrusion of illegal acts.",
+      dataSecurity: "Data Security",
+      dataSecurityAssurance:
+        "For any data and information related to the company, confidentiality is required when handling.",
+      // Legal Basis
+      legalBasis: "Legal Basis",
+      generalTermsMessage:
+        "Below are general terms and conditions for using TF88. By registering for an account, you agree to abide by our general terms. All activity in a visitor's account on the website is subject to and monitored by the following terms:",
+      ageRequirement:
+        "Members must be at least 18 years old and have the intellectual capacity to take responsibility for their own actions.",
+      singleAccount:
+        "Each customer can only open one account on TF88's website. We may close any additional accounts opened and any remaining funds in the account will be handled at TF88's sole discretion.",
+      personalInformation2:
+        "Customers provide personal information when registering for an account and need to ensure that their provided information is correctly updated on the Website. If there is a mistake in the registration information, TF88 disclaims related liability. We ensure that customer information is safe and secure.",
+      checkAccountBalance:
+        "The customer must regularly check the account balance, when there is any deviation, the customer is responsible for immediately reporting to Online Support to check and verify the account.",
+      accountSecurity:
+        "Customers must ensure the security of their account information, when customers disclose information to others, any disputes or conflicts later TF88 is not responsible.",
+      depositInstructions:
+        "Customers who need to deposit money need to comply with the information and instructions on the Web site, TF88 is not responsible for all transactions that are not made according to instructions.",
+      accessFromRestrictedArea:
+        "TF88 does not encourage or prohibit attempts to access the Website from an area not designated for our service.",
+      entertainmentPurpose:
+        "TF88 provides products for entertainment purposes, customers who agree to participate in TF88 will have certain risks. When using the service at TF88, we disclaim the website's responsibility for any customer's losses.",
+      withdrawalRequest:
+        "TF88 reserves the right to refuse a withdrawal request if the registration information is incorrect, TF88 has the right to request relevant documents to confirm the registration information.",
+      honestyPolicy:
+        "Customers must ensure not to deceive, misrepresent or release inaccurate information to smear TF88.",
+      suspensionPolicyMessage:
+        "If TF88 suspects that a customer does not comply with the above provisions, we have the right to suspend the account to handle according to regulations.",
+
+      // Betting Rules
+      bettingRules: "Betting Rules",
+      familyRestriction:
+        "People in the same family, same home address, same phone number, bank account number or IP address on the internet will not be able to participate in TF88 promotions.",
+      entertainmentPurpose2:
+        "All promotions at TF88 are for entertainment purposes only, TF88 reserves the right to limit customers' right to participate in any promotions.",
+      modifyPromotion:
+        "TF88 reserves the right to change, modify or terminate the Promotion, or part thereof, at any time and without prior notice.",
+      singleDeposit: "Each deposit can only participate in one Promotion.",
+      refundBasedOnBetTurnover:
+        "The refund will be based on the total amount of valid bets (bet turnover) of the member in each product according to each market, each match and each membership level as follows:",
+      refundOptions: {
+        loseAll: "Lose All - Refund on stake",
+        loseLessThanStake: "Lose less than stake - Refund on Win/Loss",
+        winGreaterThanOrEqualTo75: "Win >= 75% - Refund on stake",
+        winLessThan75: "Win < 75% - Cashback on winnings"
+      },
+      requiredRounds:
+        "The required number of rounds should be reached within 30 days to avoid the bonus and winnings being voided.",
+      abuseDiscretion:
+        "The determination of what constitutes bonus abuse will be at the discretion of TF88, clear evidence of bonus abuse will include, but are not limited to, the following examples:",
+      abuseExamples: {
+        excludedGames: "Bonus bets on excluded games",
+        multipleAccounts: "Using multiple accounts",
+        crossAccountBets: "Cross-account bets",
+        oddsDifference: "Abuse of odds difference between betting sites",
+        doubleBetAmount: "Double the bet amount for each consecutive bet",
+        betOnBothSides: "Bet on both sides",
+        doubleBet: "Double bet",
+        affiliateAbuse: "Affiliate agent CPA or revenue sharing abuse"
+      },
+      excludedBets:
+        "All bets DRAW, CANCEL bets, Jackpot progressive, slot progressive, card and table games, virtual sports, odds under 1.75 Dec or 0.75 Cn will not count towards the promotion turnover.",
+      transactionRecordsCheck:
+        "TF88 reserves the right to check transaction records and login time at any time for any reason. If, after our investigation, we discover that a player has benefited from the promotion by placing bets in the ways outlined above, or we consider that there have been unfair participation practices, TF88 reserves the right to withdraw the bonus amount and any associated winnings.",
+      falsifiedContentDisqualification:
+        "Any person who falsifies the promotional content may be disqualified, meaning the bonus and any associated winnings will be forfeited.",
+      amendTermsAndConditions:
+        "TF88 reserves the right to terminate or amend the Terms and Conditions of the promotion at any time for any reason without prior notice.",
+      withdrawalVerification:
+        "Withdrawals may be audited and/or identity verified before being processed. Members may be required to provide proof of identity, address, age and/or deposit receipts, proof of games played or phone number. Failure to provide this required information to us within 72 hours may result in the bonus and any associated winnings being forfeited.",
+
+      // Blame
+      blame: "Gambling Responsibly",
+      intro:
+        "TF88 always strives to provide a safe platform for players to relax and be entertained. We understand that gambling can carry risks associated with addiction. TF88 is solely responsible for our players' understanding of all potential harms involved. Make sure you are playing responsibly through the self-assessment questions below:",
+      questions: {
+        question1: "Have you ever neglected work to play betting?",
+        question2: "Do you bet to kill time or to get rid of boredom?",
+        question3:
+          "When you lose a bet that runs out of money, do you feel lost, desperate and need to bet again immediately?",
+        question4: "Have you ever relied on gambling to earn money paying off debts or solving financial difficulties?",
+        question5: "After losing all your money, do you ever feel compelled to take back your losses immediately?",
+        question6: "After winning, do you aspire to win bigger?",
+        question7: "Have you ever bet all your hands to the end of your money?",
+        question8: "Have you ever lied or considered committing theft in order to get money for a bet?",
+        question9: "Do you ever lose interest in your family, friends, or habits anymore?",
+        question10: "Does betting make you despair or even commit suicide because of it?"
+      },
+      signsOfGambling: "If the answer is 'YES' then you may be showing signs of gambling.",
+      adviceTitle: "ADVICE",
+      advice1: "Betting should only be viewed as entertainment.",
+      advice2: "It is recommended to manage playtime, up to 1 day no more than 2 hours.",
+      advice3: "Manage playing capital, determine the maximum amount of certain wins and losses before playing.",
+      advice4:
+        "When you are experiencing negative emotions, drunkenness, insecurity,... Look for another hobby instead of gambling.",
+      advice5: "Don't be afraid to seek help from those around you when you feel things are getting worse.",
+      tf88SupportTitle: "Help from TF88 responsible bets",
+      tf88SupportContent:
+        "As one of the leading game platforms in Vietnam, and Asia. We ensure negative principles of prevention and containment when betting on all parties including providers and platform regulators. In addition, TF88's team is always equipped with enough knowledge and skills about responsible betting ready to support you at any time.",
+      ageRestriction:
+        "TF88 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",
+      partner: "Partner",
+      paymentMethod: "Payment Method"
+    }
   },
   error: {
     101: "Platform not found",
@@ -1289,6 +1455,7 @@ export default {
     601: "Token validation error",
     603: "Token not found",
     608: "The current user's operations are too frequent. Please try again.",
+    609: "Platform in maintenance",
     604: "Logged in successfully",
     707: "Insufficient balance",
     800: "Incorrect confirmation code",
@@ -1297,7 +1464,7 @@ export default {
     901: "Record not found",
     902: "Email does not match our member",
     903: "Email does not match the registered account",
-    904: "Email has not been verified",
+    904: "Email has not been verified yet, please contact Customer Service 24/7.",
     905: "Real name not provided",
     906: "User email has not verify yet.",
     909: "Phone number not found",
@@ -1305,7 +1472,7 @@ export default {
     1000: "Login name or password error",
     1001: "Account is closed",
     1002: "Account is for affiliates",
-    1004: "Username can only contains numbers and letters",
+    1004: "The account is temporarily locked due to entering the wrong password many times",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -1350,6 +1517,7 @@ export default {
     30004: "Member deposit does not meet the requirements",
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
+    30007: "Member deposit does not meet the requirements",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

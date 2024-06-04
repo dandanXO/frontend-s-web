@@ -1,6 +1,7 @@
 export default {
   common: {
     title: 'TF แดชบอร์ด',
+    welcome_system: 'ยินดีต้อนรับสู่ระบบหลังบ้าน',
     logout: 'ออกจากระบบ',
     changePassword: 'เปลี่ยนรหัสผ่าน',
   },
@@ -193,6 +194,9 @@ export default {
     bet: 'การเดิมพัน',
     payout: 'การจ่ายเงิน',
     merchantDepositSummary: 'สรุปการฝากเงินของร้านค้า',
+    rfdRegisterCount: 'จำนวนการลงทะเบียน',
+    rfdFDepositCount: 'สถิติการฝากครั้งแรก',
+    rfdReport: 'การลงทะเบียนแนวโน้มการฝากเงินครั้งแรก',
   },
   reportGame: {
     gamePlatform: 'แพลตฟอร์มเกม',
@@ -658,6 +662,7 @@ export default {
     jobName: 'ชื่องาน',
     jobType: 'ประเภทงาน',
     label: 'ฉลาก',
+    labelCancel: 'ยกเลิก',
     lastLogin: 'เข้าสู่ระบบครั้งล่าสุด',
     lastLoginAddress: 'ที่อยู่เข้าสู่ระบบล่าสุด',
     lastLoginIp: 'IP เข้าสู่ระบบล่าสุด',
@@ -1176,9 +1181,11 @@ export default {
     indRebateAmount: 'จำนวนเงินคืน',
     indAdjustAmount: 'จำนวนการปรับปรุงกองทุน',
     grossProfit: 'กำไรขั้นต้น',
+    winloss: 'ชนะการสูญเสีย',
+    profit2: 'Dep-With',
   },
   message: {
-    startenddatemore3months: "เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน",
+    startenddatemore3months: 'เวลาเริ่มและเสร็จสิ้นต้องไม่เกิน 3 เดือน',
     addRemarkSuccess: 'เพิ่มหมายเหตุความสำเร็จ',
     addSuccess: 'เพิ่มความสำเร็จ',
     adjustSuccess: 'ปรับจำนวนเงินสำเร็จ',
@@ -1593,6 +1600,8 @@ export default {
     Lottery: 'หวย',
     'Lottery Record List': 'บันทึกรายการหวย',
     'Lottery Result List': 'บันทึกการผลรางวัลหวย',
+    'Vietnam Lottery Record List': 'บันทึกรายการหวย',
+    'Vietnam Lottery Result List': 'บันทึกการผลรางวัลหวย',
     'VIP Rebate Record': 'บันทึกรีเบทวีไอพี',
     'Bet Rebate Record': 'บันทึกการคืนเงินส่วนลดจากการพนัน',
     'Refer Friend': 'บันทึกแนะนำเพื่อน',

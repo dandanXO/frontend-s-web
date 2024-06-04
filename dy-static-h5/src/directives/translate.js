@@ -9,7 +9,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "DEPOSIT") {
     if (type === "transfer") {
       return "转进";
-    }else if(type === "moneyChange"){
+    } else if (type === "moneyChange") {
       return "转账";
     }
     return "存款"; // 存款
@@ -57,6 +57,8 @@ export const translateRecord = (rec, type = "") => {
     return "QQ支付"; // QQ支付
   } else if (rec === "KDPAY") {
     return "K豆"; // K豆
+  } else if (rec === "BLBPAY") {
+    return "808钱包"; // 808钱包
   } else if (rec === "DDPAY") {
     return "钉钉"; // 钉钉
   } else if (rec === "HBPAY") {
@@ -123,12 +125,12 @@ export const translateRecord = (rec, type = "") => {
     return "转账"; // TRANSFER
   } else if (rec === "ADJUST") {
     return "金额调整"; // ADJUST
-  }else if (rec === "MGP") {
+  } else if (rec === "MGP") {
     return "MG"; // AG
-  }else if (rec === "PMLIVE") {
+  } else if (rec === "PMLIVE") {
     return "PM真人"; // BET
   } else if (rec === "AG") {
-    if(type == "SLOT"){
+    if (type == "SLOT") {
       return "XIN电子";
     }
     return "AG真人"; // AG
@@ -142,6 +144,8 @@ export const translateRecord = (rec, type = "") => {
     return "开元棋牌"; // KY
   } else if (rec === "KYDY") {
     return "开元棋牌"; // KY
+  } else if (rec === "LEG") {
+    return "乐游棋牌"; // DT
   } else if (rec === "DT") {
     return "大唐棋牌"; // DT
   } else if (rec === "TCG") {

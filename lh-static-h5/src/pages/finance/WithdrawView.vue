@@ -15,6 +15,10 @@
               <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </div>
         <q-form ref="withdrawFormRef">
@@ -66,7 +70,7 @@
               <q-item-section>
                 <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                   {{ scope.opt.bankName }} - ****{{
-                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                   }}
                 </q-item-label>
               </q-item-section>
@@ -89,8 +93,8 @@
               (val) => (val && val.length > 0) || '请输入提款金额',
               (val) => val >= selectedWithdrawalMethod.withdrawMin || '请输入正确的提款金额',
               (val) => val <= selectedWithdrawalMethod.withdrawMax || '请输入正确的提款金额',
-              (val) => (val && /^\d+$/.test(val))  || '提款金额不能有小数',
-              isValidUSDTAmt,
+              (val) => (val && /^\d+$/.test(val)) || '提款金额不能有小数',
+              isValidUSDTAmt
             ]"
             clearable
           >
@@ -144,9 +148,9 @@
             </div>
             <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
           </div>
-<!--          <div v-else-if="!isEWALLET && !isUSDT">-->
-<!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
-<!--          </div>-->
+          <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
+          <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
+          <!--          </div>-->
           <div v-else-if="isEWALLET">
             <div class="q-mt-sm text-neontb">*特别说明：提款钱包和游戏账号的姓名务必一致</div>
             <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -177,7 +181,13 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn class="q-mt-md common-large-btn quick-withdraw-btn" @click="submitWithdraw" label="立即提款" />
+            <q-btn
+              class="q-mt-md common-large-btn quick-withdraw-btn"
+              @click="submitWithdraw"
+              :loading="withdrawLoading"
+              :disable="withdrawLoading"
+              label="立即提款"
+            />
           </div>
           <div class="q-py-md">
             <div
@@ -244,6 +254,8 @@ export default defineComponent({
     const isNewUser = ref(false);
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -310,14 +322,19 @@ export default defineComponent({
         });
       }
     };
+
+    const withdrawLoading = ref(false);
+
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
         message: "确认中。。。"
       });
+      withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
+        withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
@@ -336,6 +353,8 @@ export default defineComponent({
               },0)
             }
 
+            withdrawLoading.value = false;
+
           } else {
             $q.notify({
               color: "negative",
@@ -343,9 +362,12 @@ export default defineComponent({
               message: response.message,
               icon: "report_problem"
             });
+
+            withdrawLoading.value = false;
           }
         }).catch((error) => {
           console.log("error", error);
+          withdrawLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -365,7 +387,7 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
@@ -472,13 +494,19 @@ export default defineComponent({
         return 'EB教程视频'
       } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
         return 'OK教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'BLBPAY') {
+        return '808钱包教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
+        return 'JDPAY教程视频'
       }
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com/',
-        'EBPAY': 'https://www.ebpay24.com/',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -497,6 +525,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
@@ -515,7 +544,8 @@ export default defineComponent({
       tutorialLabel,
       isNewUser,
       checkNewUser,
-      isValidUSDTAmt
+      isValidUSDTAmt,
+      withdrawLoading
     };
   }
 });
@@ -571,6 +601,20 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
+    .promo-label {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translate(-50%);
+      width: 50px;
+
+      img {
+        width: 100%;
+        height: auto;
+        padding: 4px 6px;
+      }
+    }
+
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 10px;
@@ -583,13 +627,14 @@ export default defineComponent({
     }
 
     &.active {
-      // background: #212534;
-      // color: #db7e42;
-      // box-shadow: none;
-      // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
         border: 3px solid #33bcd4;
         border-radius: 10px;
+      }
+
+      .promo-img {
+        border: none;
+        border-radius: 0px;
       }
 
       .type-name {
@@ -641,5 +686,15 @@ export default defineComponent({
 
 .quick-withdraw-btn {
   width: 100%;
+}
+
+.body--dark {
+  .withdraw-section {
+    @include content-block-dark;
+    .withdraw-selection.q-field,
+    .withdraw-field.q-field {
+      box-shadow: none;
+    }
+  }
 }
 </style>

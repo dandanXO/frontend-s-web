@@ -90,7 +90,7 @@ const searchRecord = () => {
 
 const isEnded = ref(false);
 
-var apiUrl= "/session/member/gameBetRecord";
+var apiUrl = "/session/member/gameBetRecord";
 
 var endDate = reactive(moment().format("YYYY-MM-DD"));
 var startDate = reactive(moment().add(-7, "days").format("YYYY-MM-DD"));
@@ -141,18 +141,19 @@ const loadDepositTable = (isNew) => {
 
   var platformName = platform.value ? (platform.value.value === "BBINDY" ? "BBIN" : platform.value.value) : "";
   let paramData = {
-    "startDate": startDate,
-    "endDate": endDate,
-    "platform": platformName,
-    "memberId": store.id,
-    "size": 20,
-    "current": current.value
+    startDate: startDate,
+    endDate: endDate,
+    platform: platformName,
+    memberId: store.id,
+    size: 20,
+    current: current.value
   };
 
-  api.get(apiUrl, {
+  api
+    .get(apiUrl, {
       params: paramData
-    }
-  ).then((res) => {
+    })
+    .then((res) => {
       maxPage.value = res.data.pages;
       totalBetRecord.totalBet = res.data.sums.totalBet;
       totalBetRecord.totalPayout = res.data.sums.totalPayout;
@@ -174,53 +175,55 @@ const loadDepositTable = (isNew) => {
 
 const getGameName = (gameName) => {
   if (!gameName) {
-    return ''
+    return "";
   }
 
   switch (gameName) {
-        case 'IMES':
-          return 'IM电竞';
-        case 'TCG':
-          return 'TCG彩票';
-        case 'MGP':
-          return 'MG电子';
-        case 'CQ9':
-          return 'CQ电子';
-        case 'SABA':
-          return 'SABA体育';
-        case 'TFGaming':
-          return 'DY电竞 ';
-        case 'SW':
-          return 'SW电子';
-        case 'GPS':
-          return 'GPS捕鱼';
-        case 'PMFISH':
-          return 'DB捕鱼';
-        case 'IA':
-          return '小艾电竞 ';
-        case 'DT':
-          return '大唐棋牌';
-        case 'IM':
-          return 'IM体育';
-        case 'BBIN':
-          return 'BBIN真人, BBIN电子, BBIN彩票';
-        case 'KY':
-          return '开元棋牌';
-        case 'PT':
-          return 'PT电子';
-        case 'PG':
-          return 'PG电子';
-        case 'AG':
-          return 'AG真人, XIN电子';
-        case 'AGF':
-          return 'AG捕鱼';
-        case 'ALLBET':
-          return 'ALLBET真人';
+    case "IMES":
+      return "IM电竞";
+    case "TCG":
+      return "TCG彩票";
+    case "MGP":
+      return "MG电子";
+    case "CQ9":
+      return "CQ电子";
+    case "SABA":
+      return "SABA体育";
+    case "TFGaming":
+      return "DY电竞 ";
+    case "SW":
+      return "SW电子";
+    case "GPS":
+      return "GPS捕鱼";
+    case "PMFISH":
+      return "DB捕鱼";
+    case "IA":
+      return "小艾电竞 ";
+    case "LEG":
+      return "乐游棋牌";
+    case "DT":
+      return "大唐棋牌";
+    case "IM":
+      return "IM体育";
+    case "BBIN":
+      return "BBIN真人, BBIN电子, BBIN彩票";
+    case "KY":
+      return "开元棋牌";
+    case "PT":
+      return "PT电子";
+    case "PG":
+      return "PG电子";
+    case "AG":
+      return "AG真人, XIN电子";
+    case "AGF":
+      return "AG捕鱼";
+    case "ALLBET":
+      return "ALLBET真人";
 
-        default:
-          return gameName;
-      }
-    }
+    default:
+      return gameName;
+  }
+};
 
 const loadPlatformLists = () => {
   platformsList.value = [];
@@ -236,7 +239,7 @@ const loadPlatformLists = () => {
         value: ""
       });
 
-      _.each(data, function(item, index) {
+      _.each(data, function (item, index) {
         var option = {
           label: getGameName(item.name),
           value: item.code
@@ -247,6 +250,10 @@ const loadPlatformLists = () => {
 };
 
 const tableHeaders = [
+  {
+    key: "betId",
+    label: "注单号"
+  },
   {
     key: "betTime",
     label: "游戏时间"

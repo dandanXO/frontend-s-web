@@ -15,7 +15,7 @@ export const actions = {
     let { userName, password, googleCode } = userInfo;
     userName = userName.trim();
     const currentHost = window.location.host
-    if (currentHost === process.env.VUE_APP_IND_HOST || currentHost === process.env.VUE_APP_IND2_HOST || currentHost === process.env.VUE_APP_IW2_HOST) {
+    if (currentHost === process.env.VUE_APP_IND_HOST || currentHost === process.env.VUE_APP_IW2_HOST) {
       const { data: token } = await indLoginRequest({ userName: userName, password, googleCode: googleCode });
       commit(UserMutationTypes.SET_TOKEN, token);
     } else {

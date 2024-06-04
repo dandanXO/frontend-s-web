@@ -38,7 +38,7 @@
                           :rules="[
                             { required: true, message: '请输入姓名' },
                             {
-                              pattern: '^([\u4e00-\u9fa5]*)$',
+                              pattern: /^[\u4e00-\u9fa5·]+$/,
                               message: '请输入中文字符',
                               trigger: 'change'
                             }
@@ -189,11 +189,7 @@
 
               <button
                 class="standard-button btn-color-blue"
-                v-if="
-                  !isEdit &&
-                  (
-                    !personalState.memberInfo.birthday)
-                "
+                v-if="!isEdit && !personalState.memberInfo.birthday"
                 @click="isEdit = !isEdit"
               >
                 编辑
@@ -211,22 +207,38 @@
 
             <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
               <el-form-item ref="refOldPassword" label="旧密码" name="oldPassword" prop="oldPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.oldPassword" :placeholder="'请输入旧密码'" clearable show-password />
+                <el-input
+                  style="width: 200px"
+                  type="password"
+                  v-model="updatePwdInfo.oldPassword"
+                  :placeholder="'请输入旧密码'"
+                  clearable
+                  show-password
+                />
               </el-form-item>
 
               <el-form-item ref="refPassword" label="新密码" name="password" prop="password">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.password" :placeholder="'请输入新密码'" clearable show-password />
+                <el-input
+                  style="width: 200px"
+                  type="password"
+                  v-model="updatePwdInfo.password"
+                  :placeholder="'请输入新密码'"
+                  clearable
+                  show-password
+                />
               </el-form-item>
               <el-form-item ref="refConfirmPassword" label="确认密码" name="confirmPassword" prop="confirmPassword">
-                <el-input style="width:200px;" type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="'请再次输入新密码'" clearable show-password />
+                <el-input
+                  style="width: 200px"
+                  type="password"
+                  v-model="updatePwdInfo.confirmPassword"
+                  :placeholder="'请再次输入新密码'"
+                  clearable
+                  show-password
+                />
               </el-form-item>
               <div class="txt-center btn-container">
-                <button
-                  :loading="loadingPwBtn"
-                  class="standard-button btn-color-white"
-                  type="button"
-                  @click="clearPwd"
-                >
+                <button :loading="loadingPwBtn" class="standard-button btn-color-white" type="button" @click="clearPwd">
                   重新填写
                 </button>
 
@@ -1127,6 +1139,35 @@ export default defineComponent({
       display: flex;
       justify-content: flex-end;
     }
+  }
+}
+
+.dark {
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
+
+  .personal-container {
+    .personal-wrapper {
+      .tbl-row {
+        .basic-info-cell {
+          color: $font-3-dark;
+        }
+      }
+
+      .update-pwd-container {
+        &:deep(.el-input__wrapper) {
+          background-color: $background-content-block-lighter-dark;
+          box-shadow: 0px 0px 8px 0px #0d233a inset;
+        }
+      }
+    }
+  }
+
+  .account-tip-text {
+    color: $font-3-dark;
   }
 }
 </style>

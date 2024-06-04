@@ -36,8 +36,12 @@
             <span class="promo" v-if="method.recommended">
               {{ "finance.withdraw.recommended" }}
             </span>
-            <img :src="imgURL + method.icon" />
+            <img class="promo-img" :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img v-if="method.privilegeIcon" :src="`${imgURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </el-form-item>
 
@@ -138,7 +142,7 @@
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <div
             style="margin: 15px 0px; color: #ff7f10"
-            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
+            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
             *特别说明：提款钱包和游戏账号的姓名务必一致
           </div>
@@ -150,6 +154,8 @@
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
           </el-button>
         </div>
 
@@ -160,7 +166,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -234,17 +246,20 @@ export default defineComponent({
               })
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
+              loadingBtn.value = false;
               // message.error(response.message);
             }
           }).catch((error) => {
               console.log(error.message);
+              loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
           console.log("error", error);
+          loadingBtn.value = false;
         });
-        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
@@ -372,7 +387,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY');
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY');
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       loadCards()
     }
@@ -401,9 +416,11 @@ export default defineComponent({
 
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com/useTutorial',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -521,24 +538,43 @@ export default defineComponent({
       // margin-right: 10px;
       // border-radius: 6px;
       // border: solid 1px #484460;
-      // position: relative;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       cursor: pointer;
-      img {
+
+      .promo-label {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translate(-50%);
         width: 40px;
-        padding: 2px 20px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .promo-img {
+        width: 40px;
+        padding: 6px 20px;
         background: #2a313e;
         border: 1px solid transparent;
+        margin-bottom: 5px;
       }
       &.active {
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
-        img {
+        pointer-events: none;
+        .promo-img {
           border: 1px solid #45fdfb;
+        }
+        .promo-label {
+          border: none;
         }
       }
       .type-name {

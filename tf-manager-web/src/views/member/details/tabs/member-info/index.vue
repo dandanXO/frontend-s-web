@@ -501,12 +501,13 @@
       </template>
       <div v-loading="loading.fundingInfo">
         <el-descriptions>
-          <el-descriptions-item :label="t('fields.totalBalance')" width="20%">
+          <el-descriptions-item :label="t('fields.totalBalance')" width="30%">
             <div style="display: inline-block;" v-loading="loading.total">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.balance,type: 'money'}" />
               </div>
             </div>
+            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
           </el-descriptions-item>
           <el-descriptions-item v-if="memberDetail.siteId === '5' || memberDetail.site === 5" :label="t('fields.withdrawableBalance')">
             <div style="display: inline-block;" v-loading="loading.total">
@@ -516,12 +517,12 @@
             </div>
           </el-descriptions-item>
           <el-descriptions-item :label="t('fields.thirtyDaysdw')">
-            <div style="display: inline-block;" v-loading="loading.total">
+            <div style="display: inline-block;" v-loading="loading.dnw">
               <div class="balance">
                 $ <span v-formatter="{data: memberDetail.companyProfit,type: 'money'}" />
               </div>
             </div>
-            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshAllBalance" />
+            <el-button class="refresh-btn" icon="el-icon-refresh" size="mini" @click="refreshDnW" />
           </el-descriptions-item>
         </el-descriptions>
         <el-descriptions
@@ -874,6 +875,7 @@ import {
   updateMemberType,
   unlockMember,
   refreshBalance,
+  getDnW,
   forceLogout,
   syncMemberDetail
 } from "../../../../../api/member";
@@ -921,6 +923,7 @@ export default defineComponent({
       loginInfo: false,
       fundingInfo: false,
       total: false,
+      dnw: false,
       balance: []
     });
 
@@ -1470,7 +1473,6 @@ export default defineComponent({
       const { data: balance } = await refreshBalance(props.mbrId, site.id);
       memberDetail.balance = balance.balance;
       memberDetail.withdrawableBalance = balance.withdrawableBalance;
-      memberDetail.companyProfit = balance.companyProfit;
       memberDetail.totalDeposit = balance.totalDeposit;
       memberDetail.totalWithdraw = balance.totalWithdraw;
       memberDetail.totalBonus = balance.totalBonus;
@@ -1481,6 +1483,13 @@ export default defineComponent({
         loading.balance[key] = false;
       }
       loading.total = false;
+    };
+
+    const refreshDnW = async () => {
+      loading.dnw = true;
+      const { data: balance } = await getDnW(props.mbrId, site.id);
+      memberDetail.companyProfit = balance;
+      loading.dnw = false;
     };
 
     const refreshPlatformBalance = async (key) => {
@@ -1666,6 +1675,7 @@ export default defineComponent({
       showEditRemark,
       loadBalance,
       refreshAllBalance,
+      refreshDnW,
       refreshPlatformBalance,
       unmaskDetail,
       unmaskedValue,

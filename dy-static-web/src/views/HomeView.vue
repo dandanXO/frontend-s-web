@@ -2,7 +2,7 @@
   <div class="home">
     <el-carousel class="banner-slider" height="25vw" arrow="always">
       <el-carousel-item class="banner-container" v-for="banner in banners" :key="banner">
-        <router-link :to="`/promotion?name=${banner.redirectUrl}`">
+        <a @click="goBannerPage(banner.redirectUrl)">
           <div
             v-if="banner && banner.desktopImageUrl"
             class="promo-bg isDesktop"
@@ -13,7 +13,7 @@
             class="promo-bg isMobile"
             :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"
           ></div>
-        </router-link>
+        </a>
       </el-carousel-item>
     </el-carousel>
     <div class="index-container">
@@ -271,14 +271,19 @@
               <div
                 class="game-platform"
                 @click="openGame('开元棋牌', 'KY', '')"
-                style="margin-top: 118px; margin-left: 38px"
+                style="margin-top: 48px; margin-left: 46px"
               >
                 <img src="../assets/home/ky.png" />
                 <div>开元棋牌</div>
               </div>
-              <div class="game-platform" @click="openGame('大唐棋牌', 'DT', '')" style="margin-left: 21px">
+              <div class="game-platform" @click="openGame('大唐棋牌', 'DT', '')" style="margin-left: 30px">
                 <img src="../assets/home/tx.png" />
                 <div>大唐棋牌</div>
+              </div>
+
+              <div class="game-platform" @click="openGame('乐游棋牌', 'LEG', '')" style="margin-left: 14px">
+                <img src="../assets/home/leg.png" />
+                <div>乐游棋牌</div>
               </div>
             </div>
           </div>
@@ -672,6 +677,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   // directives: {
@@ -684,6 +690,7 @@ export default defineComponent({
   setup() {
     const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
     const gameMenu = ref(null);
+    const router = useRouter();
     const banners = ref([
       // {
       //   src: "83ac7ea8-c77d-4cf0-976a-7f1a5e1b0027.png"
@@ -755,6 +762,15 @@ export default defineComponent({
           .catch(() => {});
       }
     };
+
+    const goBannerPage = (redirectUrl) => {
+      if (redirectUrl == "app://deposit") {
+        router.push("/center/deposit");
+      } else {
+        router.push(`/promotion?name=${redirectUrl}`);
+      }
+    };
+
     onMounted(() => {
       loadBanners();
       checkShowImgTop();
@@ -768,7 +784,8 @@ export default defineComponent({
       getWithExpiry,
       setWithExpiry,
       homePopupImg,
-      isImpt
+      isImpt,
+      goBannerPage
     };
   }
 });

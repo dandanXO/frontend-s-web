@@ -16,7 +16,7 @@
               'grid-column': playerPosition.column
             }"
           >
-            <img src="../../../assets/images/promo/hotpromo/lh-step-game/player-pin.png" />
+            <img :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/player-pin-game${currentStage}.png`)">
           </div>
           <template v-for="(position, step) in stepPositionMapping" :key="step">
             <template
@@ -37,8 +37,10 @@
               >
                 <span>
                   <img
-                    :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}.png`)"
+                    :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}.png`)" v-if="step !== '59'"
                   />
+
+                  <img :src="require(`../../../assets/images/promo/hotpromo/lh-step-game/game-btn-reward-${step}-game${currentStage}.png`)" v-else>
                 </span>
               </div>
             </template>
@@ -604,7 +606,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .stepgame-wrapper {
-  background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/stepgame-bg.png");
+  background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/game1-bg.jpg");
   padding: 1px 1px 0px;
   background-size: 100% auto;
   background-position: top center;
@@ -613,7 +615,7 @@ onUnmounted(() => {
   background-color: #042212;
 
   &.step-2 {
-    background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/stepgame2-bg.png");
+    background-image: url("../../../assets/images/promo/hotpromo/lh-step-game/game2-bg.jpg");
 
     .game-container {
       border: 2px solid #f9dd94;

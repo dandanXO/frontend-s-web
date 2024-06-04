@@ -112,12 +112,24 @@ const getPromotion = () => {
 
       if (res.code === 0) {
         const claimedAmt = res.data.lastDigitAmount + res.data.vipAmount;
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: `恭喜中奖！获得：${claimedAmt}`,
-          icon: "check_circle_outline"
-        });
+        // const claimedAmt = res.data;
+
+        if(claimedAmt===0){
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: `谢谢惠顾`,
+            icon: "check_circle_outline"
+          });
+
+        }else{
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: `恭喜中奖！获得：${claimedAmt}`,
+            icon: "check_circle_outline"
+          });
+        }
 
         store.getBalance();
 
@@ -213,7 +225,7 @@ onMounted(() => {
 
       .table-data {
         position: absolute;
-        top: 0%;
+        top: 15%;
         left: 50%;
         transform: translate(-50%, 0%);
         width: 90%;
@@ -225,23 +237,31 @@ onMounted(() => {
           display: table-row;
 
           .header {
-            font-size: 14px;
+            font-size: 12px;
             color: #ffffffb2;
             text-align: center;
             display: table-cell;
-            padding: 2px;
-            padding-top: 25px;
-            padding-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #411971;
+
+            &:not(:last-child) {
+              border-right: 1px solid #411971;
+            }
           }
 
           .content {
             font-size: 10px;
-            color: #b5a0f1;
+            color: #fff;
             text-align: center;
             display: table-cell;
-            padding: 2px;
+            padding: 5px;
             overflow: auto;
-            height: 100px;
+            height: 70px;
+            vertical-align: middle;
+
+            &:not(:last-child) {
+              border-right: 1px solid #411971;
+            }
           }
         }
       }
@@ -269,14 +289,14 @@ onMounted(() => {
       margin: 0 auto;
       text-align: left;
       padding: 0px 10px;
-      color: #7a8eb9;
+      color: #fff;
       font-size: 12px;
     }
 
     .rules-header {
       margin: 0 auto;
       padding: 0px 10px;
-      color: #a4c1ff;
+      color: #fff;
 
       .rules-header-img {
         width: 100%;

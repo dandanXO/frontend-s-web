@@ -40,29 +40,35 @@
             child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'
           "
         >
-          <RouterLink
-            :to="nav.path + child.path"
-            class="route"
-            v-if="child.isMainNav"
+          <template
+            v-if="
+              !(child.path === '/transfer' && store.state.user.siteId === '10')
+            "
           >
-            <div
-              class="route-content"
-              :style="
-                !isExpanded && child.icon === 'speech-bubbles'
-                  ? 'margin-top: 50px'
-                  : ''
-              "
+            <RouterLink
+              :to="nav.path + child.path"
+              class="route"
+              v-if="child.isMainNav"
             >
-              <svg-icon
-                :icon-class="`${child.icon}`"
-                :style="child.active ? 'color: #179cff' : ''"
-                :className="child.active ? 'active-icon' : ''"
-              />
-              <span :class="child.active ? 'active' : ''" v-if="isExpanded">
-                {{ child.title }}
-              </span>
-            </div>
-          </RouterLink>
+              <div
+                class="route-content"
+                :style="
+                  !isExpanded && child.icon === 'speech-bubbles'
+                    ? 'margin-top: 50px'
+                    : ''
+                "
+              >
+                <svg-icon
+                  :icon-class="`${child.icon}`"
+                  :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''"
+                />
+                <span :class="child.active ? 'active' : ''" v-if="isExpanded">
+                  {{ child.title }}
+                </span>
+              </div>
+            </RouterLink>
+          </template>
         </div>
       </div>
     </div>
@@ -242,6 +248,14 @@ const getNavigationData = () => {
             active: false,
             isMainNav: true,
             icon: 'affiliate',
+          },
+          {
+            path: '/summary',
+            title: t('menu.AffiliateSummary'),
+            label: 'Affiliate Summary',
+            active: false,
+            isMainNav: true,
+            icon: 'report',
           },
           {
             path: '/game-record',

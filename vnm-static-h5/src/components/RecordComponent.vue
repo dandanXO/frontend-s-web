@@ -153,6 +153,7 @@ import { SessionStorage, useQuasar } from "quasar";
 import { translateRecord } from "../directives/translate.js";
 import * as _ from "lodash";
 import { useI18n } from "vue-i18n";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   props: {
@@ -323,7 +324,7 @@ export default defineComponent({
       });
     };
 
-    const imgURL = process.env.IMAGE_CDN;
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
     const getImageLink = (linkId) => {
       // reminderForm.photos = linkId;
       reminderForm.photos = `${imgURL}/${linkId}`;

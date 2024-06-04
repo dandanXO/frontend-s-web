@@ -8,9 +8,9 @@
         <q-tab :class="{ tab: 'tab', active: activeKey === 'record' }" name="record">
           <h3>{{ $t("lang.lucky_number_record") }}</h3>
         </q-tab>
-        <q-tab :class="{ tab: 'tab', active: activeKey === 'winner' }" name="winner">
+        <!-- <q-tab :class="{ tab: 'tab', active: activeKey === 'winner' }" name="winner">
           <h3>{{ $t("lang.winner_list") }}</h3>
-        </q-tab>
+        </q-tab> -->
       </q-tabs>
 
       <q-tab-panels v-model="activeKey">

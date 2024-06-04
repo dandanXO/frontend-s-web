@@ -283,7 +283,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="1200px"
+      width="1800px"
     >
       <div>
         <div class="search">
@@ -431,6 +431,39 @@
           </template>
         </el-table-column>
         <el-table-column
+          prop="rebate"
+          :label="t('fields.rebate')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="paymentFee"
+          :label="t('fields.paymentFee')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="platformFee"
+          :label="t('fields.platformFee')"
+          align="center"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.platformFee, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
           prop="bet"
           :label="t('fields.totalBet')"
           align="center"
@@ -490,6 +523,22 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="lastLoginTime"
+          :label="t('fields.lastLoginTime')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span
+              v-formatter="{
+                data: scope.row.lastLoginTime,
+                formatter: 'YYYY/MM/DD HH:mm:ss',
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -513,8 +562,8 @@
           currentPageType === 'main'
             ? request.current
             : currentPageType === 'newRegister'
-              ? memberPage.current
-              : allMemberPage.current
+              ? memberRequest.current
+              : allMemberRequest.current
         "
       />
     </el-dialog>
@@ -539,8 +588,8 @@ const siteList = reactive({
   list: [],
 })
 
-let currentPageType = ref('main')
-let currentAffiliateId = ref(null)
+const currentPageType = ref('main')
+const currentAffiliateId = ref(null)
 
 const shortcuts = getShortcuts(t)
 const uiControl = reactive({
@@ -595,7 +644,7 @@ const memberRequest = reactive({
 })
 
 const allMemberRequest = reactive({
-  size: 15,
+  size: 25,
   current: 1,
   siteId: null,
 })
@@ -675,7 +724,7 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
-  currentPageType = 'main'
+  currentPageType.value = 'main'
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
@@ -699,21 +748,25 @@ async function loadChildren(tree, treeNode, resolve) {
 function showDialog(type, affiliateId) {
   if (type === 'MEMBER') {
     // newMembers.list = members
-    currentPageType = 'newRegister'
-    loadNewMember(affiliateId)
-    currentAffiliateId = affiliateId
+    currentPageType.value = 'newRegister'
     uiControl.dialogTitle = t('fields.newMember')
+    memberPage.affiliateId = affiliateId
+    memberRequest.current = 1
+    loadNewMember(affiliateId)
   } else if (type === 'ALLMEMBER') {
-    currentPageType = 'allMembers'
-    loadAllMember(affiliateId)
-    currentAffiliateId = affiliateId
+    currentPageType.value = 'allMembers'
     uiControl.dialogTitle = t('fields.allmembers')
+    allMemberPage.affiliateId = affiliateId
+    allMemberRequest.current = 1
+    loadAllMember(affiliateId)
   }
+  currentAffiliateId.value = affiliateId
   uiControl.dialogType = type
   uiControl.dialogVisible = true
 }
 
 async function loadNewMember(affiliateId) {
+  currentPageType.value = 'newRegister'
   memberPage.loading = true
   memberRequest.siteId = request.siteId
   const requestCopy = { ...memberRequest }
@@ -753,7 +806,6 @@ async function loadNewMember(affiliateId) {
   query.memberType = popUpRequest.memberType
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
-  currentPageType = 'newRegister'
   memberPage.pages = ret.pages
   memberPage.records = ret.records
   memberPage.loading = false
@@ -761,6 +813,7 @@ async function loadNewMember(affiliateId) {
 }
 
 async function loadAllMember(affiliateId) {
+  currentPageType.value = 'allMembers'
   allMemberPage.loading = true
   allMemberRequest.siteId = request.siteId
   const requestCopy = { ...allMemberRequest }
@@ -776,20 +829,20 @@ async function loadAllMember(affiliateId) {
 
   popUpRequest.recordTime = request.recordTime
 
-  if (popUpRequest.regTime !== null) {
-    if (popUpRequest.regTime.length === 2) {
-      query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
+  // if (popUpRequest.regTime !== null) {
+  //   if (popUpRequest.regTime.length === 2) {
+  //     query.regTime = JSON.parse(JSON.stringify(popUpRequest.regTime))
 
-      query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
-      query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
+  //     query.regTime[0] = moment(query.regTime[0]).format('YYYY-MM-DD 00:00:00')
+  //     query.regTime[1] = moment(query.regTime[1]).format('YYYY-MM-DD 23:59:59')
 
-      query.regTime = query.regTime.join(',')
-    } else {
-      query.regTime = moment(popUpRequest.regTime[0]).format(
-        'YYYY-MM-DD 00:00:00'
-      )
-    }
-  }
+  //     query.regTime = query.regTime.join(',')
+  //   } else {
+  //     query.regTime = moment(popUpRequest.regTime[0]).format(
+  //       'YYYY-MM-DD 00:00:00'
+  //     )
+  //   }
+  // }
 
   if (popUpRequest.recordTime !== null) {
     if (popUpRequest.recordTime.length === 2) {
@@ -811,7 +864,6 @@ async function loadAllMember(affiliateId) {
   }
 
   const { data: ret } = await getAffiliateSummaryNewMember(query)
-  currentPageType = 'allMembers'
 
   allMemberPage.pages = ret.pages
   allMemberPage.records = ret.records

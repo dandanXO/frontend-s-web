@@ -143,6 +143,16 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isHotGameLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -153,100 +163,140 @@
               class="platform-game-container"
             >
               <!-- Add Evolution in Hot Game -->
-              <template v-for="(item, index) in livecasino" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    data-aos-delay="100"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#home"
-                  >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
-                          backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
-                        }"
-                      ></div>
-                    </div>
-
-                    <div class="platform-game-title">
-                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                    </div>
-                  </div>
-                </swiper-slide>
-              </template>
+              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
+              <!--               -->
+              <!--              </template>-->
 
               <template v-for="(item, index) in hotGameList" :key="index">
-                <swiper-slide
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#home"
+
+                <template v-if="item.type && item.type ==='game'">
+                  <swiper-slide
+                    class="platform-game-item btn-effect"
+                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div class="platform-game-img">
-                      <div
-                        class="game--bg"
-                        :style="{
+                    <div
+                      data-aos="zoom-in"
+                      :data-aos-delay="100 * index"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#home"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
                           backgroundImage: `url(${imgURLGame}${item.icon})`
                         }"
-                      ></div>
-                    </div>
+                        ></div>
+                      </div>
 
-                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                  </div>
-                </swiper-slide>
+                      <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
+                    </div>
+                  </swiper-slide>
+                </template>
+                <template v-else>
+                  <swiper-slide
+                    class="platform-game-item btn-effect"
+                    @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
+                  >
+                    <div
+                      data-aos="zoom-in"
+                      data-aos-delay="100"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#home"
+                    >
+                      <div class="platform-game-img">
+                        <div
+                          class="game--bg"
+                          :style="{
+                            backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                        }"
+                        ></div>
+                      </div>
+
+                      <div class="platform-game-title">
+                        {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                      </div>
+                    </div>
+                  </swiper-slide>
+                </template>
+
               </template>
             </swiper>
           </div>
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
-              <template v-for="(item, index) in livecasino" :key="index">
-                <div
-                  class="platform-game-item btn-effect"
-                  v-if="item.name === 'Evo' || item.name === 'WCPT'"
-                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
-                >
-                  <div class="platform-game-img">
-                    <div
-                      class="game--bg"
-                      :style="{
-                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`
-                      }"
-                    ></div>
-                  </div>
-                  <div class="platform-game-title">
-                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}
-                  </div>
-                </div>
-              </template>
+              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
+              <!--                <div-->
+              <!--                  class="platform-game-item btn-effect"-->
+              <!--                  v-if="item.name === 'Evo' || item.name === 'WCPT'"-->
+              <!--                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"-->
+              <!--                >-->
+              <!--                  <div class="platform-game-img">-->
+              <!--                    <div-->
+              <!--                      class="game&#45;&#45;bg"-->
+              <!--                      :style="{-->
+              <!--                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`-->
+              <!--                      }"-->
+              <!--                    ></div>-->
+              <!--                  </div>-->
+              <!--                  <div class="platform-game-title">-->
+              <!--                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </template>-->
 
               <template v-for="(item, index) in hotGameList" :key="index">
-                <div
-                  class="platform-game-item btn-effect"
-                  @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
-                >
-                  <div class="platform-game-img">
-                    <div
-                      class="game--bg"
-                      :style="{
+                <template v-if="item.type && item.type ==='game'">
+                  <div
+                    class="platform-game-item btn-effect"
+                    @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
                         backgroundImage: `url(${imgURLGame}${item.icon})`
                       }"
-                    ></div>
+                      ></div>
+                    </div>
+                    <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
-                  <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
-                </div>
+                </template>
+
+                <template v-else>
+                  <div
+                    class="platform-game-item btn-effect"
+                    @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                            backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                          }
+                        })()
+                        }"
+                      ></div>
+                    </div>
+                    <div class="platform-game-title">
+                      {{ truncateText(item.alias ? item.alias : item.name, 22) }}
+                    </div>
+                  </div>
+                </template>
+
               </template>
             </div>
           </div>
@@ -263,6 +313,14 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="1.5"
               :spaceBetween="0"
@@ -292,7 +350,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.789f.app/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://m.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -313,6 +371,14 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-downs">
+                <q-skeleton class="casino-skeleton" />
+                <q-skeleton class="casino-skeleton" />
+              </div>
+            </template>
+
             <div class="platform-game-container">
               <template v-for="(item, index) in livecasino" :key="index">
                 <div
@@ -328,7 +394,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.789f.app/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://m.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -360,6 +426,16 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -389,7 +465,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.789f.app/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -408,6 +484,21 @@
           </div>
 
           <div class="platform-game-wrapper" v-else>
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <div
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -430,7 +521,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.789f.app/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -459,6 +550,16 @@
           </div>
 
           <div class="platform-game-wrapper">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-lists">
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+                <q-skeleton class="slot-skeleton" />
+              </div>
+            </template>
+
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -632,6 +733,7 @@
         </div>
 
         <div class="platform-game-container grid-view" v-else>
+
           <template v-for="(item, index) in fishGameJILIList" :key="index">
             <div
               class="platform-game-item btn-effect"
@@ -677,6 +779,15 @@
             <!-- <span class="txt-style">Sports</span> -->
           </div>
           <div class="platform-game-container sport-platform">
+
+            <template v-if="isPlatLoading">
+              <div class="skeleton-grid">
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+                <q-skeleton class="sport-skeleton" />
+              </div>
+            </template>
+
             <template v-for="(item, index) in sport" :key="index">
               <div
                 class="platform-game-item btn-effect"
@@ -690,7 +801,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.789f.app/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://m.indwin7.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -1002,11 +1113,8 @@ import KYCGuestForm from "../components/KYCGuestForm.vue";
 import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { isAndroid } from "boot/utils";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
-// import { ref, onMounted, onUnmounted } from 'vue';
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "swiper/css/navigation";
@@ -1148,6 +1256,8 @@ const playGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId
 };
 
 const isGameLoading = ref(true);
+const isPlatLoading= ref(false);
+const isHotGameLoading= ref(false);
 const openGame = (gameName, platformCode, gameCode, gameStatus, gameType, gameId) => {
   isShowAllFullGames.value = false;
   isGameLoading.value = true;
@@ -1202,14 +1312,16 @@ const filteredHotGameList = computed(() => {
 const loadHotGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
   const key = `PLATFORM_HOT_GAMES_${regDevice}`;
+  const key2 = `MEMBER_HOT_${regDevice}`;
 
-  // cached
+  var gameLists = [];
+  var hotlists= [];
+
   cached
-    .get(key, () =>
+    .get(key2, () =>
       api
-        .get("/platformGamesByLabel", {
+        .get("/member/hot", {
           params: {
-            gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -1222,10 +1334,52 @@ const loadHotGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
-      hotGameList.value = res;
+      hotlists = res;
 
-      hotGameList.value.sort((a, b) => a.sequence - b.sequence);
+      // cached
+      cached
+        .get(key, () =>
+          api
+            .get("/platformGamesByLabel", {
+              params: {
+                gameLabel: "HOT",
+                device: regDevice
+              }
+            })
+            .then((ret) => {
+              const res = ret;
+              if (res.code === 0) {
+                return res;
+              }
+            })
+            .catch((err) => {})
+        )
+        .then((res) => {
+          gameLists = res;
+
+          hotlists = hotlists.map((item1) => {
+            const matchingItem = gameLists.find((item2) => item1.type==='game' && item1.code === item2.code);
+            return { ...matchingItem, ...item1 };
+          });
+
+          hotlists = hotlists.map((item3) => {
+            const matchingItem = livecasino.value.find((item4) => item3.type==='platform' && item3.code === item4.name);
+            return { ...item3 ,...matchingItem  };
+          });
+
+          hotGameList.value = hotlists.map((item5) => {
+            const matchingItem = sport.value.find((item6) => item5.type==='sport' && item5.code === item6.name);
+            return { ...item5 ,...matchingItem  };
+          });
+
+          console.log("End")
+          console.log(hotGameList.value);
+          // console.log(livecasino.value);
+
+          isHotGameLoading.value= false;
+        });
     });
+
 };
 
 const fishGameJILIList = ref([]);
@@ -1463,10 +1617,15 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
+      isPlatLoading.value= false;
+
       // console.log("After");
       // console.log(sport.value);
+      loadHotGameList();
     })
-    .catch((err) => {});
+    .catch((err) => {
+
+    });
 };
 
 const announcementList = ref([]);
@@ -1692,11 +1851,12 @@ onActivated(() => {
 });
 
 onMounted(() => {
+  isHotGameLoading.value= true;
+  isPlatLoading.value = true;
   getPlatList();
   loadData();
   loadAnnouncement();
   checkPlatform();
-  loadHotGameList();
   loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
@@ -2589,6 +2749,59 @@ onMounted(() => {
     }
   }
 }
+
+.skeleton-lists{
+  overflow-x: auto;
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+
+  .casino-skeleton{
+    height: 150px;
+    width: calc((100vw - 20px) /2);
+    border-radius: 12px;
+  }
+
+  .slot-skeleton{
+    height: 150px;
+    width: calc((100vw - 20px) / 3);
+    border-radius: 12px;
+  }
+}
+
+.skeleton-downs{
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .casino-skeleton{
+    height: 150px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+.skeleton-grid{
+  display:flex;
+  gap: 15px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  .slot-skeleton{
+    height: 150px;
+    width: calc(33% - 15px);
+    border-radius: 12px;
+  }
+
+  .sport-skeleton{
+    height: 125px;
+    width: 100%;
+    border-radius: 12px;
+  }
+}
+
+
 
 .platform-game-container {
   display: grid;

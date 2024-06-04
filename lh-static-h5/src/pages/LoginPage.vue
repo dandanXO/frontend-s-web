@@ -2,7 +2,14 @@
   <div class="login-container">
     <div class="back-left">
       <router-link :to="'/'">
-        <img class="left-back" src="../assets/images/common/left-back-icon.svg" />
+        <img
+          class="left-back"
+          :src="
+            $q.dark.isActive
+              ? require('../assets/images/common/left-back-icon-dark.svg')
+              : require('../assets/images/common/left-back-icon.svg')
+          "
+        />
       </router-link>
     </div>
 
@@ -482,7 +489,7 @@ export default defineComponent({
 
     const getSummonCode = () => {
       const summonCode = sessionStorage.getItem("SUMMON_CODE");
-    // && route.query && route.query.refer
+      // && route.query && route.query.refer
       if (summonCode) {
         loginForm.summoner = summonCode;
       }
@@ -685,5 +692,18 @@ export default defineComponent({
 
 .checked {
   color: #0089ed;
+}
+
+.body--dark {
+  .login-container {
+    background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
+    background-size: 100% auto;
+    .login-form-container {
+      @include content-block-dark-with-border;
+      q-label {
+        color: $font-3-dark;
+      }
+    }
+  }
 }
 </style>

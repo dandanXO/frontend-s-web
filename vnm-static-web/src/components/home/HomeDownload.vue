@@ -2,13 +2,13 @@
   <div class="download-section">
     <HomeTitle :title="t('home.appDownload')"></HomeTitle>
     <div class="download-container">
-      <div class="left-container" 
-        data-aos="fade-left">
+      <div class="left-container"
+           data-aos="fade-left">
         <img src="../../assets/home/download/download-bg.png" width="100%" />
       </div>
 
-      <div class="right-container" 
-        data-aos="fade-right">
+      <div class="right-container"
+           data-aos="fade-right">
         <HomeContentTitle :title="t('home.downloadTheApp')"></HomeContentTitle>
 
         <div class="tab-wrapper">
@@ -164,18 +164,18 @@ onMounted(() => {});
           }
 
           .tab-desc {
-            color: #a4aabb;
+            color: $font-5;
             font-size: 1.25rem;
             font-weight: 400;
             line-height: 1.875rem;
             margin: 1rem;
           }
-            .download-desc {
-              font-weight: 700;
-              color: #424f72;
-              font-size: 1.3rem;
+          .download-desc {
+            font-weight: 700;
+            color: #424f72;
+            font-size: 1.3rem;
             margin: 1rem;
-            }
+          }
 
           .download {
             display: flex;

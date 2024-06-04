@@ -125,7 +125,7 @@
 
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
-        height="600"
+        height="calc(100vh - 285px)"
         size="mini"
         :resizable="true"
         :data="page.records"

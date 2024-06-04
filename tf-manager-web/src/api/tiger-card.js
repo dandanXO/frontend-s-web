@@ -16,3 +16,7 @@ export const insertTigerCardSetting = (tigerCardSetting) => {
 export const updateTigerCardSetting = (tigerCardSetting) => {
   return https().request(`/tiger-card/${tigerCardSetting.id}?_method=PUT`, Method.POST, tigerCardSetting, ContentType.form);
 };
+
+export const getTigerCardExport = (tigerCardQuery) => {
+  return https().request("/tiger-card/export", Method.GET, tigerCardQuery, ContentType.form);
+};

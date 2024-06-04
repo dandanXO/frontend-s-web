@@ -7,6 +7,11 @@
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <HongBaoYu2024
+      v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -30,6 +35,7 @@ import DailyLoginPromo from "../components/hotpromo/DailyLogin/DailyLoginPromo.v
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import PennyBank from "../components/hotpromo/penny-bank/PennyBank.vue";
 import SlotNetloss from "../components/hotpromo/slot-netloss/SlotNetloss.vue";
+import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
@@ -45,7 +51,8 @@ export default defineComponent({
     LotteryPromo,
     PennyBank,
     SlotNetloss,
-    PokerCashback
+    PokerCashback,
+    HongBaoYu2024
     // DailyBonus
   },
   props: {
@@ -291,7 +298,8 @@ export default defineComponent({
       this.list.redirectUrl === "vi-daily-checkin" ||
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
-      this.list.redirectUrl === "vi-poker-cashback"
+      this.list.redirectUrl === "vi-poker-cashback" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket"
     ) {
       this.isCommonPromo = false;
     } else {

@@ -75,6 +75,7 @@ import {useUI} from "stores/ui";
 import BacktoTop from "components/backtotop.vue"
 import {scroll, SessionStorage} from 'quasar'
 import {userStore} from "src/stores";
+import { useLocalStorage } from "@vueuse/core";
 
 const qs = require("qs");
 export default defineComponent({
@@ -171,6 +172,7 @@ export default defineComponent({
     };
     const loadGameList = () => {
 
+      const imgURL= useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
       const regDevice = Platform.is.mobile ? "MOBILE" : "WEB"
       const code = selectedPlatId.value;
       const gameType = "FISH";
@@ -190,7 +192,7 @@ export default defineComponent({
       })).then((res) => {
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+          element.icon = `${imgURL}/game/${element.icon}`;
         });
         gameListData.value = res;
         isLoading.value = false;

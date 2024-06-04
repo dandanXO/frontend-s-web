@@ -6,11 +6,14 @@
           <div class="top q-pb-md">
             <div class="title">意见类型</div>
           </div>
-          <q-select 
+          <q-select
             name="title"
-            v-model="mailDetailList.feedbackType" :options="feedbackTypes" :label="`${mailDetailList.feedbackType || '快捷输入'}`"
+            v-model="mailDetailList.feedbackType"
+            :options="feedbackTypes"
+            :label="`${mailDetailList.feedbackType || '快捷输入'}`"
             ref="feedbackTypeRef"
-            :rules="[(val) => !!val || '请选择']" />
+            :rules="[(val) => !!val || '请选择']"
+          />
 
           <!--
           <q-btn-dropdown style="width:100%;" color="brightbtn" :label="`${mailDetailList.feedbackType || '快捷输入'}`" menu-anchor="bottom end">
@@ -44,6 +47,12 @@
             placeholder="请输入标题"
           />
         </div>
+
+        <div class="write-board-div q-pa-md">
+          <div class="top q-pb-md">上传图片</div>
+          <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+        </div>
+
         <div class="write-board-div q-pa-md">
           <div class="top q-pb-md">内容</div>
           <q-input
@@ -82,7 +91,7 @@
         <p>提交成功！</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="text-teal">
         <q-btn class="common-md-btn" flat label="确定" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -93,6 +102,8 @@ import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import FileUpload from "components/FileUpload.vue";
+
 var qs = require("qs");
 const $q = useQuasar();
 const router = useRouter();
@@ -104,6 +115,11 @@ const mailDetailList = ref({
 });
 
 const feedbackTypes = ref([]);
+
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailDetailList.value.photo = linkId;
+};
 
 const loadFeedbackType = () => {
   api
@@ -191,6 +207,18 @@ onMounted(() => {
     border-radius: 10px;
     border: 1px solid $bg-blue;
     background: #f7f8fb;
+  }
+}
+
+.body--dark {
+  .write-letter {
+    .write-board-div {
+      @include content-block-dark-with-border;
+      .q-field--filled .q-field__control {
+        background: unset;
+        border: 1px solid $border-dark;
+      }
+    }
   }
 }
 </style>

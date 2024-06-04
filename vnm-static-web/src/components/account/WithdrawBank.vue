@@ -264,6 +264,7 @@ import { useI18n } from "vue-i18n";
 import { i18nStore } from '@/store/language'
 import emptyData from "@/components/emptyData.vue";
 import { storeToRefs } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawBankView",
@@ -294,7 +295,11 @@ export default defineComponent({
       return Promise.resolve();
     };
     let validateBankLength = async (r, v) => {
+        var min = 6;
+        var max = 20;
       if (selectedBankType.value === "Bank") {
+          min = 6;
+          max = 20;
         var selectedBankCode = null;
         banksList.value.forEach(bank => {
           if (bank.id === bankCardInfo.bankId) {
@@ -311,8 +316,6 @@ export default defineComponent({
         }
 
       } else if (selectedBankType.value === "Crypto") {
-        var min = null;
-        var max = null;
         min = 34;
         max = 36;
       } else if (selectedBankType.value === "e-Wallet") {
@@ -357,7 +360,7 @@ export default defineComponent({
       }
     }
     const tblLoading = ref(false);
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/payment/";
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);

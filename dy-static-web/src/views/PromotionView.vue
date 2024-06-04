@@ -44,13 +44,25 @@
       </div>
     </div>
 
-    <div v-else class="selected-promo">
+    <div
+      v-else
+      class="selected-promo"
+      :class="{
+        isMSIPromo: selectedPromo.promoCode === 'dy2-msi-promo'
+      }"
+    >
       <div class="selected-promo-wrapper">
         <div
           class="banner-container"
-          v-if="selectedPromo.promoCode !== 'dy2-cny-step-game' && selectedPromo.promoCode !== 'dy2-game-steps'"
+          v-if="
+            selectedPromo.promoCode !== 'dy2-cny-step-game' &&
+            selectedPromo.promoCode !== 'dy2-game-steps' &&
+            selectedPromo.promoCode !== 'dy2-msi-promo' &&
+            selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
+          "
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
           }"
         >
           <div
@@ -77,10 +89,22 @@
           class="inner"
           :class="{
             isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
-              selectedPromo.promoCode === 'dy2-game-steps'
+              selectedPromo.promoCode === 'dy2-game-steps' ||
+              selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
+              selectedPromo.promoCode === 'dy2-lpl-summer24' ||
+              selectedPromo.promoCode === 'dy-duanwujie24' ||
+              selectedPromo.promoCode === 'dy2-eurocup-manual'
+          }"
+          :style="{
+            backgroundImage:
+              selectedPromo?.desktopImgBackgroundUrl
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : 'none'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -94,7 +118,8 @@
               eSport: selectedPromo.promoType.toLowerCase() === 'esport',
               fish: selectedPromo.promoType.toLowerCase() === 'fish',
               liveCasino: selectedPromo.promoType.toLowerCase() === 'livecasino',
-              slot: selectedPromo.promoType.toLowerCase() === 'slot game'
+              slot: selectedPromo.promoType.toLowerCase() === 'slot game',
+              isHide: selectedPromo.promoCode === 'dy2-msi-promo'
             }"
           >
             <div :class="{ isSpecial: !isSpecialPromo }" v-html="selectedPromo.pageContent"></div>
@@ -181,7 +206,7 @@ export default defineComponent({
           router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
-          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024') {
+          if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
             isSpecialPromo.value = true;
           } else {
             isSpecialPromo.value = false;
@@ -291,6 +316,10 @@ export default defineComponent({
   .promo-view-container {
     line-height: 30px;
 
+    &.isHide {
+      display: none;
+    }
+
     ol {
       padding: 0 15px;
     }
@@ -310,7 +339,6 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
-
       &:not(:has(thead)) {
         tr:first-child td {
           background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -324,6 +352,8 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+        p { margin: 0;
+    line-height: 21px; }
       }
 
       tbody {
@@ -594,6 +624,9 @@ export default defineComponent({
   .selected-promo {
     width: 100%;
 
+    &.isMSIPromo {
+    }
+
     .selected-promo-wrapper {
       .banner-container {
         width: 100%;
@@ -623,6 +656,17 @@ export default defineComponent({
             height: 220px;
           }
         }
+
+        &.isEurocupManualBanner {
+          max-width: 100%;
+
+          .promo-bg {
+            height: 500px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
+        }
       }
 
       .inner {
@@ -633,6 +677,21 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
 
+        &.isEurocupManual {
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 100% 100%;
+        }
+
+        &.isMSI {
+          padding: 0px 0 0px;
+          margin: 0 auto;
+          max-width: none;
+          width: 100%;
+          background-size: cover;
+          position: relative;
+        }
+
         &.fullwidth {
           width: 100%;
           max-width: 100%;
@@ -640,6 +699,10 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
           }
         }
         &.isCS {

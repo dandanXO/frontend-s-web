@@ -359,7 +359,7 @@
     </el-row>
     <el-row class="chart-summary">
       <el-card>
-        <Chart :options="depositBarchatOptions" />
+        <Chart :options="rfdLinechatOptions" />
       </el-card>
       <el-card>
         <Chart :options="depositLinechatOptions" />
@@ -410,6 +410,11 @@
             :label="t('dashboard.ratio')"
           />
         </el-table>
+      </el-card>
+    </el-row>
+    <el-row class="chart-summary-2">
+      <el-card>
+        <Chart :options="depositBarchatOptions" />
       </el-card>
     </el-row>
   </div>
@@ -683,6 +688,57 @@ const depositLinechatOptions = reactive({
   },
 })
 
+const rfdLinechatOptions = reactive({
+//   title: {
+//     display: true,
+//     text: t('dashboard.rfdReport'),
+//   },
+  height: '160px',
+  tooltip: {
+    trigger: 'axis',
+  },
+  grid: {
+    left: 10,
+    right: 10,
+    bottom: 60,
+    top: 50,
+    containLabel: true,
+  },
+  xAxis: {
+    type: 'category',
+    data: [],
+  },
+  yAxis: {
+    type: 'value',
+  },
+  series: [
+    {
+      name: t('dashboard.rfdRegisterCount'),
+      data: [1],
+      type: 'line',
+      smooth: true,
+      showBackground: true,
+      backgroundStyle: {
+        color: 'rgba(70, 142, 207, 0.2)',
+      },
+    },
+    {
+      name: t('dashboard.rfdFDepositCount'),
+      data: [1],
+      type: 'line',
+      smooth: true,
+      showBackground: true,
+      backgroundStyle: {
+        color: 'rgba(240, 143, 77, 0.2)',
+      },
+    },
+  ],
+  legend: {
+    display: true,
+    position: 'bottom',
+  },
+})
+
 const financialPiechatOptions = reactive({
   title: {
     text: t('dashboard.financialLevelRatio'),
@@ -861,6 +917,7 @@ async function getDailySummaryList() {
   quickSummary.depositRecords = ret.siteDepositSummaryVO
 
   getDepositChart(ret.siteDailySummaryVOList)
+  getRFDChart(ret.siteDailySummaryVOList)
   getFinancialChart(
     ret.siteMemberDailySummaryFinancialVO,
     financialPiechatOptions
@@ -900,6 +957,25 @@ function getDepositChart(summaryList) {
     depositLinechatOptions.xAxis.data = recordTime
     depositLinechatOptions.series[0].data = depositMemberCount
     depositLinechatOptions.series[1].data = depositTransactionCount
+  }
+}
+
+function getRFDChart(summaryList) {
+  const recordTime = []
+  const registerMemberCount = []
+  const fdMemberCount = []
+
+  if (summaryList.length > 0) {
+    summaryList.forEach((item, index) => {
+      recordTime.push(item.recordTime.substring(5).replace('-', '/'))
+      fdMemberCount.push(item.ftdMember)
+      registerMemberCount.push(item.registerMember)
+    })
+    // debugger;
+
+    rfdLinechatOptions.xAxis.data = recordTime
+    rfdLinechatOptions.series[0].data = registerMemberCount
+    rfdLinechatOptions.series[1].data = fdMemberCount
   }
 }
 
@@ -960,6 +1036,10 @@ function resetDisplayValues() {
   // reset Deposit Summary Barchat
   depositSummaryBarchatOptions.yAxis.data = []
   depositSummaryBarchatOptions.series[0].data = []
+
+  // reset RFD Line chart value
+  rfdLinechatOptions.xAxis.data = [0]
+  rfdLinechatOptions.series[0].data = [0]
 
   quickSummary.registerMember = 0
   quickSummary.total_ftd = 0
@@ -1051,6 +1131,15 @@ function getSummaries(param) {
 .chart-summary {
   width: 100%;
   height: 530px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.chart-summary-2 {
+  width: 100%;
+  height: 265px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;

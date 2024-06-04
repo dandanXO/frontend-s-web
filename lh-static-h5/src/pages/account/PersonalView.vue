@@ -59,7 +59,7 @@
         <template v-slot:append>
           <q-icon v-if="isEditBirthday" name="event" color="accent" class="cursor-pointer">
             <q-popup-proxy cover transition-show="scale" transition-hide="scale" v-model="showDatePopup">
-              <q-date v-model="formDetail.birthday" >
+              <q-date v-model="formDetail.birthday">
                 <div class="row items-center justify-end">
                   <q-btn v-close-popup label="确认" flat />
                   <q-btn v-close-popup label="关闭" flat />
@@ -410,7 +410,7 @@ export default defineComponent({
 
     const isValidName = () => {
       const namePattern =
-        /^([\u4e00-\u9fa5]*)$/;
+        /^[\u4e00-\u9fa5·]+$/;
       return namePattern.test(formDetail.realName) || "请输入中文字符";
     };
 
@@ -532,6 +532,15 @@ export default defineComponent({
     font-size: 1.1rem;
     padding: 0 0 10px;
     font-weight: bold;
+  }
+}
+
+.body--dark {
+  .personal-account {
+    .q-field__control {
+      box-shadow: none;
+      border: 1px solid $border-dark;
+    }
   }
 }
 </style>

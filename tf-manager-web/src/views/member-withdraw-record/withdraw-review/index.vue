@@ -189,7 +189,7 @@
       size="small"
       highlight-current-row
       v-loading="page.loading"
-      height="500"
+      :height="tableHeight"
       :header-cell-style="{background: 'lightgray'}"
       :empty-text="t('fields.noData')"
       :summary-method="getSummaries"
@@ -511,6 +511,11 @@ const financialLevelList = reactive({
   list: [],
 })
 let timeZone = null;
+
+const tableHeight = computed(() => {
+  const windowHeight = window.innerHeight;
+  return windowHeight - 225;
+})
 
 const sortList = reactive({
   list: [
@@ -964,5 +969,10 @@ async function showDialog(record) {
 
 .el-input-number:deep .el-input__inner {
   text-align: left;
+}
+</style>
+<style lang="scss">
+.roles-main .el-table__footer-wrapper{
+  height: 43px;
 }
 </style>

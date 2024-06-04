@@ -17,11 +17,12 @@
     </div>
 
     <div class="login-img">
-      <img src="../assets/images/login/login-img.png" />
+      <!-- <img src="../assets/images/login/login-img.png" />
       <div class="login-text">
         <div class="text-title">{{ $t("lang.login_title") }}</div>
         <div class="text-desc">{{ $t("lang.login_desc") }}</div>
-      </div>
+      </div> -->
+      <img :src="require(`../assets/images/login/login-img.png`)" />
     </div>
 
     <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
@@ -256,6 +257,8 @@ import LangOptions from "components/LangOptions";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "LoginPage",
@@ -263,6 +266,8 @@ export default defineComponent({
     LangOptions
   },
   setup() {
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const { t } = useI18n();
     const tab = ref("login");
     const loginType = ref(false);
@@ -288,7 +293,7 @@ export default defineComponent({
     const route = useRoute();
     const getCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             verificationImg.value = "data:image/png;base64," + response.data.img;
@@ -329,7 +334,7 @@ export default defineComponent({
 
     const getInnerCode = () => {
       api
-        .get("/member/verificationCode")
+        .get("/member/verificationEasyCode")
         .then((response) => {
           if (response.code === 0) {
             phoneVerificationImg.value = "data:image/png;base64," + response.data.img;
@@ -429,10 +434,7 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 // FB tracking :: login-success
-                if (
-                  window.location.href.indexOf("https://tf88king.com") > -1 ||
-                  window.location.href.indexOf("https://tfgame88.com") > -1
-                ) {
+                if (store.isAffiliateA) {
                   fbq("track", "login-success");
                 }
 
@@ -567,7 +569,8 @@ export default defineComponent({
       telephoneRef,
       LangOptions,
       appVersionNo,
-      getVersionNo
+      getVersionNo,
+      languageVal
     };
   }
 });
@@ -591,7 +594,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-
+    filter: brightness(100);
     img {
       width: 10px;
 
@@ -628,14 +631,16 @@ export default defineComponent({
   }
 
   .login-img {
-    padding: 0 16px 16px;
-    display: flex;
-    justify-content: center;
-    position: relative;
+    // padding: 0 0px 16px 0px;
+    // display: flex;
+    // justify-content: center;
+    // position: relative;
+    height: 160px;
     img {
-      display: block;
-      width: 100%;
-      max-width: 300px;
+      // display: block;
+      // width: 110%;
+      // margin-right: -15%;
+      display: none;
     }
 
     .login-text {
@@ -776,23 +781,27 @@ export default defineComponent({
   padding: 4px;
 
   .header-left {
-    height: 45px;
-    margin-right: auto;
-    margin-left: 12px;
+    // height: 50px;
+    // margin-right: auto;
+    // margin-left: 12px;
 
-    @media (max-width: 400px) {
-      height: 35px;
-    }
+    // @media (max-width: 400px) {
+      // height: 40px;
+    // }
 
     img {
-      height: 100%;
-      width: auto;
+      // height: 100%;
+      // width: auto;
+      width: 100%;
+      max-width: 135px;
+    opacity: 0;
     }
   }
 
   .header-middle {
     margin-left: auto;
     margin-right: 12px;
+    margin-top: 3px;
     display: flex;
     gap: 12px;
 

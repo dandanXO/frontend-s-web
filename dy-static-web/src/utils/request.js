@@ -16,6 +16,10 @@ if (isGlobalDY) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+
+  localStorage.setItem("DY_WEB_RST_URL", rstApi);
+  localStorage.setItem("DY_WEB_CRT_URL", crtApi);
+  localStorage.setItem("DY_WEB_EVT_URL", evtApi);
 } else {
   var rstApi = getInitApi(rstArray, "DY_WEB_RST_URL");
   var crtApi = getInitApi(crArray, "DY_WEB_CRT_URL");

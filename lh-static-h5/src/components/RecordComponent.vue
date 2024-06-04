@@ -17,6 +17,15 @@
                 <div v-if="obj === 'type'">
                   {{ translateRecord(det[obj], recordType) }}
                 </div>
+                <div v-else-if="obj === 'betId'">
+                  <q-link @click="copyText(det[obj], '注单号')">
+                    <span style="color: #468CFF">复制</span>
+                    {{ det[obj].slice(0,1) }}...
+                    <q-tooltip anchor="center start" self="center middle" :offset="[-180, 10]">
+                    {{ det[obj] }}
+                    </q-tooltip>
+                  </q-link>
+                </div>
                 <div v-else-if="obj === 'status'">
                   {{ checkRecord(det[obj]) }}
                 </div>
@@ -110,7 +119,11 @@
   <q-input style="width: 100%; opacity: 0" filled color="white" ref="copyinput" v-model="text_copied" />
 
   <q-dialog v-model="reminderDialog" width="100%" no-backdrop-dismiss no-esc-dismis>
-    <q-card class="reminder-dialog-card bg-white" style="width: 100%; padding: 0px 0px 20px">
+    <q-card
+      class="reminder-dialog-card"
+      :class="$q.dark.isActive ? '' : 'bg-white'"
+      style="width: 100%; padding: 0px 0px 20px"
+    >
       <q-card-section class="text-white">
         <q-toolbar>
           <q-toolbar-title>催单</q-toolbar-title>
@@ -149,7 +162,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isConfirmWithdraw">
-    <q-card style="width: 100%; padding: 20px" class="bg-white text-black">
+    <q-card style="width: 100%; padding: 20px" :class="$q.dark.isActive ? '' : 'bg-white text-black'">
       <q-card-section class="q-mb-md">
         系统提示
         <br />
@@ -310,7 +323,7 @@ export default defineComponent({
         .then((response) => {
           // Handle the response
           if (response.code === 0) {
-            isConfirmWithdraw.value = false;
+            isCancelWithdraw.value = false;
             $q.notify({
               color: "positive",
               position: "top",
@@ -437,7 +450,6 @@ export default defineComponent({
         }
       });
     };
-
     return {
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
@@ -496,5 +508,21 @@ export default defineComponent({
 
 .reminder-dialog-form {
   padding: 16px;
+}
+
+.body--dark {
+  .table-record {
+    .q-card {
+      background: $background-dark-light !important;
+      box-shadow: none;
+      border: 1px solid $border-dark;
+    }
+    .label {
+      color: $font-1;
+    }
+    .desc {
+      color: #999999;
+    }
+  }
 }
 </style>

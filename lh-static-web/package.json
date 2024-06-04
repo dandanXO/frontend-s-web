@@ -15,6 +15,7 @@
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^3.4.0",
     "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.4.0",
+    "@vueuse/core": "^10.9.0",
     "animate.css": "^4.1.1",
     "ant-design-vue": "^2.2.8",
     "aos": "^3.0.0-beta.6",
@@ -31,6 +32,7 @@
     "sweetalert2": "^11.7.12",
     "swiper": "^11.0.7",
     "vue": "^3.4.19",
+    "vue-advanced-cropper": "^2.8.8",
     "vue-qrcode-component": "^2.1.1",
     "vue-qrious": "^3.1.0",
     "vue-remix-icons": "^1.1.1",

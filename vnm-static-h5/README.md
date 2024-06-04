@@ -1,7 +1,13 @@
-# # VNM H5 Vue3 (vnm-h5-new)
+# # VNM H5 Vue3 (vnm-static-h5)
 
 - Node Version >= 16.17.0
 - H5 + Embed pages for APP
+
+
+### You might need to install Quasar cli first:
+```bash
+npm install -g @quasar/cli
+```
 
 ## Install the dependencies
 ```bash

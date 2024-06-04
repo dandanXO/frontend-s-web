@@ -27,7 +27,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "",
       phoneVerified: false,
       emailVerified: false,
-      appDownloadUrl: ""
+      appDownloadUrl: "",
+      visitorId: ""
     };
   },
   actions: {

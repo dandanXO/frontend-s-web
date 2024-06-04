@@ -64,7 +64,10 @@
     </div>
     <div v-else class="selected-promo">
       <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
-        <div class="banner-container" v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu'">
+        <div
+          class="banner-container"
+          v-if="selectedPromo.redirectUrl !== 'cny-hongbaoyu' || selectedPromo.redirectUrl !== 'xf-eurocup-hongbao'"
+        >
           <template v-if="selectedPromo.promoCode === 'cny-spinwheel'">
             <img
               src="../assets/images/promotion/hotpromo/bonus-spinwheel/banner1.png"
@@ -85,7 +88,10 @@
         <div
           class="inner"
           :class="
-            selectedPromo.promoCode === 'cny-hongbaoyu' || selectedPromo.redirectUrl === 'cny-hongbaoyu'
+            selectedPromo.promoCode === 'cny-hongbaoyu' ||
+            selectedPromo.redirectUrl === 'cny-hongbaoyu' ||
+            selectedPromo.promoCode === 'xf-eurocup-hongbao' ||
+            selectedPromo.redirectUrl === 'xf-eurocup-hongbao'
               ? 'hongbao'
               : ''
           "
@@ -95,6 +101,7 @@
           </div>
           <div
             class="promo-view-container"
+            v-if="selectedPromo.promoCode !== 'xf-eurocup-hongbao'"
             :class="{
               welcome: selectedPromo.promoType.toLowerCase() === 'welcome',
               sport: selectedPromo.promoType.toLowerCase() === 'sport',
@@ -198,20 +205,6 @@ export default defineComponent({
     //   }
     // }
     const showPromoDetails = (promo) => {
-
-      if (!store.token) {
-        ElMessageBox.alert("请登录后再操作", "系统提示", {
-          // if you want to disable its autofocus
-          // autofocus: false,
-          center: true,
-          confirmButtonText: "确认",
-          showClose: false,
-          buttonSize: "large"
-        }).then(() => {
-          store.loginPageVisible = true;
-        });
-        return;
-      } else {
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/vip");
         }
@@ -223,8 +216,9 @@ export default defineComponent({
           isPromoDetail.value = true;
           selectedPromo.value = promo;
         }
+        window.scroll({ behavior: "smooth", left: 0, top: 0 });
       }
-    };
+
     const switchPromoType = (type) => {
       promoTabActive.value = type;
       if (type !== "ALL") {
@@ -593,13 +587,9 @@ export default defineComponent({
     width: 100%;
 
     .selected-promo-wrapper {
-      &.bg__xf-return-promo {
-        background-image: url("../assets/images/promotion/hotpromo/return-promo/bg.png");
-        // background-size: cover;
-        background-size: 100% auto;
-        background-repeat: no-repeat;
-        background-position: top center;
+      &.bg__xf-eurocup-hongbao {
         padding-bottom: 0px;
+        background-color: #090b18;
 
         .banner-container {
           display: none;
@@ -612,7 +602,50 @@ export default defineComponent({
           width: 100%;
           margin: 0 auto;
         }
+      }
 
+      &.bg__xf-deposit-award {
+        background-image: url("../assets/images/promotion/hotpromo/deposit-award/bg.jpg");
+        // background-size: cover;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        padding-bottom: 0px;
+        background-color: #770201;
+
+        .banner-container {
+          display: none;
+        }
+
+        .inner {
+          height: 100%;
+          justify-content: space-between;
+          max-width: none;
+          width: 100%;
+          margin: 0 auto;
+        }
+      }
+
+      &.bg__xf-return-promo {
+        background-image: url("../assets/images/promotion/hotpromo/return-promo/bg.png");
+        // background-size: cover;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: top center;
+        padding-bottom: 0px;
+        background-color: #770201;
+
+        .banner-container {
+          display: none;
+        }
+
+        .inner {
+          height: 100%;
+          justify-content: space-between;
+          max-width: none;
+          width: 100%;
+          margin: 0 auto;
+        }
       }
 
       &.bg__cny-spinwheel {

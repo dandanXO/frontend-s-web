@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { login, logout, mobileLogin } from "@/api/index/login";
 import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { getUnreadTotal } from "@/api/personal/mailbox";
 import { useSessionStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { getCSAFromServer } from "@/api/index/site";
@@ -30,7 +31,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 7,
       unreadTotal: 0,
-      visitorId: ""
+      visitorId: "",
+      profilePhoto: "",
     };
   },
   actions: {
@@ -44,6 +46,7 @@ export const userStore = defineStore("userStore", {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
+            this.getUnreadMail();
           } else {
             ElMessage.error(ret.message);
             // throw new Error(ret.message);
@@ -58,6 +61,7 @@ export const userStore = defineStore("userStore", {
       this.token = token;
       this.getBalance();
       this.getMemberInfo();
+      this.getUnreadMail();
     },
     telephoneLogin(loginInfo) {
       return mobileLogin(loginInfo)
@@ -66,6 +70,7 @@ export const userStore = defineStore("userStore", {
             this.token = ret.data;
             this.getBalance();
             this.getMemberInfo();
+            this.getUnreadMail();
           } else {
             ElMessage.error(ret.message);
             // throw new Error(ret.message);
@@ -75,6 +80,14 @@ export const userStore = defineStore("userStore", {
           console.log(err);
           // message.error(err.message);
         });
+    },
+    getUnreadMail() {
+      getUnreadTotal().then((response) => {
+        if (response.code === 0) {
+          this.unreadTotal = response.data;
+        }
+      }).catch((error) => {
+      });
     },
     getMemberInfo() {
       if (this.token) {
@@ -91,6 +104,7 @@ export const userStore = defineStore("userStore", {
             this.evip = ret.data.evip;
             this.currentDeposit = ret.data.currentDeposit;
             this.levelUpDeposit = ret.data.levelUpDeposit;
+            this.profilePhoto = ret.data.profilePhoto;
           } else {
             ElMessage.error(ret.message);
           }
@@ -124,7 +138,7 @@ export const userStore = defineStore("userStore", {
 
       return getCSAFromServer()
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           var lineUrl = "";
           const randNum = Math.floor(Math.random() * 2) + 1;
           if (randNum === 1) {

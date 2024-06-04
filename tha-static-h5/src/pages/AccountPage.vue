@@ -11,6 +11,18 @@
         <img v-if="vip === 'VIP5'" src="../assets/vip/badge/badge-5.png" />
         <img v-if="vip === 'VIP6'" src="../assets/vip/badge/badge-6.png" />
         <img v-if="vip === 'VIP7'" src="../assets/vip/badge/badge-7.png" />
+        <img v-if="vip === 'VIP8'" src="../assets/vip/badge/badge-8.png" />
+        <img v-if="vip === 'VIP9'" src="../assets/vip/badge/badge-9.png" />
+        <img v-if="vip === 'VIP10'" src="../assets/vip/badge/badge-10.png" />
+        <img v-if="vip === 'VIP11'" src="../assets/vip/badge/badge-11.png" />
+        <img v-if="vip === 'VIP12'" src="../assets/vip/badge/badge-12.png" />
+        <img v-if="vip === 'VIP13'" src="../assets/vip/badge/badge-13.png" />
+        <img v-if="vip === 'VIP14'" src="../assets/vip/badge/badge-14.png" />
+        <img v-if="vip === 'VIP15'" src="../assets/vip/badge/badge-15.png" />
+        <img v-if="vip === 'VIP16'" src="../assets/vip/badge/badge-16.png" />
+        <img v-if="vip === 'VIP17'" src="../assets/vip/badge/badge-17.png" />
+        <img v-if="vip === 'VIP18'" src="../assets/vip/badge/badge-18.png" />
+        <img v-if="vip === 'VVIP'" src="../assets/vip/badge/badge-vvip.png" />
       </div>
 
       <q-card-section class="acct-section">

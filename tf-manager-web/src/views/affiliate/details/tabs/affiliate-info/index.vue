@@ -305,6 +305,13 @@
             {{ t('affiliate.commissionModel.' + memberDetail.commissionModel) }}
           </el-tag>
           <el-tag
+            v-if="memberDetail.commissionModel === 'DETAILS'"
+            size="mini"
+            type="primary"
+          >
+            {{ t('affiliate.commissionModel.' + memberDetail.commissionModel) }}
+          </el-tag>
+          <el-tag
             v-if="memberDetail.commissionModel === null"
             size="mini"
             type="info"
@@ -591,7 +598,7 @@
             </div>
           </template>
           <span v-if="affiliateDetails.commission !== null">
-            {{ affiliateDetails.commission }} %
+            {{ (affiliateDetails.commission).toFixed() }} %
           </span>
           <span v-if="affiliateDetails.commission === null">0 %</span>
           <el-button
@@ -691,6 +698,36 @@
             {{ affiliateDetails.downlineAffiliate }}
           </span>
           <span v-if="affiliateDetails.downlineAffiliate === null">0</span>
+        </el-descriptions-item>
+        <el-descriptions-item
+          label-align="left"
+          label-class-name="member-label"
+          class-name="member-context"
+        >
+          <template #label>
+            <div>
+              <svg-icon
+                icon-class="peoples"
+                style="height: 16px;width: 16px;"
+              />
+              {{ t('fields.viewLoginName') }}
+            </div>
+          </template>
+          <el-tag v-if="affiliateDetails.viewLoginName" size="mini" type="success">
+            {{ t('fields.show') }}
+          </el-tag>
+          <el-tag v-else size="mini" type="danger">
+            {{ t('fields.hidden') }}
+          </el-tag>
+          <el-button
+            type="info"
+            size="mini"
+            style="float: right;"
+            v-permission="['sys:affiliate:update:view-login-name']"
+            @click="changeViewLoginName()"
+          >
+            {{ t('fields.update') }}
+          </el-button>
         </el-descriptions-item>
         <el-descriptions-item />
       </el-descriptions>
@@ -966,7 +1003,6 @@
         </el-descriptions-item>
       </el-descriptions>
     </el-card>
-
     <el-dialog
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
@@ -1167,6 +1203,16 @@
               :value="item.value"
             />
           </el-select>
+        </el-form-item>
+        <el-form-item v-if="modelForm.commissionModel === 'DETAILS'" :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+            <el-input
+              :disabled="!hasPermission(['sys:affiliate:update:share-ratio'])"
+              v-model="item.value"
+              style=" width:100px; margin-left: auto; order: 2"
+            />
+          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -1423,10 +1469,12 @@ import {
   updatePlatformFeeRate,
   updateTimeType,
   updateBelongType,
+  updateViewLoginName,
+  getAffiliateShareRatio
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
-import { getConfigList } from '../../../../../api/config'
+import { getConfigList, getConfigListByGroup } from '../../../../../api/config'
 import { selectList } from "@/api/risk-level";
 
 const { t } = useI18n()
@@ -1451,6 +1499,9 @@ const site = reactive({
 const riskList = reactive({
   list: []
 });
+const shareRatioList = reactive({
+  list: [],
+})
 const selectedRiskColor = reactive({
   levelColor: null,
 });
@@ -1468,6 +1519,11 @@ const uiControl = reactive({
       key: 2,
       displayName: t('affiliate.commissionModel.SIMPLE'),
       value: 'SIMPLE',
+    },
+    {
+      key: 2,
+      displayName: t('affiliate.commissionModel.DETAILS'),
+      value: 'DETAILS',
     },
   ],
   timeType: [
@@ -1561,7 +1617,7 @@ const memberDetail = reactive({
   site: '',
   siteId: 0,
   risk: '',
-  riskColor: '',
+  riskColor: ''
 })
 
 const affiliateDetails = reactive({
@@ -1572,6 +1628,7 @@ const affiliateDetails = reactive({
   commission: 0,
   paymentFee: null,
   platformFee: null,
+  viewLoginName: 1
 })
 
 const superiorAffiliateDetail = reactive({
@@ -1617,6 +1674,7 @@ const financialForm = reactive({
 
 const modelForm = reactive({
   commissionModel: null,
+  shareRatio: null,
 })
 
 const commForm = reactive({
@@ -1662,6 +1720,17 @@ const validateCommission = (rule, value, callback) => {
   callback()
 }
 
+const validateShareRatio = (rule, value, callback) => {
+  if (memberDetail.commissionModel === 'DETAILS') {
+    shareRatioList.list.forEach((item) => {
+      if (item.value === '' || item.value < 0 || item.value > 1) {
+        callback(new Error(t('message.validateShareRatioFormat')))
+      }
+    })
+  }
+  callback()
+}
+
 const passwordFormRules = reactive({
   password: [
     required(t('message.validatePasswordRequired')),
@@ -1695,6 +1764,12 @@ const commFormRules = reactive({
   ],
 })
 
+const modelFormRules = reactive({
+  shareRatio: [
+    { validator: validateShareRatio, trigger: 'blur' },
+  ],
+})
+
 const remarkFormRules = reactive({
   remark: [required(t('message.validateRemarkRequired'))],
 })
@@ -1720,6 +1795,16 @@ const loadRiskLevels = async () => {
   riskList.list = risk;
 };
 
+const loadShareRatio = async () => {
+  const { data: shareRatio } = await getAffiliateShareRatio(memberDetail.id)
+  if (shareRatio.length > 0) {
+    shareRatioList.list = shareRatio
+  } else {
+    const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
+    shareRatioList.list = shareRatio
+  }
+}
+
 const populateRiskColor = () => {
   const risk = riskList.list.find(r => r.id === riskForm.risk);
   selectedRiskColor.levelColor = risk.levelColor;
@@ -1740,7 +1825,7 @@ async function loadFinancialLevels() {
 async function loadReferralLink() {
   const { data: affiliateUrl } = await getConfigList("affiliate_web_link", memberDetail.siteId);
   if (affiliateUrl[0].value) {
-    link.value = affiliateUrl[0].value + '/agent/' + affiliateDetails.affiliateCode;
+    link.value = affiliateUrl[0].value + 'agent/' + affiliateDetails.affiliateCode;
   } else {
     link.value = ''
   }
@@ -1933,7 +2018,12 @@ async function syncMember() {
 function updateModel() {
   updateModelForm.value.validate(async valid => {
     if (valid) {
-      await updateCommissionModel(props.affId, modelForm.commissionModel)
+      if (modelForm.commissionModel === 'DETAILS' && hasPermission(['sys:affiliate:update:share-ratio'])) {
+        const shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+        await updateCommissionModel(props.affId, modelForm.commissionModel, shareRatio)
+      } else {
+        await updateCommissionModel(props.affId, modelForm.commissionModel, null)
+      }
       const data = await getAffiliateRecord(props.affId)
       Object.keys({ ...data.data }).forEach(detailField => {
         memberDetail[detailField] = data.data[detailField]
@@ -2126,6 +2216,7 @@ async function loadAffiliateRecord() {
   affiliateDetails.commission = record.commission * 100
   affiliateDetails.paymentFee = record.paymentFee === null ? null : record.paymentFee * 100
   affiliateDetails.platformFee = record.platformFee === null ? null : record.platformFee * 100
+  affiliateDetails.viewLoginName = record.viewLoginName;
 }
 
 function restrictCommissionDecimalInput(event) {
@@ -2201,6 +2292,18 @@ async function resetSecurityQuestion() {
   })
 }
 
+async function changeViewLoginName() {
+  ElMessageBox.confirm(t('message.confirmUpdate'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await updateViewLoginName(props.affId)
+    await loadAffiliateRecord()
+    ElMessage({ message: t('message.updateSuccess'), type: 'success' })
+  })
+}
+
 onMounted(async () => {
   loading.accountInfo = true
   loading.loginInfo = true
@@ -2211,6 +2314,7 @@ onMounted(async () => {
   Object.keys({ ...data.data }).forEach(detailField => {
     memberDetail[detailField] = data.data[detailField]
   })
+  await loadShareRatio()
   const { data: aff } = await getAffiliateInfo(props.affId, site.id)
   Object.keys({ ...aff }).forEach(detailField => {
     superiorAffiliateDetail[detailField] = aff[detailField]

@@ -6,7 +6,12 @@
       <div class="sports-container-inner">
         <template v-for="(det, idx) in filteredPlatforms" :key="idx">
           <template v-if="selectedPlat === det.code">
-            <div class="sports-right" v-if="det.image === 'im'" data-aos="fade-right" data-aos-duration="4000">
+            <div
+              class="sports-right"
+              v-if="det.image === 'im' || det.image === 'fb'"
+              data-aos="fade-right"
+              data-aos-duration="4000"
+            >
               <img :src="require('../assets/sports/sport_left_' + det.image + '.png')" />
             </div>
             <div class="sports-right" v-else data-aos="fade-right" data-aos-duration="4000">
@@ -74,25 +79,24 @@ export default defineComponent({
         code: "PM",
         name: "熊猫体育",
         image: "db",
-        message:
-          "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
+        message: "最专业的盘口趋势分析，及时掌握最全面的热点赛事、体育资讯，多种投注型，让您乐享其中。",
         link: "/games/pm-sport.html"
       },
       {
         code: "SABA",
-        name: "SABA",
+        name: "SABA体育",
         image: "saba",
         message:
           "覆盖世界各地大小赛事，提供让球、大小、半全场、 波胆、单双、总入球、连串过关等多元竞猜， 不会让您错过任何自己最喜爱的体育赛事",
         link: "/games/cr-sport.html"
+      },
+      {
+        code: "FB",
+        name: "FB体育",
+        image: "fb",
+        message: "FB体育是一个充满激情和刺激的线上游戏体育平台，提供丰富的体育赛事和精彩的游戏体验，让您乐享其中。",
+        link: "/games/cr-sport.html"
       }
-      // {
-      //   code: 'CR',
-      //   name: 'CR',
-      //   image: 'cr',
-      //   message: '奇幻赛事、特别投注 ，各种趣味玩法，最全赛事覆盖助你花式收米赢到人生巅峰。',
-      //   link: '/games/cr-sport.html'
-      // }
     ]);
 
     const filteredPlatforms = ref([]);
@@ -102,13 +106,17 @@ export default defineComponent({
       if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.split(",").includes("SPORT")
+          );
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("SPORT"));
+          platformsListDisplay.value = platformsList.value.filter((element) =>
+            element.gameType.split(",").includes("SPORT")
+          );
           setFilteredPlatforms();
         });
       }
@@ -119,11 +127,19 @@ export default defineComponent({
         platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
+      filteredPlatforms.value = filteredPlatforms.value.map((item1) => {
+        const matchingItem = platformsListDisplay.value.find((item2) => item1.code === item2.code);
+        return { ...matchingItem, ...item1 };
+      });
+
       filteredPlatforms.value.forEach((element) => {
         if (element.code === route.query.plat) {
           clickPlat(element);
         }
       });
+
+      filteredPlatforms.value = filteredPlatforms.value.sort((a, b) => a.sequence - b.sequence);
+
       setSelectedPlat();
     };
 
@@ -228,7 +244,7 @@ export default defineComponent({
         font-size: 16px;
         line-height: 26px;
         letter-spacing: 1px;
-        margin: 80px 0 77px;
+        margin: 55px 0 60px;
         color: #2e79fc;
       }
       .play-btn {
@@ -257,10 +273,12 @@ export default defineComponent({
   .platform-list-box {
     cursor: pointer;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 25px;
-    margin: 35px auto 90px;
+    width: 600px;
+    flex-wrap: wrap;
+    margin: 35px auto 50px;
     .platform-list-item {
       display: flex;
       justify-content: center;

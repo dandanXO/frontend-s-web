@@ -27,10 +27,11 @@ const { setLanguage } = i18nStore();
 watch(languageVal, (newVal) => {
   setLanguage(languageVal.value);
 });
+
 const langOptions = [
   {
     label: "Vietnamese",
-    value: "vn",
+    value: "vi",
     icon: "iconvn"
   },
   {

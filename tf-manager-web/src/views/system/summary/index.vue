@@ -25,6 +25,22 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.summaryTable')" prop="type" v-if="hasRole(['ADMIN'])">
+          <el-select
+            v-model="form.type"
+            size="small"
+            :placeholder="t('fields.summaryTable')"
+            class="filter-item"
+            style="width: 120px;margin-left: 5px"
+          >
+            <el-option
+              v-for="item in uiControl.type"
+              :key="item.key"
+              :label="t('fields.' + item.displayName)"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.date')" prop="date" v-if="hasRole(['ADMIN'])">
           <el-date-picker
             v-model="form.date"
@@ -67,9 +83,16 @@ import { getSiteListSimple } from "../../../api/site";
 
 const { t } = useI18n();
 const summaryForm = ref(null);
+const uiControl = reactive({
+  type: [
+    { key: 0, displayName: 'all', value: 'ALL' },
+    { key: 1, displayName: 'affiliate', value: 'AFFILIATE' }
+  ]
+})
 const form = reactive({
   date: [],
-  siteId: null
+  siteId: null,
+  type: null
 });
 const siteList = reactive({
   list: []
@@ -89,7 +112,12 @@ function summary() {
     if (valid) {
       const formCopy = { ...form };
       formCopy.date = form.date.join(",");
-      formCopy.isAff = false;
+      if (form.type === 'AFFILIATE') {
+        formCopy.isAff = true;
+      } else {
+        formCopy.isAff = false;
+      }
+      formCopy.type = null;
       await generateSummary(formCopy);
       ElMessage({ message: t('message.summarySuccess'), type: "success" });
     }

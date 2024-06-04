@@ -105,28 +105,52 @@ onMounted(() => {
   loadNews();
 });
 </script>
-<style lang="scss">
+<style  lang="scss">
 .news-section {
   max-width: 1350px;
-  margin: 50px auto;
+  margin: 30px auto 50px;
+
+  .el-tabs{
+    margin-top: -40px;
+  }
+
+  .el-tabs__nav-wrap{
+    padding-left: 140px;
+    padding-bottom: 10px;
+  }
+
+  .el-tabs__item{
+   padding: 0 20px !important;
+  }
+
+  .el-tabs__item.is-active:after{
+    width: 100px;
+    height: 3px;
+  }
+
   .el-card {
     border-radius: 15px;
   }
   .news-listing {
-    font-family: 'Roboto';
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    // font-family: 'Roboto';
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     .news {
+    width: 48%;
       display: flex;
       gap: 20px;
       &:first-child {
-        grid-column: span 2;
+        width: 100%;
         .news-image {
           width: 556px;
           height: 240px;
         }
         .news-contents {flex: 4;
+        .news-content {
+        
+        height: 150px;
+        }
         }
       }
       .news-image {
@@ -145,16 +169,18 @@ onMounted(() => {
         flex: 3;
         cursor: pointer;
         .news-title {
-          color: #7a80a1;
+          color: #444444;
           font-size: 20px;
           font-weight: 700;
+          height: 30px;
+          overflow: hidden;
         }
         .news-content {
-          height: 92px;
+        height: 60px;
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
-          color: #a4aabb;
+          color: #444444;
           margin: 15px 0;
         }
         .standard-button {

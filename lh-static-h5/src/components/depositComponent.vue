@@ -1,4 +1,6 @@
 <template>
+
+  <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
     <div class="q-mb-lg">
       <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
@@ -84,12 +86,12 @@
           </template>
         </q-select>
 
-        <div class="q-mt-sm q-mb-sm text-grey text-bold ">
-          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{
-            activeMethod.depositMax
-              ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value)
-              : " "
+        <div class="q-mt-sm q-mb-sm text-grey text-bold">
+          单笔存款：{{
+            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
+          -
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
@@ -141,7 +143,6 @@
         </div>
         <div class="q-mt-sm" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-
       </q-form>
     </div>
   </div>
@@ -216,7 +217,7 @@ const router = useRouter();
 const formRef = ref();
 const isNewUser = ref(false);
 const isNoBankCard = ref(false);
-const isNoRealName= ref(false);
+const isNoRealName = ref(false);
 const isDeposited = ref(false);
 const checkNewUser = () => {
   if (store.phone === "" || store.phone === null) {
@@ -293,7 +294,7 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
-  (val) => ((val && /^\d+$/.test(val)) || val && isUSDT.value) || '存款金额不能带有小数',
+  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "存款金额不能带有小数",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
     "存款应介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
@@ -321,6 +322,8 @@ const initPay = () => {
   $q.loading.show({
     message: "加载数据中... 请稍等..."
   });
+
+  isFetchingApi.value = window.location.pathname === "/deposit";
 
   payMethods.value = [];
   cashier.get("/session/deposit/index/").then((res) => {
@@ -352,7 +355,10 @@ const initPay = () => {
       }
     }
     localStorage.removeItem("isBacked");
-  });
+    isFetchingApi.value = false;
+  }).catch((err) => {
+    isFetchingApi.value = false;
+  })
 };
 
 async function loadPrivilege(val) {
@@ -371,6 +377,10 @@ async function loadPrivilege(val) {
           } else {
             unselectedPrivileges.value.push(p);
             hasPrivilege.value = true;
+
+            if(p.code === route.query?.privilegeCode && selectedPrivilege.value === "") {
+              selectedPrivilege.value = p;
+            }
           }
         }
       });
@@ -466,7 +476,7 @@ const depositAmtRef = ref("");
 async function confirmDeposit() {
   if (!extensionState.value && (store.phone === "" || store.phone === null)) {
     isNewUser.value = true;
-  }else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
+  } else if (!extensionState.value && (store.realName === "" || store.realName === null)) {
     isNoRealName.value = true;
   } else {
     btnLoading.value = true;
@@ -676,6 +686,8 @@ async function pDepo(deposit) {
 const currentPath = ref(route.path);
 const extensionState = ref(false);
 const extensionToken = ref("");
+const isFetchingApi = ref(false);
+
 const checkExtension = () => {
   // console.log(currentPath.value);
   if (currentPath.value === "/deposit") {
@@ -696,7 +708,6 @@ onMounted(() => {
     checkNewUser();
   }
 });
-
 </script>
 
 <style lang="scss">
@@ -770,12 +781,49 @@ onMounted(() => {
 }
 
 .deposit-selection {
-  &.q-field--labeled{
+  &.q-field--labeled {
     color: #fff;
   }
   &.q-field {
     border-radius: 10px;
     box-shadow: $shadow-bg;
+  }
+}
+
+.body--dark {
+  .deposit-field.q-field {
+    box-shadow: none;
+    background: $background-dark-light;
+  }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>

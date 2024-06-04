@@ -3,8 +3,9 @@
     v-model="isStationNotice"
     :maskClosable="false"
     :footer="null"
-    style="border-radius: 8px; width: 800px;"
+    style="border-radius: 8px; width: 800px"
     class="notice-modal"
+    :show-close="false"
   >
     <div class="notice-header">
       公告列表
@@ -15,9 +16,13 @@
 
     <div>
       <el-tabs type="card" class="announcement-tabs" v-model="announcementActive" @tab-click="announcementTabChange">
-        <el-tab-pane v-for="(tab, ind) in announcementTypes" :key="tab.id" :tab="ind" :label="tab.name"
-                     :name="tab.name">
-
+        <el-tab-pane
+          v-for="(tab, ind) in announcementTypes"
+          :key="tab.id"
+          :tab="ind"
+          :label="tab.name"
+          :name="tab.name"
+        >
           <el-collapse accordion v-model="typeActive">
             <template v-for="(ann, idx) in announcementList" :key="idx">
               <template v-if="ann.typeId === tab.id">
@@ -28,18 +33,16 @@
             </template>
           </el-collapse>
 
-<!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
-<!--            <template v-if="ann.typeId === tab.id">-->
-<!--              <div class="announcement-content">-->
-<!--                {{ ann.content }}-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </template>-->
+          <!--          <template v-for="(ann, idx) in announcementList" :key="idx">-->
+          <!--            <template v-if="ann.typeId === tab.id">-->
+          <!--              <div class="announcement-content">-->
+          <!--                {{ ann.content }}-->
+          <!--              </div>-->
+          <!--            </template>-->
+          <!--          </template>-->
         </el-tab-pane>
       </el-tabs>
     </div>
-
-
   </el-dialog>
 
   <div class="top-bar-wrapper">
@@ -52,8 +55,10 @@
             @click="openPopup(announcementList)"
           />
           <div class="station-notice">
-            <Vue3Marquee :clone="false"
-                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70">
+            <Vue3Marquee
+              :clone="false"
+              :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 70"
+            >
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"
@@ -130,13 +135,11 @@ const calculateMaxContentLength = () => {
 onMounted(() => {
   loadAnnouncement();
 });
-
-
 </script>
 
 <style scoped lang="scss">
 .notice-header {
-  color: #468CFF;
+  color: #468cff;
   font-family: "Inter Bold";
   font-size: 22px;
   font-weight: 600;
@@ -153,7 +156,7 @@ onMounted(() => {
 }
 
 .announcement-content {
-  color: #7A80A1;
+  color: #7a80a1;
   font-family: Inter;
   font-size: 14px;
   font-weight: 500;
@@ -165,9 +168,8 @@ onMounted(() => {
   margin-top: 20px;
   padding: 0px 10px;
 
-
-  .announcement-p{
-    color: #7A80A1;
+  .announcement-p {
+    color: #7a80a1;
   }
 }
 
@@ -192,6 +194,7 @@ onMounted(() => {
     gap: 5px;
 
     .station-notice-container {
+      width: 100%;
       flex: 3;
 
       .station-notice-box {
@@ -231,6 +234,30 @@ onMounted(() => {
         cursor: pointer;
         color: #78919d;
       }
+    }
+  }
+}
+
+.dark {
+  .top-bar-wrapper {
+    background: rgba($font-1-dark, 0.1);
+    box-shadow: 0px -20px 30px 0px #4e8fe669 inset, 0px 4px 10px 0px #0000001a;
+    .top-bar-inner {
+      .station-notice-container {
+        .station-notice-box {
+          .station-notice {
+            .station-notice-item {
+              color: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .announcement-content {
+    .announcement-p {
+      color: $font-3-dark;
     }
   }
 }

@@ -4,30 +4,19 @@
       <template v-for="(det, idx) in filteredPlatforms" :key="idx">
         <template v-if="selectedPlat === det.code">
           <div class="live-left" data-aos="fade-right" data-aos-duration="4000">
-            <img
-              :src="require('../assets/live/title_live_' + det.image + '.png')"
-              style="margin-bottom: 54px"
-            />
+            <img :src="require('../assets/live/title_live_' + det.image + '.png')" style="margin-bottom: 54px" />
             <div class="platform-txt-box">
               <div>
                 <div class="platform-txt-list-content">{{ det.message }}</div>
               </div>
             </div>
-            <img
-              src="../assets/live/live_ag_platforms.png"
-              style="margin: 8px 0 68px 50px"
-            />
+            <img src="../assets/live/live_ag_platforms.png" style="margin: 8px 0 68px 50px" />
             <br />
-            <div
-              class="play-btn"
-              @click="openGame(det.name, det.code, det.gameCode)"
-            ></div>
+            <div class="play-btn" @click="openGame(det.name, det.code, det.gameCode)"></div>
           </div>
           <div class="live-right" data-aos="fade-left" data-aos-duration="4000">
             <img class="absolute" src="../assets/live/live_right.png" />
-            <img
-              :src="require('../assets/live/live_right_' + det.image + '.png')"
-            />
+            <img :src="require('../assets/live/live_right_' + det.image + '.png')" />
           </div>
         </template>
       </template>
@@ -52,10 +41,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import GameModal from "@/components/modal/GameModal";
 import { useRoute } from "vue-router";
 import aos from "aos";
-import {
-  getPlatformListDisplay,
-  getLoggedInPlatformList
-} from "@/api/platform/platform";
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 
 export default defineComponent({
@@ -68,7 +54,7 @@ export default defineComponent({
     const store = userStore();
 
     const platforms = ref([
-    {
+      {
         code: "PMLIVE",
         name: "DB",
         image: "pm",
@@ -107,7 +93,7 @@ export default defineComponent({
         message:
           "玩放易博尽享金满人生，EBET自2012年成立以来即致力创造富游戏性与创意兼具的移动娱乐平台，不仅提供专业的技术支持和稳定的顶级设备，并支持多项平台和荣获多项国际许可认证，提供玩家最值得信任的娱乐环境。",
         gameCode: ""
-      },
+      }
     ]);
     // const selectedPlat = ref(platforms.value[0].code);
 
@@ -115,20 +101,16 @@ export default defineComponent({
     const platformsList = ref([]);
     const platformsListDisplay = ref([]);
     const getPlatList = () => {
-      if (store.memberType === "TEST") {
+      if (store.token) {
         getLoggedInPlatformList().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
           setFilteredPlatforms();
         });
       } else {
         getPlatformListDisplay().then((res) => {
           platformsList.value = res;
-          platformsListDisplay.value = platformsList.value.filter((element) =>
-            element.gameType.includes("LIVE")
-          );
+          platformsListDisplay.value = platformsList.value.filter((element) => element.gameType.includes("LIVE"));
           setFilteredPlatforms();
         });
       }
@@ -136,9 +118,7 @@ export default defineComponent({
 
     const setFilteredPlatforms = () => {
       filteredPlatforms.value = platforms.value.filter((displayPlatform) =>
-        platformsListDisplay.value.some(
-          (platform) => platform.code === displayPlatform.code
-        )
+        platformsListDisplay.value.some((platform) => platform.code === displayPlatform.code)
       );
 
       filteredPlatforms.value.forEach((element) => {

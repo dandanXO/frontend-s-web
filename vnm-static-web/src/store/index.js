@@ -31,7 +31,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "0",
       siteId: 8,
       unreadTotal: 0,
-      visitorId: ""
+      visitorId: "",
+      isAffiliateA: false
     };
   },
   actions: {

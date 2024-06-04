@@ -17,6 +17,10 @@ export const adjustAmount = (id, adjust) => {
   return https().request(`/vip-rebate-record/${id}?_method=PUT`, Method.POST, adjust, ContentType.form);
 };
 
+export const adjustBetAmount = (id, adjust) => {
+  return https().request(`/vip-rebate-record/bet/${id}?_method=PUT`, Method.POST, adjust, ContentType.form);
+};
+
 export const distribute = (rebate) => {
   return https().request("/vip-rebate-record/rebate", Method.POST, rebate, ContentType.form);
 };

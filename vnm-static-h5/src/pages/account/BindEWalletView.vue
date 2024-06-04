@@ -187,6 +187,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import {useLocalStorage} from "@vueuse/core";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -208,7 +209,7 @@ const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = process.env.IMAGE_CDN + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
@@ -260,7 +261,7 @@ const getInnerCode = () => {
   innerCaptchaCode.value = "";
 
   api
-    .get("/member/verificationCode")
+    .get("/member/verificationEasyCode")
     .then((response) => {
       if (response.code === 0) {
         phoneVerificationImg.value = "data:image/png;base64," + response.data.img;

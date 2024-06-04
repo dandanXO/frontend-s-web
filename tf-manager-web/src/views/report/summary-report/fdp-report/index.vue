@@ -2,6 +2,21 @@
   <div class="roles-main">
     <div class="header-container">
       <div class="search">
+        <el-date-picker
+          v-model="request.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          type="daterange"
+          range-separator=":"
+          :start-placeholder="t('fields.startDate')"
+          :end-placeholder="t('fields.endDate')"
+          style="margin-left: 5px; width: 250px"
+          :shortcuts="shortcuts"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-back"
@@ -14,12 +29,13 @@
 
         <el-button
           style="margin-left: 20px"
-          icon="el-icon-refresh"
+          icon="el-icon-search"
           size="mini"
           type="success"
           @click="refresh()"
-        />
-
+        >
+          {{ t('fields.search') }}
+        </el-button>
         <el-button
           size="mini"
           type="primary"
@@ -42,6 +58,7 @@
     >
       <el-table-column prop="member" :label="t('fields.member')" width="120" fixed />
       <el-table-column prop="source" :label="t('fields.sourceType')" width="120" />
+      <el-table-column prop="affiliateName" :label="t('fields.affiliateName')" width="180" />
       <el-table-column prop="registerTime" :label="t('fields.registerTime')" width="150">
         <template #default="scope">
           <span v-if="scope.row.registerTime === null">-</span>
@@ -124,6 +141,131 @@ let timeZone = null;
 var date = new URL(location.href).searchParams.get('date')
 var siteIdFromParam = new URL(location.href).searchParams.get('site')
 
+const shortcuts = [
+  {
+    text: t('fields.today'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.yesterday'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'days')
+          .startOf('day')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'days')
+          .endOf('day')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.lastWeek'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'weeks')
+          .startOf('isoWeek')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'weeks')
+          .endOf('isoWeek')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.thisMonth'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(1, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      end.setTime(
+        moment(end)
+          .subtract(1, 'months')
+          .endOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+  {
+    text: t('fields.last3Months'),
+    value: () => {
+      const end = new Date()
+      const start = new Date()
+      start.setTime(
+        moment(start)
+          .subtract(2, 'months')
+          .startOf('month')
+          .format('x')
+      )
+      return [start, end]
+    },
+  },
+]
+
+function disabledDate(time) {
+  return (
+    time.getTime() <
+      moment(new Date())
+        .subtract(2, 'months')
+        .startOf('month')
+        .format('x') || time.getTime() > new Date().getTime()
+  )
+}
+
 const uiControl = reactive({
   messageVisible: false,
 })
@@ -137,7 +279,7 @@ const page = reactive({
 const request = reactive({
   size: 30,
   current: 1,
-  recordTime: date,
+  recordTime: [date, date],
   siteId: null,
 })
 

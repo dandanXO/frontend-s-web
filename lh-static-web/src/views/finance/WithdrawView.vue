@@ -41,6 +41,10 @@
             </span>
             <img :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img v-if="method.privilegeIcon" :src="`${imgURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </el-form-item>
 
@@ -125,7 +129,6 @@
           <template v-else>
             <span>加载中...</span>
           </template>
-
         </el-form-item>
         <el-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="预计到账">
           <span style="color: #17cd27">
@@ -144,12 +147,16 @@
         <!-- K豆教程视频 -->
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
-          <el-button class="common-btn"
-                     v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
-                     @click="openEWalletTutorial(selectedWithdrawalMethod.code)">
+          <el-button
+            class="common-btn"
+            v-if="selectedWithdrawalMethod.code !== 'SZPAY'"
+            @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+          >
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
           </el-button>
         </div>
 
@@ -160,7 +167,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -187,6 +200,9 @@ export default defineComponent({
     const loadingBtn = ref(false);
     const store = userStore();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + "/withdraw/";
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
+
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -234,21 +250,25 @@ export default defineComponent({
               });
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
               ElMessage.error({
                 type: "error",
                 message: response.message
               });
+              loadingBtn.value = false;
               // message.error(response.message);
             }
           }).catch((error) => {
             console.log(error.message);
+            loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
         console.log("error", error);
+        loadingBtn.value = false;
       });
-      loadingBtn.value = false;
+
     };
     const withdrawRules = {
       amount: [
@@ -384,7 +404,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes("USDT");
-      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY") || withdrawInfo.withdrawCode.includes("SZPAY");
+      isEWALLET.value = withdrawInfo.withdrawCode.includes("KDPAY") || withdrawInfo.withdrawCode.includes("EBPAY") || withdrawInfo.withdrawCode.includes("OKPAY") || withdrawInfo.withdrawCode.includes("SZPAY") || withdrawInfo.withdrawCode.includes("BLBPAY") || withdrawInfo.withdrawCode.includes("JDPAY");
       isALIPAY.value = withdrawInfo.withdrawCode.includes("ALIPAY");
       loadCards();
     };
@@ -415,9 +435,11 @@ export default defineComponent({
     };
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        "KDPAY": "http://jiaocheng.kdpay123.com",
-        "EBPAY": "https://www.ebpay009.com/syjc",
-        "OKPAY": "https://me-qr.com/l/okpay"
+        "KDPAY": "https://kdzfxz.kdzf2345.com/home/#/transactionFlow",
+        "EBPAY": "https://www.ebpay.org/",
+        "OKPAY": "https://me-qr.com/l/okpay",
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -437,6 +459,7 @@ export default defineComponent({
       loadCards,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       isUSDT,
       isEWALLET,
       isALIPAY,
@@ -573,6 +596,19 @@ export default defineComponent({
       position: relative;
       padding: 10px;
 
+      .promo-label {
+        position: absolute;
+        bottom: -13px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 50px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
       img {
         //     width: 40px;
         // padding: 8px 20px;
@@ -673,7 +709,8 @@ export default defineComponent({
     gap: 15px;
   }
 
-  :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+  :deep(.el-input__wrapper),
+  :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
     box-shadow: 0px 0px 8px 0px #a9c9ea inset;
   }
@@ -833,11 +870,42 @@ export default defineComponent({
 .menu-title-container {
   .menu-title {
     font-size: 18px;
-    color: #424F72;
+    color: #424f72;
   }
 
   .additional-title {
     padding-left: 16px;
+  }
+}
+
+.dark {
+  .card {
+    @include content-block-dark;
+    color: $font-3-dark;
+  }
+
+  .menu-title-container {
+    .menu-title {
+      color: $color-white;
+    }
+  }
+
+  .account-container {
+    .account-content-wrapper {
+      .withdraw-type-item {
+        border: unset;
+        box-shadow: unset;
+        background-color: $background-content-block-lighter-dark;
+      }
+    }
+  }
+
+  .withdraw-form {
+    :deep(.el-input__wrapper),
+    :deep(.el-select__wrapper) {
+      background-color: $background-content-block-lighter-dark;
+      box-shadow: none;
+    }
   }
 }
 </style>

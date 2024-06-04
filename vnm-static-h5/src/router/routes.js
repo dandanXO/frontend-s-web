@@ -355,6 +355,11 @@ const routes = [
     children: [{ path: "", name: "vipapp", component: () => import("pages/games/VIPView.vue") }],
     meta: { requiresAuth: true, isApp: true }
   },
+  {
+    path: "/about",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

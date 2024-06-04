@@ -16,6 +16,11 @@
               <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
+
           </div>
         </div>
         <q-form ref="withdrawFormRef">
@@ -211,7 +216,7 @@
                 :label="tutorialLabel()"
               />
             </div>
-            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)">
+            <div class="q-mt-md text-orange" v-if="['KDPAY', 'EBPAY', 'OKPAY', 'JDPAY', 'BLBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)">
               <span>*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             </div>
           </div>
@@ -240,6 +245,8 @@
               class="q-mt-md fit"
               color="brightbtn"
               @click="submitWithdraw"
+              :loading="withdrawLoading"
+              :disable="withdrawLoading"
               label="立即提款"
             />
           </div>
@@ -291,6 +298,9 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -348,14 +358,19 @@ export default defineComponent({
         });
       }
     };
+
+    const withdrawLoading = ref(false);
+
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
         message: "确认中。。。"
       });
+      withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
+        withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
@@ -367,6 +382,8 @@ export default defineComponent({
             });
             getWithdrawalMethods();
 
+            withdrawLoading.value = false;
+
           } else {
             $q.notify({
               color: "negative",
@@ -374,9 +391,12 @@ export default defineComponent({
               message: response.message,
               icon: "report_problem"
             });
+
+            withdrawLoading.value = false;
           }
         }).catch((error) => {
           console.log("error", error);
+          withdrawLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -396,7 +416,7 @@ export default defineComponent({
       selectedWithdrawalMethod.value = method;
       withdrawInfo.withdrawCode = method.code;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY')|| withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
@@ -493,13 +513,19 @@ export default defineComponent({
         return 'EB使用教程'
       } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
         return 'OK教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'BLBPAY') {
+        return '808钱包教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
+        return 'JDPAY教程视频'
       }
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -518,6 +544,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
@@ -533,7 +560,8 @@ export default defineComponent({
       chooseLabel,
       chooseCard,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      withdrawLoading
     };
   }
 });
@@ -557,6 +585,20 @@ export default defineComponent({
     position: relative;
     cursor: pointer;
 
+    .promo-label{
+      position:absolute;
+      bottom:8px;
+      left:50%;
+      transform: translate(-50%);
+      width: 50px;
+
+      img{
+        width: 100%;
+        height: auto;
+        padding: 4px 6px;
+      }
+    }
+
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 6px;
@@ -575,6 +617,11 @@ export default defineComponent({
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
         border: 1px solid #33bcd4;
+      }
+
+      .promo-img{
+        border:none;
+        border-radius:0px;
       }
 
       // img {

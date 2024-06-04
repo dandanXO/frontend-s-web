@@ -54,6 +54,12 @@
           style="width: 200px"
           :placeholder="t('fields.gameName')"
         />
+        <el-input
+          v-model="request.code"
+          size="small"
+          style="width: 120px"
+          :placeholder="t('fields.gameCode')"
+        />
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -635,6 +641,7 @@ const request = reactive({
   gameType: null,
   requestBy: null,
   requestTime: null,
+  code: null
 })
 const imageRequest = reactive({
   size: 10,
@@ -713,6 +720,7 @@ const gameLabel = reactive({
     { key: 2, displayName: 'HOT', value: 'HOT' },
     { key: 3, displayName: 'RECOMMEND', value: 'RECOMMEND' },
     { key: 4, displayName: 'LIST', value: 'LIST' },
+    { key: 5, displayName: 'JACKPOT', value: 'JACKPOT' },
   ],
 })
 
@@ -726,6 +734,7 @@ function resetQuery() {
   request.platform = null
   request.siteId = site.value ? site.value.id : null;
   request.gameType = null
+  request.code = null;
 }
 
 function resetImageQuery() {

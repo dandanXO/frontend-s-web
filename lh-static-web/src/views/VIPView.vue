@@ -2,9 +2,8 @@
   <div class="vip-container">
     <div class="header-section">
       <img src="../assets/vip/vip-header.png" class="vip-header" />
-
     </div>
-<!--    <div class="banner-container" />-->
+    <!--    <div class="banner-container" />-->
 
     <Carousel v-model="currentSlide" :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
@@ -108,7 +107,7 @@
               <td>30,000</td>
               <td id="vipPromoInfo4">
                 存款最少100元可申请每月一次再存20% 最高奖金1888元
-                <span style="color: #B8945D;">（仅限白银Ⅲ申请）</span>
+                <span style="color: #b8945d">（仅限白银Ⅲ申请）</span>
               </td>
               <td>电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
             </tr>
@@ -134,7 +133,7 @@
               <td rowspan="3">黄金</td>
               <td>黄金Ⅲ</td>
               <td>400,000</td>
-              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金1888元</td>
+              <td id="vipPromoInfo7" class="showTips6">存款最少200元可申请一次再存30%最高奖金888元</td>
               <td class="showTips6">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips6">
                 <div class="vip-btn disable">未符合</div>
@@ -152,7 +151,7 @@
             <tr>
               <td>黄金Ⅰ</td>
               <td>1,000,000</td>
-              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金8888元</td>
+              <td id="vipPromoInfo9" class="showTips8">存款最少500元可申请每月一次再存35% 最高奖金2888元</td>
               <td class="showTips8">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips8">
                 <div class="vip-btn disable">未符合</div>
@@ -171,7 +170,7 @@
             <tr>
               <td>铂金Ⅰ</td>
               <td>4,000,000</td>
-              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金18888元</td>
+              <td id="vipPromoInfo11" class="showTips10">存款最少500元可申请一次再存40%最高奖金5888元</td>
               <td class="showTips10">电竞/体育 15倍 老虎机12倍 真人18倍（不包含彩票场馆）</td>
               <!-- <td colspan="2" class="hideTips10">
                 <div class="vip-btn disable">未符合</div>
@@ -319,20 +318,20 @@ export default defineComponent({
       }
       var levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       if (!levelUpDeposit) {
-        levelUpDeposit = 0
+        levelUpDeposit = 0;
       }
       if (vipLevel === 0) {
-        return 0
+        return 0;
       }
       if (vipLevel + 1 === +vipInfo.vipLevel) {
         return (currentDeposit / levelUpDeposit) * 100;
       }
       if (currentDeposit > levelUpDeposit + 1) {
-        return 100
+        return 100;
       } else {
-        return 0
+        return 0;
       }
-      
+
       // const levelUpDeposit = +upgradeStatus.replaceAll(",", "");
       // return (currentDeposit / levelUpDeposit) * 100;
 
@@ -399,30 +398,36 @@ export default defineComponent({
 
     const vipTerms = [
       {
-        text: `所有雷火电竞会员存款达到相应VIP等级要求即可享有特定免费奖金、存送奖金或其他奖励，存送奖金只需完成（存款+奖金）*相应流水倍数即可提款。`
+        text: `返水奖金根据北京时间每天00:00:00-23:59:59之间的有效投注额进行计算，所有游戏场馆投注额都是按照北京时间计算，返水彩金无需申请，系统会在次日下午14:00派发到您的主账户；`
       },
       {
-        text: `达到相应等级要求的会员可以点击"待领取"，领取免费奖金或存款选择相对应的存送优惠即可。`
+        text: `雷火电竞夺宝、捕鱼和彩票 不参与返水优惠；`
       },
       {
-        text: `各等级所对应的优惠所要求的流水有所不同，会员需要达到相应流水方可申请提款。`
+        text: `电竞/体育中的连串过关投注额返水将以注单结算时间为准。`
       },
       {
-        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址﹑电话号码﹑支付方式（相同借记卡/信用卡/银行账户号码）IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+        text: `返水根据有效投注进行计算，在所有产品中，任何注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注以及在同一游戏中同时投注对等盘口，将不计算在有效投注额内，赢半和输半只计算一半流水，体育提前注单按照实际输赢金额的绝对值作为有效投注；`
       },
       {
-        text: `在某些未知因素超出可控范围的情况下，雷火电竞保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+        text: `返水奖金可投注于任何平台游戏，奖金只需1倍投注额即可申请提款，最低返水1元，低于1元不予派发。`
       },
       {
-        text: `雷火电竞保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火电竞将不承担任何责任。`
+        text: `此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址, 电话号码, 支付方式(相同借记卡/信用卡/银行账户号码) IP地址，同一网络环境等将可以作为判定是否独立玩家的条件。`
       },
       {
-        text: `雷火电竞有权延长，缩短，终止，或者修改此活动！此活动最终解释权归雷火电竞所有。`
+        text: `对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利。`
+      },
+      {
+        text: `在某些未知因素超出可控范围的情况下，雷火保留可单方面执行的决定权，并承诺会在这类紧急问题发生时解释给客户原因并听取客户反馈与客户沟通协商解决。`
+      },
+      {
+        text: `雷火保留对本次活动的修订、终止和最终解释权，超出本网站控制外的技术错误，雷火将不承担任何责任。`
       }
     ];
 
     const showRebate = ref(true);
-    const currentDisplayTerms = ref(vipTerms);
+    const currentDisplayTerms = ref(terms);
     const onShowRebateClick = (flag) => {
       showRebate.value = flag;
       if (showRebate.value) currentDisplayTerms.value = terms;
@@ -574,7 +579,7 @@ export default defineComponent({
             // Now, vipItems array has the updated properties based on the provided elements
             // console.log(vipItems);
           } else {
-             ElMessage.error(res.message)
+            ElMessage.error(res.message);
           }
         });
       }
@@ -586,7 +591,7 @@ export default defineComponent({
           store.getBalance();
           initVIPTable();
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
       });
     };
@@ -600,8 +605,8 @@ export default defineComponent({
       currentSlide.value = vipLevel - 1;
     };
     onMounted(() => {
-        initVIPTable();
-        slideTo();
+      initVIPTable();
+      slideTo();
     });
 
     return {
@@ -658,7 +663,7 @@ $border-settings: 1px solid #e5e7eb;
   }
 }
 .vip-container {
-  position:relative;
+  position: relative;
   background-image: url("../assets/vip/vip-bg.jpg");
   background-color: #f3f7fd;
   background-repeat: no-repeat;
@@ -668,12 +673,12 @@ $border-settings: 1px solid #e5e7eb;
   color: #8d8d8d;
   min-height: 100vh;
 
-  .header-section{
-    margin:0 auto;
+  .header-section {
+    margin: 0 auto;
     width: 100%;
     text-align: center;
   }
-  .vip-header{
+  .vip-header {
     width: 400px;
     margin: 10px auto;
   }
@@ -731,26 +736,25 @@ $border-settings: 1px solid #e5e7eb;
       background-size: contain;
     }
 
-
     &9 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
       background-size: contain;
     }
 
-&10 {
-  background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-  background-size: contain;
-}
+    &10 {
+      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
+      background-size: contain;
+    }
 
-&11 {
-  background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
-  background-size: contain;
-}
+    &11 {
+      background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+      background-size: contain;
+    }
 
-&12 {
-  background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
-  background-size: contain;
-}
+    &12 {
+      background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
+      background-size: contain;
+    }
     .vipLevelReachStatus {
       background: url("../assets/vip/badge/vip-level-banner-status-ribbon-unachieved.png") no-repeat left center;
       background-size: contain;
@@ -986,6 +990,46 @@ $border-settings: 1px solid #e5e7eb;
 
       .vipcontents {
         padding-bottom: 10px;
+      }
+    }
+  }
+}
+
+.dark {
+  .vip-container {
+    background-image: url("../assets/vip/vip-bg-dark.png");
+    background-color: #f3f7fd;
+    background-repeat: no-repeat;
+
+    .vip-program {
+      table {
+        border: none;
+        th {
+          background-color: #001a33;
+          color: $color-white;
+          border: none;
+        }
+        td {
+          background-color: #28313e;
+          color: $color-white;
+          border-color: #3b4c6f;
+        }
+      }
+    }
+
+    .terms-conditions {
+      .section-title {
+        color: $color-white;
+      }
+      .terms {
+        @include content-block-dark;
+        color: $font-3-dark;
+        margin-top: 39px;
+        .term {
+          &:first-child {
+            margin-top: 0;
+          }
+        }
       }
     }
   }

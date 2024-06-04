@@ -185,7 +185,7 @@ export const pokerPlatforms = [
     name: "King Poker",
     image: "kp",
     message: "Texas Hold'em, Dragon Tiger Fight and many other Poker genres as you choose",
-    vimessage: "Texas Hold'em, Long Hổ Đấu và nhiều thể loại Poker khác tùy Bạn chọn",
+    vimessage: "Nơi thỏa mãn đam mê của dân chơi Texas Hold'em, Bài Cào với giao diện thân thiện, dễ thao tác với người chơi",
     caption: "",
     gameCode: ""
   },
@@ -194,7 +194,7 @@ export const pokerPlatforms = [
     name: "King Maker",
     image: "km",
     message: "The leading provider of 3D games, play Bau Cua, Xoc Dia at Kingmaker now!",
-    vimessage: "Nhà cung cấp trò chơi 3D hàng đầu, chơi  Bầu Cua, Xóc Đĩa tại Kingmaker ngay!",
+    vimessage: "Đơn vị đứng đầu trong giới sản xuất những tựa game được cập nhật theo xu hướng mới của thị trường và thời đại. ",
     caption: "",
     gameCode: ""
   },
@@ -203,7 +203,7 @@ export const pokerPlatforms = [
     name: "V8 Poker",
     image: "v8",
     message: "The V8 PLeading technology in Asia",
-    vimessage: "Công nghệ hàng đầu của châu Á",
+    vimessage: "Cổng game Poker quốc tế với giao diện chuyên nghiệp, trò chơi phong phú, mới mẻ được vận hành với quy mô lớn và được ưa chuộng bởi sự tận tâm với khách hàng.",
     caption: "",
     gameCode: ""
   },
@@ -212,7 +212,7 @@ export const pokerPlatforms = [
     name: "Rich88",
     image: "rich88",
     message: "Rich88 offers 3D games with attractive odds, Blackjack, Xoc Dia, Sicbo...",
-    vimessage: "Rich88 cung cấp trò chơi 3D với tỷ lệ cược hấp dẫn, Xì Dách, Xóc Đĩa, Sicbo... ",
+    vimessage: "Rich88 – Sảnh Poker hàng đầu Châu Á với giao diện Game Bài đặc sắc, thân thiện, quen thuộc với những dân chơi Poker kì cựu. ",
     caption: "",
     gameCode: ""
   },
@@ -242,7 +242,7 @@ export const lotteryPlatforms = [
     name: "TCG",
     image: "tcg",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép người chơi cài đặt cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. ",
     caption: "",
     gameCode: ""
   },
@@ -251,7 +251,7 @@ export const lotteryPlatforms = [
     name: "GPI",
     image: "gpi",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
     caption: "",
     gameCode: "sode"
   },
@@ -260,7 +260,7 @@ export const lotteryPlatforms = [
     name: "LOTO",
     image: "loto",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "Một sảnh xổ số nổi bật với chức năng xem Livestream quay số kéo dài cả ngày ở tất cả những trò chơi số trong sảnh. Ngoài ra kết quả xổ số của các miền đều được cập nhật nhanh chóng và chính xác.",
     caption: "",
     gameCode: ""
   }
@@ -292,7 +292,7 @@ export const cockfightPlatforms = [
     name: "WS168",
     image: "WS",
     message: "World class cockfighting online",
-    vimessage: "Sành đá gà đẳng cấp hàng đầu thế giới",
+    vimessage: "Sảnh Đá Gà sở hữu hơn 10 năm bề dày kinh nghiệm hoạt động trên thị trường với nhiều lựa chọn như: đá gà cựa, đá gà đòn, đá gà tre và đá gà Mỹ v.v….",
     caption: "",
     gameCode: 7202
   }

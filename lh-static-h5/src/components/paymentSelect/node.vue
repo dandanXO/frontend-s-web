@@ -424,6 +424,16 @@ $node-color: #468cff;
   }
 }
 
+.body--dark {
+  .node {
+    .node-content {
+      .node-text > div {
+        color: $font-3-dark;
+      }
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .node {
     .node {

@@ -27,17 +27,12 @@ let baseWss;
 
 let siteId;
 
-console.log(currentHost)
+console.log(currentHost);
 switch (currentHost) {
   case process.env.VUE_APP_IW2_HOST:
     baseApi = process.env.VUE_APP_IW2_API;
     baseWss = process.env.VUE_APP_IW2_SOCKET;
     siteId = 'iw2';
-    break;
-  case process.env.VUE_APP_IND2_HOST:
-    baseApi = process.env.VUE_APP_IND2_API;
-    baseWss = process.env.VUE_APP_IND2_SOCKET;
-    siteId = 'ind';
     break;
   case process.env.VUE_APP_IND_HOST:
     baseApi = process.env.VUE_APP_IND_API;
@@ -63,6 +58,11 @@ switch (currentHost) {
     baseApi = process.env.VUE_APP_VNM_API;
     baseWss = process.env.VUE_APP_VNM_SOCKET;
     siteId = 'vnm';
+    break;
+  case process.env.VUE_APP_KRW_HOST:
+    baseApi = process.env.VUE_APP_KRW_API;
+    baseWss = process.env.VUE_APP_KRW_SOCKET;
+    siteId = 'krw';
     break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
@@ -123,6 +123,9 @@ if (siteId === 'dy') {
 } else if (siteId === 'vnm') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
+} else if (siteId === 'krw') {
+  link.href = '/favicon.ico';
+  title.innerText = 'Bet2Won';
 } else if (siteId === 'iw2') {
   link.href = '/iw2-favicon.ico';
   title.innerText = '789F';

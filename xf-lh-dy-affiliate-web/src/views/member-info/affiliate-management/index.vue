@@ -8,23 +8,23 @@
       </template>
       <div class="inputs-wrap">
         <el-form @submit.prevent inline="true">
-          <el-form-item :label="t('fields.registerTime') + ' :'">
-            <el-date-picker
-              v-model="request.regTime"
-              format="DD/MM/YYYY"
-              value-format="YYYY-MM-DD"
-              size="normal"
-              class="input-small"
-              type="daterange"
-              range-separator=":"
-              :start-placeholder="t('fields.startDate')"
-              :end-placeholder="t('fields.endDate')"
-              :shortcuts="shortcuts"
-              :disabled-date="disabledDate"
-              :editable="false"
-              :clearable="false"
-            />
-          </el-form-item>
+          <!--          <el-form-item :label="t('fields.registerTime') + ' :'">-->
+          <!--            <el-date-picker-->
+          <!--              v-model="request.regTime"-->
+          <!--              format="DD/MM/YYYY"-->
+          <!--              value-format="YYYY-MM-DD"-->
+          <!--              size="normal"-->
+          <!--              class="input-small"-->
+          <!--              type="daterange"-->
+          <!--              range-separator=":"-->
+          <!--              :start-placeholder="t('fields.startDate')"-->
+          <!--              :end-placeholder="t('fields.endDate')"-->
+          <!--              :shortcuts="shortcuts"-->
+          <!--              :disabled-date="disabledDate"-->
+          <!--              :editable="false"-->
+          <!--              :clearable="false"-->
+          <!--            />-->
+          <!--          </el-form-item>-->
           <el-form-item :label="t('fields.loginName') + ' :'">
             <el-input
               class="input-small"
@@ -44,7 +44,12 @@
               >
                 {{ $t('fields.search') }}
               </el-button>
-              <el-button size="normal" type="primary" plain @click="resetQuery()">
+              <el-button
+                size="normal"
+                type="primary"
+                plain
+                @click="resetQuery()"
+              >
                 {{ $t('fields.reset') }}
               </el-button>
             </div>
@@ -53,7 +58,9 @@
       </div>
       <div class="btn-group">
         <el-button
-          v-if="affiliateLevel !== 'AFFILIATE'"
+          v-if="parseInt(store.state.user.siteId) === 10
+            ? affiliateLevel === 'JUNIOR_AFFILIATE' ? false : true
+            : affiliateLevel === 'AFFILIATE' ? false : true"
           icon="el-icon-plus"
           size="normal"
           type="primary"
@@ -71,7 +78,14 @@
           {{ item.name }}
         </el-breadcrumb-item>
       </el-breadcrumb>
-      <table style="width: 98%; margin: 0 auto;" cellpadding="0" cellspacing="0" border="0" class="custom-table">
+
+      <table
+        style="width: 98%; margin: 0 auto;"
+        cellpadding="0"
+        cellspacing="0"
+        border="0"
+        class="custom-table"
+      >
         <thead>
           <tr>
             <th>{{ t('fields.loginName') }}</th>
@@ -84,54 +98,114 @@
             <th>{{ t('fields.site') }}</th>
             <th>{{ t('fields.balance') }}</th>
             <th>{{ t('fields.registerTime') }}</th>
-            <th>{{ t('fields.totalDeposit') }}</th>
-            <th>{{ t('fields.totalWithdraw') }}</th>
-            <th>{{ t('fields.operate') }}</th>
+            <!--            <th>{{ t('fields.totalDeposit') }}</th>-->
+            <!--            <th>{{ t('fields.totalWithdraw') }}</th>-->
+            <th v-if="store.state.user.siteCode !== 'VNM'">{{ t('fields.operate') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="record in page.records" :key="record.id">
             <td>
-              <el-link type="primary" @click="searchDownline(record.id, record.loginName)">
+              <el-link
+                type="primary"
+                @click="searchDownline(record.id, record.loginName)"
+              >
                 {{ record.loginName }}
               </el-link>
             </td>
             <td>
               <span v-if="record.affiliateCode === null">-</span>
-              <span v-if="record.affiliateCode !== null">{{ record.affiliateCode }}</span>
+              <span v-if="record.affiliateCode !== null">
+                {{ record.affiliateCode }}
+              </span>
             </td>
             <td>
               <span v-if="record.affiliateLevel === null">-</span>
-              <span v-if="record.affiliateLevel !== null">{{ t('affiliate.level.' + record.affiliateLevel) }}</span>
+              <span v-if="record.affiliateLevel !== null">
+                {{ t('affiliate.level.' + record.affiliateLevel) }}
+              </span>
             </td>
             <td>
               <span v-if="record.commission === null">0 %</span>
-              <span v-if="record.commission !== null">{{ record.commission * 100 }} %</span>
+              <span v-if="record.commission !== null">
+                {{ record.commission * 100 }} %
+              </span>
             </td>
             <td>
               <span v-if="record.downlineMember === null">-</span>
-              <span v-if="record.downlineMember !== null">{{ record.downlineMember }}</span>
+              <span v-if="record.downlineMember !== null">
+                {{ record.downlineMember }}
+              </span>
             </td>
             <td>
               <span v-if="record.downlineAffiliate === null">-</span>
-              <span v-if="record.downlineAffiliate !== null">{{ record.downlineAffiliate }}</span>
+              <span v-if="record.downlineAffiliate !== null">
+                {{ record.downlineAffiliate }}
+              </span>
             </td>
             <td>
-              <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === 'NORMAL'" type="success" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === 'DISABLE'" type="danger" size="normal">{{ t('affiliate.status.' + record.affiliateStatus) }}</el-tag>
-              <el-tag v-if="record.affiliateStatus === null" type="info" size="normal">-</el-tag>
+              <el-tag v-if="record.affiliateStatus === 'APPLY'" size="normal">
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === 'NORMAL'"
+                type="success"
+                size="normal"
+              >
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === 'DISABLE'"
+                type="danger"
+                size="normal"
+              >
+                {{ t('affiliate.status.' + record.affiliateStatus) }}
+              </el-tag>
+              <el-tag
+                v-if="record.affiliateStatus === null"
+                type="info"
+                size="normal"
+              >
+                -
+              </el-tag>
             </td>
             <td>{{ record.site }}</td>
-            <td>$<span v-formatter="{data: record.balance, type: 'money'}" /></td>
+            <td>
+              $
+              <span v-formatter="{data: record.balance, type: 'money'}" />
+            </td>
             <td>
               <span v-if="record.regTime === null">-</span>
-              <span v-if="record.regTime !== null" v-formatter="{data: record.regTime, formatter: 'YYYY/MM/DD HH:mm:ss', type: 'date'}" />
+              <span
+                v-if="record.regTime !== null"
+                v-formatter="{
+                  data: record.regTime,
+                  formatter: 'YYYY/MM/DD HH:mm:ss',
+                  type: 'date',
+                }"
+              />
             </td>
-            <td>$<span v-formatter="{data: record.totalDeposit, type: 'money'}" /></td>
-            <td>$<span v-formatter="{data: record.totalWithdraw, type: 'money'}" /></td>
+            <!--            <td>-->
+            <!--              $-->
+            <!--              <span-->
+            <!--                v-formatter="{data: record.totalDeposit, type: 'money'}"-->
+            <!--              />-->
+            <!--            </td>-->
+            <!--            <td>-->
+            <!--              $-->
+            <!--              <span-->
+            <!--                v-formatter="{data: record.totalWithdraw, type: 'money'}"-->
+            <!--              />-->
+            <!--            </td>-->
             <td>
-              <el-button icon="el-icon-edit" size="normal" type="success" :disabled="breadcrumbNameList.length > 1" @click="showEdit(record)" />
+              <el-button
+                icon="el-icon-edit"
+                size="normal"
+                type="success"
+                :disabled="breadcrumbNameList.length > 1"
+                v-if="store.state.user.siteCode !== 'VNM'"
+                @click="showEdit(record)"
+              />
             </td>
           </tr>
         </tbody>
@@ -234,13 +308,26 @@
             maxlength="20"
           />
         </el-form-item>
-        <el-form-item :label="t('fields.commission')" prop="commission">
+        <el-form-item
+          :label="t('fields.commission')"
+          prop="commission"
+          v-if="store.state.user.siteCode !== 'VNM'"
+        >
           <el-input
             v-model="cForm.commission"
             style="width: 350px;"
             :maxlength="uiControl.commissionMax"
             @keypress="restrictCommissionDecimalInput($event)"
           />
+        </el-form-item>
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+            <el-input
+              v-model="item.value"
+              style=" width:100px; margin-left: auto; order: 2"
+            />
+          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -259,12 +346,12 @@
         :rules="eFormRules"
         :inline="true"
         size="normal"
-        label-width="200px"
+        label-width="150px"
       >
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input
             v-model="eForm.loginName"
-            style="width: 250px"
+            style="width: 350px"
             maxlength="50"
             :disabled="true"
           />
@@ -272,7 +359,7 @@
         <el-form-item :label="t('fields.affiliateCode')" prop="affiliateCode">
           <el-input
             v-model="eForm.affiliateCode"
-            style="width: 250px"
+            style="width: 350px"
             maxlength="50"
             :disabled="true"
           />
@@ -280,10 +367,19 @@
         <el-form-item :label="t('fields.commissionRate')" prop="commission">
           <el-input
             v-model="eForm.commission"
-            style="width: 250px"
+            style="width: 350px"
             :maxlength="uiControl.commissionMax"
             @keypress="restrictCommissionDecimalInput($event)"
           />
+        </el-form-item>
+        <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.shareRatio !== null" :label="t('fields.shareRatio')" prop="shareRatio">
+          <div v-for="item in eForm.shareRatio" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
+            <el-input
+              v-model="item.value"
+              style=" width:100px; margin-left: auto; order: 2"
+            />
+          </div>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -299,9 +395,9 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { useStore } from '@/store'
-import moment from 'moment'
+// import moment from 'moment'
 import {
   getAffiliateDownline,
   regsterAffiliate,
@@ -313,6 +409,7 @@ import { required, size } from '../../../utils/validate'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import emptyComp from '@/components/empty'
+import { getConfigListByGroup } from "../../../api/system-config";
 
 const store = useStore()
 const { t } = useI18n()
@@ -325,125 +422,142 @@ const uiControl = reactive({
   commissionMax: 2,
   revenueMax: 2,
   affiliateLevel: [
-    { key: 1, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 3, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 4, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
+    { key: 1, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
+    { key: 2, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
+    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 4, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 5, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 6, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
   ],
 })
 const affiliateLevel = ref(null)
 
 const site = ref(null)
 const affInfo = ref(null)
-const startDate = new Date()
-const defaultStartDate = convertDate(
-  startDate.setTime(
-    moment(startDate)
-      .startOf('month')
-      .format('x')
-  )
-)
-const defaultEndDate = convertDate(new Date())
+// const startDate = new Date()
+// const defaultStartDate = convertDate(
+//   startDate.setTime(
+//     moment(startDate)
+//       .startOf('month')
+//       .format('x')
+//   )
+// )
+// const defaultEndDate = convertDate(new Date())
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
-
-const shortcuts = [
-  {
-    text: t('fields.today'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.yesterday'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'days')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'days')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastWeek'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'weeks')
-          .startOf('isoWeek')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'weeks')
-          .endOf('isoWeek')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.thisMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .startOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-  {
-    text: t('fields.lastMonth'),
-    value: () => {
-      const end = new Date()
-      const start = new Date()
-      start.setTime(
-        moment(start)
-          .subtract(1, 'months')
-          .startOf('month')
-          .format('x')
-      )
-      end.setTime(
-        moment(end)
-          .subtract(1, 'months')
-          .endOf('month')
-          .format('x')
-      )
-      return [start, end]
-    },
-  },
-]
+const shareRatioList = reactive({
+  list: [],
+})
+// const shortcuts = [
+//   {
+//     text: t('fields.today'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.yesterday'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'days')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'days')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisWeek'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .startOf('isoWeek')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.lastWeek'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'weeks')
+//           .startOf('isoWeek')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'weeks')
+//           .endOf('isoWeek')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisMonth'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .startOf('month')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.lastMonth'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment(start)
+//           .subtract(1, 'months')
+//           .startOf('month')
+//           .format('x')
+//       )
+//       end.setTime(
+//         moment(end)
+//           .subtract(1, 'months')
+//           .endOf('month')
+//           .format('x')
+//       )
+//       return [start, end]
+//     },
+//   },
+//   {
+//     text: t('fields.thisThreeMonths'),
+//     value: () => {
+//       const end = new Date()
+//       const start = new Date()
+//       start.setTime(
+//         moment()
+//           .subtract(2, 'months')
+//           .startOf('month')
+//           .valueOf()
+//       )
+//       return [start, end]
+//     },
+//   },
+// ]
 
 const request = reactive({
-  regTime: [defaultStartDate, defaultEndDate],
   loginName: null,
   size: 20,
   current: 1,
@@ -465,6 +579,7 @@ const cForm = reactive({
   affiliateLevel: null,
   affiliateCode: null,
   commission: 0,
+  shareRatio: null,
 })
 
 const eForm = reactive({
@@ -472,15 +587,16 @@ const eForm = reactive({
   loginName: null,
   affiliateCode: null,
   commission: null,
+  shareRatio: null,
 })
 
-function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
-}
+// function convertDate(date) {
+//   return moment(date).format('YYYY-MM-DD')
+// }
 
-function disabledDate(time) {
-  return time.getTime() > new Date().getTime()
-}
+// function disabledDate(time) {
+//   return time.getTime() > new Date().getTime()
+// }
 
 const validatePassword = (rule, value, callback) => {
   if (value !== '' && cForm.reEnterPassword !== '') {
@@ -509,6 +625,15 @@ const validateCommission = (rule, value, callback) => {
   callback()
 }
 
+const validateShareRatio = (rule, value, callback) => {
+  shareRatioList.list.forEach((item) => {
+    if (item.value === '' || item.value < 0 || item.value > 1) {
+      callback(new Error(t('message.validateShareRatioFormat')))
+    }
+  })
+  callback()
+}
+
 const cFormRules = reactive({
   // affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [
@@ -529,6 +654,7 @@ const cFormRules = reactive({
     required(t('message.requiredCommission')),
     { validator: validateCommission, trigger: 'blur' },
   ],
+  shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
 })
 
 const eFormRules = reactive({
@@ -536,6 +662,7 @@ const eFormRules = reactive({
     required(t('message.requiredCommission')),
     { validator: validateCommission, trigger: 'blur' },
   ],
+  shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
 })
 
 function restrictCommissionDecimalInput(event) {
@@ -561,7 +688,6 @@ function restrictCommissionDecimalInput(event) {
 }
 
 function resetQuery() {
-  request.regTime = [defaultStartDate, defaultEndDate]
   request.loginName = null
 }
 
@@ -576,11 +702,11 @@ async function loadDownlineAffiliates() {
       }
     })
   }
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = request.regTime.join(',')
-    }
-  }
+  // if (request.regTime !== null) {
+  //   if (request.regTime.length === 2) {
+  //     query.regTime = request.regTime.join(',')
+  //   }
+  // }
   query.siteId = site.value.id
   query.memberTypes = 'AFFILIATE'
   const { data: ret } = await getAffiliateDownline(checkId.value, query)
@@ -619,7 +745,19 @@ function showEdit(affiliate) {
   nextTick(() => {
     for (const key in affiliate) {
       if (Object.keys(eForm).find(k => k === key)) {
-        eForm[key] = affiliate[key]
+        if (key === 'shareRatio') {
+          eForm[key] = [...affiliate[key]]
+        } else {
+          eForm[key] = affiliate[key]
+        }
+      }
+    }
+    if (eForm.shareRatio === null || eForm.shareRatio === undefined) {
+      eForm.shareRatio = []
+    }
+    for (var item = 0; item < shareRatioList.list.length; item++) {
+      if (!eForm.shareRatio.some(child => child.code === shareRatioList.list[item].code)) {
+        eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
       }
     }
   })
@@ -628,6 +766,10 @@ function showEdit(affiliate) {
 async function addAffiliate() {
   createForm.value.validate(async valid => {
     if (valid) {
+      if (parseInt(cForm.siteId) === 10) {
+        // join share ratio by comma
+        cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+      }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -642,6 +784,10 @@ async function editAffiliate() {
       const form = {}
       form.commission = eForm.commission
       form.siteId = store.state.user.siteId
+      if (parseInt(form.siteId) === 10) {
+        // join share ratio by comma
+        form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + item.value).join(',');
+      }
       await editAffiliateCommission(eForm.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
@@ -685,6 +831,11 @@ function breadcrumbSearch(id, name) {
   }
 }
 
+const siteId = computed(() => {
+  return store.state.user.siteId
+})
+console.log(siteId);
+
 onMounted(async () => {
   affiliateLevel.value = store.state.user.affiliateLevel
   checkId.value = store.state.user.id
@@ -693,6 +844,9 @@ onMounted(async () => {
   await loadSite()
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
+  getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
+    shareRatioList.list = res.data;
+  });
 })
 </script>
 

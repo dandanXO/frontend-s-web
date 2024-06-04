@@ -4,7 +4,7 @@
       <el-tabs v-model="tabPosition" class="summoner-tabs">
         <el-tab-pane name="first" label="精英召唤">
           <div class="main-desc">
-            唤醒人每日存款≥500元，唤醒人与被唤醒人都可活动对应的存款彩金。
+            唤醒人每日存款≥200元，唤醒人与被唤醒人都可活动对应的存款彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -28,19 +28,19 @@
               <tr>
                 <td>唤醒第一日存款≥200</td>
                 <td>8</td>
-                <td>当日存款2% </td>
+                <td>当日存款5% </td>
                 <td rowspan="5">888元 </td>
                 <td rowspan="5">3倍 </td>
               </tr>
               <tr>
                 <td>唤醒第二日存款≥200</td>
                 <td>18</td>
-                <td>当日存款3% </td>
+                <td>当日存款5% </td>
               </tr>
               <tr>
                 <td>唤醒第三日存款≥200</td>
                 <td>28</td>
-                <td>当日存款6% </td>
+                <td>当日存款5% </td>
               </tr>
               <tr>
                 <td>唤醒第四日存款≥200</td>
@@ -71,13 +71,13 @@
               <br>
               <div style="padding-left: 20px;">
                 唤醒人：<br>
-                VIP3或以上等级会员符 合唤醒人身份<br>
+                VIP1或以上等级会员符 合唤醒人身份<br>
                 <br>
                 被唤醒人：<br>
-                VIP1会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br>
+                VIP1或以上等级会员历史存款≥500且超过15天未投注与存款的会员符合被唤醒人身份；<br>
                 <br>
               </div>
-              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥500元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；<br>
+              2. 活动以被唤醒人当日开始计算，唤醒日五天内每日存款≥200元，唤醒人与被唤醒人即可享受存款彩金， 3倍流水即可提款；<br>
               <br>
               3. 被唤醒人五日内需连续每日存款，若中断存款将视为放弃本活动优惠彩金；<br>
               <br>
@@ -95,9 +95,7 @@
         <el-tab-pane name="sec" label="唤醒圣堂">
 
           <div class="sub-desc">
-            活动时间：以官网通知为准<br>
-            活动对象：全体会员 <br>
-            活动内容：活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，唤醒会员需当日存款与投注≥100元即可领取彩金。
+            活动期间，会员历史存款≥500且超过15天未投注与存款的会员即可进行召回，唤醒会员需当日存款与投注≥100元即可领取彩金。
           </div>
           <div class="table">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -148,7 +146,7 @@
             <p>
               1. 活动期间，会员历史存款≥500且会员超过15天未投注与存款的会员即可符合被唤醒人条件，申请当天被唤醒人当日存款与投注≥100元即可符合领取彩金条件。<br><br>
 
-              2. 本活动全体会员皆可参与（合作代理所发展的下线不适合此优惠）；<br><br>
+              2. 本活动全体会员皆可参与；<br><br>
 
               3. 唤醒奖励将随召回人数的上涨而增加，最高388元/人，仅需3倍流水即可出款；<br><br>
 
@@ -269,7 +267,8 @@ onMounted(() => {
 .summoner-tabs {
   :deep(.el-tabs__nav) {
     float: none;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 100px;
   }
 
   :deep(.el-tabs__nav-wrap:after) {
@@ -382,7 +381,7 @@ onMounted(() => {
 .main-desc {
   color: #7A8EB9;
   font-family: PingFang SC;
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 34.45px;
   margin: 30px auto;
@@ -396,7 +395,7 @@ onMounted(() => {
   font-weight: 500;
   line-height: 34.45px;
   margin: 30px auto;
-  text-align: left;
+  text-align: center;
 
 }
 :deep(.summoner-modal .el-dialog__body) {

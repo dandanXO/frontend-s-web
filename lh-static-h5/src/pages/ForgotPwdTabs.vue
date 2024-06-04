@@ -388,7 +388,7 @@ export default defineComponent({
                   color: "positive",
                   position: "top",
                   message: "注册成功",
-                  icon: "report_problem"
+                  icon: "check_circle_outline"
                 });
               } else {
                 // $q.notify({

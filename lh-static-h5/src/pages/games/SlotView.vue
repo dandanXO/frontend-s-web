@@ -5,23 +5,23 @@
     </div>
     <div class="pageitem">
       <div class="topbar">
-<!--        <div class="bookmarks">-->
-<!--          <div class="plat-item is-active">-->
-<!--            <span>热门游戏</span>-->
-<!--          </div>-->
-<!--          <div class="plat-item">-->
-<!--            <span>老虎机</span>-->
-<!--          </div>-->
-<!--          <div class="plat-item">-->
-<!--            <span>累计奖池老虎机</span>-->
-<!--          </div>-->
-<!--          <div class="plat-item">-->
-<!--            <span>纸牌游戏</span>-->
-<!--          </div>-->
-<!--          <div class="plat-item">-->
-<!--            <span>桌面游戏</span>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="bookmarks">-->
+        <!--          <div class="plat-item is-active">-->
+        <!--            <span>热门游戏</span>-->
+        <!--          </div>-->
+        <!--          <div class="plat-item">-->
+        <!--            <span>老虎机</span>-->
+        <!--          </div>-->
+        <!--          <div class="plat-item">-->
+        <!--            <span>累计奖池老虎机</span>-->
+        <!--          </div>-->
+        <!--          <div class="plat-item">-->
+        <!--            <span>纸牌游戏</span>-->
+        <!--          </div>-->
+        <!--          <div class="plat-item">-->
+        <!--            <span>桌面游戏</span>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="search">
           <q-form @submit="searchList">
             <q-input
@@ -441,7 +441,7 @@ export default defineComponent({
       box-shadow: $shadow-bg;
       padding: 4px;
 
-      .q-img{
+      .q-img {
         aspect-ratio: 1/1;
       }
 
@@ -481,6 +481,24 @@ export default defineComponent({
   svg {
     color: #063c50;
     width: 48px;
+  }
+}
+.body--dark {
+  .pageitem {
+    .grid {
+      .q-list {
+        @include content-block-dark;
+      }
+    }
+  }
+  .search-input {
+    :deep(.q-field__control) {
+      background: $background-dark-light !important;
+      box-shadow: none;
+      .q-field__label {
+        color: $grey-color;
+      }
+    }
   }
 }
 </style>

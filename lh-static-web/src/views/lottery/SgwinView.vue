@@ -1,4 +1,5 @@
 <template>
+  <div></div>
   <!-- <div class="banner-wrapper">
     <div class="lottery-main-banner">
       <div class="banner-title">

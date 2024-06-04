@@ -14,6 +14,7 @@ import axios from "axios";
 import { cached } from "boot/cache";
 import { getVisitorId } from "boot/utils";
 import { useUI } from "stores/ui";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "App",
@@ -22,9 +23,14 @@ export default defineComponent({
     const store = userStore();
     const ui = useUI();
     const $q = useQuasar(); // calling here; equivalent to when component
-    $q.dark.set(false);
+
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
+
+    const darkModeFromStorage = useLocalStorage("DARK_MODE", false);
+    if (darkModeFromStorage.value && store.hasToken()) {
+      $q.dark.set(true);
+    }
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -68,7 +74,7 @@ export default defineComponent({
 
           // debugger;
           CSAUrl = urlData.hostname;
-          ui.CSAUrl= urlData.hostname;
+          ui.CSAUrl = urlData.hostname;
 
           initCsWeb();
           console.log(CSAUrl);
@@ -78,7 +84,6 @@ export default defineComponent({
           CSAUrl = "csweb01.c8nhwrqx4.com";
         });
     };
-
 
     const initCsWeb = () => {
       var regDevice = store.getDeviceType();
@@ -148,7 +153,7 @@ export default defineComponent({
     onUnmounted(() => {
       clearTimeout(onlineStatTimeout);
       clearInterval(onlineStatInterval);
-    })
+    });
   }
 });
 </script>

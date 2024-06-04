@@ -3,6 +3,7 @@ import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import { isAndroid } from "boot/utils";
+import OneSignal from "onesignal-cordova-plugin";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -38,7 +39,10 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       currentDeposit: "",
       levelUpDeposit: "",
-      registeredWithdrawPassword: false
+      registeredWithdrawPassword: false,
+      visitorId: "",
+      hasUpdatedOneSignal: false,
+      isAffiliateA: false
     };
   },
   actions: {
@@ -104,6 +108,14 @@ export const userStore = defineStore("userStore", {
           } else {
             SessionStorage.set("TOKEN", ret.data);
           }
+
+          this.hasUpdatedOneSignal = false;
+
+          if (isAndroid() && OneSignal !== undefined) {
+            OneSignal.logout();
+          }
+
+
         } else {
           Notify.create({
             color: "negative",
@@ -195,6 +207,13 @@ export const userStore = defineStore("userStore", {
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
+          }
+
+          if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
+            OneSignal.login(this.nickName);
+            OneSignal.User.addTag("user_name", this.nickName);
+            OneSignal.User.addTag("VIP", this.vip);
+            this.hasUpdatedOneSignal = true;
           }
 
           this.unreadInboxMail = 0;

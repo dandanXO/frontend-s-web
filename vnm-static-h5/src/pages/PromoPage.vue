@@ -35,8 +35,17 @@
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                        <div class="promo-label"  v-if="promo.labelType !== 2"
+                        >
+                          <div class="promo-ribbon"
+                               :class="{
+                          labelhot: promo.labelType === 1,
+                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                          labellimit: promo.labelType === 6,
+                          labelnew: promo.labelType === 0,
+                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
+                       }"
+                          >
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
                           <div
@@ -72,8 +81,17 @@
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-label">
-                          <div class="promo-ribbon" v-if="promo.labelType !== 2">
+                        <div class="promo-label" v-if="promo.labelType !== 2"
+                        >
+                          <div class="promo-ribbon"
+                               :class="{
+                          labelhot: promo.labelType === 1,
+                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                          labellimit: promo.labelType === 6,
+                          labelnew: promo.labelType === 0,
+                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
+                       }"
+                          >
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
                           <div
@@ -176,9 +194,7 @@ import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
-
+import {useLocalStorage} from "@vueuse/core";
 import HotPromotion from "components/HotPromotion";
 import { useI18n } from "vue-i18n";
 
@@ -189,7 +205,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const { t } = useI18n();
 
@@ -278,20 +294,20 @@ export default defineComponent({
       } else {
         // non extension
         // if (!store.token) {
-          // isDisplayLogin.value = true;
+        // isDisplayLogin.value = true;
         // } else {
 
-          if (promo.redirectUrl.includes("page-vip")) {
-            router.push("/account/vip?from=promo");
+        if (promo.redirectUrl.includes("page-vip")) {
+          router.push("/account/vip?from=promo");
+        } else {
+          if (route.query.fromAccount) {
+            router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
           } else {
-            if (route.query.fromAccount) {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-            } else {
-              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
-            }
-            isPromoDetail.value = true;
-            selectedPromo.value = promo;
+            router.push({ path: "/promo", query: { name: promo.redirectUrl } });
           }
+          isPromoDetail.value = true;
+          selectedPromo.value = promo;
+        }
         // }
       }
     };
@@ -320,21 +336,21 @@ export default defineComponent({
 
           promoItems.forEach(element => {
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
-              promoState.promoList.push(element);
+            promoState.promoList.push(element);
 
-              if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
-                showPromoDetails(element);
-              }
+            if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
+              showPromoDetails(element);
+            }
 
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
+            if (route.query.name && String(element.redirectUrl) === route.query.name) {
+              showPromoDetails(element);
+            }
 
-              if ((route.query.name === "/vip")) {
-                router.push("/account/vip");
-              }
+            if ((route.query.name === "/vip")) {
+              router.push("/account/vip");
+            }
             // }
           });
 
@@ -523,15 +539,13 @@ export default defineComponent({
           }
 
           .promo-ribbon {
-            // position: absolute;
-            // top: 0;
-            // left: 0;
             position: relative;
             color: #ffffff;
             font-size: 0.75rem;
             overflow: hidden;
             padding: 4px 20px 4px 8px;
             background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+
 
             &:after {
               content: "";
@@ -545,6 +559,27 @@ export default defineComponent({
               border-color: transparent #f6f8fc transparent transparent;
               overflow: hidden;
             }
+
+            &.labelhot{
+              background: linear-gradient(89.92deg, #D7353F 0.06%, #FEA4A4 106.89%, #A4CEFF 106.9%);
+            }
+
+            &.labellimit{
+              background: linear-gradient(89.92deg, #454BC2 0.06%, #B1A5F0 106.9%);
+            }
+
+            &.labelnew{
+              background: linear-gradient(89.92deg, #EAA318 0.06%, #F0DBA5 106.9%);
+            }
+
+            &.labelrecommend{
+              background: linear-gradient(89.92deg, #6DB73F 0.06%, #A5F0B6 106.9%);
+            }
+
+            &.labelother{
+              background: linear-gradient(89.92deg, #4DA9FF 0.06%, #A4CEFF 106.9%);
+            }
+
           }
 
           .promo-item-date {

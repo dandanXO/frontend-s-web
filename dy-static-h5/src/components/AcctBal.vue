@@ -160,6 +160,7 @@ const platformNames = {
   AG: "AG",
   BBINDY: "BBIN",
   KY: "开元棋牌",
+  LEG: "乐游棋牌",
   DT: "大唐棋牌",
   TCG: "TCG彩票",
   SGWin: "双赢彩票",

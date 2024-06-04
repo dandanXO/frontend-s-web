@@ -5,15 +5,44 @@ import { stringify } from "qs";
 import { userStore } from "@/store";
 import i18n from "../i18n/index";
 import { ResponseCode, SkipErrorCode } from "@/api/response";
-import { useRoute, useRouter } from "vue-router";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-var rstApi = getInitApi(rstArray, "VNM_WEB_RST_URL");
-var crtApi = getInitApi(crArray, "VNM_WEB_CRT_URL");
-var evtApi = getInitApi(evtArray, "VNM_WEB_EVT_URL");
+const globalLinks= ["tf88won"];
+console.log(window.location.hostname);
+const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
+
+const q7yxLinks= ["q7yxpdxwxk"];
+const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
+
+if(isGlobalVN){
+  var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
+  var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
+  var crGlobalArray = process.env.VUE_APP_GLOBAL_CR_API.split(",");
+
+  var rstApi = getInitApi(rstGlobalArray, "VNM_WEB_RST_URL");
+  var evtApi = getInitApi(evtGlobalArray, "VNM_WEB_EVT_URL");
+  var crtApi = getInitApi(crGlobalArray, "VNM_WEB_CRT_URL");
+
+  localStorage.setItem("IMAGE_CDN", process.env.VUE_APP_GLOBAL_IMAGE_CDN);
+
+}else if(isq7yxVN){
+  var rstArray2 = process.env.VUE_APP_Q7YX_RST_API.split(",");
+  var evtArray2 = process.env.VUE_APP_Q7YX_EVT_API.split(",");
+  var crArray2 = process.env.VUE_APP_Q7YX_CR_API.split(",");
+
+  var rstApi = getInitApi(rstArray2, "VNM_WEB_RST_URL");
+  var evtApi = getInitApi(evtArray2, "VNM_WEB_EVT_URL");
+  var crtApi = getInitApi(crArray2, "VNM_WEB_CRT_URL");
+
+}else{
+  var rstApi = getInitApi(rstArray, "VNM_WEB_RST_URL");
+  var crtApi = getInitApi(crArray, "VNM_WEB_CRT_URL");
+  var evtApi = getInitApi(evtArray, "VNM_WEB_EVT_URL");
+}
+
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
@@ -93,7 +122,7 @@ const onResponse = (response) => {
       res.message = i18n.global.t('response.' + res.code) || res.message
       return res;
     }
-    
+
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       store.token = null;
       location.reload();
@@ -120,11 +149,11 @@ const onResponse = (response) => {
       // }
       // message.error(res.message, 4);
       // ElMessage.error(res.message);
-      
+
     }
     // throw new Error(res.message || "Error");
-      res.message = i18n.global.t('response.' + res.code) || res.message
-      return res
+    res.message = i18n.global.t('response.' + res.code) || res.message
+    return res
   } else {
     return response.data;
   }

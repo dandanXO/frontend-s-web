@@ -16,6 +16,10 @@
             />
           </el-select>
           <el-select
+            v-if="
+              route.query.loginNameList !== null &&
+                route.query.loginNameList !== undefined
+            "
             v-model="request.loginNameList"
             :placeholder="t('fields.platform')"
             multiple
@@ -141,6 +145,12 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          prop="withdrawCount"
+          :label="t('fields.withdrawCount')"
+          align="center"
+          width="120"
+        />
         <el-table-column
           :label="t('fields.depositWithdrawalProfit')"
           align="center"
@@ -380,23 +390,14 @@ async function loadSites() {
 async function loadAffiliateList() {
   const { data: affiliates } = await getAffiliateList(request.siteId)
 
+  const loginNameArray = getFromRouter.loginNameList.split(',')
   affiliateNames.value = affiliates
-    .filter(a => a.affiliateLevel === 'SUPER_AFFILIATE')
-    .map(a => {
-      const modifiedSuperiorName =
-        a.superiorAffiliateName !== null
-          ? a.superiorAffiliateName.includes('admin')
-            ? a.superiorAffiliateName.replace('admin', '').trim()
-            : a.superiorAffiliateName
-          : null
-
-      return {
-        name:
-          a.superiorAffiliateName !== null && modifiedSuperiorName !== 'OFFICAL'
-            ? `${a.loginName} (${modifiedSuperiorName})`
-            : a.loginName,
-      }
-    })
+    .filter(
+      a =>
+        loginNameArray.includes(a.loginName) &&
+        a.affiliateLevel === 'SUPER_AFFILIATE'
+    )
+    .map(a => ({ name: a.loginName }))
 }
 
 let previouseLoginNameList = ref(null)
@@ -411,13 +412,8 @@ async function loadSitesWithPreDefineAffiliate() {
     )
     request.siteId = site.value.id
   } else {
-    if (store.state.user.siteId === null) {
-      request.siteId = store.state.user.sites[0].id
-    } else {
-      request.siteId = store.state.user.siteId
-    }
+    request.siteId = 1
   }
-  const { data: affiliates } = await getAffiliateList(request.siteId)
 
   if (
     route.query.loginNameList !== null &&
@@ -444,15 +440,6 @@ async function loadSitesWithPreDefineAffiliate() {
       loadRecord()
     }
   }
-
-  const loginNameArray = getFromRouter.loginNameList.split(',')
-  affiliateNames.value = affiliates
-    .filter(
-      a =>
-        loginNameArray.includes(a.loginName) &&
-        a.affiliateLevel === 'SUPER_AFFILIATE'
-    )
-    .map(a => ({ name: a.loginName }))
 }
 
 function convertDate(date) {
@@ -463,7 +450,7 @@ function disabledDate(time) {
   return (
     time.getTime() <
       moment(new Date())
-        .subtract(2, 'months')
+        .subtract(3, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
@@ -544,6 +531,9 @@ async function loadRecord() {
   const query = checkQuery()
   const { data: ret } = await queryDailySummary(query)
   const { data: ret1 } = await queryDailySummaryTotal(query)
+
+  loadAffiliateList()
+
   total.data = ret1
   page.pages = ret.pages
   page.records = ret.records
@@ -560,9 +550,15 @@ function getSummaries(param) {
         sums[index] = t('fields.total')
       } else if (index > 1) {
         var prop = column.property
-        if (index === 5 || index === 6 || index === 11 || index === 12) {
+        if (
+          index === 4 ||
+          index === 6 ||
+          index === 7 ||
+          index === 12 ||
+          index === 13
+        ) {
           sums[index] = total.data[prop]
-        } else if (index === 4) {
+        } else if (index === 5) {
           // profit depositWithdrawal = deposit - withdrawal
           sums[index] =
             '$' +

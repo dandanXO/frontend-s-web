@@ -133,6 +133,41 @@
                   src="../assets/poker/img_bg_ky_right.webp"
                 />
               </template>
+              <template v-if="det.code === 'LEG'">
+                <img
+                  class="imgabs leg2"
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_leg_left.png"
+                />
+                <img
+                  class="imgabs leg3"
+                  data-aos="fade-down"
+                  data-aos-duration="700"
+                  src="../assets/poker/center_leg_btn.png"
+                />
+                <div class="imgabs leg3text" data-aos="fade-down" data-aos-duration="900" v-html="det.message"></div>
+                <img
+                  class="imgabs leg4"
+                  data-aos="fade-down"
+                  data-aos-duration="500"
+                  src="../assets/poker/txt_leg.png"
+                />
+                <img
+                  class="imgabs leg6"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                  src="../assets/poker/girl_leg_rightr.png"
+                />
+                <div
+                  class="imgabs play-btn"
+                  data-aos="fade-down"
+                  data-aos-duration="1100"
+                  @click="openGame(det.name, det.code, det.gameCode)"
+                >
+                  立即游戏
+                </div>
+              </template>
             </div>
           </div>
         </template>
@@ -177,6 +212,14 @@ export default defineComponent({
         style: "KY",
         gameCode: "",
         message: "开元棋牌提供市面上热门游戏种类，选择全面多元，应有尽有<br> 玩家能不断游戏不感无趣！"
+      },
+      {
+        code: "LEG",
+        name: "乐游",
+        image: "leg",
+        style: "LEG",
+        gameCode: "",
+        message: "欧洲最高级别安全认证，热门棋牌品类丰富，聆听悦耳音乐，<br/>感受非同凡响极致体验，让游戏改变生活"
       }
     ]);
 
@@ -497,6 +540,105 @@ export default defineComponent({
         }
       }
     }
+
+    &.LEG {
+      background: url(../assets/poker/leg_bg.jpg);
+      .imgabs {
+        position: absolute;
+        &.leg1 {
+          left: 6%;
+          bottom: 15%;
+          z-index: 0;
+        }
+        &.leg2 {
+          left: 5%;
+          top: 6%;
+          z-index: 0;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.legdice {
+          left: 14%;
+          top: 5%;
+        }
+        &.leg3 {
+          left: 0;
+          right: 0;
+          top: 38%;
+          margin: auto;
+          &text {
+            left: 0;
+            right: 0;
+            margin: auto;
+            top: 52%;
+            margin: auto;
+            z-index: 999;
+            color: #ffffff;
+            text-align: center;
+            width: 490px;
+            font-size: 18px;
+            line-height: 32px;
+            text-align: center;
+            color: #fff;
+          }
+        }
+        &.leg4 {
+          left: 0;
+          right: 0;
+          top: 20%;
+          margin: auto;
+          z-index: 7;
+        }
+        &.leg5 {
+          left: 0;
+          right: 0;
+          top: 32%;
+          margin: auto;
+          z-index: 6;
+        }
+        &.play-btn {
+          top: 65%;
+          left: 0;
+          right: 0;
+        }
+        &.leg6 {
+          right: 0%;
+          top: 13%;
+          z-index: 2;
+          // animation: 2s ease 0s 1 normal none running poker-circle-ani;
+        }
+        &.leg6a {
+        }
+        &.leg7 {
+          left: 17%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running up-down-ani;
+        }
+        &.leg8 {
+          left: 27%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running down-up-ani;
+        }
+        &.leg9 {
+          right: 21%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running up-down-ani;
+        }
+        &.leg10 {
+          right: 11%;
+          bottom: 3%;
+          z-index: 5;
+          animation: 4s ease 2s infinite normal both running down-up-ani;
+        }
+        &.leg11 {
+          right: 7%;
+          top: 13%;
+        }
+      }
+    }
+
     .play-btn {
       cursor: pointer;
       display: block;

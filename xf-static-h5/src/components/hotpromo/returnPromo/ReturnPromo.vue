@@ -1,7 +1,7 @@
 <template>
   <div class="return-promo-wrapper">
     <div class="return-promo-title">
-      <img src="../../../assets/images/promotion/hotpromo/return-promo/top-img.png" />
+      <img src="../../../assets/images/promotion/hotpromo/return-promo/top-img2.png" />
     </div>
     <div class="return-promo-container">
       <div class="return-promo-options">
@@ -15,15 +15,25 @@
       </div>
 
       <div class="return-promo-content">
+
+
+
         <div class="content-time">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-time.png" />
-          <p>2023年4月25日00:00起</p>
+          <p>2024年5月7日 20:00起</p>
         </div>
 
         <template v-if="tabOption === 'returnLoginGift'">
+
           <div class="content-main">
             <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
             <p>兴發娱乐回馈老会员，老会员登录账号后可免费领取对应VIP等级奖金，点击“立即领取”奖金自动派发至主钱包。</p>
+
+            <div  class="return-claim-btn">
+              <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
+                <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+              </div>
+            </div>
 
             <table class="return-table" border="0" cellpadding="0" cellspacing="0">
               <thead>
@@ -35,62 +45,58 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>青铜Ⅱ</td>
-                  <td>8</td>
+                  <td>VIP1</td>
+                  <td>5</td>
                   <td rowspan="12">3倍/不限场馆</td>
                 </tr>
                 <tr>
-                  <td>青铜Ⅰ</td>
-                  <td>15</td>
+                  <td>VIP2</td>
+                  <td>10</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅲ</td>
-                  <td>38</td>
+                  <td>VIP3</td>
+                  <td>25</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅱ</td>
-                  <td>68</td>
+                  <td>VIP4</td>
+                  <td>50</td>
                 </tr>
                 <tr>
-                  <td>白银Ⅰ</td>
+                  <td>VIP5</td>
                   <td>98</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅲ</td>
+                  <td>VIP6</td>
                   <td>158</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅱ</td>
+                  <td>VIP7</td>
                   <td>238</td>
                 </tr>
                 <tr>
-                  <td>黄金Ⅰ</td>
+                  <td>VIP8</td>
                   <td>388</td>
                 </tr>
                 <tr>
-                  <td>铂金Ⅱ</td>
+                  <td>VIP9</td>
                   <td>588</td>
                 </tr>
                 <tr>
-                  <td>铂金Ⅰ</td>
+                  <td>VIP10</td>
                   <td>888</td>
                 </tr>
-                <tr>
-                  <td>钻石</td>
-                  <td>1,188</td>
-                </tr>
-                <tr>
-                  <td>王者</td>
-                  <td>1,888</td>
-                </tr>
+<!--                <tr>-->
+<!--                  <td>钻石</td>-->
+<!--                  <td>1,188</td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                  <td>王者</td>-->
+<!--                  <td>1,888</td>-->
+<!--                </tr>-->
               </tbody>
             </table>
 
-            <div class="return-claim-btn">
-              <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
-                <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-              </div>
-            </div>
+
           </div>
 
           <div class="content-rules">
@@ -109,7 +115,7 @@
                 3.注单取消或本金退还，任何低于欧洲盘1.7或亚洲盘0.7水位的投注及在同一局游戏中同时投注对等盘口，将不计算为有效投注额内。
               </p>
               <p>
-                4.每位有效玩家、每个手机号码、电子邮箱、IP地址、每张银行卡、每台设备只能享受一次优惠，如发现有违规者我们将保留无限期审核扣回红利及所产生的利润权利；雷火电竞对本活动保有最终解释权。
+                4.每位有效玩家、每个手机号码、电子邮箱、IP地址、每张银行卡、每台设备只能享受一次优惠，如发现有违规者我们将保留无限期审核扣回红利及所产生的利润权利；兴發对本活动保有最终解释权。
               </p>
             </div>
           </div>
@@ -118,7 +124,13 @@
         <template v-if="tabOption === 'returnDepositGift'">
           <div class="content-main">
             <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
-            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领1,888元。</p>
+            <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领2,188元。</p>
+
+            <div class="return-claim-btn">
+              <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
+                <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+              </div>
+            </div>
 
             <table class="return-table" border="0" cellpadding="0" cellspacing="0">
               <thead>
@@ -161,11 +173,7 @@
               </tbody>
             </table>
 
-            <div class="return-claim-btn">
-              <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
-                <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-              </div>
-            </div>
+
           </div>
 
           <div class="content-rules">
@@ -196,7 +204,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
+import { useQuasar } from "quasar";
 
+const $q = useQuasar();
 const tabOption = ref("returnLoginGift");
 const toggleTabOption = () => {
   tabOption.value = tabOption.value === "returnLoginGift" ? "returnDepositGift" : "returnLoginGift";
@@ -207,6 +217,12 @@ const onReturnBonusClick = (bonusItem) => {
     .put(`/bonus/claim/${bonusItem}`)
     .then((res) => {
       if (res.code === 0) {
+        $q.notify({
+          type: "positive",
+          position: "top",
+          message: `你已领取 ${res.data}元`,
+          icon: "check_circle_outline"
+        });
       }
     })
     .catch((err) => {}); // End catch

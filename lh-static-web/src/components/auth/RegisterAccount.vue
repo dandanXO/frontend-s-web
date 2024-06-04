@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="70" size="large">
+  <el-form ref="registerRef" :rules="regRules" :model="regForm" label-width="80" size="large">
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/name-icon.png" />
       <el-form-item label="姓名" prop="realName">
@@ -10,7 +10,7 @@
           :rules="[
             { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
             {
-              pattern: '^([\u4e00-\u9fa5]*)$',
+              pattern: /^[\u4e00-\u9fa5·]+$/,
               message: '请输入中文字符',
               trigger: 'change'
             }
@@ -63,7 +63,7 @@
       </el-form-item>
     </div>
 
-    <div class="light-bg form-field">
+    <div class="light-bg form-field" v-if="!hasReferSummon">
       <img class="form-field-icon" src="@/assets/home/auth/referral-icon.png" />
       <el-form-item label="推荐码" prop="codeAffiliate">
         <el-input
@@ -109,7 +109,7 @@
   </div>
 
   <div class="flex-div">
-    <div style="visibility:hidden">
+    <div style="visibility: hidden">
       <a @click="closeRegDialog">先去逛逛</a>
     </div>
 
@@ -117,7 +117,6 @@
       已有账号？
       <a @click="openLoginDialog">去登录</a>
     </div>
-
   </div>
 </template>
 
@@ -135,6 +134,16 @@ let cachedTelephone = lsGet(registerTelephoneKey);
 const router = useRouter();
 const route = useRoute();
 const hasAffiliate = ref(false);
+const hasReferSummon = ref(false);
+
+// Check session storage for summonCode or referCode
+const checkReferSummonCode = () => {
+  const summonCode = sessionStorage.getItem("SUMMON_CODE");
+  const referCode = sessionStorage.getItem("REFERRAL_CODE");
+  if (summonCode || referCode) {
+    hasReferSummon.value = true;
+  }
+};
 
 const resetRegForm = (formEl) => {
   if (!formEl) return;
@@ -161,11 +170,11 @@ const checkName = (v) => {
 const checkName2 = (v) => {
   const alphaRegex = /^[a-zA-Z0-9_#+-]+$/;
   return v.match(alphaRegex);
-}
+};
 
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+  const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
   return v.match(chineseCharOnly);
 };
 
@@ -174,7 +183,7 @@ let validateName = async (r, v) => {
     return Promise.reject("请输入登录名");
   } else if (!checkName2(v)) {
     return Promise.reject("不允许使用特殊字符");
-  }else {
+  } else {
     return Promise.resolve();
   }
 };
@@ -243,7 +252,11 @@ let validatePass = async (r, v) => {
 const regRules = {
   realName: [
     {
-      required: false,
+      required: true,
+      message: "请输入姓名",
+      trigger: "blur"
+    },
+    {
       min: 2,
       max: 12,
       message: "长度应为 2 至 12",
@@ -255,6 +268,11 @@ const regRules = {
     }
   ],
   loginName: [
+    {
+      required: true,
+      message: "请输入用户名",
+      trigger: "blur"
+    },
     {
       min: 6,
       max: 12,
@@ -268,6 +286,11 @@ const regRules = {
   ],
   password: [
     {
+      required: true,
+      message: "请输入密码",
+      trigger: "blur"
+    },
+    {
       min: 6,
       max: 12,
       message: "长度应为 6 至 12",
@@ -279,6 +302,11 @@ const regRules = {
     }
   ],
   confirmPwd: [
+    {
+      required: true,
+      message: "请输入密码",
+      trigger: "blur"
+    },
     {
       min: 6,
       max: 12,
@@ -329,7 +357,7 @@ const regRules = {
   captchaCode: [
     {
       required: true,
-      message: "需要验证码",
+      message: "请输入验证码",
       trigger: "blur"
     },
     {
@@ -366,8 +394,8 @@ const getAffiliateCode = () => {
 
 const getReferalCode = () => {
   const referCode = sessionStorage.getItem("REFERRAL_CODE");
-// && route.query && route.query.refer
-  if (referCode ) {
+  // && route.query && route.query.refer
+  if (referCode) {
     regForm.referrer = referCode;
   }
 };
@@ -443,14 +471,18 @@ const closeRegDialog = () => {
 };
 
 const openLoginDialog = () => {
-  router.push('/login')
-  // emits("open-login-dialog");
+  if(route.path === '/register'){
+    router.push("/login");
+  }else{
+    emits("open-login-dialog");
+  }
 };
 
 onMounted(() => {
   getCode();
   getAffiliateCode();
   getReferalCode();
+  checkReferSummonCode();
 });
 </script>
 
@@ -496,6 +528,22 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.dark {
+  .light-bg {
+    background-color: $background-content-block-lighter-dark;
+    box-shadow: none;
+  }
+
+  .font-gray {
+    color: $font-3-dark;
+  }
+
+  .blue-bg {
+    box-shadow: none;
+    background-color: #3998ff;
+  }
 }
 </style>
 

@@ -13,11 +13,11 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 380px"
           :disabled-date="disabledDate"
+          @change="checkDateValue"
+          :shortcuts="shortcuts"
           :editable="false"
           :clearable="false"
           :default-time="defaultTime"
-          @blur="calendarBlur"
-          @calendar-change="calendarChange"
         />
         <el-button
           style="margin-left: 10px"
@@ -205,9 +205,13 @@ import {
 import { getMemberDetails } from '../../../../../api/member'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
+import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from '@/utils/format-timeZone'
+import { ElMessage } from "element-plus";
 
 const { t } = useI18n()
+const shortcuts = getShortcuts(t);
+
 const props = defineProps({
   mbrId: {
     type: String,
@@ -271,6 +275,18 @@ const page = reactive({
   pagingState: '',
   loading: false,
 })
+
+const checkDateValue = (date) => {
+  const [startCheck, endCheck] = date;
+  const distract = moment(endCheck).diff(startCheck, 'days');
+  if (distract >= 93) {
+    ElMessage({
+      message: t('message.startenddatemore3months'),
+      type: "error"
+    });
+    request.betTime = [defaultStartDate, defaultEndDate];
+  }
+}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD') + ' 23:59:59'

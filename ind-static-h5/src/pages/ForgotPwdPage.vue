@@ -1,9 +1,9 @@
 <template>
   <div class="forgot-password-container">
     <div class="back-left">
-      <router-link :to="'/login'">
+      <!-- <router-link :to="'/login'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
+      </router-link> -->
     </div>
     <!--
       <div class="text-blue-grey">
@@ -11,9 +11,6 @@
     </div>
   -->
 
-    <div class="forgot-password-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
-    </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
       <!-- <q-input
@@ -45,10 +42,7 @@
       ></q-input> -->
 
       <div class="forgot-password-form-grid">
-        <span class="forgot-password-form-title">Forgot Password</span>
-        <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-        </span>
+        <!-- <span class="forgot-password-form-title">Forgot Password</span> -->
 
         <span class="forgot-password-form-field-label">Phone Number</span>
         <q-input
@@ -90,6 +84,13 @@
         <div>
           <q-btn @click.prevent="onSubmitForgotPwd" type="submit" class="submit-btn" label="Submit" rounded no-caps />
         </div>
+        
+        <div class="forgot-password-form-logo-img" style="margin-top: 50px;">
+          <img src="../assets/55-ace-logo.png" />
+        </div>
+        <span class="forgot-password-form-desc">
+          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+        </span>
       </div>
     </q-form>
     <q-form v-else class="q-gutter-y-md rounded-borders">
@@ -477,11 +478,11 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .forgot-password-container {
-  min-height: 100vh;
-  padding: 16px;
+  // min-height: 100vh;
+    padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;

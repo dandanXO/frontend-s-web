@@ -18,6 +18,10 @@
               <img :src="imgURL + '/withdraw/' + method.icon" />
             </div>
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </div>
 
@@ -153,7 +157,6 @@
           <div v-else-if="isEWALLET">
             <span class="tip-text">*特别说明：提款钱包和游戏账号的姓名务必一致</span>
             <div class="q-mt-md q-mb-md text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
-              >
               <q-btn
                 style="border: 1px solid #000000; color: #000000"
                 @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
@@ -181,7 +184,14 @@
             </a-select>
           </a-form-item> -->
           <div class="flex-box flex-justify-center">
-            <q-btn style="width: 100%" class="q-mt-md submit-btn" @click="submitWithdraw" label="立即提款" />
+            <q-btn
+              style="width: 100%"
+              class="q-mt-md submit-btn"
+              @click="submitWithdraw"
+              :loading="withdrawLoading"
+              :disable="withdrawLoading"
+              label="立即提款"
+            />
           </div>
           <div class="q-py-md text-orange">
             <div
@@ -231,6 +241,8 @@ export default defineComponent({
     const store = userStore();
     const $q = useQuasar();
     const imgURL = process.env.IMAGE_CDN;
+    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+
     const amountRef = ref();
     const cardRef = ref();
     const activeItem = ref(0);
@@ -289,14 +301,19 @@ export default defineComponent({
         });
       }
     };
+
+    const withdrawLoading = ref(false);
+
     const submitWithdraw = () => {
       cardRef.value.validate();
       amountRef.value.validate();
       $q.loading.show({
         message: "确认中。。。"
       });
+      withdrawLoading.value = true;
       if (cardRef.value.hasError || amountRef.value.hasError) {
         $q.loading.hide();
+        withdrawLoading.value = false;
       } else {
         api.post("/session/withdraw/", qs.stringify(withdrawInfo)).then((response) => {
           if (response.code === 0) {
@@ -307,6 +324,7 @@ export default defineComponent({
               icon: "check_circle_outline"
             });
             getWithdrawalMethods();
+            withdrawLoading.value = false;
 
           } else {
             $q.notify({
@@ -315,9 +333,11 @@ export default defineComponent({
               message: response.message,
               icon: "report_problem"
             });
+            withdrawLoading.value = false;
           }
         }).catch((error) => {
           console.log("error", error);
+          withdrawLoading.value = false;
           // $q.notify({
           //   color: "negative",
           //   position: "top",
@@ -338,7 +358,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       console.log("WITHDRAW CODE:" + withdrawInfo.withdrawCode)
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       activeItem.value = index;
       loadCards();
@@ -435,13 +455,19 @@ export default defineComponent({
         return 'EB使用教程'
       } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
         return 'OK教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'BLBPAY') {
+        return '808钱包教程视频'
+      } else if (selectedWithdrawalMethod.value.code === 'JDPAY') {
+        return 'JDPAY教程视频'
       }
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -460,6 +486,7 @@ export default defineComponent({
       activeItem,
       selectMethod,
       imgURL,
+      imgWithdrawURL,
       step: ref(),
       selectedWithdrawalMethod,
       loadCards,
@@ -475,7 +502,8 @@ export default defineComponent({
       chooseLabel,
       chooseCard,
       openEWalletTutorial,
-      tutorialLabel
+      tutorialLabel,
+      withdrawLoading
     };
   }
 });
@@ -495,23 +523,39 @@ export default defineComponent({
       // display: flex;
       // justify-content: center;
       width: 100%;
-      max-width: 5rem;
+      max-width: 4.5rem;
 
       position: relative;
       cursor: pointer;
 
+      .promo-label {
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        transform: translate(-50%);
+        //width: 50px;
+        width: 80%;
+        max-width: 4.2rem;
+
+        img {
+          width: 100%;
+          height: auto;
+          padding: 4px 6px;
+        }
+      }
+
       .withdraw-img {
         border: 2px solid #d7d7d7;
         border-radius: 6px;
-        margin-bottom: 5px;
-        padding: 8px;
+        margin-bottom: 10px;
+        padding: 4px;
         display: flex;
         align-items: center;
       }
 
       img {
         width: 100%;
-        padding: 5px 10px;
+        padding: 0px 5px;
       }
 
       &.active {
@@ -521,6 +565,11 @@ export default defineComponent({
         // filter: drop-shadow(0px 0px 3px #ffffff);
         .withdraw-img {
           border: 2px solid #4873f1;
+        }
+
+        .promo-img {
+          border: none;
+          border-radius: 0px;
         }
 
         // img {

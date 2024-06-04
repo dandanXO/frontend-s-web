@@ -517,4 +517,37 @@ $node-color: #4873f1;
     }
   }
 }
+
+.dark {
+  .node {
+    strong,
+    .account-title {
+      color: $font-3-dark;
+    }
+
+    .node-content {
+      .payment-method-item {
+        box-shadow: none;
+        background-color: $background-content-block-lighter-dark;
+        border: unset;
+
+        &.active {
+          border: unset;
+        }
+      }
+
+      .node-text {
+        > div {
+          color: $font-3-dark;
+        }
+
+        .node-txt-img {
+          img {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

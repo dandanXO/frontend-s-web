@@ -11,8 +11,8 @@
         </div>
         <ul>
           <li>{{ $t('deposit.notept1') }}</li>
-        </ul> 
-        
+        </ul>
+
         <div v-if="selectedPayType" v-html="activeMethod.msg"></div>
       </div>
       <div class="node-wrapper">
@@ -63,11 +63,11 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              {{$t('deposit.minAmt')}}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label
+              {{$t('deposit.minAmt')}}: {{ calculatedMinDeposit ? calculatedMinDeposit.toLocaleString() : 0 }} {{ isUSDT ? "USDT" : store.currency.label
               }}
               <br />
               {{$t('deposit.maxAmt')}}: {{
-                activeMethod.depositMax ? activeMethod.depositMax : $t('deposit.noLimit')
+                activeMethod.depositMax ? activeMethod.depositMax.toLocaleString() : $t('deposit.noLimit')
               }} {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
           </el-space>
@@ -82,25 +82,25 @@
             >
           </el-form-item>
           <el-space v-show="selectedPayType && bankCardList.length">
-          <el-form-item
-            :label="$t('deposit.bank')"
-            prop="bankId"
-            name="bankId"
-            value="bankName"
-          >
-            <template #label></template>
-            <BankComponent
-              ref="payTypeClass"
-              :is="selectedPayType"
-              :bank-list="bankCardList"
-              v-model="form.bankId"
-              @selected="selectedBank"
-            ></BankComponent>
-          </el-form-item>
+            <el-form-item
+              :label="$t('deposit.bank')"
+              prop="bankId"
+              name="bankId"
+              value="bankName"
+            >
+              <template #label></template>
+              <BankComponent
+                ref="payTypeClass"
+                :is="selectedPayType"
+                :bank-list="bankCardList"
+                v-model="form.bankId"
+                @selected="selectedBank"
+              ></BankComponent>
+            </el-form-item>
             <div class="account-tip">
-             {{ $t('deposit.napas') }}
+              {{ $t('deposit.napas') }}
             </div>
-        </el-space>
+          </el-space>
           <el-form-item
             prop="privilegeId"
             name="privilegeId"
@@ -109,7 +109,7 @@
           >
             <el-select
               v-model="selectedPrivilege"
-            :placeholder="$t('deposit.promo')"
+              :placeholder="$t('deposit.promo')"
               @select="checkMinDepositAmt"
               @focus="loadPrivilege(activeMethod)"
               fit-input-width
@@ -167,16 +167,16 @@
         :closable="false"
         :title="$t('deposit.deposited')"
       >
-      {{ $t('deposit.redirected') }}<br /><br />
+        {{ $t('deposit.redirected') }}<br /><br />
 
-      {{ $t('deposit.successful') }}<br /><br />
+        {{ $t('deposit.successful') }}<br /><br />
         <el-button class="common-btn" @click="clearInfo">{{ $t('common.understand') }}</el-button>
       </el-dialog>
     </div>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef } from "vue";
+import { ref, reactive, onMounted, shallowRef, watch } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
 import { RiVolumeUpFill } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
@@ -288,6 +288,12 @@ const rules = {
   ]
 };
 
+watch(selectedPrivilege, (newVal) => {
+  if(newVal!==undefined && newVal ===0){
+    selectedPrivilege.value = null;
+  }
+})
+
 function initPay() {
   isLoading.value = true;
   loadPay().then((d) => {
@@ -326,6 +332,17 @@ async function loadPrivilege(val) {
           }
         }
       });
+
+      console.log(privilegeList.value)
+      unselectedPrivileges.value.push({
+        code: "LATER",
+        depositMin: 0,
+        id: 0,
+        name: t('account.choose_later'),
+        payTypes: "",
+        triggerType: ""
+      })
+
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -516,6 +533,10 @@ function doDeposit(data) {
   loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
+      if(window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1){
+        otag("event", "deposit");
+      }
+
       doIt(d).then((resp) => {
         const response = resp.data.result;
         if (response.payResultType === "OFFLINE") {
@@ -555,6 +576,8 @@ function doDeposit(data) {
           //     { once: true }
           // );
         }
+
+
       });
       loadingBtn.value = false;
     } else {
@@ -680,7 +703,7 @@ onMounted(() => {
 }
 .account-tip-warning {
   border: 1px solid #F8DD9A;
-  background: #FEF7E6; 
+  background: #FEF7E6;
   color: #FFC024;
   padding: 10px;
   display: flex;
@@ -748,12 +771,12 @@ onMounted(() => {
   }
 
   .deposit-container {
-    .el-space{ 
+    .el-space{
       display: flex;
     }
     .el-input__wrapper {
       padding: 8px 20px;
-    } 
+    }
     .el-select__wrapper {
       padding: 15px 20px;
     }
@@ -826,15 +849,15 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
   }
-    :deep(.el-form-item__label) {
-      // font-family: Poppins;
-font-size: 18px;
-font-weight: 400;
-line-height: 27px;
-text-align: left;
+  :deep(.el-form-item__label) {
+    // font-family: Poppins;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    text-align: left;
 
     justify-content: flex-start;
-    }
+  }
 }
 
 .txt-center {

@@ -103,8 +103,7 @@
               </div>
             </div>
             <div class="right-container">
-              <div class="title">海量赛事种类
-              </div>
+              <div class="title">海量赛事种类</div>
               <div class="desc">
                 每天为您提供近干场精彩体育赛事,更有真人、彩票、 电子游戏等多种娱乐方式选择,让您拥有完美游戏体验。
               </div>
@@ -122,8 +121,7 @@
             <div class="right-container">
               <div class="title">加密安全管理</div>
               <div class="desc">
-                独家开发,采用128位加密技术和严格的安全管理体系,
-                客户资金得到最完善的保障,让您全情尽享娱乐、赛事投注、
+                独家开发,采用128位加密技术和严格的安全管理体系, 客户资金得到最完善的保障,让您全情尽享娱乐、赛事投注、
                 无后顾之忧!
               </div>
             </div>
@@ -140,8 +138,7 @@
             <div class="right-container">
               <div class="title">三端任您选择</div>
               <div class="desc">
-                引领市场的卓越技术,自主研发了全套终端应用,让您
-                随时随地,娱乐投注随心所欲! 7x24小时在线客服提供
+                引领市场的卓越技术,自主研发了全套终端应用,让您 随时随地,娱乐投注随心所欲! 7x24小时在线客服提供
                 最贴心、最优质的服务。
               </div>
             </div>
@@ -265,10 +262,10 @@ onMounted(() => {});
 
       .item-wrapper {
         border-radius: 1.25rem;
-        background: #EEF8FF;
+        background: #eef8ff;
         box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
         padding: 0.5rem;
-        width: calc((100% - 2rem )/ 2);
+        width: calc((100% - 2rem) / 2);
 
         .item {
           display: flex;
@@ -297,14 +294,43 @@ onMounted(() => {});
           }
 
           .right-container {
-            .title{
-              color: #7A80A1;
+            .title {
+              color: #7a80a1;
               font-size: 20px;
               margin-bottom: 15px;
               font-weight: 600;
             }
-            .desc{
-              color: #A4AABB;
+            .desc {
+              color: #a4aabb;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dark {
+  .service-section {
+    .service-container {
+      .top-container {
+        .counter {
+          .title,
+          .title-en {
+            color: #dfe4ff;
+          }
+        }
+      }
+
+      .bot-container {
+        .item-wrapper {
+          @include content-block-dark;
+
+          .item {
+            .right-container {
+              .title {
+                color: $font-1-dark;
+              }
             }
           }
         }

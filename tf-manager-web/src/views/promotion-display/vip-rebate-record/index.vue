@@ -227,8 +227,8 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="180"
-          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-record:update']) || hasPermission(['sys:vip-rebate-record:detail']))"
+          width="280"
+          v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:vip-rebate-record:update']) || hasPermission(['sys:vip-rebate-record:update-bet']) || hasPermission(['sys:vip-rebate-record:detail']))"
         >
           <template #default="scope">
             <el-button
@@ -244,9 +244,18 @@
               size="mini"
               type="success"
               v-permission="['sys:vip-rebate-record:update']"
-              @click="showEdit(scope.row)"
+              @click="showEdit('AMOUNT', scope.row)"
             >
               {{ t('fields.adjustAmount') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'PENDING'"
+              size="mini"
+              type="success"
+              v-permission="['sys:vip-rebate-record:update-bet']"
+              @click="showEdit('BET_AMOUNT', scope.row)"
+            >
+              {{ t('fields.adjustBetAmount') }}
             </el-button>
           </template>
         </el-table-column>
@@ -313,6 +322,31 @@
           {{ t('fields.cancel') }}
         </el-button>
         <el-button type="primary" @click="adjust">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+    <el-form
+      v-else-if="uiControl.dialogType === 'ADJUST_BET'"
+      ref="adjustForm"
+      :model="form"
+      :rules="formRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+    >
+      <el-form-item
+        :label="t('fields.adjustBetAmount')"
+        prop="betAmount"
+        @keypress="restrictDecimalInput($event)"
+      >
+        <el-input v-model="form.betAmount" style="width: 350px;" />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="adjustBet">
           {{ t('fields.confirm') }}
         </el-button>
       </div>
@@ -488,7 +522,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { adjustAmount, distribute, getTotal, getVipRebateRecord, getVipRebateRecordForExport, batchCancel, cancelByQuery } from '../../../api/vip-rebate-record';
+import { adjustAmount, adjustBetAmount, distribute, getTotal, getVipRebateRecord, getVipRebateRecordForExport, batchCancel, cancelByQuery } from '../../../api/vip-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getVipRebateRecordDetails } from '../../../api/vip-rebate-record-detail';
@@ -543,7 +577,8 @@ const IMPORT_CANCEL_REBATE_LIST_JSON = [
 
 const form = reactive({
   id: null,
-  amount: null
+  amount: null,
+  betAmount: null
 })
 
 const defaultDate = convertDate(new Date());
@@ -616,7 +651,8 @@ function restrictDecimalInput(event) {
 }
 
 const formRules = reactive({
-  amount: [required(t('message.validateAmountRequired'))]
+  amount: [required(t('message.validateAmountRequired'))],
+  betAmount: [required(t('message.validateBetAmountRequired'))],
 })
 
 const importRules = reactive({
@@ -680,13 +716,18 @@ function changepage(page) {
   loadVipRebateRecords();
 }
 
-function showEdit(adjust) {
+function showEdit(type, adjust) {
   if (adjustForm.value) {
     adjustForm.value.resetFields()
   }
   form.id = adjust.id
-  uiControl.dialogTitle = t('fields.adjustAmount')
-  uiControl.dialogType = 'ADJUST'
+  if (type === 'AMOUNT') {
+    uiControl.dialogTitle = t('fields.adjustAmount')
+    uiControl.dialogType = 'ADJUST'
+  } else if (type === 'BET_AMOUNT') {
+    uiControl.dialogTitle = t('fields.adjustBetAmount')
+    uiControl.dialogType = 'ADJUST_BET'
+  }
   uiControl.dialogWidth = '580px'
   uiControl.dialogVisible = true
 }
@@ -714,6 +755,17 @@ async function adjust() {
   adjustForm.value.validate(async valid => {
     if (valid) {
       await adjustAmount(form.id, form)
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
+      await loadVipRebateRecords()
+    }
+  });
+}
+
+async function adjustBet() {
+  adjustForm.value.validate(async valid => {
+    if (valid) {
+      await adjustBetAmount(form.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
       await loadVipRebateRecords()

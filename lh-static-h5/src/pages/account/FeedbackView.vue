@@ -1,6 +1,22 @@
 <template>
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
+
+      <div class="quiz-announcement-wrapper" v-if="uiIsShowStatus.showQuestions">
+        <img src="../../assets/images/feedback/quiz-announcement-icon.png" />
+        <div
+          class="quiz-announcement-inner"
+          :class="{ animated: announcementAnimated }"
+          @transitionend="handleAnnouncementAnimationEnd"
+        >
+          <div v-for="(announcement, index) in announcements" :key="index">
+            恭喜用户 {{ announcement.account }}xxxxxxxxx 获得反馈彩金
+            <span class="amount">{{ announcement.bonus }}元</span>
+          </div>
+        </div>
+      </div>
+
+
       <div class="q-ma-md" key="quiz" name="quiz" :label="'有奖问答'">
         <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
         <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
@@ -20,7 +36,7 @@
             <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
               <template v-if="recordsPagination.current === item.sequence">
                 <div class="questions-title">
-                  {{ item.question }}
+                  {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                 </div>
                 <div class="answer-container">
                   <q-form>
@@ -129,7 +145,7 @@
                 </q-btn>
               </div>
               <div>
-                <q-btn color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                <q-btn :disabled="!input && optionModal.length === 0" color="brightbtn" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
                   下一题
                 </q-btn>
               </div>
@@ -140,6 +156,7 @@
                   class="standard-button btn-color-blue"
                   @click="btnClick('final')"
                   style="display: none"
+                  :disabled="!input && optionModal.length === 0"
                 >
                   完成
                 </q-btn>
@@ -194,6 +211,17 @@ const uiIsShowStatus = reactive({
   questionBox: false,
   showQuestions: true
 });
+
+const announcementBonusList = ref([8, 12, 16, 36, 38, 68]);
+const announcementTimer = ref(null);
+const announcementAnimated = ref(false);
+const announcements = ref([]);
+
+const handleAnnouncementAnimationEnd = () => {
+  const newAnnouncement = { account: getRandomAccount(), bonus: getRandomBonus() };
+  announcements.value = [announcements.value[1], newAnnouncement];
+  announcementAnimated.value = false;
+};
 
 function onBtnStartAnswerClick() {
   uiIsShowStatus.startAnswerBox = false;
@@ -314,7 +342,13 @@ const getSelected = (item, ans) => {
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
 
-  const previousChoicesArr = Array.from(choices[item.sequence - 1].choice || []);
+  // const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
+  let previousChoicesArr;
+  if (choices[item.sequence - 1] && choices[item.sequence - 1].choice) {
+    previousChoicesArr = Array.from(choices[item.sequence - 1].choice);
+  } else {
+    previousChoicesArr = [];
+  }
   const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {
@@ -332,6 +366,24 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
   };
   cacheChoices[item.sequence - 1] = cacheObj;
 };
+
+function removeEmojis(str) {
+  return str.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 表情符号块
+    .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 杂项符号和象形文字
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 交通和地图符号
+    .replace(/[\u{1F700}-\u{1F77F}]/gu, '')  // 阿尔化学符号
+    .replace(/[\u{1F780}-\u{1F7FF}]/gu, '')  // 地球和天气符号
+    .replace(/[\u{1F800}-\u{1F8FF}]/gu, '')  // 装饰符号
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '')  // 动物、自然和家居符号
+    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '')  // 手势和姿势
+    .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 杂项符号
+    .replace(/[\u{2700}-\u{27BF}]/gu, '')    // Dingbats
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')    // 变化选择器
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, ''); // 国旗符号
+}
+
 const btnClick = async (btnType) => {
   if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
     return $q.notify({
@@ -403,6 +455,10 @@ const btnClick = async (btnType) => {
       choice: Array.isArray(field.choice) ? field.choice.join(",") : field.choice
     }));
 
+    choicesLockedIn.forEach((item) => {
+      item.choice = removeEmojis(item.choice);
+    })
+
     var evtArray = Object.values(process.env.EVT_API);
     var evtApi = evtArray[getRndInteger(0, evtArray.length)];
     try {
@@ -454,12 +510,42 @@ const testAns = () => {
     }
   });
 };
+
+const getRandomBonus = () => {
+  return announcementBonusList.value[Math.floor(Math.random() * announcementBonusList.value.length)];
+};
+
+const initAnnouncement = () => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+  announcementTimer.value = setInterval(() => {
+    announcementAnimated.value = true;
+  }, 5000);
+};
+
+const getRandomAccount = () => {
+  const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
+  const randomIndex1 = Math.floor(Math.random() * 26);
+  const randomIndex2 = Math.floor(Math.random() * 26);
+
+  return letters[randomIndex1] + letters[randomIndex2];
+};
+
 onMounted(() => {
   if (store.hasToken()) {
     testAns();
     getReferral();
   }
-  // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
+
+
+  if (uiIsShowStatus.showQuestions) {
+    announcements.value = [
+      { account: getRandomAccount(), bonus: getRandomBonus() },
+      { account: getRandomAccount(), bonus: getRandomBonus() }
+    ];
+    initAnnouncement();
+  }
+
+
 });
 </script>
 
@@ -623,6 +709,10 @@ onMounted(() => {
       justify-content: flex-start;
       width: 100%;
       margin-left: 20px;
+      .singlemultiple {
+        color: #ff0000;
+      font-size: 14px;
+      }
     }
 
     .questions-desc {
@@ -916,5 +1006,58 @@ onMounted(() => {
   font-weight: 600;
   color: $font-2;
   font-size: 1.275rem;
+}
+
+.quiz-announcement-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #5ea1ff1a;
+  padding: 0 15px;
+  border-radius: 35px;
+  height: 44px;
+  margin: 8px auto;
+  overflow: hidden;
+
+  img {
+    width: 36px;
+  }
+
+  .quiz-announcement-inner {
+    position: relative;
+    align-self: start;
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0.05em;
+    color: $font-1;
+
+    &.animated {
+      transition: transform 1s;
+      transform: translateY(-44px);
+    }
+
+    > div {
+      height: 44px;
+
+      .amount {
+        color: $primary;
+      }
+    }
+  }
+}
+
+
+.body--dark {
+  .quiz-container {
+    .quiz-content {
+      @include content-block-dark-with-border;
+      .content-title,
+      .content-desc {
+        color: $font-3-dark;
+      }
+    }
+  }
 }
 </style>

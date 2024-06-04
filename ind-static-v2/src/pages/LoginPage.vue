@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="login-form-logo-img">
+    <!-- <div class="login-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
@@ -59,7 +59,7 @@
                 </q-input>
               </template>
             </InputField>
-            
+
             <!--        <q-input-->
             <!--          ref="verificationRef"-->
             <!--          hide-bottom-space-->
@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, nextTick } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
@@ -143,7 +143,6 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
@@ -321,7 +320,6 @@ export default defineComponent({
               })
               .then(() => {
                 $q.loading.hide();
-                getCode();
                 sessionStorage.removeItem("REFERRAL_CODE");
 
                 if (isCheckRmb.value) {
@@ -337,6 +335,7 @@ export default defineComponent({
                 }
 
                 loginFormRef.value.reset();
+
 
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/home";
@@ -432,11 +431,6 @@ export default defineComponent({
                 var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
                 // alert(affQuickRegEvent.value);
                 Adjust.trackEvent(adjustEvent);
-              } else {
-                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                // AdjustWeb.trackEvent({
-                //   eventToken: "vm6pjs"
-                // });
               }
 
               store.autoLogin(res.data);
@@ -526,7 +520,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .login-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;
@@ -556,7 +550,7 @@ export default defineComponent({
 .forgot-password {
   margin: 8px 0px 0px;
   text-align: right;
-  
+
   .form-text {
     color: #C1DFFC;
   }

@@ -5,7 +5,7 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
 // import CsClient from "boot/client";
@@ -26,21 +26,19 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
+    const store = userStore();
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -49,8 +47,6 @@ export default defineComponent({
         });
       })();
     };
-
-    const store = userStore();
 
     const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
 
@@ -137,7 +133,7 @@ export default defineComponent({
     const errorHandler = (error) => {
       console.error("File error: " + error.code);
     };
-    
+
     const onDeviceReady = () => {
       // Get the file system
       window.resolveLocalFileSystemURL(

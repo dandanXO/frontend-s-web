@@ -946,13 +946,17 @@ async function advancedSearch() {
 }
 
 async function toFail(val) {
+  page.loading = true
   await autoWithdrawToFail(val.id, val.withdrawDate, val.siteId)
   await loadRecord()
+  page.loading = false
 }
 
 async function toSuccess(val) {
+  page.loading = true
   await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
   await loadRecord()
+  page.loading = false
 }
 
 function checkQuery() {

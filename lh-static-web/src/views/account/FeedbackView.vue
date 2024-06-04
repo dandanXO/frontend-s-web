@@ -1,8 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="account-content mail mail-content">
-      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card">
-
+      <el-tabs v-model="mailboxState.active" @tab-click="mailTabChange" type="card" class="feedback-tabs">
         <el-tab-pane key="write" name="write" :label="'意见反馈'">
           <el-form
             ref="formRef"
@@ -13,7 +12,6 @@
             label-width="100"
             hideRequiredMark="true"
           >
-
             <div class="mail-input-item">
               <div class="input-title">意见类型</div>
               <div class="input-fill">
@@ -38,12 +36,15 @@
                 <div class="input-title">标题</div>
                 <div class="mail-btn-group">
                   <el-dropdown trigger="click">
-                    <el-button class="standard-button btn-color-blue" style="border-radius: 2rem; padding: 20px 26px;">
-                      快捷输入 <el-icon style="margin-left: 5px;"><CaretBottom /></el-icon>
+                    <el-button class="standard-button btn-color-blue" style="border-radius: 2rem; padding: 20px 26px">
+                      快捷输入
+                      <el-icon style="margin-left: 5px"><CaretBottom /></el-icon>
                     </el-button>
                     <template #dropdown>
                       <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-for="(option, i) in options" :key="i" @click="onItemClick(option)">{{ option }}</el-dropdown-item>
+                        <el-dropdown-item v-for="(option, i) in options" :key="i" @click="onItemClick(option)">
+                          {{ option }}
+                        </el-dropdown-item>
                       </el-dropdown-menu>
                     </template>
                   </el-dropdown>
@@ -51,9 +52,23 @@
               </div>
 
               <div class="input-fill">
-                <el-input ref="titleRef" v-model="mailboxState.mailboxList.write.title" placeholder="请输入标题" maxlength="255" show-word-limit />
+                <el-input
+                  ref="titleRef"
+                  v-model="mailboxState.mailboxList.write.title"
+                  placeholder="请输入标题"
+                  maxlength="255"
+                  show-word-limit
+                />
               </div>
             </div>
+
+            <div class="mail-input-item">
+              <div class="input-title">上传图片</div>
+              <div class="input-fill">
+                <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
+              </div>
+            </div>
+
             <div class="mail-input-item">
               <div class="input-title">内容</div>
               <div class="input-fill">
@@ -77,8 +92,14 @@
         <el-tab-pane key="sent" name="sent" :label="'我的反馈'">
           <template v-if="mailboxState.mailboxList.sent.list.length > 0">
             <el-collapse v-model="activeNames" @change="handleChange">
-              <el-collapse-item v-for="item in mailboxState.mailboxList.sent.list" :key="item.id" @click="openMsg(item)">
-                <template #title><p class="title-p">标题：{{ item.title }}</p></template>
+              <el-collapse-item
+                v-for="item in mailboxState.mailboxList.sent.list"
+                :key="item.id"
+                @click="openMsg(item)"
+              >
+                <template #title>
+                  <p class="title-p">标题：{{ item.title }}</p>
+                </template>
                 <div>
                   <div class="content-p">正文：{{ item.content }}</div>
                 </div>
@@ -99,67 +120,100 @@
         </el-tab-pane>
 
         <el-tab-pane key="quiz" name="quiz" :label="'有奖问答'">
-          <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
-          <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
-            <div class="quiz-header">
-              有奖问答
-            </div>
-            <div class="quiz-gift">
-                <img src="../../assets/feedback/gift.png"/>
-            </div>
-            <div class="quiz-content">
-              <div class="content-title">让我们聆听您的心声</div>
-              <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
-              <div class="content-btn">
-                <button class="standard-button btn-color-blue" @click="onBtnStartAnswerClick()">开始答题</button>
+          <div class="quiz-wrapper">
+            <div class="quiz-announcement-wrapper" v-if="uiIsShowStatus.showQuestions">
+              <img src="@/assets/feedback/quiz-announcement-icon.png" />
+              <div
+                class="quiz-announcement-inner"
+                :class="{ animated: announcementAnimated }"
+                @transitionend="handleAnnouncementAnimationEnd"
+              >
+                <div v-for="(announcement, index) in announcements" :key="index">
+                  恭喜用户 {{ announcement.account }}xxxxxxxxx 获得反馈彩金
+                  <span class="amount">{{ announcement.bonus }}元</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div v-if="uiIsShowStatus.questionBox" class="questions-container">
-            <!-- <div class="questions-back-btn">
-                <img src="../../assets/feedback/back-btn.png"/>
-            </div> -->
-            <div class="questions-header">
-              有奖问答
+
+            <div v-if="!uiIsShowStatus.showQuestions" class="quiz-disable">活动尚未开启</div>
+            <div v-if="!uiIsShowStatus.questionBox && uiIsShowStatus.showQuestions" class="quiz-container">
+              <div class="quiz-header">有奖问答</div>
+              <div class="quiz-gift">
+                <img src="../../assets/feedback/gift.png" />
+              </div>
+              <div class="quiz-content">
+                <div class="content-title">让我们聆听您的心声</div>
+                <div class="content-desc">雷火有奖问卷调查，您的意见和建议对我们非常重要</div>
+                <div class="content-btn">
+                  <button class="standard-button btn-color-blue" @click="onBtnStartAnswerClick()">开始答题</button>
+                </div>
+              </div>
             </div>
-            <div class="questions-gift">
-                <img src="../../assets/feedback/gift.png"/>
-            </div>
-            <div class="questions-content" v-if="!isAnswered">
-              <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
+            <div v-if="uiIsShowStatus.questionBox" class="questions-container">
+              <!-- <div class="questions-back-btn">
+                  <img src="../../assets/feedback/back-btn.png"/>
+              </div> -->
+              <div class="questions-header">有奖问答</div>
+              <div class="questions-gift">
+                <img src="../../assets/feedback/gift.png" />
+              </div>
+              <div class="questions-content" v-if="!isAnswered">
+                <div v-for="(item, i) in quesTitleOptions" :key="i" class="question-title-container">
                   <template v-if="recordsPagination.current === item.sequence">
                     <div class="questions-title">
-                      {{ item.question }}
+                      {{ item.question }}<span class="singlemultiple">({{ item.isMultiple ? '多选项' : '单选' }})</span>
                     </div>
                     <div class="answer-container">
-                      <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index" >
-                        <el-checkbox 
+                      <template v-if="item.isMultiple" v-for="(ans, index) in item.choices" :key="index">
+                        <el-checkbox
                           v-model="optionModal"
-                          :label="index"  
-                          @change="(newValue) => {
-                            toggleSelected(item, ans.needSpecify ? answerInputModal : ans.choice, newValue, ans.needSpecify)
-                        }">
+                          :label="index"
+                          @change="
+                            (newValue) => {
+                              toggleSelected(
+                                item,
+                                ans.needSpecify ? answerInputModal : ans.choice,
+                                newValue,
+                                ans.needSpecify
+                              );
+                            }
+                          "
+                        >
                           {{ ans.choice }}
                         </el-checkbox>
-                        <div v-if="item.isMultiple && Array.isArray(optionModal) && Array.from(optionModal).includes(index) && ans.needSpecify">
+                        <div
+                          v-if="
+                            item.isMultiple &&
+                            Array.isArray(optionModal) &&
+                            Array.from(optionModal).includes(index) &&
+                            ans.needSpecify
+                          "
+                        >
                           <el-input
                             class="answer-input-fill"
                             v-model="answerInputModal"
                             placeholder="请输入获取渠道"
                             type="textarea"
                             :autosize="{ minRows: 4 }"
-                            @change="(val) => {
-                              toggleSelected(item, val, true, ans.needSpecify)
-                            }"
+                            @change="
+                              (val) => {
+                                toggleSelected(item, val, true, ans.needSpecify);
+                              }
+                            "
                           />
                         </div>
                       </template>
                       <template v-else>
-                        <el-radio-group v-model="optionModal" >
-                          <el-radio v-for="(ans, index) in item.choices" :key="index" :label="index" @click="getSelected(item, ans.choice)">
+                        <el-radio-group v-model="optionModal">
+                          <el-radio
+                            v-for="(ans, index) in item.choices"
+                            :key="index"
+                            :label="index"
+                            @click="getSelected(item, ans.choice)"
+                          >
                             {{ ans.choice }}
                             <div v-if="optionModal === index && ans.needSpecify">
-                              <el-input 
+                              <el-input
                                 class="answer-input-fill"
                                 v-model="answerInputModal"
                                 placeholder="请输入获取渠道"
@@ -173,47 +227,68 @@
                       </template>
                     </div>
                   </template>
+                </div>
+
+                <div
+                  :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}`"
+                  style="display: flex; justify-content: space-between; gap: 10px"
+                >
+                  <div>
+                    <button
+                      id="prevBtn"
+                      class="standard-button btn-color-blue"
+                      @click="btnClick('prev')"
+                      style="display: none"
+                    >
+                      上一题
+                    </button>
+                  </div>
+                  <div>
+                    <button :disabled="!input && optionModal.length === 0" :class="!input && optionModal.length === 0 ? 'next-disabled': ''" id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">
+                      下一题
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      id="finalBtn"
+                      class="standard-button btn-color-blue"
+                      @click="btnClick('final')"
+                      style="display: none"
+                      :disabled="!input && optionModal.length === 0"
+                      :class="!input || optionModal.length === 0 ? '' : ''"
+                    >
+                      完成
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div :class="`content-btn ${recordsPagination.current === 1 ? 'active' : ''}` " style="display: flex; justify-content: space-between; gap: 10px;">
-                <div>
-                  <button id="prevBtn" class="standard-button btn-color-blue" @click="btnClick('prev')" style="display: none;">上一题</button>
+              <div class="questions-content" v-if="isAnswered">
+                <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
+                <div class="header-title-div">
+                  <span class="span1">恭喜您完成本月的调查问卷</span>
+                  <span class="span2">下月问卷将于次月1号重新开启</span>
                 </div>
-                <div>
-                  <button id="nextBtn" class="standard-button btn-color-blue" @click="btnClick('next')">下一题</button>
+                <div class="header-title-div" style="margin-top: 25px">
+                  <span class="span3">
+                    根据您填写的内容随机为您派发
+                    <span class="span1" style="color: #468cff">0-188元</span>
+                  </span>
                 </div>
-                <div>
-                  <button id="finalBtn" class="standard-button btn-color-blue" @click="btnClick('final')" style="display: none;">完成</button>
+                <div class="qr-code-div">
+                  <VueQRCodeComponent :size="188" :text="referralLink" />
+                  <!-- <img src="../../assets/feedback/share.png"/> -->
                 </div>
-              </div>
-            </div> 
-            
-            <div class="questions-content" v-if="isAnswered">
-              <div class="thumbs-up-div"><img src="../../assets/feedback/thumbs-up.png" /></div>
-              <div class="header-title-div">
-                <span class="span1">恭喜您完成本月的调查问卷</span> 
-                <span class="span2">下月问卷将于次月1号重新开启</span>
-              </div>
-              <div class="header-title-div" style="margin-top: 25px">
-                <span class="span3">根据您填写的内容随机为您派发<span class="span1" style="color: #468CFF">0-188元</span></span>
-              </div>
-              <div class="qr-code-div">
-                <VueQRCodeComponent :size="188" :text="referralLink" />
-                <!-- <img src="../../assets/feedback/share.png"/> -->
-              </div>
-              <div class="url-div">
-                <el-input 
-                  class="url-input-fill" 
-                  v-model="referralLink"
-                  :readonly="true"
-                  type="url"
-                  />
-                <div>
-                  <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">{{copybtntxt}}</button>
+                <div class="url-div">
+                  <el-input class="url-input-fill" v-model="referralLink" :readonly="true" type="url" />
+                  <div>
+                    <button class="standard-button btn-color-blue copy-button" @click="copyMessage()">
+                      {{ copybtntxt }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -222,24 +297,30 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { mailInbox, mailOutbox, submitFeedback, getFeedbackType, readFeedback } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { getQuestionnaireList, submitQuestionnaire, getQuestionnaireAns } from "@/api/index/promo";
-import { userStore } from "@/store"
+import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
-import { CaretBottom } from '@element-plus/icons-vue'
-import VueQRCodeComponent from 'vue-qrcode-component'
+import { CaretBottom } from "@element-plus/icons-vue";
+import VueQRCodeComponent from "vue-qrcode-component";
+import FileUpload from "@/components/feedback/FileUpload.vue";
 
 const store = userStore();
 const recordsPagination = reactive({ size: 3, current: 1, total: 3, pages: 3 });
 const uiIsShowStatus = reactive({
   startAnswerBox: true,
   questionBox: false,
-  showQuestions: true,
+  showQuestions: true
 });
 
 const feedbackTypes = ref("");
+const announcementBonusList = ref([8, 12, 16, 36, 38, 68]);
+const announcementTimer = ref(null);
+const announcementAnimated = ref(false);
+const announcements = ref([]);
+
 const loadFeedbackType = () => {
   getFeedbackType()
     .then((res) => {
@@ -251,6 +332,15 @@ const loadFeedbackType = () => {
     });
 };
 
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailboxState.mailboxList.write.photo = linkId;
+
+  ElMessage.success({
+    type: "success",
+    message: "上传成功"
+  });
+};
 
 function onBtnStartAnswerClick() {
   // debugger;
@@ -261,34 +351,31 @@ function onBtnStartAnswerClick() {
 const quesTitleOptions = ref([]);
 let optionModal = ref([]);
 
-
 const referralLink = ref();
 const getReferral = () => {
-  referralLink.value = 'https://' + location.hostname + `/center/feedback`;
-}
-const copybtntxt = ref('复制');
+  referralLink.value = "https://" + location.hostname + `/center/feedback`;
+};
+const copybtntxt = ref("复制");
 
-const activeNames= ref();
-const handleChange = () => {
-
-}
+const activeNames = ref();
+const handleChange = () => {};
 const copyMessage = (position) => {
   let copyText = null;
-    copyText = referralLink.value
+  copyText = referralLink.value;
   // Create a temporary textarea element
-  const tempTextarea = document.createElement('textarea');
+  const tempTextarea = document.createElement("textarea");
   tempTextarea.value = copyText;
   document.body.appendChild(tempTextarea);
 
   // Select the text and copy it
   tempTextarea.select();
-  document.execCommand('copy');
+  document.execCommand("copy");
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  copybtntxt.value = '已复制';
+  copybtntxt.value = "已复制";
   setTimeout(() => {
-    copybtntxt.value = '复制';
+    copybtntxt.value = "复制";
   }, 2000);
   // copyText.select()
   // document.execCommand("copy")
@@ -348,39 +435,56 @@ const getQuesTitleOptions = () => {
     //   ]
     // }
     if (res.code === 0) {
-      quesTitleOptions.value = res.data
-      recordsPagination.pages = res.data.length
-      uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0
+      quesTitleOptions.value = res.data;
+      recordsPagination.pages = res.data.length;
+      uiIsShowStatus.showQuestions = quesTitleOptions.value.length !== 0;
     } else {
-      ElMessage.error(res.message)
+      ElMessage.error(res.message);
     }
-
-  })
-}
-const isAnswered = ref(false)
-const answerInputModal = ref('');
+  });
+};
+const isAnswered = ref(false);
+const answerInputModal = ref(null);
 const choices = reactive([]);
 const cacheChoices = reactive([]);
 const getSelected = (item, ans) => {
-  const input = answerInputModal.value
+  const input = answerInputModal.value;
   var obj = {
     question: item.question,
     choice: input ? input : ans
-  }
-  choices[item.sequence - 1] = obj
+  };
+  choices[item.sequence - 1] = obj;
   var cacheObj = {
     sequence: item.sequence,
     question: item.question,
     choice: ans,
     input: input
-  }
-  cacheChoices[item.sequence - 1] = cacheObj
+  };
+  cacheChoices[item.sequence - 1] = cacheObj;
+};
+
+function removeEmojis(str) {
+  return str.replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // 表情符号块
+    .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // 杂项符号和象形文字
+    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // 交通和地图符号
+    .replace(/[\u{1F700}-\u{1F77F}]/gu, '')  // 阿尔化学符号
+    .replace(/[\u{1F780}-\u{1F7FF}]/gu, '')  // 地球和天气符号
+    .replace(/[\u{1F800}-\u{1F8FF}]/gu, '')  // 装饰符号
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '')  // 动物、自然和家居符号
+    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '')  // 手势和姿势
+    .replace(/[\u{2600}-\u{26FF}]/gu, '')    // 杂项符号
+    .replace(/[\u{2700}-\u{27BF}]/gu, '')    // Dingbats
+    .replace(/[\u{FE00}-\u{FE0F}]/gu, '')    // 变化选择器
+    .replace(/[\u{1F900}-\u{1F9FF}]/gu, '')  // 衣物和配件符号
+    .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, ''); // 国旗符号
 }
+
 const toggleSelected = (item, ans, isChecked, needSpecify) => {
   const input = answerInputModal.value;
-  
+
   const previousChoicesArr = Array.from(choices[item.sequence - 1]?.choice || []);
-  const newChoicesArr = [...previousChoicesArr, ans].filter(item => !isChecked ? item !== ans : item);
+  const newChoicesArr = [...previousChoicesArr, ans].filter((item) => (!isChecked ? item !== ans : item));
 
   var obj = {
     question: item.question,
@@ -390,7 +494,7 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
   var cacheObj = {
     sequence: item.sequence,
     question: item.question,
-    choice:newChoicesArr,
+    choice: newChoicesArr,
     input: input,
     needSpecify,
     isMultiple: true
@@ -398,18 +502,18 @@ const toggleSelected = (item, ans, isChecked, needSpecify) => {
   cacheChoices[item.sequence - 1] = cacheObj;
 };
 const btnClick = (btnType) => {
-  if (optionModal.value === null && (btnType === 'next' || btnType === 'final')) {
-    return ElMessage.error('请选择一个选项')
+  if (optionModal.value === null && (btnType === "next" || btnType === "final")) {
+    return ElMessage.error("请选择一个选项");
   }
-  optionModal.value = []
-  answerInputModal.value = null
+  optionModal.value = [];
+  answerInputModal.value = null;
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const finalBtn = document.getElementById("finalBtn");
-  if (btnType === 'prev') {
-      recordsPagination.current = recordsPagination.current - 1;
+  if (btnType === "prev") {
+    recordsPagination.current = recordsPagination.current - 1;
   }
-  if (btnType === 'next') {
+  if (btnType === "next") {
     recordsPagination.current = recordsPagination.current + 1;
   }
   if (recordsPagination.current < recordsPagination.pages) {
@@ -434,43 +538,49 @@ const btnClick = (btnType) => {
   }
   cacheChoices.forEach((c) => {
     if (c.sequence === recordsPagination.current) {
-      const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices
+      const choicesArray = quesTitleOptions.value[Number(c.sequence) - 1].choices;
       const chosenChoice = (() => {
-        if(c.isMultiple) {
-          const multipleChoices =  c.choice.map((selectedChoice) => choicesArray.findIndex(({choice}) => choice === selectedChoice));
-          const needSpecifyChoice = choicesArray.findIndex(choice => choice.needSpecify);
+        if (c.isMultiple) {
+          const multipleChoices = c.choice.map((selectedChoice) =>
+            choicesArray.findIndex(({ choice }) => choice === selectedChoice)
+          );
+          const needSpecifyChoice = choicesArray.findIndex((choice) => choice.needSpecify);
 
           return c.input ? [needSpecifyChoice, ...multipleChoices] : multipleChoices;
         }
 
-        return choicesArray.findIndex(choice => choice.choice === c.choice);
+        return choicesArray.findIndex((choice) => choice.choice === c.choice);
       })();
-      optionModal.value = chosenChoice
-      answerInputModal.value = c.input ? c.input : ''
+      optionModal.value = chosenChoice;
+      answerInputModal.value = c.input ? c.input : "";
     }
-  })
-  
-  if (btnType === 'final') {
+  });
+
+  if (btnType === "final") {
     const choicesLockedIn = Array.from(choices).map((field) => ({
       ...field,
-      choice: Array.isArray(field.choice) ? field.choice.join(',') : field.choice
+      choice: Array.isArray(field.choice) ? field.choice.join(",") : field.choice
     }));
+
+    choicesLockedIn.forEach((item) => {
+      item.choice = removeEmojis(item.choice);
+    })
 
     // const questionDiv = document.getElementById("questionContainer");
     // const QRDiv = document.getElementById("QRContainer");
     // When Submit API is COMPLETE
-    
+
     submitQuestionnaire(choicesLockedIn).then((res) => {
       if (res.code === 0) {
         // questionDiv.style.display = "none";
         // QRDiv.style.display = "block";
         isAnswered.value = true;
       } else {
-        ElMessage.error(res.message)
+        ElMessage.error(res.message);
       }
-    })
+    });
   }
-}
+};
 
 // const urlInput = ref("Http://LHe63851/s?eric123");
 
@@ -499,7 +609,8 @@ const mailboxState = reactive({
     },
     write: {
       title: "",
-      content: ""
+      content: "",
+      photo: ""
     },
     quiz: {}
   }
@@ -521,7 +632,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList[mailboxState.active].list.push(...response.records);
           mailboxState.mailboxList[mailboxState.active].total = response.total;
         } else {
-          ElMessage.error(res.message)
+          ElMessage.error(res.message);
         }
       })
       .catch((error) => {
@@ -542,7 +653,7 @@ const loadPersonalMailbox = () => {
           mailboxState.mailboxList["sent"].list.push(...response.data.records);
           mailboxState.mailboxList["sent"].total = response.data.total;
         } else {
-          ElMessage.error(response.message)
+          ElMessage.error(response.message);
         }
       })
       .catch((error) => {
@@ -632,8 +743,9 @@ const onSubmit = (e) => {
             mailboxState.mailboxList.write.feedbackType = "";
             mailboxState.mailboxList.write.title = "";
             mailboxState.mailboxList.write.content = "";
+            uploadFileRef.value.clear();
           } else {
-            ElMessage.error(response.message)
+            ElMessage.error(response.message);
           }
         })
         .catch((error) => {
@@ -654,14 +766,39 @@ const testAns = () => {
         loadPersonalMailbox();
         getQuesTitleOptions();
       } else {
-        uiIsShowStatus.questionBox= true;
+        uiIsShowStatus.questionBox = true;
         isAnswered.value = true;
       }
     } else {
-      ElMessage.error(res.message)
+      ElMessage.error(res.message);
     }
-  })
-}
+  });
+};
+
+const getRandomAccount = () => {
+  const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
+  const randomIndex1 = Math.floor(Math.random() * 26);
+  const randomIndex2 = Math.floor(Math.random() * 26);
+
+  return letters[randomIndex1] + letters[randomIndex2];
+};
+
+const getRandomBonus = () => {
+  return announcementBonusList.value[Math.floor(Math.random() * announcementBonusList.value.length)];
+};
+
+const initAnnouncement = () => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+  announcementTimer.value = setInterval(() => {
+    announcementAnimated.value = true;
+  }, 5000);
+};
+
+const handleAnnouncementAnimationEnd = () => {
+  const newAnnouncement = { account: getRandomAccount(), bonus: getRandomBonus() };
+  announcements.value = [announcements.value[1], newAnnouncement];
+  announcementAnimated.value = false;
+};
 
 onMounted(() => {
   if (store.token) {
@@ -670,13 +807,38 @@ onMounted(() => {
 
     loadFeedbackType();
   }
-  
+
+  if (uiIsShowStatus.showQuestions) {
+    announcements.value = [
+      { account: getRandomAccount(), bonus: getRandomBonus() },
+      { account: getRandomAccount(), bonus: getRandomBonus() }
+    ];
+    initAnnouncement();
+  }
+
   // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
 });
+
+onUnmounted(() => {
+  if (announcementTimer.value) clearInterval(announcementTimer.value);
+});
 </script>
+<style lang="scss">
 
+.standard-button.btn-color-blue {
+  &.next-disabled {
+    cursor: disabled;
+    background: #AAAAAA;
+    border-color: #AAAAAA;
+  }
+}
+
+.upload-photo-board .el-input__wrapper{
+  width: 875px;
+}
+
+</style>
 <style scoped lang="scss">
-
 .quiz-container {
   //   background: salmon;
   margin-top: 40px;
@@ -709,7 +871,7 @@ onMounted(() => {
     width: 129px;
     height: 110px;
     position: absolute;
-    top: 10px;
+    top: 54px;
     right: 200px;
   }
 
@@ -813,12 +975,16 @@ onMounted(() => {
       line-height: 22px;
       letter-spacing: 0em;
       text-align: left;
-      color: #4288FF;
+      color: #4288ff;
       margin-bottom: 20px;
       display: flex;
       justify-content: flex-start;
       width: 100%;
       margin-left: 20px;
+      .singlemultiple {
+        color: #ff0000;
+        font-size: 14px;
+      }
     }
     .questions-desc {
       color: $font-2;
@@ -827,7 +993,7 @@ onMounted(() => {
     }
 
     .answer-container {
-      display: flex; 
+      display: flex;
       width: 100%;
       flex-direction: column;
       padding: 10px 25px;
@@ -841,7 +1007,7 @@ onMounted(() => {
         justify-content: flex-start;
         align-items: flex-start;
         width: 100%;
-      }      
+      }
       :deep(.el-radio__label) {
         width: 100%;
       }
@@ -876,12 +1042,12 @@ onMounted(() => {
       }
     }
   }
-  
+
   .thumbs-up-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     img {
       width: 121px;
       height: 121px;
@@ -893,7 +1059,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     margin-top: 10px;
     gap: 5px;
   }
@@ -927,7 +1093,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #424f72;
     margin-top: 30px;
     gap: 5px;
 
@@ -941,7 +1107,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #3F8CFF;
+    color: #3f8cff;
     margin-top: 30px;
     gap: 5px;
     width: 100%;
@@ -950,47 +1116,45 @@ onMounted(() => {
 
   .url-input-fill {
     width: 389px;
-      :deep(.el-form-item__label) {
-        width: 80px;
-      }
+    :deep(.el-form-item__label) {
+      width: 80px;
+    }
 
-      :deep(.el-input__inner) {
-        color: #3F8CFF;
-      }
+    :deep(.el-input__inner) {
+      color: #3f8cff;
+    }
 
-      :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-        border-radius: 10px;
-        background: #f7f8fb;
-        height: 42px;
-      }
+    :deep(.el-input__wrapper) {
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      border-radius: 10px;
+      background: #f7f8fb;
+      height: 42px;
+    }
 
-      :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-        border-radius: 10px;
-        background: #f7f8fb;
-      }
+    :deep(.el-textarea__inner) {
+      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      border-radius: 10px;
+      background: #f7f8fb;
     }
   }
+}
 
-  .copy-button {
-    position: absolute;
-    bottom: 5px;
-    right: 110px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
+.copy-button {
+  position: absolute;
+  bottom: 5px;
+  right: 110px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
 
-    font-family: PingFang SC;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0em;
-    text-align: center;
-
-  }
-
+  font-family: PingFang SC;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: center;
+}
 
 .mail-content {
   overflow-wrap: break-word;
@@ -1074,7 +1238,8 @@ onMounted(() => {
         width: 80px;
       }
 
-      :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
+      :deep(.el-input__wrapper),
+      :deep(.el-select__wrapper) {
         box-shadow: 0px 0px 8px 0px #a9c9ea inset;
         border-radius: 10px;
         background: #f7f8fb;
@@ -1098,12 +1263,12 @@ onMounted(() => {
     margin-top: 20px;
   }
 
-  .empty-text{
+  .empty-text {
     text-align: center;
     margin-top: 50px;
   }
 
-  .title-p{
+  .title-p {
     width: 100%;
     word-wrap: break-word; /* 控制文字换行 */
     overflow-wrap: break-word;
@@ -1112,13 +1277,12 @@ onMounted(() => {
     margin-bottom: 5px;
   }
 
-  .content-p{
+  .content-p {
     width: 100%;
     word-wrap: break-word; /* 控制文字换行 */
     overflow-wrap: break-word;
     text-align: left;
     line-height: 15px;
-
   }
 }
 
@@ -1131,5 +1295,111 @@ onMounted(() => {
   font-weight: 600;
   color: $font-2;
   font-size: 1.275rem;
+}
+
+.feedback-tabs {
+  padding-top: 0;
+}
+
+.quiz-announcement-wrapper {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #5ea1ff1a;
+  padding: 0 15px;
+  border-radius: 35px;
+  height: 44px;
+  overflow: hidden;
+
+  img {
+    width: 36px;
+  }
+
+  .quiz-announcement-inner {
+    position: relative;
+    align-self: start;
+    font-family: PingFang SC;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 44px;
+    letter-spacing: 0.05em;
+    color: $font-1;
+
+    &.animated {
+      transition: transform 1s;
+      transform: translateY(-44px);
+    }
+
+    > div {
+      height: 44px;
+
+      .amount {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.dark {
+  .mail-content {
+    .mail-input-item {
+      .input-title {
+        color: #a4aabb;
+      }
+
+      .input-fill {
+        &:deep(.el-select__wrapper),
+        &:deep(.el-input__wrapper),
+        &:deep(.el-textarea__inner) {
+          box-shadow: none;
+          background-color: $background-content-block-lighter-dark;
+        }
+      }
+    }
+
+    &:deep(.el-collapse) {
+      .el-collapse-item__header {
+        background: $background-content-block-lighter-dark;
+        color: $font-3-dark;
+      }
+    }
+  }
+
+  .quiz-container {
+    .quiz-content {
+      @include content-block-dark;
+      border-color: $background-content-block-lighter-dark;
+
+      .content-title,
+      .content-desc {
+        color: $font-3-dark;
+      }
+    }
+  }
+
+  .questions-container {
+    .questions-content {
+      @include content-block-dark;
+      border-color: $background-content-block-lighter-dark;
+
+      .answer-input-fill {
+        :deep(.el-textarea__inner) {
+          box-shadow: none;
+          background-color: $background-content-block-lighter-dark;
+        }
+      }
+
+      .url-input-fill {
+        :deep(.el-input__wrapper) {
+          box-shadow: none;
+          background-color: $background-content-block-lighter-dark;
+        }
+      }
+    }
+
+    .header-title-div {
+      color: $color-white;
+    }
+  }
 }
 </style>

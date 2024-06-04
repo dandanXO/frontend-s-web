@@ -3,7 +3,7 @@
     <div class="center">
       <router-link to="/">
         <div class="logo">
-          <img src="@/assets/app/logo.png" />
+          <img src="@/assets/logo-bebest.svg" />
         </div>
       </router-link>
       <div class="card-bg">

@@ -52,8 +52,16 @@
                     style="font-size: 14px"
                     color="#0089ED"
                   />
-                  <q-chip size="sm" label="已读" v-if="det.readTime && det.sendTime" />
-                  <div class="title-text" :title="det.title">标题：{{ det.title }}</div>
+
+                  <div class="read-label" v-if="det.readTime && det.sendTime" >
+                    <img src="../assets/images/inbox/read-mail.png" />
+                  </div>
+                  <div class="read-label" v-else>
+                    <img src="../assets/images/inbox/unread-mail.png" />
+                  </div>
+
+
+                  <div class="title-text" :title="det.title">{{ det.title }}</div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
                   <div class="right-title">
                     <RiArrowUpSLine v-if="isSelectedMail === det.id" />
@@ -61,9 +69,11 @@
                   </div>
                 </div>
               </div>
-              <div class="mailcontents" v-if="isSelectedMail === det.id"
-                   v-html="det.content.replace(/\n/g, '<br/>')">
-              </div>
+              <div
+                class="mailcontents"
+                v-if="isSelectedMail === det.id"
+                v-html="det.content.replace(/\n/g, '<br/>')"
+              ></div>
               <div v-if="mailType === 'outbox'" class="buttons">
                 <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
                 <q-btn outline label="复制" size="sm" color="bright" />
@@ -314,47 +324,51 @@ export default defineComponent({
       // });
       // console.log(mailboxNotifyState[mailboxMessageTab.value]);
 
-      if(props.type === 'outbox') {
-        api.get(
-          `/session/feedback/${id}/read`).then((res) => {
-          if (res.code === 0) {
-            !readTime && $q.notify({
-              message: "已读消息",
-              type: "positive",
-              position: "top",
-              icon: "check_circle_outline"
-            });
-            mail.content = res.data.content;
-            onLoad();
-          }
-        })
-        .catch((error) => {
-          isDeleteMailModal.value = false;
-          console.log(error);
-        });
-      } else if(!readTime) {
-        api.post(
-          "/session/inbox/read",
-          qs.stringify({
-            id: id
+      if (props.type === "outbox") {
+        api
+          .get(`/session/feedback/${id}/read`)
+          .then((res) => {
+            if (res.code === 0) {
+              !readTime &&
+                $q.notify({
+                  message: "已读消息",
+                  type: "positive",
+                  position: "top",
+                  icon: "check_circle_outline"
+                });
+              mail.content = res.data.content;
+              onLoad();
+            }
           })
-        ).then((res) => {
-          if (res.code === 0) {
-            $q.notify({
-              message: "已读消息",
-              type: "positive",
-              position: "top",
-              icon: "check_circle_outline"
-            });
-            onLoad();
-          }
-        })
-        .catch((error) => {
-          isDeleteMailModal.value = false;
-          console.log(error);
-        });
+          .catch((error) => {
+            isDeleteMailModal.value = false;
+            console.log(error);
+          });
+      } else if (!readTime) {
+        api
+          .post(
+            "/session/inbox/read",
+            qs.stringify({
+              id: id
+            })
+          )
+          .then((res) => {
+            if (res.code === 0) {
+              $q.notify({
+                message: "已读消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
+              onLoad();
+            }
+          })
+          .catch((error) => {
+            isDeleteMailModal.value = false;
+            console.log(error);
+          });
       }
-    }
+    };
 
     const deleteMails = (type) => {
       isDeleteMailModal.value = true;
@@ -522,6 +536,13 @@ export default defineComponent({
     color: $font-1;
     word-break: break-all;
 
+    .read-label{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 8px;
+    }
+
     .title-wrapper {
       width: 100%;
       display: flex;
@@ -593,5 +614,21 @@ export default defineComponent({
   background: #db0011;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.body--dark {
+  .q-card {
+    box-shadow: none;
+    .title-div {
+      @include content-block-dark;
+    }
+    .mailcontents {
+      background: $background-dark-header;
+    }
+  }
+
+  .q-tab-panels {
+    background: $background-dark;
+  }
 }
 </style>

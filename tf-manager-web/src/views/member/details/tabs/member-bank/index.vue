@@ -32,6 +32,17 @@
             />
           </template>
         </el-table-column>
+        <el-table-column
+          :label="t('fields.operate')"
+          align="center"
+          fixed="right"
+        >
+          <template #default="scope" v-if="hasPermission(['sys:member:unbindbankcard'])">
+            <el-button ref="unbindBtnsRef" size="mini" type="danger" @click="toUnbind(scope.row)" @keydown.enter.prevent>
+              {{ t('fields.unbind') }}
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -104,6 +115,7 @@
             />
           </template>
         </el-table-column>
+        <el-table-column prop="operator" :label="t('fields.operator')" align="center" min-width="180" />
       </el-table>
       <el-pagination
         class="pagination"
@@ -120,10 +132,12 @@
 <script setup>
 import { onMounted, defineProps, reactive } from 'vue';
 import moment from 'moment';
-import { getMemberBank, getMemberBankLog } from '../../../../../api/member';
+import { getMemberBank, getMemberBankLog, unbindBankCard } from '../../../../../api/member';
 import { useI18n } from "vue-i18n";
 import { getShortcuts } from "@/utils/datetime";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { hasPermission } from '../../../../../utils/util'
+import { ElMessage, ElMessageBox } from 'element-plus'
 const props = defineProps({
   mbrId: {
     type: String,
@@ -234,6 +248,18 @@ function changeMemberBankLogPage(page) {
     memberBankLogRequest.current = page;
     loadMemberBankLog();
   }
+}
+
+async function toUnbind(bankCard) {
+  ElMessageBox.confirm(t('message.confirmUnbind'), {
+    confirmButtonText: t('fields.confirm'),
+    cancelButtonText: t('fields.cancel'),
+    type: 'warning',
+  }).then(async () => {
+    await unbindBankCard(bankCard.id)
+    await loadMemberBank()
+    ElMessage({ message: t('message.unbindSuccess'), type: 'success' })
+  })
 }
 
 onMounted(() => {

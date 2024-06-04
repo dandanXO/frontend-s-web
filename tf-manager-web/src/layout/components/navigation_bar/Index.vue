@@ -8,6 +8,9 @@
     />
     <BreadCrumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
+      <div class="key-value-container">
+        <div class="flex-div"><div class="text-2"><span style="color: red;">{{ message }}</span></div></div>
+      </div>
       <div v-if="selectedData" class="key-value-container">
         <div class="flex-div">
           <div class="green-circle-dot" />
@@ -33,6 +36,7 @@
         <el-option key="1" value="en">en</el-option>
         <el-option key="2" value="zh">zh</el-option>
         <el-option key="3" value="th">th</el-option>
+        <el-option key="4" value="kr">kr</el-option>
       </el-select>
       <el-dropdown
         class="avatar-container right-menu-item hover-effect"
@@ -84,6 +88,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { getMemberStatistics } from '../../../api/member-statistics'
 import { hasPermission } from "@/utils/util";
+import { showAlert } from '../../../api/member'
 
 export default {
   methods: { hasPermission },
@@ -144,6 +149,7 @@ export default {
     const selectedSite = ref(null);
     const selectedData = ref(null);
     const applyWithdrawCount = ref(0);
+    const message = ref(null);
 
     async function loadMemberStatistics() {
       const response = await getMemberStatistics();
@@ -161,10 +167,21 @@ export default {
       applyWithdrawCount.value = sessionStorage.getItem('WITHDRAW') || 0;
     }
 
+    async function showAlertMessage() {
+      const response = await showAlert()
+      const { data: alert } = response;
+      if (alert) {
+        message.value = t('fields.' + alert)
+      }
+    }
+
     onMounted(() => {
       if (store.state.user.siteId && hasPermission(['sys:member-stats:list'])) {
         loadMemberStatistics();
         updateApplyWithdrawCount();
+      }
+      if (hasPermission(['sys:member:alert'])) {
+        showAlertMessage()
       }
     })
 
@@ -201,7 +218,8 @@ export default {
       selectedData,
       updateData,
       applyWithdrawCount,
-      updateApplyWithdrawCount
+      updateApplyWithdrawCount,
+      message
     }
   },
 }

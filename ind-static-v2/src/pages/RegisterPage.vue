@@ -6,9 +6,9 @@
       </router-link>
     </div> -->
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -41,13 +41,10 @@
                   ref="pwdRef"
                   hide-bottom-space
                   v-model="regForm.password"
-                  lazy-rules
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-                    () => isAlphanumeric(regForm.password, 'Password')
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert password',
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
                   ]"
+                  :type="isPwd ? 'password' : 'text'"
                   color="white"
                   outlined
                   label-color="brand"
@@ -61,7 +58,7 @@
                     />
                   </template>
                 </q-input>
-                <div v-if="regForm.password" class="password-str-div">
+                <!-- <div v-if="regForm.password" class="password-str-div">
                   <span
                     :class="{
                       'weak-pwd': pwdStrength == 'weak',
@@ -80,75 +77,77 @@
                     Good
                   </span>
                   <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-                </div>
+                </div> -->
               </template>
             </InputField>
 
-            <InputField :label="'Confirm Password'">
-              <template #input>
-                <q-input
-                  ref="confirmPwdRef"
-                  hide-bottom-space
-                  :type="isCfmPwd ? 'password' : 'text'"
-                  v-model="regForm.confirmPwd"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val === regForm.password || 'Password does not match'
-                  ]"
-                  color="white"
-                  outlined
-                  label-color="brand"
-                >
-                  <template v-slot:append>
-                    <q-icon
-                      color="gray-3"
-                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isCfmPwd = !isCfmPwd"
-                    />
-                  </template>
-                </q-input>
+            <!--            <InputField :label="'Confirm Password'">-->
+            <!--              <template #input>-->
+            <!--                <q-input-->
+            <!--                  ref="confirmPwdRef"-->
+            <!--                  hide-bottom-space-->
+            <!--                  :type="isCfmPwd ? 'password' : 'text'"-->
+            <!--                  v-model="regForm.confirmPwd"-->
+            <!--                  lazy-rules-->
+            <!--                  :rules="[-->
+            <!--                    (val) => (val && val.length > 0) || 'Please insert password',-->
+            <!--                    (val) => val === regForm.password || 'Password does not match'-->
+            <!--                  ]"-->
+            <!--                  color="white"-->
+            <!--                  outlined-->
+            <!--                  label-color="brand"-->
+            <!--                >-->
+            <!--                  <template v-slot:append>-->
+            <!--                    <q-icon-->
+            <!--                      color="gray-3"-->
+            <!--                      :name="isCfmPwd ? 'visibility_off' : 'visibility'"-->
+            <!--                      class="cursor-pointer"-->
+            <!--                      @click="isCfmPwd = !isCfmPwd"-->
+            <!--                    />-->
+            <!--                  </template>-->
+            <!--                </q-input>-->
 
-                <!--      <q-input-->
-                <!--        ref="verificationRef"-->
-                <!--        hide-bottom-space-->
-                <!--        clearable-->
-                <!--        type="text"-->
-                <!--        v-model="regForm.captchaCode"-->
-                <!--        label="Verification Code"-->
-                <!--        lazy-rules-->
-                <!--        :rules="[-->
-                <!--          (val) => (val && val.length > 0) || 'Please insert verification code',-->
-                <!--          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'-->
-                <!--        ]"-->
-                <!--        placeholder="Please enter verification Code"-->
-                <!--        label-color="brand"-->
-                <!--        rounded-->
-                <!--        outlined-->
-                <!--        color="white"-->
-                <!--        class="landing-input"-->
-                <!--      >-->
-                <!--        <template v-slot:append>-->
-                <!--          <img :src="verificationImg" @click="getCode()" />-->
-                <!--        </template>-->
-                <!--      </q-input>-->
-              </template>
-            </InputField>
+            <!--                &lt;!&ndash;      <q-input&ndash;&gt;-->
+            <!--                &lt;!&ndash;        ref="verificationRef"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        hide-bottom-space&ndash;&gt;-->
+            <!--                &lt;!&ndash;        clearable&ndash;&gt;-->
+            <!--                &lt;!&ndash;        type="text"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        v-model="regForm.captchaCode"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        label="Verification Code"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        lazy-rules&ndash;&gt;-->
+            <!--                &lt;!&ndash;        :rules="[&ndash;&gt;-->
+            <!--                &lt;!&ndash;          (val) => (val && val.length > 0) || 'Please insert verification code',&ndash;&gt;-->
+            <!--                &lt;!&ndash;          (val) => (val && val.length > 3 && val.length < 5) || 'Verification code length is 4 characters'&ndash;&gt;-->
+            <!--                &lt;!&ndash;        ]"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        placeholder="Please enter verification Code"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        label-color="brand"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        rounded&ndash;&gt;-->
+            <!--                &lt;!&ndash;        outlined&ndash;&gt;-->
+            <!--                &lt;!&ndash;        color="white"&ndash;&gt;-->
+            <!--                &lt;!&ndash;        class="landing-input"&ndash;&gt;-->
+            <!--                &lt;!&ndash;      >&ndash;&gt;-->
+            <!--                &lt;!&ndash;        <template v-slot:append>&ndash;&gt;-->
+            <!--                &lt;!&ndash;          <img :src="verificationImg" @click="getCode()" />&ndash;&gt;-->
+            <!--                &lt;!&ndash;        </template>&ndash;&gt;-->
+            <!--                &lt;!&ndash;      </q-input>&ndash;&gt;-->
+            <!--              </template>-->
+            <!--            </InputField>-->
 
-            <InputField :label="'Invitation Code (Optional)'">
-              <template #input>
-                <q-input
-                  v-if="!hasAffiliate"
-                  ref="affiliateCodeRef"
-                  hide-bottom-space
-                  v-model="regForm.referrer"
-                  label-color="brand"
-                  outlined
-                  color="white"
-                />
-              </template>
-            </InputField>
+            <div  style="display:none;">
+              <InputField :label="'Invitation Code (Optional)'">
+                <template #input>
+                  <q-input
+                    v-if="!hasAffiliate"
+                    ref="affiliateCodeRef"
+                    hide-bottom-space
+                    v-model="regForm.referrer"
+                    label-color="brand"
+                    outlined
+                    color="white"
+                  />
+                </template>
+              </InputField>
+            </div>
           </template>
         </InputRowGrid>
 
@@ -173,18 +172,20 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
+import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+
 export default defineComponent({
   name: "RegisterPage",
   components: {
@@ -201,7 +202,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
     const isLoading = ref(false);
@@ -308,18 +309,40 @@ export default defineComponent({
     };
 
     const router = useRouter();
+    const ui = useUI();
 
     const affRegEvent = ref("");
     onActivated(() => {
-      getCode();
+      // getCode();
       getReferralCode();
       getAffiliateCode();
     });
 
+    const trackRegisterClickEvent= () => {
+      if(ui.adjust_click_register_event && isAndroid()){
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
+    const trackRegisterFailedEvent = () => {
+      if(ui.adjust_register_fail_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
@@ -334,15 +357,17 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
         // verificationRef.value.hasError ||
         isAgreeReg.value === false
       ) {
+        isLoading.value = false;
         $q.loading.hide();
       } else {
+        trackRegisterClickEvent();
         var qs = require("qs");
         const fpPromise = FingerprintJS.load();
         (async () => {
@@ -360,7 +385,8 @@ export default defineComponent({
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = sidParam;
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger= "1";
           }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -390,6 +416,9 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
+                //ADJUST TRACKEVENT.
+                trackRegisterSuccessEvent();
+
                 $q.notify({
                   color: "positive",
                   position: "top",
@@ -397,27 +426,12 @@ export default defineComponent({
                   icon: "check_circle_outline"
                 });
 
-                //ADJUST TRACKEVENT.
-                // debugger;
-                if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  var adjustEvent = new AdjustEvent(affRegEvent.value);
-                  // alert(affRegEvent.value);
-                  Adjust.trackEvent(adjustEvent);
-                } else {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: affRegEvent.value
-                  });
-                }
-
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  // router.go(jumpUrl);
-                  router.go("/");
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
+                  // location.href = "/";
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -433,10 +447,11 @@ export default defineComponent({
               isLoading.value = false;
             })
             .catch((error) => {
+              trackRegisterFailedEvent()
               $q.loading.hide();
               isLoading.value = false;
             });
-          getCode();
+          // getCode();
         })();
       }
     };
@@ -594,7 +609,7 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
+  // min-height: 80vh;
   // padding: 16px;
   display: flex;
   flex-direction: column;
@@ -670,7 +685,7 @@ function charType(num) {
 
   span.normal-pwd {
     background: var(--q-warning);
-    color: var(--q-primary);
+    color: #000;
   }
 
   span.strong-pwd {

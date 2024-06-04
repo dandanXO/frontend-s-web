@@ -39,8 +39,12 @@
             <span class="promo" v-if="method.recommended">
               {{ "finance.withdraw.recommended" }}
             </span>
-            <img :src="imgURL + method.icon" />
+            <img class="promo-img" :src="imgURL + method.icon" />
             <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img v-if="method.privilegeIcon" :src="`${imgURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </el-form-item>
 
@@ -146,6 +150,8 @@
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
           </el-button>
         </div>
 
@@ -156,7 +162,13 @@
         ></div> -->
 
         <div class="flex-box flex-justify-center">
-          <el-button :loading="loadingBtn" size="large" class="common-btn withdraw-btn" @click="submitWithraw">
+          <el-button
+            :loading="loadingBtn"
+            :disable="loadingBtn"
+            size="large"
+            class="common-btn withdraw-btn"
+            @click="submitWithraw"
+          >
             确定
           </el-button>
         </div>
@@ -230,17 +242,20 @@ export default defineComponent({
               })
               getWithdrawalMethods();
               loadCards();
+              loadingBtn.value = false;
             } else {
               // message.error(response.message);
+              loadingBtn.value = false;
             }
           }).catch((error) => {
               console.log(error.message);
+              loadingBtn.value = false;
             // message.error(error.message, 4)
           });
         }).catch((error) => {
           console.log("error", error);
+          loadingBtn.value = false;
         });
-        loadingBtn.value = false;
     };
     const withdrawRules = {
       amount: [
@@ -368,7 +383,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY')
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       loadCards()
     }
@@ -395,9 +410,11 @@ export default defineComponent({
     }
     const openEWalletTutorial = (code) => {
       const urlMap = {
-        'KDPAY': 'http://jiaocheng.kdpay123.com',
-        'EBPAY': 'https://www.ebpay24.com',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
+        'EBPAY': 'https://www.ebpay.org/',
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -522,14 +539,28 @@ export default defineComponent({
       // margin-right: 10px;
       // border-radius: 6px;
       // border: solid 1px #484460;
-      // position: relative;
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
       cursor: pointer;
       margin-right: 5px;
-      img {
+
+      .promo-label {
+        position: absolute;
+        bottom: 14px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 44px;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      .promo-img {
         //     width: 40px;
         // padding: 8px 20px;
         // background: #ffffff;
@@ -538,7 +569,7 @@ export default defineComponent({
         background-color: #f7f7f7;
         box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
         max-width: 1.5rem;
-        margin-bottom: 0;
+        margin-bottom: 4px;
         border: 2px solid #dddddd;
         padding: 5px 15px;
         border-radius: 3px;

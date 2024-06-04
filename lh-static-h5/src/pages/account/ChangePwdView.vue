@@ -198,4 +198,10 @@ export default defineComponent({
     }
   }
 }
+
+.body--dark {
+  .change-pwd {
+    @include content-block-dark-with-border;
+  }
+}
 </style>
