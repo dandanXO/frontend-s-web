@@ -30,7 +30,8 @@ import { ref, onMounted } from "vue";
 import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
 import BracketTeam from "./components/BracketTeam.vue";
 import { euroMatchAll } from '@/api/promotion/eurocup';
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+import { useLocalStorage } from "@vueuse/core";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
 const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([

@@ -177,7 +177,7 @@ import { reactive, ref, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, copyToClipboard } from "quasar";
 import { useRouter } from "vue-router";
-import * as _ from "lodash";
+import {useLocalStorage} from "@vueuse/core"
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -188,7 +188,7 @@ const ALIPAY = "ALIPAY";
 const $q = useQuasar();
 const router = useRouter();
 
-const imgURL = process.env.IMAGE_CDN + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
 
 const onBindCardClick = (path) => {
   router.push(path);

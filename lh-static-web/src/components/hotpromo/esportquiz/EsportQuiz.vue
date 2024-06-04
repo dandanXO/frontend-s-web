@@ -242,9 +242,10 @@ import {
 } from "@/api/index/promo";
 import moment from "moment";
 import { CircleCloseFilled } from '@element-plus/icons-vue'
+import { useLocalStorage } from "@vueuse/core";
 
 const store = userStore();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/";
 
 
 onMounted(() => {

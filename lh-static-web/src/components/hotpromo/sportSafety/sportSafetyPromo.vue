@@ -177,6 +177,7 @@ import {
 import { getLoggedInPlatformList } from "@/api/platform/platform";
 
 import { ArrowRight, ArrowLeft } from "@element-plus/icons-vue";
+import { useLocalStorage } from "@vueuse/core";
 
 const store = userStore();
 const matchDetails = ref([]);
@@ -326,7 +327,8 @@ const nextSlide = () => {
   $swiper.value.slideNext();
 };
 
-const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`;
+var imageUrl= useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value ;
+const iconImageBasePath = `${imageUrl}/promo`;
 
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);

@@ -220,8 +220,9 @@ import {
 } from "@/api/promotion/eurocup";
 import { ElMessage } from "element-plus";
 import moment from "moment";
+import {  useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const props = defineProps({
   tabtitle: String
@@ -256,7 +257,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({

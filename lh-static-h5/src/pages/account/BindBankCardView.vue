@@ -239,13 +239,14 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import {useLocalStorage} from "@vueuse/core"
 
 const qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const router = useRouter();
 
-const imgURL = process.env.IMAGE_CDN;
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
