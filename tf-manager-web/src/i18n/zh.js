@@ -1759,6 +1759,8 @@ export default {
     selectedAffiliates: '指定代理',
     virtualAmount: '虚拟奖金金额',
     virtualMultiplier: '虚拟奖金倍数',
+    batchDistributeRebate: '批量发送返水',
+    distribute: '发送',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -1788,6 +1790,8 @@ export default {
     confirmRunAtOnce: '请确认是否立即执行这个任务(即使任务处于未开启状态)',
     confirmEndMatch: '请确认是否结束该赛事, 此操作不可撤销',
     confirmRebate: '请确认是否发放所有返水奖金, 此操作不可撤销',
+    confirmBatchRebate: '请确认是否发送已选择的返水奖金, 此操作不可撤销',
+    confirmSingleRebate: '请确认是否发送此返水奖金, 此操作不可撤销',
     confirmRedeem: '请确认是否发折现该礼品 此操作不可撤销',
     confirmRefer: '请确认是否发放所有好友邀请奖金, 此操作不可撤销',
     confirmReset: '请确认是否要清除这些数据, 此操作不可撤销',

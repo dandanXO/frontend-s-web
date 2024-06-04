@@ -1757,6 +1757,8 @@ export default {
     selectedAffiliates: 'Selected Affiliates',
     virtualAmount: 'Virtual Amount',
     virtualMultiplier: 'Virtual Multiplier',
+    batchDistributeRebate: 'Batch Distribute Rebate',
+    distribute: 'Distribute',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -1797,6 +1799,10 @@ export default {
       'Confirm that this match is ended, the operation cannot be undone',
     confirmRebate:
       'Confirm that you want to distribute all rebate, the operation cannot be undone',
+    confirmBatchRebate:
+      'Confirm that you want to distribute these chosen rebates, the operation cannot be undone',
+    confirmSingleRebate:
+      'Confirm that you want to distribute this rebate, the operation cannot be undone',
     confirmRedeem:
       'Confirm that you want to redeem this gift as cash, the operation cannot be undone',
     confirmRefer:

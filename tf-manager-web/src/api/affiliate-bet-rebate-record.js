@@ -20,3 +20,7 @@ export const adjustBetAmount = (id, adjust) => {
 export const distribute = (rebate) => {
   return https().request("/affiliate-bet-rebate-record/rebate", Method.POST, rebate, ContentType.form);
 };
+
+export const batchDistribute = (ids) => {
+  return https().request("/affiliate-bet-rebate-record/selective-rebate", Method.POST, { ids: ids }, ContentType.form);
+};
