@@ -1792,7 +1792,7 @@ body {
     box-shadow: $shadow-header;
 
     .top-nav-inner {
-      max-width: 1250px;
+      max-width: 1300px;
       margin: 0 auto;
       width: 100%;
       display: flex;
