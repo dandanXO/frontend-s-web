@@ -315,10 +315,11 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container">
-        <div class="acc-dialog-left">
+      <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
+        <div class="acc-dialog-left" >
           <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
-          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img v-else  src="../../assets/home/tf88club-img.png">
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -1146,6 +1147,8 @@ export default defineComponent({
     };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
+    const isLandingClub= ref(route.query.landing);
+
     const showRebateValue = () => {
       dailyRebateAmt().then((res) => {
         if (res.code === 0) {
@@ -1200,8 +1203,11 @@ export default defineComponent({
         loginDialogVisible.value = false;
       }
 
-      // console.log(route);
-      // alert(route.name)
+
+      // alert(isLanding);
+      if(isLandingClub.value === "tf88club"){
+        loginDialogVisible.value = true;
+      }
 
 
     });
@@ -1533,7 +1539,8 @@ export default defineComponent({
       claimRebate,
       rebateAmt,
       claimNow,
-      welcomeDialogVisible
+      welcomeDialogVisible,
+      isLandingClub
     };
   }
 });
@@ -1925,7 +1932,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }
@@ -2507,6 +2514,7 @@ body {
       }
 
       .login-container {
+
         .acc-dialog-left {
           display: flex;
           align-items: flex-end;
@@ -2515,12 +2523,33 @@ body {
           background-position: center center;
           min-height: 500px;
 
+
           img {
             display: block;
             // width: 100%;
             width: calc(100% + 90px);
             margin: -50px 0px -45px -90px;
           }
+
+
+
+        }
+
+        &.acc-dialog-landing{
+          .acc-dialog-left{
+            background-image: url(../../assets/home/tf88club.png);
+            max-height:95vh;
+
+            img{
+              width: calc(100% + 20px);
+              margin: -50px -10px 0px -10px;
+            }
+          }
+
+          .acc-dialog-right{
+            padding-left: 20px;
+          }
+
         }
       }
 
