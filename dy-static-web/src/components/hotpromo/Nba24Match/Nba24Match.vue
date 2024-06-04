@@ -6,10 +6,10 @@
         <div class="nba24-match-game-content">
           <div class="nba24-match-game-content-left">
             <div class="nba24-match-game-content-team">
-              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
+              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
+                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
                 class="nba24-match-game-content-btn"
               >
                 已投票
@@ -17,7 +17,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
+                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
               >
                 投票
               </div>
@@ -41,10 +41,10 @@
           </div>
           <div class="nba24-match-game-content-right">
             <div class="nba24-match-game-content-team">
-              <img :src="match.homeTeamIcon" alt="" class="nba24-match-game-icon" />
-              <div class="nba24-match-game-content-team-name">{{ match.homeTeam }}</div>
+              <img :src="match.awayTeamIcon" alt="" class="nba24-match-game-icon" />
+              <div class="nba24-match-game-content-team-name">{{ match.awayTeam }}</div>
               <div
-                v-if="match.teamChosen != null && match.teamChosen == match.homeTeam"
+                v-if="match.teamChosen != null && match.teamChosen == match.awayTeam"
                 class="nba24-match-game-content-btn"
               >
                 已投票
@@ -52,7 +52,7 @@
               <div
                 v-else-if="match.teamChosen == null"
                 class="nba24-match-game-content-btn"
-                @click="handleVoteClick({ matchId: match.id, team: match.homeTeam })"
+                @click="handleVoteClick({ matchId: match.id, team: match.awayTeam })"
               >
                 投票
               </div>
@@ -192,17 +192,17 @@
                 <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
               </tr>
               <!-- <tr>
-              <td>2024-05-11 16:00</td>
-              <td>老鹰 vs 火箭</td>
-              <td>老鹰胜</td>
-              <td style="color: #ff5151">错误</td>
-            </tr>
-            <tr>
-              <td>2024-05-11 16:00</td>
-              <td>老鹰 vs 火箭</td>
-              <td>平局</td>
-              <td style="color: #7a8eb9">未出结果</td>
-            </tr> -->
+            <td>2024-05-11 16:00</td>
+            <td>老鹰 vs 火箭</td>
+            <td>老鹰胜</td>
+            <td style="color: #ff5151">错误</td>
+          </tr>
+          <tr>
+            <td>2024-05-11 16:00</td>
+            <td>老鹰 vs 火箭</td>
+            <td>平局</td>
+            <td style="color: #7a8eb9">未出结果</td>
+          </tr> -->
             </tbody>
           </table>
         </div>
