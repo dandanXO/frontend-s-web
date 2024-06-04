@@ -225,9 +225,7 @@
               <a @click="openGame(platform, platform.code, platform.gameCode)">
                 <div class="slot-img">
                   <el-image
-                    :src="
-                      require(`@/assets/images/platform/${platform.gameType.toLowerCase()}/${platform.code.toLowerCase()}.png`)
-                    "
+                    :src="loadGameIcon(`${platform.gameType.toLowerCase()}/${platform.code.toLowerCase()}.png`)"
                     lazy
                   >
                     <template #placeholder>
@@ -460,6 +458,14 @@ const loadGameList = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  }
+};
+
+const loadGameIcon = (path) => {
+  try {
+    return require(`@/assets/images/platform/${path}`);
+  } catch (e) {
+    return require("@/assets/images/games/aviator/default.png");
   }
 };
 
