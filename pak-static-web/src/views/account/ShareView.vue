@@ -9,15 +9,15 @@
         <div class="share-summary-wrapper">
           <div class="share-summary-item income">
             <div class="share-summary-item__info-wrapper">
-              <h3 class="share-summary-item__title">RS 0.00</h3>
-              <span class="share-summary-item__description">my total income</span>
+              <h3 class="share-summary-item__title">RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}</h3>
+              <span class="share-summary-item__description">My Total Income</span>
             </div>
             <img class="share-summary-item__pic" src="@/assets/images/account/share/income-pic.png" />
           </div>
           <div class="share-summary-item invitees">
             <div class="share-summary-item__info-wrapper">
-              <h3 class="share-summary-item__title">0</h3>
-              <span class="share-summary-item__description">My total number of invitees</span>
+              <h3 class="share-summary-item__title">{{ memberDetail.totalRefer }}</h3>
+              <span class="share-summary-item__description">My Total Number Of Invitees</span>
             </div>
             <img class="share-summary-item__pic" src="@/assets/images/account/share/invitees-pic.png" />
           </div>
@@ -34,18 +34,18 @@
           <div class="invitation-link__link-wrapper">
             <!-- <a-input class="invitation-link__link" readonly /> -->
             <div class="invitation-link__link-inner">
-              {{ referralLink }}
-              <button class="common-btn invitation-link__copt-btn">Copy link</button>
+              {{ selfTgurl }}
+              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">Copy link</button>
             </div>
             <div class="invitation-link__action-wrapper">
               <!-- TODO: action? -->
-              <a href="#">
+              <a :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
                 <img src="@/assets/images/account/share/logo_whatsapp.png" alt="Whatsapp" />
               </a>
-              <a href="#">
+              <a :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
                 <img src="@/assets/images/account/share/logo_tik-tok.png" alt="TikTok" />
               </a>
-              <a href="#">
+              <a :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
                 <img src="@/assets/images/account/share/logo_ins.png" alt="Instagram" />
               </a>
               <button class="invitation-link__action-more">
@@ -60,13 +60,13 @@
           <div class="earned-amount__total-wrapper">
             <h2 class="earned-amount__total-title">Total amount sent as of yesterday</h2>
             <!-- TODO: check api -->
-            <span class="earned-amount__total-amount">159,930.00</span>
+            <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
           </div>
           <div class="earned-amount__divider" />
           <div class="earned-amount__invited-friend-wrapper">
             <div class="earned-amount__invited-friend-info-wrapper">
               <span class="earned-amount__invited-friend-header">player</span>
-              <div v-for="(friend, index) in fakeFriendList" :key="index" class="earned-amount__invited-friend-info">
+              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-info">
                 <img
                   v-if="friend.profilePhoto"
                   :src="friend.profilePhoto"
@@ -79,8 +79,8 @@
 
             <div class="earned-amount__invited-friend-info-wrapper">
               <span class="earned-amount__invited-friend-header">money</span>
-              <div v-for="(friend, index) in fakeFriendList" :key="index" class="earned-amount__invited-friend-amount">
-                Rs {{ friend.depositAmount.toFixed(1) }}
+              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-amount">
+                {{ store.currency.value }} {{ friend.finalAmount }}
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@
             <div class="share-info-item__info-wrapper">
               <span class="share-info-item__info">
                 ₨
-                <span class="share-info-item__info-num">0</span>
+                <span class="share-info-item__info-num">{{ getRewardAmount("BET") }}</span>
               </span>
               <span class="share-info-item__description">Bet</span>
             </div>
@@ -109,9 +109,9 @@
             <div class="share-info-item__info-wrapper">
               <span class="share-info-item__info">
                 ₨
-                <span class="share-info-item__info-num">0</span>
+                <span class="share-info-item__info-num">{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
               </span>
-              <span class="share-info-item__description">Achievement</span>
+              <span class="share-info-item__description">Eligible Refer</span>
             </div>
           </div>
           <div class="share-info-item">
@@ -121,7 +121,7 @@
             <div class="share-info-item__info-wrapper">
               <span class="share-info-item__info">
                 ₨
-                <span class="share-info-item__info-num">0</span>
+                <span class="share-info-item__info-num">{{ getRewardAmount("ONE_TIME") }}</span>
               </span>
               <span class="share-info-item__description">Invite</span>
             </div>
@@ -133,7 +133,7 @@
             <div class="share-info-item__info-wrapper">
               <span class="share-info-item__info">
                 ₨
-                <span class="share-info-item__info-num">0</span>
+                <span class="share-info-item__info-num">{{ getRewardAmount("DEPOSIT") }}</span>
               </span>
               <span class="share-info-item__description">Top Up</span>
             </div>
@@ -145,9 +145,9 @@
             <td>Friend Count</td>
             <td>Invite Bonus</td>
           </tr>
-          <tr v-for="(rank, index) in bonusRankingList" :key="index">
-            <td class="share-bonus-ranking-label">{{ rank.friendCount }}</td>
-            <td class="share-bonus-ranking-amount">₨ {{ rank.bonusAmount.toFixed(1) }}</td>
+          <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <td class="share-bonus-ranking-label">{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+            <td class="share-bonus-ranking-amount">{{ store.currency.value }} {{ item.bonusAmount }}</td>
           </tr>
         </table>
       </div>
@@ -228,7 +228,8 @@
 
 <script setup>
 import { defineComponent, reactive, ref, onMounted } from "vue";
-import { getReferralLink, getFriendList } from "@/api/personal/share";
+import { getReferralLink, getFriendList, getOneTimeBonus, getMemberDetailAPI, getLatestInviteesAPI } from "@/api/personal/share";
+import { ElMessage } from "element-plus"
 import {
   RiFacebookCircleLine,
   RiWhatsappLine,
@@ -239,12 +240,26 @@ import {
 } from "vue-remix-icons";
 import moment from "moment";
 import VueQRCodeComponent from "vue-qrcode-component";
+import { userStore } from "@/store/index"
+import { convertToCommaAmount } from "@/utils/utils"
 
+const store = userStore();
+const copyHrefLink = () => {
+  navigator.clipboard
+    .writeText(selfTgurl.value)
+    .then(() => {
+      ElMessage.success("Link copied to clipboard");
+    })
+    .catch(() => {
+      ElMessage.error("Failed to copy link");
+    });
+};
 const searchForm = reactive({
   date: moment("2022-03-03", "YYYY-MM-DD")
 });
 const friendList = ref([]);
-const referralLink = ref("");
+const selfTgurl = ref("");
+const waUrl = ref("");
 const copybtntxt = ref("Copy");
 const copyinput = ref(null);
 const copyCode = () => {
@@ -257,24 +272,69 @@ const blurCode = () => {
   copybtntxt.value = "Copy";
 };
 
-const fakeFriendList = [
-  { profilePhoto: null, loginName: "2312342313", depositAmount: 120 },
-  { profilePhoto: null, loginName: "1512352213", depositAmount: 120 },
-  { profilePhoto: null, loginName: "7334234713", depositAmount: 120 }
-];
+const oneTimeBonusSetting = ref([]);
+const memberDetail = ref([]);
+const latestInvitees = ref([]);
+const inviteesRecords = ref([]);
+let currentIndex = 0;
+let intervalId = null;
 
-const bonusRankingList = [
-  { friendCount: "1", bonusAmount: 120 },
-  { friendCount: "2~4", bonusAmount: 120 },
-  { friendCount: "5~10", bonusAmount: 120 },
-  { friendCount: "11~30", bonusAmount: 120 },
-  { friendCount: "31~50", bonusAmount: 120 },
-  { friendCount: "51~500", bonusAmount: 120 },
-  { friendCount: "501~999", bonusAmount: 120 },
-  { friendCount: "1000~3000", bonusAmount: 120 },
-  { friendCount: "3001~9999", bonusAmount: 120 },
-  { friendCount: "10000~99999", bonusAmount: 120 }
-];
+const getOneTimeBonusSetting = () => {
+  getOneTimeBonus()
+    .then((response) => {
+      if (response.code === 0) {
+        oneTimeBonusSetting.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const getMemberDetail = () => {
+  getMemberDetailAPI()
+    .then((response) => {
+      if (response.code === 0) {
+        memberDetail.value = response.data;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const getLatestInvitees = () => {
+  getLatestInviteesAPI()
+    .then((response) => {
+      if (response.code === 0) {
+        latestInvitees.value = response.data;
+        inviteesRecords.value = response.data.records;
+        // startDisplayingRows();
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+// const fakeFriendList = [
+//   { profilePhoto: null, loginName: "2312342313", depositAmount: 120 },
+//   { profilePhoto: null, loginName: "1512352213", depositAmount: 120 },
+//   { profilePhoto: null, loginName: "7334234713", depositAmount: 120 }
+// ];
+
+// const bonusRankingList = [
+//   { friendCount: "1", bonusAmount: 120 },
+//   { friendCount: "2~4", bonusAmount: 120 },
+//   { friendCount: "5~10", bonusAmount: 120 },
+//   { friendCount: "11~30", bonusAmount: 120 },
+//   { friendCount: "31~50", bonusAmount: 120 },
+//   { friendCount: "51~500", bonusAmount: 120 },
+//   { friendCount: "501~999", bonusAmount: 120 },
+//   { friendCount: "1000~3000", bonusAmount: 120 },
+//   { friendCount: "3001~9999", bonusAmount: 120 },
+//   { friendCount: "10000~99999", bonusAmount: 120 }
+// ];
 // const columns = [
 //   {
 //     title: "ชื่อ",
@@ -287,31 +347,70 @@ const bonusRankingList = [
 //     key: "deposit",
 //   },
 // ];
-const getReferral = () => {
-  getReferralLink()
-    .then((res) => {
-      if (res.code === 0) {
-        referralLink.value = `${location.origin}/refer/${res.data}`;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+// const getReferral = () => {
+//   getReferralLink()
+//     .then((res) => {
+//       if (res.code === 0) {
+//         referralLink.value = `${location.origin}/refer/${res.data}`;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+// const initFriendList = () => {
+//   getFriendList()
+//     .then((res) => {
+//       if (res.code === 0) {
+//         friendList.value = res.data.records;
+//       }
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+// onMounted(() => {
+//   getReferral();
+//   initFriendList();
+// });
+const getRewardAmount = (type) => {
+  const rewards = memberDetail.value.rewardAmountByType;
+  if (rewards && Array.isArray(rewards)) {
+    const reward = rewards.find((reward) => reward.rewardType === type);
+    return reward ? reward.totalAmount : 0;
+  }
+  return 0;
 };
-const initFriendList = () => {
-  getFriendList()
-    .then((res) => {
-      if (res.code === 0) {
-        friendList.value = res.data.records;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+const startDisplayingRows = () => {
+  // Display the first item initially
+  if (currentIndex === 0) {
+    currentIndex++;
+  }
+
+  intervalId = setInterval(() => {
+    if (currentIndex < inviteesRecords.value.length) {
+      inviteesRecords.value.unshift(inviteesRecords.value[10]);
+      currentIndex++;
+    } else {
+      clearInterval(intervalId);
+      currentIndex = 0;
+      startDisplayingRows(); // Restart the loop
+    }
+  }, 1000);
 };
 onMounted(() => {
-  getReferral();
-  initFriendList();
+  getOneTimeBonusSetting();
+  getMemberDetail();
+  getLatestInvitees();
+
+  let tgDomain = window.location.origin + "/";
+
+  getReferralLink().then((res) => {
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
+  });
 });
 </script>
 <style scoped lang="scss">
@@ -578,7 +677,9 @@ onMounted(() => {
         display: flex;
         justify-content: space-between;
         flex: 1;
-
+        height: 140px;
+          overflow: scroll;
+          padding-right: 20px;
         .earned-amount__invited-friend-info-wrapper {
           display: flex;
           flex-direction: column;
@@ -628,7 +729,8 @@ onMounted(() => {
   .right-side {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start; 
+    gap: 20px;
     flex: 1;
 
     .share-info-wrapper {

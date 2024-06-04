@@ -308,6 +308,7 @@ input:-webkit-autofill:active {
   .ant-input-affix-wrapper > input.ant-input {
     color: #ffffff;
     background: none;
+    border: 0;
     &::placeholder {
       color: #ffffff99;
     }
