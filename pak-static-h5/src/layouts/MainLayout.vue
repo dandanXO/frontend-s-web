@@ -162,6 +162,14 @@ export default defineComponent({
           } else {
             prevPage.value = "/account";
           }
+        } else if (route.path === "/account/withdraw/ewallet") {
+          hasPage.value = true;
+          pageName.value = "Add Virtual Wallet";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account/bank";
+          }
         } else if (route.path === "/account/message") {
           hasPage.value = true;
           pageName.value = "Message";

@@ -101,7 +101,7 @@
         </div>
       </div> -->
       <div class="center-content">
-        <SectionWrapper title="🔥HOT" to="" class="section-wrapper">
+        <SectionWrapper title="🔥HOT" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
             <img
               v-for="index in 6"
@@ -128,7 +128,7 @@
             />
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Fish" to="" class="section-wrapper">
+        <SectionWrapper title="Fish" to="/aviator" class="section-wrapper">
           <div class="section-wrapper-content">
             <img
               v-for="index in 6"
@@ -388,7 +388,6 @@ const homeState = reactive({
   esGamesList: []
 });
 
-
 const platformTabs = NavPlatforms.sort((a, b) => a.tabOrder - b.tabOrder);
 
 const platforms = ref([]);
@@ -475,7 +474,7 @@ const checkShowImgTop = () => {
             } else {
               homePopupPath.value = "/promotion?name=" + data["path"];
             }
-            homePopupImg.value = imgURL  + data["desktopImgUrl"];
+            homePopupImg.value = imgURL + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
             homePopupId.value = data["id"];
@@ -489,7 +488,6 @@ const checkShowImgTop = () => {
       .catch(() => {});
   }
 };
-
 
 const refCarousel = ref(null);
 
@@ -927,7 +925,6 @@ onMounted(async () => {
   }
 }
 .dark-theme {
-
   .noticeModal {
     .notice-modal.ant-modal {
       .ant-modal-content {
@@ -965,13 +962,13 @@ onMounted(async () => {
 
   .el-dialog__body {
     padding: 20px !important;
-    border-radius:12px;
+    border-radius: 12px;
   }
 
   .alert-img {
     display: block;
     width: 100%;
-    border-radius:12px;
+    border-radius: 12px;
   }
 
   .el-dialog__headerbtn {
@@ -985,10 +982,9 @@ onMounted(async () => {
     line-height: 1.7em;
     display: flex;
     align-items: center;
-    z-index:99;
+    z-index: 99;
     justify-content: center;
   }
-
 }
 
 //.is21Modal {

@@ -12,18 +12,35 @@
           <RiCameraFill />
         </div>
       </button>
-      <a-form ref="formRef" :model="form" class="personal-info-wrapper" hide-required-mark>
-        <a-form-item required name="nickName" label="Nick Name" label-align="left">
-          <a-input v-model:value="form.nickName" placeholder="Please enter your nick name" />
+      <a-form ref="updateFormRef" :model="updateFormDetails" class="personal-info-wrapper" hide-required-mark>
+        <a-form-item required name="nickName" label="Phone number" label-align="left">
+          <a-input :disabled="true" v-model:value="updateFormDetails.nickName" placeholder="Please enter your nick name" />
         </a-form-item>
-        <a-form-item required name="email" label="Email" label-align="left">
-          <a-input v-model:value="form.email" placeholder="Please enter your email" />
+        <a-form-item :rules="[
+                { required: true, message: 'Please enter your email' },
+                { type: 'email', message: 'Email address is not valid' }
+              ]" name="email" label="Email" label-align="left">
+          <a-input v-model:value="updateFormDetails.email" placeholder="Please enter your email" />
         </a-form-item>
-        <a-form-item required name="password" label="Password" label-align="left">
-          <a-input v-model:value="form.password" placeholder="Please enter new password" />
+        <!-- <a-form-item required name="password" label="Password" label-align="left">
+          <a-input v-model:value="updateFormDetails.password" placeholder="Please enter new password" />
+        </a-form-item> -->
+        <a-form-item required name="realName" label="Full Name" label-align="left">
+          <a-input :rules="[
+                        {
+                          validator: validateName,
+                          trigger: 'change'
+                        },
+                        {
+                          required: true,
+                          trigger: 'blur',
+                          message: 'Real name is required'
+                        }
+                       ]" v-model:value="updateFormDetails.realName" placeholder="Please enter your full name" />
         </a-form-item>
-        <a-form-item required name="fullName" label="Full Name" label-align="left">
-          <a-input v-model:value="form.fullName" placeholder="Please enter your full name" />
+        
+        <a-form-item class="txt-center">
+          <button class="txt-center common-btn" type="submit" @click="updateState">SUBMIT</button>
         </a-form-item>
       </a-form>
     </div>
@@ -92,13 +109,6 @@ const { handleUpload } = useHandleUpload(
   { accept: "image/*", multiple: false }
 );
 
-const formRef = ref();
-const form = ref({
-  nickName: nickName.value || "",
-  email: email.value || "",
-  password: "",
-  fullName: realName.value || ""
-});
 
 const isEmailSending = ref(false);
 const verificationDetails = reactive({
@@ -150,6 +160,9 @@ const loadInfo = () => {
         personalState.memberInfo = response.data;
 
         if (personalState.memberInfo.birthday) {
+          personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
+        }
+        if (personalState.memberInfo.realName) {
           personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
         }
       }
@@ -349,7 +362,12 @@ const isEditEmail = ref(false);
 const isEditPhone = ref(false);
 const isEditBirthday = ref(false);
 const isEdit = ref(false);
-const updateFormDetails = reactive({});
+const updateFormDetails = reactive({
+  nickName: nickName.value || "",
+  email: email.value || "",
+  password: "",
+  realName: realName.value || ""
+});
 const updateFormRef = ref();
 const updateState = async () => {
   try {
@@ -361,7 +379,7 @@ const updateState = async () => {
       loadInfo();
       isEdit.value = false;
     } else {
-      console.error("Update failed with code:", ret.code);
+      message.error(ret.message);
     }
   } catch (err) {
     console.error("An error occurred:", err.message);

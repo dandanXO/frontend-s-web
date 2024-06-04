@@ -1157,7 +1157,7 @@ $link-color: #ffffff;
 
         &:hover,
         &.router-link-exact-active {
-          background: linear-gradient(270deg, #152df4 0%, #af0be8 100%);
+          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
           box-shadow: 0px -4px 4px 0px #02009e inset;
           box-shadow: -1px 2px 4px 0px #ffffffcc inset;
           color: #ffffff;

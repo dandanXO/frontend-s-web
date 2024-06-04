@@ -74,25 +74,63 @@
   <q-page class="bind-container">
     <div class="bind-wrapper">
       <q-form class="bind-item">
-        <q-label>
-          电子钱包
+        <InputRowGrid>
+          <template #fields>
+            <InputField :label="`Virtual Wallet`">
+              <template #input>
+                <q-input
+                  outlined
+                  clearable
+                  lazy-rules
+                  ref="cardNumberRef"
+                  placeholder="Please insert virtual wallet"
+                  v-model="bankCardInfo.cardNumber"
+                  hide-bottom-space
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert virtual wallet']"
+                ></q-input>
+              </template>
+            </InputField>
+          </template>
+        </InputRowGrid>
+
+        <InputRowGrid>
+          <template #fields>
+            <InputField :label="`IFSC`">
+              <template #input>
+                <q-input
+                  outlined
+                  clearable
+                  lazy-rules
+                  ref="ifscRef"
+                  placeholder="Please insert IFSC"
+                  v-model="bankCardInfo.ifsc"
+                  hide-bottom-space
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert IFSC']"
+                ></q-input>
+              </template>
+            </InputField>
+          </template>
+        </InputRowGrid>
+
+        <!-- <q-label>
+          Virtual Wallet
           <em>*</em>
         </q-label>
         <q-input
           ref="cardNumberRef"
           type="text"
           standout
+          filled
           v-model="bankCardInfo.cardNumber"
           class="q-pb-xs"
           hide-bottom-space
-          label="请输入电子钱包"
-          lazy-rules
+          label="Please insert virtual wallet"
           clearable
           :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
-        ></q-input>
+        ></q-input> -->
 
         <q-label>
-          电子钱包种类
+          Virtual Wallet Type
           <em>*</em>
         </q-label>
         <div class="type-toggle">
@@ -108,7 +146,7 @@
         </div>
 
         <q-label>
-          协议
+          Protocol
           <em>*</em>
         </q-label>
         <div class="category-toggle">
@@ -126,7 +164,7 @@
         </div>
 
         <!-- since onMount API forced update name & phone, hence no validation needed. -->
-        <q-label>
+        <!-- <q-label>
           手机号
           <em>*</em>
         </q-label>
@@ -136,7 +174,6 @@
           class="q-pb-xs"
           hide-bottom-space
           label="请输入您绑定的手机号"
-          lazy-rules
           clearable
           readonly
         >
@@ -150,9 +187,9 @@
               rounded
             />
           </template>
-        </q-input>
+        </q-input> -->
 
-        <template v-if="isOtpSent">
+        <!-- <template v-if="isOtpSent">
           <q-label>
             验证码
             <em>*</em>
@@ -164,19 +201,26 @@
             class="q-pb-xs"
             hide-bottom-space
             label="请输入您的注册手机验证"
-            lazy-rules
             clearable
             maxlength="6"
             :rules="[(val) => (val && val.length > 3) || '请输入您的注册手机验证']"
             @keydown.enter.prevent="handleEnterKey"
             @keydown.enter="submitBankCard()"
           ></q-input>
-        </template>
+        </template> -->
       </q-form>
 
-      <div class="note">温馨提示：若持卡人姓名不符可联系在线客服更正信息，感谢您的支持与 理解！</div>
+      <div class="note">
+        Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the
+        information. Thank you for your support and understanding!
+      </div>
 
-      <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" />
+      <div class="bottom-btn">
+        <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitBankCard()">Confirm</q-btn>
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
+      </div>
+
+      <!-- <q-btn class="common-large-btn" label="提交" width="100%" style="width: 100%" @click="submitBankCard()" /> -->
     </div>
   </q-page>
 </template>
@@ -188,10 +232,12 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useLocalStorage } from "@vueuse/core";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const selectedTypeToggleName = ref("KDOU");
+const selectedTypeToggleName = ref("JAZZCASH");
 const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
@@ -213,6 +259,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pay
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
+const ifscRef = ref();
 const phoneVerificationRef = ref();
 
 const bankCardInfo = reactive({
@@ -220,9 +267,9 @@ const bankCardInfo = reactive({
   cardNumber: "",
   cardAccount: store.realName,
   cardAddress: "",
-  telephone: store.phone,
-  smsCode: "",
-  smsCodeId: ""
+  telephone: store.phone
+  // smsCode: "",
+  // smsCodeId: ""
 });
 
 const validateBankLength = (val) => {
@@ -362,16 +409,16 @@ const submitBankCard = () => {
     cardNumberRef.value.validate();
   }
 
-  if (!isOtpSent.value) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "请点击获取验证码，并输入您的注册手机验证",
-      icon: "report_problem"
-    });
-  } else if (phoneVerificationRef.value) {
-    phoneVerificationRef.value.validate();
-  }
+  // if (!isOtpSent.value) {
+  //   $q.notify({
+  //     color: "negative",
+  //     position: "top",
+  //     message: "请点击获取验证码，并输入您的注册手机验证",
+  //     icon: "report_problem"
+  //   });
+  // } else if (phoneVerificationRef.value) {
+  //   phoneVerificationRef.value.validate();
+  // }
 
   if (
     !(
@@ -388,10 +435,10 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: "Virtual wallet added successfully",
             icon: "check_circle_outline"
           });
-          router.push("/account/withdraw");
+          router.push("/account/bank");
         }
       })
       .catch((error) => {
@@ -412,6 +459,20 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.common-sm-btn {
+  padding: 6px 12px;
+  display: flex;
+  border: 2px solid #b81212;
+  box-shadow: unset;
+  border-radius: 8px;
+}
+
+.common-sm-white-btn {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
+
 .bind-container {
   font-size: 1rem;
 
@@ -432,6 +493,7 @@ onMounted(() => {
         margin: 8px 0 4px 0;
         display: inline-block;
         font-size: 0.95rem;
+        color: #98a6b4;
 
         em {
           color: $negative;
@@ -446,10 +508,15 @@ onMounted(() => {
         font-size: 1rem;
       }
 
+      .landing-input {
+        margin-bottom: 12px;
+      }
+
       .q-field__control {
-        border-radius: 0.5rem;
-        background: #f7f8fb;
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        // padding-bottom: 12px;
+        // border-radius: 0.5rem;
+        // background: #f7f8fb;
+        // box-shadow: 0px 0px 8px 0px #a9c9ea inset;
       }
 
       .get-otp-btn {
@@ -473,7 +540,7 @@ onMounted(() => {
           align-items: center;
           justify-content: center;
           font-size: 1rem;
-          width: 6.5rem;
+          // width: 6.5rem;
 
           img {
             width: 1.5rem;
@@ -494,5 +561,11 @@ onMounted(() => {
       margin: 1rem 0;
     }
   }
+}
+
+.bottom-btn {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
 }
 </style>
