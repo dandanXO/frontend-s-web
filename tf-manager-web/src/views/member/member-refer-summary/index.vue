@@ -95,6 +95,9 @@
             </router-link>
           </template>
         </el-table-column>
+        <el-table-column prop="ftdDownlineCount" :label="t('fields.ftdDownlineCount')" width="120" />
+        <el-table-column prop="depositDownlineCount" :label="t('fields.depositDownlineCount')" width="120" />
+        <el-table-column prop="regDownlineCount" :label="t('fields.regDownlineCount')" width="120" />
         <el-table-column
           prop="deposit"
           :label="t('fields.depositAmount')"
