@@ -12,7 +12,7 @@ import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { AddressbarColor } from "quasar";
-// import { StatusBar, Style } from "@capacitor/status-bar";
+import { StatusBar, Style } from "@capacitor/status-bar";
 // import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
@@ -201,10 +201,10 @@ export default defineComponent({
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
-        // await StatusBar.hide();
-        // await StatusBar.setOverlaysWebView({ overlay: true });
-        // await StatusBar.setBackgroundColor({ color: "#3E1474" });
-        // await StatusBar.setStyle({ style: Style.Dark });
+        await StatusBar.hide();
+        await StatusBar.setOverlaysWebView({ overlay: true });
+        await StatusBar.setBackgroundColor({ color: "#3E1474" });
+        await StatusBar.setStyle({ style: Style.Dark });
         // setTimeout(() => {
         //   getInsetHeight();
         // }, 250);
@@ -228,9 +228,9 @@ export default defineComponent({
     // };
 
     const handleVisibilityChange = (status) => {
-      // if (Platform.is.capacitor && Platform.is.android) {
-      //   StatusBar.hide();
-      // }
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+      }
     };
 
     const getOnlineStatApi = async () => {
