@@ -188,15 +188,13 @@
             <div class="refreshbtn" @click="refreshBalance"><img src="../../assets/images/common/refresh.png" /></div>
           </div> -->
           <router-link class="common-btn reg-btn" to="/center/top-up">{{ $t("layout.header.deposit") }}</router-link>
-          <UserProfile />
+          <UserProfile @open-dialog="trigger" />
 
           <div class="login-box mobile-menu-hide">
-            <!-- <div class="header-balance">₱ {{ balance.toFixed(2) }}</div> -->
             <div class="viewmail" />
             <div class="dropdown-container setting-hamburger">
               <div class="setting-hamburger">
                 <img src="../../assets/hamburger.svg" />
-                <!-- <RiListSettingsLine style="fill: #83a3ca" /> -->
               </div>
               <div class="abs-menu desktop" :class="triggerMenu ? 'show' : 'hide'">
                 <ul>

@@ -31,7 +31,7 @@
     </div> -->
 
     <div class="node-wrapper">
-      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @click="onSelect" />
+      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
     <div class="lil-title q-mt-sm">Select Amount</div>
@@ -417,6 +417,7 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 async function onSelect(value) {
+  // debugger;
   depositItems.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;
