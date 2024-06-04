@@ -3,7 +3,7 @@
     <div class="platform-breadcrumb">
       <span>Home</span>
       <span>{{ platformType }}</span>
-      <span v-if="currentPlat">{{ currentPlat }}</span>
+      <span v-if="activePlat && ['SLOT', 'FISH'].includes(platformGameType)">{{ activePlat.code }}</span>
     </div>
     <!-- <div class="platform-container" :class="platformType === 'slot' ? 'slot-container' : ''">
       <div class="platform-container-slot" v-if="platformType === 'slot'">
@@ -110,7 +110,7 @@
 
     <div class="margin-center game-container" v-if="platformExpandable">
       <div class="all-game-container">
-        <div class="plat-options-wrapper">
+        <div class="plat-options-wrapper" v-if="platformGameType !== 'POKER'">
           <div class="plat-options-container">
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
@@ -285,11 +285,28 @@ const props = defineProps({
 const filteredPlatforms = ref([]);
 const platformsList = ref([]);
 const platformsListDisplay = ref([]);
-const currentPlat = ref();
 
 const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
+    // TODO: remove after api include JILI poker data
+    const _res = [
+      ...res,
+      {
+        id: 8,
+        name: "JiliGames",
+        code: "JILI",
+        status: "OPEN",
+        walletType: "SEAMLESS",
+        gameType: "POKER",
+        followType: "FOLLOW",
+        underMaintenance: false,
+        maintenanceStartTime: null,
+        maintenanceEndTime: null,
+        alias: null,
+        sequence: 902
+      }
+    ];
     platformsList.value = res;
 
     // console.log(platformsList.value);
@@ -379,7 +396,25 @@ const getPlatGameList = () => {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformList;
     getFn()
       .then((data) => {
-        platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+        // TODO: remove after api include JILI poker data
+        const _data = [
+          ...data,
+          {
+            id: 8,
+            name: "JiliGames",
+            code: "JILI",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "POKER",
+            followType: "FOLLOW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: null,
+            sequence: 902
+          }
+        ];
+        platformsListDisplay.value = _data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
           return { ...matchingItem, ...item1 };
@@ -387,7 +422,6 @@ const getPlatGameList = () => {
 
         // console.log("SLOT")
         // console.log(platformsListDisplay.value);
-
         if (!route.query.plat) {
           switchPlat(platformsListDisplay.value[0]);
         } else {
@@ -440,9 +474,6 @@ const gameCat = ref("allGame");
 onMounted(() => {
   getPlatList();
   getPlatGameList();
-  if (["SLOT", "FISH"].includes(props.platformType)) {
-    currentPlat.value = route.query.plat;
-  }
 });
 
 watch(
@@ -456,9 +487,6 @@ watch(
           loadGameList();
         }
       });
-    }
-    if (["SLOT", "FISH"].includes(props.platformType)) {
-      currentPlat.value = route.query.plat;
     }
   }
 );

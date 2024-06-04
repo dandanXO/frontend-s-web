@@ -5,6 +5,7 @@
     :platformType="platformType"
     :platformName="platformName"
     :platformPattern="platformPattern"
+    :platformExpandable="true"
   />
 </template>
 
