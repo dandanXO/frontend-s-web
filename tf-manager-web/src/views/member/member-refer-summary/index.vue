@@ -9,7 +9,7 @@
           :placeholder="t('fields.loginName')"
         />
         <el-date-picker
-          v-model="request.regTime"
+          v-model="request.recordTime"
           format="DD/MM/YYYY"
           value-format="YYYY-MM-DD"
           size="small"
@@ -73,9 +73,9 @@
         <el-table-column prop="downlineMember" :label="t('fields.downlineMember')" width="180">
           <template
             #default="scope"
-            v-if="hasPermission(['sys:member-refer:list'])"
+            v-if="hasPermission(['sys:member-refer:summary'])"
           >
-            <a v-if="scope.row.downlineMember > 0" :href="$router.resolve(`member-refer?id=${scope.row.id}&site=${request.siteId}&referrer=${scope.row.loginName}`).href">
+            <a v-if="scope.row.downlineMember > 0" :href="$router.resolve(`member-refer-summary?id=${scope.row.memberId}&site=${request.siteId}&referrer=${scope.row.loginName}&recordTime=${joinRecordTime(request.recordTime)}`).href">
               <el-link type="primary">{{ scope.row.downlineMember }}</el-link>
             </a>
             <span v-else>{{ scope.row.downlineMember }}</span>
@@ -90,53 +90,90 @@
             #default="scope"
             v-if="hasPermission(['sys:member:detail'])"
           >
-            <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
+            <router-link :to="`details/${scope.row.memberId}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="vip" :label="t('fields.vipName')" width="100" />
         <el-table-column
-          prop="balance"
-          :label="t('fields.balance')"
+          prop="deposit"
+          :label="t('fields.depositAmount')"
           width="120"
         >
           <template #default="scope">
             $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="regTime"
-          :label="t('fields.registerTime')"
-          width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.regTime === null">-</span>
             <span
-              v-if="scope.row.regTime !== null"
-              v-formatter="{
-                data: scope.row.regTime,
-                timeZone: timeZone,
-                type: 'date',
-              }"
+              v-formatter="{data: scope.row.deposit, type: 'money'}"
             />
           </template>
         </el-table-column>
         <el-table-column
-          prop="lastLoginTime"
-          :label="t('fields.lastLoginTime')"
-          width="150"
+          prop="deposit"
+          :label="t('fields.withdrawAmount')"
+          width="120"
         >
           <template #default="scope">
-            <span v-if="scope.row.lastLoginTime === null">-</span>
+            $
             <span
-              v-if="scope.row.lastLoginTime !== null"
-              v-formatter="{
-                data: scope.row.lastLoginTime,
-                timeZone: timeZone,
-                type: 'date',
-              }"
+              v-formatter="{data: scope.row.withdraw, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="deposit"
+          :label="t('fields.betAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.bet, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="deposit"
+          :label="t('fields.winloss')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.payout - scope.row.bet, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="deposit"
+          :label="t('fields.payoutAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.payout, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="balance"
+          :label="t('fields.rebateAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="deposit"
+          :label="t('fields.bonusAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.bonus, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -156,7 +193,7 @@
 <script setup>
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
-  getMemberReferParent
+  getMemberReferSummary
 } from '../../../api/member-refer-event'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
@@ -177,7 +214,14 @@ const siteList = reactive({
   list: [],
 })
 const shortcuts = getShortcuts(t)
-let timeZone = null
+const startDate = new Date()
+startDate.setTime(
+  moment(startDate)
+    .startOf('month')
+    .format('x')
+)
+const defaultStartDate = convertDate(startDate)
+const defaultEndDate = convertDate(new Date())
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -197,16 +241,19 @@ const request = reactive({
   current: 1,
   loginName: null,
   siteId: null,
-  memberRemark: null,
-  regTime: null,
+  recordTime: [defaultStartDate, defaultEndDate],
   referrerId: null,
 })
+
+function convertDate(date) {
+  return moment(date).format('YYYY-MM-DD')
+}
 
 function resetQuery() {
   request.loginName = null
   request.memberRemark = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
-  request.regTime = null
+  request.recordTime = [defaultStartDate, defaultEndDate]
   request.referrerId = null
   uiControl.referrer = null
 }
@@ -219,19 +266,17 @@ function checkQuery() {
       query[key] = value
     }
   })
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime = JSON.parse(JSON.stringify(request.regTime))
-      query.regTime[0] = moment(query.regTime[0]).format(
-        'YYYY-MM-DD 00:00:00'
-      )
-      query.regTime[1] = moment(query.regTime[1]).format(
-        'YYYY-MM-DD 23:59:59'
-      )
-      query.regTime = query.regTime.join(',')
+  if (request.recordTime !== null) {
+    if (request.recordTime.length === 2) {
+      query.recordTime = joinRecordTime(request.recordTime)
     }
   }
   return query
+}
+
+function joinRecordTime(recordTime) {
+  const string = JSON.parse(JSON.stringify(request.recordTime))
+  return string.join(',')
 }
 
 async function loadMembers() {
@@ -239,11 +284,10 @@ async function loadMembers() {
   page.loading = true
   uiControl.searchDialogVisible = false
   const query = checkQuery()
-  const result = await getMemberReferParent(query)
+  const result = await getMemberReferSummary(query)
 
   page.pages = result.data.pages
   page.records = result.data.records
-  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone
   page.loading = false
 }
 
@@ -265,6 +309,7 @@ onMounted(async () => {
     request.siteId = Number(router.currentRoute.value.query.site)
     request.referrerId = router.currentRoute.value.query.id
     uiControl.referrer = router.currentRoute.value.query.referrer
+    request.recordTime = router.currentRoute.value.query.recordTime.split(',')
   } else {
     request.siteId = siteList.list[0].id
     if (LOGIN_USER_TYPE.value === TENANT.value) {

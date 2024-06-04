@@ -2225,6 +2225,7 @@ export default {
     'Member Edit Log': 'Member Edit Log',
     'Member Feedback': 'Member Feedback',
     'Member Refer': 'Member Refer',
+    'Member Refer Summary': 'Member Refer Summary',
     'Member Freeze Record': 'Member Freeze Record',
     'Member Amount Adjust': 'Member Amount Adjust',
     'Member Privilege Blacklist': 'Member Privilege Blacklist',
