@@ -125,11 +125,11 @@ const routes = [
       //   name: "vip",
       //   component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
       // },
-      {
-        path: "affiliate",
-        name: "affiliate",
-        component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
-      },
+      // {
+      //   path: "affiliate",
+      //   name: "affiliate",
+      //   component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
+      // },
       {
         path: "getapp",
         name: "getapp",
