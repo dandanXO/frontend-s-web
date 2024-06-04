@@ -2191,6 +2191,7 @@ export default {
     'Member Edit Log': '会员编辑日志',
     'Member Feedback': '会员反馈',
     'Member Refer': '邀请列表',
+    'Member Refer Summary': '会员邀请统计',
     'Member Bank Card History': '会员绑卡记录',
     'Member Freeze Record': '会员账号冻结记录',
     'Member Amount Adjust': '会员平账记录',
