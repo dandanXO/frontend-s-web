@@ -103,47 +103,37 @@
       <div class="center-content">
         <SectionWrapper title="🔥HOT" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
-            <img
-              v-for="index in 6"
-              :key="`hot-${index}`"
-              :src="require(`@/assets/images/home/home-hot-${index}.png`)"
-            />
+            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platform, game.code)">
+              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'hot')" />
+            </a>
           </div>
         </SectionWrapper>
         <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
-          <div class="section-wrapper-content">
-            <img
-              v-for="index in 3"
-              :key="`hot-${index}`"
-              :src="require(`@/assets/images/home/home-casino-${index}.png`)"
-            />
+          <div class="section-wrapper-content wide">
+            <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game, game.code, game.name)">
+              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
+            </a>
           </div>
         </SectionWrapper>
         <SectionWrapper title="SLOT" to="/slot" class="section-wrapper">
           <div class="section-wrapper-content">
-            <img
-              v-for="index in 5"
-              :key="`hot-${index}`"
-              :src="require(`@/assets/images/home/home-slot-${index}.png`)"
-            />
+            <router-link v-for="(game, index) in slotGames" :key="index" :to="`/slot?plat=${game.code}`">
+              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'slot')" />
+            </router-link>
           </div>
         </SectionWrapper>
         <SectionWrapper title="Fish" to="/aviator" class="section-wrapper">
           <div class="section-wrapper-content">
-            <img
-              v-for="index in 6"
-              :key="`hot-${index}`"
-              :src="require(`@/assets/images/home/home-fish-${index}.png`)"
-            />
+            <a v-for="(game, index) in fishingGames" :key="index" @click="openGame(game, game.platformName, game.code)">
+              <img :src="`${imgGamesURL}${game.icon}`" />
+            </a>
           </div>
         </SectionWrapper>
         <SectionWrapper title="Sport" to="/sport" class="section-wrapper">
-          <div class="section-wrapper-content">
-            <img
-              v-for="index in 3"
-              :key="`hot-${index}`"
-              :src="require(`@/assets/images/home/home-sport-${index}.png`)"
-            />
+          <div class="section-wrapper-content wide">
+            <a v-for="(game, index) in sportGames" :key="index" @click="openGame(game, game.code, game.name)">
+              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'sport')" />
+            </a>
           </div>
         </SectionWrapper>
         <!-- <div class="station-notice-wrapper container">
@@ -328,6 +318,7 @@ import { userStore } from "@/store";
 import AdsPopupList from "@/components/hotpromo/adsPopupList.vue";
 import BannerCarousel from "@/components/home/BannerCarousel.vue";
 import SectionWrapper from "@/components/home/SectionWrapper.vue";
+import { getDevice } from "@/utils/utils";
 const store = userStore();
 const winners = [
   {
@@ -367,7 +358,7 @@ const PLATFORM_CODE = {
 
 // Legacy
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
-const imgGamesURL = process.env.VUE_APP_IMAGE_CDN + "/games/";
+const imgGamesURL = process.env.VUE_APP_IMAGE_CDN + "/game/";
 const banners = ref([]);
 const route = useRoute();
 const router = useRouter();
@@ -391,6 +382,7 @@ const homeState = reactive({
 const platformTabs = NavPlatforms.sort((a, b) => a.tabOrder - b.tabOrder);
 
 const platforms = ref([]);
+const lives = ref([]);
 
 const platform = ref(NavPlatforms[0]);
 const showPlatform = (newPlatform) => {
@@ -442,6 +434,11 @@ const homePopupFrequencyNum = ref(0);
 const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
+
+const slotGames = ref([]);
+const liveGames = ref([]);
+const fishingGames = ref([]);
+const sportGames = ref([]);
 
 const checkShowImgTop = () => {
   const lastTime = localStorage.getItem("indexImgTop");
@@ -542,8 +539,9 @@ const platformSection = computed(() => {
   return _platform;
 });
 
-const openGame = (game, platName, platStatus) => {
-  slotsGame.value.open(game.name, platName, game.code, platStatus);
+const openGame = (game, platformCode, gameCode) => {
+  const platName = game.alias ?? game.cnname ?? game.name;
+  slotsGame.value.open(platName, platformCode, gameCode);
   // if (game.gameType && (game.gameType === "SLOT" || game.gameType === "FISH" || game.gameType === "BINGO")) {
   //   slotsGame.value.open(game.name, platName, game.code, platStatus);
   // } else {
@@ -611,7 +609,7 @@ const hotTrendingGames = [
 const hotGames = ref([]);
 const getHotGames = () => {
   hotGame("HOT").then((res) => {
-    hotGames.value = res.slice(0, 10);
+    hotGames.value = res;
   });
 };
 const topWinners = ref([]);
@@ -717,11 +715,34 @@ const getPlatList = () => {
       data.forEach((d) => (d.gameType = d.gameType.split(",")));
 
       platforms.value = data.filter((element) => element.gameType.some((type) => ["SLOT", "FISH"].includes(type)));
+      const _platform = [];
+      const _slotGames = [];
+      const _liveGames = [];
+      const _sportGames = [];
+      data.forEach((platform) => {
+        if (platform.gameType.some((type) => ["SLOT", "FISH"].includes(type))) _platform.push(platform);
+        if (platform.gameType.includes("SLOT")) _slotGames.push(platform);
+        if (platform.gameType.includes("LIVE")) _liveGames.push(platform);
+        if (platform.gameType.includes("SPORT")) _sportGames.push(platform);
+      });
+      platforms.value = _platform.sort((a, b) => a.sequence - b.sequence);
+      liveGames.value = _liveGames.sort((a, b) => a.sequence - b.sequence);
+      slotGames.value = _slotGames.sort((a, b) => a.sequence - b.sequence);
+      sportGames.value = _sportGames.sort((a, b) => a.sequence - b.sequence);
+      platforms.value.sort((a, b) => a.sequence - b.sequence);
+
       if (platforms.value.length > 0) loadGameList(0);
     })
     .catch((err) => {
       console.log(err.message);
     });
+};
+const getFishingGameList = async () => {
+  const jiliGameList = await getPlatformGames(8, "FISH");
+  jiliGameList.forEach((game) => (game.platformName = "JILI"));
+  const jdbGameList = await getPlatformGames(31, "FISH");
+  jdbGameList.forEach((game) => (game.platformName = "JDB"));
+  fishingGames.value = jiliGameList.concat(jdbGameList);
 };
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
@@ -802,6 +823,14 @@ const redirectToPromo = () => {
   router.push("/center/top-up?isFromWelcomePromo=true");
 };
 
+const loadGameIcon = (path, type) => {
+  try {
+    return require(`@/assets/images/platform/${type}/${path}`);
+  } catch (e) {
+    return require("@/assets/images/platform/slot/default.png");
+  }
+};
+
 onMounted(async () => {
   loadAnnouncement();
   getPlatList();
@@ -809,6 +838,7 @@ onMounted(async () => {
   // getTopWinners();
   loadBanners();
   checkShowImgTop();
+  getFishingGameList();
 
   const hotMatchData = [];
 
@@ -2345,12 +2375,24 @@ $link-color: #db7e42;
   }
 
   .section-wrapper {
-    margin-bottom: 37px;
+    margin-bottom: 20px;
 
     .section-wrapper-content {
       display: flex;
       align-items: center;
       gap: 16px;
+      overflow: auto;
+      padding-bottom: 16px;
+
+      img {
+        max-width: 230px;
+      }
+
+      &.wide {
+        img {
+          max-width: 520px;
+        }
+      }
     }
   }
 }
