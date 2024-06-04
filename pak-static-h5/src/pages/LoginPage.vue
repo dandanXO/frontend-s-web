@@ -7,7 +7,7 @@
     </div> -->
 
     <div class="login-form-logo-img">
-      <img src="../assets/images/auth/login-img.png" />
+      <img src="../assets/images/auth/login-logo.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -128,6 +128,11 @@
     <div class="bottom-btn">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn>
     </div>
+
+    <div class="bottom-img">
+      <img src="../assets/images/auth/login-img2.png" />
+    </div>
+
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -630,12 +635,21 @@ export default defineComponent({
   img {
     display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
+    margin-bottom: 10px;
   }
 }
 
 .login-form-wrapper {
   padding: 0 20px 20px;
+
+  :deep(.q-field__control){
+    height:45px;
+
+    .q-field__marginal{
+      height:45px;
+    }
+  }
 }
 
 .forgot-password {
@@ -677,6 +691,11 @@ export default defineComponent({
 
 .bottom-btn {
   // margin-top: 20px;
-  padding: 20px;
+  padding: 3px 20px 8px;
+}
+
+.bottom-img{
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

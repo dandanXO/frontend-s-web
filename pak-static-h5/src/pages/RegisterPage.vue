@@ -7,7 +7,7 @@
     </div> -->
 
     <div class="register-form-logo-img">
-      <img src="../assets/images/auth/login-img.png" />
+      <img src="../assets/images/auth/login-logo.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -202,6 +202,10 @@
       >
         Confirm
       </q-btn>
+    </div>
+
+    <div class="bottom-img">
+      <img src="../assets/images/auth/login-img2.png" />
     </div>
   </div>
 </template>
@@ -767,12 +771,21 @@ function charType(num) {
   img {
     display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
+    margin-bottom: 10px;
   }
 }
 
 .register-form-wrapper {
   padding: 0 20px 20px;
+
+  :deep(.q-field__control){
+    height:45px;
+
+    .q-field__marginal{
+      height:45px;
+    }
+  }
 }
 
 .page-header {
@@ -884,6 +897,12 @@ function charType(num) {
 
 .bottom-btn {
   // margin-top: auto;
-  padding: 20px;
+  padding: 3px 20px 8px;
+}
+
+
+.bottom-img{
+  text-align: center;
+  margin-top: 10px;
 }
 </style>
