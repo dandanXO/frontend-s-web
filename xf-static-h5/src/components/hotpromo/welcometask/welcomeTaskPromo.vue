@@ -318,7 +318,9 @@ const welcomeState = reactive({
   stateDetails: {}
 });
 const checkInRewardState = reactive({
-  stateDetails: {}
+  stateDetails: {
+    checkInDays: 0
+  }
 });
 onMounted(() => {
   pageInit();
