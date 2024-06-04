@@ -37,6 +37,6 @@ export const cancelNbaMatchRecord = (id) => {
   return https().request(`/nba-match/record/cancel/${id}?_method=PUT`, Method.POST);
 };
 
-export const settleAllNbaMatchRecord = () => {
-  return https().request('/nba-match/record/settle/all?_method=PUT', Method.POST);
+export const settleAllNbaMatchRecord = (siteId) => {
+  return https().request('/nba-match/record/settle/all?_method=PUT', Method.POST, { siteId: siteId }, ContentType.form);
 };
