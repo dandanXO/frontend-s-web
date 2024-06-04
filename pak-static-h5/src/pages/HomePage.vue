@@ -20,11 +20,11 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)"
+      :img-src="imgURLPromo + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
-    <!-- :img-src="imgURLPromo + banner.mobileImageUrl" -->
+    <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
 
     <template v-slot:navigation-icon="{ active, onClick }">
       <q-btn
@@ -911,7 +911,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
@@ -925,7 +925,7 @@
         </div>
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog
     v-model="fullGameDialog"
@@ -1111,6 +1111,22 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog> -->
+
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
+    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+      <q-card-section>
+        <div class="close-alert" @click="setExpiryBanner()">
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
+          <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
+          <div class="promo-banner-img" v-else>
+            <img :src="homePopupImg" class="alert-img" />
+          </div>
+        </router-link>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1566,48 +1582,48 @@ const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
-const isImportantAnnoucementModal = ref(false);
-const homePopupImg = ref("");
-const homePopupContent = ref("");
-const homePopupType = ref("");
-const homePopupId = ref(0);
-const homePopupFrequency = ref(0);
-const homePopupFrequencyNum = ref(0);
+// const isImportantAnnoucementModal = ref(false);
+// const homePopupImg = ref("");
+// const homePopupContent = ref("");
+// const homePopupType = ref("");
+// const homePopupId = ref(0);
+// const homePopupFrequency = ref(0);
+// const homePopupFrequencyNum = ref(0);
 
-const setExpiryBanner = () => {
-  if (homePopupFrequencyNum.value !== 0) {
-    setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-  }
-  isImportantAnnoucementModal.value = false;
-};
+// const setExpiryBanner = () => {
+//   if (homePopupFrequencyNum.value !== 0) {
+//     setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+//   }
+//   isImportantAnnoucementModal.value = false;
+// };
 
-const setWithExpiry = (key, value, interval) => {
-  // Create a new date object in GMT+5.5
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+// const setWithExpiry = (key, value, interval) => {
+//   // Create a new date object in GMT+5.5
+//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
-  const item = {
-    value: value,
-    expiry: now.getTime() + interval,
-    id: homePopupId.value,
-    frequency: homePopupFrequency.value
-  };
-  sessionStorage.setItem(key, JSON.stringify(item));
-};
+//   const item = {
+//     value: value,
+//     expiry: now.getTime() + interval,
+//     id: homePopupId.value,
+//     frequency: homePopupFrequency.value
+//   };
+//   sessionStorage.setItem(key, JSON.stringify(item));
+// };
 
 function loadData() {
   api
     .get("/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        // banners.value = res.data;
-        banners.value = [
-          {
-            promoPageId: null,
-            mobileImageUrl: "home-banner-01.jpg",
-            redirectUrl: "",
-            category: "HOME"
-          }
-        ];
+        banners.value = res.data;
+        // banners.value = [
+        //   {
+        //     promoPageId: null,
+        //     mobileImageUrl: "home-banner-01.jpg",
+        //     redirectUrl: "",
+        //     category: "HOME"
+        //   }
+        // ];
       } else {
       }
     })
@@ -1907,9 +1923,112 @@ const loadCustomerAddress = () => {
     });
 };
 
+// Pop out ads banner
+const isImportantAnnoucementModal = ref(false);
+const homePopupImg = ref("");
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupLink = ref("");
+const homePopupLinkOut = ref(false);
+
+const setExpiryBanner = () => {
+  isImportantAnnoucementModal.value = false;
+};
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+};
+
+const getWithExpiry = (key) => {
+  const itemStr = localStorage.getItem(key);
+  if (!itemStr) {
+    return null;
+  }
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  api
+    .get("/member/ads-popout")
+    .then((res) => {
+      // debugger;
+      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
+        localStorage.removeItem(key);
+        // isImportantAnnoucementModal.value = true;
+        return null;
+      }
+    })
+    .catch(() => {});
+  return item.value;
+};
+
+const isImpt = getWithExpiry("isImpt");
+
+const checkShowImgTop = () => {
+  const lastTime = sessionStorage.getItem("indexImgTop");
+  if (lastTime) {
+    const diff = new Date().getTime() - Number(lastTime);
+    if (diff > 1000 * 60 * 60 * 12) {
+      isFirstView.value = true;
+    }
+  } else {
+    api
+      .get("/member/ads-popout")
+      .then((res) => {
+        if (res.code === 0) {
+          if (isImpt === null) {
+            switch (res.data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
+            }
+            isImportantAnnoucementModal.value = true;
+            homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
+            homePopupContent.value = res.data["content"];
+            homePopupType.value = res.data["type"];
+            homePopupId.value = res.data["id"];
+            homePopupFrequency.value = res.data["frequency"];
+
+            if (res.data["path"].includes("http")) {
+              homePopupLink.value = res.data["path"];
+              homePopupLinkOut.value = true;
+            } else {
+              homePopupLink.value = `/promo?name=${res.data["path"]}`;
+            }
+
+            if (homePopupFrequencyNum.value !== 0) {
+              setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+            }
+
+            isFirstView.value = true;
+          }
+        }
+      })
+      .catch(() => {});
+  }
+};
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
+  checkShowImgTop();
 });
 
 onMounted(() => {
@@ -2395,9 +2514,10 @@ watch(
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 10px;
   overflow-y: auto;
+  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
 
   .q-tab__label {
     font-size: 18px;
@@ -2957,6 +3077,7 @@ watch(
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #1e1f24;
+  max-width: 500px !important;
 }
 
 .fullgame-wrapper {
@@ -3236,7 +3357,7 @@ watch(
   display: flex;
   justify-content: center;
   margin: auto;
-  border: 2px solid #8b36f8;
+  border: 2px solid #5eb673;
   padding: 12px 16px;
   width: 160px;
   border-radius: 8px;
@@ -3272,6 +3393,33 @@ watch(
 
   .q-item__label {
     color: #fff;
+  }
+}
+
+.alert-img {
+  // background-color: salmon;
+  // width: 70% !important;
+  // margin: auto;
+}
+
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 28px;
+  padding: 2px;
+  height: 28px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  color: #222a34 !important;
+  // background: transparent;
+}
+
+.modal-home-popup {
+  .q-card {
+    background: transparent;
   }
 }
 </style>

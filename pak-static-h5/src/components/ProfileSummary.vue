@@ -72,7 +72,7 @@
 
       <div class="side-menu-divider"></div>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
         Live Support
       </div>
@@ -82,15 +82,21 @@
         Feedback
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent">
-        <div class="item-icon"><img src="../assets/images/auth/menu-telegram.png" /></div>
+      <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
+        <div class="item-icon">
+          <img src="../assets/images/auth/menu-telegram.png" />
+        </div>
         Telegram
-      </div>
+      </a>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <a
+        class="side-menu-item side-menu-item__transparent"
+        href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+        target="_blank"
+      >
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
-      </div>
+      </a>
     </div>
   </div>
 
@@ -237,6 +243,8 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
 
 import { defineEmits } from "vue";
 
@@ -245,6 +253,27 @@ const emits = defineEmits(["closeslot", "activateSlide"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const ui = useUI();
+
+const loadCustomerAddress = () => {
+  cached
+    .get("customerAddress", () =>
+      api.get("/config/customerAddress/v2").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      console.log(data);
+      var url = data.liveUrl1;
+      ui.CSAUrl = url;
+    });
+};
+
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+  menuOpen.value = false;
+};
 
 const activateSlide = (item) => {
   router
@@ -387,6 +416,7 @@ onMounted(() => {
 
   getTopDownloadUrl();
   checkTopDownloadAppear();
+  loadCustomerAddress();
 });
 </script>
 
@@ -509,6 +539,7 @@ onMounted(() => {
       color: #9f9f9f;
       font-weight: bold;
       line-height: 1.2;
+      text-decoration: none;
 
       &__transparent {
         background-color: transparent;
