@@ -171,7 +171,7 @@ import { userStore } from "stores/index";
 import qs from "qs";
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -299,6 +299,13 @@ export default defineComponent({
       getAffiliateCode();
     });
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -380,11 +387,7 @@ export default defineComponent({
                 });
 
                 //ADJUST TRACKEVENT.
-                // debugger;
-                if (ui.adjust_register_event && isAndroid()) {
-                  var adjustEvent = new AdjustEvent(ui.adjust_register_event);
-                  Adjust.trackEvent(adjustEvent);
-                }
+                trackRegisterSuccessEvent();
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");

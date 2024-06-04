@@ -1,6 +1,6 @@
 {
   "name": "ind-project",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "55Ace App",
   "productName": "55Ace",
   "author": "KengHong <kenghongho@eagrp.net>",
@@ -19,7 +19,6 @@
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
     "@adjustcom/adjust-web-sdk": "^5.6.0",
-    "@awesome-cordova-plugins/adjust": "^6.7.0",
     "@angular/core": "^17.0.6",
     "@capacitor/android": "^5.0.0",
     "@capacitor/app": "^5.0.0",

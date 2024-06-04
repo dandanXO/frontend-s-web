@@ -440,7 +440,7 @@ export default defineComponent({
                 // alert(affQuickRegEvent.value);
                 Adjust.trackEvent(adjustEvent);
               } else {
-                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
                 // AdjustWeb.trackEvent({
                 //   eventToken: "vm6pjs"
                 // });
