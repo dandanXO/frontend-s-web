@@ -155,6 +155,7 @@
 
 <script setup lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import { useRouter } from "vue-router";
 import { loadBankCards, confirmWithdraw, withdrawEntrance
  } from "@/api/personal/personal";
 import { message } from "ant-design-vue";
@@ -163,6 +164,7 @@ import { convertToCommaAmount } from "@/utils/utils";
 
 
     const store = userStore();
+    const router = useRouter();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/'
     const formRef = ref();
     const activeItem = ref(0);
@@ -175,12 +177,12 @@ import { convertToCommaAmount } from "@/utils/utils";
       amount: "",
     });
     const withdrawalMethods = ref([])
-    const withdrawMethod= ref("EASYPAISA");
+    const withdrawMethod= ref("BANK");
     const isVirtual= computed(() => {
-      return (withdrawMethod.value === 'EASYPAISA') ? false : true;
+      return (withdrawMethod.value === 'BANK') ? false : true;
     })
     onMounted(() => {
-      getWithdrawalMethods()
+      getWithdrawalMethods();
     });
     const submitWithraw = () => {
       formRef.value
@@ -280,28 +282,22 @@ import { convertToCommaAmount } from "@/utils/utils";
         }
       })
     }
-    const checkNewUser = () => {
-      if (store.realName == "" || store.realName == null) {
-        ElMessage.error("Please fill in your personal details.")
-        router.push(`/center/top-up`);
-      }
-    };
 </script>
 
 <style scoped lang="scss">
-.dark-theme {
-  .account-container .account-content-wrapper .withdraw-type-item {
-    &.active {
-      background: #ffffff0d;
-      border: 1px solid #48a7ff;
-      filter: none;
-      color: #ffffff;
-      .type-name {
-        color: #ffffff;
-      }
-    }
-  }
-}
+// .dark-theme {
+//   .account-container .account-content-wrapper .withdraw-type-item {
+//     &.active {
+//       background: #ffffff0d;
+//       border: 1px solid #48a7ff;
+//       filter: none;
+//       color: #ffffff;
+//       .type-name {
+//         color: #ffffff;
+//       }
+//     }
+//   }
+// }
 .balance-withdrawal-container {
   background: #FFFFFF0D;
   display: flex;
@@ -446,31 +442,52 @@ import { convertToCommaAmount } from "@/utils/utils";
       }
     }
     .withdraw-type-item {
-      width: 100px;
+      background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+      background-size: cover;
+      filter: grayscale(1);
+      height: 30px;
+      width: 160px;
+      height: 80px;
+      color: #ffffff;
+      border-radius: 6px;
+      justify-content: flex-start;
+      align-items: flex-end;
       margin-right: 10px;
-      padding: 15px;
-      border-radius: 12px;
-
-      position: relative;
-      cursor: pointer;
-      img {
-        width: 100%;
-        border-radius: 12px;
-      }
+        img {
+          width: 40px;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+        }
       &.active {
-        background: rgba(7, 91, 232, 0.1019607843);
-        box-shadow: none;
-        filter: drop-shadow(0px 0px 3px #ffffff);
-        pointer-events: none;
+          // background: rgba(255,255,255,.3);
+          background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+          background-size: cover;
+          // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+          //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+          border: 1px solid #B81212;
+          filter: none;
+          color: #ffffff;
+          position: relative;
+          &:after {
+            content: "";
+            background: url(../../assets/images/finance/bankcard-green-check.png)no-repeat bottom right;
+            background-size: contain;
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            right:-1px;
+            bottom: -1px;
+          }
         .type-name {
-          color: #075be8;
+          color: #ffffff;
           font-family: Inter Bold;
         }
       }
       .type-name {
-        line-height: 15px;
-        margin: 10px 0 0;
-        overflow-wrap: break-word;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
       }
       .promo {
         position: absolute;
