@@ -6,6 +6,7 @@ export default {
     login_captcha: "Captcha",
     login_submit: "Login",
     login_register: "Register",
+    login_success_msg: "Login successfully",
     // login end
     // register start
     reg_referrer: "Referrer",
