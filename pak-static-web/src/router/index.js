@@ -108,7 +108,7 @@ const routes = [
       {
         path: "sport",
         name: "sport",
-        component: () => import(/* webpackChunkName: "sport" */ "../views/games/CMDView.vue")
+        component: () => import(/* webpackChunkName: "sport" */ "../views/games/SportView.vue")
       },
       {
         path: "cockfight",

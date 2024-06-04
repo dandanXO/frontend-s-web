@@ -85,7 +85,7 @@ const handlePaginationClick = (index) => {
     width: 100%;
 
     .pagination-swiper-slide {
-      width: 33%;
+      width: 30%;
       .promo-bg {
         background-size: contain;
         background-repeat: no-repeat;

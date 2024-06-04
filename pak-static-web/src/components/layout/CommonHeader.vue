@@ -1094,7 +1094,7 @@ $link-color: #ffffff;
           &:before {
             // background-position: 0 90%;
             background: url(../../assets/images/common/submenu/menu-icons/promotion-icon.png) no-repeat center center;
-            background-size: contain;
+            // background-size: contain;
           }
         }
 
