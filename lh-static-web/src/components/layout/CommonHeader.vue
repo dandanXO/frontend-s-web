@@ -35,6 +35,14 @@
               </div>
             </template>
           </template>
+          <div
+            class="header-menu-item"
+          @click="getPlatformListAndGoImSport">
+             <img
+              class="eroup-menu-icon"
+              :src="require(`../../assets/images/home/header-eroup.png`)"
+            />
+          </div>
         </div>
 
         <div class="navigations second-nav">
@@ -169,7 +177,7 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产:</span>
+                <span class="assets-text">总资产：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">加载中...</span>
                   <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
@@ -465,6 +473,7 @@ import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from '@/api/personal/common'
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -1121,12 +1130,21 @@ export default defineComponent({
 
     const modalGame = ref(null);
     const openGame = (gameName, code, gameCode) => {
+      console.log(gameName, code, gameCode,'dan')
       modalGame.value.open(gameName, code, gameCode);
     };
 
+    const getPlatformListAndGoImSport = () => {
+      const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+
+      fetchFunction().then((res) => {
+        const imSport = res.filter(item=> item.code==='IM')
+        openGame(imSport[0].name,imSport[0].code,imSport[0].gameType)
+        
+      });
+    };
 
     onMounted(() => {
-
       if (regCountdown.value > 0)
         countdownTimer("REGISTER");
       getAffiliateCode();
@@ -1424,6 +1442,7 @@ export default defineComponent({
         "bonjour",
         "안녕하세요"
       ],
+      getPlatformListAndGoImSport,
       loginForm,
       loginDialogVisible,
       forgetPassDialogVisible,
@@ -1803,7 +1822,6 @@ body {
           display: block;
         }
       }
-
       .navigations {
         display: flex;
         justify-content: center;
@@ -1819,7 +1837,10 @@ body {
           margin-right: auto;
           gap: 24px;
         }
-
+        .eroup-menu-icon{
+            width: 50px;
+            height: 50px;
+          }
         a {
           // padding-top: 10px;
           display: flex;
@@ -1840,7 +1861,6 @@ body {
               font-weight: bold;
             }
           }
-
           .menu-icon {
             width: 50px;
           }
