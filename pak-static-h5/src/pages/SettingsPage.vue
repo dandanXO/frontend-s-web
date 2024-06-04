@@ -116,6 +116,7 @@
               :name="i"
               class="column no-wrap flex-center"
               :img-src="imgURL + banner.mobileImageUrl"
+              @click="router.push('/earn-money')"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
@@ -162,7 +163,7 @@ const slide = ref(0);
 const imgURL = "";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-3.png")
+    mobileImageUrl: require("../assets/images/account/account-banner-4.png")
   }
 ]);
 

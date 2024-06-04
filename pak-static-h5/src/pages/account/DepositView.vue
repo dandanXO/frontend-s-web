@@ -31,7 +31,7 @@
     </div> -->
 
     <div class="node-wrapper">
-      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @click="onSelect" />
     </div>
 
     <div class="lil-title q-mt-sm">Select Amount</div>

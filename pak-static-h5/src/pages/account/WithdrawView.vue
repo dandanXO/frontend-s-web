@@ -22,7 +22,7 @@
 
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Bank Account</div>
+        <div class="title">Choose Virtual Account</div>
       </div>
 
       <div class="mid-wrapper">
@@ -38,8 +38,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please Select A Bank Card']"
-              lazy-rules
+              :rules="[(val) => !!val || 'Please Select A Virtual Account']"
               hide-bottom-space
             >
               <template v-slot:option="scope">
@@ -238,6 +237,8 @@
       </div>
       -->
 
+      <!-- <pre>withdrawalMethods[withdrawalDialogTab]{{ withdrawalMethods[withdrawalDialogTab] }}</pre> -->
+
       <div class="bot-wrapper">
         <div class="info">
           <div class="desc-wrapper">
@@ -249,7 +250,7 @@
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}</div>
+          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">

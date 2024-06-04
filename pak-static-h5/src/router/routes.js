@@ -216,7 +216,14 @@ const routes = [
   {
     path: "/account/bank",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    // children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    children: [{ path: "", component: () => import("pages/account/WithdrawBankView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/withdraw/ewallet",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/BindEWalletView.vue") }],
     meta: { requiresAuth: true }
   },
   {
