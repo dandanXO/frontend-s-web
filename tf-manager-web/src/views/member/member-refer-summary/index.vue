@@ -108,7 +108,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="deposit"
+          prop="withdraw"
           :label="t('fields.withdrawAmount')"
           width="120"
         >
@@ -120,7 +120,7 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="deposit"
+          prop="bet"
           :label="t('fields.betAmount')"
           width="120"
         >
@@ -128,6 +128,18 @@
             $
             <span
               v-formatter="{data: scope.row.bet, type: 'money'}"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="payout"
+          :label="t('fields.payoutAmount')"
+          width="120"
+        >
+          <template #default="scope">
+            $
+            <span
+              v-formatter="{data: scope.row.payout, type: 'money'}"
             />
           </template>
         </el-table-column>
@@ -140,18 +152,6 @@
             $
             <span
               v-formatter="{data: scope.row.payout - scope.row.bet, type: 'money'}"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="deposit"
-          :label="t('fields.payoutAmount')"
-          width="120"
-        >
-          <template #default="scope">
-            $
-            <span
-              v-formatter="{data: scope.row.payout, type: 'money'}"
             />
           </template>
         </el-table-column>
