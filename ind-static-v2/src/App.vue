@@ -11,7 +11,7 @@ import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
-import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+// import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 // import { StatusBar, Style } from "@capacitor/status-bar";
 // import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
@@ -70,22 +70,32 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
 
+        //TESTING ONLY.
+        // Adjust.getSdkVersion(function(version){
+        //   alert(version);
+        //   alert(AdjustConfig.EnvironmentProduction);
+        //   alert(AdjustConfig.LogLevelVerbose);
+        //
+        //   var adjEve = new AdjustEvent("123456");
+        //   alert(adjEve);
+        // })
+
         Adjust.create(adjustConfig);
         setTimeout(() => {
-
-          Adjust.getGoogleAdId().then((googleid) => {
+          Adjust.getGoogleAdId(function(googleid)  {
             console.log("Google AdID");
             console.log(googleid);
             if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
               (async () => {
-                Adjust.getAdid().then((adid) => {
+                Adjust.getAdid(function(adid) {
                   console.log("Attribution 2");
                   console.log(adid);
                   store.aaid = adid;
@@ -97,7 +107,7 @@ export default defineComponent({
               trackAppStartEvent();
             }
           });
-        }, 500);
+        }, 100);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
