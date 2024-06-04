@@ -46,9 +46,9 @@ export default route(function (/* { store, ssrContext } */) {
       ui.showFooter();
     }
 
-    // if (Platform.is.capacitor && Platform.is.android) {
-    //   StatusBar.hide();
-    // }
+    if (Platform.is.capacitor && Platform.is.android) {
+      StatusBar.hide();
+    }
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
