@@ -97,10 +97,9 @@
                   eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual'
                 }"
                 :style="{
-                  backgroundImage:
-                    selectedPromo?.mobileImgBackgroundUrl
-                      ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
-                      : 'none'
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -835,7 +834,7 @@ export default defineComponent({
             text-align: center;
             background-color: #ffffff;
             border: 1px solid #d0d1d3;
-            white-space: pre-wrap;
+            white-space: normal;
           }
         }
 
