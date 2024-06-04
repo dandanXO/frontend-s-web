@@ -37,6 +37,6 @@ export const cancelSportMatchRecord = (id) => {
   return https().request(`/sport-match/record/cancel/${id}?_method=PUT`, Method.POST);
 };
 
-export const settleAllSportMatchRecord = () => {
-  return https().request('/sport-match/record/settle/all?_method=PUT', Method.POST);
+export const settleAllSportMatchRecord = (siteId) => {
+  return https().request('/sport-match/record/settle/all?_method=PUT', Method.POST, { siteId: siteId }, ContentType.form);
 };

@@ -268,7 +268,7 @@ async function settleAllPending() {
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
   }).then(async () => {
-    await settleAllSportMatchRecord()
+    await settleAllSportMatchRecord(request.siteId)
     await loadMatchRecord()
     ElMessage({ message: t('message.settled'), type: 'success' })
   })
