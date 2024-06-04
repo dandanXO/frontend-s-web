@@ -113,7 +113,7 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
@@ -122,7 +122,7 @@
                       </div>
                     </div>
                     <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div>
+                  </div> -->
 
                   <!-- <div class="join-container">
                     <div class="promo-date">

@@ -55,9 +55,16 @@
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+
           <q-btn
-            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+            :class="{
+              'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
+              'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
+              'btn--orange': e.betStatus === 'BET',
+              'btn--yellow': e.betStatus === 'UNSETTLED',
+              'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+            }"
+            :label="`${e.betStatus}`"
           ></q-btn>
         </q-card-section>
 
@@ -366,6 +373,61 @@ onActivated(() => {
       padding: 4px 10px;
       border-radius: 4px;
       background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--yellow {
+      color: #ffe500;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 229, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--blue {
+      color: #00f0ff;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.2);
+      min-height: unset;
+    }
+
+    .btn--orange {
+      color: #ff7a00;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 122, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--red {
+      color: #b81212;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--green {
+      color: #00b900;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 185, 0, 0.2);
       min-height: unset;
     }
   }
