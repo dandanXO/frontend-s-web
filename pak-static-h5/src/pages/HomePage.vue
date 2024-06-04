@@ -20,11 +20,11 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)"
+      :img-src="imgURLPromo + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
-    <!-- :img-src="imgURLPromo + banner.mobileImageUrl" -->
+    <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
 
     <template v-slot:navigation-icon="{ active, onClick }">
       <q-btn
