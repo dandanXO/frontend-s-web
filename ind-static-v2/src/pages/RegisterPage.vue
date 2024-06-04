@@ -42,7 +42,7 @@
                   hide-bottom-space
                   v-model="regForm.password"
                   :rules="[(val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => (val && val.length >= 6) || 'The characters of password must be above 5'
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
                   ]"
                   :type="isPwd ? 'password' : 'text'"
                   color="white"
@@ -184,6 +184,7 @@ import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -324,6 +325,13 @@ export default defineComponent({
       }
     }
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
     const trackRegisterFailedEvent = () => {
       if(ui.adjust_register_fail_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
@@ -409,11 +417,7 @@ export default defineComponent({
               // console.log(ret);
               if (res.code === 0) {
                 //ADJUST TRACKEVENT.
-                // debugger;
-                if (ui.adjust_register_event && isAndroid()) {
-                  var adjustEvent = new AdjustEvent(ui.adjust_register_event);
-                  Adjust.trackEvent(adjustEvent);
-                }
+                trackRegisterSuccessEvent();
 
                 $q.notify({
                   color: "positive",

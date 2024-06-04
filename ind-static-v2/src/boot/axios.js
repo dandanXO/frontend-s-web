@@ -20,21 +20,8 @@ const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
-  var successRstUrl = localStorage.getItem(urlLsName);
+  var successRstUrl = sessionStorage.getItem(urlLsName);
   if (successRstUrl) {
-    axios
-      .get(successRstUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem(urlLsName);
-        }
-      })
-      .catch((err) => {
-        // console.log(err);
-        localStorage.removeItem(urlLsName);
-      });
-
     return successRstUrl;
   } else {
     if (typeof apiLinks === "string" || apiLinks instanceof String) {
@@ -44,14 +31,7 @@ function getInitApi(apiLinks, urlLsName) {
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
     }
 
-    axios.get(initApi + "/ping").then((res) => {
-      // console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem(urlLsName, initApi);
-      } else {
-        localStorage.removeItem(urlLsName);
-      }
-    });
+    sessionStorage.setItem(urlLsName, initApi);
     return initApi;
   }
 }

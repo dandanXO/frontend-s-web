@@ -258,7 +258,8 @@ input:-webkit-autofill:active {
   .ant-select-item-option-active:not(.ant-select-item-option-disabled),
   .ant-select-item-option:not(.ant-select-item-option-disabled)[class*="-active"] {
     color: #ffffff;
-    background: $primary;
+    // background: $primary;
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   }
   .login-container .login-form-wrapper .forget-pwd-tip,
   .login-container .reg-form-wrapper .forget-pwd-tip {
@@ -1100,10 +1101,10 @@ li.ant-calendar-time-picker-select-option-selected {
   color: #8c968f;
   .ant-select-item-option:not(.ant-select-item-option-disabled) {
     &[class*="-active"] {
-      color: #70bc62;
+      color: #ffffff;
     }
     &[class*="-selected"] {
-      color: #70bc62;
+      color: #ffffff;
     }
   }
   .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
@@ -1370,7 +1371,8 @@ li.ant-calendar-time-picker-select-option-selected {
 }
 
 .container {
-  max-width: $container-width;
+  // max-width: $container-width;
+  width: 100%;
   margin-inline: auto;
   padding-inline: 0px;
 }
@@ -1448,13 +1450,18 @@ a {
 .ant-select-single:not(.ant-select-customize-input) {
   .ant-select-selector {
     height: 42px;
-    background-color: #ffffff0d;
+    // background-color: #ffffff0d;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 360px;
+    background: #0b0e0d99;
+
     color: #ffffff;
-    .ant-select-selection-item {
-      font-family: Poppins;
-      font-size: 18px;
-      font-weight: 700;
-    }
+    // .ant-select-selection-item {
+    //   font-family: Poppins;
+    //   font-size: 18px;
+    //   font-weight: 700;
+    // }
   }
 
   .ant-select-arrow {
@@ -1500,6 +1507,15 @@ a {
 
 .mb-24px {
   margin-bottom: 24px;
+}
+.account-title {
+  color: #8c968f;
+  font-family: "Poppins Medium";
+  margin-bottom: 10px;
+  display: block;
+}
+.ant-form-item .ant-select {
+  max-width: 360px;
 }
 
 // Base

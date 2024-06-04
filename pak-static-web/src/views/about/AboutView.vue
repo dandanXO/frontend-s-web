@@ -10,42 +10,43 @@
               <span class="menu-title">About us</span>
             </div>
             <p>
-              play4win's missions and motto: To provide Customer with best betting odds and services: Our advantage:
+              B9.game's missions and motto: To provide Customer with best betting odds and services: Our advantage:
               Website and market odds are updated timely. Funds transfer are lightning fast, allowing you to freely
-              allocate your funds anytime, anywhere in order to wager big money, at the same time, enjoying the best odds.
+              allocate your funds anytime, anywhere in order to wager big money, at the same time, enjoying the best
+              odds.
             </p>
             <div class="content-title-container">
               <span class="content-title">PRODUCT VARIETY</span>
             </div>
             <p>
-              play4win is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
+              B9.game is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
               live sport matches every month. Moreover, we support more than 400 different football leagues, other than
-              just well-known professional leagues. The following league is supported: Greek League / Italian C League Cup
-              / Serie A / Russian League / Croatian Cup / Bougainvillea/Leah Cup/Norway Cup/ Bundesliga/Roman B/Denmark
-              A/France B/Thailand Copa del Rey/Cyprus Cup/Brazil B-League/Japan A/Korea A/Argentina A... and more live
-              events for you to follow.
+              just well-known professional leagues. The following league is supported: Greek League / Italian C League
+              Cup / Serie A / Russian League / Croatian Cup / Bougainvillea/Leah Cup/Norway Cup/ Bundesliga/Roman
+              B/Denmark A/France B/Thailand Copa del Rey/Cyprus Cup/Brazil B-League/Japan A/Korea A/Argentina A... and
+              more live events for you to follow.
             </p>
             <p>
-              Besides sport product, we offer a wide variety of product including live casino, live dealer, Esports which
-              you cannot missed. In order to satisfy members in Philippines. play4win carefully select a variety of online
-              games to provide you with the best game and platform choices. We continue to improve our products and add
-              more exciting new products, allowing you to enjoy first-class services in live entertainment.
+              Besides sport product, we offer a wide variety of product including live casino, live dealer, Esports
+              which you cannot missed. In order to satisfy members in Philippines. B9.game carefully select a variety of
+              online games to provide you with the best game and platform choices. We continue to improve our products
+              and add more exciting new products, allowing you to enjoy first-class services in live entertainment.
             </p>
             <div class="content-title-container">
               <span class="content-title">COMPANY PROFILE</span>
             </div>
             <p>
-              play4win holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro Manila.
-              At present, we are expert in bookmaking, gaming technologies, and possessing a professional team of customer
-              support and technical engineer. Through offering excellent products and high-quality customer services, we
-              provide customers with best online entertainment experiences. Compare to land-based casino, we offer by far
-              better odds! To maintain fairness of the games, when it comes down to picking a platform, play4win with
-              professional 24/7 customer service team, facilitating financial team, strong financial capacity will be your
-              angel of choice. On top of that, we adopt the best encryption technology and firewall system to protect your
-              security, privacy, and to ensure that you enjoy a fair and just gameplay. Due to the adoption of
-              enterprise-level encryption technology (1024-bit RSA key exchange and 448-bit blowfish), we can provide your
-              data with a higher level of security, more than that of SSL This technology is currently adopted by major
-              financial institutions over the world.
+              B9.game holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro
+              Manila. At present, we are expert in bookmaking, gaming technologies, and possessing a professional team
+              of customer support and technical engineer. Through offering excellent products and high-quality customer
+              services, we provide customers with best online entertainment experiences. Compare to land-based casino,
+              we offer by far better odds! To maintain fairness of the games, when it comes down to picking a platform,
+              B9.game with professional 24/7 customer service team, facilitating financial team, strong financial
+              capacity will be your angel of choice. On top of that, we adopt the best encryption technology and
+              firewall system to protect your security, privacy, and to ensure that you enjoy a fair and just gameplay.
+              Due to the adoption of enterprise-level encryption technology (1024-bit RSA key exchange and 448-bit
+              blowfish), we can provide your data with a higher level of security, more than that of SSL This technology
+              is currently adopted by major financial institutions over the world.
             </p>
           </div>
         </a-tab-pane>
@@ -80,8 +81,8 @@
               <li>Perform account management and process your transactions on our website.</li>
               <li>Provide you with gaming and betting services</li>
               <li>
-                For verification and identification purposes, such as ensuring that you have reached the legal age and are
-                not in the prohibited jurisdiction specified by the rules and terms of this website.
+                For verification and identification purposes, such as ensuring that you have reached the legal age and
+                are not in the prohibited jurisdiction specified by the rules and terms of this website.
               </li>
               <li>Customize the event materials according to your preferences.</li>
               <li>Website diagnosis and maintenance.</li>
@@ -91,14 +92,15 @@
               <li>
                 In the process of providing relevant support and services, in accordance with the requirements of our
                 software suppliers (subject to the terms of this policy). We also reserve the right to measure user
-                interests and perform statistical analysis of user behavior on the use of different areas of the website.
-                In addition, we will also notify advertisers of information such as the number of users viewed or clicked
-                on advertising banners. We will only provide the aggregated data of these analyses to third parties.
+                interests and perform statistical analysis of user behavior on the use of different areas of the
+                website. In addition, we will also notify advertisers of information such as the number of users viewed
+                or clicked on advertising banners. We will only provide the aggregated data of these analyses to third
+                parties.
               </li>
               <li>
-                play4win cooperates with multiple associations to ensure the fairness and integrity of sports
-                competitions, and to prevent artificial competitions. Therefore, all parties reserve the right to monitor
-                and share player betting records.
+                B9.game cooperates with multiple associations to ensure the fairness and integrity of sports
+                competitions, and to prevent artificial competitions. Therefore, all parties reserve the right to
+                monitor and share player betting records.
               </li>
             </ul>
             <div class="content-title-container">
@@ -106,8 +108,8 @@
             </div>
             <p>
               For marketing purposes, we reserve the right to disclose any profits or prizes on the website or other
-              promotional media. We may publish your username in abbreviation, profit amount and other information on the
-              website when necessary for publicity.
+              promotional media. We may publish your username in abbreviation, profit amount and other information on
+              the website when necessary for publicity.
             </p>
             <div class="content-title-container">
               <span class="content-title">Safety</span>
@@ -138,8 +140,8 @@
                 If you are under the age of 21, you are not allowed to use and/or the website under any circumstances.
               </li>
               <li>
-                Some legal jurisdictions do not state the legality of online gambling, while others clearly stipulate that
-                online gambling is illegal.
+                Some legal jurisdictions do not state the legality of online gambling, while others clearly stipulate
+                that online gambling is illegal.
               </li>
               <li>
                 We never attempted to allow anyone in the area to be prohibited by law from using the casino and/or
@@ -164,17 +166,17 @@
                 address, telephone number, bank account and IP address.
               </li>
               <li>
-                Our offers are intended for recreational players only and play4win may in our sole discretion limit the
+                Our offers are intended for recreational players only and B9.game may in our sole discretion limit the
                 eligibility of customers to participate in any promotion.
               </li>
               <li>
                 We reserve the right to alter, amend or terminate this Promotion, or any aspect of it, at any time and
-                without prior notice. All play4win Terms & Conditions and Rules apply
+                without prior notice. All B9.game Terms & Conditions and Rules apply
               </li>
               <li>Only deposit applied for one promotion.</li>
               <li>
-                Refunds will be based on the total amount of valid bet (betting turnover) of the members at Sport product
-                for each bet and each membership level.
+                Refunds will be based on the total amount of valid bet (betting turnover) of the members at Sport
+                product for each bet and each membership level.
                 <ul class="content-list disc-style">
                   <li>Lose All - Refund on stake</li>
                   <li>Lose less than stake - Refund on Win/Loss</li>
@@ -184,8 +186,8 @@
               </li>
               <li>Rollover must be fulfilled within 30 days to prevent forfeited of Bonus and winning amount.</li>
               <li>
-                The determination of what constitutes bonus abuse shall be at the sole discretion of the company, but for
-                clarity what will be considered evidence of bonus abuse shall include, but not be limited to, the
+                The determination of what constitutes bonus abuse shall be at the sole discretion of the company, but
+                for clarity what will be considered evidence of bonus abuse shall include, but not be limited to, the
                 following examples:
                 <br />
                 Wagering the bonus money on excluded games
@@ -201,27 +203,27 @@
                 Affiliate CPA or revenue share abuse
               </li>
               <li>
-                We reserve the right to review transaction records and logs from time to time and for any reason. If, upon
-                review, we discover a player who has benefited from promotional funds by participating in betting patterns
-                or strategies at our sole discretion deems to be abusive, we reserve the right to withdraw the bonus
-                amount and any associated winnings
+                We reserve the right to review transaction records and logs from time to time and for any reason. If,
+                upon review, we discover a player who has benefited from promotional funds by participating in betting
+                patterns or strategies at our sole discretion deems to be abusive, we reserve the right to withdraw the
+                bonus amount and any associated winnings
               </li>
               <li>
-                Any person deviating from promotional rules may be disqualified, meaning that the bonus and any associated
-                winnings will be forfeited.
+                Any person deviating from promotional rules may be disqualified, meaning that the bonus and any
+                associated winnings will be forfeited.
               </li>
               <li>
                 We reserve the right to end or amend any promotion at any time for any reason without giving notice.
               </li>
               <li>
                 Withdrawals may be subject to audit and/or identity verification before being processed. You may be
-                requested to furnish proof of identification, address, age and/or proof of deposit, proof of game play or
-                telephone number. Failure to provide this information to us within 72 hours of a request being made may
-                result in the bonus and any associated winnings being withdrawn.
+                requested to furnish proof of identification, address, age and/or proof of deposit, proof of game play
+                or telephone number. Failure to provide this information to us within 72 hours of a request being made
+                may result in the bonus and any associated winnings being withdrawn.
               </li>
               <li>
-                Participants must be 18 years old, have intellectual capacity and be able to take responsibility for their
-                own decisions.
+                Participants must be 18 years old, have intellectual capacity and be able to take responsibility for
+                their own decisions.
               </li>
             </ul>
           </div>
@@ -232,11 +234,11 @@
               <span class="menu-title">Compensation</span>
             </div>
             <p>
-              play4win's users hereby agree that when connect to our betting website, download or install our betting
+              B9.game's users hereby agree that when connect to our betting website, download or install our betting
               softwares. Place bet and/or use our service and/or betting information through any method that
               violate/against our regulation, and/or cause any damage, loss, claim fee to our shareholders, employees,
-              managers, directors, boards, licensees, distributors of play4win. The user shall be required to compensate
-              play4win in full The casino (all games) bet the highest payout to any member is Php1,000,000. If all
+              managers, directors, boards, licensees, distributors of B9.game. The user shall be required to compensate
+              B9.game in full The casino (all games) bet the highest payout to any member is Php1,000,000. If all
               non-deposited members have won the progressive jackpot before depositing, the winning pool will be
               considered invalid. (Including free betting members)
             </p>
@@ -247,13 +249,13 @@
             <div class="about-title-container">
               <span class="menu-title">Responsible Gambling</span>
             </div>
-            <p>We hope all our valued users have fun at play4win</p>
+            <p>We hope all our valued users have fun at B9.game</p>
             <p>Gambling is a form of entertainment and should not burden your financial and emotional life</p>
             <p>
-              Borrowing money to play, overspending budget or embezzling money for other purposes is not only unwise, but
-              also causes serious problems for you and the people around you.
+              Borrowing money to play, overspending budget or embezzling money for other purposes is not only unwise,
+              but also causes serious problems for you and the people around you.
             </p>
-            <p>We hope you have fun at Play4Win, so please bet responsibly and have fun!</p>
+            <p>We hope you have fun at B9.game, so please bet responsibly and have fun!</p>
           </div>
         </a-tab-pane>
       </a-tabs>
@@ -305,7 +307,7 @@ export default defineComponent({
   border-radius: 20px;
   width: 95%;
   margin: 40px auto;
-box-shadow: 0px 4px 10px 0px #0000001A;
+  box-shadow: 0px 4px 10px 0px #0000001a;
 
   .content-list {
     margin: 0;
@@ -329,20 +331,23 @@ box-shadow: 0px 4px 10px 0px #0000001A;
     font-size: 30px;
 
     margin-bottom: 30px;
-    font-family: 'Poppins Bold';
+    font-family: "Poppins Bold";
+    color: #ffffff;
   }
-  li, p {
-    color: #83A3CA;
+  li,
+  p {
+    color: #8c968f;
     margin-left: 25px;
   }
-  ol, p {
+  ol,
+  p {
     &:before {
-      content: '';
+      content: "";
       width: 8px;
       height: 8px;
       position: absolute;
       transform: rotate(45deg);
-      background: linear-gradient(270deg, #5800E8 0%, #0062E8 100%);
+      background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
       margin-left: -20px;
       margin-top: 5px;
     }
@@ -355,9 +360,9 @@ box-shadow: 0px 4px 10px 0px #0000001A;
 
     .content-title {
       position: relative;
-    font-size: 20px;
-    font-family: 'Poppins Bold';
-    text-transform: uppercase;
+      font-size: 20px;
+      font-family: "Poppins Bold";
+      text-transform: uppercase;
       // &::before,
       // &::after {
       //   content: "";
@@ -380,23 +385,21 @@ box-shadow: 0px 4px 10px 0px #0000001A;
 </style>
 <style scoped lang="scss">
 .about-container :deep(.ant-tabs) {
-    border-radius: 20px;
-  background: #ECF5FF;
+  border-radius: 20px;
+  background: #171719;
   min-height: 60vh;
-
+  color: #ffffff;
 }
 .about-container :deep(.ant-tabs .ant-tabs-left) {
-  background: #ECF5FF;
+  background: #ecf5ff;
 }
 .about-container :deep(.ant-tabs .ant-tabs-left-content) {
-  
   min-height: 60vh;
 }
 .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-nav-container) {
   padding: 25px 0;
 }
 .about-container :deep(.ant-tabs .ant-tabs-left-bar) {
-  
 }
 
 .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-extra-content) {
@@ -410,9 +413,9 @@ box-shadow: 0px 4px 10px 0px #0000001A;
 .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-tab) {
   padding: 14px 40px;
   text-align: left;
-  color: #83A3CA;
+  color: #8c968f;
   &:hover {
-    color: #2B2B82;
+    color: #ffffff;
   }
 }
 :deep(.ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane, .ant-tabs .ant-tabs-bottom-content > .ant-tabs-tabpane) {
@@ -420,9 +423,9 @@ box-shadow: 0px 4px 10px 0px #0000001A;
 }
 
 .about-container :deep(.ant-tabs .ant-tabs-nav .ant-tabs-tab-active) {
-  color: #2B2B82;
-  font-family: 'Poppins Medium';
-  background: linear-gradient(270deg, rgba(7, 91, 232, 0.2) 0%, rgba(7, 91, 232, 0) 100%);
+  color: #ffffff;
+  font-family: "Poppins Medium";
+  background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
 }
 
 .about-container :deep(.ant-tabs-ink-bar) {
@@ -436,26 +439,25 @@ box-shadow: 0px 4px 10px 0px #0000001A;
 
 .about-container :deep(.ant-tabs .ant-tabs-left-content) {
   padding: 20px 50px;
-  background: #ffffff;
+  border-color: #0f0b0b;
+  background: #0f0b0b;
   // padding-right: 50px;
   // border-left: 4px solid #23263c;
   // margin-left: -4px;
 }
-.dark-theme
-  .about-container :deep(.ant-tabs .ant-tabs-left-content)  {
-    background: #FFFFFF05;
-    border: 0;
+.dark-theme .about-container :deep(.ant-tabs .ant-tabs-left-content) {
+  background: #ffffff05;
+  border: 0;
 }
-.dark-theme
-  .about-container :deep(.ant-tabs)  {
+.dark-theme .about-container :deep(.ant-tabs) {
+  color: #ffffff;
+  background: #ffffff05;
+  p,
+  li {
     color: #ffffff;
-    background: #FFFFFF05;
-    p, li {
-      color: #ffffff;
-    }
+  }
 }
-.dark-theme
-.about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-tab) {
+.dark-theme .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-tab) {
   color: #ffffff;
 }
 

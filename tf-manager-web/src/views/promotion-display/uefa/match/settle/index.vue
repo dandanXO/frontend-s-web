@@ -262,7 +262,7 @@ async function settleAllPending() {
     cancelButtonText: t('fields.cancel'),
     type: 'warning',
   }).then(async () => {
-    await settleAllPendingUefa()
+    await settleAllPendingUefa(request.siteId)
     await loadUefaSettlement()
     ElMessage({ message: t('message.settled'), type: 'success' })
   })

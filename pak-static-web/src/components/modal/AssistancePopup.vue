@@ -10,7 +10,7 @@
       </div>
       <div class="action-buttons">
         <button class="action-button" @click="router.push('/center/top-up');cancelPopup();">Deposit</button>
-        <button class="action-button" @click="router.push('/center/withdraw');cancelPopup();">Withdraw</button>
+        <button class="action-button" @click="router.push('/center/top-up?tab=withdraw');cancelPopup();">Withdraw</button>
         <button class="action-button" @click="router.push('/center/personal');cancelPopup();">Account</button>
         <button class="action-button" @click="router.push('/promotion');cancelPopup();">Promotion</button>
       </div>

@@ -569,6 +569,7 @@ export default defineComponent({
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
+        pointer-events: none;
         .promo-img {
           border: 1px solid #45fdfb;
         }

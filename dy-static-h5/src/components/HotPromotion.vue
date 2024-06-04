@@ -81,9 +81,10 @@
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
-    
+    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -133,14 +134,17 @@ import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGameProm
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
+import EurocupManual from "./hotpromo/EurocupManual/EurocupManual.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    Nba24Match,
     ClaimPromo,
     TigerCardPromo,
     PrizePoolVotePromo,
@@ -165,7 +169,8 @@ export default defineComponent({
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
     LPLSummer24,
-    DragonBoat
+    DragonBoat,
+    EurocupManual
   },
   props: {
     list: {
@@ -243,9 +248,11 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy2-eurocup-hongbao" || 
+      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
       this.list.redirectUrl === "dy2-lpl-summer24" ||
-      this.list.redirectUrl === "dy-duanwujie24"
+      this.list.redirectUrl === "dy-duanwujie24" ||
+      this.list.redirectUrl === "dy2-nba24-match" ||
+      this.list.redirectUrl === "dy2-eurocup-manual"
     ) {
       this.isCommonPromo = false;
     } else {

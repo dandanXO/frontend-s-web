@@ -1672,6 +1672,11 @@ export default {
     unbind: '언바인드',
     winloss: '승패',
     profit2: '입출금',
+    batchDistributeRebate: '일괄 배분 리베이트',
+    distribute: '분배하다',
+    affiliateBetRebateRecord: '제휴 베팅 리베이트 기록',
+    affiliateBetRebateDetails: '제휴 베팅 리베이트 세부정보',
+    adjustRebateAmount: '리베이트 금액 조정',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -1709,6 +1714,10 @@ export default {
       '이 경기를 종료하시겠습니까? 이 작업은 취소할 수 없습니다.',
     confirmRebate:
       '모든 리베이트를 분배하시겠습니까? 이 작업은 취소할 수 없습니다.',
+    confirmBatchRebate:
+      '선택한 리베이트를 배포할 것인지 확인하세요. 작업은 취소할 수 없습니다.',
+    confirmSingleRebate:
+      '이 리베이트를 배포할 것인지 확인하세요. 작업은 취소할 수 없습니다.',
     confirmRedeem:
       '이 선물을 현금으로 교환하시겠습니까? 이 작업은 취소할 수 없습니다.',
     confirmRefer:
@@ -2336,6 +2345,7 @@ export default {
     'Redirect Notification': '리디렉션 알림',
     'Member Summon Event': '회원 소환 이벤트',
     'Member Summon List': '회원 소환 목록',
+    'Affiliate Bet Rebate Record': '제휴 베팅 리베이트 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',

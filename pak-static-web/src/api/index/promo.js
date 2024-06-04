@@ -107,3 +107,7 @@ export function getAdsPopupList() {
   return server.EVENT.get("/adsPopup/list");
   // return server.EVENT.get("/privi/adsPopup/list");
 }
+
+export function loadHomePopup() {
+  return server.REST.get("/member/ads-popout");
+}

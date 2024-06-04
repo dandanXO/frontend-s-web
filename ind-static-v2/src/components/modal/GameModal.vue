@@ -226,9 +226,9 @@ const transferInfo = ref({
 });
 const isClicked = ref("");
 
-// watchEffect(() => {
-//   console.log('isShowLsMainArea', window.isShowLsMainArea)
-// })
+watchEffect(() => {
+  console.log('isShowLsMainArea', window.isShowLsMainArea);
+})
 
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;

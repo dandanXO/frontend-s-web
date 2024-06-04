@@ -64,6 +64,7 @@ $max-width: $container-width;
     width: calc(100% - 280px);
     padding: 30px;
     background: #ffffff05;
+    border-radius: 4px;
 
     .menu-title-container {
       margin: 0px 0 20px;
@@ -246,7 +247,7 @@ $max-width: $container-width;
           content: "";
           width: 8px;
           height: 8px;
-          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+          background: linear-gradient(270deg, #25ac92 0%, #7cc24e 100%);
           position: absolute;
           transform: rotateZ(45deg);
           left: 0px;

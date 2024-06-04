@@ -7,7 +7,7 @@
           <login-tab @close-modal="handleCloseModal" />
         </el-tab-pane>
         <el-tab-pane name="register" :label="$t('layout.header.accountModal.register.tab')">
-          <register-tab @close-modal="() => (verifyPage = true)" />
+          <register-tab @close-modal="handleCloseModal" />
         </el-tab-pane>
       </el-tabs>
       <div v-else class="verify-wrapper">

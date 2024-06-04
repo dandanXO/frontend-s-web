@@ -116,6 +116,12 @@
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
           <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领2,188元。</p>
 
+          <div class="return-claim-btn">
+            <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
+              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+            </div>
+          </div>
+
           <table class="return-table" border="0" cellpadding="0" cellspacing="0">
             <thead>
               <tr>
@@ -156,12 +162,6 @@
               </tr>
             </tbody>
           </table>
-
-          <div class="return-claim-btn">
-            <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
-              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-            </div>
-          </div>
         </div>
 
         <div class="content-rules">

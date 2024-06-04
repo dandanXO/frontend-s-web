@@ -11,7 +11,8 @@ import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
-// import { StatusBar, Style } from "@capacitor/status-bar";
+// import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { StatusBar, Style } from "@capacitor/status-bar";
 // import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
@@ -26,26 +27,26 @@ export default defineComponent({
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
-      const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        const obj = {
-          identifier: sidParam,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
-      })();
+      // const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
+      // const fpPromise = FingerprintJS.load();
+      // (async () => {
+      //   const fp = await fpPromise;
+      //   const result = await fp.get();
+      //   const excludes = { value: ["timezone", "timeZoneOffset"] };
+      //   const allComponents = { ...result.components };
+      //   excludes.value.forEach((element) => {
+      //     delete allComponents[element];
+      //   });
+      //   const sidParam = FingerprintJS.hashComponents(allComponents);
+      //   const obj = {
+      //     identifier: sidParam,
+      //     affiliateCode: affiliateItem
+      //   };
+      //   api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+      //     if (res.code === 0) {
+      //     }
+      //   });
+      // })();
     };
 
     const getAppInfo = async () => {
@@ -69,17 +70,27 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentSandbox);
+
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
         adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
 
+        //TESTING ONLY.
+        // Adjust.getSdkVersion(function(version){
+        //   alert(version);
+        //   alert(AdjustConfig.EnvironmentProduction);
+        //   alert(AdjustConfig.LogLevelVerbose);
+        //
+        //   var adjEve = new AdjustEvent("123456");
+        //   alert(adjEve);
+        // })
+
         Adjust.create(adjustConfig);
         setTimeout(() => {
-
-          Adjust.getGoogleAdId(function(googleid){
+          Adjust.getGoogleAdId(function(googleid)  {
             console.log("Google AdID");
             console.log(googleid);
             if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
@@ -96,7 +107,7 @@ export default defineComponent({
               trackAppStartEvent();
             }
           });
-        }, 500);
+        }, 100);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -119,7 +130,7 @@ export default defineComponent({
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
 
-        }, 1500);
+        }, 500);
       }
     };
 
@@ -231,10 +242,10 @@ export default defineComponent({
       AddressbarColor.set("#3E1474");
       if (Platform.is.capacitor && Platform.is.android) {
         // console.log("STATUSBARR");
-        // await StatusBar.hide();
-        // await StatusBar.setOverlaysWebView({ overlay: true });
-        // await StatusBar.setBackgroundColor({ color: "#3E1474" });
-        // await StatusBar.setStyle({ style: Style.Dark });
+        await StatusBar.hide();
+        await StatusBar.setOverlaysWebView({ overlay: true });
+        await StatusBar.setBackgroundColor({ color: "#3E1474" });
+        await StatusBar.setStyle({ style: Style.Dark });
 
         // setTimeout(() => {
         //   getInsetHeight();
@@ -259,9 +270,9 @@ export default defineComponent({
     // };
 
     const handleVisibilityChange = (status) => {
-      // if (Platform.is.capacitor && Platform.is.android) {
-      //   StatusBar.hide();
-      // }
+      if (Platform.is.capacitor && Platform.is.android) {
+        StatusBar.hide();
+      }
     };
 
     const addCloudWiseTrackCode = () => {
@@ -307,7 +318,7 @@ export default defineComponent({
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
-      checkSID();
+      // checkSID();
       // getCSA();
       getAppInfo();
       initOrientation();

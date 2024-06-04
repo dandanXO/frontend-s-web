@@ -108,7 +108,7 @@ const routes = [
       {
         path: "sport",
         name: "sport",
-        component: () => import(/* webpackChunkName: "sport" */ "../views/games/CMDView.vue")
+        component: () => import(/* webpackChunkName: "sport" */ "../views/games/SportView.vue")
       },
       {
         path: "cockfight",
@@ -120,16 +120,16 @@ const routes = [
         name: "e-sport",
         component: () => import(/* webpackChunkName: "esport" */ "../views/games/E-SportView.vue")
       },
-      {
-        path: "vip",
-        name: "vip",
-        component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
-      },
-      {
-        path: "affiliate",
-        name: "affiliate",
-        component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
-      },
+      // {
+      //   path: "vip",
+      //   name: "vip",
+      //   component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
+      // },
+      // {
+      //   path: "affiliate",
+      //   name: "affiliate",
+      //   component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
+      // },
       {
         path: "getapp",
         name: "getapp",

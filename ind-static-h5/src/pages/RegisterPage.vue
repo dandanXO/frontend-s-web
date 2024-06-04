@@ -35,8 +35,9 @@
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
-          :rules="[(val) => (val && val.length > 0) || 'Please insert password',
-            (val) => (val && val.length > 6) || 'The characters of password must be above 6'
+          :rules="[
+            (val) => (val && val.length > 0) || 'Please insert password',
+            (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
           ]"
           :type="isPwd ? 'password' : 'text'"
           color="white"
@@ -168,8 +169,10 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
+import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
 import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
+
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -287,6 +290,7 @@ export default defineComponent({
     };
 
     const router = useRouter();
+    const ui = useUI();
 
     const affRegEvent = ref("");
     onActivated(() => {
@@ -294,7 +298,6 @@ export default defineComponent({
       getReferralCode();
       getAffiliateCode();
     });
-    
 
     const onSubmit = () => {
       loginNameRef.value.validate();
@@ -338,7 +341,8 @@ export default defineComponent({
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = sidParam;
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger = "1";
           }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -377,17 +381,9 @@ export default defineComponent({
 
                 //ADJUST TRACKEVENT.
                 // debugger;
-                if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  var adjustEvent = new AdjustEvent(affRegEvent.value);
-                  // alert(affRegEvent.value);
+                if (ui.adjust_register_event && isAndroid()) {
+                  var adjustEvent = new AdjustEvent(ui.adjust_register_event);
                   Adjust.trackEvent(adjustEvent);
-                } else {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: affRegEvent.value
-                  });
                 }
 
                 store.autoLogin(res.data);
@@ -549,7 +545,7 @@ export default defineComponent({
       isAlphanumeric,
       isValidName,
       isValidPhone,
-      affRegEvent,
+      affRegEvent
     };
   }
 });

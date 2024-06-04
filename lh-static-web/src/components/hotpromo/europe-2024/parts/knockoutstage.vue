@@ -15,12 +15,13 @@
       :style="{ top: date.top + 'px', left: date.left + 'px' }"
     >
       <!-- <span v-html="formatDate(date.matchTime)" />   -->
-      06月30日<br>
-00:00
+      <span v-if="date.matchTime" v-html="formatDate(date.matchTime)"></span>
+      <span v-else>待定中</span>
     </div>
     <div class="bracket-final">
       <span class="bracket-final__title">决赛</span>
-      <div class="bracket-final__date" v-html="formatDate(finalDate)"></div>
+      <div class="bracket-final__date" v-if="finalDate" v-html="formatDate(finalDate)"></div>
+      <div class="bracket-final__date" v-else style="line-height: 56px;">待定中</div>
     </div>
   </div>
 </template>

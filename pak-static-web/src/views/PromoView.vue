@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="promo-info">
-                <span class="viewdetail">View Details</span>
+                <span class="viewdetail">{{ promo.title }}</span>
               </div>
             </a>
           </div>
@@ -220,7 +220,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .promo-container {
-  background-image: url(../assets/images/index/centerbg.png);
   .promo-view-container {
     ol {
       padding: 0 15px;
@@ -318,7 +317,7 @@ export default defineComponent({
         // margin: 30px 0;
         padding: 30px 0;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-gap: 18px;
         .promo-item {
           position: relative;
@@ -331,7 +330,7 @@ export default defineComponent({
           .promo-img-wrapper {
             position: relative;
             overflow: hidden;
-            border-radius: 10px;
+            border-radius: 10px 10px 0 0;
             .promo-bg {
               transition: all 0.5s ease;
               background-size: cover;
@@ -358,19 +357,19 @@ export default defineComponent({
             }
           }
           .promo-info {
-            text-align: right;
             border-radius: 0 0 10px 10px;
-
             left: 0;
             bottom: 0;
             width: 100%;
-            background-color: $primary-color-light;
-            color: #333;
-            display: none;
-            justify-content: flex-end;
+            background-color: #ffffff1a;
             align-items: center;
+            padding: 7px 14px;
             .viewdetail {
-              padding: 15px;
+              font-family: Poppins;
+              font-size: 15.3px;
+              font-weight: 700;
+              line-height: 22.96px;
+              color: #ffffff;
             }
             .detail-arrow {
               margin-right: 20px;

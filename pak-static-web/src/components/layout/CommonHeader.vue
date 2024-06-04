@@ -8,7 +8,12 @@
             <img src="../../assets/hamburger.svg" v-if="globalStore.isMenuActive" />
           </div>
           <Logo />
-          <text-switch :tabs="switches" v-model="activateTab" class="text-switch-wrapper" />
+          <text-switch
+            :tabs="switches"
+            v-model="activateTab"
+            class="text-switch-wrapper"
+            @change="handleSwitchChange"
+          />
         </div>
 
         <div class="header-menu-container mobile-menu-hide" :class="globalStore.isMenuActive ? 'active' : ''">
@@ -25,6 +30,7 @@
               >
                 {{ nav.name }}
               </router-link>
+              <!-- TODO: sub menu? -->
               <!-- <div
                 v-if="nav.hasSub"
                 class="submenu"
@@ -201,7 +207,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <div class="icon icon-quick"></div>
                       Quick Withdraw
                     </router-link>
@@ -255,7 +261,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <RiBankCardLine />
                       Quick Withdraw
                     </router-link>
@@ -392,6 +398,10 @@ const contacts = [
 
 const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
 
+const router = useRouter();
+const route = useRoute();
+const { t } = useI18n();
+
 const isLoadingBal = ref(true);
 const casinoGame = ref(null);
 const spinWheel = ref(null);
@@ -400,8 +410,6 @@ const dailyLoginPromoPopup = ref();
 const adsPopupListRef = ref();
 const activateTab = ref("casino");
 const accountModalVisible = ref(false);
-const router = useRouter();
-const { t } = useI18n();
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -448,6 +456,7 @@ onMounted(() => {
     store.getBalance();
     isLoadingBal.value = false;
   }
+  activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
   getBalance();
   window.addEventListener("scroll", onScroll);
 });
@@ -497,7 +506,6 @@ const onScroll = () => {
   windowScroll.value = window.scrollY;
 };
 
-// const route = useRoute();
 //   watch(
 //     () => route.name,
 //     () => {
@@ -569,6 +577,14 @@ const toggleTheme = () => {
 };
 
 const openAccountModal = () => (accountModalVisible.value = true);
+
+const handleSwitchChange = (value) => {
+  if (value === "casino") {
+    router.push("/home");
+  } else {
+    router.push("/promotion");
+  }
+};
 </script>
 <style scoped lang="scss">
 $navigation-height: 80px;
@@ -672,7 +688,7 @@ $link-color: #ffffff;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
-      color: #ffffff;
+      color: #000000;
     }
   }
 }
@@ -1078,7 +1094,7 @@ $link-color: #ffffff;
           &:before {
             // background-position: 0 90%;
             background: url(../../assets/images/common/submenu/menu-icons/promotion-icon.png) no-repeat center center;
-            background-size: contain;
+            // background-size: contain;
           }
         }
 

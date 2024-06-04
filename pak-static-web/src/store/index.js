@@ -24,7 +24,7 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-      currency: { value: "₱", label: "peso" },
+      currency: { value: "₹", label: "RS" },
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       isAffiliateA: false,
@@ -75,14 +75,16 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
-    getCurrentDeposit() {
-      return this.currentDeposit;
-    },
     getLevelUpDeposit() {
       return this.levelUpDeposit;
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
+    }
+  },
+  getters: {
+    currentDepositNumber() {
+      return Number(this.currentDeposit);
     }
   }
 });

@@ -42,7 +42,8 @@
     <div class="main-wrapper">
       <!-- Hero Slider-->
       <div class="top-container-wrapper">
-        <div class="top-container">
+        <BannerCarousel :banners="banners" />
+        <!-- <div class="top-container">
           <div class="banner-slider">
             <a-carousel ref="refCarousel" autoplay :slides-to-show="1">
               <div v-for="(banner, i) in banners" :key="i" class="banner-container">
@@ -65,7 +66,7 @@
               <img src="../assets/images/index/arrow-forward.svg" />
             </el-button>
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Tabs / Links -->
       <!--      <div class="container">-->
@@ -100,10 +101,54 @@
         </div>
       </div> -->
       <div class="center-content">
-        <!-- Marquee -->
-        <div class="station-notice-wrapper container">
+        <SectionWrapper title="🔥HOT" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 6"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-hot-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 3"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-casino-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="SLOT" to="/slot" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 5"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-slot-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Fish" to="" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 6"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-fish-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <SectionWrapper title="Sport" to="/sport" class="section-wrapper">
+          <div class="section-wrapper-content">
+            <img
+              v-for="index in 3"
+              :key="`hot-${index}`"
+              :src="require(`@/assets/images/home/home-sport-${index}.png`)"
+            />
+          </div>
+        </SectionWrapper>
+        <!-- <div class="station-notice-wrapper container">
           <div class="station-notice-container">
-            <RiVolumeUpLine />
+            <img src="@/assets/images/common/volume-up.svg" />
             <div class="station-notice-box">
               <div class="station-notice">
                 <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
@@ -116,7 +161,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!--Jackpot-->
         <!-- <div class="jackpot container">
@@ -124,14 +169,14 @@
         </div> -->
 
         <!-- Content -->
-        <div class="og-tab-content container" v-if="['casino', 'Poker'].indexOf(platform.code) === -1">
-          <!-- Content Header -->
-          <h2 class="hot-game-header">
+        <!-- <div class="og-tab-content container" v-if="['casino', 'Poker'].indexOf(platform.code) === -1"> -->
+        <!-- Content Header -->
+        <!-- <h2 class="hot-game-header">
             <img src="../assets/images/common/submenu/menu-icons/hot-icon.png" />
             <span>Hot game</span>
-          </h2>
+          </h2> -->
 
-          <div class="hot-games-section">
+        <!-- <div class="hot-games-section">
             <img
               @click="openGame(hot, hot.platformCode, hot.code)"
               v-for="(hot, index) in hotGames"
@@ -157,10 +202,10 @@
                 </button>
               </template>
             </div>
-          </div>
+          </div> -->
 
-          <!-- Content Body -->
-          <div v-if="isGameLoading" style="display: flex; justify-content: center; align-items: center; display: none">
+        <!-- Content Body -->
+        <!-- <div v-if="isGameLoading" style="display: flex; justify-content: center; align-items: center; display: none">
             <a-spin />
           </div>
           <div
@@ -182,15 +227,15 @@
                 <img v-image="game.icon" :src="game.default" />
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <!-- End -->
-        </div>
-        <div class="og-tab-content container" v-else>
+        <!-- End -->
+        <!-- </div> -->
+        <!-- <div class="og-tab-content container" v-else>
           <LiveCasinoView v-if="platform.code == 'casino'" no-banner />
           <PokerView v-if="platform.code == 'Poker'" no-banner />
-        </div>
-        <div class="ribbonbar container">
+        </div> -->
+        <!-- <div class="ribbonbar container">
           <div
             v-for="(win, wini) in topWinners.slice(0, 4)"
             class="rib"
@@ -211,12 +256,12 @@
               <div class="rib-plus">+{{ win.amount }}</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Download Apps -->
-        <DownloadApp />
+        <!-- <DownloadApp /> -->
         <!-- Services Advantages -->
-        <ServicesAdvantages />
+        <!-- <ServicesAdvantages /> -->
       </div>
     </div>
 
@@ -245,57 +290,17 @@
         </a-tab-pane>
       </a-tabs>
     </a-modal>
-    <a-modal
-      :class="{ 'dark-modal': globalStore.isDarkMode, 'light-modal': !globalStore.isDarkMode }"
-      v-model:visible="is21Modal"
-      width="600px"
-      wrap-class-name="is21Modal"
-      :mask-closable="false"
-      :footer="null"
-      centered
+
+    <el-dialog
+      @close="setWithExpiry('isImpt', true, homePopupFrequencyNum)"
+      class="imptann-modal"
+      v-model="isImportantAnnoucementModal"
+      v-if="!isImpt"
     >
-      <div class="pagcor">
-        <div class="images">
-          <!-- <div class="banner-board">
-            <div class="banner-left"></div>
-            <img class="banner-bubble" src="../assets/images/common/banner-bubble.png" />
-            <img class="banner-logo" src="../assets/images/common/banner-logo.png" />
-
-            <div class="banner-info">
-              <div class="banner-info-top">
-                <img class="banner-pagcor" src="../assets/images/common/banner-pagcor.png" />
-                <div class="banner-info-tr">
-                  <div class="banner-line1">Gaming for</div>
-                  <div class="banner-line2">
-                    <strong>21</strong>
-                    years only！
-                  </div>
-                  <div class="banner-line3">AND ABOVE ONLY</div>
-                </div>
-              </div>
-
-              <div class="mid-line">&nbsp;</div>
-
-              <div class="banner-line4">KEEP IT FUN</div>
-              <div class="banner-line5">GAME RESPONSIBLY</div>
-            </div>
-          </div> -->
-          <div class="banner-line">KEEP IT FUN. GAME RESPONSIBLY</div>
-          <img src="../assets/images/index/responsibly.png" />
-          <!-- <img src="../assets/images/index/pagcor-details.webp" /> -->
-          <!-- <img src="../assets/images/index/pagcor-details.webp" /> -->
-        </div>
-        <a-button type="primary" shape="round" @click="confirm21Modal">I'm 21+ years old</a-button>
-        <a-button
-          style="background: #ffffff0f; border: 1px solid #48a7ff29"
-          type="default"
-          shape="round"
-          @click="confirm21Modal"
-        >
-          Exit
-        </a-button>
-      </div>
-    </a-modal>
+      <a :href="homePopupPath" :target="homePopupPath.includes('https://') ? '_blank' : '_self'">
+        <img :src="homePopupImg" class="alert-img" />
+      </a>
+    </el-dialog>
 
     <AdsPopupList ref="homeadsPopupListRef" />
   </div>
@@ -310,7 +315,7 @@ import { RiVolumeUpLine, RiCloseCircleFill } from "vue-remix-icons";
 import { useRoute, useRouter } from "vue-router";
 import { getAnnouncement } from "@/api/personal/personal";
 import { getPlatformGames, getPlatformList, hotGame, topWin } from "@/api/platform/platform";
-import { loadPromoBanner } from "@/api/index/promo";
+import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 import { globalStore } from "@/store";
 import MarqueeText from "vue-marquee-text-component";
 import TFLoading from "@/components/loading/TFLoading.vue";
@@ -321,6 +326,8 @@ import LiveCasinoView from "@/views/games/LiveCasinoView.vue";
 import PokerView from "@/views/games/PokerView.vue";
 import { userStore } from "@/store";
 import AdsPopupList from "@/components/hotpromo/adsPopupList.vue";
+import BannerCarousel from "@/components/home/BannerCarousel.vue";
+import SectionWrapper from "@/components/home/SectionWrapper.vue";
 const store = userStore();
 const winners = [
   {
@@ -359,7 +366,6 @@ const PLATFORM_CODE = {
 };
 
 // Legacy
-const is21Modal = ref(false);
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 const imgGamesURL = process.env.VUE_APP_IMAGE_CDN + "/games/";
 const banners = ref([]);
@@ -382,11 +388,6 @@ const homeState = reactive({
   esGamesList: []
 });
 
-const confirm21Modal = () => {
-  is21Modal.value = false;
-
-  // homeadsPopupListRef.value.initGetAdsPopupList();
-};
 
 const platformTabs = NavPlatforms.sort((a, b) => a.tabOrder - b.tabOrder);
 
@@ -406,6 +407,89 @@ const showPlatform = (newPlatform) => {
     });
   }
 };
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+};
+
+const getWithExpiry = (key) => {
+  const itemStr = localStorage.getItem(key);
+  if (!itemStr) return null;
+
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  if (now.getTime() > item.expiry) {
+    localStorage.removeItem(key);
+    return null;
+  }
+  return item.value;
+};
+
+const isImpt = getWithExpiry("isImpt");
+
+const isFirstView = ref(false);
+const homePopupImg = ref("");
+const homePopupPath = ref("");
+const isImportantAnnoucementModal = ref(false);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+
+const checkShowImgTop = () => {
+  const lastTime = localStorage.getItem("indexImgTop");
+  if (lastTime) {
+    const diff = new Date().getTime() - Number(lastTime);
+    if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
+  } else {
+    loadHomePopup()
+      .then((res) => {
+        const { code, data } = res;
+        if (code === 0) {
+          if (isImpt === null) {
+            switch (data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
+            }
+            isImportantAnnoucementModal.value = true;
+            if (data["path"].includes("https://")) {
+              homePopupPath.value = data["path"];
+            } else {
+              homePopupPath.value = "/promotion?name=" + data["path"];
+            }
+            homePopupImg.value = imgURL  + data["desktopImgUrl"];
+            homePopupContent.value = data["content"];
+            homePopupType.value = data["type"];
+            homePopupId.value = data["id"];
+            homePopupFrequency.value = data["frequency"];
+            isFirstView.value = true;
+          } else {
+            isImportantAnnoucementModal.value = false;
+          }
+        }
+      })
+      .catch(() => {});
+  }
+};
+
 
 const refCarousel = ref(null);
 
@@ -721,17 +805,12 @@ const redirectToPromo = () => {
 };
 
 onMounted(async () => {
-  if (sessionStorage.getItem("is21Modal")) {
-    is21Modal.value = false;
-  } else {
-    is21Modal.value = true;
-    sessionStorage.setItem("is21Modal", "true");
-  }
   loadAnnouncement();
   getPlatList();
-  // getHotGames();
+  getHotGames();
   // getTopWinners();
   loadBanners();
+  checkShowImgTop();
 
   const hotMatchData = [];
 
@@ -848,11 +927,6 @@ onMounted(async () => {
   }
 }
 .dark-theme {
-  .is21Modal {
-    .banner-line {
-      color: #ffffff;
-    }
-  }
 
   .noticeModal {
     .notice-modal.ant-modal {
@@ -881,168 +955,204 @@ onMounted(async () => {
     }
   }
 }
-.is21Modal {
-  padding: 50px;
 
-  .ant-modal .ant-modal-content .ant-modal-body {
-    background: #ffffff;
-    padding: 40px;
+.imptann-modal {
+  max-width: 760px;
+  margin-top: 170px !important;
 
-    .pagcor {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+  background: transparent !important;
+  box-shadow: none !important;
 
-      .images {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        margin-bottom: 30px;
-        .banner-line {
-          font-family: "Poppins Bold";
-          font-size: 30px;
-          text-align: center;
-        }
-      }
-
-      .ant-btn-primary {
-        background-image: linear-gradient(270deg, #5800e8 30%, #0062e8 70%, #5800e8 100%);
-        transition: all 0.5s;
-        background-size: 400% 100%;
-        border-radius: 12px;
-      }
-      .ant-btn-default {
-        border-radius: 12px;
-      }
-
-      .ant-btn:hover,
-      .ant-btn:focus {
-        background-position: 100% 0;
-      }
-
-      // .banner-board {
-      //   position: relative;
-      //   width: 500px;
-      //   height: 320px;
-
-      //   .banner-left {
-      //     position: absolute;
-      //     left: 0px;
-      //     top: 0px;
-      //     background-image: url("../assets/images/common/banner-left.png");
-      //     width: 244px;
-      //     height: 320px;
-      //     background-position: -30px -8px;
-      //     background-repeat: no-repeat;
-      //   }
-
-      //   .banner-bubble {
-      //     position: absolute;
-      //     width: 52px;
-      //     height: 60px;
-      //     top: 70px;
-      //     left: 240px;
-      //   }
-
-      //   .banner-logo {
-      //     position: absolute;
-      //     width: 160px;
-      //     height: auto;
-      //     right: 0px;
-      //     top: 0px;
-      //   }
-
-      //   .banner-info {
-      //     position: absolute;
-      //     right: 0px;
-      //     bottom: 10px;
-      //     width: 265px;
-      //     z-index: 4;
-      //     height: 172px;
-      //     border: 4px solid #5e9be1;
-      //     border-radius: 4px;
-
-      //     display: flex;
-      //     flex-direction: column;
-      //     justify-content: center;
-      //     gap: 3px;
-      //     align-items: flex-start;
-
-      //     .banner-pagcor {
-      //       width: 70px;
-      //       height: auto;
-      //     }
-
-      //     .banner-info-top {
-      //       display: flex;
-      //       justify-content: space-between;
-      //       width: calc(100% - 10px);
-      //       align-items: center;
-      //       margin: 0px auto;
-      //     }
-
-      //     .mid-line {
-      //       height: 1px;
-      //       background: #c7e1ff;
-      //       width: calc(100% - 20px);
-      //       margin: 2px auto 2px;
-      //     }
-
-      //     .banner-line1 {
-      //       color: #5e9be1;
-      //       font-size: 24px;
-      //       line-height: 24px;
-      //       font-weight: bold;
-      //       padding-left: 15px;
-      //       white-space: nowrap;
-      //     }
-
-      //     .banner-line2 {
-      //       color: #5e9be1;
-      //       font-size: 24px;
-      //       line-height: 24px;
-      //       font-weight: bold;
-      //       padding-left: 15px;
-      //       white-space: nowrap;
-      //     }
-
-      //     strong {
-      //       color: #ff0d0d;
-      //     }
-
-      //     .banner-line3 {
-      //       color: #1b1958;
-      //       font-size: 18px;
-      //       line-height: 24px;
-      //       font-weight: 200;
-      //       padding-left: 15px;
-      //       white-space: nowrap;
-      //     }
-
-      //     .banner-line4 {
-      //       color: #5e9be1;
-      //       font-size: 28px;
-      //       line-height: 30px;
-      //       font-weight: bold;
-      //       padding-left: 15px;
-      //     }
-
-      //     .banner-line5 {
-      //       color: #1b1958;
-      //       font-size: 22px;
-      //       line-height: 22px;
-      //       font-weight: 200;
-      //       padding-left: 15px;
-      //     }
-      //   }
-      // }
-    }
+  .el-dialog__body {
+    padding: 20px !important;
+    border-radius:12px;
   }
 
-  img {
+  .alert-img {
+    display: block;
     width: 100%;
+    border-radius:12px;
   }
+
+  .el-dialog__headerbtn {
+    top: 8px !important;
+    right: 15px;
+    height: 2em !important;
+    width: 2em !important;
+    border-radius: 50%;
+    background: #666;
+    text-align: center;
+    line-height: 1.7em;
+    display: flex;
+    align-items: center;
+    z-index:99;
+    justify-content: center;
+  }
+
 }
+
+//.is21Modal {
+//  padding: 50px;
+//
+//  .ant-modal .ant-modal-content .ant-modal-body {
+//    background: #ffffff;
+//    padding: 40px;
+//
+//    .pagcor {
+//      display: flex;
+//      flex-direction: column;
+//      gap: 10px;
+//
+//      .images {
+//        display: flex;
+//        flex-direction: column;
+//        gap: 20px;
+//        margin-bottom: 30px;
+//        .banner-line {
+//          font-family: "Poppins Bold";
+//          font-size: 30px;
+//          text-align: center;
+//        }
+//      }
+//
+//      .ant-btn-primary {
+//        background-image: linear-gradient(270deg, #5800e8 30%, #0062e8 70%, #5800e8 100%);
+//        transition: all 0.5s;
+//        background-size: 400% 100%;
+//        border-radius: 12px;
+//      }
+//      .ant-btn-default {
+//        border-radius: 12px;
+//      }
+//
+//      .ant-btn:hover,
+//      .ant-btn:focus {
+//        background-position: 100% 0;
+//      }
+//
+//      // .banner-board {
+//      //   position: relative;
+//      //   width: 500px;
+//      //   height: 320px;
+//
+//      //   .banner-left {
+//      //     position: absolute;
+//      //     left: 0px;
+//      //     top: 0px;
+//      //     background-image: url("../assets/images/common/banner-left.png");
+//      //     width: 244px;
+//      //     height: 320px;
+//      //     background-position: -30px -8px;
+//      //     background-repeat: no-repeat;
+//      //   }
+//
+//      //   .banner-bubble {
+//      //     position: absolute;
+//      //     width: 52px;
+//      //     height: 60px;
+//      //     top: 70px;
+//      //     left: 240px;
+//      //   }
+//
+//      //   .banner-logo {
+//      //     position: absolute;
+//      //     width: 160px;
+//      //     height: auto;
+//      //     right: 0px;
+//      //     top: 0px;
+//      //   }
+//
+//      //   .banner-info {
+//      //     position: absolute;
+//      //     right: 0px;
+//      //     bottom: 10px;
+//      //     width: 265px;
+//      //     z-index: 4;
+//      //     height: 172px;
+//      //     border: 4px solid #5e9be1;
+//      //     border-radius: 4px;
+//
+//      //     display: flex;
+//      //     flex-direction: column;
+//      //     justify-content: center;
+//      //     gap: 3px;
+//      //     align-items: flex-start;
+//
+//      //     .banner-pagcor {
+//      //       width: 70px;
+//      //       height: auto;
+//      //     }
+//
+//      //     .banner-info-top {
+//      //       display: flex;
+//      //       justify-content: space-between;
+//      //       width: calc(100% - 10px);
+//      //       align-items: center;
+//      //       margin: 0px auto;
+//      //     }
+//
+//      //     .mid-line {
+//      //       height: 1px;
+//      //       background: #c7e1ff;
+//      //       width: calc(100% - 20px);
+//      //       margin: 2px auto 2px;
+//      //     }
+//
+//      //     .banner-line1 {
+//      //       color: #5e9be1;
+//      //       font-size: 24px;
+//      //       line-height: 24px;
+//      //       font-weight: bold;
+//      //       padding-left: 15px;
+//      //       white-space: nowrap;
+//      //     }
+//
+//      //     .banner-line2 {
+//      //       color: #5e9be1;
+//      //       font-size: 24px;
+//      //       line-height: 24px;
+//      //       font-weight: bold;
+//      //       padding-left: 15px;
+//      //       white-space: nowrap;
+//      //     }
+//
+//      //     strong {
+//      //       color: #ff0d0d;
+//      //     }
+//
+//      //     .banner-line3 {
+//      //       color: #1b1958;
+//      //       font-size: 18px;
+//      //       line-height: 24px;
+//      //       font-weight: 200;
+//      //       padding-left: 15px;
+//      //       white-space: nowrap;
+//      //     }
+//
+//      //     .banner-line4 {
+//      //       color: #5e9be1;
+//      //       font-size: 28px;
+//      //       line-height: 30px;
+//      //       font-weight: bold;
+//      //       padding-left: 15px;
+//      //     }
+//
+//      //     .banner-line5 {
+//      //       color: #1b1958;
+//      //       font-size: 22px;
+//      //       line-height: 22px;
+//      //       font-weight: 200;
+//      //       padding-left: 15px;
+//      //     }
+//      //   }
+//      // }
+//    }
+//  }
+//
+//  img {
+//    width: 100%;
+//  }
+//}
 </style>
 
 <style scoped lang="scss">
@@ -1100,8 +1210,10 @@ $link-color: #db7e42;
 
   .main-wrapper {
     width: 100%;
+    padding: 27px 39px;
 
     .top-container-wrapper {
+      margin-bottom: 24px;
       animation-duration: 0.5s;
 
       .top-container {
@@ -1175,25 +1287,24 @@ $link-color: #db7e42;
 
     .station-notice-wrapper {
       color: inherit;
-      width: 98%;
-      margin-top: 10px;
+      width: 100%;
+      margin-bottom: 28px;
       border-radius: 12px;
       overflow: hidden;
     }
 
     .station-notice-container {
       width: 100%;
-      color: #83a3ca;
-      max-width: $container-width;
+      color: #8c968f;
       margin: 0 auto;
       display: flex;
       justify-content: flex-start;
-      background: #ffffff;
+      background: #ffffff0d;
       padding: 0.45rem 1rem;
       border-radius: 5rem;
 
       svg {
-        fill: currentColor;
+        fill: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
         aspect-ratio: 1/1;
         height: 1.4rem;
       }
@@ -2199,7 +2310,6 @@ $link-color: #db7e42;
   }
 }
 .center-content {
-  background: url(../assets/images/index/centerbg.png) no-repeat center top;
   background-size: cover;
   overflow: hidden;
   .jackpot {
@@ -2235,6 +2345,16 @@ $link-color: #db7e42;
     img {
       width: 100%;
       mix-blend-mode: plus-lighter;
+    }
+  }
+
+  .section-wrapper {
+    margin-bottom: 37px;
+
+    .section-wrapper-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
   }
 }
