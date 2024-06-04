@@ -6,17 +6,17 @@
         <div class="grid">
           <router-link class="footer-link" to="/about">About B9.Game</router-link>
 
-          <router-link class="footer-link" to="/about?id=data-collection">Data Collection</router-link>
+          <router-link class="footer-link" to="/about?id=data-collection">Collect Information</router-link>
 
-          <router-link class="footer-link" to="/about?id=legal-grounds">Legal Grounds</router-link>
+          <router-link class="footer-link" to="/about?id=legal-grounds">Legal Basis</router-link>
 
           <router-link class="footer-link" to="/about?id=betting-rules">Betting Rules</router-link>
 
           <router-link class="footer-link" to="/about?id=compensation">Compensation</router-link>
 
-          <router-link class="footer-link footer-nav" to="/register">Join US</router-link>
+          <router-link class="footer-link" to="/about?id=responsible-gambling">Gambling Responsibly</router-link>
 
-          <router-link class="footer-link" to="/about?id=responsible-gambling">Responsible Gambling</router-link>
+          <a class="footer-link footer-nav" href="">Affiliates</a>
         </div>
       </div>
 

@@ -188,7 +188,7 @@ $node-color: #dd4645;
         &.active {
           // background: rgba(255,255,255,.3);
           background: #ffffff0d;
-          border: 1px solid #48a7ff;
+          border: 1px solid #B81212;
           filter: none;
           color: #ffffff;
         }
@@ -201,14 +201,36 @@ $node-color: #dd4645;
         .node-item {
           color: rgba(255, 255, 255, 0.3);
           &.payment-method-item {
-            background: #ffffff0f;
+            background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+            background-size: cover;
+            filter: grayscale(1);
+            height: 30px;
+            border-radius: 0;
+            width: 108px;
+            height: 80px;
             color: #ffffff;
+            border-radius: 4px;
+            justify-content: flex-start;
+            align-items: flex-end;
             &.active {
-              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-                linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-              border: 1px solid #48a7ff;
+              background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+              background-size: cover;
+              // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+              //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+              border: 1px solid #B81212;
               filter: none;
               color: #ffffff;
+              position: relative;
+              &:after {
+                content: "";
+                background: url(../../assets/images/finance/bankcard-green-check.png)no-repeat bottom right;
+                background-size: contain;
+                width: 25px;
+                height: 25px;
+                position: absolute;
+                right:-1px;
+                bottom: -1px;
+              }
             }
           }
         }

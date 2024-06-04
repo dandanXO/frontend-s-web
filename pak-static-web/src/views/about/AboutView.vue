@@ -10,7 +10,7 @@
               <span class="menu-title">About us</span>
             </div>
             <p>
-              play4win's missions and motto: To provide Customer with best betting odds and services: Our advantage:
+              B9.game's missions and motto: To provide Customer with best betting odds and services: Our advantage:
               Website and market odds are updated timely. Funds transfer are lightning fast, allowing you to freely
               allocate your funds anytime, anywhere in order to wager big money, at the same time, enjoying the best
               odds.
@@ -19,7 +19,7 @@
               <span class="content-title">PRODUCT VARIETY</span>
             </div>
             <p>
-              play4win is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
+              B9.game is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
               live sport matches every month. Moreover, we support more than 400 different football leagues, other than
               just well-known professional leagues. The following league is supported: Greek League / Italian C League
               Cup / Serie A / Russian League / Croatian Cup / Bougainvillea/Leah Cup/Norway Cup/ Bundesliga/Roman
@@ -28,21 +28,20 @@
             </p>
             <p>
               Besides sport product, we offer a wide variety of product including live casino, live dealer, Esports
-              which you cannot missed. In order to satisfy members in Philippines. play4win carefully select a variety
-              of online games to provide you with the best game and platform choices. We continue to improve our
-              products and add more exciting new products, allowing you to enjoy first-class services in live
-              entertainment.
+              which you cannot missed. In order to satisfy members in Philippines. B9.game carefully select a variety of
+              online games to provide you with the best game and platform choices. We continue to improve our products
+              and add more exciting new products, allowing you to enjoy first-class services in live entertainment.
             </p>
             <div class="content-title-container">
               <span class="content-title">COMPANY PROFILE</span>
             </div>
             <p>
-              play4win holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro
+              B9.game holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro
               Manila. At present, we are expert in bookmaking, gaming technologies, and possessing a professional team
               of customer support and technical engineer. Through offering excellent products and high-quality customer
               services, we provide customers with best online entertainment experiences. Compare to land-based casino,
               we offer by far better odds! To maintain fairness of the games, when it comes down to picking a platform,
-              play4win with professional 24/7 customer service team, facilitating financial team, strong financial
+              B9.game with professional 24/7 customer service team, facilitating financial team, strong financial
               capacity will be your angel of choice. On top of that, we adopt the best encryption technology and
               firewall system to protect your security, privacy, and to ensure that you enjoy a fair and just gameplay.
               Due to the adoption of enterprise-level encryption technology (1024-bit RSA key exchange and 448-bit
@@ -99,7 +98,7 @@
                 parties.
               </li>
               <li>
-                play4win cooperates with multiple associations to ensure the fairness and integrity of sports
+                B9.game cooperates with multiple associations to ensure the fairness and integrity of sports
                 competitions, and to prevent artificial competitions. Therefore, all parties reserve the right to
                 monitor and share player betting records.
               </li>
@@ -167,12 +166,12 @@
                 address, telephone number, bank account and IP address.
               </li>
               <li>
-                Our offers are intended for recreational players only and play4win may in our sole discretion limit the
+                Our offers are intended for recreational players only and B9.game may in our sole discretion limit the
                 eligibility of customers to participate in any promotion.
               </li>
               <li>
                 We reserve the right to alter, amend or terminate this Promotion, or any aspect of it, at any time and
-                without prior notice. All play4win Terms & Conditions and Rules apply
+                without prior notice. All B9.game Terms & Conditions and Rules apply
               </li>
               <li>Only deposit applied for one promotion.</li>
               <li>
@@ -235,11 +234,11 @@
               <span class="menu-title">Compensation</span>
             </div>
             <p>
-              play4win's users hereby agree that when connect to our betting website, download or install our betting
+              B9.game's users hereby agree that when connect to our betting website, download or install our betting
               softwares. Place bet and/or use our service and/or betting information through any method that
               violate/against our regulation, and/or cause any damage, loss, claim fee to our shareholders, employees,
-              managers, directors, boards, licensees, distributors of play4win. The user shall be required to compensate
-              play4win in full The casino (all games) bet the highest payout to any member is Php1,000,000. If all
+              managers, directors, boards, licensees, distributors of B9.game. The user shall be required to compensate
+              B9.game in full The casino (all games) bet the highest payout to any member is Php1,000,000. If all
               non-deposited members have won the progressive jackpot before depositing, the winning pool will be
               considered invalid. (Including free betting members)
             </p>
@@ -250,13 +249,13 @@
             <div class="about-title-container">
               <span class="menu-title">Responsible Gambling</span>
             </div>
-            <p>We hope all our valued users have fun at play4win</p>
+            <p>We hope all our valued users have fun at B9.game</p>
             <p>Gambling is a form of entertainment and should not burden your financial and emotional life</p>
             <p>
               Borrowing money to play, overspending budget or embezzling money for other purposes is not only unwise,
               but also causes serious problems for you and the people around you.
             </p>
-            <p>We hope you have fun at Play4Win, so please bet responsibly and have fun!</p>
+            <p>We hope you have fun at B9.game, so please bet responsibly and have fun!</p>
           </div>
         </a-tab-pane>
       </a-tabs>
@@ -348,7 +347,7 @@ export default defineComponent({
       height: 8px;
       position: absolute;
       transform: rotate(45deg);
-      background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+      background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
       margin-left: -20px;
       margin-top: 5px;
     }
