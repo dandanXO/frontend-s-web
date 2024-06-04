@@ -43,7 +43,7 @@
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-02.png" /></div>
         </div>
 
-        <div class="details-item details-item__full">
+        <div class="details-item details-item">
           <div class="item-amount">
             Rs
             <span>{{ getRewardAmount("BET") }}</span>
@@ -51,6 +51,16 @@
           <div class="item-title">Bet</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-03.png" /></div>
         </div>
+
+        <div class="details-item details-item">
+          <div class="item-amount">
+            <span>{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
+          </div>
+          <div class="item-title">Eligible Refer</div>
+          <div class="item-icon"><img src="../assets/images/earn-money/details-icon-04.png" /></div>
+        </div>
+
+        <!-- <pre>memberDetail{{ memberDetail }}</pre> -->
 
         <!-- <div class="details-item">
           <div class="item-amount">
@@ -89,10 +99,24 @@
         </div>
 
         <div class="invite-share-social">
-          <div class="social-item"><img src="../assets/images/earn-money/social-whatsapp.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-instagram.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-tiktok.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-more.png" /></div>
+          <a class="social-item" :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+            <img src="../assets/images/earn-money/social-whatsapp.png" />
+          </a>
+          <a
+            class="social-item"
+            :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`"
+            target="_blank"
+          >
+            <img src="../assets/images/earn-money/social-instagram.png" />
+          </a>
+          <a
+            class="social-item"
+            :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`"
+            target="_blank"
+          >
+            <img src="../assets/images/earn-money/social-tiktok.png" />
+          </a>
+          <a class="social-item"><img src="../assets/images/earn-money/social-more.png" /></a>
         </div>
       </div>
 
@@ -109,55 +133,6 @@
               <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
             </tr>
           </template>
-          <!-- <tr>
-            <td>1</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>2~4</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>5~10</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>11~30</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>31~50</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>51~500</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>501~999</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>1000~3000</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>3001~9999</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>10000~999999</td>
-            <td>Rs 120.0</td>
-          </tr> -->
         </table>
       </div>
 
@@ -172,7 +147,7 @@
         </div>
       </div>
 
-      <div class="earn-money-friendcount">
+      <!-- <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tr>
             <td style="color: #8c968f; font-size: 120%">Player</td>
@@ -198,19 +173,49 @@
             </template>
           </template>
         </table>
+      </div> -->
+
+      <div class="earn-money-friendcount">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <tr>
+            <td style="color: #8c968f; font-size: 120%">Player</td>
+            <td style="color: #8c968f; font-size: 120%">Money</td>
+          </tr>
+        </table>
+        <div class="table-container">
+          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+            <template v-if="inviteesRecords && inviteesRecords.length === 0">
+              <tr>
+                <td colspan="2">No Records</td>
+              </tr>
+            </template>
+            <template v-else>
+              <template v-for="(item, index) in inviteesRecords" :key="index">
+                <tr>
+                  <td>
+                    <div class="player-details">
+                      <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                      {{ item.loginName }}
+                    </div>
+                  </td>
+                  <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+                </tr>
+              </template>
+            </template>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
 
-const hrefLink = ref("https://b9.game/refer/JnAlZ6");
 const $q = useQuasar();
 const store = userStore();
 
@@ -238,6 +243,9 @@ const copyHrefLink = () => {
 const oneTimeBonusSetting = ref([]);
 const memberDetail = ref([]);
 const latestInvitees = ref([]);
+const inviteesRecords = ref([]);
+let currentIndex = 0;
+let intervalId = null;
 
 const getOneTimeBonusSetting = () => {
   api
@@ -271,6 +279,8 @@ const getLatestInvitees = () => {
     .then((response) => {
       if (response.code === 0) {
         latestInvitees.value = response.data;
+        inviteesRecords.value = response.data.records;
+        // startDisplayingRows();
       }
     })
     .catch((e) => {
@@ -279,6 +289,7 @@ const getLatestInvitees = () => {
 };
 
 const selfTgurl = ref("");
+const waUrl = ref("");
 
 const getRewardAmount = (type) => {
   const rewards = memberDetail.value.rewardAmountByType;
@@ -287,6 +298,24 @@ const getRewardAmount = (type) => {
     return reward ? reward.totalAmount : 0;
   }
   return 0;
+};
+
+const startDisplayingRows = () => {
+  // Display the first item initially
+  if (currentIndex === 0) {
+    currentIndex++;
+  }
+
+  intervalId = setInterval(() => {
+    if (currentIndex < inviteesRecords.value.length) {
+      inviteesRecords.value.unshift(inviteesRecords.value[10]);
+      currentIndex++;
+    } else {
+      clearInterval(intervalId);
+      currentIndex = 0;
+      startDisplayingRows(); // Restart the loop
+    }
+  }, 1000);
 };
 
 onMounted(() => {
@@ -300,9 +329,15 @@ onMounted(() => {
   }
 
   api.get("/session/member/referralCode").then((res) => {
-    if (res.code === 0) selfTgurl.value = tgDomain + "refer/" + res.data;
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
   });
 });
+
+// onUnmounted(() => {
+//   clearInterval(scrollInterval.value);
+// });
 </script>
 
 <style scoped lang="scss">
@@ -502,6 +537,31 @@ onMounted(() => {
       width: calc(100% + 40px);
       margin-left: -20px;
       margin-right: -20px;
+      .table-container {
+        max-height: 200px; /* Adjust height as needed to show 5 rows */
+        overflow-y: auto;
+        position: relative;
+        pointer-events: none;
+
+        tr:first-child {
+          position: relative;
+
+          // &:after {
+          //   content: "";
+          //   background: #0e1311;
+          //   width: 100%;
+          //   height: 100%;
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   opacity: 0;
+          //   animation: blink 1.1s infinite;
+          // }
+        }
+      }
+      .table-container::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for better aesthetics */
+      }
       table {
         tr {
           &:nth-child(even) {
@@ -521,6 +581,31 @@ onMounted(() => {
         }
       }
     }
+
+    // .earn-money-friendcount {
+    //   margin-top: 16px;
+    //   width: calc(100% + 40px);
+    //   margin-left: -20px;
+    //   margin-right: -20px;
+    //   table {
+    //     tr {
+    //       &:nth-child(even) {
+    //         background: #ffffff0d;
+    //       }
+
+    //       .player-details {
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         gap: 8px;
+    //       }
+
+    //       td:last-child {
+    //         color: #70bc62;
+    //       }
+    //     }
+    //   }
+    // }
 
     .earn-money-sent-ytd {
       margin-top: 16px;
@@ -558,6 +643,18 @@ onMounted(() => {
         }
       }
     }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>

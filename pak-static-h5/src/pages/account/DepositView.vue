@@ -417,6 +417,8 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 async function onSelect(value) {
+  depositItems.forEach((item) => (item.isActive = false));
+
   isDisplay.value = false;
 
   clearInfo();
@@ -692,12 +694,14 @@ onActivated(() => {
   initPay();
   checkNewUser();
   loadInfo();
+  console.log("onActivated deposit");
 });
 
 onMounted(() => {
   initPay();
   checkNewUser();
   loadInfo();
+  console.log("onMounted deposit");
 });
 </script>
 

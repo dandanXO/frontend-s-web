@@ -48,7 +48,7 @@
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
-              <div class="order-col">
+              <div class="order-col q-mt-sm">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
                 </span>
@@ -79,7 +79,7 @@
             <div class="order-subrow">
               <div class="order-col">{{ e.paymentType }}</div>
               <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
                   {{ getDepositStatus(e.status) }}
                 </span>
               </div>
