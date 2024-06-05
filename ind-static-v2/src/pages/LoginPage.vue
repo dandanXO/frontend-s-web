@@ -30,8 +30,13 @@
                   label-color="brand"
                   autocomplete="username"
                   outlined
+                  placeholder="Phone number"
                   color="white"
-                ></q-input>
+                >
+                  <template v-slot:prepend>
+                    <img src="../assets/images/auth/phone.svg">
+                  </template>
+                </q-input>
               </template>
             </InputField>
 
@@ -55,6 +60,10 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     />
+                  </template>
+
+                  <template v-slot:prepend>
+                    <img src="../assets/images/auth/pass.svg">
                   </template>
                 </q-input>
               </template>
@@ -88,7 +97,7 @@
           <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
         </div>
 
-        <div style="margin-top: 30px;">
+        <div style="margin-top: 10px;">
           <PrimaryButton :onClick="onSubmit" :label="'Login'" />
         </div>
 
@@ -104,6 +113,10 @@
         &nbsp;
         <router-link class="form-text" to="/register" style="color: #00AE00">Create account</router-link>
       </div>
+    </div>
+
+    <div class="register-form-logo-img">
+      <img src="../assets/images/auth/auth-logo.png" />
     </div>
   </div>
 
@@ -544,11 +557,11 @@ export default defineComponent({
 }
 
 .login-form-wrapper {
-  padding: 20px;
+  padding: 20px 20px 10px;
 }
 
 .forgot-password {
-  margin: 8px 0px 0px;
+  margin: 5px 0px 0px;
   text-align: right;
 
   .form-text {
@@ -557,7 +570,7 @@ export default defineComponent({
 }
 
 .end-of-form-separator {
-  margin: 35px 0px 0px;
+  margin: 15px 0px 0px;
   border-color: #ffffff26;
 }
 
@@ -568,5 +581,12 @@ export default defineComponent({
 .form-text {
   color: #b3b0b8;
   text-decoration: none;
+}
+
+.register-form-logo-img {
+  img {
+    display: block;
+    width: 100%;
+  }
 }
 </style>
