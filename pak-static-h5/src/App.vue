@@ -260,7 +260,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: theSid,
-            siteCode: "iw2"
+            siteCode: "pak"
           }
         });
       }
