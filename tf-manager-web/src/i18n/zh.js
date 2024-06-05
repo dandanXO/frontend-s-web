@@ -434,6 +434,19 @@ export default {
     MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL: '唤醒人和被唤醒人相同注册信息',
     MEMBER_ALREADY_SUMMONED: '会员已被唤醒',
   },
+  lottery: {
+    status: {
+      BET: '下注',
+      WIN: '赢',
+      LOSS: '输',
+    },
+    prizeLevel: {
+      FIRST_PRIZE: '直选',
+      GROUP_THREE: '组三',
+      GROUP_SIX: '组六',
+      TWO_D: '2D',
+    }
+  },
   fields: {
     account: '账号',
     accountHolder: '账号持有者',
@@ -1712,6 +1725,8 @@ export default {
     affiliateBetRebateRecord: '代理投注返水记录',
     affiliateBetRebateDetails: '代理投注返水详情',
     adjustRebateAmount: '调整返水金额',
+    prizeLevel: '奖等',
+    addLotteryRecord: '新增彩票记录',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2356,6 +2371,9 @@ export default {
     'Member Summon Event': '精英召唤活动',
     'Member Summon List': '召唤列表',
     'Affiliate Bet Rebate Record': '代理投注返水记录',
+    'UEFA Lottery': 'UEFA 彩票',
+    'UEFA Lottery Record': 'UEFA 彩票记录',
+    'UEFA Lottery Result': 'UEFA 彩票成绩',
   },
   google: {
     google_auth_menu: '谷歌验证',

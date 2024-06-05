@@ -430,6 +430,19 @@ export default {
       'Member and summoner same register detail',
     MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
   },
+  lottery: {
+    status: {
+      BET: 'BET',
+      WIN: 'WIN',
+      LOSS: 'LOSS',
+    },
+    prizeLevel: {
+      FIRST_PRIZE: 'FIRST PRIZE',
+      GROUP_THREE: 'GROUP THREE',
+      GROUP_SIX: 'GROUP SIX',
+      TWO_D: '2D',
+    }
+  },
   fields: {
     account: 'Account',
     accountHolder: 'Account Holder',
@@ -1710,6 +1723,8 @@ export default {
     affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
     affiliateBetRebateDetails: 'Affiliate Bet Rebate Details',
     adjustRebateAmount: 'Adjust Rebate Amount',
+    prizeLevel: 'Prize Level',
+    addLotteryRecord: 'Add Lottery Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2394,6 +2409,9 @@ export default {
     'Member Summon Event': 'Member Summon Event',
     'Member Summon List': 'Member Summon List',
     'Affiliate Bet Rebate Record': 'Affiliate Bet Rebate Record',
+    'UEFA Lottery': 'UEFA Lottery',
+    'UEFA Lottery Record': 'UEFA Lottery Record',
+    'UEFA Lottery Result': 'UEFA Lottery Result',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
