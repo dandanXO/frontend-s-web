@@ -688,7 +688,7 @@ export default {
     totalBetMonth: "TOTAL BET OF MONTH",
     vipProgram: "VIP Program",
     exclusivePromotions: "EXCLUSIVE PROMTIONS AND BENEFITS",
-    "3timedeposit": "DEPOSIT 3 TIMES",
+    "3timedeposit": "DEPOSIT 1 TIME",
     proceedToDeposit: "Proceed to deposit",
     claim: "Claim",
     claimed: "Claimed",
