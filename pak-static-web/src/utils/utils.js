@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const MAIN = "MAIN";
 
 export const getRndInteger = (min, max) => {
@@ -37,3 +39,17 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+export const toGMT5 = (date, format = "YYYY-MM-DD HH:mm:ss") => {
+  return moment(date).utcOffset("+05:00").format(format);
+};
+
+export const addThousandsComma = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+};

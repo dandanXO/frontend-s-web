@@ -662,7 +662,8 @@ $link-color: #ffffff;
       color: #ffffff;
       transition: all;
       font-weight: bold;
-      background: transparent;
+      background: linear-gradient(91.02deg, rgba(255, 230, 0, 0.16) 0%, rgba(72, 167, 255, 0.16) 100%),
+        linear-gradient(270deg, #e84600 0%, #e8df00 100%);
       box-shadow: -1px 2px 4px 0px #ffffffcc inset;
       width: 130px;
       height: 48px;

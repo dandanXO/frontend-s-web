@@ -17,12 +17,11 @@ export default [
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "mailbox" */ "../views/account/MailboxView.vue")
   },
-  // {
-  //   path: "share",
-  //   name: "share",
-  //   component: () =>
-  //     import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue"),
-  // },
+  {
+    path: "discount",
+    name: "discount",
+    component: () => import(/* webpackChunkName: "share" */ "../views/account/DiscountView.vue")
+  },
   {
     path: "security-verified",
     name: "security-verified",

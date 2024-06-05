@@ -173,8 +173,8 @@ const loadPersonalMailbox = () => {
   if (mailboxState.active === "inbox") {
     const params = {
       type: null,
-      current: mailboxState.mailboxList[mailboxState.active].pageNum,
-      size: mailboxState.mailboxList[mailboxState.active].pageSize
+      current: null,
+      size: null
     };
     mailInbox(params)
       .then((response) => {

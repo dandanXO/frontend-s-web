@@ -8,7 +8,8 @@ import { reactive } from "vue";
 const TOKEN_KEY = "TOKEN";
 const DARK_MODE = "DARKMODE";
 export const globalStore = reactive({
-  isDarkMode: useLocalStorage(DARK_MODE, true),
+  // isDarkMode: useLocalStorage(DARK_MODE, true),
+  isDarkMode: false,
   isMenuActive: true
 });
 export const userStore = defineStore("userStore", {
