@@ -1,8 +1,8 @@
 <template>
     <div>
-      <div class="period">
-        活动时间: 2024/6/10-2024/6/20 23:59:59
-      </div>
+<!--      <div class="period">-->
+<!--        活动时间: 2024/6/10-2024/6/20 23:59:59-->
+<!--      </div>-->
     <q-tabs v-model="tabPosition" class="dragonboat-tabs">
       <q-tab name="duanwu" label="端午粽情"></q-tab>
       <q-tab name="fangzong" label="放粽不羁"></q-tab>
@@ -179,7 +179,7 @@
   font-family: 'Microsoft YaHei UI';
   width: 100%;
   white-space: nowrap;
-  
+
   @media (max-width: 400px) {
     font-size: 13px;
   }
