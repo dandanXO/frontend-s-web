@@ -16,7 +16,7 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              <span v-if="store.token">님 환영합니다 {{ store.nickName }}</span>
+              <span v-if="store.token">{{ store.nickName }}<br/>님 환영합니다 </span>
               <span v-else>로그인</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
