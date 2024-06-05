@@ -40,8 +40,7 @@
           class="column no-wrap flex-center"
           :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
           @click="gotoPromo(banner)"
-        >
-        </q-carousel-slide>
+        ></q-carousel-slide>
       </q-carousel>
     </div>
 
@@ -873,8 +872,8 @@
       </q-btn>
       <div class="sticky-container">
         <div class="line-title">LINE</div>
-        <img src="../assets/home/line-bg-thai-theme.png" class="line-img" />
-        <div class="line-bottom">line ID:@jolly88</div>
+        <img src="../assets/home/line-bg-new.png" class="line-img" />
+        <div class="line-bottom">line ID:@201zdzav</div>
       </div>
     </div>
 
