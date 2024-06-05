@@ -2,38 +2,41 @@
   <div class="fish-match-box">
     <div class="fish-match-container">
       <div class="fish-match-game-info-sub">
-        活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获 1,888 元。
+        活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获
+        1,888 元。
       </div>
       <div class="fish-match-game">
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">今日打码</div>
-            <div class="fish-match-game-detail">{{availableDraw || 11}} 元</div>
+            <div class="fish-match-game-detail">{{ availableDraw }} 元</div>
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{validBet || 11}} 次</div>
+            <div class="fish-match-game-detail">{{ validBet }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
           <img class="fish-1" :src="require(`../../../assets/promo/lh-fish-honbao/fish-1.png`)" />
           <div class="hongbao-1">
-            <img style="width: 266px;height: 280px;"  :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)" />
-            <div class="fish-open-hongbao" @click="tableRecordDialog = true;">立即开启</div>
+            <img
+              style="width: 266px; height: 280px"
+              :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)"
+            />
+            <div class="fish-open-hongbao" @click="tableRecordDialog = true">立即开启</div>
           </div>
           <img class="fish-2" :src="require(`../../../assets/promo/lh-fish-honbao/fish-2.png`)" />
         </div>
       </div>
       <div class="fish-match-game-bottom">
-        <div class="fish-match-game-bottom-left-title">
-          注：今日打码每 15 分钟更新一次
-        </div>
+        <div class="fish-match-game-bottom-left-title">注：今日打码每 15 分钟更新一次</div>
         <!-- <div class="fish-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div> -->
       </div>
       <div class="fish-match-game-info">
         <div class="title"></div>
         <div class="fish-match-game-info-sub">
-          活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获 1,888 元。
+          活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000
+          元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获 1,888 元。
         </div>
         <table class="fish-match-game-info-table">
           <tr>
@@ -73,16 +76,21 @@
           </tr>
         </table>
         <div class="fish-match-game-info-sub">
-          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000 档位各一次红包抽奖。
+          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000
+          档位各一次红包抽奖。
         </div>
       </div>
       <div class="fish-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500 元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取 1 次；
+            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500 元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取
+            1 次；
           </div>
-          <div class="item">2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20 分钟即可，若仍未正确，请联系客服查询；</div>
+          <div class="item">
+            2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20
+            分钟即可，若仍未正确，请联系客服查询；
+          </div>
           <div class="item">
             3.符合条件的会员请在当日点击活动页面【点击开启】按钮，次日累计抽奖次数清零，若超时未点击则视为放弃；
           </div>
@@ -90,26 +98,25 @@
             4.本活动根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P 地址视为同一账户，若有违规者，将不享受此红利；
+            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
-          <div class="item">
-            6.为避免文字理解差异，雷火电竟保留此活动最终解释权；
-          </div>
+          <div class="item">6.为避免文字理解差异，雷火电竟保留此活动最终解释权；</div>
         </div>
       </div>
-      <q-dialog v-model="tableRecordDialog" persistent>
-        <q-card class="confirm-vote-card">
-          <q-card-section class="q-mb-md row justify-center">
-            <div class="text-h6" v-if="submitParam.team === 'DRAW'">您确定要投"平局"吗？</div>
-            <div class="text-h6" v-else>您确定要把票投给 {{ submitParam.team }} 吗？</div>
-          </q-card-section>
+      <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
+        <div class="title">恭喜你抽中</div>
 
-          <q-card-actions align="center">
-            <div class="flex flex-center">
-              <q-btn class="q-mr-md" label="取消" color="warning" v-close-popup />
-              <q-btn color="blue" label="确定" @click="handleSubmitVote" />
+        <q-card class="confirm-vote-card">
+          <div class="close-btn" @click="tableRecordDialog = false"></div>
+          <div class="record-dialog-container">
+            <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
+            <div class="record-dialog-content-detail">
+              <span>{{ rewardMoney }}</span>
+              元
             </div>
-          </q-card-actions>
+            <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
+          </div>
         </q-card>
       </q-dialog>
     </div>
@@ -117,103 +124,37 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
-import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
-import { useQuasar } from "quasar";
-import {useLocalStorage} from "@vueuse/core"
-const $q = useQuasar();
+import { ref, onMounted, watch } from "vue";
 
+import { getHongbaoInfo, getHongbaoMoney } from "../../../api/promotion/fishHongbao";
+
+import { useLocalStorage } from "@vueuse/core";
+
+const availableDraw = ref(0);
+const validBet = ref(0);
 const tableRecordDialog = ref(false);
-const confirmVoteDialog = ref(false);
+const rewardMoney = ref(0);
 
-const matchList = ref([]);
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
-const recordList = ref([]);
-
-let submitParam = reactive({ matchId: 0, team: "" });
-
-const handleVoteClick = (selectedData) => {
-  submitParam = selectedData;
-  confirmVoteDialog.value = true;
-};
-
-const handleSubmitVote = () => {
-  console.log(submitParam);
-  submitNbaMatch(submitParam)
-    .then((res) => {
-      if (res.code === 0) {
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "投票成功！",
-          icon: "check_circle_outline"
-        });
-        getNbaMatchData();
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: res.message,
-          icon: "report_problem"
-        });
-      }
-    })
-    .finally(() => {
-      confirmVoteDialog.value = false;
-    });
-};
-
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-const displayTeamVictory = (record) => {
-  if (record.teamChosen === "DRAW") return "平局";
-  return record.teamChosen + "胜";
-};
-const displayGuessResult = (record) => {
-  if (record.status !== "SETTLED" && record.status !== "PENDING_SETTLE") {
-    return { text: "结果未出", color: "#7a8eb9" };
-  } else if (record.teamChosen === "DRAW") {
-    if (record.homeTeamResult === record.awayTeamResult) {
-      return { text: "正确", color: "#51acff" };
-    } else {
-      return { text: "错误", color: "#ff5151" };
-    }
-  } else if (record.homeTeam === record.teamChosen) {
-    if (record.homeTeamResult > record.awayTeamResult) {
-      return { text: "正确", color: "#51acff" };
-    } else {
-      return { text: "错误", color: "#ff5151" };
-    }
-  } else if (record.awayTeam === record.teamChosen) {
-    if (record.homeTeamResult < record.awayTeamResult) {
-      return { text: "正确", color: "#51acff" };
-    } else {
-      return { text: "错误", color: "#ff5151" };
-    }
-  } else {
-    return { text: "", color: "#51acff" };
+const getHongbao = async () => {
+  const res = await getHongbaoInfo();
+  console.log(res);
+  if (res.code === 0) {
+    availableDraw.value = res.data.availableDraw;
+    validBet.value = res.data.validBet;
   }
 };
 
-const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
-  matchList.value = res.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
-    awayTeamIcon: imgURL + res.awayTeamIcon,
-    homeTeamIcon: imgURL + res.homeTeamIcon
-  }));
-};
-
-onMounted(getNbaMatchData);
+onMounted(getHongbao);
 
 watch(tableRecordDialog, async () => {
   if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
-    recordList.value = res.data.map((res) => ({
-      ...res,
-      updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
-    }));
+    const res = await getHongbaoMoney();
+    console.log(res);
+    if (res.code === 0) {
+      rewardMoney.value = res.data;
+    }
   }
 });
 </script>
@@ -240,12 +181,12 @@ watch(tableRecordDialog, async () => {
   background-color: #fff;
   position: relative;
   margin-bottom: 12px;
-  .fish-match-content-warp{
+  .fish-match-content-warp {
     display: flex;
     justify-content: space-around;
     flex-direction: row;
   }
-  .fish-match-game-content{
+  .fish-match-game-content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -268,22 +209,22 @@ watch(tableRecordDialog, async () => {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
   }
-  .fish-match-game-detail{
+  .fish-match-game-detail {
     width: 158px;
     height: 32px;
     background: rgba(81, 172, 255, 0.3);
-    border: 1px solid #51ACFF;
+    border: 1px solid #51acff;
     font-size: 14px;
     font-weight: 500;
     line-height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #479AF7;
+    color: #479af7;
     border-radius: 8px;
   }
 }
-.fish-match-honbao-content{
+.fish-match-honbao-content {
   max-height: 288px;
   display: flex;
   justify-content: center;
@@ -301,16 +242,16 @@ watch(tableRecordDialog, async () => {
     position: relative;
     width: 220px !important;
     height: 240px !important;
-    .fish-open-hongbao{
+    .fish-open-hongbao {
       background-image: url("../../../assets/promo/lh-fish-honbao/hongbao-open-btn.png");
-      background-size: cover;  
+      background-size: cover;
       width: 120px;
       height: 32px;
       border-radius: 12px;
       position: absolute;
       bottom: 2%;
       right: 18%;
-      color: #F22A00;
+      color: #f22a00;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -319,11 +260,11 @@ watch(tableRecordDialog, async () => {
       line-height: 22.4px;
       text-align: left;
     }
-    .fish-open-hongbao:hover{
-      opacity:0.8;
+    .fish-open-hongbao:hover {
+      opacity: 0.8;
     }
-    .fish-open-hongbao:active{
-      filter: brightness(0.8) ;
+    .fish-open-hongbao:active {
+      filter: brightness(0.8);
       transform: translate(0px, 1px);
     }
   }
@@ -512,11 +453,11 @@ watch(tableRecordDialog, async () => {
     font-weight: 400;
     line-height: 18px;
     color: #000000;
-    background-color: #F2F8FE !important;
+    background-color: #f2f8fe !important;
   }
 }
-        
-.fish-match-game-info-sub{
+
+.fish-match-game-info-sub {
   font-family: PingFang TC;
   font-size: 12px;
   font-weight: 400;
@@ -558,26 +499,92 @@ watch(tableRecordDialog, async () => {
 }
 
 .fish-match-table-record-dialog {
-  width: 1000px;
-  height: 652px;
+  .confirm-vote-card {
+    width: 360px;
+    height: 360px;
+    background-color: #fff3df;
+    position: relative;
+  }
+  .close-btn {
+    background: url(../../../assets/promo/lh-fish-honbao/close-btn.png);
+    content-visibility: hidden;
+    background-size: contain;
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    right: 24px;
+    position: absolute;
+  }
 
   .record-dialog-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    background-color: #fff;
-
     width: 100%;
-    height: 100%;
+    height: 320px;
+    .record-dialog-content-title {
+      color: #ea5046;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16.63px;
+      letter-spacing: 0.2em;
+      text-align: center;
+    }
+    .record-dialog-content-detail {
+      font-family: FZHanZhenGuangBiaoS-GB;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color: #ea5046;
+      span {
+        font-size: 48px;
+      }
+    }
+    .hongbao-finish-btn {
+      width: 256px;
+      height: 44px;
+      top: 634px;
+      left: 832px;
+      gap: 0px;
+      border-radius: 100px 0px 0px 0px;
+      opacity: 0px;
+      background-color: #ea574e;
+      font-family: FZHanZhenGuangBiaoS-GB;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      border-radius: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   .title {
-    background-image: url("../../../assets/promo/lh-nba24-match/record-title.png");
+    background-image: url("../../../assets/promo/lh-fish-honbao/info-title.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 265px;
-    height: 20px;
-    margin-top: 20px;
+    width: 244px;
+    height: 44px;
+    font-size: 18px;
+    color: #fff;
+    font-family: FZHanZhenGuangBiaoS-GB;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0.2em;
+    text-align: center;
+    position: absolute;
+    top: 275px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
   }
 
   .record-table {
