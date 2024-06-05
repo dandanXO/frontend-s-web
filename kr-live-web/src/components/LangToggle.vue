@@ -9,9 +9,9 @@
   import { i18nStore } from "src/router/language";
 
   const showLangToggle = ref(process.env.NODE_ENV === "development");
-  const { setLanguage } = i18nStore();
+  const { setLanguage, languageVal } = i18nStore();
   
-  const lang = ref('kr');
+  const lang = ref(languageVal);
 
   const toggleLang = () => {
     if(lang.value === 'kr') {

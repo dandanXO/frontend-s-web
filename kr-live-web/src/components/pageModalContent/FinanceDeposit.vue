@@ -22,14 +22,14 @@
           </q-btn>
         </div>
         <div class="line">
-          <span>은행 계좌:</span>
+          <span>이름:</span>
           <input readonly class="info" ref="subMsg1" :value="submitMessage[1]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
             {{ copybtntxt1 }}
           </q-btn>
         </div>
         <div class="line">
-          <span>이름:</span>
+          <span>은행 계좌:</span>
           <input readonly class="info" ref="subMsg2" :value="submitMessage[2]" v-on:focus="$event.target.select()" />
           <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
             {{ copybtntxt2 }}
