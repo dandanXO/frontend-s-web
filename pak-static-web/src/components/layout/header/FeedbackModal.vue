@@ -150,7 +150,7 @@ onMounted(() => {
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
     });
 });
 </script>
@@ -161,7 +161,6 @@ onMounted(() => {
   padding: 13px 16px;
 
   .feedback-modal-title {
-    font-family: Poppins;
     font-size: 18px;
     font-weight: 700;
     line-height: 20.92px;

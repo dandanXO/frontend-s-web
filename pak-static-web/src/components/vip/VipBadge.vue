@@ -52,7 +52,6 @@ $bg-list: linear-gradient(103.8deg, #f4e457 0.82%, #c4ba5d 61.53%, #f4e457 98.77
   padding: 16px 19px;
   position: relative;
   border-radius: 10px;
-  font-family: Inter;
   font-size: 10px;
   font-weight: 600;
   line-height: 14px;
@@ -80,7 +79,6 @@ $bg-list: linear-gradient(103.8deg, #f4e457 0.82%, #c4ba5d 61.53%, #f4e457 98.77
 
   .vip-badge-title {
     margin-bottom: 13px;
-    font-family: Lilita One;
     font-size: 24px;
     font-weight: 400;
     line-height: 27.43px;

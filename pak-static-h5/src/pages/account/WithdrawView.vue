@@ -613,16 +613,30 @@ const checkNewUser = () => {
   }
 };
 
+const checkBankcardEmpty = () => {
+  if (bankCardList.value.length === 0) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "Please add bank / virtual account for withdrawal",
+      icon: "report_problem"
+    });
+    router.push(`/account/bank`);
+  }
+};
+
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
+  checkBankcardEmpty();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
+  checkBankcardEmpty();
 });
 
 const isValidCardNumber = () => {

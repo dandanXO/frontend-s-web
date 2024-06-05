@@ -60,17 +60,14 @@ export default defineComponent({
         .page-headline {
           font-size: 150px;
           line-height: 150px;
-          font-family: Wave;
         }
         .page-subline {
           font-size: 60px;
           line-height: 60px;
           margin-bottom: 10px;
-          font-family: Wave;
         }
         .page-blend {
           background-image: linear-gradient(to right, #de4545, #db7e42);
-          font-family: Wave;
 
           font-size: 60px;
           line-height: 60px;
