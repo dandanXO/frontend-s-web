@@ -100,6 +100,23 @@
           </template>
         </div>
       </div> -->
+      <div class="station-notice-wrapper container">
+        <div class="station-notice-container">
+          <img src="@/assets/images/common/volume-up.svg" />
+          <div class="station-notice-box">
+            <div class="station-notice">
+              <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
+                <div v-if="announcementList">
+                  <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                    {{ a.content }}
+                  </span>
+                </div>
+              </marquee-text>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="center-content">
         <SectionWrapper title="🔥HOT" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
@@ -136,22 +153,6 @@
             </a>
           </div>
         </SectionWrapper>
-        <!-- <div class="station-notice-wrapper container">
-          <div class="station-notice-container">
-            <img src="@/assets/images/common/volume-up.svg" />
-            <div class="station-notice-box">
-              <div class="station-notice">
-                <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
-                  <div v-if="announcementList">
-                    <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                      {{ a.content }}
-                    </span>
-                  </div>
-                </marquee-text>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
         <!--Jackpot-->
         <!-- <div class="jackpot container">
@@ -265,6 +266,7 @@
       :footer="null"
       centered
       title="Announcements"
+      :style="{ padding: 0 }"
     >
       <a-tabs v-model:activeKey="announcementActive" class="announcementTabs" @change="announcementTabChange">
         <a-tab-pane v-for="tab in announcementTypes" :key="tab.id" :tab="tab.name">
@@ -878,6 +880,7 @@ onMounted(async () => {
 
     .ant-modal-content {
       width: 95%;
+      background-color: #131313;
 
       .ant-modal-header {
         border: 0;
@@ -887,10 +890,10 @@ onMounted(async () => {
 
         .ant-modal-title {
           font-family: "Poppins Bold";
-          color: #000;
           font-size: 30px;
           text-align: center;
           padding-top: 20px;
+          color: #ffffff;
         }
       }
 
@@ -911,7 +914,7 @@ onMounted(async () => {
 
             &.ant-tabs-tab-active {
               padding: 2px 5px;
-              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+              background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
               background-clip: text;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
@@ -936,7 +939,7 @@ onMounted(async () => {
 
           .ant-collapse > .ant-collapse-item > .ant-collapse-header {
             border-bottom: 1px solid #83a3ca33;
-            color: #2b2b82;
+            color: #ffffff;
             font-family: "Poppins Bold";
             font-size: 18px;
             font-weight: 700;
@@ -1339,7 +1342,7 @@ $link-color: #db7e42;
         overflow: hidden;
         margin-left: 10px;
         width: 100%;
-        justify-content: flex-start;
+        padding: 10px 0;
       }
 
       .station-notice {

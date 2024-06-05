@@ -13,20 +13,23 @@
             @change="handleFilterChange"
           />
           <div class="finance-record-wrapper deposit">
-            <div v-for="(record, index) in dataState.deposit" :key="index" class="finance-record-item">
-              <span class="finance-record-item__title">{{ record.serialNumber }}</span>
-              <span class="finance-record-item__status" :class="record.status">
-                <!-- TODO: check status code -->
-                <template v-if="record.status === 'PENDING'">Pending</template>
-                <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
-                <template v-else-if="record.status === 'REJECTED'">Rejected</template>
-                <template v-else-if="record.status === 'CLOSED'">Closed</template>
-                <template v-else-if="record.status === 'LOSS'">Loss</template>
-                <template v-else>{{ record.status }}</template>
-              </span>
-              <span class="finance-record-item__date">{{ moment(record.depositDate).format("MM/DD/YYYY") }}</span>
-              <span class="finance-record-item__amount">+{{ record.depositAmount.toFixed(2) }}</span>
-            </div>
+            <template v-if="dataState.deposit.length">
+              <div v-for="(record, index) in dataState.deposit" :key="index" class="finance-record-item">
+                <span class="finance-record-item__title">{{ record.serialNumber }}</span>
+                <span class="finance-record-item__status" :class="record.status">
+                  <!-- TODO: check status code -->
+                  <template v-if="record.status === 'PENDING'">Pending</template>
+                  <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
+                  <template v-else-if="record.status === 'REJECTED'">Rejected</template>
+                  <template v-else-if="record.status === 'CLOSED'">Closed</template>
+                  <template v-else-if="record.status === 'LOSS'">Loss</template>
+                  <template v-else>{{ record.status }}</template>
+                </span>
+                <span class="finance-record-item__date">{{ moment(record.depositDate).format("MM/DD/YYYY") }}</span>
+                <span class="finance-record-item__amount">+{{ record.depositAmount.toFixed(2) }}</span>
+              </div>
+            </template>
+            <NoData v-else />
           </div>
           <!-- <div>
             <a-form layout="inline" :model="searchForm.deposit">
@@ -128,20 +131,23 @@
             @change="handleFilterChange"
           />
           <div class="finance-record-wrapper withdraw">
-            <div v-for="(record, index) in dataState.withdraw" :key="index" class="finance-record-item">
-              <span class="finance-record-item__title">{{ record.serialNumber }}</span>
-              <span class="finance-record-item__status" :class="record.status">
-                <!-- TODO: check status code -->
-                <template v-if="record.status === 'PENDING'">Pending</template>
-                <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
-                <template v-else-if="record.status === 'REJECTED'">Rejected</template>
-                <template v-else-if="record.status === 'CLOSED'">Closed</template>
-                <template v-else-if="record.status === 'LOSS'">Loss</template>
-                <template v-else>{{ record.status }}</template>
-              </span>
-              <span class="finance-record-item__date">{{ moment(record.withdrawDate).format("MM/DD/YYYY") }}</span>
-              <span class="finance-record-item__amount">-{{ record.withdrawAmount.toFixed(2) }}</span>
-            </div>
+            <template v-if="dataState.withdraw.length">
+              <div v-for="(record, index) in dataState.withdraw" :key="index" class="finance-record-item">
+                <span class="finance-record-item__title">{{ record.serialNumber }}</span>
+                <span class="finance-record-item__status" :class="record.status">
+                  <!-- TODO: check status code -->
+                  <template v-if="record.status === 'PENDING'">Pending</template>
+                  <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
+                  <template v-else-if="record.status === 'REJECTED'">Rejected</template>
+                  <template v-else-if="record.status === 'CLOSED'">Closed</template>
+                  <template v-else-if="record.status === 'LOSS'">Loss</template>
+                  <template v-else>{{ record.status }}</template>
+                </span>
+                <span class="finance-record-item__date">{{ moment(record.withdrawDate).format("MM/DD/YYYY") }}</span>
+                <span class="finance-record-item__amount">-{{ record.withdrawAmount.toFixed(2) }}</span>
+              </div>
+            </template>
+            <NoData v-else />
           </div>
           <!-- <div>
             <a-form layout="inline" :model="searchForm.withdraw">
@@ -482,6 +488,7 @@ import { getPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
 import { message } from "ant-design-vue";
+import NoData from "@/components/common/NoData.vue";
 
 const dateRangeOptions = ref([
   { value: "1d", label: "1 Days" },
@@ -1003,10 +1010,10 @@ const handleFilterChange = () => {
     case "1d":
       break;
     case "3d":
-      startDate.setDate(startDate.getDate() - 2);
+      startDate.setDate(startDate.getDate() - 3);
       break;
     case "7d":
-      startDate.setDate(startDate.getDate() - 6);
+      startDate.setDate(startDate.getDate() - 7);
       break;
   }
   const params = {
@@ -1015,6 +1022,7 @@ const handleFilterChange = () => {
   };
   loadRecords(recordActive.value, params).then((res) => console.log(res));
 };
+
 onMounted(() => {
   handleFilterChange();
 });
@@ -1199,6 +1207,7 @@ const humanDatetime = (ts) => {
   }
 
   &.deposit {
+    min-height: unset;
     > div {
       height: unset;
     }

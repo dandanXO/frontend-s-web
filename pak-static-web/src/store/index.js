@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { login, logout } from "@/api/index/login";
-import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { getUnreadTotal, loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage, useLocalStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { reactive } from "vue";
@@ -32,7 +32,8 @@ export const userStore = defineStore("userStore", {
       isAffiliate2: false,
       isAffiliate3: false,
       profilePhoto: "",
-      accountModalVisible: false
+      accountModalVisible: false,
+      unreadInboxMail: 0
     };
   },
   actions: {
@@ -74,6 +75,13 @@ export const userStore = defineStore("userStore", {
       if (this.token) {
         loadBalance(MAIN).then((ret) => {
           this.balance = ret.data;
+        });
+      }
+    },
+    getUnreadNotification() {
+      if (this.token) {
+        getUnreadTotal().then((res) => {
+          if (res.code === 0) this.unreadInboxMail = res.data;
         });
       }
     },

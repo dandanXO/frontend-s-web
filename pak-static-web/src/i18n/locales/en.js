@@ -14,7 +14,7 @@ export default {
               label: "Phone",
               error: {
                 len: "Invalid phone number",
-                required: "Phone is required"
+                required: "Phone number is required"
               },
               placeholder: "Please enter your account or mobile number"
             },
@@ -36,7 +36,7 @@ export default {
               label: "Phone",
               error: {
                 len: "Invalid phone number",
-                required: "Phone is required"
+                required: "Phone number is required"
               },
               placeholder: "Please enter your account or mobile number"
             },

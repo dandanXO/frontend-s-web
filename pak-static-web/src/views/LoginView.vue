@@ -7,6 +7,7 @@
           <a-input v-model:value="loginForm.loginName" placeholder="Login name">
             <template #prefix>
               <RiUserFill />
+              <span style="color: #ffffff">+92</span>
             </template>
           </a-input>
         </a-form-item>
@@ -44,15 +45,15 @@
         </div>
       </a-form>
       <div class="txt-center">
-        Not on Play4Win yet?
+        Not on B9.GAME yet?
         <router-link class="forget-pwd-tip" to="/register">Register Now</router-link>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
+<script setup>
+import { onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode } from "@/api/index/login";
@@ -62,121 +63,80 @@ import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
-export default defineComponent({
-  components: {
-    RiUserFill, RiLock2Fill, RiShieldCheckFill
-  },
-  setup() {
-    const isSpinWheel = ref(true);
-    const store = userStore();
-    const router = useRouter();
-    const route = useRoute();
-    const formRef = ref();
-    const loginForm = reactive({
-      loginName: "",
-      password: "",
-      // captchaCode: "",
-      // codeId: ""
-    });
-    const verificationImg = ref("");
-    onMounted(() => {
-      // getCode();
-    });
-    const getCode = () => {
-      loginForm.captchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          verificationImg.value = "data:image/png;base64," + res.data.img;
-          loginForm.codeId = res.data.id;
-        }
-      }).catch((e) => {
-        console.log(e.message);
-      });
-    };
-    const rules = {
-      loginName: [
-        {
-          required: true,
-          message: "User name is required",
-          trigger: "blur"
-        },
-        {
-          min: 6,
-          max: 12,
-          message: "Length should be 6 to 12",
-          trigger: "blur"
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: "Password is required",
-          trigger: "blur"
-        }
-      ],
-      // captchaCode: [
-      //   {
-      //     required: true,
-      //     message: "Verification code is required",
-      //     trigger: "blur"
-      //   },
-      //   {
-      //     min: 4,
-      //     max: 4,
-      //     message: "Length should be 4",
-      //     trigger: "change"
-      //   }
-      // ]
-    };
-    const loadingLogin = ref(false)
-    const onSubmit = () => {
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-
-        formRef.value.validate().then(() => {
-          loadingLogin.value = true
-          store.memberLogin({
-            loginName: loginForm.loginName,
-            password: loginForm.password,
-            sid: sidParam,
-            // captchaCode: loginForm.captchaCode,
-            // codeId: loginForm.codeId
-          }).then(() => {
-            const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-          router.push(jumpUrl);
-          loadingLogin.value = false
-          }).catch((error) => {
-            console.log(error.message);
-            loadingLogin.value = false
-            // getCode();
-          });
-        });
-      })();
-    };
-    const resetForm = () => {
-      formRef.value.resetFields();
-    };
-    return {
-      formRef,
-      loginForm,
-      rules,
-      onSubmit,
-      resetForm,
-      verificationImg,
-      // getCode,
-      loadingLogin,
-      isSpinWheel
-    };
-  }
+const isSpinWheel = ref(true);
+const store = userStore();
+const router = useRouter();
+const route = useRoute();
+const formRef = ref();
+const loginForm = reactive({
+  loginName: "",
+  password: ""
+  // captchaCode: "",
+  // codeId: ""
 });
+const verificationImg = ref("");
+onMounted(() => {
+  // getCode();
+});
+const getCode = () => {
+  loginForm.captchaCode = "";
+  getVerificationCode()
+    .then((res) => {
+      if (res.code === 0) {
+        verificationImg.value = "data:image/png;base64," + res.data.img;
+        loginForm.codeId = res.data.id;
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    });
+};
+const rules = ref({
+  loginName: [
+    { len: 11, message: "Invalid phone number" },
+    { required: true, message: "Phone number is required" }
+  ],
+  password: [{ required: true, message: "Password is required" }]
+});
+const loadingLogin = ref(false);
+const onSubmit = () => {
+  const fpPromise = FingerprintJS.load();
+  (async () => {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const excludes = { value: ["timezone", "timeZoneOffset"] };
+    const allComponents = { ...result.components };
+    excludes.value.forEach((element) => {
+      delete allComponents[element];
+    });
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+
+    formRef.value.validate().then(() => {
+      loadingLogin.value = true;
+      store
+        .memberLogin({
+          loginName: loginForm.loginName,
+          password: loginForm.password,
+          sid: sidParam
+          // captchaCode: loginForm.captchaCode,
+          // codeId: loginForm.codeId
+        })
+        .then(() => {
+          const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+          router.push(jumpUrl);
+          loadingLogin.value = false;
+        })
+        .catch((error) => {
+          console.log(error.message);
+          loadingLogin.value = false;
+          // getCode();
+        });
+    });
+  })();
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+};
 </script>
 <style scoped lang="scss">
 .login-container {
@@ -207,7 +167,7 @@ export default defineComponent({
   align-items: center;
   flex-direction: column;
   .ant-btn.common-btn {
-    background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     width: 100%;
     color: #ffffff;
   }
