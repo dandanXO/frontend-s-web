@@ -103,7 +103,7 @@
                   lazy-rules
                   ref="ifscRef"
                   placeholder="Please insert IFSC"
-                  v-model="bankCardInfo.ifsc"
+                  v-model="bankCardInfo.cardAddress"
                   hide-bottom-space
                   :rules="[(val) => (val && val.length > 0) || 'Please insert IFSC']"
                 ></q-input>
