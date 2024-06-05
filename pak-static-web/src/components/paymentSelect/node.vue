@@ -388,7 +388,6 @@ $node-color: #dd4645;
       min-width: 6rem;
       // width: 140px;
       font-weight: 700;
-      font-family: "Arial";
       .payment-method-wrapper {
         display: none;
       }

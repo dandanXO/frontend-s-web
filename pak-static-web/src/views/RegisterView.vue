@@ -962,7 +962,6 @@ function charType(num) {
   .userreg-text {
     margin: 30px auto 40px;
     font-size: 24px;
-    font-family: "Poppins Bold";
     text-align: left;
 
     &.title-sub {
@@ -1051,8 +1050,7 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: white;
+   color: white;
   }
 
   span.weak-pwd {

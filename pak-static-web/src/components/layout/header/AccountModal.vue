@@ -77,6 +77,7 @@ const onSubmit = () => {};
 </script>
 <style scoped lang="scss">
 .account-modal-wrapper {
+  font-family: "Inter", Arial,sans-serif;
   display: flex;
   padding: 40px;
   align-items: center;

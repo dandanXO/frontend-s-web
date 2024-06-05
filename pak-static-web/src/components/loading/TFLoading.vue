@@ -156,7 +156,6 @@ $loadingwidth: 300px;
   font-size: 18px;
   width: 100%;
   text-align: center;
-  font-family: Baloo Bhaina;
   margin-top: 10px;
 }
 @keyframes pgs {

@@ -79,7 +79,7 @@ watch(
   color: #ffffff;
 }
 :deep(.el-tabs__item.is-active) {
-  font-family: "Poppins Bold";
+
 }
 :deep(.el-tabs__active-bar.is-top) {
   background: #70bc62;

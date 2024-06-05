@@ -80,7 +80,6 @@ defineExpose({
   .ant-modal-content {
     background: #ffffff;
     .title {
-      font-family: "Poppins Bold";
       font-size: 30px;
     }
     .innercontents {

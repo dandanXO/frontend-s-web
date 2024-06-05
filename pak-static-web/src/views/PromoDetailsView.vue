@@ -75,7 +75,7 @@ export default defineComponent({
           border-radius: 20px;
           margin-bottom: 10px;
           .pesos {
-            font-family: sans-serif;
+
             font-weight: bold;
           }
         }
