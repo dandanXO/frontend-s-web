@@ -1,6 +1,7 @@
 export default {
   lang: {
     // login start
+    login: "Login",
     login_account: "Account",
     login_password: "Password",
     login_captcha: "Captcha",
@@ -24,8 +25,14 @@ export default {
     reg_check_captcha: "Captcha Code Check",
     reg_enter_captcha: "Enter captcha code",
     // register end
+    // menu start
+    menu_announcement: "Announcement",
+    menu_deposit: "Deposit",
+    menu_withdraw: "Withdraw",
+    menu_message: "Message",
+    menu_customer_service: "Customer Service",
+    // menu end
     langVal: "en",
-    login: "Login",
     register: "Register",
     personal_information: "Personal Information",
     card_account_cannot_empty: "Card Account cannot be empty.",
@@ -362,6 +369,7 @@ export default {
     enter_lastname: "Please enter your name.",
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
+    ok_btn: "Okay",
     close_btn: "Close",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",

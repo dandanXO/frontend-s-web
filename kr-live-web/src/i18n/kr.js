@@ -1,6 +1,7 @@
 export default {
   lang: {
     // login start
+    login: "로그인",
     login_account: "계정",
     login_password: "암호",
     login_captcha: "보안 문자",
@@ -25,8 +26,14 @@ export default {
     reg_check_captcha: "Captcha 코드 확인",
     reg_enter_captcha: "입력하다 Captcha",
     // register end
+    // menu start
+    menu_announcement: "공지사항",
+    menu_deposit: "충전",
+    menu_withdraw: "환전",
+    menu_message: "쪽지함",
+    menu_customer_service: "고객센터",
+    // menu end
     langVal: "en",
-    login: "Login",
     register: "Register",
     personal_information: "Personal Information",
     card_account_cannot_empty: "카드 계좌는 비워둘 수 없습니다.",
@@ -363,6 +370,7 @@ export default {
     enter_lastname: "Please enter your name.",
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
+    ok_btn: "Okay",
     close_btn: "Close",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
