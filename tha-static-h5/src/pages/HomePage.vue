@@ -873,7 +873,7 @@
       <div class="sticky-container">
         <div class="line-title">LINE</div>
         <img src="../assets/home/line-bg-new.png" class="line-img" />
-        <div class="line-bottom">line ID:@201zdzav</div>
+        <div class="line-bottom">line ID:@255xzyib</div>
       </div>
     </div>
 
