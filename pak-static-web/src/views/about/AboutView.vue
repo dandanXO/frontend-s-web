@@ -329,9 +329,7 @@ export default defineComponent({
   .about-title-container {
     position: relative;
     font-size: 30px;
-
     margin-bottom: 30px;
-    font-family: "Poppins Bold";
     color: #ffffff;
   }
   li,
@@ -361,7 +359,6 @@ export default defineComponent({
     .content-title {
       position: relative;
       font-size: 20px;
-      font-family: "Poppins Bold";
       text-transform: uppercase;
       // &::before,
       // &::after {
@@ -424,7 +421,6 @@ export default defineComponent({
 
 .about-container :deep(.ant-tabs .ant-tabs-nav .ant-tabs-tab-active) {
   color: #ffffff;
-  font-family: "Poppins Medium";
   background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
 }
 
