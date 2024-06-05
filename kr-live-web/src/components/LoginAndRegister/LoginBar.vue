@@ -24,26 +24,17 @@
               </div>
             </div>
             <div class="sidebar-section top">
-              <router-link
-                class="sidebar-section-item"
-                to="/?page=personal/info"
-              >
+              <router-link class="sidebar-section-item" to="/?page=personal/info">
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
-                <div class="info-text">출금</div>
+                <div class="info-text">마이페이지</div>
               </router-link>
             </div>
             <div class="sidebar-section middle">
-              <router-link
-                class="sidebar-section-item"
-                to="/?page=finance/deposit"
-              >
+              <router-link class="sidebar-section-item" to="/?page=finance/deposit">
                 <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
                 <div class="info-text">입금</div>
               </router-link>
-              <router-link
-                class="sidebar-section-item"
-                to="/?page=finance/withdraw"
-              >
+              <router-link class="sidebar-section-item" to="/?page=finance/withdraw">
                 <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
                 <div class="info-text">출금</div>
               </router-link>
@@ -60,17 +51,14 @@
                 <div class="info-text">알전환</div>
               </div> -->
             </div>
-            <div class="separator"/>
+            <div class="separator" />
             <div class="icon-section-label">메뉴</div>
           </div>
-          <div
-            v-for="(item, index) in iconInfo"
-            :key="index"
+          <div v-for="(item, index) in iconInfo" :key="index"
             @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
-            class="credit-info cursor-pointer"
-          >
+            class="credit-info cursor-pointer">
             <img :src="item.iconUrl" alt="" />
-            <div class="info-text">{{ item.info }}</div>
+            <div class="info-text">{{ $t(item.info) }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
             <div class="primary-button red" @click.stop="logout">
@@ -94,8 +82,11 @@ import { reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
+
 const store = userStore();
 const $q = useQuasar();
+const { t } = useI18n();
 
 const router = useRouter();
 
@@ -126,7 +117,7 @@ const iconInfo = reactive([
   //   }
   // },
   {
-    info: "공지사항",
+    info: 'lang.menu_announcement',
     iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     goPage: () => {
       router.push(`/?page=notify`);
@@ -140,14 +131,14 @@ const iconInfo = reactive([
   //   }
   // },
   {
-    info: "충전",
+    info: "lang.menu_deposit",
     iconUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     goPage: () => {
       router.push(`/?page=finance/deposit`);
     }
   },
   {
-    info: "환전",
+    info: "lang.menu_withdraw",
     iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     goPage: () => {
       router.push(`/?page=finance/withdraw`);
@@ -161,14 +152,14 @@ const iconInfo = reactive([
   //   }
   // },
   {
-    info: "쪽지함",
+    info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
   },
   {
-    info: "고객센터",
+    info: "lang.menu_customer_service",
     iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
     goPage: () => {
       window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
@@ -182,7 +173,6 @@ const iconInfo = reactive([
 .top-header {
   display: flex;
   justify-content: space-between;
-  background: salmon;
   width: 100%;
   position: fixed;
   top: 0;
@@ -214,6 +204,7 @@ const iconInfo = reactive([
     background: rgba(18, 17, 33, 0.6);
   }
 }
+
 .container {
   // background: transparent;
   width: 100%;
@@ -239,7 +230,7 @@ const iconInfo = reactive([
   display: flex;
   flex-direction: column;
   overflow-x: auto;
-  
+
   @media (min-width: 769px) {
     width: 1280px;
     flex-direction: row;
@@ -249,16 +240,6 @@ const iconInfo = reactive([
 }
 
 .left-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-  width: 100%;
-  height: 68px;
-  // background: linear-gradient(#292b31, #191b1e);
-  border-width: 1px 0px 1px 0px;
-  border-style: solid;
-  border-color: #333333;
   display: none;
 
   .left-content-items {

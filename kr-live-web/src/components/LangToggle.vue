@@ -1,5 +1,5 @@
 <template>
-    <button @click="toggleLang">Toggle Lang ({{ lang }})</button>
+    <q-btn class="primary-button blue-square" @click="toggleLang">Toggle ({{ lang }})</q-btn>
   </template>
   
   <script setup>
