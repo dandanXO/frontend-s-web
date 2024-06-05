@@ -8,10 +8,34 @@
       <q-form ref="profileFormRef" class="pc-form">
         <InputRowGrid>
           <template #fields>
-            <div class="pc-form-item" @click="openPersonalCenterDialog">
+            <div class="pc-form-item">
               <InputField :label="'Full Name'">
                 <template #input>
                   <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
+                </template>
+              </InputField>
+            </div>
+
+            <div class="pc-form-item" :class="{ 'item-click': !formDetail.emailVerified }" @click="openBindEmailDialog">
+              <InputField :label="'Email'">
+                <template #input>
+                  <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
+                    <template v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+            </div>
+
+            <div class="pc-form-item item-click" @click="openChangePasswordDialog">
+              <InputField :label="'Password'">
+                <template #input>
+                  <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly type="password">
+                    <template v-slot:append>
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -113,7 +137,7 @@
       </q-form>
     </div>
   </q-page>
-  <q-dialog width="100%" v-model="showCaptchaDialog">
+  <!-- <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
         <strong>Tips</strong>
@@ -123,7 +147,7 @@
       </q-card-section>
       <router-link to="/login?redirect=/account"><q-btn label="Confirm" color="brightbtn" /></router-link>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
@@ -252,6 +276,74 @@
     </div>
   </q-dialog>
 
+  <q-dialog width="100%" v-model="bindEmailDialog" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-black popout-close" @click="openBindEmailDialog()" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">Bind Email</div>
+        <div class="pc-form">
+          <InputRowGrid>
+            <template #fields>
+              <InputField :label="'Email'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter email"
+                    v-model="updateEmailInfo.email"
+                    ref="updateEmailRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => /.+@.+\..+/.test(val) || 'Please enter valid email']"
+                  >
+                    <template v-slot:append>
+                      <div class="pc-form-side-btn">
+                        <q-btn
+                          no-caps
+                          dense
+                          class="text-green"
+                          :label="!startCountdownResendOTP && 'Send'"
+                          :disable="!formDetail.phone || startCountdownResendOTP"
+                          @click="openVerificationCodeDialog"
+                        />
+                      </div>
+                    </template>
+                  </q-input>
+                </template>
+              </InputField>
+
+              <InputField :label="'Code'">
+                <template #input>
+                  <q-input
+                    outlined
+                    clearable
+                    placeholder="Enter verification code"
+                    v-model="updateEmailInfo.code"
+                    ref="updateEmailCodeRef"
+                    hide-bottom-space
+                    type="text"
+                    :rules="[(val) => val.length !== 0 || 'Verification code is required']"
+                  >
+                    <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
+                  </q-input>
+                </template>
+              </InputField>
+            </template>
+          </InputRowGrid>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">Confirm</q-btn>
+        </div>
+
+        <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
+        <!-- <PrimaryButton :label="'Confirm'" :isSmall="true" :onClick="submitUpdatePwd" /> -->
+        <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" @click="submitUpdatePwd">Confirm</q-btn> -->
+        <!-- </div> -->
+      </div>
+    </div>
+  </q-dialog>
+
   <q-dialog width="100%" v-model="changePasswordDialog" presistent>
     <div class="popout-dialog">
       <q-btn
@@ -301,11 +393,8 @@
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
                     :rules="[
-                      (val) => (val && val.length > 0) || 'Please insert new password',
-                      (val) =>
-                        (val.length >= 6 && val.length <= 11) ||
-                        'The characters of new password must be between 6 and 11',
-                      () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                      (val) => (val && val.length > 0) || 'Please insert password',
+                      (val) => val.length > 6 || 'The characters of password must be above 6'
                     ]"
                   >
                     <template v-slot:append>
@@ -500,8 +589,9 @@
           </div>
         </div>
 
-        <div class="q-mt-md q-pl-lg q-pr-lg">
-          <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn>
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">Confirm</q-btn>
+          <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
         </div>
       </div>
     </div>
@@ -611,6 +701,13 @@ const changePasswordDialog = ref(false);
 const openChangePasswordDialog = () => {
   resetChangePasswordInfo();
   changePasswordDialog.value = !changePasswordDialog.value;
+};
+
+const bindEmailDialog = ref(false);
+const openBindEmailDialog = () => {
+  if (!formDetail.emailVerified) {
+    bindEmailDialog.value = !bindEmailDialog.value;
+  }
 };
 
 const userKYCDialog = ref(false);
@@ -1072,9 +1169,9 @@ const countdownOTP = ref();
 const onCaptchaSubmit = () => {
   api
     .post(
-      `/otp/sendSms`,
+      `/otp/sendNewEmail`,
       qs.stringify({
-        telephone: formDetail.phone,
+        email: updateEmailInfo.email,
         captchaCode: captchaRef.value,
         codeId: updateSecurityVerified.codeId
       })
@@ -1084,10 +1181,12 @@ const onCaptchaSubmit = () => {
         color = "positive";
 
       if (res.code === 0) {
-        showCaptchaDialog.value = false;
+        verificationCodeDialog.value = false;
+
+        updateEmailInfo.codeId = res.data.codeId;
+
         showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
-
         startCountdownResendOTP.value = true;
 
         countdownOTP.value = 59;
@@ -1098,6 +1197,13 @@ const onCaptchaSubmit = () => {
             startCountdownResendOTP.value = false;
           }
         }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Email verification sent",
+          icon: "check_circle_outline"
+        });
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
@@ -1116,6 +1222,15 @@ const updatePwdInfo = reactive({
   password: "",
   confirmNewPwd: ""
 });
+
+const updateEmailInfo = reactive({
+  email: "",
+  code: "",
+  codeId: ""
+});
+
+const updateEmailRef = ref();
+const updateEmailCodeRef = ref();
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
@@ -1148,6 +1263,48 @@ const submitUpdatePwd = () => {
           // router.go("/account");
           resetChangePasswordInfo();
           changePasswordDialog.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const submitUpdateEmail = () => {
+  updateEmailRef.value.validate();
+  updateEmailCodeRef.value.validate();
+
+  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/verifyAndUpdateEmail",
+        qs.stringify({
+          email: updateEmailInfo.email,
+          code: updateEmailInfo.code,
+          codeId: updateEmailInfo.codeId
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Email binded successfully",
+            icon: "check_circle_outline"
+          });
+
+          bindEmailDialog.value = false;
+          store.getMemberInfo();
+          startRefresh();
         } else {
           $q.notify({
             color: "negative",
@@ -1283,7 +1440,20 @@ const openConfirmSignOutDialog = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 25px;
+    position: relative;
+
+    &.item-click {
+      &:after {
+        content: "";
+        background: rgba(255, 255, 255, 0.05);
+        height: calc(100% - 36px);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: 8px;
+      }
+    }
   }
   .pc-form-label {
     color: rgba(255, 255, 255, 1);
@@ -1348,6 +1518,7 @@ const openConfirmSignOutDialog = () => {
 .pc-tip {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
   // flex-direction: column;
   // align-items: flex-end;
 }

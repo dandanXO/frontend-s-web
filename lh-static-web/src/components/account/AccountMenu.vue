@@ -150,6 +150,7 @@ import { ElMessage } from "element-plus";
 import { Cropper, CircleStencil } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
+import { useLocalStorage } from "@vueuse/core";
 components: {
   Cropper,
   CircleStencil
@@ -181,7 +182,7 @@ const refreshBalance = () => {
     isLoadingBalance.value = false;
   });
 };
-const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
+const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
 const loginName = computed(() => {
   return store.nickName;

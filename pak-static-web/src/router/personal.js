@@ -3,43 +3,30 @@ export default [
     path: "personal",
     name: "personal",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "personal" */ "../views/account/PersonalView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "personal" */ "../views/account/PersonalView.vue")
   },
   {
     path: "withdrawbank",
     name: "withdrawbank",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "personal" */ "../views/account/WithdrawBankView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "personal" */ "../views/account/WithdrawBankView.vue")
   },
   {
     path: "mailbox",
     name: "mailbox",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "mailbox" */ "../views/account/MailboxView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "mailbox" */ "../views/account/MailboxView.vue")
   },
   {
-    path: "share",
-    name: "share",
-    component: () =>
-      import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue"),
+    path: "discount",
+    name: "discount",
+    component: () => import(/* webpackChunkName: "share" */ "../views/account/DiscountView.vue")
   },
   {
     path: "security-verified",
     name: "security-verified",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "security-verified" */ "../views/account/SecurityView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "security-verified" */ "../views/account/SecurityView.vue")
   },
   // {
   //   path: "voucher-code",
@@ -54,54 +41,42 @@ export default [
     path: "transit-record",
     name: "transit-record",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "transit-record" */ "../views/account/TransitRecordView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "transit-record" */ "../views/account/TransitRecordView.vue")
   },
   {
     path: "top-up",
     name: "deposit",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "deposit" */ "../views/finance/DepositView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "deposit" */ "../views/finance/DepositView.vue")
   },
   {
     path: "/display",
     name: "display",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "display" */ "../views/finance/DisplayView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "display" */ "../views/finance/DisplayView.vue")
   },
   {
     path: "transfer",
     name: "transfer",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "transfer" */ "../views/finance/TransferView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "transfer" */ "../views/finance/TransferView.vue")
   },
   {
     path: "withdraw",
     name: "withdraw",
     meta: { requiresAuth: true },
-    component: () =>
-      import(
-        /* webpackChunkName: "withdraw" */ "../views/finance/WithdrawView.vue"
-      ),
+    component: () => import(/* webpackChunkName: "withdraw" */ "../views/finance/WithdrawView.vue")
   },
   {
     path: "security-verification",
     name: "security-verification",
     meta: { requiresAuth: true },
     component: () =>
-      import(
-        /* webpackChunkName: "security-verification" */ "../views/account/SecurityVerificationView.vue"
-      ),
+      import(/* webpackChunkName: "security-verification" */ "../views/account/SecurityVerificationView.vue")
   },
+  {
+    path: "vip",
+    name: "vip",
+    component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
+  }
 ];

@@ -2,20 +2,20 @@
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
       <div class="right-container">
-        <div class="primary-button blue" @click="goToRegister">
-          회원가입
-        </div>
-        <div class="primary-button yellow" @click="goToLogin">
-          로그인
-        </div>
+        <q-btn class="primary-button blue" @click="goToRegister">
+          {{ $t('lang.login_register') }}
+        </q-btn>
+        <q-btn class="primary-button yellow" @click="goToLogin">
+          {{ $t('lang.login') }}
+        </q-btn>
       </div>
       <div class="actions-topbar" v-if="!props.isH5Banner">
-        <div class="primary-button blue-square" @click="goToRegister">
-          회원가입
-        </div>
-        <div class="primary-button yellow-square" @click="goToLogin">
-          로그인
-        </div>
+        <q-btn class="primary-button blue-square" @click="goToRegister">
+          {{ $t('lang.login_register') }}
+        </q-btn>
+        <q-btn class="primary-button yellow-square" @click="goToLogin">
+          {{ $t('lang.login') }}
+        </q-btn>
       </div>
     </form>
   </div>

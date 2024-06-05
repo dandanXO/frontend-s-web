@@ -48,7 +48,7 @@
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
-              <div class="order-col">
+              <div class="order-col q-mt-sm">
                 <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
                 </span>
@@ -77,18 +77,18 @@
           </div>
           <div class="order-row order-row--content">
             <div class="order-subrow">
-              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
               <div class="order-col">{{ e.paymentType }}</div>
+              <div class="order-col">
+                <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
+                  {{ getDepositStatus(e.status) }}
+                </span>
+              </div>
             </div>
             <div class="order-subrow">
               <div class="order-col">
                 <span class="txt-gray">{{ convertToGMT55(e.depositDate) }}</span>
               </div>
-              <div class="order-col">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
-                  {{ getDepositStatus(e.status) }}
-                </span>
-              </div>
+              <div class="order-col">{{ convertToCommaAmount(e.depositAmount, true) }}</div>
             </div>
           </div>
         </div>
@@ -137,8 +137,8 @@ const orderOptionTab = ref("withdrawal");
 
 const searchForm = reactive({ startDate: "", endDate: "" });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
-  searchForm.endDate = updateDate(0);
+  searchForm.startDate = updateDate(6);
+  searchForm.endDate = updateDate(-1);
 };
 
 const withdrawalData = ref([]);
@@ -318,9 +318,10 @@ onActivated(() => {
     margin: auto;
   }
   .order-table {
-    background: #171e2b80;
-    border-radius: 10px;
-    padding: 6px 4px;
+    // background: #171e2b80;
+    // border-radius: 10px;
+    border-bottom: 1px solid #ffffff33;
+    padding: 6px 0px;
     margin-bottom: 10px;
     .order-row {
       display: flex;
@@ -355,14 +356,29 @@ onActivated(() => {
 
       span.txt-gray {
         color: #888888;
+        // background: rgba(136, 136, 136, 0.2);
       }
 
       span.txt-green {
         color: #5bf25c;
+        background: #00b90033;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.825rem;
       }
 
       span.txt-red {
         color: #f24c5a;
+        background: #b8121233;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.825rem;
       }
     }
   }

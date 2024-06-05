@@ -225,13 +225,21 @@ export default defineComponent({
           pageName.value = "VIP Privileges";
           if (route.query.redirect) prevPage.value = route.query.redirect;
           else prevPage.value = "/";
+        } else if (route.path === "/login") {
+          prevPage.value = "/home";
+          hasPage.value = true;
+          pageName.value = "Login";
+        } else if (route.path === "/register") {
+          prevPage.value = "/home";
+          hasPage.value = true;
+          pageName.value = "Register";
         } else if (route.path === "/forgot-account") {
           prevPage.value = "/login";
           hasPage.value = true;
           pageName.value = "Forgot Account";
         } else if (route.path === "/forgot-password") {
           prevPage.value = "/login";
-          // hasPage.value = true;
+          hasPage.value = true;
           pageName.value = "Forgot Password";
         } else if (route.path === "/live-casino") {
           hasPage.value = true;

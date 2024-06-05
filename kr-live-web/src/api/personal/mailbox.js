@@ -33,3 +33,8 @@ export function mailOutbox(mailQuery) {
 export function wirteMail(mail) {
   return server.REST.post("/session/writeOutbox", mail);
 }
+
+export function submitFeedback(param) {
+  const { title, content } = param;
+  return server.REST.post("/session/feedback", { title, content });
+}

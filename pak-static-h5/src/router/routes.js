@@ -45,7 +45,7 @@ const routes = [
     path: "/earn-money",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/EarnMoneyPage.vue") }],
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: true }
   },
   {
     path: "/agency-policy",
@@ -216,7 +216,14 @@ const routes = [
   {
     path: "/account/bank",
     component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    // children: [{ path: "", component: () => import("pages/account/BankView.vue") }],
+    children: [{ path: "", component: () => import("pages/account/WithdrawBankView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/withdraw/ewallet",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/BindEWalletView.vue") }],
     meta: { requiresAuth: true }
   },
   {
@@ -229,6 +236,18 @@ const routes = [
     path: "/account/message-detail",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/MessageDetailView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/feedback",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/mail/OutboxView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/write",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/mail/WriteView.vue") }],
     meta: { requiresAuth: true }
   },
   {

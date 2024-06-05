@@ -41,6 +41,14 @@
           {{ t('fields.reset') }}
         </el-button>
       </div>
+      <div class="btn-group">
+        <el-button size="mini" type="success" @click="buildAll">
+          {{ t('affiliateApk.buildAllApk') }}
+        </el-button>
+        <el-button size="mini" type="danger" @click="cancelAll">
+          {{ t('fields.cancelAll') }}
+        </el-button>
+      </div>
     </div>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
       <template #header>
@@ -266,6 +274,8 @@ import {
   editParam,
   getLatestVersion,
   cancelBuild,
+  buildAllApk,
+  cancelAllApk
 } from '../../../api/affiliate-apk'
 import { getSiteListSimple } from '../../../api/site'
 import { useStore } from '../../../store'
@@ -432,6 +442,22 @@ async function build(id) {
 
 async function cancel(id) {
   await cancelBuild(id)
+  ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
+  await loadAffiliates()
+}
+
+async function buildAll() {
+  page.loading = true
+  const query = checkQuery()
+  await buildAllApk(query)
+  ElMessage({ message: t('message.buildIsInQueue'), type: 'success' })
+  await loadAffiliates()
+}
+
+async function cancelAll() {
+  page.loading = true
+  const query = checkQuery()
+  await cancelAllApk(query)
   ElMessage({ message: t('message.cancelSuccess'), type: 'success' })
   await loadAffiliates()
 }

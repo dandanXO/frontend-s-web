@@ -32,6 +32,7 @@
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { userStore } from "stores/index";
+import {useLocalStorage} from "@vueuse/core"
 import moment from "moment"
 
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
@@ -42,7 +43,7 @@ import DrawerWithdraw from "assets/images/home/drawer-withdraw.png";
 
 const isLogin = ref(false);
 
-const imageDir = process.env.IMAGE_CDN + "/profile/";
+const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/profile/";
 const timestamp= moment().unix();
 
 var qs = require('qs')

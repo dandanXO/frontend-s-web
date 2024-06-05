@@ -11,6 +11,14 @@ export function getPlatformList() {
   return cached.get(platformApiKey, () => server.REST.get(platformApiUrl));
 }
 
+export function getLoggedInPlatformList() {
+  return cached.get("LOGGEDINPLATFORMS", () => server.REST.get("/session/loggedInPlatform"));
+}
+
+export function getPlatformListDisplay() {
+  return cached.get("PLATFORMS", () => server.REST.get("/platform"));
+}
+
 export function getPlatformGames(code, gameType) {
   const regDevice = getDevice();
   var way = null;
@@ -71,7 +79,7 @@ export function hotGame(gameLabel) {
       }
     };
 
-    let respond = await server.REST.get("/platformGamesByGameLabel", requestBody);
+    let respond = await server.REST.get("member/hot?device=WEB");
 
     return respond;
   });
@@ -104,4 +112,27 @@ export function jackpotGames() {
 
 export function topWin() {
   return server.REST.get("/top-winner");
+}
+
+export function getHotGames() {
+  const regDevice = getDevice();
+  var way = null;
+  if (getDevice() === "MOBILE") {
+    way = getMobileOS();
+  }
+  const key = `MEMBER_HOT_${regDevice}`;
+
+  // sessionStorage.removeItem(key);
+
+  return cached.get(key, async () => {
+    const requestBody = {
+      params: {
+        device: regDevice
+      }
+    };
+
+    let respond = await server.REST.get("/member/hot", requestBody);
+
+    return respond;
+  });
 }

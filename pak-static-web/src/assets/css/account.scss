@@ -5,7 +5,6 @@
 
   .account-title {
     position: relative;
-    font-family: "Inter Medium";
     font-size: 15px;
     line-height: 32px;
     letter-spacing: 0px;
@@ -57,12 +56,14 @@ $max-width: $container-width;
 
   .account-box-wrapper {
     width: 280px;
+    flex-shrink: 0;
   }
 
   .account-content-wrapper {
     width: calc(100% - 280px);
     padding: 30px;
     background: #ffffff05;
+    border-radius: 4px;
 
     .menu-title-container {
       margin: 0px 0 20px;
@@ -83,7 +84,7 @@ $max-width: $container-width;
     }
 
     .ant-tabs-nav .ant-tabs-tab {
-      padding: 15px 48px;
+      // padding: 15px 48px;
       margin: 0;
       font-size: 16px;
     }
@@ -134,7 +135,7 @@ $max-width: $container-width;
 
       &:hover,
       &:focus {
-        border-color: #2b2b82;
+        border-color: $primary-light;
       }
 
       &.ant-calendar-picker-input {
@@ -167,36 +168,30 @@ $max-width: $container-width;
     }
 
     .ant-tabs-bar {
-      border-bottom: 0;
+      border-bottom: 3px solid #ffffff0d;
     }
 
     .ant-tabs-nav {
       .ant-tabs-tab {
-        color: #2b2b8266;
+        color: #8c968f;
       }
       .ant-tabs-tab-active {
         font-family: Poppins Medium;
-        background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 20.07%);
-        background-size: 100%;
-        background-repeat: repeat;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -moz-background-clip: text;
-        -moz-text-fill-color: transparent;
+        color: #ffffff;
+        background-color: transparent;
       }
       .ant-tabs-ink-bar {
-        background: transparent;
+        // background: transparent;
         position: relative;
         &:after {
           position: absolute;
           content: "";
-          width: 35px;
           height: 4px;
           left: 0;
           right: 0;
           margin: auto;
           border-radius: 8px;
-          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+          background: #70bc62;
         }
       }
     }
@@ -251,7 +246,7 @@ $max-width: $container-width;
           content: "";
           width: 8px;
           height: 8px;
-          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+          background: linear-gradient(270deg, #25ac92 0%, #7cc24e 100%);
           position: absolute;
           transform: rotateZ(45deg);
           left: 0px;

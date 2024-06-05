@@ -6,7 +6,7 @@
           <a-empty :image="simpleImage" :description="'No information'" />
         </div>
       </template>
-      <div class="flex-box flex-wrap margin-center account-container-wrap">
+      <div class="flex-box margin-center account-container-wrap">
         <div class="account-box account-box-wrapper">
           <account-menu />
         </div>
@@ -45,7 +45,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.account-container-wrap {
+  gap: 16px;
+  border-radius: 0;
+}
+
 :deep(.ant-empty-image) {
   height: 200px;
   margin-bottom: 0;

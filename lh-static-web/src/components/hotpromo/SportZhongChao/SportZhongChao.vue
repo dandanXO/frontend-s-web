@@ -244,7 +244,7 @@
           class="sport-zhongchao-title"
           :style="{ backgroundImage: 'url(' + require(`@/assets/promo/lh-sport-zhongchao/rules.png`) + ')' }"
         ></div>
-        
+
         <div class="sport-zhongchao-notice">
           <div class="sport-zhongchao-notice-item">
             1.活动期间，符合条件的会员彩金于次日24点前派发至账户,彩金于次日24点前派发至福利中心，仅需一倍流水即可提款；​
@@ -322,9 +322,6 @@
         <div style="line-height: 32px">
           注：若多注单出现多个尾号【8】字样注单，则只以礼金最高的注单派彩。
         </div>
-        <div style="line-height: 40px;text-indent: 2em">
-          注单申请时间为三天有效期，若逾期视为自动放弃不予发放。
-        </div>
       </div>
 
       <div v-if="tab === 'third'">
@@ -335,19 +332,18 @@
 
         <div class="sport-zhongchao-notice">
           <div class="sport-zhongchao-notice-item">
-            1.活动需通过活动页面立即申请按钮参与，逢8注单三天有效期内未点击则视为放弃参与本活动，彩金于次日24点前派发至福利中心，仅需一倍流水即可提款；​
+            1.活动期间，符合条件的会员彩金于次日24点前派发至账户,彩金于次日24点前派发至福利中心，仅需一倍流水即可提款；
           </div>
           <div class="sport-zhongchao-notice-item">
-            2.本活动仅计算体育场馆投注已结算的注单；
+            2.本活动有效投注额以结算时间为准，仅对已结算并产生输赢结果的投注额进行计算，单日单场赛事有在多体育场馆投注则累积计算，任何走盘、串关、特殊投注、取消的赛事将不计算在有效投注额内；
           </div>
           <div class="sport-zhongchao-notice-item">
-            3.任何低于欧洲盘1.7或亚洲盘0.7水位的注单，任何串关、特殊投注、取消的赛事均不计算在内；​
+            3.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；
           </div>
           <div class="sport-zhongchao-notice-item">
-            4.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；​
+            4.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
           </div>
-          <div class="sport-zhongchao-notice-item">5.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单</div>
-          <div class="sport-zhongchao-notice-item">6.为避免文字理解差异，本站体育保留本活动最终解释权。</div>
+          <div class="sport-zhongchao-notice-item">5.为避免文字理解差异，本站体育保留本活动最终解释权。</div>
         </div>
       </div>
 
@@ -361,8 +357,9 @@
 import { onMounted, ref } from "vue";
 import { getSportMatch } from "@/api/index/promo";
 import MatchGame from './components/MatchGame.vue';
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value+ "/promo/";
 
 const tab = ref("first");
 const matchList = ref([]);

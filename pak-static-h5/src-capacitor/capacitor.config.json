@@ -1,9 +1,9 @@
 {
-  "appId": "com.ind.appindwin7",
-  "appName": "IndWin7",
+  "appId": "com.ind.appb9mega1",
+  "appName": "B9.GAME",
   "webDir": "www",
   "server": {
     "androidScheme": "https",
-    "hostname": "7rzyd3kui.indwin7.com"
+    "hostname": "7rzyd3kui.b9mega1.com"
   }
 }

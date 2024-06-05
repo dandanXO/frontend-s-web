@@ -11,7 +11,7 @@
       </div>
 
       <div class="page-dialog-main">
-        <!-- <LangToggle v-if="showLangToggle"/> -->
+        
         <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
             <p class="header-info-description">{{ headerInfo.description }}</p>
@@ -101,7 +101,6 @@ import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
-import LangToggle from "components/LangToggle.vue";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
 import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
@@ -111,7 +110,6 @@ const visible = ref(false);
 const store = userStore();
 const page = ref("");
 const tabIndex = ref("log");
-const showLangToggle = ref(process.env.NODE_ENV === "development");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {

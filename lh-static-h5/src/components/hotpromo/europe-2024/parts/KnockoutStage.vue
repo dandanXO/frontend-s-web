@@ -28,12 +28,14 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { eventapi } from "boot/axios";
+import {useLocalStorage} from "@vueuse/core"
+
 const pageLoading = ref(false);
 const refBracketWrapper = ref(null);
 const flagWidth = ref(34);
 const domHeight = ref(770);
 const finalDate = ref('');
-const imgUrl = process.env.IMAGE_CDN + '/promo/';
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + '/promo/';
 const bracketTeamList = ref([
   // top side round of 16
   { bottom: 95.6, left: 3.3, seg: 1, group: '16', team: 'A' },

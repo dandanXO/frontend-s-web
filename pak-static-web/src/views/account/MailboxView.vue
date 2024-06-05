@@ -1,8 +1,30 @@
 <template>
   <div class="menu-title-container">
-    <span class="menu-title">Mailbox</span>
+    <span class="menu-title">Message</span>
   </div>
-  <div class="mail-wrapper">
+  <div v-if="!isReadingMail" class="mailbox-mail-list">
+    <div v-for="(mail, index) in mailboxState.mailboxList.inbox.list" :key="index" class="mailbox-mail-item">
+      <h3 class="mailbox-mail-item__title">{{ mail.title }}</h3>
+      <div class="mailbox-mail-item__preview">{{ mail.content }}</div>
+      <div class="mailbox-mail-item__inner-wrapper">
+        <span class="mailbox-mail-item__date">{{ moment(mail.sendTime).format("MM/DD/YYYY") }}</span>
+        <button class="mailbox-mail-item__read-btn" @click="handleReadMail(mail.id)">
+          More
+          <RiArrowRightSLine />
+        </button>
+      </div>
+      <div v-if="!mail.readTime" class="mailbox-mail-item__unread">NEW</div>
+    </div>
+  </div>
+  <div v-else class="mailbox-mail-detail">
+    <button class="mailbox-mail-detail__return-btn" @click="() => (isReadingMail = false)">back</button>
+    <div class="mailbox-mail-detail__inner-wrapper">
+      <h3 class="mailbox-mail-detail__title">{{ readingMail.title }}</h3>
+      <span class="mailbox-mail-detail__date">{{ moment(readingMail.sendTime).format("MM/DD/YYYY HH:mm") }}</span>
+    </div>
+    <p class="mailbox-mail-detail__content">{{ readingMail.content }}</p>
+  </div>
+  <!-- <div class="mail-wrapper">
     <div class="bottom-content">
       <div class="left-list">
         <div class="buttons">
@@ -99,629 +121,237 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
-<script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
-import { RiMailAddLine } from "vue-remix-icons";
-import { message } from "ant-design-vue";
+<script setup>
+import { onMounted, reactive, ref } from "vue";
+import { mailInbox, mailOutbox, wirteMail, readMail } from "@/api/personal/mailbox";
+import { RiArrowRightSLine } from "vue-remix-icons";
+import moment from "moment";
 
-export default defineComponent({
-  name: "MailboxView",
-  components: { RiMailAddLine },
-  setup() {
-    const mailboxState = reactive({
-      active: "inbox",
-      mailboxList: {
-        inbox: {
-          list: [],
-          pageNum: 1,
-          pageSize: 2,
-          total: 0,
-        },
-        sent: {
-          list: [],
-          pageNum: 1,
-          pageSize: 2,
-          total: 0,
-          orderBy: 'createTime'
-        },
-        write: {
-          title: "",
-          content: "",
-        },
-      },
-    });
-     const mailboxData = ref({});
-    const mailOpened = ref(false);
-    const viewSentList = ref(false);
-    const newMailVisible = ref(false);
-    const selectedIndex = ref(null);
-    const selectedId = ref(false);
-    const selectItem = (item, index) => {
-      selectedId.value = item.id;
-      mailOpened.value = true;
-      newMailVisible.value = false
-      selectedIndex.value = index;
-      mailDetailList.value = item;
-      item.status = ''
+const mailboxState = reactive({
+  active: "inbox",
+  mailboxList: {
+    inbox: {
+      list: [],
+      pageNum: 1,
+      pageSize: 2,
+      total: 0
+    },
+    sent: {
+      list: [],
+      pageNum: 1,
+      pageSize: 2,
+      total: 0,
+      orderBy: "createTime"
+    },
+    write: {
+      title: "",
+      content: ""
     }
-    const loadPersonalMailbox = () => {
+  }
+});
 
-     mailboxData.value = {
-        type: null,
-        current: mailboxState.mailboxList[mailboxState.active].pageNum,
-        size: mailboxState.mailboxList[mailboxState.active].pageSize,
-        orderBy: "sendTime"
-      }
-      mailboxState.mailboxList[mailboxState.active].list = []
-      if (mailboxState.active === 'inbox') {
-
-      mailboxData.value = {
-          type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize
+const isReadingMail = ref(false);
+const readingMail = ref();
+const mailOpened = ref(false);
+const viewSentList = ref(false);
+const newMailVisible = ref(false);
+const selectedIndex = ref(null);
+const selectedId = ref(false);
+const selectItem = (item, index) => {
+  selectedId.value = item.id;
+  mailOpened.value = true;
+  newMailVisible.value = false;
+  selectedIndex.value = index;
+  mailDetailList.value = item;
+  item.status = "";
+};
+const loadPersonalMailbox = () => {
+  mailboxState.mailboxList[mailboxState.active].list = [];
+  if (mailboxState.active === "inbox") {
+    const params = {
+      type: null,
+      current: null,
+      size: null
+    };
+    mailInbox(params)
+      .then((response) => {
+        if (response.code === 0) {
+          mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
         }
-        mailInbox(mailboxData.value).then((response) => {
-          if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-          }
-        }).catch((error) => {
-          console.log("error", error);
-        });
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+  // if (mailboxState.active === "sent") {
+  //   params = {
+  //     type: null,
+  //     current: mailboxState.mailboxList[mailboxState.active].pageNum,
+  //     size: mailboxState.mailboxList[mailboxState.active].pageSize,
+  //     orderBy: "createTime"
+  //   };
+  //   mailOutbox(params)
+  //     .then((response) => {
+  //       if (response.code === 0) {
+  //         mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
+  //         mailboxState.mailboxList[mailboxState.active].total = response.data.total;
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //     });
+  // }
+};
+// const changePage = (page, pageSize) => {
+//   loadPersonalMailbox(page, pageSize);
+//   // const pageSize = 2
+// };
+
+const handleReadMail = (id) => {
+  const targetMail = mailboxState.mailboxList.inbox.list.find((mail) => mail.id === id);
+  if (!targetMail) return;
+
+  readMail({ id })
+    .then((res) => {
+      if (res.code === 0) {
+        readingMail.value = targetMail;
+        isReadingMail.value = true;
       }
-      if (mailboxState.active === 'sent') {
+    })
+    .catch((error) => console.log(error));
+};
 
-      mailboxData.value = {
-          type: null,
-          current: mailboxState.mailboxList[mailboxState.active].pageNum,
-          size: mailboxState.mailboxList[mailboxState.active].pageSize,
-          orderBy: "createTime"
-        }
-        mailOutbox(mailboxData.value).then((response) => {
-          if (response.code === 0) {
-            mailboxState.mailboxList[mailboxState.active].list.push(...response.data.records);
-            mailboxState.mailboxList[mailboxState.active].total = response.data.total;
-          }
-        }).catch((error) => {
-          console.log("error", error);
-        });
-      }
-    };
-    const changePage = (page, pageSize) => {
-      loadPersonalMailbox(page, pageSize)
-      // const pageSize = 2
-    };
-
-    const mailTabChange = (nk) => {
-      selectedId.value = null
-      mailOpened.value = false
-
-     mailboxData.value = {
-        type: null,
-        current: mailboxState.mailboxList[nk].pageNum,
-        size: mailboxState.mailboxList[nk].pageSize,
-        orderBy: 'createTime'
-      }
-
-      if (nk === 'sent') {
-        mailboxState.active = 'sent'
-        viewSentList.value = true
-        loadPersonalMailbox()
-      }
-      else if (nk === 'inbox') {
-        mailboxState.active = 'inbox'
-        viewSentList.value = false
-        loadPersonalMailbox();
-      }
-      newMailVisible.value = false
-    };
-
-    onMounted(() => {
-      loadPersonalMailbox();
-    });
-
-    const formRef = ref();
-    const mailDetailList = ref({})
-    const rules = {
-      title: [
-        {
-          required: true,
-          message: "title is required",
-          trigger: "blur",
-        },
-        {
-          max: 255,
-          message: "Length should be less than 255",
-          trigger: "change",
-        },
-      ],
-      content: [
-        {
-          required: true,
-          message: "content is required",
-          trigger: "blur",
-        },
-        {
-          max: 500,
-          message: "Length should be less than 500",
-          trigger: "change",
-        },
-      ],
-    };
-    const onSubmit = () => {
-      formRef.value
-        .validate()
-        .then(() => {
-          message.loading("login...", 1, () => {
-            wirteMail(mailboxState.mailboxList.write)
-              .then((response) => {
-                if(response.code === 0) {
-                  message.success("success");
-                  mailboxState.mailboxList.write.title = "";
-                  mailboxState.mailboxList.write.content = "";
-                  newMailVisible.value = false
-                  mailTabChange('sent')
-                } else {
-                  message.error(response.message);
-                }
-              })
-              .catch((error) => {
-                  console.log(error.message);
-              });
-          });
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    };
-    return {
-      mailboxState,
-      loadPersonalMailbox,
-      mailTabChange,
-      changePage,
-      formRef,
-      rules,
-      onSubmit,
-      viewSentList,
-      newMailVisible,
-      selectItem,
-      selectedIndex,
-      mailDetailList,
-      mailOpened,
-      selectedId,
-      mailboxData
-    }
-  },
+onMounted(() => {
+  loadPersonalMailbox();
 });
 </script>
-<style lang="scss">
-.account-container {
-  .account-content-wrapper {
-    .mail-wrapper {
-      .ant-input {
-      }
-    }
-  }
-}
-</style>
 <style scoped lang="scss">
-.account-container {
-  .account-content-wrapper {
-    .account-content.mail {
-      min-height: 740px;
-      margin-bottom: 0;
-      padding: 0;
+.mailbox-mail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 
-      :deep(.ant-form-horizontal .ant-form-item-label) {
-        text-align: left;
-      }
-      :deep(.ant-tabs-tabpane) {
-        padding: 20px 0;
-      }
-    }
-    .pagination-wrapper {
-      text-align: center;
-      padding: 20px;
-      &.hidden {
-        display: block;
-      }
-    }
-    :deep(.ant-tabs-nav .ant-tabs-tab) {
+  .mailbox-mail-item {
+    padding: 18px 20px;
+    border: 1px solid #ffffff0d;
+    background: #ffffff0d;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+
+    .mailbox-mail-item__title {
+      margin-bottom: 8px;
       font-size: 16px;
+      font-weight: 700;
+      line-height: 19.2px;
+      color: #ffffff;
     }
-    :deep(.ant-tabs-nav .ant-tabs-tabpane) {
-      padding: 20px 30px;
+
+    .mailbox-mail-item__preview {
+      width: 50%;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 21.6px;
+      color: #9f9f9f;
     }
-    .mail-wrapper {
-      flex: 1;
-      .buttons {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-end;
+
+    .mailbox-mail-item__inner-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .mailbox-mail-item__date {
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16.2px;
+        color: #ffffff80;
       }
 
-      .rounded-btn {
-        padding: 0;
+      .mailbox-mail-item__read-btn {
         display: flex;
-        justify-content: flex-end;
-        border-radius: 30px;
         align-items: center;
-        gap: 10px;
-        cursor: pointer;
-        font-weight: bold;
-        .new {
-          background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-          padding: 10px;
-          border-radius: 20px;
-          width: 40px;
-          height: 40px;
-          svg {
-            fill: #ffffff;
-            width: 20px;
-            display: inline-block;
-          }
-        }
-      }
-      .left-btns {
-        display: flex;
-        justify-content: space-evenly;
-        border-radius: 30px;
-        align-items: center;
-        gap: 0;
-        cursor: pointer;
-        font-family: "Poppins Bold";
-        .inbox-btn,
-        .sent-btn,
-        .compose-btn {
-          padding: 10px;
-          text-align: center;
-          margin: 10px 0;
-          &.active {
-            background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-            background-size: 100%;
-            background-repeat: repeat;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            -moz-background-clip: text;
-            -moz-text-fill-color: transparent;
-          }
+        gap: 7px;
+        border: 0.78px solid #ffffffcc;
+        background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+        border-radius: 20px;
+        padding: 5px 14px;
+        padding-right: 10px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 21.6px;
+        color: #ffffffcc;
+
+        svg {
+          fill: #ffffffcc;
+          width: 18px;
         }
 
-        .inbox-btn,
-        .sent-btn {
-          position: relative;
-
-          &::before {
-            content: "";
-            top: calc(100% - 6px);
-            height: 2px;
-            display: block;
-            position: absolute;
-            width: calc(100% - 18px);
-            left: 10px;
-            background-color: $primary-color;
-            opacity: 0;
-            transition: all 0.3s;
-          }
-        }
-
-        .active::before {
-          opacity: 1;
-        }
-      }
-      .bottom-content {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        align-items: flex-start;
-        .left-list {
-          flex: 2;
-          .buttons {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-        }
-        .mail-list {
-          flex: 2;
-          border-radius: 10px;
-          overflow: hidden;
-          display: flex;
-          background: #ffffff0f;
-          .mailbox-list {
-            display: flex;
-            flex-direction: column;
-
-            gap: 10px;
-            overflow: auto;
-            min-height: 445px;
-            padding: 20px;
-            .mailbox-item {
-              padding-bottom: 10px;
-              &:after {
-                content: "";
-                width: 100%;
-                height: 1px;
-                margin: 0 auto;
-                border-bottom: 1px solid #83a3ca33;
-                position: absolute;
-                bottom: 0;
-              }
-              &.unread {
-                &:before {
-                  position: absolute;
-                  right: 20px;
-                  top: 20px;
-                  margin: auto;
-                  content: "";
-                  border-radius: 50%;
-                  background: #de4545;
-                  width: 8px;
-                  height: 8px;
-                  vertical-align: middle;
-                  display: inline-block;
-                }
-              }
-              display: flex;
-              gap: 10px;
-              justify-content: flex-start;
-              align-items: flex-start;
-              flex-direction: column;
-              border-radius: 10px;
-              position: relative;
-              cursor: pointer;
-              z-index: 5;
-              &.active {
-                .mailbox-title {
-                  background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-                  background-size: 100%;
-                  background-repeat: repeat;
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  -moz-background-clip: text;
-                  -moz-text-fill-color: transparent;
-                }
-                .mailbox-content {
-                  background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-                  background-size: 100%;
-                  background-repeat: repeat;
-                  -webkit-background-clip: text;
-                  -webkit-text-fill-color: transparent;
-                  -moz-background-clip: text;
-                  -moz-text-fill-color: transparent;
-                }
-              }
-              .status {
-                font-weight: bold;
-                font-size: 10px;
-
-                background: coral;
-                padding: 3px 10px;
-                border-radius: 20px;
-                position: absolute;
-                right: 20px;
-                top: -10px;
-              }
-              .mailbox-title {
-                flex: 1;
-                // font-size: 16px;
-                // line-height: 16px;
-                // border-radius: 20px;
-                font-weight: bold;
-
-                font-size: 13px;
-                vertical-align: middle;
-                position: relative;
-              }
-              .mailbox-content {
-                width: 100%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                height: 46px;
-                margin: 0;
-                // overflow: hidden;
-                // text-overflow: ellipsis;
-                // white-space: nowrap;
-              }
-              .txt-right {
-                flex: 1;
-                color: #a3a3a3;
-                text-align: right;
-                width: 100%;
-              }
-            }
-          }
-
-          .openedmail {
-            display: block;
-            border-radius: 10px;
-            margin-left: 0;
-            &.active {
-              display: block;
-            }
-            .b-button {
-              cursor: pointer;
-              display: none;
-              padding: 10px;
-              border-radius: 10px;
-              margin: 10px;
-            }
-            .rounded-btn {
-              margin-bottom: 10px;
-              justify-content: flex-end;
-            }
-
-            .mailbox-item {
-              &.active {
-                &:after {
-                  content: "";
-                  position: absolute;
-                  width: 90%;
-                  bottom: -10px;
-                  background: #313553;
-                  margin: auto;
-                  border-radius: 0 0 30px 30px;
-                  box-shadow: inset 0 0 20px -20px #000000;
-                  left: 0;
-                  right: 0;
-                }
-              }
-              .mailbox-title {
-                font-size: 17px;
-                line-height: 20px;
-                background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-
-                color: #ffffff;
-                padding: 10px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                .txt-right {
-                  font-size: 12px;
-                }
-              }
-              .mailbox-content {
-                width: 100%;
-                padding: 10px;
-
-                margin: 0;
-                max-height: 360px;
-                overflow: auto;
-              }
-              .txt-right {
-                text-align: left;
-              }
-            }
-          }
-          .closedmail {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            padding-left: 0;
-            border-left: 1px solid #83a3ca33;
-            border-radius: 0;
-          }
-          .mail-txtarea {
-            height: 180px;
-          }
-
-          .viewmail {
-            flex: 3;
-            padding: 20px;
-            .newmail-section {
-              text-align: right;
-            }
-          }
+        &:hover {
+          background: linear-gradient(180deg, #33562d 0%, #70bc62 100%);
         }
       }
     }
-    .write-btn {
-      width: 300px;
+
+    .mailbox-mail-item__unread {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      position: absolute;
+      background-color: #70bc62;
+      border-radius: 5px;
+      width: 50px;
       height: 50px;
-      font-size: 18px;
-      line-height: 50px;
-      border: none;
-      background-color: linear-gradient(to right, #de4545, #db7e42);
-      cursor: pointer;
+      transform: rotate(45deg);
+      top: -22px;
+      right: -22px;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 16px;
     }
   }
 }
-</style>
-<style scoped lang="scss">
-.pagination-wrapper :deep(.ant-pagination) {
-  &.ant-pagination-simple .ant-pagination-simple-pager input {
-    border: #2b2b4b;
+
+.mailbox-mail-detail {
+  .mailbox-mail-detail__return-btn {
+    background-color: transparent;
+    border: 1px solid #13e25c;
+    padding: 8px 12px;
+    margin-bottom: 10px;
   }
-}
-:deep(.ant-select:not(.ant-select-disabled):hover .ant-select-selector) {
-  border-color: #de4845;
-}
-:deep(.ant-select-selector:focus) {
-  border-color: #de4845;
-}
-:deep(.ant-select:not(.ant-select-disabled):visited .ant-select-selector) {
-  border-color: #de4845;
-}
-:deep(.ant-pagination-next:hover .ant-pagination-item-link) {
-  border-color: #de4845;
-  color: #de4845;
-}
-:deep(.ant-pagination-next:focus .ant-pagination-item-link) {
-  border-color: #de4845;
-  color: #de4845;
-}
-:deep(.ant-pagination-prev:hover .ant-pagination-item-link) {
-  border-color: #de4845;
-  color: #de4845;
-}
-:deep(.ant-pagination-prev:focus .ant-pagination-item-link) {
-  border-color: #de4845;
-  color: #de4845;
-}
-</style>
-<style scoped lang="scss">
-@media (max-width: 767px) {
-  .account-container {
-    .account-content-wrapper {
-      .mail-wrapper {
-        .ant-input {
-        }
-        .bottom-content {
-          .mail-list {
-            .mailbox-list {
-              .mailbox-item {
-                width: 100%;
-                padding: 15px 18px 18px 18px;
-                &.read,
-                &.unread {
-                  &::after {
-                    width: 76px;
-                    height: 32px;
-                    line-height: 32px;
-                  }
-                }
-                .mailbox-content {
-                  width: 100%;
-                  overflow: hidden;
-                }
-              }
-            }
-            flex-direction: column;
-            .openedmail {
-              display: none;
-              margin: 20px;
-              &.active {
-                display: block;
-              }
-              .b-button {
-                display: inline-block;
-                margin-bottom: 10px;
-              }
-            }
-            .closedmail {
-              display: none;
-            }
-            .mailbox-list {
-              &.hide {
-                display: none;
-              }
-            }
-          }
-          .viewmail {
-            width: 100%;
-          }
-        }
-        .pagination-wrapper {
-          &.hidden {
-            display: none;
-          }
-        }
-      }
+
+  .mailbox-mail-detail__inner-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    .mailbox-mail-detail__title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+      color: #ffffff;
     }
+
+    .mailbox-mail-detail__date {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 21.6px;
+      color: #9f9f9f;
+    }
+  }
+
+  .mailbox-mail-detail__content {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.6px;
+    color: #ffffffcc;
   }
 }
 </style>

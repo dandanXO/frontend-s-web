@@ -6,13 +6,13 @@
     <div class="container">
       <div class="btn-group">
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'groupStage' }" @click="tab = 'groupStage'">
-          小組賽
+          小组赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'roundOf16' }" @click="tab = 'roundOf16'">
-          十六強賽
+          十六强赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'quarterFinal' }" @click="tab = 'quarterFinal'">
-          4/1決賽
+          4/1决赛
         </div>
         <div
           class="btn btn-active"
@@ -107,7 +107,7 @@
           <div class="alert-contents"><img src="../../../assets/promo/lh-eurocup-manual/alert-contents.png"></div>
           <div class="alert-box">
             <div class="alert-line" v-if="tab === 'groupStage'">
-            轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            小组赛赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
           </div>
           <div class="alert-line" v-if="tab === 'roundOf16'">
             第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
@@ -306,7 +306,7 @@
           <li>3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
           <li>4.达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
           <li>5.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
-          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
+          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
           <li>7.为避免文字理解差异，本站保留本活动最终解释权。</li>
         </ul>
       </div>
@@ -322,6 +322,7 @@ import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
 import GameModal from "@/components/modal/GameModal";
+import { useLocalStorage } from "@vueuse/core";
 
 const platformGame = ref(null);
 const tab = ref("groupStage");
@@ -330,7 +331,7 @@ const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const openPlat = (platformMatchId) => {
   var matchId = platformMatchId ?? "";

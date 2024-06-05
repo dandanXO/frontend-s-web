@@ -165,6 +165,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import moment from "moment";
 
 import HotPromotion from '@/components/HotPromotion'
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -172,7 +173,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
@@ -329,11 +330,11 @@ export default defineComponent({
       loadAll();
     });
 
-    // watch(() => route.query.name, () => {
-    //   if (!route.query.name) {
-    //     isPromoDetail.value = false
-    //   }
-    // });
+    watch(() => route.query.name, () => {
+      if (route.query.name) {
+        loadAll();
+      }
+    });
 
     return {
       promoState,

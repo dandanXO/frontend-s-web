@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, onMounted, defineProps, computed } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
+import {useLocalStorage} from "@vueuse/core"
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -55,7 +55,7 @@ const props = defineProps({
 });
 
 const upcomingMatchDetails = ref([]);
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const getMatchDateOnly = (matchTime) => {
   if (!matchTime) {

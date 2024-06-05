@@ -256,6 +256,7 @@ import {
 } from "@/api/index/promo";
 import moment from "moment";
 import { ElMessage } from "element-plus";
+import { useLocalStorage } from "@vueuse/core";
 
 // tabs
 const activeKey = ref("tabOne");
@@ -266,7 +267,7 @@ const handleTabClick = (tab) => {
 // dialogs
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 let submitParam = reactive({ quizId: "", quizTitle: "", answerOne: "" });
 const handleVoteClick = (selectedData) => {

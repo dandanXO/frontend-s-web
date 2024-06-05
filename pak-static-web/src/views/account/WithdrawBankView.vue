@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">Withdraw Bank Card</span>
+      <span class="menu-title">Bank</span>
     </div>
 
-    <div class="account-title-container">
+    <!-- <div class="account-title-container">
       <span class="account-title">Select Card</span>
-    </div>
+    </div> -->
     <div class="account-content">
-      <div class="account-tip-text wbot">Please register for a withdrawal bank account below to be updated</div>
+      <!-- <div class="account-tip-text wbot">Please register for a withdrawal bank account below to be updated</div> -->
       <!-- <div class="addbuttons">
         <div
           class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
@@ -29,9 +29,9 @@
           }"
           @click="showCard(bc, index)"
         >
-          <div class="icon">
+          <!-- <div class="icon">
             <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
-          </div>
+          </div> -->
           <div class="cardname">
             <div class="txt-center">
               <strong>{{ bc.bankName }}</strong>
@@ -41,11 +41,20 @@
           <div class="unlink-btn" @click="unbindBankCard(bc)">
             <RiLinkUnlink />
           </div>
+          <!-- TODO: click event? -->
+          <div class="setting-btn">
+            <RiSettings3Line />
+          </div>
 
           <div class="flex-box cards">
-            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
-              {{ b }}
+            <div class="card-num-box">
+              <div v-for="(cardNumber, index) in bc.displayCardNumberList" :key="index">
+                <span v-if="[1, 2].includes(index)">****</span>
+                <span v-else>{{ cardNumber }}</span>
+              </div>
             </div>
+            <!-- TODO: check  -->
+            <div class="card-address">E*A</div>
             <!-- <div
               v-for="b in bc.cardNumber.split()"
               :key="b"
@@ -82,7 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="account-title-container bindunbind">
+    <!-- <div class="account-title-container bindunbind">
       <span class="account-title">Bank/E-wallet Card Unbind Record</span>
     </div>
     <div class="account-content last bindunbind">
@@ -125,11 +134,9 @@
           </template>
         </a-table>
       </div>
-    </div>
+    </div> -->
     <a-modal v-model:visible="bankCardModalState.visible" wrap-class-name="bankModal" width="100%" :footer="null">
-      <div class="modal-head-title">
-        {{ isVirtual ? "Add a Crypto card" : !isEwallet ? "Add Bank Card" : "Add E-wallet Card" }}
-      </div>
+      <div class="modal-head-title">Add Bank Card</div>
       <a-form
         ref="bankCardFormRef"
         :hide-required-mark="true"
@@ -180,21 +187,31 @@
           </a-space>
         </a-form-item>
 
-        <div class="ant-input mb-24px">
-          {{ bankCardInfo.cardAccount }}
-        </div>
-
-        <a-form-item ref="cardNumber" name="cardNumber">
+        <a-form-item name="cardAccount" label-align="left" label="Holder Name">
+          <a-input v-model:value="bankCardInfo.cardAccount" placeholder="Enter Holder Name" />
+        </a-form-item>
+        <a-form-item
+          ref="cardNumber"
+          name="cardNumber"
+          label-align="left"
+          :label="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
+        >
           <a-input
             v-model:value="bankCardInfo.cardNumber"
             :placeholder="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
           />
         </a-form-item>
-        <a-form-item v-if="!(isVirtual || isEwallet)" ref="cardAddress" name="cardAddress">
+        <!-- <a-form-item v-if="!(isVirtual || isEwallet)" ref="cardAddress" name="cardAddress" label="Card Address">
           <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Card Address" />
+        </a-form-item> -->
+        <!-- <a-form-item v-if="!(isVirtual || isEwallet)"  name="cardNumber" label-align="left" label="Account Number">
+          <a-input v-model:value="bankCardInfo.cardNumber" placeholder="Enter Account Number" />
+        </a-form-item> -->
+        <a-form-item name="cardAddress" label-align="left" label="IFSC Code">
+          <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Enter Bank IFSC Code" />
         </a-form-item>
         <a-form-item class="txt-center">
-          <button class="txt-center common-btn" type="submit" @click="submitBankCard">Confirm</button>
+          <button class="txt-center common-btn" type="submit" @click="submitBankCard">CONFIRM</button>
         </a-form-item>
       </a-form>
     </a-modal>
@@ -208,345 +225,303 @@
   </div>
 </template>
 
-<script lang="js">
-import {defineComponent, reactive, ref, onMounted, createVNode, computed} from "vue";
-import {Modal, message} from "ant-design-vue";
-import {ExclamationCircleOutlined} from "@ant-design/icons-vue"
-import {RiSpamLine, RiAddCircleFill, RiLinkUnlink} from "vue-remix-icons";
-import {loadBanks, loadAllBankCards, loadUnbindRecord, addBankCard, deleteBankCard} from "@/api/personal/personal";
-import {userStore} from "@/store";
-import {useRouter} from "vue-router";
+<script setup>
+import { defineComponent, reactive, ref, onMounted, createVNode, computed } from "vue";
+import { Modal, message } from "ant-design-vue";
+import { ExclamationCircleOutlined } from "@ant-design/icons-vue";
+import { RiSpamLine, RiAddCircleFill, RiLinkUnlink, RiSettings3Line } from "vue-remix-icons";
+import { loadBanks, loadAllBankCards, loadUnbindRecord, addBankCard, deleteBankCard } from "@/api/personal/personal";
+import { userStore } from "@/store";
+import { useRouter } from "vue-router";
 import moment from "moment/moment";
 
-export default defineComponent({
-  name: "WithdrawBankView",
-  components: {
-    RiSpamLine, RiAddCircleFill, RiLinkUnlink
+let validateBankLength = async (r, v) => {
+  var min = 6;
+  var max = 12;
+  var reg = /^\d+$/;
+  var allreg = /^[A-Za-z0-9]*$/;
+  if (v === "") {
+    return Promise.reject("Please enter card number");
+  } else if (v.length < min || v.length > max) {
+    return Promise.reject("Length should be between " + min + "-" + max);
+  } else {
+    return Promise.resolve();
+  }
+};
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/payment/";
+const isCardActive = ref();
+const store = userStore();
+const searchForm = reactive({
+  startDate: "",
+  endDate: ""
+});
+const router = useRouter();
+const columns = [
+  {
+    title: "Bank Name",
+    dataIndex: "bankName",
+    key: "bankName"
   },
-  setup() {
-    let validateBankLength = async (r, v) => {
-      var min = 6
-      var max = 12
-      if (selectedBankType.value === 'Bank') {
-        min = 6;
-        max = 12;
-      } else if (selectedBankType.value === 'Crypto') {
-        min = 34;
-        max = 37;
-      } else if (selectedBankType.value === 'e-Wallet') {
-        min = 11;
-        max = 11;
-      }
-      var reg = /^\d+$/;
-      var allreg = /^[A-Za-z0-9]*$/;
-      if (v === '') {
-        return Promise.reject('Please enter card number');
-      } else if (selectedBankType.value !== 'Crypto' && !reg.test(v)) {
-        return Promise.reject('Only numbers are allowed');
-      } else if (selectedBankType.value === 'Crypto' && !allreg.test(v)) {
-        return Promise.reject('Only numbers and alphabets are allowed');
-      } else if (v.length < min || v.length > max) {
-        if (selectedBankType.value === 'e-Wallet') {
-          return Promise.reject('Length should be 11');
-        } else {
-          return Promise.reject('Length should be between ' + min + '-' + max);
-        }
+  {
+    title: "Card Account",
+    dataIndex: "cardAccount",
+    key: "cardAccount"
+  },
+  {
+    title: "Card Address",
+    dataIndex: "cardAddress",
+    key: "cardAddress"
+  },
+  {
+    title: "Bind Time",
+    key: "bindTime",
+    dataIndex: "bindTime",
+    slots: { customRender: "bindTime" }
+  },
+  {
+    title: "UnbindTime",
+    key: "unbindTime",
+    dataIndex: "unbindTime",
+    slots: { customRender: "unbindTime" }
+  }
+];
+
+const bankTypes = ["e-Wallet"];
+const isVirtual = computed(() => selectedBankType.value === "Crypto");
+const isEwallet = computed(() => selectedBankType.value === "e-Wallet");
+
+const personalState = reactive({
+  memberInfo: {},
+  bankCardList: []
+});
+const dataSource = ref();
+const searchRecord = () => {
+  loadUnbindRecord(searchForm)
+    .then((response) => {
+      if (response.code === 0) {
+        dataSource.value = response.data.records;
       } else {
-        return Promise.resolve();
+        message.error(response.message, 4);
       }
-    };
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/'
-    const isCardActive = ref();
-    const store = userStore();
-    const searchForm = reactive({
-      startDate: "",
-      endDate: ""
+    })
+    .catch((e) => {
+      console.log(e.message);
     });
-    const router = useRouter()
-    const columns = [
-      {
-        title: "Bank Name",
-        dataIndex: "bankName",
-        key: "bankName",
-      },
-      {
-        title: "Card Account",
-        dataIndex: "cardAccount",
-        key: "cardAccount"
-      },
-      {
-        title: "Card Address",
-        dataIndex: "cardAddress",
-        key: "cardAddress"
-      },
-      {
-        title: "Bind Time",
-        key: "bindTime",
-        dataIndex: "bindTime",
-        slots: { customRender: "bindTime" }
-      },
-      {
-        title: "UnbindTime",
-        key: "unbindTime",
-        dataIndex: "unbindTime",
-        slots: { customRender: "unbindTime" }
-      }
-    ];
-    const bankTypes = ['e-Wallet', 'Bank', 'Crypto',];
-    const isVirtual = computed(() => selectedBankType.value === "Crypto");
-    const isEwallet = computed(() => selectedBankType.value === "e-Wallet");
+};
 
-    const personalState = reactive({
-      memberInfo: {},
-      bankCardList: []
-    });
-    const dataSource = ref();
-    const searchRecord = () => {
-      loadUnbindRecord(searchForm).then((response) => {
-        if (response.code === 0) {
-          dataSource.value = response.data.records
-        } else {
-          message.error(response.message, 4)
-        }
-      }).catch((e) => {
-        console.log(e.message);
-      });
-    };
+const chgDate = (val) => {
+  var gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  var oldDate = new Date(gapDate);
+  var newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  var useDate = newDate.Y + newDate.M + newDate.D;
+  return useDate;
+};
 
-
-    const chgDate = (val) => {
-      var gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
-      var oldDate = new Date(gapDate);
-      var newDate = {
-        Y: oldDate.getFullYear() + "-",
-        M: (oldDate.getMonth() + 1) < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : (oldDate.getMonth() + 1 + "-"),
-        D: (oldDate.getDate()) < 10 ? "0" + (oldDate.getDate() + "") : (oldDate.getDate() + "")
-      };
-      var useDate = newDate.Y + newDate.M + newDate.D;
-      return useDate;
-    };
-
-    const getTime = () => {
-      searchForm.startDate = chgDate(7);
-      searchForm.endDate = chgDate(0);
-      searchRecord();
-    };
-    onMounted(() => {
-      getTime();
-      loadCards();
-    });
-    const showCard = (item, index) => {
-      // if (index === isCardActive.value) {
-      //   isCardActive.value = null;
-      //   console.log(isCardActive.value)
-      // } else {
-      //   isCardActive.value = index
-      // }
-      isCardActive.value = index
-    }
-    const loadCards = () => {
-      personalState.bankCardList = [];
-      loadAllBankCards().then((response) => {
-        if (response.code === 0) {
-          response.data.forEach(element => {
-            if (element){
-              personalState.bankCardList.push(element);
-            }
-          });
-        }
-      }).catch((error) => {
-        console.log("error", error);
-      });
-    }
-
-    //add bank card
-    const bankCardModalState = reactive({
-      visible: false,
-      banks: []
-    });
-    const bankCardFormRef = ref();
-    const bankCardInfo = reactive({
-      bankId: undefined,
-      cardNumber: "",
-      cardAccount: "",
-      cardAddress: ""
-    });
-    const bankName = ref()
-    const banksList = ref([])
-    const bankCardModal = () => {
-      store.getMemberInfo().then(() => {
-        if (!store.realName || store.realName == "") {
-          router.push("/center/personal");
-        } else {
-          bankCardInfo.bankId = undefined;
-          bankCardInfo.cardNumber = "";
-          bankCardInfo.cardAccount = store.realName;
-          bankCardInfo.cardAddress = "";
-          bankCardModalState.visible = true;
-          if (bankCardModalState.banks.length === 0) {
-            loadBanks().then((res) => {
-              if (res.code === 0) {
-                bankCardModalState.banks.push(...res.data)
-                selectBankType();
-              }
-            }).catch((e) => {
-              console.log("error", e);
-            });
+const getTime = () => {
+  searchForm.startDate = chgDate(7);
+  searchForm.endDate = chgDate(0);
+  searchRecord();
+};
+onMounted(() => {
+  getTime();
+  loadCards();
+});
+const showCard = (item, index) => {
+  // if (index === isCardActive.value) {
+  //   isCardActive.value = null;
+  //   console.log(isCardActive.value)
+  // } else {
+  //   isCardActive.value = index
+  // }
+  isCardActive.value = index;
+};
+const loadCards = () => {
+  personalState.bankCardList = [];
+  loadAllBankCards()
+    .then((response) => {
+      if (response.code === 0) {
+        response.data.forEach((element) => {
+          if (element) {
+            const _element = {
+              ...element,
+              displayCardNumberList: element.cardNumber.split(/(\d{4})/).filter(Boolean)
+            };
+            personalState.bankCardList.push(_element);
           }
-        }
-      })
-      // bankCardInfo.bankId = undefined;
-      // bankCardInfo.cardNumber = "";
-      // bankCardInfo.cardAccount = store.realName;
-      // bankCardInfo.cardAddress = "";
-      // bankCardModalState.visible = true;
-      // if (bankCardModalState.banks.length === 0) {
-      //   loadBanks().then((res) => {
-      //     if (res.code === 0) {
-      //       bankCardModalState.banks.push(...res.data)
-      //       selectBankType();
-      //     }
-      //   }).catch((e) => {
-      //     console.log("error", e);
-      //   });
-      // }
-    };
-    const selectedBankType = ref("e-Wallet")
-    const selectBankType = () => {
-      bankCardFormRef.value.clearValidate()
-      banksList.value = []
-      bankCardInfo.bankId = null
-      bankCardModalState.banks.forEach(element => {
-        if (selectedBankType.value === "Bank" && element.bankType === 'BANK') {
-          banksList.value.push(element);
-        }
-        if (selectedBankType.value === "Crypto" && element.bankType === 'CRYPTO') {
-          banksList.value.push(element);
-        }
-        if (selectedBankType.value === "e-Wallet" && element.bankType === 'EWALLET') {
-          banksList.value.push(element);
-        }
-      })
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
+//add bank card
+const bankCardModalState = reactive({
+  visible: false,
+  banks: []
+});
+const bankCardFormRef = ref();
+const bankCardInfo = reactive({
+  cardNumber: "",
+  cardAccount: "",
+  cardAddress: ""
+});
+const bankName = ref();
+const banksList = ref([]);
+const bankCardModal = () => {
+  store.getMemberInfo().then(() => {
+    if (!store.realName || store.realName == "") {
+      message.error("Kindly fill in your personal details");
+      router.push("/center/personal");
+    } else {
+      bankCardInfo.bankId = undefined;
+      bankCardInfo.cardNumber = "";
+      bankCardInfo.cardAccount = store.realName;
+      bankCardInfo.cardAddress = "";
+      bankCardModalState.visible = true;
+      if (bankCardModalState.banks.length === 0) {
+        loadBanks()
+          .then((res) => {
+            if (res.code === 0) {
+              bankCardModalState.banks.push(...res.data);
+              selectBankType();
+            }
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      }
     }
-    const submitBankCard = () => {
-      bankCardFormRef.value
-          .validate()
-          .then(() => {
-            addBankCard(bankCardInfo).then((response) => {
-              if (response.code === 0) {
-                message.success("success");
-                bankCardModalState.visible = false;
-                loadCards();
-              }
-            }).catch((error) => {
-              console.log(error.message);
-            });
-          }).catch((error) => {
-        console.log("error", error);
-      });
-    };
-    const bankCardRules = {
-      cardNumber: [
-        {
-          required: true,
-          message: "Please enter card number",
-          trigger: "blur",
-        },
-        // {
-        //   validator: validateBankLength,
-        //   trigger: "blur",
-        // }
-      ],
-      cardAccount: [
-        {
-          required: true,
-          message: "Card account is required",
-          trigger: "blur"
-        }
-      ]
-    };
-    const open = ref(false);
-    const selectedUnbindingCard = ref({})
-    const unbindBankCard = (card) => {
-      selectedUnbindingCard.value = card
-      open.value = true;
-      // Modal.confirm({
-      //   title: "Remove " + card.bankName + "?",
-      //   content: "Are you sure you want to remove " + card.bankName + "?",
-      //   icon: createVNode(ExclamationCircleOutlined),
-      //   width: "100%",
-      //   onOk() {
-      //     deleteBankCard(card.id
-      //     ).then((res) => {
-      //       if (res.code === 0) {
-      //         for (let i = 0; i < personalState.bankCardList.length; i++) {
-      //           if (personalState.bankCardList[i].id === card.id) {
-      //             personalState.bankCardList.splice(i, 1);
-      //           }
-      //         }
-      //       }
-      //     }).catch((e) => {
-      //       console.log("error", e);
-      //     });
-      //   },
-      //   onCancel() {
-      //   },
-      // });
-    };
+  });
+  // bankCardInfo.bankId = undefined;
+  // bankCardInfo.cardNumber = "";
+  // bankCardInfo.cardAccount = store.realName;
+  // bankCardInfo.cardAddress = "";
+  // bankCardModalState.visible = true;
+  // if (bankCardModalState.banks.length === 0) {
+  //   loadBanks().then((res) => {
+  //     if (res.code === 0) {
+  //       bankCardModalState.banks.push(...res.data)
+  //       selectBankType();
+  //     }
+  //   }).catch((e) => {
+  //     console.log("error", e);
+  //   });
+  // }
+};
+
+const selectedBankType = ref("e-Wallet");
+const selectBankType = () => {
+  bankCardFormRef.value.clearValidate();
+  banksList.value = [];
+  bankCardInfo.bankId = null;
+  bankCardModalState.banks.forEach((element) => {
+    if (selectedBankType.value === "Bank" && element.bankType === "BANK") {
+      banksList.value.push(element);
+    }
+    if (selectedBankType.value === "Crypto" && element.bankType === "CRYPTO") {
+      banksList.value.push(element);
+    }
+    if (selectedBankType.value === "e-Wallet" && element.bankType === "EWALLET") {
+      banksList.value.push(element);
+    }
+  });
+};
+const submitBankCard = () => {
+  bankCardFormRef.value
+    .validate()
+    .then(() => {
+      addBankCard(bankCardInfo)
+        .then((response) => {
+          if (response.code === 0) {
+            message.success("success");
+            bankCardModalState.visible = false;
+            loadCards();
+          }
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+const bankCardRules = {
+  cardNumber: [
+    {
+      required: true,
+      message: "Please enter card number",
+      trigger: "blur"
+    }
+    // {
+    //   validator: validateBankLength,
+    //   trigger: "blur",
+    // }
+  ],
+  cardAccount: [
+    {
+      required: true,
+      message: "Card account is required",
+      trigger: "blur"
+    }
+  ]
+};
+const open = ref(false);
+const selectedUnbindingCard = ref({});
+const unbindBankCard = (card) => {
+  selectedUnbindingCard.value = card;
+  open.value = true;
+  // Modal.confirm({
+  //   title: "Remove " + card.bankName + "?",
+  //   content: "Are you sure you want to remove " + card.bankName + "?",
+  //   icon: createVNode(ExclamationCircleOutlined),
+  //   width: "100%",
+  //   onOk() {
+  //     deleteBankCard(card.id
+  //     ).then((res) => {
+  //       if (res.code === 0) {
+  //         for (let i = 0; i < personalState.bankCardList.length; i++) {
+  //           if (personalState.bankCardList[i].id === card.id) {
+  //             personalState.bankCardList.splice(i, 1);
+  //           }
+  //         }
+  //       }
+  //     }).catch((e) => {
+  //       console.log("error", e);
+  //     });
+  //   },
+  //   onCancel() {
+  //   },
+  // });
+};
 
 const handleOk = (e) => {
-  deleteBankCard(selectedUnbindingCard.value.id).then((res) => {
+  deleteBankCard(selectedUnbindingCard.value.id)
+    .then((res) => {
       if (res.code === 0) {
         for (let i = 0; i < personalState.bankCardList.length; i++) {
           if (personalState.bankCardList[i].id === selectedUnbindingCard.value.id) {
             personalState.bankCardList.splice(i, 1);
           }
         }
-  open.value = false;
+        open.value = false;
       }
-    }).catch((e) => {
+    })
+    .catch((e) => {
       console.log("error", e);
-  open.value = false;
+      open.value = false;
     });
 };
 
 const handleCancel = (e) => {
   open.value = false;
-}
-    return {
-      searchForm,
-      columns,
-      personalState,
-      bankCardModalState,
-      bankCardFormRef,
-      bankCardInfo,
-      bankCardRules,
-      submitBankCard,
-      bankCardModal,
-      unbindBankCard,
-      showCard,
-      isCardActive,
-      bankName,
-      bankTypes,
-      selectBankType,
-      selectedBankType,
-      banksList,
-      searchRecord,
-      humanDatetime(ts) {
-        return moment(ts).format("MM-DD-YYYY HH:mm:ss");
-      },
-      dataSource,
-      validateBankLength,
-      imgURL,
-      isVirtual,
-      isEwallet,
-      open,
-      selectedUnbindingCard,
-      handleOk,
-      handleCancel
-    };
-  }
-});
+};
 </script>
 
 <style lang="scss">
@@ -582,9 +557,11 @@ const handleCancel = (e) => {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  color: #ffffff;
 
   .ant-modal-content {
     width: 90%;
+    background-color: #131313;
   }
 
   .ant-form-item-control-input-content {
@@ -670,7 +647,8 @@ const handleCancel = (e) => {
   .account-content-wrapper {
     .bank-card-list {
       padding-top: 20px;
-      padding-right: 220px;
+      gap: 24px;
+      // padding-right: 220px;
       // padding-left: 40px;
 
       .bank-card-item {
@@ -684,7 +662,6 @@ const handleCancel = (e) => {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: -260px;
         color: #fff;
         cursor: pointer;
         transition: all 0.3s ease-in;
@@ -694,7 +671,6 @@ const handleCancel = (e) => {
         // filter: grayscale(0.3);
         background-image: url("../../assets/images/finance/bankcard.png");
         transform: none;
-        box-shadow: 0px 0px 10px 0 #000;
         &.addcard {
           background-image: url("../../assets/images/finance/bankaddcard.png");
           // background-color: #e7e7ffc9;
@@ -706,79 +682,69 @@ const handleCancel = (e) => {
           }
         }
 
-        .icon {
-          position: absolute;
-          left: 25px;
-          bottom: 25px;
-          width: 50px;
-
-          img {
-            width: 100%;
-          }
+        &:hover {
+          box-shadow: 0px 0px 10px 0 #000;
         }
+
+        // .icon {
+        //   position: absolute;
+        //   left: 25px;
+        //   bottom: 25px;
+        //   width: 50px;
+
+        //   img {
+        //     width: 100%;
+        //   }
+        // }
 
         &.active {
           flex-direction: column;
-          margin: 0 -60px 20px 0px;
+          // margin: 0 -60px 20px 0px;
           gap: 10px;
           filter: none;
 
-          .icon {
-            width: 20%;
-            position: relative;
-            left: 0;
-            bottom: 0;
-          }
-
-          .unlink-btn {
-            display: block;
-          }
-          .card-num-box {
-            display: block;
-            padding: 0;
-          }
-          .txt-center {
-            position: relative;
-            padding-top: 0;
-            transform: rotateZ(0);
-            height: unset;
-            text-align: center;
-            left: 0;
-          }
-
-          &:hover {
-            &:before {
-              -webkit-animation: shine 2s;
-              animation: shine 2s;
-            }
-          }
+          // .icon {
+          //   width: 20%;
+          //   position: relative;
+          //   left: 0;
+          //   bottom: 0;
+          // }
         }
 
         .txt-center {
           position: absolute;
-          padding-top: 25px;
           text-align: left;
-          // transform: rotateZ(-90deg);
           left: 20px;
-          bottom: 35px;
-          top: 0;
-          margin: auto;
-          transform-origin: 50% 50%;
-          width: 200px;
-          width: 160px;
+          top: 35px;
           text-overflow: ellipsis;
-          height: 160px;
           overflow: hidden;
           white-space: nowrap;
           transition: all 0.3s ease-in-out;
         }
 
         .cards {
+          display: flex;
+          flex-direction: column;
           gap: 10px;
-          margin-top: 10px;
-          justify-content: center;
-          width: 100%;
-          text-align: center;
+          position: absolute;
+          top: 120px;
+          left: 20px;
+
+          .card-num-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16.64px;
+            font-weight: 700;
+            line-height: 18.69px;
+          }
+
+          .card-address {
+            font-size: 13.93px;
+            font-style: italic;
+            font-weight: 400;
+            line-height: 15.64px;
+          }
         }
 
         &.add-bank-card {
@@ -791,7 +757,13 @@ const handleCancel = (e) => {
         .unlink-btn {
           cursor: pointer;
           position: absolute;
-          display: none;
+          top: 10px;
+          right: 10px;
+        }
+
+        .setting-btn {
+          cursor: pointer;
+          position: absolute;
           top: 10px;
           left: 10px;
         }
@@ -799,15 +771,6 @@ const handleCancel = (e) => {
         svg {
           fill: #ffffff;
           width: 20px;
-        }
-
-        .card-num-box {
-          // padding: 40px 0 0;
-          width: 70%;
-          padding-right: 20px;
-          overflow-wrap: break-word;
-          white-space: pre-wrap;
-          display: none;
         }
 
         &:before {
@@ -822,6 +785,13 @@ const handleCancel = (e) => {
           background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
           border-radius: 10px;
           transform: skewX(320deg);
+        }
+
+        &:hover {
+          &:before {
+            -webkit-animation: shine 2s;
+            animation: shine 2s;
+          }
         }
 
         @-webkit-keyframes shine {

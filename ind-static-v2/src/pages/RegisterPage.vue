@@ -41,9 +41,10 @@
                   ref="pwdRef"
                   hide-bottom-space
                   v-model="regForm.password"
-                  lazy-rules
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert password',
+                    (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
+                  ]"
                   :type="isPwd ? 'password' : 'text'"
-                  :rules="[(val) => (val.length > 6) || 'The characters of password must be above 6']"
                   color="white"
                   outlined
                   label-color="brand"
@@ -171,19 +172,20 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "vue";
+import { defineComponent, ref, reactive, onMounted, watch, onActivated, nextTick } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 import PrimaryButton from '../components/auth/PrimaryButton.vue';
 import InputField from '../components/auth/InputField.vue';
 import InputRowGrid from '../components/auth/InputRowGrid.vue';
 import { useUI } from "stores/ui";
 import { isAndroid } from "boot/utils";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+
 export default defineComponent({
   name: "RegisterPage",
   components: {
@@ -323,6 +325,13 @@ export default defineComponent({
       }
     }
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
     const trackRegisterFailedEvent = () => {
       if(ui.adjust_register_fail_event && isAndroid()) {
         var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
@@ -408,11 +417,7 @@ export default defineComponent({
               // console.log(ret);
               if (res.code === 0) {
                 //ADJUST TRACKEVENT.
-                // debugger;
-                if (ui.adjust_register_event && isAndroid()) {
-                  var adjustEvent = new AdjustEvent(ui.adjust_register_event);
-                  Adjust.trackEvent(adjustEvent);
-                }
+                trackRegisterSuccessEvent();
 
                 $q.notify({
                   color: "positive",
@@ -424,9 +429,9 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  // const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  // router.go(jumpUrl);
-                  router.go("/");
+                  const jumpUrl = route.query.redirect ? route.query.redirect : "/";
+                  router.go(jumpUrl);
+                  // location.href = "/";
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

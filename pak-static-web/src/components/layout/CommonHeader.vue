@@ -1,5 +1,5 @@
 <template>
-  <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
+  <header class="header-container">
     <div class="top-nav-wrapper">
       <div class="top-nav">
         <div class="left-hamb">
@@ -8,19 +8,29 @@
             <img src="../../assets/hamburger.svg" v-if="globalStore.isMenuActive" />
           </div>
           <Logo />
+          <text-switch
+            :tabs="switches"
+            v-model="activateTab"
+            class="text-switch-wrapper"
+            @change="handleSwitchChange"
+          />
         </div>
 
         <div class="header-menu-container mobile-menu-hide" :class="globalStore.isMenuActive ? 'active' : ''">
+          <router-link class="without-divider" to="/share">
+            <img src="@/assets/images/layout/header/invite-to-earn.png" />
+          </router-link>
           <ul class="header-menu-list">
             <li v-for="nav in sortedNavigations" :key="nav.name" class="header-menu-item">
               <router-link
                 :to="nav.path"
                 class="header-nav"
                 @mouseover="hoveredMenu = nav.code"
-                :class="nav.code.toLowerCase()"
+                :class="[nav.code.toLowerCase(), nav.submenu ? 'suffix' : '']"
               >
                 {{ nav.name }}
               </router-link>
+              <!-- TODO: sub menu? -->
               <!-- <div
                 v-if="nav.hasSub"
                 class="submenu"
@@ -122,12 +132,30 @@
               </div> -->
             </li>
           </ul>
+          <ul class="header-menu-list">
+            <li class="header-menu-item">
+              <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
+                Live Support
+              </a>
+              <a class="header-nav feedback" @click="() => (feedbackModalVisible = true)">Feedback</a>
+              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
+              <a
+                class="header-nav whatsapp"
+                href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+                target="_blank"
+              >
+                Whatsapp
+              </a>
+              <a class="header-nav language" href="" target="_blank">Language</a>
+            </li>
+          </ul>
+          <bet-ranking />
         </div>
 
-        <div class="mobile-menu-overlay" @click="showMobileMenu" />
+        <!-- <div class="mobile-menu-overlay" @click="showMobileMenu" /> -->
 
-        <Jackpot />
-        <div class="toggle-box">
+        <!-- <Jackpot /> -->
+        <!-- <div class="toggle-box">
           <input
             type="checkbox"
             @click="toggleTheme"
@@ -137,7 +165,7 @@
           />
           <label for="toggle-box-checkbox" class="toggle-box-label-left"></label>
           <label for="toggle-box-checkbox" class="toggle-box-label"></label>
-        </div>
+        </div> -->
         <!-- <router-link to="/getapp" class="apphead">
           <img src="../../assets/images/common/appheadicon.svg" />
         </router-link> -->
@@ -145,28 +173,33 @@
           <img src="../../assets/images/common/vipheadicon.svg" />
         </router-link> -->
         <div v-if="!token" class="login-box">
-          <router-link class="common-btn login-btn" to="/login">Login</router-link>
-          <router-link class="common-btn reg-btn" to="/register" style="margin-right: 30px">
+          <button class="common-btn login-btn" @click="openAccountModal">Login</button>
+          <button class="common-btn reg-btn" @click="openAccountModal" style="margin-right: 30px">
             Register
-            <img style="position: absolute; right: -30px" src="../../assets/images/common/regpresent.png" />
-          </router-link>
+            <!-- <img style="position: absolute; right: -30px" src="../../assets/images/common/regpresent.png" /> -->
+          </button>
         </div>
         <div v-else class="login-box">
-          <div class="header-balance">
+          <button class="action-btn">
+            <RiSearchLine />
+          </button>
+          <button class="action-btn has-unread-notification">
+            <img :src="NotificationSvg" />
+          </button>
+          <!-- <div class="header-balance">
             <div v-if="isLoadingBal">Loading...</div>
             <div v-else>₱ {{ balance.toFixed(2) }}</div>
 
             <div class="refreshbtn" @click="refreshBalance"><img src="../../assets/images/common/refresh.png" /></div>
-          </div>
-          <router-link class="common-btn reg-btn" to="/center/top-up">Deposit</router-link>
+          </div> -->
+          <router-link class="common-btn reg-btn" to="/center/top-up">{{ $t("layout.header.deposit") }}</router-link>
+          <UserProfile @open-dialog="trigger" />
 
           <div class="login-box mobile-menu-hide">
-            <!-- <div class="header-balance">₱ {{ balance.toFixed(2) }}</div> -->
             <div class="viewmail" />
             <div class="dropdown-container setting-hamburger">
               <div class="setting-hamburger">
                 <img src="../../assets/hamburger.svg" />
-                <!-- <RiListSettingsLine style="fill: #83a3ca" /> -->
               </div>
               <div class="abs-menu desktop" :class="triggerMenu ? 'show' : 'hide'">
                 <ul>
@@ -177,7 +210,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <div class="icon icon-quick"></div>
                       Quick Withdraw
                     </router-link>
@@ -231,7 +264,7 @@
                     </router-link>
                   </li>
                   <li>
-                    <router-link to="/center/withdraw" class="flex-box flex-align-center account-menu-item">
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
                       <RiBankCardLine />
                       Quick Withdraw
                     </router-link>
@@ -305,304 +338,251 @@
       <ClaimModal ref="claimPromo" />
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
+      <AccountModal v-model="accountModalVisible" />
+      <FeedbackModal v-model="feedbackModalVisible" />
     </div>
   </header>
 </template>
 
-<script lang="js">
-
+<script setup>
 import "vue3-carousel/dist/carousel.css";
-import {defineComponent, onMounted, onUnmounted, ref, computed, watch} from "vue";
-import {storeToRefs} from "pinia";
-import {userStore, globalStore} from "@/store";
-import GameModal from "@/components/modal/GameModal";
-import SpinWheelModal from "@/components/modal/SpinWheelModal";
-import AppPromoModal from "@/components/modal/appPromoModal";
-import AdsPopupList from "@/components/hotpromo/adsPopupList.vue";
-import ClaimModal from "@/components/modal/claimPromoModal";
-import DailyLoginCashBonusPromoPopup
-  from "@/components/hotpromo/DAILY-LOGIN-CASH-BONUS/DailyLoginCashBonusPromoPopup.vue";
+import { onMounted, onUnmounted, ref, computed, watch } from "vue";
+import { storeToRefs } from "pinia";
+import { userStore, globalStore } from "@/store";
 import {
-  RiBilliardsLine,
-  RiBasketballLine,
-  RiCoinsLine,
-  RiVipCrownLine,
-  RiVipCrown2Line,
+  RiSearchLine,
   RiWallet3Line,
   RiUser5Line,
   RiBankCardLine,
   RiBankLine,
   RiMailLine,
   RiShieldFlashLine,
-  RiMoonLine,
-  RiSunLine,
   RiLogoutCircleLine,
   RiShareBoxLine,
-  RiListSettingsLine,
-  RiTeamLine,
-  RiSmartphoneLine
-} from 'vue-remix-icons'
-import {useRoute} from "vue-router";
-import {kycAPI, loadPromo} from "@/api/index/promo"
-import {useRouter} from "vue-router";
-import Platforms from '@/constant/platforms'
+  RiListSettingsLine
+} from "vue-remix-icons";
+import { useRoute } from "vue-router";
+import { kycAPI, loadPromo } from "@/api/index/promo";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import Platforms from "@/constant/platforms";
 
-import Logo from "@/components/Logo"
-import Jackpot from "@/components/Jackpot";
+import Logo from "@/components/Logo";
+import TextSwitch from "@/components/layout/header/TextSwitch.vue";
+import UserProfile from "@/components/layout/header/UserProfile.vue";
+import GameModal from "@/components/modal/GameModal";
+import SpinWheelModal from "@/components/modal/SpinWheelModal";
+import AppPromoModal from "@/components/modal/appPromoModal";
+import AdsPopupList from "@/components/hotpromo/adsPopupList.vue";
+import ClaimModal from "@/components/modal/claimPromoModal";
+import DailyLoginCashBonusPromoPopup from "@/components/hotpromo/DAILY-LOGIN-CASH-BONUS/DailyLoginCashBonusPromoPopup.vue";
+import NotificationSvg from "@/assets/images/layout/header/notification.svg";
+import AccountModal from "@/components/layout/header/AccountModal.vue";
+import BetRanking from "@/components/layout/header/BetRanking.vue";
+import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
 
-export default defineComponent({
-  name: "CommonHeader",
-  components: {
-    Logo,
-    GameModal,
-    SpinWheelModal,
-    AppPromoModal,
-    ClaimModal,
-    Jackpot,
-    AdsPopupList,
-    DailyLoginCashBonusPromoPopup,
-    RiBilliardsLine
-    ,
-    RiBasketballLine,
-    RiCoinsLine,
-    RiVipCrownLine,
-    RiVipCrown2Line,
-    RiWallet3Line,
-    RiUser5Line,
-    RiBankCardLine,
-    RiBankLine,
-    RiMailLine,
-    RiShieldFlashLine,
-    RiMoonLine,
-    RiSunLine,
-    RiLogoutCircleLine,
-    RiShareBoxLine,
-    RiListSettingsLine,
-    RiTeamLine,
-    RiSmartphoneLine
-  },
-  setup() {
-    const isLoadingBal = ref(true);
-    const casinoGame = ref(null);
-    const spinWheel = ref(null);
-    const appPromo = ref(null);
-    const dailyLoginPromoPopup = ref();
-    const adsPopupListRef = ref();
-    const router = useRouter();
+const navigations = [
+  // { code: "VIP", name: "VIP", path: "/vip" },
+  // { code: "GetApp", name: "Download APP", path: "/getapp" },
+  // { code: "Home", name: "Hot", path: "/home" },
+  // { code: "Jackpot", name: "Jackpot", path: "/jackpot" },
+  ...Platforms
+  // { code: "Promotion", name: "Promotion", path: "/promotion" },
+  // { code: "Affiliates", name: "Affiliates", path: "/affiliate" },
+  // { code: "AppTutorial", name: "App Tutorial", path: "/app-tutorial" }
+];
 
-    const spinWheelOnCloseHandler = () => {
-      const isGo = sessionStorage.getItem("IS_GO_PAGE");
-      if(!isGo){
-        adsPopupListRef.value.initAdsPopupList();
+const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
+
+const router = useRouter();
+const route = useRoute();
+const { t } = useI18n();
+
+const isLoadingBal = ref(true);
+const casinoGame = ref(null);
+const spinWheel = ref(null);
+const appPromo = ref(null);
+const dailyLoginPromoPopup = ref();
+const adsPopupListRef = ref();
+const activateTab = ref("casino");
+const feedbackModalVisible = ref(false);
+
+const switches = computed(() => [
+  { label: t("layout.header.switch.casino"), value: "casino" },
+  { label: t("layout.header.switch.promotion"), value: "promotion" }
+]);
+
+const spinWheelOnCloseHandler = () => {
+  const isGo = sessionStorage.getItem("IS_GO_PAGE");
+  if (!isGo) {
+    adsPopupListRef.value.initAdsPopupList();
+  }
+  sessionStorage.removeItem("IS_GO_PAGE");
+};
+
+const getSpinWheel = () => {
+  //API
+  spinWheel.value.open();
+};
+const getAppPromo = () => {
+  kycAPI().then((res) => {
+    if (res.code === 0) {
+      if (res.data.hasKYC) {
+        appPromo.value.open();
       }
-      sessionStorage.removeItem("IS_GO_PAGE")
     }
+  });
+};
 
-    const getSpinWheel = () => {
-      //API
-      spinWheel.value.open();
+const claimPromo = ref(null);
+
+const getClaimPromo = () => {
+  claimPromo.value.open();
+};
+
+function playGame(gameName, platformCode, gameCode, status) {
+  casinoGame.value.open(gameName, platformCode, gameCode, status);
+}
+
+const store = userStore();
+const { token, accountModalVisible } = storeToRefs(store);
+const { openAccountModal } = store;
+const triggerMenu = ref(null);
+onMounted(() => {
+  if (store.token) {
+    store.getBalance();
+    isLoadingBal.value = false;
+  }
+  activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
+  getBalance();
+  window.addEventListener("scroll", onScroll);
+});
+const getBalance = () => {
+  setInterval(function () {
+    if (store.token) {
+      store.getBalance();
     }
-    const getAppPromo = () => {
-      kycAPI().then((res) => {
+  }, 20000);
+  isLoadingBal.value = false;
+};
+const refreshBalance = () => {
+  isLoadingBal.value = true;
+  setTimeout(() => {
+    store.getBalance();
+    isLoadingBal.value = false;
+  }, 100);
+};
+onUnmounted(() => window.removeEventListener("resize", onScroll));
+const balance = computed(() => {
+  return store.balance;
+});
+const vip = computed(() => {
+  return store.vip;
+});
+const nickName = computed(() => {
+  return store.nickName;
+});
+
+const onLogout = () => {
+  store.memberLogout().then(() => {
+    router.push("/");
+    // location.reload();
+  });
+};
+const trigger = () => {
+  triggerMenu.value = !triggerMenu.value;
+  // if (triggerMenu.value === true) {
+  //   globalStore.isMenuActive = false;
+  // }
+};
+let windowScroll = ref(window.scrollY);
+// var $animation_elements = document.getElementsByClassName("mod-slide");
+// var $window = window;
+
+const onScroll = () => {
+  windowScroll.value = window.scrollY;
+};
+
+//   watch(
+//     () => route.name,
+//     () => {
+//       globalStore.isMenuActive = false;
+//       triggerMenu.value = false;
+//     }
+//   );
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      loadPromo().then((res) => {
         if (res.code === 0) {
-          if (res.data.hasKYC) {
-            appPromo.value.open();
-          }
-        }
-      })
-    }
+          const promoDetails = res.data;
 
-    const claimPromo = ref(null);
-
-    const getClaimPromo = () => {
-      claimPromo.value.open();
-    }
-
-    function playGame(gameName, platformCode, gameCode, status) {
-      casinoGame.value.open(gameName, platformCode, gameCode, status);
-    }
-
-    const store = userStore();
-    const {token} = storeToRefs(store);
-    const triggerMenu = ref(null);
-    onMounted(() => {
-      if (store.token) {
-        store.getBalance();
-        isLoadingBal.value = false;
-      }
-      getBalance()
-      window.addEventListener('scroll', onScroll);
-
-    });
-    const getBalance = () => {
-      setInterval(function () {
-        if (store.token) {
-          store.getBalance()
-        }
-      }, 20000);
-      isLoadingBal.value = false;
-
-    }
-    const refreshBalance = () => {
-      isLoadingBal.value = true;
-      setTimeout(() => {
-        store.getBalance();
-        isLoadingBal.value = false;
-      }, 100)
-
-
-    }
-    onUnmounted(() => window.removeEventListener('resize', onScroll))
-    const balance = computed(() => {
-      return store.balance;
-    });
-    const vip = computed(() => {
-      return store.vip;
-    });
-    const nickName = computed(() => {
-      return store.nickName;
-    });
-
-    const onLogout = () => {
-      store.memberLogout().then(() => {
-        router.push('/');
-        // location.reload();
-      });
-    };
-    const trigger = () => {
-      triggerMenu.value = !triggerMenu.value
-      // if (triggerMenu.value === true) {
-      //   globalStore.isMenuActive = false;
-      // }
-    };
-    let windowScroll = ref(window.scrollY)
-    // var $animation_elements = document.getElementsByClassName("mod-slide");
-    // var $window = window;
-
-    const onScroll = () => {
-      windowScroll.value = window.scrollY
-    };
-
-    // const route = useRoute();
-    //   watch(
-    //     () => route.name,
-    //     () => {
-    //       globalStore.isMenuActive = false;
-    //       triggerMenu.value = false;
-    //     }
-    //   );
-    watch(
-        () => store.token,
-        () => {
-          if (store.token) {
-            loadPromo().then((res) => {
-              if (res.code === 0) {
-                const promoDetails = res.data
-
-                promoDetails.forEach(element => {
-                  if (element.privilegeStatus === "OPEN" || (store.memberType === "TEST" && element.privilegeStatus === "TEST")) {
-                    if (element.promoCode === "P4W-ROULETTE-TOTO") {
-                      spinWheel.value.open()?.then((isShowSpinWheelSuccess) => {
-                        if(isShowSpinWheelSuccess) {
-                          return;
-                        }
-
-                        adsPopupListRef.value.initAdsPopupList();
-                      }).catch((err) => {
-                        console.log(err);
-                        adsPopupListRef.value.initAdsPopupList();
-                      });
+          promoDetails.forEach((element) => {
+            if (
+              element.privilegeStatus === "OPEN" ||
+              (store.memberType === "TEST" && element.privilegeStatus === "TEST")
+            ) {
+              if (element.promoCode === "P4W-ROULETTE-TOTO") {
+                spinWheel.value
+                  .open()
+                  ?.then((isShowSpinWheelSuccess) => {
+                    if (isShowSpinWheelSuccess) {
+                      return;
                     }
-                    // if (element.promoCode === "P4W-CNY-VIP-RED-PACKET") {
-                    //   getClaimPromo()
-                    // }
-                    // if (element.promoCode === "P4W-DOWNLOAD-BONUS") {
-                    //   getAppPromo()
-                    // }
-                    // if (element.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS") {
-                    //   dailyLoginPromoPopup.value.open();
-                    // }
-                  }
-                });
+
+                    adsPopupListRef.value.initAdsPopupList();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                    adsPopupListRef.value.initAdsPopupList();
+                  });
               }
-            })
-          }
+              // if (element.promoCode === "P4W-CNY-VIP-RED-PACKET") {
+              //   getClaimPromo()
+              // }
+              // if (element.promoCode === "P4W-DOWNLOAD-BONUS") {
+              //   getAppPromo()
+              // }
+              // if (element.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS") {
+              //   dailyLoginPromoPopup.value.open();
+              // }
+            }
+          });
         }
-    )
-    const scroll = computed(() => windowScroll.value)
-
-    var showMobileMenu = () => {
-      globalStore.isMenuActive = !globalStore.isMenuActive
-      if (globalStore.isMenuActive === true) {
-        triggerMenu.value = false;
-      }
-    }
-    const hoveredMenu = ref('')
-    const DARK_MODE = "DARKMODE"
-    const toggleTheme = () => {
-      globalStore.isDarkMode = !globalStore.isDarkMode;
-      if (globalStore.isDarkMode) {
-        localStorage.setItem(DARK_MODE, true);
-      } else {
-        localStorage.setItem(DARK_MODE, false);
-      }
-    };
-
-    return {
-      onLogout,
-      getBalance,
-      balance,
-      token,
-      mailValue: 0,
-      scroll,
-      triggerMenu,
-      trigger,
-      showMobileMenu,
-      vip,
-      nickName,
-      store,
-      hoveredMenu,
-      playGame,
-      casinoGame,
-      globalStore,
-      toggleTheme,
-      getSpinWheel,
-      spinWheel,
-      getAppPromo,
-      appPromo,
-      getClaimPromo,
-      claimPromo,
-      refreshBalance,
-      isLoadingBal,
-      dailyLoginPromoPopup,
-      adsPopupListRef,
-      spinWheelOnCloseHandler
-    };
-  },
-  data: () => {
-    // carousel settings
-    const navigations = [
-      {code: "VIP", name: "VIP", path: "/vip"},
-      {code: "GetApp", name: "Download APP", path: "/getapp"},
-      {code: "Home", name: "Hot", path: "/home"},
-      {code: "Jackpot", name: "Jackpot", path: "/jackpot"},
-      ...Platforms,
-      {code: "Promotion", name: "Promotion", path: "/promotion"},
-      {code: "Affiliates", name: "Affiliates", path: "/affiliate"},
-      {code: "AppTutorial", name: "App Tutorial", path: "/app-tutorial"},
-    ]
-
-    const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
-
-    return {
-      sortedNavigations,
-      navigations
+      });
     }
   }
-});
+);
+const scroll = computed(() => windowScroll.value);
+
+var showMobileMenu = () => {
+  globalStore.isMenuActive = !globalStore.isMenuActive;
+  if (globalStore.isMenuActive === true) {
+    triggerMenu.value = false;
+  }
+};
+const hoveredMenu = ref("");
+const DARK_MODE = "DARKMODE";
+const toggleTheme = () => {
+  globalStore.isDarkMode = !globalStore.isDarkMode;
+  if (globalStore.isDarkMode) {
+    localStorage.setItem(DARK_MODE, true);
+  } else {
+    localStorage.setItem(DARK_MODE, false);
+  }
+};
+
+const handleSwitchChange = (value) => {
+  if (value === "casino") {
+    router.push("/home");
+  } else {
+    router.push("/promotion");
+  }
+};
 </script>
 <style scoped lang="scss">
-$navigation-height: 100px;
+$navigation-height: 80px;
 $link-color: #ffffff;
 
 .setting-hamburger {
@@ -649,43 +629,41 @@ $link-color: #ffffff;
 }
 
 .main-body {
-  .header-container {
-    .header-menu-container {
-      .header-menu-item {
-        color: #ffffff;
-      }
-
-      &:before {
-        background-color: #141d26;
-        background-image: linear-gradient(
-          to bottom,
-          #ffffff 20%,
-          #88d9ff,
-          #203e5c,
-          #141d26 80%,
-          rgba(44, 0, 114, 0.205) 90%,
-          #141d26 100%
-        );
-        transition: all 1s;
-        background-size: 100% 400%;
-        background-position: 100% 0%;
-        box-shadow: 0px 4px 4px 0px #04003026;
-      }
-    }
-  }
-
   .top-nav-wrapper {
-    box-shadow: 0px 4px 4px 0px #00000040;
-    background-image: linear-gradient(to bottom, #ffffff 30%, #88d9ff, #203e5c, #141d26 80%);
     transition: all 1s;
     background-size: 100% 400%;
     background-position: 100% 0%;
+    position: relative;
+
+    &::before,
+    &::after {
+      display: block;
+      position: absolute;
+      content: "";
+      right: 20px;
+      top: 0;
+      bottom: 0;
+      transform: skewX(25deg);
+    }
+
+    &::before {
+      z-index: -2;
+      left: calc($menu-width - 20px);
+      background: linear-gradient(270.76deg, #171719 85%, #252527 99.76%);
+    }
+
+    &::after {
+      z-index: -1;
+      left: calc($menu-width + 90px);
+      background: linear-gradient(270.15deg, #13161b 0%, #171719 45.21%, #292929 99.37%);
+    }
 
     .login-btn {
-      color: #15599a;
+      color: #ffffff;
       transition: all;
       font-weight: bold;
-      background: linear-gradient(270deg, #76b5fa 0%, #ffffff 44.79%, #76b5fa 100%);
+      background: linear-gradient(91.02deg, rgba(255, 230, 0, 0.16) 0%, rgba(72, 167, 255, 0.16) 100%),
+        linear-gradient(270deg, #e84600 0%, #e8df00 100%);
       box-shadow: -1px 2px 4px 0px #ffffffcc inset;
       width: 130px;
       height: 48px;
@@ -694,16 +672,18 @@ $link-color: #ffffff;
     }
 
     .reg-btn {
+      width: unset;
       transition: all;
-      font-weight: bold;
-      background: linear-gradient(270deg, #152df4 0%, #af0be8 100%);
-      color: #ffffff;
-      box-shadow: -1px 2px 4px 0px #ffffffcc inset;
-      width: 130px;
-      height: 48px;
+      background: var(--primary-linear-background-color);
+      padding: 12px 20px;
       border-radius: 26.32px;
       gap: 10.53px;
       position: relative;
+      border: 1px solid #cbe3ad;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #000000;
     }
   }
 }
@@ -751,6 +731,8 @@ $link-color: #ffffff;
     .header-menu-container {
       .header-menu-list {
         .header-menu-item {
+          color: #ffffff;
+
           .header-nav {
             // color: #ffffff;
             // margin: 0;
@@ -765,7 +747,7 @@ $link-color: #ffffff;
 
               &:hover,
               &.router-link-exact-active {
-                background: linear-gradient(270deg, #152df4 0%, #af0be8 100%);
+                background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
                 box-shadow: 0px -4px 4px 0px #02009e inset;
                 box-shadow: -1px 2px 4px 0px #ffffffcc inset;
                 color: #ffffff;
@@ -780,17 +762,7 @@ $link-color: #ffffff;
               }
 
               &:hover {
-                background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-              }
-
-              &:after {
-                // position: absolute;
-                // content: "";
-                // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-                // width: 2px;
-                // height: 100%;
-                // right: 0;
-                // top: 0;
+                background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
               }
             }
           }
@@ -816,7 +788,6 @@ $link-color: #ffffff;
     }
 
     .reg-btn {
-      background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
       color: #ffffff;
     }
   }
@@ -848,7 +819,7 @@ $link-color: #ffffff;
   position: sticky;
   top: 0;
   z-index: 999;
-  background-color: #fff;
+  background-color: #171719;
 
   .container {
     position: relative;
@@ -886,23 +857,30 @@ $link-color: #ffffff;
     display: flex;
     flex: 0 0 90px;
     align-items: center;
+
+    .text-switch-wrapper {
+      margin-left: 116px;
+    }
   }
 
   // header
   .header-menu-container {
     display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     transition: all 0.3s;
     isolation: isolate;
     position: absolute;
     left: 0;
     top: $navigation-height;
-    width: 200px;
+    width: $menu-width;
     height: calc(100vh - $navigation-height);
     overflow: auto;
     transition: all 0.3s ease-in-out;
     transform: translateX(-100%);
     box-shadow: 6px 0px 8px 0px #0000000d;
+    background: var(--nav-background-color);
+    padding: 0 10px;
 
     .desktop-hide {
       display: block;
@@ -921,24 +899,25 @@ $link-color: #ffffff;
       width: 100%;
     }
 
-    &:before {
-      content: "";
-      opacity: 0;
-      width: 100%;
-      height: 100%;
-      background: $primary-linear-background;
-
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-
-      transition: all 0.3s;
-    }
-
     &.active {
       &:before {
         opacity: 1;
+      }
+    }
+
+    > *:not(:last-child) {
+      &::after {
+        content: "";
+        display: block;
+        height: 2px;
+        background-color: #ffffff0d;
+        margin: 20px 0;
+      }
+    }
+
+    .without-divider {
+      &::after {
+        display: none;
       }
     }
   }
@@ -947,10 +926,10 @@ $link-color: #ffffff;
   .header-menu-list {
     display: flex;
     flex-wrap: nowrap;
-    flex: 1 1 auto;
     font-size: 1.2rem;
     padding: 0;
     flex-direction: column;
+    margin: 0;
     // li
     .header-menu-item {
       flex: 1 1 auto;
@@ -978,10 +957,10 @@ $link-color: #ffffff;
         justify-content: flex-start;
         align-items: center;
         padding: 0.6em 0.65em;
-        margin: 5px 10px;
-        background: #f1f7ff;
-        border-radius: 10px;
-        color: #83a3ca;
+        margin: 5px 0;
+        background: #ffffff0d;
+        border-radius: 5px;
+        color: #9f9f9f;
 
         &:before {
           content: "";
@@ -997,6 +976,15 @@ $link-color: #ffffff;
           -webkit-transform: translateZ(0);
           -webkit-perspective: 1000;
           -webkit-backface-visibility: hidden;
+        }
+
+        &.suffix {
+          &::after {
+            content: "▶";
+            display: block;
+            flex: 1;
+            text-align: right;
+          }
         }
 
         &.vip {
@@ -1101,7 +1089,7 @@ $link-color: #ffffff;
           &:before {
             // background-position: 0 90%;
             background: url(../../assets/images/common/submenu/menu-icons/promotion-icon.png) no-repeat center center;
-            background-size: contain;
+            // background-size: contain;
           }
         }
 
@@ -1121,9 +1109,49 @@ $link-color: #ffffff;
           }
         }
 
+        &.live-support {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/live-support-icon.png) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.feedback {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/feedback-icon.png) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.telegram {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/telegram-icon.png) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.whatsapp {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/whatsapp-icon.png) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.language {
+          &:before {
+            content: "🇺🇸";
+            background: unset;
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 16.33px;
+          }
+        }
+
         &:hover,
         &.router-link-exact-active {
-          background: linear-gradient(270deg, #152df4 0%, #af0be8 100%);
+          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
           box-shadow: 0px -4px 4px 0px #02009e inset;
           box-shadow: -1px 2px 4px 0px #ffffffcc inset;
           color: #ffffff;
@@ -1138,7 +1166,7 @@ $link-color: #ffffff;
         }
 
         &:hover {
-          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
         }
       }
     }
@@ -1292,13 +1320,7 @@ $link-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
-    float: right;
-    gap: 10px;
-
-    .common-btn {
-      padding: 5px 10px;
-      min-width: 80px;
-    }
+    gap: 16px;
 
     .header-balance {
       padding: 10px;
@@ -1309,7 +1331,6 @@ $link-color: #ffffff;
       align-items: center;
       gap: 5px;
       border-radius: 12px;
-      font-family: "Inter Bold";
       font-size: 18px;
 
       img {
@@ -1497,6 +1518,34 @@ $link-color: #ffffff;
               }
             }
           }
+        }
+      }
+    }
+
+    .action-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: #ffffff0d;
+      padding: 8px;
+      position: relative;
+
+      svg {
+        fill: #ffffff;
+        width: 24px;
+      }
+
+      &.has-unread-notification {
+        &::before {
+          display: block;
+          content: "";
+          background-color: #d21010;
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
         }
       }
     }

@@ -1,21 +1,22 @@
 <template>
+  <!-- <DepositComponent /> -->
+  <!-- <pre>{{ paymentNode.value }}</pre> -->
   <div class="deposit-wrapper">
-    <div class="deposit-options">
+    <!-- <div class="deposit-options">
       <div class="lil-title">
         Payment Channel
         <span>*</span>
       </div>
       <div class="deposit-option-container">
         <div class="deposit-option-btn-wrapper" v-for="(item, index) in payMethods" :key="index">
-          <!-- paymentIcon is the only unique identifier, paymentId and privilegeId may be the same for 2 different payment methods -->
           <img
             class="deposit-option-btn q-mt-sm"
-            :src="`${imgURL}/payment/${item.paymentIcon}`"
+            :src="`${imgURL}/payment/${item.nodeIcon}`"
             @click="handleDepositNodeClick(item)"
-            :class="{ active: activeMethod.paymentIcon === item.paymentIcon }"
+            :class="{ active: activeMethod.nodeIcon === item.nodeIcon }"
             style="width: 100%"
           />
-          <div :class="['selected-svg', activeMethod.paymentIcon === item.paymentIcon && 'active']">
+          <div :class="['selected-svg', activeMethod.nodeIcon === item.nodeIcon && 'active']">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path
                 d="M8.12492 11.118L14.0828 5L15 5.94102L8.12492 13L4 8.76474L4.9165 7.82373L8.12492 11.118Z"
@@ -25,9 +26,13 @@
           </div>
         </div>
       </div>
+    </div> -->
+
+    <div class="node-wrapper">
+      <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-lg">Select Amount</div>
+    <div class="lil-title q-mt-sm">Select Amount</div>
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -167,10 +172,6 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <!--    <div class="node-wrapper" style="display: none">-->
-    <!--      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />-->
-    <!--    </div>-->
-
     <div class="bottom-btn">
       <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
       <q-btn
@@ -179,6 +180,7 @@
         class="btn-primary btn-primary__full"
         :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
+        :disable="!isFormFilled"
       >
         SUBMIT
       </q-btn>
@@ -216,7 +218,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -228,6 +230,7 @@ import { convertToCommaAmount } from "src/boot/utils";
 import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+import DepositComponent from "../../components/depositComponent.vue";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -249,6 +252,7 @@ const checkNewUser = () => {
   }
 };
 
+const isFormFilled = ref(false);
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
@@ -319,9 +323,9 @@ const $q = useQuasar();
 const calculatedMinDeposit = ref("");
 
 const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 800, hotLabel: 40, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
@@ -354,7 +358,7 @@ function initPay() {
 
   payMethods.value = [];
 
-  cashier.get("/session/ind/deposit/index/").then((res) => {
+  cashier.get("/session/deposit/index/").then((res) => {
     $q.loading.hide();
     isLoadingInitPay.value = false;
 
@@ -412,7 +416,10 @@ function selectPayType(value) {
 }
 
 const depositForm = ref(null);
-async function onSelect(value) {
+const onSelect = (value) => {
+  // debugger;
+  depositItems.forEach((item) => (item.isActive = false));
+
   isDisplay.value = false;
 
   clearInfo();
@@ -434,7 +441,7 @@ async function onSelect(value) {
     }
     checkMinDepositAmt();
   }
-}
+};
 
 function checkMinDepositAmt() {
   // api won't return min and max values from now on, currently min set to 100
@@ -684,16 +691,26 @@ const loadInfo = () => {
   }
 };
 
+const nodeKey = ref(0);
+const refreshNode = () => {
+  // Update the key to force re-render
+  nodeKey.value += 1;
+};
+
 onActivated(() => {
   initPay();
   checkNewUser();
   loadInfo();
+  refreshNode();
+  // console.log("onActivated deposit");
 });
 
 onMounted(() => {
   initPay();
   checkNewUser();
   loadInfo();
+  refreshNode();
+  // console.log("onMounted deposit");
 });
 </script>
 

@@ -20,11 +20,11 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)"
+      :img-src="imgURLPromo + banner.mobileImageUrl"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
-    <!-- :img-src="imgURLPromo + banner.mobileImageUrl" -->
+    <!-- :img-src="require(`../assets/images/index/${banner.mobileImageUrl}`)" -->
 
     <template v-slot:navigation-icon="{ active, onClick }">
       <q-btn
@@ -127,6 +127,7 @@
     </swiper>
 
     <!-- <pre>hotGameList{{ hotGameList }}</pre> -->
+    <!-- <pre>pokerGameJILIList--{{ pokerGameJILIList }}</pre> -->
 
     <template v-for="category in categoriesList" :key="category.title">
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
@@ -157,7 +158,6 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <!-- <pre>{{ item }}</pre> -->
                     <div
                       data-aos="zoom-in"
                       :data-aos-delay="100 * index"
@@ -198,7 +198,7 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -269,7 +269,7 @@
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
                               // return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                              return `url(https://m.indwin7.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -289,7 +289,7 @@
       <template
         v-if="(category.title === 'Live' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="live">
+        <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" />
             <!-- <span class="txt-style">Live Casino</span> -->
@@ -325,7 +325,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(http://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -361,7 +361,7 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.indwin7.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -386,7 +386,7 @@
       <template
         v-if="(category.title === 'Slot' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="slotsgames">
+        <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" />
             <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
@@ -423,7 +423,7 @@
                             try {
                               return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                              return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -464,7 +464,7 @@
                           try {
                             return `url(${require(`../assets/images/index/slot/item-game-${item.code.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(https://m.indwin7.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
+                            return `url(https://m.b9mega1.com/static/images/index/slot/item-game-${item.code.toLowerCase()}.png)`;
                           }
                         })()
                       }"
@@ -486,7 +486,7 @@
       <template
         v-if="(category.title === 'Fish' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="fishing" v-if="category.title === 'Lobby' && category.active">
+        <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
             <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
@@ -710,9 +710,99 @@
       </template>
 
       <template
+        v-if="(category.title === 'Poker' && category.active) || (category.title === 'Lobby' && category.active)"
+      >
+        <div class="games-selection-wrapper" id="Poker">
+          <div class="title-game">
+            <img src="../assets/images/index/menu-label-poker.png" class="label-img" />
+          </div>
+
+          <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
+            <swiper
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container"
+            >
+              <template v-for="(item, index) in pokerGameJILIList" :key="index">
+                <!-- <template v-if="item.code === 'JILI'"> -->
+                <swiper-slide
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                >
+                  <div
+                    data-aos="zoom-in"
+                    :data-aos-delay="100 * index"
+                    data-aos-duration="1200"
+                    data-aos-once="true"
+                    data-aos-anchor="#slotsgames"
+                  >
+                    <div class="platform-game-img">
+                      <div
+                        class="game--bg"
+                        :style="{
+                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                        }"
+                      ></div>
+                    </div>
+
+                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                      <img src="../assets/images/index/hot.png" />
+                    </div>
+
+                    <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                  </div>
+                </swiper-slide>
+                <!-- </template> -->
+              </template>
+            </swiper>
+          </div>
+
+          <div class="platform-game-wrapper" v-else>
+            <div
+              :slidesPerView="3.5"
+              :spaceBetween="10"
+              :scrollbar="{
+                hide: true
+              }"
+              :modules="gameModules"
+              class="platform-game-container grid-view"
+            >
+              <template v-for="(item, index) in pokerGameJILIList" :key="index">
+                <!-- <template v-if="item.code === 'JILI'"> -->
+                <div
+                  class="platform-game-item btn-effect"
+                  @click="playGame(item.name, 'JILI', item.code, item.status, item.gameType, item.id)"
+                >
+                  <div class="platform-game-img">
+                    <div
+                      class="game--bg"
+                      :style="{
+                        backgroundImage: `url(${imgURLGame}${item.icon})`
+                      }"
+                    ></div>
+                  </div>
+
+                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+
+                  <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
+                </div>
+                <!-- </template> -->
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
-        <div class="games-selection-wrapper" id="sport">
+        <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
             <img src="../assets/images/index/menu-label-sport.png" class="label-img" />
             <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
@@ -732,7 +822,7 @@
                       try {
                         return `url(${require(`../assets/images/index/sport/item-game-${item.name.toLowerCase()}.png`)})`;
                       } catch (e) {
-                        return `url(https://m.indwin7.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
+                        return `url(https://m.b9mega1.com/static/images/index/sport/item-game-${item.code.toLowerCase()}.png)`;
                       }
                     })()
                   }"
@@ -821,7 +911,7 @@
     </div>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <!-- <q-dialog width="100%" v-model="isImportantAnnoucementModal">
     <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
       <q-card-section>
         <div class="close-alert" @click="setExpiryBanner()">
@@ -835,7 +925,7 @@
         </div>
       </q-card-section>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog
     v-model="fullGameDialog"
@@ -1021,6 +1111,22 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog> -->
+
+  <q-dialog width="100%" class="modal-home-popup" v-model="isImportantAnnoucementModal">
+    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+      <q-card-section>
+        <div class="close-alert" @click="setExpiryBanner()">
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <router-link class="promo-banner-container" :to="homePopupLink" :target="homePopupLinkOut ? '_blank' : '_self'">
+          <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
+          <div class="promo-banner-img" v-else>
+            <img :src="homePopupImg" class="alert-img" />
+          </div>
+        </router-link>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -1067,8 +1173,8 @@ const categoriesList = ref([
   { title: "Live", icon: "live", active: false },
   { title: "Fish", icon: "fish", active: false },
   { title: "Slot", icon: "slot", active: false },
-  { title: "Sport", icon: "sport", active: false },
-  { title: "Card", icon: "card", active: false }
+  { title: "Poker", icon: "poker", active: false },
+  { title: "Sport", icon: "sport", active: false }
 ]);
 
 // const activateSlide = (clickedItem) => {
@@ -1086,6 +1192,15 @@ const handleActivateSlide = (slot) => {
   const item = categoriesList.value.find((cat) => cat.title === slot);
   if (item) {
     activateSlide(item);
+  }
+};
+
+const checkHash = () => {
+  const hash = route.hash.replace("#", "");
+  if (hash) {
+    handleActivateSlide(hash);
+  } else {
+    handleActivateSlide("Lobby");
   }
 };
 
@@ -1143,9 +1258,9 @@ const closeUserKYCDialog = () => {
 };
 
 const depositItems = reactive([
-  { amount: 100, hotLabel: 5, isActive: false },
   { amount: 300, hotLabel: 15, isActive: false },
   { amount: 500, hotLabel: 25, isActive: false },
+  { amount: 800, hotLabel: 40, isActive: false },
   { amount: 1000, hotLabel: 50, isActive: false },
   { amount: 3000, hotLabel: 150, isActive: false },
   { amount: 5000, hotLabel: 250, isActive: false },
@@ -1327,6 +1442,7 @@ const loadHotGameList = () => {
 };
 
 const fishGameJILIList = ref([]);
+const pokerGameJILIList = ref([]);
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1352,6 +1468,33 @@ const loadJILIFishGameList = () => {
     )
     .then((res) => {
       fishGameJILIList.value = res;
+    });
+};
+
+const loadJILIPokerhGameList = () => {
+  const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
+  const key = `PLATFORM_JILI_POKER_GAMES_${regDevice}`;
+
+  cached
+    .get(key, () =>
+      api
+        .get("/platformGames", {
+          params: {
+            platformId: 8,
+            gameType: "POKER",
+            device: regDevice
+          }
+        })
+        .then((ret) => {
+          const res = ret;
+          if (res.code === 0) {
+            return res;
+          }
+        })
+        .catch((err) => {})
+    )
+    .then((res) => {
+      pokerGameJILIList.value = res;
     });
 };
 
@@ -1439,48 +1582,48 @@ const imgURLGame = imgURL + "/game/";
 const imgURLPromo = imgURL + "/promo/";
 
 // Pop out ads banner
-const isImportantAnnoucementModal = ref(false);
-const homePopupImg = ref("");
-const homePopupContent = ref("");
-const homePopupType = ref("");
-const homePopupId = ref(0);
-const homePopupFrequency = ref(0);
-const homePopupFrequencyNum = ref(0);
+// const isImportantAnnoucementModal = ref(false);
+// const homePopupImg = ref("");
+// const homePopupContent = ref("");
+// const homePopupType = ref("");
+// const homePopupId = ref(0);
+// const homePopupFrequency = ref(0);
+// const homePopupFrequencyNum = ref(0);
 
-const setExpiryBanner = () => {
-  if (homePopupFrequencyNum.value !== 0) {
-    setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
-  }
-  isImportantAnnoucementModal.value = false;
-};
+// const setExpiryBanner = () => {
+//   if (homePopupFrequencyNum.value !== 0) {
+//     setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+//   }
+//   isImportantAnnoucementModal.value = false;
+// };
 
-const setWithExpiry = (key, value, interval) => {
-  // Create a new date object in GMT+5.5
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+// const setWithExpiry = (key, value, interval) => {
+//   // Create a new date object in GMT+5.5
+//   const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
-  const item = {
-    value: value,
-    expiry: now.getTime() + interval,
-    id: homePopupId.value,
-    frequency: homePopupFrequency.value
-  };
-  sessionStorage.setItem(key, JSON.stringify(item));
-};
+//   const item = {
+//     value: value,
+//     expiry: now.getTime() + interval,
+//     id: homePopupId.value,
+//     frequency: homePopupFrequency.value
+//   };
+//   sessionStorage.setItem(key, JSON.stringify(item));
+// };
 
 function loadData() {
   api
     .get("/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
-        // banners.value = res.data;
-        banners.value = [
-          {
-            promoPageId: null,
-            mobileImageUrl: "home-banner-01.jpg",
-            redirectUrl: "",
-            category: "HOME"
-          }
-        ];
+        banners.value = res.data;
+        // banners.value = [
+        //   {
+        //     promoPageId: null,
+        //     mobileImageUrl: "home-banner-01.jpg",
+        //     redirectUrl: "",
+        //     category: "HOME"
+        //   }
+        // ];
       } else {
       }
     })
@@ -1587,43 +1730,22 @@ const openPopup = (noticeType) => {
     isStationNotice.value = true;
   }
 };
+
 const gotoPromo = (banner) => {
-  const urlPattern = /^\/url\/(.*)/;
-  const platformPattern = /^\/platform\/(.*)/;
-  const gamePattern = /^\/game\/(.*)/;
-  const openPattern = /^\/open\/(.*)/;
-
-  if (banner.redirectUrl.match(urlPattern)) {
-    const extractedUrl = banner.redirectUrl.match(urlPattern)[1];
-    router.push(`${extractedUrl}`);
-  } else if (banner.redirectUrl.match(platformPattern)) {
-    const extractedUrl = banner.redirectUrl.match(platformPattern)[1];
-
-    if (extractedUrl === "SABA") {
-      // gameName: SABA platformCode: SABA gameCode:  gameStatus: OPEN gameType: SPORT gameId: 50
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "SPORT", "50");
-    } else if (extractedUrl === "Evo") {
-      // gameName: Evo platformCode: Evo gameCode:  gameStatus: OPEN gameType: LIVE gameId: 2
-      playGame(extractedUrl, extractedUrl, "", "OPEN", "LIVE", "2");
-    } else if (extractedUrl === "JILI") {
-      // gameName: JiliGames platformCode: JILI gameCode:  gameStatus: OPEN gameType: SLOT gameId: 8
-      openGame(extractedUrl, extractedUrl, "", "OPEN", "SLOT", "8");
+  const urlSplit = banner.redirectUrl.split("|");
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(gamePattern)) {
-    const extractedUrl = banner.redirectUrl.match(gamePattern)[1];
-    switch (extractedUrl) {
-      case "spribe/aviator":
-        // gameName: Aviator platformCode: Spribe gameCode: aviator gameStatus: OPEN gameType: CASUAL gameId: 9568
-        playGame("Aviator", "Spribe", "aviator", "CASUAL", "LIVE", "9568");
-      default:
-        return null;
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else {
+      router.push(`/promo?name=${banner.redirectUrl}`);
     }
-  } else if (banner.redirectUrl.match(openPattern)) {
-    const extractedUrl = banner.redirectUrl.match(openPattern)[1];
-    const [gameName, platformCode, gameCode, gameStatus, gameType, gameId] = extractedUrl.split("/");
-    playGame(gameName, platformCode, gameCode, gameStatus, gameType, gameId);
-  } else if (banner.redirectUrl.slice(0, 4) === "http") {
-    window.open(banner.redirectUrl, "_blank");
   }
 };
 
@@ -1780,8 +1902,112 @@ const loadCustomerAddress = () => {
     });
 };
 
+// Pop out ads banner
+const isImportantAnnoucementModal = ref(false);
+const homePopupImg = ref("");
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupLink = ref("");
+const homePopupLinkOut = ref(false);
+
+const setExpiryBanner = () => {
+  isImportantAnnoucementModal.value = false;
+};
+
+const setWithExpiry = (key, value, interval) => {
+  const now = new Date();
+  const item = {
+    value: value,
+    expiry: now.getTime() + interval,
+    id: homePopupId.value,
+    frequency: homePopupFrequency.value
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+};
+
+const getWithExpiry = (key) => {
+  const itemStr = localStorage.getItem(key);
+  if (!itemStr) {
+    return null;
+  }
+  const item = JSON.parse(itemStr);
+  const now = new Date();
+  api
+    .get("/member/ads-popout")
+    .then((res) => {
+      // debugger;
+      if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
+        localStorage.removeItem(key);
+        // isImportantAnnoucementModal.value = true;
+        return null;
+      }
+    })
+    .catch(() => {});
+  return item.value;
+};
+
+const isImpt = getWithExpiry("isImpt");
+
+const checkShowImgTop = () => {
+  const lastTime = sessionStorage.getItem("indexImgTop");
+  if (lastTime) {
+    const diff = new Date().getTime() - Number(lastTime);
+    if (diff > 1000 * 60 * 60 * 12) {
+      isFirstView.value = true;
+    }
+  } else {
+    api
+      .get("/member/ads-popout")
+      .then((res) => {
+        if (res.code === 0) {
+          if (isImpt === null) {
+            switch (res.data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
+            }
+            isImportantAnnoucementModal.value = true;
+            homePopupImg.value = imgURLPromo + res.data["mobileImgUrl"];
+            homePopupContent.value = res.data["content"];
+            homePopupType.value = res.data["type"];
+            homePopupId.value = res.data["id"];
+            homePopupFrequency.value = res.data["frequency"];
+
+            if (res.data["path"].includes("http")) {
+              homePopupLink.value = res.data["path"];
+              homePopupLinkOut.value = true;
+            } else {
+              homePopupLink.value = `/promo?name=${res.data["path"]}`;
+            }
+
+            if (homePopupFrequencyNum.value !== 0) {
+              setWithExpiry("isImpt", true, homePopupFrequencyNum.value);
+            }
+
+            isFirstView.value = true;
+          }
+        }
+      })
+      .catch(() => {});
+  }
+};
+
 onActivated(() => {
   store.getUnreadTotal();
+  checkHash();
+  checkShowImgTop();
 });
 
 onMounted(() => {
@@ -1792,13 +2018,24 @@ onMounted(() => {
   loadCustomerAddress();
   loadJILIFishGameList();
   loadJDBFishGameList();
+  loadJILIPokerhGameList();
+
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 
-  if (Platform.is.android && Platform.is.capacitor) {
-    initOneSignal();
-  }
+  // if (Platform.is.android && Platform.is.capacitor) {
+  //   initOneSignal();
+  // }
 });
+
+watch(
+  () => route.hash,
+  (newHash) => {
+    if (newHash) {
+      checkHash();
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">
@@ -2256,9 +2493,10 @@ onMounted(() => {
 
 .announcement-card {
   height: 400px;
-  background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
+  // background: linear-gradient(180deg, #8b36f8 0%, #334ad6 100%);
   border-radius: 10px;
   overflow-y: auto;
+  background: linear-gradient(180deg, rgba(36, 36, 36, 1) 0%, rgba(35, 45, 31, 1) 100%);
 
   .q-tab__label {
     font-size: 18px;
@@ -2818,6 +3056,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #1e1f24;
+  max-width: 500px !important;
 }
 
 .fullgame-wrapper {
@@ -3097,7 +3336,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin: auto;
-  border: 2px solid #8b36f8;
+  border: 2px solid #5eb673;
   padding: 12px 16px;
   width: 160px;
   border-radius: 8px;
@@ -3133,6 +3372,33 @@ onMounted(() => {
 
   .q-item__label {
     color: #fff;
+  }
+}
+
+.alert-img {
+  // background-color: salmon;
+  // width: 70% !important;
+  // margin: auto;
+}
+
+.close-alert {
+  display: block;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 28px;
+  padding: 2px;
+  height: 28px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  color: #222a34 !important;
+  // background: transparent;
+}
+
+.modal-home-popup {
+  .q-card {
+    background: transparent;
   }
 }
 </style>

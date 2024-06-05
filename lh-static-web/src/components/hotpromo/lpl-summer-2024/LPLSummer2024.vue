@@ -82,7 +82,7 @@
           <div class="title">*逆转奖金</div>
           <div class="content">赛事中先输一局，最终逆转取胜</div>
         </div>
-        <div class="lpl-summer-2024-example">例：档位奖金不累计，指定赛事场数投注额机多场馆有效投注额累计；</div>
+        <div class="lpl-summer-2024-example">例：档位奖金不累计，若触发多个特殊事件按最高档位派发，指定赛事场数投注额按多场馆有效投注额累计。</div>
         <div class="lpl-summer-2024-rule-title"></div>
         <div class="lpl-summer-2024-rule-content">
           <div class="item-content">
@@ -137,12 +137,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
@@ -250,10 +250,11 @@
 import { ref, onMounted } from "vue";
 import { getLplSummer24Match } from "@/api/index/promo.js";
 import moment from "moment";
+import { useLocalStorage } from "@vueuse/core";
 
 const activeTab = ref("first");
 const matchList = ref([]);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 onMounted(async () => {
   const apiRes = await getLplSummer24Match();
   console.log(apiRes);

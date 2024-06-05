@@ -1,14 +1,14 @@
 <template>
   <div class="register-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
-    <div class="register-form-logo-img">
+    <!-- <div class="register-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
-    </div>
+    </div> -->
 
     <q-form class="q-gutter-y-md rounded-borders">
       <div class="register-form-grid">
@@ -20,7 +20,6 @@
           ref="loginNameRef"
           hide-bottom-space
           v-model="regForm.loginName"
-          lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert Phone number',
             (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
@@ -36,13 +35,11 @@
           ref="pwdRef"
           hide-bottom-space
           v-model="regForm.password"
-          lazy-rules
-          :type="isPwd ? 'password' : 'text'"
           :rules="[
             (val) => (val && val.length > 0) || 'Please insert password',
-            (val) => (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-            () => isAlphanumeric(regForm.password, 'Password')
+            (val) => (val && val.length >= 6) || 'The characters of password must be above 6'
           ]"
+          :type="isPwd ? 'password' : 'text'"
           color="white"
           class="landing-input"
           outlined
@@ -57,7 +54,7 @@
             />
           </template>
         </q-input>
-        <div v-if="regForm.password" class="password-str-div">
+        <!-- <div v-if="regForm.password" class="password-str-div">
           <span
             :class="{
               'weak-pwd': pwdStrength == 'weak',
@@ -76,9 +73,9 @@
             Good
           </span>
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-        </div>
+        </div> -->
 
-        <span class="register-form-field-label">Confirm Password</span>
+        <!-- <span class="register-form-field-label">Confirm Password</span>
         <q-input
           ref="confirmPwdRef"
           hide-bottom-space
@@ -102,7 +99,7 @@
               @click="isCfmPwd = !isCfmPwd"
             />
           </template>
-        </q-input>
+        </q-input> -->
 
         <!--      <q-input-->
         <!--        ref="verificationRef"-->
@@ -128,7 +125,7 @@
         <!--        </template>-->
         <!--      </q-input>-->
 
-        <span class="register-form-field-label">Invitation Code (Optional)</span>
+        <!-- <span class="register-form-field-label">Invitation Code (Optional)</span>
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"
@@ -138,7 +135,7 @@
           outlined
           color="white"
           class="landing-input"
-        />
+        /> -->
       </div>
 
       <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
@@ -172,8 +169,10 @@ import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
+import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
+// import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
+
 export default defineComponent({
   name: "RegisterPage",
   setup() {
@@ -185,7 +184,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
 
@@ -291,6 +290,7 @@ export default defineComponent({
     };
 
     const router = useRouter();
+    const ui = useUI();
 
     const affRegEvent = ref("");
     onActivated(() => {
@@ -299,10 +299,17 @@ export default defineComponent({
       getAffiliateCode();
     });
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
-      confirmPwdRef.value.validate();
+      // confirmPwdRef.value.validate();
       // telRef.value.validate();
       // phoneVerificationRef.value.validate();
       // emailRef.value.validate();
@@ -315,7 +322,7 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        confirmPwdRef.value.hasError ||
+        // confirmPwdRef.value.hasError ||
         // telRef.value.hasError ||
         // phoneVerificationRef.value.hasError ||
         // emailRef.value.hasError ||
@@ -341,7 +348,8 @@ export default defineComponent({
           } else if (store.aaid) {
             regForm.sid = store.aaid;
           } else {
-            regForm.sid = sidParam;
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger = "1";
           }
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
@@ -379,19 +387,7 @@ export default defineComponent({
                 });
 
                 //ADJUST TRACKEVENT.
-                // debugger;
-                if (Platform.is.android && Platform.is.capacitor) {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  var adjustEvent = new AdjustEvent(affRegEvent.value);
-                  // alert(affRegEvent.value);
-                  Adjust.trackEvent(adjustEvent);
-                } else {
-                  affRegEvent.value = sessionStorage.getItem("AFFILIATE_REGISTER_EVENT");
-                  const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-                  AdjustWeb.trackEvent({
-                    eventToken: affRegEvent.value
-                  });
-                }
+                trackRegisterSuccessEvent();
 
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -572,11 +568,12 @@ function charType(num) {
 </script>
 <style scoped lang="scss">
 .register-container {
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;

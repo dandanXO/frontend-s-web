@@ -13,7 +13,7 @@
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
-      <div class="download-count">({{ topDownloadCount }}s)</div>
+      <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
@@ -61,7 +61,7 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
         Fishing
       </div>
-      <div class="side-menu-item" @click="activateSlide('Card')">
+      <div class="side-menu-item" @click="activateSlide('Poker')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
         Poker
       </div>
@@ -72,7 +72,7 @@
 
       <div class="side-menu-divider"></div>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
         Live Support
       </div>
@@ -82,15 +82,21 @@
         Feedback
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent">
-        <div class="item-icon"><img src="../assets/images/auth/menu-telegram.png" /></div>
+      <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
+        <div class="item-icon">
+          <img src="../assets/images/auth/menu-telegram.png" />
+        </div>
         Telegram
-      </div>
+      </a>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <a
+        class="side-menu-item side-menu-item__transparent"
+        href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+        target="_blank"
+      >
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
-      </div>
+      </a>
     </div>
   </div>
 
@@ -237,6 +243,8 @@ import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
 
 import { defineEmits } from "vue";
 
@@ -245,10 +253,38 @@ const emits = defineEmits(["closeslot", "activateSlide"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const ui = useUI();
+
+const loadCustomerAddress = () => {
+  cached
+    .get("customerAddress", () =>
+      api.get("/config/customerAddress/v2").then((res) => {
+        return res;
+      })
+    )
+    .then((data) => {
+      console.log(data);
+      var url = data.liveUrl1;
+      ui.CSAUrl = url;
+    });
+};
+
+const openCSInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+  menuOpen.value = false;
+};
 
 const activateSlide = (item) => {
-  emits("activateSlide", item);
-  router.push("/home");
+  router
+    .push(`/home#${item}`)
+    .then(() => {
+      emits("activateSlide", item);
+      menuOpen.value = false;
+    })
+    .catch((error) => {
+      console.error("Navigation error:", error);
+    });
   menuOpen.value = false;
 };
 
@@ -294,7 +330,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.indwin7.com/", "_blank");
+    window.open("http://m.b9mega1.com/", "_blank");
     return;
   }
 
@@ -340,10 +376,10 @@ const checkTopDownloadAppear = () => {
       topDownload.value = false;
     } else {
       topDownload.value = true;
-      countdown();
-      setTimeout(() => {
-        topDownload.value = false;
-      }, 6000);
+      // countdown();
+      // setTimeout(() => {
+      //   topDownload.value = false;
+      // }, 6000);
     }
   }
 };
@@ -351,7 +387,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=IW2&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }
@@ -380,6 +416,7 @@ onMounted(() => {
 
   getTopDownloadUrl();
   checkTopDownloadAppear();
+  loadCustomerAddress();
 });
 </script>
 
@@ -394,7 +431,8 @@ onMounted(() => {
   width: 100%;
   height: 55px; /* adjust the height as needed */
   padding: 12px 16px 28px;
-  background: linear-gradient(rgba(131, 131, 131, 0.2117647059), rgba(131, 131, 131, 0.2117647059));
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+  backdrop-filter: blur(6px);
   z-index: 98;
 
   .download-container {
@@ -501,6 +539,7 @@ onMounted(() => {
       color: #9f9f9f;
       font-weight: bold;
       line-height: 1.2;
+      text-decoration: none;
 
       &__transparent {
         background-color: transparent;

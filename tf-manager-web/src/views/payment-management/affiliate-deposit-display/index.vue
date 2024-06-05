@@ -27,7 +27,7 @@
           style="width: 200px; margin-left: 5px;"
         >
           <el-option
-            v-for="item in list.affiliates"
+            v-for="item in list.allAffiliates"
             :key="item.affiliateId"
             :label="item.loginName"
             :value="item.affiliateId"
@@ -94,7 +94,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.privilegeName') + 3" prop="privilegeId3" v-if="checkSetting(3)">
+        <el-form-item :label="t('fields.privilegeName') + 3" prop="privilegeId3" v-if="checkSetting(3) && !uiControl.isPRKSite">
           <el-select
             filterable
             clearable
@@ -225,7 +225,7 @@
             disabled
           />
         </el-form-item>
-        <el-form-item :label="t('fields.paymentChannel') + 1" prop="paymentId1">
+        <el-form-item :label="uiControl.payment1Title" prop="paymentId1" v-if="!uiControl.isPRKSite">
           <el-select
             filterable
             clearable
@@ -243,7 +243,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.paymentChannel') + 2" prop="paymentId2">
+        <el-form-item :label="uiControl.payment2Title" prop="paymentId2" v-if="!uiControl.isPRKSite">
           <el-select
             filterable
             clearable
@@ -261,7 +261,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.paymentChannel') + 3" prop="paymentId3">
+        <el-form-item :label="uiControl.payment3Title" prop="paymentId3" v-if="!uiControl.isPRKSite">
           <el-select
             filterable
             clearable
@@ -279,7 +279,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.riskPaymentChannel')" prop="paymentId4">
+        <el-form-item :label="t('fields.riskPaymentChannel')" prop="paymentId4" v-if="!uiControl.isPRKSite">
           <el-select
             filterable
             clearable
@@ -297,11 +297,29 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('fields.withdrawChannel')" prop="withdrawPlatformId">
+        <el-form-item :label="uiControl.withdraw1Title" prop="withdrawPlatformId">
           <el-select
             filterable
             clearable
             v-model="form.withdrawPlatformId"
+            size="small"
+            :placeholder="t('fields.withdrawChannel')"
+            class="filter-item"
+            style="width: 350px;"
+          >
+            <el-option
+              v-for="item in list.siteWithdrawPlatform"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="uiControl.withdraw2Title" prop="withdrawPlatformId2" v-if="uiControl.isPRKSite">
+          <el-select
+            filterable
+            clearable
+            v-model="form.withdrawPlatformId2"
             size="small"
             :placeholder="t('fields.withdrawChannel')"
             class="filter-item"
@@ -427,7 +445,7 @@
         </div>
       </div>
     </el-dialog>
-    <el-card class="box-card" shadow="never" style="margin-top: 40px">
+    <el-card class="box-card" shadow="never" style="margin-top: 40px" v-if="!uiControl.isPRKSite">
       <template #header>
         <div class="clearfix">
           <span class="role-span">{{ t('fields.paymentDisplay') }}</span>
@@ -515,11 +533,12 @@
             <span v-if="scope.row.affiliateCode !== null">{{ scope.row.affiliateCode }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="paymentName1" :label="t('fields.paymentChannel') + 1" />
-        <el-table-column prop="paymentName2" :label="t('fields.paymentChannel') + 2" />
-        <el-table-column prop="paymentName3" :label="t('fields.paymentChannel') + 3" />
-        <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" />
-        <el-table-column :label="t('fields.withdrawChannel')" prop="withdrawPlatformName" />
+        <el-table-column prop="paymentName1" :label="uiControl.payment1Title" v-if="!uiControl.isPRKSite" />
+        <el-table-column prop="paymentName2" :label="uiControl.payment2Title" v-if="!uiControl.isPRKSite" />
+        <el-table-column prop="paymentName3" :label="uiControl.payment3Title" v-if="!uiControl.isPRKSite" />
+        <el-table-column prop="paymentName4" :label="t('fields.riskPaymentChannel')" v-if="!uiControl.isPRKSite" />
+        <el-table-column prop="withdrawPlatformName" :label="uiControl.withdraw1Title" />
+        <el-table-column prop="withdrawPlatformName2" :label="uiControl.withdraw2Title" v-if="uiControl.isPRKSite" />
         <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:affiliate-deposit-display:update'])">
           <template #default="scope">
             <el-button
@@ -547,6 +566,7 @@
 import { nextTick, onMounted, reactive, ref, computed } from 'vue'
 import { getSiteListSimple } from '../../../api/site'
 import { getAffiliateDepositDisplayList, createAffiliateDepositDisplay, updateAffiliateDepositDisplay, getAffiliateDepositSetting, createAffiliateDepositSetting, updateAffiliateDepositSetting, getAffiliateBySiteId } from '../../../api/affiliate-deposit-display'
+import { getAffiliateList } from '../../../api/affiliate-record'
 import { getActivePrivilegeInfoBySiteId } from '../../../api/privilege-info'
 import { getSiteImage } from '../../../api/site-image'
 import { required } from '../../../utils/validate'
@@ -581,6 +601,12 @@ const uiControl = reactive({
   imageDialogTitle: '',
   imageDialogType: '',
   dialogSetting: '',
+  payment1Title: t('fields.paymentChannel') + ' 1',
+  payment2Title: t('fields.paymentChannel') + ' 2',
+  payment3Title: t('fields.paymentChannel') + ' 3',
+  withdraw1Title: t('fields.withdrawChannel'),
+  withdraw2Title: t('fields.withdrawChannel'),
+  isPRKSite: false,
 })
 const request = reactive({
   size: 30,
@@ -595,6 +621,7 @@ const list = reactive({
   siteWithdrawPlatform: [],
   affiliates: [],
   allAffiliates: [],
+  allNewAffiliates: [],
   privileges: [],
   setting: [],
 })
@@ -611,8 +638,8 @@ const form = reactive({
   paymentId3: null,
   paymentId4: null,
   affiliateId: null,
-  privilegeId: null,
   withdrawPlatformId: null,
+  withdrawPlatformId2: null,
   loginName: null,
 })
 const settingForm = reactive({
@@ -695,14 +722,21 @@ async function loadAffiliateDepositSetting() {
     setting.value = ret
     list.setting.push({ id: 1, privilegeId: setting.value.privilegeId1, icon: setting.value.icon1 })
     list.setting.push({ id: 2, privilegeId: setting.value.privilegeId2, icon: setting.value.icon2 })
-    list.setting.push({ id: 3, privilegeId: setting.value.privilegeId3, icon: setting.value.icon3 })
+    if (!uiControl.isPRKSite) {
+      list.setting.push({ id: 3, privilegeId: setting.value.privilegeId3, icon: setting.value.icon3 })
+    }
   }
 }
 
 async function loadAffiliates() {
-  const { data: ret } = await getAffiliateBySiteId(request.siteId);
+  const { data: ret } = await getAffiliateList(request.siteId);
   list.allAffiliates = ret
-  list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
+}
+
+async function loadNewAffiliates() {
+  const { data: ret } = await getAffiliateBySiteId(request.siteId);
+  list.allNewAffiliates = ret
+  list.affiliates = list.allNewAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
 }
 
 async function loadPrivilege() {
@@ -717,29 +751,17 @@ async function loadSiteImage() {
   imageList.pages = ret.pages
 }
 
-async function handleChangeSite() {
-  await loadAffiliateDepositSetting()
-  await loadAffiliateDepositDisplay()
-  await loadPayment()
-  await loadWithdrawPlatform()
-  await loadSiteWithdrawPlatform(request.siteId)
-  await loadAffiliates()
-  await loadPrivilege()
-}
-
 const handleClick = (tab, event) => {
-  console.log(tab, event)
-  console.log('tab.props.name', tab.props.name)
   switchToList(tab.props.name)
 }
 
 async function switchToList(type) {
   if (type !== 'superior') {
     request.affiliateLevel = 'AFFILIATE,SUPER_AFFILIATE,CHIEF_AFFILIATE'
-    list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel !== 'MASTER_AFFILIATE')
+    list.affiliates = list.allNewAffiliates.filter(item => item.affiliateLevel !== 'MASTER_AFFILIATE')
   } else {
     request.affiliateLevel = 'MASTER_AFFILIATE'
-    list.affiliates = list.allAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
+    list.affiliates = list.allNewAffiliates.filter(item => item.affiliateLevel === 'MASTER_AFFILIATE')
   }
   await loadAffiliateDepositDisplay()
 }
@@ -848,7 +870,7 @@ function create() {
       uiControl.dialogVisible = false
       await loadAffiliateDepositDisplay()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
-      await loadAffiliates()
+      await loadNewAffiliates()
     }
   })
 }
@@ -856,6 +878,12 @@ function create() {
 function edit() {
   affiliateFinancialDepositDisplayForm.value.validate(async valid => {
     if (valid) {
+      if (uiControl.isPRKSite) {
+        form.paymentId1 = 0
+        form.paymentId2 = 0
+        form.paymentId3 = 0
+        form.paymentId4 = 0
+      }
       form.siteId = request.siteId
       await updateAffiliateDepositDisplay(form)
       uiControl.dialogVisible = false
@@ -928,6 +956,33 @@ function changePage(page) {
   }
 }
 
+async function handleChangeSite() {
+  if (request.siteId === 11) {
+    uiControl.withdraw1Title = t('fields.withdrawChannel') + ' (EASYPAISA)'
+    uiControl.withdraw2Title = t('fields.withdrawChannel') + ' (JAZZCASH)'
+    form.paymentId1 = 0
+    form.paymentId2 = 0
+    form.paymentId3 = 0
+    form.paymentId4 = 0
+    uiControl.isPRKSite = true
+  } else {
+    form.paymentId1 = null
+    form.paymentId2 = null
+    form.paymentId3 = null
+    form.paymentId4 = null
+    uiControl.withdraw1Title = t('fields.withdrawChannel')
+    uiControl.isPRKSite = false
+  }
+  await loadAffiliates()
+  await loadNewAffiliates()
+  await loadPrivilege()
+  await loadWithdrawPlatform()
+  await loadSiteWithdrawPlatform(request.siteId)
+  await loadPayment()
+  await loadAffiliateDepositSetting()
+  await loadAffiliateDepositDisplay()
+}
+
 onMounted(async() => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
@@ -937,13 +992,7 @@ onMounted(async() => {
     site.value = list.sites[0];
     request.siteId = site.value.id;
   }
-  await loadAffiliates()
-  await loadPrivilege()
-  await loadWithdrawPlatform()
-  await loadSiteWithdrawPlatform(request.siteId)
-  await loadPayment()
-  await loadAffiliateDepositSetting()
-  await loadAffiliateDepositDisplay()
+  handleChangeSite()
 })
 </script>
 

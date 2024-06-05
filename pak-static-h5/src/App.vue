@@ -135,7 +135,7 @@ export default defineComponent({
 
       var affiliateCode = "";
       if (omitSites.includes(window.location.host)) {
-        affiliateCode = "E4B265";
+        affiliateCode = "4F09FA";
       } else {
         // affiliateCode = "3B1BFB";
         affiliateCode = "";
@@ -260,7 +260,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: theSid,
-            siteCode: "iw2"
+            siteCode: "pak"
           }
         });
       }

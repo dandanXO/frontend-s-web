@@ -155,8 +155,8 @@
           <el-option
             v-for="item in privileges.list"
             :key="item.id"
-            :label="item.name"
-            :value="item.code"
+            :label="item.title"
+            :value="item.redirectUrl"
           />
         </el-select>
         <el-input v-else v-model="form.code" style="width: 350px;" maxlength="100" />
@@ -351,7 +351,7 @@ import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
 import { getRedirect, createRedirect, updateRedirect, updateRedirectStatus, deleteRedirect } from "@/api/redirect";
 import { getPlatformsBySite } from "@/api/platform";
-import { getActivePrivilegeInfoBySiteId } from "@/api/privilege-info"
+import { getActivePromoPageList } from "@/api/promoPages"
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteImage } from "@/api/site-image";
@@ -462,7 +462,7 @@ async function loadPlatform() {
 }
 
 async function loadPrivileges() {
-  const { data: privilege } = await getActivePrivilegeInfoBySiteId(form.siteId);
+  const { data: privilege } = await getActivePromoPageList(form.siteId);
   privileges.list = privilege;
 }
 

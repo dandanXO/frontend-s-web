@@ -1,5 +1,7 @@
 <template>
   <div class="main-section">
+    <LangToggle />
+
     <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
 
     <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
@@ -1085,6 +1087,7 @@ import qs from "qs";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 import MinigamesGrid from 'components/game/MinigamesGrid';
+import LangToggle from "src/components/LangToggle.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1097,7 +1100,8 @@ export default defineComponent({
     RiStarFill,
     GameItem,
     GameCategory,
-    MinigamesGrid
+    MinigamesGrid,
+    LangToggle
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,

@@ -873,7 +873,7 @@ defineExpose({
 }
 
 .back-bar {
-  background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
+  // background: linear-gradient(180deg, #3e1474 0%, #101114 96.35%);
   min-height: 60px;
   width: calc(100% + 32px);
   font-size: 18px;

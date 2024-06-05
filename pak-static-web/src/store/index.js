@@ -8,7 +8,8 @@ import { reactive } from "vue";
 const TOKEN_KEY = "TOKEN";
 const DARK_MODE = "DARKMODE";
 export const globalStore = reactive({
-  isDarkMode: useLocalStorage(DARK_MODE, true),
+  // isDarkMode: useLocalStorage(DARK_MODE, true),
+  isDarkMode: false,
   isMenuActive: true
 });
 export const userStore = defineStore("userStore", {
@@ -24,12 +25,14 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-      currency: { value: "₱", label: "peso" },
+      currency: { value: "₹", label: "RS" },
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       isAffiliateA: false,
       isAffiliate2: false,
-      isAffiliate3: false
+      isAffiliate3: false,
+      profilePhoto: "",
+      accountModalVisible: false
     };
   },
   actions: {
@@ -61,6 +64,7 @@ export const userStore = defineStore("userStore", {
           this.vip = ret.data.vip;
           this.currentDeposit = ret.data.currentDeposit;
           this.levelUpDeposit = ret.data.levelUpDeposit;
+          this.profilePhoto = ret.data.profilePhoto;
         } else {
           throw new Error(ret.message);
         }
@@ -73,14 +77,19 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
-    getCurrentDeposit() {
-      return this.currentDeposit;
-    },
     getLevelUpDeposit() {
       return this.levelUpDeposit;
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
+    },
+    openAccountModal() {
+      this.accountModalVisible = true;
+    }
+  },
+  getters: {
+    currentDepositNumber() {
+      return Number(this.currentDeposit);
     }
   }
 });

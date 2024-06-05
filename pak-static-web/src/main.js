@@ -20,6 +20,8 @@ import { globalStore } from "@/store";
 import "element-plus/dist/index.css";
 import "element-plus/theme-chalk/dark/css-vars.css";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
+import { i18n } from "./i18n/index";
+import { register } from "swiper/element/bundle";
 
 const app = createApp(App);
 Object.keys(directives).forEach((key) => {
@@ -30,13 +32,15 @@ watchEffect(() => {
   document.body.classList.toggle("dark-theme", globalStore.isDarkMode);
 });
 
-app.provide("globalStore", globalStore);
+register();
 
+app.provide("globalStore", globalStore);
 app
   .use(createPinia())
   .use(AOS.init())
   .use(router)
   .use(Antd)
+  .use(i18n)
   .use(VueSnip)
   .use(ElementPlus, {
     locale: zhCn

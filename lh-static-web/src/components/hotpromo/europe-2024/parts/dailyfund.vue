@@ -10,7 +10,7 @@
         <div class="fund-status__point">{{ matchPoints.currentPoints }}</div>
         <div class="fund-contest-time-left">
           <img src="../images/daily-fund-icon-time.svg" />
-          <span class="fund-contest-time-left__title">比赛剩余</span>
+          <span class="fund-contest-time-left__title">{{ matchStartAt }}</span>
           <span class="fund-contest-time-left__content" v-if="remainingTime">
             {{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}
           </span>
@@ -220,8 +220,9 @@ import {
 } from "@/api/promotion/eurocup";
 import { ElMessage } from "element-plus";
 import moment from "moment";
+import {  useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const props = defineProps({
   tabtitle: String
@@ -256,7 +257,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({
@@ -270,12 +271,20 @@ const getPercentage = (points) => {
 const isClaimed = ref(false);
 const ongoingMatches = ref();
 const remainingTime = ref();
+
+const matchStartAt = ref("比赛剩余")
+
 const teams = ref([]);
 const getMatchPoints = () => {
   euroMatchPoints().then((res) => {
     if (res.code === 0) {
       matchPoints.value = res.data;
-      remainingTime.value = calculateRemainingTime(res.data.endDate);
+      if(moment().format("YYYY-MM-DD HH:mm") <= "2024-06-15 03:00"){
+        remainingTime.value = calculateRemainingTime("2024-06-15 02:59:59");
+        matchStartAt.value = "比赛倒计时"
+      }else{
+        remainingTime.value = calculateRemainingTime(res.data.endDate);
+      }
     } else {
       ElMessage.error(res.message);
     }
@@ -311,6 +320,8 @@ const confirmMatchSelect = () => {
       ElMessage.success("投票成功");
       confirmDialog.value = false;
       getMatches();
+    } else {
+      ElMessage.error(res.message)
     }
   });
 };
@@ -360,6 +371,8 @@ function confirmSelection(team, choiceName) {
       if (res.code === 0) {
         team.isSelectionConfirmed = true;
         getTeamsData();
+      } else {
+        ElMessage.error(res.message)
       }
     });
   }

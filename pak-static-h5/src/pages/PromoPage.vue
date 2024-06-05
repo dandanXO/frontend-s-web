@@ -15,6 +15,8 @@
     </q-tabs>
   </div>
 
+  <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
+
   <div class="promo-container" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
@@ -103,15 +105,15 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div class="top-float">
+                  <!-- <div class="top-float">
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
-                  </div>
+                  </div> -->
                   <div class="promo-content-inner">
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
@@ -120,7 +122,7 @@
                       </div>
                     </div>
                     <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div>
+                  </div> -->
 
                   <!-- <div class="join-container">
                     <div class="promo-date">
@@ -248,6 +250,10 @@ export default defineComponent({
       updateCountdown();
       store.getUnreadTotal();
     });
+
+    // onMounted(() => {
+    //   loadAll();
+    // });
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -624,10 +630,10 @@ export default defineComponent({
 
 .back-btn {
   background: rgb(255, 255, 255, 0.4);
-  margin: 12px;
-  position: absolute;
-  right: 0;
-  top: 0;
+  margin: 12px !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
   z-index: 9;
 }
 </style>
@@ -647,9 +653,9 @@ export default defineComponent({
     .promo-bg {
       background-size: cover;
       background-repeat: no-repeat;
-      background-position: center bottom;
+      background-position: center top;
       overflow: hidden;
-      height: 170px;
+
       // max-height: 130px;
       margin: 10px;
 
@@ -759,8 +765,9 @@ export default defineComponent({
 
             .promo-bg {
               transition: all 0.5s ease;
-              background-size: cover;
+              // background-size: cover;
               background-position: center center;
+              background-size: 100% 100%;
               margin: 0;
               // border-radius: 10px 10px 0 0;
               border-radius: 17px;
@@ -770,8 +777,9 @@ export default defineComponent({
               }
 
               display: flex;
+              height: 160px;
               justify-content: center;
-              align-items: center;
+              align-items: flex-start;
               gap: 30px;
 
               .promo-content {

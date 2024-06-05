@@ -7,7 +7,7 @@
     </div> -->
 
     <div class="register-form-logo-img">
-      <img src="../assets/images/auth/login-img.png" />
+      <img src="../assets/images/auth/login-logo.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -32,7 +32,8 @@
                   v-model="regForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
+                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits',
+                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
                   ]"
                   color="green"
                   outlined
@@ -56,9 +57,7 @@
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) =>
-                      (val.length >= 6 && val.length <= 11) || 'The characters of password must be between 6 and 11',
-                    () => isAlphanumeric(regForm.password, 'Password')
+                    (val) => val.length > 6 || 'The characters of password must be above 6'
                   ]"
                   color="green"
                   outlined
@@ -204,6 +203,10 @@
         Confirm
       </q-btn>
     </div>
+
+    <div class="bottom-img">
+      <img src="../assets/images/auth/login-img2.png" />
+    </div>
   </div>
 </template>
 
@@ -236,7 +239,7 @@ export default defineComponent({
     const innerCaptchaRef = ref("");
     const showCaptchaDialog = ref(false);
     const phoneVerificationImg = ref("");
-    const isAgreeReg = ref(false);
+    const isAgreeReg = ref(true);
 
     const affCode = ref("");
     const isLoading = ref(false);
@@ -343,6 +346,12 @@ export default defineComponent({
       // const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
       return passwordPattern.test(value) || `${translation} must at least contain letters and numbers.`;
     };
+
+    // const phoneNumberRules = [
+    //   (val) => (val && val.length > 0) || "Please insert Phone number",
+    //   (val) => (val && val.length === 11) || "The phone number must have 11 digits",
+    //   (val) => (val && val.startsWith("03")) || 'The phone number must start with "03"'
+    // ];
 
     const router = useRouter();
 
@@ -762,12 +771,21 @@ function charType(num) {
   img {
     display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
+    margin-bottom: 10px;
   }
 }
 
 .register-form-wrapper {
   padding: 0 20px 20px;
+
+  :deep(.q-field__control){
+    height:45px;
+
+    .q-field__marginal{
+      height:45px;
+    }
+  }
 }
 
 .page-header {
@@ -878,7 +896,13 @@ function charType(num) {
 }
 
 .bottom-btn {
-  margin-top: auto;
-  padding: 20px;
+  // margin-top: auto;
+  padding: 3px 20px 8px;
+}
+
+
+.bottom-img{
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

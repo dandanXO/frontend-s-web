@@ -37,6 +37,12 @@
       </q-form>
     </q-card>
 
+    <!-- <q-tabs v-model="selectedRange" @update:model-value="updateDateRange" active-color="green" indicator-color="green">
+      <q-tab name="1" label="1 Day" />
+      <q-tab name="7" label="7 Days" />
+      <q-tab name="30" label="30 Days" />
+    </q-tabs> -->
+
     <LoadingComponent v-if="isLoading"></LoadingComponent>
     <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
 
@@ -49,9 +55,16 @@
       <q-card v-for="(e, i) in gameBetRecordData" :key="`${e}-${i}`" class="record-container">
         <q-card-section class="top-wrapper">
           <div class="date">{{ convertToGMT55(e.betTime) }}</div>
+
           <q-btn
-            :class="`${e.payout > 0 ? 'bet-btn' : 'loss-btn'}`"
-            :label="`${e.payout > 0 ? 'Profit' : 'Loss'}`"
+            :class="{
+              'btn--green': ['SETTLE', 'SETTLED', 'BET_N_SETTLE'].includes(e.betStatus),
+              'btn--red': ['CANCEL', 'ROLLBACK', 'PATCH'].includes(e.betStatus),
+              'btn--orange': e.betStatus === 'BET',
+              'btn--yellow': e.betStatus === 'UNSETTLED',
+              'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
+            }"
+            :label="`${e.betStatus}`"
           ></q-btn>
         </q-card-section>
 
@@ -116,13 +129,22 @@ const isActiveSlide = (e) => {
   return false;
 };
 
+const selectedRange = ref("1");
+
+const updateDateRange = (range) => {
+  searchRecord();
+  const days = parseInt(range);
+  searchForm.startDate = updateDate(days);
+  searchForm.endDate = updateDate(0);
+};
+
 const isLoading = ref(true);
 const isNoInfo = ref(true);
 const isNoInfoAtEnd = ref(false);
 
 const searchForm = reactive({ startDate: "", endDate: "", platform: "", memberId: store.id });
 const setTime = () => {
-  searchForm.startDate = updateDate(7);
+  searchForm.startDate = updateDate(1);
   searchForm.endDate = updateDate(0);
 };
 
@@ -313,8 +335,11 @@ onActivated(() => {
   }
 }
 .record-container {
-  border-radius: 0.5rem;
-  background: rgba(21, 0, 37, 0.2);
+  border-radius: 0;
+  // background: rgba(21, 0, 37, 0.2);
+  box-shadow: none;
+  border-bottom: 1px solid #ffffff33;
+  background: transparent;
   padding: 1rem;
   margin-top: 0;
 
@@ -330,24 +355,79 @@ onActivated(() => {
     }
 
     .bet-btn {
-      color: #fae576;
+      color: #5bf25c;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
+      padding: 4px 10px;
+      border-radius: 4px;
       background: rgba(250, 229, 118, 0.2);
-      padding: 0 1rem;
       min-height: unset;
     }
 
     .loss-btn {
-      color: #bc66ff;
+      color: #b81212;
       font-size: 0.825rem;
       font-weight: 700;
       text-transform: capitalize;
-      border-radius: 12.5rem;
-      background: rgba(188, 102, 255, 0.2);
-      padding: 0 1rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--yellow {
+      color: #ffe500;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 229, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--blue {
+      color: #00f0ff;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 240, 255, 0.2);
+      min-height: unset;
+    }
+
+    .btn--orange {
+      color: #ff7a00;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(255, 122, 0, 0.2);
+      min-height: unset;
+    }
+
+    .btn--red {
+      color: #b81212;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(184, 18, 18, 0.2);
+      min-height: unset;
+    }
+
+    .btn--green {
+      color: #00b900;
+      font-size: 0.825rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(0, 185, 0, 0.2);
       min-height: unset;
     }
   }
@@ -364,7 +444,7 @@ onActivated(() => {
     font-size: 1rem;
     font-weight: 700;
     line-height: 2.25rem;
-    background: rgba(21, 0, 37, 0.5);
+    // background: rgba(21, 0, 37, 0.5);
     margin: 0 -1rem;
     padding: 0 1rem;
 
@@ -425,7 +505,7 @@ onActivated(() => {
   border-bottom: 0;
 
   .pagination-btn {
-    background: #7c28bd;
+    background: #58b475;
     font-size: 20px;
     width: 40px;
     height: 40px;

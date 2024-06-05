@@ -2,13 +2,13 @@ $color-primary: #427786;
 $color-primary-active: #1bcef1;
 $color-tip: #76c034;
 
-$primary-linear-background: linear-gradient(360deg, #A2D2FF -59.29%, #E0EFFF 72.14%);
-$primary-linear-background-second: linear-gradient(104.75deg, #8EC1F7 39.58%, #4183D3 109.58%);
-$primary-lightest-linear-background: linear-gradient(360deg, #A2D2FF -59.29%, #E0EFFF 72.14%);
+$primary-linear-background: linear-gradient(360deg, #a2d2ff -59.29%, #e0efff 72.14%);
+$primary-linear-background-second: linear-gradient(104.75deg, #8ec1f7 39.58%, #4183d3 109.58%);
+$primary-lightest-linear-background: linear-gradient(360deg, #a2d2ff -59.29%, #e0efff 72.14%);
 $primary-lightest-linear-background-invert: linear-gradient(to right, #db7e42, #ffbd99);
-$primary-color:#0071ed;
+$primary-color: #0071ed;
 $primary-color-light: #f5faff;
-$primary-color-lightest: #A2D2FF;
+$primary-color-lightest: #a2d2ff;
 
 $low-piority-color: #efefef;
 $low-piority-color-2: #cfcfcf;
@@ -21,3 +21,8 @@ $border-settings: 1px solid #2b2b4b;
 $container-width: 1450px;
 $container-padding-inline: 1.25rem;
 $false-padding: calc(50vw - calc($container-width / 2));
+
+$menu-width: 280px;
+$input-background-color: #0b0e0d99;
+$primary: #1baa99;
+$primary-light: #8ac542;

@@ -24,93 +24,99 @@
         </div>
 
         <q-form ref="withdrawFormRef">
-          <q-select
-            v-show="isLoaded"
-            hide-bottom-space
-            filled
-            ref="cardRef"
-            v-model="withdrawInfo.cardId"
-            option-value="id"
-            emit-value
-            :label="chooseLabel()"
-            class="withdraw-selection q-mt-sm q-mb-sm"
-            :options="withdrawState.bankCardList"
-            map-options
-            :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]"
-          >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey">
-                  {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
-                  <router-link class="text-bright" to="/?page=withdrawcard">
-                    {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
-                  </router-link>
-                </q-item-section>
-              </q-item>
-            </template>
-            <template v-slot:option="scope">
-              <q-item v-bind="scope.itemProps">
+          <div class="form-item">
+            <label>{{ chooseLabel() }}</label>
+            <q-select
+              dense
+              v-show="isLoaded"
+              hide-bottom-space
+              outlined
+              ref="cardRef"
+              v-model="withdrawInfo.cardId"
+              option-value="id"
+              emit-value
+              class="withdraw-selection q-mt-sm q-mb-sm"
+              :options="withdrawState.bankCardList"
+              map-options
+              :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
+                    <router-link class="text-bright" to="/?page=withdrawcard">
+                      {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
+                    </router-link>
+                  </q-item-section>
+                </q-item>
+              </template>
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar v-if="scope.opt.bankIcon">
+                    <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      {{ scope.opt.bankName }} - ****{{
+                        scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                      }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </template>
+              <template v-slot:selected-item="scope">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
-                  <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                  <img
+                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                  />
                 </q-item-section>
                 <q-item-section>
-                  <q-item-label>
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
                     {{ scope.opt.bankName }} - ****{{
                       scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
                 </q-item-section>
-              </q-item>
-            </template>
-            <template v-slot:selected-item="scope">
-              <q-item-section avatar v-if="scope.opt.bankIcon">
-                <img
-                  style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                  :src="imgURL + '/payment/' + scope.opt.bankIcon"
-                />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                  {{ scope.opt.bankName }} - ****{{
-                    scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                  }}
-                </q-item-label>
-              </q-item-section>
-            </template>
-          </q-select>
+              </template>
+            </q-select>
+          </div>
 
-          <q-input
-            hide-bottom-space
-            ref="amountRef"
-            v-model="withdrawInfo.amount"
-            label="출금금액"
-            class="withdraw-field"
-            :rules="[
-                (val) => (val && val.length > 0) || '출금 금액을 입력해주세요',
-                (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
-                (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-                (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
-                isValidUSDTAmt
-              ]"
-            clearable
-          >
-            <template v-slot:prepend>
-                <span style="font-size: 26px" class="text-bright">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
-                </span>
-            </template>
-            <template v-slot:append>
-                <span style="font-size: 26px;" class="text-bright">
-                  <q-btn @click="updateWithdrawAmt" label="삭제" color="brightbtn" text-color="black" />
-                </span>
-            </template>
-          </q-input>
+          <div class="form-item">
+            <label>출금금액</label>
+            <q-input
+              dense
+              outlined
+              ref="amountRef"
+              v-model="withdrawInfo.amount"
+              class="withdraw-field"
+              :rules="[
+                  (val) => (val && val.length > 0) || '출금 금액을 입력해주세요',
+                  (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
+                  (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
+                  (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
+                  isValidUSDTAmt
+                ]"
+              clearable
+            >
+              <template v-slot:prepend>
+                  <span style="z-index:1;font-size:16px;">
+                    <template v-if="isUSDT">USDT</template>
+                    <template v-else>{{ store.currency.value }}</template>
+                  </span>
+              </template>
+              <template v-slot:append>
+                  <span style="z-index:1;">
+                    <div @click="updateWithdrawAmt" class="update-withdraw-btn">삭제</div>
+                  </span>
+              </template>
+            </q-input>
 
-          <div class="option-btns">
-            <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="isUSDT ? `${item} USDT` : item + '만원'"
-                  @click="updateWithdrawItem(item)"
-            ></q-btn>
+            <div class="select-amt-btn-wrapper">
+              <q-btn class="select-amt-btn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="isUSDT ? `${item} USDT` : item + '만원'"
+                    @click="updateWithdrawItem(item)"
+              />
+            </div>
           </div>
 
           <div
@@ -488,22 +494,31 @@ onMounted(() => {
     }
   }
 
-  .option-btns {
+  // .option-btns {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   gap: 8px;
+
+  //   :deep(.q-btn) {
+  //     height: 40px;
+  //     color: #fff;
+  //     font-size: 14px;
+  //     border-radius: 3px;
+  //     background: #18324A;
+  //   }
+  // }
+
+  .select-amt-btn-wrapper {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 10px;
-    grid-row-gap: 12px;
-    grid-column-gap: 12px;
-    :deep(.q-btn) {
-      height: 40px;
-      color: #fff;
-      font-size: 14px;
-      border-radius: 3px;
-      background: #18324A;
-      &.active {
-        background: #237BFF;
-      }
-    }
+    align-items: center;
+    gap: 8px;
+  }
+
+  .select-amt-btn {
+    background: #18324A;
+    color: #fff;
+    white-space: nowrap;
   }
 }
 
@@ -516,24 +531,26 @@ onMounted(() => {
   background:#fff;
 }
 .withdrawalmethod {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  overflow-x: unset;
-  padding: 0px 5px;
+  display: flex;
   grid-gap: 10px;
-  grid-column-gap: 10px;
-  grid-row-gap: 5px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 
   .withdraw-type-item {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    min-width: 150px;
+    width: 200px;
     text-align: center;
     position: relative;
     cursor: pointer;
+
+    background: #252e43;
+    border-radius: 6px;
+    border: 2px solid #4b4b4b;
+    color: #ffffff;
 
     .promo-label {
       position: absolute;
@@ -552,7 +569,8 @@ onMounted(() => {
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 10px;
-      max-width: 4.5rem;
+      // max-width: 4.5rem;
+      max-width: 50px;
     }
 
     img {
@@ -561,10 +579,14 @@ onMounted(() => {
     }
 
     &.active {
-      img {
-        border: 3px solid #33bcd4;
-        border-radius: 10px;
-      }
+      background: $linear-bg-2;
+      border: 3px solid $primary;
+      border-radius: 6px;
+
+      // img {
+      //   border: 3px solid #33bcd4;
+      //   border-radius: 10px;
+      // }
 
       .promo-img {
         border: none;
@@ -603,6 +625,14 @@ onMounted(() => {
     }
   }
 
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    .withdraw-type-item {
+      width: 100%;
+    }
+  }
+
   .withdraw-btn {
     margin: 30px auto;
 
@@ -616,7 +646,6 @@ onMounted(() => {
 }
 
 .withdraw-field{
-  margin-top: 15px;
   :deep(.q-field__control){
     background:#252E43;
   }
@@ -627,6 +656,19 @@ onMounted(() => {
 .withdraw-selection{
   :deep(.q-field__control){
     background:#252E43;
+  }
+}
+
+.update-withdraw-btn {
+  background: #38F3FF;
+  color: #131313;
+  padding: 0 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
   }
 }
 

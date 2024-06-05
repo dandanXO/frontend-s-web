@@ -78,6 +78,9 @@
           <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate-bet-rebate-record:rebate']" @click="distributeRebate()">
             {{ t('fields.distributeRebate') }}
           </el-button>
+          <el-button icon="el-icon-edit" size="mini" type="success" v-permission="['sys:affiliate-bet-rebate-record:rebate']" @click="batchDistributeRebate()" :disabled="uiControl.batchDistributeBtn">
+            {{ t('fields.batchDistributeRebate') }}
+          </el-button>
         </div>
       </div>
     </div>
@@ -95,7 +98,9 @@
                 v-loading="page.loading"
                 :empty-text="t('fields.noData')"
                 sortable
+                @selection-change="handleSelectionChange"
       >
+        <el-table-column type="selection" width="50" />
         <el-table-column prop="loginName" :label="t('fields.affiliateName')" align="center" min-width="120">
           <template #default="scope" v-if="hasPermission(['sys:member:detail'])">
             <router-link :to="`/affiliate/details/${scope.row.affiliateId}?site=${request.siteId}`">
@@ -169,7 +174,7 @@
           :label="t('fields.operate')"
           align="center"
           fixed="right"
-          width="280"
+          width="200"
           v-if="!hasRole(['SUB_TENANT']) && (hasPermission(['sys:affiliate-bet-rebate-record:update']) || hasPermission(['sys:affiliate-bet-rebate-record:update-bet']) || hasPermission(['sys:affiliate-bet-rebate-record:detail']))"
         >
           <template #default="scope">
@@ -198,6 +203,15 @@
               @click="showEdit('BET_AMOUNT', scope.row)"
             >
               {{ t('fields.adjustBetAmount') }}
+            </el-button>
+            <el-button
+              v-if="scope.row.status === 'PENDING'"
+              size="mini"
+              type="success"
+              v-permission="['sys:affiliate-bet-rebate-record:rebate']"
+              @click="batchDistributeRebate(scope.row.id)"
+            >
+              {{ t('fields.distribute') }}
             </el-button>
           </template>
         </el-table-column>
@@ -332,7 +346,7 @@ import { useI18n } from "vue-i18n";
 import { getSiteListSimple } from '../../../api/site';
 import { useStore } from '../../../store';
 import { TENANT } from '../../../store/modules/user/action-types';
-import { getAffiliateBetRebateRecord, adjustRebateAmount, adjustBetAmount, distribute, getTotal } from '../../../api/affiliate-bet-rebate-record';
+import { getAffiliateBetRebateRecord, adjustRebateAmount, adjustBetAmount, distribute, getTotal, batchDistribute } from '../../../api/affiliate-bet-rebate-record';
 import { required } from '../../../utils/validate';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { getAffiliateBetRebateRecordDetail } from '../../../api/affiliate-bet-rebate-record-detail';
@@ -368,7 +382,8 @@ const uiControl = reactive({
     { key: 3, displayName: "DISTRIBUTED", value: "DISTRIBUTED" },
     { key: 4, displayName: "CANCEL", value: "CANCEL" }
   ],
-  importDialogVisible: false
+  importDialogVisible: false,
+  batchDistributeBtn: true,
 });
 
 const form = reactive({
@@ -388,6 +403,8 @@ const request = reactive({
   gameType: [],
   status: ["PENDING", "IN_PROGRESS", "DISTRIBUTED", "CANCEL"]
 });
+
+let chooseRecords = [];
 
 function resetQuery() {
   request.recordTime = [defaultDate, defaultDate];
@@ -476,6 +493,7 @@ async function loadAffiliateBetRebateRecords() {
   page.totalValidBet = total.totalValidBet;
 
   timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
+  chooseRecords = []
   page.loading = false;
 }
 
@@ -540,7 +558,7 @@ async function adjustBet() {
   });
 }
 
-function distributeRebate() {
+async function distributeRebate() {
   ElMessageBox.confirm(
     t('message.confirmRebate'),
     {
@@ -552,7 +570,37 @@ function distributeRebate() {
     const query = checkQuery();
     distribute(query);
     ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+    loadAffiliateBetRebateRecords()
   });
+}
+
+function batchDistributeRebate(id) {
+  ElMessageBox.confirm(
+    id ? t('message.confirmSingleRebate') : t('message.confirmBatchRebate'),
+    {
+      confirmButtonText: t('fields.confirm'),
+      cancelButtonText: t('fields.cancel'),
+      type: "warning"
+    }
+  ).then(() => {
+    if (id) {
+      batchDistribute(id);
+    } else {
+      const idsList = chooseRecords.map(r => r.id).join(',');
+      batchDistribute(idsList);
+    }
+    ElMessage({ message: t('message.rebateSuccess'), type: "success" });
+    loadAffiliateBetRebateRecords()
+  });
+}
+
+function handleSelectionChange(val) {
+  chooseRecords = val;
+  if (chooseRecords.length === 0) {
+    uiControl.batchDistributeBtn = true;
+  } else {
+    uiControl.batchDistributeBtn = false;
+  }
 }
 
 onMounted(async() => {
@@ -584,5 +632,9 @@ onMounted(async() => {
   .dialog-footer {
     display: flex;
     justify-content: flex-end;
+  }
+
+  .el-button {
+    margin-top: 5px;
   }
   </style>

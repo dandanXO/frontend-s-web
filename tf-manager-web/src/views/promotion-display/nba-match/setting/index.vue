@@ -213,6 +213,21 @@
           <el-tag v-if="scope.row.status === 'ENDED'" type="warning" size="mini">{{ t('status.gameMatch.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column
+        prop="toShow"
+        :label="t('fields.show')"
+        width="150"
+        v-if="hasPermission(['sys:nba-match:update'])"
+      >
+        <template #default="scope">
+          <el-switch
+            v-model="scope.row.toShow"
+            active-color="#409EFF"
+            inactive-color="#F56C6C"
+            @change="changeToShow(scope.row.id, scope.row.toShow)"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200">
         <template #default="scope">
           <span v-if="scope.row.matchTime === null">-</span>
@@ -400,7 +415,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getNbaMatch, createNbaMatch, updateNbaMatch, endNbaMatch, deleteNbaMatch } from "@/api/nba-match";
+import { getNbaMatch, createNbaMatch, updateNbaMatch, updateToShow, endNbaMatch, deleteNbaMatch } from "@/api/nba-match";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -601,6 +616,10 @@ async function browseImage(type) {
   }
   uiControl.imageSelectionType = type
   uiControl.imageSelectionVisible = true
+}
+
+async function changeToShow(id, toShow) {
+  await updateToShow(id, toShow)
 }
 
 function endMatch() {

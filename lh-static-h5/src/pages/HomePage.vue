@@ -522,11 +522,57 @@
   <GameModal ref="allGames"></GameModal>
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
-    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab">
+    <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
       <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
-      <div class="rocket-wrapper" @click="playGame('TFGaming', 'TFGaming', '20')">
-        <div class="rocket"><img src="../assets/images/home/rocket.gif" /></div>
-      </div>
+      <q-carousel
+        class="float"
+        :navigation="gamePromo.length > 1 ? true : false"
+        v-model="rocketSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(game, i) in gamePromo"
+          :key="i"
+          :name="i"
+          @click="playGame(game.platform, game.platform, game.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
+  <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="floatPromo.length > 1 ? true : false"
+        v-model="promoSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="i"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
     </div>
   </q-page-sticky>
 
@@ -616,7 +662,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref } from "vue";
+import { computed, defineComponent, onActivated, onUnmounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
@@ -624,7 +670,7 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-// import {RiVolumeUpLine} from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core"
 import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
@@ -639,6 +685,7 @@ import MaintenanceBox from "components/MaintenanceBox.vue";
 import UserProfile from "components/home/drawer/UserProfile.vue";
 import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
+import { onMounted } from "vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -964,8 +1011,8 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -1044,7 +1091,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+                homePopupImg.value = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/adspopout/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -1507,6 +1554,115 @@ export default defineComponent({
         });
       }
     };
+    const gotoFloatPromo = (code) => {
+
+      router.push(`/promo?name=${code}`)
+    }
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
+      api
+        .get("/session/redirect")
+        .then((res) => {
+            if (res.code === 0) {
+              res.data.forEach(element => {
+                if (element.type === 'PROMO') {
+                  floatPromo.push(element);
+                  showFloatPromo.value = true;
+                }
+                if (element.type === 'GAME') {
+                  gamePromo.push(element)
+                  showRocket.value = true;
+                }
+              });
+              checkShowRocket();
+              checkFloatPromo();
+              updatePromo(); // Initially update the displayed promo
+              // Update the displayed promo every 5 seconds
+              setInterval(updatePromo, 3000);
+              updateRocket(); // Initially update the displayed promo
+              // Update the displayed promo every 5 seconds
+              setInterval(updateRocket, 3000);
+            } else {
+              ElMessage.error(res.message);
+            }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
+
+    const currentRocket = ref(null)
+    const currentRocketIndex = ref(0);
+    const updateRocket = () => {
+      currentRocket.value = gamePromo[currentRocketIndex.value];
+      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.length;
+    };
+    const imageLoading = ref(false);
+    const selectedLiveTab = ref();
+
+    const showRocket = ref(false);
+    const checkShowRocket = () => {
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showRocket.value = true;
+      // }
+    };
+
+    const hideRocket = () => {
+      showRocket.value = false;
+      promoPos.value = [18, 18]
+    };
+
+    const showFloatPromo = ref(false);
+    const checkFloatPromo = () => {
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showFloatPromo.value = true;
+      // }
+      if (gamePromo.length === 0) {
+        promoPos.value = [18, 18]
+      }
+    };
+
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const fabPos = ref([18, 18]);
+    const promoPos = ref([18, 128]);
+    const draggingRocketFab = ref(false);
+    const draggingPromoFab = ref(false);
+
+    const currentElement = ref(null);
+    const moveRocketFab = (ev) => {
+      console.log(ev)
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+    const movePromoFab = (ev) => {
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingPromoFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = promoPos.value[0] - ev.delta.x;
+      let newY = promoPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      promoPos.value = [newX, newY];
+
+    }
 
     onActivated(() => {
       getPlatList();
@@ -1517,37 +1673,18 @@ export default defineComponent({
       checkShowImgTop();
       getAppDownloadUrl();
       getUnreadTotal();
-      checkShowRocket();
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
-    });
-    const imageLoading = ref(false);
-    const selectedLiveTab = ref();
-
-    const showRocket = ref(false);
-    const checkShowRocket = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showRocket.value = true;
+  });
+  onMounted(() => {
+    if ((store.token)) {
+        initFloating();
       }
-    };
-
-    const hideRocket = () => {
-      showRocket.value = false;
-    };
-
-    const fabPos = ref([18, 18]);
-    const draggingFab = ref(false);
-
-    const moveFab = (ev) => {
-      const maxX = window.innerWidth - 70;
-      const maxY = window.innerHeight - 70;
-      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
-      let newX = fabPos.value[0] - ev.delta.x;
-      let newY = fabPos.value[1] - ev.delta.y;
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
-      fabPos.value = [newX, newY];
-    };
+  })
+    // Clear interval on unmounted
+    onUnmounted(() => {
+      clearInterval(intervalId);
+    });
 
     return {
       imageLoading,
@@ -1631,9 +1768,26 @@ export default defineComponent({
       showRocket,
       checkShowRocket,
       fabPos,
-      draggingFab,
-      moveFab,
-      hideRocket
+      draggingRocketFab,
+      draggingPromoFab,
+      moveRocketFab,
+      movePromoFab,
+      hideRocket,
+      promoPos,
+      hideFloatPromo,
+      showFloatPromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoFloatPromo,
+      floatPromo,
+      gamePromo,
+      currentElement,
+      imgURLFloat,
+      updateRocket,
+      currentRocket,
+      currentRocketIndex,
+      rocketSlide: ref(0),
+      promoSlide: ref(0)
     };
   }
 });
@@ -1672,7 +1826,7 @@ export default defineComponent({
   // cursor: pointer;
 
   img {
-    width: 70px;
+    width: 105px;
     pointer-events: none;
   }
 
@@ -1763,6 +1917,17 @@ export default defineComponent({
   }
 }
 
+:deep(.q-carousel.float) {
+  height: unset;
+  background: transparent;
+
+}
+  :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
+    margin: 0;
+    padding: 0;
+    font-size: 4px !important;
+    color: #3382f4;
+  }
 .home-header {
   display: flex;
   align-items: center;

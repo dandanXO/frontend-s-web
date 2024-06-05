@@ -69,6 +69,6 @@ export const cancelUefaSettlement = (id) => {
   return https().request(`/uefa/settlementCancel/${id}?_method=PUT`, Method.POST);
 };
 
-export const settleAllPendingUefa = () => {
-  return https().request('/uefa/settlement/all?_method=PUT', Method.POST);
+export const settleAllPendingUefa = (siteId) => {
+  return https().request('/uefa/settlement/all?_method=PUT', Method.POST, { siteId: siteId }, ContentType.form);
 };

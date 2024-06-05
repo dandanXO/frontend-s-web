@@ -10,6 +10,10 @@
           <template v-for="nav in navigations" :key="nav.name">
             <template v-if="!nav.hasicon && !nav.isTest">
               <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
+                <img v-if="nav.code === 'sports'"
+                     class="hot-label"
+                     :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
+                />
                 <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
                   <h2 class="nav-title cn">{{ nav.name }}</h2>
                   <h2 class="nav-title">{{ nav.enName }}</h2>
@@ -35,6 +39,14 @@
               </div>
             </template>
           </template>
+          <div
+            class="header-menu-item"
+            @click="getPlatformListAndGoImSport">
+            <img
+              class="eroup-menu-icon"
+              :src="require(`../../assets/images/home/header-eroup.png`)"
+            />
+          </div>
         </div>
 
         <div class="navigations second-nav">
@@ -169,7 +181,7 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产:</span>
+                <span class="assets-text">总资产：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">加载中...</span>
                   <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
@@ -455,7 +467,7 @@ import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
-import { useDark, useElementSize } from "@vueuse/core";
+import { useDark, useElementSize, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
@@ -465,6 +477,7 @@ import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from '@/api/personal/common'
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -488,7 +501,7 @@ export default defineComponent({
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
-    const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
+    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
@@ -512,7 +525,7 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
-    
+
     const checkToken = () => {
       if (store.token) {
         if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
@@ -1121,12 +1134,21 @@ export default defineComponent({
 
     const modalGame = ref(null);
     const openGame = (gameName, code, gameCode) => {
+      console.log(gameName, code, gameCode,'dan')
       modalGame.value.open(gameName, code, gameCode);
     };
 
+    const getPlatformListAndGoImSport = () => {
+      const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+
+      fetchFunction().then((res) => {
+        const imSport = res.filter(item=> item.code==='IM')
+        openGame(imSport[0].name,imSport[0].code,imSport[0].gameType)
+
+      });
+    };
 
     onMounted(() => {
-
       if (regCountdown.value > 0)
         countdownTimer("REGISTER");
       getAffiliateCode();
@@ -1424,6 +1446,7 @@ export default defineComponent({
         "bonjour",
         "안녕하세요"
       ],
+      getPlatformListAndGoImSport,
       loginForm,
       loginDialogVisible,
       forgetPassDialogVisible,
@@ -1769,13 +1792,13 @@ body {
     box-shadow: $shadow-header;
 
     .top-nav-inner {
-      max-width: 1250px;
+      max-width: 1300px;
       margin: 0 auto;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
 
       &.logged-in-nav {
         max-width: 1400px;
@@ -1803,7 +1826,6 @@ body {
           display: block;
         }
       }
-
       .navigations {
         display: flex;
         justify-content: center;
@@ -1812,14 +1834,27 @@ body {
         // padding: 0px 16px;
         gap: 20px;
         text-align: center;
-        padding: 0px 15px;
+        padding: 0px 12px;
 
         &.second-nav {
           margin-left: auto;
           margin-right: auto;
-          gap: 24px;
+          gap: 10px;
+          padding-left:6px;
+          padding-right: 6px;
         }
+        .eroup-menu-icon{
+          cursor: pointer;
+          width: 50px;
+          height: 50px;
 
+          &:hover{
+            filter: brightness(0.9);
+          }
+          &:active{
+            transform: translate(0px, 1px);
+          }
+        }
         a {
           // padding-top: 10px;
           display: flex;
@@ -1840,7 +1875,6 @@ body {
               font-weight: bold;
             }
           }
-
           .menu-icon {
             width: 50px;
           }
@@ -1874,7 +1908,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }
@@ -2533,26 +2567,33 @@ body {
 }
 
 .header-menu-item {
+  min-width: 40px;
   position: relative;
-    &.active {
-      &:after {
-        content: "";
-        background: #468CFF;
-        width: 80%;
-        height: 5px;
-        bottom: -24px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        border-radius: 4px;
-      }
+  &.active {
+    &:after {
+      content: "";
+      background: #468CFF;
+      width: 80%;
+      height: 5px;
+      bottom: -24px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border-radius: 4px;
     }
+  }
   // display: flex;
   a {
     position: relative;
   }
-
+  .hot-label {
+    width: 12px;
+    height:12px;
+    position: absolute;
+    right: -10px;
+    top: -7px;
+  }
   .nav-title {
     // position: absolute;
     // margin: 0px;
@@ -2568,7 +2609,7 @@ body {
     margin: 0;
     &.cn {
       font-weight: 600;
-    font-size: 16px;
+      font-size: 16px;
     }
 
     &.active {
@@ -2645,10 +2686,10 @@ body {
 
 .grid-container {
   margin: 20px auto;
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .grid-item {
@@ -2659,7 +2700,7 @@ body {
   transition: transform 0.5s;
   img {
     width: 100px;
-  cursor: pointer;
+    cursor: pointer;
     border-radius: 50%;
   }
 }
@@ -2669,13 +2710,13 @@ body {
 }
 
 .grid-item.selected {
-    position:relative;
-    color: #ffffff;
+  position:relative;
+  color: #ffffff;
   img {
     border: 3px solid #33BC03;
   }
-    &:after {
-      content: "✓";
+  &:after {
+    content: "✓";
     position: absolute;
     background: #33BC03;
     font-size: 15px;
@@ -2688,7 +2729,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    }
+  }
 }
 
 
@@ -2701,14 +2742,14 @@ body {
 }
 
 .profile-dialog .standard-button {
-    width: 400px;
-    display: block;
-    margin: 10px auto;
-    height: unset;
-    border-radius: 40px;
+  width: 400px;
+  display: block;
+  margin: 10px auto;
+  height: unset;
+  border-radius: 40px;
 }
 .profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
-  
+
   background: #7A8EB966;
   border-radius: 25px;
   top: 8px;

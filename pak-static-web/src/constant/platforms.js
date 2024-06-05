@@ -1,19 +1,19 @@
 export default [
-  {
-    code: "E-sports",
-    name: "E-sports",
-    path: "/e-sport",
-    hasSub: true,
-    tabOrder: 5,
-    isLink: true,
-    submenu: [
-      {
-        code: "Play4Win",
-        icon: "jolly88",
-        to: "/e-sport"
-      }
-    ]
-  },
+  // {
+  //   code: "E-sports",
+  //   name: "E-sports",
+  //   path: "/e-sport",
+  //   hasSub: true,
+  //   tabOrder: 5,
+  //   isLink: true,
+  //   submenu: [
+  //     {
+  //       code: "Play4Win",
+  //       icon: "jolly88",
+  //       to: "/e-sport"
+  //     }
+  //   ]
+  // },
   {
     code: "casino",
     name: "Live Casino",
@@ -54,7 +54,7 @@ export default [
     icon: require("@/assets/images/index/menu/menu_sport.png"),
     hasSub: true,
     isLink: true,
-    tabOrder: 6,
+    tabOrder: 9,
     submenu: [
       {
         code: "Play4Win",
@@ -63,38 +63,38 @@ export default [
       }
     ]
   },
-  {
-    code: "CockFight",
-    name: "Cockfight",
-    path: "/cockfight",
-    icon: require("@/assets/images/index/menu/menu_sport.png"),
-    hasSub: true,
-    isLink: true,
-    tabOrder: 7,
-    submenu: [
-      {
-        code: "Play4Win",
-        icon: "cockfight-sub-icon.png",
-        to: "/cockfight"
-      }
-    ]
-  },
-  {
-    code: "bingo",
-    name: "Bingo",
-    path: "/bingo",
-    icon: require("@/assets/images/index/menu/menu_sport.png"),
-    hasSub: true,
-    isLink: true,
-    tabOrder: 4,
-    submenu: [
-      {
-        code: "Play4Win",
-        icon: "bingo-menu-icon.png",
-        to: "/bingo"
-      }
-    ]
-  },
+  // {
+  //   code: "CockFight",
+  //   name: "Cockfight",
+  //   path: "/cockfight",
+  //   icon: require("@/assets/images/index/menu/menu_sport.png"),
+  //   hasSub: true,
+  //   isLink: true,
+  //   tabOrder: 7,
+  //   submenu: [
+  //     {
+  //       code: "Play4Win",
+  //       icon: "cockfight-sub-icon.png",
+  //       to: "/cockfight"
+  //     }
+  //   ]
+  // },
+  // {
+  //   code: "bingo",
+  //   name: "Bingo",
+  //   path: "/bingo",
+  //   icon: require("@/assets/images/index/menu/menu_sport.png"),
+  //   hasSub: true,
+  //   isLink: true,
+  //   tabOrder: 4,
+  //   submenu: [
+  //     {
+  //       code: "Play4Win",
+  //       icon: "bingo-menu-icon.png",
+  //       to: "/bingo"
+  //     }
+  //   ]
+  // },
   {
     code: "Poker",
     name: "Poker",
@@ -137,22 +137,22 @@ export default [
       }
     ]
   },
-  {
-    code: "minigame",
-    name: "Hash Games",
-    path: "/minigame",
-    icon: require("@/assets/images/index/menu/menu_sport.png"),
-    hasSub: true,
-    isLink: true,
-    tabOrder: 1,
-    submenu: [
-      {
-        code: "Play4Win",
-        icon: "bingo-menu-icon.png",
-        to: "/minigame"
-      }
-    ]
-  },
+  // {
+  //   code: "minigame",
+  //   name: "Hash Games",
+  //   path: "/minigame",
+  //   icon: require("@/assets/images/index/menu/menu_sport.png"),
+  //   hasSub: true,
+  //   isLink: true,
+  //   tabOrder: 1,
+  //   submenu: [
+  //     {
+  //       code: "Play4Win",
+  //       icon: "bingo-menu-icon.png",
+  //       to: "/minigame"
+  //     }
+  //   ]
+  // },
   {
     id: "SLOT",
     code: "Slots",
@@ -230,7 +230,7 @@ export default [
     icon: require("@/assets/images/index/menu/menu_fish.png"),
     hasSub: true,
     isLink: false,
-    tabOrder: 9,
+    tabOrder: 6,
     platformType: "FISH",
     tabFilter: "JILI",
     submenu: [

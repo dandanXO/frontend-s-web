@@ -523,8 +523,9 @@ export default {
     vip_lottery_rebate: "Lottery Rebate",
     vip_unachieved: "Unachieved",
     vip_achieved: "Achieved",
-    vip_cumulative_deposits: "Cumulative deposits:",
-
+    vip_cumulative_deposits: "VIP MAINTAIN REQUIRED:",
+    vip_3timedeposit: "DEPOSIT 1 TIME",
+    totalBetMonth: "TOTAL BET OF MONTH",
     have_one_successful_deposit: "have one successful deposit",
     accumulated_deposits: "Accumulated deposits",
     turnover_requirements: "Turnover requirements",

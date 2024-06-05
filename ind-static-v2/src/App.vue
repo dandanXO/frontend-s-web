@@ -9,11 +9,11 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
+// import { Adjust,AdjustEvent, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
+// import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 
@@ -27,26 +27,26 @@ export default defineComponent({
     const $q = useQuasar(); // calling here; equivalent to when component
     $q.dark.set(true);
     const checkSID = () => {
-      const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        const obj = {
-          identifier: sidParam,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
-      })();
+      // const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
+      // const fpPromise = FingerprintJS.load();
+      // (async () => {
+      //   const fp = await fpPromise;
+      //   const result = await fp.get();
+      //   const excludes = { value: ["timezone", "timeZoneOffset"] };
+      //   const allComponents = { ...result.components };
+      //   excludes.value.forEach((element) => {
+      //     delete allComponents[element];
+      //   });
+      //   const sidParam = FingerprintJS.hashComponents(allComponents);
+      //   const obj = {
+      //     identifier: sidParam,
+      //     affiliateCode: affiliateItem
+      //   };
+      //   api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+      //     if (res.code === 0) {
+      //     }
+      //   });
+      // })();
     };
 
     const getAppInfo = async () => {
@@ -70,22 +70,32 @@ export default defineComponent({
         //Android App.
         console.log("Init Adjust Sdk");
         console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+
+        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustConfig.EnvironmentProduction);
+        adjustConfig.setLogLevel(AdjustConfig.LogLevelVerbose);
         adjustConfig.setAttributionCallbackListener(function (e) {
           console.log("setAttributionCallbackListener");
           console.log(e);
         });
 
+        //TESTING ONLY.
+        // Adjust.getSdkVersion(function(version){
+        //   alert(version);
+        //   alert(AdjustConfig.EnvironmentProduction);
+        //   alert(AdjustConfig.LogLevelVerbose);
+        //
+        //   var adjEve = new AdjustEvent("123456");
+        //   alert(adjEve);
+        // })
+
         Adjust.create(adjustConfig);
         setTimeout(() => {
-
-          Adjust.getGoogleAdId().then((googleid) => {
+          Adjust.getGoogleAdId(function(googleid)  {
             console.log("Google AdID");
             console.log(googleid);
             if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
               (async () => {
-                Adjust.getAdid().then((adid) => {
+                Adjust.getAdid(function(adid) {
                   console.log("Attribution 2");
                   console.log(adid);
                   store.aaid = adid;
@@ -97,7 +107,7 @@ export default defineComponent({
               trackAppStartEvent();
             }
           });
-        }, 0);
+        }, 100);
       } else {
         //Normal WEb / H5 / iOS WEbclip.
         console.log("Init Web Adjust");
@@ -120,11 +130,12 @@ export default defineComponent({
           console.log(attribution);
           store.aaid = attribution ? attribution.adid : "";
 
-        }, 1500);
+        }, 500);
       }
     };
 
     const trackAppStartEvent = () => {
+      // debugger;
       if(ui.adjust_open_app_event) {
         var adjustEvent = new AdjustEvent(ui.adjust_open_app_event);
         Adjust.trackEvent(adjustEvent);
@@ -242,27 +253,39 @@ export default defineComponent({
       }
     };
 
-    const getInsetHeight = async () => {
-      const ua = navigator.userAgent.toLowerCase();
-      console.log(ua);
-      const isAndroidPixel = ua.indexOf("android") > -1;
-      // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
-      if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
-        const insets = await SafeArea.getSafeAreaInsets();
-        console.log(insets);
-        // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
-        if (insets.bottom > 0) {
-          // console.log("HERe");
-          ui.bottomInsetHeight = insets.bottom;
-        }
-      }
-    };
+    // const getInsetHeight = async () => {
+    //   const ua = navigator.userAgent.toLowerCase();
+    //   console.log(ua);
+    //   const isAndroidPixel = ua.indexOf("android") > -1;
+    //   // && (ua.indexOf("pixel") > -1 || ua.indexOf("samsung") > -1 || ua.indexOf("galaxy") > -1);
+    //   if (Platform.is.capacitor && Platform.is.android && isAndroidPixel) {
+    //     const insets = await SafeArea.getSafeAreaInsets();
+    //     console.log(insets);
+    //     // alert(insets); // Ex. { "bottom":34, "top":47, "right":0, "left":0 }
+    //     if (insets.bottom > 0) {
+    //       // console.log("HERe");
+    //       ui.bottomInsetHeight = insets.bottom;
+    //     }
+    //   }
+    // };
 
     const handleVisibilityChange = (status) => {
       if (Platform.is.capacitor && Platform.is.android) {
         StatusBar.hide();
       }
     };
+
+    const addCloudWiseTrackCode = () => {
+      // const script0 = document.createElement('script');
+      // script0.innerHTML = "var CWRUMLICENCE = 'wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';";
+      //
+      // const script = document.createElement('script');
+      // script.src = 'https://apm-int.cloudwise.com/api/browser/settings/v70/js?app_key=wS0n2SF8WRCb0fAkjFLvksRizrsrej3YMdswg2ZnOKQ6sptOSL5kDBNXpsWQ8fpQ';
+      // script.async = true;
+
+      // document.head.appendChild(script0);
+      // document.head.appendChild(script);
+    }
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");
@@ -295,7 +318,7 @@ export default defineComponent({
       // const info = await App.getInfo();
       // console.log("APP Info");
       // console.log(info);
-      checkSID();
+      // checkSID();
       // getCSA();
       getAppInfo();
       initOrientation();
@@ -311,6 +334,7 @@ export default defineComponent({
         );
       } else {
         trackH5Affiliate();
+        addCloudWiseTrackCode();
       }
 
       document.addEventListener("visibilitychange", handleVisibilityChange);

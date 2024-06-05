@@ -110,13 +110,18 @@
       </q-card>
     </q-dialog>
   </q-scroll-area>
+
+  <div id="sport-root"
+       v-if="visible && platformCodeImg === 'LuckySport'"
+       data-ck-props='{"theme":{"pbgc":"000","sbgc":"1a1a1a","pc":"D2B79E","sc":"333","tc":"333","tpc":"fff","tsc":"999","qlbc":"333","primaryColorLinearGradientParams":{"deg":"","color1":"F4E7D6","opacity1":"","color2":"D2B79E","opacity2":"","color3":"","opacity3":""},"quickLink":{"sponsor":true},"burger":false,"eventList":{"statementLink":true}},"displayHeader":false,"displayPCLeftSidebar":true,"displayPCNavbar":true,"displayPCNavHome":true,"displayPCNavSearch":true,"loginCart":false,"displaySports": "1,4"}'></div>
+
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
+import { ref, defineExpose, reactive, shallowRef, watchEffect } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -220,6 +225,11 @@ const transferInfo = ref({
   platform: null
 });
 const isClicked = ref("");
+
+watchEffect(() => {
+  console.log('isShowLsMainArea', window.isShowLsMainArea);
+})
+
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api

@@ -232,7 +232,7 @@ import { Search } from "@element-plus/icons-vue";
 import { RiHeartLine, RiHeartFill } from "vue-remix-icons";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment/moment";
-import { useDark } from "@vueuse/core";
+import { useDark, useLocalStorage } from "@vueuse/core";
 
 const platformGame = ref(null);
 const route = useRoute();
@@ -383,7 +383,8 @@ const loadGameList = () => {
       .then((data) => {
         data.forEach((element) => {
           element.default = require("../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+          var imageUrl= useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value ;
+          element.icon = `${imageUrl}/game/${element.icon}`;
         });
         gameListData.value = data;
         gamePage.total = data.length;

@@ -6,44 +6,56 @@
       <div class="earn-money-title">Bonus Pot Arrived</div>
       <div class="earn-money-pots">
         <div class="pot-item">
-          <div class="item-amount">RS 0.00</div>
+          <div class="item-amount">
+            RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+          </div>
           <div class="item-desc">My Total Income</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-01.png" /></div>
         </div>
         <div class="pot-item pot-item__2">
-          <div class="item-amount">0</div>
+          <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
           <div class="item-desc">My Total Number Of Invites</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-02.png" /></div>
         </div>
       </div>
-
+      <!-- banner.redirectUrl.includes("https://") -->
       <div class="earn-money-details-grid">
-        <div class="details-item">
+        <div class="details-item" v-if="isShowOnetime">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("ONE_TIME") }}</span>
           </div>
           <div class="item-title">Invite</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-01.png" /></div>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" v-if="isShowDeposit">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("DEPOSIT") }}</span>
           </div>
           <div class="item-title">Top Up</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-02.png" /></div>
         </div>
 
-        <div class="details-item">
+        <div class="details-item details-item" v-if="isShowBet">
           <div class="item-amount">
             Rs
-            <span>0</span>
+            <span>{{ getRewardAmount("BET") }}</span>
           </div>
           <div class="item-title">Bet</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-03.png" /></div>
         </div>
+
+        <div class="details-item details-item">
+          <div class="item-amount">
+            <span>{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
+          </div>
+          <div class="item-title">Eligible Refer</div>
+          <div class="item-icon"><img src="../assets/images/earn-money/details-icon-04.png" /></div>
+        </div>
+
+        <!-- <pre>memberDetail{{ memberDetail }}</pre> -->
 
         <!-- <div class="details-item">
           <div class="item-amount">
@@ -77,15 +89,29 @@
         </div>
 
         <div class="invite-share-link">
-          <div class="link-href">https://b9.game/refer/JnAlZ6</div>
+          <div class="link-href">{{ selfTgurl }}</div>
           <div class="link-copy" @click="copyHrefLink">Copy Link</div>
         </div>
 
         <div class="invite-share-social">
-          <div class="social-item"><img src="../assets/images/earn-money/social-whatsapp.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-instagram.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-tiktok.png" /></div>
-          <div class="social-item"><img src="../assets/images/earn-money/social-more.png" /></div>
+          <a class="social-item" :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+            <img src="../assets/images/earn-money/social-whatsapp.png" />
+          </a>
+          <a
+            class="social-item"
+            :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`"
+            target="_blank"
+          >
+            <img src="../assets/images/earn-money/social-instagram.png" />
+          </a>
+          <a
+            class="social-item"
+            :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`"
+            target="_blank"
+          >
+            <img src="../assets/images/earn-money/social-tiktok.png" />
+          </a>
+          <a class="social-item"><img src="../assets/images/earn-money/social-more.png" /></a>
         </div>
       </div>
 
@@ -95,55 +121,13 @@
             <td style="color: #8c968f; font-size: 120%">Friend Count</td>
             <td style="color: #8c968f; font-size: 120%">Invite Bonus</td>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>Rs 120.0</td>
-          </tr>
 
-          <tr>
-            <td>2~4</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>5~10</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>11~30</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>31~50</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>51~500</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>501~999</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>1000~3000</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>3001~9999</td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>10000~999999</td>
-            <td>Rs 120.0</td>
-          </tr>
+          <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+            <tr>
+              <td>{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+              <td>{{ store.currency.value }} {{ item.bonusAmount }}</td>
+            </tr>
+          </template>
         </table>
       </div>
 
@@ -154,9 +138,37 @@
 
         <div class="sent-ytd-amount">
           Total amount sent as of yesterday
-          <span>159,930.00</span>
+          <span>{{ oneTimeBonusSetting.totalAmount }}</span>
         </div>
       </div>
+
+      <!-- <div class="earn-money-friendcount">
+        <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+          <tr>
+            <td style="color: #8c968f; font-size: 120%">Player</td>
+            <td style="color: #8c968f; font-size: 120%">Money</td>
+          </tr>
+
+          <template v-if="latestInvitees.records && latestInvitees.records.length === 0">
+            <tr>
+              <td colspan="2">No Records</td>
+            </tr>
+          </template>
+          <template v-else>
+            <template v-for="(item, index) in latestInvitees.records" :key="index">
+              <tr>
+                <td>
+                  <div class="player-details">
+                    <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                    {{ item.loginName }}
+                  </div>
+                </td>
+                <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+              </tr>
+            </template>
+          </template>
+        </table>
+      </div> -->
 
       <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
@@ -164,53 +176,47 @@
             <td style="color: #8c968f; font-size: 120%">Player</td>
             <td style="color: #8c968f; font-size: 120%">Money</td>
           </tr>
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-2.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
-
-          <tr>
-            <td>
-              <div class="player-details">
-                <img src="../assets/images/earn-money/profile-img-3.png" width="30" />
-                23****2313
-              </div>
-            </td>
-            <td>Rs 120.0</td>
-          </tr>
         </table>
+        <div class="table-container" ref="tableContainer">
+          <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
+            <template v-if="inviteesRecords && inviteesRecords.length === 0">
+              <tr>
+                <td colspan="2">No Records</td>
+              </tr>
+            </template>
+            <template v-else>
+              <template v-for="(item, index) in inviteesRecords" :key="index">
+                <tr>
+                  <td>
+                    <div class="player-details">
+                      <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                      {{ item.loginName }}
+                    </div>
+                  </td>
+                  <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+                </tr>
+              </template>
+            </template>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
+import { userStore } from "stores/index";
 
-const hrefLink = ref("https://b9.game/refer/JnAlZ6");
 const $q = useQuasar();
+const store = userStore();
 
 const copyHrefLink = () => {
   navigator.clipboard
-    .writeText(hrefLink.value)
+    .writeText(selfTgurl.value)
     .then(() => {
       $q.notify({
         message: "Link copied to clipboard",
@@ -230,6 +236,12 @@ const copyHrefLink = () => {
 };
 
 const oneTimeBonusSetting = ref([]);
+const memberDetail = ref([]);
+const activeSetting = ref([]);
+const latestInvitees = ref([]);
+const inviteesRecords = ref([]);
+let currentIndex = 0;
+let intervalId = null;
 
 const getOneTimeBonusSetting = () => {
   api
@@ -244,9 +256,118 @@ const getOneTimeBonusSetting = () => {
     });
 };
 
+const getMemberDetail = () => {
+  api
+    .get("/session/refer-rebate/member-detail")
+    .then((response) => {
+      if (response.code === 0) {
+        memberDetail.value = response.data;
+        activeSetting.value = response.data.activeSetting;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const getLatestInvitees = () => {
+  api
+    .get("/session/refer-rebate/latest-invitees")
+    .then((response) => {
+      if (response.code === 0) {
+        latestInvitees.value = response.data;
+        inviteesRecords.value = response.data.records;
+        // startDisplayingRows();
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+const selfTgurl = ref("");
+const waUrl = ref("");
+
+const getRewardAmount = (type) => {
+  const rewards = memberDetail.value.rewardAmountByType;
+  if (rewards && Array.isArray(rewards)) {
+    const reward = rewards.find((reward) => reward.rewardType === type);
+    return reward ? reward.totalAmount : 0;
+  }
+  return 0;
+};
+
+const startDisplayingRows = () => {
+  // Display the first item initially
+  if (currentIndex === 0) {
+    currentIndex++;
+  }
+
+  intervalId = setInterval(() => {
+    if (currentIndex < inviteesRecords.value.length) {
+      inviteesRecords.value.unshift(inviteesRecords.value[10]);
+      currentIndex++;
+    } else {
+      clearInterval(intervalId);
+      currentIndex = 0;
+      startDisplayingRows(); // Restart the loop
+    }
+  }, 1000);
+};
+
+const tableContainer = ref(null);
+
+const startAutoScroll = () => {
+  const container = tableContainer.value;
+  const rowHeight = container.querySelector("tr").offsetHeight;
+  let scrollPosition = 0;
+
+  setInterval(() => {
+    scrollPosition += 46;
+    if (scrollPosition >= container.scrollHeight) {
+      scrollPosition = 0; // Reset scroll position if we reach the bottom
+    }
+    container.scrollTo({
+      top: scrollPosition,
+      behavior: "smooth"
+    });
+  }, 2000); // Adjust the interval as needed
+};
+
+const isShowOnetime = ref(false);
+const isShowDeposit = ref(false);
+const isShowBet = ref(false);
+
+const checkIsShowDetail = () => {
+  isShowOnetime.value = activeSetting.value.includes("ONE_TIME");
+  isShowDeposit.value = activeSetting.value.includes("DEPOSIT");
+  isShowBet.value = activeSetting.value.includes("BET");
+};
+
 onMounted(() => {
   getOneTimeBonusSetting();
+  getMemberDetail();
+  getLatestInvitees();
+  startAutoScroll();
+  checkIsShowDetail();
+
+  let tgDomain = window.location.origin + "/";
+  if (store.isApp()) {
+    tgDomain = store.h5Url;
+  }
+
+  api.get("/session/member/referralCode").then((res) => {
+    if (res.code === 0) {
+      selfTgurl.value = tgDomain + "refer/" + res.data;
+    }
+  });
 });
+
+watch(activeSetting, checkIsShowDetail);
+
+// onUnmounted(() => {
+//   clearInterval(scrollInterval.value);
+// });
 </script>
 
 <style scoped lang="scss">
@@ -313,10 +434,11 @@ onMounted(() => {
       // grid-gap: 12px;
       gap: 12px;
       margin-top: 16px;
+      flex-wrap: wrap;
 
       .details-item {
         display: flex;
-        width: 50%;
+        width: calc(50% - 6px);
         flex-direction: column;
         min-height: 100px;
         align-items: center;
@@ -324,6 +446,10 @@ onMounted(() => {
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 10px;
         position: relative;
+
+        &__full {
+          width: 100%;
+        }
 
         .item-amount {
           span {
@@ -402,6 +528,8 @@ onMounted(() => {
 
         .link-href {
           padding: 16px;
+          word-break: break-all;
+          font-size: 11px;
         }
         .link-copy {
           color: #0f0b0b;
@@ -439,6 +567,31 @@ onMounted(() => {
       width: calc(100% + 40px);
       margin-left: -20px;
       margin-right: -20px;
+      .table-container {
+        max-height: 200px; /* Adjust height as needed to show 5 rows */
+        overflow-y: auto;
+        position: relative;
+        pointer-events: none;
+
+        tr:first-child {
+          position: relative;
+
+          // &:after {
+          //   content: "";
+          //   background: #0e1311;
+          //   width: 100%;
+          //   height: 100%;
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   opacity: 0;
+          //   animation: blink 1.1s infinite;
+          // }
+        }
+      }
+      .table-container::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for better aesthetics */
+      }
       table {
         tr {
           &:nth-child(even) {
@@ -458,6 +611,31 @@ onMounted(() => {
         }
       }
     }
+
+    // .earn-money-friendcount {
+    //   margin-top: 16px;
+    //   width: calc(100% + 40px);
+    //   margin-left: -20px;
+    //   margin-right: -20px;
+    //   table {
+    //     tr {
+    //       &:nth-child(even) {
+    //         background: #ffffff0d;
+    //       }
+
+    //       .player-details {
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         gap: 8px;
+    //       }
+
+    //       td:last-child {
+    //         color: #70bc62;
+    //       }
+    //     }
+    //   }
+    // }
 
     .earn-money-sent-ytd {
       margin-top: 16px;
@@ -495,6 +673,18 @@ onMounted(() => {
         }
       }
     }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 </style>

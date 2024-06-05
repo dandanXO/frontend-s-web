@@ -1,35 +1,18 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <span class="menu-title">Quick withdraw</span>
-    </div>
-    <div class="account-title-container">
-      <span class="account-title">Withdrawal Process</span>
-    </div>
-    <div class="account-content withdrawal">
-      <!-- รายการที่รอดำเนินการ -->
-      <a-steps label-placement="vertical">
-        <a-step status="process" title="Applying" />
-        <a-step status="process" title="Pending" />
-        <a-step status="process" title="Paying" />
-        <a-step status="process" title="Successful" />
-      </a-steps>
-
-      <ul>
-        <li class="account-tip-text" style="list-style-type: none">
-          After the game is over. the system will check the score and synchronize the payout. please be patient and wait
-          for a minute. Thank you for your understanding and support!
-        </li>
-        <li class="account-tip-text" style="list-style-type: none">
-          If the withdrawal fails, please check the reason for the failure indicated in the letter on the site!
-        </li>
-      </ul>
+    <div class="balance-withdrawal-container">
+      <div class="balance">
+        <div class="amt">{{ store.balance }}</div>
+        <div class="words">Cash balance</div>
+      </div>
+      <div class="withdrawable">
+        <div class="amt">{{ selectedWithdrawalMethod.withdrawableBalance }}</div>
+        <div class="words">Withdrawable</div>
+      </div>
     </div>
 
-    <div class="account-title-container">
-      <span class="account-title">Withdrawal Method</span>
-    </div>
     <div class="account-content last">
+      <span class="account-title">Withdrawal Method</span>
       <div class="flex-box account-content withdrawalmethod">
         <div
           v-for="(method, i) in withdrawalMethods"
@@ -46,14 +29,69 @@
         </div>
       </div>
       <a-form ref="formRef" :hide-required-mark="true" :model="withdrawInfo" :rules="withdrawRules" :colon="false">
-        <a-form-item ref="amount" class="helptxt" label="Amount" name="amount">
+        <span class="account-title">{{ !isVirtual ? "Bank card" : "E-wallet" }}</span>
+
+        <a-form-item
+          class="select"
+          name="cardId"
+          :rules="[
+            {
+              required: true,
+              message: !isVirtual ? 'Bank card is required' : 'E-wallet is required'
+            }
+          ]"
+        >
+          <a-select
+            v-model:value="withdrawInfo.cardId"
+            :placeholder="!isVirtual ? 'Select bank card' : 'Select E-wallet'"
+          >
+            <a-select-option v-for="b in withdrawState.bankCardList" :key="b.id" :value="b.id">
+              Acc No. **** {{ b.cardNumber.slice(b.cardNumber.length - 4, b.cardNumber.length) }}
+              <br />
+              IFSC {{ b.cardAddress }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
+
+        <div class="bot-wrapper">
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">Withdraw Amount</div>
+            </div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+          </div>
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">{{ store.vip }} Daily Limit</div>
+            </div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
+          </div>
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">Remain Wagers</div>
+            </div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
+          </div>
+        </div>
+
+        <span class="account-title">
+          {{
+            "Amount (" +
+            convertToCommaAmount(selectedWithdrawalMethod.withdrawMin) +
+            " - " +
+            convertToCommaAmount(selectedWithdrawalMethod.withdrawMax) +
+            ")"
+          }}
+        </span>
+
+        <a-form-item ref="amount" class="helptxt" name="amount">
           <a-input
             v-model:value="withdrawInfo.amount"
             class="form-input"
             placeholder="Enter the withdrawal amount"
-            :suffix="store.currency.value"
+            :prefix="store.currency.value"
           />
-          <div class="account-tip remain-box" style="flex-direction: column; align-items: flex-start">
+          <!-- <div class="account-tip remain-box" style="flex-direction: column; align-items: flex-start">
             <div class="account-tip-text">
               <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
                 {{
@@ -70,9 +108,10 @@
                 {{ " Remaining: " + selectedWithdrawalMethod.withdrawMaxTimes + " times" }}
               </template>
             </div>
-          </div>
+          </div> -->
         </a-form-item>
-        <a-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="Exchange Rate">
+
+        <!-- <a-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="Exchange Rate">
           <span style="color: #0b8f1a">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
             {{ store.currency.value }}
@@ -113,8 +152,7 @@
 
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="text-left full-width">
           <span style="color: #0b8f1a">1.00 USDT will be charged for each transaction</span>
-        </div>
-
+        </div> -->
         <div class="flex-box flex-justify-start">
           <button class="common-btn confirm-btn" @click="submitWithraw">Confirm Withdrawal</button>
         </div>
@@ -123,18 +161,18 @@
   </div>
 </template>
 
-<script lang="js">
+<script setup lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import { useRouter } from "vue-router";
 import { loadBankCards, confirmWithdraw, withdrawEntrance
  } from "@/api/personal/personal";
 import { message } from "ant-design-vue";
 import { userStore } from "@/store";
+import { convertToCommaAmount } from "@/utils/utils";
 
-export default defineComponent({
-  name: "WithdrawView",
-  setup() {
 
     const store = userStore();
+    const router = useRouter();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/'
     const formRef = ref();
     const activeItem = ref(0);
@@ -152,7 +190,7 @@ export default defineComponent({
       return (withdrawMethod.value === 'BANK') ? false : true;
     })
     onMounted(() => {
-      getWithdrawalMethods()
+      getWithdrawalMethods();
     });
     const submitWithraw = () => {
       formRef.value
@@ -203,11 +241,12 @@ export default defineComponent({
     // ]
     const selectedWithdrawalMethod = ref([])
     const selectMethod = (method, index) => {
+      console.log(method)
       withdrawMethod.value= method.code;
 
       withdrawInfo.amount = null;
       withdrawInfo.withdrawCode = null;
-      withdrawInfo.cardId = null;
+      withdrawInfo.cardId = method.id;
       // withdrawInfo.withdrawPassword = null;
       selectedWithdrawalMethod.value = method
       withdrawInfo.withdrawCode = method.code;
@@ -251,45 +290,83 @@ export default defineComponent({
         }
       })
     }
-    return {
-      formRef,
-      withdrawInfo,
-      submitWithraw,
-      withdrawRules,
-      withdrawState,
-      withdrawalMethods,
-      activeItem,
-      selectMethod,
-      imgURL,
-      selectedWithdrawalMethod,
-      loadCards,
-      isUSDT,
-      store,
-      isVirtual
-    };
-  },
-});
 </script>
 
 <style scoped lang="scss">
-.dark-theme {
-  .account-container .account-content-wrapper .withdraw-type-item {
-    &.active {
-      background: #ffffff0d;
-      border: 1px solid #48a7ff;
-      filter: none;
-      color: #ffffff;
-      .type-name {
+// .dark-theme {
+//   .account-container .account-content-wrapper .withdraw-type-item {
+//     &.active {
+//       background: #ffffff0d;
+//       border: 1px solid #48a7ff;
+//       filter: none;
+//       color: #ffffff;
+//       .type-name {
+//         color: #ffffff;
+//       }
+//     }
+//   }
+// }
+.balance-withdrawal-container {
+  background: #ffffff0d;
+  display: flex;
+  padding: 10px;
+  width: 340px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  .balance,
+  .withdrawable {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    .amt {
+      font-family: "Poppins Bold";
+      font-size: 24px;
+      line-height: 24px;
+    }
+    .words {
+      font-family: "Poppins Medium";
+      font-size: 12px;
+      color: #9f9f9f;
+    }
+  }
+  .balance {
+    border-right: 1px solid #ffffff0d;
+  }
+}
+.bot-wrapper {
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  .info {
+    background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    width: 360px;
+    border-radius: 50px;
+    .desc {
+      &:first-child {
         color: #ffffff;
       }
+      color: #8c968f;
     }
   }
 }
 .account-container {
+  .confirm-btn {
+    width: 360px;
+    margin-top: 10px;
+  }
   .account-content-wrapper {
     .withdrawalmethod {
       overflow-x: auto;
-      padding: 15px 5px;
+      // padding: 15px 5px;
     }
     .withdrawal {
       ul {
@@ -372,30 +449,51 @@ export default defineComponent({
       }
     }
     .withdraw-type-item {
-      width: 100px;
+      background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+      background-size: cover;
+      filter: grayscale(1);
+      height: 30px;
+      width: 160px;
+      height: 80px;
+      color: #ffffff;
+      border-radius: 6px;
+      justify-content: flex-start;
+      align-items: flex-end;
       margin-right: 10px;
-      padding: 15px;
-      border-radius: 12px;
-
-      position: relative;
-      cursor: pointer;
       img {
-        width: 100%;
-        border-radius: 12px;
+        width: 40px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
       }
       &.active {
-        background: rgba(7, 91, 232, 0.1019607843);
-        box-shadow: none;
-        filter: drop-shadow(0px 0px 3px #ffffff);
+        // background: rgba(255,255,255,.3);
+        background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+        background-size: cover;
+        // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+        //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+        border: 1px solid #b81212;
+        filter: none;
+        color: #ffffff;
+        position: relative;
+        &:after {
+          content: "";
+          background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
+          background-size: contain;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: -1px;
+          bottom: -1px;
+        }
         .type-name {
-          color: #075be8;
-          font-family: Inter Bold;
+          color: #ffffff;
         }
       }
       .type-name {
-        line-height: 15px;
-        margin: 10px 0 0;
-        overflow-wrap: break-word;
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
       }
       .promo {
         position: absolute;
@@ -504,12 +602,13 @@ export default defineComponent({
 }
 :deep(.ant-input-affix-wrapper) {
   padding: 8px 16px;
-  max-width: 250px;
+  max-width: 360px;
   .ant-input {
     border: 0;
   }
-  .ant-input-suffix {
-    color: currentColor;
+  .ant-input-suffix,
+  .ant-input-prefix {
+    color: #8c968f;
   }
 }
 

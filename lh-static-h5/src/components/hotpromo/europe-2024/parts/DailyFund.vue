@@ -13,7 +13,7 @@
         </div>
         <div class="fund-contest-time-left">
           <img src="../images/daily-fund-icon-time.svg" />
-          <span class="fund-contest-time-left__title">比赛剩余</span>
+          <span class="fund-contest-time-left__title">{{ matchStartAt }}</span>
           <span class="fund-contest-time-left__content" v-if="remainingTime">
             {{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}
           </span>
@@ -214,8 +214,9 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import moment from "moment";
+import {useLocalStorage} from "@vueuse/core"
 
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const $q = useQuasar();
 const store = userStore();
@@ -253,7 +254,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({
@@ -269,11 +270,17 @@ const ongoingMatches = ref();
 const remainingTime = ref();
 const teams = ref([]);
 
+const matchStartAt = ref("比赛剩余")
 const getMatchPoints = () => {
   eventapi.get("/uefa/matchPoints").then((res) => {
     if (res.code === 0) {
       matchPoints.value = res.data;
-      remainingTime.value = calculateRemainingTime(res.data.endDate);
+      if(moment().format("YYYY-MM-DD HH:mm") <= "2024-06-15 03:00"){
+        remainingTime.value = calculateRemainingTime("2024-06-15 02:59:59");
+        matchStartAt.value = "比赛倒计时"
+      }else{
+        remainingTime.value = calculateRemainingTime(res.data.endDate);
+      }
     } else {
       $q.notify({
         color: "negative",

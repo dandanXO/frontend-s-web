@@ -22,7 +22,7 @@
 
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Bank Account</div>
+        <div class="title">Choose Virtual Account</div>
       </div>
 
       <div class="mid-wrapper">
@@ -38,8 +38,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please Select A Bank Card']"
-              lazy-rules
+              :rules="[(val) => !!val || 'Please Select A Virtual Account']"
               hide-bottom-space
             >
               <template v-slot:option="scope">
@@ -60,6 +59,7 @@
                   </q-item-section>
                 </q-item>
               </template>
+
               <template v-slot:selected-item="scope">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img
@@ -69,7 +69,9 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    Acc No. {{ scope.opt.cardNumber }}
+                    Acc No. ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    }}
                   </q-item-label>
                   <q-item-label>
                     IFSC
@@ -192,19 +194,23 @@
                   (val) => !!val || 'Please Enter Withdraw Amount',
                   (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
                   (val) =>
-                    val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                    val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
                   (val) =>
                     (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                       val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
                     `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
                 ]"
-                lazy-rules
                 hide-bottom-space
               ></q-input>
             </template>
           </InputField>
         </template>
       </InputRowGrid>
+
+      <!-- <pre>withdrawInfo.amount{{ withdrawInfo.amount }}</pre> -->
+      <!-- <pre>withdrawInfo.withdrawCode{{ withdrawInfo.withdrawCode }}</pre> -->
+      <!-- <pre>].code{{ withdrawalMethods[withdrawalDialogTab].bankCode }}</pre> -->
+      <!-- <pre>{{ withdrawalMethods }}</pre> -->
 
       <!--
       <div class="top-wrapper">
@@ -238,6 +244,8 @@
       </div>
       -->
 
+      <!-- <pre>withdrawalMethods[withdrawalDialogTab]{{ withdrawalMethods[withdrawalDialogTab] }}</pre> -->
+
       <div class="bot-wrapper">
         <div class="info">
           <div class="desc-wrapper">
@@ -249,7 +257,9 @@
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
@@ -327,7 +337,7 @@ const refreshBalance = () => {
 
 const isLoadingWithdrawalMethod = ref(false);
 const withdrawalDialogTab = ref("EASYPAISA");
-const withdrawalMethods = reactive({ BANK: {}, UPI: {}, EASYPAISA: {} });
+const withdrawalMethods = reactive({ BANK: {}, UPI: {}, EASYPAISA: {}, JAZZCASH: {} });
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;
@@ -418,7 +428,8 @@ const withdrawInfo = reactive({
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: ""
+  cardAddress: "",
+  bankCode: ""
 });
 const bankCardField = reactive({
   bankId: undefined,
@@ -428,7 +439,7 @@ const bankCardField = reactive({
   withdrawCode: "",
   amount: ""
 });
-watch(withdrawalDialogTab, () => {
+watch(onCardChanged, withdrawalDialogTab, () => {
   withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
 
   withdrawInfo.cardId = null;
@@ -437,6 +448,7 @@ watch(withdrawalDialogTab, () => {
   withdrawReadOnlyInfo.cardAccount = "";
   withdrawReadOnlyInfo.cardNumber = "";
   withdrawReadOnlyInfo.cardAddress = "";
+  // withdrawReadOnlyInfo.bankCode = "";
 });
 
 const onCardChanged = () => {
@@ -445,6 +457,8 @@ const onCardChanged = () => {
       withdrawReadOnlyInfo.cardAccount = e.cardAccount;
       withdrawReadOnlyInfo.cardNumber = e.cardNumber;
       withdrawReadOnlyInfo.cardAddress = e.cardAddress || "-";
+      withdrawReadOnlyInfo.bankCode = e.bankCode;
+      withdrawalDialogTab.value = e.bankCode;
     }
   });
 };
@@ -520,7 +534,6 @@ const submitWithdrawBank = async () => {
           // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
-
           emits("closeWithdraw");
         }
       })
@@ -602,16 +615,30 @@ const checkNewUser = () => {
   }
 };
 
+const checkBankcardEmpty = () => {
+  if (bankCardList.value.length === 0) {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: "Please add bank / virtual account for withdrawal",
+      icon: "report_problem"
+    });
+    router.push(`/account/bank`);
+  }
+};
+
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
+  // checkBankcardEmpty();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
+  // checkBankcardEmpty();
 });
 
 const isValidCardNumber = () => {

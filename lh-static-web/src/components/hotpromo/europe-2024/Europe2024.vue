@@ -1,7 +1,7 @@
 <template>
-    <div class="europe-2024-promo-period">
+<!--    <div class="europe-2024-promo-period">
       活动时间：2024/6/1 - 2024/7/15 23:59:59
-    </div>
+    </div>-->
     <div class="europe-container">
       <div class="tab-buttons">
         <button
@@ -31,8 +31,8 @@ import VenueFund from "@/components/hotpromo/europe-2024/parts/venuefund.vue"
 // import { ElMessage } from "element-plus";
 
 const tabs = ref([
-  { name: '欧洲杯赛程', content: ScheduleDisplay },
   { name: '欧洲杯庆赛礼', content: DoublingGold},
+  { name: '欧洲杯赛程', content: ScheduleDisplay },
   { name: '欧洲杯专属豪礼', content: DailyFund },
   // { name: '首投场馆助威金', content: VenueFund },
   { name: '欧洲杯进球红包雨', content: EuropeHongBaoYu },
@@ -66,7 +66,7 @@ function activateTab(index) {
   .europe-container {
     width: 100%;
     max-width: 1500px;
-    margin: 35px auto;
+    margin: 85px auto;
     .rule-title {
       text-align: center;
     }

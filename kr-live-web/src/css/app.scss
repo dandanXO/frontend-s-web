@@ -713,7 +713,7 @@ input:internal-autofill-selected {
 .form-item {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 
 .form-wrapper {
@@ -725,7 +725,7 @@ input:internal-autofill-selected {
   .form-template {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 20px;
+    grid-gap: 15px;
   }
 
   .action-buttons {

@@ -82,7 +82,9 @@
           <div class="title">*逆转奖金</div>
           <div class="content">赛事中先输一局，最终逆转取胜</div>
         </div>
-        <div class="lpl-summer-2024-example">例：档位奖金不累计，指定赛事场数投注额机多场馆有效投注额累计；</div>
+        <div class="lpl-summer-2024-example">
+          例：档位奖金不累计，若触发多个特殊事件按最高档位派发，指定赛事场数投注额按多场馆有效投注额累计。
+        </div>
         <div class="lpl-summer-2024-rule-title"></div>
         <div class="lpl-summer-2024-rule-content">
           <div class="item-content">
@@ -99,9 +101,7 @@
               <div class="item-icon"></div>
             </div>
             <div class="item-text">
-              2.活动期间，每场特殊事件判定标准为如下：
-              速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场LPL赛事第一局比赛为准；
+              2. 活动期间，每场特殊事件判定标准为如下：完胜奖金:赛制中零封对手；逆转奖金:赛事中先输一局，最终逆转取胜；
             </div>
           </div>
           <div class="item-content">
@@ -155,12 +155,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
@@ -296,7 +296,6 @@ onMounted(async () => {
 });
 </script>
 
-
 <style scoped lang="scss">
 .lpl-summer-2024 {
   width: 100%;
@@ -370,7 +369,7 @@ onMounted(async () => {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    margin-bottom: 29px;
+    margin-bottom: 10px;
   }
   .lpl-summer-2024-rule-title {
     width: 100%;
@@ -389,29 +388,28 @@ onMounted(async () => {
     justify-content: space-between;
     .lpl-summer-2024-game-team {
       width: 100%;
-      height: 184px;
+      height: 110px;
       background-image: url("../../../assets/promo/dy-lpl-summer-24/team-back.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      margin-bottom: 36px;
+      margin-bottom: 20px;
       .lpl-summer-2024-game-team-item {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         .lpl-summer-2024-game-team-icon {
-          width: 65px;
-          height: 65px;
+          width: 50px;
+          height: 50px;
         }
         .lpl-summer-2024-game-team-name {
           font-size: 16px;
           font-weight: 400;
           line-height: 24.82px;
           color: #fff;
-          margin-top: 16px;
         }
       }
 
@@ -421,15 +419,15 @@ onMounted(async () => {
         justify-content: center;
         flex-direction: column;
         .vs-icon {
-          width: 91px;
-          height: 91px;
+          width: 60px;
+          height: 60px;
           background-image: url("../../../assets/promo/dy-lpl-summer-24/vs.png");
           background-repeat: no-repeat;
           background-size: 100% 100%;
         }
         .vs-time {
           color: #aeafa2;
-          margin-top: 8px;
+          margin-top: 5px;
           font-size: 18px;
           font-weight: 400;
           line-height: 25.4px;
@@ -493,14 +491,14 @@ onMounted(async () => {
     line-height: 25.4px;
     color: #fdffe9;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 105px;
+    height: 50px;
     justify-content: flex-start;
     .title {
-      width: 40%;
+      width: 25%;
       height: 100%;
       background: linear-gradient(90deg, #ff4d00 0%, #ffc700 100%);
       display: flex;
@@ -511,8 +509,8 @@ onMounted(async () => {
       font-weight: 700;
     }
     .content {
-      width: 60%;
-      padding: 25px; 
+      width: 75%;
+      padding: 25px;
     }
   }
 
@@ -540,7 +538,7 @@ onMounted(async () => {
     gap: 10px;
     .item-content {
       display: flex;
-    align-items: flex-start;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
       font-size: 16px;
@@ -588,7 +586,7 @@ onMounted(async () => {
     color: #fdffe9;
     padding: 16px 24px;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
   }
   .lpl-summer-2024-table {
     width: 100%;
@@ -610,6 +608,9 @@ onMounted(async () => {
         th {
           border: 1px solid #ffdba633;
           background: #ffdba633 !important;
+          white-space: pre-wrap;
+          font-size: 14px;
+          line-height: 18px;
         }
       }
     }
@@ -687,7 +688,7 @@ onMounted(async () => {
     gap: 10px;
     .item-content {
       display: flex;
-    align-items: flex-start;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
       font-size: 16px;

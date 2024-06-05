@@ -82,7 +82,9 @@
           <div class="title">*逆转奖金</div>
           <div class="content">赛事中先输一局，最终逆转取胜</div>
         </div>
-        <div class="lpl-summer-2024-example">例：档位奖金不累计，指定赛事场数投注额机多场馆有效投注额累计；</div>
+        <div class="lpl-summer-2024-example">
+          例：档位奖金不累计，若触发多个特殊事件按最高档位派发，指定赛事场数投注额按多场馆有效投注额累计。
+        </div>
         <div class="lpl-summer-2024-rule-title"></div>
         <div class="lpl-summer-2024-rule-content">
           <div class="item-content">
@@ -94,9 +96,7 @@
           <div class="item-content">
             <div class="item-icon"></div>
             <div class="item-text">
-              2.活动期间，每场特殊事件判定标准为如下：
-              速战速决：第一局比赛中比赛时间≤30分钟；黄金持久：第一局比赛中比赛时间≥30分钟；
-              特殊事件以当日第一场LPL赛事第一局比赛为准；
+              2. 活动期间，每场特殊事件判定标准为如下：完胜奖金:赛制中零封对手；逆转奖金:赛事中先输一局，最终逆转取胜；
             </div>
           </div>
           <div class="item-content">
@@ -139,12 +139,12 @@
           <thead>
             <tr>
               <th rowspan="2" style="width: 25%">累计盈利</th>
-              <th colspan="3">特殊事件及返利彩金</th>
-            </tr>
-            <tr>
               <th style="width: 25%">累计投注≥1,000</th>
               <th style="width: 25%">累计投注≥10,000</th>
               <th style="width: 25%">累计投注≥50,000</th>
+            </tr>
+            <tr>
+              <th colspan="3">礼金额度</th>
             </tr>
           </thead>
           <tbody>
@@ -280,6 +280,7 @@ onMounted(async () => {
   position: relative;
   padding-top: 40px;
   padding-bottom: 80px;
+  background-color: #1d1d1e;
   .lpl-summer-2024-background-img {
     position: absolute;
     bottom: 0;
@@ -353,6 +354,7 @@ onMounted(async () => {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 27px;
+    gap: 40px;
     .lpl-summer-2024-game-team {
       width: 567px;
       height: 184px;

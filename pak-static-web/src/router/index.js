@@ -99,16 +99,15 @@ const routes = [
         name: "live-casino",
         component: () => import(/* webpackChunkName: "live-casino" */ "../views/games/LiveCasinoView.vue")
       },
-      // {
-      //   path: "sport",
-      //   name: "sport",
-      //   component: () =>
-      //     import(/* webpackChunkName: "sport" */ "../views/games/CMDView.vue"),
-      // },
+      {
+        path: "hot",
+        name: "hot",
+        component: () => import(/* webpackChunkName: "sport" */ "../views/games/HotGameView.vue")
+      },
       {
         path: "sport",
         name: "sport",
-        component: () => import(/* webpackChunkName: "sport" */ "../views/games/CMDView.vue")
+        component: () => import(/* webpackChunkName: "sport" */ "../views/games/SportView.vue")
       },
       {
         path: "cockfight",
@@ -120,16 +119,16 @@ const routes = [
         name: "e-sport",
         component: () => import(/* webpackChunkName: "esport" */ "../views/games/E-SportView.vue")
       },
-      {
-        path: "vip",
-        name: "vip",
-        component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
-      },
-      {
-        path: "affiliate",
-        name: "affiliate",
-        component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
-      },
+      // {
+      //   path: "vip",
+      //   name: "vip",
+      //   component: () => import(/* webpackChunkName: "poker" */ "../views/games/VIPView.vue")
+      // },
+      // {
+      //   path: "affiliate",
+      //   name: "affiliate",
+      //   component: () => import(/* webpackChunkName: "poker" */ "../views/AffiliateView.vue")
+      // },
       {
         path: "getapp",
         name: "getapp",
@@ -166,6 +165,12 @@ const routes = [
         path: "app-tutorial",
         name: "appTutorial",
         component: () => import(/* webpackChunkName: "agentRegGuide" */ "../views/AppTutorial.vue")
+      },
+      {
+        path: "share",
+        name: "share",
+        component: () => import(/* webpackChunkName: "share" */ "../views/account/ShareView.vue"),
+        meta: { requiresAuth: true }
       }
     ]
   },
@@ -212,7 +217,9 @@ router.beforeEach((to, _, next) => {
     }
   } else {
     if (to.meta.requiresAuth) {
-      next(`/login?redirect=${to.path}`);
+      // next(`/login?redirect=${to.path}`);
+      store.openAccountModal();
+      return false;
     } else {
       next();
     }

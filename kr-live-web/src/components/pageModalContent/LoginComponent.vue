@@ -3,8 +3,8 @@
     <q-form class="login-form" @keypress.enter="onSubmit">
       <div class="form-item">
         <label>{{ $t('lang.login_account') }}</label>
-        <q-input dense ref="loginNameRef" outlined clearable v-model="loginForm.loginName"
-          lazy-rules :rules="[
+        <q-input :disable="isLoading" :loading="isLoading" dense ref="loginNameRef" outlined clearable
+          v-model="loginForm.loginName" lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
             (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
@@ -13,8 +13,8 @@
 
       <div class="form-item">
         <label>{{ $t('lang.login_password') }}</label>
-        <q-input dense ref="pwdRef" outlined clearable v-model="loginForm.password"
-          :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
+        <q-input :disable="isLoading" :loading="isLoading" dense ref="pwdRef" outlined clearable
+          v-model="loginForm.password" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
           ]">
@@ -27,8 +27,8 @@
       <div class="form-item">
         <label>{{ $t('lang.login_captcha') }}</label>
         <div class="captcha-code">
-          <q-input dense ref="captchaRef" outlined clearable class="captcha-code-input"
-            v-model="loginForm.captchaCode" lazy-rules
+          <q-input :disable="isLoading" :loading="isLoading" dense ref="captchaRef" outlined clearable
+            class="captcha-code-input" v-model="loginForm.captchaCode" lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
           <div class="captcha-img-wrapper">
             <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
@@ -38,139 +38,115 @@
       </div>
 
       <div class="action-buttons">
-        <div @click="onSubmit" class="primary-button yellow login-submit-btn">
-          {{ isLoading ? $t('lang.loading') : $t('lang.login_submit') }}
-        </div>
-        <router-link to="/?page=register">
-          <div class="primary-button blue login-register-btn">
-            {{ isLoading ? $t('lang.loading') : $t('lang.login_register') }}
-          </div>
-        </router-link>
+        <q-btn :disable="isLoading" @click="onSubmit" class="primary-button yellow login-submit-btn">
+          {{ $t('lang.login_submit') }}
+        </q-btn>
+        <q-btn :disable="isLoading" class="primary-button blue login-register-btn" to="/?page=register">
+          {{ $t('lang.login_register') }}
+        </q-btn>
       </div>
     </q-form>
+
+    <q-inner-loading :showing="isLoading">
+      <q-spinner-hourglass size="50px" color="blue" />
+    </q-inner-loading>
   </div>
 </template>
 
-<script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+<script setup id="LoginPage">
+import { ref, reactive, onMounted } from "vue";
 import { api } from "boot/axios";
-import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
+import { errorNotify, successNotify } from "src/boot/utils";
+import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-export default defineComponent({
-  name: "LoginPage",
-  emits: ["closeModal"],
-  setup(_props) {
-    const store = userStore();
-    const router = useRouter();
-    const $q = useQuasar();
+const store = userStore();
+const router = useRouter();
+const { t: $t } = useI18n();
 
-    const loginNameRef = ref();
-    const pwdRef = ref();
-    const captchaRef = ref();
-    const isLoading = ref(false);
-    const captchaLoading = ref(false);
+const loginNameRef = ref();
+const pwdRef = ref();
+const captchaRef = ref();
+const isLoading = ref(false);
+const captchaLoading = ref(false);
 
-    const loginForm = reactive({
-      loginName: "",
-      password: "",
-      captchaCode: "",
-      codeId: ""
-    });
+const loginForm = reactive({
+  loginName: "",
+  password: "",
+  captchaCode: "",
+  codeId: ""
+});
+const verificationImg = ref("");
+const isPwd = ref(true);
 
-    onMounted(() => {
-      getCode();
-    });
-
-    const getCode = () => {
-      captchaLoading.value = true;
-
-      api
-        .get("/member/verificationEasyCode")
-        .then((res) => {
-          const response = res.data;
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-            loginForm.captchaCode = '';
-          }
-
-          captchaLoading.value = false;
-        })
-        .catch((e) => {
-          captchaLoading.value = false;
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: res.data.message,
-            icon: "report_problem"
-          });
-        }).finally(() => {
-          captchaLoading.value = false;
-        });
-    };
-
-    const verificationImg = ref("");
-
-
-    const onSubmit = () => {
-      (async () => {
-        loginNameRef.value.validate();
-        pwdRef.value.validate();
-        captchaRef.value.validate();
-
-        if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
-        } else {
-          isLoading.value = true;
-
-          store
-            .memberLogin({
-              loginName: loginForm.loginName.trim(),
-              password: loginForm.password,
-              sid: store.visitorId,
-              captchaCode: loginForm.captchaCode,
-              codeId: loginForm.codeId
-            })
-            .then(() => {
-              $q.notify({
-                color: "positive",
-                position: "top",
-                message: "성공적으로 로그인하세요",
-                icon: "check_circle_outline"
-              });
-
-              router.push("/");
-
-              setTimeout(() => {
-                // location.reload();
-              }, 1000);
-            })
-            .catch((error) => {
-              console.log(error);
-              getCode();
-              isLoading.value = false;
-            }).finally(() => {
-              isLoading.value = false;
-            });
-        }
-      })();
-    };
-
-    return {
-      loginForm,
-      loginNameRef,
-      pwdRef,
-      captchaRef,
-      verificationImg,
-      getCode,
-      onSubmit,
-      isPwd: ref(true),
-      isLoading,
-      captchaLoading
-    };
+onMounted(() => {
+  // prevent visiting Login form when logged in
+  if (store.hasToken()) {
+    router.push("/");
+  } else {
+    getCode();
   }
 });
+
+const getCode = () => {
+  captchaLoading.value = true;
+
+  api
+    .get("/member/verificationEasyCode")
+    .then((res) => {
+      const response = res.data;
+      if (response.code === 0) {
+        verificationImg.value = `data:image/png;base64,${response.data.img}`;
+        loginForm.codeId = response.data.id;
+        loginForm.captchaCode = '';
+      }
+
+      captchaLoading.value = false;
+    })
+    .catch((e) => {
+      captchaLoading.value = false;
+      errorNotify(res.data.message);
+    }).finally(() => {
+      captchaLoading.value = false;
+    });
+};
+
+
+
+const onSubmit = () => {
+  (async () => {
+    loginNameRef.value.validate();
+    pwdRef.value.validate();
+    captchaRef.value.validate();
+
+    if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
+    } else {
+      isLoading.value = true;
+
+      store
+        .memberLogin({
+          loginName: loginForm.loginName.trim(),
+          password: loginForm.password,
+          sid: store.visitorId,
+          captchaCode: loginForm.captchaCode,
+          codeId: loginForm.codeId
+        })
+        .then(() => {
+          successNotify($t('lang.login_success_msg'));
+          router.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          getCode();
+          isLoading.value = false;
+        }).finally(() => {
+          isLoading.value = false;
+        });
+    }
+  })();
+};
+
 </script>
 
 <style lang="scss" scoped>
@@ -178,17 +154,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   row-gap: 24px;
-
-  :deep(.q-field--filled.q-field--dark .q-field__control),
-  :deep(.q-field--filled.q-field--dark .q-field__control:before) {
-    width: 100%;
-    font-size: 14px;
-    border: 1px solid #48b5b5;
-    line-height: 40px;
-    color: #fff;
-    background: #252e43;
-    border-radius: 8px;
-  }
 
   .captcha-code {
     width: 100%;

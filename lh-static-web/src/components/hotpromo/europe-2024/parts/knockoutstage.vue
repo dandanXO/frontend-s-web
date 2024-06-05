@@ -15,12 +15,13 @@
       :style="{ top: date.top + 'px', left: date.left + 'px' }"
     >
       <!-- <span v-html="formatDate(date.matchTime)" />   -->
-      06月30日<br>
-00:00
+      <span v-if="date.matchTime" v-html="formatDate(date.matchTime)"></span>
+      <span v-else>待定中</span>
     </div>
     <div class="bracket-final">
       <span class="bracket-final__title">决赛</span>
-      <div class="bracket-final__date" v-html="formatDate(finalDate)"></div>
+      <div class="bracket-final__date" v-if="finalDate" v-html="formatDate(finalDate)"></div>
+      <div class="bracket-final__date" v-else style="line-height: 56px;">待定中</div>
     </div>
   </div>
 </template>
@@ -29,7 +30,8 @@ import { ref, onMounted } from "vue";
 import FlagImg from "@/components/hotpromo/europe-2024/images/flag.png";
 import BracketTeam from "./components/BracketTeam.vue";
 import { euroMatchAll } from '@/api/promotion/eurocup';
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+import { useLocalStorage } from "@vueuse/core";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
 const pageLoading = ref(true);
 const finalDate = ref(null);
 const bracketTeamList = ref([
@@ -152,7 +154,6 @@ const formatDate = (matchTime) => {
       return `${month}月${day}日<br>${hour}:${minute}`;
     }
 
-populateTeams();
 onMounted(() => {
   populateTeams()
 })

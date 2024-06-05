@@ -61,7 +61,8 @@
             selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
           "
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
           }"
         >
           <div
@@ -89,11 +90,21 @@
           :class="{
             isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
-              selectedPromo.promoCode === 'dy2-eurocup-hongbao'
+              selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
+              selectedPromo.promoCode === 'dy2-lpl-summer24' ||
+              selectedPromo.promoCode === 'dy-duanwujie24' ||
+              selectedPromo.promoCode === 'dy2-eurocup-manual'
+          }"
+          :style="{
+            backgroundImage:
+              selectedPromo?.desktopImgBackgroundUrl
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : 'none'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -645,6 +656,17 @@ export default defineComponent({
             height: 220px;
           }
         }
+
+        &.isEurocupManualBanner {
+          max-width: 100%;
+
+          .promo-bg {
+            height: 500px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
+        }
       }
 
       .inner {
@@ -654,6 +676,12 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.isEurocupManual {
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 100% 100%;
+        }
 
         &.isMSI {
           padding: 0px 0 0px;
@@ -671,6 +699,10 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
           }
         }
         &.isCS {

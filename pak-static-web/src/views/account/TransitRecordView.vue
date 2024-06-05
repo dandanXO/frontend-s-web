@@ -4,9 +4,31 @@
       <span class="menu-title">Transaction Record</span>
     </div>
     <div class="account-content transit">
-      <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="searchRecord">
+      <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="handleFilterChange">
         <a-tab-pane key="deposit" tab="Deposit">
-          <div>
+          <a-select
+            v-model:value="selectedDateRange.deposit"
+            style="width: 124px"
+            :options="dateRangeOptions"
+            @change="handleFilterChange"
+          />
+          <div class="finance-record-wrapper deposit">
+            <div v-for="(record, index) in dataState.deposit" :key="index" class="finance-record-item">
+              <span class="finance-record-item__title">{{ record.serialNumber }}</span>
+              <span class="finance-record-item__status" :class="record.status">
+                <!-- TODO: check status code -->
+                <template v-if="record.status === 'PENDING'">Pending</template>
+                <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
+                <template v-else-if="record.status === 'REJECTED'">Rejected</template>
+                <template v-else-if="record.status === 'CLOSED'">Closed</template>
+                <template v-else-if="record.status === 'LOSS'">Loss</template>
+                <template v-else>{{ record.status }}</template>
+              </span>
+              <span class="finance-record-item__date">{{ moment(record.depositDate).format("MM/DD/YYYY") }}</span>
+              <span class="finance-record-item__amount">+{{ record.depositAmount.toFixed(2) }}</span>
+            </div>
+          </div>
+          <!-- <div>
             <a-form layout="inline" :model="searchForm.deposit">
               <div class="left">
                 <a-form-item label="Start">
@@ -52,9 +74,9 @@
                 <span>{{ getDepositStatus(text) }}</span>
               </template>
             </a-table>
-          </div>
+          </div> -->
         </a-tab-pane>
-        <a-tab-pane key="turnover" tab="Turnover">
+        <!-- <a-tab-pane key="turnover" tab="Turnover">
           <div>
             <a-form layout="inline" :model="searchForm.turnover">
               <div class="left">
@@ -97,9 +119,31 @@
               </template>
             </a-table>
           </div>
-        </a-tab-pane>
+        </a-tab-pane> -->
         <a-tab-pane key="withdraw" tab="Withdraw">
-          <div>
+          <a-select
+            v-model:value="selectedDateRange.withdraw"
+            style="width: 124px"
+            :options="dateRangeOptions"
+            @change="handleFilterChange"
+          />
+          <div class="finance-record-wrapper withdraw">
+            <div v-for="(record, index) in dataState.withdraw" :key="index" class="finance-record-item">
+              <span class="finance-record-item__title">{{ record.serialNumber }}</span>
+              <span class="finance-record-item__status" :class="record.status">
+                <!-- TODO: check status code -->
+                <template v-if="record.status === 'PENDING'">Pending</template>
+                <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
+                <template v-else-if="record.status === 'REJECTED'">Rejected</template>
+                <template v-else-if="record.status === 'CLOSED'">Closed</template>
+                <template v-else-if="record.status === 'LOSS'">Loss</template>
+                <template v-else>{{ record.status }}</template>
+              </span>
+              <span class="finance-record-item__date">{{ moment(record.withdrawDate).format("MM/DD/YYYY") }}</span>
+              <span class="finance-record-item__amount">-{{ record.withdrawAmount.toFixed(2) }}</span>
+            </div>
+          </div>
+          <!-- <div>
             <a-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
                 <a-form-item label="Start">
@@ -146,7 +190,7 @@
                 <span>{{ getWithdrawStatus(text) }}</span>
               </template>
             </a-table>
-          </div>
+          </div> -->
         </a-tab-pane>
         <!-- <a-tab-pane key="transfer" tab="โอน">
           <div>
@@ -211,7 +255,7 @@
             </a-table>
           </div>
         </a-tab-pane> -->
-        <a-tab-pane key="rebates" tab="Rebates">
+        <!-- <a-tab-pane key="rebates" tab="Rebates">
           <div>
             <a-form layout="inline" :model="searchForm.rebates">
               <div class="left">
@@ -356,7 +400,7 @@
               </template>
             </a-table>
           </div>
-        </a-tab-pane>
+        </a-tab-pane> -->
       </a-tabs>
 
       <a-modal v-model:visible="betRecordDialog" width="90%" :mask-closable="false" :closable="true" :footer="null">
@@ -411,7 +455,7 @@
             <a-button
               color="#3bafda"
               class="common-btn"
-              style="margin-left: 120px; width: unset;"
+              style="margin-left: 120px; width: unset"
               :loading="loadingBtn"
               @click="submitReminder()"
             >
@@ -424,15 +468,30 @@
   </div>
 </template>
 
-<script lang="js">
-import { defineComponent, onMounted, reactive, ref } from "vue";
-import { loadRecords, gameBetRecordTotal, saveFinanceFeedback, financeFeedbackList, getVerifyingFeedbackCount } from "@/api/personal/personal";
+<script setup>
+import { onMounted, reactive, ref } from "vue";
+import {
+  loadRecords,
+  gameBetRecordTotal,
+  saveFinanceFeedback,
+  financeFeedbackList,
+  getVerifyingFeedbackCount
+} from "@/api/personal/personal";
 import moment from "moment";
 import { getPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
-import FileUpload from "@/components/FileUpload.vue"
+import FileUpload from "@/components/FileUpload.vue";
 import { message } from "ant-design-vue";
 
+const dateRangeOptions = ref([
+  { value: "1d", label: "1 Days" },
+  { value: "3d", label: "3 Days" },
+  { value: "7d", label: "7 Days" }
+]);
+const selectedDateRange = ref({
+  deposit: "1d",
+  withdraw: "1d"
+});
 const loadingBtn = ref(false);
 const store = userStore();
 const uploadFileRef = ref();
@@ -441,7 +500,7 @@ const reminderForm = reactive({});
 const totalBetRecord = reactive({
   totalBet: 0,
   totalPayout: 0
-})
+});
 const searchForm = reactive({
   turnover: {
     startDate: "",
@@ -526,7 +585,7 @@ const tableColumns = {
     },
     {
       title: "Payment Type",
-      dataIndex: "paymentType",
+      dataIndex: "paymentType"
     },
     {
       title: "Deposit Date",
@@ -660,7 +719,7 @@ const tableColumns = {
     {
       title: "Game type",
       dataIndex: "gameType"
-    },
+    }
     // {
     //   title: "เวลาเดิมพัน",
     //   dataIndex: "betTime",
@@ -731,7 +790,7 @@ const tableColumns = {
     {
       title: "Result",
       dataIndex: "result"
-    },
+    }
     // {
     //   title: "Bet ID",
     //   dataIndex: "betId"
@@ -790,11 +849,11 @@ const tableColumns = {
   reminderRecord: [
     {
       title: "Order No.",
-      dataIndex: 'orderNo'
+      dataIndex: "orderNo"
     },
     {
       title: "Finance Remark",
-      dataIndex: 'financeRemark'
+      dataIndex: "financeRemark"
     },
     {
       title: "Feedback Time",
@@ -818,274 +877,344 @@ const betPagination = reactive({
   total: 0
 });
 
-export default defineComponent({
-  name: "TransitRecordView",
-  components: {
-    FileUpload
-  },
-  setup() {
-    const reminderDialog = ref(false);
-    const openReminder = (record) => {
-      getVerifyingFeedbackCount().then((res) => {
-        if (res.code === 0) {
-          if (res.data < 3) {
-            reminderDialog.value = true
-            reminderForm.orderNo = record.serialNumber
-            reminderForm.photos = null
-            reminderForm.memberRemark = null
-            if (recordActive.value === 'deposit') {
-              reminderForm.type = 1
-              reminderForm.recordTime = moment(record.depositDate).format('YYYY-MM-DD HH:mm:ss')
-            } else if (recordActive.value === 'withdraw') {
-              reminderForm.type = 2
-              reminderForm.recordTime = moment(record.withdrawDate).format('YYYY-MM-DD HH:mm:ss')
-            }
-          } else {
-            message.error('There is an existing reminder')
-          }
+const reminderDialog = ref(false);
+const openReminder = (record) => {
+  getVerifyingFeedbackCount().then((res) => {
+    if (res.code === 0) {
+      if (res.data < 3) {
+        reminderDialog.value = true;
+        reminderForm.orderNo = record.serialNumber;
+        reminderForm.photos = null;
+        reminderForm.memberRemark = null;
+        if (recordActive.value === "deposit") {
+          reminderForm.type = 1;
+          reminderForm.recordTime = moment(record.depositDate).format("YYYY-MM-DD HH:mm:ss");
+        } else if (recordActive.value === "withdraw") {
+          reminderForm.type = 2;
+          reminderForm.recordTime = moment(record.withdrawDate).format("YYYY-MM-DD HH:mm:ss");
         }
-      })
-    }
-    const submitReminder = () => {
-      loadingBtn.value = true;
-      if (!reminderForm.photos) {
-        loadingBtn.value = false;
-        message.error(
-            `Please select Image`
-        );
       } else {
-        saveFinanceFeedback(reminderForm).then((res) => {
-          loadingBtn.value = false;
-          if (res.code === 0) {
-            reminderDialog.value = false;
-            reminderForm.value = {}
-            uploadFileRef.value.clear()
-            message.success("Success", 4);
-          }
-        });
+        message.error("There is an existing reminder");
       }
     }
-    const searchRecord = () => {
-      if (searchForm[recordActive.value].startDate === "" || searchForm[recordActive.value].startDate === null || searchForm[recordActive.value].endDate === "" || searchForm[recordActive.value].endDate === null) {
-        message.error('Please fill in the date.')
-        return
+  });
+};
+const submitReminder = () => {
+  loadingBtn.value = true;
+  if (!reminderForm.photos) {
+    loadingBtn.value = false;
+    message.error(`Please select Image`);
+  } else {
+    saveFinanceFeedback(reminderForm).then((res) => {
+      loadingBtn.value = false;
+      if (res.code === 0) {
+        reminderDialog.value = false;
+        reminderForm.value = {};
+        uploadFileRef.value.clear();
+        message.success("Success", 4);
       }
-      loading.value = true;
-      if (recordActive.value === 'gameBetRecord') {
-        getPlatList();
+    });
+  }
+};
+const searchRecord = () => {
+  if (
+    searchForm[recordActive.value].startDate === "" ||
+    searchForm[recordActive.value].startDate === null ||
+    searchForm[recordActive.value].endDate === "" ||
+    searchForm[recordActive.value].endDate === null
+  ) {
+    message.error("Please fill in the date.");
+    return;
+  }
+  loading.value = true;
+  if (recordActive.value === "gameBetRecord") {
+    getPlatList();
+  }
+  if (recordActive.value === "reminderRecord") {
+    financeFeedbackList(searchForm[recordActive.value]).then((response) => {
+      if (response.code === 0) {
+        pagination.total = response.data.total;
+        const dataSource = dataState[recordActive.value];
+        //clear array and then push new record
+        dataSource.splice(0);
+        dataSource.push(...response.data.records);
+        loading.value = false;
       }
-      if (recordActive.value === 'reminderRecord') {
-        financeFeedbackList(searchForm[recordActive.value]).then((response) => {
-          if(response.code === 0) {
+      return;
+    });
+  } else {
+    loadRecords(recordActive.value, searchForm[recordActive.value])
+      .then((response) => {
+        if (response.code === 0) {
           pagination.total = response.data.total;
           const dataSource = dataState[recordActive.value];
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
-          loading.value = false;
-          }
-          return
-        })
-      } else {
-        loadRecords(recordActive.value, searchForm[recordActive.value]).then((response) => {
-          if (response.code === 0) {
-            pagination.total = response.data.total;
-            const dataSource = dataState[recordActive.value];
-            //clear array and then push new record
-            dataSource.splice(0);
-            dataSource.push(...response.data.records);
-          }
-        }).catch((error) => {
-          console.log("error", error);
-        }).then(() => {
-          loading.value = false;
-        });
-      }
-    };
-    const recordPage = (pagination) => {
-      searchForm[recordActive.value].current = pagination.current;
-      searchRecord();
-    };
-    const recordBetPage = (pagination) => {
-      searchForm.betRecord.current = pagination.current
-      betDetails(selectedBetRecord);
-    }
-    const chgDate = (val) => {
-      var gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
-      var oldDate = new Date(gapDate);
-      var newDate = {
-        Y: oldDate.getFullYear() + "-",
-        M: (oldDate.getMonth() + 1) < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : (oldDate.getMonth() + 1 + "-"),
-        D: (oldDate.getDate()) < 10 ? "0" + (oldDate.getDate() + "") : (oldDate.getDate() + "")
-      };
-      var useDate = newDate.Y + newDate.M + newDate.D;
-      return useDate;
-    };
-    const getTime = () => {
-      ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function(v) {
-        if (v in searchForm) {
-          searchForm[v].startDate = chgDate(7);
-          searchForm[v].endDate = chgDate(0);
-          if(v === "gameBetRecord") {
-            // 结束时间如果不跟开始时间一个月，则从当月1号开始
-            if(moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
-              searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
-            }
-          }
         }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      })
+      .then(() => {
+        loading.value = false;
       });
-      searchRecord();
-    };
-    onMounted(() => {
-      getTime();
-    });
-    const platformsList = ref([])
-    const getPlatList = () => {
-      getPlatformList().then((ret) => {
-        platformsList.value = ret
-      })
-
-      const obj = {
-        memberId: searchForm.gameBetRecord.memberId,
-        platform: searchForm.gameBetRecord.platform,
-        startDate: searchForm.gameBetRecord.startDate,
-        endDate: searchForm.gameBetRecord.endDate,
-      }
-      gameBetRecordTotal(obj).then((ret) => {
-        if (ret.code === 0) {
-          totalBetRecord.totalBet = ret.data.totalBet
-          totalBetRecord.totalPayout = ret.data.totalPayout
-        }
-      })
-
-    };
-    const clearItems = (done) => {
-      uploadFileRef.value.clear();
-      done()
-    }
-    const selectedBetRecord = ref({})
-    const getTurnoverType = (turnoverType) => {
-      if (!turnoverType) {
-        return ''
-      }
-      if (turnoverType === 'WITHDRAW_FAIL') {
-        return 'Fail Withdrawal' // Fail Withdrawal
-      } else if (turnoverType === 'WITHDRAW') {
-        return 'Withdraw' // Withdraw
-      } else {
-        return turnoverType
-      }
-    }
-    const getWithdrawStatus = (withdrawStatus) => {
-      if (withdrawStatus === 'APPLY') {
-        return 'Applying' //Applying
-      } else if (withdrawStatus === 'FAIL') {
-        return 'Failed' // Failed
-      } else if (withdrawStatus === 'SUCCESS') {
-        return 'Success' // Success
-      } else if (withdrawStatus === 'STEP_1') {
-        return 'Under review' //Under review
-      } else if (withdrawStatus === 'STEP_2') {
-        return 'To be paid' // To be paid
-      }  else if (withdrawStatus === 'STEP_3') {
-        return 'Paying' // Payment on going
-      }  else if (withdrawStatus === 'STEP_4') {
-        return 'Automatic Payment' // Automatic Payment
-      }  else if (withdrawStatus === 'STEP_5') {
-        return 'Suspend' //Suspend
-      } else if (withdrawStatus === 'WAITING_CALLBACK') {
-        return 'Paying' //Paying
-      } else {
-        return withdrawStatus
-      }
-    };
-    const getDepositStatus = (depositStatus) => {
-      if (!depositStatus) {
-        return ''
-      }
-      if (depositStatus === 'PENDING') {
-        return 'Pending' // Pending
-      } else if (depositStatus === 'SUCCESS') {
-        return 'Success' // Success
-      } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-        return 'Supplement Success' // Supplement Success
-      } else if (depositStatus === 'CLOSED') {
-        return 'Closed' // Closed
-      } else {
-        return depositStatus
-      }
-    }
-
-    const betRecordDialog = ref(false)
-    const betDetails = (record) => {
-      dataState.betRecord = []
-      selectedBetRecord.value = record
-      const obj = {
-        gameName: record.gameName,
-        platform: record.platform,
-        betTime: moment(record.betTime).format('yyyy-MM-DD'),
-        memberId: searchForm.betRecord.memberId,
-        current: searchForm.betRecord.current,
-        size: searchForm.betRecord.size,
-      }
-      loadRecords("betRecord", obj).then((response) => {
-        if (response.code === 0) {
-          betPagination.total = response.data.total;
-          betRecordDialog.value = true
-          // dataState.betRecord = response.data.records
-          dataState.betRecord.push(...response.data.records)
-        }
-      })
-    }
-    const getImageLink = (linkId) => {
-      reminderForm.photos = `${linkId}`
-    }
-
-    return {
-      recordActive,
-      searchForm,
-      dataState,
-      tableColumns,
-      searchRecord,
-      recordPage,
-      loading,
-      pagination,
-      getTime,
-      chgDate,
-      loadingBtn,
-      humanDatetime(ts) {
-        return moment(ts).format("MM/DD/yyyy HH:mm:ss");
-      },
-      checkType(ts) {
-        if (ts === 1) {
-          return 'Deposit'
-        } else {
-          return 'Withdraw'
-        }
-      },
-      getPlatList,
-      platformsList,
-      betDetails,
-      betRecordDialog,
-      recordBetPage,
-      betPagination,
-      totalBetRecord,
-      openReminder,
-      reminderDialog,
-      reminderForm,
-      submitReminder,
-      getImageLink,
-      uploadFileRef,
-      getTurnoverType,
-      getWithdrawStatus,
-      getDepositStatus,
-      clearItems
-    };
   }
-});
-</script>
+};
+const recordPage = (pagination) => {
+  searchForm[recordActive.value].current = pagination.current;
+  searchRecord();
+};
+const recordBetPage = (pagination) => {
+  searchForm.betRecord.current = pagination.current;
+  betDetails(selectedBetRecord);
+};
+const chgDate = (val) => {
+  var gapDate = new Date().getTime() - val * 24 * 60 * 60 * 1000;
+  var oldDate = new Date(gapDate);
+  var newDate = {
+    Y: oldDate.getFullYear() + "-",
+    M: oldDate.getMonth() + 1 < 10 ? "0" + (oldDate.getMonth() + 1 + "-") : oldDate.getMonth() + 1 + "-",
+    D: oldDate.getDate() < 10 ? "0" + (oldDate.getDate() + "") : oldDate.getDate() + ""
+  };
+  var useDate = newDate.Y + newDate.M + newDate.D;
+  return useDate;
+};
+const getTime = () => {
+  ["deposit", "rebates", "transfer", "turnover", "withdraw", "gameBetRecord", "reminderRecord"].forEach(function (v) {
+    if (v in searchForm) {
+      searchForm[v].startDate = chgDate(7);
+      searchForm[v].endDate = chgDate(0);
+      if (v === "gameBetRecord") {
+        // 结束时间如果不跟开始时间一个月，则从当月1号开始
+        if (moment(searchForm[v].startDate).format("YYYY-MM") !== moment(searchForm[v].endDate).format("YYYY-MM")) {
+          searchForm[v].startDate = moment(searchForm[v].endDate).format("YYYY-MM") + "-01";
+        }
+      }
+    }
+  });
+  searchRecord();
+};
 
+const handleFilterChange = () => {
+  const value = selectedDateRange.value[recordActive.value];
+  let startDate = new Date();
+  switch (value) {
+    case "1d":
+      break;
+    case "3d":
+      startDate.setDate(startDate.getDate() - 2);
+      break;
+    case "7d":
+      startDate.setDate(startDate.getDate() - 6);
+      break;
+  }
+  const params = {
+    startDate: moment(startDate).format("YYYY-MM-DD"),
+    endDate: moment(new Date()).format("YYYY-MM-DD")
+  };
+  loadRecords(recordActive.value, params).then((res) => console.log(res));
+};
+onMounted(() => {
+  handleFilterChange();
+});
+const platformsList = ref([]);
+const getPlatList = () => {
+  getPlatformList().then((ret) => {
+    platformsList.value = ret;
+  });
+
+  const obj = {
+    memberId: searchForm.gameBetRecord.memberId,
+    platform: searchForm.gameBetRecord.platform,
+    startDate: searchForm.gameBetRecord.startDate,
+    endDate: searchForm.gameBetRecord.endDate
+  };
+  gameBetRecordTotal(obj).then((ret) => {
+    if (ret.code === 0) {
+      totalBetRecord.totalBet = ret.data.totalBet;
+      totalBetRecord.totalPayout = ret.data.totalPayout;
+    }
+  });
+};
+const clearItems = (done) => {
+  uploadFileRef.value.clear();
+  done();
+};
+const selectedBetRecord = ref({});
+const getTurnoverType = (turnoverType) => {
+  if (!turnoverType) {
+    return "";
+  }
+  if (turnoverType === "WITHDRAW_FAIL") {
+    return "Fail Withdrawal"; // Fail Withdrawal
+  } else if (turnoverType === "WITHDRAW") {
+    return "Withdraw"; // Withdraw
+  } else {
+    return turnoverType;
+  }
+};
+const getWithdrawStatus = (withdrawStatus) => {
+  if (withdrawStatus === "APPLY") {
+    return "Applying"; //Applying
+  } else if (withdrawStatus === "FAIL") {
+    return "Failed"; // Failed
+  } else if (withdrawStatus === "SUCCESS") {
+    return "Success"; // Success
+  } else if (withdrawStatus === "STEP_1") {
+    return "Under review"; //Under review
+  } else if (withdrawStatus === "STEP_2") {
+    return "To be paid"; // To be paid
+  } else if (withdrawStatus === "STEP_3") {
+    return "Paying"; // Payment on going
+  } else if (withdrawStatus === "STEP_4") {
+    return "Automatic Payment"; // Automatic Payment
+  } else if (withdrawStatus === "STEP_5") {
+    return "Suspend"; //Suspend
+  } else if (withdrawStatus === "WAITING_CALLBACK") {
+    return "Paying"; //Paying
+  } else {
+    return withdrawStatus;
+  }
+};
+const getDepositStatus = (depositStatus) => {
+  if (!depositStatus) {
+    return "";
+  }
+  if (depositStatus === "PENDING") {
+    return "Pending"; // Pending
+  } else if (depositStatus === "SUCCESS") {
+    return "Success"; // Success
+  } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
+    return "Supplement Success"; // Supplement Success
+  } else if (depositStatus === "CLOSED") {
+    return "Closed"; // Closed
+  } else {
+    return depositStatus;
+  }
+};
+
+const betRecordDialog = ref(false);
+const betDetails = (record) => {
+  dataState.betRecord = [];
+  selectedBetRecord.value = record;
+  const obj = {
+    gameName: record.gameName,
+    platform: record.platform,
+    betTime: moment(record.betTime).format("yyyy-MM-DD"),
+    memberId: searchForm.betRecord.memberId,
+    current: searchForm.betRecord.current,
+    size: searchForm.betRecord.size
+  };
+  loadRecords("betRecord", obj).then((response) => {
+    if (response.code === 0) {
+      betPagination.total = response.data.total;
+      betRecordDialog.value = true;
+      // dataState.betRecord = response.data.records
+      dataState.betRecord.push(...response.data.records);
+    }
+  });
+};
+const getImageLink = (linkId) => {
+  reminderForm.photos = `${linkId}`;
+};
+
+const checkType = (ts) => {
+  if (ts === 1) {
+    return "Deposit";
+  } else {
+    return "Withdraw";
+  }
+};
+
+const humanDatetime = (ts) => {
+  return moment(ts).format("MM/DD/yyyy HH:mm:ss");
+};
+</script>
 <style scoped lang="scss">
+.account-content.transit {
+  margin: 0;
+  padding: 0;
+  .form-wrapped {
+    :deep(.ant-tabs-top-bar) {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+.finance-record-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 24px;
+  margin-top: 21px;
+
+  .finance-record-item {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 24px;
+    border-bottom: 3px solid #ffffff0d;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.0008em;
+    color: #ffffff;
+
+    .finance-record-item__title {
+    }
+
+    .finance-record-item__status {
+      padding: 7px 17px;
+      font-weight: 500;
+      white-space: nowrap;
+      &.PENDING {
+        background-color: #ff7a0033;
+        color: #ff7a00;
+      }
+      &.SUCCESS,
+      &.SUPPLEMENT_SUCCESS {
+        background-color: #00b90033;
+        color: #00b900;
+      }
+      &.CLOSED,
+      &.REJECTED,
+      &.LOSS {
+        background-color: #b8121233;
+        color: #b81212;
+      }
+    }
+
+    .finance-record-item__date {
+      color: #9a9a9a;
+    }
+
+    .finance-record-item__amount {
+      font-weight: 700;
+      font-size: 20px;
+      text-align: right;
+      color: #00b900;
+    }
+  }
+
+  &.deposit {
+    > div {
+      height: unset;
+    }
+    .finance-record-item__amount {
+      color: #00b900;
+    }
+  }
+
+  &.withdraw {
+    .finance-record-item__amount {
+      color: #b81212;
+    }
+  }
+}
+</style>
+<!-- <style scoped lang="scss">
 :deep(.ant-upload-list) {
   display: flex;
   justify-content: center;
@@ -1196,4 +1325,4 @@ export default defineComponent({
     }
   }
 }
-</style>
+</style> -->
