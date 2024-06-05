@@ -681,7 +681,7 @@ export default {
     totalBetMonth: "TỔNG CƯỢC TRONG THÁNG",
     vipProgram: "ƯU ĐÃI VIP",
     exclusivePromotions: "ƯU ĐÃI VÀ LỢI ÍCH ĐẶC QUYỀN",
-    "3timedeposit": "NẠP THÀNH CÔNG 03 LẦN TRONG THÁNG",
+    "3timedeposit": "NẠP THÀNH CÔNG 01 LẦN TRONG THÁNG",
     proceedToDeposit: "Tiếp Tục Nạp Tiền",
     claim: "Yêu Cầu",
     claimed: "Đã Yêu Cầu",
