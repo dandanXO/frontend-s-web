@@ -36,10 +36,15 @@ export function submitLuckyNumber(item) {
 }
 
 export function luckyNumberList(queryItems, memberId) {
+  var betweenDate = null;
+  if (queryItems.recordTimeStart && queryItems.recordTimeEnd) {
+    betweenDate = queryItems.recordTimeStart + "," + queryItems.recordTimeEnd;
+  }
+
   return server.EVENT.get(`/privi/selectedNumbers`, {
     params: {
       winStatus: queryItems.winStatus,
-      recordTime: queryItems.recordTime,
+      recordTimeBetween: betweenDate,
       memberId: memberId
     }
   });

@@ -446,7 +446,15 @@ export default defineComponent({
         onlyMeParam = "&memberId=" + user_id;
       }
 
-      var filterUrl = "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
+      if(filterDate){
+        var filterDateStart = moment(filterDate).format("YYYY-MM-DD 00:00:00");
+        var filterDateEnd =  moment(filterDate).format("YYYY-MM-DD 23:59:59");
+        var betweenDate= "recordTimeBetween=" + filterDateStart + "," + filterDateEnd;
+      }else{
+        var betweenDate = "";
+      }
+
+      var filterUrl = "/privi/selectedNumbers?" + betweenDate + onlyMeParam;
 
       // console.log(filterDate);
       eventapi
