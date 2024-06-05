@@ -226,7 +226,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, onActivated } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
@@ -369,19 +369,11 @@ const loadBankCards = () => {
       $q.notify({
         color: "negative",
         position: "top",
-        message: "请输入您的真实姓名",
+        message: "Please Complete your KYC.",
         icon: "report_problem"
       });
-      router.push("/account/personal");
-    } else if (!store.phone) {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "请输入您的电话号码",
-        icon: "report_problem"
-      });
-      router.push("/account/verifyTelephone");
-    } else {
+      router.push("/account/profile");
+    }  else {
       api
         .get("/session/withdraw/card")
         .then((res) => {
@@ -453,7 +445,7 @@ const handleEnterKey = () => {
   }
 };
 
-onMounted(() => {
+onActivated(() => {
   loadBankCards();
 });
 </script>
