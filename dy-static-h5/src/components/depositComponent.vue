@@ -99,6 +99,18 @@
             {{ store.currency.value }}
           </span>
         </div>
+
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
+          <label class="label">预计到账</label>
+          <span class="text-positive" style="font-size: 16px; font-weight: 600">
+            {{
+              calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                ? "0.00"
+                : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+            }}
+            {{ store.currency.value }}
+          </span>
+        </div>
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
