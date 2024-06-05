@@ -80,6 +80,7 @@
         <el-form-item :label="t('fields.withdrawPlatformName')" prop="withdrawId">
           <el-select
             clearable
+            filterable
             v-model="form.withdrawId"
             size="small"
             :placeholder="t('fields.withdrawPlatformName')"
