@@ -104,16 +104,21 @@
             </div>
           </el-space>
 
-          <el-form-item
-            v-if="isUSDT && activeMethod.currencyRate"
-            class="helptxt"
-            label="实时汇率"
-          >
+          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="实时汇率">
+            <span style="color: #17cd27">1.00 USDT ≈ {{ activeMethod.currencyRate }} {{ store.currency.label }}</span>
+          </el-form-item>
+
+          <el-form-item v-if="isUSDT && activeMethod.currencyRate" class="helptxt" label="预计到账">
             <span style="color: #17cd27">
-              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
               {{ store.currency.label }}
             </span>
           </el-form-item>
+          
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
             label="银行"
