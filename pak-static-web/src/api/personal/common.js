@@ -9,5 +9,5 @@ export function getAnnouncement() {
 }
 
 export function getAppDownload() {
-  return server.REST.get('/config/appDownloadUrl');
+  return server.REST.get("/config/appDownloadUrl");
 }

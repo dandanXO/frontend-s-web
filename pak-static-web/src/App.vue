@@ -49,6 +49,8 @@ export default defineComponent({
   font-family: Poppins Regular, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  max-width: 1920px;
+  margin: auto;
 }
 .component-fade-enter-active,
 .component-fade-leave-active {

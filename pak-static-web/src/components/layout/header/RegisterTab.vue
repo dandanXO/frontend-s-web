@@ -57,7 +57,7 @@
       <div class="privacy-agreement">
         <a-checkbox v-model:checked="agreePrivacy">
           {{ $t("layout.header.accountModal.register.privacyAgreement.label") }}
-          <router-link class="pwd-tip" to="/">
+          <router-link class="pwd-tip" to="">
             {{ $t("layout.header.accountModal.register.privacyAgreement.link") }}
           </router-link>
         </a-checkbox>
@@ -79,7 +79,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useRouter } from "vue-router";
 import InvitationIcon from "@/assets/images/layout/header/invitation-icon.svg";
 import { register } from "@/api/index/login";
-import { ElMessage } from "element-plus"
+import { ElMessage } from "element-plus";
 
 const emit = defineEmits(["close-modal"]);
 
@@ -104,24 +104,25 @@ const registerFormRules = ref({
 });
 
 const onSubmit = () => {
-  formRef.value.validate().then(() => {
-    
-        register(registerForm.value)
-          .then((response) => {
-            const regResult = response.code;
-            if (regResult === 0) {
-              loadingRegister.value = false;
-              ElMessage.success("Successfully Registered");
-              store.autoLogin(response.data);
-              emit("close-modal");
-            }
-          })
-          .catch((error) => {
-            console.log("error", error);
-            // getCode()
+  formRef.value
+    .validate()
+    .then(() => {
+      register(registerForm.value)
+        .then((response) => {
+          const regResult = response.code;
+          if (regResult === 0) {
             loadingRegister.value = false;
-          });
-  })
+            ElMessage.success("Successfully Registered");
+            store.autoLogin(response.data);
+            emit("close-modal");
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+          // getCode()
+          loadingRegister.value = false;
+        });
+    })
     .catch((error) => {
       console.log("error", error);
     });

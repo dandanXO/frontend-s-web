@@ -3,18 +3,21 @@
     <span class="menu-title">Message</span>
   </div>
   <div v-if="!isReadingMail" class="mailbox-mail-list">
-    <div v-for="(mail, index) in mailboxState.mailboxList.inbox.list" :key="index" class="mailbox-mail-item">
-      <h3 class="mailbox-mail-item__title">{{ mail.title }}</h3>
-      <div class="mailbox-mail-item__preview">{{ mail.content }}</div>
-      <div class="mailbox-mail-item__inner-wrapper">
-        <span class="mailbox-mail-item__date">{{ moment(mail.sendTime).format("MM/DD/YYYY") }}</span>
-        <button class="mailbox-mail-item__read-btn" @click="handleReadMail(mail.id)">
-          More
-          <RiArrowRightSLine />
-        </button>
+    <template v-if="mailboxState.mailboxList.inbox.list.length">
+      <div v-for="(mail, index) in mailboxState.mailboxList.inbox.list" :key="index" class="mailbox-mail-item">
+        <h3 class="mailbox-mail-item__title">{{ mail.title }}</h3>
+        <div class="mailbox-mail-item__preview">{{ mail.content }}</div>
+        <div class="mailbox-mail-item__inner-wrapper">
+          <span class="mailbox-mail-item__date">{{ moment(mail.sendTime).format("MM/DD/YYYY") }}</span>
+          <button class="mailbox-mail-item__read-btn" @click="handleReadMail(mail.id)">
+            More
+            <RiArrowRightSLine />
+          </button>
+        </div>
+        <div v-if="!mail.readTime" class="mailbox-mail-item__unread">NEW</div>
       </div>
-      <div v-if="!mail.readTime" class="mailbox-mail-item__unread">NEW</div>
-    </div>
+    </template>
+    <NoData v-else />
   </div>
   <div v-else class="mailbox-mail-detail">
     <button class="mailbox-mail-detail__return-btn" @click="() => (isReadingMail = false)">back</button>
@@ -129,6 +132,7 @@ import { onMounted, reactive, ref } from "vue";
 import { mailInbox, mailOutbox, wirteMail, readMail } from "@/api/personal/mailbox";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import moment from "moment";
+import NoData from "@/components/common/NoData.vue";
 
 const mailboxState = reactive({
   active: "inbox",

@@ -217,9 +217,7 @@ router.beforeEach((to, _, next) => {
     }
   } else {
     if (to.meta.requiresAuth) {
-      // next(`/login?redirect=${to.path}`);
-      store.openAccountModal();
-      return false;
+      next(`/login?redirect=${to.path}`);
     } else {
       next();
     }

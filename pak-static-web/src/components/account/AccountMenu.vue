@@ -68,7 +68,7 @@ const actions = ref([
 const links = ref([
   { name: "Personal center", img: PersonalSvg, path: "/center/personal" },
   { name: "Record", img: RecordSvg, path: "/center/transit-record" },
-  { name: "Discount", img: DiscountSvg, path: "/center/top-up?tab=withdraw" },
+  { name: "Discount", img: DiscountSvg, path: "/center/discount" },
   { name: "Bank", img: BankSvg, path: "/center/withdrawbank" },
   { name: "Message", img: MessageSvg, path: "/center/mailbox" },
   { name: "VIP", img: VIPSvg, path: "/center/vip" }
