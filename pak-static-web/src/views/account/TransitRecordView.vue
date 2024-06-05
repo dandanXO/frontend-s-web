@@ -1123,7 +1123,6 @@ const humanDatetime = (ts) => {
     gap: 12px;
     padding-bottom: 24px;
     border-bottom: 3px solid #ffffff0d;
-    font-family: Poppins;
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;

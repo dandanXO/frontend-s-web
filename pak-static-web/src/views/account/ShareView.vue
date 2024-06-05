@@ -420,7 +420,6 @@ onMounted(() => {
 }
 
 .menu-title-container {
-  font-family: Poppins;
   font-size: 24px;
   font-weight: 700;
   line-height: 24px;
@@ -471,7 +470,6 @@ onMounted(() => {
           gap: 11px;
 
           .share-summary-item__title {
-            font-family: Poppins;
             font-size: 32px;
             font-weight: 700;
             line-height: 32px;
@@ -479,7 +477,6 @@ onMounted(() => {
           }
 
           .share-summary-item__description {
-            font-family: Poppins;
             font-size: 16px;
             font-weight: 500;
             line-height: 16px;
@@ -505,7 +502,6 @@ onMounted(() => {
       margin-bottom: 23px;
 
       .invitation-link-title {
-        font-family: Poppins;
         font-size: 32px;
         font-weight: 700;
         line-height: 32px;
@@ -515,7 +511,6 @@ onMounted(() => {
 
       .invitation-link-description {
         margin-bottom: 13px;
-        font-family: Poppins;
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
@@ -536,7 +531,6 @@ onMounted(() => {
           display: flex;
           align-items: center;
           flex: 1;
-          font-family: Poppins;
           font-size: 16px;
           font-weight: 400;
           line-height: 16px;
@@ -549,7 +543,6 @@ onMounted(() => {
           &::before {
             counter-increment: num;
             content: counter(num);
-            font-family: Poppins;
             font-size: 24px;
             font-weight: 900;
             line-height: 32px;
@@ -577,7 +570,6 @@ onMounted(() => {
           background-color: #0f0b0b;
           border-radius: 10px;
           position: relative;
-          font-family: Poppins;
           font-size: 18px;
           font-weight: 400;
           line-height: 32px;
@@ -589,7 +581,6 @@ onMounted(() => {
             top: 0;
             height: 100%;
             width: 155px;
-            font-family: Baloo Bhai 2;
             font-size: 20px;
             font-weight: 700;
             line-height: 20px;
@@ -644,7 +635,6 @@ onMounted(() => {
         margin-right: 62px;
 
         .earned-amount__total-title {
-          font-family: Poppins;
           font-size: 18px;
           font-weight: 500;
           line-height: 18px;
@@ -657,7 +647,6 @@ onMounted(() => {
           background: #ffffff05;
           border: 1px solid #ffffff0d;
           border-radius: 10px;
-          font-family: Poppins;
           font-size: 32px;
           font-weight: 900;
           line-height: 32px;
@@ -688,7 +677,6 @@ onMounted(() => {
 
           .earned-amount__invited-friend-header {
             margin-bottom: 4px;
-            font-family: Poppins;
             font-size: 16px;
             font-weight: 500;
             line-height: 16px;
@@ -700,7 +688,6 @@ onMounted(() => {
             align-items: center;
             align-self: start;
             gap: 8px;
-            font-family: Poppins;
             font-size: 16px;
             font-weight: 400;
             line-height: 16px;
@@ -715,7 +702,6 @@ onMounted(() => {
           }
 
           .earned-amount__invited-friend-amount {
-            font-family: Poppins;
             font-size: 16px;
             font-weight: 500;
             line-height: 32px;
@@ -763,13 +749,11 @@ onMounted(() => {
           justify-content: center;
 
           .share-info-item__info {
-            font-family: Baloo Bhai 2;
             font-size: 20.62px;
             font-weight: 500;
             line-height: 20.62px;
 
             .share-info-item__info-num {
-              font-family: Poppins;
               font-size: 30.93px;
               font-weight: 700;
               line-height: 46.39px;
@@ -778,7 +762,6 @@ onMounted(() => {
           }
 
           .share-info-item__description {
-            font-family: Poppins;
             font-size: 18.04px;
             font-weight: 500;
             line-height: 27.06px;
@@ -799,7 +782,6 @@ onMounted(() => {
 
       td {
         padding: 13px 0;
-        font-family: Poppins;
         font-size: 16px;
         font-weight: 500;
         line-height: 16px;
@@ -812,14 +794,12 @@ onMounted(() => {
       }
 
       .share-bonus-ranking-label {
-        font-family: Poppins;
         font-size: 16px;
         font-weight: 500;
         line-height: 16px;
       }
 
       .share-bonus-ranking-amount {
-        font-family: Poppins;
         font-size: 16px;
         font-weight: 500;
         line-height: 16px;

@@ -244,7 +244,6 @@ onMounted(() => {
 
     .mailbox-mail-item__title {
       margin-bottom: 8px;
-      font-family: Poppins;
       font-size: 16px;
       font-weight: 700;
       line-height: 19.2px;
@@ -257,7 +256,6 @@ onMounted(() => {
       white-space: nowrap;
       overflow: hidden;
       margin-bottom: 15px;
-      font-family: Poppins;
       font-size: 16px;
       font-weight: 400;
       line-height: 21.6px;
@@ -270,7 +268,6 @@ onMounted(() => {
       justify-content: space-between;
 
       .mailbox-mail-item__date {
-        font-family: Poppins;
         font-size: 12px;
         font-weight: 400;
         line-height: 16.2px;
@@ -286,7 +283,6 @@ onMounted(() => {
         border-radius: 20px;
         padding: 5px 14px;
         padding-right: 10px;
-        font-family: Poppins;
         font-size: 16px;
         font-weight: 400;
         line-height: 21.6px;
@@ -337,7 +333,6 @@ onMounted(() => {
     margin-bottom: 32px;
 
     .mailbox-mail-detail__title {
-      font-family: Poppins;
       font-size: 20px;
       font-weight: 700;
       line-height: 24px;
@@ -345,7 +340,6 @@ onMounted(() => {
     }
 
     .mailbox-mail-detail__date {
-      font-family: Poppins;
       font-size: 16px;
       font-weight: 400;
       line-height: 21.6px;
@@ -354,7 +348,6 @@ onMounted(() => {
   }
 
   .mailbox-mail-detail__content {
-    font-family: Poppins;
     font-size: 16px;
     font-weight: 400;
     line-height: 25.6px;

@@ -41,3 +41,8 @@ export function readMail(id) {
 export function getFeedbackType() {
   return server.REST.get("/session/feedback/types", {});
 }
+
+export function submitFeedback(param) {
+  const { feedbackType, title, content, photo } = param;
+  return server.REST.post("/session/feedback", { feedbackType, title, content, photo });
+}
