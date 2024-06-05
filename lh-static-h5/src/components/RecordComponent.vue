@@ -404,7 +404,6 @@ export default defineComponent({
       });
     };
 
-    const imgURL = process.env.IMAGE_CDN;
     const getImageLink = (linkId) => {
       reminderForm.photos = linkId;
       // reminderForm.photos = `${imgURL}/${linkId}`;

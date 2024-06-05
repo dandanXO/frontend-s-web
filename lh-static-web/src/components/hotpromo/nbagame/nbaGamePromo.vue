@@ -121,11 +121,12 @@ import "swiper/css/navigation";
 
 import { loadNbaDetails, submitNBAInsuranceForm } from "@/api/promotion/nbaGame";
 import { userStore } from "@/store";
+import { useLocalStorage } from "@vueuse/core";
 const store = userStore();
 
 const nbaDetails = ref([]);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
-const iconImageBasePath = `${process.env.VUE_APP_IMAGE_CDN}/promo`;
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const iconImageBasePath = `${imgURL}/promo`;
 
 const formatDate = (dateTimeString) => {
   if (dateTimeString === undefined) {

@@ -357,8 +357,9 @@
 import { onMounted, ref } from "vue";
 import { getSportMatch } from "@/api/index/promo";
 import MatchGame from './components/MatchGame.vue';
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value+ "/promo/";
 
 const tab = ref("first");
 const matchList = ref([]);

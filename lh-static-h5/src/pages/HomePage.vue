@@ -670,7 +670,7 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-// import {RiVolumeUpLine} from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core"
 import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
@@ -1011,8 +1011,8 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-    const imgURLFloat = process.env.IMAGE_CDN
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -1091,7 +1091,7 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+                homePopupImg.value = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/adspopout/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
@@ -1600,7 +1600,7 @@ export default defineComponent({
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
-    
+
     const currentRocket = ref(null)
     const currentRocketIndex = ref(0);
     const updateRocket = () => {
@@ -1920,7 +1920,7 @@ export default defineComponent({
 :deep(.q-carousel.float) {
   height: unset;
   background: transparent;
-  
+
 }
   :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
     margin: 0;

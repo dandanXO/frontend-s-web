@@ -85,8 +85,9 @@ import { eventapi } from "boot/axios";
 import GameModal from "components/modal/GameModal.vue";
 import TabView from "./components/TabView.vue";
 import { useWindowSize } from "@vueuse/core";
+import {useLocalStorage} from "@vueuse/core"
 
-const imgUrl = process.env.IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const platformGame = ref(null);
 const matches = ref([]);

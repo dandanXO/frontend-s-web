@@ -250,10 +250,11 @@
 import { ref, onMounted } from "vue";
 import { getLplSummer24Match } from "@/api/index/promo.js";
 import moment from "moment";
+import { useLocalStorage } from "@vueuse/core";
 
 const activeTab = ref("first");
 const matchList = ref([]);
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 onMounted(async () => {
   const apiRes = await getLplSummer24Match();
   console.log(apiRes);

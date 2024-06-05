@@ -210,7 +210,6 @@
 //           data.forEach((element) => {
 //             element.default = require("../../assets/images/games/aviator/default.png");
 //             element.icon = `${
-//               process.env.VUE_APP_IMAGE_CDN
 //             }/game/${transferInfo.value.platform.toLowerCase()}/lottery/${
 //               element.icon
 //             }.png`;
