@@ -59,6 +59,7 @@
                   </q-item-section>
                 </q-item>
               </template>
+
               <template v-slot:selected-item="scope">
                 <q-item-section avatar v-if="scope.opt.bankIcon">
                   <img
@@ -68,7 +69,9 @@
                 </q-item-section>
                 <q-item-section>
                   <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                    Acc No. {{ scope.opt.cardNumber }}
+                    Acc No. ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    }}
                   </q-item-label>
                   <q-item-label>
                     IFSC
@@ -197,13 +200,17 @@
                       val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
                     `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
                 ]"
-                lazy-rules
                 hide-bottom-space
               ></q-input>
             </template>
           </InputField>
         </template>
       </InputRowGrid>
+
+      <!-- <pre>withdrawInfo.amount{{ withdrawInfo.amount }}</pre> -->
+      <!-- <pre>withdrawInfo.withdrawCode{{ withdrawInfo.withdrawCode }}</pre> -->
+      <!-- <pre>].code{{ withdrawalMethods[withdrawalDialogTab].bankCode }}</pre> -->
+      <!-- <pre>{{ withdrawalMethods }}</pre> -->
 
       <!--
       <div class="top-wrapper">
@@ -328,7 +335,7 @@ const refreshBalance = () => {
 
 const isLoadingWithdrawalMethod = ref(false);
 const withdrawalDialogTab = ref("EASYPAISA");
-const withdrawalMethods = reactive({ BANK: {}, UPI: {}, EASYPAISA: {} });
+const withdrawalMethods = reactive({ BANK: {}, UPI: {}, EASYPAISA: {}, JAZZCASH: {} });
 const getWithdrawalMethods = () => {
   isLoadingWithdrawalMethod.value = true;
   let cbCount = 0;
@@ -419,7 +426,8 @@ const withdrawInfo = reactive({
 const withdrawReadOnlyInfo = reactive({
   cardAccount: store.realName,
   cardNumber: "",
-  cardAddress: ""
+  cardAddress: "",
+  bankCode: ""
 });
 const bankCardField = reactive({
   bankId: undefined,
@@ -429,7 +437,7 @@ const bankCardField = reactive({
   withdrawCode: "",
   amount: ""
 });
-watch(withdrawalDialogTab, () => {
+watch(onCardChanged, withdrawalDialogTab, () => {
   withdrawInfo.withdrawCode = withdrawalMethods[withdrawalDialogTab.value].code;
 
   withdrawInfo.cardId = null;
@@ -438,6 +446,7 @@ watch(withdrawalDialogTab, () => {
   withdrawReadOnlyInfo.cardAccount = "";
   withdrawReadOnlyInfo.cardNumber = "";
   withdrawReadOnlyInfo.cardAddress = "";
+  // withdrawReadOnlyInfo.bankCode = "";
 });
 
 const onCardChanged = () => {
@@ -446,6 +455,8 @@ const onCardChanged = () => {
       withdrawReadOnlyInfo.cardAccount = e.cardAccount;
       withdrawReadOnlyInfo.cardNumber = e.cardNumber;
       withdrawReadOnlyInfo.cardAddress = e.cardAddress || "-";
+      withdrawReadOnlyInfo.bankCode = e.bankCode;
+      withdrawalDialogTab.value = e.bankCode;
     }
   });
 };
@@ -521,7 +532,6 @@ const submitWithdrawBank = async () => {
           // props.loadCards();
           refreshBalance();
           getWithdrawalMethods();
-
           emits("closeWithdraw");
         }
       })
