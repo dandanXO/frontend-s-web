@@ -13,6 +13,7 @@
 }
 
 body {
+  font-family: "Baloo", Arial, sans-serif;
   min-width: 1200px;
   background-color: var(--body-background-color);
 }
@@ -138,9 +139,8 @@ input:-webkit-autofill:active {
   min-height: 40px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   padding-top: 8px !important;
-  font-family: Poppins;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 20.92px;
   color: #000a01;
 
@@ -449,7 +449,6 @@ $glow-clr: #ff5a00;
 }
 
 .game-title {
-  font-family: "Poppins Bold";
   font-size: 30px;
   line-height: 35px;
   color: #222222;
@@ -1507,7 +1506,6 @@ a {
 }
 .account-title {
   color: #8c968f;
-  font-family: "Poppins Medium";
   margin-bottom: 10px;
   display: block;
 }
@@ -1582,7 +1580,6 @@ a {
       td {
         background: #ecf5ff;
         color: #2b2b82;
-        font-family: "Poppins Bold";
         text-align: center;
       }
       td:first-child {

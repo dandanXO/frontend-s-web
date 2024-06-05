@@ -87,7 +87,6 @@ defineExpose({
     background: #ffffff;
     text-align: center;
     .title {
-      font-family: "Poppins Bold";
       font-size: 30px;
     }
     .innercontents {
@@ -109,7 +108,6 @@ defineExpose({
         gap: 30px;
         .claimtext {
           color: #83a3ca;
-          font-family: "Poppins Medium";
           font-size: 20px;
         }
         // .claimimg {

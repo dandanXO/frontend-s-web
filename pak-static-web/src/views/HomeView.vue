@@ -889,7 +889,6 @@ onMounted(async () => {
         // background: linear-gradient(104.75deg, #4183d3 39.58%, #8ec1f7 109.58%);
 
         .ant-modal-title {
-          font-family: "Poppins Bold";
           font-size: 30px;
           text-align: center;
           padding-top: 20px;
@@ -908,7 +907,6 @@ onMounted(async () => {
         .announcementTabs {
           .ant-tabs-nav .ant-tabs-tab {
             margin: 0;
-            font-family: "Poppins Regular";
             font-size: 18px;
             color: #83a3ca;
 
@@ -919,7 +917,6 @@ onMounted(async () => {
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               text-shadow: none;
-              font-family: "Poppins Bold";
               border-bottom: 3px solid $primary-color;
             }
           }
@@ -940,7 +937,6 @@ onMounted(async () => {
           .ant-collapse > .ant-collapse-item > .ant-collapse-header {
             border-bottom: 1px solid #83a3ca33;
             color: #ffffff;
-            font-family: "Poppins Bold";
             font-size: 18px;
             font-weight: 700;
           }
@@ -948,7 +944,6 @@ onMounted(async () => {
           .ant-collapse > .ant-collapse-item > .ant-collapse-content {
             border: 0;
             color: #83a3ca;
-            font-family: "Poppins Regular";
             font-size: 14px;
             background: transparent;
           }
@@ -1812,7 +1807,6 @@ $link-color: #db7e42;
 
           border-radius: 20px;
           color: white;
-          font-family: sans-serif;
           font-size: 100%;
           font-weight: bold;
           overflow: hidden;
@@ -2006,7 +2000,6 @@ $link-color: #db7e42;
 .header-text {
   text-align: center;
   color: #fff;
-  font-family: Poppins;
   line-height: normal;
 
   .title {
@@ -2160,7 +2153,6 @@ $link-color: #db7e42;
   justify-content: center;
   color: #fff;
   text-align: center;
-  font-family: Poppins;
   font-size: 2.25rem;
   font-weight: 600;
 }
@@ -2177,7 +2169,6 @@ $link-color: #db7e42;
     border: 0;
     color: #fff;
     text-align: center;
-    font-family: Poppins;
     font-size: 1.25rem;
     font-weight: 600;
     position: absolute;
@@ -2353,7 +2344,6 @@ $link-color: #db7e42;
     width: 90%;
     margin: 0 auto;
     .numbers {
-      font-family: "Arial Black";
       font-size: 2.5vw;
       padding-top: 1.5vw;
       padding-left: 1vw;
@@ -2589,14 +2579,13 @@ $link-color: #db7e42;
       flex-direction: column;
       color: #ffffff99;
       .rib-number {
-        font-family: "Poppins Regular";
+
       }
       .rib-title {
-        font-family: "Poppins Medium";
+
       }
     }
     .rib-right {
-      font-family: "Poppins Bold";
       display: flex;
       flex-direction: column;
       gap: 5px;

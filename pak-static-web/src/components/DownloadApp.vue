@@ -99,7 +99,6 @@ onMounted(() => {
   }
 
   h2 {
-    font-family: "Baloo Bhaina";
     font-size: 2.4rem;
     line-height: 42px;
     margin: 0;
@@ -125,7 +124,6 @@ onMounted(() => {
     font-size: 1.2rem;
     line-height: 1.5569;
     color: #83a3ca;
-    font-family: "Microsoft Yahei UI";
     font-weight: 700;
     &.text-low-piority {
       font-size: 0.9rem;

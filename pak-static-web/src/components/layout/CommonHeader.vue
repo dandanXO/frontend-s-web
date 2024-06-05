@@ -661,7 +661,6 @@ $link-color: #ffffff;
                 box-shadow: 0px -4px 4px 0px #02009e inset;
                 box-shadow: -1px 2px 4px 0px #ffffffcc inset;
                 color: #ffffff;
-                font-family: "Poppins Bold";
 
                 &:before {
                   filter: grayscale(0);
@@ -861,8 +860,7 @@ $link-color: #ffffff;
         position: relative;
         color: #000;
         transition: all 0.3s ease-out;
-        font-size: 0.9rem;
-        line-height: 1rem;
+        font-size: 16px;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -1065,7 +1063,6 @@ $link-color: #ffffff;
           box-shadow: 0px -4px 4px 0px #02009e inset;
           box-shadow: -1px 2px 4px 0px #ffffffcc inset;
           color: #ffffff;
-          font-family: "Poppins Bold";
 
           &:before {
             filter: grayscale(0);

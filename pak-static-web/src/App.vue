@@ -46,7 +46,7 @@ export default defineComponent({
 
 <style lang="scss">
 #app {
-  font-family: Poppins Regular, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Baloo", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 1920px;

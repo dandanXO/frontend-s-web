@@ -365,9 +365,7 @@ export default defineComponent({
             align-items: center;
             padding: 7px 14px;
             .viewdetail {
-              font-family: Poppins;
               font-size: 15.3px;
-              font-weight: 700;
               line-height: 22.96px;
               color: #ffffff;
             }

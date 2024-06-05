@@ -116,11 +116,10 @@ const links = ref([
       .account-profile-info {
         display: flex;
         flex-direction: column;
-        gap: 7;
+        gap: 7px;
         justify-content: center;
 
         .account-profile-info__name {
-          font-family: Poppins;
           font-size: 20px;
           font-weight: 700;
           line-height: 20px;
@@ -128,7 +127,6 @@ const links = ref([
         }
 
         .account-profile-info__id {
-          font-family: Poppins;
           font-size: 12px;
           font-weight: 400;
           line-height: 20px;
@@ -144,7 +142,6 @@ const links = ref([
       align-items: center;
       justify-content: space-between;
       border-radius: 4px;
-      font-family: Poppins;
       font-size: 12px;
       font-weight: 500;
       line-height: 12px;
@@ -153,7 +150,6 @@ const links = ref([
       margin: 0 30px;
 
       .account-info-balance-amount {
-        font-family: Poppins;
         font-size: 20px;
         font-weight: 700;
         line-height: 20px;
@@ -176,7 +172,6 @@ const links = ref([
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-family: Poppins;
         font-size: 12px;
         font-weight: 500;
         line-height: 12px;
@@ -203,7 +198,6 @@ const links = ref([
       gap: 14px;
       padding: 10px 20px;
       border-radius: 10px;
-      font-family: Poppins;
       font-size: 20px;
       font-weight: 400;
       line-height: 20px;
