@@ -15,7 +15,7 @@
         ]" clearable />
       </div>
       <div class="form-item">
-        <label>비밀번호</label>
+        <label>{{ $t('lang.reg_pass') }}</label>
         <div>
           <q-input dense placeholder="비밀번호입력" ref="pwdRef" outlined v-model="regForm.password"
             :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
@@ -47,7 +47,7 @@
         </div>
       </div>
       <div class="form-item">
-        <label>비밀번호확인</label>
+        <label>{{ $t('lang.reg_confirm_pass') }}</label>
         <q-input dense placeholder="비밀번호확인입력" ref="confirmPwdRef" outlined :type="isCfmPwd ? 'password' : 'text'"
           v-model="regForm.confirmPwd" lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
@@ -61,12 +61,12 @@
         </q-input>
       </div>
       <div class="form-item">
-        <label>이메일</label>
+        <label>{{ $t('lang.reg_email') }}</label>
         <q-input dense placeholder="이메일" ref="emailRef" type="email" outlined v-model="regForm.email" lazy-rules
           :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]" clearable />
       </div>
       <div class="form-item">
-        <label>휴대폰번호</label>
+        <label>{{ $t('lang.reg_phone_num') }}</label>
         <q-input dense placeholder="없이 숫자 만 입력" ref="telRef" outlined v-model="regForm.telephone" lazy-rules :rules="[
           (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
           (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
@@ -74,13 +74,13 @@
         ]" clearable>
           <template v-slot:append>
             <div class="primary-button blue-square" :class="!regForm.telephone ? 'disabled' : ''" @click="openTelephoneVerificationModal">
-              인증 코드
+              {{ $t('lang.reg_phone_verification') }}
             </div>
           </template>
         </q-input>
       </div>
       <div class="form-item">
-        <label>인증 코드</label>
+        <label>{{ $t('lang.reg_phone_otp') }}</label>
         <div class="telephone-otp-row">
           <q-input dense ref="telOtpCodeRef" v-model="regForm.smsCode" :placeholder="'6자리 숫자'" stack-label clearable
             autocomplete="off" outlined lazy-rules
@@ -88,19 +88,19 @@
         </div>
       </div>
       <div class="form-item">
-        <label>은행명</label>
+        <label>{{ $t('lang.reg_bank') }}</label>
         <q-select dense outlined label="은행선택" ref="bankCardRef" v-model="regForm.bankId" :options="banksList"
           option-value="id" option-label="name" emit-value map-options lazy-rules
           :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" />
       </div>
       <div class="form-item">
-        <label>계좌번호</label>
+        <label>{{ $t('lang.reg_bank_acc_num') }}</label>
         <q-input dense type="number" placeholder="'-'없이숫자만입력." ref="cardNumRef" outlined v-model="regForm.cardNumber"
           lazy-rules clearable
           :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"></q-input>
       </div>
       <div class="form-item">
-        <label>예금주</label>
+        <label>{{ $t('lang.reg_bank_acc_holder') }}</label>
         <q-input dense placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)" ref="cardAccRef" outlined
           v-model="regForm.cardAccount" lazy-rules clearable
           :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"></q-input>

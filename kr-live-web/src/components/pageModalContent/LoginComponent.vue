@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <q-form class="login-form" @keypress.enter="onSubmit">
+  <div class="form-wrapper">
+    <q-form class="login-form form-template" @keypress.enter="onSubmit">
       <div class="form-item">
         <label>{{ $t('lang.login_account') }}</label>
         <q-input :disable="isLoading" :loading="isLoading" dense ref="loginNameRef" outlined clearable
@@ -150,10 +150,13 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+  min-height: unset;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
-  row-gap: 24px;
 
   .captcha-code {
     width: 100%;
