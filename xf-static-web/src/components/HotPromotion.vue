@@ -272,6 +272,8 @@ export default defineComponent({
       query: {
         winStatus: "",
         recordTime: null,
+        recordTimeStart: null,
+        recordTimeEnd: null,
         onlyMe: false
       },
       winnersQuery: {
@@ -390,6 +392,14 @@ export default defineComponent({
       } else {
         this.memberId = null;
       }
+      if (this.query.recordTime) {
+        this.query.recordTimeStart = moment(this.query.recordTime).format("YYYY-MM-DD 00:00:00");
+        this.query.recordTimeEnd = moment(this.query.recordTime).format("YYYY-MM-DD 23:59:59");
+      } else {
+        this.query.recordTimeStart = null;
+        this.query.recordTimeEnd = null;
+      }
+
       luckyNumberList(this.query, this.memberId)
         .then((res) => {
           if (res.code === 0) {
