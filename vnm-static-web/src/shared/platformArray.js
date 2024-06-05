@@ -68,6 +68,15 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "IM",
+    name: "IM",
+    image: "im",
+    message: "IM Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",
+    vimessage: 'IM Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
     code: "GFSBO",
     name: "SBOBET",
     image: "gfsbo",
@@ -222,6 +231,15 @@ export const pokerPlatforms = [
     image: "gpi",
     message: "LEG Corporation is expanding its investment in developing LEG Poker",
     vimessage: "Tập đoàn LEG khuếch trương đầu tư phát triển Poker LEG",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "KP",
+    name: "King Poker",
+    image: "kp",
+    message: "Spribe Corporation is expanding its investment in developing Spribe Poker",
+    vimessage: "Tập đoàn Spribe khuếch trương đầu tư phát triển Poker Spribe",
     caption: "",
     gameCode: ""
   },

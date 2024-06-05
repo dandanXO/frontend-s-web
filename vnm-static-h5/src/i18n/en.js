@@ -524,7 +524,7 @@ export default {
     vip_unachieved: "Unachieved",
     vip_achieved: "Achieved",
     vip_cumulative_deposits: "VIP MAINTAIN REQUIRED:",
-    vip_3timedeposit: "DEPOSIT 3 TIMES",
+    vip_3timedeposit: "DEPOSIT 1 TIME",
     totalBetMonth: "TOTAL BET OF MONTH",
     have_one_successful_deposit: "have one successful deposit",
     accumulated_deposits: "Accumulated deposits",

@@ -34,6 +34,8 @@ export const useHandleUpload = (onChange, options) => {
     });
   };
 
+  const manualEmit = (files) => onChange(files);
+
   onUnmounted(() => {
     if (!inputRef.value) return;
     inputRef.value.remove();
@@ -41,6 +43,7 @@ export const useHandleUpload = (onChange, options) => {
   });
 
   return {
-    handleUpload
+    handleUpload,
+    manualEmit
   };
 };

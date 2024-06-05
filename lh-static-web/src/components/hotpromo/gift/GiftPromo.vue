@@ -186,9 +186,10 @@ import { getGiftList, getGiftBet, redeemGift, getGiftRecord } from "@/api/index/
 import Vue3autocounter from "vue3-autocounter";
 import { TweenMax } from "gsap";
 import * as _ from "lodash";
+import { useLocalStorage } from "@vueuse/core";
 
 const store = userStore();
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const isGiftRecordLoading = ref(false);
 const isGiftRecordModalOpen = ref(false);

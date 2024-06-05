@@ -144,12 +144,69 @@
         :rules="bankCardRules"
         :colon="false"
       >
+        <a-form-item
+          name="bankId"
+          :rules="[
+            {
+              required: true,
+              message: isVirtual
+                ? 'Please select a Crypto card'
+                : !isEwallet
+                ? 'Please select a bank'
+                : 'Please select an E-wallet'
+            }
+          ]"
+        >
+          <a-space style="width: 100%; justify-content: space-between">
+            <a-select
+              v-model:value="selectedBankType"
+              :placeholder="isVirtual ? 'Crypto' : !isEwallet ? 'Bank type' : 'E-wallet type'"
+              style="width: 100%"
+              :options="bankTypes.map((bank) => ({ value: bank }))"
+              @change="selectBankType"
+            />
+            <a-select
+              v-model:value="bankCardInfo.bankId"
+              class="select"
+              :placeholder="
+                isVirtual ? 'Please select a Crypto' : !isEwallet ? 'Please select a bank' : 'Please select an E-wallet'
+              "
+              style="width: 100%"
+            >
+              <a-select-option v-for="b in banksList" :key="b.id" :value="b.id">
+                <span role="img" :aria-label="b.name">
+                  <img
+                    v-if="b.bankIcon"
+                    style="height: 100%; max-width: 30px; margin-right: 10px"
+                    :src="imgURL + b.bankIcon"
+                  />
+                  {{ b.name }}
+                </span>
+              </a-select-option>
+            </a-select>
+          </a-space>
+        </a-form-item>
+
         <a-form-item name="cardAccount" label-align="left" label="Holder Name">
           <a-input v-model:value="bankCardInfo.cardAccount" placeholder="Enter Holder Name" />
         </a-form-item>
-        <a-form-item name="cardNumber" label-align="left" label="Account Number">
-          <a-input v-model:value="bankCardInfo.cardNumber" placeholder="Enter Account Number" />
+        <a-form-item
+          ref="cardNumber"
+          name="cardNumber"
+          label-align="left"
+          :label="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
+        >
+          <a-input
+            v-model:value="bankCardInfo.cardNumber"
+            :placeholder="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
+          />
         </a-form-item>
+        <!-- <a-form-item v-if="!(isVirtual || isEwallet)" ref="cardAddress" name="cardAddress" label="Card Address">
+          <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Card Address" />
+        </a-form-item> -->
+        <!-- <a-form-item v-if="!(isVirtual || isEwallet)"  name="cardNumber" label-align="left" label="Account Number">
+          <a-input v-model:value="bankCardInfo.cardNumber" placeholder="Enter Account Number" />
+        </a-form-item> -->
         <a-form-item name="cardAddress" label-align="left" label="IFSC Code">
           <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Enter Bank IFSC Code" />
         </a-form-item>
@@ -228,6 +285,10 @@ const columns = [
     slots: { customRender: "unbindTime" }
   }
 ];
+
+const bankTypes = ["e-Wallet"];
+const isVirtual = computed(() => selectedBankType.value === "Crypto");
+const isEwallet = computed(() => selectedBankType.value === "e-Wallet");
 
 const personalState = reactive({
   memberInfo: {},
@@ -315,6 +376,7 @@ const banksList = ref([]);
 const bankCardModal = () => {
   store.getMemberInfo().then(() => {
     if (!store.realName || store.realName == "") {
+      message.error("Kindly fill in your personal details");
       router.push("/center/personal");
     } else {
       bankCardInfo.bankId = undefined;
@@ -352,12 +414,22 @@ const bankCardModal = () => {
   //   });
   // }
 };
+
+const selectedBankType = ref("e-Wallet");
 const selectBankType = () => {
   bankCardFormRef.value.clearValidate();
   banksList.value = [];
   bankCardInfo.bankId = null;
   bankCardModalState.banks.forEach((element) => {
-    if (element.bankType === "BANK") banksList.value.push(element);
+    if (selectedBankType.value === "Bank" && element.bankType === "BANK") {
+      banksList.value.push(element);
+    }
+    if (selectedBankType.value === "Crypto" && element.bankType === "CRYPTO") {
+      banksList.value.push(element);
+    }
+    if (selectedBankType.value === "e-Wallet" && element.bankType === "EWALLET") {
+      banksList.value.push(element);
+    }
   });
 };
 const submitBankCard = () => {
@@ -662,14 +734,12 @@ const handleCancel = (e) => {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-family: Courier Prime;
             font-size: 16.64px;
             font-weight: 700;
             line-height: 18.69px;
           }
 
           .card-address {
-            font-family: Courier Prime;
             font-size: 13.93px;
             font-style: italic;
             font-weight: 400;

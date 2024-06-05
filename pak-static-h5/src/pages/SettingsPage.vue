@@ -69,6 +69,12 @@
             </div>
             <div class="acct-nav-label">Message</div>
           </router-link>
+          <!-- <router-link to="/account/feedback">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/message-svg.svg" />
+            </div>
+            <div class="acct-nav-label">Feedback</div>
+          </router-link> -->
           <router-link to="/vip">
             <div class="acct-nav-item">
               <img src="../assets/images/account/vip-svg.svg" />
@@ -116,6 +122,7 @@
               :name="i"
               class="column no-wrap flex-center"
               :img-src="imgURL + banner.mobileImageUrl"
+              @click="router.push('/earn-money')"
             ></q-carousel-slide>
           </q-carousel>
         </q-card-section>
@@ -162,7 +169,7 @@ const slide = ref(0);
 const imgURL = "";
 const btm_banners = ref([
   {
-    mobileImageUrl: require("../assets/images/account/account-banner-3.png")
+    mobileImageUrl: require("../assets/images/account/account-banner-4.png")
   }
 ]);
 

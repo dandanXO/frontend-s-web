@@ -1308,10 +1308,15 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
             }
-            if (platTypes.indexOf("POKER") > -1) {
+            if (platTypes.indexOf("POKER") > -1 || platTypes.indexOf("CASUAL") > -1 ) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title_vn = pokerObj.name + " Poker";
-              pokerObj.title_en = pokerObj.name + " Poker";
+              if (pokerObj.name === "Spribe") {
+                pokerObj.title_vn = pokerObj.name ;
+                pokerObj.title_en = pokerObj.name ;
+              }else{
+                pokerObj.title_vn = pokerObj.name + " Poker";
+                pokerObj.title_en = pokerObj.name + " Poker";
+              }
               pokerObj.icon = "poker";
               if (pokerObj.code === "GPI") {
                 pokerObj.gameCode = "";

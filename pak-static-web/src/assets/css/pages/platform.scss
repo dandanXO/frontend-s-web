@@ -25,12 +25,13 @@ $accent: #ffffff;
 }
 
 .platform-breadcrumb {
-  font-family: Inter;
+  font-family: san-serif;
   font-size: 20px;
   font-weight: 700;
   line-height: 24.2px;
   color: #9f9f9f;
   margin-bottom: 28px;
+  text-transform: capitalize;
 
   > span {
     &::after {
@@ -111,7 +112,6 @@ $accent: #ffffff;
 
       .platform-title-wrap {
         /* IM体育 */
-        font-family: "YiHei";
         font-style: normal;
         font-weight: 400;
         font-size: 80px;
@@ -405,7 +405,6 @@ $accent: #ffffff;
 
   .game-title {
     position: relative;
-    font-family: C9;
     color: #10a0cb;
     font-weight: 600;
   }
@@ -504,7 +503,7 @@ $accent: #ffffff;
       background-color: #d9d9d91a;
       transition: 0.3s all;
       .text {
-        font-family: Inter;
+        font-family: san-serif;
         font-size: 20px;
         font-weight: 700;
         line-height: 24.2px;

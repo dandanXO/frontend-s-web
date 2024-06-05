@@ -33,12 +33,12 @@
 import { ref, onMounted } from "vue";
 import { loadPromoBanner } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
-import { useDark } from "@vueuse/core";
+import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const banners = ref([]);
 
 const isDark = useDark();

@@ -94,13 +94,13 @@
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
-                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual'
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
                 }"
                 :style="{
-                  backgroundImage:
-                    selectedPromo?.mobileImgBackgroundUrl
-                      ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
-                      : 'none'
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -733,6 +733,13 @@ export default defineComponent({
           background-position: center center;
         }
 
+        &.duanwujie {
+          margin: 0px;
+          width: 100%;
+          background-size: 100% 100% !important;
+          padding-top: 0px !important;
+        }
+
         &.lplSummer2024 {
           margin: 0;
           width: 100%;
@@ -835,7 +842,7 @@ export default defineComponent({
             text-align: center;
             background-color: #ffffff;
             border: 1px solid #d0d1d3;
-            white-space: pre-wrap;
+            white-space: normal;
           }
         }
 

@@ -268,12 +268,12 @@ import {
   getBBDachaRecordsCount
 } from "../../../api/index/promo";
 import moment from "moment";
-
+import {useLocalStorage} from "@vueuse/core"
 const $q = useQuasar();
 
 // tabs
 const activeKey = ref("tabOne");
-const imgURL = process.env.IMAGE_CDN + "/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 // dialogs
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);

@@ -417,6 +417,7 @@ function selectPayType(value) {
 
 const depositForm = ref(null);
 async function onSelect(value) {
+  // debugger;
   depositItems.forEach((item) => (item.isActive = false));
 
   isDisplay.value = false;

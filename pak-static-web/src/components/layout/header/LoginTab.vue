@@ -26,7 +26,6 @@
         <a-input
           v-model:value="loginForm.password"
           type="password"
-          placeholder="Password"
           :placeholder="$t('layout.header.accountModal.login.form.password.placeholder')"
           @keypress.enter="onSubmit"
         >

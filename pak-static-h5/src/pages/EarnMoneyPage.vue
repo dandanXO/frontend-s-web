@@ -182,7 +182,7 @@
             <td style="color: #8c968f; font-size: 120%">Money</td>
           </tr>
         </table>
-        <div class="table-container">
+        <div class="table-container" ref="tableContainer">
           <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
             <template v-if="inviteesRecords && inviteesRecords.length === 0">
               <tr>
@@ -318,10 +318,30 @@ const startDisplayingRows = () => {
   }, 1000);
 };
 
+const tableContainer = ref(null);
+
+const startAutoScroll = () => {
+  const container = tableContainer.value;
+  const rowHeight = container.querySelector("tr").offsetHeight;
+  let scrollPosition = 0;
+
+  setInterval(() => {
+    scrollPosition += 46;
+    if (scrollPosition >= container.scrollHeight) {
+      scrollPosition = 0; // Reset scroll position if we reach the bottom
+    }
+    container.scrollTo({
+      top: scrollPosition,
+      behavior: "smooth"
+    });
+  }, 2000); // Adjust the interval as needed
+};
+
 onMounted(() => {
   getOneTimeBonusSetting();
   getMemberDetail();
   getLatestInvitees();
+  startAutoScroll();
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {

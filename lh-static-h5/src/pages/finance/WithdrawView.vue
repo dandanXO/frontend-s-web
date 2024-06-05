@@ -245,6 +245,7 @@ import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
+import{useLocalStorage} from "@vueuse/core"
 
 export default defineComponent({
   name: "WithdrawView",
@@ -253,8 +254,8 @@ export default defineComponent({
     const store = userStore();
     const isNewUser = ref(false);
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN;
-    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
+    const imgWithdrawURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/withdraw/";
 
     const amountRef = ref();
     const cardRef = ref();
@@ -314,8 +315,8 @@ export default defineComponent({
                 platform.isLoading = false;
               }
             }).catch((e) => {
-                  platform.isLoading = false;
-                }
+                platform.isLoading = false;
+              }
             );
 
           }
@@ -402,10 +403,10 @@ export default defineComponent({
           response.data.forEach(element => {
             if (element.bankType === "BANK") {
               if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                  withdrawState.bankCardList.push(element)
-                }
-                if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-                  withdrawState.bankCardList.push(element)
+                withdrawState.bankCardList.push(element)
+              }
+              if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+                withdrawState.bankCardList.push(element)
               }
             } else {
               if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {

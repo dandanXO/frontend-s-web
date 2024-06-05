@@ -244,11 +244,11 @@ import {
   submitMemberSportMatchQuiz,
   getMemberSportQuizTotal
 } from "../../../api/index/promo";
-import moment from "moment";
+import {useLocalStorage} from "@vueuse/core"
 
 const $q = useQuasar();
 const store = userStore();
-const imgURL = process.env.IMAGE_CDN + "/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 
 onMounted(() => {
   if (!store.token) {
@@ -837,7 +837,7 @@ const getMatchTimeOnly = (matchTime) => {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center; 
+        align-items: center;
 
         background: linear-gradient(0deg, #FFFFFF 0%, #eaf3fced 100%);
 

@@ -648,6 +648,7 @@ export default {
     bulkApprove: 'Bulk Approve',
     callbackUrl: 'Callback URL',
     cancel: 'Cancel',
+    cancelAll: 'Cancel All',
     cancelBbDacha: 'Cancel BB Dacha',
     cancelBySearch: 'Cancel By Query',
     cancelDeposit: 'Cancel Deposit',
@@ -2536,6 +2537,7 @@ export default {
     buildStatus: 'Build Status',
     latestVersion: 'Latest Version',
     buildApk: 'Build APK',
+    buildAllApk: 'Build All APK',
     editParam: 'Edit Param',
     status: {
       IN_QUEUE: 'IN QUEUE',

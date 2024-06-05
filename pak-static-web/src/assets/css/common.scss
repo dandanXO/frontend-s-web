@@ -106,7 +106,6 @@ input:-webkit-autofill:active {
   padding: 8px 10px;
   transition: all 0.3s;
   filter: brightness(1);
-  font-family: "Inter Medium";
   line-height: 25px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   width: 100%;
@@ -308,6 +307,7 @@ input:-webkit-autofill:active {
   .ant-input-affix-wrapper > input.ant-input {
     color: #ffffff;
     background: none;
+    border: 0;
     &::placeholder {
       color: #ffffff99;
     }
@@ -440,7 +440,6 @@ $glow-clr: #ff5a00;
     color: $glow-clr;
     z-index: 99;
     font-size: 2rem;
-    font-family: "Titillium Web", sans-serif;
     letter-spacing: 10px;
     text-indent: 10px;
     animation: pulse var(--pulse-time) linear infinite;
@@ -481,6 +480,9 @@ $glow-clr: #ff5a00;
 
 .ant-select {
   max-width: 280px;
+  border: 1px solid #072a19;
+  background: #0b0e0d;
+  border-radius: 10px;
 }
 .ant-select-clear {
   right: 30px;
@@ -591,7 +593,6 @@ $glow-clr: #ff5a00;
   }
   tr > th {
     background: #ecf5ff;
-    font-family: "Inter Bold";
     color: #2b2b82;
   }
 }
@@ -690,7 +691,6 @@ $glow-clr: #ff5a00;
         $primary-color: #0071ed;
         .ant-btn {
           border-radius: 5px;
-          font-family: "Jura";
           transition: all 0.8s, color 0.3s 0.3s;
           min-width: 120px;
           display: flex;
@@ -747,7 +747,6 @@ $glow-clr: #ff5a00;
       .welcome-text {
         margin: 30px auto 40px;
         font-size: 24px;
-        font-family: trending;
         text-align: center;
       }
       a.forgot {
@@ -910,7 +909,6 @@ $glow-clr: #ff5a00;
         .welcome-text {
           margin: 30px auto 40px;
           font-size: 24px;
-          font-family: trending;
           text-align: center;
         }
         a.forgot {
@@ -1223,8 +1221,7 @@ li.ant-calendar-time-picker-select-option-selected {
     //       .welcome-text {
     //         margin: 30px auto 40px;
     //         font-size: 24px;
-    //         font-family: trending;
-    //         text-align: center;
+    //             //         text-align: center;
     //       }
     //       a.forgot {
     //
@@ -1299,7 +1296,6 @@ li.ant-calendar-time-picker-select-option-selected {
           .welcome-text {
             margin: 30px auto 40px;
             font-size: 24px;
-            font-family: trending;
             text-align: center;
           }
           a.forgot {
@@ -1614,7 +1610,6 @@ a {
   .ant-form-item-label {
     > label {
       color: #ffffffcc;
-      font-family: Inter;
       font-size: 15px;
       font-weight: 500;
       line-height: 24px;
@@ -1623,6 +1618,13 @@ a {
 
       &::after {
         display: none;
+      }
+    }
+  }
+  .ant-form-item-has-error {
+    .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input) {
+      .ant-select-selector {
+        background-color: #0b0e0d;
       }
     }
   }

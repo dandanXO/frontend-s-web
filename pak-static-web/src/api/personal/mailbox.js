@@ -37,3 +37,12 @@ export function wirteMail(mail) {
 export function readMail(id) {
   return server.REST.post("/session/inbox/read", id);
 }
+
+export function getFeedbackType() {
+  return server.REST.get("/session/feedback/types", {});
+}
+
+export function submitFeedback(param) {
+  const { feedbackType, title, content, photo } = param;
+  return server.REST.post("/session/feedback", { feedbackType, title, content, photo });
+}

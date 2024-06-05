@@ -2,9 +2,9 @@
   <div class="user-profile-wrapper">
     <div class="user-profile-info-wrapper">
       <span class="user-profile-info__name">{{ nickName }}</span>
-      <span class="user-profile-info__balance">USD: {{ balance.toFixed(2) }}</span>
+      <span class="user-profile-info__balance">₨: {{ balance.toFixed(2) }}</span>
     </div>
-    <button class="user-profile-photo">
+    <button class="user-profile-photo" @click="openDialog">
       <img v-if="profilePhoto" :src="profilePhoto" />
     </button>
   </div>
@@ -12,9 +12,16 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { userStore } from "@/store";
+import { defineEmits } from "vue";
+
+const emit = defineEmits();
 
 const store = userStore();
 const { profilePhoto, nickName, balance } = storeToRefs(store);
+
+const openDialog = () => {
+  emit("open-dialog");
+};
 </script>
 <style scoped lang="scss">
 .user-profile-wrapper {
@@ -30,7 +37,6 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
     gap: 4px;
 
     .user-profile-info__name {
-      font-family: Baloo Bhai 2;
       font-size: 20px;
       font-weight: 800;
       line-height: 20px;
@@ -39,7 +45,6 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
     }
 
     .user-profile-info__balance {
-      font-family: Baloo Bhai 2;
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;

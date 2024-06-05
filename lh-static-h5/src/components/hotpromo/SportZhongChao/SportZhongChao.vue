@@ -360,8 +360,8 @@
 import { ref, onMounted } from "vue";
 import { getSportMatch } from "src/api/index/promo";
 import MatchGame from './components/MatchGame.vue';
-
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+import {useLocalStorage} from "@vueuse/core"
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const slide = ref(0);
 

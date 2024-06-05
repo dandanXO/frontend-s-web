@@ -99,12 +99,11 @@ const routes = [
         name: "live-casino",
         component: () => import(/* webpackChunkName: "live-casino" */ "../views/games/LiveCasinoView.vue")
       },
-      // {
-      //   path: "sport",
-      //   name: "sport",
-      //   component: () =>
-      //     import(/* webpackChunkName: "sport" */ "../views/games/CMDView.vue"),
-      // },
+      {
+        path: "hot",
+        name: "hot",
+        component: () => import(/* webpackChunkName: "sport" */ "../views/games/HotGameView.vue")
+      },
       {
         path: "sport",
         name: "sport",
@@ -218,7 +217,9 @@ router.beforeEach((to, _, next) => {
     }
   } else {
     if (to.meta.requiresAuth) {
-      next(`/login?redirect=${to.path}`);
+      // next(`/login?redirect=${to.path}`);
+      store.openAccountModal();
+      return false;
     } else {
       next();
     }

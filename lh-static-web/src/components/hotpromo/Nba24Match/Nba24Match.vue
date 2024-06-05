@@ -225,6 +225,7 @@ import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 import { ElMessage } from "element-plus";
+import { useLocalStorage } from "@vueuse/core";
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
@@ -262,7 +263,7 @@ const handleSubmitVote = () => {
     });
 };
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const displayTeamVictory = (record) => {
   if(record.teamChosen === 'DRAW') return '平局'
   return record.teamChosen + '胜'

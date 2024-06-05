@@ -1081,7 +1081,6 @@ const vipItems = [
 
     .vip-reward-ticket__description {
       margin-right: 32px;
-      font-family: Poppins;
       font-size: 12px;
       line-height: 18px;
       color: #ffffff;
@@ -1102,7 +1101,6 @@ const vipItems = [
         padding: 4px 20px;
         border-radius: 10px;
         background: #ffffff1a;
-        font-family: Poppins;
         font-size: 14px;
         font-weight: 700;
         line-height: 21px;
@@ -1120,7 +1118,6 @@ const vipItems = [
 }
 
 .vip-upgrade-rule {
-  font-family: Poppins;
   font-size: 18px;
   font-weight: 700;
   line-height: 30px;
@@ -1136,7 +1133,6 @@ const vipItems = [
     background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
     td {
       padding: 8px 0;
-      font-family: Manrope;
       font-size: 16px;
       font-weight: 700;
       line-height: 27.2px;
@@ -1153,7 +1149,6 @@ const vipItems = [
 }
 
 .vip-upgrade-rule-2 {
-  font-family: Poppins;
   font-size: 14px;
   font-weight: 400;
   line-height: 23.8px;

@@ -113,3 +113,26 @@ export function jackpotGames() {
 export function topWin() {
   return server.REST.get("/top-winner");
 }
+
+export function getHotGames() {
+  const regDevice = getDevice();
+  var way = null;
+  if (getDevice() === "MOBILE") {
+    way = getMobileOS();
+  }
+  const key = `MEMBER_HOT_${regDevice}`;
+
+  // sessionStorage.removeItem(key);
+
+  return cached.get(key, async () => {
+    const requestBody = {
+      params: {
+        device: regDevice
+      }
+    };
+
+    let respond = await server.REST.get("/member/hot", requestBody);
+
+    return respond;
+  });
+}

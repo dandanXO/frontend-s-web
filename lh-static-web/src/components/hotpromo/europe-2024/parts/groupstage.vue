@@ -83,8 +83,9 @@ import { onMounted, computed, ref } from "vue";
 import { euroMatchAll, getTeams } from "@/api/promotion/eurocup";
 import GameModal from "@/components/modal/GameModal.vue";
 import TabView from "./components/TabView.vue";
+import { useLocalStorage } from "@vueuse/core";
 
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const platformGame = ref(null);
 

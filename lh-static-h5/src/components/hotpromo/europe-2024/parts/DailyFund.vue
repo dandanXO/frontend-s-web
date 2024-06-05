@@ -214,8 +214,9 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import moment from "moment";
+import {useLocalStorage} from "@vueuse/core"
 
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const $q = useQuasar();
 const store = userStore();
@@ -253,7 +254,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({

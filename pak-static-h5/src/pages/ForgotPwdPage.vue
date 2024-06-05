@@ -1,7 +1,7 @@
 <template>
   <div class="forgot-password-container">
     <div class="forgot-password-form-logo-img">
-      <img src="../assets/images/auth/login-img.png" />
+      <img src="../assets/images/auth/login-logo.png" />
     </div>
 
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
@@ -24,7 +24,6 @@
         hide-bottom-space
         v-model="passwordForm.loginName"
         label="Username"
-        lazy-rules
         :rules="[(val) => (val && val.length > 0) || 'Please Enter Username']"
         rounded
         outlined
@@ -36,7 +35,7 @@
       <div class="forgot-password-form-grid">
         <span class="forgot-password-form-title">Forgot Password</span>
         <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+          Please Provide email, We Will Send OTP To Your Registered Phone Number.
         </span>
 
         <InputRowGrid>
@@ -46,15 +45,44 @@
                 <q-input
                   type="tel"
                   pattern="\d*"
-                  maxlength="10"
-                  ref="phoneRef"
+                  maxlength="11"
+                  ref="loginNameRef"
                   hide-bottom-space
-                  v-model="passwordForm.phone"
-                  lazy-rules
+                  v-model="passwordForm.loginName"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
+                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
                   ]"
+                  outlined
+                  label-color="brand"
+                  color="green"
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="smartphone" />
+                    <div class="prepend-number">+92</div>
+                  </template>
+                </q-input>
+              </template>
+            </InputField>
+
+            <!-- <InputField :label="'Email'">
+              <template #input>
+                <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
+                  <template v-slot:append>
+                    <q-icon name="chevron_right" />
+                  </template>
+                </q-input>
+              </template>
+            </InputField> -->
+
+            <InputField :label="'Email'">
+              <template #input>
+                <q-input
+                  type="email"
+                  ref="emailRef"
+                  hide-bottom-space
+                  v-model="passwordForm.email"
+                  :rules="[(val) => (val && val.length > 0) || 'Please insert email']"
                   outlined
                   label-color="brand"
                   color="green"
@@ -69,7 +97,6 @@
                   hide-bottom-space
                   type="text"
                   v-model="passwordForm.captchaCode"
-                  lazy-rules
                   :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
                   outlined
                   label-color="brand"
@@ -88,20 +115,24 @@
           </template>
         </InputRowGrid>
       </div>
+
+      <div class="bottom-btn">
+        <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd">
+          Confirm
+        </q-btn>
+      </div>
     </q-form>
 
     <q-form v-else class="q-gutter-y-md rounded-borders">
       <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
       <InputRowGrid>
         <template #fields>
-          <InputField>
+          <InputField :label="'OTP'">
             <template #input>
               <q-input
                 ref="codeRef"
                 hide-bottom-space
                 v-model="verificationForm.code"
-                label="OTP"
-                lazy-rules
                 :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
                 rounded
                 outlined
@@ -111,20 +142,16 @@
             </template>
           </InputField>
 
-          <InputField>
+          <InputField :label="'New Password'">
             <template #input>
               <q-input
                 ref="newPwdRef"
                 :type="isPwd ? 'password' : 'text'"
                 hide-bottom-space
                 v-model="verificationForm.newPassword"
-                label="New Password"
-                lazy-rules
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please Enter New Password',
-                  (val) => (val.length > 5 && val.length <= 12) || 'Password Must Be 6 To 12 Character',
-                  (val) =>
-                    (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || 'Stronger Password Is Recommended'
+                  (val) => (val && val.length > 0) || 'Please insert password',
+                  (val) => val.length > 6 || 'The characters of password must be above 6'
                 ]"
                 rounded
                 outlined
@@ -142,18 +169,16 @@
             </template>
           </InputField>
 
-          <InputField>
+          <InputField :label="'Confirm New Password'">
             <template #input>
               <q-input
                 ref="newConfirmPwdRef"
                 :type="isConfirmPwd ? 'password' : 'text'"
                 hide-bottom-space
                 v-model="newConfirmPwdVModel"
-                label="Confirm New Password"
-                lazy-rules
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please Enter Confirm Password',
-                  (val) => (val.length > 5 && val.length <= 12) || 'Confirm Password Must Be 6 To 12 Character',
+                  (val) => (val && val.length > 0) || 'Please insert password',
+                  (val) => val.length > 6 || 'The characters of password must be above 6',
                   (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
                 ]"
                 rounded
@@ -170,7 +195,7 @@
                 </template>
               </q-input>
 
-              <div v-if="verificationForm.newPassword" class="password-str-div">
+              <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
                 <span
                   :class="{
                     'weak-pwd': pwdStrength == 'weak',
@@ -189,19 +214,17 @@
                   Normal
                 </span>
                 <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-              </div>
+              </div> -->
             </template>
           </InputField>
 
-          <InputField>
+          <InputField :label="'Verification Code'">
             <template #input>
               <q-input
                 ref="captchaRef"
                 hide-bottom-space
                 type="text"
                 v-model="verificationForm.captchaCode"
-                label="Verification Code"
-                lazy-rules
                 :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
                 rounded
                 outlined
@@ -215,15 +238,23 @@
             </template>
           </InputField>
 
-          <PrimaryButton :label="'Submit'" :onClick="onVerifyForgotPassword"></PrimaryButton>
+          <div class="bottom-btn">
+            <q-btn
+              no-caps
+              unelevated
+              class="btn-primary btn-primary__full"
+              :loading="isLoading"
+              @click="onVerifyForgotPassword"
+            >
+              Confirm
+            </q-btn>
+          </div>
         </template>
       </InputRowGrid>
     </q-form>
 
-    <div class="bottom-btn">
-      <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd">
-        Confirm
-      </q-btn>
+    <div class="bottom-img">
+      <img src="../assets/images/auth/login-img2.png" />
     </div>
   </div>
 </template>
@@ -246,8 +277,8 @@ const router = useRouter();
 const verificationImg = ref("");
 const passwordForm = reactive({
   loginName: "",
-  phone: "",
-  // email: "",
+  // phone: "",
+  email: "",
   captchaCode: "",
   codeId: ""
 });
@@ -269,7 +300,7 @@ const getCode = () => {
 
 const loginNameRef = ref();
 const phoneRef = ref();
-// const emailRef = ref();
+const emailRef = ref();
 const ftCaptchaRef = ref();
 
 const codeRef = ref();
@@ -287,55 +318,21 @@ const newConfirmPwdVModel = ref();
 // };
 
 const isRequestSent = ref(false);
-// const onSubmitForgotPwd = () => {
-//   loginNameRef.value.validate();
-//   emailRef.value.validate();
-//   ftCaptchaRef.value.validate();
-
-//   $q.loading.show({
-//     message: "Sending verification code..."
-//   });
-
-//   if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
-//     $q.loading.hide();
-//   } else {
-//     api
-//       .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
-//       .then((response) => {
-//         if (response.code === 0) {
-//           isRequestSent.value = true;
-//           SessionStorage.set("emailCodeId", response.data.codeId);
-//         }
-//       })
-//       .catch((error) => {})
-//       .then(() => {
-//         $q.loading.hide();
-//       });
-
-//     getCode();
-//   }
-// };
 
 const onSubmitForgotPwd = () => {
-  // loginNameRef.value.validate();
-  phoneRef.value.validate();
+  loginNameRef.value.validate();
+  emailRef.value.validate();
   ftCaptchaRef.value.validate();
 
   $q.loading.show({
     message: "Sending verification code..."
   });
 
-  passwordForm.loginName = passwordForm.phone;
-
-  if (
-    // loginNameRef.value.hasError ||
-    phoneRef.value.hasError ||
-    ftCaptchaRef.value.hasError
-  ) {
+  if (loginNameRef.value.hasError || emailRef.value.hasError || ftCaptchaRef.value.hasError) {
     $q.loading.hide();
   } else {
     api
-      .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordForm))
+      .post("/otp/sendForgetPasswordEmail", qs.stringify(passwordForm))
       .then((response) => {
         if (response.code === 0) {
           isRequestSent.value = true;
@@ -351,29 +348,116 @@ const onSubmitForgotPwd = () => {
   }
 };
 
+// const onSubmitForgotPwd = () => {
+//   // loginNameRef.value.validate();
+//   phoneRef.value.validate();
+//   ftCaptchaRef.value.validate();
+
+//   $q.loading.show({
+//     message: "Sending verification code..."
+//   });
+
+//   passwordForm.loginName = passwordForm.phone;
+
+//   if (
+//     // loginNameRef.value.hasError ||
+//     phoneRef.value.hasError ||
+//     ftCaptchaRef.value.hasError
+//   ) {
+//     $q.loading.hide();
+//   } else {
+//     api
+//       .post("/otp/sendForgetPasswordPhone", qs.stringify(passwordForm))
+//       .then((response) => {
+//         if (response.code === 0) {
+//           isRequestSent.value = true;
+//           SessionStorage.set("emailCodeId", response.data.codeId);
+//         }
+//       })
+//       .catch((error) => {})
+//       .then(() => {
+//         $q.loading.hide();
+//       });
+
+//     getCode();
+//   }
+// };
+
 // const verificationForm = reactive({
 //   email: "",
 //   code: "",
 //   codeId: SessionStorage.getItem("emailCodeId"),
 //   newPassword: ""
 // });
+
+const onVerifyForgotPassword = () => {
+  codeRef.value.validate();
+  newPwdRef.value.validate();
+  captchaRef.value.validate();
+
+  $q.loading.show({
+    message: "Submitting..."
+  });
+
+  if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
+    $q.loading.hide();
+  } else {
+    verificationForm.codeId = SessionStorage.getItem("emailCodeId");
+    verificationForm.email = passwordForm.email;
+
+    api
+      .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Password Reset Completed",
+            icon: "check_circle_outline"
+          });
+          isRequestSent.value = false;
+          router.push("/login");
+        }
+      })
+      .catch((error) => {})
+      .then(() => {
+        $q.loading.hide();
+      });
+
+    getCode();
+  }
+};
+
+const verificationForm = reactive({
+  // phone: "",
+  code: "",
+  captchaCode: "",
+  codeId: SessionStorage.getItem("emailCodeId"),
+  newPassword: ""
+});
 // const onVerifyForgotPassword = () => {
 //   codeRef.value.validate();
 //   newPwdRef.value.validate();
+//   newConfirmPwdRef.value.validate();
 //   captchaRef.value.validate();
 
 //   $q.loading.show({
 //     message: "Submitting..."
 //   });
 
-//   if (codeRef.value.hasError || newPwdRef.value.hasError || captchaRef.value.hasError) {
+//   if (
+//     codeRef.value.hasError ||
+//     newPwdRef.value.hasError ||
+//     newConfirmPwdRef.value.hasError ||
+//     captchaRef.value.hasError
+//   ) {
 //     $q.loading.hide();
 //   } else {
 //     verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-//     verificationForm.email = passwordForm.email;
+//     // verificationForm.phone = passwordForm.phone;
 
 //     api
-//       .post("/otp/verifyForgetPasswordEmail", qs.stringify(verificationForm))
+//       .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
 //       .then((response) => {
 //         if (response.code === 0) {
 //           $q.notify({
@@ -394,57 +478,6 @@ const onSubmitForgotPwd = () => {
 //     getCode();
 //   }
 // };
-
-const verificationForm = reactive({
-  phone: "",
-  code: "",
-  captchaCode: "",
-  codeId: SessionStorage.getItem("emailCodeId"),
-  newPassword: ""
-});
-const onVerifyForgotPassword = () => {
-  codeRef.value.validate();
-  newPwdRef.value.validate();
-  newConfirmPwdRef.value.validate();
-  captchaRef.value.validate();
-
-  $q.loading.show({
-    message: "Submitting..."
-  });
-
-  if (
-    codeRef.value.hasError ||
-    newPwdRef.value.hasError ||
-    newConfirmPwdRef.value.hasError ||
-    captchaRef.value.hasError
-  ) {
-    $q.loading.hide();
-  } else {
-    verificationForm.codeId = SessionStorage.getItem("emailCodeId");
-    verificationForm.phone = passwordForm.phone;
-
-    api
-      .post("/otp/verifyForgetPasswordPhone", qs.stringify(verificationForm))
-      .then((response) => {
-        if (response.code === 0) {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: "Password Reset Completed",
-            icon: "report_problem"
-          });
-
-          router.push("/login");
-        }
-      })
-      .catch((error) => {})
-      .then(() => {
-        $q.loading.hide();
-      });
-
-    getCode();
-  }
-};
 
 const charType = (num) => {
   if (num >= 48 && num <= 57) return 1;
@@ -522,9 +555,21 @@ onMounted(() => {
   img {
     display: block;
     width: 100%;
-    max-width: 300px;
+    max-width: 100px;
+    margin-bottom: 10px;
   }
 }
+
+// .forgot-password-form-logo-img {
+//   padding: 0 16px;
+//   display: flex;
+//   justify-content: center;
+//   img {
+//     display: block;
+//     width: 100%;
+//     max-width: 300px;
+//   }
+// }
 .forgot-password-form-grid {
   display: grid;
   grid-auto-flow: row;
@@ -579,7 +624,12 @@ onMounted(() => {
 }
 
 .bottom-btn {
-  margin-top: auto;
-  padding: 20px 0 0;
+  // margin-top: 20px;
+  padding: 12px 0px 20px;
+}
+
+.bottom-img {
+  text-align: center;
+  margin-top: 10px;
 }
 </style>

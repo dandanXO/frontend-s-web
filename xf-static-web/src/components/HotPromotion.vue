@@ -14,12 +14,12 @@
       :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao' && store.token"
     />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser'" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <BonusSpinWheel v-if="list.redirectUrl === 'cny-spinwheel' && !isCommonPromo" />
     <ReturnPromo v-if="list.redirectUrl === 'xf-return-promo' && !isCommonPromo" />
     <DepositAwardPromo v-if="list.redirectUrl === 'xf-deposit-award' && !isCommonPromo" />
-    <div v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo && store.token" class="promo-4">
+    <div v-if="list.redirectUrl === 'fucaiiphone' && !isCommonPromo" class="promo-4">
       <div class="tabs">
         <el-tabs v-model="activeKey" type="card">
           <el-tab-pane key="1" label="选择幸运号码">
@@ -272,6 +272,8 @@ export default defineComponent({
       query: {
         winStatus: "",
         recordTime: null,
+        recordTimeStart: null,
+        recordTimeEnd: null,
         onlyMe: false
       },
       winnersQuery: {
@@ -390,6 +392,14 @@ export default defineComponent({
       } else {
         this.memberId = null;
       }
+      if (this.query.recordTime) {
+        this.query.recordTimeStart = moment(this.query.recordTime).format("YYYY-MM-DD 00:00:00");
+        this.query.recordTimeEnd = moment(this.query.recordTime).format("YYYY-MM-DD 23:59:59");
+      } else {
+        this.query.recordTimeStart = null;
+        this.query.recordTimeEnd = null;
+      }
+
       luckyNumberList(this.query, this.memberId)
         .then((res) => {
           if (res.code === 0) {

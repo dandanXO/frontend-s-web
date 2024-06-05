@@ -38,10 +38,10 @@ const appDownloadUrl = ref();
 
 onMounted(() => {
   getAppDownload().then((res) => {
-    if(res.code === 0 && res.data) {
+    if (res.code === 0 && res.data) {
       appDownloadUrl.value = res.data;
     }
-  })
+  });
 });
 </script>
 <style scoped lang="scss">
@@ -94,7 +94,6 @@ onMounted(() => {
         margin-bottom: 20px;
         font-size: 60px;
         line-height: 70px;
-        font-family: Poppins Bold;
         background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
         background-size: 100%;
         background-repeat: repeat;
@@ -103,7 +102,6 @@ onMounted(() => {
       }
       .text {
         color: #83a3ca;
-        font-family: Inter Medium;
         font-size: 18px;
       }
       // .codes {

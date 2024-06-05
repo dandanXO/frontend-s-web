@@ -7,7 +7,7 @@
       </div>
       <div class="withdrawable">
         <div class="amt">{{ selectedWithdrawalMethod.withdrawableBalance }}</div>
-        <div class="words">Cash balance</div>
+        <div class="words">Withdrawable</div>
       </div>
     </div>
 
@@ -29,8 +29,8 @@
         </div>
       </div>
       <a-form ref="formRef" :hide-required-mark="true" :model="withdrawInfo" :rules="withdrawRules" :colon="false">
-        <span class="account-title">{{!isVirtual ? 'Bank card' : 'E-wallet'}}</span>
-      
+        <span class="account-title">{{ !isVirtual ? "Bank card" : "E-wallet" }}</span>
+
         <a-form-item
           class="select"
           name="cardId"
@@ -46,36 +46,44 @@
             :placeholder="!isVirtual ? 'Select bank card' : 'Select E-wallet'"
           >
             <a-select-option v-for="b in withdrawState.bankCardList" :key="b.id" :value="b.id">
-              Acc No. **** {{ b.cardNumber.slice(b.cardNumber.length - 4, b.cardNumber.length) }}<br>
+              Acc No. **** {{ b.cardNumber.slice(b.cardNumber.length - 4, b.cardNumber.length) }}
+              <br />
               IFSC {{ b.cardAddress }}
             </a-select-option>
           </a-select>
         </a-form-item>
 
-      
         <div class="bot-wrapper">
-            <div class="info">
-              <div class="desc-wrapper">
-                <div class="desc">Withdraw Amount</div>
-              </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">Withdraw Amount</div>
             </div>
-            <div class="info">
-              <div class="desc-wrapper">
-                <div class="desc">{{ store.vip }} Daily Limit</div>
-              </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+          </div>
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">{{ store.vip }} Daily Limit</div>
             </div>
-            <div class="info">
-              <div class="desc-wrapper">
-                <div class="desc">Remain Wagers</div>
-              </div>
-              <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
+          </div>
+          <div class="info">
+            <div class="desc-wrapper">
+              <div class="desc">Remain Wagers</div>
             </div>
+            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
+          </div>
         </div>
 
-        <span class="account-title">{{'Amount (' + convertToCommaAmount(selectedWithdrawalMethod.withdrawMin) + ' - ' + convertToCommaAmount(selectedWithdrawalMethod.withdrawMax) + ')'}}</span>
-      
+        <span class="account-title">
+          {{
+            "Amount (" +
+            convertToCommaAmount(selectedWithdrawalMethod.withdrawMin) +
+            " - " +
+            convertToCommaAmount(selectedWithdrawalMethod.withdrawMax) +
+            ")"
+          }}
+        </span>
+
         <a-form-item ref="amount" class="helptxt" name="amount">
           <a-input
             v-model:value="withdrawInfo.amount"
@@ -102,7 +110,7 @@
             </div>
           </div> -->
         </a-form-item>
-        
+
         <!-- <a-form-item v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="helptxt" label="Exchange Rate">
           <span style="color: #0b8f1a">
             1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
@@ -155,6 +163,7 @@
 
 <script setup lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+import { useRouter } from "vue-router";
 import { loadBankCards, confirmWithdraw, withdrawEntrance
  } from "@/api/personal/personal";
 import { message } from "ant-design-vue";
@@ -163,6 +172,7 @@ import { convertToCommaAmount } from "@/utils/utils";
 
 
     const store = userStore();
+    const router = useRouter();
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/'
     const formRef = ref();
     const activeItem = ref(0);
@@ -175,12 +185,12 @@ import { convertToCommaAmount } from "@/utils/utils";
       amount: "",
     });
     const withdrawalMethods = ref([])
-    const withdrawMethod= ref("EASYPAISA");
+    const withdrawMethod= ref("BANK");
     const isVirtual= computed(() => {
-      return (withdrawMethod.value === 'EASYPAISA') ? false : true;
+      return (withdrawMethod.value === 'BANK') ? false : true;
     })
     onMounted(() => {
-      getWithdrawalMethods()
+      getWithdrawalMethods();
     });
     const submitWithraw = () => {
       formRef.value
@@ -280,37 +290,32 @@ import { convertToCommaAmount } from "@/utils/utils";
         }
       })
     }
-    const checkNewUser = () => {
-      if (store.realName == "" || store.realName == null) {
-        ElMessage.error("Please fill in your personal details.")
-        router.push(`/center/top-up`);
-      }
-    };
 </script>
 
 <style scoped lang="scss">
-.dark-theme {
-  .account-container .account-content-wrapper .withdraw-type-item {
-    &.active {
-      background: #ffffff0d;
-      border: 1px solid #48a7ff;
-      filter: none;
-      color: #ffffff;
-      .type-name {
-        color: #ffffff;
-      }
-    }
-  }
-}
+// .dark-theme {
+//   .account-container .account-content-wrapper .withdraw-type-item {
+//     &.active {
+//       background: #ffffff0d;
+//       border: 1px solid #48a7ff;
+//       filter: none;
+//       color: #ffffff;
+//       .type-name {
+//         color: #ffffff;
+//       }
+//     }
+//   }
+// }
 .balance-withdrawal-container {
-  background: #FFFFFF0D;
+  background: #ffffff0d;
   display: flex;
-    padding: 10px;
-    width: 340px;
-    justify-content: center;
-    align-items: center;
-    margin: 20px 0;
-  .balance, .withdrawable {
+  padding: 10px;
+  width: 340px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  .balance,
+  .withdrawable {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -319,18 +324,18 @@ import { convertToCommaAmount } from "@/utils/utils";
     gap: 10px;
     padding: 15px;
     .amt {
-      font-family: 'Poppins Bold';
+      font-family: "Poppins Bold";
       font-size: 24px;
-      line-height: 24px;  
+      line-height: 24px;
     }
     .words {
-      font-family: 'Poppins Medium';
+      font-family: "Poppins Medium";
       font-size: 12px;
-      color: #9F9F9F;
+      color: #9f9f9f;
     }
   }
   .balance {
-    border-right: 1px solid #FFFFFF0D;
+    border-right: 1px solid #ffffff0d;
   }
 }
 .bot-wrapper {
@@ -339,7 +344,7 @@ import { convertToCommaAmount } from "@/utils/utils";
   flex-direction: column;
   margin-bottom: 20px;
   .info {
-    background: linear-gradient(90deg, #70BC62 -1.25%, #131313 104.06%);
+    background: linear-gradient(90deg, #70bc62 -1.25%, #131313 104.06%);
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
@@ -347,11 +352,9 @@ import { convertToCommaAmount } from "@/utils/utils";
     border-radius: 50px;
     .desc {
       &:first-child {
-        
         color: #ffffff;
       }
-      color: #8C968F;
-
+      color: #8c968f;
     }
   }
 }
@@ -446,31 +449,51 @@ import { convertToCommaAmount } from "@/utils/utils";
       }
     }
     .withdraw-type-item {
-      width: 100px;
+      background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+      background-size: cover;
+      filter: grayscale(1);
+      height: 30px;
+      width: 160px;
+      height: 80px;
+      color: #ffffff;
+      border-radius: 6px;
+      justify-content: flex-start;
+      align-items: flex-end;
       margin-right: 10px;
-      padding: 15px;
-      border-radius: 12px;
-
-      position: relative;
-      cursor: pointer;
       img {
-        width: 100%;
-        border-radius: 12px;
+        width: 40px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
       }
       &.active {
-        background: rgba(7, 91, 232, 0.1019607843);
-        box-shadow: none;
-        filter: drop-shadow(0px 0px 3px #ffffff);
-        pointer-events: none;
+        // background: rgba(255,255,255,.3);
+        background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+        background-size: cover;
+        // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+        //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+        border: 1px solid #b81212;
+        filter: none;
+        color: #ffffff;
+        position: relative;
+        &:after {
+          content: "";
+          background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
+          background-size: contain;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: -1px;
+          bottom: -1px;
+        }
         .type-name {
-          color: #075be8;
-          font-family: Inter Bold;
+          color: #ffffff;
         }
       }
       .type-name {
-        line-height: 15px;
-        margin: 10px 0 0;
-        overflow-wrap: break-word;
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
       }
       .promo {
         position: absolute;
@@ -583,10 +606,9 @@ import { convertToCommaAmount } from "@/utils/utils";
   .ant-input {
     border: 0;
   }
-  .ant-input-suffix, 
+  .ant-input-suffix,
   .ant-input-prefix {
-    color: #8C968F;
-;
+    color: #8c968f;
   }
 }
 

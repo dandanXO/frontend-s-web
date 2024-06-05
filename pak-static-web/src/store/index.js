@@ -8,7 +8,8 @@ import { reactive } from "vue";
 const TOKEN_KEY = "TOKEN";
 const DARK_MODE = "DARKMODE";
 export const globalStore = reactive({
-  isDarkMode: useLocalStorage(DARK_MODE, true),
+  // isDarkMode: useLocalStorage(DARK_MODE, true),
+  isDarkMode: false,
   isMenuActive: true
 });
 export const userStore = defineStore("userStore", {
@@ -30,7 +31,8 @@ export const userStore = defineStore("userStore", {
       isAffiliateA: false,
       isAffiliate2: false,
       isAffiliate3: false,
-      profilePhoto: ""
+      profilePhoto: "",
+      accountModalVisible: false
     };
   },
   actions: {
@@ -80,6 +82,9 @@ export const userStore = defineStore("userStore", {
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
+    },
+    openAccountModal() {
+      this.accountModalVisible = true;
     }
   },
   getters: {

@@ -133,15 +133,20 @@
             </li>
           </ul>
           <ul class="header-menu-list">
-            <li v-for="nav in contacts" :key="nav.name" class="header-menu-item">
-              <router-link
-                :to="nav.path"
-                class="header-nav"
-                @mouseover="hoveredMenu = nav.code"
-                :class="[nav.code.toLowerCase(), nav.submenu ? 'suffix' : '']"
+            <li class="header-menu-item">
+              <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
+                Live Support
+              </a>
+              <a class="header-nav feedback" @click="() => (feedbackModalVisible = true)">Feedback</a>
+              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
+              <a
+                class="header-nav whatsapp"
+                href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
+                target="_blank"
               >
-                {{ nav.name }}
-              </router-link>
+                Whatsapp
+              </a>
+              <a class="header-nav language" href="" target="_blank">Language</a>
             </li>
           </ul>
           <bet-ranking />
@@ -188,15 +193,13 @@
             <div class="refreshbtn" @click="refreshBalance"><img src="../../assets/images/common/refresh.png" /></div>
           </div> -->
           <router-link class="common-btn reg-btn" to="/center/top-up">{{ $t("layout.header.deposit") }}</router-link>
-          <UserProfile />
+          <UserProfile @open-dialog="trigger" />
 
           <div class="login-box mobile-menu-hide">
-            <!-- <div class="header-balance">₱ {{ balance.toFixed(2) }}</div> -->
             <div class="viewmail" />
             <div class="dropdown-container setting-hamburger">
               <div class="setting-hamburger">
                 <img src="../../assets/hamburger.svg" />
-                <!-- <RiListSettingsLine style="fill: #83a3ca" /> -->
               </div>
               <div class="abs-menu desktop" :class="triggerMenu ? 'show' : 'hide'">
                 <ul>
@@ -336,6 +339,7 @@
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
       <AccountModal v-model="accountModalVisible" />
+      <FeedbackModal v-model="feedbackModalVisible" />
     </div>
   </header>
 </template>
@@ -375,6 +379,7 @@ import DailyLoginCashBonusPromoPopup from "@/components/hotpromo/DAILY-LOGIN-CAS
 import NotificationSvg from "@/assets/images/layout/header/notification.svg";
 import AccountModal from "@/components/layout/header/AccountModal.vue";
 import BetRanking from "@/components/layout/header/BetRanking.vue";
+import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
 
 const navigations = [
   // { code: "VIP", name: "VIP", path: "/vip" },
@@ -385,15 +390,6 @@ const navigations = [
   // { code: "Promotion", name: "Promotion", path: "/promotion" },
   // { code: "Affiliates", name: "Affiliates", path: "/affiliate" },
   // { code: "AppTutorial", name: "App Tutorial", path: "/app-tutorial" }
-];
-
-// TODO: route path ?
-const contacts = [
-  { code: "live-support", name: "Live Support", path: "/test" },
-  { code: "feedback", name: "Feedback", path: "/test" },
-  { code: "telegram", name: "Telegram", path: "/test" },
-  { code: "whatsapp", name: "Whatsapp", path: "/test" },
-  { code: "language", name: "Language", path: "/test", submenu: [] }
 ];
 
 const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
@@ -409,7 +405,7 @@ const appPromo = ref(null);
 const dailyLoginPromoPopup = ref();
 const adsPopupListRef = ref();
 const activateTab = ref("casino");
-const accountModalVisible = ref(false);
+const feedbackModalVisible = ref(false);
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -449,7 +445,8 @@ function playGame(gameName, platformCode, gameCode, status) {
 }
 
 const store = userStore();
-const { token } = storeToRefs(store);
+const { token, accountModalVisible } = storeToRefs(store);
+const { openAccountModal } = store;
 const triggerMenu = ref(null);
 onMounted(() => {
   if (store.token) {
@@ -576,8 +573,6 @@ const toggleTheme = () => {
   }
 };
 
-const openAccountModal = () => (accountModalVisible.value = true);
-
 const handleSwitchChange = (value) => {
   if (value === "casino") {
     router.push("/home");
@@ -667,7 +662,8 @@ $link-color: #ffffff;
       color: #ffffff;
       transition: all;
       font-weight: bold;
-      background: transparent;
+      background: linear-gradient(91.02deg, rgba(255, 230, 0, 0.16) 0%, rgba(72, 167, 255, 0.16) 100%),
+        linear-gradient(270deg, #e84600 0%, #e8df00 100%);
       box-shadow: -1px 2px 4px 0px #ffffffcc inset;
       width: 130px;
       height: 48px;
@@ -684,7 +680,6 @@ $link-color: #ffffff;
       gap: 10.53px;
       position: relative;
       border: 1px solid #cbe3ad;
-      font-family: Baloo Bhai 2;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
@@ -1148,7 +1143,6 @@ $link-color: #ffffff;
             background: unset;
             display: flex;
             align-items: center;
-            font-family: Baloo Bhai 2;
             font-size: 30px;
             font-weight: 500;
             line-height: 16.33px;
@@ -1157,7 +1151,7 @@ $link-color: #ffffff;
 
         &:hover,
         &.router-link-exact-active {
-          background: linear-gradient(270deg, #152df4 0%, #af0be8 100%);
+          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
           box-shadow: 0px -4px 4px 0px #02009e inset;
           box-shadow: -1px 2px 4px 0px #ffffffcc inset;
           color: #ffffff;
@@ -1337,7 +1331,6 @@ $link-color: #ffffff;
       align-items: center;
       gap: 5px;
       border-radius: 12px;
-      font-family: "Inter Bold";
       font-size: 18px;
 
       img {

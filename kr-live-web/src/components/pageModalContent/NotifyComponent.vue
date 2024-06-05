@@ -1,6 +1,6 @@
 <template>
   <q-list bordered class="rounded-borders">
-    <q-expansion-item icon="notifications" :label="'제목'" :caption="'날짜'" disable>
+    <q-expansion-item icon="info" :label="'제목'" :caption="'날짜'" disable>
       <q-card style="background:transparent;">
         <q-card-section>
           콘텐츠

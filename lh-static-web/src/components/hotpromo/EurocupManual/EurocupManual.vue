@@ -322,6 +322,7 @@ import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
 import GameModal from "@/components/modal/GameModal";
+import { useLocalStorage } from "@vueuse/core";
 
 const platformGame = ref(null);
 const tab = ref("groupStage");
@@ -330,7 +331,7 @@ const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const openPlat = (platformMatchId) => {
   var matchId = platformMatchId ?? "";

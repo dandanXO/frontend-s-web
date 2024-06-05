@@ -16,7 +16,7 @@
               </InputField>
             </div>
 
-            <div class="pc-form-item item-click" @click="openBindEmailDialog">
+            <div class="pc-form-item" :class="{ 'item-click': !formDetail.emailVerified }" @click="openBindEmailDialog">
               <InputField :label="'Email'">
                 <template #input>
                   <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
@@ -137,7 +137,7 @@
       </q-form>
     </div>
   </q-page>
-  <q-dialog width="100%" v-model="showCaptchaDialog">
+  <!-- <q-dialog width="100%" v-model="showCaptchaDialog">
     <q-card style="width: 100%; padding: 20px" class="bg-dark text-white text-center">
       <q-card-section class="q-mb-md">
         <strong>Tips</strong>
@@ -147,7 +147,7 @@
       </q-card-section>
       <router-link to="/login?redirect=/account"><q-btn label="Confirm" color="brightbtn" /></router-link>
     </q-card>
-  </q-dialog>
+  </q-dialog> -->
 
   <q-dialog v-model="showCaptchaDialog" width="100%">
     <q-card width="100%">
@@ -319,7 +319,7 @@
                     clearable
                     placeholder="Enter verification code"
                     v-model="updateEmailInfo.code"
-                    ref="updateEmailCode"
+                    ref="updateEmailCodeRef"
                     hide-bottom-space
                     type="text"
                     :rules="[(val) => val.length !== 0 || 'Verification code is required']"
@@ -333,7 +333,7 @@
         </div>
 
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePwd">Confirm</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">Confirm</q-btn>
         </div>
 
         <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
@@ -393,11 +393,8 @@
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
                     :rules="[
-                      (val) => (val && val.length > 0) || 'Please insert new password',
-                      (val) =>
-                        (val.length >= 6 && val.length <= 11) ||
-                        'The characters of new password must be between 6 and 11',
-                      () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                      (val) => (val && val.length > 0) || 'Please insert password',
+                      (val) => val.length > 6 || 'The characters of password must be above 6'
                     ]"
                   >
                     <template v-slot:append>
@@ -708,7 +705,9 @@ const openChangePasswordDialog = () => {
 
 const bindEmailDialog = ref(false);
 const openBindEmailDialog = () => {
-  bindEmailDialog.value = !bindEmailDialog.value;
+  if (!formDetail.emailVerified) {
+    bindEmailDialog.value = !bindEmailDialog.value;
+  }
 };
 
 const userKYCDialog = ref(false);
@@ -1182,7 +1181,10 @@ const onCaptchaSubmit = () => {
         color = "positive";
 
       if (res.code === 0) {
-        showCaptchaDialog.value = false;
+        verificationCodeDialog.value = false;
+
+        updateEmailInfo.codeId = res.data.codeId;
+
         showVerificationTokenInput.value = true;
         verificationCodeID = res.data.codeId;
         startCountdownResendOTP.value = true;
@@ -1195,6 +1197,13 @@ const onCaptchaSubmit = () => {
             startCountdownResendOTP.value = false;
           }
         }, 1000);
+
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Email verification sent",
+          icon: "check_circle_outline"
+        });
       } else color = "negative";
 
       if (message) $q.notify({ message, color });
@@ -1216,11 +1225,12 @@ const updatePwdInfo = reactive({
 
 const updateEmailInfo = reactive({
   email: "",
-  code: ""
+  code: "",
+  codeId: ""
 });
 
 const updateEmailRef = ref();
-const updateEmailCode = ref();
+const updateEmailCodeRef = ref();
 
 const isAlphanumeric = (value, translation) => {
   const passwordPattern = /^(?=.*?[a-z])(?=.*?\d)[a-z\d]+$/i;
@@ -1253,6 +1263,48 @@ const submitUpdatePwd = () => {
           // router.go("/account");
           resetChangePasswordInfo();
           changePasswordDialog.value = false;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: response.message,
+            icon: "report_problem"
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+      });
+  }
+};
+
+const submitUpdateEmail = () => {
+  updateEmailRef.value.validate();
+  updateEmailCodeRef.value.validate();
+
+  if (updateEmailRef.value.hasError || updateEmailCodeRef.value.hasError) {
+  } else {
+    api
+      .post(
+        "/session/verifyAndUpdateEmail",
+        qs.stringify({
+          email: updateEmailInfo.email,
+          code: updateEmailInfo.code,
+          codeId: updateEmailInfo.codeId
+        })
+      )
+      .then((response) => {
+        if (response.code === 0) {
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "Email binded successfully",
+            icon: "check_circle_outline"
+          });
+
+          bindEmailDialog.value = false;
+          store.getMemberInfo();
+          startRefresh();
         } else {
           $q.notify({
             color: "negative",
@@ -1394,7 +1446,7 @@ const openConfirmSignOutDialog = () => {
       &:after {
         content: "";
         background: rgba(255, 255, 255, 0.05);
-        height: calc(100% - 45px);
+        height: calc(100% - 36px);
         width: 100%;
         position: absolute;
         bottom: 0;

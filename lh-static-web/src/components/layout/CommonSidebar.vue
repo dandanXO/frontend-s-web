@@ -53,13 +53,20 @@
     :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
     @mousedown="startDragging('rocket', $event)"
   >
-    <div v-for="game in gamePromo" style="position: relative">
+    <div>
       <div class="close-btn" @click="hideRocket()">X</div>
-      <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
+      <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
         <div class="rocket">
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
-      </div>
+      </div> -->
+      <el-carousel height="130px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+        <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
+            <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
+              <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
+            </div>
+        </el-carousel-item>
+      </el-carousel>
     </div>
   </div>
 
@@ -72,11 +79,18 @@
     >
       <div style="position: relative">
         <div class="close-btn" @click="hideFloatPromo()">X</div>
-        <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
+        <!-- <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
           <div class="rocket">
             <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
           </div>
-        </div>
+        </div> -->
+        <el-carousel height="130px"  :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+          <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
+              <div @click="gotoPromo(promo.code)" class="rocket-container">
+                <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+              </div>
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
 </template>
@@ -85,7 +99,7 @@ import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
-import { useDark } from "@vueuse/core";
+import { useDark, useLocalStorage } from "@vueuse/core";
 import GameModal from "@/components/modal/GameModal.vue";
 import { ElMessage } from "element-plus";
 import { useRoute, useRouter } from "vue-router";
@@ -96,7 +110,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
     const customerHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -136,6 +150,8 @@ export default defineComponent({
     const floatPromo = ([]);
     const gamePromo = ([]);
     const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
       getFloatingItems().then((res) => {
         if (res.code === 0) {
           res.data.forEach(element => {
@@ -148,6 +164,7 @@ export default defineComponent({
               showRocket.value = true;
             }
           });
+          checkFloatPromo();
           updatePromo(); // Initially update the displayed promo
           // Update the displayed promo every 5 seconds
           setInterval(updatePromo, 3000);
@@ -155,6 +172,11 @@ export default defineComponent({
           ElMessage.error(res.message);
         }
       })
+    }
+    const checkFloatPromo = () => {
+      if (gamePromo.length === 0) {
+        promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      }
     }
 
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
@@ -284,6 +306,8 @@ export default defineComponent({
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 99;
+    cursor: pointer;
   }
 
   .rocket {

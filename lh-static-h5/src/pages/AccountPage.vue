@@ -425,7 +425,7 @@ import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-// import { RiRefreshLine } from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core"
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { Cropper } from 'vue-advanced-cropper'
@@ -555,8 +555,8 @@ export default defineComponent({
       }
     });
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-    const imageDir = process.env.IMAGE_CDN + "/profile/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/profile/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api

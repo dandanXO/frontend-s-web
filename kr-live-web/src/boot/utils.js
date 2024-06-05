@@ -1,4 +1,4 @@
-import { Platform } from "quasar";
+import { Platform, Notify } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 
@@ -140,3 +140,21 @@ export const updateDate = (val) => {
   };
   return newDate.Y + newDate.M + newDate.D;
 };
+
+export const errorNotify = (message) => {
+  Notify.create({
+    color: "negative",
+    position: "top",
+    message: message,
+    icon: "report_problem"
+  });
+}
+
+export const successNotify = (message) => {
+  Notify.create({
+    color: "positive",
+    position: "top",
+    message: message,
+    icon: "check_circle_outline"
+  });
+}
