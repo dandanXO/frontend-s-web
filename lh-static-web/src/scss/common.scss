@@ -211,6 +211,25 @@ body {
     border-radius: 12px 12px 0 0;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
   }
+
+  .imptann-modal {
+    background: transparent;
+    max-width: 750px;
+    margin-top: 10px !important;
+
+    .el-dialog__body {
+      padding: 20px !important;
+      border-radius:12px;
+      text-align:center;
+    }
+
+    .alert-img {
+      display: block;
+      width: 100%;
+      border-radius:12px;
+    }
+
+  }
 }
 .full-modal {
   &.el-dialog {
