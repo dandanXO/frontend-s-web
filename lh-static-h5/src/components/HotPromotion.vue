@@ -17,7 +17,8 @@
       "
     />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
-    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />
+<!--    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />-->
+    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-eurocup-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
@@ -145,7 +146,7 @@ import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
-// import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
+import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
@@ -191,7 +192,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     DragonCardPromo,
-    // PrizePoolVotePromo,
+    EurocupVotePromo,
     GoldenEggPromo,
     HongBaoYu2024,
     UpcomingMatchPromo,
@@ -306,6 +307,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-invite-2" ||
       this.list.redirectUrl === "lh1-invite-3" ||
       this.list.redirectUrl === "lh1-s13-vote" ||
+      this.list.redirectUrl === "lh1-eurocup-vote" ||
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-sports-continuous-win" ||
       this.list.redirectUrl === "lh1-gift8" ||
