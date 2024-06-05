@@ -581,6 +581,16 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: 'Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to \'Allow pop-ups\' before attempting to recharge again.',
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
