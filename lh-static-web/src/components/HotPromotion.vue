@@ -82,6 +82,7 @@
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
+    <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
 
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
@@ -143,6 +144,7 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue"
+import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -192,6 +194,7 @@ export default defineComponent({
     EurocupManual,
     SportZhongChao,
     Nba24Match,
+    fishHongbao,
     LPLSummer2024,
     DuanWuJiePromo
     // DailyBonus
@@ -477,7 +480,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-nba24-match" ||
       this.list.redirectUrl === "lh-lpl-summer24" ||
       this.list.redirectUrl === "lh-nba24-match" ||
-      this.list.redirectUrl === "lh-duanwujie24"
+      this.list.redirectUrl === "lh-duanwujie24"||
+      this.list.redirectUrl === "lh-fish-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {

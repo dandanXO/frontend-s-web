@@ -228,7 +228,6 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-
       if (!store.token) {
         ElMessageBox.alert('请登录后再操作', '系统提示', {
           // if you want to disable its autofocus
@@ -256,7 +255,7 @@ export default defineComponent({
           // }
           // isPromoDetail.value = true;
 
-          console.log(promo)
+          console.log(promo,'promo')
           selectedPromo.value = promo
         }
       }
