@@ -369,6 +369,7 @@ export default {
     enter_lastname: "Please enter your name.",
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
+    ok_btn: "Okay",
     close_btn: "Close",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
