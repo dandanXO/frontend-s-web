@@ -67,6 +67,9 @@ watch(
     if (activeName.value === "Withdraw") {
       router.push({ query: { tab: "withdraw" } });
     }
+    if (activeName.value === "Deposit") {
+      router.push({ query: "" });
+    }
   }
 );
 </script>

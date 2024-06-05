@@ -33,6 +33,7 @@ export const userStore = defineStore("userStore", {
       isAffiliate3: false,
       profilePhoto: "",
       accountModalVisible: false,
+      accountModalRegVisible: false,
       unreadInboxMail: 0
     };
   },
@@ -91,8 +92,13 @@ export const userStore = defineStore("userStore", {
     memberLogout() {
       return logout().then(() => (this.token = null));
     },
-    openAccountModal() {
+    openAccountModal(regLogin) {
       this.accountModalVisible = true;
+      if (regLogin === 'register') {
+        this.accountModalRegVisible = true;
+      } else {
+        this.accountModalRegVisible = false;
+      }
     }
   },
   getters: {

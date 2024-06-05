@@ -176,8 +176,7 @@ $node-color: #dd4645;
   left: -10px;
 }
 
-.dark-theme {
-  .node {
+.node {
     .node-content {
       .node-item {
         color: rgba(255, 255, 255, 0.3);
@@ -187,20 +186,28 @@ $node-color: #dd4645;
         background-size: cover;
         filter: grayscale(1);
         height: 30px;
-        width: 180px;
-        height: 100px;
+        width: 150px;
+        height: 80px;
         color: #ffffff;
         border-radius: 6px;
         justify-content: flex-start;
         align-items: flex-end;
+              padding: 10px;
         .node-text {
+          display: flex;
           justify-content: flex-start;
-          align-items: flex-start;
+          align-items: center;
+          gap: 10px;
+          font-size: 14px;
+          color: #ffffff;
+          height: 100%;
+          padding-top: 25px;
           img {
             width: 40px;
             position: absolute;
             top: 10px;
             right: 10px;
+    background: #181818;
           }
         }
         &.active {
@@ -237,7 +244,7 @@ $node-color: #dd4645;
             background-size: cover;
             filter: grayscale(1);
             height: 30px;
-            width: 108px;
+            width: 150px;
             height: 80px;
             color: #ffffff;
             border-radius: 4px;
@@ -268,7 +275,6 @@ $node-color: #dd4645;
       }
     }
   }
-}
 .payment-method-wrapper {
   // display: grid;
   // grid-template-columns: repeat(auto-fill, 200px);
@@ -333,33 +339,34 @@ $node-color: #dd4645;
       background: none;
       border-top: 1px solid #83a3ca33;
       font-weight: bold;
+      padding: 0;
     }
     .node-content {
-      .node-item.payment-method-item {
-        border-radius: 40px;
-        font-weight: normal;
-        background: transparent;
-        color: #ffffff;
-        min-width: 10rem;
-        position: relative;
-        &.active {
-          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
-          color: #ffffff;
-          font-weight: bold;
-        }
+      // .node-item.payment-method-item {
+      //   border-radius: 40px;
+      //   font-weight: normal;
+      //   background: transparent;
+      //   color: #ffffff;
+      //   min-width: 10rem;
+      //   position: relative;
+      //   &.active {
+      //     background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
+      //     color: #ffffff;
+      //     font-weight: bold;
+      //   }
 
-        &::after {
-          position: absolute;
-          content: "";
-          inset: 0;
-          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-          border-radius: 40px;
-          padding: 1px;
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask-composite: exclude;
-          pointer-events: none;
-        }
-      }
+      //   &::after {
+      //     position: absolute;
+      //     content: "";
+      //     inset: 0;
+      //     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      //     border-radius: 40px;
+      //     padding: 1px;
+      //     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      //     mask-composite: exclude;
+      //     pointer-events: none;
+      //   }
+      // }
       .node-text {
         img {
           display: none;
@@ -367,44 +374,44 @@ $node-color: #dd4645;
       }
     }
   }
-  .node-content {
-    .payment-method-item {
-      text-align: center;
-      padding: 10px 8px;
-      cursor: pointer;
+  // .node-content {
+  //   .payment-method-item {
+  //     text-align: center;
+  //     padding: 10px 8px;
+  //     cursor: pointer;
 
-      &:hover {
-      }
-      &.active {
-        background: #075be81a;
-        color: #075be8;
-        box-shadow: none;
-        filter: drop-shadow(0px 0px 3px #ffffff);
-      }
-    }
-    .node-item {
-      display: flex;
-      justify-content: center;
-      min-width: 6rem;
-      // width: 140px;
-      font-weight: 700;
-      .payment-method-wrapper {
-        display: none;
-      }
-    }
-    .node-text {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 14px;
-      color: #ffffff;
-      img {
-        margin-bottom: 0;
-      }
-    }
-  }
+  //     &:hover {
+  //     }
+  //     &.active {
+  //       background: #075be81a;
+  //       color: #075be8;
+  //       box-shadow: none;
+  //       filter: drop-shadow(0px 0px 3px #ffffff);
+  //     }
+  //   }
+  //   .node-item {
+  //     display: flex;
+  //     justify-content: center;
+  //     min-width: 6rem;
+  //     // width: 140px;
+  //     font-weight: 700;
+  //     .payment-method-wrapper {
+  //       display: none;
+  //     }
+  //   }
+  //   .node-text {
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     flex-direction: column;
+  //     gap: 10px;
+  //     font-size: 14px;
+  //     color: #ffffff;
+  //     img {
+  //       margin-bottom: 0;
+  //     }
+  //   }
+  // }
   // .node-content {
   //   display: flex;
   //   align-items: stretch;
