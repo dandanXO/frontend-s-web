@@ -629,14 +629,14 @@ onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
-  checkBankcardEmpty();
+  // checkBankcardEmpty();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
-  checkBankcardEmpty();
+  // checkBankcardEmpty();
 });
 
 const isValidCardNumber = () => {

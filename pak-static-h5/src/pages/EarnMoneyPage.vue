@@ -1,11 +1,6 @@
 <template>
   <ProfileSummary :homeProfile="true" />
 
-  <!-- <pre>oneTimeBonusSetting--{{ oneTimeBonusSetting }}</pre> -->
-  <!-- <pre>memberDetail--{{ memberDetail }}</pre> -->
-  <!-- <pre>latestInvitees--{{ latestInvitees }}</pre> -->
-  <!-- <pre>selfTgurl{{ selfTgurl }}</pre> -->
-
   <div class="earn-money-wrapper">
     <div class="earn-money-container">
       <div class="earn-money-title">Bonus Pot Arrived</div>
@@ -18,14 +13,14 @@
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-01.png" /></div>
         </div>
         <div class="pot-item pot-item__2">
-          <div class="item-amount">{{ memberDetail.totalRefer }}</div>
+          <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
           <div class="item-desc">My Total Number Of Invites</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-02.png" /></div>
         </div>
       </div>
-
+      <!-- banner.redirectUrl.includes("https://") -->
       <div class="earn-money-details-grid">
-        <div class="details-item">
+        <div class="details-item" v-if="isShowOnetime">
           <div class="item-amount">
             Rs
             <span>{{ getRewardAmount("ONE_TIME") }}</span>
@@ -34,7 +29,7 @@
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-01.png" /></div>
         </div>
 
-        <div class="details-item">
+        <div class="details-item" v-if="isShowDeposit">
           <div class="item-amount">
             Rs
             <span>{{ getRewardAmount("DEPOSIT") }}</span>
@@ -43,7 +38,7 @@
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-02.png" /></div>
         </div>
 
-        <div class="details-item details-item">
+        <div class="details-item details-item" v-if="isShowBet">
           <div class="item-amount">
             Rs
             <span>{{ getRewardAmount("BET") }}</span>
@@ -242,6 +237,7 @@ const copyHrefLink = () => {
 
 const oneTimeBonusSetting = ref([]);
 const memberDetail = ref([]);
+const activeSetting = ref([]);
 const latestInvitees = ref([]);
 const inviteesRecords = ref([]);
 let currentIndex = 0;
@@ -266,6 +262,7 @@ const getMemberDetail = () => {
     .then((response) => {
       if (response.code === 0) {
         memberDetail.value = response.data;
+        activeSetting.value = response.data.activeSetting;
       }
     })
     .catch((e) => {
@@ -337,11 +334,22 @@ const startAutoScroll = () => {
   }, 2000); // Adjust the interval as needed
 };
 
+const isShowOnetime = ref(false);
+const isShowDeposit = ref(false);
+const isShowBet = ref(false);
+
+const checkIsShowDetail = () => {
+  isShowOnetime.value = activeSetting.value.includes("ONE_TIME");
+  isShowDeposit.value = activeSetting.value.includes("DEPOSIT");
+  isShowBet.value = activeSetting.value.includes("BET");
+};
+
 onMounted(() => {
   getOneTimeBonusSetting();
   getMemberDetail();
   getLatestInvitees();
   startAutoScroll();
+  checkIsShowDetail();
 
   let tgDomain = window.location.origin + "/";
   if (store.isApp()) {
@@ -354,6 +362,8 @@ onMounted(() => {
     }
   });
 });
+
+watch(activeSetting, checkIsShowDetail);
 
 // onUnmounted(() => {
 //   clearInterval(scrollInterval.value);
