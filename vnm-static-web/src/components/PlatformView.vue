@@ -249,7 +249,7 @@ const getPlatList = () => {
     // console.log(platformsList.value);
 
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase() || (type.trim().toUpperCase() === 'CASUAL' && props.platformGameType.toUpperCase() === 'POKER'))
     );
 
     // console.log("Platform");

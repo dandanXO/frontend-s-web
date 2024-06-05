@@ -61,7 +61,7 @@ const getPlatformList = () => {
   fetchFunction().then((res) => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase() || (type.trim().toUpperCase() === 'CASUAL' && props.platformGameType.toUpperCase() === 'POKER'))
     );
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
