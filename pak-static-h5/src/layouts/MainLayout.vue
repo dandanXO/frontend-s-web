@@ -182,6 +182,14 @@ export default defineComponent({
           prevPage.value = "/account/message";
           hasPage.value = true;
           pageName.value = "Message";
+        } else if (route.path === "/account/feedback") {
+          hasPage.value = true;
+          pageName.value = "Feedback";
+          if (route.query.from) {
+            prevPage.value = route.query.from;
+          } else {
+            prevPage.value = "/account";
+          }
         } else if (route.path === "/account/record") {
           prevPage.value = "/account";
           hasPage.value = true;

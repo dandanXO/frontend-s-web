@@ -393,11 +393,8 @@
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
                     :rules="[
-                      (val) => (val && val.length > 0) || 'Please insert new password',
-                      (val) =>
-                        (val.length >= 6 && val.length <= 11) ||
-                        'The characters of new password must be between 6 and 11',
-                      () => isAlphanumeric(updatePwdInfo.password, 'New password')
+                      (val) => (val && val.length > 0) || 'Please insert password',
+                      (val) => val.length > 6 || 'The characters of password must be above 6'
                     ]"
                   >
                     <template v-slot:append>
@@ -708,9 +705,9 @@ const openChangePasswordDialog = () => {
 
 const bindEmailDialog = ref(false);
 const openBindEmailDialog = () => {
-  // if (!formDetail.emailVerified) {
-  bindEmailDialog.value = !bindEmailDialog.value;
-  // }
+  if (!formDetail.emailVerified) {
+    bindEmailDialog.value = !bindEmailDialog.value;
+  }
 };
 
 const userKYCDialog = ref(false);
@@ -1307,6 +1304,7 @@ const submitUpdateEmail = () => {
 
           bindEmailDialog.value = false;
           store.getMemberInfo();
+          startRefresh();
         } else {
           $q.notify({
             color: "negative",
