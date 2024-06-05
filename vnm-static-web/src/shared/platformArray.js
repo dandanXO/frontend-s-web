@@ -86,6 +86,15 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "SBO",
+    name: "SBOBET",
+    image: "sbo",
+    message: "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
+    vimessage: 'Thể thao SBOBET là nhà cung cấp tỷ lệ cá cược tin cậy hàng đầu khu vực, mạng lưới phủ sóng rộng khắp các quốc gia châu Á. Hỗ trợ hàng trăm kiểu cược và hàng nghìn sự kiện mỗi năm. Phát sóng trực tiếp các kèo đấu chính xác tới từng giây tới người chơi đam mê chiến thắng.',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
     code: "CMD",
     name: "CMD",
     image: "cmd",
