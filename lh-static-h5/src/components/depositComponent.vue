@@ -93,13 +93,28 @@
           -
           {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
-
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
-          <span class="text-positive">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
-            {{ store.currency.value }}
-          </span>
+        
+        <div v-if="isUSDT && activeMethod.currencyRate">
+          <div style="display: flex; justify-content: center; align-items: center">
+            <span style="flex: 1">实时汇率：</span>
+            <span style="flex: 3" class="q-pa-sm text-positive">
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center">
+            <span style="flex: 1">预计到帐：</span>
+            <span style="flex: 3" class="q-pa-sm text-positive">
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+              {{ store.currency.value }}
+            </span>
+          </div>
         </div>
+
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
