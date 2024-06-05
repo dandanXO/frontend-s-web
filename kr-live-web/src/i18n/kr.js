@@ -8,18 +8,20 @@ export default {
     login_submit: "로그인",
     login_register: "회원가입",
     login_success_msg: "성공적으로 로그인하세요",
+    login_forget_pwd: "비밀번호 분실",
     // login end
     // register start
     reg_referrer: "추천인",
     reg_userid: "아이디",
-    reg_login_name: "로그인 이름",
-    reg_phone_num: "전화 번호",
+    reg_phone_num: "휴대폰번호",
+    reg_phone_verification: "인증 코드",
+    reg_phone_otp: "인증 코드",
     reg_pass: "비밀번호",
-    reg_confirm_pass: "비밀번호 확인",
+    reg_confirm_pass: "비밀번호확인",
     reg_email: "이메일",
-    reg_code_affiliate: "코드 제휴사",
-    reg_bank_id: "은행 ID",
-    reg_card_acc: "카드 계좌",
+    reg_bank: "은행명",
+    reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_holder: "예금주",
     reg_submit: "가입완료",
     reg_captcha_confirm: "확인하다",
     reg_captcha_verifying: "확인 중",
@@ -33,6 +35,9 @@ export default {
     menu_message: "쪽지함",
     menu_customer_service: "고객센터",
     // menu end
+    // rolling text start
+    roll_text_no_content: "아직 콘텐츠가 없습니다",
+    // rolling text end
     // transaction record start
     date_picker_sunday: "일요일",
     date_picker_sun: "일",
