@@ -137,7 +137,7 @@
               <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
                 Live Support
               </a>
-              <a class="header-nav feedback" @click="openFeedback">Feedback</a>
+              <a class="header-nav feedback" @click="() => (feedbackModalVisible = true)">Feedback</a>
               <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
               <a
                 class="header-nav whatsapp"
@@ -149,7 +149,7 @@
               <a class="header-nav language" href="" target="_blank">Language</a>
             </li>
           </ul>
-          <!-- <bet-ranking /> -->
+          <bet-ranking />
         </div>
 
         <!-- <div class="mobile-menu-overlay" @click="showMobileMenu" /> -->
@@ -174,35 +174,162 @@
         </router-link> -->
         <div v-if="!token" class="login-box">
           <button class="common-btn login-btn" @click="openAccountModal">Login</button>
-          <button class="common-btn reg-btn" @click="openAccountModal" style="margin-right: 30px">
+          <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
             Register
             <!-- <img style="position: absolute; right: -30px" src="../../assets/images/common/regpresent.png" /> -->
           </button>
         </div>
         <div v-else class="login-box">
-          <!-- <button class="action-btn">
+          <button class="action-btn">
             <RiSearchLine />
-          </button> -->
-          <router-link
-            class="action-btn"
-            :class="{ 'has-unread-notification': !!unreadInboxMail }"
-            to="/center/mailbox"
-          >
+          </button>
+          <button class="action-btn has-unread-notification">
             <img :src="NotificationSvg" />
-          </router-link>
+          </button>
           <!-- <div class="header-balance">
             <div v-if="isLoadingBal">Loading...</div>
             <div v-else>₱ {{ balance.toFixed(2) }}</div>
 
             <div class="refreshbtn" @click="refreshBalance"><img src="../../assets/images/common/refresh.png" /></div>
           </div> -->
-          <router-link class="common-btn deposit-btn" to="/center/top-up">
-            {{ $t("layout.header.deposit") }}
-          </router-link>
+          <router-link class="common-btn reg-btn" to="/center/top-up">{{ $t("layout.header.deposit") }}</router-link>
           <UserProfile @open-dialog="trigger" />
-          <button class="action-btn" @click="handleLogoutClick">
-            <RiLoginBoxLine />
-          </button>
+
+          <div class="login-box mobile-menu-hide">
+            <div class="viewmail" />
+            <div class="dropdown-container setting-hamburger">
+              <div class="setting-hamburger">
+                <img src="../../assets/hamburger.svg" />
+              </div>
+              <div class="abs-menu desktop" :class="triggerMenu ? 'show' : 'hide'">
+                <ul>
+                  <li>
+                    <router-link to="/center/personal" class="flex-box flex-align-center account-menu-item">
+                      <div class="icon icon-personal"></div>
+                      Personal
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
+                      <div class="icon icon-quick"></div>
+                      Quick Withdraw
+                    </router-link>
+                  </li>
+                  <!-- <li>
+                    <router-link
+                      to="/center/transfer"
+                      class="flex-box flex-align-center account-menu-item"
+                    >
+                      <RiWallet3Line />
+                      Quick Transfer
+                    </router-link>
+                  </li> -->
+
+                  <li>
+                    <router-link to="/center/mailbox" class="flex-box flex-align-center account-menu-item last">
+                      <div class="icon icon-mail"></div>
+                      Mailbox
+                    </router-link>
+                  </li>
+                  <li>
+                    <a class="flex-box flex-align-center account-menu-item" @click="onLogout">
+                      <div class="logout">Logout</div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="abs-menu mobile" :class="triggerMenu ? 'show' : 'hide'">
+                <div class="user-data">
+                  <!-- <div class="vip-badge">
+                    <img v-if="vip === 'VIP1'" src="../../assets/images/vip/badge/badge-1.png" />
+                    <img v-if="vip === 'VIP2'" src="../../assets/images/vip/badge/badge-2.png" />
+                    <img v-if="vip === 'VIP3'" src="../../assets/images/vip/badge/badge-3.png" />
+                    <img v-if="vip === 'VIP4'" src="../../assets/images/vip/badge/badge-4.png" />
+                    <img v-if="vip === 'VIP5'" src="../../assets/images/vip/badge/badge-5.png" />
+                    <img v-if="vip === 'VIP6'" src="../../assets/images/vip/badge/badge-6.png" />
+                    <img v-if="vip === 'VIP7'" src="../../assets/images/vip/badge/badge-7.png" />
+                  </div> -->
+                  <div class="user-info">
+                    <div class="nickname">
+                      {{ nickName }}
+                    </div>
+                    <div class="bal">{{ store.currency.value }} {{ balance.toFixed(2) }}</div>
+                  </div>
+                </div>
+                <ul>
+                  <li>
+                    <router-link to="/center/top-up" class="flex-box flex-align-center account-menu-item">
+                      <RiWallet3Line />
+                      Deposit
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link to="/center/top-up?tab=withdraw" class="flex-box flex-align-center account-menu-item">
+                      <RiBankCardLine />
+                      Quick Withdraw
+                    </router-link>
+                  </li>
+                  <!-- <li>
+                    <router-link
+                      to="/center/transfer"
+                      class="flex-box flex-align-center account-menu-item"
+                    >
+                      <RiExchangeDollarLine />
+                      Quick Transfer
+                    </router-link>
+                  </li> -->
+                  <li>
+                    <router-link to="/center/transit-record" class="flex-box flex-align-center account-menu-item">
+                      <RiShieldFlashLine />
+                      Transaction Record
+                    </router-link>
+                  </li>
+
+                  <div class="divider" />
+                  <li>
+                    <router-link to="/center/personal" class="flex-box flex-align-center account-menu-item">
+                      <RiUser5Line />
+                      Personal Information
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link to="/center/withdrawbank" class="flex-box flex-align-center account-menu-item">
+                      <RiBankLine />
+                      Withdraw Bank Card
+                    </router-link>
+                  </li>
+                  <li>
+                    <router-link to="/center/mailbox" class="flex-box flex-align-center account-menu-item">
+                      <RiMailLine />
+                      Mailbox
+                    </router-link>
+                  </li>
+                  <!-- <li>
+                    <router-link
+                      to="/center/voucher-code"
+                      class="flex-box flex-align-center account-menu-item"
+                    >
+                      <RiCoupon3Line />
+                      รหัส Voucher
+                    </router-link>
+                  </li> -->
+                  <li>
+                    <router-link to="/center/share" class="flex-box flex-align-center account-menu-item">
+                      <RiShareBoxLine />
+                      Share
+                    </router-link>
+                  </li>
+                  <div class="divider" />
+                  <li>
+                    <a class="flex-box flex-align-center account-menu-item" @click="onLogout">
+                      <RiLogoutCircleLine />
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <SpinWheelModal ref="spinWheel" @spinWheelOnClose="spinWheelOnCloseHandler" />
@@ -211,9 +338,8 @@
       <ClaimModal ref="claimPromo" />
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
-      <AccountModal v-model="accountModalVisible" />
-      <FeedbackModal ref="feedbackModalRef" v-model="feedbackModalVisible" />
-      <LogoutModal v-model="logoutModalVisible" @confirm="onLogout" />
+      <AccountModal v-model="accountModalVisible" :isReg="accountModalRegVisible" />
+      <FeedbackModal v-model="feedbackModalVisible" />
     </div>
   </header>
 </template>
@@ -233,8 +359,7 @@ import {
   RiShieldFlashLine,
   RiLogoutCircleLine,
   RiShareBoxLine,
-  RiListSettingsLine,
-  RiLoginBoxLine
+  RiListSettingsLine
 } from "vue-remix-icons";
 import { useRoute } from "vue-router";
 import { kycAPI, loadPromo } from "@/api/index/promo";
@@ -255,7 +380,6 @@ import NotificationSvg from "@/assets/images/layout/header/notification.svg";
 import AccountModal from "@/components/layout/header/AccountModal.vue";
 import BetRanking from "@/components/layout/header/BetRanking.vue";
 import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
-import LogoutModal from "@/components/layout/header/LogoutModal.vue";
 
 const navigations = [
   // { code: "VIP", name: "VIP", path: "/vip" },
@@ -282,7 +406,6 @@ const dailyLoginPromoPopup = ref();
 const adsPopupListRef = ref();
 const activateTab = ref("casino");
 const feedbackModalVisible = ref(false);
-const logoutModalVisible = ref(false);
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -317,27 +440,17 @@ const getClaimPromo = () => {
   claimPromo.value.open();
 };
 
-const openFeedback = () => {
-  if(store.token){
-    feedbackModalVisible.value = true
-  }else{
-    openAccountModal();
-  }
-}
-
 function playGame(gameName, platformCode, gameCode, status) {
   casinoGame.value.open(gameName, platformCode, gameCode, status);
 }
 
 const store = userStore();
-const { token, accountModalVisible, unreadInboxMail } = storeToRefs(store);
+const { token, accountModalVisible, accountModalRegVisible } = storeToRefs(store);
 const { openAccountModal } = store;
 const triggerMenu = ref(null);
-const feedbackModalRef= ref(null);
 onMounted(() => {
   if (store.token) {
     store.getBalance();
-    store.getUnreadNotification();
     isLoadingBal.value = false;
   }
   activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
@@ -401,8 +514,6 @@ watch(
   () => store.token,
   () => {
     if (store.token) {
-      feedbackModalRef.value.loadFeedBackType();
-
       loadPromo().then((res) => {
         if (res.code === 0) {
           const promoDetails = res.data;
@@ -427,6 +538,15 @@ watch(
                     adsPopupListRef.value.initAdsPopupList();
                   });
               }
+              // if (element.promoCode === "P4W-CNY-VIP-RED-PACKET") {
+              //   getClaimPromo()
+              // }
+              // if (element.promoCode === "P4W-DOWNLOAD-BONUS") {
+              //   getAppPromo()
+              // }
+              // if (element.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS") {
+              //   dailyLoginPromoPopup.value.open();
+              // }
             }
           });
         }
@@ -460,8 +580,6 @@ const handleSwitchChange = (value) => {
     router.push("/promotion");
   }
 };
-
-const handleLogoutClick = () => (logoutModalVisible.value = true);
 </script>
 <style scoped lang="scss">
 $navigation-height: 80px;
@@ -541,47 +659,18 @@ $link-color: #ffffff;
     }
 
     .login-btn {
+      color: #ffffff;
       transition: all;
-      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
-      padding: 10px 20px;
-      width: 90px;
-      border-radius: 6px;
+      font-weight: bold;
+      background: transparent;
+      box-shadow: -1px 2px 4px 0px #ffffffcc inset;
+      width: 130px;
+      height: 48px;
+      border-radius: 26.32px;
       gap: 10.53px;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 16.8px;
-      letter-spacing: -0.0008em;
-      color: #000a01;
     }
 
     .reg-btn {
-      width: unset;
-      transition: all;
-      background: transparent;
-      padding: 10px 20px;
-      border-radius: 6px;
-      gap: 10.53px;
-      position: relative;
-      position: relative;
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 16.8px;
-      color: #ffffff;
-
-      &::after {
-        position: absolute;
-        content: "";
-        inset: 0;
-        padding: 1px;
-        background: linear-gradient(180deg, #61ff00 0%, rgba(255, 255, 255, 0) 100%);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask-composite: exclude;
-        pointer-events: none;
-        border-radius: 6px;
-      }
-    }
-
-    .deposit-btn {
       width: unset;
       transition: all;
       background: var(--primary-linear-background-color);
@@ -590,10 +679,11 @@ $link-color: #ffffff;
       gap: 10.53px;
       position: relative;
       border: 1px solid #cbe3ad;
+      font-family: Baloo Bhai 2;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
-      color: #ffffff;
+      color: #000000;
     }
   }
 }
@@ -661,6 +751,7 @@ $link-color: #ffffff;
                 box-shadow: 0px -4px 4px 0px #02009e inset;
                 box-shadow: -1px 2px 4px 0px #ffffffcc inset;
                 color: #ffffff;
+                font-family: "Poppins Bold";
 
                 &:before {
                   filter: grayscale(0);
@@ -860,7 +951,8 @@ $link-color: #ffffff;
         position: relative;
         color: #000;
         transition: all 0.3s ease-out;
-        font-size: 16px;
+        font-size: 0.9rem;
+        line-height: 1rem;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -1051,6 +1143,7 @@ $link-color: #ffffff;
             background: unset;
             display: flex;
             align-items: center;
+            font-family: Baloo Bhai 2;
             font-size: 30px;
             font-weight: 500;
             line-height: 16.33px;
@@ -1063,6 +1156,7 @@ $link-color: #ffffff;
           box-shadow: 0px -4px 4px 0px #02009e inset;
           box-shadow: -1px 2px 4px 0px #ffffffcc inset;
           color: #ffffff;
+          font-family: "Poppins Bold";
 
           &:before {
             filter: grayscale(0);
@@ -1238,6 +1332,7 @@ $link-color: #ffffff;
       align-items: center;
       gap: 5px;
       border-radius: 12px;
+      font-family: "Inter Bold";
       font-size: 18px;
 
       img {

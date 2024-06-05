@@ -66,6 +66,27 @@ export default {
             button: "Resent"
           },
           submitButton: "SUBMIT"
+        },
+        forgetPwd: {
+          title: "Recover your password",
+          
+          form: {
+            email: {
+              label: "Email",
+              error: {
+                len: "Invalid email",
+                required: "Email is required"
+              },
+              placeholder: "Please enter your email"
+            },
+            password: {
+              label: "password",
+              placeholder: "Please enter password",
+              error: {
+                required: "Password is required"
+              }
+            }
+          },
         }
       }
     }
