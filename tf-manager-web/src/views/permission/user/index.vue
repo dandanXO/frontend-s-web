@@ -564,6 +564,8 @@ async function loadUser() {
       : null
   });
   page.records = ret.records
+  console.log(ret.records)
+  console.log(page.records)
 }
 
 async function loadRoles(siteId) {
@@ -592,6 +594,9 @@ function showDialog(type) {
     form.queryNumber = 10
     form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
+    uiControl.userTypeSelect = false
+    uiControl.siteSelectVisible = false
+    uiControl.rolesSelect = true
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editUser')
   } else {
@@ -750,12 +755,15 @@ watch(
     await loadRoles(form.siteId)
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
+      if (value) {
+        uiControl.rolesSelect = false
+      }
     } else if (uiControl.dialogType === 'EDIT') {
       if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
+      uiControl.rolesSelect = false
     }
-    uiControl.rolesSelect = false
   }
 )
 watch(
