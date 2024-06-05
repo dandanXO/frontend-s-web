@@ -257,7 +257,9 @@
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
