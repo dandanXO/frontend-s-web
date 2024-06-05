@@ -111,7 +111,7 @@
         <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
           <div class="section-wrapper-content wide">
             <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game, game.code, game.name)">
-              <img style="max-height: 228px;" :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
+              <img style="max-height: 228px" :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
             </a>
           </div>
         </SectionWrapper>
@@ -1039,8 +1039,7 @@ onMounted(async () => {
 //        gap: 20px;
 //        margin-bottom: 30px;
 //        .banner-line {
-//          font-family: "Poppins Bold";
-//          font-size: 30px;
+//          //          font-size: 30px;
 //          text-align: center;
 //        }
 //      }
@@ -2417,7 +2416,6 @@ $link-color: #db7e42;
     display: flex;
     align-items: center;
     gap: 5px;
-    font-family: "Baloo Bhaina";
     font-size: 2.4rem;
     line-height: 42px;
     margin: 0;

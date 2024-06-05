@@ -1113,7 +1113,6 @@ function charType(num) {
   max-height: 70vh;
   overflow: auto;
   color: #83a3ca;
-  font-family: "Inter Medium";
 
   .userreg-text {
     margin: 30px auto 40px;
@@ -1128,7 +1127,6 @@ function charType(num) {
     }
   }
   p {
-    font-family: "Inter Medium";
     font-size: 14px;
     line-height: 19px;
   }

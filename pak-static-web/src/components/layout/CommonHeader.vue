@@ -679,7 +679,6 @@ $link-color: #ffffff;
       gap: 10.53px;
       position: relative;
       border: 1px solid #cbe3ad;
-      font-family: Baloo Bhai 2;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
@@ -1143,7 +1142,6 @@ $link-color: #ffffff;
             background: unset;
             display: flex;
             align-items: center;
-            font-family: Baloo Bhai 2;
             font-size: 30px;
             font-weight: 500;
             line-height: 16.33px;
@@ -1332,7 +1330,6 @@ $link-color: #ffffff;
       align-items: center;
       gap: 5px;
       border-radius: 12px;
-      font-family: "Inter Bold";
       font-size: 18px;
 
       img {

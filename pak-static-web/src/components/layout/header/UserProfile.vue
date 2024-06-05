@@ -20,8 +20,8 @@ const store = userStore();
 const { profilePhoto, nickName, balance } = storeToRefs(store);
 
 const openDialog = () => {
-  emit("open-dialog")
-}
+  emit("open-dialog");
+};
 </script>
 <style scoped lang="scss">
 .user-profile-wrapper {
@@ -37,7 +37,6 @@ const openDialog = () => {
     gap: 4px;
 
     .user-profile-info__name {
-      font-family: Baloo Bhai 2;
       font-size: 20px;
       font-weight: 800;
       line-height: 20px;
@@ -46,7 +45,6 @@ const openDialog = () => {
     }
 
     .user-profile-info__balance {
-      font-family: Baloo Bhai 2;
       font-size: 14px;
       font-weight: 500;
       line-height: 20px;

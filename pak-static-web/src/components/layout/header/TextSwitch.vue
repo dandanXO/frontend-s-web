@@ -42,7 +42,6 @@ const handleClick = (tab) => {
     border-radius: 10px;
     background: unset;
     border: none;
-    font-family: Baloo Bhai 2;
     font-size: 16px;
     font-weight: 700;
     line-height: 20px;
