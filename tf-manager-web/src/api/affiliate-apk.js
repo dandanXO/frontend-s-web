@@ -41,3 +41,21 @@ export const cancelBuild = id => {
     ContentType.form
   )
 }
+
+export const buildAllApk = query => {
+  return https().request(
+    '/affiliate-apk/buildAll',
+    Method.POST,
+    query,
+    ContentType.form
+  )
+}
+
+export const cancelAllApk = query => {
+  return https().request(
+    '/affiliate-apk/cancelAll?_method=PUT',
+    Method.POST,
+    query,
+    ContentType.form
+  )
+}
