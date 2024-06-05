@@ -42,10 +42,10 @@ const checkRoute = () => {
   }
 };
 const checkNewUser = () => {
-  // if (store.realName == "" || store.realName == null) {
-  //   ElMessage.error('Please fill in your personal details')
-  //   router.push(`/center/personal`);
-  // }
+  if (store.realName == "" || store.realName == null) {
+    ElMessage.error("Please fill in your personal details");
+    router.push(`/center/personal`);
+  }
 };
 // Initial check on mounted
 onMounted(() => {
