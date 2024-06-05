@@ -46,7 +46,7 @@
               <div class="vip-card-common-text">{{ vip.title }}</div>
             </div>
             <div class="amount q-mt-xs">
-              <div class="vip-card-common-text">{{ $t("lang.vip_cumulative_deposits") }}</div>
+              <div class="vip-card-common-text">{{ $t("lang.vip_upgrade_require") }}</div>
               <div class="vip-card-common-text amount-text">
                 <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span>
                 <span v-else>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
