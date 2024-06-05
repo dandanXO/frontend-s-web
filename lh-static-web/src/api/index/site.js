@@ -16,5 +16,5 @@ export function getCSAFromServer() {
 }
 
 export function getFloatingItems() {
-  return server.REST.get("/session/redirect");
+  return server.REST.get("/redirect");
 }

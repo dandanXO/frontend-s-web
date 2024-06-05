@@ -5,7 +5,12 @@
     v-model="isImportantAnnoucementModal"
     v-if="!isImpt"
   >
-    <img :src="homePopupImg" class="alert-img" />
+    <a
+      :href="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' ? homePopupPath : ''"
+      :target="homePopupPath.includes('https://') ? '_blank' : '_self'"
+    >
+      <img :src="homePopupImg" class="alert-img" />
+    </a>
   </el-dialog>
 
   <el-carousel class="banner-slider" indicator-position="outside" :autoplay="false" :interval="5000">
@@ -17,10 +22,11 @@
             class="promo-bg isDesktop"
             :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
           ></div>
-          <div v-else class="promo-bg isDesktop"
-               :style="'background-image: url(' + require(`../../assets/home/bannerTest/IM-img.png`) + ')'"
-          >
-          </div>
+          <div
+            v-else
+            class="promo-bg isDesktop"
+            :style="'background-image: url(' + require(`../../assets/home/bannerTest/IM-img.png`) + ')'"
+          ></div>
 
           <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'"></div>
         </div>
@@ -31,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { loadPromoBanner } from "@/api/index/promo";
+import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
@@ -42,16 +48,16 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
 const banners = ref([]);
 
 const isDark = useDark();
-const store= userStore()
-const router= useRouter()
+const store = userStore();
+const router = useRouter();
 
 const goBannerPage = (redirectUrl) => {
-  if(redirectUrl=="app://deposit"){
+  if (redirectUrl == "app://deposit") {
     router.push("/center/deposit");
-  }else{
-    router.push(`/promotion?name=${redirectUrl}`)
+  } else {
+    router.push(`/promotion?name=${redirectUrl}`);
   }
-}
+};
 
 const loadBanners = () => {
   loadPromoBanner("HOME").then((res) => {
@@ -60,16 +66,15 @@ const loadBanners = () => {
 
       console.log(banners.value);
 
-      if(store.token && (store.memberType==='TEST' || store.memberType === 'PROMO_TEST')){
+      if (store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")) {
         banners.value.unshift({
           category: "HOME",
           isLocal: true,
           promoPageId: null,
           redirectUrl: "lh1-im-sport"
-        })
+        });
       }
-    }
-    else
+    } else
       ElMessage.error({
         type: "error",
         message: res.message
@@ -84,6 +89,19 @@ const setWithExpiry = (key, value, interval) => {
     expiry: now.getTime() + interval
   };
   localStorage.setItem(key, JSON.stringify(item));
+};
+
+const apiMockData = {
+  code: 0,
+  data: {
+    title: "雷火 欧洲杯 TEST",
+    desktopImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+    mobileImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+    content: null,
+    type: "IMG",
+    path: "?name=lh1-eurocup-2024",
+    frequency: "EVERYDAY"
+  }
 };
 
 const getWithExpiry = (key) => {
@@ -103,24 +121,86 @@ const isImpt = getWithExpiry("isImpt");
 
 const isFirstView = ref(false);
 const homePopupImg = ref("");
+const homePopupPath = ref("");
 const isImportantAnnoucementModal = ref(false);
+const homePopupFrequency = ref(0);
+const homePopupFrequencyNum = ref(0);
+const homePopupContent = ref("");
+const homePopupType = ref("");
+const homePopupId = ref(0);
+
+// const clickHomePopupImg = (urlString) => {
+//   let regexUrl = new RegExp(/^(https:\/\/)/g);
+//   if (regexUrl.test(urlString)) {
+//     // 跳轉
+//     location.href = urlString;
+//     return;
+//   }
+//   let regexName = new RegExp(/^(name|\?name)/g);
+//   if (regexName.test(urlString)) {
+//     //去優惠
+//     router.push(`/promo${urlString}`);
+//     return;
+//   }
+// };
 const checkShowImgTop = () => {
   const lastTime = localStorage.getItem("indexImgTop");
   if (lastTime) {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
   } else {
-    loadPromoBanner("HOMEPOP")
+    // loadPromoBanner("HOMEPOP")
+    //   .then((res) => {
+    //     const { code, data } = res;
+    //     if (code === 0) {
+    //       if (data.length > 0) {
+    //         if (isImpt === null) {
+    //           isImportantAnnoucementModal.value = true;
+
+    //           homePopupImg.value = data.length > 0 ? imgURL + data[0]["desktopImageUrl"] : "";
+    //           if (homePopupImg.value) isFirstView.value = true;
+    //         }
+    //       } else {
+    //         isImportantAnnoucementModal.value = false;
+    //       }
+    //     }
+    //   })
+    //   .catch(() => {});
+
+    loadHomePopup("")
       .then((res) => {
+        // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        //   res = apiMockData;
+        // }
         const { code, data } = res;
         if (code === 0) {
-          if (data.length > 0) {
-            if (isImpt === null) {
-              isImportantAnnoucementModal.value = true;
-
-              homePopupImg.value = data.length > 0 ? imgURL + data[0]["desktopImageUrl"] : "";
-              if (homePopupImg.value) isFirstView.value = true;
+          if (isImpt === null) {
+            switch (data["frequency"]) {
+              case "EVERYTIME":
+                homePopupFrequencyNum.value = 0;
+                break;
+              case "EVERYDAY":
+                homePopupFrequencyNum.value = 86400000; // 24hrs
+                break;
+              case "SESSION":
+                homePopupFrequencyNum.value = 7866432000; // 3months
+                break;
+              default:
+                homePopupFrequencyNum.value = 10000;
+                break;
             }
+            isImportantAnnoucementModal.value = true;
+            if (data["path"].includes("https://")) {
+              homePopupPath.value = data["path"];
+            } else {
+              homePopupPath.value = "/promotion?name=" + data["path"];
+            }
+            homePopupImg.value = imgURL + data["desktopImgUrl"];
+            homePopupContent.value = data["content"];
+            homePopupType.value = data["type"];
+            homePopupId.value = data["id"];
+            homePopupFrequency.value = data["frequency"];
+            isFirstView.value = true;
           } else {
             isImportantAnnoucementModal.value = false;
           }
@@ -132,7 +212,9 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  if(store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")){
+    checkShowImgTop();
+  }
 });
 </script>
 
@@ -165,23 +247,6 @@ onMounted(() => {
         height: 100%;
       }
     }
-  }
-}
-
-.imptann-modal {
-  max-width: 800px;
-
-  .el-dialog__body {
-    padding: 0;
-  }
-
-  .alert-img {
-    display: block;
-    width: 100%;
-  }
-
-  .el-dialog__headerbtn {
-    opacity: 0;
   }
 }
 
