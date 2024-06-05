@@ -652,6 +652,7 @@ export default {
     bulkApprove: '批量批准',
     callbackUrl: '回调地址',
     cancel: '取消',
+    cancelAll: '全部取消',
     cancelBbDacha: '取消BB别墅杯赛事',
     cancelBySearch: '一键取消',
     cancelDeposit: '取消存款',
@@ -2495,6 +2496,7 @@ export default {
     buildStatus: '构建状态',
     latestVersion: '最新版本',
     buildApk: '构建APK',
+    buildAllApk: '构建全部APK',
     editParam: '编辑参数',
     status: {
       IN_QUEUE: '等待中',
