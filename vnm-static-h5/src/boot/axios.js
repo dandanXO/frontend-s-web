@@ -15,7 +15,7 @@ const crtArray = Object.values(process.env.CR_API);
 const globalLinks= ["tf88won"];
 const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 
-const q7yxLinks= ["q7yxpdxwxk"];
+const q7yxLinks= ["tf88bof"];
 const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
 console.log(window.location.hostname);
 

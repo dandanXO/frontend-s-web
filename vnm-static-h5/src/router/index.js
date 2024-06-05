@@ -130,7 +130,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "441415921872746");
       fbq("track", "PageView");
       user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
+    }else if (window.location.href.indexOf("tf88bof.com") > -1) {
       fbq("init", "1862869640792398");
       fbq("track", "PageView");
       user.isAffiliateA= true;
