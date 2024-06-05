@@ -183,16 +183,16 @@
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-              corresponding upgrade rewards.
+              Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the
+              corresponding upgrade rewards will be issued.
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
       <div class="hint-msg">
-        After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-        corresponding upgrade rewards.
+        Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the
+        corresponding upgrade rewards will be issued.
       </div>
 
       <!-- <q-table
