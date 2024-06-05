@@ -4,6 +4,7 @@
       <div class="account-profile-wrapper">
         <div class="account-profile-photo">
           <img v-if="profilePhoto" :src="profilePhoto" />
+          <img v-else src="@/assets/images/account/default-profile.png" />
         </div>
         <div class="account-profile-info">
           <!-- TODO: check name -->
@@ -62,7 +63,7 @@ const route = useRoute();
 const actions = ref([
   { name: "Withdraw", path: "/center/top-up?tab=withdraw" },
   { name: "Deposit", path: "/center/top-up" },
-  { name: "Promo", path: "/center/personal" }
+  { name: "Promo", path: "/promotion" }
 ]);
 
 const links = ref([
@@ -103,6 +104,13 @@ const links = ref([
         width: 60px;
         height: 60px;
         background-color: #ffffff0d;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       .account-profile-info {

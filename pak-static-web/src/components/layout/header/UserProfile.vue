@@ -6,6 +6,7 @@
     </div>
     <router-link class="user-profile-photo" to="/center/personal">
       <img v-if="profilePhoto" :src="profilePhoto" />
+      <img v-else src="@/assets/images/account/default-profile.png" />
     </router-link>
   </div>
 </template>
@@ -52,6 +53,13 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
     width: 60px;
     height: 60px;
     background-color: #ffffff0d;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 </style>
