@@ -4,9 +4,14 @@
       <span class="menu-title">Transaction Record</span>
     </div>
     <div class="account-content transit">
-      <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="searchRecord">
+      <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="handleFilterChange">
         <a-tab-pane key="deposit" tab="Deposit">
-          <a-select v-model:value="selectedDateRange" style="width: 124px" :options="dateRangeOptions" />
+          <a-select
+            v-model:value="selectedDateRange.deposit"
+            style="width: 124px"
+            :options="dateRangeOptions"
+            @change="handleFilterChange"
+          />
           <div class="finance-record-wrapper deposit">
             <div v-for="(record, index) in dataState.deposit" :key="index" class="finance-record-item">
               <span class="finance-record-item__title">{{ record.serialNumber }}</span>
@@ -116,7 +121,12 @@
           </div>
         </a-tab-pane> -->
         <a-tab-pane key="withdraw" tab="Withdraw">
-          <a-select v-model:value="selectedDateRange" style="width: 124px" :options="dateRangeOptions" />
+          <a-select
+            v-model:value="selectedDateRange.withdraw"
+            style="width: 124px"
+            :options="dateRangeOptions"
+            @change="handleFilterChange"
+          />
           <div class="finance-record-wrapper withdraw">
             <div v-for="(record, index) in dataState.withdraw" :key="index" class="finance-record-item">
               <span class="finance-record-item__title">{{ record.serialNumber }}</span>
@@ -475,10 +485,13 @@ import { message } from "ant-design-vue";
 
 const dateRangeOptions = ref([
   { value: "1d", label: "1 Days" },
-  { value: "7d", label: "7 Days" },
-  { value: "30d", label: "30 Days" }
+  { value: "3d", label: "3 Days" },
+  { value: "7d", label: "7 Days" }
 ]);
-const selectedDateRange = ref("1d");
+const selectedDateRange = ref({
+  deposit: "1d",
+  withdraw: "1d"
+});
 const loadingBtn = ref(false);
 const store = userStore();
 const uploadFileRef = ref();
@@ -982,8 +995,28 @@ const getTime = () => {
   });
   searchRecord();
 };
+
+const handleFilterChange = () => {
+  const value = selectedDateRange.value[recordActive.value];
+  let startDate = new Date();
+  switch (value) {
+    case "1d":
+      break;
+    case "3d":
+      startDate.setDate(startDate.getDate() - 2);
+      break;
+    case "7d":
+      startDate.setDate(startDate.getDate() - 6);
+      break;
+  }
+  const params = {
+    startDate: moment(startDate).format("YYYY-MM-DD"),
+    endDate: moment(new Date()).format("YYYY-MM-DD")
+  };
+  loadRecords(recordActive.value, params).then((res) => console.log(res));
+};
 onMounted(() => {
-  getTime();
+  handleFilterChange();
 });
 const platformsList = ref([]);
 const getPlatList = () => {

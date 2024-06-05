@@ -364,7 +364,6 @@ const clickPlat = (plat) => {
 };
 
 const openGame = (item, platformCode, gameCode) => {
-  console.log(platformCode, gameCode);
   const platName = item.alias ?? item.cnname ?? item.name;
   platformGame.value.open(platName, platformCode, gameCode);
 };
@@ -449,7 +448,7 @@ const loadGameList = () => {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
-          element.default = require("../assets/images/games/aviator/default.png");
+          element.default = require("../assets/images/platform/slot/default.png");
           element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
