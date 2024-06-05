@@ -168,9 +168,9 @@ const checkShowImgTop = () => {
 
     loadHomePopup("")
       .then((res) => {
-        if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-          res = apiMockData;
-        }
+        // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        //   res = apiMockData;
+        // }
         const { code, data } = res;
         if (code === 0) {
           if (isImpt === null) {
@@ -211,7 +211,9 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  checkShowImgTop();
+  if(store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")){
+    checkShowImgTop();
+  }
 });
 </script>
 
@@ -244,23 +246,6 @@ onMounted(() => {
         height: 100%;
       }
     }
-  }
-}
-
-.imptann-modal {
-  max-width: 800px;
-
-  .el-dialog__body {
-    padding: 0;
-  }
-
-  .alert-img {
-    display: block;
-    width: 100%;
-  }
-
-  .el-dialog__headerbtn {
-    opacity: 0;
   }
 }
 

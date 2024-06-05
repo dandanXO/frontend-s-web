@@ -1026,10 +1026,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
-          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {  
+          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
             res = apiMockData
           }
-          
+
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
@@ -1067,9 +1067,9 @@ export default defineComponent({
         api
           .get("/member/ads-popout")
           .then((res) => {
-            if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {  
-              res = apiMockData
-            }
+            // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+            //   res = apiMockData
+            // }
             if (res.code === 0) {
               // if (res.data[id] !== null) {
               if (isImpt === null) {
@@ -1562,7 +1562,7 @@ export default defineComponent({
       floatPromo.value = [];
       gamePromo.value = [];
       api
-        .get("/session/redirect")
+        .get("/redirect")
         .then((res) => {
             if (res.code === 0) {
               res.data.forEach(element => {
@@ -1655,7 +1655,9 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      checkShowImgTop();
+      if (store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
+        checkShowImgTop();
+      }
       getAppDownloadUrl();
       getUnreadTotal();
 
