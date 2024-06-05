@@ -63,7 +63,7 @@
       </div>
       <div class="nba24-match-game-bottom">
         <div class="nba24-match-game-bottom-left-title">
-          例：用户当日投注 NBA 季后赛总决赛 30,000 元，且用户参与活动选择队伍胜利，用户则获得 188 元。
+          例：用户当日早盘投注 NBA 季后赛总决赛 30,000 元，且用户参与活动选择队伍胜利，用户则获得 188 元
         </div>
         <div class="nba24-match-game-bottom-left-btn" @click="tableRecordDialog = true">[投票记录]</div>
       </div>
@@ -71,7 +71,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="right">
-            活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。
+            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。
             每日最高可获 1,888 元。
           </div>
         </div>
@@ -139,7 +139,7 @@
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
+            1.活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
           </div>
           <div class="item">2.活动期间，每日符合条件的会员彩金于次日 24 小时内派发，彩金 5 倍流水即可提款；</div>
           <div class="item">
@@ -216,21 +216,21 @@
           </div>
           <table class="record-table">
             <thead>
-            <tr>
-              <th>投票时间</th>
-              <th>参赛队伍</th>
-              <th>投票队伍</th>
-              <th>投票结果</th>
-            </tr>
+              <tr>
+                <th>投票时间</th>
+                <th>参赛队伍</th>
+                <th>投票队伍</th>
+                <th>投票结果</th>
+              </tr>
             </thead>
             <tbody>
-            <tr v-for="(record, index) in recordList" :key="index">
-              <td>{{ moment(record.createTime).format("MM-DD HH:mm") }}</td>
-              <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
-              <td>{{ displayTeamVictory(record) }}</td>
-              <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
-            </tr>
-            <!-- <tr>
+              <tr v-for="(record, index) in recordList" :key="index">
+                <td>{{ moment(record.createTime).format("MM-DD HH:mm") }}</td>
+                <td>{{ `${record.homeTeam}VS${record.awayTeam}` }}</td>
+                <td>{{ displayTeamVictory(record) }}</td>
+                <td :style="{ color: displayGuessResult(record).color }">{{ displayGuessResult(record).text }}</td>
+              </tr>
+              <!-- <tr>
               <td>2024-05-11 16:00</td>
               <td>老鷹 vs 火箭</td>
               <td>平局</td>
