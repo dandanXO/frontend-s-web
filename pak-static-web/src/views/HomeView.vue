@@ -1301,6 +1301,7 @@ $link-color: #db7e42;
               &.isDesktop {
                 display: block;
                 height: 22vw;
+                aspect-ratio: 1920/600;
               }
 
               &.isMobile {
@@ -2394,6 +2395,23 @@ $link-color: #db7e42;
       &.wide {
         img {
           max-width: 520px;
+        }
+      }
+
+
+      a{
+
+        img{
+          transition: transform 0.3s ease;
+        }
+
+        &:hover{
+          filter: brightness(0.9);
+          opacity: 0.9;
+        }
+        &:active{
+          filter: brightness(0.8);
+          transform: translate(0px, 1px);
         }
       }
     }

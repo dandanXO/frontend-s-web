@@ -83,7 +83,8 @@ onMounted(() => {
 
         &.isDesktop {
           display: block;
-          height: 22vw;
+          height: auto;
+          aspect-ratio: 1560/490;
         }
       }
     }

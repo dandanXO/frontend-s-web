@@ -183,44 +183,44 @@ $node-color: #dd4645;
         color: rgba(255, 255, 255, 0.3);
       }
       .payment-method-item {
-        background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
-          background-size: cover;
-          filter: grayscale(1);
-          height: 30px;
-          width: 180px;
-          height: 100px;
-          color: #ffffff;
-          border-radius: 6px;
+        background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+        background-size: cover;
+        filter: grayscale(1);
+        height: 30px;
+        width: 180px;
+        height: 100px;
+        color: #ffffff;
+        border-radius: 6px;
+        justify-content: flex-start;
+        align-items: flex-end;
+        .node-text {
           justify-content: flex-start;
-          align-items: flex-end;
-          .node-text { 
-            justify-content: flex-start;
-            align-items: flex-start;
-            img {
-              width: 40px;
-              position: absolute;
-              top: 10px;
-              right: 10px;
-            }
+          align-items: flex-start;
+          img {
+            width: 40px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
           }
+        }
         &.active {
           // background: rgba(255,255,255,.3);
-          background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+          background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
           background-size: cover;
           // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
           //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-          border: 1px solid #B81212;
+          border: 1px solid #b81212;
           filter: none;
           color: #ffffff;
           position: relative;
           &:after {
             content: "";
-            background: url(../../assets/images/finance/bankcard-green-check.png)no-repeat bottom right;
+            background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
             background-size: contain;
             width: 25px;
             height: 25px;
             position: absolute;
-            right:-1px;
+            right: -1px;
             bottom: -1px;
           }
         }
@@ -233,7 +233,7 @@ $node-color: #dd4645;
         .node-item {
           color: rgba(255, 255, 255, 0.3);
           &.payment-method-item {
-            background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+            background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
             background-size: cover;
             filter: grayscale(1);
             height: 30px;
@@ -244,22 +244,22 @@ $node-color: #dd4645;
             justify-content: flex-start;
             align-items: flex-end;
             &.active {
-              background:url(../../assets/images/finance/bankcard-green.png)no-repeat left center;
+              background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
               background-size: cover;
               // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
               //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-              border: 1px solid #B81212;
+              border: 1px solid #b81212;
               filter: none;
               color: #ffffff;
               position: relative;
               &:after {
                 content: "";
-                background: url(../../assets/images/finance/bankcard-green-check.png)no-repeat bottom right;
+                background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
                 background-size: contain;
                 width: 25px;
                 height: 25px;
                 position: absolute;
-                right:-1px;
+                right: -1px;
                 bottom: -1px;
               }
             }
@@ -337,16 +337,27 @@ $node-color: #dd4645;
     .node-content {
       .node-item.payment-method-item {
         border-radius: 40px;
-        border: 1px solid #eaeaea;
         font-weight: normal;
-        background: #ecf5ff;
-        color: #2b2b82;
+        background: transparent;
+        color: #ffffff;
         min-width: 10rem;
+        position: relative;
         &.active {
-          background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-            linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
           color: #ffffff;
           font-weight: bold;
+        }
+
+        &::after {
+          position: absolute;
+          content: "";
+          inset: 0;
+          background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+          border-radius: 40px;
+          padding: 1px;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          pointer-events: none;
         }
       }
       .node-text {
@@ -389,6 +400,7 @@ $node-color: #dd4645;
       flex-direction: column;
       gap: 10px;
       font-size: 14px;
+      color: #ffffff;
       img {
         margin-bottom: 0;
       }
