@@ -18,6 +18,8 @@
 
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
+    <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
+
     <upgradeHongBaoPromo v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'" :promo-code="list.promoCode" />
 
   </div>
@@ -52,6 +54,7 @@ import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPoker
 import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
+import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -64,7 +67,8 @@ export default defineComponent({
     ViPokerCashbackPromo,
     ViSlotNetLossPromo,
     ViPennyBankPromo,
-    upgradeHongBaoPromo
+    upgradeHongBaoPromo,
+    EuroCup2024
     // CnyStepGame2024Promo
   },
   props: {

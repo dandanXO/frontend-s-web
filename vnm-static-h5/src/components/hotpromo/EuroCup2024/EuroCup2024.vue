@@ -2,9 +2,9 @@
     <div class="container">
         <div class="wrapper border">
             <div class="section-title">
-                <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24/section-title-decor-left.svg" />
+                <img class="decor" src="../../../assets/images/promo/hotpromo/eurocup24/section-title-decor-left.svg" />
                 <span>Quy tắc hoạt động</span>
-                <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24/section-title-decor-right.svg" />
+                <img class="decor" src="../../../assets/images/promo/hotpromo/eurocup24/section-title-decor-right.svg" />
             </div>
 
             <div class="bullet-points">
@@ -76,7 +76,7 @@
                             cược sẽ bị mất).</li>
                         <li>Nếu TF88 phát hiện thành viên liên tục đăng ký tài khoản, lợi dụng sơ hở của trò chơi hoặc
                             cố ý vi phạm, TF88 có quyền hủy hoặc rút lại tiền thưởng của Thành viên.</li>
-                        <li> Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC < 1.75, MY -0.6 đến
+                        <li>Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC {{ '<' }} 1.75, MY -0.6 đến
                                 0.75, Thể thao ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình
                                 này.</li>
                         <li>Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình
@@ -109,19 +109,19 @@
         flex-direction: column;
         gap: 20px;
         background-color: #F2F8FE;
-        max-width: 60%;
         padding: 20px;
         border-radius: 6px;
 
         .section-title {
             display: flex;
             color: #0080FF;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             line-height: 20px;
-            gap: 30px;
+            gap: 20px;
             align-items: center;
             margin: 0 auto;
+            text-align: center;
 
             .decor {
                 aspect-ratio: 195/44;
@@ -148,7 +148,7 @@
                     padding: 5px 15px;
                     width: 100px;
                     height: 25px;
-                    background: url('../../../assets/images/promotion/hotpromo/eurocup24/blue-hexagon.svg') no-repeat center center;
+                    background: url('../../../assets/images/promo/hotpromo/eurocup24/blue-hexagon.svg') no-repeat center center;
                     background-size: 100% 100%;
                 }
             }
