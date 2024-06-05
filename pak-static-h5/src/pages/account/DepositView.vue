@@ -180,7 +180,6 @@
         class="btn-primary btn-primary__full"
         :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
-        :disable="!isFormFilled"
       >
         SUBMIT
       </q-btn>
