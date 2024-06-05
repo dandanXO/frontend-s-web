@@ -137,7 +137,7 @@
               <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
                 Live Support
               </a>
-              <a class="header-nav feedback" @click="() => (feedbackModalVisible = true)">Feedback</a>
+              <a class="header-nav feedback" @click="openFeedback">Feedback</a>
               <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
               <a
                 class="header-nav whatsapp"
@@ -212,7 +212,7 @@
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
       <AccountModal v-model="accountModalVisible" />
-      <FeedbackModal v-model="feedbackModalVisible" />
+      <FeedbackModal ref="feedbackModalRef" v-model="feedbackModalVisible" />
       <LogoutModal v-model="logoutModalVisible" @confirm="onLogout" />
     </div>
   </header>
@@ -317,6 +317,14 @@ const getClaimPromo = () => {
   claimPromo.value.open();
 };
 
+const openFeedback = () => {
+  if(store.token){
+    feedbackModalVisible.value = true
+  }else{
+    openAccountModal();
+  }
+}
+
 function playGame(gameName, platformCode, gameCode, status) {
   casinoGame.value.open(gameName, platformCode, gameCode, status);
 }
@@ -325,6 +333,7 @@ const store = userStore();
 const { token, accountModalVisible, unreadInboxMail } = storeToRefs(store);
 const { openAccountModal } = store;
 const triggerMenu = ref(null);
+const feedbackModalRef= ref(null);
 onMounted(() => {
   if (store.token) {
     store.getBalance();
@@ -392,6 +401,8 @@ watch(
   () => store.token,
   () => {
     if (store.token) {
+      feedbackModalRef.value.loadFeedBackType();
+
       loadPromo().then((res) => {
         if (res.code === 0) {
           const promoDetails = res.data;
@@ -416,15 +427,6 @@ watch(
                     adsPopupListRef.value.initAdsPopupList();
                   });
               }
-              // if (element.promoCode === "P4W-CNY-VIP-RED-PACKET") {
-              //   getClaimPromo()
-              // }
-              // if (element.promoCode === "P4W-DOWNLOAD-BONUS") {
-              //   getAppPromo()
-              // }
-              // if (element.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS") {
-              //   dailyLoginPromoPopup.value.open();
-              // }
             }
           });
         }
