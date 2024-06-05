@@ -564,6 +564,16 @@ $accent: #ffffff;
       &.sport,
       &.live {
         grid-template-columns: repeat(3, 1fr);
+
+      :deep(.el-image__inner){
+          max-height: 220px;
+        }
+      }
+
+      &.slot{
+        .slot-img{
+          aspect-ratio: 1/1;
+        }
       }
 
       .game-slot {
