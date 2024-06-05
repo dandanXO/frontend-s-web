@@ -14,7 +14,7 @@ const globalLinks= ["tf88won"];
 console.log(window.location.hostname);
 const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 
-const q7yxLinks= ["tf88bof"];
+const q7yxLinks= ["q7yxpdxwxk"];
 const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
 
 if(isGlobalVN){

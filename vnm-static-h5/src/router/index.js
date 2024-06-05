@@ -120,7 +120,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "3658633674357920");
       fbq("track", "PageView");
       user.isAffiliateA= true;
-    } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1) {
+    } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
       otag("init", "adv10336256983680");
     } else if (window.location.href.indexOf("tf68688.com") > -1) {
       fbq("init", "1123673335564806");
@@ -130,7 +130,7 @@ export default route(function (/* { store, ssrContext } */) {
       fbq("init", "441415921872746");
       fbq("track", "PageView");
       user.isAffiliateA= true;
-    }else if (window.location.href.indexOf("tf88bof.com") > -1) {
+    }else if (window.location.href.indexOf("q7yxpdxwxk.com") > -1) {
       fbq("init", "1862869640792398");
       fbq("track", "PageView");
       user.isAffiliateA= true;
