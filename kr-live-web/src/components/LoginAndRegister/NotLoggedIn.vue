@@ -2,7 +2,6 @@
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
       <div class="right-container">
-        <LangToggle v-if="showLangToggle"/>
         <q-btn class="primary-button blue" @click="goToRegister">
           {{ $t('lang.login_register') }}
         </q-btn>
@@ -28,9 +27,7 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { useBreakpoints } from "@vueuse/core";
-import LangToggle from "../LangToggle.vue";
 
-const showLangToggle = ref(process.env.NODE_ENV === "development");
 const loginNameRef = ref();
 const pwdRef = ref();
 const captchaRef = ref();
