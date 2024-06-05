@@ -833,15 +833,21 @@ $glow-clr: #ff5a00;
       margin-left: 0%;
       border-radius: 0;
       .ant-modal-header {
-        position: absolute;
-        right: -60px;
-        margin: 0px auto;
-        width: 60px;
-        height: 60px;
-        top: 0;
-        background: transparent;
+        // position: absolute;
+        // right: -60px;
+        // margin: 0px auto;
+        // width: 60px;
+        // height: 60px;
+        // top: 0;
+        // background: transparent;
+        padding: 0;
+        background: #141622;
+        border: 0;
+        border-radius: 0;
         .ant-modal-title {
-          display: none;
+          padding: 6px 10px;
+          color: #ffffff;
+          // display: none;
         }
       }
       .ant-modal-body {
@@ -852,6 +858,9 @@ $glow-clr: #ff5a00;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        color: #ffffff;
+        text-align: left;
       }
 
       .ant-modal-footer {
@@ -863,8 +872,9 @@ $glow-clr: #ff5a00;
         width: 48px;
         padding: 10px;
         right: 0px;
-        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-        opacity: 0.9;
+        // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+        background: var(--primary-linear-background-color);
+        opacity: 0.95;
         color: #000;
         &:hover {
           opacity: 1;
