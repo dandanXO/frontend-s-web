@@ -1640,6 +1640,13 @@ a {
   &::placeholder {
     color: #ffffff4d;
   }
+  &[disabled] {
+    background-color: unset;
+    color: #8c968f;
+    &:hover {
+      border-color: #072a19;
+    }
+  }
 }
 
 .ant-input-affix-wrapper {

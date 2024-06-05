@@ -133,7 +133,7 @@ $max-width: $container-width;
       border-width: 1px;
       border-style: solid;
 
-      &:hover,
+      &:not([disabled]):hover,
       &:focus {
         border-color: $primary-light;
       }
