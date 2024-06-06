@@ -11,6 +11,13 @@ export default {
         title: "Invite to Earn",
         description: "Simply share your exclusive QR code"
       },
+      navigation: {
+        slot: "Slots",
+        live: "Live Casino",
+        fish: "Fishing",
+        poker: "Poker",
+        sport: "Sports"
+      },
       menu: {
         liveSupport: "Live SUpport",
         feedback: "Feedback",

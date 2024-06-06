@@ -24,7 +24,7 @@
           :class="{ active: route.fullPath === action.path }"
           class="account-info-action-link"
         >
-          <img :src="require(`@/assets/images/account/${action.name.toLocaleLowerCase()}-icon.svg`)" />
+          <img :src="action.img" />
           <span>{{ action.name }}</span>
         </router-link>
       </div>
@@ -55,6 +55,9 @@ import DiscountSvg from "@/assets/images/account/discount-icon.svg";
 import BankSvg from "@/assets/images/account/bank-icon.svg";
 import MessageSvg from "@/assets/images/account/message-icon.svg";
 import VIPSvg from "@/assets/images/account/vip-icon.svg";
+import DepositSvg from "@/assets/images/account/deposit-icon.svg";
+import WithdrawSvg from "@/assets/images/account/withdraw-icon.svg";
+import PromoSvg from "@/assets/images/account/promo-icon.svg";
 import { useI18n } from "vue-i18n";
 
 const store = userStore();
@@ -63,9 +66,9 @@ const route = useRoute();
 const { t } = useI18n();
 
 const actions = computed(() => [
-  { name: t("personalView.layout.accountMenu.action.withdraw"), path: "/center/top-up?tab=withdraw" },
-  { name: t("personalView.layout.accountMenu.action.deposit"), path: "/center/top-up" },
-  { name: t("personalView.layout.accountMenu.action.promo"), path: "/promotion" }
+  { name: t("personalView.layout.accountMenu.action.withdraw"), img: WithdrawSvg, path: "/center/top-up?tab=withdraw" },
+  { name: t("personalView.layout.accountMenu.action.deposit"), img: DepositSvg, path: "/center/top-up" },
+  { name: t("personalView.layout.accountMenu.action.promo"), img: PromoSvg, path: "/promotion" }
 ]);
 
 const links = ref([
