@@ -102,10 +102,6 @@
       }"
       :modules="modules"
       class="cat-selection-wrapper"
-      data-aos="fade-in"
-      :data-aos-delay="200"
-      data-aos-duration="1000"
-      data-aos-once="true"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -144,14 +140,14 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isHotGameLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
+            <!--            <template v-if="isHotGameLoading">-->
+            <!--              <div class="skeleton-lists">-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--              </div>-->
+            <!--            </template>-->
 
             <swiper
               :slidesPerView="3.5"
@@ -174,13 +170,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      :data-aos-delay="100 * index"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <!--                        <p>{{ `hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</p>-->
                         <div
@@ -210,13 +200,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      data-aos-delay="100"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -325,12 +309,12 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="casino-skeleton" />
-                <q-skeleton class="casino-skeleton" />
-              </div>
-            </template>
+<!--            <template v-if="isPlatLoading">-->
+<!--              <div class="skeleton-lists">-->
+<!--                <q-skeleton class="casino-skeleton" />-->
+<!--                <q-skeleton class="casino-skeleton" />-->
+<!--              </div>-->
+<!--            </template>-->
 
             <swiper
               :slidesPerView="1.5"
@@ -346,13 +330,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
+                  <div>
                     <img src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
@@ -1574,6 +1552,8 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       // console.log(pf);
+      slot.value= [];
+      livecasino.value= [];
 
       pf.forEach((element) => {
         const { status } = element;
@@ -1631,7 +1611,7 @@ const getPlatList = () => {
       isPlatLoading.value= false;
 
       console.log("After");
-      console.log(JSON.stringify(livecasino.value));
+      // console.log(JSON.stringify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {
