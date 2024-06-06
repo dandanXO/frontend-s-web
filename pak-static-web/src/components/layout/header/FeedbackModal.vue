@@ -1,20 +1,35 @@
 <template>
   <a-modal v-model:visible="visible" :footer="null" centered :body-style="{ padding: 0 }" :width="335">
     <div class="feedback-modal-wrapper">
-      <h3 class="feedback-modal-title">PostComments</h3>
+      <h3 class="feedback-modal-title">{{ $t("layout.header.feedbackModal.title") }}</h3>
       <a-form ref="formRef" class="feedback-modal-form" :model="form" :rule="rules" hide-required-mark>
-        <a-form-item required name="feedbackType" label="Type of opinion" label-align="left">
+        <a-form-item
+          required
+          name="feedbackType"
+          :label="$t('layout.header.feedbackModal.form.type.label')"
+          label-align="left"
+        >
           <a-select
             v-model:value="form.feedbackType"
-            placeholder="Please select the opinion type"
+            :placeholder="$t('layout.header.feedbackModal.form.type.placeholder')"
             :options="feedbackTypes.map((type) => ({ value: type }))"
           />
         </a-form-item>
-        <a-form-item required name="title" label="Title" label-align="left">
-          <a-input v-model:value="form.title" placeholder="pleases enter Title" />
+        <a-form-item
+          required
+          name="title"
+          :label="$t('layout.header.feedbackModal.form.title.label')"
+          label-align="left"
+        >
+          <a-input v-model:value="form.title" :placeholder="$t('layout.header.feedbackModal.form.title.placeholder')" />
         </a-form-item>
 
-        <a-form-item required name="photo" label="upload image" label-align="left">
+        <a-form-item
+          required
+          name="photo"
+          :label="$t('layout.header.feedbackModal.form.photo.label')"
+          label-align="left"
+        >
           <button
             class="feedback-modal-upload-block"
             :class="{ dragging: uploadFieldStatus === 'dragging' }"
@@ -32,32 +47,42 @@
           </button>
         </a-form-item>
 
-        <a-form-item required name="content" label="Content" label-align="left">
+        <a-form-item
+          required
+          name="content"
+          :label="$t('layout.header.feedbackModal.form.content.label')"
+          label-align="left"
+        >
           <a-textarea
             v-model:value="form.content"
-            placeholder="Please enter your feedback"
+            :placeholder="$t('layout.header.feedbackModal.form.content.placeholder')"
             :auto-size="{ minRows: 6 }"
           />
         </a-form-item>
-        <a-button class="common-btn" :loading="uploadFieldStatus === 'loading'" @click="onSubmit">CONFIRM</a-button>
+        <a-button class="common-btn" :loading="uploadFieldStatus === 'loading'" @click="onSubmit">
+          {{ $t("layout.header.feedbackModal.confirmButton") }}
+        </a-button>
       </a-form>
     </div>
   </a-modal>
 </template>
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { getFeedbackType, submitFeedback } from "@/api/personal/mailbox";
 import { RiImageFill, RiFileAddFill } from "vue-remix-icons";
 import { useHandleUpload } from "@/hooks/upload";
 import { ElMessage } from "element-plus";
 import { uploadImage } from "@/api/image";
 import { userStore } from "@/store";
+import { useI18n } from "vue-i18n";
 
 const uploadOption = { accept: "image/jpeg,image/png,image/gif", multiple: false };
 const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/";
 
 const visible = defineModel();
 defineEmits(["submit"]);
+
+const { t } = useI18n();
 
 const { handleUpload, manualEmit } = useHandleUpload(async ([file]) => {
   uploadFieldStatus.value = "loading";
@@ -69,14 +94,16 @@ const { handleUpload, manualEmit } = useHandleUpload(async ([file]) => {
   const result = await uploadImage(formData);
   if (result.code === 0) {
     form.value.photo = result.data;
+    ElMessage.success(t("layout.header.feedbackModal.uploadSuccess"));
+    uploadFieldStatus.value = "success";
   } else {
-    ElMessage.error("Upload Fail");
+    ElMessage.error(t("layout.header.feedbackModal.uploadFail"));
+    uploadFieldStatus.value = "idle";
   }
-  uploadFieldStatus.value = "success";
 }, uploadOption);
 
 const formRef = ref();
-const store = userStore()
+const store = userStore();
 const feedbackTypes = ref([]);
 // idle, dragging, loading, success
 const uploadFieldStatus = ref("idle");
@@ -86,17 +113,17 @@ const form = ref({
   photo: "",
   content: ""
 });
-const rules = ref({
-  type: [{ required: true, message: "Opinion type is required" }],
+const rules = computed(() => ({
+  feedbackType: [{ required: true, message: t("layout.header.feedbackModal.form.type.error.required") }],
   title: [
-    { required: true, message: "Title is required" },
-    { max: 255, message: "Title should be less than 255 characters" }
+    { required: true, message: t("layout.header.feedbackModal.form.title.error.required") },
+    { max: 255, message: t("layout.header.feedbackModal.form.title.error.max") }
   ],
   content: [
-    { required: true, message: "Content is required" },
-    { max: 255, message: "Content should be less than 500 characters" }
+    { required: true, message: t("layout.header.feedbackModal.form.content.error.required") },
+    { max: 255, message: t("layout.header.feedbackModal.form.content.error.max") }
   ]
-});
+}));
 
 const handleDragEnter = () => {
   if (["loading", "success"].includes(uploadFieldStatus.value)) return;
@@ -133,11 +160,11 @@ const onSubmit = () => {
     .then(() => {
       submitFeedback(form.value).then((res) => {
         if (res.code === 0) {
-          ElMessage.success("Submit success");
+          ElMessage.success(t("layout.header.feedbackModal.submitSuccess"));
           uploadFieldStatus.value = "idle";
           formRef.value.resetFields();
         } else {
-          ElMessage.error("Submit fail");
+          ElMessage.error(t("layout.header.feedbackModal.submitFail"));
         }
       });
     })
@@ -154,15 +181,15 @@ const loadFeedBackType = () => {
     .catch((error) => {
       console.log(error);
     });
-}
+};
 
 onMounted(() => {
-  if(store.token){
+  if (store.token) {
     loadFeedBackType();
   }
 });
 
-defineExpose({loadFeedBackType});
+defineExpose({ loadFeedBackType });
 </script>
 <style scoped lang="scss">
 .feedback-modal-wrapper {

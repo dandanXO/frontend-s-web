@@ -5,7 +5,7 @@
       <div class="pg">
         <div class="color"></div>
       </div>
-      <div class="load-txt">Loading...</div>
+      <div class="load-txt">{{ $t("common.loading.text") }}</div>
     </div>
   </div>
 </template>

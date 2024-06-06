@@ -2,21 +2,31 @@
   <footer class="footer" :class="{ menuactive: globalStore.isMenuActive }">
     <div class="container">
       <div class="wrapper">
-        <span class="logo">LOGO</span>
+        <span class="logo">{{ $t("layout.footer.logo") }}</span>
         <div class="grid">
-          <router-link class="footer-link" to="/about">About B9.Game</router-link>
+          <router-link class="footer-link" to="/about">{{ $t("layout.footer.link.about") }}</router-link>
 
-          <router-link class="footer-link" to="/about?id=data-collection">Collect Information</router-link>
+          <router-link class="footer-link" to="/about?id=data-collection">
+            {{ $t("layout.footer.link.dataCollection") }}
+          </router-link>
 
-          <router-link class="footer-link" to="/about?id=legal-grounds">Legal Basis</router-link>
+          <router-link class="footer-link" to="/about?id=legal-grounds">
+            {{ $t("layout.footer.link.legalGround") }}
+          </router-link>
 
-          <router-link class="footer-link" to="/about?id=betting-rules">Betting Rules</router-link>
+          <router-link class="footer-link" to="/about?id=betting-rules">
+            {{ $t("layout.footer.link.bettingRule") }}
+          </router-link>
 
-          <router-link class="footer-link" to="/about?id=compensation">Compensation</router-link>
+          <router-link class="footer-link" to="/about?id=compensation">
+            {{ $t("layout.footer.link.compensation") }}
+          </router-link>
 
-          <router-link class="footer-link" to="/about?id=responsible-gambling">Gambling Responsibly</router-link>
+          <router-link class="footer-link" to="/about?id=responsible-gambling">
+            {{ $t("layout.footer.link.responsibleGambling") }}
+          </router-link>
 
-          <a class="footer-link footer-nav" href="">Affiliates</a>
+          <a class="footer-link footer-nav" href="">{{ $t("layout.footer.link.affiliates") }}</a>
         </div>
       </div>
 
@@ -80,7 +90,7 @@
     </div> -->
   </footer>
 
-<!--  <StickyMenu />-->
+  <!--  <StickyMenu />-->
 </template>
 
 <script setup>

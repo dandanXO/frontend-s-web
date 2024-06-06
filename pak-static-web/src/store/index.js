@@ -43,6 +43,7 @@ export const userStore = defineStore("userStore", {
         if (ret.code === 0) {
           this.token = ret.data;
           this.getBalance();
+          this.getMemberInfo();
         } else {
           throw new Error(ret.message);
         }
@@ -94,7 +95,7 @@ export const userStore = defineStore("userStore", {
     },
     openAccountModal(regLogin) {
       this.accountModalVisible = true;
-      if (regLogin === 'register') {
+      if (regLogin === "register") {
         this.accountModalRegVisible = true;
       } else {
         this.accountModalRegVisible = false;

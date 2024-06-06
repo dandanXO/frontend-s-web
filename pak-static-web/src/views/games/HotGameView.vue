@@ -1,8 +1,8 @@
 <template>
   <div class="platform-section">
     <div class="platform-breadcrumb">
-      <span>Home</span>
-      <span>🔥Hot</span>
+      <span>{{ $t("hotGameView.breadcrumb.home") }}</span>
+      <span>{{ $t("hotGameView.breadcrumb.title") }}</span>
     </div>
 
     <div class="margin-center game-container">
@@ -45,7 +45,6 @@ const loadGameIcon = (path) => {
   try {
     return require(`@/assets/images/platform/game/hot/${path}`);
   } catch (e) {
-    console.log(e);
     return `${require("@/assets/images/platform/game/default.png")}`;
   }
 };

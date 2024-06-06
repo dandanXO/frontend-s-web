@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="margin-center login-form-wrapper">
       <div class="game-title">
-        <span class="menu-title">Register Account</span>
+        <span class="menu-title">{{ $t("registerView.title") }}</span>
       </div>
 
       <!-- <a-tabs v-model:activeKey="tabActive" class="form-wrapped" @change="resetForm">
@@ -184,14 +184,18 @@
 
       <a-form ref="formRef" :model="regForm" :rules="rules">
         <a-form-item ref="loginName" name="loginName">
-          <a-input v-model:value="regForm.loginName" placeholder="Login name">
+          <a-input v-model:value="regForm.loginName" :placeholder="$t('registerView.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
             </template>
           </a-input>
         </a-form-item>
         <a-form-item ref="password" name="password">
-          <a-input v-model:value="regForm.password" :type="togglePwd ? 'password' : 'text'" placeholder="Password">
+          <a-input
+            v-model:value="regForm.password"
+            :type="togglePwd ? 'password' : 'text'"
+            :placeholder="$t('registerView.form.password.placeholder')"
+          >
             <template #prefix>
               <RiLock2Fill />
             </template>
@@ -333,16 +337,19 @@
         </div> -->
         <div class="privacy-agreement">
           <a-checkbox v-model:checked="agreePrivacy">
-            I have Agree to the
-            <router-link class="pwd-tip" to="">Use Privacy Agreement</router-link>
+            {{ $t("registerView.privacy.description") }}
+
+            <router-link class="pwd-tip" to="">{{ $t("registerView.privacy.link") }}</router-link>
           </a-checkbox>
         </div>
-        <button class="txt-center common-btn login-btn" type="submit" @click="onSubmit">Register Now</button>
+        <button class="txt-center common-btn login-btn" type="submit" @click="onSubmit">
+          {{ $t("registerView.registerButton") }}
+        </button>
       </a-form>
       <div class="txt-center already-member">
-        <span class="info-text">Already a member?</span>
+        <span class="info-text">{{ $t("registerView.haveAccount.description") }}</span>
 
-        <router-link class="forget-pwd-tip" to="/login">Login Now</router-link>
+        <router-link class="forget-pwd-tip" to="/login">{{ $t("registerView.haveAccount.link") }}</router-link>
       </div>
     </div>
     <a-modal closable v-model:visible="isUserRegistrationModalVisible" width="90%">
@@ -634,7 +641,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { computed, onMounted, reactive, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 // import { setMember } from "@/store/index";
@@ -663,8 +670,11 @@ import "@/assets/css/login.scss";
 import { getVerificationCode, sendTelephoneOtp } from "@/api/index/login";
 import { message } from "ant-design-vue";
 import { userStore, globalStore } from "@/store";
+import { useI18n } from "vue-i18n";
 
 const router = useRouter();
+const { t } = useI18n();
+
 const tabActive = ref("username");
 const formRef = ref();
 const regForm = reactive({
@@ -851,13 +861,13 @@ let validatePhoneNumber = async (r, v) => {
     return Promise.resolve();
   }
 };
-const rules = {
+const rules = computed(() => ({
   loginName: [
-    { len: 11, message: "Invalid phone number" },
-    { required: true, message: "Phone number is required" }
+    { len: 11, message: t("registerView.form.loginName.error.len") },
+    { required: true, message: t("registerView.form.loginName.error.required") }
   ],
-  password: [{ required: true, message: "Please enter your account or mobile number" }]
-};
+  password: [{ required: true, message: t("registerView.form.password.error.required") }]
+}));
 const loadingRegister = ref(false);
 const onSubmit = () => {
   formRef.value
@@ -1050,7 +1060,7 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-   color: white;
+    color: white;
   }
 
   span.weak-pwd {

@@ -1,6 +1,6 @@
 <template>
   <div class="bet-ranking-wrapper">
-    <span class="bet-ranking-title">Biggest bet today</span>
+    <span class="bet-ranking-title">{{ $t("layout.header.betRanking.title") }}</span>
     <div class="bet-ranking-record-list">
       <div v-if="loading" class="bet-ranking-loading-wrapper">
         <a-spin />

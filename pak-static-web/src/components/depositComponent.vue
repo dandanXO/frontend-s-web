@@ -15,7 +15,7 @@
 
       <div class="deposit-container">
         <div class="deposit-amt-quick-select-wrapper" v-if="allowedDepositAmtOptions.length > 0">
-          <div class="deposit-amt-quick-select-title">Recharge amount</div>
+          <div class="deposit-amt-quick-select-title">{{ $t("personalView.finance.deposit.recharge") }}</div>
           <div class="deposit-amt-quick-select-list">
             <div
               :class="`deposit-amt-quick-select-item ${depositAmtOption === Number(form.localAmount) ? 'active' : ''}`"
@@ -38,12 +38,12 @@
           autocomplete="off"
           label-align="left"
         >
-          <div class="deposit-amt-quick-select-title">Amount</div>
+          <div class="deposit-amt-quick-select-title">{{ $t("personalView.finance.deposit.form.label.title") }}</div>
           <a-form-item class="helptxt" name="localAmount">
             <a-input
               :prefix="store.currency.value"
               v-model:value="form.localAmount"
-              placeholder="Enter an amount"
+              :placeholder="$t('personalView.finance.deposit.form.amount.placeholder')"
               allowClear
             />
             <!-- <div class="account-tip" style="flex-direction: column; align-items: flex-start">
@@ -128,7 +128,9 @@
           </a-form-item> -->
         </a-form>
         <div class="txt-center">
-          <button class="common-btn confirm-btn" @click="confirmDeposit">Confirm Deposit</button>
+          <button class="common-btn confirm-btn" @click="confirmDeposit">
+            {{ $t("personalView.finance.deposit.confirmButton") }}
+          </button>
         </div>
       </div>
       <a-modal
@@ -140,11 +142,10 @@
         :closable="false"
         :footer="null"
       >
-        You have been redirected to your specific bank to proceed with the deposit.
-        <br />
-        <br />
-        Once the deposit is successful, it will be reflected here.
-        <div class="common-btn confirm-btn" @click="clearInfo">I understand</div>
+        {{ $t("personalView.finance.deposit.modal.description") }}
+        <div class="common-btn confirm-btn" @click="clearInfo">
+          {{ $t("personalView.finance.deposit.modal.confirmButton") }}
+        </div>
       </a-modal>
     </div>
   </div>
@@ -160,10 +161,9 @@ import TFLoading from "@/components/loading/TFLoading.vue";
 import { userStore } from "@/store";
 import { getMobileOS } from "@/utils/utils";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 
-{
-  RiSpamLine;
-}
+const { t } = useI18n();
 const store = userStore();
 const formRef = ref();
 const isDeposited = ref(false);
@@ -206,12 +206,12 @@ const rules = {
   localAmount: [
     {
       required: true,
-      message: "Deposit amount is required",
+      message: t("personalView.finance.deposit.form.amount.error.required"),
       trigger: "blur"
     },
     {
       pattern: "^([1-9][0-9]*)$",
-      message: "Amount should be a positive number",
+      message: t("personalView.finance.deposit.form.amount.error.pattern"),
       trigger: "change"
     },
     {
@@ -395,33 +395,39 @@ function confirmDeposit() {
       form.privilegeId = null;
     }
   }
-  formRef.value.validate().then(() => {
-    form.paymentId = activeMethod.value.paymentId;
-    if (store.token) {
-      const newWin = window.open(`/depositLoading`, "Bank");
-      newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.data.msg) {
-            if (event.data.msg === "Success") {
-              isDeposited.value = true;
-            } else {
-              message.error(event.data.msg, 4);
+  formRef.value
+    .validate()
+    .then(() => {
+      form.paymentId = activeMethod.value.paymentId;
+      if (store.token) {
+        const newWin = window.open(`/depositLoading`, "Bank");
+        newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+        window.addEventListener(
+          "message",
+          (event) => {
+            if (event.data.msg) {
+              if (event.data.msg === "Success") {
+                isDeposited.value = true;
+              } else {
+                message.error(event.data.msg, 4);
+              }
             }
-          }
-        },
-        { once: true }
-      );
-    }
-  });
+          },
+          { once: true }
+        );
+      }
+    })
+    .catch((error) => console.log(error));
 }
 
 async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
+        t("personalView.finance.deposit.form.amount.error.range", {
+          min: calculatedMinDeposit.value,
+          max: activeMethod.value.depositMax
+        })
       );
     } else {
       if (checkAmount.flag) {

@@ -2,22 +2,47 @@
   <div class="forget-password-containier">
     <a-form ref="formRef" :model="passwordForm" :rules="passwordFormRules" hide-required-mark>
       <div v-if="step === 1">
-        <a-form-item name="loginName" label="Phone Number" label-align="left">
-          <a-input v-model:value="passwordForm.loginName" placeholder="Phone Number">
+        <a-form-item
+          name="loginName"
+          :label="$t('layout.header.accountModal.forgetPwd.infoForm.loginName.label')"
+          label-align="left"
+        >
+          <a-input
+            v-model:value="passwordForm.loginName"
+            :placeholder="$t('layout.header.accountModal.forgetPwd.infoForm.loginName.placeholder')"
+          >
             <template #prefix>
-              <RiPhoneFill />
+              <RiSmartphoneFill />
+              <span style="color: #ffffff">+92</span>
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item ref="email" label="Email" label-align="left" name="email">
-          <a-input v-model:value="passwordForm.email" placeholder="Email">
+        <a-form-item
+          ref="email"
+          :label="$t('layout.header.accountModal.forgetPwd.infoForm.email.label')"
+          label-align="left"
+          name="email"
+        >
+          <a-input
+            v-model:value="passwordForm.email"
+            :placeholder="$t('layout.header.accountModal.forgetPwd.infoForm.email.placeholder')"
+          >
             <template #prefix>
               <RiMailFill />
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item label="Captcha" label-align="left" ref="captchaCode" name="captchaCode">
-          <a-input v-model:value="passwordForm.captchaCode" :maxlength="4" placeholder="Verification Code">
+        <a-form-item
+          :label="$t('layout.header.accountModal.forgetPwd.infoForm.captcha.label')"
+          label-align="left"
+          ref="captchaCode"
+          name="captchaCode"
+        >
+          <a-input
+            v-model:value="passwordForm.captchaCode"
+            :maxlength="4"
+            :placeholder="$t('layout.header.accountModal.forgetPwd.infoForm.captcha.placeholder')"
+          >
             <template #prefix>
               <RiShieldCheckFill />
             </template>
@@ -31,11 +56,13 @@
     <a-form ref="verifyFormRef" :model="verificationForm" :rules="verificationFormRules" hide-required-mark>
       <div class="step2" v-if="step === 2">
         <div class="step2-top">
-          <div class="title">Input your verification code</div>
-          <div class="submessage">Your will receive a verification code at your Email {{ verificationForm.email }}</div>
+          <div class="title">{{ $t("layout.header.accountModal.forgetPwd.verifyForm.title") }}</div>
+          <div class="submessage">
+            {{ $t("layout.header.accountModal.forgetPwd.verifyForm.description") }} {{ verificationForm.email }}
+          </div>
         </div>
         <div>
-          <a-form-item name="otp" label-align="left">
+          <a-form-item name="code" label-align="left">
             <span class="otp-container">
               <a-input
                 v-for="(value, index) in otp"
@@ -49,11 +76,16 @@
               />
             </span>
           </a-form-item>
-          <a-form-item label="New password" label-align="left" ref="password" name="password">
+          <a-form-item
+            :label="$t('layout.header.accountModal.forgetPwd.verifyForm.newPassword.label')"
+            label-align="left"
+            ref="password"
+            name="password"
+          >
             <a-input
               v-model:value="verificationForm.newPassword"
               :type="togglePwd ? 'password' : 'text'"
-              placeholder="Password"
+              :placeholder="$t('layout.header.accountModal.forgetPwd.verifyForm.newPassword.placeholder')"
             >
               <template #prefix>
                 <LockFilled />
@@ -64,7 +96,7 @@
               </template>
             </a-input>
           </a-form-item>
-          <div v-if="verificationForm.password" class="password-str-div">
+          <!-- <div v-if="verificationForm.password" class="password-str-div">
             <span
               :class="{
                 'weak-pwd': pwdStrength == 'weak',
@@ -83,12 +115,17 @@
               Good
             </span>
             <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-          </div>
-          <a-form-item label="Confirm new password" label-align="left" ref="confirmPwd" name="confirmPwd">
+          </div> -->
+          <a-form-item
+            :label="$t('layout.header.accountModal.forgetPwd.verifyForm.confirmPwd.label')"
+            label-align="left"
+            ref="confirmPwd"
+            name="confirmPwd"
+          >
             <a-input
               v-model:value="verificationForm.confirmPwd"
               :type="togglePwd ? 'password' : 'text'"
-              placeholder="Confirm password"
+              :placeholder="$t('layout.header.accountModal.forgetPwd.verifyForm.confirmPwd.placeholder')"
             >
               <template #prefix>
                 <LockFilled />
@@ -112,17 +149,17 @@
       </div>
       <div>
         <a-button class="common-btn" :loading="loadingLogin" @click="onSubmit">
-          {{ $t("layout.header.accountModal.login.submitButton") }}
+          {{ $t("layout.header.accountModal.forgetPwd.submitButton") }}
         </a-button>
       </div>
     </a-form>
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, reactive, onMounted, watch, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { userStore } from "@/store/index";
-import { RiMailFill, RiPhoneFill } from "vue-remix-icons";
+import { RiMailFill, RiSmartphoneFill } from "vue-remix-icons";
 import { getVerificationCode } from "@/api/index/login";
 import { sendForgetPasswordEmail, verifyForgetPasswordEmail } from "@/api/index/forgotPwd";
 import { useRoute, useRouter } from "vue-router";
@@ -147,10 +184,85 @@ const verificationForm = reactive({
   code: "",
   captchaCode: "",
   codeId: sessionStorage.getItem("emailCodeId"),
-  newPassword: ""
+  newPassword: "",
+  confirmPwd: ""
 });
 const isLoading = ref(false);
 const step = ref(1);
+const verificationImg = ref("");
+
+const passwordFormRules = computed(() => ({
+  loginName: [
+    {
+      required: true,
+      message: t("layout.header.accountModal.forgetPwd.infoForm.loginName.error.required"),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 12,
+      message: t("layout.header.accountModal.forgetPwd.infoForm.loginName.error.required"),
+      trigger: "blur"
+    }
+  ],
+  email: [
+    {
+      required: true,
+      message: t("layout.header.accountModal.forgetPwd.infoForm.email.error.required"),
+      trigger: "blur"
+    }
+  ],
+  captchaCode: [
+    {
+      required: true,
+      message: t("layout.header.accountModal.forgetPwd.infoForm.captcha.error.required"),
+      trigger: "blur"
+    },
+    {
+      min: 4,
+      max: 4,
+      message: t("layout.header.accountModal.forgetPwd.infoForm.captcha.error.len"),
+      trigger: "change"
+    }
+  ]
+}));
+
+const verificationFormRules = computed(() => ({
+  code: [
+    {
+      required: true,
+      message: t("layout.header.accountModal.forgetPwd.verifyForm.code.error.required"),
+      trigger: "blur"
+    },
+    { len: 6, message: t("layout.header.accountModal.forgetPwd.verifyForm.code.error.len"), trigger: "blur" }
+  ],
+  newPassword: [
+    {
+      required: true,
+      message: t("layout.header.accountModal.forgetPwd.verifyForm.newPassword.error.required"),
+      trigger: "blur"
+    },
+    { min: 6, message: t("layout.header.accountModal.forgetPwd.verifyForm.newPassword.error.min"), trigger: "blur" }
+  ],
+  confirmPwd: [
+    { min: 6, message: t("layout.header.accountModal.forgetPwd.verifyForm.confirmPwd.error.min"), trigger: "blur" },
+    {
+      validator: validateConfirmPwd,
+      trigger: "blur"
+    }
+  ]
+}));
+
+const validateConfirmPwd = async (_, val) => {
+  if (!val) {
+    return Promise.reject(t("layout.header.accountModal.forgetPwd.verifyForm.confirmPwd.error.required"));
+  } else if (val !== verificationForm.newPassword) {
+    return Promise.reject(t("layout.header.accountModal.forgetPwd.verifyForm.confirmPwd.error.validator"));
+  } else {
+    return Promise.resolve();
+  }
+};
+
 const onSubmit = () => {
   if (step.value === 1) {
     formRef.value
@@ -165,7 +277,7 @@ const onSubmit = () => {
       });
     return;
   } else if (step.value === 2) {
-    verificationForm.code = otp.value.join("");
+    // verificationForm.code = otp.value.join("");
     verifyFormRef.value
       .validate()
       .then(() => {
@@ -199,14 +311,16 @@ const backToLogin = () => {
   emit("back-to-login");
 };
 const sendEmail = () => {
-  sendForgetPasswordEmail(passwordForm).then((res) => {
-    if (res.code === 0) {
-      step.value = 2;
-      sessionStorage.setItem("codeId", res.data.codeId);
-    }
-  });
+  sendForgetPasswordEmail(passwordForm)
+    .then((res) => {
+      if (res.code === 0) {
+        step.value = 2;
+        sessionStorage.setItem("codeId", res.data.codeId);
+      }
+    })
+    .catch((error) => console.log(error));
 };
-const verificationImg = ref("");
+
 const getCode = () => {
   passwordForm.captchaCode = "";
   getVerificationCode()
@@ -220,41 +334,7 @@ const getCode = () => {
       console.log(e.message);
     });
 };
-const passwordFormRules = {
-  loginName: [
-    {
-      required: true,
-      message: "User name is required",
-      trigger: "blur"
-    },
-    {
-      min: 6,
-      max: 12,
-      message: "Length should be 6 to 12",
-      trigger: "blur"
-    }
-  ],
-  password: [
-    {
-      required: true,
-      message: "Password is required",
-      trigger: "blur"
-    }
-  ],
-  captchaCode: [
-    {
-      required: true,
-      message: "Verification code is required",
-      trigger: "blur"
-    },
-    {
-      min: 4,
-      max: 4,
-      message: "Length should be 4",
-      trigger: "change"
-    }
-  ]
-};
+
 // Register the component
 const { "a-input": AInput } = { "a-input": Input };
 
@@ -344,6 +424,15 @@ watch(
     // console.log(pwdStrength.value);
   }
 );
+
+watch(
+  otp,
+  (val) => {
+    verificationForm.code = val.join("");
+  },
+  { deep: true }
+);
+
 onMounted(() => {
   getCode();
 });

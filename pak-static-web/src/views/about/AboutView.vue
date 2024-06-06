@@ -4,10 +4,10 @@
       <a-tabs v-model:activeKey="activeTab" :tab-position="windowSize > 768 ? 'left' : 'top'">
         <!-- <template #tabBarExtraContent v-if="windowSize > 768">
         </template> -->
-        <a-tab-pane key="about" tab="About us">
+        <a-tab-pane key="about" :tab="$t('about.about.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">About us</span>
+              <span class="menu-title">{{ $t("about.about.title") }}</span>
             </div>
             <p>
               B9.game's missions and motto: To provide Customer with best betting odds and services: Our advantage:
@@ -50,10 +50,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="data-collection" tab="Data Collection">
+        <a-tab-pane key="data-collection" :tab="$t('about.dataCollection.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Data collection</span>
+              <span class="menu-title">{{ $t("about.dataCollection.title") }}</span>
             </div>
             <div class="content-title-container">
               <span class="content-title">General information</span>
@@ -129,10 +129,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="legal-grounds" tab="Legal Grounds">
+        <a-tab-pane key="legal-grounds" :tab="$t('about.legalGround.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Legal grounds</span>
+              <span class="menu-title">{{ $t("about.legalGround.title") }}</span>
             </div>
             <ul class="content-list decimal-style">
               <li>This privacy policy strictly complies with relevant data protection laws;</li>
@@ -155,10 +155,10 @@
             </ul>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="betting-rules" tab="Betting Rules">
+        <a-tab-pane key="betting-rules" :tab="$t('about.bettingRule.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Betting Rules</span>
+              <span class="menu-title">{{ $t("about.bettingRule.title") }}</span>
             </div>
             <ul class="content-list decimal-style">
               <li>
@@ -228,10 +228,10 @@
             </ul>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="compensation" tab="Compensation">
+        <a-tab-pane key="compensation" :tab="$t('about.compensation.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Compensation</span>
+              <span class="menu-title">{{ $t("about.compensation.title") }}</span>
             </div>
             <p>
               B9.game's users hereby agree that when connect to our betting website, download or install our betting
@@ -244,10 +244,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="responsible-gambling" tab="Responsible Gambling">
+        <a-tab-pane key="responsible-gambling" :tab="$t('about.responsibleGambling.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Responsible Gambling</span>
+              <span class="menu-title">{{ $t("about.responsibleGambling.title") }}</span>
             </div>
             <p>We hope all our valued users have fun at B9.game</p>
             <p>Gambling is a form of entertainment and should not burden your financial and emotional life</p>

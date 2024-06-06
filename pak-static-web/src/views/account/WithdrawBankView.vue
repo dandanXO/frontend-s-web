@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">Bank</span>
+      <span class="menu-title">{{ $t("personalView.bank.title") }}</span>
     </div>
 
     <!-- <div class="account-title-container">
@@ -54,7 +54,7 @@
               </div>
             </div>
             <!-- TODO: check  -->
-            <div class="card-address">E*A</div>
+            <div class="card-address">{{ bc.cardAddress }}</div>
             <!-- <div
               v-for="b in bc.cardNumber.split()"
               :key="b"
@@ -87,7 +87,7 @@
         </div>
         <div class="bank-card-item addcard" @click="bankCardModal('bank')">
           <RiAddCircleFill style="fill: currentColor" />
-          Add card
+          {{ $t("personalView.bank.addButton") }}
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@
       </div>
     </div> -->
     <a-modal v-model:visible="bankCardModalState.visible" wrap-class-name="bankModal" width="100%" :footer="null">
-      <div class="modal-head-title">Add Bank Card</div>
+      <div class="modal-head-title">{{ $t("personalView.bank.addModal.title") }}</div>
       <a-form
         ref="bankCardFormRef"
         :hide-required-mark="true"
@@ -144,23 +144,17 @@
         :rules="bankCardRules"
         :colon="false"
       >
-        <a-form-item
-          name="bankId"
-          :rules="[
-            {
-              required: true,
-              message: isVirtual
-                ? 'Please select a Crypto card'
-                : !isEwallet
-                ? 'Please select a bank'
-                : 'Please select an E-wallet'
-            }
-          ]"
-        >
+        <a-form-item name="bankId">
           <a-space style="width: 100%; justify-content: space-between">
             <a-select
               v-model:value="selectedBankType"
-              :placeholder="isVirtual ? 'Crypto' : !isEwallet ? 'Bank type' : 'E-wallet type'"
+              :placeholder="
+                $t(
+                  `personalView.bank.addModal.form.bankType.placeholder.${
+                    isVirtual ? 'crypto' : !isEwallet ? 'bank' : 'eWallet'
+                  }`
+                )
+              "
               style="width: 100%"
               :options="bankTypes.map((bank) => ({ value: bank }))"
               @change="selectBankType"
@@ -169,7 +163,11 @@
               v-model:value="bankCardInfo.bankId"
               class="select"
               :placeholder="
-                isVirtual ? 'Please select a Crypto' : !isEwallet ? 'Please select a bank' : 'Please select an E-wallet'
+                $t(
+                  `personalView.bank.addModal.form.bankId.placeholder.${
+                    isVirtual ? 'crypto' : !isEwallet ? 'bank' : 'eWallet'
+                  }`
+                )
               "
               style="width: 100%"
             >
@@ -187,18 +185,34 @@
           </a-space>
         </a-form-item>
 
-        <a-form-item name="cardAccount" label-align="left" label="Holder Name">
-          <a-input :disabled="true" v-model:value="bankCardInfo.cardAccount" placeholder="Enter Holder Name" />
+        <a-form-item
+          name="cardAccount"
+          label-align="left"
+          :label="$t('personalView.bank.addModal.form.cardAccount.label')"
+        >
+          <a-input
+            :disabled="true"
+            v-model:value="bankCardInfo.cardAccount"
+            :placeholder="$t('personalView.bank.addModal.form.cardAccount.placeholder')"
+          />
         </a-form-item>
         <a-form-item
           ref="cardNumber"
           name="cardNumber"
           label-align="left"
-          :label="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
+          :label="
+            $t(`personalView.bank.addModal.form.cardNumber.label.${isVirtual || isEwallet ? 'wallet' : 'cardNumber'}`)
+          "
         >
           <a-input
             v-model:value="bankCardInfo.cardNumber"
-            :placeholder="isVirtual || isEwallet ? 'Wallet' : 'Card Number'"
+            :placeholder="
+              $t(
+                `personalView.bank.addModal.form.cardNumber.placeholder.${
+                  isVirtual || isEwallet ? 'wallet' : 'cardNumber'
+                }`
+              )
+            "
           />
         </a-form-item>
         <!-- <a-form-item v-if="!(isVirtual || isEwallet)" ref="cardAddress" name="cardAddress" label="Card Address">
@@ -207,21 +221,38 @@
         <!-- <a-form-item v-if="!(isVirtual || isEwallet)"  name="cardNumber" label-align="left" label="Account Number">
           <a-input v-model:value="bankCardInfo.cardNumber" placeholder="Enter Account Number" />
         </a-form-item> -->
-        <a-form-item name="cardAddress" label-align="left" label="IFSC Code">
-          <a-input v-model:value="bankCardInfo.cardAddress" placeholder="Enter Bank IFSC Code" />
+        <a-form-item
+          name="cardAddress"
+          label-align="left"
+          :label="$t('personalView.bank.addModal.form.cardAddress.label')"
+        >
+          <a-input
+            v-model:value="bankCardInfo.cardAddress"
+            :placeholder="$t('personalView.bank.addModal.form.cardAddress.placeholder')"
+          />
         </a-form-item>
         <a-form-item class="txt-center">
-          <button class="txt-center common-btn" type="submit" @click="submitBankCard">CONFIRM</button>
+          <button class="txt-center common-btn" type="submit" @click="submitBankCard">
+            {{ $t("personalView.bank.addModal.confirmButton") }}
+          </button>
         </a-form-item>
       </a-form>
     </a-modal>
-    <a-modal centered v-model:visible="open" :title="`Remove ${selectedUnbindingCard.bankName} ?`">
+    <ConfirmModal
+      v-model="open"
+      centered
+      :title="$t('personalView.bank.removeModal.title', { bankName: selectedUnbindingCard.bankName })"
+      @confirm="handleOk"
+    >
+      {{ $t("personalView.bank.removeModal.description", { bankName: selectedUnbindingCard.bankName }) }}
+    </ConfirmModal>
+    <!-- <a-modal centered v-model:visible="open" :title="`Remove ${selectedUnbindingCard.bankName} ?`">
       Are you sure you want to remove {{ selectedUnbindingCard.bankName }} ?
       <div class="flex" style="gap: 10px; margin: 20px">
         <a-button class="common-btn outline" @click="handleCancel">Cancel</a-button>
         <a-button class="common-btn" @click="handleOk">Confirm</a-button>
       </div>
-    </a-modal>
+    </a-modal> -->
   </div>
 </template>
 
@@ -234,6 +265,10 @@ import { loadBanks, loadAllBankCards, loadUnbindRecord, addBankCard, deleteBankC
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
 import moment from "moment/moment";
+import ConfirmModal from "@/components/common/ConfirmModal.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 let validateBankLength = async (r, v) => {
   var min = 6;
@@ -452,11 +487,11 @@ const submitBankCard = () => {
       console.log("error", error);
     });
 };
-const bankCardRules = {
+const bankCardRules = computed(() => ({
   cardNumber: [
     {
       required: true,
-      message: "Please enter card number",
+      message: t("personalView.bank.addModal.form.cardNumber.error.required"),
       trigger: "blur"
     }
     // {
@@ -464,21 +499,29 @@ const bankCardRules = {
     //   trigger: "blur",
     // }
   ],
+  bankId: [
+    {
+      required: true,
+      message: t(
+        `personalView.bank.addModal.form.bankId.error.required.${isVirtual ? "crypto" : isEwallet ? "eWallet" : "bank"}`
+      )
+    }
+  ],
   cardAccount: [
     {
       required: true,
-      message: "Card account is required",
+      message: t("personalView.bank.addModal.form.cardAccount.error.required"),
       trigger: "blur"
     }
   ],
   cardAddress: [
     {
       required: true,
-      message: "Please enter IFSC Code",
+      message: t("personalView.bank.addModal.form.cardAddress.error.required"),
       trigger: "blur"
     }
   ]
-};
+}));
 const open = ref(false);
 const selectedUnbindingCard = ref({});
 const unbindBankCard = (card) => {

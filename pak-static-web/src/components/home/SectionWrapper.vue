@@ -2,7 +2,7 @@
   <div class="section-wrapper">
     <div class="section-header">
       <span class="section-header__title">{{ title }}</span>
-      <router-link class="section-header__link" :to="to">View All</router-link>
+      <router-link class="section-header__link" :to="to">{{ $t("homeView.sectionWrapper.viewAll") }}</router-link>
     </div>
     <div class="section-content-wrapper">
       <slot />
