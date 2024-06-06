@@ -244,6 +244,7 @@ const platformsListDisplay = ref([]);
 const getPlatList = () => {
   const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
   getFn().then((res) => {
+    console.log(res,'dan')
     platformsList.value = res;
 
     // console.log(platformsList.value);
