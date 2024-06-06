@@ -514,8 +514,8 @@ svg path {
   width: 300px;
   transform: translate(-50%, -50%);
 
-  @media (max-width: 991px) {
-    width: 150px;
+  @media (max-width: 1200px) {
+    width: 250px;
   }
 
   @media (max-width: 768px) {
@@ -539,16 +539,31 @@ svg path {
   flex-direction: column;
   position: relative;
   width: 100%;
-  background: url("../assets/home/home-banner.png") no-repeat top center;
+  background: url("../assets/home/home-banner-sm.jpg") no-repeat top center;
   background-size: cover;
-  height: 250px;
+  height: 228px;
+  margin-top: 60px;
 
-  @media (min-width: 991px) {
-    background: url("../assets/home/home-banner.png") no-repeat top center;
-    background-size: 100% 100%;
-    background-color: #0e0536;
-    height: 375px;
+  @media (min-width: 620px) {
+    background: url("../assets/home/home-banner-md.jpg") no-repeat top center;
+    background-size: cover;
+    height: 228px;
   }
+
+  @media (min-width: 769px) {
+    background: url("../assets/home/home-banner-lg.jpg") no-repeat top center;
+    background-size: cover;
+    margin-top: 0px;
+    height: 345px;
+  }
+
+  @media (min-width: 1200px) {
+    background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
+    background-size: cover;
+    height: 480px;
+  }
+
+  
 }
 
 footer {
