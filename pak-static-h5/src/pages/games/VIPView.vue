@@ -15,6 +15,15 @@
     </q-tabs>
   </div>
 
+  <div class="receive-monthly">
+    <div class="monthly-img"><img src="../../assets/images/vip/receive-monthly-img.png" width="120" /></div>
+    <div class="monthly-txt">Receive monthly rewards</div>
+    <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">
+      <span v-if="!monthlyVipReceive">RECEIVED</span>
+      <span v-else>RECEIVE</span>
+    </div>
+  </div>
+
   <div class="vip-container">
     <Carousel
       ref="vipCarouselRef"
@@ -101,7 +110,7 @@
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
             </div>
           </div>
-          <div class="unlock-status" @click="getMonthlyVip">
+          <div class="unlock-status">
             <img
               v-if="currentVipLevelStats.rewardUnlocked"
               src="../../assets/images/vip/vip-reward-unlocked-icon.png"
@@ -367,7 +376,7 @@
 </template>
 
 <script setup>
-import { watch, ref, onActivated } from "vue";
+import { watch, ref, onActivated, onMounted } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -564,6 +573,10 @@ onActivated(() => {
 
     vipCarouselRef.value.data.currentSlide.value = vipCarouselIndex.value;
   });
+});
+
+onMounted(() => {
+  checkMonthlyVipReceive();
 });
 
 watch(
@@ -840,9 +853,31 @@ const swipeRight = () => {
   router.push("/promo");
 };
 
+const monthlyVipReceive = ref(false);
+
+// api.get('/session/balance', {params: {platform: platform.code}}).then((res) => {
+
+const checkMonthlyVipReceive = () => {
+  eventapi
+    .get("/privi/vip/canRedeem", { params: { promoCode: "pak-vip-monthly" } })
+    .then((res) => {
+      console.log(res);
+      monthlyVipReceive.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err.message);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: err.message,
+        icon: "report_problem"
+      });
+    });
+};
+
 const getMonthlyVip = () => {
   eventapi
-    .put(" /bonus/claim/pak-vip-monthly")
+    .put("/bonus/claim/pak-vip-monthly")
     .then((res) => {
       if (res.code === 0) {
         $q.notify({
@@ -1304,6 +1339,44 @@ const getMonthlyVip = () => {
 @media (max-width: 410px) {
   .vip-container {
     padding: 0 0.75rem;
+  }
+}
+
+.receive-monthly {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  // padding: 0 12px;
+  height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 36px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 90px;
+  position: relative;
+  border-radius: 6px;
+  .monthly-img {
+    position: absolute;
+    top: -30px;
+    left: -20px;
+  }
+  .monthly-txt {
+    margin: auto;
+  }
+  .monthly-btn {
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #000a01;
+
+    &.disable {
+      background: #313131;
+      color: #999999;
+    }
   }
 }
 </style>
