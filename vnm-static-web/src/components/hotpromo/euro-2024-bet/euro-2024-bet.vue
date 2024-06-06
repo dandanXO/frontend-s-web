@@ -1,11 +1,13 @@
 <template>
     <div class="container">
         <div class="section-title">
-                <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24bet/section-title-decor-left.svg" />
-                <span>BÙNG NỔ CUP CHÂU ÂU 2024</span>
-                <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24bet/section-title-decor-right.svg" />
-            </div>
-
+            <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24bet/section-title-decor-left.svg" />
+            <span>BÙNG NỔ CUP CHÂU ÂU 2024</span>
+            <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24bet/section-title-decor-right.svg" />
+        </div>
+        <div>
+            <img src="../../../assets/images/promotion/hotpromo/eurocup24/hangbao.png">
+        </div>
         <div class="wrapper border">
             <div class="section-title">
                 <img class="decor" src="../../../assets/images/promotion/hotpromo/eurocup24bet/section-title-decor-left.svg" />
@@ -74,7 +76,7 @@
                         <td>3</td>
                     </tr>
                     <tr>
-                        <td>≥580,000 VNDP</td>
+                        <td>≥580F,000 VNDP</td>
                         <td>6,888 VNDP</td>
                         <td>3</td>
                     </tr>                
