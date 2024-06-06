@@ -137,7 +137,15 @@
         <div class="header">VIP status can be upgraded by accumulating monthly deposits</div>
       </div>
 
-      <q-table flat :hide-pagination="true" :columns="columns" :rows="rows" row-key="name" :rows-per-page-options="[0]">
+      <q-table
+        flat
+        :hide-pagination="true"
+        :columns="columns"
+        :rows="rows"
+        row-key="name"
+        :rows-per-page-options="[0]"
+        style="overflow-x: scroll"
+      >
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
             <q-th v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
@@ -156,11 +164,20 @@
             <q-td>
               <div><img src="../../assets/images/vip/vip-col-level.png" /></div>
             </q-td>
-            <q-td>Award</q-td>
-            <q-td style="width: 60px">
-              1st Day of
+            <q-td>
+              Upgrade
               <br />
-              Next Month
+              Experience
+            </q-td>
+            <q-td>
+              Upgrade
+              <br />
+              Rewards
+            </q-td>
+            <q-td>
+              Monthly
+              <br />
+              Rewards
             </q-td>
           </q-tr>
         </template>
@@ -168,7 +185,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="(col, colIndex) in props.cols" :key="col.name" :props="props">
-              <template v-if="colIndex === 1 || colIndex === 2">
+              <template v-if="colIndex === 1 || colIndex === 2 || colIndex === 3">
                 <div style="justify-content: flex-end; display: flex; align-items: center; gap: 4px">
                   <img src="../../assets/images/vip/vip-coins.png" />
                   <span>{{ col.value }}</span>
@@ -404,73 +421,101 @@ const columns = [
     field: (row) => row.name
   },
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
+  { name: "reward", field: "reward", align: "center" },
   { name: "flow", field: "flow", align: "center" }
 ];
+
+// 1	5000	20	38
+// 2	10000	25	88
+// 3	20000	50	188
+// 4	50000	100	388
+// 5	100000	200	588
+// 6	200000	300	888
+// 7	500000	1000	1888
+// 8	1000000	2000	3888
+// 9	2000000	3000	8888
+// 10	5000000	10000	28888
+// 11	10000000	20000	58888
+// 12	20000000	30000	88888
+
 const rows = [
   {
     name: "VIP 0",
     ugprade: "0",
+    reward: "0",
     flow: "0"
   },
   {
     name: "VIP 1",
     ugprade: "5,000",
-    flow: "50"
+    reward: "20",
+    flow: "38"
   },
   {
     name: "VIP 2",
     ugprade: "10,000",
-    flow: "100"
+    reward: "25",
+    flow: "88"
   },
   {
     name: "VIP 3",
     ugprade: "20,000",
-    flow: "200"
+    reward: "50",
+    flow: "188"
   },
   {
     name: "VIP 4",
     ugprade: "50,000",
-    flow: "500"
+    reward: "100",
+    flow: "388"
   },
   {
     name: "VIP 5",
     ugprade: "100,000",
-    flow: "1,000"
+    reward: "200",
+    flow: "588"
   },
   {
     name: "VIP 6",
     ugprade: "200,000",
-    flow: "2,000"
+    reward: "300",
+    flow: "888"
   },
   {
     name: "VIP 7",
     ugprade: "500,000",
-    flow: "5,000"
+    reward: "1,000",
+    flow: "1,888"
   },
   {
     name: "VIP 8",
     ugprade: "1,000,000",
-    flow: "10,000"
+    reward: "2,000",
+    flow: "3,888"
   },
   {
     name: "VIP 9",
     ugprade: "2,000,000",
-    flow: "20,000"
+    reward: "3,000",
+    flow: "8,888"
   },
   {
     name: "VIP 10",
     ugprade: "5,000,000",
-    flow: "50,000"
+    reward: "10,000",
+    flow: "28,888"
   },
   {
     name: "VIP 11",
     ugprade: "10,000,000",
-    flow: "100,000"
+    reward: "20,000",
+    flow: "58,888"
   },
   {
     name: "VIP 12",
     ugprade: "20,000,000",
-    flow: "200,000"
+    reward: "30,000",
+    flow: "88,888"
   }
 ];
 
