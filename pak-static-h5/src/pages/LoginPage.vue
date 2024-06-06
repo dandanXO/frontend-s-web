@@ -670,6 +670,7 @@ export default defineComponent({
 }
 
 .login-form-logo-img {
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;

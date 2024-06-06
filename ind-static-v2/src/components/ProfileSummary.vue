@@ -238,6 +238,7 @@ const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
+    console.log("platform", Platform);
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
