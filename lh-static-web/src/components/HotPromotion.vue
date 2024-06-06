@@ -3,7 +3,6 @@
     <ClaimPromo v-if="isCommonPromo" :promo-id="list.id" :loading-claim="loadingClaim" @daily-slot="handleSlot()" />
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-tiger-card'" />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" :promo-code="list.promoCode" />
-    <!-- <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-s13-vote'" /> -->
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-goldenegg' && store.token" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-hongbaoyu' && store.token" />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-welcomenewuser' && store.token" />
@@ -85,6 +84,8 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
 
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
+    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
+
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
         <span class="img-item">
@@ -105,7 +106,8 @@ import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
-import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
+// import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
+import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
@@ -156,7 +158,7 @@ export default defineComponent({
   components: {
     ClaimPromo,
     TigerCardPromo,
-    PrizePoolVotePromo,
+    EurocupVotePromo,
     GoldenEggPromo,
     HongBaoYuPromo,
     InviteFriendPromo,
@@ -449,6 +451,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-esport-safety" ||
       this.list.redirectUrl === "lh1-sport-safety" ||
       this.list.redirectUrl === "lh1-s13-vote" ||
+      this.list.redirectUrl === "lh1-team-vote" ||
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-nba-safety" ||
       this.list.redirectUrl === "lh1-quiz" ||
