@@ -6,15 +6,16 @@
         <span>BÙNG NỔ CUP CHÂU ÂU 2024</span>
         <img class="decor" src="../../../assets/images/promo/hotpromo/eurocup24/section-title-decor-right.svg" />
       </div>
-      <div class="moneyBg">
+      <div class="moneyBg" @click="postClaimSummon">
         <div class="moneyText">
           <div>NHẬN THƯỞNG</div>
           <div class="money">{{ betMoney }} VNDP</div>
           <div>MỖI NGÀY</div>
         </div>
         <img src="../../../assets/promo/vnm-euro-2024-bet-reward/moneyBg.png" alt="" />
-        <div class="btnText" @click="postClaimSummon">Nhận ngay</div>
+        <div class="btnText" >Nhận ngay</div>
       </div>
+      
     </div>
     <div class="wrapper border">
       <div class="section-title">
@@ -230,6 +231,16 @@ onMounted(() => {
     .moneyBg {
       width: 234px;
       position: relative;
+
+      &:hover{
+        filter:brightness(0.9);
+      }
+      &:active{
+        filter:brightness(0.8);
+        transform: translate(0px, 1px);
+      }
+
+
       .moneyText {
         font-family: Inter;
         font-size: 14px;
