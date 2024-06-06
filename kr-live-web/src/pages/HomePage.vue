@@ -2,7 +2,7 @@
   <div class="main-section">
     <LangToggle />
 
-    <RollingText :depositRecordList="depositRecordList"/>
+    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="true"/>
 
     <JackpotPrize />
 
@@ -1128,6 +1128,7 @@ export default defineComponent({
 
     const platforms = ref([]);
     const newsList = ref([]);
+    const isLoadingDepositRecordList = ref(false);
     const depositRecordList = ref([]);
 
     const selectedPlatId = ref();
@@ -1466,6 +1467,7 @@ export default defineComponent({
     };
 
     const loadDepositRecordList = () => {
+      isLoadingDepositRecordList.value = true;
       api
         .get("/member/withdraw-deposit-record")
         .then((res) => {
@@ -1481,9 +1483,14 @@ export default defineComponent({
               icon: "report_problem"
             });
           }
+
+          isLoadingDepositRecordList.value = false;
         })
         .catch((err) => {
           console.log(err);
+          isLoadingDepositRecordList.value = false;
+        }).finally(() => {
+          isLoadingDepositRecordList.value = false;
         });
     };
 
@@ -1790,6 +1797,7 @@ export default defineComponent({
     };
 
     return {
+      isLoadingDepositRecordList,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",

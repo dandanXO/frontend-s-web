@@ -7,8 +7,11 @@
                     <div class="text">공지</div>
                 </div>
             </div>
+            <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
+                <q-spinner-pie color="purple" size="20"/>
+            </div>
             <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
-                v-if="props.depositRecordList && props.depositRecordList.length > 0">
+                v-else-if="props.depositRecordList && props.depositRecordList.length > 0">
                 <div>
                     <span style="color: #fff;" v-for="(a, i) in props.depositRecordList" :key="i">
                         {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
@@ -25,12 +28,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
 import MarqueeText from "vue-marquee-text-component";
-import { api } from 'boot/axios';
 import moment from 'moment';
 
-const props = defineProps(['depositRecordList']);
+const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
 
 </script>
 

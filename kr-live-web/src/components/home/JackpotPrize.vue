@@ -1,6 +1,9 @@
 <template>
     <div class="jackpot">
-      <div class="jackpot-txt">{{ jackpotPrizeAmt }}</div>
+      <div class="jackpot-txt">
+        <q-spinner-pie  v-if="isLoading" color="purple" size="20"/>
+        <span v-else>{{ jackpotPrizeAmt }}</span>
+      </div>
     </div>
 </template>
 
@@ -9,16 +12,22 @@ import { onMounted, ref } from 'vue';
 import { api } from 'boot/axios';
 
 const jackpotPrizeAmt = ref();
+const isLoading = ref(false);
 
 const initData = () => {
-    api.get("/member/jackpot-amount")
-        .then((res) => {
-            const response = res.data
-            jackpotPrizeAmt.value = response.data;
-        })
-        .catch((e) => {
-            console.log(e);
-        });
+  isLoading.value = true;
+
+  api.get("/member/jackpot-amount").then((res) => {
+      const response = res.data
+      jackpotPrizeAmt.value = response.data;
+      isLoading.value = false;
+  })
+  .catch((e) => {
+      console.log(e);
+      isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
+  });
 }
 
 onMounted(() => {
@@ -55,9 +64,7 @@ onMounted(() => {
     font-weight: bold;
     font-family: monospace;
     color: #f5c681;
-    // text-shadow: 0 0 5px #ff0000;
-    text-shadow: 2px 0 #ff3c3c, -2px 0 #ff3c3c, 0 2px #ff3c3c, 0 -2px #ff3c3c,
-               1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
+    text-shadow: 2px 0 #ff3c3c, -2px 0 #ff3c3c, 0 2px #ff3c3c, 0 -2px #ff3c3c, 1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
     letter-spacing: 3px;
 
     @media (max-width: 768px) {
