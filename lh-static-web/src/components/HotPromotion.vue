@@ -83,7 +83,7 @@
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
 
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
-    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-eurocup-vote'" />
+    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -448,7 +448,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-esport-safety" ||
       this.list.redirectUrl === "lh1-sport-safety" ||
       this.list.redirectUrl === "lh1-s13-vote" ||
-      this.list.redirectUrl === "lh1-eurocup-vote" ||
+      this.list.redirectUrl === "lh1-team-vote" ||
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-nba-safety" ||
       this.list.redirectUrl === "lh1-quiz" ||

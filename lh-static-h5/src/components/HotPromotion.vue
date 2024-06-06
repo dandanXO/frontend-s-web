@@ -18,7 +18,7 @@
     />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
 <!--    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />-->
-    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-eurocup-vote'" />
+    <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
@@ -307,7 +307,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-invite-2" ||
       this.list.redirectUrl === "lh1-invite-3" ||
       this.list.redirectUrl === "lh1-s13-vote" ||
-      this.list.redirectUrl === "lh1-eurocup-vote" ||
+      this.list.redirectUrl === "lh1-team-vote" ||
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-sports-continuous-win" ||
       this.list.redirectUrl === "lh1-gift8" ||
