@@ -27,7 +27,7 @@
             @update:modelValue="handleInput(index, $event)"
             @keydown="handleKeyDown(index, $event)"
             class="number-input"
-            outlined 
+            outlined
           ></q-input>
         </div>
         <el-button :loading="isLoadingJackpot" @click="onSubmitJackpot" class="jackpot-button">CHỌN SỐ</el-button>
@@ -126,10 +126,10 @@
                 <div class="section-title">Ví Dụ: </div>
                 <p class="likeli">
                     <span class="point">A</span>
-                    
+
                     <span class="wSub">
                     Kết quả xổ số Miền Bắc ngày 01/07/2024 là 272935 thì:
-                        
+
                        <span class="sub">- Triệu Phú: 935</span>
                         <span class="sub">- Nhóm 3: Không có trúng thưởng</span>
                         <span class="sub">- Nhóm 6 là: 953; 539; 593; 359; 395</span>
@@ -140,7 +140,7 @@
                     <span class="point">B</span>
                     <span class="wSub">
                     Kết quả xổ số Miền Bắc ngày 01/07/2024 là 272935 thì:
-                        
+
                        <span class="sub">- Triệu Phú: 335</span>
                         <span class="sub">- Nhóm 3: 353; 533</span>
                         <span class="sub">- Nhóm 6 là: Không có trúng thưởng  </span>
@@ -293,9 +293,10 @@ const getJackpotAmt = () => {
   const jackpotNum = 2231104000;
   jackpotNumber.value = jackpotNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
+var qs = require("qs");
 const onSubmitJackpot = () => {
   isLoadingJackpot.value = true;
-  const number = inputValues.value.join("");
+  const number = parseInt(inputValues.value.join(""));
   selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
     if (res.code === 0) {
       $q.notify({
@@ -457,6 +458,11 @@ onMounted(() => {
         padding: 8px;
         min-height: unset;
         height: unset;
+
+        &:active{
+          filter:brightness(0.86);
+          transform: translate(0px, 1px);
+        }
       }
     }
     .jackpot-note {
@@ -494,7 +500,7 @@ onMounted(() => {
             padding: 20px 100px;
         }
         &:after {
-            
+
         transform: rotateY(180deg);
         }
     }
@@ -527,7 +533,7 @@ onMounted(() => {
     .section-list {
         color: #000000;
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         gap: 10px;
         margin: 20px auto;
         .section {
@@ -597,10 +603,10 @@ onMounted(() => {
                     background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
                     color: #ffffff;
                     padding: 10px;
-                    &:first-child { 
+                    &:first-child {
                         border-radius: 12px 0 0 0;
                     }
-                    &:last-child { 
+                    &:last-child {
                         border-radius: 0 12px 0 0;
                     }
                 }
@@ -654,7 +660,7 @@ onMounted(() => {
   .container .jackpot-container .jackpot-note {
     font-size: 12px;
   }
-  
+
   .container .luckydraw-details {
     padding: 5px;
     text-align: left;
