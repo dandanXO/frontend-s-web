@@ -1520,6 +1520,7 @@ export default {
     30005: "Chưa hoàn thành số lượng quay lại theo điều kiện",
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
+    30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",

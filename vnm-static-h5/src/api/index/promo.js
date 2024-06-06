@@ -158,3 +158,16 @@ export function getWinners(promoCode) {
 export function getPrizeAmount(promoCode) {
   return eventapi.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
 }
+
+export function getBetDetail(promoCode) {
+  return eventapi.get("/event-bet-reward/get-bet-detail", { params: { promoCode: promoCode } });
+}
+
+export function claimSummon(promoCode) {
+  return eventapi.post(
+    "/event-bet-reward/claim",
+    qs.stringify({
+      promoCode: promoCode
+    })
+  );
+}
