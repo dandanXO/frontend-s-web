@@ -1236,7 +1236,11 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
-const banners = ref(null);
+const banners = ref([
+  {
+    mobileImageUrl: "empty-banner.png"
+  }
+]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
