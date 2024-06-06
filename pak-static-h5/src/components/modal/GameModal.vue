@@ -383,6 +383,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
     } else {
       props.closeFullGameDialog();
+      $q.notify({
+        message: "Please login to continue",
+        color: "negative",
+        position: "top",
+        icon: "report_problem",
+        timeout: 2000
+      });
       router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
