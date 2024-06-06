@@ -6,13 +6,9 @@
       </router-link>
     </div> -->
 
-    <!-- <div class="register-form-logo-img">
-      <img src="../assets/55-ace-logo.png" />
-    </div> -->
-
     <q-form class="q-gutter-y-md rounded-borders">
       <div class="register-form-grid">
-        <span class="register-form-field-label">Phone Number</span>
+        <!--        <span class="register-form-field-label">Phone Number</span>-->
         <q-input
           type="tel"
           pattern="\d*"
@@ -27,10 +23,15 @@
           color="white"
           class="landing-input"
           outlined
+          placeholder="Enter your mobile number"
           label-color="brand"
-        />
+        >
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/phone.svg" />
+          </template>
+        </q-input>
 
-        <span class="register-form-field-label">Password</span>
+        <!--        <span class="register-form-field-label">Password</span>-->
         <q-input
           ref="pwdRef"
           hide-bottom-space
@@ -43,6 +44,7 @@
           color="white"
           class="landing-input"
           outlined
+          placeholder="Enter Confirm Password"
           label-color="brand"
         >
           <template v-slot:append>
@@ -52,6 +54,10 @@
               class="cursor-pointer"
               @click="isPwd = !isPwd"
             />
+          </template>
+
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/pass.svg" />
           </template>
         </q-input>
         <!-- <div v-if="regForm.password" class="password-str-div">
@@ -138,14 +144,14 @@
         /> -->
       </div>
 
-      <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
+      <div class="" style="margin-top: 5px" :class="isAgreeReg ? 'checked' : ''">
         <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
           I have Agree To The
           <a href="#" style="text-decoration: none; color: #c1dffc">Use Privacy Agreement</a>
         </q-checkbox>
       </div>
 
-      <div>
+      <div style="margin-top: 0px">
         <q-btn @click="onSubmit" class="register-btn" label="Register" rounded no-caps :disable="!isAgreeReg">
           <template v-slot:loading>
             <q-spinner-hourglass size="24px" color="white" />
@@ -158,6 +164,10 @@
         <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
       </div>
     --></q-form>
+
+    <div class="register-form-logo-img">
+      <img src="../assets/55-ace-logo.png" />
+    </div>
   </div>
 </template>
 
@@ -607,7 +617,7 @@ function charType(num) {
   width: 100%;
   height: 56px;
   border-radius: 4px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
@@ -681,6 +691,10 @@ function charType(num) {
     border-color: #1e1f24;
     background-color: #1e1f24;
     border-width: 2px;
+  }
+
+  .white-svg {
+    filter: brightness(0) invert(1);
   }
 }
 

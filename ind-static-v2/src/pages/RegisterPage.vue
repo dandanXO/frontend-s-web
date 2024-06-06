@@ -6,9 +6,6 @@
       </router-link>
     </div> -->
 
-    <!-- <div class="register-form-logo-img">
-      <img src="../assets/images/auth/auth-logo.png" />
-    </div> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -30,8 +27,13 @@
                   ]"
                   color="white"
                   outlined
+                  placeholder="Enter your mobile number"
                   label-color="brand"
-                />
+                >
+                  <template v-slot:prepend>
+                    <img src="../assets/images/auth/phone.svg">
+                  </template>
+                </q-input>
               </template>
             </InputField>
 
@@ -47,6 +49,7 @@
                   :type="isPwd ? 'password' : 'text'"
                   color="white"
                   outlined
+                  placeholder="Enter Confirm Password"
                   label-color="brand"
                 >
                   <template v-slot:append>
@@ -56,6 +59,10 @@
                       class="cursor-pointer"
                       @click="isPwd = !isPwd"
                     />
+                  </template>
+
+                  <template v-slot:prepend>
+                    <img src="../assets/images/auth/pass.svg">
                   </template>
                 </q-input>
                 <!-- <div v-if="regForm.password" class="password-str-div">
@@ -151,14 +158,14 @@
           </template>
         </InputRowGrid>
 
-        <div class="mui-row" :class="isAgreeReg ? 'checked' : ''">
+        <div class="" style="margin-top: 5px;" :class="isAgreeReg ? 'checked' : ''">
           <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
             I have Agree To The
             <a href="#" style="text-decoration: none; color: #c1dffc">Use Privacy Agreement</a>
           </q-checkbox>
         </div>
 
-        <div style="margin-top: 30px;">
+        <div style="margin-top: 10px;">
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div>
 
@@ -167,6 +174,11 @@
           <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
         </div>
       --></q-form>
+    </div>
+
+
+    <div class="register-form-logo-img">
+      <img src="../assets/images/auth/auth-logo.png" />
     </div>
   </div>
 </template>
@@ -613,10 +625,11 @@ function charType(num) {
   // padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  height:100%;
 }
 
 .back-left {
