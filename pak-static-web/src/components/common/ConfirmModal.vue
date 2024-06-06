@@ -6,7 +6,7 @@
         <slot />
       </div>
       <div class="confirm-modal-action-wrapper">
-        <button class="confirm-modal-action cancel">CANCEL</button>
+        <button class="confirm-modal-action cancel" @click="handleCancel">CANCEL</button>
         <button class="confirm-modal-action confirm" @click="handleConfirm">CONFIRM</button>
       </div>
     </div>
@@ -22,6 +22,10 @@ defineProps({
 const handleConfirm = () => {
   visible.value = false;
   emit("confirm");
+};
+
+const handleCancel = () => {
+  visible.value = false;
 };
 </script>
 <style scoped lang="scss">
