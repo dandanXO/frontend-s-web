@@ -19,7 +19,7 @@
           <img class="fish-1" :src="require(`../../../assets/promo/lh-fish-honbao/fish-1.png`)" />
           <div class="hongbao-1">
             <img style="width: 266px;height: 280px;"  :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)" />
-            <div class="fish-open-hongbao" @click="tableRecordDialog = true;">立即开启</div>
+            <div class="fish-open-hongbao" @click="claimHongBao">立即开启</div>
           </div>
           <img class="fish-2" :src="require(`../../../assets/promo/lh-fish-honbao/fish-2.png`)" />
         </div>
@@ -115,7 +115,7 @@
             完成
           </div>
         </div>
-      </el-dialog>     
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -123,7 +123,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaRecord, getHongbaoInfo, getHongbaoMoney } from "@/api/promotion/fishHongbao";
+import { getHongbaoInfo, getHongbaoMoney } from "@/api/promotion/fishHongbao";
 import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -132,9 +132,6 @@ const validBet = ref(0);
 const tableRecordDialog = ref(false);
 const rewardMoney = ref(0);
 
-const matchList = ref([]);
-
-const recordList = ref([]);
 
 
 
@@ -150,20 +147,29 @@ const getNbaMatchData = async () => {
 }
 
 onMounted(getNbaMatchData);
-
-watch(tableRecordDialog, async () => {
-  if (tableRecordDialog.value) {
-    const res = await getHongbaoMoney();
-    if(res.code === 0){
-      rewardMoney.value = res.data
-    }
+const claimHongBao = async () => {
+  const res = await getHongbaoMoney();
+  console.log(res);
+  if (res.code === 0) {
+    tableRecordDialog.value = true;
+    rewardMoney.value = res.data;
+  }else{
+    ElMessage.error(res.message)
   }
-});
+}
+
+// watch(tableRecordDialog, async () => {
+//   if (tableRecordDialog.value) {
+//     const res = await getHongbaoMoney();
+//     if(res.code === 0){
+//       rewardMoney.value = res.data
+//     }
+//   }
+// });
 </script>
 
 <style scoped lang="scss">
 .fish-match-box {
-  font-family: PingFang TC;
   width: 100%;
   height: 100%;
   display: flex;
@@ -307,7 +313,7 @@ watch(tableRecordDialog, async () => {
     height: 300px;
     .fish-open-hongbao{
       background-image: url("../../../assets/promo/lh-fish-honbao/hongbao-open-btn.png");
-      background-size: cover;  
+      background-size: cover;
       width: 120px;
       height: 32px;
       border-radius: 12px;
@@ -474,11 +480,11 @@ watch(tableRecordDialog, async () => {
   }
 }
 .fish-content-sub-title{
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 22.4px;
-    color: #000000;
-    width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22.4px;
+  color: #000000;
+  width: 100%;
 
 }
 .fish-match-game-bottom-rule {
@@ -514,9 +520,9 @@ watch(tableRecordDialog, async () => {
 }
 
 :deep(.fish-match-table-record-dialog) {
-    width: 360px;
-    height: 360px;
-    background-color: #FFF3DF;
+  width: 360px;
+  height: 360px;
+  background-color: #FFF3DF;
   .el-dialog__header {
     background: #FFF3DF;
     display: flex;
@@ -542,7 +548,6 @@ watch(tableRecordDialog, async () => {
     height: 320px;
     .record-dialog-content-title{
       color:#EA5046;
-      font-family: FZHanZhenGuangBiaoS-GB;
       font-size: 14px;
       font-weight: 400;
       line-height: 16.63px;
@@ -550,16 +555,16 @@ watch(tableRecordDialog, async () => {
       text-align: center;
     }
     .record-dialog-content-detail{
-        font-family: FZHanZhenGuangBiaoS-GB;
-        font-size: 24px;
-        font-weight: 400;
-        line-height: 28.5px;
-        letter-spacing: 0.2em;
-        text-align: center;
-        color:#EA5046;
-        span{  
-          font-size: 48px;
-        }
+
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 28.5px;
+      letter-spacing: 0.2em;
+      text-align: center;
+      color:#EA5046;
+      span{
+        font-size: 48px;
+      }
     }
     .hongbao-finish-btn{
       width: 256px;
@@ -568,9 +573,8 @@ watch(tableRecordDialog, async () => {
       left: 832px;
       gap: 0px;
       border-radius: 100px 0px 0px 0px;
-      opacity: 0px;
       background-color: #EA574E;
-      font-family: FZHanZhenGuangBiaoS-GB;
+
       color: #fff;
       font-size: 16px;
       font-weight: 400;
@@ -594,7 +598,6 @@ watch(tableRecordDialog, async () => {
     margin-top: -5px;
     font-size: 18px;
     color: #fff;
-    font-family: FZHanZhenGuangBiaoS-GB;
     font-weight: 400;
     line-height: 22px;
     letter-spacing: 0.2em;

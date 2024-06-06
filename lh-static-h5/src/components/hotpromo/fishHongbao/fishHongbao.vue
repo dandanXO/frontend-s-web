@@ -2,9 +2,9 @@
   <div class="fish-match-box">
     <div class="fish-match-container">
       <div class="fish-match-game-info-sub">
-        活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获
-        1,888 元。
+        活动期间，每日参与捕鱼场馆有效投注≥1,500元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金58,888元
       </div>
+
       <div class="fish-match-game">
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
@@ -23,7 +23,7 @@
               style="width: 266px; height: 280px"
               :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)"
             />
-            <div class="fish-open-hongbao" @click="tableRecordDialog = true">立即开启</div>
+            <div class="fish-open-hongbao" @click="claimHongBao">立即开启</div>
           </div>
           <img class="fish-2" :src="require(`../../../assets/promo/lh-fish-honbao/fish-2.png`)" />
         </div>
@@ -34,10 +34,10 @@
       </div>
       <div class="fish-match-game-info">
         <div class="title"></div>
-        <div class="fish-match-game-info-sub">
-          活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000
-          元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获 1,888 元。
-        </div>
+        <!--        <div class="fish-match-game-info-sub">-->
+        <!--          活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000-->
+        <!--          元后参与本活动竞猜，根据竞猜结果派发对应彩金。每日最高可获 1,888 元。-->
+        <!--        </div>-->
         <table class="fish-match-game-info-table">
           <tr>
             <th>捕鱼机日总有效投注</th>
@@ -148,15 +148,16 @@ const getHongbao = async () => {
 
 onMounted(getHongbao);
 
-watch(tableRecordDialog, async () => {
-  if (tableRecordDialog.value) {
-    const res = await getHongbaoMoney();
-    console.log(res);
-    if (res.code === 0) {
-      rewardMoney.value = res.data;
-    }
+const claimHongBao = async () => {
+  const res = await getHongbaoMoney();
+  console.log(res);
+  if (res.code === 0) {
+    tableRecordDialog.value = true;
+    rewardMoney.value = res.data;
   }
-});
+}
+
+
 </script>
 
 <style scoped lang="scss">
@@ -504,6 +505,7 @@ watch(tableRecordDialog, async () => {
     height: 360px;
     background-color: #fff3df;
     position: relative;
+    border-radius: 20px;
   }
   .close-btn {
     background: url(../../../assets/promo/lh-fish-honbao/close-btn.png);
@@ -511,8 +513,7 @@ watch(tableRecordDialog, async () => {
     background-size: contain;
     width: 24px;
     height: 24px;
-    top: 20px;
-    right: 24px;
+    right: 14px;
     position: absolute;
   }
 
@@ -526,7 +527,7 @@ watch(tableRecordDialog, async () => {
     .record-dialog-content-title {
       color: #ea5046;
       font-family: FZHanZhenGuangBiaoS-GB;
-      font-size: 14px;
+      font-size: 18px;
       font-weight: 400;
       line-height: 16.63px;
       letter-spacing: 0.2em;
@@ -551,7 +552,6 @@ watch(tableRecordDialog, async () => {
       left: 832px;
       gap: 0px;
       border-radius: 100px 0px 0px 0px;
-      opacity: 0px;
       background-color: #ea574e;
       font-family: FZHanZhenGuangBiaoS-GB;
       color: #fff;
@@ -577,11 +577,11 @@ watch(tableRecordDialog, async () => {
     color: #fff;
     font-family: FZHanZhenGuangBiaoS-GB;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 32px;
     letter-spacing: 0.2em;
     text-align: center;
     position: absolute;
-    top: 275px;
+    top: 26%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
