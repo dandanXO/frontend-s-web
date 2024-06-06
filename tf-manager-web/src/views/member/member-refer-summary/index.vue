@@ -43,7 +43,7 @@
           icon="el-icon-search"
           size="mini"
           type="success"
-          @click="loadMembers()"
+          @click="search()"
         >
           {{ t('fields.search') }}
         </el-button>
@@ -75,8 +75,8 @@
             #default="scope"
             v-if="hasPermission(['sys:member-refer:summary'])"
           >
-            <a v-if="scope.row.downlineMember > 0" :href="$router.resolve(`member-refer-summary?id=${scope.row.memberId}&site=${request.siteId}&referrer=${scope.row.loginName}&recordTime=${joinRecordTime(request.recordTime)}`).href">
-              <el-link type="primary">{{ scope.row.downlineMember }}</el-link>
+            <a v-if="scope.row.downlineMember > 0">
+              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.downlineMember }}</el-link>
             </a>
             <span v-else>{{ scope.row.downlineMember }}</span>
           </template>
@@ -280,6 +280,18 @@ function checkQuery() {
 function joinRecordTime(recordTime) {
   const string = JSON.parse(JSON.stringify(request.recordTime))
   return string.join(',')
+}
+
+function search() {
+  uiControl.referrer = null
+  request.referrerId = null
+  loadMembers()
+}
+
+async function reloadMembers(loginName, uplineId) {
+  request.referrerId = uplineId
+  uiControl.referrer = loginName
+  loadMembers()
 }
 
 async function loadMembers() {
