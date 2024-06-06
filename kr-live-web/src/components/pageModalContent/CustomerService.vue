@@ -40,13 +40,6 @@
     <div class="feedback-replies-list">
       <q-list bordered class="rounded-borders">
           <div style="max-height: 500px;overflow-y:auto;">
-            <q-expansion-item icon="info" :label="'제목'" :caption="'날짜 시간'" disable>
-              <q-card style="background:transparent;">
-                <q-card-section>
-                  콘텐츠
-                </q-card-section>
-              </q-card>
-            </q-expansion-item>
             <q-expansion-item
               v-for="item in outboxData" :key="item.page"
               @click="readFeedback(item.id)"

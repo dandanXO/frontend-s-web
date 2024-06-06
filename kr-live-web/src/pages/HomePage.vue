@@ -2,70 +2,6 @@
   <div class="main-section">
     <LangToggle />
 
-    <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
-
-    <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
-    <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
-    <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
-    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" /> -->
-
-    <!-- <q-carousel
-        :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        infinite
-      > -->
-    <!-- <template v-slot:navigation-icon="{ active, onClick }">
-          <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
-          <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-        </template> -->
-
-    <!--      <q-carousel-slide-->
-    <!--        name="mainSlide"-->
-    <!--        class="column no-wrap flex-center"-->
-    <!--        :img-src="-->
-    <!--          !$q.screen.gt.sm-->
-    <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-    <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-    <!--        "-->
-    <!--        @click="gotoPromo(0)"-->
-    <!--      >-->
-    <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-    <!--      </q-carousel-slide>-->
-    <!-- <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
-          @click="gotoPromo(banner)"
-        >
-        </q-carousel-slide>
-      </q-carousel> -->
-
-    <!-- <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef">
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"
-          @click="switchMenu('xfj')"
-        >
-          <img src="../assets/images/index/home-cf.png" />
-          <span>{{ $t("lang.fish2_list") }}</span>
-        </div>
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish2' ? 'active-board' : ''"
-          @click="switchMenu('fish2')"
-        >
-          <img src="../assets/images/index/home-fish2.png" />
-          <span>เกมส์เล็ก ๆ</span>
-        </div>
-      </div>
-    </div> -->
-
     <RollingText :depositRecordList="depositRecordList"/>
 
     <JackpotPrize />
@@ -1910,7 +1846,7 @@ export default defineComponent({
         // getFavGameList();
         store.getUnreadTotal();
       }
-      loadData();
+      // loadData();
       loadAnnouncement();
       getPlatList();
     };
