@@ -179,13 +179,6 @@
           </template>
         </InputRowGrid>
 
-        <div class="mui-row q-mt-sm" :class="isAgreeReg ? 'checked' : ''">
-          <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-            I have Agree To The
-            <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
-          </q-checkbox>
-        </div>
-
         <!-- <div style="margin-top: 30px">
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div> -->
@@ -208,6 +201,13 @@
       >
         Confirm
       </q-btn>
+    </div>
+
+    <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
+      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+        I have Agree To The
+        <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
+      </q-checkbox>
     </div>
 
     <div class="bottom-img">
@@ -807,6 +807,7 @@ function charType(num) {
 }
 
 .register-form-logo-img {
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
