@@ -249,6 +249,7 @@ import moment from "moment";
 import VueQRCodeComponent from "vue-qrcode-component";
 import { userStore } from "@/store/index";
 import { convertToCommaAmount } from "@/utils/utils";
+import { server } from "@/utils/request";
 
 const store = userStore();
 const copyHrefLink = () => {
