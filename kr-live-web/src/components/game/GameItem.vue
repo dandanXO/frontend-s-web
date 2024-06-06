@@ -155,7 +155,7 @@ const gameType = ref(props.gameType);
 
         .game-logo {
           max-width: 160px;
-          width: 100%;
+          // width: 100%;
         }
       }
 
