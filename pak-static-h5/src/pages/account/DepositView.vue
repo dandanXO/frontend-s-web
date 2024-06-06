@@ -28,6 +28,8 @@
       </div>
     </div> -->
 
+    <!-- <pre>payMethods-{{ payMethods }}</pre> -->
+
     <div class="node-wrapper">
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
@@ -362,6 +364,7 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
+      payMethods.value = [];
       const d = res.data;
       d.payments.forEach((element) => {
         element.promoValue = "";
@@ -585,7 +588,8 @@ async function pDepo(deposit) {
                 $q.notify({
                   color: "negative",
                   position: "top",
-                  message: 'Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to \'Allow pop-ups\' before attempting to recharge again.',
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
                   icon: "report_problem"
                 });
                 btnLoading.value = false;
@@ -707,10 +711,9 @@ const refreshNode = () => {
 };
 
 onActivated(() => {
-  initPay();
   checkNewUser();
   loadInfo();
-  refreshNode();
+  // refreshNode();
   // console.log("onActivated deposit");
 });
 
