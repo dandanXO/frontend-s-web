@@ -2,7 +2,7 @@
   <div class="main-section">
     <LangToggle />
 
-    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="true"/>
+    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="isLoadingDepositRecordList"/>
 
     <JackpotPrize />
 
