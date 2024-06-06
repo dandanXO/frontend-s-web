@@ -1134,7 +1134,6 @@ export default defineComponent({
 
     const modalGame = ref(null);
     const openGame = (gameName, code, gameCode) => {
-      console.log(gameName, code, gameCode,'dan')
       modalGame.value.open(gameName, code, gameCode);
     };
 
