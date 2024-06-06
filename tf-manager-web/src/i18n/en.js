@@ -2372,6 +2372,7 @@ export default {
     'VIP Rebate': 'VIP Rebate',
     VIP: 'VIP',
     Game: 'Game',
+    'Game Tag': 'Game Tag',
     'Financial Level': 'Financial Level',
     'Risk Level': 'Risk Level',
     'Ip Label': 'IP Label',

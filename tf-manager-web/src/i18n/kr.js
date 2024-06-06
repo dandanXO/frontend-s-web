@@ -2252,6 +2252,7 @@ export default {
     'VIP Rebate': 'VIP 리베이트',
     VIP: 'VIP',
     Game: '게임',
+    'Game Tag': '게임 태그',
     'Financial Level': '금융 레벨',
     'Risk Level': '리스크 레벨',
     'Ip Label': 'IP 라벨',
