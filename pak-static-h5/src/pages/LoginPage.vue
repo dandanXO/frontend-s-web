@@ -1,4 +1,10 @@
 <template>
+  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
+      <div class="cs-icon-wrapper"></div>
+    </div>
+  </q-page-sticky>
+
   <div class="login-container">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
@@ -132,7 +138,6 @@
     <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
-
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -175,6 +180,8 @@ import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
 
 export default defineComponent({
   name: "LoginPage",
@@ -185,6 +192,7 @@ export default defineComponent({
     // RiArrowDropLeftLine
   },
   setup() {
+    const ui = useUI();
     const tab = ref("login");
     const loginType = ref(false);
     const store = userStore();
@@ -526,6 +534,32 @@ export default defineComponent({
     //   }
     // );
 
+    // sticky cs
+    const csDragPos = ref([10, 10]);
+    const isDraggingCsIcon = ref(false);
+    const openCSInNewTab = (url) => {
+      const absoluteUrl = url;
+      window.open(absoluteUrl, "_blank");
+    };
+    const moveCsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+      csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+    };
+    const loadCustomerAddress = () => {
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          console.log(data);
+          var url = data.liveUrl1;
+          ui.CSAUrl = url;
+        });
+    };
+
     onMounted(() => {
       getAppInfo();
       getCode();
@@ -534,6 +568,7 @@ export default defineComponent({
         tab.value = "register";
       }
       checkRememberPwd();
+      loadCustomerAddress();
     });
     return {
       header: "Login",
@@ -569,7 +604,13 @@ export default defineComponent({
       getAppInfo,
       Platform,
       affQuickRegEvent,
-      regLoginTab
+      regLoginTab,
+      csDragPos,
+      isDraggingCsIcon,
+      openCSInNewTab,
+      moveCsIcon,
+      loadCustomerAddress,
+      ui
     };
   }
 });
@@ -643,11 +684,11 @@ export default defineComponent({
 .login-form-wrapper {
   padding: 0 20px 20px;
 
-  :deep(.q-field__control){
-    height:45px;
+  :deep(.q-field__control) {
+    height: 45px;
 
-    .q-field__marginal{
-      height:45px;
+    .q-field__marginal {
+      height: 45px;
     }
   }
 }
@@ -694,7 +735,7 @@ export default defineComponent({
   padding: 3px 20px 8px;
 }
 
-.bottom-img{
+.bottom-img {
   text-align: center;
   margin-top: 10px;
 }

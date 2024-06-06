@@ -70,23 +70,27 @@
       v-if="Platform.is.android && Platform.is.capacitor"
     />
 
-    <div class="midd">
-      <div class="station-notice-wrapper">
-        <div class="volume">
-          <img src="../assets/images/index/icon-volume.png" />
-        </div>
-        <div class="marquee-container">
-          <marquee-text :repeat="5" :duration="announcementList.length * 120">
-            <div v-if="announcementList">
-              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
-              </span>
-            </div>
-          </marquee-text>
+    <div class="notice-outer">
+      <div class="midd">
+        <div class="station-notice-wrapper">
+          <div class="volume">
+            <img src="../assets/images/index/icon-volume.png" />
+          </div>
+          <div class="marquee-container">
+            <marquee-text :repeat="5" :duration="announcementList.length * 120">
+              <div v-if="announcementList">
+                <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                  {{ a.content }}
+                </span>
+              </div>
+            </marquee-text>
+          </div>
         </div>
       </div>
+      <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
+        <img src="../assets/images/index/download/download-app.png" />
+      </a>
     </div>
-
     <!-- <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
@@ -1287,11 +1291,13 @@ const checkPlatform = () => {
     (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
     (Platform.is.android && Platform.is.capacitor)
   ) {
+    downloadHeart.value = false;
     isH5.value = false;
     setTimeout(() => {
       getVersionNo();
     }, 1000);
   } else {
+    downloadHeart.value = true;
     isH5.value = true;
     setTimeout(() => {
       getVersionNo();
@@ -2008,6 +2014,29 @@ const checkShowImgTop = () => {
   }
 };
 
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data.url;
+    }
+  });
+};
+
+const downloadHeart = ref(false);
+
+// const getDownloadHeart = () => {
+//   if (
+//     ("standalone" in window.navigator && window.navigator.standalone) ||
+//     (Platform.is.capacitor && Platform.is.android)
+//   ) {
+//     downloadHeart.value = false;
+//   } else {
+//     downloadHeart.value = true;
+//   }
+// };
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
@@ -2023,6 +2052,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
+  getTopDownloadUrl();
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -2195,7 +2225,52 @@ watch(
   }
 }
 
+.notice-outer {
+  display: flex;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.notice-download {
+  display: flex;
+  align-items: center;
+  animation: beat 1.5s infinite;
+
+  img {
+    display: block;
+    width: 36px;
+    height: 36px;
+    filter: hue-rotate(120deg);
+  }
+}
+
+/* Heart beat animation */
+@keyframes beat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 .midd {
+  width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
