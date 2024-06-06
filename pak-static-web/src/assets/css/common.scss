@@ -1562,10 +1562,14 @@ a {
     overflow: auto;
     display: inline-block;
     margin-block: 2rem;
-    border: 1px solid #eaeaea;
-    background: #ffffff;
+    border: 1px solid #ffffff1a;
+    background: #70bc621a;
     border-radius: 12px;
-    color: #83a3ca;
+    color: #fff;
+
+    td {
+      border: 1px solid #ffffff1a;
+    }
 
     td,
     th {
@@ -1579,8 +1583,8 @@ a {
     }
 
     th {
-      background: #ecf5ff;
-      color: #2b2b82;
+      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+      color: #fff;
     }
     tr:first-child {
       td,
@@ -1588,8 +1592,8 @@ a {
         border-top: 0 !important;
       }
       td {
-        background: #ecf5ff;
-        color: #2b2b82;
+        background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+        color: #fff;
         text-align: center;
       }
       td:first-child {

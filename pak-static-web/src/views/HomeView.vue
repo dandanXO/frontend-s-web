@@ -827,9 +827,9 @@ const redirectToPromo = () => {
 
 const loadGameIcon = (path, type) => {
   try {
-    return require(`@/assets/images/platform/${type}/${path}`);
+    return require(`@/assets/images/platform/game/${type}/${path}`);
   } catch (e) {
-    return require("@/assets/images/platform/slot/default.png");
+    return require("@/assets/images/platform/game/default.png");
   }
 };
 
@@ -2388,18 +2388,16 @@ $link-color: #db7e42;
         }
       }
 
-
-      a{
-
-        img{
+      a {
+        img {
           transition: transform 0.3s ease;
         }
 
-        &:hover{
+        &:hover {
           filter: brightness(0.9);
           opacity: 0.9;
         }
-        &:active{
+        &:active {
           filter: brightness(0.8);
           transform: translate(0px, 1px);
         }
@@ -2579,10 +2577,8 @@ $link-color: #db7e42;
       flex-direction: column;
       color: #ffffff99;
       .rib-number {
-
       }
       .rib-title {
-
       }
     }
     .rib-right {

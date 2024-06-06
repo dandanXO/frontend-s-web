@@ -1733,9 +1733,13 @@ const openPopup = (noticeType) => {
 
 const gotoPromo = (banner) => {
   const urlSplit = banner.redirectUrl.split("|");
+  const gameSplit = urlSplit.map((part) => part.split("/"));
+
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
-    if (type === "page") {
+    if (type === "open") {
+      playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+    } else if (type === "page") {
       router.push(`/${urlSplit[1]}`);
     } else {
       router.push(`/promo?name=${banner.redirectUrl}`);

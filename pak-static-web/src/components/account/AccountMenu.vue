@@ -117,6 +117,7 @@ const links = ref([
         display: flex;
         flex-direction: column;
         gap: 7px;
+        align-items: start;
         justify-content: center;
 
         .account-profile-info__name {

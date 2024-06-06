@@ -127,6 +127,7 @@
           </q-carousel>
         </q-card-section>
       </q-card>
+
       <a @click="openConfirmSignOutDialog">
         <div class="acct-logout">
           <div class="acct-nav-label">LOG OUT</div>
@@ -158,6 +159,7 @@ import { userStore } from "src/stores";
 import { useRouter } from "vue-router";
 import { useQuasar } from "quasar";
 import ProfileSummary from "../components/ProfileSummary.vue";
+import { api } from "boot/axios";
 
 const store = userStore();
 const router = useRouter();
@@ -165,13 +167,21 @@ const qs = require("qs");
 const $q = useQuasar();
 
 const slide = ref(0);
-// const imgURL = process.env.IMAGE_CDN + "/promo/";
-const imgURL = "";
-const btm_banners = ref([
-  {
-    mobileImageUrl: require("../assets/images/account/account-banner-4.png")
-  }
-]);
+const imgURL = process.env.IMAGE_CDN + "/promo/";
+const btm_banners = ref([]);
+const getPromoImage = () => {
+  api
+    .get("/promo/banner?category=CENTERPROMO")
+    .then((res) => {
+      if (res.code === 0) {
+        btm_banners.value = res.data;
+        // if (btm_banners.value.length === 1) {
+        //   btm_banners.value.push(res.data[0]);
+        // }
+      }
+    })
+    .catch(() => {});
+};
 
 const loadingLogout = ref(false);
 
@@ -182,6 +192,7 @@ const openConfirmSignOutDialog = () => {
 
 onActivated(() => {
   store.getUnreadTotal();
+  getPromoImage();
 });
 
 const logout = () => {
