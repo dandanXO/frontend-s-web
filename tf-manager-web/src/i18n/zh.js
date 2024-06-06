@@ -2332,6 +2332,7 @@ export default {
     'VIP Rebate': 'VIP 返水',
     VIP: 'VIP',
     Game: '游戏',
+    'Game Tag': '游戏标签',
     'Financial Level': '会员组别',
     'Risk Level': '风险等级',
     'Ip Label': 'IP 标签',
