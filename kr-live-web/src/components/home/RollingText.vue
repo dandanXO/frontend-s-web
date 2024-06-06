@@ -1,5 +1,5 @@
 <template>
-    <router-link class="rolling-text-container" to="/?page=notify">
+    <div class="rolling-text-container">
         <div class="rolling-text-wrapper">
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
@@ -21,7 +21,7 @@
                 </span>
             </div>
         </div>
-    </router-link>
+    </div>
 </template>
 
 <script setup>
