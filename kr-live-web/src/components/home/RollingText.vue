@@ -7,10 +7,10 @@
                     <div class="text">공지</div>
                 </div>
             </div>
-            <marquee-text :repeat="withdrawDepositData.length" :duration="withdrawDepositData.length * 20"
-                v-if="withdrawDepositData && withdrawDepositData.length > 0">
+            <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
+                v-if="props.depositRecordList && props.depositRecordList.length > 0">
                 <div>
-                    <span style="color: #fff;" v-for="(a, i) in withdrawDepositData" :key="i">
+                    <span style="color: #fff;" v-for="(a, i) in props.depositRecordList" :key="i">
                         {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
                     </span>
                 </div>
@@ -30,22 +30,8 @@ import MarqueeText from "vue-marquee-text-component";
 import { api } from 'boot/axios';
 import moment from 'moment';
 
-const withdrawDepositData = ref([]);
+const props = defineProps(['depositRecordList']);
 
-const initData = () => {
-    api.get("/member/withdraw-deposit-record")
-        .then((res) => {
-            const response = res.data
-            withdrawDepositData.value = response.data.records;
-        })
-        .catch((e) => {
-            console.log(e);
-        });
-}
-
-onMounted(() => {
-    initData();
-})
 </script>
 
 <style lang="scss" scoped>

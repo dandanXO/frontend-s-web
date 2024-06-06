@@ -66,7 +66,7 @@
       </div>
     </div> -->
 
-    <RollingText />
+    <RollingText :depositRecordList="depositRecordList"/>
 
     <JackpotPrize />
 
