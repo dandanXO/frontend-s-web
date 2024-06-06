@@ -330,12 +330,6 @@ export default defineComponent({
       getAffiliateCode();
     });
 
-    const trackRegisterClickEvent= () => {
-      if(ui.adjust_click_register_event && isAndroid()){
-        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
-        Adjust.trackEvent(adjustEvent);
-      }
-    }
 
     const trackRegisterSuccessEvent = () => {
       if (ui.adjust_register_event && isAndroid()) {
@@ -379,7 +373,6 @@ export default defineComponent({
         isLoading.value = false;
         $q.loading.hide();
       } else {
-        trackRegisterClickEvent();
         var qs = require("qs");
         const fpPromise = FingerprintJS.load();
         (async () => {
