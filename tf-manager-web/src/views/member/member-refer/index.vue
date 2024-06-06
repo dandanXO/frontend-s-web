@@ -242,6 +242,7 @@ function search() {
 
 async function reloadMembers(loginName, uplineId) {
   request.referrerId = uplineId
+  request.loginName = null
   uiControl.referrer = loginName
   loadMembers()
 }
