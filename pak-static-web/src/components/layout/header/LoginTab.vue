@@ -34,7 +34,6 @@
           </template>
         </a-input>
       </a-form-item>
-      <!-- TODO: action? -->
       <div class="forget-password">
         <a @click="onForgetPwd" class="pwd-tip">
           {{ $t("layout.header.accountModal.login.forgetPassword") }}
@@ -113,7 +112,7 @@ const onSubmit = () => {
 };
 const onForgetPwd = () => {
   emit("forget-pwd");
-}
+};
 </script>
 <style scoped lang="scss">
 @import "./style/accountModalTab.scss";

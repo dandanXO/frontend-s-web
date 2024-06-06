@@ -146,7 +146,8 @@
               >
                 Whatsapp
               </a>
-              <a class="header-nav language" href="" target="_blank">Language</a>
+              <!-- TODO: wait i18n -->
+              <!-- <a class="header-nav language" href="" target="_blank">Language</a> -->
             </li>
           </ul>
           <!-- <bet-ranking /> -->
