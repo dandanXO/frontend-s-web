@@ -156,6 +156,12 @@ export default {
     ASC: 'ASC',
     DESC: 'DESC',
   },
+  rebateStatus: {
+    PENDING: 'PENDING',
+    IN_PROGRESS: 'IN PROGRESS',
+    DISTRIBUTED: 'DISTRIBUTED',
+    CANCEL: 'CANCEL',
+  },
   fields: {
     account: 'Account',
     accountInfo: 'Account Information',
@@ -691,6 +697,7 @@ export default {
     'Daily Detail': 'Daily Detail',
     'Daily Summary': 'Daily Summary',
     Withdraw: 'Withdraw',
+    'Rebate Report': 'Rebate Report',
   },
   posterType: {
     OVERALL: 'Overall Referral',

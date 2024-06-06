@@ -153,6 +153,12 @@ export default {
     ASC: '오름차순',
     DESC: '내림차순',
   },
+  rebateStatus: {
+    PENDING: '보류 중',
+    IN_PROGRESS: '진행 중',
+    DISTRIBUTED: '분배하다',
+    CANCEL: '취소',
+  },
   fields: {
     account: '계정',
     accountInfo: '계정 정보',
@@ -685,6 +691,7 @@ export default {
     'Daily Detail': '일일 상세 내역',
     'Daily Summary': '일일 총괄',
     Withdraw: '은행 출금',
+    'Rebate Report': '리베이트 보고서',
   },
   posterType: {
     OVERALL: '종합 홍보 이미지',

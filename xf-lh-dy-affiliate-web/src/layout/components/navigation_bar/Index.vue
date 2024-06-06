@@ -101,6 +101,8 @@ export default {
         return router.push("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         return router.push("/vi/login")
+      } else if (siteId === "10" || siteId === 10) {
+        return router.push("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         return router.push("/pak/login")
       } else {
