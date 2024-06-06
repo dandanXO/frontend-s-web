@@ -177,9 +177,9 @@
     </div>
 
 
-    <div class="register-form-logo-img">
-      <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+<!--    <div class="register-form-logo-img">-->
+<!--      <img src="../assets/images/auth/auth-logo.png" />-->
+<!--    </div>-->
   </div>
 </template>
 
