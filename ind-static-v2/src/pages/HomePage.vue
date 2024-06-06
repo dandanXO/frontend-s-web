@@ -20,7 +20,7 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURLPromo + banner.mobileImageUrl"
+      :img-src="returnBannerUrl(banner)"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
@@ -182,10 +182,21 @@
                       data-aos-anchor="#home"
                     >
                       <div class="platform-game-img">
+                        <!--                        <p>{{ `hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</p>-->
                         <div
                           class="game--bg"
                           :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                             backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                         ></div>
                       </div>
@@ -585,7 +596,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -611,7 +632,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -1798,6 +1829,24 @@ const detectAndroidVersion = () => {
 
   return "not-android";
 };
+
+const returnBannerUrl = (banner) => {
+  try {
+    var bannerImg = "";
+    const bannerSplit= banner.mobileImageUrl.split("/");
+    // console.log(bannerSplit);
+    if(bannerSplit.length > 1){
+      bannerImg = bannerSplit[1];
+    }else{
+      bannerImg = bannerSplit[0];
+    }
+    return require(`../assets/images/banners/${bannerImg}`);
+  } catch (e) {
+    console.log("WERR")
+    return imgURLPromo + banner.mobileImageUrl;
+  }
+}
+
 
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
