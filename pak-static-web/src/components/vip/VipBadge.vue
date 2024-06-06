@@ -1,13 +1,15 @@
 <template>
   <div class="vip-badge-wrapper" :class="`bg-${level + 1}`">
-    <h3 class="vip-badge-title">VIP{{ level }}</h3>
-    <span class="vip-badge-qualification-info">Accumulate Deposit: {{ addThousandsComma(qualification) }}</span>
+    <h3 class="vip-badge-title">{{ $t("personalView.vip.badge.title") }} {{ level }}</h3>
+    <span class="vip-badge-qualification-info">
+      {{ $t("personalView.vip.badge.accumulateDeposit") }} {{ addThousandsComma(qualification) }}
+    </span>
     <div class="vip-badge-percentage-bar">
       <div class="vip-badge-percentage-bar__inner" :style="{ width: qualificationPercentage + '%' }" />
     </div>
     <div class="vip-badge-percentage-info">
-      <span>vip{{ level }}</span>
-      <span>vip{{ level + 1 }}</span>
+      <span>{{ $t("personalView.vip.badge.info") }}{{ level }}</span>
+      <span>{{ $t("personalView.vip.badge.info") }}{{ level + 1 }}</span>
     </div>
     <img class="vip-badge-crown" :src="require(`@/assets/images/vip/badge/badge-crown-${level}.png`)" />
   </div>

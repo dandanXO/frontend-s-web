@@ -1,7 +1,7 @@
 <template>
   <div class="vip-container">
     <div class="menu-title-container">
-      <span class="menu-title">VIP</span>
+      <span class="menu-title">{{ $t("personalView.vip.title") }}</span>
     </div>
     <!-- <div class="banner-container">
       <div class="btn-wrapper">
@@ -42,14 +42,14 @@
         </div>
       </div>
     </div>
-    <div class="vip-upgrade-rule">VIP status can be upgraded by accumulating monthly deposits</div>
+    <div class="vip-upgrade-rule">{{ $t("personalView.vip.rule1") }}</div>
     <table class="vip-ranking-table">
       <thead>
         <tr>
           <td><img src="@/assets/images/vip/vip-table-icon.png" /></td>
-          <td>Upgrade Experience</td>
-          <td>Upgrade Rewards</td>
-          <td>Monthly Rewards</td>
+          <td>{{ $t("personalView.vip.table.header.experience") }}</td>
+          <td>{{ $t("personalView.vip.table.header.oneOffReward") }}</td>
+          <td>{{ $t("personalView.vip.table.header.monthlyReward") }}</td>
         </tr>
       </thead>
       <tbody>
@@ -71,8 +71,7 @@
       </tbody>
     </table>
     <div class="vip-upgrade-rule-2">
-      After the recharge on the day reaches the standard, the next day will increase the VIP level and issue
-      corresponding upgrade rewards.
+      {{ $t("personalView.vip.rule2") }}
     </div>
     <!-- <Carousel :items-to-show="2.95" :wrap-around="true">
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
@@ -193,18 +192,43 @@ import VipBadge from "@/components/vip/VipBadge.vue";
 import { storeToRefs } from "pinia";
 import { RiLockFill } from "vue-remix-icons";
 import { addThousandsComma } from "@/utils/utils";
+import { useI18n } from "vue-i18n";
 // import { message } from "ant-design-vue";
 
 const store = userStore();
-const { currentDepositNumber } = storeToRefs(store);
+const { currentDepositNumber, vip } = storeToRefs(store);
+const { t } = useI18n();
 
 const amount = ref("$0");
 const privilegeClaimedModalVisible = ref(false);
-const rewards = [
-  { title: "Level Upgrade", description: "Reward", amount: 20, status: "unavailable" },
-  { title: "Level Upgrade", description: "Reward", amount: 20, status: "unavailable" },
-  { title: "Level Upgrade", description: "Reward", amount: 20, status: "unavailable" }
-];
+
+const currentVipLevel = computed(() => {
+  const level = vipTableData.value.find((data) => data.name.replace(" ") === vip.value);
+  return level || vipTableData.value[0];
+});
+
+const rewards = computed(() => {
+  return [
+    {
+      title: t("personalView.vip.privilege.oneOff.title"),
+      description: t("personalView.vip.privilege.oneOff.type"),
+      amount: currentVipLevel.value.oneOff,
+      status: "unavailable"
+    },
+    {
+      title: t("personalView.vip.privilege.monthly.title"),
+      description: t("personalView.vip.privilege.monthly.type"),
+      amount: currentVipLevel.value.monthly,
+      status: "unavailable"
+    },
+    {
+      title: t("personalView.vip.privilege.withdrawal.title"),
+      description: t("personalView.vip.privilege.withdrawal.type"),
+      amount: 20,
+      status: "unavailable"
+    }
+  ];
+});
 
 const vipLevel = computed(() => {
   return store.vip;
@@ -474,7 +498,7 @@ const vipTableData = ref([
     }
 
     .vip-reward-ticket__description {
-      margin-right: 32px;
+      flex: 1;
       font-size: 12px;
       line-height: 18px;
       color: #ffffff;

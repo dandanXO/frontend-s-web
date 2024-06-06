@@ -1,13 +1,17 @@
 <template>
-  <a-modal v-model:visible="visible" :body-style="{ padding: 0 }">
+  <a-modal v-model:visible="visible">
     <div class="confirm-modal-wrapper">
       <h3 class="confirm-modal-title">{{ title }}</h3>
       <div class="confirm-modal-content-wrapper">
         <slot />
       </div>
       <div class="confirm-modal-action-wrapper">
-        <button class="confirm-modal-action cancel" @click="handleCancel">CANCEL</button>
-        <button class="confirm-modal-action confirm" @click="handleConfirm">CONFIRM</button>
+        <button class="confirm-modal-action cancel" @click="handleCancel">
+          {{ $t("common.confirmModal.cancelButton") }}
+        </button>
+        <button class="confirm-modal-action confirm" @click="handleConfirm">
+          {{ $t("common.confirmModal.confirmButton") }}
+        </button>
       </div>
     </div>
   </a-modal>
@@ -30,9 +34,7 @@ const handleCancel = () => {
 </script>
 <style scoped lang="scss">
 .confirm-modal-wrapper {
-  background-color: var(--body-background-color);
   border-radius: 10px;
-  padding: 13px 18px;
 
   .confirm-modal-title {
     margin-bottom: 42px;

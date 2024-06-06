@@ -669,6 +669,15 @@ $glow-clr: #ff5a00;
     border-radius: 20px;
     max-width: unset;
     background-size: 100% 400%;
+    background-color: #131313;
+    color: #ffffff;
+
+    .ant-modal-header,
+    .ant-modal-title {
+      background-color: #131313;
+      color: inherit;
+      border: none;
+    }
 
     .ant-modal-body {
       .modal-head-title {
@@ -1105,7 +1114,7 @@ li.ant-calendar-time-picker-select-option-selected {
 }
 
 .ant-select-dropdown {
-  background-color: #ffffff0d;
+  background: #232325;
   color: #8c968f;
   .ant-select-item-option:not(.ant-select-item-option-disabled) {
     &[class*="-active"] {

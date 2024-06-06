@@ -17,8 +17,14 @@
         </div>
 
         <div class="header-menu-container mobile-menu-hide" :class="globalStore.isMenuActive ? 'active' : ''">
-          <router-link class="without-divider" to="/share">
-            <img src="@/assets/images/layout/header/invite-to-earn.png" />
+          <button class="download-app" @click="handleDownloadAppClick">
+            <span class="download-app__content">{{ $t("layout.header.downloadApp") }}</span>
+          </button>
+          <router-link class="invite-to-earn" to="/share">
+            <div class="invite-to-earn__content-wrapper">
+              <span class="invite-to-earn__title">{{ $t("layout.header.inviteToEarn.title") }}</span>
+              <span class="invite-to-earn__description">{{ $t("layout.header.inviteToEarn.description") }}</span>
+            </div>
           </router-link>
           <ul class="header-menu-list">
             <li v-for="nav in sortedNavigations" :key="nav.name" class="header-menu-item">
@@ -135,16 +141,18 @@
           <ul class="header-menu-list">
             <li class="header-menu-item">
               <a class="header-nav live-support" href="https://direct.lc.chat/16986612/" target="_blank">
-                Live Support
+                {{ $t("layout.header.menu.liveSupport") }}
               </a>
-              <a class="header-nav feedback" @click="openFeedback">Feedback</a>
-              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">Telegram</a>
+              <a class="header-nav feedback" @click="openFeedback">{{ $t("layout.header.menu.feedback") }}</a>
+              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">
+                {{ $t("layout.header.menu.telegram") }}
+              </a>
               <a
                 class="header-nav whatsapp"
                 href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l"
                 target="_blank"
               >
-                Whatsapp
+                {{ $t("layout.header.menu.whatsapp") }}
               </a>
               <!-- TODO: wait i18n -->
               <!-- <a class="header-nav language" href="" target="_blank">Language</a> -->
@@ -173,37 +181,35 @@
         <!-- <router-link to="/vip" class="viphead">
           <img src="../../assets/images/common/vipheadicon.svg" />
         </router-link> -->
-        <div v-if="!token" class="login-box">
-          <button class="common-btn login-btn" @click="openAccountModal">Login</button>
-          <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
-            Register
-            <!-- <img style="position: absolute; right: -30px" src="../../assets/images/common/regpresent.png" /> -->
+        <div class="login-box">
+          <button class="download-app-btn" @click="handleDownloadAppClick">
+            <img src="@/assets/images/layout/header/download-icon-with-gradient.svg" />
+            {{ $t("layout.header.common.downloadApp") }}
           </button>
-        </div>
-        <div v-else class="login-box">
-          <!-- <button class="action-btn">
-            <RiSearchLine />
-          </button> -->
-          <router-link
-            class="action-btn"
-            :class="{ 'has-unread-notification': !!unreadInboxMail }"
-            to="/center/mailbox"
-          >
-            <img :src="NotificationSvg" />
-          </router-link>
-          <!-- <div class="header-balance">
-            <div v-if="isLoadingBal">Loading...</div>
-            <div v-else>₱ {{ balance.toFixed(2) }}</div>
-
-            <div class="refreshbtn" @click="refreshBalance"><img src="../../assets/images/common/refresh.png" /></div>
-          </div> -->
-          <router-link class="common-btn deposit-btn" to="/center/top-up">
-            {{ $t("layout.header.deposit") }}
-          </router-link>
-          <UserProfile @open-dialog="trigger" />
-          <button class="action-btn" @click="handleLogoutClick">
-            <RiLoginBoxLine />
-          </button>
+          <template v-if="token">
+            <router-link
+              class="action-btn"
+              :class="{ 'has-unread-notification': !!unreadInboxMail }"
+              to="/center/mailbox"
+            >
+              <img :src="NotificationSvg" />
+            </router-link>
+            <router-link class="common-btn deposit-btn" to="/center/top-up">
+              {{ $t("layout.header.deposit") }}
+            </router-link>
+            <UserProfile @open-dialog="trigger" />
+            <button class="action-btn" @click="handleLogoutClick">
+              <RiLoginBoxLine />
+            </button>
+          </template>
+          <template v-else>
+            <button class="common-btn login-btn" @click="openAccountModal">
+              {{ $t("layout.header.notLogin.loginButton") }}
+            </button>
+            <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
+              {{ $t("layout.header.notLogin.registerButton") }}
+            </button>
+          </template>
         </div>
       </div>
       <SpinWheelModal ref="spinWheel" @spinWheelOnClose="spinWheelOnCloseHandler" />
@@ -215,6 +221,7 @@
       <AccountModal v-model="accountModalVisible" :isReg="accountModalRegVisible" />
       <FeedbackModal ref="feedbackModalRef" v-model="feedbackModalVisible" />
       <LogoutModal v-model="logoutModalVisible" @confirm="onLogout" />
+      <DownloadAppModal v-model="downloadAppModalVisible" />
     </div>
   </header>
 </template>
@@ -257,6 +264,7 @@ import AccountModal from "@/components/layout/header/AccountModal.vue";
 import BetRanking from "@/components/layout/header/BetRanking.vue";
 import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
 import LogoutModal from "@/components/layout/header/LogoutModal.vue";
+import DownloadAppModal from "@/components/layout/header/DownloadAppModal.vue";
 
 const navigations = [
   // { code: "VIP", name: "VIP", path: "/vip" },
@@ -284,6 +292,7 @@ const adsPopupListRef = ref();
 const activateTab = ref("casino");
 const feedbackModalVisible = ref(false);
 const logoutModalVisible = ref(false);
+const downloadAppModalVisible = ref(false);
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -463,6 +472,8 @@ const handleSwitchChange = (value) => {
 };
 
 const handleLogoutClick = () => (logoutModalVisible.value = true);
+
+const handleDownloadAppClick = () => (downloadAppModalVisible.value = true);
 </script>
 <style scoped lang="scss">
 $navigation-height: 80px;
@@ -825,7 +836,51 @@ $link-color: #ffffff;
       }
     }
 
-    .without-divider {
+    .download-app {
+      background: url(@/assets/images/layout/header/download-app.png) no-repeat;
+      background-size: contain;
+      min-height: 63px;
+      width: 100%;
+      position: relative;
+
+      .download-app__content {
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 14px;
+        position: absolute;
+        left: 26px;
+        top: 28px;
+      }
+    }
+
+    .invite-to-earn {
+      background: url(@/assets/images/layout/header/invite-to-earn.png) no-repeat;
+      background-size: contain;
+      min-height: 80px;
+      width: 100%;
+      position: relative;
+
+      .invite-to-earn__content-wrapper {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 25px;
+        left: 20px;
+
+        .invite-to-earn__title {
+          font-size: 14px;
+          font-weight: 700;
+          line-height: 14px;
+          color: #fff;
+        }
+
+        .invite-to-earn__description {
+          font-size: 8px;
+          font-weight: 700;
+          line-height: 14px;
+          color: #ffe500;
+        }
+      }
       &::after {
         display: none;
       }
@@ -1455,6 +1510,25 @@ $link-color: #ffffff;
           height: 12px;
           border-radius: 50%;
         }
+      }
+    }
+
+    .download-app-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: 1px solid #cbe3ad;
+      border-radius: 30px;
+      background: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
+      background-clip: text;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 20px;
+      color: transparent;
+
+      &:hover {
+        filter: brightness(1.3);
       }
     }
   }

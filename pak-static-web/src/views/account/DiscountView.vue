@@ -1,6 +1,6 @@
 <template>
   <div class="menu-title-container">
-    <span class="menu-title">Discount</span>
+    <span class="menu-title">{{ $t("personalView.discount.title") }}</span>
   </div>
   <div class="discount-record-list">
     <template v-if="discountList.length">
@@ -8,7 +8,7 @@
         <h3 class="discount-record-item__title">{{ toGMT5(record.recordTime, "MM/DD/YYYY") }}</h3>
         <div class="discount-record-item__inner-wrapper">
           <span class="discount-record-item__amount-prefix">
-            Amount:
+            {{ $t("personalView.discount.amount") }}
             <span class="discount-record-item__amount">{{ addThousandsComma(record.amount, true) }}</span>
           </span>
         </div>
@@ -34,7 +34,7 @@ const loadDiscount = () => {
     startDate: moment(startDate).format("YYYY-MM-DD"),
     endDate: moment(endDate).format("YYYY-MM-DD")
   };
-  console.log(params);
+
   getDiscount(params)
     .then((response) => {
       if (response.code === 0) {

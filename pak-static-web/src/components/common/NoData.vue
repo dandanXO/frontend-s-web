@@ -1,8 +1,8 @@
 <template>
   <div class="no-data-wrapper">
     <RiFileInfoFill />
-    <h3>No Records</h3>
-    <span>Haven’t found any record</span>
+    <h3>{{ $t("common.noData.title") }}</h3>
+    <span>{{ $t("common.noData.description") }}</span>
   </div>
 </template>
 <script setup>
