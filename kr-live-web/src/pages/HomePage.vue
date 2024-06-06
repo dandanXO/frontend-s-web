@@ -66,33 +66,9 @@
       </div>
     </div> -->
 
-    <router-link class="midd" to="/?page=notify">
-      <div class="station-notice-wrapper">
-        <div class="volume">
-          <img src="../assets/icon/icon-announcement.svg" />
-          <div class="box">
-            <div class="text">공지</div>
-          </div>
-        </div>
-        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20" v-if="store.announcementList && store.announcementList.length > 0">
-          <div>
-            <span style="color: #fff;" v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
-          </div>
-          
-        </marquee-text>
-        <div v-else style="width:100%;text-align:center;">
-          <span style="color: #fff;">
-            아직 콘텐츠가 없습니다
-          </span>
-        </div>
-      </div>
-    </router-link>
+    <RollingText />
 
-    <div class="jackpot">
-      <div class="jackpot-txt">987,654,321.23</div>
-    </div>
+    <JackpotPrize />
 
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
@@ -777,42 +753,16 @@
         <div class="title-text">출금현황</div>
         <!-- <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link> -->
       </div>
-      <!-- <div class="news-item-box">
+      
+      <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
         <div class="news-item-left">
           <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+            {{ d.loginName }}
+            <span style="color: #01e1ff">{{ d.amount }}원</span>
+            <span style="color: #92959f; margin-left: 20px">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</span>
           </div>
         </div>
       </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 
@@ -1088,6 +1038,8 @@ import { useI18n } from "vue-i18n";
 import moment from "moment";
 import MinigamesGrid from 'components/game/MinigamesGrid';
 import LangToggle from "src/components/LangToggle.vue";
+import RollingText from "src/components/home/RollingText.vue";
+import JackpotPrize from "src/components/home/JackpotPrize.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1101,7 +1053,9 @@ export default defineComponent({
     GameItem,
     GameCategory,
     MinigamesGrid,
-    LangToggle
+    LangToggle,
+    RollingText,
+    JackpotPrize
     // RiVolumeUpLine,
     // RiBilliardsLine,
     // RiBasketballLine,
@@ -1681,15 +1635,10 @@ export default defineComponent({
       api
         .get("/member/withdraw-deposit-record")
         .then((res) => {
-          const {
-            data: {
-              code,
-              data: { depositRecord }
-            }
-          } = res;
+          const response = res.data;
 
-          if (code === 0) {
-            depositRecordList.value = depositRecord;
+          if (response.code === 0) {
+            depositRecordList.value = response.data.records;
           } else {
             $q.notify({
               color: "negative",
@@ -2128,7 +2077,9 @@ export default defineComponent({
       toggleSpecialInviteBonusPopup,
       newsList,
       getBackgroundImageStyle,
-      gameItemLoad
+      gameItemLoad,
+      depositRecordList,
+      moment
     };
   }
 });
@@ -2148,73 +2099,6 @@ export default defineComponent({
   width: 100%;
   height: 440px;
   background: url("../assets/images/headerBanner/banner.svg") no-repeat center center;
-}
-
-.midd {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 15px;
-  /* margin: 10px 10px 5px; */
-
-  @media (min-width: 769px) {
-    padding: 20px;
-  }
-
-  .station-notice-wrapper {
-    display: flex;
-    border-radius: 8px;
-    background-color: #151324;
-    gap: 10px;
-    padding: 6px;
-    justify-content: center;
-    align-items: center;
-    width: 85%;
-    flex: 1;
-    border: 1px solid #24213f;
-
-    @media (min-width: 769px) {
-      padding: 8px 12px;
-    }
-
-    .volume {
-      height: 24px;
-      // background-color: #ff3c3c;
-      display: flex;
-      align-items: center;
-      @media (min-width: 769px) {
-        height: 32px;
-      }
-      .box {
-        color: #00FFFF;
-        width: 48px;
-        font-size: 16px;
-        line-height: 22.4px;
-        border-radius: 2px;
-        display: flex;
-        justify-content: center;
-        @media (min-width: 769px) {
-          width: 60px;
-        }
-      }
-    }
-
-    span {
-      margin-right: 10px;
-      cursor: pointer;
-    }
-  }
-
-  .share {
-    background-image: $linear-bg-red;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    flex: 1;
-  }
 }
 
 .slot-grid,
@@ -2344,46 +2228,6 @@ export default defineComponent({
     /* img {
       width: 100%;
     } */
-  }
-}
-
-.jackpot {
-  display: flex;
-  margin: 0 auto;
-  width: calc(100% - 40px);
-  max-width: 816px;
-  background: url('../assets/home/jackpot.png') no-repeat center center;
-  background-size: 100% 100%;
-  position: relative;
-  aspect-ratio: 816 / 130;
-
-  @media (max-width: 768px) {
-    background: url('../assets/home/jackpot-mobile.png') no-repeat center center;
-    background-size: 100% 100%;
-    aspect-ratio: 288 / 68;
-    max-width: 288px;
-    margin: 0px auto 10px;
-  }
-
-  .jackpot-txt {
-    display: flex;
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 34px;
-    font-weight: bold;
-    font-family: monospace;
-    color: #f5c681;
-    // text-shadow: 0 0 5px #ff0000;
-    text-shadow: 2px 0 #ff3c3c, -2px 0 #ff3c3c, 0 2px #ff3c3c, 0 -2px #ff3c3c,
-               1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
-    letter-spacing: 3px;
-
-    @media (max-width: 768px) {
-      font-size: 18px;
-      text-shadow: 1px 0 #ff3c3c, -1px 0 #ff3c3c, 0 1px #ff3c3c, 0 -1px #ff3c3c, 1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
-    }
   }
 }
 
@@ -2823,6 +2667,9 @@ export default defineComponent({
   line-height: 16.8px;
   border-bottom: 1px solid #3f3f3f;
 
+  display: grid;
+  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(100px, 10%);
+
   &:hover {
     .news-item-title,
     .news-item-date {
@@ -2837,7 +2684,7 @@ export default defineComponent({
     line-height: 22px;
   }
   .news-item-left {
-    width: 175px;
+    width: 100%;
     @media (min-width: 769px) {
       width: 60%;
     }
