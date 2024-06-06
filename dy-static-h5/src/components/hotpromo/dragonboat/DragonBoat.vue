@@ -274,6 +274,7 @@ const closeDialog = () => {
   background-color: transparent;
   box-shadow: none;
   margin-bottom: 0px;
+  margin-top: 10px;
 }
 
 .q-tabs.dragonboat-tabs .q-tab {
@@ -285,9 +286,10 @@ const closeDialog = () => {
   font-weight: 700;
   line-height: 31.92px;
   text-align: center;
-  padding: 0;
-  padding-top: 0.25rem;
-  padding: 20px;
+  width: 40%;
+  aspect-ratio: 363/90;
+  min-height: 40px;
+
   :deep(.q-tab__label) {
     font-size: 20px !important;
   }
