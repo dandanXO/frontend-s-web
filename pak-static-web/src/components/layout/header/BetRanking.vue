@@ -30,7 +30,6 @@ const records = ref([
 <style scoped lang="scss">
 .bet-ranking-wrapper {
   .bet-ranking-title {
-    font-family: Baloo Bhai 2;
     font-size: 16px;
     font-weight: 400;
     line-height: 18px;
@@ -51,7 +50,6 @@ const records = ref([
       gap: 13px;
       align-items: center;
       padding: 7px 12px;
-      font-family: Baloo 2;
       font-size: 12px;
       font-weight: 500;
       line-height: 12px;

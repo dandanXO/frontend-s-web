@@ -154,7 +154,6 @@ onMounted(() => {
   display: flex;
   justify-content: flex-start;
   gap: 5px;
-  font-family: Poppins;
   font-size: 20px;
   font-weight: 500;
   line-height: 32px;
@@ -167,7 +166,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin: 10px 50px;
-  font-family: Poppins;
   font-size: 20px;
   font-weight: 500;
   line-height: 32px;
@@ -179,7 +177,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin: 10px 50px;
-  font-family: Poppins;
   font-size: 20px;
   font-weight: 500;
   line-height: 32px;
@@ -192,7 +189,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   margin: 10px 35px;
-  font-family: Poppins;
   font-size: 30px;
   font-weight: 900;
   line-height: 32px;
@@ -212,7 +208,6 @@ onMounted(() => {
 }
 .jili-rules-span {
   display: flex;
-  font-family: Poppins Bold;
   font-size: 20px;
   font-weight: 900;
   line-height: 32px;
@@ -223,7 +218,6 @@ onMounted(() => {
 }
 .jili-rules-text {
   display: flex;
-  font-family: Microsoft YaHei UI;
   font-size: 20px;
   font-weight: 400;
   line-height: 21px;

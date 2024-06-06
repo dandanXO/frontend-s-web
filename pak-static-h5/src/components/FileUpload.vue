@@ -1,14 +1,16 @@
 <template>
   <q-file
-      name="upload_img"
-      v-model="file"
-      class="q-pt-md"
-      filled
-      label="上传图片"
-      color="white"
+    name="upload_img"
+    v-model="file"
+    class="q-pt-md"
+    label-color="brand"
+    outlined
+    label="Upload image"
+    color="green"
+    bg-color="black"
   >
     <template v-slot:prepend>
-      <q-icon name="cloud_upload"/>
+      <q-icon name="cloud_upload" />
     </template>
     <!-- Display error message -->
     <!-- <template v-slot:error="{ error }">
@@ -18,21 +20,21 @@
 </template>
 
 <script>
-import {ref, defineComponent, watch} from "vue";
-import {userStore} from "src/stores";
-import {useQuasar} from "quasar";
-import {getRndInteger} from "boot/utils";
+import { ref, defineComponent, watch } from "vue";
+import { userStore } from "src/stores";
+import { useQuasar } from "quasar";
+import { getRndInteger } from "boot/utils";
 
 export default defineComponent({
   emits: ["photoResponse"],
   name: "UploadExample",
-  setup: (props, {emit}) => {
+  setup: (props, { emit }) => {
     const store = userStore();
 
     var rstArray = Object.values(process.env.RST_API);
     var rstApi = rstArray[getRndInteger(0, rstArray.length)];
 
-    const action = rstApi + '/session/image/uploadOrder?token=' + store.token;
+    const action = rstApi + "/session/image/uploadOrder?token=" + store.token;
     const $q = useQuasar();
     const file = ref();
     watch(file, (newValue, oldValue) => {
@@ -43,30 +45,27 @@ export default defineComponent({
         const formData = new FormData();
         formData.append("files", file.value);
         try {
-          const response = await fetch(
-              `${rstApi}/session/image/uploadOrder`,
-              {
-                method: "POST",
-                body: formData,
-                headers: {
-                  token: `${store.token}`
-                }
-              }
-          );
+          const response = await fetch(`${rstApi}/session/image/uploadOrder`, {
+            method: "POST",
+            body: formData,
+            headers: {
+              token: `${store.token}`
+            }
+          });
           const data = await response.json();
           if (data.code === 0) {
             emit("photoResponse", data.data);
             $q.notify({
               type: "positive",
               position: "top",
-              message: `${file.value.name} 上传成功。`,
+              message: `${file.value.name} uploaded successfully`,
               icon: "check_circle_outline"
             });
           } else {
             $q.notify({
               type: "negative",
               position: "top",
-              message: `${file.value.name} 上传失败。请稍后再试。`,
+              message: `${file.value.name} upload failed. Please try again`,
               icon: "report_problem"
             });
             file.value = null;
@@ -81,10 +80,10 @@ export default defineComponent({
       file,
       action,
       // handleChange,
-      uploadFile,
+      uploadFile
       // uploadedCallBack,
     };
-  },
+  }
 });
 </script>
 

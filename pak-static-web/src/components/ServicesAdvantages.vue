@@ -86,7 +86,6 @@
   }
 
   h2 {
-    font-family: "Baloo Bhaina";
     font-size: 2.4rem;
     line-height: 42px;
     margin: 0;
@@ -166,12 +165,10 @@
       h3 {
         font-weight: bold;
         font-size: 24px;
-        font-family: "Baloo Bhaina";
         text-align: center;
       }
       p {
         color: #83a3ca;
-        font-family: "Microsoft Yahei UI";
         font-size: 16px;
         line-height: 20px;
       }
@@ -205,10 +202,8 @@
           line-height: 40px;
           margin: 0;
           color: #ffffff;
-          font-family: "Baloo Bhaina";
         }
         p {
-          font-family: Microsoft Yahei UI;
           font-size: 15px;
           line-height: 15px;
         }

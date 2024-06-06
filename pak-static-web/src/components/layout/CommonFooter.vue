@@ -95,7 +95,6 @@ import { globalStore } from "@/store";
   color: #000;
   line-height: 2.5;
   padding: 45px 0;
-  font-family: "Baloo Bhaina";
 
   &.menuactive {
     margin-left: $menu-width;
@@ -111,7 +110,6 @@ import { globalStore } from "@/store";
     gap: 120px;
 
     .logo {
-      font-family: Microsoft YaHei UI;
       font-size: 40px;
       font-weight: 700;
       line-height: 53.2px;
@@ -137,7 +135,6 @@ import { globalStore } from "@/store";
     .footer-link {
       color: #a4aabb;
       font-weight: 400;
-      font-family: "Baloo Bhaina";
       &:hover {
       }
     }

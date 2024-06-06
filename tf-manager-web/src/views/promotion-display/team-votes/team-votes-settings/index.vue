@@ -79,6 +79,16 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item :label="t('fields.sequence')" prop="sequence">
+          <el-input-number
+            type="number"
+            v-model.number="form.sequence"
+            :min="0"
+            style="width: 350px"
+            @keypress="restrictInput($event)"
+            controls-position="right"
+          />
+        </el-form-item>
         <el-form-item :label="t('fields.teamNameEn')" prop="teamNameEn">
           <el-input v-model="form.teamNameEn" style="width: 350px" />
         </el-form-item>
@@ -150,6 +160,11 @@
       size="small"
       highlight-current-row
     >
+      <el-table-column prop="sequence" :label="t('fields.sequence')">
+        <template #default="scope">
+          <el-input v-model="scope.row.sequence" />
+        </template>
+      </el-table-column>
       <el-table-column prop="teamNameLocal" :label="t('fields.teamName')" />
       <el-table-column prop="totalVotesRealVirtual" :label="t('fields.realVirtualVotes')">
         <template #default="scope">
@@ -398,6 +413,7 @@ const form = reactive({
   teamNameEn: "",
   teamNameLocal: "",
   countryImgUrl: null,
+  sequence: 0
 })
 
 const awardsForm = reactive({
@@ -410,6 +426,7 @@ const formRules = reactive({
   teamNameEn: [required(t('message.validateTeamNameEnRequired'))],
   teamNameLocal: [required(t('message.validateTeamNameLocalRequired'))],
   countryImgUrl: [required(t('message.validateCountryImageRequired'))],
+  sequence: [required(t('message.validateSequenceRequired'))],
 });
 
 const awardsFormRules = reactive({
@@ -478,7 +495,7 @@ function deleteVoteRecord(value) {
 }
 
 function editVoteRecord(value) {
-  if (value.totalVotesVirtual) {
+  if (value.totalVotesVirtual >= 0) {
     updateVotes(value).then((res) => {
       if (res.code === 0) {
         totalVirtualVote.value = Number(value.totalVotesReal) + Number(value.totalVotesVirtual)

@@ -68,9 +68,27 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "IM",
+    name: "IM",
+    image: "im",
+    message: "IM Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",
+    vimessage: 'IM Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
     code: "GFSBO",
     name: "SBOBET",
     image: "gfsbo",
+    message: "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
+    vimessage: 'Thể thao SBOBET là nhà cung cấp tỷ lệ cá cược tin cậy hàng đầu khu vực, mạng lưới phủ sóng rộng khắp các quốc gia châu Á. Hỗ trợ hàng trăm kiểu cược và hàng nghìn sự kiện mỗi năm. Phát sóng trực tiếp các kèo đấu chính xác tới từng giây tới người chơi đam mê chiến thắng.',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
+    code: "SBO",
+    name: "SBOBET",
+    image: "sbo",
     message: "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
     vimessage: 'Thể thao SBOBET là nhà cung cấp tỷ lệ cá cược tin cậy hàng đầu khu vực, mạng lưới phủ sóng rộng khắp các quốc gia châu Á. Hỗ trợ hàng trăm kiểu cược và hàng nghìn sự kiện mỗi năm. Phát sóng trực tiếp các kèo đấu chính xác tới từng giây tới người chơi đam mê chiến thắng.',
     caption: "专业品牌，尽享满贯",
@@ -222,6 +240,15 @@ export const pokerPlatforms = [
     image: "gpi",
     message: "LEG Corporation is expanding its investment in developing LEG Poker",
     vimessage: "Tập đoàn LEG khuếch trương đầu tư phát triển Poker LEG",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "KP",
+    name: "King Poker",
+    image: "kp",
+    message: "Spribe Corporation is expanding its investment in developing Spribe Poker",
+    vimessage: "Tập đoàn Spribe khuếch trương đầu tư phát triển Poker Spribe",
     caption: "",
     gameCode: ""
   },

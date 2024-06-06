@@ -737,7 +737,7 @@ export default defineComponent({
           margin: 0px;
           width: 100%;
           background-size: 100% 100% !important;
-          padding-top: 38px !important;
+          padding-top: 0px !important;
         }
 
         &.lplSummer2024 {

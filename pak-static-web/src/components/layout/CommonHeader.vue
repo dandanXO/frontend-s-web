@@ -174,7 +174,7 @@
         </router-link> -->
         <div v-if="!token" class="login-box">
           <button class="common-btn login-btn" @click="openAccountModal">Login</button>
-          <button class="common-btn reg-btn" @click="openAccountModal" style="margin-right: 30px">
+          <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
             Register
             <!-- <img style="position: absolute; right: -30px" src="../../assets/images/common/regpresent.png" /> -->
           </button>
@@ -338,7 +338,7 @@
       <ClaimModal ref="claimPromo" />
       <DailyLoginCashBonusPromoPopup ref="dailyLoginPromoPopup" />
       <AdsPopupList ref="adsPopupListRef" />
-      <AccountModal v-model="accountModalVisible" />
+      <AccountModal v-model="accountModalVisible" :isReg="accountModalRegVisible" />
       <FeedbackModal v-model="feedbackModalVisible" />
     </div>
   </header>
@@ -445,7 +445,7 @@ function playGame(gameName, platformCode, gameCode, status) {
 }
 
 const store = userStore();
-const { token, accountModalVisible } = storeToRefs(store);
+const { token, accountModalVisible, accountModalRegVisible } = storeToRefs(store);
 const { openAccountModal } = store;
 const triggerMenu = ref(null);
 onMounted(() => {
@@ -679,6 +679,7 @@ $link-color: #ffffff;
       gap: 10.53px;
       position: relative;
       border: 1px solid #cbe3ad;
+      font-family: Baloo Bhai 2;
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
@@ -1142,6 +1143,7 @@ $link-color: #ffffff;
             background: unset;
             display: flex;
             align-items: center;
+            font-family: Baloo Bhai 2;
             font-size: 30px;
             font-weight: 500;
             line-height: 16.33px;
@@ -1330,6 +1332,7 @@ $link-color: #ffffff;
       align-items: center;
       gap: 5px;
       border-radius: 12px;
+      font-family: "Inter Bold";
       font-size: 18px;
 
       img {

@@ -4,24 +4,18 @@
       <span class="user-profile-info__name">{{ nickName }}</span>
       <span class="user-profile-info__balance">₨: {{ balance.toFixed(2) }}</span>
     </div>
-    <button class="user-profile-photo" @click="openDialog">
+    <router-link class="user-profile-photo" to="/center/personal">
       <img v-if="profilePhoto" :src="profilePhoto" />
-    </button>
+      <img v-else src="@/assets/images/account/default-profile.png" />
+    </router-link>
   </div>
 </template>
 <script setup>
 import { storeToRefs } from "pinia";
 import { userStore } from "@/store";
-import { defineEmits } from "vue";
-
-const emit = defineEmits();
 
 const store = userStore();
 const { profilePhoto, nickName, balance } = storeToRefs(store);
-
-const openDialog = () => {
-  emit("open-dialog");
-};
 </script>
 <style scoped lang="scss">
 .user-profile-wrapper {
@@ -59,6 +53,13 @@ const openDialog = () => {
     width: 60px;
     height: 60px;
     background-color: #ffffff0d;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 </style>

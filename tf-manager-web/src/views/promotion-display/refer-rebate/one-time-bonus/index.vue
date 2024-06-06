@@ -226,6 +226,7 @@ async function showCreate() {
 
 async function showEdit(setting) {
   showDialog('EDIT')
+  bonusRuleList.value = [];
   await nextTick(() => {
     for (const key in setting) {
       if (key === 'bonusAmountRules') {

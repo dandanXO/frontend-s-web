@@ -51,6 +51,7 @@ import { RiImageFill, RiFileAddFill } from "vue-remix-icons";
 import { useHandleUpload } from "@/hooks/upload";
 import { ElMessage } from "element-plus";
 import { uploadImage } from "@/api/image";
+import { userStore } from "@/store";
 
 const uploadOption = { accept: "image/jpeg,image/png,image/gif", multiple: false };
 const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/";
@@ -75,6 +76,7 @@ const { handleUpload, manualEmit } = useHandleUpload(async ([file]) => {
 }, uploadOption);
 
 const formRef = ref();
+const store = userStore()
 const feedbackTypes = ref([]);
 // idle, dragging, loading, success
 const uploadFieldStatus = ref("idle");
@@ -142,7 +144,7 @@ const onSubmit = () => {
     .catch((error) => console.log(error));
 };
 
-onMounted(() => {
+const loadFeedBackType = () => {
   getFeedbackType()
     .then((res) => {
       if (res.code === 0) {
@@ -152,7 +154,15 @@ onMounted(() => {
     .catch((error) => {
       console.log(error);
     });
+}
+
+onMounted(() => {
+  if(store.token){
+    loadFeedBackType();
+  }
 });
+
+defineExpose({loadFeedBackType});
 </script>
 <style scoped lang="scss">
 .feedback-modal-wrapper {

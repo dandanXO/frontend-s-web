@@ -69,6 +69,12 @@
             </div>
             <div class="acct-nav-label">Message</div>
           </router-link>
+          <router-link to="/account/feedback">
+            <div class="acct-nav-item">
+              <img src="../assets/images/account/message-svg.svg" />
+            </div>
+            <div class="acct-nav-label">Feedback</div>
+          </router-link>
           <router-link to="/vip">
             <div class="acct-nav-item">
               <img src="../assets/images/account/vip-svg.svg" />

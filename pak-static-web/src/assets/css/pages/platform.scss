@@ -25,12 +25,12 @@ $accent: #ffffff;
 }
 
 .platform-breadcrumb {
-  font-family: san-serif;
   font-size: 20px;
   font-weight: 700;
   line-height: 24.2px;
   color: #9f9f9f;
   margin-bottom: 28px;
+  text-transform: capitalize;
 
   > span {
     &::after {
@@ -502,7 +502,6 @@ $accent: #ffffff;
       background-color: #d9d9d91a;
       transition: 0.3s all;
       .text {
-        font-family: san-serif;
         font-size: 20px;
         font-weight: 700;
         line-height: 24.2px;
@@ -563,6 +562,16 @@ $accent: #ffffff;
       &.sport,
       &.live {
         grid-template-columns: repeat(3, 1fr);
+
+      :deep(.el-image__inner){
+          max-height: 220px;
+        }
+      }
+
+      &.slot{
+        .slot-img{
+          aspect-ratio: 1/1;
+        }
       }
 
       .game-slot {

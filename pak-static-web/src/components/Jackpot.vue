@@ -49,7 +49,6 @@ onUnmounted(() => {
   height: 100%;
   overflow: hidden;
   .numbers {
-    font-family: "Arial Black";
     color: #ffe500;
     font-size: 30px;
     margin-left: 233px;

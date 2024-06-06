@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { login, logout } from "@/api/index/login";
-import { loadBalance, loadMemberInfo } from "@/api/personal/personal";
+import { getUnreadTotal, loadBalance, loadMemberInfo } from "@/api/personal/personal";
 import { useSessionStorage, useLocalStorage } from "@vueuse/core";
 import { MAIN } from "@/utils/utils";
 import { reactive } from "vue";
@@ -8,7 +8,8 @@ import { reactive } from "vue";
 const TOKEN_KEY = "TOKEN";
 const DARK_MODE = "DARKMODE";
 export const globalStore = reactive({
-  isDarkMode: useLocalStorage(DARK_MODE, true),
+  // isDarkMode: useLocalStorage(DARK_MODE, true),
+  isDarkMode: false,
   isMenuActive: true
 });
 export const userStore = defineStore("userStore", {
@@ -31,7 +32,9 @@ export const userStore = defineStore("userStore", {
       isAffiliate2: false,
       isAffiliate3: false,
       profilePhoto: "",
-      accountModalVisible: false
+      accountModalVisible: false,
+      accountModalRegVisible: false,
+      unreadInboxMail: 0
     };
   },
   actions: {
@@ -76,14 +79,26 @@ export const userStore = defineStore("userStore", {
         });
       }
     },
+    getUnreadNotification() {
+      if (this.token) {
+        getUnreadTotal().then((res) => {
+          if (res.code === 0) this.unreadInboxMail = res.data;
+        });
+      }
+    },
     getLevelUpDeposit() {
       return this.levelUpDeposit;
     },
     memberLogout() {
       return logout().then(() => (this.token = null));
     },
-    openAccountModal() {
+    openAccountModal(regLogin) {
       this.accountModalVisible = true;
+      if (regLogin === 'register') {
+        this.accountModalRegVisible = true;
+      } else {
+        this.accountModalRegVisible = false;
+      }
     }
   },
   getters: {

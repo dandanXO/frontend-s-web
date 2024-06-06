@@ -956,7 +956,7 @@ onMounted(() => {
             td {
               background: #ecf5ff;
               color: #2b2b82;
-              font-family: "Poppins Bold";
+
               text-align: center;
             }
             td:first-child {

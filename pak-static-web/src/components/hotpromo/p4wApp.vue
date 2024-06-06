@@ -99,7 +99,6 @@ const props = defineProps({
     width: 90%;
     margin: 60px auto;
     .rule-title {
-      font-family: Poppins Bold;
       font-size: 24px;
       color: #ffffff;
       margin-bottom: 10px;

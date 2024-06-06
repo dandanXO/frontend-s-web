@@ -100,6 +100,23 @@
           </template>
         </div>
       </div> -->
+      <div class="station-notice-wrapper container">
+        <div class="station-notice-container">
+          <img src="@/assets/images/common/volume-up.svg" />
+          <div class="station-notice-box">
+            <div class="station-notice">
+              <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
+                <div v-if="announcementList">
+                  <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                    {{ a.content }}
+                  </span>
+                </div>
+              </marquee-text>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="center-content">
         <SectionWrapper title="🔥HOT" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
@@ -136,22 +153,6 @@
             </a>
           </div>
         </SectionWrapper>
-        <!-- <div class="station-notice-wrapper container">
-          <div class="station-notice-container">
-            <img src="@/assets/images/common/volume-up.svg" />
-            <div class="station-notice-box">
-              <div class="station-notice">
-                <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
-                  <div v-if="announcementList">
-                    <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                      {{ a.content }}
-                    </span>
-                  </div>
-                </marquee-text>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
         <!--Jackpot-->
         <!-- <div class="jackpot container">
@@ -265,6 +266,7 @@
       :footer="null"
       centered
       title="Announcements"
+      :style="{ padding: 0 }"
     >
       <a-tabs v-model:activeKey="announcementActive" class="announcementTabs" @change="announcementTabChange">
         <a-tab-pane v-for="tab in announcementTypes" :key="tab.id" :tab="tab.name">
@@ -540,10 +542,6 @@ const platformSection = computed(() => {
 });
 
 const openGame = (game, platformCode, gameCode) => {
-  if (!store.token) {
-    store.openAccountModal();
-    return;
-  }
   const platName = game.alias ?? game.cnname ?? game.name;
   slotsGame.value.open(platName, platformCode, gameCode);
   // if (game.gameType && (game.gameType === "SLOT" || game.gameType === "FISH" || game.gameType === "BINGO")) {
@@ -882,6 +880,7 @@ onMounted(async () => {
 
     .ant-modal-content {
       width: 95%;
+      background-color: #131313;
 
       .ant-modal-header {
         border: 0;
@@ -890,11 +889,10 @@ onMounted(async () => {
         // background: linear-gradient(104.75deg, #4183d3 39.58%, #8ec1f7 109.58%);
 
         .ant-modal-title {
-          font-family: "Poppins Bold";
-          color: #000;
           font-size: 30px;
           text-align: center;
           padding-top: 20px;
+          color: #ffffff;
         }
       }
 
@@ -909,18 +907,16 @@ onMounted(async () => {
         .announcementTabs {
           .ant-tabs-nav .ant-tabs-tab {
             margin: 0;
-            font-family: "Poppins Regular";
             font-size: 18px;
             color: #83a3ca;
 
             &.ant-tabs-tab-active {
               padding: 2px 5px;
-              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+              background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
               background-clip: text;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               text-shadow: none;
-              font-family: "Poppins Bold";
               border-bottom: 3px solid $primary-color;
             }
           }
@@ -940,8 +936,7 @@ onMounted(async () => {
 
           .ant-collapse > .ant-collapse-item > .ant-collapse-header {
             border-bottom: 1px solid #83a3ca33;
-            color: #2b2b82;
-            font-family: "Poppins Bold";
+            color: #ffffff;
             font-size: 18px;
             font-weight: 700;
           }
@@ -949,7 +944,6 @@ onMounted(async () => {
           .ant-collapse > .ant-collapse-item > .ant-collapse-content {
             border: 0;
             color: #83a3ca;
-            font-family: "Poppins Regular";
             font-size: 14px;
             background: transparent;
           }
@@ -1302,6 +1296,7 @@ $link-color: #db7e42;
               &.isDesktop {
                 display: block;
                 height: 22vw;
+                aspect-ratio: 1920/600;
               }
 
               &.isMobile {
@@ -1343,7 +1338,7 @@ $link-color: #db7e42;
         overflow: hidden;
         margin-left: 10px;
         width: 100%;
-        justify-content: flex-start;
+        padding: 10px 0;
       }
 
       .station-notice {
@@ -1812,7 +1807,6 @@ $link-color: #db7e42;
 
           border-radius: 20px;
           color: white;
-          font-family: sans-serif;
           font-size: 100%;
           font-weight: bold;
           overflow: hidden;
@@ -2006,7 +2000,6 @@ $link-color: #db7e42;
 .header-text {
   text-align: center;
   color: #fff;
-  font-family: Poppins;
   line-height: normal;
 
   .title {
@@ -2160,7 +2153,6 @@ $link-color: #db7e42;
   justify-content: center;
   color: #fff;
   text-align: center;
-  font-family: Poppins;
   font-size: 2.25rem;
   font-weight: 600;
 }
@@ -2177,7 +2169,6 @@ $link-color: #db7e42;
     border: 0;
     color: #fff;
     text-align: center;
-    font-family: Poppins;
     font-size: 1.25rem;
     font-weight: 600;
     position: absolute;
@@ -2353,7 +2344,6 @@ $link-color: #db7e42;
     width: 90%;
     margin: 0 auto;
     .numbers {
-      font-family: "Arial Black";
       font-size: 2.5vw;
       padding-top: 1.5vw;
       padding-left: 1vw;
@@ -2395,6 +2385,23 @@ $link-color: #db7e42;
       &.wide {
         img {
           max-width: 520px;
+        }
+      }
+
+
+      a{
+
+        img{
+          transition: transform 0.3s ease;
+        }
+
+        &:hover{
+          filter: brightness(0.9);
+          opacity: 0.9;
+        }
+        &:active{
+          filter: brightness(0.8);
+          transform: translate(0px, 1px);
         }
       }
     }
@@ -2572,14 +2579,13 @@ $link-color: #db7e42;
       flex-direction: column;
       color: #ffffff99;
       .rib-number {
-        font-family: "Poppins Regular";
+
       }
       .rib-title {
-        font-family: "Poppins Medium";
+
       }
     }
     .rib-right {
-      font-family: "Poppins Bold";
       display: flex;
       flex-direction: column;
       gap: 5px;

@@ -101,7 +101,7 @@
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
             </div>
           </div>
-          <div class="unlock-status">
+          <div class="unlock-status" @click="getMonthlyVip">
             <img
               v-if="currentVipLevelStats.rewardUnlocked"
               src="../../assets/images/vip/vip-reward-unlocked-icon.png"
@@ -356,6 +356,10 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import { eventapi } from "boot/axios";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 
 const vipLevel = ref("");
 const currentVipLevelStats = ref({
@@ -405,8 +409,8 @@ const columns = [
 const rows = [
   {
     name: "VIP 0",
-    ugprade: "5,000",
-    flow: "50"
+    ugprade: "0",
+    flow: "0"
   },
   {
     name: "VIP 1",
@@ -790,7 +794,32 @@ const swipeLeft = () => {
 const swipeRight = () => {
   router.push("/promo");
 };
+
+const getMonthlyVip = () => {
+  eventapi
+    .put(" /bonus/claim/pak-vip-monthly")
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "Vip monthly claimed successfully",
+          icon: "check_circle_outline"
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err.message);
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: err.message,
+        icon: "report_problem"
+      });
+    });
+};
 </script>
+
 <style lang="scss" scoped>
 .separator-line {
   border: 1px solid #49148f70;

@@ -239,6 +239,18 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/feedback",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/mail/OutboxView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/write",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/mail/WriteView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/order",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/account/OrderView.vue") }],

@@ -20,10 +20,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -34,10 +34,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -124,10 +124,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -138,10 +138,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -208,10 +208,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -222,10 +222,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -329,10 +329,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -343,10 +343,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -412,10 +412,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -426,10 +426,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -461,10 +461,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -475,10 +475,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -537,10 +537,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.reminderRecord.startDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.reminderRecord.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -551,10 +551,10 @@
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.reminderRecord.endDate" mask="YYYY-MM-DD" :locale="koreanDateLocale">
+                        <q-date v-model="searchForm.reminderRecord.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
                           <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" flat />
-                            <q-btn v-close-popup :label="$t('lang.ok_btn')" flat  />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
+                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
                           </div>
                         </q-date>
                       </q-popup-proxy>
@@ -724,11 +724,11 @@ export default defineComponent({
       totalPayout: 0
     })
     const $q = useQuasar();
-    const koreanDateLocale = {
-        days: '일요일_월요일_화요일_수요일_목요일_금요일_토요일'.split('_'),
-        daysShort: '일_월_화_수_목_금_토'.split('_'),
-        months: '일월_이월_삼월_사월_오월_유월_칠월_팔월_구월_시월_십일월_십이월'.split('_'),
-        monthsShort: '1월_2월_3월_4월_5월_6월_7월_8월_9월_10월_11월_12월'.split('_'),
+    const dateLocale = {
+        days: `${t('lang.date_picker_sunday')}}_${t('lang.date_picker_monday')}_${t('lang.date_picker_tuesday')}_${t('lang.date_picker_wednesday')}_${t('lang.date_picker_thursday')}_${t('lang.date_picker_friday')}_${t('lang.date_picker_saturday')}`.split('_'),
+        daysShort: `${t('lang.date_picker_sun')}_${t('lang.date_picker_mon')}_${t('lang.date_picker_tue')}_${t('lang.date_picker_wed')}_${t('lang.date_picker_thu')}_${t('lang.date_picker_fri')}_${t('lang.date_picker_sat')}`.split('_'),
+        months: `${t('lang.date_picker_january')}_${t('lang.date_picker_february')}_${t('lang.date_picker_march')}_${t('lang.date_picker_april')}_${t('lang.date_picker_may')}_${t('lang.date_picker_june')}_${t('lang.date_picker_july')}_${t('lang.date_picker_august')}_${t('lang.date_picker_september')}_${t('lang.date_picker_october')}_${t('lang.date_picker_november')}_${t('lang.date_picker_december')}`.split('_'),
+        monthsShort: `${t('lang.date_picker_jan')}_${t('lang.date_picker_feb')}_${t('lang.date_picker_mar')}_${t('lang.date_picker_apr')}_${t('lang.date_picker_may_short')}_${t('lang.date_picker_jun')}_${t('lang.date_picker_jul')}_${t('lang.date_picker_aug')}_${t('lang.date_picker_sep')}_${t('lang.date_picker_oct')}_${t('lang.date_picker_nov')}_${t('lang.date_picker_dec')}`.split('_'),
         firstDayOfWeek: 0, // 0-6, 0 - Sunday, 1 Monday, ...
         format24h: true,
         pluralDay: '날들'
@@ -1336,7 +1336,7 @@ export default defineComponent({
     }
 
     return {
-      koreanDateLocale,
+      dateLocale,
       recordActive,
       searchForm,
       dataState,

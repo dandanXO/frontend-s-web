@@ -2,15 +2,15 @@
   <a-modal v-model:visible="visible" :width="835" :body-style="{ padding: 0, overflow: 'hidden' }" centered>
     <div class="account-modal-wrapper">
       <img class="account-modal-kv" src="@/assets/images/layout/header/account-modal-kv.png" />
-      <el-tabs v-if="!verifyPage" v-model="activateTab" class="account-modal-tabs">
+      <el-tabs v-if="!verifyPage && !isForgetPwd" v-model="activateTab" class="account-modal-tabs">
         <el-tab-pane name="login" :label="$t('layout.header.accountModal.login.tab')">
-          <login-tab @close-modal="handleCloseModal" />
+          <login-tab @close-modal="handleCloseModal" @forget-pwd="handleForgetPwd" />
         </el-tab-pane>
         <el-tab-pane name="register" :label="$t('layout.header.accountModal.register.tab')">
           <register-tab @close-modal="handleCloseModal" />
         </el-tab-pane>
       </el-tabs>
-      <div v-else class="verify-wrapper">
+      <div v-if="verifyPage" class="verify-wrapper">
         <div>
           <button class="verify-back-btn" @click="() => (verifyPage = false)">
             <img src="@/assets/images/layout/header/back-icon.png" />
@@ -35,17 +35,41 @@
           {{ $t("layout.header.accountModal.verify.submitButton") }}
         </a-button>
       </div>
+      <div v-if="isForgetPwd" class="forgetpwd-wrapper">
+        <div class="forgetpwd-top">
+          <button class="forgetpwd-back-btn" @click="() => (isForgetPwd = false)">
+            <img src="@/assets/images/layout/header/back-icon.png" />
+          </button>
+          <h3 class="forgetpwd-title">{{ $t("layout.header.accountModal.forgetPwd.title") }}</h3>
+        </div>
+        <forget-password-tab @close-modal="handleCloseModal" @back-to-login="handleBackToLogin" />
+      </div>
     </div>
   </a-modal>
 </template>
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, defineProps, toRefs } from "vue";
 
 import LoginTab from "./LoginTab.vue";
 import RegisterTab from "./RegisterTab.vue";
-
+import ForgetPasswordTab from "./ForgetPasswordTab.vue";
+import { onMounted } from "vue";
+import { watch } from "vue";
+const props = defineProps({
+  isReg: {
+    type: Boolean,
+    default: false,
+  },
+});
+const { isReg } = toRefs(props);
 const visible = defineModel();
-
+const isForgetPwd = ref(false);
+const handleForgetPwd = () => {
+  isForgetPwd.value = true
+}
+const handleBackToLogin = () => {
+  isForgetPwd.value = false
+}
 const verifyInputsRef = ref([]);
 const activateTab = ref("login");
 const verifyPage = ref(false);
@@ -53,7 +77,9 @@ const verifyCodeInputs = ref(Array(6).fill(""));
 
 const finalVerifyCode = computed(() => verifyCodeInputs.value.join(""));
 
-const handleCloseModal = () => (visible.value = false);
+const handleCloseModal = () => {
+  visible.value = false;
+}
 
 const handleVerifyInput = (e, index) => {
   if (verifyCodeInputs.value[index].length === 1) {
@@ -72,11 +98,19 @@ const handleVerifyInput = (e, index) => {
     verifyCodeInputs.value[index] = verifyCodeInputs.value[index][0];
   }
 };
-
 const onSubmit = () => {};
+
+watch(visible, (newVal) => {
+  if (newVal) {
+    // Reset the state when the modal becomes visible
+    isForgetPwd.value = false;
+    activateTab.value = isReg.value ? "register" : "login";
+  }
+});
 </script>
 <style scoped lang="scss">
 .account-modal-wrapper {
+  font-family: "Inter", Arial,sans-serif;
   display: flex;
   padding: 40px;
   align-items: center;
@@ -175,6 +209,66 @@ const onSubmit = () => {};
 
     .verify-resent {
       .verify-resent-btn {
+        border: none;
+        background-color: transparent;
+        color: #61ff00;
+      }
+    }
+  }
+  
+  .forgetpwd-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #8c968f;
+    width: 100%;
+    margin-top: -20px;
+    .forgetpwd-top {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .forgetpwd-back-btn {
+      border: none;
+      background: transparent;
+      position: relative;
+    }
+
+    .forgetpwd-title {
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 24px;
+      color: #ffffff;
+    }
+
+    .forgetpwd-input-wrapper {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin: 22px 0;
+
+      input {
+        border: 1px solid #61ff00;
+        background-color: #0b0e0d;
+        border-radius: 10px;
+        width: 56px;
+        height: 56px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 24px;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+
+    .forgetpwd-resent {
+      .forgetpwd-resent-btn {
         border: none;
         background-color: transparent;
         color: #61ff00;

@@ -261,7 +261,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: "Arial";
   .center-title {
     padding-top: 40px;
     font-size: 36px;
@@ -275,7 +274,6 @@ export default defineComponent({
   }
 }
 .countries-wrapper {
-  font-family: "Arial";
   background-color: #290315;
   border-radius: 10px;
   border: solid 1px #a81538;
@@ -370,7 +368,6 @@ export default defineComponent({
   }
 }
 .table-details {
-  font-family: "Arial";
   background-color: #290315;
   border-radius: 10px;
   border: solid 1px #a81538;

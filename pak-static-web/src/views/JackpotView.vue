@@ -155,7 +155,6 @@ $link-color: #db7e42;
     width: 90%;
     margin: 0 auto;
     .numbers {
-      font-family: "Arial Black";
       font-size: 2.5vw;
       padding-top: 1.5vw;
       padding-left: 1vw;
@@ -195,7 +194,6 @@ $link-color: #db7e42;
     display: flex;
     align-items: center;
     gap: 5px;
-    font-family: "Baloo Bhaina";
     font-size: 2.4rem;
     line-height: 42px;
     margin: 0;
@@ -352,14 +350,13 @@ $link-color: #db7e42;
       flex-direction: column;
       color: #ffffff99;
       .rib-number {
-        font-family: "Poppins Regular";
+
       }
       .rib-title {
-        font-family: "Poppins Medium";
+
       }
     }
     .rib-right {
-      font-family: "Poppins Bold";
       display: flex;
       flex-direction: column;
       gap: 5px;
