@@ -142,7 +142,8 @@
               </div>
               <div class="inner" 
               :class="{
-                isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24'
+                'isEurocup24': selectedPromo.redirectUrl === 'vnm-eurocup24',
+                'isEurocupLucky': selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
               }">
                 <!-- <h2>{{ selectedPromo.title }}</h2> -->
 
@@ -797,6 +798,12 @@ export default defineComponent({
           width: 100%;
           margin: 0px;
         }
+        &.isEurocupLucky {
+          background: #E7F1FD;
+          margin: 0px;
+          width: 100%;
+        }
+
 
         h2 {
           font-size: 18px;

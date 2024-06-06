@@ -259,3 +259,37 @@ export function bonusClaimPokerRefund() {
 export function getBonusPokerCashback() {
   return server.EVENT.get('/vnm-refund/poker');
 }
+export function selectNumber(promoCode, number) { 
+  return server.EVENT.post('/uefa-lottery/select-number',  
+  { promoCode, number }); 
+  // const formData = {
+  //   promoCode: promoCode,
+  //   number: Number(number)
+  // }
+  // const requestOptions = {
+  //   method: 'POST',
+  //   body: JSON.stringify(formData),
+  //   headers: {
+  //       token: `${userStore().token}`,
+  //       'Content-Type': 'application/json'
+  //   },
+  // };
+  //   var evtUrl = process.env.VUE_APP_EVT_API.split(",")[0];
+
+  // return fetch(evtUrl + '/uefa-lottery/select-number', requestOptions)
+  //   .then(response => {
+  //     return response.json()
+  //   })
+  //   .catch(error => {
+  //     return Promise.reject(error);
+  //   });
+} 
+export function getSelectedNumber() { 
+  return server.EVENT.get('/uefa-lottery/selected-number') 
+} 
+export function getWinners(promoCode) { 
+  return server.EVENT.get(`/uefa-lottery/winners?promoCode=${promoCode}`); 
+} 
+export function getPrizeAmount(promoCode) { 
+  return server.EVENT.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`); 
+} 
