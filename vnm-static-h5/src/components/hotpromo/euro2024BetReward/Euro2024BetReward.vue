@@ -15,7 +15,7 @@
         <img src="../../../assets/promo/vnm-euro-2024-bet-reward/moneyBg.png" alt="" />
         <div class="btnText" >Nhận ngay</div>
       </div>
-      
+
     </div>
     <div class="wrapper border">
       <div class="section-title">
@@ -225,7 +225,7 @@ onMounted(() => {
 
       .decor {
         aspect-ratio: 195/44;
-        width: 106px;
+        width: 53px;
       }
     }
     .moneyBg {
@@ -294,7 +294,7 @@ onMounted(() => {
 
       .decor {
         aspect-ratio: 195/44;
-        width: 120px;
+        width: 45px;
       }
     }
 
