@@ -206,12 +206,10 @@
 
         <el-form-item :label="t('fields.currency')" prop="currencyIds">
           <el-select
-            multiple
             filterable
-            allow-create
             default-first-option
             :reserve-keyword="false"
-            v-model="selected.currency"
+            v-model="form.currencyIds"
             size="small"
             :placeholder="t('fields.pleaseChoose')"
             class="filter-item"
@@ -585,7 +583,6 @@ function handleChange() {
 }
 
 function handleChangeCurrencies() {
-  form.currencyIds = selected.currency.join(',')
   if (!uiControl.dialogTitle.includes('Add')) {
     traceEditing()
   }
@@ -677,13 +674,7 @@ function showEdit(banner) {
     bankType = form.bankType
     bankOrder = form.sequence
     bankCurrencies = form.currencyIds
-
-    if (form.currencyIds !== null) {
-      const arr = form.currencyIds.split(',')
-      arr.forEach(element => {
-        selected.currency.push(Number(element))
-      })
-    }
+    form.currencyIds = Number(form.currencyIds)
   })
 }
 
