@@ -25,6 +25,7 @@
         </div>
       </div>
     </div>
+
     <div class="table-details pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
       <table id="rankTable">
@@ -53,6 +54,78 @@
         </div>
       </div>
     </div>
+
+    <div class="promo-content">
+
+      <div class="promo-title">
+        <img src="../eurocup-2024-vote/images/title-detail.png"/>
+      </div>
+
+      <div class="content-info">
+        <div class="content-info-item">活动时间：2024年06月15号00:00至07月14号23:59:59</div>
+        <div class="content-info-item" >
+          活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
+        </div>
+
+        <table class="content-table">
+          <thead>
+          <tr>
+            <th>获取条件</th>
+            <th>获取投票次数</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>当日有登录记录</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>存款≥200</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>存款≥500</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>存款≥1,000</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>存款≥3,000</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>存款≥5,000</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>存款≥8,000</td>
+            <td>10</td>
+          </tr>
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <div class="promo-title">
+        <img src="../eurocup-2024-vote/images/title-rules.png"/>
+      </div>
+
+      <div class="promo-rules-div">
+        <p>1.在活动日期内每日达到参与条件，即可在队伍下方点击投票，每位会员每日最高享受有10票名额；</p>
+
+        <p>2.所有雷火电竞会员均可参加此活动，活动奖金只需3倍水即可提款；</p>
+
+        <p>3.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
+
+        <p>4.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+
+        <p>5.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
+      </div>
+    </div>
+
 
     <el-dialog align-center v-model="isCastVoteModalVisible" :title="castVoteFormData.teamName" width="500">
       <el-form :rules="castVoteFormValidationRules" ref="castVoteFormRef" style="padding: 20px;"
@@ -179,7 +252,7 @@ export default defineComponent({
 .center-numbers {
   margin: 0px auto;
   position: relative;
-  background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/topboard_new_0930.png") no-repeat center center;
+  background: url("images/prizepool.png") no-repeat center center;
   background-size: contain;
   height: 300px;
   display: flex;
@@ -188,6 +261,59 @@ export default defineComponent({
   flex-direction: column;
   font-family: 'Arial';
   padding-top: 82px;
+}
+
+.promo-title{
+  text-align: center;
+  width:100%;
+
+  img{
+    width: 750px;
+  }
+}
+
+.content-info-item{
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.content-info{
+  font-size: 16px;
+  width: 1200px;
+  margin: 10px auto;
+}
+
+.promo-rules-div{
+  width: 1200px;
+  margin: 10px auto;
+  background-image: url("../eurocup-2024-vote/images/rule-board.png");
+  padding: 40px 20px;
+  background-size: 100% 100%;
+
+  p{
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+}
+
+.content-table{
+  color: #fff;
+  width: 1200px;
+  border-collapse: collapse;
+  margin: 20px auto 50px;
+  font-size: 18px;
+
+  th, td {
+    border: 1px solid #fff;
+    padding: 12px 10px;
+    text-align: center;
+  }
+
+  thead{
+    background: linear-gradient(180deg, #00E9FE 0%, #0A8AFF 100%);
+    color:#102628;
+  }
 }
 
 .center-numbers .center-title {
@@ -207,9 +333,8 @@ export default defineComponent({
 }
 
 .countries-wrapper {
-  background-color: #f7f7f7;
-  border-radius: 30px;
-  border: 1px solid #53abff;
+  background-color: transparent;
+  border: 1px solid #00EAFE;
   max-width: 1298px;
   margin: 50px auto;
   font-size: 16px;
@@ -219,23 +344,23 @@ export default defineComponent({
 }
 
 .countries-wrapper .point {
-  color: #232323;
+  color: #fff;
 }
 
-.pattern-wrapper:before,
-.pattern-wrapper:after,
-.pattern-wrapper-bottom:before,
-.pattern-wrapper-bottom:after {
-  background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 14px 14px;
-  content: "";
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-  position: absolute;
-}
+//.pattern-wrapper:before,
+//.pattern-wrapper:after,
+//.pattern-wrapper-bottom:before,
+//.pattern-wrapper-bottom:after {
+//  background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
+//  background-repeat: no-repeat;
+//  background-position: center center;
+//  background-size: 14px 14px;
+//  content: "";
+//  width: 14px;
+//  height: 14px;
+//  display: inline-block;
+//  position: absolute;
+//}
 
 .pattern-wrapper:before {
   transform: rotateZ(0deg);
@@ -263,7 +388,7 @@ export default defineComponent({
 
 .countries-wrapper .right-count {
   text-align: right;
-  color: #232323;
+  color: #fff;
   margin-top: -25px;
   font-weight: normal;
 }
@@ -353,12 +478,12 @@ export default defineComponent({
 
 .countries-wrapper .country-list .country-item .c-name {
   padding: 5px 0;
-  color: #232323;
+  color: #fff;
 }
 
 .countries-wrapper .country-list .country-item .c-price {
   background: #ffffff;
-  color: #11131F;
+  color: #fff;
   font-size: 14px;
   font-weight: normal;
   border-left: 2px solid #53ABFF;
@@ -402,7 +527,7 @@ export default defineComponent({
 
 .table-details table thead td {
   text-align: center;
-  color: #232323;
+  color: #ff;
   padding: 10px;
 }
 
