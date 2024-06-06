@@ -20,8 +20,12 @@
 
     <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
 
-    <upgradeHongBaoPromo v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'" :promo-code="list.promoCode" />
+    <upgradeHongBaoPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'"
+      :promo-code="list.promoCode"
+    />
 
+    <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -55,6 +59,7 @@ import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLo
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
 import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
+import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -68,7 +73,8 @@ export default defineComponent({
     ViSlotNetLossPromo,
     ViPennyBankPromo,
     upgradeHongBaoPromo,
-    EuroCup2024
+    EuroCup2024,
+    EuroCup2024BetReward
     // CnyStepGame2024Promo
   },
   props: {
@@ -240,6 +246,7 @@ export default defineComponent({
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+
 
   .promo-bg {
     background-size: cover;

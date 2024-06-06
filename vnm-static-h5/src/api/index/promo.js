@@ -141,3 +141,16 @@ export function submitGameStep() {
 export function getStepRecords(current) {
   return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
 }
+
+export function getBetDetail(promoCode) {
+  return eventapi.get("/event-bet-reward/get-bet-detail", { params: { promoCode: promoCode } });
+}
+
+export function claimSummon(promoCode) {
+  return eventapi.post(
+    "/event-bet-reward/claim",
+    qs.stringify({
+      promoCode: promoCode
+    })
+  );
+}
