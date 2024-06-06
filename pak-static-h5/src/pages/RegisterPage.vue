@@ -1,4 +1,10 @@
 <template>
+  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
+    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
+      <div class="cs-icon-wrapper"></div>
+    </div>
+  </q-page-sticky>
+
   <div class="register-container">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
@@ -223,6 +229,9 @@ import AdjustWeb from "@adjustcom/adjust-web-sdk";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
+
 export default defineComponent({
   name: "RegisterPage",
   components: {
@@ -231,6 +240,7 @@ export default defineComponent({
     // PrimaryButton
   },
   setup() {
+    const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
 
@@ -648,6 +658,32 @@ export default defineComponent({
 
     const regLoginTab = ref("register");
 
+    // sticky cs
+    const csDragPos = ref([10, 30]);
+    const isDraggingCsIcon = ref(false);
+    const openCSInNewTab = (url) => {
+      const absoluteUrl = url;
+      window.open(absoluteUrl, "_blank");
+    };
+    const moveCsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+      csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+    };
+    const loadCustomerAddress = () => {
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          console.log(data);
+          var url = data.liveUrl1;
+          ui.CSAUrl = url;
+        });
+    };
+
     watch(
       () => regLoginTab.value,
       () => {
@@ -690,7 +726,13 @@ export default defineComponent({
       isValidPhone,
       affRegEvent,
       isLoading,
-      regLoginTab
+      regLoginTab,
+      csDragPos,
+      isDraggingCsIcon,
+      openCSInNewTab,
+      moveCsIcon,
+      loadCustomerAddress,
+      ui
     };
   }
 });
@@ -779,11 +821,11 @@ function charType(num) {
 .register-form-wrapper {
   padding: 0 20px 20px;
 
-  :deep(.q-field__control){
-    height:45px;
+  :deep(.q-field__control) {
+    height: 45px;
 
-    .q-field__marginal{
-      height:45px;
+    .q-field__marginal {
+      height: 45px;
     }
   }
 }
@@ -900,8 +942,7 @@ function charType(num) {
   padding: 3px 20px 8px;
 }
 
-
-.bottom-img{
+.bottom-img {
   text-align: center;
   margin-top: 10px;
 }
