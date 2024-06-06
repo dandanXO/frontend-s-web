@@ -427,15 +427,6 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
-
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -550,15 +541,6 @@
           </div>
 
           <div class="platform-game-wrapper">
-
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
 
             <swiper
               :slidesPerView="3.5"
@@ -1209,10 +1191,10 @@ const depositItems = reactive([
 
 const esport = ref([]);
 const sport = ref([]);
-const livecasino = ref([]);
+const livecasino = ref([{"id":123,"name":"Evo","code":"WCEvo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"id":4,"name":"Awc","code":"AWC","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":0},{"id":103,"name":"WCPT","code":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":5,"name":"Ezugi","code":"EZUGI","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":902},{"id":102,"name":"WCSW","code":"WCSW","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":101,"name":"WCMG","code":"WCMG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":100,"name":"WCOT","code":"WCOT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":99,"name":"WCAG","code":"WCAG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":98,"name":"WCBG","code":"WCBG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([]);
+const slot = ref([{"id":124,"name":"Turbo","code":"Turbo","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":890},{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":900},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":901},{"id":8,"name":"JiliGames","code":"JILI","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":902},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JOKER","sequence":1000},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":110,"name":"Skywind","code":"WCSWS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":112,"name":"Quick Spin","code":"WCQS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":114,"name":"BNG","code":"WCBNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":115,"name":"Playson","code":"WCPS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":117,"name":"Elysium","code":"WCElysium","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":118,"name":"MG","code":"WCMGS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":119,"name":"PT","code":"WCPTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -1382,7 +1364,7 @@ const loadHotGameList = () => {
 
 };
 
-const fishGameJILIList = ref([]);
+const fishGameJILIList = ref([{"id":18886,"name":"Bombing Fishing","code":"20","status":"OPEN","icon":"5/JILI/20.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18887,"name":"Dinosaur Tycoon","code":"42","status":"OPEN","icon":"5/JILI/42.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"10/30/23, 2:36 PM"},{"id":18888,"name":"Jackpot Fishing","code":"32","status":"OPEN","icon":"5/JILI/32.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18889,"name":"Dragon Fortune","code":"60","status":"OPEN","icon":"5/JILI/60.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18890,"name":"Mega Fishing","code":"74","status":"OPEN","icon":"5/JILI/74.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18891,"name":"Boom Legend","code":"71","status":"OPEN","icon":"5/JILI/71.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18892,"name":"Happy Fishing","code":"82","status":"OPEN","icon":"5/JILI/82.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"10/30/23, 2:36 PM"},{"id":18893,"name":"All-star Fishing","code":"119","status":"OPEN","icon":"5/JILI/119.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18945,"name":"Royal Fishing","code":"1","status":"OPEN","icon":"5/JILI/1.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18949,"name":"Dinosaur Tycoon II","code":"212","status":"OPEN","icon":"5/JILI/212.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"}]);
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1408,10 +1390,12 @@ const loadJILIFishGameList = () => {
     )
     .then((res) => {
       fishGameJILIList.value = res;
+
+      // console.log(JSON.stringify(fishGameJILIList.value));
     });
 };
 
-const fishGameJDBList = ref([]);
+const fishGameJDBList = ref([{"id":19200,"name":"Dragon Fishing","code":"7001","status":"OPEN","icon":"5/JDB/7001.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19201,"name":"Dragon Fishing II","code":"7002","status":"OPEN","icon":"5/JDB/7002.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19202,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"5/JDB/7003.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19203,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"5/JDB/7004.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19204,"name":"Fishing YiLuFa","code":"7005","status":"OPEN","icon":"5/JDB/7005.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19205,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"5/JDB/7006.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19206,"name":"Fishing Disco","code":"7007","status":"OPEN","icon":"5/JDB/7007.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"}]);
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1437,6 +1421,8 @@ const loadJDBFishGameList = () => {
     )
     .then((res) => {
       fishGameJDBList.value = res;
+
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -1619,8 +1605,8 @@ const getPlatList = () => {
 
       isPlatLoading.value= false;
 
-      // console.log("After");
-      // console.log(sport.value);
+      console.log("After");
+      console.log(JSON.stringify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {
