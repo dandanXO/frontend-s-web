@@ -535,7 +535,7 @@ export default defineComponent({
     // );
 
     // sticky cs
-    const csDragPos = ref([10, 10]);
+    const csDragPos = ref([10, 30]);
     const isDraggingCsIcon = ref(false);
     const openCSInNewTab = (url) => {
       const absoluteUrl = url;
