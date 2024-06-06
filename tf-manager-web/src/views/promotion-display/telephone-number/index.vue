@@ -668,6 +668,8 @@ onMounted(async () => {
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = sites.list.find(s => s.siteName === store.state.user.siteName)
     request.siteId = site.value.id
+  } else {
+    request.siteId = sites.list[0].id
   }
   await loadTelephones()
 })
