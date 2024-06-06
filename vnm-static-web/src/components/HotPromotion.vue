@@ -9,6 +9,8 @@
     <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+
     <HongBaoYu2024
       v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
@@ -41,6 +43,7 @@ import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vu
 import PokerCashback from "../components/hotpromo/poker-cashback/PokerCashback.vue";
 import Eurocup2024 from "../components/hotpromo/Eurocup2024/Eurocup2024.vue";
 import Eurocup2024bet from "../components/hotpromo/euro-2024-bet/euro-2024-bet.vue";
+import EurocupLuckyDraw from "../components/hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -58,7 +61,8 @@ export default defineComponent({
     PokerCashback,
     HongBaoYu2024,
     Eurocup2024,
-    Eurocup2024bet
+    Eurocup2024bet,
+    EurocupLuckyDraw
     // DailyBonus
   },
   props: {
@@ -307,7 +311,8 @@ export default defineComponent({
       this.list.redirectUrl === "vi-poker-cashback" ||
       this.list.redirectUrl === "vi-mualixi-redpacket" ||
       this.list.redirectUrl === "vnm-eurocup24"||
-      this.list.redirectUrl === "vnm-euro-2024-bet-reward"
+      this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
+      this.list.redirectUrl === "vnm-eurocup-luckydraw"
     ) {
       this.isCommonPromo = false;
     } else {

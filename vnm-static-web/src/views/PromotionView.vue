@@ -104,7 +104,8 @@
         <div
           class="inner"
           :class="{
-            isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24'
+            'isEurocup24': selectedPromo.redirectUrl === 'vnm-eurocup24',
+            'isEurocupLucky': selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
           }"
           :style="
             selectedPromo?.desktopImgBackgroundUrl
@@ -863,6 +864,9 @@ export default defineComponent({
 
         &.isEurocup24 {
           padding: 0px;
+        }
+        &.isEurocupLucky {
+          background: #E7F1FD;
         }
 
         .hot-promo {

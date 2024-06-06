@@ -154,7 +154,8 @@
                 class="inner"
                 :class="{
                   isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24',
-                  isEurocup24Bet: selectedPromo.redirectUrl === 'vnm-euro-2024-bet-reward'
+                  isEurocup24Bet: selectedPromo.redirectUrl === 'vnm-euro-2024-bet-reward',
+                  isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
                 }"
               >
                 <!-- <h2>{{ selectedPromo.title }}</h2> -->
@@ -813,6 +814,12 @@ export default defineComponent({
           margin: 0px;
           background: #e7f1fd;
         }
+        &.isEurocupLucky {
+          background: #E7F1FD;
+          margin: 0px;
+          width: 100%;
+        }
+
 
         h2 {
           font-size: 18px;
