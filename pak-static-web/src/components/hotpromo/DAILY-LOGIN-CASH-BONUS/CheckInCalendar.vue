@@ -190,7 +190,6 @@ onMounted(() => {
       align-items: center;
       text-transform: uppercase;
       padding: 0px 20px;
-      font-family: "Poppins Bold";
 
       .calendar-header-image {
         filter: brightness(0) invert(1);

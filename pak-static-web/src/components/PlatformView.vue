@@ -115,14 +115,8 @@
             <template v-for="(item, index) in platformsListDisplay" :key="index">
               <!-- <div class="plat-option" @click="switchPlat(item)" :class="{ active: selectedPlat === item.code }"> -->
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
-                <!-- <img
-                  :src="
-                  require(`../assets/game/plat-logo-${item.code.toLowerCase()}${
-                    selectedPlat !== item.code ? '-blue' : ''
-                  }.png`)
-                "
-                /> -->
-                <div class="text">
+                <img v-if="item.icon" :src="item.icon" />
+                <div class="text" v-else>
                   <span v-if="item.code === 'AG'">XIN</span>
                   <span v-else>{{ item.code }}</span>
                 </div>
@@ -229,11 +223,11 @@
                     lazy
                   >
                     <template #placeholder>
-                      <img src="@/assets/images/platform/slot/default.png" />
+                      <img src="@/assets/images/platform/game/default.png" />
                     </template>
                     <template #error>
                       <div class="image-slot">
-                        <img src="@/assets/images/platform/slot/default.png" />
+                        <img src="@/assets/images/platform/game/default.png" />
                       </div>
                     </template>
                   </el-image>
@@ -307,22 +301,18 @@ const getPlatList = () => {
     ];
     platformsList.value = res;
 
-    // console.log(platformsList.value);
-
     platformsListDisplay.value = platformsList.value.filter((element) =>
       element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase())
     );
 
-    // console.log("Platform");
-    // console.log(platformsListDisplay.value);
-
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-      return { ...matchingItem, ...item1 };
+      return {
+        ...matchingItem,
+        ...item1,
+        icon: loadPlatformIcon(`${item1.gameType.toLowerCase()}/${item1.code.toLowerCase()}.png`)
+      };
     });
-
-    // console.log("THIs");
-    // console.log(platformsListDisplay.value);
 
     setFilteredPlatforms();
   });
@@ -415,7 +405,11 @@ const getPlatGameList = () => {
         platformsListDisplay.value = _data.filter((element) => element.gameType.includes(props.platformGameType));
         platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
           const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
-          return { ...matchingItem, ...item1 };
+          return {
+            ...matchingItem,
+            ...item1,
+            icon: loadPlatformIcon(`${props.platformGameType.toLowerCase()}/${item1.code.toLowerCase()}.png`)
+          };
         });
 
         // console.log("SLOT")
@@ -448,7 +442,7 @@ const loadGameList = () => {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {
-          element.default = require("../assets/images/platform/slot/default.png");
+          element.default = require("@/assets/images/platform/game/default.png");
           element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
         });
         gameListData.value = data;
@@ -463,9 +457,17 @@ const loadGameList = () => {
 
 const loadGameIcon = (path) => {
   try {
-    return require(`@/assets/images/platform/${path}`);
+    return require(`@/assets/images/platform/game/${path}`);
   } catch (e) {
-    return require("@/assets/images/platform/slot/default.png");
+    return require("@/assets/images/platform/game/default.png");
+  }
+};
+
+const loadPlatformIcon = (path) => {
+  try {
+    return require(`@/assets/images/platform/icon/${path}`);
+  } catch (e) {
+    return null;
   }
 };
 

@@ -9,7 +9,9 @@
         <div class="share-summary-wrapper">
           <div class="share-summary-item income">
             <div class="share-summary-item__info-wrapper">
-              <h3 class="share-summary-item__title">RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}</h3>
+              <h3 class="share-summary-item__title">
+                RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+              </h3>
               <span class="share-summary-item__description">My Total Income</span>
             </div>
             <img class="share-summary-item__pic" src="@/assets/images/account/share/income-pic.png" />
@@ -38,7 +40,6 @@
               <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">Copy link</button>
             </div>
             <div class="invitation-link__action-wrapper">
-              <!-- TODO: action? -->
               <a :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
                 <img src="@/assets/images/account/share/logo_whatsapp.png" alt="Whatsapp" />
               </a>
@@ -59,7 +60,6 @@
           <img class="earned-amount__pic" src="@/assets/images/account/share/earn-money-pic.png" />
           <div class="earned-amount__total-wrapper">
             <h2 class="earned-amount__total-title">Total amount sent as of yesterday</h2>
-            <!-- TODO: check api -->
             <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
           </div>
           <div class="earned-amount__divider" />
@@ -88,7 +88,6 @@
       </div>
 
       <div class="right-side">
-        <!-- TODO: api? -->
         <div class="share-info-wrapper">
           <div class="share-info-item">
             <div class="share-info-item__icon-wrapper">
@@ -109,7 +108,9 @@
             <div class="share-info-item__info-wrapper">
               <span class="share-info-item__info">
                 ₨
-                <span class="share-info-item__info-num">{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
+                <span class="share-info-item__info-num">
+                  {{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}
+                </span>
               </span>
               <span class="share-info-item__description">Eligible Refer</span>
             </div>
@@ -228,8 +229,14 @@
 
 <script setup>
 import { defineComponent, reactive, ref, onMounted } from "vue";
-import { getReferralLink, getFriendList, getOneTimeBonus, getMemberDetailAPI, getLatestInviteesAPI } from "@/api/personal/share";
-import { ElMessage } from "element-plus"
+import {
+  getReferralLink,
+  getFriendList,
+  getOneTimeBonus,
+  getMemberDetailAPI,
+  getLatestInviteesAPI
+} from "@/api/personal/share";
+import { ElMessage } from "element-plus";
 import {
   RiFacebookCircleLine,
   RiWhatsappLine,
@@ -240,8 +247,9 @@ import {
 } from "vue-remix-icons";
 import moment from "moment";
 import VueQRCodeComponent from "vue-qrcode-component";
-import { userStore } from "@/store/index"
-import { convertToCommaAmount } from "@/utils/utils"
+import { userStore } from "@/store/index";
+import { convertToCommaAmount } from "@/utils/utils";
+import { server } from "@/utils/request";
 
 const store = userStore();
 const copyHrefLink = () => {
@@ -667,8 +675,8 @@ onMounted(() => {
         justify-content: space-between;
         flex: 1;
         height: 140px;
-          overflow: scroll;
-          padding-right: 20px;
+        overflow: scroll;
+        padding-right: 20px;
         .earned-amount__invited-friend-info-wrapper {
           display: flex;
           flex-direction: column;
@@ -715,7 +723,7 @@ onMounted(() => {
   .right-side {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; 
+    justify-content: flex-start;
     gap: 20px;
     flex: 1;
 
@@ -956,7 +964,7 @@ onMounted(() => {
             td {
               background: #ecf5ff;
               color: #2b2b82;
-              font-family: "Poppins Bold";
+
               text-align: center;
             }
             td:first-child {

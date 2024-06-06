@@ -30,8 +30,6 @@
     font-size: 24px;
     font-weight: normal;
     letter-spacing: 4px;
-    text-transform: uppercase;
-    font-family: "Audiowide";
     color: #ff6d00;
     animation-name: bounce;
     animation-duration: 2s;

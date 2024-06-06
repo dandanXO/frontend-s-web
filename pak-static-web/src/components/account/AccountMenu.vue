@@ -4,6 +4,7 @@
       <div class="account-profile-wrapper">
         <div class="account-profile-photo">
           <img v-if="profilePhoto" :src="profilePhoto" />
+          <img v-else src="@/assets/images/account/default-profile.png" />
         </div>
         <div class="account-profile-info">
           <!-- TODO: check name -->
@@ -62,13 +63,13 @@ const route = useRoute();
 const actions = ref([
   { name: "Withdraw", path: "/center/top-up?tab=withdraw" },
   { name: "Deposit", path: "/center/top-up" },
-  { name: "Promo", path: "/center/personal" }
+  { name: "Promo", path: "/promotion" }
 ]);
 
 const links = ref([
   { name: "Personal center", img: PersonalSvg, path: "/center/personal" },
   { name: "Record", img: RecordSvg, path: "/center/transit-record" },
-  { name: "Discount", img: DiscountSvg, path: "/center/top-up?tab=withdraw" },
+  { name: "Discount", img: DiscountSvg, path: "/center/discount" },
   { name: "Bank", img: BankSvg, path: "/center/withdrawbank" },
   { name: "Message", img: MessageSvg, path: "/center/mailbox" },
   { name: "VIP", img: VIPSvg, path: "/center/vip" }
@@ -103,16 +104,23 @@ const links = ref([
         width: 60px;
         height: 60px;
         background-color: #ffffff0d;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
 
       .account-profile-info {
         display: flex;
         flex-direction: column;
-        gap: 7;
+        gap: 7px;
+        align-items: start;
         justify-content: center;
 
         .account-profile-info__name {
-          font-family: Poppins;
           font-size: 20px;
           font-weight: 700;
           line-height: 20px;
@@ -120,7 +128,6 @@ const links = ref([
         }
 
         .account-profile-info__id {
-          font-family: Poppins;
           font-size: 12px;
           font-weight: 400;
           line-height: 20px;
@@ -136,7 +143,6 @@ const links = ref([
       align-items: center;
       justify-content: space-between;
       border-radius: 4px;
-      font-family: Poppins;
       font-size: 12px;
       font-weight: 500;
       line-height: 12px;
@@ -145,7 +151,6 @@ const links = ref([
       margin: 0 30px;
 
       .account-info-balance-amount {
-        font-family: Poppins;
         font-size: 20px;
         font-weight: 700;
         line-height: 20px;
@@ -168,7 +173,6 @@ const links = ref([
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-family: Poppins;
         font-size: 12px;
         font-weight: 500;
         line-height: 12px;
@@ -195,7 +199,6 @@ const links = ref([
       gap: 14px;
       padding: 10px 20px;
       border-radius: 10px;
-      font-family: Poppins;
       font-size: 20px;
       font-weight: 400;
       line-height: 20px;

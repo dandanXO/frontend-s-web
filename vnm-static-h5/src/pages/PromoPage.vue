@@ -140,7 +140,10 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
+              <div class="inner" 
+              :class="{
+                isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24'
+              }">
                 <!-- <h2>{{ selectedPromo.title }}</h2> -->
 
                 <div v-if="selectedPromo.hasPromo">
@@ -789,6 +792,11 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.isEurocup24 {
+          width: 100%;
+          margin: 0px;
+        }
 
         h2 {
           font-size: 18px;

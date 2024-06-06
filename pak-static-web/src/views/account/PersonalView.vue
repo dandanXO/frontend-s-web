@@ -5,40 +5,41 @@
     </div>
 
     <div class="personal-wrapper">
-      <button @click="handleUpload" class="personal-profile">
+      <!-- <button @click="handleUpload" class="personal-profile">
         <img v-if="profilePhoto && !tempProfile" :src="profilePhoto" />
         <img v-else-if="tempProfile" :src="tempProfile" />
         <div class="personal-profile-mask">
           <RiCameraFill />
         </div>
-      </button>
+      </button> -->
       <a-form ref="updateFormRef" :model="updateFormDetails" class="personal-info-wrapper" hide-required-mark>
         <a-form-item required name="nickName" label="Phone number" label-align="left">
-          <a-input :disabled="true" v-model:value="updateFormDetails.nickName" placeholder="Please enter your nick name" />
+          <a-input
+            :disabled="true"
+            v-model:value="updateFormDetails.nickName"
+            placeholder="Please enter your nick name"
+          />
         </a-form-item>
-          <div class="datewsend">
-            <a-form-item
-              label="Email" 
-              name="email"
-            >
-              <div class="fake-field">
-                <div class="fake-input">
-                {{ personalState.memberInfo.email}}
-                </div>
-                <a-button
-                  class="common-btn"
-                  v-if="!personalState.memberInfo.emailVerified"
-                  type="button"
-                  @click="updateSecurityModal"
-                >
-                  Verify
-                </a-button>
-                <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
+        <div class="datewsend">
+          <a-form-item label="Email" name="email">
+            <div class="fake-field">
+              <div class="fake-input">
+                {{ personalState.memberInfo.email }}
               </div>
-            </a-form-item>
-            <!-- <a-input v-model="updateFormDetails.email" placeholder="อีเมลล์" /> -->
-          </div> 
-          <!-- <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
+              <a-button
+                class="common-btn"
+                v-if="!personalState.memberInfo.emailVerified"
+                type="button"
+                @click="updateSecurityModal"
+              >
+                Verify
+              </a-button>
+              <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
+            </div>
+          </a-form-item>
+          <!-- <a-input v-model="updateFormDetails.email" placeholder="อีเมลล์" /> -->
+        </div>
+        <!-- <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
           <a-button
             class="common-btn"
             v-if="!personalState.memberInfo.emailVerified"
@@ -47,9 +48,9 @@
           >
             Verify
           </a-button> -->
-          <!-- <div v-if="!personalState.memberInfo.email" class="datewsend">
+        <!-- <div v-if="!personalState.memberInfo.email" class="datewsend">
             <a-form-item
-            label="Email" 
+            label="Email"
               name="email"
               :rules="[
                 { required: true, message: 'Please enter your email' },
@@ -81,26 +82,26 @@
         <!-- <a-form-item required name="password" label="Password" label-align="left">
           <a-input v-model:value="updateFormDetails.password" placeholder="Please enter new password" />
         </a-form-item> -->
-        <a-form-item :rules="[
-                        {
-                          validator: validateName,
-                          trigger: 'blur'
-                        },
-                        {
-                          required: true,
-                          trigger: 'blur',
-                          message: 'Real name is required'
-                        }
-                       ]" name="realName" label="Full Name" label-align="left">
+        <a-form-item
+          :rules="[
+            {
+              validator: validateName,
+              trigger: 'blur'
+            }
+          ]"
+          name="realName"
+          label="Full Name"
+          label-align="left"
+        >
           <a-input v-model:value="updateFormDetails.realName" placeholder="Please enter your full name" />
         </a-form-item>
       </a-form>
-        
-        <a-form-item class="txt-center" style="max-width: 340px;">
-          <button class="txt-center common-btn" type="submit" @click="updateState">SUBMIT</button>
-        </a-form-item>
+
+      <a-form-item class="txt-center" style="max-width: 340px">
+        <button class="txt-center common-btn" type="submit" @click="updateState">SUBMIT</button>
+      </a-form-item>
     </div>
-    
+
     <a-modal
       wrap-class-name="securityModal"
       v-model:visible="verificationModalVisible"
@@ -112,26 +113,28 @@
       @keydown.enter.prevent
     >
       <a-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <a-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: 'Please insert captcha' }]">
-            <a-input
-              @keyup.enter="verifyVerificationCode"
-              v-model:value="updateSecurityVerified.captchaCode"
-              :maxlength="4"
-              placeholder="Captcha"
-            >
-              <template #suffix>
-
-            <div class="verification" @click="getCode()">
-              <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
-            </div>
-          </template>
-        </a-input>
+        <a-form-item
+          ref="captchaCode"
+          prop="captchaCode"
+          :rules="[{ required: true, message: 'Please insert captcha' }]"
+        >
+          <a-input
+            @keyup.enter="verifyVerificationCode"
+            v-model:value="updateSecurityVerified.captchaCode"
+            :maxlength="4"
+            placeholder="Captcha"
+          >
+            <template #suffix>
+              <div class="verification" @click="getCode()">
+                <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+              </div>
+            </template>
+          </a-input>
         </a-form-item>
       </a-form>
       <a-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">Verify</a-button>
     </a-modal>
-    <a-modal v-model:visible="updateSecurityModalVisible" wrap-class-name="securityModal" :footer="null" 
-      width="500px">
+    <a-modal v-model:visible="updateSecurityModalVisible" wrap-class-name="securityModal" :footer="null" width="500px">
       <div class="modal-head-title">Security Verification</div>
       <a-form
         ref="updateSecurityFormRef"
@@ -145,10 +148,8 @@
         <a-form-item ref="verificationCode" class="half" name="verificationCode">
           <a-input v-model:value="updateSecurityVerified.verificationCode" placeholder="Verification code">
             <template #suffix>
-              
-          <span class="common-btn verification-btn" @click="openVerificationModal">Verify</span>
+              <span class="common-btn verification-btn" @click="openVerificationModal">Verify</span>
             </template>
-              
           </a-input>
         </a-form-item>
         <span class="common-btn verification-btn" @click="submitUpdateSecurity">Submit</span>
@@ -180,7 +181,7 @@ import { RiCameraFill, RiMailCheckLine } from "vue-remix-icons";
 let validateName = async (r, v) => {
   var reg = /[^a-zA-Z0-9 ]/g;
   if (v === "") {
-    return Promise.reject("Please enter real name");
+    return Promise.reject("Real name is required");
   } else if (reg.test(v)) {
     return Promise.reject("Only alphabets and numbers are allowed");
   } else {
@@ -219,7 +220,6 @@ const { handleUpload } = useHandleUpload(
   { accept: "image/*", multiple: false }
 );
 
-
 const isEmailSending = ref(false);
 const verificationDetails = reactive({
   memberInfo: {}
@@ -253,14 +253,16 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
 };
 const regDevice = getDevice() === "MOBILE" ? "H5" : "WEB";
 const getCode = () => {
-  getVerificationCode().then((res) => {
-    if (res.code === 0) {
-      verificationImg.value = "data:image/png;base64," + res.data.img;
-      updateSecurityVerified.codeId = res.data.id;
-    }
-  }).catch((e) => {
-    message.error(e.message);
-  });
+  getVerificationCode()
+    .then((res) => {
+      if (res.code === 0) {
+        verificationImg.value = "data:image/png;base64," + res.data.img;
+        updateSecurityVerified.codeId = res.data.id;
+      }
+    })
+    .catch((e) => {
+      message.error(e.message);
+    });
 };
 const loadInfo = () => {
   loadMemberInfo()
@@ -306,7 +308,7 @@ const updateSecurityModal = () => {
 };
 const openVerificationModal = () => {
   getCode();
-  updateSecurityVerified.captchaCode = ''
+  updateSecurityVerified.captchaCode = "";
   verificationModalVisible.value = true;
 };
 const verifyVerificationCode = () => {
@@ -557,23 +559,23 @@ const goToSecurityVerficationPage = () => {
     grid-template-columns: repeat(3, 1fr);
   }
   .fake-field {
-      display: flex; 
-      background: rgba(255, 255, 255, 0.0588235294);
-      border: 1px solid rgba(255, 255, 255, 0.0588235294);
-      padding: 8px 15px;
-      border-radius: 12px;
-    .fake-input { 
+    display: flex;
+    background: rgba(255, 255, 255, 0.0588235294);
+    border: 1px solid rgba(255, 255, 255, 0.0588235294);
+    padding: 8px 15px;
+    border-radius: 12px;
+    .fake-input {
       color: #ffffff;
       gap: 10px;
       flex: 3;
     }
-      .ant-btn.common-btn {
+    .ant-btn.common-btn {
       flex: 1;
-        width: unset;
-        height: unset;
-        min-height: unset;
-        padding: 4px 0;
-      }
+      width: unset;
+      height: unset;
+      min-height: unset;
+      padding: 4px 0;
+    }
   }
 }
 </style>

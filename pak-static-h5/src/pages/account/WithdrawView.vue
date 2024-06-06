@@ -95,12 +95,9 @@
     </div>
 
     <div class="withdrawal-amount-container">
-      <template v-if="bankCardList.length === 0">
+      <!-- <template v-if="bankCardList.length === 0">
         <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
-          <!-- <div class="top-wrapper">
-            <div class="title">Account Number</div>
-          </div> -->
-          <!-- <div class="mid-wrapper"> -->
+
           <InputRowGrid>
             <template #fields>
               <InputField :label="`Account Number`">
@@ -120,20 +117,6 @@
               </InputField>
             </template>
           </InputRowGrid>
-
-          <!-- <q-input
-              outlined
-              dense
-              clearable
-              lazy-rules
-              ref="bankNumberRef"
-              placeholder="1"
-              v-model="withdrawReadOnlyInfo.cardNumber"
-              :rules="[(_) => isValidCardNumber()]"
-              :readonly="bankCardList.length > 0 ? true : false"
-              hide-bottom-space
-            ></q-input> -->
-          <!-- </div> -->
         </div>
         <div class="w-form-item w-form-item--bankcard" v-if="isNoBankCard">
           <InputRowGrid>
@@ -156,7 +139,7 @@
             </template>
           </InputRowGrid>
 
-          <!-- <div class="top-wrapper">
+          <div class="top-wrapper">
             <div class="title">Bank IFSC Code</div>
           </div>
           <div class="mid-wrapper">
@@ -172,9 +155,9 @@
               :readonly="bankCardList.length > 0 ? true : false"
               hide-bottom-space
             ></q-input>
-          </div> -->
+          </div>
         </div>
-      </template>
+      </template> -->
 
       <InputRowGrid>
         <template #fields>
@@ -257,7 +240,9 @@
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
@@ -403,6 +388,14 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Please add bank / virtual account for withdrawal",
+            icon: "report_problem"
+          });
+          router.push(`/account/bank`);
         }
       }
     })
@@ -613,30 +606,30 @@ const checkNewUser = () => {
   }
 };
 
-const checkBankcardEmpty = () => {
-  if (bankCardList.value.length === 0) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: "Please add bank / virtual account for withdrawal",
-      icon: "report_problem"
-    });
-    router.push(`/account/bank`);
-  }
-};
+// const checkBankcardEmpty = () => {
+//   if (bankCardList.value.length === 0) {
+//     $q.notify({
+//       color: "negative",
+//       position: "top",
+//       message: "Please add bank / virtual account for withdrawal",
+//       icon: "report_problem"
+//     });
+
+//     console.log(bankCardList.value.length);
+//     router.push(`/account/bank`);
+//   }
+// };
 
 onMounted(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
-  checkBankcardEmpty();
 });
 
 onActivated(() => {
   getWithdrawalMethods();
   checkNewUser();
   loadCards();
-  checkBankcardEmpty();
 });
 
 const isValidCardNumber = () => {

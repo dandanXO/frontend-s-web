@@ -230,7 +230,6 @@ defineExpose({
 
     .promo-title-wrapper {
       color: #83a3ca;
-      font-family: "Poppins Regular";
       font-size: 18px;
       font-weight: 400;
       line-height: 20px;
@@ -242,7 +241,6 @@ defineExpose({
 
       &:hover,
       &.active {
-        font-family: "Poppins Bold";
         color: #2b2b82;
         font-weight: 700;
         background: linear-gradient(270deg, rgba(7, 91, 232, 0.2) 0%, rgba(7, 91, 232, 0) 100%);

@@ -1,5 +1,5 @@
 <template>
-    <span class="form-field-label">{{ props.label }}</span>
+<!--    <span class="form-field-label">{{ props.label }}</span>-->
     <div class="landing-input">
         <slot name="input"></slot>
     </div>

@@ -103,6 +103,9 @@
 
         <div
           class="inner"
+          :class="{
+            isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24'
+          }"
           :style="
             selectedPromo?.desktopImgBackgroundUrl
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
@@ -856,6 +859,11 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+
+        &.isEurocup24 {
+          padding: 0px;
+        }
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;

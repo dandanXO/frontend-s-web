@@ -1,6 +1,6 @@
 <template>
   <!-- <DepositComponent /> -->
-
+  <!-- <pre>{{ paymentNode.value }}</pre> -->
   <div class="deposit-wrapper">
     <!-- <div class="deposit-options">
       <div class="lil-title">
@@ -26,12 +26,12 @@
           </div>
         </div>
       </div>
-
-
     </div> -->
 
+    <!-- <pre>payMethods-{{ payMethods }}</pre> -->
+
     <div class="node-wrapper">
-      <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+      <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
     <div class="lil-title q-mt-sm">Select Amount</div>
@@ -219,7 +219,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated } from "vue";
+import { ref, reactive, onMounted, shallowRef, defineEmits, onActivated, watch } from "vue";
 import Node from "../../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
@@ -253,6 +253,7 @@ const checkNewUser = () => {
   }
 };
 
+const isFormFilled = ref(false);
 const isDeposited = ref(false);
 const btnLoading = ref(false);
 const payTypeClass = ref();
@@ -363,6 +364,7 @@ function initPay() {
     isLoadingInitPay.value = false;
 
     if (res.code === 0) {
+      payMethods.value = [];
       const d = res.data;
       d.payments.forEach((element) => {
         element.promoValue = "";
@@ -416,7 +418,7 @@ function selectPayType(value) {
 }
 
 const depositForm = ref(null);
-async function onSelect(value) {
+const onSelect = (value) => {
   // debugger;
   depositItems.forEach((item) => (item.isActive = false));
 
@@ -441,7 +443,7 @@ async function onSelect(value) {
     }
     checkMinDepositAmt();
   }
-}
+};
 
 function checkMinDepositAmt() {
   // api won't return min and max values from now on, currently min set to 100
@@ -582,6 +584,17 @@ async function pDepo(deposit) {
               }
             } else {
               const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
               newWin.localStorage.setItem("formDetails", JSON.stringify(form));
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
@@ -691,18 +704,25 @@ const loadInfo = () => {
   }
 };
 
+const nodeKey = ref(0);
+const refreshNode = () => {
+  // Update the key to force re-render
+  nodeKey.value += 1;
+};
+
 onActivated(() => {
-  initPay();
   checkNewUser();
   loadInfo();
-  console.log("onActivated deposit");
+  // refreshNode();
+  // console.log("onActivated deposit");
 });
 
 onMounted(() => {
   initPay();
   checkNewUser();
   loadInfo();
-  console.log("onMounted deposit");
+  refreshNode();
+  // console.log("onMounted deposit");
 });
 </script>
 

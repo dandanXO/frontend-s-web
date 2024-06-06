@@ -434,6 +434,19 @@ export default {
     MEMBER_AND_SUMMONER_SAME_REGISTER_DETAIL: '唤醒人和被唤醒人相同注册信息',
     MEMBER_ALREADY_SUMMONED: '会员已被唤醒',
   },
+  lottery: {
+    status: {
+      BET: '下注',
+      WIN: '赢',
+      LOSS: '输',
+    },
+    prizeLevel: {
+      FIRST_PRIZE: '直选',
+      GROUP_THREE: '组三',
+      GROUP_SIX: '组六',
+      TWO_D: '2D',
+    }
+  },
   memberReferStatus: {
     PENDING: '核实中',
     SUCCESS: '合格',
@@ -1735,6 +1748,8 @@ export default {
     affiliateBetRebateRecord: '代理投注返水记录',
     affiliateBetRebateDetails: '代理投注返水详情',
     adjustRebateAmount: '调整返水金额',
+    prizeLevel: '奖等',
+    addLotteryRecord: '新增彩票记录',
     finalAmount: '最终金额',
     rewardType: '奖励类别',
     refereeEligibility: '受邀人参与条件',
@@ -2414,6 +2429,9 @@ export default {
     'Member Summon Event': '精英召唤活动',
     'Member Summon List': '召唤列表',
     'Affiliate Bet Rebate Record': '代理投注返水记录',
+    'UEFA Lottery': 'UEFA 彩票',
+    'UEFA Lottery Record': 'UEFA 彩票记录',
+    'UEFA Lottery Result': 'UEFA 彩票成绩',
     'Member Refer Event': '会员邀请活动',
     'Member Refer Record': '会员邀请记录',
     'Member Refer Reward List': '会员邀请奖励记录',

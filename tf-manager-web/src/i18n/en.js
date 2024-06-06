@@ -430,6 +430,19 @@ export default {
       'Member and summoner same register detail',
     MEMBER_ALREADY_SUMMONED: 'Member is already summoned',
   },
+  lottery: {
+    status: {
+      BET: 'BET',
+      WIN: 'WIN',
+      LOSS: 'LOSS',
+    },
+    prizeLevel: {
+      FIRST_PRIZE: 'FIRST PRIZE',
+      GROUP_THREE: 'GROUP THREE',
+      GROUP_SIX: 'GROUP SIX',
+      TWO_D: '2D',
+    }
+  },
   memberReferStatus: {
     PENDING: 'PENDING',
     SUCCESS: 'SUCCESS',
@@ -1733,6 +1746,8 @@ export default {
     affiliateBetRebateRecord: 'Affiliate Bet Rebate Record',
     affiliateBetRebateDetails: 'Affiliate Bet Rebate Details',
     adjustRebateAmount: 'Adjust Rebate Amount',
+    prizeLevel: 'Prize Level',
+    addLotteryRecord: 'Add Lottery Record',
     finalAmount: 'Final Amount',
     rewardType: 'Reward Type',
     refereeEligibility: 'Referee Eligibility',
@@ -2454,6 +2469,9 @@ export default {
     'Member Summon Event': 'Member Summon Event',
     'Member Summon List': 'Member Summon List',
     'Affiliate Bet Rebate Record': 'Affiliate Bet Rebate Record',
+    'UEFA Lottery': 'UEFA Lottery',
+    'UEFA Lottery Record': 'UEFA Lottery Record',
+    'UEFA Lottery Result': 'UEFA Lottery Result',
     'Member Refer Event': 'Member Refer Event',
     'Member Refer Record': 'Member Refer Record',
     'Member Refer Reward List': 'Member Refer Reward List',

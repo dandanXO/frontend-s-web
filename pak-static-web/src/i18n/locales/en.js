@@ -14,7 +14,7 @@ export default {
               label: "Phone",
               error: {
                 len: "Invalid phone number",
-                required: "Phone is required"
+                required: "Phone number is required"
               },
               placeholder: "Please enter your account or mobile number"
             },
@@ -36,7 +36,7 @@ export default {
               label: "Phone",
               error: {
                 len: "Invalid phone number",
-                required: "Phone is required"
+                required: "Phone number is required"
               },
               placeholder: "Please enter your account or mobile number"
             },
@@ -66,6 +66,27 @@ export default {
             button: "Resent"
           },
           submitButton: "SUBMIT"
+        },
+        forgetPwd: {
+          title: "Recover your password",
+          
+          form: {
+            email: {
+              label: "Email",
+              error: {
+                len: "Invalid email",
+                required: "Email is required"
+              },
+              placeholder: "Please enter your email"
+            },
+            password: {
+              label: "password",
+              placeholder: "Please enter password",
+              error: {
+                required: "Password is required"
+              }
+            }
+          },
         }
       }
     }

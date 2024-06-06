@@ -188,7 +188,7 @@
         </a-form-item>
 
         <a-form-item name="cardAccount" label-align="left" label="Holder Name">
-          <a-input v-model:value="bankCardInfo.cardAccount" placeholder="Enter Holder Name" />
+          <a-input :disabled="true" v-model:value="bankCardInfo.cardAccount" placeholder="Enter Holder Name" />
         </a-form-item>
         <a-form-item
           ref="cardNumber"
@@ -468,6 +468,13 @@ const bankCardRules = {
     {
       required: true,
       message: "Card account is required",
+      trigger: "blur"
+    }
+  ],
+  cardAddress: [
+    {
+      required: true,
+      message: "Please enter IFSC Code",
       trigger: "blur"
     }
   ]

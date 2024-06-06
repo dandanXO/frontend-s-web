@@ -208,7 +208,6 @@ export default defineComponent({
     .main-title {
       font-size: 60px;
       line-height: 70px;
-      font-family: Poppins Bold;
       background-image: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
       background-size: 100%;
       background-repeat: repeat;
@@ -220,7 +219,6 @@ export default defineComponent({
     }
     .game-title {
       &.sub {
-        font-family: Poppins Bold;
         color: #2b2b82;
       }
     }
@@ -228,7 +226,6 @@ export default defineComponent({
       &.sub {
         font-size: 35px;
         margin-bottom: 12px;
-        font-family: Poppins Bold;
         color: #2b2b82;
         margin: 0;
         line-height: 39px;
@@ -239,7 +236,6 @@ export default defineComponent({
       }
       &.small {
         font-size: 18px;
-        font-family: Poppins Medium;
         color: #222222;
       }
     }

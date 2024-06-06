@@ -133,7 +133,7 @@ $loadingwidth: 300px;
 }
 .pg .color {
   position: absolute;
-  background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+  background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
 
   width: 90%;
   height: 20px;
@@ -156,7 +156,6 @@ $loadingwidth: 300px;
   font-size: 18px;
   width: 100%;
   text-align: center;
-  font-family: Baloo Bhaina;
   margin-top: 10px;
 }
 @keyframes pgs {

@@ -212,7 +212,7 @@ router.beforeEach((to, from, next) => {
     fbq("init", "3658633674357920");
     fbq("track", "PageView");
     store.isAffiliateA= true;
-  } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1) {
+  } else if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
     console.log("5svn88.com 2")
     otag("init", "adv10336256983680");
   } else if (window.location.href.indexOf("tf68688.com") > -1) {

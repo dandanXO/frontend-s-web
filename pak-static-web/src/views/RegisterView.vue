@@ -201,7 +201,7 @@
             </template>
           </a-input>
         </a-form-item>
-        <div v-if="regForm.password" class="password-str-div">
+        <!-- <div v-if="regForm.password" class="password-str-div">
           <span
             :class="{
               'weak-pwd': pwdStrength == 'weak',
@@ -258,7 +258,7 @@
           >
             {{ isOtpSending ? "Sending" : "Send OTP" }}
           </button>
-        </a-form-item>
+        </a-form-item> -->
 
         <!-- Phone verification modal starts here -->
         <a-modal v-model:visible="isTelephoneVerificationModalVisible" :width="500">
@@ -276,13 +276,13 @@
         </a-modal>
         <!-- Phone verification modal ends here -->
 
-        <a-form-item ref="smsCode" required name="smsCode">
+        <!-- <a-form-item ref="smsCode" required name="smsCode">
           <a-input v-model:value="regForm.smsCode" placeholder="OTP Code">
             <template #prefix>
               <RiShieldCheckFill />
             </template>
           </a-input>
-        </a-form-item>
+        </a-form-item> -->
         <!-- <a-form-item ref="birthday" name="birthday">
               <RiCake2Line class="birthday" />
               <a-date-picker
@@ -309,7 +309,7 @@
             <img :src="verificationImg" @click="getCode" />
           </div>
         </a-form-item> -->
-        <a-form-item ref="codeAffiliate" name="codeAffiliate">
+        <!-- <a-form-item ref="codeAffiliate" name="codeAffiliate">
           <a-input
             v-if="hasAffiliate"
             v-model:value="regForm.codeAffiliate"
@@ -326,10 +326,16 @@
               <RiQrCodeFill />
             </template>
           </a-input>
-        </a-form-item>
-        <div class="txt-center reg-protocol">
+        </a-form-item> -->
+        <!-- <div class="txt-center reg-protocol">
           Registration means you have agreed and complied
           <a class="pwd-tip" to="#" @click="openUserRegistration">User Registration Protocol</a>
+        </div> -->
+        <div class="privacy-agreement">
+          <a-checkbox v-model:checked="agreePrivacy">
+            I have Agree to the
+            <router-link class="pwd-tip" to="">Use Privacy Agreement</router-link>
+          </a-checkbox>
         </div>
         <button class="txt-center common-btn login-btn" type="submit" @click="onSubmit">Register Now</button>
       </a-form>
@@ -627,9 +633,9 @@
   </div>
 </template>
 
-<script lang="js">
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
-import {useRouter} from "vue-router";
+<script setup>
+import { onMounted, reactive, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 // import { setMember } from "@/store/index";
 // import {
@@ -642,457 +648,296 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 //   EyeFilled,
 //   EyeInvisibleFilled
 // } from "@ant-design/icons-vue";
-import { RiUserFill, RiLock2Fill, RiShieldCheckFill, RiSmartphoneFill, RiMailFill, RiQrCodeFill, RiEyeFill, RiEyeOffFill } from "vue-remix-icons";
-import {register} from "@/api/index/login";
+import {
+  RiUserFill,
+  RiLock2Fill,
+  RiShieldCheckFill,
+  RiSmartphoneFill,
+  RiMailFill,
+  RiQrCodeFill,
+  RiEyeFill,
+  RiEyeOffFill
+} from "vue-remix-icons";
+import { register } from "@/api/index/login";
 import "@/assets/css/login.scss";
-import {getVerificationCode, sendTelephoneOtp} from "@/api/index/login";
-import {message} from "ant-design-vue";
-import {userStore, globalStore} from "@/store";
+import { getVerificationCode, sendTelephoneOtp } from "@/api/index/login";
+import { message } from "ant-design-vue";
+import { userStore, globalStore } from "@/store";
 
-export default defineComponent({
-  components: {
-    RiUserFill, RiLock2Fill, RiShieldCheckFill, RiSmartphoneFill, RiMailFill, RiQrCodeFill, RiEyeFill, RiEyeOffFill
-  },
-  setup() {
-    const router = useRouter();
-    const tabActive = ref("username");
-    const formRef = ref();
-    const regForm = reactive({
-      loginName: "",
-      password: "",
-      confirmPwd: "",
-      telephone: "",
-      telephoneVerifyCaptchaCode: "",
-      telephoneVerificationCaptchaCodeId: "",
-      email: "",
-      realName: "",
-      // captchaCode: "",
-      regHost: location.hostname,
-      // codeId: "",
-      codeAffiliate: "",
-      smsCodeId: "",
-      smsCode: "",
-    });
-    const store = userStore();
-
-    const verificationImg = ref("");
-    const telephoneVerificationCaptchaImg = ref("");
-    onMounted(() => {
-      // getCode();
-      getAffiliateCode();
-      getReferralCode();
-    });
-    const isOtpSending = ref(false)
-    const disable30Sec = ref(false)
-
-    const isTelephoneVerificationModalVisible = ref(false);
-    const openTelephoneVerificationModal = () => {
-      getTelephoneVerificationImgCode();
-      isTelephoneVerificationModalVisible.value = true
-    }
-    const isUserRegistrationModalVisible = ref(false)
-    const openUserRegistration = () => {
-      isUserRegistrationModalVisible.value = true
-    }
-    const hasAffiliate = ref(false);
-    const getAffiliateCode = () => {
-      const affCode = sessionStorage.getItem("AFFILIATE_CODE");
-      if (affCode) {
-        hasAffiliate.value = true
-        regForm.codeAffiliate = affCode;
-      }
-    }
-    const getReferralCode = () => {
-      const referralCode = sessionStorage.getItem("REFERRAL_CODE");
-      if (referralCode) {
-        regForm.referrer = referralCode;
-      }
-    }
-    const getCode = () => {
-      regForm.captchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          verificationImg.value = "data:image/png;base64," + res.data.img;
-          regForm.codeId = res.data.id;
-        }
-      }).catch((e) => {
-        console.log(e)
-      });
-    };
-    const getTelephoneVerificationImgCode = () => {
-      regForm.telephoneVerifyCaptchaCode = ''
-      getVerificationCode().then((res) => {
-        if (res.code === 0) {
-          telephoneVerificationCaptchaImg.value = "data:image/png;base64," + res.data.img;
-          regForm.telephoneVerificationCaptchaCodeId = res.data.id;
-        }
-      }).catch((e) => {
-        console.log(e)
-      });
-    };
-    const getOtpCode = () => {
-      isOtpSending.value = true
-      regForm.smsCode = ''
-      const telephoneDetails = {
-        telephone: regForm.telephone,
-        countryCode: "63",
-        codeId: regForm.telephoneVerificationCaptchaCodeId,
-        captchaCode: regForm.telephoneVerifyCaptchaCode
-      }
-      sendTelephoneOtp(telephoneDetails).then((res) => {
-        if (res.code === 0) {
-          regForm.smsCodeId = res.data.codeId;
-          disableOtpBtn();
-          message.success("OTP Sent")
-        }
-        isOtpSending.value = false;
-        isTelephoneVerificationModalVisible.value = false;
-      }).catch((e) => {
-        message.error(e.message);
-        isOtpSending.value = false
-      });
-    };
-    let validateName = async (r, v) => {
-      if (v === "") {
-        return Promise.reject("Login name is required");
-      } else if (!checkName(v)) {
-        return Promise.reject("Only English letters and numbers are allowed.");
-      } else {
-        return Promise.resolve();
-      }
-    };
-    const checkName = (v) => {
-      var alphanumeric = /^[A-Za-z0-9]+$/;
-      return v.match(alphanumeric);
-    };
-    let validatePass = async (r, v) => {
-      if (v === "") {
-        return Promise.reject('Password is required');
-      } else if (v.length < 6 || v.length > 12) {
-        return Promise.reject('Password length should be between 6 and 12');
-      } else {
-        return Promise.resolve();
-      }
-    };
-    let validatePassStrength = (r, v) => {
-      var strength = ""
-      var pwd = v;
-      var result = 0;
-      for (var i = 0, len = pwd.length; i < len; ++i) {
-        result |= charType(pwd.charCodeAt(i));
-      }
-
-      var level = 0;
-      for (i = 0; i <= 4; i++) {
-        if (result & 1) {
-          level++;
-        }
-        result = result >>> 1;
-      }
-
-      // console.log(level);
-
-      if (pwd.length >= 6) {
-        switch (level) {
-          case 1:
-            strength = 'weak';
-            break;
-          case 2:
-            strength = 'normal';
-            break;
-          case 3:
-          case 4:
-            strength = 'strong';
-            break;
-        }
-      } else {
-        strength = 'weak';
-      }
-      if (strength === "weak" && pwd.length >= 6) {
-        return Promise.reject('The level of password security must be at least good.');
-      } else {
-        return Promise.resolve();
-      }
-    }
-    let validatePass2 = async (r, v) => {
-      if (v === "") {
-        return Promise.reject('Confirm password is required');
-      } else if (v !== regForm.password) {
-        return Promise.reject("Password is not same");
-      } else {
-        return Promise.resolve();
-      }
-    };
-
-    let validatePhoneNumber = async (r, v) => {
-      var reg = /^\d+$/;
-      if (v === '') {
-        return Promise.reject('Mobile number is required');
-      } else if (!reg.test(v)) {
-        return Promise.reject('Only numbers are allowed');
-      } else {
-        return Promise.resolve();
-      }
-    };
-    const rules = {
-      loginName: [
-        {
-          validator: validateName,
-          trigger: "blur",
-        },
-      ],
-      password: [
-        // {
-        //   required: true,
-        //   message: "Password is required",
-        //   trigger: "blur",
-        // },
-        {
-          validator: validatePass,
-          trigger: "blur",
-        },
-        {
-          validator: validatePassStrength,
-          trigger: "blur",
-        },
-        // {
-        //   min: 6,
-        //   max: 12,
-        //   message: "Length should be 6 to 12",
-        //   trigger: "blur",
-        // },
-      ],
-      confirmPwd: [
-        // {
-        //   required: true,
-        //   message: "Confirm password is required",
-        //   trigger: "blur",
-        // },
-        {
-          validator: validatePass2,
-          trigger: "blur",
-        },
-      ],
-      // telephone: [
-      //   {
-      //     required: true,
-      //     message: "Mobile number is required",
-      //     trigger: "blur",
-      //   },
-      // ],
-      telephone: [
-        {
-          validator: validatePhoneNumber,
-          trigger: "blur"
-        }
-      ],
-      // birthday: [
-      //   {
-      //     required: true,
-      //     message: "Birthday is required",
-      //     trigger: "change",
-      //   },
-      // ],
-      realName: [
-        {
-          required: true,
-          message: "Complete Name is required",
-          trigger: "blur"
-        }
-      ],
-      email: [
-        {
-          required: true,
-          message: "Email is required",
-          trigger: "blur",
-        },
-        {
-          type: "email",
-          message: "Email is not available",
-          trigger: "blur",
-        },
-        {
-          max: 50,
-          message: "Length should less then 50",
-          trigger: "blur",
-        },
-      ],
-      smsCode: [
-        {
-          required: true,
-          message: "SMS Code is required",
-          trigger: "blur",
-        },
-      ],
-      // captchaCode: [
-      //   {
-      //     required: true,
-      //     message: "Verification code is required",
-      //     trigger: "blur",
-      //   },
-      //   {
-      //     min: 4,
-      //     max: 4,
-      //     message: "Length should be 4",
-      //     trigger: "change",
-      //   },
-      // ],
-      telephoneVerifyCaptchaCode: [
-        {
-          required: true,
-          message: "Verification code is required",
-          trigger: "blur",
-        },
-        {
-          min: 4,
-          max: 4,
-          message: "Length should be 4",
-          trigger: "change",
-        },
-      ],
-    };
-    const loadingRegister = ref(false)
-    const onSubmit = () => {
-      formRef.value
-          .validate()
-          .then(() => {
-            const fpPromise = FingerprintJS.load();
-            (async () => {
-              const fp = await fpPromise;
-              const result = await fp.get();
-              const excludes = {value: ["timezone", "timeZoneOffset"]};
-              const allComponents = {...result.components};
-              excludes.value.forEach((element) => {
-                delete allComponents[element];
-              });
-              const sidParam = FingerprintJS.hashComponents(allComponents);
-              regForm.sid = sidParam
-              loadingRegister.value = true
-              if (tabActive.value === 'mobile') {
-                regForm.loginName = regForm.telephone;
-              }
-              register(regForm)
-                  .then((response) => {
-                    const regResult = response.code;
-                    if (regResult === 0) {
-                      loadingRegister.value = false
-                      message.success("Successfully Registered");
-
-                      // debugger;
-                      if (store.isAffiliateA) {
-                        fbq("track", "signup-success");
-                        fbq("track", "CompleteRegistration");
-                      } else if (store.isAffiliate2) {
-                        fbq("track", "signup-success");
-                        fbq("track", "CompleteRegistration");
-                      }else if (store.isAffiliate3) {
-                        fbq("track", "signup-success");
-                        fbq("track", "CompleteRegistration");
-                      }
-
-
-                      store.autoLogin(response.data);
-
-                      //now , reg success return {code: 0} , can not set token ,may be update later
-                      // setMember({
-                      //   nickName: regForm.loginName,
-                      //   token: "123",
-                      // });
-                      router.push({path: '/', query: {isFromRegister: true}})
-                    }
-                  })
-                  .catch((error) => {
-                    console.log("error", error);
-                    // getCode()
-                    loadingRegister.value = false
-                  });
-            })();
-          })
-          .catch((error) => {
-            console.log("error", error);
-          });
-    };
-    const resetForm = () => {
-      formRef.value.resetFields();
-      regForm.loginName = "";
-      disable30Sec.value = false;
-      isOtpSending.value = false;
-    };
-
-    const disableOtpBtn = () => {
-      disable30Sec.value = true
-      setTimeout(() => disable30Sec.value = false, 30000);
-    }
-
-    const pwdStrength = ref()
-    const togglePwd = ref(true)
-    watch(() => regForm.password, () => {
-      pwdStrength.value = '';
-
-      var pwd = regForm.password;
-      var result = 0;
-      for (var i = 0, len = pwd.length; i < len; ++i) {
-        result |= charType(pwd.charCodeAt(i));
-      }
-
-      var level = 0;
-      for (i = 0; i <= 4; i++) {
-        if (result & 1) {
-          level++;
-        }
-        result = result >>> 1;
-      }
-
-      // console.log(level);
-
-      if (pwd.length >= 6) {
-        switch (level) {
-          case 1:
-            pwdStrength.value = 'weak';
-            break;
-          case 2:
-            pwdStrength.value = 'normal';
-            break;
-          case 3:
-          case 4:
-            pwdStrength.value = 'strong';
-            break;
-        }
-      } else {
-        pwdStrength.value = 'weak';
-      }
-
-      // console.log(pwdStrength.value);
-    });
-    return {
-      tabActive,
-      formRef,
-      regForm,
-      rules,
-      onSubmit,
-      resetForm,
-      verificationImg,
-      telephoneVerificationCaptchaImg,
-      isTelephoneVerificationModalVisible,
-      openTelephoneVerificationModal,
-      getTelephoneVerificationImgCode,
-      hasAffiliate,
-      // getCode,
-      loadingRegister,
-      pwdStrength,
-      validatePassStrength,
-      togglePwd,
-      isUserRegistrationModalVisible,
-      openUserRegistration,
-      validatePhoneNumber,
-      isOtpSending,
-      getOtpCode,
-      disable30Sec,
-      disableOtpBtn,
-      globalStore
-    };
-  },
+const router = useRouter();
+const tabActive = ref("username");
+const formRef = ref();
+const regForm = reactive({
+  loginName: "",
+  password: "",
+  confirmPwd: "",
+  telephone: "",
+  telephoneVerifyCaptchaCode: "",
+  telephoneVerificationCaptchaCodeId: "",
+  email: "",
+  realName: "",
+  // captchaCode: "",
+  regHost: location.hostname,
+  // codeId: "",
+  codeAffiliate: "",
+  smsCodeId: "",
+  smsCode: ""
 });
+const store = userStore();
+
+const agreePrivacy = ref(true);
+const verificationImg = ref("");
+const telephoneVerificationCaptchaImg = ref("");
+onMounted(() => {
+  // getCode();
+  getAffiliateCode();
+  getReferralCode();
+});
+const isOtpSending = ref(false);
+const disable30Sec = ref(false);
+
+const isTelephoneVerificationModalVisible = ref(false);
+const openTelephoneVerificationModal = () => {
+  getTelephoneVerificationImgCode();
+  isTelephoneVerificationModalVisible.value = true;
+};
+const isUserRegistrationModalVisible = ref(false);
+const openUserRegistration = () => {
+  isUserRegistrationModalVisible.value = true;
+};
+const hasAffiliate = ref(false);
+const getAffiliateCode = () => {
+  const affCode = sessionStorage.getItem("AFFILIATE_CODE");
+  if (affCode) {
+    hasAffiliate.value = true;
+    regForm.codeAffiliate = affCode;
+  }
+};
+const getReferralCode = () => {
+  const referralCode = sessionStorage.getItem("REFERRAL_CODE");
+  if (referralCode) {
+    regForm.referrer = referralCode;
+  }
+};
+const getCode = () => {
+  regForm.captchaCode = "";
+  getVerificationCode()
+    .then((res) => {
+      if (res.code === 0) {
+        verificationImg.value = "data:image/png;base64," + res.data.img;
+        regForm.codeId = res.data.id;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+const getTelephoneVerificationImgCode = () => {
+  regForm.telephoneVerifyCaptchaCode = "";
+  getVerificationCode()
+    .then((res) => {
+      if (res.code === 0) {
+        telephoneVerificationCaptchaImg.value = "data:image/png;base64," + res.data.img;
+        regForm.telephoneVerificationCaptchaCodeId = res.data.id;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+const getOtpCode = () => {
+  isOtpSending.value = true;
+  regForm.smsCode = "";
+  const telephoneDetails = {
+    telephone: regForm.telephone,
+    countryCode: "63",
+    codeId: regForm.telephoneVerificationCaptchaCodeId,
+    captchaCode: regForm.telephoneVerifyCaptchaCode
+  };
+  sendTelephoneOtp(telephoneDetails)
+    .then((res) => {
+      if (res.code === 0) {
+        regForm.smsCodeId = res.data.codeId;
+        disableOtpBtn();
+        message.success("OTP Sent");
+      }
+      isOtpSending.value = false;
+      isTelephoneVerificationModalVisible.value = false;
+    })
+    .catch((e) => {
+      message.error(e.message);
+      isOtpSending.value = false;
+    });
+};
+let validateName = async (r, v) => {
+  if (v === "") {
+    return Promise.reject("Login name is required");
+  } else if (!checkName(v)) {
+    return Promise.reject("Only English letters and numbers are allowed.");
+  } else {
+    return Promise.resolve();
+  }
+};
+const checkName = (v) => {
+  var alphanumeric = /^[A-Za-z0-9]+$/;
+  return v.match(alphanumeric);
+};
+let validatePass = async (r, v) => {
+  if (v === "") {
+    return Promise.reject("Password is required");
+  } else if (v.length < 6 || v.length > 12) {
+    return Promise.reject("Password length should be between 6 and 12");
+  } else {
+    return Promise.resolve();
+  }
+};
+let validatePassStrength = (r, v) => {
+  var strength = "";
+  var pwd = v;
+  var result = 0;
+  for (var i = 0, len = pwd.length; i < len; ++i) {
+    result |= charType(pwd.charCodeAt(i));
+  }
+
+  var level = 0;
+  for (i = 0; i <= 4; i++) {
+    if (result & 1) {
+      level++;
+    }
+    result = result >>> 1;
+  }
+
+  // console.log(level);
+
+  if (pwd.length >= 6) {
+    switch (level) {
+      case 1:
+        strength = "weak";
+        break;
+      case 2:
+        strength = "normal";
+        break;
+      case 3:
+      case 4:
+        strength = "strong";
+        break;
+    }
+  } else {
+    strength = "weak";
+  }
+  if (strength === "weak" && pwd.length >= 6) {
+    return Promise.reject("The level of password security must be at least good.");
+  } else {
+    return Promise.resolve();
+  }
+};
+let validatePass2 = async (r, v) => {
+  if (v === "") {
+    return Promise.reject("Confirm password is required");
+  } else if (v !== regForm.password) {
+    return Promise.reject("Password is not same");
+  } else {
+    return Promise.resolve();
+  }
+};
+
+let validatePhoneNumber = async (r, v) => {
+  var reg = /^\d+$/;
+  if (v === "") {
+    return Promise.reject("Mobile number is required");
+  } else if (!reg.test(v)) {
+    return Promise.reject("Only numbers are allowed");
+  } else {
+    return Promise.resolve();
+  }
+};
+const rules = {
+  loginName: [
+    { len: 11, message: "Invalid phone number" },
+    { required: true, message: "Phone number is required" }
+  ],
+  password: [{ required: true, message: "Please enter your account or mobile number" }]
+};
+const loadingRegister = ref(false);
+const onSubmit = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      register(regForm)
+        .then((response) => {
+          const regResult = response.code;
+          if (regResult === 0) {
+            loadingRegister.value = false;
+            message.success("Successfully Registered");
+            store.autoLogin(response.data);
+            router.push({ path: "/", query: { isFromRegister: true } });
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+          // getCode()
+          loadingRegister.value = false;
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+const resetForm = () => {
+  formRef.value.resetFields();
+  regForm.loginName = "";
+  disable30Sec.value = false;
+  isOtpSending.value = false;
+};
+
+const disableOtpBtn = () => {
+  disable30Sec.value = true;
+  setTimeout(() => (disable30Sec.value = false), 30000);
+};
+
+const pwdStrength = ref();
+const togglePwd = ref(true);
+watch(
+  () => regForm.password,
+  () => {
+    pwdStrength.value = "";
+
+    var pwd = regForm.password;
+    var result = 0;
+    for (var i = 0, len = pwd.length; i < len; ++i) {
+      result |= charType(pwd.charCodeAt(i));
+    }
+
+    var level = 0;
+    for (i = 0; i <= 4; i++) {
+      if (result & 1) {
+        level++;
+      }
+      result = result >>> 1;
+    }
+
+    // console.log(level);
+
+    if (pwd.length >= 6) {
+      switch (level) {
+        case 1:
+          pwdStrength.value = "weak";
+          break;
+        case 2:
+          pwdStrength.value = "normal";
+          break;
+        case 3:
+        case 4:
+          pwdStrength.value = "strong";
+          break;
+      }
+    } else {
+      pwdStrength.value = "weak";
+    }
+
+    // console.log(pwdStrength.value);
+  }
+);
 
 function charType(num) {
   if (num >= 48 && num <= 57) {
@@ -1117,7 +962,6 @@ function charType(num) {
   .userreg-text {
     margin: 30px auto 40px;
     font-size: 24px;
-    font-family: "Poppins Bold";
     text-align: left;
 
     &.title-sub {
@@ -1206,8 +1050,7 @@ function charType(num) {
     background: #434343;
     width: 33%;
     text-align: center;
-    font-family: "Roboto", "-apple-system", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: white;
+   color: white;
   }
 
   span.weak-pwd {
@@ -1291,7 +1134,7 @@ function charType(num) {
   width: 90%;
   text-align: center;
   margin: 0 auto 20px;
-  color: #22222299;
+  color: #ffffff;
 }
 .already-member {
   .info-text {
@@ -1343,5 +1186,28 @@ function charType(num) {
 
 :deep(.ant-tabs-tab-active) {
   color: black;
+}
+
+.privacy-agreement {
+  margin-bottom: 36px;
+  .ant-checkbox-wrapper {
+    color: #8c968f;
+    :deep(.ant-checkbox) {
+      .ant-checkbox-inner {
+        border-radius: 50%;
+      }
+    }
+    :deep(.ant-checkbox-checked) {
+      .ant-checkbox-inner {
+        background-color: $primary;
+        border-color: $primary;
+      }
+    }
+  }
+
+  a,
+  a:hover {
+    color: #61ff00;
+  }
 }
 </style>

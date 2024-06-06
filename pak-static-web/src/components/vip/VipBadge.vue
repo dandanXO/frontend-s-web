@@ -1,7 +1,7 @@
 <template>
   <div class="vip-badge-wrapper" :class="`bg-${level + 1}`">
     <h3 class="vip-badge-title">VIP{{ level }}</h3>
-    <span class="vip-badge-qualification-info">Accumulate Deposit: {{ currentQualification }}</span>
+    <span class="vip-badge-qualification-info">Accumulate Deposit: {{ addThousandsComma(qualification) }}</span>
     <div class="vip-badge-percentage-bar">
       <div class="vip-badge-percentage-bar__inner" :style="{ width: qualificationPercentage + '%' }" />
     </div>
@@ -13,23 +13,21 @@
   </div>
 </template>
 <script setup>
+import { addThousandsComma } from "@/utils/utils";
 import { computed, ref, toRefs } from "vue";
 
 const props = defineProps({
   level: Number,
-  currentDeposit: Number
+  currentDeposit: Number,
+  qualification: Number
 });
 
-const { level, currentDeposit } = toRefs(props);
+const { level, currentDeposit, qualification } = toRefs(props);
 
-// TODO: qualification?
-const qualification = ref([
-  1, 3000, 30000, 80000, 200000, 400000, 600000, 1000000, 2000000, 4000000, 8000000, 12000000
-]);
-
-const currentQualification = computed(() => qualification.value[level.value]);
-
-const qualificationPercentage = computed(() => currentDeposit.value / currentQualification.value);
+const qualificationPercentage = computed(() => {
+  if (currentDeposit.value === 0) return 0;
+  return currentDeposit.value / qualification.value;
+});
 </script>
 <style scoped lang="scss">
 $base-bg: url(@/assets/images/vip/badge/badge-bg.png);

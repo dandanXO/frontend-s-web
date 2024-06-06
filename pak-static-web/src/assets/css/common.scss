@@ -13,7 +13,9 @@
 }
 
 body {
+  font-family: "Baloo", Arial, sans-serif;
   min-width: 1200px;
+  background-color: var(--body-background-color);
 }
 // Hover Icons
 input:-webkit-autofill,
@@ -137,9 +139,8 @@ input:-webkit-autofill:active {
   min-height: 40px;
   background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   padding-top: 8px !important;
-  font-family: Poppins;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 20.92px;
   color: #000a01;
 
@@ -169,14 +170,14 @@ input:-webkit-autofill:active {
 }
 .ant-input-affix-wrapper > input.ant-input {
   &::placeholder {
-    color: #83a3ca;
+    color: #8c968f;
   }
 }
 .ant-input-suffix,
 .ant-input-prefix {
   svg {
     width: 16px;
-    fill: #83a3ca;
+    fill: #8c968f;
   }
 }
 
@@ -448,7 +449,6 @@ $glow-clr: #ff5a00;
 }
 
 .game-title {
-  font-family: "Poppins Bold";
   font-size: 30px;
   line-height: 35px;
   color: #222222;
@@ -606,9 +606,9 @@ $glow-clr: #ff5a00;
     line-height: 2.6rem;
   }
 }
-.login-container {
-  background: url(../images/index/centerbg.png);
-}
+// .login-container {
+//   background: url(../images/index/centerbg.png);
+// }
 /* width */
 ::-webkit-scrollbar {
   width: 2px;
@@ -827,21 +827,27 @@ $glow-clr: #ff5a00;
     height: 100%;
     .ant-modal-content {
       background-color: #242e3b;
-      width: 95%;
-      height: 95%;
-      margin-top: 2%;
-      margin-left: 2%;
+      width: 100%;
+      height: 100%;
+      margin-top: 0%;
+      margin-left: 0%;
       border-radius: 0;
       .ant-modal-header {
-        position: absolute;
-        right: -60px;
-        margin: 0px auto;
-        width: 60px;
-        height: 60px;
-        top: 0;
-        background: transparent;
+        // position: absolute;
+        // right: -60px;
+        // margin: 0px auto;
+        // width: 60px;
+        // height: 60px;
+        // top: 0;
+        // background: transparent;
+        padding: 0;
+        background: #141622;
+        border: 0;
+        border-radius: 0;
         .ant-modal-title {
-          display: none;
+          padding: 6px 10px;
+          color: #ffffff;
+          // display: none;
         }
       }
       .ant-modal-body {
@@ -852,6 +858,9 @@ $glow-clr: #ff5a00;
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        color: #ffffff;
+        text-align: left;
       }
 
       .ant-modal-footer {
@@ -860,11 +869,12 @@ $glow-clr: #ff5a00;
 
       .ant-modal-close {
         top: 0px;
-        width: 60px;
-        padding: 25px;
+        width: 48px;
+        padding: 10px;
         right: 0px;
-        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
-        opacity: 0.9;
+        // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+        background: var(--primary-linear-background-color);
+        opacity: 0.95;
         color: #000;
         &:hover {
           opacity: 1;
@@ -1506,7 +1516,6 @@ a {
 }
 .account-title {
   color: #8c968f;
-  font-family: "Poppins Medium";
   margin-bottom: 10px;
   display: block;
 }
@@ -1553,10 +1562,14 @@ a {
     overflow: auto;
     display: inline-block;
     margin-block: 2rem;
-    border: 1px solid #eaeaea;
-    background: #ffffff;
+    border: 1px solid #ffffff1a;
+    background: #70bc621a;
     border-radius: 12px;
-    color: #83a3ca;
+    color: #fff;
+
+    td {
+      border: 1px solid #ffffff1a;
+    }
 
     td,
     th {
@@ -1570,8 +1583,8 @@ a {
     }
 
     th {
-      background: #ecf5ff;
-      color: #2b2b82;
+      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+      color: #fff;
     }
     tr:first-child {
       td,
@@ -1579,9 +1592,8 @@ a {
         border-top: 0 !important;
       }
       td {
-        background: #ecf5ff;
-        color: #2b2b82;
-        font-family: "Poppins Bold";
+        background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+        color: #fff;
         text-align: center;
       }
       td:first-child {
@@ -1638,6 +1650,13 @@ a {
   border-radius: 12px;
   &::placeholder {
     color: #ffffff4d;
+  }
+  &[disabled] {
+    background-color: unset;
+    color: #8c968f;
+    &:hover {
+      border-color: #072a19;
+    }
   }
 }
 

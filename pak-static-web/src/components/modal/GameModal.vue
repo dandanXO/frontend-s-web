@@ -136,7 +136,6 @@ import { Modal } from "ant-design-vue";
 
 const store = userStore();
 const { token } = storeToRefs(store);
-const { openAccountModal } = store;
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
 
@@ -225,8 +224,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         }
       });
     } else {
-      // router.push("/login");
-      openAccountModal();
+      router.push("/login");
     }
   }
 };

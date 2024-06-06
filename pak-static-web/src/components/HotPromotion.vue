@@ -309,7 +309,6 @@ export default defineComponent({
   padding: 20px;
   .spinwheelterms {
     .spinwheelrule-title {
-      font-family: Poppins Bold;
       font-size: 24px;
       color: #222222;
     }

@@ -14,8 +14,13 @@
       </div>
     </div> -->
     <swiper-container slides-per-view="3.5" space-between="24" class="vip-badge-swiper">
-      <swiper-slide v-for="(_, index) in 13" :key="index">
-        <vip-badge class="slide-badge" :level="index" :current-deposit="currentDepositNumber" />
+      <swiper-slide v-for="(data, index) in vipTableData" :key="index">
+        <vip-badge
+          class="slide-badge"
+          :level="index"
+          :current-deposit="currentDepositNumber"
+          :qualification="data.qualification"
+        />
       </swiper-slide>
     </swiper-container>
 
@@ -42,20 +47,25 @@
       <thead>
         <tr>
           <td><img src="@/assets/images/vip/vip-table-icon.png" /></td>
-          <td>Award</td>
-          <td>1st Day of Next mmonth</td>
+          <td>Upgrade Experience</td>
+          <td>Upgrade Rewards</td>
+          <td>Monthly Rewards</td>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="index in 7" :key="index">
-          <td>VIP 0</td>
+        <tr v-for="(data, index) in vipTableData" :key="index">
+          <td>{{ data.name }}</td>
           <td>
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
-            0
+            {{ addThousandsComma(data.qualification) }}
           </td>
           <td>
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
-            0
+            {{ addThousandsComma(data.oneOff) }}
+          </td>
+          <td>
+            <img src="@/assets/images/vip/vip-table-coin-icon.png" />
+            {{ addThousandsComma(data.monthly) }}
           </td>
         </tr>
       </tbody>
@@ -182,6 +192,7 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import VipBadge from "@/components/vip/VipBadge.vue";
 import { storeToRefs } from "pinia";
 import { RiLockFill } from "vue-remix-icons";
+import { addThousandsComma } from "@/utils/utils";
 // import { message } from "ant-design-vue";
 
 const store = userStore();
@@ -301,703 +312,86 @@ const onShowRebateClick = (flag) => {
   else currentDisplayTerms.value = birthdayTerms;
 };
 
-const columns = [
+const vipTableData = ref([
   {
-    title: "VIP Level",
-    dataIndex: "vipLevel",
-    key: "vipLevel",
-    colSpan: 2,
-    customCell: (_, index) => ({
-      colSpan: index === 0 ? 2 : 1
-    })
+    name: "VIP 0",
+    qualification: 5000,
+    oneOff: 0,
+    monthly: 0
   },
   {
-    title: "VIP 0",
-    dataIndex: "vip0",
-    key: "vip0"
+    name: "VIP 1",
+    qualification: 5000,
+    oneOff: 20,
+    monthly: 38
   },
   {
-    title: "VIP 1",
-    dataIndex: "vip1",
-    key: "vip1"
+    name: "VIP 2",
+    qualification: 10000,
+    oneOff: 25,
+    monthly: 88
   },
   {
-    title: "VIP 2",
-    dataIndex: "vip2",
-    key: "vip2"
+    name: "VIP 3",
+    qualification: 20000,
+    oneOff: 50,
+    monthly: 188
   },
   {
-    title: "VIP 3",
-    dataIndex: "vip3",
-    key: "vip3"
+    name: "VIP 4",
+    qualification: 50000,
+    oneOff: 100,
+    monthly: 388
   },
   {
-    title: "VIP 4",
-    dataIndex: "vip4",
-    key: "vip4"
+    name: "VIP 5",
+    qualification: 100000,
+    oneOff: 200,
+    monthly: 588
   },
   {
-    title: "VIP 5",
-    dataIndex: "vip5",
-    key: "vip5"
+    name: "VIP 6",
+    qualification: 200000,
+    oneOff: 300,
+    monthly: 888
   },
   {
-    title: "VIP 6",
-    dataIndex: "vip6",
-    key: "vip6"
+    name: "VIP 7",
+    qualification: 500000,
+    oneOff: 1000,
+    monthly: 1888
   },
   {
-    title: "VIP 7",
-    dataIndex: "vip7",
-    key: "vip7"
+    name: "VIP 8",
+    qualification: 1000000,
+    oneOff: 2000,
+    monthly: 3888
   },
   {
-    title: "VIP 8",
-    dataIndex: "vip8",
-    key: "vip8"
+    name: "VIP 9",
+    qualification: 2000000,
+    oneOff: 3000,
+    monthly: 8888
+  },
+  {
+    name: "VIP 10",
+    qualification: 5000000,
+    oneOff: 10000,
+    monthly: 28888
+  },
+  {
+    name: "VIP 11",
+    qualification: 10000000,
+    oneOff: 20000,
+    monthly: 58888
+  },
+  {
+    name: "VIP 12",
+    qualification: 20000000,
+    oneOff: 30000,
+    monthly: 88888
   }
-].map((props) => ({ ...props, className: "highlight" })); // add highlight color to every column
-
-const columnsData = [
-  {
-    key: "1",
-    vipLevel: "Turnover Bonus",
-    vip0: "X",
-    vip1: "X",
-    vip2: "X",
-    vip3: "X",
-    vip4: "0.01%",
-    vip5: "0.05%",
-    vip6: "0.10%",
-    vip7: "0.25%",
-    vip8: "0.50%"
-  }
-];
-
-const columns3 = [
-  {
-    title: "Upgrade Achievement",
-    dataIndex: "upgradeAchievement",
-    key: "upgradeAchievement",
-    colSpan: 10,
-    className: "highlight",
-    customCell: (_, index) => {
-      if (index < 2) return { colSpan: 2 };
-    }
-  },
-  {
-    title: "",
-    dataIndex: "vip0",
-    key: "vip0",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip1",
-    key: "vip1",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip2",
-    key: "vip2",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip3",
-    key: "vip3",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip4",
-    key: "vip4",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip5",
-    key: "vip5",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip6",
-    key: "vip6",
-    colSpan: 0
-  },
-  {
-    title: "",
-    dataIndex: "vip7",
-    key: "vip7",
-    colSpan: 0
-  }
-];
-
-const column3Data = [
-  {
-    key: "1",
-    upgradeAchievement: "Accumulated Deposits",
-    vip0: "≥100",
-    vip1: "≥10000",
-    vip2: "≥100000",
-    vip3: "≥500000",
-    vip4: "≥1000000",
-    vip5: "≥3000000",
-    vip6: "≥5000000",
-    vip7: "≥10000000",
-    className: "highlight"
-  },
-  {
-    key: "2",
-    upgradeAchievement: "Promotion Level",
-    vip0: "VIP 1",
-    vip1: "VIP 2",
-    vip2: "VIP 3",
-    vip3: "VIP 4",
-    vip4: "VIP 5",
-    vip5: "VIP 6",
-    vip6: "VIP 7",
-    vip7: "VIP 8"
-  }
-];
-
-const columns4 = [
-  {
-    title: "Level",
-    dataIndex: "level",
-    key: "level",
-    colSpan: 2,
-    className: "highlight",
-    customCell: (_, index) => ({
-      colSpan: index === 0 ? 2 : 1
-    })
-  },
-  {
-    title: "VIP 0",
-    dataIndex: "vip0",
-    key: "vip0"
-  },
-  {
-    title: "VIP 1",
-    dataIndex: "vip1",
-    key: "vip1"
-  },
-  {
-    title: "VIP 2",
-    dataIndex: "vip2",
-    key: "vip2"
-  },
-  {
-    title: "VIP 3",
-    dataIndex: "vip3",
-    key: "vip3"
-  },
-  {
-    title: "VIP 4",
-    dataIndex: "vip4",
-    key: "vip4"
-  },
-  {
-    title: "VIP 5",
-    dataIndex: "vip5",
-    key: "vip5"
-  },
-  {
-    title: "VIP 6",
-    dataIndex: "vip6",
-    key: "vip6"
-  },
-  {
-    title: "VIP 7",
-    dataIndex: "vip7",
-    key: "vip7"
-  },
-  {
-    title: "VIP 8",
-    dataIndex: "vip8",
-    key: "vip8"
-  }
-];
-
-const column4Data = [
-  {
-    key: "1",
-    level: "Cumulative withdrawal limit for a single day",
-    vip0: "50,000",
-    vip1: "100,000",
-    vip2: "500,000",
-    vip3: "1,000,000",
-    vip4: "5,000,000",
-    vip5: "10,000,000",
-    vip6: "10,000,000",
-    vip7: "10,000,000",
-    vip8: "10,000,000"
-  }
-];
-
-const birthdayColumnData = [
-  {
-    key: "1",
-    vipLevel: "Birthday Bonus",
-    vip0: "X",
-    vip1: "X",
-    vip2: "X",
-    vip3: "188",
-    vip4: "288",
-    vip5: "388",
-    vip6: "488",
-    vip7: "588",
-    vip8: "888"
-  }
-];
-
-const promoExclusive = [
-  {
-    title: "VIP Level",
-    dataIndex: "vipLevel",
-    key: "vipLevel",
-    render: (text) => String(text)
-  },
-  {
-    title: "VIP 1",
-    dataIndex: "vip1",
-    key: "vip1"
-  },
-  {
-    title: "VIP 2",
-    dataIndex: "vip2",
-    key: "vip2"
-  },
-  {
-    title: "VIP 3",
-    dataIndex: "vip3",
-    key: "vip3"
-  },
-  {
-    title: "VIP 4",
-    dataIndex: "vip4",
-    key: "vip4"
-  },
-  {
-    title: "VIP 5",
-    dataIndex: "vip5",
-    key: "vip5"
-  },
-  {
-    title: "VIP 6",
-    dataIndex: "vip6",
-    key: "vip6"
-  },
-  {
-    title: "VIP 7",
-    dataIndex: "vip7",
-    key: "vip7",
-    render: (text) => String(text)
-  }
-];
-const dataExclusive = [
-  {
-    key: "1",
-    vipLevel: "Withdrawal Funds",
-    vip1: "500,000/Day",
-    vip2: "500,000/Day",
-    vip3: "500,000/Day",
-    vip4: "1,000,000/Day",
-    vip5: "1,000,000/Day",
-    vip6: "1,000,000/Day",
-    vip7: "1,500,000/Day"
-  },
-  {
-    key: "2",
-    vipLevel: "Bet Limit",
-    vip1: "Standard",
-    vip2: "Standard",
-    vip3: "Standard",
-    vip4: "Standard",
-    vip5: "High limit",
-    vip6: "High limit",
-    vip7: "High limit"
-  },
-  {
-    key: "3",
-    vipLevel: "Priority Payment Method",
-    vip1: "",
-    vip2: "",
-    vip3: "",
-    vip4: "",
-    vip5: "✔",
-    vip6: "✔",
-    vip7: "✔"
-  },
-  {
-    key: "4",
-    vipLevel: "24/7 VIP Customer Care Team",
-    vip1: "",
-    vip2: "",
-    vip3: "",
-    vip4: "",
-    vip5: "",
-    vip6: "✔",
-    vip7: "✔"
-  },
-  {
-    key: "5",
-    vipLevel: "Invitation to Exclusive Events",
-    vip1: "",
-    vip2: "",
-    vip3: "",
-    vip4: "",
-    vip5: "",
-    vip6: "",
-    vip7: "✔"
-  }
-];
-
-const vipItems = [
-  {
-    vipLevel: "1",
-    upgrade: "100",
-    monthly: "",
-    birthday: "",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.20%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.30%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "2",
-    upgrade: "10,000",
-    monthly: "188",
-    birthday: "",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.20%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.30%",
-      // },
-
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "3",
-    upgrade: "100,000",
-    monthly: "688",
-    birthday: "888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.30%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.40%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "4",
-    upgrade: "500,000",
-    monthly: "1,588",
-    birthday: "2,888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.40%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.40%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "5",
-    upgrade: "1,000,000",
-    monthly: "2,888",
-    birthday: "5,888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.50%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.50%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "6",
-    upgrade: "3,000,000",
-    monthly: "6,888",
-    birthday: "8,888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.60%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.50%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "7",
-    upgrade: "5,000,000",
-    monthly: "18,888",
-    birthday: "48,888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.80%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.60%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  },
-  {
-    vipLevel: "8",
-    upgrade: "",
-    monthly: "18,888",
-    birthday: "48,888",
-    rebates: [
-      {
-        rebateName: "Slots Rebate",
-        rebateValue: "1.00%"
-      },
-      {
-        rebateName: "Fishing Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Live Casino Rebate",
-        rebateValue: "0.80%"
-      },
-      // {
-      //   rebateName: "เงินคืนไพ่",
-      //   rebateValue: "0.80%",
-      // },
-      {
-        rebateName: "Poker Rebate",
-        rebateValue: "0.80%"
-      },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      },
-      // {
-      //   rebateName: "เเงินคืนล็อตตารี่",
-      //   rebateValue: "0.60%",
-      // },
-      {
-        rebateName: "Sport/EsportsRebate",
-        rebateValue: "0.65%"
-      },
-      {
-        rebateName: "Lottery Rebate",
-        rebateValue: "0.60%"
-      }
-    ]
-  }
-];
+]);
 </script>
 <style scoped lang="scss">
 .modal-div {
@@ -1108,6 +502,9 @@ const vipItems = [
       }
 
       .vip-reward-ticket__status {
+        display: flex;
+        flex: 1;
+        align-items: end;
         svg {
           fill: #ffffff;
           width: 14px;
@@ -1121,6 +518,7 @@ const vipItems = [
   font-size: 18px;
   font-weight: 700;
   line-height: 30px;
+  margin-bottom: 16px;
 }
 
 .vip-ranking-table {
@@ -1128,6 +526,7 @@ const vipItems = [
   border-radius: 8px 8px 0 0;
   overflow: hidden;
   text-align: center;
+  margin-bottom: 16px;
 
   thead {
     background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);

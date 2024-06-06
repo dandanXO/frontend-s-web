@@ -477,7 +477,6 @@ defineExpose({
         -webkit-text-fill-color: transparent;
         -moz-background-clip: text;
         -moz-text-fill-color: transparent;
-        font-family: Baloo Bhaina;
         font-size: 60px;
         line-height: 64px;
         margin: 25px auto;
@@ -563,7 +562,6 @@ defineExpose({
           display: flex;
           justify-content: center;
           align-items: center;
-          font-family: Poppins Bold;
           &:after {
             content: "";
           }
@@ -622,7 +620,6 @@ defineExpose({
             padding: 20px 50px;
             background-size: contain;
             text-align: center;
-            font-family: Inter Bold;
             width: 100%;
             border-radius: 25px;
             padding: 15px 20px;
@@ -685,7 +682,6 @@ defineExpose({
       color: #000000;
       .spin-title {
         display: flex;
-        font-family: Poppins Bold;
         gap: 5px;
         align-items: center;
         img {
@@ -701,7 +697,6 @@ defineExpose({
 
       .amountwon {
         color: #2b2b82;
-        font-family: Poppins Bold;
         font-size: 40px;
         display: flex;
         justify-content: center;
@@ -786,7 +781,6 @@ defineExpose({
     -webkit-text-fill-color: transparent;
     -moz-background-clip: text;
     -moz-text-fill-color: transparent;
-    font-family: Baloo Bhaina;
     font-size: 60px;
     line-height: 64px;
     margin: 0 auto;
@@ -869,7 +863,6 @@ defineExpose({
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Poppins Bold;
       color: #ffffff;
       flex-direction: column;
       .spinned {
@@ -965,7 +958,6 @@ defineExpose({
   color: #000000;
   .spin-title {
     display: flex;
-    font-family: Poppins Bold;
     gap: 5px;
     align-items: center;
     img {
@@ -981,7 +973,6 @@ defineExpose({
 
   .amountwon {
     color: #2b2b82;
-    font-family: Poppins Bold;
     font-size: 40px;
     display: flex;
     justify-content: center;
@@ -1118,7 +1109,6 @@ defineExpose({
     margin: 0;
   }
   .share-title {
-    font-family: Poppins Bold;
     font-size: 16px;
   }
   .share-icons {

@@ -8,17 +8,20 @@ export default {
     login_submit: "Login",
     login_register: "Register",
     login_success_msg: "Login successfully",
+    login_forget_pwd: "Forget Password",
     // login end
     // register start
     reg_referrer: "Referrer",
     reg_userid: "User ID",
     reg_phone_num: "Phone Number",
+    reg_phone_verification: "Verify",
+    reg_phone_otp: "OTP",
     reg_pass: "Password",
     reg_confirm_pass: "Confirm Password",
     reg_email: "Email",
-    reg_code_affiliate: "Code Affiliate",
-    reg_bank_id: "Bank ID",
-    reg_card_acc: "Card Account",
+    reg_bank: "Bank",
+    reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_holder: "Bank Account Holder",
     reg_submit: "Register",
     reg_captcha_confirm: "Confirm",
     reg_captcha_verifying: "Verifying",
@@ -32,6 +35,9 @@ export default {
     menu_message: "Message",
     menu_customer_service: "Customer Service",
     // menu end
+    // rolling text start
+    roll_text_no_content: "No content yet",
+    // rolling text end
     // transaction record start
     date_picker_sunday: "Sunday",
     date_picker_sun: "Sun",

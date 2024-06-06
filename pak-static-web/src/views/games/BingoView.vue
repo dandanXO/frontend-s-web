@@ -514,7 +514,7 @@ export default defineComponent({
 
       border-radius: 4px;
       color: white;
-      font-family: sans-serif;
+
       font-size: 120%;
       font-weight: bold;
       overflow: hidden;

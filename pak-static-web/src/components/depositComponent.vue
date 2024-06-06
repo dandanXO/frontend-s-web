@@ -40,7 +40,6 @@
         >
           <div class="deposit-amt-quick-select-title">Amount</div>
           <a-form-item class="helptxt" name="localAmount">
-            
             <a-input
               :prefix="store.currency.value"
               v-model:value="form.localAmount"
@@ -239,11 +238,11 @@ const route = useRoute();
 const checkWelcome = () => {
   if (route.query && route.query.isFromWelcomePromo) {
     unselectedPrivileges.value.forEach((p) => {
-      if (p.name === 'P4W-FIRST-DEPOSIT') {
-        selectedPrivilege.value = p.id
+      if (p.name === "P4W-FIRST-DEPOSIT") {
+        selectedPrivilege.value = p.id;
       }
-    })
-    onDepositAmtQuickSelect(300)
+    });
+    onDepositAmtQuickSelect(300);
   }
 };
 const onDepositAmtQuickSelect = (amt) => {
@@ -287,7 +286,7 @@ async function loadPrivilege(val) {
           }
         }
       });
-      checkWelcome()
+      checkWelcome();
     } else {
       hasPrivilege.value = false;
       privilegeList.value = [];
@@ -475,24 +474,21 @@ onMounted(() => {
 <style lang="scss">
 .dark-theme {
   .confirm-btn {
-    
     width: 100%;
     max-width: 500px;
     color: #000000;
   }
   .ant-input-affix-wrapper .ant-input-prefix {
-    color: #5F6061;
-
+    color: #5f6061;
   }
   .account-content .deposit-container .deposit-amt-quick-select-item {
     // background: #ffffff0f;
-    background: #0B0E0D99;
+    background: #0b0e0d99;
     color: #ffffff;
     &.active {
-      background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
       filter: none;
-      color: #000A01;
-
+      color: #000a01;
     }
   }
 }
@@ -561,8 +557,8 @@ onMounted(() => {
     .ant-form-item-control-input-content {
     .ant-input-affix-wrapper,
     > .ant-input {
-      border: 1px solid #072A19;
-      background: #0B0E0D99;
+      border: 1px solid #072a19;
+      background: #0b0e0d99;
     }
   }
 }
@@ -619,22 +615,21 @@ onMounted(() => {
       margin-top: 20px;
       flex-wrap: wrap;
       padding-bottom: 20px;
-    max-width: 500px;
+      max-width: 500px;
     }
     .deposit-amt-quick-select-item {
       border-radius: 4px;
       // border: 1px solid #eaeaea;
       font-weight: normal;
       // background: #ecf5ff;
-      background: #0B0E0D99;
+      background: #0b0e0d99;
       color: #ffffff;
       padding: 20px;
       text-align: left;
       cursor: pointer;
 
       &.active {
-        background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-          linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+        background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
         color: #ffffff;
         font-weight: bold;
       }
@@ -647,7 +642,7 @@ onMounted(() => {
         max-width: 280px;
         padding: 10px;
         margin-right: 20px;
-        border: 1px solid #eaeaea;
+        // border: 1px solid #eaeaea;
         border-radius: 12px;
       }
 

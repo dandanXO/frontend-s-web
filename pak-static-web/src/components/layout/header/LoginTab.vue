@@ -34,11 +34,10 @@
           </template>
         </a-input>
       </a-form-item>
-      <!-- TODO: action? -->
       <div class="forget-password">
-        <router-link class="pwd-tip" to="/forgot-password">
+        <a @click="onForgetPwd" class="pwd-tip">
           {{ $t("layout.header.accountModal.login.forgetPassword") }}
-        </router-link>
+        </a>
       </div>
     </div>
     <div>
@@ -110,6 +109,9 @@ const onSubmit = () => {
         });
     });
   })();
+};
+const onForgetPwd = () => {
+  emit("forget-pwd");
 };
 </script>
 <style scoped lang="scss">

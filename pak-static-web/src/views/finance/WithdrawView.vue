@@ -324,12 +324,10 @@ import { convertToCommaAmount } from "@/utils/utils";
     gap: 10px;
     padding: 15px;
     .amt {
-      font-family: "Poppins Bold";
       font-size: 24px;
       line-height: 24px;
     }
     .words {
-      font-family: "Poppins Medium";
       font-size: 12px;
       color: #9f9f9f;
     }

@@ -1,49 +1,56 @@
 <template>
   <div>
     <q-inner-loading :showing="loading">
-      <q-spinner-gears size="50px" color="brand"/>
-      <div class="label">加载中</div>
+      <q-spinner-gears size="50px" color="brand" />
+      <div class="label">Loading</div>
     </q-inner-loading>
+    <!-- <pre>truncatedList{{ truncatedList }}</pre> -->
     <div v-if="!loading">
       <q-infinite-scroll @load="onLoad" :offset="150">
-        <q-card v-for="(det, n) in truncatedList" :key="n" class="q-pa-sm"
-                :class="{active: isSelectedMail === det.title }" style="background: #212534; color: #bacef1;"
-                @click="selectMail(det)">
-          <div style="display:flex; justify-content: space-between; align-items: center">
+        <q-card
+          v-for="(det, n) in truncatedList"
+          :key="n"
+          class="q-pa-sm mailBox"
+          :class="{ active: isSelectedMail === det.title }"
+          @click="selectMail(det)"
+        >
+          <div style="display: flex; justify-content: space-between; align-items: center">
             <div>
-              <q-icon name="mail"/>
+              <q-icon name="mail" />
               {{ det.title }}
             </div>
-            <q-chip color="brand" size="sm" label="已读" v-if="det.isRead && det.isRead !== 0"/>
-
+            <q-chip color="brand" size="sm" label="Read" v-if="det.isRead && det.isRead !== 0" />
           </div>
           <div class="text-grey mailcontents" :style="`height: ${isSelectedMail === det.title ? 'auto' : '0px'}`">
             {{ det.content }}
           </div>
+
+          <div class="text-grey date q-mt-sm">
+            {{ det.sendTime }}
+          </div>
           <div v-if="mailType === 'outbox'" class="buttons">
-            <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm"/>
-            <q-btn outline label="复制" size="sm" color="bright"/>
+            <q-btn outline label="催单" size="sm" color="bright" class="q-mr-sm" />
+            <q-btn outline label="复制" size="sm" color="bright" />
           </div>
         </q-card>
 
         <template v-slot:loading>
           <div v-if="comList.length > 0">
             <div class="row justify-center q-my-md">
-              <q-spinner-dots color="primary" size="40px"/>
+              <q-spinner-dots color="primary" size="40px" />
             </div>
           </div>
-          <div v-else class="q-pa-md" style="text-align: center;">
-            {{ truncatedList.length === 0 ? '暂无数据' : '暂无更多数据了' }}
+          <div v-else class="q-pa-md" style="text-align: center">
+            {{ truncatedList.length === 0 ? "No record" : "No more record" }}
           </div>
         </template>
-
       </q-infinite-scroll>
     </div>
   </div>
 </template>
 <script>
-import {defineComponent, onMounted, ref} from "vue";
-import moment from "moment"
+import { defineComponent, onMounted, ref } from "vue";
+import moment from "moment";
 
 export default defineComponent({
   props: {
@@ -56,42 +63,41 @@ export default defineComponent({
     loading: {
       type: Boolean,
       default: function () {
-        return true
+        return true;
       }
     },
     mailType: {
       type: String,
       default: function () {
-        return ''
+        return "";
       }
-
-    },
+    }
   },
   emits: ["readMsg"],
   setup(props, context) {
-    const truncatedList = ref([])
-    const comList = ref({})
+    const truncatedList = ref([]);
+    const comList = ref({});
     const onLoad = (index, done) => {
-      comList.value = props.list
+      comList.value = props.list;
       setTimeout(() => {
         if (comList.value.length) {
           var slicedArray = comList.value.splice(0, 6);
-          slicedArray.forEach(element => {
+          slicedArray.forEach((element) => {
             truncatedList.value.push(element);
           });
           done();
         }
-      }, 200)
-    }
-    const isSelectedMail = ref('');
+      }, 200);
+    };
+    const isSelectedMail = ref("");
     const selectMail = (mail) => {
       console.log(mail.id);
       isSelectedMail.value = mail.title;
       // context.emit('readMsg', mail.id);
-    }
+    };
     onMounted(() => {
-      onLoad
-    })
+      onLoad;
+    });
     return {
       humanDatetime(ts) {
         return moment(ts).format("YYYY-MM-DD HH:mm:ss");
@@ -100,10 +106,10 @@ export default defineComponent({
       truncatedList,
       comList,
       selectMail,
-      isSelectedMail,
-    }
-  },
-})
+      isSelectedMail
+    };
+  }
+});
 </script>
 <style scoped lang="scss">
 .table-data {
@@ -131,5 +137,17 @@ export default defineComponent({
   height: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.mailBox {
+  padding: 16px;
+  margin: 0 16px 12px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(46, 48, 52, 0.3098039216);
+  position: relative;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
 }
 </style>

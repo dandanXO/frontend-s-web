@@ -32,10 +32,22 @@
                 <span class="type">{{ vip.vipTitle }}</span>
               </div>
               <div class="description">
+
+                <span v-if="vipIndex !==0">
+                  {{ $t('vip.vipUpgradeRequired') }}:
+                  <span style="color: #424f72">
+                  {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
+                  </span>
+                </span>
+                <br/>
+
                 {{ $t('vip.vipMaintainRequired') }}:
                 <span style="color: #424f72"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
-                <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.upgrade }}</span>
-              </span>
+                <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
+                </span>
+                </span>
+
+
               </div>
               <!-- vip progress bar start -->
               <div class="progressBarContainer" v-if="vipLevel">
@@ -535,7 +547,7 @@ export default defineComponent({
       {
         vipLevel: "1",
         upgrade: "100",
-        // upgrade: "Nạp thành công 03 lần trong tháng",
+        maintain: "",
         vipTitle: "IRON",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -545,6 +557,7 @@ export default defineComponent({
       {
         vipLevel: "2",
         upgrade: "380,000",
+        maintain: "200,000",
         vipTitle: "BRONZE",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -554,6 +567,7 @@ export default defineComponent({
       {
         vipLevel: "3",
         upgrade: "1,000,000",
+        maintain: "600,000",
         vipTitle: "SILVER",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -563,6 +577,7 @@ export default defineComponent({
       {
         vipLevel: "4",
         upgrade: "3,000,000",
+        maintain: "2,000,000",
         vipTitle: "GOLD",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -572,6 +587,7 @@ export default defineComponent({
       {
         vipLevel: "5",
         upgrade: "9,000,000",
+        maintain: "3,000,000",
         vipTitle: "PLATINUM",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -581,6 +597,7 @@ export default defineComponent({
       {
         vipLevel: "6",
         upgrade: "20,000,000",
+        maintain: "6,000,000",
         vipTitle: "RUBY",
         depositPromoAvailable: false,
         promoAvailable: false,
@@ -590,57 +607,13 @@ export default defineComponent({
       {
         vipLevel: "7",
         upgrade: "50,000,000",
+        maintain: "20,000,000",
         vipTitle: "DIAMOND",
         depositPromoAvailable: false,
         promoAvailable: false,
         unavailable: false,
         claimed: false
       },
-      // {
-      //   vipLevel: "8",
-      //   upgrade: "1,000,000",
-      //   vipTitle: "黄金1",
-      //   depositPromoAvailable: false,
-      //   promoAvailable: false,
-      //   unavailable: false,
-      //   claimed: false
-      // },
-      // {
-      //   vipLevel: "9",
-      //   upgrade: "2,000,000",
-      //   vipTitle: "铂金2",
-      //   depositPromoAvailable: false,
-      //   promoAvailable: false,
-      //   unavailable: false,
-      //   claimed: false
-      // },
-      // {
-      //   vipLevel: "10",
-      //   upgrade: "4,000,000",
-      //   vipTitle: "铂金1",
-      //   depositPromoAvailable: false,
-      //   promoAvailable: false,
-      //   unavailable: false,
-      //   claimed: false
-      // },
-      // {
-      //   vipLevel: "11",
-      //   upgrade: "8,000,000",
-      //   vipTitle: "钻石",
-      //   depositPromoAvailable: false,
-      //   promoAvailable: false,
-      //   unavailable: false,
-      //   claimed: false
-      // },
-      // {
-      //   vipLevel: "12",
-      //   upgrade: "12,000,000",
-      //   vipTitle: "王者",
-      //   depositPromoAvailable: false,
-      //   promoAvailable: false,
-      //   unavailable: false,
-      //   claimed: false
-      // }
     ]);
     const canClaimMonthly = ref(false);
     const initVIPTable = () => {
@@ -961,6 +934,7 @@ $border-settings: 1px solid #e5e7eb;
         font-size: 13.987px;
         font-style: normal;
         font-weight: 400;
+        text-align: left;
         line-height: normal;
       }
 

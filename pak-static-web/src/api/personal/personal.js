@@ -4,8 +4,8 @@ import axios from "axios";
 export function loadBalance(platform) {
   return server.REST.get("/session/balance?v=123", {
     params: {
-      platform,
-    },
+      platform
+    }
   });
 }
 export function getAnnouncement() {
@@ -27,7 +27,7 @@ export function changePwd(oldPassword, password) {
 export function changeWithdrawPwd(oldPassword, password) {
   return server.REST.post("/session/withdrawPassword", {
     oldPassword,
-    password,
+    password
   });
 }
 
@@ -42,7 +42,7 @@ const recordUrl = {
   withdraw: "/session/member/withdraw",
   rebates: "/session/member/privilege",
   betRecord: "/session/member/betRecord",
-  gameBetRecord: "/session/member/gameBetRecord",
+  gameBetRecord: "/session/member/gameBetRecord"
 };
 
 export function loadRecords(type, p) {
@@ -125,11 +125,15 @@ export const verifyID = (formData, token) => {
     headers: {
       "Content-Type": `multipart/form-data`,
       Authorization: process.env.VUE_APP_SITE,
-      TOKEN: token,
-    },
+      TOKEN: token
+    }
   });
 };
 
 export function sendTelephoneOtpToRegisteredUser(params) {
   return server.REST.post("/session/sendSms", params);
 }
+
+export const getUnreadTotal = () => {
+  return server.REST.get("/session/inbox/getUnreadTotal");
+};
