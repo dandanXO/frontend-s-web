@@ -94,6 +94,9 @@ import FooterSection from "../layouts/FooterSection.vue";
 // import EssentialLink from "components/EssentialLink.vue";
 
 import { translateRecord } from "src/directives/translate";
+import { useI18n } from "vue-i18n";
+import { i18nStore } from "src/router/language";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
   name: "MainLayout",
@@ -101,6 +104,9 @@ export default defineComponent({
     FooterSection
   },
   setup() {
+    const { t } = useI18n();
+    const i18nStoreLanguage = i18nStore();
+    const { languageVal } = storeToRefs(i18nStoreLanguage);
     const route = useRoute();
     const router = useRouter();
     const store = userStore();
@@ -198,7 +204,7 @@ export default defineComponent({
           } else {
             prevPage.value = "/account/feedback";
           }
-        }else if (route.path === "/account/record") {
+        } else if (route.path === "/account/record") {
           prevPage.value = "/account";
           hasPage.value = true;
           pageName.value = "Record";
@@ -520,7 +526,8 @@ export default defineComponent({
       prevPage,
       hasDrawer,
       platformsList,
-      changePlatform
+      changePlatform,
+      languageVal
     };
   }
 });

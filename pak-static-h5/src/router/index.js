@@ -5,7 +5,7 @@ import { useUI } from "stores/ui";
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
 import routes from "./routes";
 import { StatusBar } from "@capacitor/status-bar";
-import { Platform } from "quasar";
+import { Platform, useQuasar } from "quasar";
 
 /*
  * If not building with SSR mode, you can
@@ -35,6 +35,7 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
+    const $q = useQuasar();
 
     if (user.token && from && from.href) {
       user.getBalance();
@@ -91,6 +92,13 @@ export default route(function (/* { store, ssrContext } */) {
     } else {
       if (to.meta.requiresAuth) {
         next(`/login`);
+
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "Please login to continue",
+          icon: "report_problem"
+        });
       } else {
         next();
       }
