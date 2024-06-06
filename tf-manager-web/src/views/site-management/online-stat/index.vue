@@ -333,7 +333,7 @@ async function onClick(val) {
   if (val) {
     compareRequest.recordTime = val.name + ":00"
     compareRequest.siteId = request.siteId
-    compareRequest.compareDays = 7
+    compareRequest.compareDays = 30
     await loadCompare()
   }
 }
