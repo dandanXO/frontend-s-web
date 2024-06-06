@@ -61,9 +61,9 @@
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <span>+添加银行卡</span>
-        </div>
-        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
+          <span>+ Add bank card</span>
+        </div> -->
+        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
           <span>+添加虚拟币账户</span>
         </div> -->
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">

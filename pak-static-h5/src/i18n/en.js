@@ -53,7 +53,7 @@ export default {
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
-    13002: "Must be within 7 days",
+    13002: "Must be within 30 days",
     13003: "End time must be greater than start time",
     14000: "Login name has already been registered",
     14001: "This phone number has already been registered",
