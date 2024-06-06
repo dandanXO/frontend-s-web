@@ -441,6 +441,7 @@ const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
+const site = ref(null)
 const userTypeList = computed(() => {
   if (
     store.state.user.userType === MANAGER.value ||
@@ -537,7 +538,7 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = null
+  request.siteId = site.value ? site.value.id : null
   request.role = null
 }
 
@@ -566,8 +567,6 @@ async function loadUser() {
       : null
   });
   page.records = ret.records
-  console.log(ret.records)
-  console.log(page.records)
 }
 
 async function loadRoles(siteId) {
@@ -628,7 +627,6 @@ function showEdit(user) {
       }
     }
     form.id = user.id;
-    // console.log(form);
   })
 }
 
@@ -787,15 +785,17 @@ watch(
 )
 
 onMounted(async () => {
-  await loadRoles()
-  loadUser()
-  loadSites()
-  loadNetPhone()
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = false
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
   }
+  await loadRoles()
+  await loadUser()
+  await loadNetPhone()
 })
 </script>
 
