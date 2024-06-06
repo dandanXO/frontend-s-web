@@ -95,7 +95,7 @@
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="vip" :label="t('fields.vipName')" width="100" />
+        <el-table-column prop="vip" :label="t('fields.vipLevel')" width="100" />
         <el-table-column
           prop="balance"
           :label="t('fields.balance')"
