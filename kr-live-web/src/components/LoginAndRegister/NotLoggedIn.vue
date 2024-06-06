@@ -22,33 +22,9 @@
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { useBreakpoints } from "@vueuse/core";
 
-const loginNameRef = ref();
-const pwdRef = ref();
-const captchaRef = ref();
-
-const breakpoints = useBreakpoints({
-  laptop: 768
-});
-
-const loginWindow = breakpoints.smaller("laptop");
-
-const store = userStore();
 const router = useRouter();
-const verificationImg = ref("");
-
-const loginForm = reactive({
-  loginName: "",
-  password: "",
-  captchaCode: "",
-  codeId: ""
-});
-
 const props = defineProps(['isH5Banner']);
 
 const goToRegister = () => {
@@ -58,63 +34,6 @@ const goToRegister = () => {
 const goToLogin = () => {
   router.push("/?page=login");
 };
-
-const onLoginSubmit = () => {
-  if (loginWindow.value) {
-    router.push("/?page=login");
-  } else {
-    (async () => {
-      loginNameRef.value.validate();
-      pwdRef.value.validate();
-      captchaRef.value.validate();
-
-      if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
-        // has error
-      } else {
-        store
-          .memberLogin({
-            loginName: loginForm.loginName.trim(),
-            password: loginForm.password,
-            sid: store.visitorId,
-            captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId
-          })
-          .then(() => {
-            location.reload();
-          })
-          .catch((error) => {
-            console.log(error);
-            getCode();
-          });
-      }
-    })();
-  }
-};
-
-const getCode = () => {
-  api
-    .get("/member/verificationEasyCode")
-    .then((res) => {
-      const response = res.data;
-      if (response.code === 0) {
-        verificationImg.value = "data:image/png;base64," + response.data.img;
-        loginForm.codeId = response.data.id;
-        loginForm.captchaCode = "";
-      }
-    })
-    .catch((e) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: res.data.message,
-      //   icon: "report_problem"
-      //     });
-    });
-};
-
-onMounted(() => {
-  getCode();
-});
 </script>
 
 <style scoped lang="scss">

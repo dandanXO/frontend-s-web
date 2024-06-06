@@ -2,71 +2,7 @@
   <div class="main-section">
     <LangToggle />
 
-    <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
-
-    <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
-    <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
-    <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
-    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" /> -->
-
-    <!-- <q-carousel
-        :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        infinite
-      > -->
-    <!-- <template v-slot:navigation-icon="{ active, onClick }">
-          <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
-          <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-        </template> -->
-
-    <!--      <q-carousel-slide-->
-    <!--        name="mainSlide"-->
-    <!--        class="column no-wrap flex-center"-->
-    <!--        :img-src="-->
-    <!--          !$q.screen.gt.sm-->
-    <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-    <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-    <!--        "-->
-    <!--        @click="gotoPromo(0)"-->
-    <!--      >-->
-    <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-    <!--      </q-carousel-slide>-->
-    <!-- <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
-          @click="gotoPromo(banner)"
-        >
-        </q-carousel-slide>
-      </q-carousel> -->
-
-    <!-- <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef">
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"
-          @click="switchMenu('xfj')"
-        >
-          <img src="../assets/images/index/home-cf.png" />
-          <span>{{ $t("lang.fish2_list") }}</span>
-        </div>
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish2' ? 'active-board' : ''"
-          @click="switchMenu('fish2')"
-        >
-          <img src="../assets/images/index/home-fish2.png" />
-          <span>เกมส์เล็ก ๆ</span>
-        </div>
-      </div>
-    </div> -->
-
-    <RollingText :depositRecordList="depositRecordList"/>
+    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="isLoadingDepositRecordList"/>
 
     <JackpotPrize />
 
@@ -1032,7 +968,6 @@ import { RiStarLine, RiStarFill } from "vue-remix-icons";
 import { useUI } from "stores/ui";
 import { isMobile } from "boot/utils";
 import { App } from "@capacitor/app";
-import liff from "@line/liff";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
@@ -1056,24 +991,12 @@ export default defineComponent({
     LangToggle,
     RollingText,
     JackpotPrize
-    // RiVolumeUpLine,
-    // RiBilliardsLine,
-    // RiBasketballLine,
-    // RiUserShared2Line
   },
   setup() {
-    const snowCount = 10;
-
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
-    // ui.$onAction(({ name, args }) => {
-    //   switch (name) {
-    //     case "setScrollPosition":
-    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-    //   }
-    // });
     const specialInviteBonusEligible = ref(false);
     const specialInviteBonusAmt = ref(0);
     const specialInviteBonusPopupVisible = ref(false);
@@ -1082,7 +1005,6 @@ export default defineComponent({
     const gameBoardRef = ref();
     const gameBoardItemRef = ref();
 
-    const route = useRoute();
     const router = useRouter();
     const store = userStore();
 
@@ -1132,19 +1054,6 @@ export default defineComponent({
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
-
-      // gameInfo && console.log(gameInfo);
-      // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      // const clickCount = favGames[gameInfo.id]
-      //     ? favGames[gameInfo.id].gameClicked + 1
-      //     : 1;
-      // const lastPlayedAt = moment().unix();
-      // const revisedGameInfo = {...gameInfo, gameClicked: clickCount, lastPlayed: lastPlayedAt};
-      // gameInfo.gameClicked = clickCount;
-      //
-      // favGames[gameInfo.id] = revisedGameInfo;
-      // localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
-      // favGamesList.value = favGames;
     };
 
     const favGamesList = ref([]);
@@ -1155,12 +1064,6 @@ export default defineComponent({
       return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
     });
 
-    // const updateSortedFavGamesList = () => {
-    //   favGamesList.value = Object.fromEntries(
-    //       Object.entries(favGamesList.value).sort(([, a], [, b]) => b.lastPlayed - a.lastPlayed)
-    //   );
-    // };
-
     const isHomePromoModal = ref(false);
     const favLists = computed(() => {
       let lists = [];
@@ -1169,71 +1072,17 @@ export default defineComponent({
       });
       return lists;
     });
-    // const getFavGameList = () => {
-    //   // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-    //   // favGamesList.value = favGames;
-    //   // updateSortedFavGamesList();
-    //
-    //   api.get("/session/member/fav-games").then((res) => {
-    //     if (res.data.code === 0) {
-    //       favGamesList.value = res.data.data;
-    //
-    //       favGamesList.value.forEach((element) => {
-    //         element.default = require("../assets/images/games/aviator/default.png");
-    //         if (element.icon.startsWith("3/")) {
-    //           element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-    //         } else {
-    //           element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
-    //             element.icon
-    //           }.png`;
-    //         }
-    //       });
-    //     }
-    //   });
-    // };
 
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     const pokerGames = [
-      // {
-      //   code: "JILI",
-      //   name: "Jili Games",
-      //   gameName: "Jili",
-      //   gameCode: "64",
-      //   bg: require("../assets/images/games/poker/poker_1.jpg"),
-      //   main: require("../assets/images/games/poker/poker1_1.png"),
-      //   logo: require("../assets/images/common/logo/jl.png")
-      // },
-      // {
-      //   code: "RICH88",
-      //   name: "Rich88",
-      //   gameName: "Rich88",
-      //   bg: require("../assets/images/games/poker/poker_2.jpg"),
-      //   main: require("../assets/images/games/poker/poker2_01.png"),
-      //   logo: require("../assets/images/common/logo/RICH88.png")
-      // },
-      // {
-      //   code: "KM",
-      //   name: "KM",
-      //   gameName: "KM",
-      //   bg: require("../assets/images/games/poker/poker_3.jpg"),
-      //   main: require("../assets/images/games/poker/poker3_01.png"),
-      //   logo: require("../assets/images/common/logo/km.png")
-      // }
+      
     ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
     const esportsGame = ref([]);
     const sportsGame = ref([]);
-
-    // {
-    //   code: "TFGaming",
-    //     name: "TF Gaming",
-    //   gameName: "AE Sexy",
-    //   gameCode: "MX-LIVE-001",
-    //   logo: require("../assets/logo/TF88.png"),
-    // },
     const platformMinigame = ref([]);
     const miniGames = ref([]);
     const miniGamesMore = ref([
@@ -1274,20 +1123,13 @@ export default defineComponent({
           }
         })
         .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
         });
     }
 
     const platforms = ref([]);
     const newsList = ref([]);
+    const isLoadingDepositRecordList = ref(false);
     const depositRecordList = ref([]);
-
-    // /member/withdraw-deposit-record
 
     const selectedPlatId = ref();
     const selectedPlat = reactive({
@@ -1302,14 +1144,7 @@ export default defineComponent({
       searchKey: "",
       total: 0
     });
-    const favGamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
+    
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const esportPlatform = ref([]);
@@ -1632,6 +1467,7 @@ export default defineComponent({
     };
 
     const loadDepositRecordList = () => {
+      isLoadingDepositRecordList.value = true;
       api
         .get("/member/withdraw-deposit-record")
         .then((res) => {
@@ -1647,9 +1483,14 @@ export default defineComponent({
               icon: "report_problem"
             });
           }
+
+          isLoadingDepositRecordList.value = false;
         })
         .catch((err) => {
           console.log(err);
+          isLoadingDepositRecordList.value = false;
+        }).finally(() => {
+          isLoadingDepositRecordList.value = false;
         });
     };
 
@@ -1861,38 +1702,10 @@ export default defineComponent({
       getVersionNo();
       checkSticky();
       loadDepositRecordList();
-
-      // checkSpinWheelPromo();
-      // checkRedeemSpecialInviteBonusEligiblity();
     });
 
     const popupInterval = ref(null);
     const isSpinWheelPromo = ref(false);
-    // const checkSpinWheelPromo = () => {
-    //   if (store.hasToken()) {
-    //     setTimeout(() => {
-    //       console.log("Check Spin Wheel.");
-    //       getSpinWheelCount();
-    //       popupInterval.value = setInterval(() => {
-    //         // alert("YEs");
-    //         getSpinWheelCount();
-    //       }, 3600000);
-    //     }, 60000);
-    //   }
-    // };
-
-    // const getSpinWheelCount = () => {
-    //   eventapi.get("/multiWheel/init?promoCode=multi-wheel").then((res) => {
-    //     const { code, data } = res.data;
-    //     if (code === 0) {
-    //       console.log(data);
-    //       const { leftCount, unlock } = data;
-    //       if (leftCount > 0) {
-    //         isSpinWheelPromo.value = true;
-    //       }
-    //     }
-    //   });
-    // };
 
     const gotoPromoSpinWheel = () => {
       isSpinWheelPromo.value = false;
@@ -1910,7 +1723,7 @@ export default defineComponent({
         // getFavGameList();
         store.getUnreadTotal();
       }
-      loadData();
+      // loadData();
       loadAnnouncement();
       getPlatList();
     };
@@ -1984,7 +1797,7 @@ export default defineComponent({
     };
 
     return {
-      snowCount,
+      isLoadingDepositRecordList,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",

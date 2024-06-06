@@ -48,7 +48,7 @@
     </q-form>
 
     <q-inner-loading :showing="isLoading">
-      <q-spinner-hourglass size="50px" color="blue" />
+      <q-spinner-pie size="50px" color="blue" />
     </q-inner-loading>
   </div>
 </template>
