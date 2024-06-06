@@ -14,11 +14,11 @@
                 <div class="slot-img">
                   <el-image :src="loadGameIcon(`${game.code.toLowerCase()}.png`)" lazy>
                     <template #placeholder>
-                      <img src="@/assets/images/platform/slot/default.png" />
+                      <img src="@/assets/images/platform/game/default.png" />
                     </template>
                     <template #error>
                       <div class="image-slot">
-                        <img src="@/assets/images/platform/slot/default.png" />
+                        <img src="@/assets/images/platform/game/default.png" />
                       </div>
                     </template>
                   </el-image>
@@ -43,10 +43,10 @@ const platformGame = ref(null);
 
 const loadGameIcon = (path) => {
   try {
-    return require(`@/assets/images/platform/hot/${path}`);
+    return require(`@/assets/images/platform/game/hot/${path}`);
   } catch (e) {
     console.log(e);
-    return `${require("@/assets/images/platform/slot/default.png")}`;
+    return `${require("@/assets/images/platform/game/default.png")}`;
   }
 };
 
