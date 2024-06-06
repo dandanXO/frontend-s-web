@@ -71,7 +71,7 @@
         <div class="title"></div>
         <div class="little-title">
           <div class="right">
-            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。 每日最高可获 1,888 元。
+            活动期间，用户投注 NBA 季后赛总决赛当日早盘有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金。 每日最高可获 2,888 元。
           </div>
         </div>
         <table class="nba24-match-game-info-table">
