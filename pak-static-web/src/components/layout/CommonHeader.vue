@@ -150,7 +150,7 @@
               <!-- <a class="header-nav language" href="" target="_blank">Language</a> -->
             </li>
           </ul>
-          <!-- <bet-ranking /> -->
+          <bet-ranking />
         </div>
 
         <!-- <div class="mobile-menu-overlay" @click="showMobileMenu" /> -->
