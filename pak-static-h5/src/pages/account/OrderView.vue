@@ -49,9 +49,18 @@
                 <span class="txt-gray">{{ convertToGMT55(e.withdrawDate) }}</span>
               </div>
               <div class="order-col q-mt-sm">
-                <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
+                <!-- <span :class="`${e.status === 'SUCCESS' ? 'txt-green' : 'txt-red'}`">
                   {{ getWithdrawStatus(e.status) }}
-                </span>
+                </span> -->
+
+                <q-btn
+                  :class="{
+                    'btn--green': ['SUCCESS'].includes(e.status),
+                    'btn--red': ['FAIL', 'STEP_5'].includes(e.status),
+                    'btn--orange': ['APPLY', 'STEP_1', 'STEP_2', 'STEP_3', 'STEP_4'].includes(e.status)
+                  }"
+                  :label="`${getWithdrawStatus(e.status)}`"
+                ></q-btn>
               </div>
             </div>
           </div>
@@ -79,9 +88,18 @@
             <div class="order-subrow">
               <div class="order-col">{{ e.paymentType }}</div>
               <div class="order-col">
-                <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
+                <!-- <span :class="`${['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status) ? 'txt-green' : 'txt-red'}`">
                   {{ getDepositStatus(e.status) }}
-                </span>
+                </span> -->
+
+                <q-btn
+                  :class="{
+                    'btn--green': ['SUCCESS', 'SUPPLEMENT_SUCCESS'].includes(e.status),
+                    'btn--red': ['CLOSED'].includes(e.status),
+                    'btn--orange': e.status === 'PENDING'
+                  }"
+                  :label="`${getDepositStatus(e.status)}`"
+                ></q-btn>
               </div>
             </div>
             <div class="order-subrow">
@@ -382,5 +400,41 @@ onActivated(() => {
       }
     }
   }
+}
+
+.btn--orange {
+  color: #ff7a00;
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(255, 122, 0, 0.2);
+  min-height: unset;
+  margin-bottom: 4px;
+}
+
+.btn--red {
+  color: #b81212;
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(184, 18, 18, 0.2);
+  min-height: unset;
+  margin-bottom: 4px;
+}
+
+.btn--green {
+  color: #00b900;
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(0, 185, 0, 0.2);
+  min-height: unset;
+  margin-bottom: 4px;
 }
 </style>

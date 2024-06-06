@@ -77,7 +77,7 @@
         Live Support
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <div class="side-menu-item side-menu-item__transparent" @click="router.push('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
         Feedback
       </div>
@@ -874,9 +874,9 @@ onMounted(() => {
 }
 
 @media (max-width: 375px) {
-  .infoboard-container .profile-wrapper .profile-balance {
-    width: 100px;
-  }
+  // .infoboard-container .profile-wrapper .profile-balance {
+  // width: 100px;
+  // }
 
   .infoboard-container .profile-wrapper {
     gap: 4px;
