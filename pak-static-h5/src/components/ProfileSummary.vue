@@ -97,6 +97,10 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
       </a>
+
+      <!-- <div class="side-menu-item side-menu-item__transparent">
+        <LangOptions />
+      </div> -->
     </div>
   </div>
 
@@ -245,6 +249,8 @@ import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 import { defineEmits } from "vue";
 

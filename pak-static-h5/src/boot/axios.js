@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
+import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 import { errorMessages } from "./error-messages";
@@ -162,15 +163,30 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-
+        if (
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_NAME_EXIST ||
+          res.code === ResponseCode.ERROR_TOKEN_MISSED
+        ) {
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          window.location.href = "/";
+        }
+        if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          window.location.href = "/";
+        }
         Notify.create({
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: messageTranslated
+          // message: res.message || "错误"
+          message:
+            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
-      throw new Error(messageTranslated);
+      throw new Error(res.message || "Error");
     } else {
       Loading.hide();
       return res;
