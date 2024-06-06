@@ -20,7 +20,7 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURLPromo + banner.mobileImageUrl"
+      :img-src="returnBannerUrl(banner)"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
@@ -182,10 +182,21 @@
                       data-aos-anchor="#home"
                     >
                       <div class="platform-game-img">
+                        <!--                        <p>{{ `hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</p>-->
                         <div
                           class="game--bg"
                           :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                             backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                         ></div>
                       </div>
@@ -567,7 +578,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -593,7 +614,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -1275,13 +1306,8 @@ const filteredSubGameList = computed(() => {
 
 const subGameCode = ref("");
 
-const openHotGame = (hotGameList) => {
-  subGameList.value = hotGameList;
-  fullGameDialog.value = true;
-  hotGameOn.value = true;
-};
 
-const hotGameList = ref([]);
+const hotGameList = ref([{"id":19398,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":900,"siteName":null,"platformId":93,"platformName":null,"platformCode":"Spribe","gameType":"CASUAL","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Spribe"},{"code":"WCEvo","type":"platform","id":123,"name":"Evo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"id":22214,"name":"Aero","code":"aero","status":"OPEN","icon":"5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png","sequence":700,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":22215,"name":"Crash X","code":"crash","status":"OPEN","icon":"5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg","sequence":800,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"code":"WCPT","type":"platform","id":103,"name":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":18956,"name":"Teen Patti","code":"72","status":"OPEN","icon":"5/JILI/097df233-0329-427c-a596-9af968062624.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT,NEW","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18957,"name":"Teen Patti Joker","code":"159","status":"OPEN","icon":"5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"LISTHOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18959,"name":"Ludo Quick","code":"163","status":"OPEN","icon":"5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18960,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18961,"name":"TeenPatti 20-20","code":"161","status":"OPEN","icon":"5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18962,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18963,"name":"7up7down","code":"124","status":"OPEN","icon":"5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18964,"name":"Baccarat","code":"152","status":"OPEN","icon":"5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1357,8 +1383,7 @@ const loadHotGameList = () => {
           console.log("End")
           console.log(hotGameList.value);
           // console.log(livecasino.value);
-
-          isHotGameLoading.value= false;
+          // isHotGameLoading.value= false;
         });
     });
 
@@ -1785,6 +1810,24 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const returnBannerUrl = (banner) => {
+  try {
+    var bannerImg = "";
+    const bannerSplit= banner.mobileImageUrl.split("/");
+    // console.log(bannerSplit);
+    if(bannerSplit.length > 1){
+      bannerImg = bannerSplit[1];
+    }else{
+      bannerImg = bannerSplit[0];
+    }
+    return require(`../assets/images/banners/${bannerImg}`);
+  } catch (e) {
+    console.log("WERR")
+    return imgURLPromo + banner.mobileImageUrl;
+  }
+}
+
+
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -1837,7 +1880,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
-  isHotGameLoading.value= true;
+  // isHotGameLoading.value= true;
   isPlatLoading.value = true;
   getPlatList();
   loadData();
