@@ -1,7 +1,19 @@
 export default {
   lang: {
-    langVal: "ur",
-    asd: "asd"
+    langVal: "ur"
+  },
+  header: {
+    login: "لاگ ان",
+    register: "رجسٹر"
+  },
+  home: {
+    menu_lobby: "لابی",
+    menu_hot: "ہاٹ/اہم",
+    menu_live: "کیسینو",
+    menu_fish: "فشنگ/مچھلی پکڑنا",
+    menu_slot: "سلاٹ ",
+    menu_poker: "Poker",
+    menu_sport: "کھیل",
   },
   error: {
     101: "Không tìm thấy nền tảng",

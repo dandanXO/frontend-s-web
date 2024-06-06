@@ -4,7 +4,7 @@ import en from "./en";
 
 const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("languageLocale") || "ur",
+  locale: localStorage.getItem("languageLocale") || "en",
   allowComposition: true,
   messages: {
     ur,

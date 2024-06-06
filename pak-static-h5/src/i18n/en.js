@@ -2,6 +2,19 @@ export default {
   lang: {
     langVal: "en"
   },
+  header: {
+    login: "Login",
+    register: "Register",
+  },
+  home: {
+    menu_lobby: "Lobby",
+    menu_hot: "Hot",
+    menu_live: "Live",
+    menu_fish: "Fish",
+    menu_slot: "Slot",
+    menu_poker: "Poker",
+    menu_sport: "Sport",
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
