@@ -13,11 +13,15 @@
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
+      <!-- <div class="download-btn">
+        <a :href="topDownloadUrl">Download</a>
+      </div> -->
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
+    <div style="height: 56px" v-if="topDownload"></div>
     <div class="side-menu" @click.stop>
       <div class="side-menu-item side-menu-item__invite" @click="router.push('/earn-money')">
         <div>
@@ -375,7 +379,7 @@ const countdown = () => {
 const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
-  if (!store.token && route.path === "/home") {
+  if (route.path === "/home") {
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
@@ -484,6 +488,18 @@ onMounted(() => {
     .download-btn {
       // margin-left: auto;
       margin-left: auto;
+
+      // a {
+      //   text-decoration: none;
+      //   background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+      //   color: #131313;
+      //   font-weight: bold;
+      //   font-size: 12px;
+      //   padding: 12px 16px;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      // }
 
       img {
         width: 100%;
