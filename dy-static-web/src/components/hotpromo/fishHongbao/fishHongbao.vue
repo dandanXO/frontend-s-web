@@ -106,6 +106,7 @@
         :close-on-click-modal="false"
         class="fish-match-table-record-dialog"
       >
+        <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
         <template #header>
           <div class="title">恭喜你抽中</div>
         </template>
@@ -520,6 +521,16 @@ const claimHongBao = async () => {
   width: 360px;
   height: 360px;
   background-color: #fff3df;
+  font-family: "FZHanZhenGuangBiaoS-GB";
+  .fish-img {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
   .el-dialog__header {
     background: #fff3df;
     display: flex;
@@ -559,7 +570,7 @@ const claimHongBao = async () => {
       text-align: center;
       color: #ea5046;
       span {
-        font-size: 48px;
+        font-size: 72px;
       }
     }
     .hongbao-finish-btn {
