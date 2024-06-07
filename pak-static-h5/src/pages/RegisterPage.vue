@@ -1008,7 +1008,7 @@ function charType(num) {
     height: 60px;
     margin-top: 5px;
     animation: smallbeat 1.5s infinite;
-    filter: hue-rotate(120deg);
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
 
