@@ -17,8 +17,8 @@
       <a href="https://tf686868.com/" target="_blank"> <img src="img/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" /></a>
     </div>
 
-    <div class="banner-wrapper">
-      <img src="img/11.jpg" alt="2024 Eurocup" title="2024 Eurocup" />
+    <div id="image-container" class="banner-wrapper">
+      <img id="banner-img" src="img/11.jpg" alt="2024 Eurocup" title="2024 Eurocup" />
     </div>
 
     <div class="action-wrapper">
@@ -133,15 +133,31 @@
       });
     });
 
-    closeOverlay.addEventListener("click", function () {
-      overlay.style.display = "none";
-    });
+    // closeOverlay.addEventListener("click", function () {
+    //   overlay.style.display = "none";
+    // });
 
-    overlay.addEventListener("click", function (event) {
-      if (event.target === overlay) {
-        overlay.style.display = "none";
-      }
-    });
+    // overlay.addEventListener("click", function (event) {
+    //   if (event.target === overlay) {
+    //     overlay.style.display = "none";
+    //   }
+    // });
+
+
+    const images = ["img/11.jpg", "img/22.jpg", "img/33.jpg"];
+    let currentIndex = 0;
+    const imgElement = document.getElementById('banner-img');
+
+    function changeImage() {
+      imgElement.classList.add('fade-out');
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        imgElement.src = images[currentIndex];
+        imgElement.classList.remove('fade-out');
+      }, 1000); // 1 second duration for fade out
+    }
+
+    setInterval(changeImage, 3000);
   });
 </script>
 </body>
