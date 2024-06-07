@@ -225,6 +225,13 @@ deploy-vnm-landing:
 
 #===============================================================================================
 
+deploy-vnm-landing-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v2
+
+#===============================================================================================
+
 deploy-vnm-maintenance:
   extends: .s3-deploy
   variables:
