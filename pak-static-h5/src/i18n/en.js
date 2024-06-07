@@ -15,6 +15,9 @@ export default {
     wallet: "Wallet",
     me: "Me"
   },
+  btn: {
+    confirm: "Confirm",
+  },
   sideNav: {
     inviteToEarn: "Invite to Earn",
     shareYourExclusiveQRCode: "share your exclusive QR code",

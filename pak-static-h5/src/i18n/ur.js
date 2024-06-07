@@ -15,6 +15,9 @@ export default {
     wallet: "پرس",
     me: "میں"
   },
+  btn: {
+    confirm: "تصدیق کریں"
+  },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
     shareYourExclusiveQRCode: "اپنا انحصاری QR کوڈ شیئر کریں",

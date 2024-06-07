@@ -23,7 +23,7 @@
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
     <div style="height: 56px" v-if="topDownload"></div>
     <div class="side-menu" @click.stop>
-      <div class="side-menu-item side-menu-item__invite" @click="router.push('/earn-money')">
+      <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
         <div>
           {{ $t("sideNav.inviteToEarn") }}
           <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
@@ -81,7 +81,7 @@
         {{ $t("sideNav.livesupport") }}
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="router.push('/account/feedback')">
+      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
         {{ $t("sideNav.feedback") }}
       </div>
@@ -102,7 +102,7 @@
         {{ $t("sideNav.whatsapp") }}
       </a>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
@@ -422,6 +422,11 @@ const handleMenuBackgroundClick = (event) => {
   // }
 };
 
+const handleMenuRouteClick = (route) => {
+  router.push(route);
+  menuOpen.value = false;
+};
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -551,13 +556,15 @@ onMounted(() => {
     padding-top: 72px;
     background-color: #131313;
     width: 202px;
-    height: 100%;
+    height: calc(100vh - 72px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
     gap: 12px;
     transition: 0.3s all;
+
+    overflow-y: auto;
 
     .side-menu-divider {
       background: rgba(255, 255, 255, 0.05);
