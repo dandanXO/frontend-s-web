@@ -42,6 +42,15 @@
           </div>
         </div>
         <div class="line">
+          <span>은행지점:</span>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
+              {{ copybtntxt4 }}
+            </q-btn>
+          </div>
+        </div>
+        <div class="line">
           <span>입금 금액:</span>
           <div class="copy-wrapper">
             <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]" v-on:focus="$event.target.select()" />
@@ -208,11 +217,12 @@ const bankCardList = ref([]);
 const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
 const amountList = ref([]);
 const isDisplay = ref(false);
-const submitMessage = ref(['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaancncslkslakslakslakslaskla', 'b', 'c', 'd']);
+const submitMessage = ref([]);
 const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
@@ -228,6 +238,7 @@ const copybtntxt0 = ref("복사");
 const copybtntxt1 = ref("복사");
 const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
+const copybtntxt4 = ref("복사");
 
 const depositAmtRef = ref("");
 const { realName } = storeToRefs(store);
@@ -259,16 +270,18 @@ const copyMessage = (position) => {
     subMsg2.value.focus();
   } else if(position === '3') {
     subMsg3.value.focus();
+  } else if(position === '4') {
+    subMsg4.value.focus();
   }
 
   document.execCommand('copy');
 
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = "복사됨";
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach((element) => {
     element.value = "복사";
   });
