@@ -62,6 +62,11 @@ const routes = [
     children: [{ path: "", name: "fishing", component: () => import("pages/games/AviatorView.vue") }]
   },
   {
+    path: "/minigame",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", name: "minigame", component: () => import("pages/games/MinigameView.vue") }]
+  },
+  {
     path: "/live-casino",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "live-casino", component: () => import("pages/games/LiveCasinoView.vue") }]
