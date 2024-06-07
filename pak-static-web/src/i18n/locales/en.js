@@ -22,7 +22,8 @@ export default {
         liveSupport: "Live SUpport",
         feedback: "Feedback",
         telegram: "Telegram",
-        whatsapp: "Whatsapp"
+        whatsapp: "Whatsapp",
+        language: "Language"
       },
       betRanking: {
         title: "Biggest bet today"
@@ -192,6 +193,10 @@ export default {
       downloadAppModal: {
         title: "Download APP",
         description: "Open your phone and scan"
+      },
+      languageModal: {
+        title: "Language",
+        confirmButton: "CONFIRM"
       },
       common: {
         downloadApp: "Download app"

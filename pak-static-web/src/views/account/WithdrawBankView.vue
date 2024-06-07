@@ -42,9 +42,9 @@
             <RiLinkUnlink />
           </div>
           <!-- TODO: click event? -->
-          <div class="setting-btn">
+          <!-- <div class="setting-btn">
             <RiSettings3Line />
-          </div>
+          </div> -->
 
           <div class="flex-box cards">
             <div class="card-num-box">

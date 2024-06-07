@@ -22,7 +22,8 @@ export default {
         liveSupport: "زندہ حمایت",
         feedback: "تاثرات",
         telegram: "Telegram",
-        whatsapp: "Whatsapp"
+        whatsapp: "Whatsapp",
+        language: "زبان"
       },
       betRanking: {
         title: "ج کا سب سے بڑا شرط"
@@ -192,6 +193,10 @@ export default {
       downloadAppModal: {
         title: "App ڈاؤن لوڈ کریں",
         description: "اپنے فون کو کھولیں اور اسکین کریں"
+      },
+      languageModal: {
+        title: "پاکستان",
+        confirmButton: "تصدیق کریں"
       },
       common: {
         downloadApp: "App ڈاؤن لوڈ کریں"
