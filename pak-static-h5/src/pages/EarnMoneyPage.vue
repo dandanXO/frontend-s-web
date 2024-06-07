@@ -1,6 +1,5 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
   <div class="earn-money-wrapper">
     <div class="earn-money-container">
       <div class="earn-money-title">Bonus Pot Arrived</div>
@@ -276,8 +275,14 @@ const getLatestInvitees = () => {
     .then((response) => {
       if (response.code === 0) {
         latestInvitees.value = response.data;
+
         inviteesRecords.value = response.data.records;
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
         // startDisplayingRows();
+        // setTimeout(startDisplayingRows, 10000);
       }
     })
     .catch((e) => {
@@ -310,9 +315,9 @@ const startDisplayingRows = () => {
     } else {
       clearInterval(intervalId);
       currentIndex = 0;
-      startDisplayingRows(); // Restart the loop
+      // startDisplayingRows(); // Restart the loop
     }
-  }, 1000);
+  }, 2000);
 };
 
 const tableContainer = ref(null);
@@ -325,7 +330,10 @@ const startAutoScroll = () => {
   setInterval(() => {
     scrollPosition += 46;
     if (scrollPosition >= container.scrollHeight) {
-      scrollPosition = 0; // Reset scroll position if we reach the bottom
+      // scrollPosition = 0; // Reset scroll position if we reach the bottom
+      // startDisplayingRows();
+      // inviteesRecords.value.unshift(inviteesRecords.value);
+      // getLatestInvitees();
     }
     container.scrollTo({
       top: scrollPosition,
