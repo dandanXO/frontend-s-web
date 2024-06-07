@@ -217,8 +217,8 @@
 
     <div class="btn-lists">
       <img class="btn-icon" @click="openWhatsApp()" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-      <img class="btn-icon" @click="downloadApp()"  id="download-icon" src="../assets/images/auth/app-icon.png" />
-      <img class="btn-icon" @click="openCSInNewTab(ui.CSAUrl)" id="cs-icon" src="../assets/images/index/icon-cs.png" />
+      <img class="btn-icon" v-if="!isAndroid()" @click="downloadApp()"  id="download-icon" src="../assets/images/index/download/download-app.png" />
+      <img class="btn-icon" @click="openCSInNewTab(ui.CSAUrl)" src="../assets/images/index/icon-cs.png" />
     </div>
 
     <div class="bottom-img">
@@ -242,9 +242,11 @@ import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
+  methods: { isAndroid },
   components: {
     InputRowGrid,
     InputField
@@ -989,8 +991,8 @@ function charType(num) {
   margin: 10px auto;
 
   .btn-icon{
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 
     &:active{
       filter: brightness(0.85);
@@ -998,21 +1000,17 @@ function charType(num) {
     }
   }
   #whatapp-icon{
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
     animation: smallbeat 1.5s infinite;
-  }
-  #cs-icon{
-    width: 70px;
-    height: 70px;
   }
   #download-icon{
-    width: 50px;
-    height: 50px;
-    margin-top: 10px;
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
     animation: smallbeat 1.5s infinite;
-    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
 
