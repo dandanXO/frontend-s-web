@@ -166,6 +166,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
 import { getShortcuts } from '@/utils/datetime'
 import moment from "moment/moment";
+import { formatInputTimeZone } from "@/utils/format-timeZone";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -215,19 +216,25 @@ function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
+    if (key === 'regTime' && value) {
+      query[key] = [...requestCopy.regTime]
+    } else {
+      if (value) {
+        query[key] = value
+      }
     }
   })
+  timeZone = siteList.list.find(e => e.id === requestCopy.siteId).timeZone;
   if (request.regTime !== null) {
     if (request.regTime.length === 2) {
-      query.regTime = JSON.parse(JSON.stringify(request.regTime))
       query.regTime[0] = moment(query.regTime[0]).format(
         'YYYY-MM-DD 00:00:00'
       )
+      query.regTime[0] = formatInputTimeZone(query.regTime[0], timeZone);
       query.regTime[1] = moment(query.regTime[1]).format(
         'YYYY-MM-DD 23:59:59'
       )
+      query.regTime[1] = formatInputTimeZone(query.regTime[1], timeZone);
       query.regTime = query.regTime.join(',')
     }
   }
