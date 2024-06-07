@@ -120,8 +120,11 @@
       <div class="center-content">
         <SectionWrapper :title="$t('homeView.game.hot')" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
-            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platform, game.code)">
-              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'hot')" />
+            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platformCode, game.code)">
+              <!-- <img :src="loadHotGameIcon(`${game.icon}`)" /> -->
+              <div class="hotgame-icon" :style="{ backgroundImage: `url(${loadHotGameIcon(game.icon)})` }">
+                <img :src="require('@/assets/images/platform/game/default.png')" />
+              </div>
             </a>
           </div>
         </SectionWrapper>
@@ -306,7 +309,7 @@ import GameModal from "@/components/modal/GameModal";
 import { RiVolumeUpLine, RiCloseCircleFill } from "vue-remix-icons";
 import { useRoute, useRouter } from "vue-router";
 import { getAnnouncement } from "@/api/personal/personal";
-import { getPlatformGames, getPlatformList, hotGame, topWin } from "@/api/platform/platform";
+import { getPlatformGames, getPlatformList, getPlatformHotGames, hotGame, topWin } from "@/api/platform/platform";
 import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 import { globalStore } from "@/store";
 import MarqueeText from "vue-marquee-text-component";
@@ -609,11 +612,17 @@ const hotTrendingGames = [
   }
 ];
 const hotGames = ref([]);
+const hotGamesList = ref([]);
 const getHotGames = () => {
-  hotGame("HOT").then((res) => {
+  // hotGame("HOT").then((res) => {
+  //   hotGames.value = res;
+  // });
+
+  getPlatformHotGames().then((res) => {
     hotGames.value = res;
   });
 };
+
 const topWinners = ref([]);
 
 const getTopWinners = () => {
@@ -825,9 +834,20 @@ const redirectToPromo = () => {
   router.push("/center/top-up?isFromWelcomePromo=true");
 };
 
+// const imgURL = process.env.IMAGE_CDN;
+// const imgURLGame = imgURL + "/game/";
+
 const loadGameIcon = (path, type) => {
   try {
     return require(`@/assets/images/platform/game/${type}/${path}`);
+  } catch (e) {
+    return require("@/assets/images/platform/game/default.png");
+  }
+};
+
+const loadHotGameIcon = (path) => {
+  try {
+    return `${imgGamesURL}${path}`;
   } catch (e) {
     return require("@/assets/images/platform/game/default.png");
   }
@@ -2376,6 +2396,16 @@ $link-color: #db7e42;
       gap: 16px;
       overflow: auto;
       padding-bottom: 16px;
+
+      .hotgame-icon {
+        background-position: center center;
+        background-size: 100% 100%;
+        border-radius: 12px;
+
+        img {
+          opacity: 0;
+        }
+      }
 
       img {
         max-width: 230px;
