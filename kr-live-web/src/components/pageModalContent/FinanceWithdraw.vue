@@ -278,7 +278,7 @@ const updateWithdrawItem = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
 
-  withdrawInfo.amount = (Number(withdrawInfo.amount) + (amt * multiple)).toString();
+  withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);
 }
 
 const selectMethod = (method, index) => {
