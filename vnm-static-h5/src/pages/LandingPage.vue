@@ -41,19 +41,19 @@
             <img src="../assets/images/landing/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
             <div class="action-btn__text-wrapper">
               <span class="action-btn__title">Đăng Ký Ngay</span>
-              <span class="action-btn__description">TẶNG 88K <img src="./../assets/images/landing/hot-pill.png" /></span>
+              <span class="action-btn__description">TẶNG 12-88K <img src="./../assets/images/landing/hot-pill.png" /></span>
             </div>
           </div>
         </a>
       </div>
 
       <div>
-        <a class="action-a" :href="downloadUrl" target="_blank">
+        <a class="action-a" @click="goToPage('/register')" target="_blank">
           <div class="action-btn download">
             <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
             <div class="action-btn__text-wrapper">
               <span class="action-btn__title">Tải APP</span>
-              <span class="action-btn__description">TẶNG 60K</span>
+              <span class="action-btn__description">MƯA LÌ XÌ MỖI TUẦN LÊN ĐẾN 8,888K</span>
             </div>
           </div>
         </a>
