@@ -32,7 +32,7 @@ export default {
     menu_announcement: "공지사항",
     menu_deposit: "충전",
     menu_withdraw: "환전",
-    menu_message: "쪽지함",
+    menu_message: "문의",
     menu_customer_service: "고객센터",
     // menu end
     // rolling text start
@@ -657,6 +657,6 @@ export default {
       34002: "생일에 수령하십시오",
       35000: "35000 회원은 이 혜택을 받을 수 없음",
       35001: "회원이 이미 이 혜택을 받았음",
-      35002: "자격이 있는"    
+      35002: "자격이 있는"
   }
 };
