@@ -4,19 +4,31 @@
     <div class="center-numbers">
       <!--<div class="center-title">总奖金</div>-->
       <div id="prizePool" class="center-number">
-        {{ votesData.award }}
+        {{ store.currency.value }} {{ convertToCommaAmount(votesData.award) }}
+      </div>
+    </div>
+    
+    <div class="winner-bar">
+      <div class="winner-bar__bg">
+        <div class="winner-bar__inner">
+          <div class="winner-bar__text">
+            恭喜玩家SAFA赢得21314元
+          </div>
+        </div>
       </div>
     </div>
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
-      <div class="point">为你喜欢的战队投票，票数越高，竞猜成功之后，奖金越高哦！</div>
-      <div class="right-count">我的选票数量: <span id="myVotes">{{ votesData.myVotes }}</span></div>
+      <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
+      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span></div>
       <div class="country-list" id="countrylist">
         <div id="btn_1" class="country-item" v-for="votesListItem in votesData.votesList">
           <div class="country-item-bottom-pattern"></div>
-          <div class="c-flag"><img :src="votesListItem.countryImgUrl">
+          <div class="c-flagname">
+            <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
+            </div>
+            <div class="c-name">{{ votesListItem.teamNameEn }}</div>
           </div>
-          <div class="c-name">{{ votesListItem.teamNameEn }}</div>
           <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
           <div class="c-button" @click="castVote({
                         teamId: votesListItem.id,
@@ -24,9 +36,12 @@
                     })">投票</div>
         </div>
       </div>
+      <div class="c-note">举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
+        </div>
     </div>
 
     <div class="table-details pattern-wrapper">
+      <div class="table-title">投票历史</div>
       <div class="pattern-wrapper-bottom"></div>
       <table id="rankTable">
         <thead>
@@ -149,12 +164,19 @@
 import { onMounted, ref, defineComponent, reactive } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
 import { ElMessage } from "element-plus";
+import { convertToCommaAmount } from "@/utils/utils"
+import { userStore } from "@/store/index"
+import { useLocalStorage } from "@vueuse/core";
+
 
 export default defineComponent({
   name: "eurocupVotePromo",
   components: {
   },
   setup() {
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+
+    const store = userStore();
     const castVoteFormValidationRules = {
       votes: [
         {
@@ -238,7 +260,10 @@ export default defineComponent({
       castVoteFormValidationRules,
       castVoteFormRef,
       castVote,
-      submit
+      submit,
+      convertToCommaAmount,
+      store,
+      imgURL
     }
   }
 });
@@ -254,15 +279,50 @@ export default defineComponent({
   position: relative;
   background: url("images/prizepool.png") no-repeat center center;
   background-size: contain;
-  height: 300px;
+  height: 240px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-family: 'Arial';
+  font-family: 'DIN';
   padding-top: 82px;
 }
 
+
+.winner-bar {
+  background: conic-gradient(from 0deg at 50% 50%, #FFFFFF 0deg, #C7D0D4 76.84deg, #4F5F68 89.71deg, #2C3443 180deg, #4F6468 268.86deg, #C7CFD4 282.59deg, #FFFFFF 360deg);
+  padding: 3px;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+  &__bg {
+    border-radius: 15px;
+    padding: 3px;
+    background: linear-gradient(90deg, #0C8AFF 0%, #00F5E6 50%, #0C8AFF 100%);
+  }
+  &__inner {
+    background: #070030;
+    border: 1px solid #000000;
+    color: #ffffff;
+    padding: 10px 20px;
+  border-radius: 15px;
+  }
+  &__text {
+    background: linear-gradient(180deg, #03C3FF 0%, #B8EEFF 50%, #03C3FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    font-family: PingFang SC;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 33.6px;
+
+  }
+  
+}
 .promo-title{
   text-align: center;
   width:100%;
@@ -326,16 +386,22 @@ export default defineComponent({
 
 .center-numbers .center-number {
   margin-left: 6px;
-  font-size: 72px;
+  font-size: 56px;
   line-height: 80px;
   font-weight: bold;
-  color: #fff;
+  color: #00FFE0;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 68.38px;
+  text-align: left;
+
 }
 
 .countries-wrapper {
-  background-color: transparent;
+  background: #00192B33;
+
   border: 1px solid #00EAFE;
-  max-width: 1298px;
+  max-width: 1200px;
   margin: 50px auto;
   font-size: 16px;
   font-weight: bold;
@@ -344,7 +410,7 @@ export default defineComponent({
 }
 
 .countries-wrapper .point {
-  color: #fff;
+    color: #00E9FE;
 }
 
 //.pattern-wrapper:before,
@@ -388,9 +454,12 @@ export default defineComponent({
 
 .countries-wrapper .right-count {
   text-align: right;
-  color: #fff;
   margin-top: -25px;
   font-weight: normal;
+  color: #fff;
+  span {
+    color: #00E9FE;
+  }
 }
 
 .countries-wrapper .country-list {
@@ -407,61 +476,73 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   padding: 5px;
-  background: #DDEEFF;
   padding: 10px;
   overflow: hidden;
   position: relative;
 }
 
-.countries-wrapper .country-list .country-item:before,
-.countries-wrapper .country-list .country-item:after,
-.countries-wrapper .country-list .country-item .country-item-bottom-pattern:before,
-.countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
-  background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 12px 12px;
-  content: "";
-  width: 12px;
-  height: 12px;
-  display: inline-block;
-  position: absolute;
-}
+// .countries-wrapper .country-list .country-item:before,
+// .countries-wrapper .country-list .country-item:after,
+// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:before,
+// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
+//   background-image: url("../../../assets/images/promotion/hotpromo/prizePoolVote/boardpettern_s13.png");
+//   background-repeat: no-repeat;
+//   background-position: center center;
+//   background-size: 12px 12px;
+//   content: "";
+//   width: 12px;
+//   height: 12px;
+//   display: inline-block;
+//   position: absolute;
+// }
 
-.countries-wrapper .country-list .country-item:before {
-  transform: rotateZ(0deg);
-  top: 0;
-  left: 0;
-}
+// .countries-wrapper .country-list .country-item:before {
+//   transform: rotateZ(0deg);
+//   top: 0;
+//   left: 0;
+// }
 
-.countries-wrapper .country-list .country-item:after {
-  transform: rotateZ(90deg);
-  top: 0;
-  right: 0;
-}
+// .countries-wrapper .country-list .country-item:after {
+//   transform: rotateZ(90deg);
+//   top: 0;
+//   right: 0;
+// }
 
-.countries-wrapper .country-list .country-item .country-item-bottom-pattern:before {
-  transform: rotateZ(270deg);
-  bottom: 0;
-  left: 0;
-}
+// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:before {
+//   transform: rotateZ(270deg);
+//   bottom: 0;
+//   left: 0;
+// }
 
-.countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
-  transform: rotateZ(180deg);
-  bottom: 0;
-  right: 0;
-}
+// .countries-wrapper .country-list .country-item .country-item-bottom-pattern:after {
+//   transform: rotateZ(180deg);
+//   bottom: 0;
+//   right: 0;
+// }
 
 .countries-wrapper .country-list .country-item:hover .c-button {
-  background-color: #ffffff;
-  border-radius: 10px;
-  color: #498BCB;
+  // background-color: #ffffff;
+  // border-radius: 10px;
+  // color: #498BCB;
+  background: #00E0FF4A;
+
 }
 
+.countries-wrapper .country-list .country-item .c-flagname {
+  background: #00F0FF0D;
+  padding: 10px 15px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+    width: 100%;
+
+}
 .countries-wrapper .country-list .country-item .c-flag {
-  background: #eeeee4;
-  border: 5px solid #53ABFF;
-  border-radius: 50%;
+  // background: #eeeee4;
+  // border: 5px solid #53ABFF;
+  // border-radius: 50%;
   height: 80px;
   width: 80px;
   overflow: hidden;
@@ -482,39 +563,69 @@ export default defineComponent({
 }
 
 .countries-wrapper .country-list .country-item .c-price {
-  background: #ffffff;
   color: #fff;
-  font-size: 14px;
-  font-weight: normal;
-  border-left: 2px solid #53ABFF;
-  border-right: 2px solid #53ABFF;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 25.2px;
   width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 0;
+  gap: 5px;
+  &:before {
+    content: "";
+    background: url("../../../assets/images/promotion/hotpromo/prizePoolVote/point-icon.png")no-repeat center center;
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .countries-wrapper .country-list .country-item .c-button {
-  border: 2px solid #22578b;
-  padding: 2px 0px;
-  border-radius: 20px;
+  border: 1px solid #00E0FF;
+  padding: 5px 20px;
+  border-radius: 4px;
+  background: #00E0FF1A;
   display: block;
   margin-top: 10px;
-  width: 100%;
+  width: 80%;
   text-align: center;
-  color: #22578b;
+  color: #ffffff;
   line-height: 16px;
-  transition: 0.3s all;
+  font-family: 'PingFang SC'
+}
+
+
+.countries-wrapper .c-note {
+  font-family: PingFang SC;
+font-size: 20px;
+font-weight: 500;
+line-height: 40px;
+text-align: left;color: #58AEDE;
+
+
 }
 
 .table-details {
-  background-color: #f7f7f7;
-  border-radius: 30px;
-  border: 1px solid #53abff;
+  border: 1px solid #00EAFE;
   margin: 50px auto;
-  max-width: 1298px;
+  max-width: 1200px;
   font-size: 16px;
   font-weight: bold;
-  padding: 20px;
+  padding: 5px;
   position: relative;
+  .table-title{ 
+    font-family: PingFang SC;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 33.6px;
+    color: #00EAFE;
+    text-align: center;
+    margin: 5px auto;
+
+  }
 }
 
 .table-details table {
@@ -523,12 +634,20 @@ export default defineComponent({
 
 .table-details table thead {
   border-bottom: 1px solid #232323;
+  background: #00EAFE;
+
 }
 
 .table-details table thead td {
   text-align: center;
-  color: #ff;
+  color: #000000;
   padding: 10px;
+  &:first-child {
+    border-radius: 4px 0 0 4px;
+  }
+  &:last-child {
+    border-radius: 0 4px 4px 0;
+  }
 }
 
 .table-details table tbody {
@@ -536,7 +655,7 @@ export default defineComponent({
 }
 
 .table-details table tbody td {
-  color: #232323;
+  color: #ffffff;
   padding: 10px;
   text-align: center;
   font-weight: normal;
@@ -547,7 +666,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   margin: 5px auto;
-  color: #232323;
+  color: #ffffff;
 }
 </style>
   

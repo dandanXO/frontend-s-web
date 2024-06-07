@@ -26,6 +26,13 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "DIN";
+  src: url("@/assets/fonts/DIN Bold.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 body {
   padding: 0;
   margin: 0;
@@ -219,16 +226,15 @@ body {
 
     .el-dialog__body {
       padding: 20px !important;
-      border-radius:12px;
-      text-align:center;
+      border-radius: 12px;
+      text-align: center;
     }
 
     .alert-img {
       display: block;
       width: 100%;
-      border-radius:12px;
+      border-radius: 12px;
     }
-
   }
 }
 .full-modal {
