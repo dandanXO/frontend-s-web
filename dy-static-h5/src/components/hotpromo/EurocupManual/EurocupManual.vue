@@ -22,17 +22,13 @@
       <div class="common-title">欧洲杯小组赛赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
-          <div
-            class="game-team"
-            v-for="team in groupStageTeamsList"
-            v-bind:key="team.id"
-          >
+          <div class="game-team" v-for="team in groupStageTeamsList" v-bind:key="team.id">
             <div class="game-item">
               <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
               <div class="game-country" v-html="team.teamOneName" />
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
             </div>
@@ -43,17 +39,13 @@
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'roundOf16'">
-          <div
-            class="game-team"
-            v-for="team in roundOf16TeamsList"
-            v-bind:key="team.id"
-          >
+          <div class="game-team" v-for="team in roundOf16TeamsList" v-bind:key="team.id">
             <div class="game-item">
               <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
               <div class="game-country" v-html="team.teamOneName" />
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
             </div>
@@ -64,17 +56,13 @@
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'quarterFinal'">
-          <div
-            class="game-team"
-            v-for="team in quarterFinalTeamsList"
-            v-bind:key="team.id"
-          >
+          <div class="game-team" v-for="team in quarterFinalTeamsList" v-bind:key="team.id">
             <div class="game-item">
               <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
               <div class="game-country" v-html="team.teamOneName" />
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
             </div>
@@ -85,17 +73,13 @@
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'semiFinalAndFinal'">
-          <div
-            class="game-team"
-            v-for="team in semiFinalAndFinalTeamsList"
-            v-bind:key="team.id"
-          >
+          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList" v-bind:key="team.id">
             <div class="game-item">
               <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
               <div class="game-country" v-html="team.teamOneName" />
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
             </div>
@@ -401,15 +385,19 @@ onMounted(() => {
     font-size: 20px;
     font-weight: 700;
     margin: 15px auto 0;
-    color: #0099D8;
-    display: flex; justify-content: center;
+    color: #0099d8;
+    display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
-    gap: 5px;
+    gap: 10px;
     text-wrap: nowrap;
-    &:before, &:after {
+    white-space: nowrap;
+
+    &:before,
+    &:after {
       content: "";
-      background: url(../../../assets/promo/dy-eurocup-manual/title-bar.png)no-repeat center center;
+      background: url(../../../assets/promo/dy-eurocup-manual/title-bar.png) no-repeat center center;
       height: 9vw;
       width: 180px;
       background-size: contain;
@@ -464,15 +452,31 @@ onMounted(() => {
 
 .schedule {
   width: 100%;
-  background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
-  border: 1px solid #1AF4FF;
+  background: linear-gradient(
+    243.03deg,
+    #1960ac 0%,
+    rgba(25, 96, 172, 0.6) 6.15%,
+    rgba(25, 96, 172, 0) 12.62%,
+    rgba(25, 96, 172, 0) 87.87%,
+    rgba(25, 96, 172, 0.6) 93.2%,
+    #1960ac 100%
+  );
+  border: 1px solid #1af4ff;
   margin: 20px auto 10px;
   padding: 10px 10px;
 }
 .shade {
-  background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
+  background: linear-gradient(
+    243.03deg,
+    #1960ac 0%,
+    rgba(25, 96, 172, 0.6) 6.15%,
+    rgba(25, 96, 172, 0) 12.62%,
+    rgba(25, 96, 172, 0) 87.87%,
+    rgba(25, 96, 172, 0.6) 93.2%,
+    #1960ac 100%
+  );
   width: 100%;
-  border: 1px solid #1AF4FF;
+  border: 1px solid #1af4ff;
   padding: 10px;
   margin: 20px auto;
 }
@@ -514,13 +518,13 @@ onMounted(() => {
   }
 
   th {
-    background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     color: #ffffff;
     font-weight: 700;
   }
 
   td {
-    border: 1px solid #ACD4F6;
+    border: 1px solid #acd4f6;
     color: #fff;
     border: none !important;
     /* margin-top: 3px; */
@@ -538,13 +542,13 @@ onMounted(() => {
   gap: 10px;
   margin: 10px 0;
   .info-item {
-      padding: 5px;
-      position: relative;
-      gap: 10px;
-      display: flex;
-      flex-direction: column;
-      background: url(../../../assets/promo/dy-eurocup-manual/info-bg.png)no-repeat center center;
-      background-size: cover;
+    padding: 5px;
+    position: relative;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    background: url(../../../assets/promo/dy-eurocup-manual/info-bg.png) no-repeat center center;
+    background-size: cover;
     width: 30%;
     .title {
       display: flex;
@@ -595,23 +599,23 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    flex:2;
+    flex: 2;
     .vs {
       font-size: 24px;
       line-height: 20px;
       color: #ffffff1a;
       font-family: FZHanZhenGuangBiaoS-GB;
-        width: 20px;
+      width: 20px;
     }
     .time {
       font-size: 10px;
       line-height: 15.24px;
-      color: #FFFFFF80;
+      color: #ffffff80;
       font-family: Microsoft YaHei UI;
       text-align: center;
     }
     .clickBet {
-      background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
       color: #ffffff;
       padding: 3px 5px;
       border-radius: 20px;
@@ -639,7 +643,7 @@ onMounted(() => {
     align-items: center;
     flex-direction: column;
     gap: 5px;
-    flex:1;
+    flex: 1;
   }
 }
 
