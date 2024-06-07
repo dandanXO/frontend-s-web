@@ -10,7 +10,10 @@
       >
         <label v-for="(language, index) in languages" :key="index" :for="language.value" class="language-item">
           <div class="language-item__label">
-            <span>{{ language.flag }}</span>
+            <img
+              class="language-item__label-flag"
+              :src="require(`@/assets/images/layout/header/${language.value}.png`)"
+            />
             <span>{{ language.name }}</span>
           </div>
           <a-checkbox :value="language.value" :id="language.value" />
@@ -36,7 +39,6 @@ const currentLanguage = useLocalStorage(LANGUAGE_KEY, LANGUAGE_DEFAULT_VALUE);
 const languages = ref([
   { flag: "🇺🇸", name: "US", value: "en" },
   { flag: "🇵🇰", name: "پاکستان", value: "ur" }
-  // {flag:'🇨🇳',name:'中国',value:'cn'},
 ]);
 
 const selectedLanguage = ref([]);
@@ -97,6 +99,10 @@ watch(visible, resetSelectedLanguage);
       .language-item__label {
         display: flex;
         gap: 10px;
+
+        .language-item__label-flag {
+          max-width: 24px;
+        }
       }
 
       :deep(.ant-checkbox) {

@@ -387,6 +387,7 @@ export default defineComponent({
           background-size: cover;
           background-repeat: no-repeat;
           background-position: center center;
+          border-radius: 10px;
           &.isDesktop {
             display: block;
             height: 22vw;

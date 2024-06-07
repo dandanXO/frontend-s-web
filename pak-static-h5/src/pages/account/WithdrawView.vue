@@ -715,8 +715,7 @@ const isValidCardAddress = () => {
       margin: 0 0 0.5rem 0;
       .title {
         color: rgba(255, 255, 255, 0.5);
-        font-size: 0.825rem;
-        font-weight: 700;
+        font-size: 14px;
       }
     }
 
@@ -776,8 +775,7 @@ const isValidCardAddress = () => {
       margin: 0 0 0.5rem 0;
       .title {
         color: #637387;
-        font-size: 0.825rem;
-        font-weight: 600;
+        font-size: 14px;
       }
     }
 

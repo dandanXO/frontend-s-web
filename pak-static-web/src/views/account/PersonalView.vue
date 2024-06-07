@@ -246,6 +246,7 @@ let validatePass2 = async (r, v) => {
 
 const store = userStore();
 const { profilePhoto, nickName, email, realName } = storeToRefs(store);
+const { getMemberInfo } = store;
 
 const tempProfile = ref();
 // TODO: upload api
@@ -310,14 +311,12 @@ const loadInfo = () => {
         if (personalState.memberInfo.birthday) {
           personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
         }
-        if (personalState.memberInfo.realName) {
-          personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-        }
       }
     })
     .catch((error) => {
       console.log("error", error);
     });
+  getMemberInfo();
 };
 
 const verificationStatus = ref(false);

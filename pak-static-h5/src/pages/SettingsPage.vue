@@ -71,7 +71,7 @@
           </router-link>
           <router-link to="/account/feedback">
             <div class="acct-nav-item">
-              <img src="../assets/images/account/message-svg.svg" />
+              <img src="../assets/images/account/feedback-svg.svg" />
             </div>
             <div class="acct-nav-label">Feedback</div>
           </router-link>
@@ -445,22 +445,23 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
   font-weight: 700;
   color: #fff;
-  border: 1px solid #5d8956;
-  border-radius: 8px;
+  border: 1px solid #1baa99;
+  border-radius: 12px;
   width: 140px;
   height: 42px;
+  color: #70bc62;
 }
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 </style>
 

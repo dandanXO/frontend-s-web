@@ -42,7 +42,9 @@
           <div class="invitation-link__link-wrapper">
             <!-- <a-input class="invitation-link__link" readonly /> -->
             <div class="invitation-link__link-inner">
-              {{ selfTgurl }}
+              <div class="invitation-link__link">
+                {{ selfTgurl }}
+              </div>
               <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">
                 {{ $t("shareView.inviteLink.copyButton") }}
               </button>
@@ -593,10 +595,17 @@ onMounted(() => {
           background-color: #0f0b0b;
           border-radius: 10px;
           position: relative;
+          max-width: 518px;
           font-size: 18px;
           font-weight: 400;
           line-height: 32px;
           color: #ffffff;
+
+          .invitation-link__link {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
 
           .invitation-link__copt-btn {
             position: absolute;

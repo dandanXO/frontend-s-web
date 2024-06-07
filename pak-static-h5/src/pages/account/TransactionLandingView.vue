@@ -67,7 +67,7 @@ watch(
     }
 
     :deep(.q-tab) {
-      color: #5c6c86;
+      color: #5F6061;
       // background: #101114;
       border-radius: 0.375rem;
       // margin: 2.5px;
