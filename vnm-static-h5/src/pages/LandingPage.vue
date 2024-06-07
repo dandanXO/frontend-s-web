@@ -36,7 +36,7 @@
     <div class="action-wrapper">
 
       <div>
-        <a @click="goToPage('/register')">
+        <a class="action-a" @click="goToPage('/register')">
           <div class="action-btn register">
             <img src="../assets/images/landing/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
             <div class="action-btn__text-wrapper">
@@ -48,7 +48,7 @@
       </div>
 
       <div>
-        <a :href="downloadUrl" target="_blank">
+        <a class="action-a" :href="downloadUrl" target="_blank">
           <div class="action-btn download">
             <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
             <div class="action-btn__text-wrapper">
@@ -250,10 +250,10 @@ a:hover {
 }
 
 .action-wrapper {
-  padding: 0px 16px 33px;
+  padding: 0px 16px 30px;
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 10px;
 }
 
 .action-wrapper > div {
@@ -279,6 +279,14 @@ a:hover {
 
 .action-btn img {
   width: 44px;
+
+  @media(max-width: 400px){
+    width: 34px;
+  }
+}
+
+.action-btn{
+  aspect-ratio: 150/75;
 }
 
 .action-btn__text-wrapper {
@@ -293,6 +301,11 @@ a:hover {
 .action-btn__title {
   font-size: 1.5rem;
   line-height: 1.8rem;
+
+  @media(max-width: 400px){
+    font-size: 1.15rem;
+    line-height: 1.4rem;
+  }
 }
 
 .action-btn__description {
