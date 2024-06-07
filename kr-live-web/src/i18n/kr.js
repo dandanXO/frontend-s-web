@@ -43,7 +43,7 @@ export default {
     date_picker_sun: "일",
     date_picker_monday: "월요일",
     date_picker_mon: "월",
-    date_picker_tueday: "화요일",
+    date_picker_tuesday: "화요일",
     date_picker_tue: "화",
     date_picker_wednesday: "수요일",
     date_picker_wed: "수",
