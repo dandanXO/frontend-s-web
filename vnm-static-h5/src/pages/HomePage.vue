@@ -695,7 +695,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%; padding: none;" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -838,9 +838,54 @@
       </div>
     </q-card>
   </q-dialog>
+  
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isWelcomeFlag"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+    persistent
+    @hide="removeRouterWelcome"
+  >
+    <q-card style="width: 100%; border-radius: 15px; padding: 10px; background: none;">
+      <div class="modalcontent welcome">
+        <div class="q-pa-sm" style="text-align: right; width: 100%;">
+          <q-btn class="color-font-1" border v-close-popup round dense icon="close" />
+        </div>
+        <div class="welcome-header">
+          <div class="welcome-header__ball"><img src="../assets/images/welcome/ball.png"></div>
+          <div class="welcome-header__title">Đăng ký thành công</div>
+        </div>
+        <div class="section">
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.firstSlide') }}</div>
+            <div class="main-text">{{ $t('lang.firstSlideContent') }}</div>
+            <div class="slide-qr"><VueQRCodeComponent :size="70" :text="ui.downloadUrl" /></div>
+            <div class="lastline">{{ $t('lang.firstSlideSub') }}</div>
+          </div>
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.secondSlide') }}</div>
+            <div class="main-text">{{ $t('lang.secondSlideContent') }}</div>
+            <div class="slide-img"><img src="../assets/images/welcome/secondslideimg.png"></div>
+            <router-link to="/finance/deposit" class="deposit-btn">{{ $t('lang.depositNow') }}</router-link>
+          </div>
+        </div>
+        <div class="section last">
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.thirdSlide') }}</div>
+            <div class="main-text">{{ $t('lang.thirdSlideContent') }}</div>
+            <div class="slide-img full"><img src="../assets/images/welcome/thirdslideimg.png"></div>
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
+import VueQRCodeComponent from 'vue-qrcode-component';
 import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
@@ -889,9 +934,11 @@ export default defineComponent({
     LangOptions,
     Swiper,
     SwiperSlide,
-    PushNotification
+    PushNotification,
+    VueQRCodeComponent
   },
   setup() {
+    const isWelcomeFlag = ref(true);
     const fabPos = ref([18, 18]);
     const draggingFab = ref(false);
     const isRebateModalVisible = ref(false);
@@ -1489,6 +1536,8 @@ export default defineComponent({
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
+          
+          ui.downloadUrl = downloadUrl.value;
         })
         .catch((err) => {
           console.log(err);
@@ -1718,11 +1767,25 @@ export default defineComponent({
     const countDay02 = computed(() => {
       return parseInt(countDayString.value.substr(1, 1));
     });
-
+    const removeRouterWelcome = () => {
+      router.push('/');
+    }
     watch(countDayString, () => {
       countDay01.value = parseInt(countDayString.value.substr(0, 1));
       countDay02.value = parseInt(countDayString.value.substr(1, 1));
     });
+    
+      watch(
+      () => route.query,
+      (newQuery) => {
+        if (newQuery.name === "welcome") {
+          isWelcomeFlag.value = true;
+        } else {
+          isWelcomeFlag.value = false;
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       imageLoading,
@@ -1838,7 +1901,10 @@ export default defineComponent({
       daysDiff,
       countDayString,
       countDay01,
-      countDay02
+      countDay02,
+      isWelcomeFlag,
+      ui,
+      removeRouterWelcome
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1850,6 +1916,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap");
 .home-news {
   width: calc(100% - 2rem);
   margin: 0 auto 32px;
@@ -2223,6 +2290,108 @@ export default defineComponent({
 
 .modal-update-div {
   .modalcontent {
+    &.welcome {
+      font-family: 'Inter';
+      background: #FFFFFFCC;
+      margin-top: 50px;
+    padding: 0;
+      .welcome-header {
+        display: flex;
+        flex-direction: column;
+        margin-top: -100px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        &__ball {
+          margin-bottom: -10px;
+          img {
+            display: block;
+          }
+        }
+        &__title { 
+          color: #000000;
+          font-size: 20px;
+          font-weight: 900;
+          line-height: 24.2px;
+          text-align: center;
+        }
+      }
+      .section {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        &.last {
+          padding-top: 0;
+        }
+        .section-card {
+          box-shadow: 0px 0px 10px 0px #0000001A;
+          background: #FFFFFFCC;
+          border: 1px solid #FFFFFF;
+          border-radius: 15px;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
+          flex: 1;
+          .main-header {
+            color: #424F72;
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 19.36px;
+            text-align: center;
+            width: 85%;
+           }
+           .main-text {
+             width: 95%;
+            color: #7A80A1;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
+            text-align: center;
+
+           }
+           .slide-img {
+            width: 80%;
+            margin: 0 auto;
+            &.full {
+              width: 100%;
+            }
+            img {
+              width: 100%;
+            }
+           }
+           .slide-qr {
+                background: url('../assets/images/welcome/welcome-qrbg.png')no-repeat center center;
+                background-size: contain;
+                width: 100px;
+                height: 110px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+           }
+           .lastline {
+            color: #424F72;
+            font-size: 12px;
+            font-weight: 900;
+            line-height: 16px;
+            text-align: center;
+
+           }
+          .deposit-btn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 90%;
+              padding: 10px;
+              font-weight: 500;
+              background: url('../assets/images/welcome/title-bg-blue.png')no-repeat center center;
+              background-size: contain;
+              color: #ffffff;
+          }
+        }
+      }
+    }
     background: $white;
     // height: 232px;
     height: auto;
@@ -2622,6 +2791,16 @@ export default defineComponent({
 //Above is New One (LH)
 
 @media (max-width: 480px) {
+  .modal-update-div .modalcontent.welcome .section .section-card {
+    gap: 5px;
+  }
+  .modal-update-div .modalcontent.welcome .section .section-card .main-header {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .modal-update-div .modalcontent.welcome .section .section-card .deposit-btn {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 410px) {

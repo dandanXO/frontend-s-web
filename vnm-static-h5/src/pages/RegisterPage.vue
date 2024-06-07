@@ -2,15 +2,16 @@
   <div class="login-container">
     <q-form class="rounded-borders" @submit="onSubmit">
       <div class="login-form-container">
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.username") }}
           <em>*</em>
-        </q-label>
+        </q-label> -->
         <q-input
           ref="loginNameRef"
           rounded
           standout
           clearable
+          dense
           v-model="regForm.loginName"
           :placeholder="$t('lang.username')"
           :rules="[
@@ -25,14 +26,15 @@
           </template>
         </q-input>
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.password") }}
           <em>*</em>
-        </q-label>
+        </q-label> -->
         <q-input
           ref="pwdRef"
           rounded
           standout
+          dense
           v-model="regForm.password"
           :placeholder="$t('lang.password')"
           :type="isPwd ? 'password' : 'text'"
@@ -108,14 +110,15 @@
           </template>
         </q-input> -->
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.real_name") }}
           <em>*</em>
-        </q-label>
+        </q-label> -->
         <q-input
           ref="realNameRef"
           rounded
           standout
+          dense
           clearable
           v-model="regForm.realName"
           :placeholder="$t('lang.real_name')"
@@ -129,17 +132,20 @@
           <template v-slot:prepend>
             <img src="../assets/images/login/user-icon.png" width="24" />
           </template>
+        <template v-slot:hint>
+        <div class="q-mb-xs" style="font-size: 11px; color: #cccccc; ">{{ $t("lang.real_name_hints") }}</div>
+        </template>
         </q-input>
 
-        <div class="q-mb-md" style="font-size: 11px; color: #cccccc">{{ $t("lang.real_name_hints") }}</div>
-
+<!-- 
         <q-label>
           {{ $t("lang.mobile_number") }}
           <em>*</em>
-        </q-label>
+        </q-label> -->
         <q-input
           ref="telRef"
           standout
+dense
           rounded
           v-model="regForm.telephone"
           :placeholder="$t('lang.mobile_number')"
@@ -176,14 +182,15 @@
           </template>
         </q-input> -->
 
-        <q-label>
+        <!-- <q-label>
           {{ $t("lang.verification_code") }}
           <em>*</em>
-        </q-label>
+        </q-label> -->
         <q-input
           ref="verificationRef"
           rounded
           standout
+          dense
           clearable
           type="text"
           v-model="regForm.captchaCode"
@@ -202,12 +209,13 @@
           </template>
         </q-input>
 
-        <q-label>{{ $t("lang.referral_code") }}</q-label>
+        <!-- <q-label>{{ $t("lang.referral_code") }}</q-label> -->
         <q-input
           v-if="!hasAffiliate"
           ref="affiliateCodeRef"
           rounded
           standout
+          dense
           clearable
           v-model="regForm.referrer"
           :hint="$t('lang.referral_hints')"
@@ -471,12 +479,12 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
-                $q.notify({
-                  color: "positive",
-                  position: "top",
-                  message: t("lang.register_successful"),
-                  icon: "check_circle_outline"
-                });
+                // $q.notify({
+                //   color: "positive",
+                //   position: "top",
+                //   message: t("lang.register_successful"),
+                //   icon: "check_circle_outline"
+                // });
 
                 // FB tracking :: signup-success
                 if (store.isAffiliateA) {
@@ -489,7 +497,7 @@ export default defineComponent({
                 store.autoLogin(res.data);
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
-                  router.go("/");
+                  router.push({path:"/", query:{ name:"welcome"}});
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");
@@ -732,7 +740,7 @@ function charType(num) {
     .veri-img {
       height: 80%;
       padding-right: 6px;
-      width: 125px;
+      // width: 125px;
     }
 
     .login-via-phone-div {
