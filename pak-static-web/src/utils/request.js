@@ -4,10 +4,13 @@ import { message } from "ant-design-vue";
 import { stringify } from "qs";
 import { ResponseCode } from "../api/response";
 import { userStore } from "@/store";
+import { i18n } from "@/i18n";
 
 const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
+
+const t = i18n.global.t;
 
 const onRequest = (config) => {
   const store = userStore();
@@ -63,7 +66,7 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      message.error(res.message || "Error", 4);
+      message.error(t(`error.${res.code}`) || "Error", 4);
     }
     throw new Error(res.message || "Error");
   } else {
@@ -80,8 +83,8 @@ function initHttp() {
   const instance = axios.create({
     timeout: process.env.TIMEOUT,
     headers: {
-      domain: host,
-    },
+      domain: host
+    }
   });
   instance.interceptors.request.use(onRequest);
   instance.interceptors.response.use(onResponse, onResponseError);
@@ -94,7 +97,7 @@ export const server = new Proxy(
   {
     REST: null,
     EVENT: null,
-    CASHIER: null,
+    CASHIER: null
   },
   {
     get: (target, propKey) => {
@@ -110,6 +113,6 @@ export const server = new Proxy(
         instance.defaults.baseURL = crArray[getRndInteger(0, crArray.length)];
       }
       return instance;
-    },
+    }
   }
 );

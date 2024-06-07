@@ -4,7 +4,7 @@ import ur from "./locales/ur";
 
 export const i18n = createI18n({
   legacy: false,
-  locale: localStorage.getItem("languageLocale") || "en",
+  locale: localStorage.getItem("languageLocale") || "ur",
   messages: {
     en,
     ur

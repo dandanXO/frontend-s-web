@@ -3,13 +3,20 @@ export default {
     header: {
       deposit: "ڈیپازت ",
       switch: {
-        casino: "casino",
+        casino: "کسینو",
         promotion: "پرومو"
       },
       downloadApp: "App ڈاؤن لوڈ کریں",
       inviteToEarn: {
         title: "پیسے کمانے کیلئےدعوت دیں",
         description: "بس اپنا خاص QR کوڈ شیئر کریں"
+      },
+      navigation: {
+        live: "لائیو کیسینو",
+        slot: "سلاٹ گیمز",
+        fish: "فشنگ/مچھلی پکڑنا",
+        sport: "کھیل",
+        poker: "پوکر"
       },
       menu: {
         liveSupport: "زندہ حمایت",
@@ -148,7 +155,7 @@ export default {
               placeholder: "تصدیقی کوڈ",
               error: {
                 required: "براہ کرم تصدیقی کوڈ کا اندراج کریں",
-                len: "Length should be 4"
+                len: "لمبائی 4 ہونی چاہیے"
               }
             }
           },
@@ -361,35 +368,35 @@ export default {
       table: {
         header: {
           experience: "تجربہ اپ گریڈ",
-          oneOffReward: "Upgrade Rewards",
-          monthlyReward: "Monthly Rewards"
+          oneOffReward: "اپ گریڈ انعامات",
+          monthlyReward: "ماہانہ انعامات"
         }
       }
     },
     bank: {
       title: "بنک",
-      addButton: "Add card",
+      addButton: "کارڈ شامل کریں",
       addModal: {
-        title: "Add Bank Card",
+        title: "بینک کارڈ شامل کریں",
         form: {
           bankType: {
             placeholder: {
-              crypto: "Crypto",
-              bank: "Bank type",
-              eWallet: "E-wallet type"
+              crypto: "کرپٹو",
+              bank: "بینک کی قسم",
+              eWallet: "الیکٹرانک والٹ کی قسم"
             }
           },
           bankId: {
             placeholder: {
-              crypto: "Please select a Crypto",
-              bank: "Please select a bank",
-              eWallet: "Please select an E-wallet"
+              crypto: "براہ کرم ایک کرپٹو کو منتخب کریں",
+              bank: "براہ کرم ایک بینک کو منتخب کریں",
+              eWallet: "براہ کرم ایک الیکٹرانک والٹ کو منتخب کریں"
             },
             error: {
               required: {
-                crypto: "Please select a Crypto card",
-                bank: "Please select a bank",
-                eWallet: "Please select an E-wallet"
+                crypto: "براہ کرم ایک کرپٹو کو منتخب کریں",
+                bank: "براہ کرم ایک بینک کو منتخب کریں",
+                eWallet: "براہ کرم ایک الیکٹرانک والٹ کو منتخب کریں"
               }
             }
           },
@@ -402,15 +409,15 @@ export default {
           },
           cardNumber: {
             label: {
-              wallet: "Wallet",
-              cardNumber: "Card Number"
+              wallet: "والٹ",
+              cardNumber: "کارڈ نمبر"
             },
             placeholder: {
-              wallet: "Wallet",
-              cardNumber: "Card Number"
+              wallet: "والٹ",
+              cardNumber: "کارڈ نمبر"
             },
             error: {
-              required: "Please enter card number"
+              required: "براہ کرم کارڈ نمبر درج کریں"
             }
           },
           cardAddress: {
@@ -424,50 +431,50 @@ export default {
         confirmButton: "تصدیق کریں"
       },
       removeModal: {
-        title: "Remove {bankName} ?",
-        description: "Are you sure you want to remove {bankName} ?"
+        title: "ہٹائیں {bankName}؟",
+        description: "کیا آپ واقعی {bankName} کو ہٹانا چاہتے ہیں؟"
       }
     },
     finance: {
       deposit: {
         title: "ڈیپازت ",
-        recharge: "Recharge amount",
+        recharge: "ریچارج رقم",
         form: {
           label: {
-            title: "Amount"
+            title: "رقم"
           },
           amount: {
-            placeholder: "Enter an amount",
+            placeholder: "رقم درج کریں",
             error: {
-              required: "Deposit amount is required",
-              pattern: "Amount should be a positive number",
-              range: "Deposit should be between {min} - {max}"
+              required: "ودیعت کی رقم درکار ہے",
+              pattern: "رقم مثبت ہونی چاہیے",
+              range: "وداعت {min} سے {max} کے درمیان ہونی چاہئے"
             }
           }
         },
         modal: {
           description:
-            "You have been redirected to your specific bank to proceed with the deposit.\n\nOnce the deposit is successful, it will be reflected here.",
-          confirmButton: "I understand"
+            "آپ کو اپنے خاص بینک پر ریڈائریکٹ کر دیا گیا ہے تاکہ وداعت جاری کی جا سکے۔ \n\nوداعت کامیاب ہونے کے بعد، یہاں دکھایا جائے گا۔",
+          confirmButton: "میں سمجھتا ہوں"
         },
-        confirmButton: "Confirm Deposit"
+        confirmButton: "تصدیق کریں وداعت"
       },
       withdraw: {
         title: "نکلوانا",
-        balance: "Cash balance",
-        withdrawable: "Withdrawable",
-        method: "Withdrawal Method",
-        recommended: "Recommended",
+        balance: "کیش بیلنس",
+        withdrawable: "وڈروا کرنے کے قابل",
+        method: "وڈروال طریقہ",
+        recommended: "تجویز شدہ",
         form: {
           cardId: {
             placeholder: {
-              bank: "Select bank card",
-              eWallet: "Select E-wallet"
+              bank: "بینک کارڈ منتخب کریں",
+              eWallet: "E-والیٹ منتخب کریں"
             },
             error: {
               required: {
-                bank: "Bank card is required",
-                eWallet: "E-wallet is required"
+                bank: "بینک کارڈ درکار ہے",
+                eWallet: "E-والیٹ درکار ہے"
               }
             },
             option: {
@@ -478,64 +485,64 @@ export default {
             }
           },
           amount: {
-            placeholder: "Enter the withdrawal amount",
+            placeholder: "واپسی کی رقم درج کریں",
             error: {
-              required: "Amount is required",
-              pattern: "Amount should be a positive number"
+              required: "واپسی کی رقم درج کریں",
+              pattern: "رقم مثبت ہونی چاہیے"
             }
           },
           label: {
             title: {
-              bank: "Bank card",
-              eWallet: "E-wallet"
+              bank: "بینک کارڈ",
+              eWallet: "E-والیٹ"
             },
-            amount: "Withdraw Amount",
-            dailyLimit: "Daily Limit",
+            amount: "واپسی کی رقم",
+            dailyLimit: "روزانہ حد",
             remain: "باقی ویجرز",
-            amountLimit: "Amount ({min} - {max})"
+            amountLimit: "رقم ({min} - {max})"
           }
         },
-        confirmButton: "Confirm Withdrawal"
+        confirmButton: "تصدیق واپسی"
       },
-      newUserError: "Please fill in your personal details"
+      newUserError: "براہ کرم اپنی ذاتی تفصیلات بھریں"
     }
   },
   shareView: {
-    title: "Reward amount",
+    title: "اِنعام کی رقم",
     summary: {
-      income: "My Total Income",
-      invitees: "My Total Number Of Invitees"
+      income: "میری کل آمدنی",
+      invitees: "میرے کل دعوتیوں کی تعداد"
     },
     inviteLink: {
-      title: "Invite friends via link",
-      description: "How to get invitation bonus",
-      step1: "Invite friends via invitation link",
-      step2: "Register via link",
-      step3: "Complete deposit after registration",
-      copyButton: "Copy link",
-      copySuccess: "Link copied to clipboard",
-      copyFail: "Failed to copy link"
+      title: "دوستوں کو لنک کے ذریعے دعوت دیں",
+      description: "دعوتی بونس کیسے حاصل کریں۔",
+      step1: "دوستوں کو دعوتی لنک کے ذریعے مدعو کریں۔",
+      step2: "رجسٹریشن کے لئے لنک استعمال کریں۔",
+      step3: "رجسٹریشن کے بعد جمع کروائیں۔",
+      copyButton: "لنک کاپی کریں",
+      copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
+      copyFail: "لنک کاپی کرنے میں ناکامی"
     },
     earnYesterday: {
-      title: "Total amount sent as of yesterday",
+      title: "کل کی موجودہ میزان",
       table: {
         header: {
-          player: "player",
-          money: "money"
+          player: "کھلاڑی",
+          money: "پیسے "
         }
       }
     },
     info: {
-      bet: "Bet",
-      eligibleRefer: "Eligible Refer",
-      invite: "Invite",
-      topUp: "Top Up"
+      bet: "شرط لگانا",
+      eligibleRefer: "اہل ریفر",
+      invite: "دعوت دینا",
+      topUp: "تاپ اپ"
     },
     bonus: {
       table: {
         header: {
-          friendCount: "Friend Count",
-          inviteBonus: "Invite Bonus"
+          friendCount: "دوستوں کی تعداد",
+          inviteBonus: "دعوتی بونس"
         }
       }
     }
@@ -557,14 +564,14 @@ export default {
       }
     },
     forgetPasswordLink: "پاس ورڈ بھول گئے؟",
-    loginButton: "Login Now",
+    loginButton: "اب لاگ ان کریں",
     register: {
-      description: "Not on B9.GAME yet?",
-      link: "Register Now"
+      description: "بھی نویں ہیں؟",
+      link: "اب رجسٹر کریں"
     }
   },
   registerView: {
-    title: "Register Account",
+    title: "اکاؤنٹ رجسٹر کریں",
     form: {
       loginName: {
         placeholder: "فون نمبر",
@@ -581,19 +588,19 @@ export default {
       }
     },
     privacy: {
-      description: "I have Agree to the",
-      link: "Use Privacy Agreement"
+      description: "میں راضی ہوں",
+      link: "پرائیویسی ایگریمنٹ استعمال کریں"
     },
-    registerButton: "Register Now",
+    registerButton: "اب رجسٹر کریں",
     haveAccount: {
-      description: "Already a member?",
+      description: "پہلے سے رکن ہیں؟",
       link: ""
     }
   },
   forgotPwdView: {
-    title: "FORGOT ACCOUNT & PASSWORD",
+    title: "حساب اور پاسورڈ بھول گئے؟",
     login: {
-      description: "Back to",
+      description: "واپس جائیں",
       link: "لاگ ان"
     },
     submitButton: "جمع کرایں",
@@ -618,17 +625,17 @@ export default {
         placeholder: "تصدیقی کوڈ",
         error: {
           required: "براہ کرم تصدیقی کوڈ کا اندراج کریں",
-          len: "Length should be 4"
+          len: "لمبائی 4 ہونی چاہیے"
         }
       }
     },
     verifyForm: {
       title: "براہ کرم تصدیقی کوڈ کا اندراج کریں",
-      description: "Your will receive a verification code at your Email",
+      description: "آپ کو ایمیل پر تصدیقی کوڈ موصول ہوگا۔",
       code: {
         error: {
-          required: "Otp code is required",
-          len: "Length should be 6"
+          required: "OTP کوڈ درکار ہے",
+          len: "لمبائی 6 ہونی چاہیے"
         }
       },
       newPassword: {
@@ -644,7 +651,7 @@ export default {
         placeholder: "پاسورڈ کی تصدیق کریں",
         error: {
           required: "براہ مہربانی تصدیق شدہ پاس ورڈ کا اندراج کریں",
-          min: "The characters of password confirm must be above 6",
+          min: "پاسورڈ کی تصدیق کے حروف 6 سے زیادہ ہونے ضروری ہیں۔",
           validator: "پاس ورڈ مطابقت نہین رکھتا"
         }
       }
@@ -656,23 +663,23 @@ export default {
       content: ""
     },
     dataCollection: {
-      title: "Data Collection",
+      title: "ڈیٹا اکٹھا کرنا",
       content: ""
     },
     legalGround: {
-      title: "Legal Grounds",
+      title: "قانونی بنیاد",
       content: ""
     },
     bettingRule: {
-      title: "Betting Rules",
+      title: "شرط بازی کے قواعد",
       content: ""
     },
     compensation: {
-      title: "Compensation",
+      title: "تلافی",
       content: ""
     },
     responsibleGambling: {
-      title: "Responsible Gambling",
+      title: "بے جواب جواب بازی",
       content: ""
     }
   },
@@ -688,5 +695,94 @@ export default {
     loading: {
       text: "لوڈنگ..."
     }
+  },
+  error: {
+    101: "پلیٹ فارم نہیں ملا",
+    102: "پلیٹفارم بند ہے",
+    104: "پیسے کی منتقلی کا پلیٹ فارم نہیں",
+    105: "ویب سائٹ  دستیاب نہیں ",
+    400: "درخواست ناکام",
+    403: "غیر مجاز",
+    405: "اس طریقہ کی اجازت نہیں",
+    500: "سسٹم کا خراب ہونا",
+    501: "درخواست کوڈ استعمال ہو چکا ہے",
+    502: "سرور نہیں ملا",
+    504: "درخواست بہت زیادہ فریکونٹ ہے",
+    601: "ٹوکن کی تصدیق میں خرابی",
+    603: "ٹوکن نہیں ملا",
+    604: "کامیابی سے لاگ ان ہو گیا",
+    608: "موجودہ صارف کےآپریشنز بہت زیادہ ہیں۔ براہ کرم دوبارہ کوشش کریں",
+    707: "کم بیلنس",
+    710: "نکلوانے کیلئے بیلنس کم ہے",
+    800: "غلط تصدیقی کوڈ",
+    801: "پاس ورڈ  کا کیپچا ختم ہوگیا ہے",
+    900: "ممبر  نہیں ملا",
+    901: "ریکارڈ نہیں ملا",
+    902: "ای میل ہمارے رکن سے میل نہیں کھاتا",
+    903: "ای میل رجسٹر شدہ اکاؤنٹ سے مطابقت نہیں کرتا",
+    904: "ای میل کی تصدیق نہیں ہوئی",
+    905: "اصلی نام فراہم نہیں کیا گیا",
+    909: "فون نمبر نہیں ملا",
+    910: "صارف کا نام فون نمبر سے مطابقت نہیں رکھتا",
+    1000: "لاگ ان نام یا پاس ورڈ کی غلطی",
+    1001: "اکاؤنٹ بند ہے",
+    1002: "اکاؤنٹ وکلاء کے لئے ہے",
+    1300: "رقم کو صفر سے زیادہ نمبر میں ہونا چاہئے",
+    1301: "یہ کارڈ سپورٹڈ نہیں ہے",
+    1302: "یہ کرنسی سپورٹڈ نہیں  ہے",
+    1304: "یہ نمبر پہلے ہی استعمال ہوگیا ہے",
+    1305: "بینک نہیں ملا",
+    1306: "روزانہ نکالنے کی وقت کی حد سے زیادہ",
+    1307: "روزانہ نکالنے کی حد سے زیادہ",
+    1308: "کم بیلنس",
+    1309: "کارڈ اکاؤنٹ رکن کے نام سے مطابقت نہیں کرتا",
+    1401: "OTP بھیجنے کا وقت ختم ہوگیا",
+    1402: "OTP بھیجنے کا شیڈول کی خرابی، براہ کرم دوبارہ OTP بھیجیں",
+    1403: "OTP تصدیق کی خرابی",
+    1404: "OTP کوڈ بھیجنے میں ناکامی",
+    10000: "کم  بیلنس کی کمی کی خرابی",
+    10001: "نکالنے کی غلطی",
+    10002: "ڈیپازٹ کی خرابی",
+    10005: "صارف پہلے ہی استعمال ہو چکا ہے",
+    10006: "نام استعمال نہیں کیا جا سکتا",
+    10007: "گیم روم میں داخل ہونے کی غلطی",
+    10008: "غلطی",
+    11003: "ڈیپازٹ کرانے میں ناکامی",
+    13000: "ڈومین نام نہیں ملا",
+    13001: "تین مہینے سے پرانی معلومات کی تلاش نہیں کی جا سکتی",
+    13002: "سات دنوں کے اندر ہونا ضروری ہے",
+    13003: "آخری وقت شروع",
+    14000: "لاگ ان نام پہلے ہی رجسٹر ہو چکا ہے",
+    14001: "یہ فون نمبر پہلے ہی رجسٹر ہو چکا ہے",
+    14002: "یہ ای میل پہلے ہی رجسٹر ہو چکا ہے",
+    14003: "ایفیلیٹ کا کوڈ نہیں ملا",
+    14010: "آپ کا آلہ اس وقت ایک اکاؤنٹ کو رجسٹر کر چکا ہے، براہ کرم اپنے اکاؤنٹ کا استعمال کر کے لاگ ان کریں۔",
+    15201: "پرانا پاس ورڈ غلط ہے",
+    15202: "نیا پاس ورڈ پرانے پاس ورڈ جیسا  نہیں ہونا چاہیے",
+    21000: "یہ کھیل پہلے ہی آپ کی مقبول کھیلوں کی فہرست میں شامل ہے۔",
+    30000: "ممبر ڈیٹا نہیں ملا",
+    30001: " ممبر نے پہلے ہی فروغ ملی",
+    30002: "ممبر نے آج نمبر بھیج دیا ہے",
+    30003: "ممبر بیلنس شرائط پر پورا نہیں کرتا",
+    30004: "ممبر ڈیپازٹ کی شرائط پر پورا نہیں اترتا",
+    30005: "ٹرن اوور  کی شرائط  پور ی نہیں ہوئیں",
+    30006: "اکاؤنٹ ہولڈر کے طور پر درج شدہ ممبرز کو اس کے فوائد کو حاصل کرنے سے روکا گیا ہے",
+    31000: "فروغ نہیں ملا",
+    32000: "VIP لیول نہیں ملا",
+    33000: "3ڈجیٹ نمبر کا استعمال کرنا ضروری ہے",
+    33001: "3تین ڈجیٹ نمبر ہونا ضروری ہے",
+    34000: "ممبر کی سالگرہ اس مہینے میں نہیں ہے",
+    34001: "ممبر کی سالگرہ کا دن نہیں  ملا",
+    35000: "  ۔۔35000۔۔ممبرز کو اس  کا فائدہ   حاصل نہیں ۔",
+    35001: "ممبرزنے پہلے ہی اس فوائد کو حاصل کیا ہے",
+    35002: "کوئی ا خاص فوائد حاصل نہیں کیے جا سکتے۔",
+    35003: "خاص فوائد اورممبرز مطابقت نہیں رکھتے۔",
+    35004: "دیے گئے ووٹ ممبر کی ووٹ حد سے زیادہ",
+    35006: "ہمارا کوٹہ پورا ہو گیا ہے",
+    35007: "اس آئی پی نے پہلے ہی فوائد حاصل کیے ہیں",
+    35008: "آپ کے پاس یہ سہولت میسر نہیں ہے",
+    35009: "فائدہ جلد  مل جائے  گا",
+    35010: "35010 رکن اس کا فائدہ  حاصل نہیں کرسکتا۔",
+    35011: "35011 رکن اس فائدہ کو حاصل نہیں کرسکتا ہے۔"
   }
 };

@@ -221,6 +221,7 @@ const rewards = computed(() => {
       amount: currentVipLevel.value.monthly,
       status: "unavailable"
     },
+    // TODO: check amount
     {
       title: t("personalView.vip.privilege.withdrawal.title"),
       description: t("personalView.vip.privilege.withdrawal.type"),
