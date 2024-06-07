@@ -819,7 +819,7 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 15px 18px;
 
           li {
             margin-bottom: 20px;

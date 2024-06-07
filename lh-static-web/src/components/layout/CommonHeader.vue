@@ -1838,14 +1838,14 @@ body {
         &.second-nav {
           margin-left: auto;
           margin-right: auto;
-          gap: 10px;
-          padding-left:6px;
-          padding-right: 6px;
+          gap: 9px;
+          padding-left:5px;
+          padding-right: 5px;
         }
         .eroup-menu-icon{
           cursor: pointer;
-          width: 50px;
-          height: 50px;
+          width: 58px;
+          height: 58px;
 
           &:hover{
             filter: brightness(0.9);
