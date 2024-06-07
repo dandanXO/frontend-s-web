@@ -9,6 +9,7 @@ export default {
     lottery: "Xổ số",
     fishing: "Bắn Cá",
     cockfight: "Đá Gà",
+    minigame: "Mini Game",
     promotion: "Khuyến Mãi",
     agent: "Đại lý",
     app: "Ứng dụng",

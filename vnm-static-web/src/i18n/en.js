@@ -9,6 +9,7 @@ export default {
     lottery: "Lottery",
     fishing: "Fishing",
     cockfight: "Cock fight",
+    minigame: "Mini Game",
     promotion: "Promotion",
     agent: "Agent",
     app: "App",

@@ -70,6 +70,7 @@
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
             <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
             <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />
+            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -486,6 +487,7 @@ import LotteryMenu from "@/components/menu/LotteryMenu.vue";
 import PokerMenu from "@/components/menu/PokerMenu.vue";
 import FishingMenu from "@/components/menu/FishingMenu.vue";
 import CockfightMenu from "@/components/menu/CockfightMenu.vue";
+import MinigameMenu from "@/components/menu/MinigameMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
@@ -513,6 +515,7 @@ export default defineComponent({
     PokerMenu,
     FishingMenu,
     CockfightMenu,
+    MinigameMenu,
     PromotionMenu,
     AppMenu,
     RiRefreshLine,
@@ -536,7 +539,8 @@ export default defineComponent({
       { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
       { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
       { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
-      { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+      // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+      { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
       { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
       { code: "Agent", name:t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
       { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
