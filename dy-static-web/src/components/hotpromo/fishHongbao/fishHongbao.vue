@@ -2,32 +2,34 @@
   <div class="fish-match-box">
     <div class="fish-match-container">
       <div class="fish-content-title">
-        活动期间，每日参与捕鱼场馆有效投注≥1,500 元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金 58,888 元
+        活动期间，每日参与捕鱼场馆有效投注≥1,500
+        元或以上，即可点击开启红包，有效投注越高抢红包次数越多，单个金额越高，最高奖金 58,888 元
       </div>
       <div class="fish-match-game">
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">今日打码</div>
-            <div class="fish-match-game-detail">{{availableDraw}} 元</div>
+            <div class="fish-match-game-detail">{{ validBet }} 元</div>
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{validBet}} 次</div>
+            <div class="fish-match-game-detail">{{ availableDraw }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
           <img class="fish-1" :src="require(`../../../assets/promo/lh-fish-honbao/fish-1.png`)" />
           <div class="hongbao-1">
-            <img style="width: 266px;height: 280px;"  :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)" />
+            <img
+              style="width: 266px; height: 280px"
+              :src="require(`../../../assets/promo/lh-fish-honbao/hongbao.png`)"
+            />
             <div class="fish-open-hongbao" @click="claimHongBao">立即开启</div>
           </div>
           <img class="fish-2" :src="require(`../../../assets/promo/lh-fish-honbao/fish-2.png`)" />
         </div>
       </div>
       <div class="fish-match-game-bottom">
-        <div class="fish-match-game-bottom-left-title">
-          注：今日打码每 15 分钟更新一次
-        </div>
+        <div class="fish-match-game-bottom-left-title">注：今日打码每 15 分钟更新一次</div>
       </div>
       <div class="fish-match-game-info">
         <div class="title"></div>
@@ -69,7 +71,8 @@
           </tr>
         </table>
         <div class="fish-content-sub-title">
-          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000 档位各一次红包抽奖。
+          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000
+          档位各一次红包抽奖。
         </div>
       </div>
       <div class="fish-match-game-bottom-rule">
@@ -78,7 +81,10 @@
           <div class="item">
             1.活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
           </div>
-          <div class="item">2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20 分钟即可，若仍未正确，请联系客服查询；</div>
+          <div class="item">
+            2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20
+            分钟即可，若仍未正确，请联系客服查询；
+          </div>
           <div class="item">
             3.符合条件的会员请在当日点击活动页面【点击开启】按钮，次日累计抽奖次数清零，若超时未点击则视为放弃；
           </div>
@@ -86,11 +92,10 @@
             4.本活动根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P 地址视为同一账户，若有违规者，将不享受此红利；
+            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
-          <div class="item">
-            6.为避免文字理解差异，雷火电竟保留此活动最终解释权；
-          </div>
+          <div class="item">6.为避免文字理解差异，雷火电竟保留此活动最终解释权；</div>
         </div>
       </div>
 
@@ -105,15 +110,12 @@
           <div class="title">恭喜你抽中</div>
         </template>
         <div class="record-dialog-container">
-          <div class="record-dialog-content-title">
-            恭喜您获得以下奖金
-          </div>
+          <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
           <div class="record-dialog-content-detail">
-            <span>{{rewardMoney}}</span>元
+            <span>{{ rewardMoney }}</span>
+            元
           </div>
-          <div @click="tableRecordDialog=false;" class="hongbao-finish-btn">
-            完成
-          </div>
+          <div @click="tableRecordDialog = false" class="hongbao-finish-btn">完成</div>
         </div>
       </el-dialog>
     </div>
@@ -132,19 +134,15 @@ const validBet = ref(0);
 const tableRecordDialog = ref(false);
 const rewardMoney = ref(0);
 
-
-
-
-
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const getNbaMatchData = async () => {
   const res = await getHongbaoInfo();
-  if(res.code === 0){
-    availableDraw.value = res.data.availableDraw
-    validBet.value = res.data.validBet
+  if (res.code === 0) {
+    availableDraw.value = res.data.availableDraw;
+    validBet.value = res.data.validBet;
   }
-}
+};
 
 onMounted(getNbaMatchData);
 const claimHongBao = async () => {
@@ -153,10 +151,10 @@ const claimHongBao = async () => {
   if (res.code === 0) {
     tableRecordDialog.value = true;
     rewardMoney.value = res.data;
-  }else{
-    ElMessage.error(res.message)
+  } else {
+    ElMessage.error(res.message);
   }
-}
+};
 
 // watch(tableRecordDialog, async () => {
 //   if (tableRecordDialog.value) {
@@ -180,7 +178,7 @@ const claimHongBao = async () => {
   width: 1200px;
   height: 100%;
 }
-.fish-content-title{
+.fish-content-title {
   font-size: 16px;
   font-weight: 500;
   line-height: 22.4px;
@@ -198,12 +196,12 @@ const claimHongBao = async () => {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
-  .fish-match-content-warp{
+  .fish-match-content-warp {
     display: flex;
     justify-content: space-around;
     flex-direction: column;
   }
-  .fish-match-game-content{
+  .fish-match-game-content {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -225,18 +223,18 @@ const claimHongBao = async () => {
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
-  .fish-match-game-detail{
+  .fish-match-game-detail {
     width: 276px;
     height: 48px;
     background: rgba(81, 172, 255, 0.3);
-    border: 1px solid #51ACFF;
+    border: 1px solid #51acff;
     font-size: 20px;
     font-weight: 500;
     line-height: 28px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #479AF7;
+    color: #479af7;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     border-top-right-radius: 16px;
@@ -297,7 +295,7 @@ const claimHongBao = async () => {
     }
   }
 }
-.fish-match-honbao-content{
+.fish-match-honbao-content {
   max-height: 288px;
   display: flex;
   flex-direction: row;
@@ -311,7 +309,7 @@ const claimHongBao = async () => {
     position: relative;
     width: 275px;
     height: 300px;
-    .fish-open-hongbao{
+    .fish-open-hongbao {
       background-image: url("../../../assets/promo/lh-fish-honbao/hongbao-open-btn.png");
       background-size: cover;
       width: 120px;
@@ -320,7 +318,7 @@ const claimHongBao = async () => {
       position: absolute;
       bottom: 25%;
       right: 32%;
-      color: #F22A00;
+      color: #f22a00;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -329,11 +327,11 @@ const claimHongBao = async () => {
       line-height: 22.4px;
       text-align: left;
     }
-    .fish-open-hongbao:hover{
-      opacity:0.8;
+    .fish-open-hongbao:hover {
+      opacity: 0.8;
     }
-    .fish-open-hongbao:active{
-      filter: brightness(0.8) ;
+    .fish-open-hongbao:active {
+      filter: brightness(0.8);
       transform: translate(0px, 1px);
     }
   }
@@ -479,13 +477,12 @@ const claimHongBao = async () => {
     color: #000000;
   }
 }
-.fish-content-sub-title{
+.fish-content-sub-title {
   font-size: 16px;
   font-weight: 500;
   line-height: 22.4px;
   color: #000000;
   width: 100%;
-
 }
 .fish-match-game-bottom-rule {
   width: 100%;
@@ -522,9 +519,9 @@ const claimHongBao = async () => {
 :deep(.fish-match-table-record-dialog) {
   width: 360px;
   height: 360px;
-  background-color: #FFF3DF;
+  background-color: #fff3df;
   .el-dialog__header {
-    background: #FFF3DF;
+    background: #fff3df;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -546,34 +543,33 @@ const claimHongBao = async () => {
     align-items: center;
     width: 100%;
     height: 320px;
-    .record-dialog-content-title{
-      color:#EA5046;
+    .record-dialog-content-title {
+      color: #ea5046;
       font-size: 14px;
       font-weight: 400;
       line-height: 16.63px;
       letter-spacing: 0.2em;
       text-align: center;
     }
-    .record-dialog-content-detail{
-
+    .record-dialog-content-detail {
       font-size: 24px;
       font-weight: 400;
       line-height: 28.5px;
       letter-spacing: 0.2em;
       text-align: center;
-      color:#EA5046;
-      span{
+      color: #ea5046;
+      span {
         font-size: 48px;
       }
     }
-    .hongbao-finish-btn{
+    .hongbao-finish-btn {
       width: 256px;
       height: 44px;
       top: 634px;
       left: 832px;
       gap: 0px;
       border-radius: 100px 0px 0px 0px;
-      background-color: #EA574E;
+      background-color: #ea574e;
 
       color: #fff;
       font-size: 16px;

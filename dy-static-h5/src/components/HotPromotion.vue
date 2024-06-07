@@ -85,6 +85,13 @@
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
     <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
     <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
+
+    <BlastPremierPromo
+      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
+    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
+    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -138,12 +145,18 @@ import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "./hotpromo/EurocupManual/EurocupManual.vue";
+import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
+import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    SportZhongChao,
+    BlastPremierPromo,
+    fishHongbao,
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
@@ -252,7 +265,10 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-lpl-summer24" ||
       this.list.redirectUrl === "dy-duanwujie24" ||
       this.list.redirectUrl === "dy2-nba24-match" ||
-      this.list.redirectUrl === "dy2-eurocup-manual"
+      this.list.redirectUrl === "dy2-eurocup-manual" ||
+      this.list.redirectUrl === "dy2-cs2-blast-2024" ||
+      this.list.redirectUrl === "dy-sport-zhongchao" ||
+      this.list.redirectUrl === "dy-fish-hongbao"
     ) {
       this.isCommonPromo = false;
     } else {
