@@ -1,14 +1,14 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
-    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
-      <div class="cs-icon-wrapper"></div>
-    </div>
-  </q-page-sticky>
-  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">
-    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">
-      <div class="whatsapp-icon-wrapper"></div>
-    </div>
-  </q-page-sticky>
+  <!--  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">-->
+  <!--      <div class="cs-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
+  <!--  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">-->
+  <!--      <div class="whatsapp-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
 
 
   <div class="login-container">
@@ -139,6 +139,12 @@
 
     <div class="bottom-btn">
       <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn>
+    </div>
+
+    <div class="btn-lists">
+      <img class="btn-icon" @click="openWhatsApp()" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
+      <img class="btn-icon" @click="downloadApp()"  id="download-icon" src="../assets/images/index/download/download-app.png" />
+      <img class="btn-icon" @click="openCSInNewTab(ui.CSAUrl)" src="../assets/images/index/icon-cs.png" />
     </div>
 
     <div class="bottom-img">
@@ -553,6 +559,18 @@ export default defineComponent({
       const absoluteUrl = url;
       window.open(absoluteUrl, "_blank");
     };
+    const downloadApp = () => {
+      if(ui.downloadAppUrl){
+        window.open(ui.downloadAppUrl, "_blank" )
+      }else{
+        api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+          if (res.code === 0) {
+            ui.downloadAppUrl = res.data.url;
+            window.open(ui.downloadAppUrl, "_blank" )
+          }
+        });
+      }
+    }
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -624,6 +642,7 @@ export default defineComponent({
       csDragPos,
       isDraggingCsIcon,
       openCSInNewTab,
+      downloadApp,
       moveCsIcon,
       moveWhatsIcon,
       whatDragPos,
@@ -652,7 +671,7 @@ export default defineComponent({
     // background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
-    margin-top: 5px;
+    margin-top: 0px;
     padding: 1px;
 
     :deep(.q-tab__label) {
@@ -689,15 +708,46 @@ export default defineComponent({
 }
 
 .login-form-logo-img {
-  margin-top: -15px;
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
   img {
     display: block;
     width: 100%;
-    max-width: 130px;
+    max-width: 140px;
     margin-bottom: 10px;
+  }
+}
+
+.btn-lists{
+  display:flex;
+  justify-content: space-evenly;
+  gap: 0px;
+  width: 100%;
+  margin: 10px auto;
+
+  .btn-icon{
+    width: 70px;
+    height: 70px;
+
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
+  #whatapp-icon{
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+    animation: smallbeat 1.5s infinite;
+  }
+  #download-icon{
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+    animation: smallbeat 1.5s infinite;
+    filter: hue-rotate(120deg);
   }
 }
 
@@ -757,7 +807,7 @@ export default defineComponent({
 
 .bottom-img {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 28px;
 }
 
 .cs-icon-wrapper {

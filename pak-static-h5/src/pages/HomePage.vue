@@ -2004,6 +2004,7 @@ const getTopDownloadUrl = () => {
   api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
+      ui.downloadAppUrl = res.data.url;
     }
   });
 };

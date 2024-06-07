@@ -786,7 +786,7 @@ function charType(num) {
     // background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
-    margin-top: 5px;
+    margin-top: 0px;
     padding: 1px;
 
     :deep(.q-tab__label) {
@@ -824,14 +824,14 @@ function charType(num) {
 }
 
 .register-form-logo-img {
-  margin-top: -15px;
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
   img {
     display: block;
     width: 100%;
-    max-width: 130px;
+    max-width: 140px;
     margin-bottom: 10px;
   }
 }
@@ -962,7 +962,7 @@ function charType(num) {
 
 .bottom-img {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 28px;
 }
 
 .cs-icon-wrapper {
