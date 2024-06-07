@@ -1,14 +1,14 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
-    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
-      <div class="cs-icon-wrapper"></div>
-    </div>
-  </q-page-sticky>
-  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">
-    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">
-      <div class="whatsapp-icon-wrapper"></div>
-    </div>
-  </q-page-sticky>
+<!--  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">-->
+<!--    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">-->
+<!--      <div class="cs-icon-wrapper"></div>-->
+<!--    </div>-->
+<!--  </q-page-sticky>-->
+<!--  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">-->
+<!--    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">-->
+<!--      <div class="whatsapp-icon-wrapper"></div>-->
+<!--    </div>-->
+<!--  </q-page-sticky>-->
 
   <div class="register-container">
     <!-- <div class="back-left">
@@ -213,6 +213,12 @@
         I have Agree To The
         <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
       </q-checkbox>
+    </div>
+
+    <div class="btn-lists">
+      <img class="btn-icon" @click="openWhatsApp()" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
+      <img class="btn-icon" @click="downloadApp()"  id="download-icon" src="../assets/images/index/download/download-app.png" />
+      <img class="btn-icon" @click="openCSInNewTab(ui.CSAUrl)" src="../assets/images/index/icon-cs.png" />
     </div>
 
     <div class="bottom-img">
@@ -684,6 +690,20 @@ export default defineComponent({
 
       csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
     };
+
+    const downloadApp = () => {
+      if(ui.downloadAppUrl){
+        window.open(ui.downloadAppUrl, "_blank" )
+      }else{
+        api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+          if (res.code === 0) {
+            ui.downloadAppUrl = res.data.url;
+            window.open(ui.downloadAppUrl, "_blank" )
+          }
+        });
+      }
+    }
+
     const loadCustomerAddress = () => {
       cached
         .get("customerAddress", () =>
@@ -749,7 +769,8 @@ export default defineComponent({
       ui,
       moveWhatsIcon,
       whatDragPos,
-      openWhatsApp
+      openWhatsApp,
+      downloadApp
     };
   }
 });
@@ -959,6 +980,38 @@ function charType(num) {
   // margin-top: auto;
   padding: 3px 20px 8px;
 }
+
+.btn-lists{
+  display:flex;
+  justify-content: space-evenly;
+  gap: 0px;
+  width: 100%;
+  margin: 10px auto;
+
+  .btn-icon{
+    width: 70px;
+    height: 70px;
+
+    &:active{
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
+  #whatapp-icon{
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+    animation: smallbeat 1.5s infinite;
+  }
+  #download-icon{
+    width: 60px;
+    height: 60px;
+    margin-top: 5px;
+    animation: smallbeat 1.5s infinite;
+    filter: hue-rotate(120deg);
+  }
+}
+
 
 .bottom-img {
   text-align: center;
