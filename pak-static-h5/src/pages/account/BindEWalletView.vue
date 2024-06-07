@@ -81,19 +81,21 @@
                 <q-input
                   outlined
                   clearable
-                  lazy-rules
                   ref="cardNumberRef"
                   placeholder="Please insert virtual wallet"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert virtual wallet']"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert virtual wallet',
+                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
+                  ]"
                 ></q-input>
               </template>
             </InputField>
           </template>
         </InputRowGrid>
 
-        <InputRowGrid>
+        <!-- <InputRowGrid>
           <template #fields>
             <InputField :label="`IFSC`">
               <template #input>
@@ -110,7 +112,7 @@
               </template>
             </InputField>
           </template>
-        </InputRowGrid>
+        </InputRowGrid> -->
 
         <!-- <q-label>
           Virtual Wallet
@@ -373,7 +375,7 @@ const loadBankCards = () => {
         icon: "report_problem"
       });
       router.push("/account/profile");
-    }  else {
+    } else {
       api
         .get("/session/withdraw/card")
         .then((res) => {

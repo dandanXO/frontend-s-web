@@ -890,12 +890,12 @@ const getMonthlyVip = () => {
     })
     .catch((err) => {
       console.log(err.message);
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: err.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: err.message,
+      //   icon: "report_problem"
+      // });
     });
 };
 </script>
