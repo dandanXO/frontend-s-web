@@ -759,7 +759,7 @@ function charType(num) {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5c6c86;
+    color: #5F6061;
     font-weight: 400;
     width: 50%;
   }

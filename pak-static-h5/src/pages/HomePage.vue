@@ -2292,7 +2292,7 @@ watch(
     span {
       margin-right: 10px;
       cursor: pointer;
-      color: #bacef1;
+      color: #5F6061;
       font-family: "Poppins";
       font-size: 12px;
       font-weight: 400;
@@ -3143,10 +3143,9 @@ watch(
 
 .burning-hot {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 35%;
-  max-width: 50px;
+  top: -10px;
+  right: -10px;
+  width: 30px;
 }
 
 .loading-spinner {
@@ -3371,6 +3370,7 @@ watch(
   background-position: center center;
   position: relative;
   background-image: url("../assets/images/index/mini-game-bg.png");
+  background: transparent;
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 

@@ -41,27 +41,34 @@
                       <!-- <div class="pad-title">
                         <span class="pad-right">查看详情&gt;&gt;</span>
                       </div> -->
-                      <div class="promo-info">
+                      <!-- <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
+                      </div>
+
                       <!-- <div class="pad-label label-new">最新活动</div> -->
                     </a>
                   </div>
 
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
-                      <div class="promo-info">
+                      <!-- <div class="promo-info">
                         <span class="viewdetail">{{ promo.title }}</span>
-                      </div>
+                      </div> -->
                       <div class="promo-img-wrapper">
                         <div class="promo-bg">
                           <img class="promo-content" :src="imgURL + promo.mobileImgUrl" />
                         </div>
+                      </div>
+                      <div class="promo-info">
+                        <span class="viewdetail">{{ promo.title }}</span>
                       </div>
                     </a>
                   </div>
@@ -531,7 +538,7 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5c6c86;
+    color: #5f6061;
     font-weight: 400;
     width: 50%;
   }
@@ -750,8 +757,9 @@ export default defineComponent({
           overflow: hidden;
           // padding-top: 40px;
           border-radius: 17px;
-          background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+          // background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
           box-shadow: 0px 7.5px 20px 0px #1411321a;
+          background: rgba(255, 255, 255, 0.1);
 
           img {
           }
@@ -770,14 +778,14 @@ export default defineComponent({
               background-size: 100% 100%;
               margin: 0;
               // border-radius: 10px 10px 0 0;
-              border-radius: 17px;
+              // border-radius: 17px;
 
               &:hover {
                 transform: scale(1.2);
               }
 
               display: flex;
-              height: 160px;
+              // height: 160px;
               justify-content: center;
               align-items: flex-start;
               gap: 30px;
@@ -817,21 +825,24 @@ export default defineComponent({
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            background: #2b2b2b;
 
             .viewdetail {
               // background: #002a35;
               color: #ffffff;
               font-size: 14px;
-              position: absolute;
+              // position: absolute;
+              position: relative;
               width: 100%;
               z-index: 2;
               bottom: 0px;
               height: 40px;
               overflow: hidden;
               line-height: 40px;
-              padding: 0 100px 0 10px;
+              padding: 0 100px 0 16px;
               font-weight: 500;
-              background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
+              // background: linear-gradient(356.25deg, rgba(0, 0, 0, 0.6) -0.21%, rgba(0, 0, 0, 0.6) 93.65%);
+              background: #2b2b2b;
               font-family: Poppins;
               font-size: 15.3px;
               font-weight: 700;
