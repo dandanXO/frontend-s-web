@@ -7,3 +7,7 @@ export function getJackpot() {
 export const getBetRanking = () => {
   return server.REST.get("/member/bet-ranking");
 };
+
+export const getDownloadAppUrl = () => {
+  return server.REST.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA");
+};

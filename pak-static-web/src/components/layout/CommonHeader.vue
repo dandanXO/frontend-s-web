@@ -222,7 +222,7 @@
       <AccountModal v-model="accountModalVisible" :isReg="accountModalRegVisible" />
       <FeedbackModal ref="feedbackModalRef" v-model="feedbackModalVisible" />
       <LogoutModal v-model="logoutModalVisible" @confirm="onLogout" />
-      <DownloadAppModal v-model="downloadAppModalVisible" />
+      <DownloadAppModal v-model="downloadAppModalVisible" ref="downloadAppModalRef" />
       <LanguageModal v-model="languageModalVisible" />
     </div>
   </header>
@@ -348,6 +348,8 @@ const { token, accountModalVisible, unreadInboxMail, accountModalRegVisible } = 
 const { openAccountModal } = store;
 const triggerMenu = ref(null);
 const feedbackModalRef = ref(null);
+const downloadAppModalRef = ref(null);
+
 onMounted(() => {
   if (store.token) {
     store.getBalance();
@@ -356,6 +358,7 @@ onMounted(() => {
   }
   activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
   getBalance();
+  downloadAppModalRef.value.getUrl();
   window.addEventListener("scroll", onScroll);
 });
 const getBalance = () => {
