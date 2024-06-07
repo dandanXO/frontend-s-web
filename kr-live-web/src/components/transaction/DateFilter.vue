@@ -1,5 +1,8 @@
 <template>
-    <q-input dense outlined :modelValue="props.startDate">
+    <q-input dense outlined :modelValue="props.startDate"
+        @change="(startDate) => {
+            emit('updateStartDate', startDate)
+        }">
         <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -15,7 +18,10 @@
             </q-icon>
         </template>
     </q-input>
-    <q-input dense outlined :modelValue="props.endDate">
+    <q-input dense outlined :modelValue="props.endDate" 
+        @change="(endDate) => {
+            emit('updateEndDate', endDate)
+        }">
         <template v-slot:append>
             <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">

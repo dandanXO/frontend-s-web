@@ -31,7 +31,8 @@
             </q-form>
           </div>
           <!-- :grid="$q.screen.lt.md" -->
-          <q-table
+          <q-table dense
+            class="datatable"
             :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.deposit"
@@ -118,7 +119,8 @@
               </div>
             </q-form>
           </div>
-          <q-table
+          <q-table dense
+            class="datatable"
             :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.turnover"
@@ -178,42 +180,14 @@
                     searchForm.withdraw.endDate = endDate
                   }" 
                 />
-
-                <q-input dense outlined v-model="searchForm.withdraw.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD" :locale="dateLocale">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
-                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input dense outlined v-model="searchForm.withdraw.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD" :locale="dateLocale">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.date_picker_close')" flat />
-                            <q-btn v-close-popup :label="$t('lang.date_picker_confirm')" flat  />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
             </q-form>
           </div>
-          <q-table
+          <q-table dense
+            class="datatable"
             :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.withdraw"
@@ -316,7 +290,8 @@
               </div>
             </q-form>
           </div>
-          <q-table
+          <q-table dense
+            class="datatable"
             :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.rebates"
@@ -373,9 +348,6 @@
               </div>
             </q-form>
           </div>
-          <div style="display:flex;justify-content:flex-end;align-items:center;padding:5px 10px;">
-            <span>{{ `페이지 ${pagination.current} / ${Math.ceil(pagination.total / pagination.pageSize)}` }}</span>
-          </div>
           <q-table
             dense
             class="datatable"
@@ -393,7 +365,8 @@
             <q-inner-loading showing color="primary" />
           </template>
           </q-table>
-          <div style="display:flex;justify-content:flex-end;align-items:center;padding:5px 10px;">
+          <div class="datatable-pagination" v-if="dataState.gameBetRecord.length > 0">
+            <span>{{ `페이지 ${pagination.current} / ${Math.ceil(pagination.total / pagination.pageSize)}` }}</span>
             <q-pagination
               v-model="pagination.current"
               :max="Math.ceil(pagination.total / pagination.pageSize)"
@@ -426,7 +399,8 @@
               </div>
             </q-form>
           </div>
-          <q-table
+          <q-table dense
+            class="datatable"
             :grid="$q.screen.lt.md"
             :loading="loading"
             :columns="tableColumns.reminderRecord"
@@ -470,7 +444,8 @@
         </q-tab-panel>
       </q-tab-panels>
       <q-dialog style="margin: 20px" v-model="betRecordDialog">
-        <q-table
+        <q-table dense
+            class="datatable"
           :grid="$q.screen.lt.md"
           :loading="loading"
           :columns="tableColumns.betRecord"
@@ -1296,6 +1271,13 @@ export default defineComponent({
 .datatable {
   box-shadow: none;
   border: 1px solid grey;
+}
+
+.datatable-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
 }
 
 .payout-total {
