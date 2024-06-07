@@ -173,8 +173,8 @@
       <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tr>
-            <td style="color: #8c968f; font-size: 120%">Player</td>
-            <td style="color: #8c968f; font-size: 120%">Money</td>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">Player</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">Money</td>
           </tr>
         </table>
         <div class="table-container" ref="tableContainer">
@@ -187,13 +187,13 @@
             <template v-else>
               <template v-for="(item, index) in inviteesRecords" :key="index">
                 <tr>
-                  <td>
+                  <td style="width: 60%">
                     <div class="player-details">
-                      <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                      <img :src="getRandomImage(index)" width="30" />
                       {{ item.loginName }}
                     </div>
                   </td>
-                  <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+                  <td style="width: 40%">{{ store.currency.value }} {{ item.finalAmount }}</td>
                 </tr>
               </template>
             </template>
@@ -343,6 +343,15 @@ const checkIsShowDetail = () => {
   isShowDeposit.value = activeSetting.value.includes("DEPOSIT");
   isShowBet.value = activeSetting.value.includes("BET");
 };
+
+const getRandomImage = (index) => {
+  const randomNumber = (index % 10) + 1; // Ensures a number between 1 and 10
+  return require(`../assets/images/earn-money/profile-img-${randomNumber}.png`);
+};
+
+// const profileImagePath = computed(() => {
+//   return require(`../assets/images/account/${randomProfileImg.value}.png`);
+// });
 
 onMounted(() => {
   getOneTimeBonusSetting();

@@ -156,6 +156,8 @@
               <!--  -->
               <!-- </template> -->
 
+              <!-- <pre>{{ filteredHotGameList }}</pre> -->
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
@@ -177,7 +179,6 @@
                           }"
                         ></div>
                       </div>
-
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
                   </swiper-slide>
@@ -202,7 +203,8 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                                // return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -221,26 +223,6 @@
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
-              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
-              <!--                <div-->
-              <!--                  class="platform-game-item btn-effect"-->
-              <!--                  v-if="item.name === 'Evo' || item.name === 'WCPT'"-->
-              <!--                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"-->
-              <!--                >-->
-              <!--                  <div class="platform-game-img">-->
-              <!--                    <div-->
-              <!--                      class="game&#45;&#45;bg"-->
-              <!--                      :style="{-->
-              <!--                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`-->
-              <!--                      }"-->
-              <!--                    ></div>-->
-              <!--                  </div>-->
-              <!--                  <div class="platform-game-title">-->
-              <!--                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </template>-->
-
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <div
@@ -272,8 +254,8 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              // return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                              return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                              // return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -1386,8 +1368,10 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
+        // .get("/sitePlatformAndGamesByLabel", {
         .get("/member/hot", {
           params: {
+            // gameLabel: "HOT",
             device: regDevice
           }
         })
