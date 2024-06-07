@@ -115,9 +115,9 @@
       </div>
     </div>
 
-    <div class="register-form-logo-img">
-      <img src="../assets/images/auth/auth-logo.png" />
-    </div>
+<!--    <div class="register-form-logo-img">-->
+<!--      <img src="../assets/images/auth/auth-logo.png" />-->
+<!--    </div>-->
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
