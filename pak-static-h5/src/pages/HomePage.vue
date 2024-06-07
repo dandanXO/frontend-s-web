@@ -2253,6 +2253,7 @@ watch(
   }
 }
 
+
 .midd {
   width: 100%;
   margin-top: 10px;
@@ -2820,18 +2821,6 @@ watch(
   }
 }
 
-.whatsapp-icon-wrapper{
-  display: flex;
-  width: 60px;
-  height: 60px;
-  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
-  background-size: contain;
-
-  &:active{
-    filter: brightness(0.85);
-    transform: translate(0px, 1px);
-  }
-}
 
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);

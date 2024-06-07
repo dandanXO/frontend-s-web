@@ -102,15 +102,18 @@
                   placeholder="Please insert virtual wallet"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
+                  maxlength="11"
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert virtual wallet',
-                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
+                    (val) => val.startsWith('03') || 'The phone number must start with \'03\'',
+                    (val) => (val && val.length === 11) || 'The virtual wallet must have 11 digits.',
                   ]"
                 ></q-input>
               </template>
             </InputField>
           </template>
         </InputRowGrid>
+
 
         <!-- <InputRowGrid>
           <template #fields>
@@ -150,11 +153,11 @@
 
 
 
-        <q-label>
+        <q-label style="display:none;">
           Protocol
           <em>*</em>
         </q-label>
-        <div class="category-toggle">
+        <div class="category-toggle" style="display:none;">
           <!-- <q-btn
             v-for="(category, categoryIndex) in categoryToggleList"
             :key="`${category}-${categoryIndex}`"
@@ -242,7 +245,7 @@ import InputField from "src/components/auth/InputField.vue";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const selectedTypeToggleName = ref("JAZZCASH");
+const selectedTypeToggleName = ref("EASYPAISA");
 const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
@@ -384,8 +387,10 @@ const loadBankCards = () => {
         .get("/session/withdraw/card")
         .then((res) => {
           if (res.code === 0) {
-            for (let i = 0, l = res.data.length; i < l; i++) {
-              const data = res.data[i];
+            const items= res.data.reverse();
+
+            for (let i = 0, l = items.length; i < l; i++) {
+              const data = items[i];
               const { bankType } = data;
               if (bankType === "EWALLET") bankList.value.push(data);
             }
