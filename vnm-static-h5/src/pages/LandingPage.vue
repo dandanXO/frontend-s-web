@@ -10,17 +10,6 @@
     </div>
 
     <div class="action-wrapper">
-      <div>
-        <a :href="downloadUrl" target="_blank">
-          <div class="action-btn download">
-            <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
-            <div class="action-btn__text-wrapper">
-              <span class="action-btn__title">Tải APP</span>
-              <span class="action-btn__description">TẶNG 60K</span>
-            </div>
-          </div>
-        </a>
-      </div>
 
       <div>
         <a @click="goToPage('/register')">
@@ -33,17 +22,30 @@
           </div>
         </a>
       </div>
+
+      <div>
+        <a :href="downloadUrl" target="_blank">
+          <div class="action-btn download">
+            <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
+            <div class="action-btn__text-wrapper">
+              <span class="action-btn__title">Tải APP</span>
+              <span class="action-btn__description">TẶNG 60K</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
     </div>
 
-    <a @click="goToPage('/promo')">
-      <div class="announcement-wrapper">
-        <div class="announcement-btn">
-          <img class="announcement-btn__icon" src="../assets/images/landing/speaker-icon.png" alt="Thông báo" title="Thông báo" />
-          <span class="announcement-btn__title">Thông báo</span>
-          <span class="announcement-btn__description">Tặng thưởng 100% và nhiều khuyến mãi...</span>
-        </div>
-      </div>
-    </a>
+<!--    <a @click="goToPage('/promo')">-->
+<!--      <div class="announcement-wrapper">-->
+<!--        <div class="announcement-btn">-->
+<!--          <img class="announcement-btn__icon" src="../assets/images/landing/speaker-icon.png" alt="Thông báo" title="Thông báo" />-->
+<!--          <span class="announcement-btn__title">Thông báo</span>-->
+<!--          <span class="announcement-btn__description">Tặng thưởng 100% và nhiều khuyến mãi...</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </a>-->
 
     <div class="new-user-wrapper">
       <img class="section-title" src="../assets/images/landing/new-user-title.png" alt="Khuyến Mãi" title="Khuyến Mãi" />
