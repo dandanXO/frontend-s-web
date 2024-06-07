@@ -330,7 +330,7 @@
       <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
       <!--      </div>-->
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
         <template v-if="tab === 'casual'">
           <img src="../assets/images/home/games/casual-icon-active.png" />
         </template>
@@ -585,7 +585,7 @@
       </div>
 
 
-      <div class="game-lists fade-in-image" id="casual-lists">
+      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"

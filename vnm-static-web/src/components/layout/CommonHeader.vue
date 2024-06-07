@@ -530,22 +530,57 @@ export default defineComponent({
     const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const navigations = computed(() => [
-      { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-      { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
-      { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-      { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
-      { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
-      // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
-      { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
-      { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
-      { code: "Agent", name:t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
-      { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
-    ]);
+    const navigations = computed(() => {
+      if (store && store.token && store.memberType === 'TEST') {
+        return [
+          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
+          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
+          // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+          { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
+          {
+            code: "Promotion",
+            name: t('menu.promotion'),
+            enName: "Promotion",
+            path: "/promotion",
+            submenu: false,
+            hasicon: true
+          },
+          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
+        ]
+      } else {
+        return [
+          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
+          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
+          // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+          // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
+          {
+            code: "Promotion",
+            name: t('menu.promotion'),
+            enName: "Promotion",
+            path: "/promotion",
+            submenu: false,
+            hasicon: true
+          },
+          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
+        ]
+      }
+    });
 
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
