@@ -41,7 +41,7 @@
           "
         >
           <template
-            v-if="(store.state.user.siteId === '10')
+            v-if="(parseInt(store.state.user.siteId) === 10)
               ? (child.path === '/transfer' ? false : true)
               : (child.path === '/rebate' ? false : true)
             "
