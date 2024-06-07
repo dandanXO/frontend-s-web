@@ -7,7 +7,7 @@ export default {
     login_captcha: "보안 문자",
     login_submit: "로그인",
     login_register: "회원가입",
-    login_success_msg: "성공적으로 로그인하세요",
+    login_success_msg: "로그인이 되었습니다",
     login_forget_pwd: "비밀번호 분실",
     // login end
     // register start
