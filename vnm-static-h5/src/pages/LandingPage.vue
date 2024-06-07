@@ -6,7 +6,31 @@
     </div>
 
     <div class="banner-wrapper">
-      <img src="../assets/images/landing/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />
+
+      <q-carousel
+        class="banner-landing"
+        autoplay
+        navigation
+        v-model="slide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+      >
+
+        <q-carousel-slide
+          v-for="(banner, i) in banners"
+          :key="i"
+          :name="i"
+          class="column no-wrap flex-center"
+          :img-src="banner.img"
+          @click="gotoPromo(banner)"
+        />
+      </q-carousel>
+
+
+<!--      <img src="../assets/images/landing/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />-->
     </div>
 
     <div class="action-wrapper">
@@ -111,6 +135,26 @@ const goToPage = (page) => {
   router.push(page);
 }
 
+const gotoPromo = (banner) => {
+
+}
+
+const slide= ref(1);
+const banners= ref([
+  {
+    name: "",
+    img: require("../assets/images/landing/11.jpg")
+  },
+  {
+    name: "",
+    img:  require("../assets/images/landing/22.jpg"),
+  },
+  {
+    name: "",
+    img:  require("../assets/images/landing/33.jpg")
+  }
+])
+
 
 const getAppDownloadUrl = () => {
   api
@@ -131,6 +175,27 @@ onMounted(() => {
 
 </script>
 
+<style lang="scss">
+.banner-landing{
+  width: 100%;
+  aspect-ratio: 1000/400;
+  height: auto;
+  min-height: 120px;
+  border-radius: 12px;
+
+
+  .q-carousel__navigation .q-btn{
+    padding: 1px;
+    width: 10px;
+    height: 10px;
+    //opacity: 0;
+  }
+
+  .q-carousel__navigation--top, .q-carousel__navigation--bottom{
+    bottom: 8px;
+  }
+}
+</style>
 <style scoped lang="scss">
 
 img {
