@@ -388,6 +388,7 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
+          withdrawalDialogTab.value= bankCardList.value[0].bankCode;
         } else {
           $q.notify({
             color: "negative",

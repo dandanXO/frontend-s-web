@@ -33,6 +33,7 @@ export default {
     608: "Quá nhiều lần truy cập, vui lòng thử lại sau",
     609: "Đang bảo trì",
     707: "Số dư không đủ",
+    710: "Số dư không đủ",
     800: "Mã xác nhận không chính xác",
     801: "Mật khẩu đã hết hạn",
     900: "Không tìm thấy tên thành viên",

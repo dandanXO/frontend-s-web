@@ -33,6 +33,7 @@ export default {
     609: "Platform in maintenance",
     604: "Logged in successfully",
     707: "Insufficient balance",
+    710: "Insufficient balance",
     800: "Incorrect confirmation code",
     801: "Password captcha has expired",
     900: "Member not found",
