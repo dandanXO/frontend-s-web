@@ -665,7 +665,7 @@ export default defineComponent({
 
     // sticky cs
     const csDragPos = ref([10, 30]);
-    const whatDragPos = ref([86, 38]);
+    const whatDragPos = ref([15, 110]);
 
     const isDraggingCsIcon = ref(false);
     const openCSInNewTab = (url) => {
@@ -786,7 +786,7 @@ function charType(num) {
     // background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
-    margin-top: 5px;
+    margin-top: 0px;
     padding: 1px;
 
     :deep(.q-tab__label) {
@@ -824,14 +824,14 @@ function charType(num) {
 }
 
 .register-form-logo-img {
-  margin-top: -15px;
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
   img {
     display: block;
     width: 100%;
-    max-width: 130px;
+    max-width: 140px;
     margin-bottom: 10px;
   }
 }
@@ -962,6 +962,61 @@ function charType(num) {
 
 .bottom-img {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 28px;
 }
+
+.cs-icon-wrapper {
+  display: flex;
+  width: 70px;
+  height: 76px;
+  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background-size: contain;
+
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+
+.whatsapp-icon-wrapper{
+  display: flex;
+  width: 60px;
+  height: 60px;
+  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
+  background-size: contain;
+  animation: smallbeat 1.5s infinite;
+
+
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 </style>

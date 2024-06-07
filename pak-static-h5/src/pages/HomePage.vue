@@ -2004,6 +2004,7 @@ const getTopDownloadUrl = () => {
   api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
+      ui.downloadAppUrl = res.data.url;
     }
   });
 };
@@ -2252,6 +2253,7 @@ watch(
     transform: scale(1);
   }
 }
+
 
 .midd {
   width: 100%;
@@ -2820,18 +2822,6 @@ watch(
   }
 }
 
-.whatsapp-icon-wrapper{
-  display: flex;
-  width: 60px;
-  height: 60px;
-  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
-  background-size: contain;
-
-  &:active{
-    filter: brightness(0.85);
-    transform: translate(0px, 1px);
-  }
-}
 
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);

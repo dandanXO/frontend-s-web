@@ -10,7 +10,8 @@ export const useUI = defineStore("ui-store", {
       pageName: "优惠详细信息",
       slotLists: [],
       bottomInsetHeight: 0,
-      CSAUrl: ""
+      CSAUrl: "",
+      downloadAppUrl: ""
     };
   },
   actions: {
