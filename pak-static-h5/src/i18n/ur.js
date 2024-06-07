@@ -4,16 +4,43 @@ export default {
   },
   header: {
     login: "لاگ ان",
-    register: "رجسٹر"
+    register: "رجسٹر",
+    download: "ڈاؤن لوڈ کریں"
+  },
+  bottomNav: {
+    home: "گھر/ہوم",
+    promo: "پرومو",
+    earnMoney: "پیسے کمائیں",
+    wallet: "پرس",
+    me: "میں"
+  },
+  sideNav: {
+    inviteToEarn: "دعوت دیں اور کمائیں",
+    shareYourExclusiveQRCode: "اپنا انحصاری QR کوڈ شیئر کریں",
+    slots: "سلاٹس",
+    livecasino: "لائیو کیسینو",
+    fishing: "ماہی گیری",
+    poker: "پوکر",
+    sport: "کھیل",
+    livesupport: "لائیو سپورٹ",
+    feedback: "رائے",
+    telegram: "ٹیلیگرام",
+    whatsapp: "واٹس ایپ"
   },
   home: {
     menu_lobby: "لابی",
     menu_hot: "ہاٹ/اہم",
     menu_live: "کیسینو",
-    menu_fish: "فشنگ/مچھلی پکڑنا",
+    menu_fish: "مچھلی",
     menu_slot: "سلاٹ ",
-    menu_poker: "Poker",
+    menu_poker: "پوکر",
     menu_sport: "کھیل",
+    cat_hotgames: "گرم کھیل",
+    cat_livecasino: "لائیو کیسینو",
+    cat_slotsgame: "سلاٹس کھیل",
+    cat_fishing: "ماہی گیری",
+    cat_poker: "پوکر",
+    cat_sport: "کھیل"
   },
   error: {
     101: "Không tìm thấy nền tảng",

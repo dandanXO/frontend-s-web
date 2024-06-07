@@ -5,6 +5,27 @@ export default {
   header: {
     login: "Login",
     register: "Register",
+    download: "Download"
+  },
+  bottomNav: {
+    home: "Home",
+    promo: "Promo",
+    earnMoney: "Earn Money",
+    wallet: "Wallet",
+    me: "Me"
+  },
+  sideNav: {
+    inviteToEarn: "Invite to Earn",
+    shareYourExclusiveQRCode: "share your exclusive QR code",
+    slots: "Slots",
+    livecasino: "Live Casino",
+    fishing: "Fishing",
+    poker: "Poker",
+    sport: "Sport",
+    livesupport: "Live Support",
+    feedback: "Feedback",
+    telegram: "Telegram",
+    whatsapp: "WhatsApp"
   },
   home: {
     menu_lobby: "Lobby",
@@ -14,6 +35,12 @@ export default {
     menu_slot: "Slot",
     menu_poker: "Poker",
     menu_sport: "Sport",
+    cat_hotgames: "Hot Games",
+    cat_livecasino: "Live Casino",
+    cat_slotsgame: "Slots Game",
+    cat_fishing: "Fishing",
+    cat_poker: "Poker",
+    cat_sport: "Sport"
   },
   error: {
     101: "Platform not found",
