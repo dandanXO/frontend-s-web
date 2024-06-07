@@ -31,7 +31,7 @@
             class="captcha-code-input" v-model="loginForm.captchaCode" lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
           <div class="captcha-img-wrapper">
-            <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+            <q-spinner-pie :color="'blue'" size="30px" v-if="captchaLoading" />
             <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
           </div>
         </div>
