@@ -1,125 +1,122 @@
 <template>
   <div class="main-wrapper">
-  <div class="full-container">
-    <div class="top-wrapper">
-      <img src="../assets/images/landing/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" />
-    </div>
+    <div class="full-container">
+      <div class="top-wrapper">
+        <img src="../assets/images/landing/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" />
+      </div>
 
-    <div class="banner-wrapper">
+      <div class="banner-wrapper">
 
-      <q-carousel
-        class="banner-landing"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        transition-next="slide-left"
-        transition-prev="slide-right"
-        animated
-        infinite
-      >
+        <q-carousel
+          class="banner-landing"
+          autoplay
+          navigation
+          v-model="slide"
+          swipeable
+          transition-next="slide-left"
+          transition-prev="slide-right"
+          animated
+          infinite
+        >
 
-        <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="banner.img"
-          @click="gotoPromo(banner)"
-        />
-      </q-carousel>
+          <q-carousel-slide
+            v-for="(banner, i) in banners"
+            :key="i"
+            :name="i"
+            class="column no-wrap flex-center"
+            :img-src="banner.img"
+            @click="gotoPromo(banner)"
+          />
+        </q-carousel>
 
 
-<!--      <img src="../assets/images/landing/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />-->
-    </div>
+        <!--      <img src="../assets/images/landing/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />-->
+      </div>
 
-    <div class="action-wrapper">
+      <div class="action-wrapper">
 
-      <div>
-        <a class="action-a" @click="goToPage('/register')">
-          <div class="action-btn register">
-            <img src="../assets/images/landing/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
-            <div class="action-btn__text-wrapper">
-              <span class="action-btn__title">Đăng Ký Ngay</span>
-              <span class="action-btn__description">TẶNG 88K <img src="./../assets/images/landing/hot-pill.png" /></span>
-            </div>
+
+        <div class="action-a action-btn register" @click="goToPage('/register')">
+          <img src="../assets/images/landing/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
+          <div class="action-btn__text-wrapper">
+            <span class="action-btn__title">Đăng Ký Ngay</span>
+            <span class="action-btn__description">TẶNG 18-88K <img src="./../assets/images/landing/hot-pill.png" /></span>
           </div>
-        </a>
-      </div>
+        </div>
 
-      <div>
-        <a class="action-a" :href="downloadUrl" target="_blank">
-          <div class="action-btn download">
-            <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
-            <div class="action-btn__text-wrapper">
-              <span class="action-btn__title">Tải APP</span>
-              <span class="action-btn__description">TẶNG 60K</span>
-            </div>
+        <div class="action-a action-btn download" @click="goToPage('/register')">
+          <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
+          <div class="action-btn__text-wrapper">
+            <span class="action-btn__title">Tải APP</span>
+            <span class="action-btn__description">MƯA LÌ XÌ MỖI TUẦN LÊN ĐẾN 8,888K</span>
           </div>
-        </a>
+        </div>
+
       </div>
 
-    </div>
+      <div class="text-a">
+        <p>Lì xì đăng ký từ 18 - 88K. Số lượng có hạn ưu tiên người đến trước.</p>
+      </div>
 
-<!--    <a @click="goToPage('/promo')">-->
-<!--      <div class="announcement-wrapper">-->
-<!--        <div class="announcement-btn">-->
-<!--          <img class="announcement-btn__icon" src="../assets/images/landing/speaker-icon.png" alt="Thông báo" title="Thông báo" />-->
-<!--          <span class="announcement-btn__title">Thông báo</span>-->
-<!--          <span class="announcement-btn__description">Tặng thưởng 100% và nhiều khuyến mãi...</span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </a>-->
+      <!--    <a @click="goToPage('/promo')">-->
+      <!--      <div class="announcement-wrapper">-->
+      <!--        <div class="announcement-btn">-->
+      <!--          <img class="announcement-btn__icon" src="../assets/images/landing/speaker-icon.png" alt="Thông báo" title="Thông báo" />-->
+      <!--          <span class="announcement-btn__title">Thông báo</span>-->
+      <!--          <span class="announcement-btn__description">Tặng thưởng 100% và nhiều khuyến mãi...</span>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <!--    </a>-->
 
-    <div class="new-user-wrapper">
-      <img class="section-title" src="../assets/images/landing/new-user-title.png" alt="Khuyến Mãi" title="Khuyến Mãi" />
-      <div @click="goToPage('/promo')" class="new-user-discount-wrapper">
-        <img src="../assets/images/landing/discount-1.png" alt="Nạp Đầu" title="Nạp Đầu" />
-        <img src="../assets/images/landing/discount-2.png" alt="Bảo Hiểm" title="Bảo Hiểm" />
-        <img src="../assets/images/landing/discount-3.png" alt="Thưởng Mỗi Ngày" title="Thưởng Mỗi Ngày" />
-        <img src="../assets/images/landing/discount-4.png" alt="Ngày Hội VIP" title="Ngày Hội VIP" />
-        <img src="../assets/images/landing/discount-5.png" alt="Hòan Trả" title="Hòan Trả" />
-        <img src="../assets/images/landing/discount-6.png" alt="Check-in Mỗi Ngày" title="Check-in Mỗi Ngày" />
+      <div class="new-user-wrapper">
+        <img class="section-title" src="../assets/images/landing/new-user-title.png" alt="Khuyến Mãi" title="Khuyến Mãi" />
+        <div @click="goToPage('/promo')" class="new-user-discount-wrapper">
+          <img src="../assets/images/landing/discount-1.png" alt="Nạp Đầu" title="Nạp Đầu" />
+          <img src="../assets/images/landing/discount-2.png" alt="Bảo Hiểm" title="Bảo Hiểm" />
+          <img src="../assets/images/landing/discount-3.png" alt="Thưởng Mỗi Ngày" title="Thưởng Mỗi Ngày" />
+          <img src="../assets/images/landing/discount-4.png" alt="Ngày Hội VIP" title="Ngày Hội VIP" />
+          <img src="../assets/images/landing/discount-5.png" alt="Hòan Trả" title="Hòan Trả" />
+          <img src="../assets/images/landing/discount-6.png" alt="Check-in Mỗi Ngày" title="Check-in Mỗi Ngày" />
+        </div>
+      </div>
+
+      <div class="game-wrapper">
+        <img class="section-title" src="../assets/images/landing/game-title.png" alt="Trò Chơi Nổi Bật" title="Trò Chơi Nổi Bật" />
+        <div class="game-inner-wrapper">
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-sport.png" alt="" title="" />
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-casino.png" alt="" title="" />
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-esport.png" alt="" title="" />
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-lottery.png" alt="" title="" />
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-slot.png" alt="" title="" />
+          <img @click="goToPage('/home')" src="../assets/images/landing/game-fishing.png" alt="" title="" />
+        </div>
       </div>
     </div>
 
-    <div class="game-wrapper">
-      <img class="section-title" src="../assets/images/landing/game-title.png" alt="Trò Chơi Nổi Bật" title="Trò Chơi Nổi Bật" />
-      <div class="game-inner-wrapper">
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-sport.png" alt="" title="" />
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-casino.png" alt="" title="" />
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-esport.png" alt="" title="" />
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-lottery.png" alt="" title="" />
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-slot.png" alt="" title="" />
-        <img @click="goToPage('/home')" src="../assets/images/landing/game-fishing.png" alt="" title="" />
-      </div>
-    </div>
-  </div>
-
-  <div class="main-sticky-wrapper" id="scrolldown-tbn">
-    <a @click="goToPage('/promo')">
-      <div class="main-sticky-btn benefit">
-        <img class="main-sticky-btn__icon" src="../assets/images/landing/gift-icon.png" alt="AN TOÀN TUYỆT ĐỐI" title="AN TOÀN TUYỆT ĐỐI" />
-        <div class="main-sticky-btn__text-wrapper">
-          <span class="main-sticky-btn__title">THAM GIA CƯỢC TẠI TF88</span>
-          <span class="main-sticky-btn__description">
+    <div class="main-sticky-wrapper" id="scrolldown-tbn">
+      <a @click="goToPage('/promo')">
+        <div class="main-sticky-btn benefit">
+          <img class="main-sticky-btn__icon" src="../assets/images/landing/gift-icon.png" alt="AN TOÀN TUYỆT ĐỐI" title="AN TOÀN TUYỆT ĐỐI" />
+          <div class="main-sticky-btn__text-wrapper">
+            <span class="main-sticky-btn__title">THAM GIA CƯỢC TẠI TF88</span>
+            <span class="main-sticky-btn__description">
                 <span class="hight-light">NẠP RÚT NHANH CHÓNG,</span><br/>AN TOÀN TUYỆT ĐỐI
               </span>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
 
-    <a href="https://csweb.mh98q4u1yq.com/?partnerId=7&way=WEB&lang=vn" target="_blank">
-      <div class="main-sticky-btn customer-service">
-        <div class="main-sticky-btn__text-wrapper">
-          <span class="main-sticky-btn__title">LIÊN LẠC VỚI CHÚNG TÔI</span>
-          <span class="main-sticky-btn__description">CSKH 24/7</span>
+      <a href="https://csweb.mh98q4u1yq.com/?partnerId=7&way=WEB&lang=vn" target="_blank">
+        <div class="main-sticky-btn customer-service">
+          <div class="main-sticky-btn__text-wrapper">
+            <span class="main-sticky-btn__title">LIÊN LẠC VỚI CHÚNG TÔI</span>
+            <span class="main-sticky-btn__description">CSKH 24/7</span>
+          </div>
+          <img class="main-sticky-btn__icon" src="../assets/images/landing/customer-service-icon.png" alt="LIÊN LẠC VỚI CHÚNG TÔI" title="LIÊN LẠC VỚI CHÚNG TÔI" />
         </div>
-        <img class="main-sticky-btn__icon" src="../assets/images/landing/customer-service-icon.png" alt="LIÊN LẠC VỚI CHÚNG TÔI" title="LIÊN LẠC VỚI CHÚNG TÔI" />
-      </div>
-    </a>
+      </a>
+    </div>
   </div>
-</div>
 </template>
 
 <script setup>
@@ -240,6 +237,11 @@ a:hover {
   justify-content: center;
 }
 
+.text-a{
+  padding: 0px 20px;
+  color: rgb(245, 108, 108);
+}
+
 .top-wrapper img {
   width: 100%;
   max-width: 170px;
@@ -250,7 +252,7 @@ a:hover {
 }
 
 .action-wrapper {
-  padding: 0px 16px 30px;
+  padding: 0px 16px 12px;
   display: flex;
   justify-content: space-between;
   gap: 10px;
@@ -263,9 +265,11 @@ a:hover {
 .action-btn {
   display: flex;
   align-items: center;
-  padding: 15px 0px;
+  padding: 15px 5px;
   color: #ffffff;
+  gap: 4px;
   border-radius: 10px;
+  aspect-ratio: 150/80;
   justify-content: space-evenly;
 }
 
@@ -278,19 +282,18 @@ a:hover {
 }
 
 .action-btn img {
-  width: 44px;
+  width: 40px;
 
-  @media(max-width: 400px){
+  @media(max-width: 420px){
     width: 34px;
   }
 }
 
-.action-btn{
-  aspect-ratio: 150/75;
-}
+
 
 .action-btn__text-wrapper {
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
   gap: 0.25rem;
   /* font-family: FZHanZhenGuangBiaoS-GB; */
@@ -302,7 +305,7 @@ a:hover {
   font-size: 1.5rem;
   line-height: 1.8rem;
 
-  @media(max-width: 400px){
+  @media(max-width: 420px){
     font-size: 1.15rem;
     line-height: 1.4rem;
   }
