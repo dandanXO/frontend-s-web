@@ -100,7 +100,8 @@ onMounted(() => {
 
     .pagination-swiper-slide {
       .promo-bg {
-        background-size: contain;
+        border-radius: 10px;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
 

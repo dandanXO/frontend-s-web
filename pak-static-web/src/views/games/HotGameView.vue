@@ -1,7 +1,7 @@
 <template>
   <div class="platform-section">
     <div class="platform-breadcrumb">
-      <span>{{ $t("hotGameView.breadcrumb.home") }}</span>
+      <router-link to="/">{{ $t("hotGameView.breadcrumb.home") }}</router-link>
       <span>{{ $t("hotGameView.breadcrumb.title") }}</span>
     </div>
 

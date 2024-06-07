@@ -78,6 +78,10 @@ onUnmounted(() => timer.value && clearInterval(timer.value));
       line-height: 12px;
       color: #8c968f;
 
+      img {
+        max-width: 18px;
+      }
+
       .bet-ranking-record__rank {
         width: 18px;
         text-align: center;

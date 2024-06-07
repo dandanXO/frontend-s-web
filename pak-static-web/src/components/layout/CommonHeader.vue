@@ -935,14 +935,14 @@ $link-color: #ffffff;
         &:before {
           content: "";
           display: inline-block;
-          width: 34px;
-          height: 34px;
+          width: 27px;
+          height: 27px;
           margin-right: 10px;
           background: url(../../assets/images/common/submenu/menu-icons/home-icon.png) no-repeat center center;
           background-size: contain;
           // background: url(../../assets/images/common/submenu/menu-icons/hot-icon.png) no-repeat center center;
           // background-size: contain;
-          filter: grayscale(1);
+          // filter: grayscale(1);
           -webkit-transform: translateZ(0);
           -webkit-perspective: 1000;
           -webkit-backface-visibility: hidden;
@@ -1081,28 +1081,28 @@ $link-color: #ffffff;
 
         &.live-support {
           &:before {
-            background: url(../../assets/images/common/submenu/menu-icons/live-support-icon.png) no-repeat center center;
+            background: url(../../assets/images/common/submenu/menu-icons/live-support-icon.svg) no-repeat center center;
             background-size: contain;
           }
         }
 
         &.feedback {
           &:before {
-            background: url(../../assets/images/common/submenu/menu-icons/feedback-icon.png) no-repeat center center;
+            background: url(../../assets/images/common/submenu/menu-icons/feedback-icon.svg) no-repeat center center;
             background-size: contain;
           }
         }
 
         &.telegram {
           &:before {
-            background: url(../../assets/images/common/submenu/menu-icons/telegram-icon.png) no-repeat center center;
+            background: url(../../assets/images/common/submenu/menu-icons/telegram-icon.svg) no-repeat center center;
             background-size: contain;
           }
         }
 
         &.whatsapp {
           &:before {
-            background: url(../../assets/images/common/submenu/menu-icons/whatsapp-icon.png) no-repeat center center;
+            background: url(../../assets/images/common/submenu/menu-icons/whatsapp-icon.svg) no-repeat center center;
             background-size: contain;
           }
         }
@@ -1120,40 +1120,34 @@ $link-color: #ffffff;
 
           &.en {
             &::before {
-              content: "🇺🇸";
+              background: url(@/assets/images/layout/header/en.png) no-repeat center center;
+              background-size: contain;
             }
           }
 
           &.ur {
             &::before {
-              content: "🇵🇰";
-            }
-          }
-
-          &.cn {
-            &::before {
-              content: "🇨🇳";
+              background: url(@/assets/images/layout/header/ur.png) no-repeat center center;
+              background-size: contain;
             }
           }
         }
 
         &:hover,
         &.router-link-exact-active {
-          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
-          box-shadow: 0px -4px 4px 0px #02009e inset;
-          box-shadow: -1px 2px 4px 0px #ffffffcc inset;
+          background: #70bc621a;
           color: #ffffff;
 
-          &:before {
+          &::before {
             filter: grayscale(0);
             -webkit-transform: translateZ(0);
             -webkit-perspective: 1000;
             -webkit-backface-visibility: hidden;
           }
-        }
 
-        &:hover {
-          background: linear-gradient(270deg, #1baa99 0%, #8ac542 100%);
+          &::after {
+            color: #70bc62;
+          }
         }
       }
     }

@@ -143,7 +143,7 @@ import { globalStore } from "@/store";
     margin: 20px;
 
     .footer-link {
-      color: #a4aabb;
+      color: #9f9f9f;
       font-weight: 400;
       &:hover {
       }
