@@ -567,7 +567,8 @@ $accent: #ffffff;
         }
       }
 
-      &.slot {
+      &.slot,
+      &.hot {
         .slot-img {
           aspect-ratio: 1/1;
         }
