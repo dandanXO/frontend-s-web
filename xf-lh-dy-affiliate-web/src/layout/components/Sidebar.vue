@@ -41,8 +41,9 @@
           "
         >
           <template
-            v-if="
-              !(child.path === '/transfer' && store.state.user.siteId === '10')
+            v-if="(store.state.user.siteId === '10')
+              ? (child.path === '/transfer' ? false : true)
+              : (child.path === '/rebate' ? false : true)
             "
           >
             <RouterLink
@@ -327,6 +328,14 @@ const getNavigationData = () => {
             active: false,
             isMainNav: true,
             icon: 'money',
+          },
+          {
+            path: '/rebate',
+            title: t('menu.Rebate Report'),
+            label: 'Rebate Report',
+            active: false,
+            isMainNav: true,
+            icon: 'monitor',
           },
           {
             path: '/credit-flow',

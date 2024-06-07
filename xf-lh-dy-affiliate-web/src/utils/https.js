@@ -69,6 +69,8 @@ const onResponse = (response) => {
         router.go("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         router.go("/vi/login")
+      } else if (siteId === "10" || siteId === 10) {
+        router.go("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         router.go("/pak/login")
       }
@@ -95,6 +97,8 @@ const onResponse = (response) => {
         router.go("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         router.go("/vi/login")
+      } else if (siteId === "10" || siteId === 10) {
+        router.go("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         router.go("/pak/login")
       }
@@ -115,6 +119,8 @@ const onResponse = (response) => {
           router.go("/lh/login")
         } else if (siteId === "8" || siteId === 8) {
           router.go("/vi/login")
+        } else if (siteId === "10" || siteId === 10) {
+          router.go("/kr/login")
         } else if (siteId === "11" || siteId === 11) {
           router.go("/pak/login")
         }
