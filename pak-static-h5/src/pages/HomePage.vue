@@ -2225,7 +2225,7 @@ watch(
     display: block;
     width: 36px;
     height: 36px;
-    filter: hue-rotate(120deg);
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
 
