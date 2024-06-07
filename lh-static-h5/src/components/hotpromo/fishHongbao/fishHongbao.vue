@@ -9,11 +9,11 @@
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">今日打码</div>
-            <div class="fish-match-game-detail">{{ availableDraw }} 元</div>
+            <div class="fish-match-game-detail">{{ validBet }} 元</div>
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{ validBet }} 次</div>
+            <div class="fish-match-game-detail">{{ availableDraw  }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
