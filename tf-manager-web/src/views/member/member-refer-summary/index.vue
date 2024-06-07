@@ -76,7 +76,7 @@
             v-if="hasPermission(['sys:member-refer:summary'])"
           >
             <a v-if="scope.row.downlineMember > 0">
-              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.downlineMember }}</el-link>
+              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.memberId)">{{ scope.row.downlineMember }}</el-link>
             </a>
             <span v-else>{{ scope.row.downlineMember }}</span>
           </template>
