@@ -360,6 +360,11 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", name: "about", component: () => import("pages/AboutView.vue") }]
   },
+  {
+    path: "/landing",
+    name: "landing",
+    component: () => import("pages/LandingPage.vue")
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
