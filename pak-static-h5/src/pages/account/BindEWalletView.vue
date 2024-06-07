@@ -74,6 +74,23 @@
   <q-page class="bind-container">
     <div class="bind-wrapper">
       <q-form class="bind-item">
+
+        <q-label>
+          Virtual Wallet Type
+          <em>*</em>
+        </q-label>
+        <div class="type-toggle">
+          <q-btn
+            v-for="(bank, bankIndex) in bankList"
+            :key="`${bank}-${bankIndex}`"
+            :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
+            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
+          >
+            <img :src="imgURL + bank.bankIcon" alt="" />
+            <div>{{ bank.name }}</div>
+          </q-btn>
+        </div>
+
         <InputRowGrid>
           <template #fields>
             <InputField :label="`Virtual Wallet`">
@@ -131,21 +148,7 @@
           :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
         ></q-input> -->
 
-        <q-label>
-          Virtual Wallet Type
-          <em>*</em>
-        </q-label>
-        <div class="type-toggle">
-          <q-btn
-            v-for="(bank, bankIndex) in bankList"
-            :key="`${bank}-${bankIndex}`"
-            :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
-          >
-            <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name }}</div>
-          </q-btn>
-        </div>
+
 
         <q-label>
           Protocol
@@ -366,6 +369,7 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
+  bankList.value = [];
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
@@ -502,8 +506,12 @@ onActivated(() => {
         font-size: 1rem;
       }
 
+      .form-fields{
+        margin-top: 8px;
+      }
+
       .landing-input {
-        margin-bottom: 12px;
+        margin-bottom: 4px;
       }
 
       .q-field__control {
