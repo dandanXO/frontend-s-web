@@ -1440,7 +1440,19 @@ export default {
         "TF88 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",
       partner: "Partner",
       paymentMethod: "Payment Method"
-    }
+    },
+    depositNow: "DEPOSIT NOW",
+    congrats: "Registered successfully",
+    webapp: "Web App",
+    esportapp: "Esports App",
+    firstSlide: "DOWN LOAD APPS",
+    firstSlideContent: "Super smooth experience on TF88's high class apps",
+    firstSlideSub: "DOWNLOAD +60 VNDP",
+    secondSlide: "GET WELCOME BONUS",
+    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 VNDP",
+    thirdSlide: "ESPORTS BETTING DEVELOPER",
+    thirdSlideContent:
+      "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
   },
   error: {
     101: "Platform not found",

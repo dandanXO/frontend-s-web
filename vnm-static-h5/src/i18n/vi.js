@@ -1441,7 +1441,17 @@ export default {
         "TF88 CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",
       partner: "Đối tác",
       paymentMethod: "Phương thức"
-    }
+    },
+    // Welcome 
+    firstSlide: "TẢI XUỐNG ỨNG DỤNG",
+    depositNow: "GỬI TIỀN NGAY",
+    firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của TF88",
+    firstSlideSub: "TẢI XUỐNG +60VNPD",
+    secondSlide: "THƯỞNG GỬI TIỀN HẤP DẪN",
+    secondSlideContent: "THƯỞNG NẠP ĐẦU 100% LÊN ĐẾN 2,000 VNDP",
+    thirdSlide: "NHÀ PHÁT TRIỂN ESPORTS",
+    thirdSlideContent:
+      "TF88 là nhà phát triển tiên phong của cá cược E-Sports tại Châu Á. Cược ngay E-Sports với hơn 500 sự kiện mỗi ngày!"
   },
   error: {
     101: "Không tìm thấy nền tảng",
