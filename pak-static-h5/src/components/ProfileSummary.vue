@@ -103,7 +103,10 @@
       </a>
 
       <div class="side-menu-item side-menu-item__transparent">
-        <LangOptions />
+        <div class="item-icon">
+          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
+        </div>
+        {{ $t("sideNav.language") }}
       </div>
     </div>
   </div>
@@ -642,6 +645,10 @@ onMounted(() => {
         align-items: center;
         img {
           display: block;
+
+          &.flag {
+            width: 26px;
+          }
         }
       }
     }

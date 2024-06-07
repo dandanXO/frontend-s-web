@@ -1,6 +1,7 @@
 export default {
   lang: {
-    langVal: "ur"
+    langVal: "ur",
+    language: "زبان"
   },
   header: {
     login: "لاگ ان",
@@ -25,7 +26,8 @@ export default {
     livesupport: "لائیو سپورٹ",
     feedback: "رائے",
     telegram: "ٹیلیگرام",
-    whatsapp: "واٹس ایپ"
+    whatsapp: "واٹس ایپ",
+    language: "زبان"
   },
   home: {
     menu_lobby: "لابی",

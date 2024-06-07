@@ -1,6 +1,7 @@
 export default {
   lang: {
-    langVal: "en"
+    langVal: "en",
+    language: "Language"
   },
   header: {
     login: "Login",
@@ -25,7 +26,8 @@ export default {
     livesupport: "Live Support",
     feedback: "Feedback",
     telegram: "Telegram",
-    whatsapp: "WhatsApp"
+    whatsapp: "WhatsApp",
+    language: "Language"
   },
   home: {
     menu_lobby: "Lobby",
