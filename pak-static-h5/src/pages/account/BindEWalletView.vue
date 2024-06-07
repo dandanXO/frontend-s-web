@@ -95,7 +95,7 @@
           </template>
         </InputRowGrid>
 
-        <InputRowGrid>
+        <!-- <InputRowGrid>
           <template #fields>
             <InputField :label="`IFSC`">
               <template #input>
@@ -112,7 +112,7 @@
               </template>
             </InputField>
           </template>
-        </InputRowGrid>
+        </InputRowGrid> -->
 
         <!-- <q-label>
           Virtual Wallet
