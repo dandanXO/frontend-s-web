@@ -138,7 +138,7 @@
         <SectionWrapper :title="$t('homeView.game.slot')" to="/slot" class="section-wrapper">
           <div class="section-wrapper-content">
             <router-link v-for="(game, index) in slotGames" :key="index" :to="`/slot?plat=${game.code}`">
-              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'slot')" />
+              <img :src="loadGameIcon(`item-game-${game.code.toLowerCase()}.png`, 'slot')" />
             </router-link>
           </div>
         </SectionWrapper>
