@@ -4,6 +4,12 @@
       <div class="cs-icon-wrapper"></div>
     </div>
   </q-page-sticky>
+  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">
+    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">
+      <div class="whatsapp-icon-wrapper"></div>
+    </div>
+  </q-page-sticky>
+
 
   <div class="login-container">
     <!-- <div class="back-left">
@@ -13,7 +19,7 @@
     </div> -->
 
     <div class="login-form-logo-img">
-      <img src="../assets/images/auth/login-logo.png" />
+      <img src="../assets/images/auth/b9-logo.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -321,6 +327,10 @@ export default defineComponent({
       router.push("/register");
     };
 
+    const openWhatsApp = () => {
+      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+    }
+
     const onSubmit = () => {
       $q.loading.show({
         message: "Logging in"
@@ -536,6 +546,8 @@ export default defineComponent({
 
     // sticky cs
     const csDragPos = ref([10, 30]);
+    const whatDragPos = ref([86, 38]);
+
     const isDraggingCsIcon = ref(false);
     const openCSInNewTab = (url) => {
       const absoluteUrl = url;
@@ -545,6 +557,10 @@ export default defineComponent({
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
       csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+    };
+    const moveWhatsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+      whatDragPos.value = [whatDragPos.value[0] - ev.delta.x, whatDragPos.value[1] - ev.delta.y];
     };
     const loadCustomerAddress = () => {
       cached
@@ -609,8 +625,11 @@ export default defineComponent({
       isDraggingCsIcon,
       openCSInNewTab,
       moveCsIcon,
+      moveWhatsIcon,
+      whatDragPos,
       loadCustomerAddress,
-      ui
+      ui,
+      openWhatsApp
     };
   }
 });
@@ -670,14 +689,14 @@ export default defineComponent({
 }
 
 .login-form-logo-img {
-  margin-top: -10px;
+  margin-top: -15px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
   img {
     display: block;
     width: 100%;
-    max-width: 100px;
+    max-width: 130px;
     margin-bottom: 10px;
   }
 }
@@ -740,4 +759,6 @@ export default defineComponent({
   text-align: center;
   margin-top: 10px;
 }
+
+
 </style>

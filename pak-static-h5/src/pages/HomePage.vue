@@ -2813,6 +2813,24 @@ watch(
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
+
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.whatsapp-icon-wrapper{
+  display: flex;
+  width: 60px;
+  height: 60px;
+  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
+  background-size: contain;
+
+  &:active{
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .home-divider {
