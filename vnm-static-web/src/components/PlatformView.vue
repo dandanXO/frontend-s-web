@@ -1,12 +1,12 @@
 <template>
-  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
+  <div class="platform-section" :style="{ 'background-size':'cover', 'background-image':( platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual') ? 'url(' + require('../assets/' + platformType + '/' + platformType + '-bg.png') + ')' : 'none' }">
     <div v-if="platformsListDisplay.length > 0" class="platform-container"
-         :class="(platformType === 'slot' || platformType === 'fishing') ? 'slot-container' : ''"
+         :class="(platformType === 'slot' || platformType === 'fishing' || platformType === 'casual') ? 'slot-container' : ''"
     >
-      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'">
+      <div class="platform-container-slot" v-if="platformType === 'slot' || platformType === 'fishing'  || platformType === 'casual'">
         <img :src="require(`../assets/slot/slot-top-bg-${languageVal}.png`)">
       </div>
-      <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing'">
+      <div class="platform-container-inner" v-if="platformType !== 'slot' && platformType !== 'fishing' && platformType !== 'casual'">
         <!-- <template v-for="(item, index) in filteredPlatforms" :key="index"> -->
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <template v-if="selectedPlat === item.code">
@@ -248,13 +248,15 @@ const getPlatList = () => {
     platformsList.value = res;
 
     // console.log(platformsList.value);
-
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase() )
+      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase() || (type.trim().toUpperCase() === 'COCKFIGHT' && props.platformGameType.toUpperCase() === 'FISH'))
     );
 
     // console.log("Platform");
     // console.log(platformsListDisplay.value);
+    //
+    // console.log("Platform2");
+    // console.log(props.platforms);
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
       const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
@@ -278,10 +280,11 @@ const setFilteredPlatforms = () => {
     return { ...matchingItem, ...item1 };
   });
 
-  // console.log("Filter plat");
-  // console.log(filteredPlatforms.value);
+  console.log("Filter plat");
+  console.log(filteredPlatforms.value);
   // console.log(platformsListDisplay.value);
 
+  // debugger;
   if (!route.query.plat) {
     setSelectedPlat();
   } else {
@@ -300,6 +303,11 @@ const setSelectedPlat = () => {
 };
 
 const clickPlat = (plat) => {
+  if(plat.gameType==='COCKFIGHT'){
+    router.push("/cockfight")
+    return;
+  }
+
   router.push({ path: route.path, query: { plat: plat.code } });
   selectedPlat.value = plat.code;
 };
@@ -331,17 +339,20 @@ const switchPlat = (plat) => {
 };
 
 const getPlatGameList = () => {
-  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH" || props.platformGameType === "CASUAL") {
     const getFn = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
     getFn().then((data) => {
-      platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType));
+      platformsListDisplay.value = data.filter((element) => element.gameType.includes(props.platformGameType) || (element.gameType==='COCKFIGHT' && props.platformGameType==='FISH'));
       platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
         const matchingItem = props.platforms.find((item2) => item1.code === item2.code);
         return { ...matchingItem, ...item1 };
       });
 
+      // console.log("ATER")
+      // console.log(platformsListDisplay.value)
+
       if (!route.query.plat) {
-        switchPlat(platformsListDisplay.value[0]);
+        switchPlat(platformsListDisplay.value.find(obj => obj.gameType !== 'COCKFIGHT'));
       } else {
         platformsListDisplay.value.forEach((element) => {
           if (route.query.plat === element.code) {
@@ -364,7 +375,7 @@ const searchList = () => {
   // }
 };
 const loadGameList = () => {
-  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH") {
+  if (props.platformGameType === "SLOT" || props.platformGameType === "FISH" || props.platformGameType === "CASUAL") {
     getPlatformGames(activePlat.value.id, props.platformGameType)
       .then((data) => {
         data.forEach((element) => {

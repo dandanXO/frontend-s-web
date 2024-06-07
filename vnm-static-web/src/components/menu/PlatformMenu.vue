@@ -61,7 +61,8 @@ const getPlatformList = () => {
   fetchFunction().then((res) => {
     platformsList.value = res;
     platformsListDisplay.value = platformsList.value.filter((element) =>
-      element.gameType.split(",").some((type) => type.trim().toUpperCase() === props.platformGameType.toUpperCase() )
+       element.gameType.split(",").some((type) =>
+         type.trim().toUpperCase() === props.platformGameType.toUpperCase()  || (type.trim().toUpperCase() === 'COCKFIGHT' && props.platformGameType.toUpperCase() === 'FISH'))
     );
 
     platformsListDisplay.value = platformsListDisplay.value.map((item1) => {
@@ -93,7 +94,13 @@ const gotoGame = (item, platformType) => {
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   } else if (platformType === "fishing") {
+    if(item.gameType==='COCKFIGHT'){
+      router.push(`/cockfight`);
+    }else{
     router.push(`/fishing?plat=${item.code}`);
+    }
+  } else if (platformType === "casual") {
+    router.push(`/minigame?plat=${item.code}`);
   } else {
     const platName = item.alias ?? item.name
     emits("load-game", platName, item.code, item.gameCode);
