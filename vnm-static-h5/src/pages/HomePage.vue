@@ -1308,7 +1308,7 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
             }
-            if (platTypes.indexOf("POKER") > -1 || platTypes.indexOf("CASUAL") > -1 ) {
+            if (platTypes.indexOf("POKER") > -1 ) {
               var pokerObj = Object.assign({}, element);
               if (pokerObj.name === "Spribe") {
                 pokerObj.title_vn = pokerObj.name ;
