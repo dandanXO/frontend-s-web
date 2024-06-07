@@ -113,6 +113,7 @@ export default {
     bankAcc: "Tên tài khoản",
     backCard: "Số tài khoản",
     depositAmount: "Số tiền",
+    branch: "Chi nhánh",
     submitSuccess: "Chỉnh sửa thành công",
     updateSuccess: "Cập nhật thành công",
     claimedSuccess: "Đã nhận thành công",

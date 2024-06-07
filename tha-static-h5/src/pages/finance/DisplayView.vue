@@ -23,6 +23,13 @@
       <q-btn @blur="blurCode" @click="copyMessage('2')" class="common-btn" color="brand">{{ copybtntxt2 }}</q-btn>
     </div>
     <div class="line">
+      <span>สาขา：</span>
+      <span class="info" ref="subMsg4">{{
+        encodeURIComponent(submitMessage[4]).replace(/%20/g, " ")
+      }}</span>
+      <q-btn @blur="blurCode" @click="copyMessage('4')" class="common-btn" color="brand">{{ copybtntxt4 }}</q-btn>
+    </div>
+    <div class="line">
       <span>จำนวนเงิน：</span>
       
       <span class="info" ref="subMsg3">{{
@@ -48,10 +55,12 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 const copybtntxt0 = ref("คัดลอก");
 const copybtntxt1 = ref("คัดลอก");
 const copybtntxt2 = ref("คัดลอก");
 const copybtntxt3 = ref("คัดลอก");
+const copybtntxt4 = ref("คัดลอก");
 const copyMessage = (position) => {
   let copyText = null;
     copyText = eval(`subMsg${position}.value.innerText`);
@@ -66,7 +75,7 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = 'คัดลอกแล้ว';
   // copyText.select()
   // document.execCommand("copy")
@@ -74,7 +83,7 @@ const copyMessage = (position) => {
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach(element => {
     element.value = 'คัดลอก';
   });
