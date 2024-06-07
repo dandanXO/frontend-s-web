@@ -19,7 +19,7 @@
               <span class="content-title">PRODUCT VARIETY</span>
             </div>
             <p>
-              B9.game is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
+              B9.game is Pakistan recognized specialist in sport live betting, we provide an average of about 10,000
               live sport matches every month. Moreover, we support more than 400 different football leagues, other than
               just well-known professional leagues. The following league is supported: Greek League / Italian C League
               Cup / Serie A / Russian League / Croatian Cup / Bougainvillea/Leah Cup/Norway Cup/ Bundesliga/Roman
@@ -28,7 +28,7 @@
             </p>
             <p>
               Besides sport product, we offer a wide variety of product including live casino, live dealer, Esports
-              which you cannot missed. In order to satisfy members in Philippines. B9.game carefully select a variety of
+              which you cannot missed. In order to satisfy members in Pakistan. B9.game carefully select a variety of
               online games to provide you with the best game and platform choices. We continue to improve our products
               and add more exciting new products, allowing you to enjoy first-class services in live entertainment.
             </p>
@@ -36,9 +36,9 @@
               <span class="content-title">COMPANY PROFILE</span>
             </div>
             <p>
-              B9.game holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro
-              Manila. At present, we are expert in bookmaking, gaming technologies, and possessing a professional team
-              of customer support and technical engineer. Through offering excellent products and high-quality customer
+              B9.game holds the Inland gaming license authorized by PAGCOR Pakistan and headquartered in metro Manila.
+              At present, we are expert in bookmaking, gaming technologies, and possessing a professional team of
+              customer support and technical engineer. Through offering excellent products and high-quality customer
               services, we provide customers with best online entertainment experiences. Compare to land-based casino,
               we offer by far better odds! To maintain fairness of the games, when it comes down to picking a platform,
               B9.game with professional 24/7 customer service team, facilitating financial team, strong financial
