@@ -26,7 +26,7 @@
             {{ $t("layout.footer.link.responsibleGambling") }}
           </router-link>
 
-          <a class="footer-link footer-nav" href="">{{ $t("layout.footer.link.affiliates") }}</a>
+          <!-- <a class="footer-link footer-nav" href="">{{ $t("layout.footer.link.affiliates") }}</a> -->
         </div>
       </div>
 

@@ -22,7 +22,7 @@
 
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Virtual Account</div>
+        <div class="title">Choose Account</div>
       </div>
 
       <div class="mid-wrapper">
@@ -38,7 +38,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please Select A Virtual Account']"
+              :rules="[(val) => !!val || 'Please select account']"
               hide-bottom-space
             >
               <template v-slot:option="scope">
@@ -52,10 +52,10 @@
                         scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                       }}
                     </q-item-label>
-                    <q-item-label>
+                    <!-- <q-item-label>
                       IFSC
                       {{ scope.opt.cardAddress }}
-                    </q-item-label>
+                    </q-item-label> -->
                   </q-item-section>
                 </q-item>
               </template>
@@ -73,10 +73,10 @@
                       scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
-                  <q-item-label>
+                  <!-- <q-item-label>
                     IFSC
                     {{ scope.opt.cardAddress }}
-                  </q-item-label>
+                  </q-item-label> -->
                 </q-item-section>
               </template>
             </q-select>

@@ -154,8 +154,9 @@
               >
                 {{ $t("layout.header.menu.whatsapp") }}
               </a>
-              <!-- TODO: wait i18n -->
-              <!-- <a class="header-nav language" href="" target="_blank">Language</a> -->
+              <button class="header-nav language" :class="locale" @click="handleLanguageClick">
+                {{ $t("layout.header.menu.language") }}
+              </button>
             </li>
           </ul>
           <bet-ranking />
@@ -222,6 +223,7 @@
       <FeedbackModal ref="feedbackModalRef" v-model="feedbackModalVisible" />
       <LogoutModal v-model="logoutModalVisible" @confirm="onLogout" />
       <DownloadAppModal v-model="downloadAppModalVisible" />
+      <LanguageModal v-model="languageModalVisible" />
     </div>
   </header>
 </template>
@@ -265,6 +267,7 @@ import BetRanking from "@/components/layout/header/BetRanking.vue";
 import FeedbackModal from "@/components/layout/header/FeedbackModal.vue";
 import LogoutModal from "@/components/layout/header/LogoutModal.vue";
 import DownloadAppModal from "@/components/layout/header/DownloadAppModal.vue";
+import LanguageModal from "@/components/layout/header/LanguageModal.vue";
 
 const navigations = [
   // { code: "VIP", name: "VIP", path: "/vip" },
@@ -281,7 +284,7 @@ const sortedNavigations = navigations.sort((a, b) => a.tabOrder - b.tabOrder);
 
 const router = useRouter();
 const route = useRoute();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const isLoadingBal = ref(true);
 const casinoGame = ref(null);
@@ -293,6 +296,7 @@ const activateTab = ref("casino");
 const feedbackModalVisible = ref(false);
 const logoutModalVisible = ref(false);
 const downloadAppModalVisible = ref(false);
+const languageModalVisible = ref(false);
 
 const switches = computed(() => [
   { label: t("layout.header.switch.casino"), value: "casino" },
@@ -474,6 +478,8 @@ const handleSwitchChange = (value) => {
 const handleLogoutClick = () => (logoutModalVisible.value = true);
 
 const handleDownloadAppClick = () => (downloadAppModalVisible.value = true);
+
+const handleLanguageClick = () => (languageModalVisible.value = true);
 </script>
 <style scoped lang="scss">
 $navigation-height: 80px;
@@ -656,10 +662,6 @@ $link-color: #ffffff;
           color: #ffffff;
 
           .header-nav {
-            // color: #ffffff;
-            // margin: 0;
-            // border-radius: 0;
-            // background: none;
             background: #ffffff0f;
 
             &:hover,
@@ -914,6 +916,7 @@ $link-color: #ffffff;
 
       .header-nav {
         position: relative;
+        width: 100%;
         color: #000;
         transition: all 0.3s ease-out;
         font-size: 16px;
@@ -1103,13 +1106,31 @@ $link-color: #ffffff;
 
         &.language {
           &:before {
-            content: "🇺🇸";
+            content: "";
             background: unset;
             display: flex;
             align-items: center;
             font-size: 30px;
             font-weight: 500;
             line-height: 16.33px;
+          }
+
+          &.en {
+            &::before {
+              content: "🇺🇸";
+            }
+          }
+
+          &.ur {
+            &::before {
+              content: "🇵🇰";
+            }
+          }
+
+          &.cn {
+            &::before {
+              content: "🇨🇳";
+            }
           }
         }
 
