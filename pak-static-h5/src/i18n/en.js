@@ -15,8 +15,20 @@ export default {
     wallet: "Wallet",
     me: "Me"
   },
+  form: {
+    phone: "Phone",
+    phone_placeholder: "Please enter your mobile number",
+    phone_rules_01: "Please insert Phone number",
+    phone_rules_02: "The phone number must have 11 digits",
+    phone_rules_03: "The phone number must start with '03'",
+    password: "Password",
+    password_placeholder: "Please enter password",
+    password_rules_01: "Please insert password",
+    password_rules_02: "The characters of password must be above 6",
+    forgotPassword: "Forgot Password"
+  },
   btn: {
-    confirm: "Confirm",
+    confirm: "Confirm"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",

@@ -15,6 +15,18 @@ export default {
     wallet: "پرس",
     me: "میں"
   },
+  form: {
+    phone: "فون نمبر",
+    phone_placeholder: "براہ کرم اپنا موبائل نمبر درج کریں",
+    phone_rules_01: "براہ کرم فون نمبر درج کریں",
+    phone_rules_02: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
+    phone_rules_03: "فون نمبر '03' سے شروع ہونا چاہئے",
+    password: "پاس ورڈ",
+    password_placeholder: "براہ کرم پاس ورڈ درج کریں",
+    password_rules_01: "براہ کرم پاس ورڈ درج کریں",
+    password_rules_02: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
+    forgotPassword: "پاس ورڈ بھول گئے؟"
+  },
   btn: {
     confirm: "تصدیق کریں"
   },

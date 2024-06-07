@@ -60,14 +60,7 @@ watch(group, (newVal) => {
 // };
 
 const handleConfirmClick = (route) => {
-  router
-    .push(route)
-    .then(() => {
-      window.location.reload();
-    })
-    .catch((err) => {
-      console.error("Navigation error: ", err);
-    });
+  router.push(route);
 };
 </script>
 
