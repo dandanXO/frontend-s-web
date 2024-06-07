@@ -3,7 +3,8 @@
     <div class="download-app-content-wrapper">
       <span class="download-app-title">{{ $t("layout.header.downloadAppModal.title") }}</span>
       <div class="download-app-qr-code-wrapper">
-        <vue-qrcode-component :size="200" text="test" />
+        <vue-qrcode-component v-if="downloadUrl" :size="200" :text="downloadUrl" />
+        <a-spin v-else />
       </div>
       <div class="download-app-description">
         {{ $t("layout.header.downloadAppModal.description") }}
@@ -13,10 +14,28 @@
   </a-modal>
 </template>
 <script setup>
+import { getDownloadAppUrl } from "@/api/index/common";
+import { onMounted, ref } from "vue";
 import VueQrcodeComponent from "vue-qrcode-component";
 import { RiQrScan2Line } from "vue-remix-icons";
 
 const visible = defineModel();
+
+const downloadUrl = ref("");
+
+const getUrl = () => {
+  getDownloadAppUrl()
+    .then((res) => {
+      if (res.code === 0) downloadUrl.value = res.data.url;
+    })
+    .catch(() => {});
+};
+
+onMounted(() => {
+  if (!downloadUrl.value) getUrl();
+});
+
+defineExpose({ getUrl });
 </script>
 <style scoped lang="scss">
 .download-app-content-wrapper {
