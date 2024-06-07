@@ -11,7 +11,7 @@
         <el-date-picker
           v-model="request.recordTime"
           format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
+          value-format="YYYY-MM-DD 00:00:00"
           size="small"
           class="input-small"
           style="margin-left: 5px;"
@@ -205,6 +205,7 @@ import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
 import { getShortcuts } from '@/utils/datetime'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 import moment from "moment/moment";
 
 const router = useRouter()
@@ -225,6 +226,7 @@ startDate.setTime(
 )
 const defaultStartDate = convertDate(startDate)
 const defaultEndDate = convertDate(new Date())
+let timeZone = null;
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -249,7 +251,7 @@ const request = reactive({
 })
 
 function convertDate(date) {
-  return moment(date).format('YYYY-MM-DD')
+  return moment(date).format('YYYY-MM-DD 00:00:00')
 }
 
 function resetQuery() {
@@ -265,20 +267,31 @@ function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value
+    if (key === 'recordTime') {
+      query[key] = [...requestCopy.recordTime]
+    } else {
+      if (value) {
+        query[key] = value
+      }
     }
   })
-  if (request.recordTime !== null) {
-    if (request.recordTime.length === 2) {
-      query.recordTime = joinRecordTime(request.recordTime)
+  timeZone = siteList.list.find(e => e.id === requestCopy.siteId).timeZone;
+  if (query.recordTime !== null) {
+    if (query.recordTime.length === 2) {
+      query.summaryTime = joinRecordTime(query.recordTime)
+      query.recordTime[0] = formatInputTimeZone(query.recordTime[0], timeZone);
+      query.recordTime[1] = moment(query.recordTime[1]).format(
+        'YYYY-MM-DD 23:59:59'
+      )
+      query.recordTime[1] = formatInputTimeZone(query.recordTime[1], timeZone);
+      query.recordTime = joinRecordTime(query.recordTime)
     }
   }
   return query
 }
 
 function joinRecordTime(recordTime) {
-  const string = JSON.parse(JSON.stringify(request.recordTime))
+  const string = JSON.parse(JSON.stringify(recordTime))
   return string.join(',')
 }
 
