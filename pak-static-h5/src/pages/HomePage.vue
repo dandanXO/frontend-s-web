@@ -88,7 +88,7 @@
         </div>
       </div>
       <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
-        <img src="../assets/images/index/download/download-app.png" />
+        <img src="../assets/images/auth/app-icon.png" />
       </a>
     </div>
     <!-- <div class="top-action" v-if="store.hasToken()">
@@ -2223,9 +2223,9 @@ watch(
 
   img {
     display: block;
-    width: 36px;
-    height: 36px;
-    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+    width: 32px;
+    height: 32px;
+    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
 
