@@ -175,6 +175,15 @@ export default defineComponent({
             var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName} ${t("lang.page_lobby")}`;
           }
+        }else if (route.path === "/minigame") {
+          prevPage.value = "";
+          hasPage.value = true;
+          hasDrawer.value = true;
+          pageName.value = t("lang.page_game");
+          if (route.query.platform) {
+            var platformName = translateRecord(route.query.platform);
+            pageName.value = `${platformName}`;
+          }
         } else if (route.path === "/account/vip") {
           hasPage.value = true;
           pageName.value = t("lang.page_vip");

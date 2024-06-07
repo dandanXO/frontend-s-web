@@ -62,6 +62,7 @@ export default {
     menu_slots: "Nổ Hũ",
     menu_fishing: "Bắn Cá",
     menu_cockfighting: "ĐÁ GÀ",
+    menu_minigame: "Mini Game",
     menu_rebate: "Hoàn Trả",
 
     // notify msg

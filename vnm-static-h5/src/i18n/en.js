@@ -59,6 +59,7 @@ export default {
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_cockfighting: "Cock Fighting",
+    menu_minigame: "Mini Game",
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
