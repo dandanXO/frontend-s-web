@@ -31,43 +31,38 @@
             </q-form>
           </div>
           <!-- :grid="$q.screen.lt.md" -->
-          <q-table dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.deposit"
-            :rows="dataState.deposit"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            :rows-per-page-options="[]"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.deposit" :dataState="dataState.deposit"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
-            <template v-slot:item="props">
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <template #item="props">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.depositAmount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.depositAmount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                    <div class="q-table__grid-item-value">{{ getDepositStatus(props.row.status) }}</div>
+                    <div class="q-table__grid-item-value">{{ getDepositStatus(props?.props?.row.status) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.deposit_date") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.depositDate }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.depositDate }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
                       <div
                         class="primary-button blue-square"
-                        v-if="props.row.status === 'PENDING'"
-                        @click="($event) => openReminder(props)"
+                        v-if="props?.props?.row.status === 'PENDING'"
+                        @click="($event) => openReminder(props?.props)"
                       >
                       {{ $t('lang.reminder') }}
                       </div>
@@ -77,19 +72,19 @@
               </div>
             </template>
 
-            <template v-slot:body-cell-status="props">
-              <q-td :props="props">
+            <template #body-cell-status="props">
+              <q-td>
                 <div>
-                  {{ getDepositStatus(props.value) }}
+                  {{ getDepositStatus(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
 
-            <template v-slot:body-cell-operation="props">
-              <q-td :props="props">
+            <template #body-cell-operation="props">
+              <q-td>
                 <div
                   class="primary-button blue-square"
-                  v-if="props.row.status === 'PENDING'"
+                  v-if="props?.props?.row.status === 'PENDING'"
                   @click="($event) => openReminder(props)"
                   style="width: 75px;height: 30px; font-size: 12px"
                 >
@@ -97,7 +92,8 @@
                 </div>
               </q-td>
             </template>
-          </q-table>
+            </DataTable>
+
         </q-tab-panel>
         <q-tab-panel name="turnover">
           <div>
@@ -119,52 +115,47 @@
               </div>
             </q-form>
           </div>
-          <q-table dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.turnover"
-            :rows="dataState.turnover"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            :rows-per-page-options="[]"
-            row-key="serialNumber"
+          <DataTable :pagination="null" :loading="loading" :tableColumns="tableColumns.turnover" :dataState="dataState.turnover" :rowsPerPage="searchForm[recordActive].size"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
-            <template v-slot:item="props">
+          <template v-slot:item="props">
               <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.type") }}</div>
-                    <div class="q-table__grid-item-value">{{ getTurnoverType(props.row.type) }}</div>
+                    <div class="q-table__grid-item-value">{{ getTurnoverType(props?.props?.row.type) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.amount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.format") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.subType }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.subType }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.recordTime }}</div>
                   </div>
                 </div>
               </div>
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ getTurnoverType(props.value) }}
+                  {{ getTurnoverType(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
-          </q-table>
+        </DataTable>
         </q-tab-panel>
         <q-tab-panel name="withdraw">
           <div>
@@ -186,54 +177,49 @@
               </div>
             </q-form>
           </div>
-          <q-table dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.withdraw"
-            :rows="dataState.withdraw"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            :rows-per-page-options="[]"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.withdraw" :dataState="dataState.withdraw"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
             <template v-slot:item="props">
               <!-- <pre>{{props}}</pre> -->
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.withdrawAmount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                    <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
+                    <div class="q-table__grid-item-value">{{ getWithdrawStatus(props?.props?.row.status) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.withdrawDate }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
                       <q-btn
-                        v-if="props.row.status === 'STEP_1'"
+                        v-if="props?.props?.row.status === 'STEP_1'"
                         size="sm"
                         :label="$t('lang.reminder')"
                         color="brand"
-                        @click="($event) => openReminder(props)"
+                        @click="($event) => openReminder(props?.props)"
                       />
 
                       <q-btn
-                        v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                        v-if="props.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                         size="sm"
                         :label="$t('lang.confirm_withdraw_success')"
                         color="brand"
-                        @click="openWithdrawConfirmDialog(props)"
+                        @click="openWithdrawConfirmDialog(props?.props)"
                       />
                     </div>
                   </div>
@@ -242,33 +228,33 @@
             </template>
 
             <template v-slot:body-cell-status="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ getWithdrawStatus(props.value) }}
+                  {{ getWithdrawStatus(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
 
             <template v-slot:body-cell-operation="props">
-              <q-td :props="props">
+              <q-td>
                 <q-btn
                   v-if="props.row.status === 'STEP_1'"
                   size="sm"
                   :label="$t('lang.reminder')"
                   color="brand"
-                  @click="($event) => openReminder(props)"
+                  @click="($event) => openReminder(props?.prop)"
                 />
 
                 <q-btn
-                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                  v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                   size="sm"
                   :label="$t('lang.confirm_withdraw_success')"
                   color="brand"
-                  @click="openWithdrawConfirmDialog(props)"
+                  @click="openWithdrawConfirmDialog(props?.props)"
                 />
               </q-td>
             </template>
-          </q-table>
+          </DataTable>
         </q-tab-panel>
         <q-tab-panel name="rebates">
           <div>
@@ -290,16 +276,11 @@
               </div>
             </q-form>
           </div>
-          <q-table dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.rebates"
-            :rows="dataState.rebates"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            :rows-per-page-options="[]"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.rebates" :dataState="dataState.rebates"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           />
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
@@ -348,36 +329,12 @@
               </div>
             </q-form>
           </div>
-          <q-table
-            dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.gameBetRecord"
-            :rows="dataState.gameBetRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
-            :rows-per-page-options="[10]"
-            :hide-pagination="true"
-          >
-          <template v-slot:loading>
-            <q-inner-loading showing color="primary" />
-          </template>
-          </q-table>
-          <div class="datatable-pagination" v-if="dataState.gameBetRecord.length > 0">
-            <span>{{ `페이지 ${pagination.current} / ${Math.ceil(pagination.total / pagination.pageSize)}` }}</span>
-            <q-pagination
-              v-model="pagination.current"
-              :max="Math.ceil(pagination.total / pagination.pageSize)"
-              :max-pages="10"
-              @update:model-value="(currentPage) => {
-                pagination.current = currentPage;
-                recordPage(pagination)
-              }"
-              boundary-links
-            />
-          </div>
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.gameBetRecord" :dataState="dataState.gameBetRecord"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          />
         </q-tab-panel>
         <q-tab-panel name="reminderRecord">
           <div>
@@ -399,48 +356,43 @@
               </div>
             </q-form>
           </div>
-          <q-table dense
-            class="datatable"
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.reminderRecord"
-            :rows="dataState.reminderRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            :rows-per-page-options="[]"
-            row-key="orderNo"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.reminderRecord" :dataState="dataState.reminderRecord" :rowKey="'orderNo'"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
             <template v-slot:item="props">
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.orderNo }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.orderNo }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.finance_remark") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.financeRemark }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.financeRemark }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.feedback_time") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.feedbackTime }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.feedbackTime }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.reminder_type") }}</div>
-                    <div class="q-table__grid-item-value">{{ checkType(props.row.type) }}</div>
+                    <div class="q-table__grid-item-value">{{ checkType(props?.props?.row.type) }}</div>
                   </div>
                 </div>
               </div>
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ checkType(props.value) }}
+                  {{ checkType(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
-          </q-table>
+          </DataTable>
         </q-tab-panel>
       </q-tab-panels>
       <q-dialog style="margin: 20px" v-model="betRecordDialog">
@@ -538,12 +490,14 @@ import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
 import {useI18n} from "vue-i18n";
 import DateFilter from 'components/transaction/DateFilter';
+import DataTable from 'components/transaction/DataTable';
 
 export default defineComponent({
   name: "TransitRecordView",
   components: {
     FileUpload,
-    DateFilter
+    DateFilter,
+    DataTable
   },
   setup() {
 
@@ -615,23 +569,33 @@ export default defineComponent({
     const searchForm = reactive({
       turnover: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 20
       },
       rebates: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       transfer: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       withdraw: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       deposit: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       gameBetRecord: {
         startDate: "",
@@ -644,11 +608,15 @@ export default defineComponent({
       betRecord: {
         platform: "",
         gameType: "",
-        memberId: store.id
+        memberId: store.id,
+        current: 1,
+        size: 10
       },
       reminderRecord: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       }
     });
     const dataState = reactive({
@@ -1050,6 +1018,7 @@ export default defineComponent({
         dataSource.value = [];
         if (response.code === 0) {
           pagination.total = response.data.total;
+          pagination.pages = response.data.pages;
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
