@@ -48,7 +48,7 @@
           <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
           <div class="action-btn__text-wrapper">
             <span class="action-btn__title">Tải APP</span>
-            <span class="action-btn__description">TẶNG 18-88K</span>
+            <span class="action-btn__description">MƯA LÌ XÌ MỖI TUẦN LÊN ĐẾN 8,888K</span>
           </div>
         </div>
 
@@ -265,9 +265,11 @@ a:hover {
 .action-btn {
   display: flex;
   align-items: center;
-  padding: 15px 0px;
+  padding: 15px 5px;
   color: #ffffff;
+  gap: 4px;
   border-radius: 10px;
+  aspect-ratio: 150/80;
   justify-content: space-evenly;
 }
 
@@ -280,16 +282,14 @@ a:hover {
 }
 
 .action-btn img {
-  width: 44px;
+  width: 40px;
 
-  @media(max-width: 400px){
+  @media(max-width: 420px){
     width: 34px;
   }
 }
 
-.action-btn{
-  aspect-ratio: 150/75;
-}
+
 
 .action-btn__text-wrapper {
   display: flex;
@@ -305,7 +305,7 @@ a:hover {
   font-size: 1.5rem;
   line-height: 1.8rem;
 
-  @media(max-width: 400px){
+  @media(max-width: 420px){
     font-size: 1.15rem;
     line-height: 1.4rem;
   }
