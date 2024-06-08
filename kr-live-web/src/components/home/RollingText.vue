@@ -4,7 +4,7 @@
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
                 <div class="box">
-                    <div class="text">공지</div>
+                    <div class="text">출금현황</div>
                 </div>
             </div>
             <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
