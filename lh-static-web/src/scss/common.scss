@@ -1,10 +1,18 @@
+// @font-face {
+//   font-family: "FZHanZhenGuangBiaoS-GB";
+//   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
+//   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+//   font-weight: normal;
+//   font-style: normal;
+//   font-display: swap;
+// }
+
 @font-face {
   font-family: "FZHanZhenGuangBiaoS-GB";
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+  src: url("@/assets/fonts/FZHanZhenGuangBiaoS.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

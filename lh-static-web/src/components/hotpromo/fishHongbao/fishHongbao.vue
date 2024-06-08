@@ -48,12 +48,12 @@
             <td>18~88</td>
           </tr>
           <tr>
-            <td>60,000</td>
+            <td>300,000</td>
             <td>3</td>
             <td>88~288</td>
           </tr>
           <tr>
-            <td>300,000</td>
+            <td>1,200,000</td>
             <td>4</td>
             <td>388~888</td>
           </tr>
@@ -86,7 +86,7 @@
             4.本活动根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P 地址视为同一账户，若有违规者，将不享受此红利；
+            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P 地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             6.为避免文字理解差异，雷火电竟保留此活动最终解释权；
@@ -100,7 +100,8 @@
         align-center
         :close-on-click-modal="false"
         class="fish-match-table-record-dialog"
-      >
+      > 
+        <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
         <template #header>
           <div class="title">恭喜你抽中</div>
         </template>
@@ -520,9 +521,19 @@ const claimHongBao = async () => {
 }
 
 :deep(.fish-match-table-record-dialog) {
-  width: 360px;
+  width: 320px;
   height: 360px;
   background-color: #FFF3DF;
+  font-family: "FZHanZhenGuangBiaoS-GB";
+  .fish-img {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
   .el-dialog__header {
     background: #FFF3DF;
     display: flex;
@@ -548,7 +559,7 @@ const claimHongBao = async () => {
     height: 320px;
     .record-dialog-content-title{
       color:#EA5046;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 16.63px;
       letter-spacing: 0.2em;
@@ -562,8 +573,8 @@ const claimHongBao = async () => {
       letter-spacing: 0.2em;
       text-align: center;
       color:#EA5046;
-      span{
-        font-size: 48px;
+      span {
+        font-size: 72px;
       }
     }
     .hongbao-finish-btn{

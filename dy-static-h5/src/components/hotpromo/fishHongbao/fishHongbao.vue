@@ -105,9 +105,9 @@
         </div>
       </div>
       <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
-        <div class="title">恭喜你抽中</div>
-
         <q-card class="confirm-vote-card">
+          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>      
+          <div class="title">恭喜你抽中</div>
           <div class="close-btn" @click="tableRecordDialog = false"></div>
           <div class="record-dialog-container">
             <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
@@ -498,12 +498,23 @@ const claimHongBao = async () => {
 }
 
 .fish-match-table-record-dialog {
+  position: relative;
+  .fish-img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -108px;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
   .confirm-vote-card {
     width: 360px;
-    height: 360px;
+    height: 320px;
     background-color: #fff3df;
     position: relative;
     border-radius: 20px;
+    overflow: unset;
   }
   .close-btn {
     background: url(../../../assets/promo/lh-fish-honbao/close-btn.png);
@@ -540,7 +551,7 @@ const claimHongBao = async () => {
       text-align: center;
       color: #ea5046;
       span {
-        font-size: 48px;
+        font-size: 72px;
       }
     }
     .hongbao-finish-btn {
@@ -579,7 +590,7 @@ const claimHongBao = async () => {
     letter-spacing: 0.2em;
     text-align: center;
     position: absolute;
-    top: 26%;
+    top: -1%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;
