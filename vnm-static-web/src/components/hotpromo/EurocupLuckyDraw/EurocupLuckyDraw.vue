@@ -68,7 +68,7 @@
                     </tr>
                     <tr>
                         <td>Triệu Phú</td>
-                        <td>888,888 VNDP</td>
+                        <td>288,888 VNDP</td>
                         <td>3 chữ số đã chọn trùng khớp với 3 chữ số cuối của Giải Đặc Biệt</td>
                     </tr>
                     <tr>
@@ -137,7 +137,7 @@
                 <p class="likeli">
                     <span class="point">B</span>
                     <span class="wSub">
-                    Kết quả xổ số Miền Bắc ngày 01/07/2024 là 272935 thì:
+                    Kết quả xổ số Miền Bắc ngày 01/07/2024 là 128335 thì:
                         
                        <span class="sub">- Triệu Phú: 335</span>
                         <span class="sub">- Nhóm 3: 353; 533</span>
@@ -504,6 +504,8 @@ onMounted(() => {
             font-weight: 700;
             font-size: 18px;
             color: #ffffff;
+            width: 130px;
+            text-align: center;
             }
             &__sub {
                 color: #000000;

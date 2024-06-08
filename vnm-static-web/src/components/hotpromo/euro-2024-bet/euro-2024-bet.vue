@@ -44,7 +44,7 @@
       <div class="section-wrapper border">
         <div class="title">
           <div class="title-prefix" />
-          Chi tiết khuyến mãSố Tiền Thưởn
+          Chi tiết khuyến mãi:
         </div>
         <div class="content">
           Mỗi ngày Thành Viên tham gia cược tại các trận đấu của giải bóng đá vô địch Châu Âu 2024 và đạt số tiền đặt
@@ -72,7 +72,7 @@
             <td>3</td>
           </tr>
           <tr>
-            <td>≥30,800 VNDP</td>
+            <td>≥38,800 VNDP</td>
             <td>588 VNDP</td>
             <td>3</td>
           </tr>
@@ -87,7 +87,7 @@
             <td>3</td>
           </tr>
           <tr>
-            <td>≥580F,000 VNDP</td>
+            <td>≥580,000 VNDP</td>
             <td>6,888 VNDP</td>
             <td>3</td>
           </tr>
@@ -313,7 +313,7 @@ onMounted(() => {
           justify-content: center;
           align-items: center;
           padding: 5px 15px;
-          width: 100px;
+          width: 120px;
           height: 25px;
           background: url("../../../assets/images/promotion/hotpromo/eurocup24/blue-hexagon.svg") no-repeat center
             center;
