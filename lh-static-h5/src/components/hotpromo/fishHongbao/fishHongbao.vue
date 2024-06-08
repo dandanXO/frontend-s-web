@@ -107,7 +107,7 @@
       <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
 
         <q-card class="confirm-vote-card">
-          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>      
+          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
           <div class="title">恭喜你抽中</div>
           <div class="close-btn" @click="tableRecordDialog = false"></div>
           <div class="record-dialog-container">

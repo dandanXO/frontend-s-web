@@ -50,12 +50,12 @@
             <td>18~88</td>
           </tr>
           <tr>
-            <td>60,000</td>
+            <td>300,000</td>
             <td>3</td>
             <td>88~288</td>
           </tr>
           <tr>
-            <td>300,000</td>
+            <td>1,200,000</td>
             <td>4</td>
             <td>388~888</td>
           </tr>
@@ -93,7 +93,7 @@
           </div>
           <div class="item">
             5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P
-            地址视为同一账户，若有违规者，将不享受此红利；
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">6.为避免文字理解差异，雷火电竟保留此活动最终解释权；</div>
         </div>
@@ -106,7 +106,7 @@
         :close-on-click-modal="false"
         class="fish-match-table-record-dialog"
       >
-        <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
+        <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png" /></div>
         <template #header>
           <div class="title">恭喜你抽中</div>
         </template>
