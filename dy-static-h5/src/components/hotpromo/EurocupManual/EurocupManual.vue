@@ -380,6 +380,11 @@ onMounted(() => {
   position: relative;
   width: 100%;
 
+  .container {
+    width: calc(100% - 20px);
+    margin: 0 auto;
+  }
+
   .common-title {
     font-family: Play;
     font-size: 20px;
@@ -433,9 +438,9 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100px;
-  height: 40px;
-  font-size: 12px;
+  width: 120px;
+  height: 48px;
+  font-size: 14px;
   color: #fff;
   cursor: pointer;
 }
@@ -488,7 +493,7 @@ onMounted(() => {
   margin-bottom: 20px;
   .alert-line {
     color: #f4ffe1;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 25.4px;
     margin: 14px 0px;
   }
@@ -498,7 +503,7 @@ onMounted(() => {
   width: 100%;
   table {
     width: 100%;
-    font-size: 10px;
+    font-size: 13px;
     line-height: 16px;
     text-align: center;
     border-collapse: separate !important;
@@ -536,9 +541,9 @@ onMounted(() => {
   width: 100%;
   font-size: 12px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: stretch;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 10px;
   margin: 10px 0;
   .info-item {
@@ -549,14 +554,14 @@ onMounted(() => {
     flex-direction: column;
     background: url(../../../assets/promo/dy-eurocup-manual/info-bg.png) no-repeat center center;
     background-size: cover;
-    width: 30%;
+    width: 32%;
     .title {
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       font-family: Play;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 700;
     }
     .content {
@@ -566,7 +571,7 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       font-family: Play;
-      font-size: 10px;
+      font-size: 13px;
       font-weight: 400;
       text-align: center;
     }
@@ -654,11 +659,11 @@ onMounted(() => {
     padding: 0px;
     list-style: none;
     li {
-      font-size: 10px;
-      line-height: 12px;
+      font-size: 14px;
+      line-height: 16px;
       color: #e1f2ff;
       font-weight: 400;
-      margin-bottom: 5px !important;
+      margin-bottom: 10px !important;
     }
   }
 }
