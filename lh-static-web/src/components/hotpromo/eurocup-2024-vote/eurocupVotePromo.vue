@@ -27,12 +27,13 @@
           <div class="c-flagname">
             <div class="c-flag"><img :src="imgURL + votesListItem.countryImgUrl">
             </div>
-            <div class="c-name">{{ votesListItem.teamNameEn }}</div>
+            <div class="c-name">{{ votesListItem.teamNameLocal }}</div>
           </div>
           <div class="c-price">{{ votesListItem.totalVotes }} 票</div>
           <div class="c-button" @click="castVote({
                         teamId: votesListItem.id,
-                        teamName: votesListItem.teamNameEn
+                        teamName: votesListItem.teamNameEn,
+                        teamNameLocal: votesListItem.teamNameLocal
                     })">投票</div>
         </div>
       </div>
@@ -142,7 +143,7 @@
     </div>
 
 
-    <el-dialog align-center v-model="isCastVoteModalVisible" :title="castVoteFormData.teamName" width="500">
+    <el-dialog align-center v-model="isCastVoteModalVisible" :title="castVoteFormData.teamNameLocal" width="500">
       <el-form :rules="castVoteFormValidationRules" ref="castVoteFormRef" style="padding: 20px;"
                :model="castVoteFormData">
         <el-form-item prop="votes" label="投票数量" :label-width="formLabelWidth">
@@ -197,6 +198,7 @@ export default defineComponent({
     const castVoteFormData = reactive({
       teamId: undefined,
       teamName: '',
+      teamNameLocal: "",
       votes: '1'
     })
     const votesData = ref({
@@ -205,10 +207,11 @@ export default defineComponent({
       votesList: [],
       votesRecord: [],
     });
-    const castVote = ({ teamId, teamName }) => {
+    const castVote = ({ teamId, teamName, teamNameLocal }) => {
       isCastVoteModalVisible.value = true;
       castVoteFormData.teamId = teamId
-      castVoteFormData.teamName = teamName
+      castVoteFormData.teamName = teamName;
+      castVoteFormData.teamNameLocal = teamNameLocal
     }
     const submit = async (elForm) => {
       if (!elForm) return
@@ -232,8 +235,10 @@ export default defineComponent({
           if (res.code === 0) {
             ElMessage.success({
               type: "success",
-              message: "success"
+              message: "投票成功"
             })
+            isCastVoteModalVisible.value= false;
+            loadVoteTeam();
           } else {
             ElMessage.error(res.message)
           }
@@ -243,12 +248,16 @@ export default defineComponent({
       })
     }
 
-    onMounted(() => {
+    const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
           votesData.value = res.data;
         }
       });
+    }
+
+    onMounted(() => {
+      loadVoteTeam();
     })
 
 
@@ -261,6 +270,7 @@ export default defineComponent({
       castVoteFormRef,
       castVote,
       submit,
+      isSubmitting,
       convertToCommaAmount,
       store,
       imgURL

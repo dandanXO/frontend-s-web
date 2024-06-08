@@ -408,6 +408,7 @@ onMounted(() => {
     width: 100%;
     gap: 5px;
     text-wrap: nowrap;
+    white-space: nowrap;
     &:before, &:after {
       content: "";
       background: url(../../../assets/promo/lh-eurocup-manual/title-bar.png)no-repeat center center;
