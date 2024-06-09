@@ -88,12 +88,12 @@
               border-right: 2px solid #05a5ff !important;
             "
           >
-            <div style="white-space: nowrap">角球+1分</div>
-            <div style="white-space: nowrap">黄牌+1分</div>
-            <div style="white-space: nowrap">进球+2分</div>
-            <div style="white-space: nowrap">红牌+2分</div>
-            <div style="white-space: nowrap">射门数+2分</div>
-            <div style="white-space: nowrap">乌龙球+2分</div>
+            <div>角球+1分</div>
+            <div>黄牌+1分</div>
+            <div>进球+2分</div>
+            <div>红牌+2分</div>
+            <div>射门数+2分</div>
+            <div>乌龙球+2分</div>
           </td>
           <td>6</td>
           <td>8</td>
@@ -251,6 +251,7 @@
           text-align: start;
           background: #ffefef;
           margin-top: 15px;
+          margin-bottom: 10px;
           border: 1px solid #ffcbcb;
         "
       >
@@ -348,6 +349,7 @@
           text-align: start;
           background: #ffefef;
           margin-top: 15px;
+          margin-bottom: 10px;
           border: 1px solid #ffcbcb;
         "
       >
@@ -521,6 +523,7 @@ onMounted(async () => {
     border-left: 1px solid #05a5ff;
     border-right: 1px solid #05a5ff;
     border-color: #05a5ff;
+    white-space: normal;
 
     th {
       background-color: initial !important;
