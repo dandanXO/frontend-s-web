@@ -82,18 +82,18 @@
             rowspan="6"
             style="
               color: #05a5ff;
-              line-height: 35px;
+              line-height: 24px;
               font-size: 14px;
               border-left: 2px solid #05a5ff !important;
               border-right: 2px solid #05a5ff !important;
             "
           >
-            <div>角球+1分</div>
-            <div>黄牌+1分</div>
-            <div>进球+2分</div>
-            <div>红牌+2分</div>
-            <div>射门数+2分</div>
-            <div>乌龙球+2分</div>
+            <div style="white-space: nowrap">角球+1分</div>
+            <div style="white-space: nowrap">黄牌+1分</div>
+            <div style="white-space: nowrap">进球+2分</div>
+            <div style="white-space: nowrap">红牌+2分</div>
+            <div style="white-space: nowrap">射门数+2分</div>
+            <div style="white-space: nowrap">乌龙球+2分</div>
           </td>
           <td>6</td>
           <td>8</td>
@@ -141,6 +141,7 @@
           text-align: start;
           background: #ffefef;
           margin-top: 15px;
+          margin-bottom: 12px;
           border: 1px solid #ffcbcb;
         "
       >
@@ -178,7 +179,7 @@
           <th colspan="2">投注指定两场</th>
         </tr>
         <tr>
-          <td style="color: #05a5ff !important; font-size: 14px; line-height: 28px; font-weight: 500">
+          <td style="color: #05a5ff !important; font-size: 14px; line-height: 20px; font-weight: 500">
             <div>两队总比分</div>
             <div>双数彩金</div>
           </td>
@@ -186,7 +187,7 @@
             style="
               color: #05a5ff !important;
               font-size: 14px;
-              line-height: 28px;
+              line-height: 20px;
               font-weight: 500;
               border-right: 2px solid #05a5ff !important;
             "
@@ -292,8 +293,8 @@
             rowspan="6"
             style="
               color: #05a5ff !important;
-              line-height: 60px;
-              font-size: 14px;
+              line-height: 40px;
+              font-size: 17px;
               border-right: 2px solid #05a5ff !important;
             "
           >
@@ -447,15 +448,20 @@ onMounted(async () => {
   }
 
   .sport-zhongchao-tab {
-    width: 400px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
-    margin-top: 20px;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    gap: 10px;
+    flex-wrap: nowrap;
     .sport-zhongchao-tab-item {
-      width: 122px;
-      height: 40px;
+      //width: 122px;
+      //height: 40px;
+      width: 100%;
+      min-height: 25px;
+      aspect-ratio: 122/40;
       color: #fff;
       font-size: 17px;
       font-weight: 500;
@@ -509,6 +515,7 @@ onMounted(async () => {
   .second-table,
   .third-table {
     width: 100%;
+    box-sizing: border-box;
     text-align: center;
     vertical-align: middle;
     border-left: 1px solid #05a5ff;
