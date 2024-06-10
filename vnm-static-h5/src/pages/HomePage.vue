@@ -257,7 +257,7 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -310,15 +310,25 @@
         <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
-      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/minigame-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
+          <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_hashgame") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
       </div>
+      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
+        <template v-if="tab === 'fishing'">
+          <img src="../assets/images/home/games/others-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/others-icon.png" />
+        </template>
+        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
+      </div>
+    </div>
 
       <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
       <!--        <template v-if="tab === 'cockfight'">-->
@@ -330,16 +340,6 @@
       <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
       <!--      </div>-->
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/casual-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/casual-icon.png" />
-        </template>
-        <span :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
-      </div>
-    </div>
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
       <!-- <div class="game-lists fade-in-image" id="esport-lists">
@@ -515,6 +515,31 @@
         </template>
       </div>
 
+
+      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
+        <template v-for="(item, index) in casuals" :key="index">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
       <div class="game-lists fade-in-image" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
@@ -584,31 +609,6 @@
         </template>
       </div>
 
-
-      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
-        <template v-for="(item, index) in casuals" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
     </div>
   </div>
 
@@ -1023,6 +1023,7 @@ export default defineComponent({
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("esport-lists");
           var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem6half = document.getElementById("casual-lists");
           var checkItem7 = document.getElementById("fishing-lists");
           var checkItem8 = document.getElementById("cockfight-lists");
 
@@ -1032,6 +1033,7 @@ export default defineComponent({
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
+          var positionTop6half = checkItem6half.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
           var positionTop8 = checkItem8.getBoundingClientRect().top;
 
@@ -1043,7 +1045,9 @@ export default defineComponent({
             tab.value = "cockfight";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop6half - 5 && positionTop7 >= blockHeight) {
+            tab.value = "casual";
+          } else if (0 > positionTop6 - 5 && positionTop6half >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "esport";
@@ -1412,8 +1416,8 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1 ) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_vn = casualObj.name + " MiniGame";
-              casualObj.title_en = casualObj.name  + " MiniGame";
+              casualObj.title_vn = casualObj.name + " Hash Game";
+              casualObj.title_en = casualObj.name  + " Hash Game";
 
               casualObj.icon = "casual";
               casuals.value.push(casualObj);

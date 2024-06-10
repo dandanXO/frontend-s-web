@@ -86,7 +86,7 @@
         img {
           display: block;
           //width: 100%;
-          transform: scale(1.10);
+          transform: scale(1.1);
           width: 748px;
           max-width: 749px;
         }
@@ -374,7 +374,6 @@
   }
 }
 
-
 @-webkit-keyframes playzoomsm {
   0% {
     -webkit-transform: scale(1.5, 1.5);
@@ -474,7 +473,7 @@
 .game-container {
   overflow: hidden;
   padding: 1rem;
-  max-width:1400px;
+  max-width: 1400px;
   margin: 0 auto 5rem;
 
   border-radius: 2rem;
@@ -570,15 +569,15 @@
       grid-row-gap: 1rem;
       margin: 1rem;
 
-      &.cockfight-special{
-        display:flex;
+      &.cockfight-special {
+        display: flex;
         justify-content: center;
 
-        .game-slot{
+        .game-slot {
           max-width: 300px;
         }
 
-        .slot-details{
+        .slot-details {
           justify-content: center !important;
           font-size: 20px !important;
         }
@@ -592,9 +591,9 @@
         padding: 0.5rem;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 
-        .play-btn{
-          display:none;
-          position:absolute;
+        .play-btn {
+          display: none;
+          position: absolute;
           top: 50%;
           margin-top: -38px;
           margin-left: -80px;
@@ -616,23 +615,23 @@
           font-size: 20px;
           cursor: pointer;
 
-          &:hover{
+          &:hover {
             opacity: 0.9;
           }
-          &:active{
+          &:active {
             filter: brightness(0.85);
-            transform: translate(0px ,1px);
+            transform: translate(0px, 1px);
           }
         }
 
-        &:hover{
-          .play-btn{
+        &:hover {
+          .play-btn {
             transition: all 0.3s ease-out;
             -webkit-animation: playzoomsm 0.2s;
             animation: playzoomsm 0.2s;
             -webkit-animation-fill-mode: forwards;
             animation-fill-mode: forwards;
-            display:flex;
+            display: flex;
           }
         }
 
@@ -654,7 +653,7 @@
             background-size: 50%;
             opacity: 0;
             transition: all 0.3s ease-out;
-            left:0px;
+            left: 0px;
             z-index: 1;
           }
 
@@ -688,7 +687,8 @@
             }
           }
 
-          .slot-img {
+          .slot-img,
+          .cockfight-img {
             width: 100%;
             height: auto;
             aspect-ratio: 1/1;
@@ -701,6 +701,9 @@
             img {
               transition: all 0.5s ease;
             }
+          }
+          .cockfight-img {
+            aspect-ratio: unset;
           }
 
           .slot-details {
@@ -836,17 +839,16 @@
   }
 }
 
-.all-game-menus{
+.all-game-menus {
   width: 380px;
   margin: 0 auto 10px;
 
-  .all-game-tabs{
-
-    display:flex;
+  .all-game-tabs {
+    display: flex;
     align-items: center;
     justify-content: center;
 
-    .all-game-tab{
+    .all-game-tab {
       width: 190px;
       text-align: center;
       cursor: pointer;
@@ -857,15 +859,14 @@
       font-weight: bold;
       font-size: 20px;
 
-      &:nth-child(1){
+      &:nth-child(1) {
         border-radius: 25px 0px 0px 25px;
       }
-      &:nth-child(2){
-        border-radius:0px 25px 25px 0px;
+      &:nth-child(2) {
+        border-radius: 0px 25px 25px 0px;
       }
 
-
-      &.active{
+      &.active {
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
         box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
         color: #fff;
