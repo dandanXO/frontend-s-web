@@ -10,7 +10,7 @@
       <thead>
         <tr>
           <th>竞猜正确场次</th>
-          <th>存款反比</th>
+          <th>投注反比</th>
           <th>彩金上限</th>
         </tr>
       </thead>
@@ -39,7 +39,7 @@
     </table>
 
     <div class="tips-txt-bottom">
-      注：用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数7次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+      注：用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数8次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
     </div>
   </div>
   <div class="competition-container">
@@ -123,7 +123,7 @@
 
   <div class="tips-container">
     <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
-    <div class="tips-record" @click="openTableRecordDialog">【投票记录】</div>
+    <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
   </div>
 
   <div class="tabs-container">
