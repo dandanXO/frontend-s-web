@@ -230,7 +230,7 @@ const validateBankLength = (val) => {
   if (selectedBankType.value === "BANK") {
     return ((val.length > 10 && val.length < 21) || "길이는 10에서 20자 여야 합니다");
   } else if (selectedBankType.value.includes("USDT")) {
-    return ((val.length > 33 && val.length < 38) || "길이는 33에서 38자 여야 합니다");
+    return ((val.length >= 34 && val.length <= 36) || "길이는 34에서 36자 여야 합니다");
   }
 };
 
