@@ -34,6 +34,12 @@
       :params="list.param"
     />
 
+    <HongBaoPreEurocup
+      v-if="list.redirectUrl === 'tiqianhongbao' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
     <AsianCup2024 v-if="list.redirectUrl === 'lh1-promo-application-A' && !isCommonPromo && store.token" />
     <BasketballHot v-if="list.redirectUrl === 'lh1-promo-basketball' && !isCommonPromo && store.token" />
     <LPLSummer v-if="list.redirectUrl === 'lh1-lpl-game' && !isCommonPromo && store.token" />
@@ -146,6 +152,7 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue"
+import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue"
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
@@ -198,7 +205,8 @@ export default defineComponent({
     Nba24Match,
     fishHongbao,
     LPLSummer2024,
-    DuanWuJiePromo
+    DuanWuJiePromo,
+    HongBaoPreEurocup
     // DailyBonus
   },
   props: {
