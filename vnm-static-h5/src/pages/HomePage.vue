@@ -135,9 +135,9 @@
 
         <div class="euro-countdown-txt">
           <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 90px" />
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 70px" />
           </div>
-          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
 
           <div class="euro-countdown-num-wrap">
             {{ $t("lang.euroCountdown01a") }}
@@ -2906,8 +2906,8 @@ export default defineComponent({
     align-items: baseline;
     // padding-bottom: 35px;
     // padding-top: 15px;
-    padding-bottom: 8px;
-    padding-top: 8px;
+    // padding-bottom: 8px;
+    // padding-top: 8px;
     position: relative;
 
     img {
@@ -2968,7 +2968,9 @@ export default defineComponent({
       width: max-content;
       position: relative;
       background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
-      background-size: 100% 100%;
+      // background-size: 100% 100%;
+      
+    background-size: 100% 70%;
       padding: 4px;
       margin-left: 12px;
 
@@ -3024,25 +3026,28 @@ export default defineComponent({
 
         .num {
           background-image: url(../assets/images/home/eurocup-countdown-number.png);
-          height: 40px;
-          width: 40px;
+          // height: 40px;
+          // width: 40px;
+          
+    height: 30px;
+    width: 30px;
           background-size: 100% 100%;
           display: flex;
           align-items: center;
           justify-content: center;
 
-          @media (min-width: 440px) {
-            height: 50px;
-            width: 50px;
-          }
+          // @media (min-width: 440px) {
+          //   height: 50px;
+          //   width: 50px;
+          // }
 
-          @media (min-width: 500px) {
-            height: 60px;
-            width: 60px;
-          }
+          // @media (min-width: 500px) {
+          //   height: 60px;
+          //   width: 60px;
+          // }
 
           &:last-child {
-            margin-left: -5px;
+            margin-left: -3px;
           }
         }
         span {
