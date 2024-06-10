@@ -29,7 +29,7 @@
       :params="list.param"
     />-->
     <HongBaoYu2024
-      v-if="list.redirectUrl === 'lh1-upgrade-hongbao' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'tiqianhongbaozz' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -467,7 +467,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-asian-zone" ||
       this.list.redirectUrl === "lh1-cny-step-game" ||
       this.list.redirectUrl === "lh1-feedback-award" ||
-      this.list.redirectUrl === "lh1-upgrade-hongbao" ||
+      this.list.redirectUrl === "tiqianhongbao" ||
       this.list.redirectUrl === "lh-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "lh1-spin-wheel" ||
       this.list.redirectUrl === "lh1-game-steps" ||
