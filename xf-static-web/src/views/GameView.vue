@@ -108,7 +108,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { useRoute, useRouter } from 'vue-router';
 import { useScriptTag } from '@vueuse/core'
 import { userStore } from "@/store";
-// import { message } from "ant-design-vue";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   components: {
@@ -117,7 +117,7 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const numBox = ref(275417746)
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/game/'
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/game/'
     const banner = ref([]);
     const route = useRoute();
     const router = useRouter();
@@ -142,53 +142,53 @@ export default defineComponent({
     };
     const getPlatList = () => {
 
-		if (!store.token) {
-			getPlatformList().then((data) => {
-				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-				if (!route.query.plat) {
-          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+      if (!store.token) {
+        getPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
 
-          if (firstPlatform) {
-            switchPlat(firstPlatform);
+            if (firstPlatform) {
+              switchPlat(firstPlatform);
+            }
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
           }
-				} else {
-				platforms.value.forEach(element => {
-					if (route.query.plat === element.code) {
-					switchPlat(element)
-					}
-				});
-				}
-			}).catch((err) => {
-				console.log(err.message)
-				// message.error(
-				//   err.message,
-				//   4
-				// );
-			});
-		} else {
-			getLoggedInPlatformList().then((data) => {
-				platforms.value = data.filter(element => element.gameType.includes("SLOT"));
-				if (!route.query.plat) {
-          const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      } else {
+        getLoggedInPlatformList().then((data) => {
+          platforms.value = data.filter(element => element.gameType.includes("SLOT"));
+          if (!route.query.plat) {
+            const firstPlatform = platforms.value.find((pl) => pl.code !== 'AG');
 
-          if (firstPlatform) {
-            switchPlat(firstPlatform);
+            if (firstPlatform) {
+              switchPlat(firstPlatform);
+            }
+          } else {
+            platforms.value.forEach(element => {
+              if (route.query.plat === element.code) {
+                switchPlat(element)
+              }
+            });
           }
-				} else {
-				platforms.value.forEach(element => {
-					if (route.query.plat === element.code) {
-					switchPlat(element)
-					}
-				});
-				}
-			}).catch((err) => {
-				console.log(err.message)
-				// message.error(
-				//   err.message,
-				//   4
-				// );
-			});
-		}
+        }).catch((err) => {
+          console.log(err.message)
+          // message.error(
+          //   err.message,
+          //   4
+          // );
+        });
+      }
 
 
     };
@@ -201,22 +201,23 @@ export default defineComponent({
     };
     const loadGameList = () => {
       // if (!store.token) {
-        getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
-          data.forEach(element => {
-          element.default = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+      getPlatformGames(activePlat.value.id, "SLOT").then((data) => {
+        data.forEach(element => {
+          var imageCdnUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value;
+          element.default = `${imageCdnUrl}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
           if(element.icon.indexOf('/') > -1){
-            element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${element.icon}`;
+            element.icon = `${imageCdnUrl}/game/${element.icon}`;
           }else{
-            element.icon = `${process.env.VUE_APP_IMAGE_CDN}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+            element.icon = `${imageCdnUrl}/game/${activePlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
           }
 
-          });
-          gameListData.value = data;
-          gamePage.total = data.length;
-          changePage(1, gamePage.pageSize);
-        }).catch((err) => {
-          console.log(err.message);
         });
+        gameListData.value = data;
+        gamePage.total = data.length;
+        changePage(1, gamePage.pageSize);
+      }).catch((err) => {
+        console.log(err.message);
+      });
       // } else {
       //   getLoggedInPlatformGames(activePlat.value.id, "SLOT").then((data) => {
       //     data.forEach(element => {
@@ -245,7 +246,7 @@ export default defineComponent({
     const loadBanner = () => {
       loadPromoBanner("SLOT").then((res) => {
         if (res.code === 0) {
-            banner.value = res.data[0]
+          banner.value = res.data[0]
         }
       })
     }
@@ -271,55 +272,55 @@ export default defineComponent({
     useScriptTag(
       'https://tickers.playtech.com/jackpots/new_jackpotjs.js',
       // on script tag loaded.
-        () => {
-          function formatNumberStr(nStr) {
-              nStr += "";
-              var x = nStr.split(".");
-              var x1 = x[0];
-            //	x2 = x.length > 1 ? "." + x[1] : "";
-              var rgx = /(\d+)(\d{3})/;
-              while (rgx.test(x1)) {
-                x1 = x1.replace(rgx, "$1" + "," + "$2");
-              }
-            //	return x1 + x2;
-              return x1;
-            }
-            Ticker.prototype.showJackpot = function()
-            {
-              var newvalue = this.getJackpot();
+      () => {
+        function formatNumberStr(nStr) {
+          nStr += "";
+          var x = nStr.split(".");
+          var x1 = x[0];
+          //	x2 = x.length > 1 ? "." + x[1] : "";
+          var rgx = /(\d+)(\d{3})/;
+          while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, "$1" + "," + "$2");
+          }
+          //	return x1 + x2;
+          return x1;
+        }
+        Ticker.prototype.showJackpot = function()
+        {
+          var newvalue = this.getJackpot();
 
-              if (this.type != "count") {
-                newvalue = Math.round(newvalue * 100) / 100 + "";
-                if (newvalue.match(/^\d+\.\d$/)) {
-                  newvalue = newvalue + "0";
-                }
-                if (newvalue.match(/^\d+$/)) {
-                  newvalue = newvalue + ".00";
-                }
-              }
-              var text = "LOADING...";
-              if (newvalue > 0) {
-                text = (this.signpos != 0 ? formatNumberStr(newvalue) + this.sign
-                    : this.sign + formatNumberStr(newvalue));
-              }
-              if (newvalue > 0 && this.type == "count") {
-                text = newvalue;
-              }
-
-              this.textbox.innerHTML = text;
+          if (this.type != "count") {
+            newvalue = Math.round(newvalue * 100) / 100 + "";
+            if (newvalue.match(/^\d+\.\d$/)) {
+              newvalue = newvalue + "0";
             }
-          // do something
-            ptJackpot.value = new Ticker({
-              info : 2,
-              casino : 'drunkenmonkey88',
-              currency : 'cny'
-            })
-          ptJackpot.value.SetCurrencyPos(0);
-          ptJackpot.value.SetCurrencySign(store.currency.value);
-          ptJackpot.value.attachToTextBox('numBox');
-          ptJackpot.value.tick();
-        },
-      )
+            if (newvalue.match(/^\d+$/)) {
+              newvalue = newvalue + ".00";
+            }
+          }
+          var text = "LOADING...";
+          if (newvalue > 0) {
+            text = (this.signpos != 0 ? formatNumberStr(newvalue) + this.sign
+              : this.sign + formatNumberStr(newvalue));
+          }
+          if (newvalue > 0 && this.type == "count") {
+            text = newvalue;
+          }
+
+          this.textbox.innerHTML = text;
+        }
+        // do something
+        ptJackpot.value = new Ticker({
+          info : 2,
+          casino : 'drunkenmonkey88',
+          currency : 'cny'
+        })
+        ptJackpot.value.SetCurrencyPos(0);
+        ptJackpot.value.SetCurrencySign(store.currency.value);
+        ptJackpot.value.attachToTextBox('numBox');
+        ptJackpot.value.tick();
+      },
+    )
 
     onMounted(() => {
       getPlatList();

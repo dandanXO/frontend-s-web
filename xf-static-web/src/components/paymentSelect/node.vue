@@ -10,10 +10,7 @@
         class="node-item payment-method-item"
         :id="level + '_' + i"
         @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         :style="item.group && item.children.length === 0 ? 'display:none' : ''"
         :key="i"
         v-for="(item, i) in list"
@@ -22,10 +19,7 @@
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div>{{ item.nodeName }}</div>
           <div class="promo">
-            <img
-              v-if="item.promotionIcon"
-              :src="`${imgURL}${item.promotionIcon}`"
-            />
+            <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
           </div>
           <div class="payment-method-wrapper">
             <div
@@ -56,10 +50,7 @@
       <node
         @click="clickItem(item)"
         :name="item.nodeName"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : ''
-        ]"
+        :class="[item.children ? 'node-group' : '', selectItem === item ? 'active' : '']"
         v-if="selectItem === item"
         :level="parseInt(level) + 1"
         :list="item.children"
@@ -71,6 +62,7 @@
 
 <script>
 import { defineComponent, reactive } from "vue";
+import { useLocalStorage } from "@vueuse/core";
 
 export default defineComponent({
   name: "NodeComp",
@@ -103,7 +95,7 @@ export default defineComponent({
       selectItem: null,
       dialogVisible: false,
       payMethods: reactive([]),
-      imgURL: process.env.VUE_APP_IMAGE_CDN + "/payment/",
+      imgURL: useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/payment/",
       nodeKey: 0
     };
   },
@@ -136,9 +128,7 @@ export default defineComponent({
         item.hasActive = true;
         this.selectItem = item;
         if (item.group) {
-          let activeChild = item.children.find(
-            (child) => child.hasActive === true
-          );
+          let activeChild = item.children.find((child) => child.hasActive === true);
           if (activeChild) {
             this.$emit("clicked", activeChild);
           } else {
@@ -184,8 +174,7 @@ $node-color: #45fefa;
   top: 8px;
   width: 6px;
   height: 6px;
-  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
-    linear-gradient(#ffffff, #ffffff);
+  background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%), linear-gradient(#ffffff, #ffffff);
 }
 .title::before {
   top: 8px;
@@ -315,7 +304,7 @@ $node-color: #45fefa;
         img {
           background-color: #2a313e;
           width: 100%;
-          // max-width: 2.3rem; 
+          // max-width: 2.3rem;
           // max-width: 1.5rem;
           margin-bottom: 0;
         }
@@ -384,7 +373,7 @@ $node-color: #45fefa;
         border-radius: 3px;
 
         img {
-          // max-width: 2.3rem; 
+          // max-width: 2.3rem;
           width: 100%;
           height: auto;
           // max-width: 1.5rem;

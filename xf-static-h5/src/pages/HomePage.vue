@@ -443,6 +443,7 @@ import {Thumbs, Controller} from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import {useLocalStorage} from "@vueuse/core";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -676,7 +677,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -762,7 +763,7 @@ export default defineComponent({
                   }
                   isImportantAnnoucementModal.value = true;
                   homePopupImg.value =
-                      process.env.IMAGE_CDN +
+                    useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value +
                       "/adspopout/" +
                       res.data["mobileImgUrl"];
                   homePopupContent.value = res.data["content"];
