@@ -27,9 +27,7 @@
     <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
-    <BbDacha2024Promo
-      v-if="list.redirectUrl === 'dy2-bb-dacha-2024' && !isCommonPromo && store.token"
-    ></BbDacha2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
     <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
     <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite
@@ -306,7 +304,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-vip-upgrade-bonus" ||
       this.list.redirectUrl === "dy2-refer-bonus" ||
       this.list.redirectUrl === "dy2-cny2024-promo" ||
-      this.list.redirectUrl === "dy2-bb-dacha-2024" ||
+      this.list.redirectUrl === "dy2-asian-zone" ||
       this.list.redirectUrl === "dy2-cny-step-game" ||
       this.list.redirectUrl === "dy2-nba24-match" ||
       this.list.redirectUrl === "dy2-game-steps" ||

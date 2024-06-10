@@ -3,35 +3,45 @@
     <div class="head-title mb-40">
       <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-01.png" />
     </div><div class="table-container">
-          <p class="top-liner">活动期间，每轮中超竞猜正确次数≥2场可获每轮总存款的对应存款反比奖金</p>
+    <p class="top-liner">活动期间，每日世预赛竞猜正确次数≥3场可获每轮世预赛总有效投注的对应投注反比奖金</p>
 
-          <table class="promo-table">
-            <thead>
-              <tr>
-                <th>竞猜正确场次</th>
-                <th>存款反比</th>
-                <th>彩金上限</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥2</td>
-                <td>0.5%</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥3</td>
-                <td>0.8%</td>
-                <td>188</td>
-              </tr>
-              <tr>
-                <td>≥5</td>
-                <td>1.0%</td>
-                <td>388</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+
+    <table class="promo-table">
+      <thead>
+      <tr>
+        <th>竞猜正确场次</th>
+        <th>存款反比</th>
+        <th>彩金上限</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>≥3</td>
+        <td>0.8%</td>
+        <td>88</td>
+      </tr>
+      <tr>
+        <td>≥5</td>
+        <td>1.0%</td>
+        <td>188</td>
+      </tr>
+      <tr>
+        <td>≥6</td>
+        <td>1.5%</td>
+        <td>388</td>
+      </tr>
+      <tr>
+        <td>≥8</td>
+        <td>3.0%</td>
+        <td>388</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="tips-txt-bottom">注：用户A当日投注世预赛总有效投注30,000元且免费竞猜正确次数7次，用户可获得30,000*3.0%=900元，用户A彩金金额超出彩金上限，用户A最终可获得888元。
+    </div>
+  </div>
+
 
     <div class="competition-container">
       <p v-if="isLoaded && upcomingData.length === 0" style="text-align: center">目前没有赛事。</p>
@@ -86,10 +96,10 @@
                 data.status === "ONGOING"
                   ? "进行中"
                   : data.status === "ENDED"
-                  ? "已结束"
-                  : data.status === "CANCEL"
-                  ? "已取消"
-                  : ""
+                    ? "已结束"
+                    : data.status === "CANCEL"
+                      ? "已取消"
+                      : ""
               }}
             </span>
           </div>
@@ -113,10 +123,13 @@
       </div>
     </div>
 
-    <div class="tips-container">
-      <div class="tips-txt">注：赛事每一轮天数不一致，总存款以每一轮的第一天与最后一天统计。</div>
+<!--    <div class="tips-list" style="text-align: right;display:flex;justify-content: flex-end;width:1400px;margin: 0px auto;">-->
+<!--      <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>-->
+<!--    </div>-->
 
-      <div class="tips-record" @click="tableRecordDialog = true">【投票记录】</div>
+    <div class="tips-container">
+      <div class="tips-txt">注：请于每场指定开赛时间前选择完成竞猜，超出开赛时间则无法参与竞猜。</div>
+      <div class="tips-record" @click="openTableRecordDialog">【投票记录】</div>
     </div>
 
     <div class="tabs-container">
@@ -130,7 +143,7 @@
       </div> -->
 
       <div class="tab-panel" v-if="activeKey === 'tabOne'">
-        
+
 
         <div class="head-title my-40">
           <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-02.png" />
@@ -139,16 +152,20 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，中国超级联赛每一轮竞猜正确场次≥2次可获每轮开始与结束时间总存款的对应反比，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，每日世预赛竞猜正确次数≥3场可获每轮世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
-            <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；</li>
+            <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；
+            </li>
             <li>
-              活动期间会员竞猜正确场次≥2次且会员当日未存款，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+              活动期间会员竞猜正确场次≥3次且会员当日未进行世预赛投注，次日清零重新计算，若会员彩金金额超出彩金上限金额则按彩金上限派发奖金；
+
             </li>
             <li>
               每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将在任何时候保留可以全部停止、取消优惠或索回已支付全部优惠的权利；
+
             </li>
-            <li>为避免文字理解差异，本站保留该活动的最终解释权；</li>
+            <li>为避免文字理解差异，本站保留该活动的最终解释权；
+            </li>
           </ol>
         </div>
       </div>
@@ -161,28 +178,28 @@
 
           <table class="promo-table">
             <thead>
-              <tr>
-                <th>累计竞猜正确次数</th>
-                <th>BB别墅杯累计投注金额</th>
-                <th>彩金</th>
-              </tr>
+            <tr>
+              <th>累计竞猜正确次数</th>
+              <th>BB别墅杯累计投注金额</th>
+              <th>彩金</th>
+            </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>≥10</td>
-                <td>≥10,000</td>
-                <td>88</td>
-              </tr>
-              <tr>
-                <td>≥15</td>
-                <td>≥50,000</td>
-                <td>288</td>
-              </tr>
-              <tr>
-                <td>≥20</td>
-                <td>≥100,000</td>
-                <td>688</td>
-              </tr>
+            <tr>
+              <td>≥10</td>
+              <td>≥10,000</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>≥15</td>
+              <td>≥50,000</td>
+              <td>288</td>
+            </tr>
+            <tr>
+              <td>≥20</td>
+              <td>≥100,000</td>
+              <td>688</td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -217,20 +234,20 @@
 
       <table class="promo-table record-table">
         <thead>
-          <tr>
-            <th>投票时间</th>
-            <th>参赛队伍</th>
-            <th>投票队伍</th>
-          </tr>
+        <tr>
+          <th>投票时间</th>
+          <th>参赛队伍</th>
+          <th>投票队伍</th>
+        </tr>
         </thead>
         <tbody>
-          <template v-for="(record, index) in answeredRecords" :key="index">
-            <tr>
-              <td>{{ record.createTime }}</td>
-              <td>{{ record.quizTitle }}</td>
-              <td>{{ record.answerOne === 'draw' ? '平局' : record.answerOne }}</td>
-            </tr>
-          </template>
+        <template v-for="(record, index) in answeredRecords" :key="index">
+          <tr>
+            <td>{{ record.createTime }}</td>
+            <td>{{ record.quizTitle }}</td>
+            <td>{{ record.answerOne === 'draw' ? '平局' : record.answerOne }}</td>
+          </tr>
+        </template>
         </tbody>
       </table>
     </div>
@@ -597,13 +614,16 @@ table.promo-table.record-table {
     color: #424f72;
   }
 
-  .tips-record {
-    color: #3f8cff;
-    min-width: 90px;
-    margin-left: auto;
-    text-align: right;
-    cursor: pointer;
-  }
+
+}
+
+.tips-record {
+  color: #3f8cff;
+  min-width: 90px;
+  margin-left: auto;
+  text-align: right;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 // tabs
