@@ -16,8 +16,8 @@
                     <div class="deposit-content__details">{{ card.content }}</div>
                 </div>
                 <div class="deposit-buttons">
-                    <div class="btn deposit-buttons__go-deposit"><router-link to="/center/deposit"><img src="./images/depositnow-btn.png"></router-link></div>
-                    <div class="btn deposit-buttons__check-lesson"><a :href="card.lesson" target="_blank"><img src="./images/checklesson-btn.png"></a></div>
+                    <div class="btn deposit-buttons__go-deposit"><router-link to="/finance/deposit"><img src="./images/depositnow-btn.png"></router-link></div>
+                    <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a :href="card.lesson" target="_blank"><img src="./images/checklesson-btn.png"></a></div>
                 </div>
             </div>
         </div>
@@ -143,14 +143,12 @@
     {
         "code": "szrmb",
         "title": "数字人民币",
-        "content": "充值即送1%彩金​数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥1000元，即可享受存款金额的1%加码彩金，单日优惠最高上限100元​",
-        "lesson": "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
+        "content": "充值即送1%彩金​数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥1000元，即可享受存款金额的1%加码彩金，单日优惠最高上限100元​"
     },
     {
         "code": "zfb",
         "title": "支付宝转卡",
-        "content": "充值即送0.5%彩金​活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的0.5%的彩金返还，单日优惠最高上限50元。​",
-        "lesson": "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
+        "content": "充值即送0.5%彩金​活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的0.5%的彩金返还，单日优惠最高上限50元。​"
     }
 ]);
 
@@ -210,6 +208,7 @@
                     left: 0;
                     bottom: 0;
                     display: flex;
+                    z-index: 1;
                     img {
                         height: 100%;
                     }
@@ -275,6 +274,8 @@
                     }
                 }
                 .deposit-buttons {
+                    position: relative;
+                    z-index: 1;
                     display: flex;
                     flex: 1;
                     gap: 15px;
