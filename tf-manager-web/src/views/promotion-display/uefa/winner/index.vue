@@ -35,7 +35,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          v-permission="['sys:affannou:add']"
+          v-permission="['sys:uefa-winner:add']"
           @click="showDialog('CREATE')"
           v-if="!hasRole(['SUB_TENANT'])"
         >
