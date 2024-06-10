@@ -314,6 +314,7 @@ export default {
     IN_PROGRESS: '派发中',
     DISTRIBUTED: '已派发',
     CANCEL: '已取消',
+    PRE_PROCESS: '派发中',
   },
   referFriendEvent: {
     INFO: '完善个人信息',
