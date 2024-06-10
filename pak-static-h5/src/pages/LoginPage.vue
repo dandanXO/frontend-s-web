@@ -142,11 +142,11 @@
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-whatsapp.png" />
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>Download App</div>
       </div>
       <div class="list-item" @click="openTiktok()">
@@ -769,21 +769,21 @@ export default defineComponent({
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    // animation: smallbeat 1.5s infinite;
     animation-delay: 1s;
   }
   #whatapp-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    // animation: smallbeat 1.5s infinite;
     animation-delay: 0.5s;
   }
   #download-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    animation: smallbeat 1.5s infinite;
+    // animation: smallbeat 1.5s infinite;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
