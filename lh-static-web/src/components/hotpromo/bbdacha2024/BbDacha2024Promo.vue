@@ -3,7 +3,7 @@
     <div class="head-title mb-40">
       <img src="../../../assets/images/promotion/hotpromo/bbdacha2024/head-title-01.png" />
     </div><div class="table-container">
-    <p class="top-liner">活动期间，每日世预赛竞猜正确次数≥3场可获每轮世预赛总有效投注的对应投注反比奖金</p>
+    <p class="top-liner">活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金</p>
 
 
     <table class="promo-table">
@@ -33,7 +33,7 @@
       <tr>
         <td>≥8</td>
         <td>3.0%</td>
-        <td>388</td>
+        <td>888</td>
       </tr>
       </tbody>
     </table>
@@ -152,7 +152,7 @@
         <div class="rules-container">
           <ol class="rules-content">
             <li>
-              活动期间，每日世预赛竞猜正确次数≥3场可获每轮世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
+              活动期间，每日世预赛竞猜正确次数≥3场可获每日世预赛总有效投注的对应投注反比奖金，彩金于次日24小时内派发，彩金仅需3倍流水即可提款；
             </li>
             <li>活动期间，请在指定比赛开赛前竞猜，若超出开赛时间则视为放弃竞猜；
             </li>
