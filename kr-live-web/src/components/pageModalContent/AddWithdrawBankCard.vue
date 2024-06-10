@@ -301,6 +301,8 @@ const loadBankCards = () => {
               const { bankType, bankCode } = data;
               // is bank & not alipay (78)
               if (bankType === "BANK" && bankCode !== 78) bankList.value.push(data);
+
+              if (bankType === "CRYPTO") bankList.value.push(data);
             }
           }
         })

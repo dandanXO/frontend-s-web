@@ -91,7 +91,7 @@
               v-model="withdrawInfo.amount"
               class="withdraw-field"
               :rules="[
-                  (val) => (val && val.length > 0) || '출금 금액을 입력해주세요',
+                  (val) => !!val || '출금 금액을 입력해주세요',
                   (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                   (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
                   (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
@@ -105,11 +105,11 @@
                     <template v-else>{{ store.currency.value }}</template>
                   </span>
               </template>
-              <template v-slot:append>
+              <!-- <template v-slot:append>
                   <span style="z-index:1;">
                     <div @click="updateWithdrawAmt" class="update-withdraw-btn">삭제</div>
                   </span>
-              </template>
+              </template> -->
             </q-input>
 
             <div class="select-amt-btn-wrapper">
