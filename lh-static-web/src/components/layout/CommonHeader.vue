@@ -41,6 +41,7 @@
           </template>
           <div
             class="header-menu-item"
+            @mouseover="selectedMenu = ''"
             @click="getPlatformListAndGoImSport">
             <img
               class="eroup-menu-icon"
@@ -1138,6 +1139,8 @@ export default defineComponent({
     };
 
     const getPlatformListAndGoImSport = () => {
+      selectedMenu.value = ''
+
       const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
 
       fetchFunction().then((res) => {
