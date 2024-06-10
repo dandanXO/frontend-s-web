@@ -12,11 +12,63 @@ const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crtArray = process.env.VUE_APP_CR_API.split(",");
 
 console.log(window.location.hostname);
-const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869"];
+const globalLinks = ["xf13140"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const baseEvtUrl = getEvtUrl();
-const baseCrtUrl = getCrtUrl();
+if (isGlobalLH) {
+  var rstApi = "https://apbldfsqgl.ornpoicvw5y.com";
+  var evtApi = "https://prr4bi80gl.7jko99gysa.com";
+  var crtApi = "https://ca8tpj9cal.vay0qv35d4y.com";
+
+  localStorage.setItem("XF_WEB_RST_URL", rstApi);
+  localStorage.setItem("XF_WEB_EVT_URL", evtApi);
+  localStorage.setItem("XF_WEB_CRT_URL", crtApi);
+
+  var imageCdnUrl = "https://urle7rqimtl.enkpdmqvhc.com";
+  localStorage.setItem("IMAGE_CDN", imageCdnUrl);
+} else {
+  var rstApi = getInitApi(rstArray, "XF_WEB_RST_URL");
+  var evtApi = getInitApi(evtArray, "XF_WEB_EVT_URL");
+  var crtApi = getInitApi(crtArray, "XF_WEB_CRT_URL");
+}
+
+function getInitApi(apiLinks, urlLsName) {
+  var successRstUrl = localStorage.getItem(urlLsName);
+  if (successRstUrl) {
+    axios
+      .get(successRstUrl + "/ping")
+      .then((res) => {
+        console.log(res);
+        if (res.status !== 200) {
+          localStorage.removeItem(urlLsName);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        localStorage.removeItem(urlLsName);
+      });
+
+    return successRstUrl;
+  } else {
+    var initApi;
+    if (typeof apiLinks === "string" || apiLinks instanceof String) {
+      initApi = apiLinks;
+    } else {
+      var apiLists = Object.values(apiLinks);
+      initApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
+
+    axios.get(initApi + "/ping").then((res) => {
+      // console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem(urlLsName, initApi);
+      } else {
+        localStorage.removeItem(urlLsName);
+      }
+    });
+    return initApi;
+  }
+}
 
 const onRequest = (config) => {
   const store = userStore();
@@ -108,167 +160,8 @@ function initHttp() {
   instance.interceptors.request.use(onRequest);
   instance.interceptors.response.use(onResponse, onResponseError);
 
-  checkSuccessUrl();
   return instance;
 }
-
-var successfulUrls = [];
-let urls = rstArray;
-let urlsWithPing = [];
-let restInitialized = false;
-
-function placePing(urls) {
-  for (const url of urls) {
-    urlsWithPing.push(url + "/ping");
-  }
-}
-
-const checkSuccessUrl = () => {
-  var successRstUrl = localStorage.getItem("successfulApiUrl");
-  if (successRstUrl) {
-    axios
-      .get(successRstUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successfulApiUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successfulApiUrl");
-      });
-  }
-
-  var successEvtUrl = localStorage.getItem("successfulEvtUrl");
-  if (successEvtUrl) {
-    axios
-      .get(successEvtUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successfulEvtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successfulEvtUrl");
-      });
-  }
-
-  var successCrtUrl = localStorage.getItem("successfulCrtUrl");
-  if (successCrtUrl) {
-    axios
-      .get(successCrtUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successfulCrtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successfulCrtUrl");
-      });
-  }
-};
-
-const testURLs = async (urlsToTest) => {
-  for (const url of urlsToTest) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) {
-        const responseData = await response.json();
-        if (responseData.code === 0) {
-          console.log(`Successful URL: ${url}`);
-          successfulUrls.push(url.replace("/ping", ""));
-        }
-      }
-    } catch (error) {
-      console.log(`Failed URL (error): ${url}`);
-    }
-  }
-
-  if (successfulUrls.length > 0) {
-    const randomIndex = Math.floor(Math.random() * successfulUrls.length);
-    const successfulApiUrl = successfulUrls[randomIndex];
-    localStorage.setItem("successfulApiUrl", successfulApiUrl);
-    console.log(`Random URL stored in local storage: ${successfulApiUrl}`);
-  } else {
-    console.log("No successful URLs to store.");
-  }
-};
-
-function getEvtUrl() {
-  var successEvtUrl = localStorage.getItem("successfulEvtUrl");
-  if (successEvtUrl) {
-    axios
-      .get(successEvtUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successfulEvtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successfulEvtUrl");
-      });
-
-    return successEvtUrl;
-  } else {
-    var testEvtApi = evtArray[getRndInteger(0, evtArray.length)];
-
-    axios.get(testEvtApi + "/ping").then((res) => {
-      // console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem("successfulEvtUrl", testEvtApi);
-      } else {
-        localStorage.removeItem("successfulEvtUrl");
-      }
-    });
-
-    return testEvtApi;
-  }
-}
-
-function getCrtUrl() {
-  var successCrtUrl = localStorage.getItem("successfulCrtUrl");
-  if (successCrtUrl) {
-    axios
-      .get(successCrtUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem("successfulCrtUrl");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("successfulCrtUrl");
-      });
-
-    return successCrtUrl;
-  } else {
-    var crtTestApi = crtArray[getRndInteger(0, crtArray.length)];
-
-    axios.get(crtTestApi + "/ping").then((res) => {
-      // console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem("successfulCrtUrl", crtTestApi);
-      } else {
-        localStorage.removeItem("successfulCrtUrl");
-      }
-    });
-
-    return crtTestApi;
-  }
-}
-
-const apiUrlFunction = () => {
-  placePing(urls);
-  testURLs(urlsWithPing);
-};
 
 let instance = null;
 
@@ -284,20 +177,11 @@ export const server = new Proxy(
         instance = initHttp();
       }
       if (propKey === "REST") {
-        if (localStorage.getItem("successfulApiUrl")) {
-          instance.defaults.baseURL = localStorage.getItem("successfulApiUrl");
-        } else {
-          if (!restInitialized) {
-            apiUrlFunction();
-            window.location.reload;
-          }
-          restInitialized = true;
-          instance.defaults.baseURL = rstArray[getRndInteger(0, rstArray.length)];
-        }
+        instance.defaults.baseURL = rstApi;
       } else if (propKey === "EVENT") {
-        instance.defaults.baseURL = baseEvtUrl;
+        instance.defaults.baseURL = evtApi;
       } else if (propKey === "CASHIER") {
-        instance.defaults.baseURL = baseCrtUrl;
+        instance.defaults.baseURL = crtApi;
       }
       return instance;
     }

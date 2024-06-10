@@ -302,7 +302,7 @@
 import GameModal from "@/components/modal/GameModal";
 import { defineComponent, ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
-// import { numberCounter } from "vue3-number-counter";
+import { useLocalStorage } from "@vueuse/core";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
@@ -315,7 +315,7 @@ export default defineComponent({
     Vue3autocounter
   },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
       {
@@ -375,7 +375,10 @@ export default defineComponent({
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
-            homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/adspopout/" + res.data["desktopImgUrl"];
+            homePopupImg.value =
+              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
+              "/adspopout/" +
+              res.data["desktopImgUrl"];
             homePopupContent.value = res.data["content"];
             homePopupType.value = res.data["type"];
             homePopupId.value = res.data["id"];
@@ -418,7 +421,10 @@ export default defineComponent({
                 }
 
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.VUE_APP_IMAGE_CDN + "/adspopout/" + res.data["desktopImgUrl"];
+                homePopupImg.value =
+                  useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
+                  "/adspopout/" +
+                  res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupId.value = res.data["id"];
