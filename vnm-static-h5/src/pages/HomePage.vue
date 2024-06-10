@@ -135,7 +135,7 @@
 
         <div class="euro-countdown-txt">
           <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 100px" />
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 90px" />
           </div>
           <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
 
@@ -2111,7 +2111,7 @@ export default defineComponent({
 
 .q-carousel.home {
   width: calc(100% - 2rem);
-  margin: 10px auto;
+  margin: 6px auto;
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
@@ -2906,8 +2906,8 @@ export default defineComponent({
     align-items: baseline;
     // padding-bottom: 35px;
     // padding-top: 15px;
-    padding-bottom: 15px;
-    padding-top: 15px;
+    padding-bottom: 8px;
+    padding-top: 8px;
     position: relative;
 
     img {
