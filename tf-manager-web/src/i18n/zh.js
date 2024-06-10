@@ -458,6 +458,10 @@ export default {
     PRIVI_HAS_ENDED: '优惠已结束',
     VIP_LEVEL_IS_NOT_ALLOWED: 'VIP等级不允许',
     AFFILIATE_IS_NOT_ALLOWED: '代理不允许',
+    ERROR_MEMBER_PHONE_NOT_VERIFIED: '手机未认证',
+    ERROR_REGISTER_DUPLICATE_IP_OR_SID: '侦测到相同IP或设备',
+    ERROR_DEPOSIT_AMT_MIN_NOT_MEET: '最低存款要求未达成',
+    ERROR_BET_AMT_MIN_NOT_MEET: '最低下注要求未达成',
   },
   rewardType: {
     BET: "投注",
