@@ -79,6 +79,18 @@ export default {
     date_picker_close: "Close",
     date_picker_confirm: "Confirm",
     // transaction record end
+    // withdraw start
+    withdraw_method: "Withdraw Method",
+    withdraw_bank: "Bank",
+    withdraw_bank_choose: "Select a bank",
+    withdraw_bank_num: "Bank Number",
+    withdraw_bank_num_choose: "Please enter bank number",
+    withdraw_bank_holder: "Bank Account Holder",
+    withdraw_bank_address: "Bank Address",
+    withdraw_bank_address_placeholder: "Account opening bank address",
+    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
+    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
+    // withdraw end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
