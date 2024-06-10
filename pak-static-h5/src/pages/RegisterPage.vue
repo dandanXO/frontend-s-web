@@ -784,6 +784,7 @@ export default defineComponent({
       moveWhatsIcon,
       whatDragPos,
       openWhatsApp,
+      openTiktok,
       downloadApp
     };
   }
