@@ -205,8 +205,8 @@
 
     <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        I have Agree To The
-        <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
+        {{ $t("form.register_agree_01") }}
+        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
       </q-checkbox>
     </div>
 

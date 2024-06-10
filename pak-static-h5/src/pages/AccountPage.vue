@@ -9,7 +9,7 @@
         <InputRowGrid>
           <template #fields>
             <div class="pc-form-item">
-              <InputField :label="'Full Name'">
+              <InputField :label="$t('form.email')">
                 <template #input>
                   <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
                 </template>

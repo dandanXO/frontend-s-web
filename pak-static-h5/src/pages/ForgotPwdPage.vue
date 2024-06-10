@@ -33,14 +33,14 @@
       ></q-input> -->
 
       <div class="forgot-password-form-grid">
-        <span class="forgot-password-form-title">Forgot Password</span>
+        <span class="forgot-password-form-title">{{ $t("form.forgotPassword") }}</span>
         <span class="forgot-password-form-desc">
-          Please Provide email, We Will Send OTP To Your Registered Phone Number.
+          {{ $t("form.forgotPassword_desc") }}
         </span>
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone Number'">
+            <InputField :label="$t('form.phone')">
               <template #input>
                 <q-input
                   type="tel"
@@ -50,12 +50,13 @@
                   hide-bottom-space
                   v-model="passwordForm.loginName"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
+                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                    (val) => (val && val.length === 11) || $t('form.phone_rules_02')
                   ]"
                   outlined
                   label-color="brand"
                   color="green"
+                  :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
@@ -75,32 +76,34 @@
               </template>
             </InputField> -->
 
-            <InputField :label="'Email'">
+            <InputField :label="$t('form.email')">
               <template #input>
                 <q-input
                   type="email"
                   ref="emailRef"
                   hide-bottom-space
                   v-model="passwordForm.email"
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert email']"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.email_rules_01')]"
                   outlined
                   label-color="brand"
                   color="green"
+                  :placeholder="$t('form.email_placeholder')"
                 ></q-input>
               </template>
             </InputField>
 
-            <InputField :label="'Verification Code'">
+            <InputField :label="$t('form.verificationCode')">
               <template #input>
                 <q-input
                   ref="ftCaptchaRef"
                   hide-bottom-space
                   type="text"
                   v-model="passwordForm.captchaCode"
-                  :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+                  :rules="[(val) => (val && val.length > 3) || $t('form.verificationCode_rules_01')]"
                   outlined
                   label-color="brand"
                   color="green"
+                  :placeholder="$t('form.verificationCode_placeholder')"
                 >
                   <template v-slot:append>
                     <img :src="verificationImg" @click="getCode()" />
@@ -118,31 +121,32 @@
 
       <div class="bottom-btn">
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" :loading="isLoading" @click="onSubmitForgotPwd">
-          Confirm
+          {{ $t("btn.confirm") }}
         </q-btn>
       </div>
     </q-form>
 
     <q-form v-else class="q-gutter-y-md rounded-borders">
-      <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
+      <p>{{ $t("form.otp_sent_title") }}</p>
       <InputRowGrid>
         <template #fields>
-          <InputField :label="'OTP'">
+          <InputField :label="$t('form.otp')">
             <template #input>
               <q-input
                 ref="codeRef"
                 hide-bottom-space
                 v-model="verificationForm.code"
-                :rules="[(val) => (val && val.length > 0) || 'Please Enter OTP']"
+                :rules="[(val) => (val && val.length > 0) || $t('form.otp_rules_01')]"
                 rounded
                 outlined
                 label-color="brand"
                 color="white"
+                :placeholder="$t('form.otp_placeholder')"
               ></q-input>
             </template>
           </InputField>
 
-          <InputField :label="'New Password'">
+          <InputField :label="$t('form.newPassword')">
             <template #input>
               <q-input
                 ref="newPwdRef"
@@ -150,13 +154,14 @@
                 hide-bottom-space
                 v-model="verificationForm.newPassword"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert password',
-                  (val) => val.length > 6 || 'The characters of password must be above 6'
+                  (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
+                  (val) => val.length > 6 || $t('form.newPassword_rules_02')
                 ]"
                 rounded
                 outlined
                 label-color="brand"
                 color="white"
+                :placeholder="$t('form.newPassword_placeholder')"
               >
                 <template v-slot:append>
                   <q-icon
@@ -169,7 +174,7 @@
             </template>
           </InputField>
 
-          <InputField :label="'Confirm New Password'">
+          <InputField :label="$t('form.confirmNewPassword')">
             <template #input>
               <q-input
                 ref="newConfirmPwdRef"
@@ -178,8 +183,7 @@
                 v-model="newConfirmPwdVModel"
                 :rules="[
                   (val) => (val && val.length > 0) || 'Please insert password',
-                  (val) => val.length > 6 || 'The characters of password must be above 6',
-                  (val) => (val && val === verificationForm.newPassword) || 'Confirm Password Does Not Match'
+                  (val) => (val && val === verificationForm.newPassword) || $t('form.confirmNewPassword_rules_02')
                 ]"
                 rounded
                 outlined
@@ -218,18 +222,19 @@
             </template>
           </InputField>
 
-          <InputField :label="'Verification Code'">
+          <InputField :label="$t('form.verificationCode')">
             <template #input>
               <q-input
                 ref="captchaRef"
                 hide-bottom-space
                 type="text"
                 v-model="verificationForm.captchaCode"
-                :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+                :rules="[(val) => (val && val.length > 3) || $t('form.verificationCode_rules_01')]"
                 rounded
                 outlined
                 label-color="brand"
                 color="white"
+                :placeholder="$t('form.verificationCode_placeholder')"
               >
                 <template v-slot:append>
                   <img :src="verificationImg" @click="getCode()" />
@@ -246,7 +251,7 @@
               :loading="isLoading"
               @click="onVerifyForgotPassword"
             >
-              Confirm
+              {{ $t("btn.confirm") }}
             </q-btn>
           </div>
         </template>

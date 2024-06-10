@@ -25,10 +25,45 @@ export default {
     password_placeholder: "براہ کرم پاس ورڈ درج کریں",
     password_rules_01: "براہ کرم پاس ورڈ درج کریں",
     password_rules_02: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
-    forgotPassword: "پاس ورڈ بھول گئے؟"
+    forgotPassword: "پاس ورڈ بھول گئے؟",
+    forgotPassword_desc: "براہ کرم ای میل فراہم کریں، ہم آپ کے رجسٹرڈ ای میل پر OTP بھیجیں گے۔",
+    register_agree_01: "میں نے اس سے اتفاق کیا ہے ",
+    register_agree_02: "رازداری کے معاہدے کا استعمال کریں",
+    email: "ای میل",
+    email_placeholder: "براہ کرم ای میل درج کریں",
+    email_rules_01: "براہ کرم ای میل درج کریں",
+    verificationCode: "تصدیقی کوڈ",
+    verificationCode_placeholder: "براہ کرم تصدیقی کوڈ درج کریں",
+    verificationCode_rules_01: "براہ کرم تصدیقی کوڈ درج کریں",
+    otp_sent_title: "OTP آپ کی ای میل پر بھیجا گیا ہے، براہ کرم OTP اور نیا پاس ورڈ درج کریں۔",
+    otp: "OTP",
+    otp_placeholder: "براہ کرم OTP درج کریں",
+    otp_rules_01: "براہ کرم OTP درج کریں",
+    newPassword: "نیا پاس ورڈ",
+    newPassword_placeholder: "براہ کرم نیا پاس ورڈ درج کریں",
+    newPassword_rules_01: "براہ کرم نیا پاس ورڈ درج کریں",
+    newPassword_rules_02: "نئے پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں",
+    confirmNewPassword: "نیا پاس ورڈ کی تصدیق کریں",
+    confirmNewPassword_placeholder: "براہ کرم نیا تصدیق شدہ پاس ورڈ درج کریں",
+    confirmNewPassword_rules_01: "براہ کرم نیا تصدیق شدہ پاس ورڈ درج کریں",
+    confirmNewPassword_rules_02: "تصدیق شدہ پاس ورڈ میل نہیں کھاتا",
+    depositAmount: "رقم",
+    depositAmount_placeholder: "براہ کرم رقم درج کریں",
+    depositAmount_rules_01: "جمع کرائیں اس سے زیادہ ہونی چاہئے",
+    withdrawChoose_placeholder: "اکاؤنٹ منتخب کریں",
+    withdrawChoose_rules_01: "براہ کرم ایک ورچوئل اکاؤنٹ منتخب کریں",
+    withdrawalAmount: "واپسی کی رقم",
+    withdrawalAmount_placeholder: "واپسی کی رقم",
+    withdrawalAmount_rules_01: "براہ کرم واپسی کی رقم درج کریں",
+    withdrawalAmount_rules_02: "واپسی کی رقم 0 سے زیادہ ہونی چاہئے",
+    withdrawalAmount_rules_03: "واپسی کی رقم ناکافی ہے",
+    withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
+    fullName: "پورا نام"
   },
   btn: {
-    confirm: "تصدیق کریں"
+    confirm: "تصدیق کریں",
+    submit: "جمع کرائیں",
+    addNewAccount: "نیا اکاؤنٹ شامل کریں"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
@@ -58,6 +93,32 @@ export default {
     cat_fishing: "ماہی گیری",
     cat_poker: "پوکر",
     cat_sport: "کھیل"
+  },
+  settings: {
+    totalScore: "کل اسکور",
+    withdraw: "واپسی",
+    deposit: "جمع کرائیں",
+    promo: "پرومو",
+    otherServices: "دیگر خدمات",
+    personalCentre: "شخصی مرکز",
+    record: "ریکارڈ",
+    discount: "ڈسکاؤنٹ",
+    bank: "بینک",
+    order: "اورڈر",
+    message: "پیغام",
+    feedback: "فیڈبیک",
+    vip: "VIP",
+    logout: "لاگ آوٹ"
+  },
+  deposit: {
+    selectAmount: "رقم منتخب کریں"
+  },
+  withdraw: {
+    cashBalance: "کیش بیلنس",
+    withdrawable: "واپسی کے قابل",
+    withdrewAmount: "واپس لی گئی رقم",
+    dailyLimit: "یومیہ حد",
+    remainWagers: "باقی شرطیں"
   },
   error: {
     101: "Không tìm thấy nền tảng",
