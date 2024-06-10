@@ -10,7 +10,7 @@
             name="title"
             v-model="mailDetailList.feedbackType"
             :options="feedbackTypes"
-            :label="`${mailDetailList.feedbackType || 'Quick Input'}`"
+            :label="`${mailDetailList.feedbackType || 'Please select the opinion type'}`"
             ref="feedbackTypeRef"
             :rules="[(val) => !!val || 'Please select']"
             label-color="brand"
@@ -122,39 +122,27 @@
         <div class="txt-title">Message Sent</div>
         <div class="txt-content q-mt-md text-center">Your feedback has been sent successfully!</div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Confirm" no-caps class="btn-confirm" v-close-popup @click="router.push('/account/feedback')" />
+          <q-btn label="Confirm" no-caps class="btn-confirm" v-close-popup @click="emitClose()" />
         </div>
       </div>
     </div>
   </q-dialog>
-
-  <q-dialog class="modal-feedback-div" @hide="closePage" v-model="zmodalSendSuccess">
-    <q-card style="width: 330px" class="modalcontent">
-      <div class="headers">
-        <div class="black-titles">Feedback sent</div>
-        <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
-      </div>
-
-      <div class="contents">
-        <img style="width: 2.5rem" src="../../assets/images/inbox/success-tick-icon.svg" />
-        <p>Feedback sent successfully</p>
-      </div>
-
-      <q-card-actions style="width: 100%" align="center" class="text-teal">
-        <q-btn class="common-md-btn" flat label="Confirm" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineEmits } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import FileUpload from "components/FileUpload.vue";
 import InputField from "components/auth/InputField.vue";
 import InputRowGrid from "components/auth/InputRowGrid.vue";
+
+const emit = defineEmits(["close-modal"]);
+
+const emitClose = () => {
+  emit("close-modal");
+};
 
 var qs = require("qs");
 const $q = useQuasar();
@@ -297,7 +285,7 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+  background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
   border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;

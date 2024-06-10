@@ -10,7 +10,6 @@
   <!--    </div>-->
   <!--  </q-page-sticky>-->
 
-
   <div class="login-container">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
@@ -142,9 +141,18 @@
     </div>
 
     <div class="btn-lists">
-      <img class="btn-icon" @click="openWhatsApp()" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
-      <img class="btn-icon" v-if="!isAndroid()" @click="downloadApp()"  id="download-icon" src="../assets/images/auth/app-icon.png" />
-      <img class="btn-icon" @click="openCSInNewTab(ui.CSAUrl)" id="cs-icon" src="../assets/images/index/icon-cs.png" />
+      <div class="list-item" @click="openWhatsApp()">
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-whatsapp.png" />
+        <div>Service</div>
+      </div>
+      <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
+        <div>Download App</div>
+      </div>
+      <div class="list-item" @click="openTiktok()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
+        <div>Tiktok</div>
+      </div>
     </div>
 
     <div class="bottom-img">
@@ -337,7 +345,11 @@ export default defineComponent({
 
     const openWhatsApp = () => {
       window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
-    }
+    };
+
+    const openTiktok = () => {
+      window.open("https://www.tiktok.com/@b9game", "_blank");
+    };
 
     const onSubmit = () => {
       $q.loading.show({
@@ -562,17 +574,17 @@ export default defineComponent({
       window.open(absoluteUrl, "_blank");
     };
     const downloadApp = () => {
-      if(ui.downloadAppUrl){
-        window.open(ui.downloadAppUrl, "_blank" )
-      }else{
+      if (ui.downloadAppUrl) {
+        window.open(ui.downloadAppUrl, "_blank");
+      } else {
         api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
           if (res.code === 0) {
             ui.downloadAppUrl = res.data.url;
-            window.open(ui.downloadAppUrl, "_blank" )
+            window.open(ui.downloadAppUrl, "_blank");
           }
         });
       }
-    }
+    };
     const moveCsIcon = (ev) => {
       isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -650,7 +662,8 @@ export default defineComponent({
       whatDragPos,
       loadCustomerAddress,
       ui,
-      openWhatsApp
+      openWhatsApp,
+      openTiktok
     };
   }
 });
@@ -663,7 +676,7 @@ export default defineComponent({
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5F6061;
+    color: #5f6061;
     font-weight: 400;
     width: 50%;
   }
@@ -722,33 +735,51 @@ export default defineComponent({
   }
 }
 
-.btn-lists{
-  display:flex;
+.btn-lists {
+  display: flex;
   justify-content: space-evenly;
   gap: 0px;
   width: 100%;
   margin: 10px auto;
 
-  .btn-icon{
+  .list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    color: #9f9f9f;
+    font-size: 12px;
+  }
+
+  .btn-icon {
     width: 70px;
     height: 70px;
 
-    &:active{
+    &:active {
       filter: brightness(0.85);
       transform: translate(0px, 1px);
     }
   }
-  #cs-icon{
+  #cs-icon {
     width: 70px;
     height: 70px;
   }
-  #whatapp-icon{
+  #tiktok-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
     animation: smallbeat 1.5s infinite;
+    animation-delay: 1s;
   }
-  #download-icon{
+  #whatapp-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 1.5s infinite;
+    animation-delay: 0.5s;
+  }
+  #download-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
@@ -823,14 +854,13 @@ export default defineComponent({
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
 
-  &:active{
+  &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
   }
 }
 
-
-.whatsapp-icon-wrapper{
+.whatsapp-icon-wrapper {
   display: flex;
   width: 60px;
   height: 60px;
@@ -838,13 +868,11 @@ export default defineComponent({
   background-size: contain;
   animation: smallbeat 1.5s infinite;
 
-
-  &:active{
+  &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
   }
 }
-
 
 @keyframes smallbeat {
   0% {
@@ -869,5 +897,4 @@ export default defineComponent({
     transform: scale(1);
   }
 }
-
 </style>

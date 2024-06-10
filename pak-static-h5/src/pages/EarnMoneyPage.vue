@@ -428,6 +428,7 @@ watch(activeSetting, checkIsShowDetail);
 
         .item-desc {
           color: #ffffff99;
+          font-size: 12px;
         }
 
         .item-img {
@@ -545,7 +546,9 @@ watch(activeSetting, checkIsShowDetail);
 
         .link-href {
           padding: 16px;
-          word-break: break-all;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           font-size: 11px;
         }
         .link-copy {
@@ -554,7 +557,8 @@ watch(activeSetting, checkIsShowDetail);
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 90px;
+          width: 80px;
+          min-width: 98px;
           font-weight: bold;
           border-radius: 12px;
           letter-spacing: -1px;
@@ -585,7 +589,7 @@ watch(activeSetting, checkIsShowDetail);
       margin-left: -20px;
       margin-right: -20px;
       .table-container {
-        max-height: 200px; /* Adjust height as needed to show 5 rows */
+        max-height: 181px;
         overflow-y: auto;
         position: relative;
         pointer-events: none;

@@ -4,20 +4,31 @@
   </div>
 
   <div class="bottom-btn">
-    <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="router.push('/account/write')">
+    <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="isPostCommentsModal = true">
       POST COMMENTS
     </q-btn>
   </div>
+
+  <q-dialog v-model="isPostCommentsModal">
+    <q-card class="post-dialog-card">
+      <q-toolbar class="post-dialog-toolbar">
+        <q-toolbar-title>Post Comments</q-toolbar-title>
+        <q-btn flat v-close-popup round dense icon="close" />
+      </q-toolbar>
+      <WriteComponent @close-modal="closeModal" />
+    </q-card>
+  </q-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { api } from "boot/axios";
 import MailComponent from "../../components/MailComponent.vue";
+import WriteComponent from "../../components/WriteComponent.vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
 components: {
-  MailComponent;
+  WriteComponent, MailComponent;
 }
 const visible = ref(true);
 const mailData = ref([]);
@@ -60,11 +71,19 @@ const loadOutbox = () => {
       console.log("error", error);
     });
 };
+
+const isPostCommentsModal = ref(false);
+
+const closeModal = () => {
+  isPostCommentsModal.value = false;
+};
+
 onMounted(() => {
   // loadOutbox();
   loadOutboxFeedback();
 });
 </script>
+
 <style scoped lang="scss">
 .table-record {
   width: 100%;
@@ -79,5 +98,26 @@ onMounted(() => {
   width: 100%;
   margin-top: 20px;
   padding: 20px;
+}
+
+.post-dialog-card {
+  background: #131313;
+  width: calc(100% - 32px);
+}
+
+.post-dialog-toolbar {
+  background: #131313;
+
+  .q-toolbar__title {
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  button {
+    position: absolute;
+    right: 16px;
+  }
 }
 </style>

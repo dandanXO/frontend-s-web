@@ -154,6 +154,7 @@
         row-key="name"
         :rows-per-page-options="[0]"
         style="overflow-x: scroll"
+        class="monthly-deposit-table"
       >
         <template v-slot:header="props">
           <q-tr :props="props" style="display: none">
@@ -981,7 +982,7 @@ const getMonthlyVip = () => {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5F6061;
+    color: #5f6061;
     width: 50%;
   }
 
@@ -1376,6 +1377,20 @@ const getMonthlyVip = () => {
     &.disable {
       background: #313131;
       color: #999999;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .monthly-deposit-table {
+    font-size: 10px;
+
+    tbody td {
+      font-size: 10px;
+
+      img {
+        width: 14px;
+      }
     }
   }
 }
