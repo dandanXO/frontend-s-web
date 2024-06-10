@@ -2349,6 +2349,7 @@ export default {
     UEFA: '欧洲杯',
     'UEFA Team': '欧洲杯队伍',
     'UEFA Match': '欧洲杯赛事',
+    'UEFA Winner': '欧洲杯获胜名单',
     'Refer Friend Manager': '邀请好友管理',
     'Sport Match': '中超角逐',
     'Nba Match': 'NBA季后赛',

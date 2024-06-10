@@ -2389,6 +2389,7 @@ export default {
     UEFA: 'UEFA',
     'UEFA Team': 'UEFA Team',
     'UEFA Match': 'UEFA Match',
+    'UEFA Winner': 'UEFA Winner',
     'Refer Friend Manager': 'Refer Friend Manager',
     'Sport Match': 'Sport Match',
     'Nba Match': 'NBA Playoffs',
