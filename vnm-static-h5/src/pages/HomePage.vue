@@ -160,7 +160,7 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper">
+    <div class="hot-matches-title-wrapper" style="display:none;">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -175,7 +175,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" style="display:none;">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -2195,7 +2195,7 @@ export default defineComponent({
 .mid-announcement-section {
   width: $box-width;
   margin: 10px auto 10px;
-  height: 36px;
+  height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2896,8 +2896,9 @@ export default defineComponent({
 }
 
 .hot-matches-wrapper {
-  width: calc(100% - 2rem);
-  margin: 20px auto 0px;
+  width: calc(100% - 1rem);
+  margin: auto;
+  // margin: 20px auto 0px;
 
   .euro-countdown {
     display: flex;
@@ -2905,8 +2906,8 @@ export default defineComponent({
     align-items: baseline;
     // padding-bottom: 35px;
     // padding-top: 15px;
-    padding-bottom: 20px;
-    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-top: 15px;
     position: relative;
 
     img {
@@ -2966,7 +2967,7 @@ export default defineComponent({
       justify-content: center;
       width: max-content;
       position: relative;
-      background-image: url(../assets/images/home/eurocup-countdown-content-frame.png);
+      background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
       background-size: 100% 100%;
       padding: 4px;
       margin-left: 12px;
