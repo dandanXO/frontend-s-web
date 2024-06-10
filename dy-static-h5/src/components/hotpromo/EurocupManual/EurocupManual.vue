@@ -19,7 +19,7 @@
           半/总决赛
         </div>
       </div>
-      <div class="common-title">欧洲杯小组赛赛程</div>
+      <div class="common-title">欧洲杯{{ matchType }}赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
           <div class="game-team" v-for="team in groupStageTeamsList" v-bind:key="team.id">
@@ -314,7 +314,7 @@
   <GameModal ref="platformGame"></GameModal>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getEurocupManualSchedule } from "../../../api/index/promo";
 import GameModal from "components/modal/GameModal.vue";
 import moment from "moment";
@@ -325,6 +325,17 @@ const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
 const imgUrl = process.env.IMAGE_CDN + "/promo/";
+
+const matchType = computed(() => {
+  if (tab.value === "roundOf16") {
+    return "十六强赛";
+  } else if (tab.value === "quarterFinal") {
+    return "4/1决赛";
+  } else if (tab.value === "semiFinalAndFinal") {
+    return "半/总决赛";
+  }
+  return "小组赛";
+});
 const init = () => {
   getEurocupManualSchedule().then((res) => {
     console.log("123456");
