@@ -135,9 +135,9 @@
 
         <div class="euro-countdown-txt">
           <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 100px" />
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />
           </div>
-          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
 
           <div class="euro-countdown-num-wrap">
             {{ $t("lang.euroCountdown01a") }}
@@ -160,7 +160,7 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper">
+    <div class="hot-matches-title-wrapper" style="display:none;">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -175,7 +175,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" style="display:none;">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -2111,7 +2111,7 @@ export default defineComponent({
 
 .q-carousel.home {
   width: calc(100% - 2rem);
-  margin: 10px auto;
+  margin: 6px auto;
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
@@ -2195,7 +2195,7 @@ export default defineComponent({
 .mid-announcement-section {
   width: $box-width;
   margin: 10px auto 10px;
-  height: 36px;
+  height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2896,8 +2896,9 @@ export default defineComponent({
 }
 
 .hot-matches-wrapper {
-  width: calc(100% - 2rem);
-  margin: 20px auto 0px;
+  width: calc(100% - 1rem);
+  margin: auto;
+  // margin: 20px auto 0px;
 
   .euro-countdown {
     display: flex;
@@ -2905,8 +2906,8 @@ export default defineComponent({
     align-items: baseline;
     // padding-bottom: 35px;
     // padding-top: 15px;
-    padding-bottom: 20px;
-    padding-top: 10px;
+    // padding-bottom: 8px;
+    // padding-top: 8px;
     position: relative;
 
     img {
@@ -2966,9 +2967,11 @@ export default defineComponent({
       justify-content: center;
       width: max-content;
       position: relative;
-      background-image: url(../assets/images/home/eurocup-countdown-content-frame.png);
-      background-size: 100% 100%;
-      padding: 4px;
+      background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
+      // background-size: 100% 100%;
+      
+    background-size: 100% 70%;
+      padding: 0 4px;
       margin-left: 12px;
 
       img {
@@ -2988,7 +2991,7 @@ export default defineComponent({
       color: #ffffff;
       line-height: 1;
       align-items: center;
-      width: 100%;
+      width: 94%;
       padding: 0px 10px;
 
       @media (min-width: 440px) {
@@ -3023,25 +3026,28 @@ export default defineComponent({
 
         .num {
           background-image: url(../assets/images/home/eurocup-countdown-number.png);
-          height: 40px;
-          width: 40px;
+          // height: 40px;
+          // width: 40px;
+          
+    height: 30px;
+    width: 30px;
           background-size: 100% 100%;
           display: flex;
           align-items: center;
           justify-content: center;
 
-          @media (min-width: 440px) {
-            height: 50px;
-            width: 50px;
-          }
+          // @media (min-width: 440px) {
+          //   height: 50px;
+          //   width: 50px;
+          // }
 
-          @media (min-width: 500px) {
-            height: 60px;
-            width: 60px;
-          }
+          // @media (min-width: 500px) {
+          //   height: 60px;
+          //   width: 60px;
+          // }
 
           &:last-child {
-            margin-left: -5px;
+            margin-left: -3px;
           }
         }
         span {

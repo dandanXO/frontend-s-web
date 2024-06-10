@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="jackpot-container">
-      <div class="jackpot-title">TỔNG JACKPOT LÊN ĐẾN 2,2 TỶ</div>
+      <div class="jackpot-title">TỔNG JACKPOT LÊN ĐẾN 3.8 TỶ</div>
       <div class="jackpot-box">
         <div class="jackpot-numbers">
           <div
@@ -59,7 +59,7 @@
             <div class="section pt1">
                 <div class="section-title">Đợt I</div>
                 <p>Ngày chọn số từ 16/06/2024 – 30/06/2024, ngày mở thưởng là 01/07/2024.</p>
-                <p>Tổng tiền thưởng Jackpot lên đến 1485,552 VNDP, tổng nạp yêu cầu trong ngày là 1,800 VNDP để đủ điều kiện chọn số tham gia.</p>
+                <p>Tổng tiền thưởng Jackpot lên đến 1,555,552 VNDP, tổng nạp yêu cầu trong ngày là 1,800 VNDP để đủ điều kiện chọn số tham gia.</p>
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <th width="30%">Giải Thưởng</th>
@@ -83,7 +83,7 @@
                     </tr>
                     <tr>
                         <td>2D</td>
-                        <td>1188,888 VNDP</td>
+                        <td>188,888 VNDP</td>
                         <td>2 chữ số cuối trong dãy 3 chữ số được chọn trùng với 2 chữ số cuối trong dãy số Giải đặc biệt</td>
                     </tr>
                 </table>
@@ -91,7 +91,7 @@
             <div class="section pt2">
                 <div class="section-title">Đợt II</div>
                 <p>Ngày chọn số từ 01/07/2024 – 15/07/2024, ngày mở thưởng là 16/07/2024.</p>
-                <p>Tổng tiền thưởng Jackpot lên đến 1,675,552 VNDP, tổng nạp yêu cầu trong ngày là 3,500 VNDP để đủ điều kiện chọn số tham gia.</p>
+                <p>Tổng tiền thưởng Jackpot lên đến 2,255,552 VNDP, tổng nạp yêu cầu trong ngày là 3,500 VNDP để đủ điều kiện chọn số tham gia.</p>
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <th width="30%">Giải Thưởng</th>
@@ -105,7 +105,7 @@
                   </tr>
                   <tr>
                     <td>Nhóm 3</td>
-                    <td>588,888 VNDP</td>
+                    <td>688,888 VNDP</td>
                     <td>2/3 chữ số cuối Giải Đặc Biệt là số kép và 3 chữ số được chọn trùng khớp với dãy số này theo thứ tự bất kì</td>
                   </tr>
                   <tr>
@@ -289,7 +289,7 @@ const getJackpotAmt = () => {
             console.log(res.data)
         }
     })
-  const jackpotNum = 3641104;
+  const jackpotNum = 3811104;
   jackpotNumber.value = jackpotNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 const onSubmitJackpot = () => {
