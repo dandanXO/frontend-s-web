@@ -22,7 +22,7 @@
           半/总决赛
         </div>
       </div>
-      <div class="common-title">欧洲杯小组赛赛程</div>
+      <div class="common-title">欧洲杯{{ matchType }}赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
           <div class="game-team" v-for="team in groupStageTeamsList" @click="openPlat(team.platformMatchId)">
@@ -327,7 +327,7 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
@@ -346,6 +346,17 @@ const openPlat = (platformMatchId) => {
   var matchId = platformMatchId ?? "";
   platformGame.value.open("FB体育", "FB", matchId);
 };
+
+const matchType = computed(() => {
+  if (tab.value === "roundOf16") {
+    return "十六强赛";
+  } else if (tab.value === "quarterFinal") {
+    return "4/1决赛";
+  } else if (tab.value === "semiFinalAndFinal") {
+    return "半/总决赛";
+  }
+  return "小组赛";
+});
 
 const init = () => {
   getEurocupManualSchedule().then((res) => {
