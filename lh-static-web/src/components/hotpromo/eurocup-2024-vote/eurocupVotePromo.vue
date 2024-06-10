@@ -160,7 +160,7 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog align-center v-model="isVoteRecordModalVisible" :title="castVoteFormData.teamNameLocal" width="700" style="background-color:#00192B;">
+    <el-dialog align-center v-model="isVoteRecordModalVisible" width="700" style="background-color:#00192B;">
       <div class="cast-vote-container">    
         <div class=title>投票历史</div>
         <div class="vote-records">
@@ -231,7 +231,7 @@ export default defineComponent({
       votesList: [],
       votesRecord: {
         data: [],
-        pageSize: 2,
+        pageSize: 6,
         current: 1
       },
     });
@@ -397,6 +397,7 @@ export default defineComponent({
         white-space: nowrap;
         color: #fff;
         padding: 15px 33px;
+        gap: 40px;
   
         .vote-record-flag-wrapper {
           display: flex;

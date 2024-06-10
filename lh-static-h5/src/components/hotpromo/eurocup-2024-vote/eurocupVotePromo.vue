@@ -58,7 +58,7 @@
 
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
-      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span></div>
+      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div>
       <div class="country-list" id="countrylist">
         <div id="btn_1" class="country-item" v-for="votesListItem in votesData.votesList" :key="votesListItem.id">
           <div class="country-item-bottom-pattern"></div>
@@ -175,11 +175,33 @@
 
         <p>5.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
       </div>
+
+      <q-dialog v-model="isVoteRecordModalVisible">
+        <div class="cast-vote-container">    
+          <div class=title>投票历史</div>
+          <div class="vote-records">
+            <div class="vote-record-item" v-for="voteRecord, index in paginatedVoteRecords" :key="index">
+              <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
+              <div>2024/05/24 16:54</div>
+            </div>
+          </div>
+          <div class="pagination-wrapper">
+            <q-pagination
+              class="vote-record-pagination"
+              v-model="votesData.votesRecord.current"
+              :max="votesData.votesRecord.data.length / votesData.votesRecord.pageSize"
+              direction-links
+              boundary-numbers
+              :max-pages="6"
+            />
+          </div>
+        </div>
+      </q-dialog>
     </div>
   </div>
 </template>
 <script>
-import { onMounted, ref, defineComponent, reactive } from "vue";
+import { onMounted, ref, defineComponent, reactive, computed } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "../../../api/promotion/poolPrizeVote";
 import { useQuasar } from "quasar";
 import { convertToCommaAmount } from "boot/utils"
@@ -205,6 +227,7 @@ export default defineComponent({
     const castVoteFormRef = ref();
     const isSubmitting = ref(false);
     const isCastVoteModalVisible = ref(false);
+    const isVoteRecordModalVisible = ref(false);
     const castVoteFormData = reactive({
       teamId: undefined,
       teamName: '',
@@ -215,7 +238,11 @@ export default defineComponent({
       award: 0,
       myVotes: 0,
       votesList: [],
-      votesRecord: [],
+      votesRecord: {
+        data: [],
+        pageSize: 6,
+        current: 1
+      },
     });
     const castVote = ({ teamId, teamName, teamNameLocal }) => {
       toggleCastVoteModal(true)
@@ -271,16 +298,45 @@ export default defineComponent({
       isSubmitting.value = false;
     }
 
-    onMounted(() => {
-      loadVoteTeam();
+    const votesRecordChangePage = (page) => {
+      if(page < 1) {
+        votesData.value.votesRecord.current = 1;  
+      } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
+        votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
+      } else {
+        votesData.value.votesRecord.current = page;
+      }
+    }
+
+    const paginatedVoteRecords = computed(() => {
+      const votesRecord = votesData.value.votesRecord;
+      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize); 
     })
+
 
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
-        votesData.value = res.data;
+        if(res.code===0){
+          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
+          });
+
+          votesData.value = {
+            ...res.data,
+            votesRecord: {
+              ...votesData.value.votesRecord,
+              data: votesRecord,
+            }
+          }
+        }
       });
     }
 
+
+    onMounted(() => {
+      loadVoteTeam();
+    })
 
     return {
       votesData,
@@ -294,7 +350,10 @@ export default defineComponent({
       toggleCastVoteModal,
       convertToCommaAmount,
       store,
-      imgURL
+      imgURL,
+      isVoteRecordModalVisible,
+      paginatedVoteRecords,
+      votesRecordChangePage
     }
   }
 });
@@ -304,7 +363,83 @@ export default defineComponent({
 
 </script>
 
+<style lang="scss">
+.cast-vote-container {
+  .q-pagination__middle {
+    gap: 5px;
+  }
+
+  .q-pagination__middle > .q-btn, .q-pagination__content > .q-btn {
+    border: 2px solid #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff !important;
+    background-color: transparent;
+
+    &.bg-primary {
+      color: #102628;
+      background-color: #00EAFE !important;
+      border: 2px solid #00EAFE;
+      font-weight: bold;
+      border: none;
+    }
+  }
+}
+</style>
 <style scoped lang="scss">
+.cast-vote-container {
+  background-color: #00192B;
+  padding: 10px 20px;
+  
+  .title {
+    font-size: 20px;
+    text-align: center;
+    color: #00E9FE;
+    font-family: "PingFang", "Roboto";
+  }
+    
+  .vote-records {
+    display: grid;
+    padding: 20px;
+    grid-template-columns: 1fr;
+    gap: 10px;
+
+    .vote-record-item {
+      font-family: "PingFang", "Roboto";
+      background-color: #0A243E;
+      border: 2px solid #00EAFE4D;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      white-space: nowrap;
+      color: #fff;
+      padding: 10px 25px;
+      gap: 40px;
+
+      .vote-record-flag-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        .vote-record-item-flag {
+          width: 35px;
+          height: 25px;
+        }
+      }
+    }
+  }
+
+  .pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 .center-numbers {
   position: relative;
   background: url("images/prizepool.png") no-repeat center center;
