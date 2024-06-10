@@ -120,7 +120,7 @@
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ item.label }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -137,8 +137,9 @@
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" />
-            <!-- <div class="txt-style">Hot Games</div> -->
+            <!-- <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -277,8 +278,10 @@
       >
         <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" /> -->
             <!-- <span class="txt-style">Live Casino</span> -->
+            <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -374,9 +377,11 @@
       >
         <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
             <!-- <span class="txt-style">Slots Games</span> -->
+            <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -474,9 +479,11 @@
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
             <!-- <span class="txt-style">Fishing</span> -->
+            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
           </div>
 
           <div class="platform-game-wrapper">
@@ -654,7 +661,9 @@
 
         <div class="games-selection-wrapper" id="fishing" v-else>
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
           </div>
 
           <div class="platform-game-container grid-view">
@@ -700,7 +709,9 @@
       >
         <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-poker.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_poker") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -790,9 +801,11 @@
       >
         <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-sport.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
             <!-- <span class="txt-style">Sports</span> -->
+            <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_sport") }}</div>
           </div>
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
@@ -1138,6 +1151,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
 import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { useI18n } from "vue-i18n";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1153,14 +1167,16 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
-const categoriesList = ref([
-  { title: "Lobby", icon: "lobby", active: true },
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Live", icon: "live", active: false },
-  { title: "Fish", icon: "fish", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Poker", icon: "poker", active: false },
-  { title: "Sport", icon: "sport", active: false }
+const { t } = useI18n();
+
+const categoriesList = computed(() => [
+  { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
+  { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
+  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
+  { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
+  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false }
 ]);
 
 // const activateSlide = (clickedItem) => {
@@ -2907,7 +2923,7 @@ watch(
     margin-right: -8px;
     padding: 0px 12px 0px;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
     // background-image: url("../assets/images/index/title-bg.png");
     // background-repeat: no-repeat;
@@ -2921,8 +2937,8 @@ watch(
     }
 
     .txt-style {
-      font-family: "Dongle", sans-serif;
-      font-size: 2.6rem;
+      // font-family: "Dongle", sans-serif;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;

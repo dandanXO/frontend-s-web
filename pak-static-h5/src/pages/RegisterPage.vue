@@ -23,8 +23,8 @@
 
     <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
-        <q-tab name="login" label="Log in" />
-        <q-tab name="register" label="Register" />
+        <q-tab name="login" :label="$t('header.login')" />
+        <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
     </div>
 
@@ -32,7 +32,7 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone'">
+            <InputField :label="$t('form.phone')">
               <template #input>
                 <q-input
                   type="tel"
@@ -42,14 +42,14 @@
                   hide-bottom-space
                   v-model="regForm.loginName"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits',
-                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
+                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
+                    (val) => val.startsWith('03') || $t('form.phone_rules_03')
                   ]"
                   color="green"
                   outlined
                   label-color="brand"
-                  placeholder="Please enter your mobile number"
+                  :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
@@ -59,7 +59,7 @@
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField :label="$t('form.password')">
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -67,13 +67,13 @@
                   v-model="regForm.password"
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val.length > 6 || 'The characters of password must be above 6'
+                    (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+                    (val) => val.length > 6 || $t('form.password_rules_02')
                   ]"
                   color="green"
                   outlined
                   label-color="brand"
-                  placeholder="Please enter password"
+                  :placeholder="$t('form.password_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="lock" />
@@ -204,14 +204,14 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        Confirm
+        {{ $t("btn.confirm") }}
       </q-btn>
     </div>
 
     <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        I have Agree To The
-        <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
+        {{ $t("form.register_agree_01") }}
+        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
       </q-checkbox>
     </div>
 

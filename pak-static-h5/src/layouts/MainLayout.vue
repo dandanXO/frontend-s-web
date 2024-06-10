@@ -224,6 +224,10 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = false;
           pageName.value = "Earn Money";
+        } else if (route.path === "/language") {
+          prevPage.value = "/";
+          hasPage.value = true;
+          pageName.value = "Language";
         } else if (route.path === "/bonus") {
           prevPage.value = "/";
           // hasPage.value = true;

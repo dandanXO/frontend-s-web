@@ -1,10 +1,83 @@
 export default {
   lang: {
-    langVal: "en"
+    langVal: "en",
+    language: "Language"
   },
   header: {
     login: "Login",
     register: "Register",
+    download: "Download"
+  },
+  bottomNav: {
+    home: "Home",
+    promo: "Promo",
+    earnMoney: "Earn Money",
+    wallet: "Wallet",
+    me: "Me"
+  },
+  form: {
+    phone: "Phone",
+    phone_placeholder: "Please enter your mobile number",
+    phone_rules_01: "Please insert Phone number",
+    phone_rules_02: "The phone number must have 11 digits",
+    phone_rules_03: "The phone number must start with '03'",
+    password: "Password",
+    password_placeholder: "Please enter password",
+    password_rules_01: "Please insert password",
+    password_rules_02: "The characters of password must be above 6",
+    forgotPassword: "Forgot Password",
+    forgotPassword_desc: "Please Provide email, We Will Send OTP To Your Registered Email.",
+    register_agree_01: "I have Agree To The ",
+    register_agree_02: "Use Privacy Agreement",
+    email: "Email",
+    email_placeholder: "Please enter email",
+    email_rules_01: "Please insert email",
+    verificationCode: "Verification Code",
+    verificationCode_placeholder: "Please enter Verification Code",
+    verificationCode_rules_01: "Please insert Verification Code",
+    otp_sent_title: "OTP Has Been Sent To Your Email, Please Enter The OTP And New Password.",
+    otp: "OTP",
+    otp_placeholder: "Please enter OTP",
+    otp_rules_01: "Please insert OTP",
+    newPassword: "New Password",
+    newPassword_placeholder: "Please enter new password",
+    newPassword_rules_01: "Please insert new password",
+    newPassword_rules_02: "The characters of new password must be above 6",
+    confirmNewPassword: "Confirm New Password",
+    confirmNewPassword_placeholder: "Please enter new confirm password",
+    confirmNewPassword_rules_01: "Please insert new confirm password",
+    confirmNewPassword_rules_02: "Confirm password does not match",
+    depositAmount: "Amount",
+    depositAmount_placeholder: "Please enter the amount",
+    depositAmount_rules_01: "Deposit should be more than ",
+    withdrawChoose_placeholder: "Choose account",
+    withdrawChoose_rules_01: "Please Select A Virtual Account",
+    withdrawalAmount: "Withdrawal Amount",
+    withdrawalAmount_placeholder: "Withdrawal Amount",
+    withdrawalAmount_rules_01: "Please Enter Withdraw Amount",
+    withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
+    withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
+    withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
+    fullName: "Full Name"
+  },
+  btn: {
+    confirm: "Confirm",
+    submit: "Submit",
+    addNewAccount: "Add New Account"
+  },
+  sideNav: {
+    inviteToEarn: "Invite to Earn",
+    shareYourExclusiveQRCode: "share your exclusive QR code",
+    slots: "Slots",
+    livecasino: "Live Casino",
+    fishing: "Fishing",
+    poker: "Poker",
+    sport: "Sport",
+    livesupport: "Live Support",
+    feedback: "Feedback",
+    telegram: "Telegram",
+    whatsapp: "WhatsApp",
+    language: "Language"
   },
   home: {
     menu_lobby: "Lobby",
@@ -14,6 +87,38 @@ export default {
     menu_slot: "Slot",
     menu_poker: "Poker",
     menu_sport: "Sport",
+    cat_hotgames: "Hot Games",
+    cat_livecasino: "Live Casino",
+    cat_slotsgame: "Slots Game",
+    cat_fishing: "Fishing",
+    cat_poker: "Poker",
+    cat_sport: "Sport"
+  },
+  settings: {
+    totalScore: "Total Score",
+    withdraw: "Withdraw",
+    deposit: "Deposit",
+    promo: "Promo",
+    otherServices: "Other Services",
+    personalCentre: "Personal Centre",
+    record: "Record",
+    discount: "Discount",
+    bank: "Bank",
+    order: "Order",
+    message: "Message",
+    feedback: "Feedback",
+    vip: "VIP",
+    logout: "LOG OUT"
+  },
+  deposit: {
+    selectAmount: "Select Amount"
+  },
+  withdraw: {
+    cashBalance: "Cash Balance",
+    withdrawable: "Withdrawable",
+    withdrewAmount: "Withdrew Amount",
+    dailyLimit: "Daily Limit",
+    remainWagers: "Remain Wagers"
   },
   error: {
     101: "Platform not found",

@@ -6,34 +6,34 @@
           <img class="inactive" src="../assets/images/index/menu/icon-home.png" />
           <img class="hover" src="../assets/images/index/menu/icon-home-hover.png" />
         </div>
-        <span class="footer-label">Home</span>
+        <span class="footer-label">{{ $t("bottomNav.home") }}</span>
       </q-route-tab>
       <q-route-tab class="cs-web-id" to="/promo" id="cs-web-id" name="live" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-promotion.png" />
           <img class="hover" src="../assets/images/index/menu/icon-promotion-hover.png" />
         </div>
-        <span class="footer-label">Promo</span>
+        <span class="footer-label">{{ $t("bottomNav.promo") }}</span>
       </q-route-tab>
       <q-route-tab to="/earn-money" name="earn-money" class="center-menu" :ripple="false">
         <div class="footer-big-img">
           <img src="../assets/images/index/menu/icon-earnmoney.png" />
         </div>
-        <span class="footer-label" style="padding-top: 0">Earn Money</span>
+        <span class="footer-label" style="padding-top: 0">{{ $t("bottomNav.earnMoney") }}</span>
       </q-route-tab>
       <q-route-tab :to="`/deposit?from=${route.path}`" name="deposit" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-wallet.png" />
           <img class="hover" src="../assets/images/index/menu/icon-wallet-hover.png" />
         </div>
-        <span class="footer-label">Wallet</span>
+        <span class="footer-label">{{ $t("bottomNav.wallet") }}</span>
       </q-route-tab>
       <q-route-tab to="/account" name="account" :ripple="false">
         <div class="footer-img">
           <img class="inactive" src="../assets/images/index/menu/icon-account.png" />
           <img class="hover" src="../assets/images/index/menu/icon-account-hover.png" />
         </div>
-        <span class="footer-label">Me</span>
+        <span class="footer-label">{{ $t("bottomNav.me") }}</span>
       </q-route-tab>
     </q-tabs>
   </q-footer>
