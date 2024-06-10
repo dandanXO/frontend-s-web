@@ -1,107 +1,10 @@
 <template>
-  <div class="hongbaoyu-container">
-    <!--    <div>-->
-    <!--      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />-->
-    <!--    </div>-->
-
-    <!--    <div class="hongbao-subtitle">-->
-    <!--      <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-01.png" />-->
-    <!--    </div>-->
-
+  <div class="eurocup-hongbaoyu-container">
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div @click="getPromotion" class="hongbao-open">
         <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
       </div>
     </div>
-
-    <!--    <div class="winner-container">-->
-    <!--      <div class="title-wrapper">-->
-    <!--        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-ribbon.png`)" />-->
-    <!--        <span>中奖记录</span>-->
-    <!--      </div>-->
-
-    <!--      <div class="winner-wrapper">-->
-    <!--        <div class="contents">-->
-    <!--          <div class="winner" v-for="(item, index) in visibleItems" :key="index">-->
-    <!--            <div>{{ item.date }}</div>-->
-    <!--            <div>{{ item.name }}</div>-->
-    <!--            <div class="amount-txt">{{ item.amount }}</div>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="content-container">-->
-    <!--      <div class="hongbao-subtitle">-->
-    <!--        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-02.png" />-->
-    <!--      </div>-->
-
-    <!--      <div class="contents">-->
-    <!--        <div class="event-details">-->
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动时间</div>-->
-    <!--            <div class="event-txt">{{ getDateRange(promoParam) }}</div>-->
-    <!--          </div>-->
-
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动对象</div>-->
-    <!--            <div class="event-txt">东赢全体会员</div>-->
-    <!--          </div>-->
-
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动期间</div>-->
-    <!--            <div class="event-txt">-->
-    <!--              根据欧洲杯赛事-->
-    <!--              <span class="color-red">当日进球粒数</span>-->
-    <!--              派发开启红包雨，-->
-    <!--              <span class="color-red">所有会员</span>-->
-    <!--              均可参与，红包仅需-->
-    <!--              <span class="color-red">一倍流水</span>-->
-    <!--              即可转出。-->
-    <!--            </div>-->
-    <!--          </div>-->
-
-    <!--          <table class="details-table" border="0" cellpadding="0" cellspacing="0">-->
-    <!--            <thead>-->
-    <!--              <tr>-->
-    <!--                <td>进*粒球</td>-->
-    <!--                <td>红包雨总奖金</td>-->
-    <!--                <td>流水倍数</td>-->
-    <!--              </tr>-->
-    <!--            </thead>-->
-    <!--            <tbody>-->
-    <!--              <tr>-->
-    <!--                <td>≥1</td>-->
-    <!--                <td>10,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--              <tr>-->
-    <!--                <td>≥3</td>-->
-    <!--                <td>50,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--              <tr>-->
-    <!--                <td>≥5</td>-->
-    <!--                <td>100,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--            </tbody>-->
-    <!--          </table>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
-    <!--    <div class="content-container">-->
-    <!--      <div class="hongbao-subtitle">-->
-    <!--        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-03.png" />-->
-    <!--      </div>-->
-
-    <!--      <div class="contents">-->
-    <!--        <div class="rules-content">-->
-    <!--          <div v-html="promoContent" />-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 
   <el-dialog
@@ -258,7 +161,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.hongbaoyu-container {
+.eurocup-hongbaoyu-container {
+  //background-color: #e2e6f1;
   margin: 0px auto;
   display: flex;
   align-items: center;
@@ -266,9 +170,6 @@ onMounted(() => {
   flex-direction: column;
   position: relative;
   width: 100%;
-  // min-height: 1900px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
 
   img.banner-img {
     display: block;
@@ -297,6 +198,14 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       margin-left: 60px;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
     }
   }
 
@@ -332,13 +241,15 @@ onMounted(() => {
     .winner-wrapper {
       position: relative;
       padding: 60px 20px 20px;
-      background-color: #161824;
+      background-color: #f2f8fe;
       border-radius: 8px;
       margin-bottom: 80px;
       margin-top: -60px;
       min-height: 250px;
       width: 100%;
-      max-width: 700px;
+      max-width: 1240px;
+      border: 1px solid #51acff;
+
       .contents {
         max-height: 280px;
         overflow-y: hidden;
@@ -348,12 +259,12 @@ onMounted(() => {
           align-items: center;
           justify-content: space-between;
 
-          color: white;
+          color: #7a8eb9;
           padding: 15px;
           gap: 20px;
 
           &:nth-child(odd) {
-            background-color: #383c51;
+            background-color: #ffffff;
           }
         }
 
@@ -367,13 +278,14 @@ onMounted(() => {
   .content-container {
     width: 100%;
     position: relative;
-    background-color: #161824;
+    background-color: #f2f8fe;
     width: 100%;
     max-width: 1280px;
     margin: auto;
     padding-bottom: 40px;
     margin-bottom: 40px;
     border-radius: 8px;
+    border: 1px solid #acd4f6;
 
     .contents {
       margin-top: 25px;
@@ -401,14 +313,14 @@ onMounted(() => {
             background-repeat: no-repeat;
             padding: 6px 24px;
 
-            color: #000000;
+            color: #ffffff;
             font-weight: 600;
             font-size: 1rem;
           }
 
           .event-txt {
             font-size: 1.25rem;
-            color: #ffffff;
+            color: #000000;
 
             .color-red {
               color: #f41f1c;
@@ -421,15 +333,17 @@ onMounted(() => {
           border-radius: 8px;
           border-radius: 8px;
           overflow: hidden;
+          border: 1px solid #acd4f6;
+
           thead {
-            background: linear-gradient(0deg, #fcc834 0%, #fde7a1 100%);
-            color: #000000;
+            background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
+            color: #ffffff;
             font-weight: 600;
           }
 
           tbody {
             tr:nth-child(odd) {
-              background-color: #383c51;
+              background-color: #ffffff;
             }
           }
 

@@ -23,6 +23,8 @@
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
+    <HongBaoPreEurocup v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'" :promo-code="list.promoCode" />
+
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1-esport-safety') ||
@@ -149,7 +151,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
@@ -213,6 +215,7 @@ export default defineComponent({
     // PrivilegeInvite,
     // AsiaCup2024Promo,
     // BasketballHot,
+    HongBaoPreEurocup,
     LplSummerPromo,
     // Cny2024Promo,
     BbDacha2024Promo,
