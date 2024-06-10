@@ -308,6 +308,7 @@ export default {
     IN_PROGRESS: 'Distributing',
     DISTRIBUTED: 'Distributed',
     CANCEL: 'Cancel',
+    PRE_PROCESS: 'Distributing',
   },
   referFriendEvent: {
     INFO: 'Complete Info',
