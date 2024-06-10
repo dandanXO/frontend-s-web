@@ -80,6 +80,18 @@ export default {
     date_picker_close: "닫다",
     date_picker_confirm: "확인하다",
     // transaction record end
+    // withdraw start
+    withdraw_method: "출금방법",
+    withdraw_bank: "개설 은행",
+    withdraw_bank_choose: "선택하세요",
+    withdraw_bank_num: "은행 카드 번호",
+    withdraw_bank_num_choose: "은행 카드 번호를 입력하세요",
+    withdraw_bank_holder: "카드 계좌",
+    withdraw_bank_address: "카드 주소",
+    withdraw_bank_address_placeholder: "계좌 개설 은행 주소를",
+    withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    // withdraw end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
