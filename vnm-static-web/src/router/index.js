@@ -79,6 +79,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {
+        path: "/hashgame",
+        name: "hashgame",
+        component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
+      },
+      {
         path: "/cockfight",
         name: "cockfight",
         component: () => import(/* webpackChunkName: "Game" */ "../views/CockfightView.vue")

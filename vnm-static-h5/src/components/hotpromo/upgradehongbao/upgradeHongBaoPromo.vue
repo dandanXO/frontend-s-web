@@ -64,7 +64,7 @@
     <div class="modal-div">
       <div class="red-packet-opened">
         <img :src="require(`../../../assets/images/promo/hotpromo/upgradehongbao/red-packet-opened.png`)" />
-        <div class="grats">{{$t('lang.congrats')}}</div>
+        <div class="grats">{{$t('lang.hong_congrats')}}</div>
         <div class="amount">{{ winAmount }}</div>
 
         <div class="get-btn" @click="getPromotionPrize">{{$t('lang.claim')}}</div>

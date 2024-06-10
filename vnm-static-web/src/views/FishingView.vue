@@ -1,6 +1,7 @@
 <template>
-  <PlatformView
+  <PlatformViewFish
     :platforms="fishingPlatforms"
+    :platforms2="cockfightPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
     :platformName="platformName"
@@ -11,8 +12,8 @@
 
 <script setup>
 import { ref } from "vue";
-import PlatformView from "@/components/PlatformView";
-import { fishingPlatforms } from "@/shared/platformArray";
+import PlatformViewFish from "@/components/PlatformViewFish.vue";
+import { fishingPlatforms, cockfightPlatforms } from "@/shared/platformArray";
 
 const platformType = ref("fishing");
 const platformGameType = ref("FISH");
