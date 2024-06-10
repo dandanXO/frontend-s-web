@@ -9,11 +9,11 @@
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">今日打码</div>
-            <div class="fish-match-game-detail">{{ availableDraw }} 元</div>
+            <div class="fish-match-game-detail">{{ validBet }} 元</div>
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{ validBet }} 次</div>
+            <div class="fish-match-game-detail">{{ availableDraw  }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
@@ -76,16 +76,14 @@
           </tr>
         </table>
         <div class="fish-match-game-info-sub">
-          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000
-          档位各一次红包抽奖。
+          例：用户A当日在捕鱼场馆娱乐金额为500,000，用户A可分别获得对应1,500档位、60,000档位、300,000档位各一次红包抽奖，彩金只需完成3倍流水即可出款；
         </div>
       </div>
       <div class="fish-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500 元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取
-            1 次；
+            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取1次，彩金只需完成3倍流水即可出款；
           </div>
           <div class="item">
             2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20
@@ -105,9 +103,10 @@
         </div>
       </div>
       <q-dialog v-model="tableRecordDialog" persistent class="fish-match-table-record-dialog">
-        <div class="title">恭喜你抽中</div>
 
         <q-card class="confirm-vote-card">
+          <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
+          <div class="title">恭喜你抽中</div>
           <div class="close-btn" @click="tableRecordDialog = false"></div>
           <div class="record-dialog-container">
             <div class="record-dialog-content-title">恭喜您获得以下奖金</div>
@@ -500,12 +499,23 @@ const claimHongBao = async () => {
 }
 
 .fish-match-table-record-dialog {
+  position: relative;
+  .fish-img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -108px;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
   .confirm-vote-card {
     width: 360px;
-    height: 360px;
+    height: 320px;
     background-color: #fff3df;
     position: relative;
     border-radius: 20px;
+    overflow: unset;
   }
   .close-btn {
     background: url(../../../assets/promo/lh-fish-honbao/close-btn.png);
@@ -542,7 +552,7 @@ const claimHongBao = async () => {
       text-align: center;
       color: #ea5046;
       span {
-        font-size: 48px;
+        font-size: 72px;
       }
     }
     .hongbao-finish-btn {
@@ -577,11 +587,11 @@ const claimHongBao = async () => {
     color: #fff;
     font-family: FZHanZhenGuangBiaoS-GB;
     font-weight: 400;
-    line-height: 32px;
+    line-height: 44px;
     letter-spacing: 0.2em;
     text-align: center;
     position: absolute;
-    top: 26%;
+    top: -1%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 6;

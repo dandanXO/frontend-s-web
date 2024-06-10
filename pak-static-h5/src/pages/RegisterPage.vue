@@ -1,4 +1,15 @@
 <template>
+  <!--  <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">-->
+  <!--      <div class="cs-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
+  <!--  <q-page-sticky position="bottom-right" :offset="whatDragPos" class="floating-btn">-->
+  <!--    <div v-touch-pan.prevent.mouse="moveWhatsIcon" @click="openWhatsApp()">-->
+  <!--      <div class="whatsapp-icon-wrapper"></div>-->
+  <!--    </div>-->
+  <!--  </q-page-sticky>-->
+
   <div class="register-container">
     <!-- <div class="back-left">
       <router-link :to="'/landing'">
@@ -7,7 +18,7 @@
     </div> -->
 
     <div class="register-form-logo-img">
-      <img src="../assets/images/auth/login-logo.png" />
+      <img src="../assets/images/auth/b9-logo.png" />
     </div>
 
     <div class="auth-tab-wrapper">
@@ -173,13 +184,6 @@
           </template>
         </InputRowGrid>
 
-        <div class="mui-row q-mt-sm" :class="isAgreeReg ? 'checked' : ''">
-          <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-            I have Agree To The
-            <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
-          </q-checkbox>
-        </div>
-
         <!-- <div style="margin-top: 30px">
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div> -->
@@ -204,6 +208,28 @@
       </q-btn>
     </div>
 
+    <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
+      <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
+        I have Agree To The
+        <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
+      </q-checkbox>
+    </div>
+
+    <div class="btn-lists">
+      <div class="list-item" @click="openWhatsApp()">
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-whatsapp.png" />
+        <div>WhatsApp</div>
+      </div>
+      <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
+        <div>Download App</div>
+      </div>
+      <div class="list-item" @click="openTiktok()">
+        <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
+        <div>Tiktok</div>
+      </div>
+    </div>
+
     <div class="bottom-img">
       <img src="../assets/images/auth/login-img2.png" />
     </div>
@@ -223,14 +249,20 @@ import AdjustWeb from "@adjustcom/adjust-web-sdk";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
+import { useUI } from "stores/ui";
+import { cached, TIME_EXPIRED } from "boot/cache";
+import { isAndroid } from "boot/utils";
+
 export default defineComponent({
   name: "RegisterPage",
+  methods: { isAndroid },
   components: {
     InputRowGrid,
     InputField
     // PrimaryButton
   },
   setup() {
+    const ui = useUI();
     const store = userStore();
     const verificationImg = ref("");
 
@@ -648,6 +680,58 @@ export default defineComponent({
 
     const regLoginTab = ref("register");
 
+    // sticky cs
+    const csDragPos = ref([10, 30]);
+    const whatDragPos = ref([15, 110]);
+
+    const isDraggingCsIcon = ref(false);
+    const openCSInNewTab = (url) => {
+      const absoluteUrl = url;
+      window.open(absoluteUrl, "_blank");
+    };
+    const moveWhatsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+      whatDragPos.value = [whatDragPos.value[0] - ev.delta.x, whatDragPos.value[1] - ev.delta.y];
+    };
+    const openWhatsApp = () => {
+      window.open("https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l", "_blank");
+    };
+    const openTiktok = () => {
+      window.open("https://www.tiktok.com/@b9game", "_blank");
+    };
+    const moveCsIcon = (ev) => {
+      isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+      csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
+    };
+
+    const downloadApp = () => {
+      if (ui.downloadAppUrl) {
+        window.open(ui.downloadAppUrl, "_blank");
+      } else {
+        api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+          if (res.code === 0) {
+            ui.downloadAppUrl = res.data.url;
+            window.open(ui.downloadAppUrl, "_blank");
+          }
+        });
+      }
+    };
+
+    const loadCustomerAddress = () => {
+      cached
+        .get("customerAddress", () =>
+          api.get("/config/customerAddress/v2").then((res) => {
+            return res;
+          })
+        )
+        .then((data) => {
+          console.log(data);
+          var url = data.liveUrl1;
+          ui.CSAUrl = url;
+        });
+    };
+
     watch(
       () => regLoginTab.value,
       () => {
@@ -690,7 +774,18 @@ export default defineComponent({
       isValidPhone,
       affRegEvent,
       isLoading,
-      regLoginTab
+      regLoginTab,
+      csDragPos,
+      isDraggingCsIcon,
+      openCSInNewTab,
+      moveCsIcon,
+      loadCustomerAddress,
+      ui,
+      moveWhatsIcon,
+      whatDragPos,
+      openWhatsApp,
+      openTiktok,
+      downloadApp
     };
   }
 });
@@ -717,7 +812,7 @@ function charType(num) {
   .q-tab {
     min-height: 45px;
     border-radius: 8px;
-    color: #5c6c86;
+    color: #5f6061;
     font-weight: 400;
     width: 50%;
   }
@@ -727,7 +822,7 @@ function charType(num) {
     // background-size: 100% 100%;
     border-radius: 8px;
     margin-bottom: 4px;
-    margin-top: 5px;
+    margin-top: 0px;
     padding: 1px;
 
     :deep(.q-tab__label) {
@@ -765,13 +860,14 @@ function charType(num) {
 }
 
 .register-form-logo-img {
+  margin-top: -10px;
   padding: 0 16px;
   display: flex;
   justify-content: center;
   img {
     display: block;
     width: 100%;
-    max-width: 100px;
+    max-width: 140px;
     margin-bottom: 10px;
   }
 }
@@ -779,11 +875,11 @@ function charType(num) {
 .register-form-wrapper {
   padding: 0 20px 20px;
 
-  :deep(.q-field__control){
-    height:45px;
+  :deep(.q-field__control) {
+    height: 45px;
 
-    .q-field__marginal{
-      height:45px;
+    .q-field__marginal {
+      height: 45px;
     }
   }
 }
@@ -900,9 +996,112 @@ function charType(num) {
   padding: 3px 20px 8px;
 }
 
+.btn-lists {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 0px;
+  width: 100%;
+  margin: 10px auto;
 
-.bottom-img{
+  .list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    color: #9f9f9f;
+    font-size: 12px;
+  }
+
+  .btn-icon {
+    width: 70px;
+    height: 70px;
+
+    &:active {
+      filter: brightness(0.85);
+      transform: translate(0px, 1px);
+    }
+  }
+  #cs-icon {
+    width: 70px;
+    height: 70px;
+  }
+  #tiktok-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 1.5s infinite;
+    animation-delay: 1s;
+  }
+  #whatapp-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 1.5s infinite;
+    animation-delay: 0.5s;
+  }
+  #download-icon {
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    animation: smallbeat 1.5s infinite;
+    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+  }
+}
+
+.bottom-img {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 28px;
+}
+
+.cs-icon-wrapper {
+  display: flex;
+  width: 70px;
+  height: 76px;
+  background: url("../assets/images/index/icon-cs.png") no-repeat center center;
+  background-size: contain;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.whatsapp-icon-wrapper {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  background: url("../assets/images/auth/whatsapp-icon.png") no-repeat center center;
+  background-size: contain;
+  animation: smallbeat 1.5s infinite;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+@keyframes smallbeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 </style>

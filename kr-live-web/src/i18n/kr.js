@@ -7,7 +7,7 @@ export default {
     login_captcha: "보안 문자",
     login_submit: "로그인",
     login_register: "회원가입",
-    login_success_msg: "성공적으로 로그인하세요",
+    login_success_msg: "로그인이 되었습니다",
     login_forget_pwd: "비밀번호 분실",
     // login end
     // register start
@@ -32,7 +32,7 @@ export default {
     menu_announcement: "공지사항",
     menu_deposit: "충전",
     menu_withdraw: "환전",
-    menu_message: "쪽지함",
+    menu_message: "문의",
     menu_customer_service: "고객센터",
     // menu end
     // rolling text start
@@ -43,7 +43,7 @@ export default {
     date_picker_sun: "일",
     date_picker_monday: "월요일",
     date_picker_mon: "월",
-    date_picker_tueday: "화요일",
+    date_picker_tuesday: "화요일",
     date_picker_tue: "화",
     date_picker_wednesday: "수요일",
     date_picker_wed: "수",
@@ -625,6 +625,7 @@ export default {
       10006: "이름을 사용할 수 없음",
       10007: "게임 방에 들어가는 중 오류 발생",
       10008: "오류",
+      11000: "은행 카드 없음",
       11003: "입금 실패",
       13000: "도메인 이름을 찾을 수 없음",
       13001: "3개월 이전의 정보를 조회할 수 없음",
@@ -656,6 +657,6 @@ export default {
       34002: "생일에 수령하십시오",
       35000: "35000 회원은 이 혜택을 받을 수 없음",
       35001: "회원이 이미 이 혜택을 받았음",
-      35002: "자격이 있는"    
+      35002: "자격이 있는"
   }
 };

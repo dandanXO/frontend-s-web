@@ -325,3 +325,16 @@ export const cockfightPlatforms = [
   }
 ];
 
+
+export const minigamePlatforms = [
+  {
+    code: "TFGaming",
+    name: "TFGaming",
+    image: "TFGaming",
+    message: "World class minigame online",
+    vimessage: "",
+    caption: "",
+    gameCode: "CASUAL"
+  }
+];
+

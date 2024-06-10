@@ -81,3 +81,15 @@ export const getVisitorId = async () => {
     return sidParam;
   }
 };
+export const convertToCommaAmount = (amount, isForceDecimal) => {
+  if (amount === null) {
+    return 0;
+  }
+  if (isNonNumericString(amount)) {
+    return amount;
+  }
+  return parseInt(amount).toLocaleString("en-US", { minimumFractionDigits: isForceDecimal ? 2 : 0 });
+};
+function isNonNumericString(value) {
+  return typeof value === "string" && isNaN(value);
+}

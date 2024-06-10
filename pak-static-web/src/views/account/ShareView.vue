@@ -1,7 +1,7 @@
 <template>
   <div class="share-view-container">
     <div class="menu-title-container">
-      <span class="menu-title">Reward amount</span>
+      <span class="menu-title">{{ $t("shareView.title") }}</span>
     </div>
 
     <div class="content-wrapper">
@@ -10,34 +10,44 @@
           <div class="share-summary-item income">
             <div class="share-summary-item__info-wrapper">
               <h3 class="share-summary-item__title">
-                RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+                ₨ {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
               </h3>
-              <span class="share-summary-item__description">My Total Income</span>
+              <span class="share-summary-item__description">{{ $t("shareView.summary.income") }}</span>
             </div>
             <img class="share-summary-item__pic" src="@/assets/images/account/share/income-pic.png" />
           </div>
           <div class="share-summary-item invitees">
             <div class="share-summary-item__info-wrapper">
               <h3 class="share-summary-item__title">{{ memberDetail.totalRefer }}</h3>
-              <span class="share-summary-item__description">My Total Number Of Invitees</span>
+              <span class="share-summary-item__description">{{ $t("shareView.summary.invitees") }}</span>
             </div>
             <img class="share-summary-item__pic" src="@/assets/images/account/share/invitees-pic.png" />
           </div>
         </div>
 
         <div class="invitation-link-wrapper">
-          <h2 class="invitation-link-title">Invite friends via link</h2>
-          <p class="invitation-link-description">How to get invitation bonus</p>
+          <h2 class="invitation-link-title">{{ $t("shareView.inviteLink.title") }}</h2>
+          <p class="invitation-link-description">{{ $t("shareView.inviteLink.description") }}</p>
           <div class="invitation-link__invitation-step-wrapper">
-            <div class="invitation-link__invitation-step"><span>Invite friends via invitation link</span></div>
-            <div class="invitation-link__invitation-step"><span>Register via link</span></div>
-            <div class="invitation-link__invitation-step"><span>Complete deposit after registration</span></div>
+            <div class="invitation-link__invitation-step">
+              <span>{{ $t("shareView.inviteLink.step1") }}</span>
+            </div>
+            <div class="invitation-link__invitation-step">
+              <span>{{ $t("shareView.inviteLink.step2") }}</span>
+            </div>
+            <div class="invitation-link__invitation-step">
+              <span>{{ $t("shareView.inviteLink.step3") }}</span>
+            </div>
           </div>
           <div class="invitation-link__link-wrapper">
             <!-- <a-input class="invitation-link__link" readonly /> -->
             <div class="invitation-link__link-inner">
-              {{ selfTgurl }}
-              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">Copy link</button>
+              <div class="invitation-link__link">
+                {{ selfTgurl }}
+              </div>
+              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">
+                {{ $t("shareView.inviteLink.copyButton") }}
+              </button>
             </div>
             <div class="invitation-link__action-wrapper">
               <a :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
@@ -59,13 +69,15 @@
         <div class="earned-amount-wrapper">
           <img class="earned-amount__pic" src="@/assets/images/account/share/earn-money-pic.png" />
           <div class="earned-amount__total-wrapper">
-            <h2 class="earned-amount__total-title">Total amount sent as of yesterday</h2>
+            <h2 class="earned-amount__total-title">{{ $t("shareView.earnYesterday.title") }}</h2>
             <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
           </div>
           <div class="earned-amount__divider" />
           <div class="earned-amount__invited-friend-wrapper">
             <div class="earned-amount__invited-friend-info-wrapper">
-              <span class="earned-amount__invited-friend-header">player</span>
+              <span class="earned-amount__invited-friend-header">
+                {{ $t("shareView.earnYesterday.table.header.player") }}
+              </span>
               <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-info">
                 <img
                   v-if="friend.profilePhoto"
@@ -78,7 +90,9 @@
             </div>
 
             <div class="earned-amount__invited-friend-info-wrapper">
-              <span class="earned-amount__invited-friend-header">money</span>
+              <span class="earned-amount__invited-friend-header">
+                {{ $t("shareView.earnYesterday.table.header.money") }}
+              </span>
               <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-amount">
                 {{ store.currency.value }} {{ friend.finalAmount }}
               </div>
@@ -98,7 +112,7 @@
                 ₨
                 <span class="share-info-item__info-num">{{ getRewardAmount("BET") }}</span>
               </span>
-              <span class="share-info-item__description">Bet</span>
+              <span class="share-info-item__description">{{ $t("shareView.info.bet") }}</span>
             </div>
           </div>
           <div class="share-info-item">
@@ -112,7 +126,7 @@
                   {{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}
                 </span>
               </span>
-              <span class="share-info-item__description">Eligible Refer</span>
+              <span class="share-info-item__description">{{ $t("shareView.info.eligibleRefer") }}</span>
             </div>
           </div>
           <div class="share-info-item">
@@ -124,7 +138,7 @@
                 ₨
                 <span class="share-info-item__info-num">{{ getRewardAmount("ONE_TIME") }}</span>
               </span>
-              <span class="share-info-item__description">Invite</span>
+              <span class="share-info-item__description">{{ $t("shareView.info.invite") }}</span>
             </div>
           </div>
           <div class="share-info-item">
@@ -136,15 +150,15 @@
                 ₨
                 <span class="share-info-item__info-num">{{ getRewardAmount("DEPOSIT") }}</span>
               </span>
-              <span class="share-info-item__description">Top Up</span>
+              <span class="share-info-item__description">{{ $t("shareView.info.topUp") }}</span>
             </div>
           </div>
         </div>
 
         <table class="share-bonus-ranking-wrapper">
           <tr class="share-bonus-ranking-header">
-            <td>Friend Count</td>
-            <td>Invite Bonus</td>
+            <td>{{ $t("shareView.bonus.table.header.friendCount") }}</td>
+            <td>{{ $t("shareView.bonus.table.header.inviteBonus") }}</td>
           </tr>
           <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
             <td class="share-bonus-ranking-label">{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
@@ -250,16 +264,19 @@ import VueQRCodeComponent from "vue-qrcode-component";
 import { userStore } from "@/store/index";
 import { convertToCommaAmount } from "@/utils/utils";
 import { server } from "@/utils/request";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const store = userStore();
 const copyHrefLink = () => {
   navigator.clipboard
     .writeText(selfTgurl.value)
     .then(() => {
-      ElMessage.success("Link copied to clipboard");
+      ElMessage.success(t("shareView.inviteLink.copySuccess"));
     })
     .catch(() => {
-      ElMessage.error("Failed to copy link");
+      ElMessage.error(t("shareView.inviteLink.copyFail"));
     });
 };
 const searchForm = reactive({
@@ -578,10 +595,17 @@ onMounted(() => {
           background-color: #0f0b0b;
           border-radius: 10px;
           position: relative;
+          max-width: 518px;
           font-size: 18px;
           font-weight: 400;
           line-height: 32px;
           color: #ffffff;
+
+          .invitation-link__link {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
 
           .invitation-link__copt-btn {
             position: absolute;

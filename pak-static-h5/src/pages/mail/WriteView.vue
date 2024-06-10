@@ -122,13 +122,13 @@
         <div class="txt-title">Message Sent</div>
         <div class="txt-content q-mt-md text-center">Your feedback has been sent successfully!</div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-          <q-btn label="Confirm" no-caps class="btn-confirm" v-close-popup />
+          <q-btn label="Confirm" no-caps class="btn-confirm" v-close-popup @click="router.push('/account/feedback')" />
         </div>
       </div>
     </div>
   </q-dialog>
 
-  <q-dialog class="modal-feedback-div" @hide="closePage" v-model="msdalSendSuccess">
+  <q-dialog class="modal-feedback-div" @hide="closePage" v-model="zmodalSendSuccess">
     <q-card style="width: 330px" class="modalcontent">
       <div class="headers">
         <div class="black-titles">Feedback sent</div>
@@ -208,6 +208,7 @@ const onSubmit = () => {
           mailDetailList.value.feedbackType = "";
           mailDetailList.value.title = "";
           mailDetailList.value.content = "";
+          uploadFileRef.value.resetFile();
         }
       })
       .catch((error) => {
@@ -296,12 +297,12 @@ onMounted(() => {
 }
 
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+  background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
   border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 </style>

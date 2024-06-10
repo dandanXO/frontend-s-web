@@ -135,7 +135,7 @@
       </div>
       <div class="profile-wrapper" v-else>
         <q-btn no-caps unelevated @click="goLogin" style="color: #98a7b5">Login</q-btn>
-        <PrimaryButton :isHot="true" :isSmall="true" :label="'Register'" :onClick="() => router.push('/register')" />
+        <PrimaryButton :isHot="true" :isSmall="true" :label="'Register'" :onClick="goToRegister" />
       </div>
     </div>
   </div>
@@ -149,12 +149,14 @@ import { useRoute, useRouter } from "vue-router";
 import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
 import PrimaryButton from "./auth/PrimaryButton.vue";
+import { useUI } from "stores/ui";
 
 const props = defineProps(["homeProfile"]);
 const emits = defineEmits(["closeslot"]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
+const ui= useUI();
 
 // const balance = ref(19999999);
 
@@ -170,6 +172,20 @@ const goLogin = () => {
   }
   router.push("/login");
 };
+
+const trackRegisterClickEvent= () => {
+  if(ui.adjust_click_register_event && isAndroid()){
+    console.log("Track Click Reg")
+    var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+    Adjust.trackEvent(adjustEvent);
+  }
+}
+
+const goToRegister = () => {
+  trackRegisterClickEvent();
+
+  router.push("/register");
+}
 
 const randomProfileImg = computed(() => {
   const storedImg = sessionStorage.getItem("PROFILE_IMG");
@@ -238,6 +254,7 @@ const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
   if (!store.token && route.path === "/home") {
+    console.log("platform", Platform);
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||

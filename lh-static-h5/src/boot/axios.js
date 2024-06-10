@@ -12,10 +12,10 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 console.log(window.location.hostname);
-const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
+const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835", "lh869"];
 const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
 
-const specialLinks= ["lh93371", "lh76390"];
+const specialLinks= ["lh93371", "lh76390" ,"lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100"];
 const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
 

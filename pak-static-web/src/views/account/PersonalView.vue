@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">Personal center</span>
+      <span class="menu-title">{{ $t("personalView.personal.title") }}</span>
     </div>
 
     <div class="personal-wrapper">
@@ -13,11 +13,16 @@
         </div>
       </button> -->
       <a-form ref="updateFormRef" :model="updateFormDetails" class="personal-info-wrapper" hide-required-mark>
-        <a-form-item required name="nickName" label="Phone number" label-align="left">
+        <a-form-item
+          required
+          name="nickName"
+          :label="$t('personalView.personal.form.loginName.label')"
+          label-align="left"
+        >
           <a-input
             :disabled="true"
             v-model:value="updateFormDetails.nickName"
-            placeholder="Please enter your nick name"
+            :placeholder="$t('personalView.personal.form.loginName.placeholder')"
           />
         </a-form-item>
         <div class="datewsend">
@@ -32,7 +37,7 @@
                 type="button"
                 @click="updateSecurityModal"
               >
-                Verify
+                {{ $t("personalView.personal.form.email.verifyButton") }}
               </a-button>
               <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
             </div>
@@ -90,70 +95,99 @@
             }
           ]"
           name="realName"
-          label="Full Name"
+          :label="$t('personalView.personal.form.fullName.label')"
           label-align="left"
         >
-          <a-input v-model:value="updateFormDetails.realName" placeholder="Please enter your full name" />
+          <a-input
+            v-model:value="updateFormDetails.realName"
+            :placeholder="$t('personalView.personal.form.fullName.placeholder')"
+          />
         </a-form-item>
       </a-form>
 
       <a-form-item class="txt-center" style="max-width: 340px">
-        <button class="txt-center common-btn" type="submit" @click="updateState">SUBMIT</button>
+        <button class="txt-center common-btn" type="submit" @click="updateState">
+          {{ $t("personalView.personal.form.submitButton") }}
+        </button>
       </a-form-item>
     </div>
 
     <a-modal
       wrap-class-name="securityModal"
       v-model:visible="verificationModalVisible"
-      title="Captcha"
       width="500px"
       align-center
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       @keydown.enter.prevent
+      class="personal-modal"
+      :body-style="{ padding: 0 }"
     >
-      <a-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <a-form-item
-          ref="captchaCode"
-          prop="captchaCode"
-          :rules="[{ required: true, message: 'Please insert captcha' }]"
-        >
-          <a-input
-            @keyup.enter="verifyVerificationCode"
-            v-model:value="updateSecurityVerified.captchaCode"
-            :maxlength="4"
-            placeholder="Captcha"
+      <div class="personal-modal">
+        <div class="modal-head-title">{{ $t("personalView.personal.verifyModal.title") }}</div>
+        <a-form ref="captchaUpdateRef" :model="updateSecurityVerified">
+          <a-form-item
+            ref="captchaCode"
+            prop="captchaCode"
+            :rules="[{ required: true, message: $t('personalView.personal.verifyModal.form.captcha.error.required') }]"
           >
-            <template #suffix>
-              <div class="verification" @click="getCode()">
-                <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
-              </div>
-            </template>
-          </a-input>
-        </a-form-item>
-      </a-form>
-      <a-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">Verify</a-button>
+            <a-input
+              @keyup.enter="verifyVerificationCode"
+              v-model:value="updateSecurityVerified.captchaCode"
+              :maxlength="4"
+              :placeholder="$t('personalView.personal.verifyModal.form.captcha.placeholder')"
+            >
+              <template #suffix>
+                <div class="verification" @click="getCode()">
+                  <img style="width: 80%; margin-top: 6px" :src="verificationImg" />
+                </div>
+              </template>
+            </a-input>
+          </a-form-item>
+        </a-form>
+        <a-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">
+          {{ $t("personalView.personal.verifyModal.verifyButton") }}
+        </a-button>
+      </div>
     </a-modal>
-    <a-modal v-model:visible="updateSecurityModalVisible" wrap-class-name="securityModal" :footer="null" width="500px">
-      <div class="modal-head-title">Security Verification</div>
-      <a-form
-        ref="updateSecurityFormRef"
-        :hide-required-mark="true"
-        :model="updateSecurityVerified"
-        :rules="updateSecurityVerifiedRules"
-      >
-        <a-form-item ref="emailAddress" name="emailAddress">
-          <a-input v-model:value="personalState.memberInfo.email" placeholder="Please input email address" />
-        </a-form-item>
-        <a-form-item ref="verificationCode" class="half" name="verificationCode">
-          <a-input v-model:value="updateSecurityVerified.verificationCode" placeholder="Verification code">
-            <template #suffix>
-              <span class="common-btn verification-btn" @click="openVerificationModal">Verify</span>
-            </template>
-          </a-input>
-        </a-form-item>
-        <span class="common-btn verification-btn" @click="submitUpdateSecurity">Submit</span>
-      </a-form>
+    <a-modal
+      v-model:visible="updateSecurityModalVisible"
+      wrap-class-name="securityModal"
+      :footer="null"
+      width="500px"
+      :body-style="{ padding: 0 }"
+    >
+      <div class="personal-modal">
+        <div class="modal-head-title">{{ $t("personalView.personal.securityModal.title") }}</div>
+        <a-form
+          ref="updateSecurityFormRef"
+          :hide-required-mark="true"
+          :model="updateSecurityVerified"
+          :rules="updateSecurityVerifiedRules"
+        >
+          <a-form-item ref="emailAddress" name="emailAddress">
+            <a-input
+              v-model:value="personalState.memberInfo.email"
+              :placeholder="$t('personalView.personal.securityModal.form.email.placeholder')"
+            />
+          </a-form-item>
+          <a-form-item ref="verificationCode" class="half" name="verificationCode">
+            <a-input
+              v-model:value="updateSecurityVerified.verificationCode"
+              :placeholder="$t('personalView.personal.securityModal.form.verificationCode.placeholder')"
+            >
+              <template #suffix>
+                <span class="common-btn verification-btn" @click="openVerificationModal">
+                  {{ $t("personalView.personal.securityModal.form.verificationCode.verifyButton") }}
+                </span>
+              </template>
+            </a-input>
+          </a-form-item>
+          <span class="common-btn verification-btn" @click="submitUpdateSecurity">
+            {{ $t("personalView.personal.securityModal.submitButton") }}
+          </span>
+        </a-form>
+      </div>
     </a-modal>
   </div>
 </template>
@@ -177,13 +211,16 @@ import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useHandleUpload } from "@/hooks/upload";
 import { RiCameraFill, RiMailCheckLine } from "vue-remix-icons";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 let validateName = async (r, v) => {
   var reg = /[^a-zA-Z0-9 ]/g;
   if (v === "") {
-    return Promise.reject("Real name is required");
+    return Promise.reject(t("personalView.personal.form.fullName.error.required"));
   } else if (reg.test(v)) {
-    return Promise.reject("Only alphabets and numbers are allowed");
+    return Promise.reject(t("personalView.personal.form.fullName.error.pattern"));
   } else {
     return Promise.resolve();
   }
@@ -209,6 +246,7 @@ let validatePass2 = async (r, v) => {
 
 const store = userStore();
 const { profilePhoto, nickName, email, realName } = storeToRefs(store);
+const { getMemberInfo } = store;
 
 const tempProfile = ref();
 // TODO: upload api
@@ -273,14 +311,12 @@ const loadInfo = () => {
         if (personalState.memberInfo.birthday) {
           personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
         }
-        if (personalState.memberInfo.realName) {
-          personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("DD-MM-YYYY");
-        }
       }
     })
     .catch((error) => {
       console.log("error", error);
     });
+  getMemberInfo();
 };
 
 const verificationStatus = ref(false);
@@ -577,5 +613,11 @@ const goToSecurityVerficationPage = () => {
       padding: 4px 0;
     }
   }
+}
+
+.personal-modal {
+  padding: 20px 50px;
+  background-color: #131313;
+  color: #ffffff;
 }
 </style>

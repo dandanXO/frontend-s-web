@@ -11,7 +11,7 @@
       </div>
 
       <div class="page-dialog-main">
-        
+
         <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
             <p class="header-info-description">{{ headerInfo.description }}</p>
@@ -203,12 +203,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "personal/messages",
-    info: "쪽지",
+    info: "문의",
     iconUrl: require("../../assets/icon/messages.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MyMessages,
     headerInfo: {
-      title: "쪽지",
+      title: "문의",
       subTitle: "MESSAGES",
       description: "입금시 꼭 계좌문의를 하세요!"
     }

@@ -13,11 +13,15 @@
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
       </div>
+      <!-- <div class="download-btn">
+        <a :href="topDownloadUrl">Download</a>
+      </div> -->
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
 
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
+    <div style="height: 56px" v-if="topDownload"></div>
     <div class="side-menu" @click.stop>
       <div class="side-menu-item side-menu-item__invite" @click="router.push('/earn-money')">
         <div>
@@ -77,7 +81,7 @@
         Live Support
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent">
+      <div class="side-menu-item side-menu-item__transparent" @click="router.push('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
         Feedback
       </div>
@@ -97,6 +101,10 @@
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
         Whatsapp
       </a>
+
+      <!-- <div class="side-menu-item side-menu-item__transparent"> -->
+      <!-- <LangOptions /> -->
+      <!-- </div> -->
     </div>
   </div>
 
@@ -229,8 +237,10 @@
         </q-btn-dropdown>
       </div>
       <div class="profile-wrapper" v-else>
-        <q-btn no-caps unelevated class="btn-primary" @click="goLogin">Login</q-btn>
-        <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">Register</q-btn>
+        <q-btn no-caps unelevated class="btn-primary" @click="goLogin">{{ $t("header.login") }}</q-btn>
+        <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">
+          {{ $t("header.register") }}
+        </q-btn>
       </div>
     </div>
   </div>
@@ -245,6 +255,8 @@ import { convertToCommaAmount, isAndroid } from "src/boot/utils";
 import { api } from "boot/axios";
 import { useUI } from "stores/ui";
 import { cached, TIME_EXPIRED } from "boot/cache";
+import { useI18n } from "vue-i18n";
+import LangOptions from "components/LangOptions";
 
 import { defineEmits } from "vue";
 
@@ -367,7 +379,8 @@ const countdown = () => {
 const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
-  if (!store.token && route.path === "/home") {
+  if (route.path === "/home") {
+    console.log("Platform", Platform);
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
@@ -476,6 +489,18 @@ onMounted(() => {
     .download-btn {
       // margin-left: auto;
       margin-left: auto;
+
+      // a {
+      //   text-decoration: none;
+      //   background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+      //   color: #131313;
+      //   font-weight: bold;
+      //   font-size: 12px;
+      //   padding: 12px 16px;
+      //   display: flex;
+      //   justify-content: center;
+      //   align-items: center;
+      // }
 
       img {
         width: 100%;
@@ -874,9 +899,9 @@ onMounted(() => {
 }
 
 @media (max-width: 375px) {
-  .infoboard-container .profile-wrapper .profile-balance {
-    width: 100px;
-  }
+  // .infoboard-container .profile-wrapper .profile-balance {
+  // width: 100px;
+  // }
 
   .infoboard-container .profile-wrapper {
     gap: 4px;

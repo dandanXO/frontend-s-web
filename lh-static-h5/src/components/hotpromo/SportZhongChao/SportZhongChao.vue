@@ -429,6 +429,13 @@ onMounted(async () => {
     justify-content: space-between;
     margin-bottom: 10px;
     margin-top: 20px;
+    flex-wrap: nowrap;
+
+    @media (max-width: 400px){
+      width: 100%;
+      gap: 10px;
+    }
+
     .sport-zhongchao-tab-item {
       width: 122px;
       height: 40px;
@@ -443,6 +450,13 @@ onMounted(async () => {
       background-repeat: no-repeat;
       background-position: center;
       cursor: pointer;
+
+      @media (max-width: 400px){
+        width: 100%;
+        aspect-ratio: 122/40;
+        min-height: 25px;
+        height: auto;
+      }
     }
     .tab-inactive {
       background-image: url("../../../assets/promo/lh-sport-zhongchao/btn-gray.png");

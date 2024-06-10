@@ -70,23 +70,27 @@
       v-if="Platform.is.android && Platform.is.capacitor"
     />
 
-    <div class="midd">
-      <div class="station-notice-wrapper">
-        <div class="volume">
-          <img src="../assets/images/index/icon-volume.png" />
-        </div>
-        <div class="marquee-container">
-          <marquee-text :repeat="5" :duration="announcementList.length * 120">
-            <div v-if="announcementList">
-              <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
-                {{ a.content }}
-              </span>
-            </div>
-          </marquee-text>
+    <div class="notice-outer">
+      <div class="midd">
+        <div class="station-notice-wrapper">
+          <div class="volume">
+            <img src="../assets/images/index/icon-volume.png" />
+          </div>
+          <div class="marquee-container">
+            <marquee-text :repeat="5" :duration="announcementList.length * 120">
+              <div v-if="announcementList">
+                <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+                  {{ a.content }}
+                </span>
+              </div>
+            </marquee-text>
+          </div>
         </div>
       </div>
+      <a class="notice-download" :href="topDownloadUrl" v-if="downloadHeart">
+        <img src="../assets/images/auth/app-icon.png" />
+      </a>
     </div>
-
     <!-- <div class="top-action" v-if="store.hasToken()">
       <q-btn class="action-btn action-btn--withdrawal" @click="onWithdrawalClick()" no-caps label="Withdrawal"></q-btn>
       <q-btn class="action-btn action-btn--deposit" @click="openDepositDialog()" no-caps label="Deposit" />
@@ -152,6 +156,8 @@
               <!--  -->
               <!-- </template> -->
 
+              <!-- <pre>{{ filteredHotGameList }}</pre> -->
+
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
@@ -173,7 +179,6 @@
                           }"
                         ></div>
                       </div>
-
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
                   </swiper-slide>
@@ -198,7 +203,8 @@
                               try {
                                 return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                                // return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
                               }
                             })()
                           }"
@@ -217,26 +223,6 @@
 
           <div class="platform-game-wrapper" v-else>
             <div class="platform-game-container grid-view">
-              <!--              <template v-for="(item, index) in livecasino" :key="index">-->
-              <!--                <div-->
-              <!--                  class="platform-game-item btn-effect"-->
-              <!--                  v-if="item.name === 'Evo' || item.name === 'WCPT'"-->
-              <!--                  @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"-->
-              <!--                >-->
-              <!--                  <div class="platform-game-img">-->
-              <!--                    <div-->
-              <!--                      class="game&#45;&#45;bg"-->
-              <!--                      :style="{-->
-              <!--                        backgroundImage: `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`-->
-              <!--                      }"-->
-              <!--                    ></div>-->
-              <!--                  </div>-->
-              <!--                  <div class="platform-game-title">-->
-              <!--                    {{ truncateText(item.alias ? item.alias : item.name, 22) }}-->
-              <!--                  </div>-->
-              <!--                </div>-->
-              <!--              </template>-->
-
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <div
@@ -268,8 +254,8 @@
                             try {
                               return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              // return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                              return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
+                              return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
+                              // return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
                             }
                           })()
                         }"
@@ -1287,11 +1273,13 @@ const checkPlatform = () => {
     (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) ||
     (Platform.is.android && Platform.is.capacitor)
   ) {
+    downloadHeart.value = false;
     isH5.value = false;
     setTimeout(() => {
       getVersionNo();
     }, 1000);
   } else {
+    downloadHeart.value = true;
     isH5.value = true;
     setTimeout(() => {
       getVersionNo();
@@ -1380,8 +1368,10 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
+        // .get("/sitePlatformAndGamesByLabel", {
         .get("/member/hot", {
           params: {
+            // gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -2008,6 +1998,30 @@ const checkShowImgTop = () => {
   }
 };
 
+const topDownloadUrl = ref("");
+
+const getTopDownloadUrl = () => {
+  api.get("/app/download/affiliate/url?siteCode=PAK&affiliateCode=4F09FA").then((res) => {
+    if (res.code === 0) {
+      topDownloadUrl.value = res.data.url;
+      ui.downloadAppUrl = res.data.url;
+    }
+  });
+};
+
+const downloadHeart = ref(false);
+
+// const getDownloadHeart = () => {
+//   if (
+//     ("standalone" in window.navigator && window.navigator.standalone) ||
+//     (Platform.is.capacitor && Platform.is.android)
+//   ) {
+//     downloadHeart.value = false;
+//   } else {
+//     downloadHeart.value = true;
+//   }
+// };
+
 onActivated(() => {
   store.getUnreadTotal();
   checkHash();
@@ -2023,6 +2037,7 @@ onMounted(() => {
   loadJILIFishGameList();
   loadJDBFishGameList();
   loadJILIPokerhGameList();
+  getTopDownloadUrl();
 
   AOS.init();
   SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
@@ -2195,7 +2210,52 @@ watch(
   }
 }
 
+.notice-outer {
+  display: flex;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.notice-download {
+  display: flex;
+  align-items: center;
+  animation: beat 1.5s infinite;
+
+  img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
+  }
+}
+
+/* Heart beat animation */
+@keyframes beat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  14% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  42% {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+  }
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
 .midd {
+  width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
   position: relative;
@@ -2233,6 +2293,7 @@ watch(
     span {
       margin-right: 10px;
       cursor: pointer;
+      // color: #5F6061;
       color: #bacef1;
       font-family: "Poppins";
       font-size: 12px;
@@ -2754,6 +2815,11 @@ watch(
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
 }
 
 .home-divider {
@@ -3084,10 +3150,9 @@ watch(
 
 .burning-hot {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 35%;
-  max-width: 50px;
+  top: -10px;
+  right: -10px;
+  width: 30px;
 }
 
 .loading-spinner {
@@ -3312,6 +3377,7 @@ watch(
   background-position: center center;
   position: relative;
   background-image: url("../assets/images/index/mini-game-bg.png");
+  background: transparent;
   // background-image: url("../assets/images/index/item-game-maintenance.png");
   border-radius: 8px;
 

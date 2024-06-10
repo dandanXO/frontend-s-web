@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">Transaction Record</span>
+      <span class="menu-title">{{ $t("personalView.record.title") }}</span>
     </div>
     <div class="account-content transit">
       <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="handleFilterChange">
-        <a-tab-pane key="deposit" tab="Deposit">
+        <a-tab-pane key="deposit" :tab="$t('personalView.record.tab.deposit.title')">
           <a-select
             v-model:value="selectedDateRange.deposit"
             style="width: 124px"
@@ -17,13 +17,7 @@
               <div v-for="(record, index) in dataState.deposit" :key="index" class="finance-record-item">
                 <span class="finance-record-item__title">{{ record.serialNumber }}</span>
                 <span class="finance-record-item__status" :class="record.status">
-                  <!-- TODO: check status code -->
-                  <template v-if="record.status === 'PENDING'">Pending</template>
-                  <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
-                  <template v-else-if="record.status === 'REJECTED'">Rejected</template>
-                  <template v-else-if="record.status === 'CLOSED'">Closed</template>
-                  <template v-else-if="record.status === 'LOSS'">Loss</template>
-                  <template v-else>{{ record.status }}</template>
+                  {{ getDepositStatus(record.status) }}
                 </span>
                 <span class="finance-record-item__date">{{ moment(record.depositDate).format("MM/DD/YYYY") }}</span>
                 <span class="finance-record-item__amount">+{{ record.depositAmount.toFixed(2) }}</span>
@@ -123,7 +117,7 @@
             </a-table>
           </div>
         </a-tab-pane> -->
-        <a-tab-pane key="withdraw" tab="Withdraw">
+        <a-tab-pane key="withdraw" :tab="$t('personalView.record.tab.withdraw.title')">
           <a-select
             v-model:value="selectedDateRange.withdraw"
             style="width: 124px"
@@ -135,13 +129,7 @@
               <div v-for="(record, index) in dataState.withdraw" :key="index" class="finance-record-item">
                 <span class="finance-record-item__title">{{ record.serialNumber }}</span>
                 <span class="finance-record-item__status" :class="record.status">
-                  <!-- TODO: check status code -->
-                  <template v-if="record.status === 'PENDING'">Pending</template>
-                  <template v-else-if="record.status === 'SUPPLEMENT_SUCCESS'">Supplement Success</template>
-                  <template v-else-if="record.status === 'REJECTED'">Rejected</template>
-                  <template v-else-if="record.status === 'CLOSED'">Closed</template>
-                  <template v-else-if="record.status === 'LOSS'">Loss</template>
-                  <template v-else>{{ record.status }}</template>
+                  {{ getWithdrawStatus(record.status) }}
                 </span>
                 <span class="finance-record-item__date">{{ moment(record.withdrawDate).format("MM/DD/YYYY") }}</span>
                 <span class="finance-record-item__amount">-{{ record.withdrawAmount.toFixed(2) }}</span>
@@ -489,6 +477,9 @@ import { userStore } from "@/store";
 import FileUpload from "@/components/FileUpload.vue";
 import { message } from "ant-design-vue";
 import NoData from "@/components/common/NoData.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const dateRangeOptions = ref([
   { value: "1d", label: "1 Days" },
@@ -1020,7 +1011,13 @@ const handleFilterChange = () => {
     startDate: moment(startDate).format("YYYY-MM-DD"),
     endDate: moment(new Date()).format("YYYY-MM-DD")
   };
-  loadRecords(recordActive.value, params).then((res) => console.log(res));
+  loadRecords(recordActive.value, params)
+    .then((res) => {
+      if (res.code === 0) {
+        dataState[recordActive.value] = res.data.records;
+      }
+    })
+    .catch((error) => console.log(error));
 };
 
 onMounted(() => {
@@ -1064,23 +1061,23 @@ const getTurnoverType = (turnoverType) => {
 };
 const getWithdrawStatus = (withdrawStatus) => {
   if (withdrawStatus === "APPLY") {
-    return "Applying"; //Applying
+    return t("personalView.record.tab.withdraw.status.applying"); //Applying
   } else if (withdrawStatus === "FAIL") {
-    return "Failed"; // Failed
+    return t("personalView.record.tab.withdraw.status.failed"); // Failed
   } else if (withdrawStatus === "SUCCESS") {
-    return "Success"; // Success
+    return t("personalView.record.tab.withdraw.status.success"); // Success
   } else if (withdrawStatus === "STEP_1") {
-    return "Under review"; //Under review
+    return t("personalView.record.tab.withdraw.status.underReview"); //Under review
   } else if (withdrawStatus === "STEP_2") {
-    return "To be paid"; // To be paid
+    return t("personalView.record.tab.withdraw.status.toBePaid"); // To be paid
   } else if (withdrawStatus === "STEP_3") {
-    return "Paying"; // Payment on going
+    return t("personalView.record.tab.withdraw.status.paying"); // Payment on going
   } else if (withdrawStatus === "STEP_4") {
-    return "Automatic Payment"; // Automatic Payment
+    return t("personalView.record.tab.withdraw.status.automaticPayment"); // Automatic Payment
   } else if (withdrawStatus === "STEP_5") {
-    return "Suspend"; //Suspend
+    return t("personalView.record.tab.withdraw.status.suspend"); //Suspend
   } else if (withdrawStatus === "WAITING_CALLBACK") {
-    return "Paying"; //Paying
+    return t("personalView.record.tab.withdraw.status.paying"); //Paying
   } else {
     return withdrawStatus;
   }
@@ -1090,13 +1087,13 @@ const getDepositStatus = (depositStatus) => {
     return "";
   }
   if (depositStatus === "PENDING") {
-    return "Pending"; // Pending
+    return t("personalView.record.tab.deposit.status.pending"); // Pending
   } else if (depositStatus === "SUCCESS") {
-    return "Success"; // Success
+    return t("personalView.record.tab.deposit.status.success"); // Success
   } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-    return "Supplement Success"; // Supplement Success
+    return t("personalView.record.tab.deposit.status.supplementSuccess"); // Supplement Success
   } else if (depositStatus === "CLOSED") {
-    return "Closed"; // Closed
+    return t("personalView.record.tab.deposit.status.closed"); // Closed
   } else {
     return depositStatus;
   }
@@ -1177,7 +1174,14 @@ const humanDatetime = (ts) => {
       padding: 7px 17px;
       font-weight: 500;
       white-space: nowrap;
-      &.PENDING {
+      &.PENDING,
+      &.APPLY,
+      &.STEP_1,
+      &.STEP_2,
+      &.STEP_3,
+      &.STEP_4,
+      &.STEP_5,
+      &.WAITING_CALLBACK {
         background-color: #ff7a0033;
         color: #ff7a00;
       }
@@ -1188,7 +1192,7 @@ const humanDatetime = (ts) => {
       }
       &.CLOSED,
       &.REJECTED,
-      &.LOSS {
+      &.FAIL {
         background-color: #b8121233;
         color: #b81212;
       }

@@ -32,9 +32,23 @@ $accent: #ffffff;
   margin-bottom: 28px;
   text-transform: capitalize;
 
-  > span {
+  > * {
     &::after {
       content: " > ";
+    }
+  }
+
+  > a {
+    transition: background 0.3s;
+
+    &:hover {
+      background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+      background-clip: text;
+      color: transparent;
+
+      &::after {
+        color: #9f9f9f;
+      }
     }
   }
 
@@ -459,18 +473,9 @@ $accent: #ffffff;
 
 .game-container {
   overflow: hidden;
-  // padding: 1rem;
   max-width: $maxwidth;
-  // margin: 0 auto 5rem;
-
-  border-radius: 2rem;
-  // background: #fff;
-  // box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.22);
 
   .all-game-container {
-    border-radius: 1.5rem;
-    // border: 1px solid #5c9fff;
-    // padding: 1rem;
     position: relative;
 
     .plat-options-wrapper {
@@ -478,15 +483,11 @@ $accent: #ffffff;
     }
 
     .plat-options-container {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 150px);
       gap: 0.5rem;
       flex: 1;
-      // justify-content: center;
-      padding: 0.5rem 0.5rem;
-      // border-radius: 3rem;
-      // background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-      // box-shadow: 0px 2px 5px 0px #bbdcff inset, 0px -3px 4px 0px #a2bff4 inset;
-      overflow: auto;
+      margin-bottom: 24px;
     }
 
     .plat-option {
@@ -501,7 +502,7 @@ $accent: #ffffff;
       // box-shadow: 0px -3px 6px 0px transparent inset, 0px -2px 4px 0px transparent inset;
       background-color: #d9d9d91a;
       transition: 0.3s all;
-      width: 150px;
+      height: 40px;
       .text {
         font-size: 20px;
         font-weight: 700;
@@ -556,7 +557,6 @@ $accent: #ffffff;
       grid-template-columns: repeat(10, 1fr);
       grid-column-gap: 1rem;
       grid-row-gap: 1rem;
-      margin: 1rem;
 
       &.sport,
       &.live {
@@ -567,7 +567,8 @@ $accent: #ffffff;
         }
       }
 
-      &.slot {
+      &.slot,
+      &.hot {
         .slot-img {
           aspect-ratio: 1/1;
         }

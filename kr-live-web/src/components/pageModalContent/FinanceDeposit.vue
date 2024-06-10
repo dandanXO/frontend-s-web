@@ -16,31 +16,48 @@
       <div class="submit-message">
         <div class="line">
           <span>은행 이름:</span>
-          <input readonly class="info" ref="subMsg0" :value="submitMessage[0]" v-on:focus="$event.target.select()" />
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-            {{ copybtntxt0 }}
-          </q-btn>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg0" :value="submitMessage[0]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+              {{ copybtntxt0 }}
+            </q-btn>
+          </div>
         </div>
         <div class="line">
           <span>이름:</span>
-          <input readonly class="info" ref="subMsg1" :value="submitMessage[1]" v-on:focus="$event.target.select()" />
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-            {{ copybtntxt1 }}
-          </q-btn>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg1" :value="submitMessage[1]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+              {{ copybtntxt1 }}
+            </q-btn>
+          </div>
         </div>
         <div class="line">
           <span>은행 계좌:</span>
-          <input readonly class="info" ref="subMsg2" :value="submitMessage[2]" v-on:focus="$event.target.select()" />
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-            {{ copybtntxt2 }}
-          </q-btn>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg2" :value="submitMessage[2]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+              {{ copybtntxt2 }}
+            </q-btn>
+          </div>
+        </div>
+        <div class="line">
+          <span>은행지점:</span>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
+              {{ copybtntxt4 }}
+            </q-btn>
+          </div>
         </div>
         <div class="line">
           <span>입금 금액:</span>
-          <input readonly class="info" ref="subMsg3" :value="submitMessage[3]" v-on:focus="$event.target.select()" />
-          <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-            {{ copybtntxt3 }}
-          </q-btn>
+          <div class="copy-wrapper">
+            <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]" v-on:focus="$event.target.select()" />
+            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+              {{ copybtntxt3 }}
+            </q-btn>
+          </div>
         </div>
       </div>
     </div>
@@ -205,6 +222,7 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
@@ -220,6 +238,7 @@ const copybtntxt0 = ref("복사");
 const copybtntxt1 = ref("복사");
 const copybtntxt2 = ref("복사");
 const copybtntxt3 = ref("복사");
+const copybtntxt4 = ref("복사");
 
 const depositAmtRef = ref("");
 const { realName } = storeToRefs(store);
@@ -251,16 +270,18 @@ const copyMessage = (position) => {
     subMsg2.value.focus();
   } else if(position === '3') {
     subMsg3.value.focus();
+  } else if(position === '4') {
+    subMsg4.value.focus();
   }
 
   document.execCommand('copy');
 
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = "복사됨";
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach((element) => {
     element.value = "복사";
   });
@@ -469,19 +490,7 @@ async function pDepo(deposit) {
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: error.message,
-        icon: "report_problem"
-      });
       btnLoading.value = false;
-      // postMessage(
-      //   {
-      //     msg: error.message
-      //   },
-      //   "*"
-      // );
     });
 }
 
@@ -618,7 +627,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  form.localAmount += amt * multiple;
+  form.localAmount = Number(form.localAmount) + (amt * multiple);
 };
 
 function clearInfo() {
@@ -696,28 +705,34 @@ onMounted(() => {
   color: #000000;
 
   .line {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
     justify-content: space-between;
-    // width: calc(100% - 30px);
     width: 100%;
     align-items: center;
     font-size: 14px;
     align-items: center;
     background: #063c50;
-    padding: 15px 10px;
+    padding: 5px 15px;
+    
+    .copy-wrapper {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+    }
 
     span:first-child {
       // flex: 1;
       color: #4fb2ff;
-      width: 80px;
     }
 
-    input.info {
+    textarea.info {
+      width: 100%;
       background: transparent;
       border: none;
-      flex: 3;
       color: #fff;
+      resize: none;
 
       &:focus {
         outline: none;
@@ -731,6 +746,15 @@ onMounted(() => {
 
     button {
       width: 80px;
+      height: 30px;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 400px) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
     }
   }
 }

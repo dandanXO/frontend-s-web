@@ -258,3 +258,6 @@ export function duanwuDepositBet() {
       return Promise.reject(error);
     });
 }
+export function getSportMatch() {
+  return server.EVENT.get("/sport-match/today");
+}

@@ -61,7 +61,9 @@
             selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
           "
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+            isCSBanner:
+              selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
           }"
         >
@@ -98,13 +100,13 @@
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
               selectedPromo.promoCode === 'dy-duanwujie24' ||
-              selectedPromo.promoCode === 'dy2-eurocup-manual'
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024'
           }"
           :style="{
-            backgroundImage:
-              selectedPromo?.desktopImgBackgroundUrl
-                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-                : 'none'
+            backgroundImage: selectedPromo?.desktopImgBackgroundUrl
+              ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+              : 'none'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -352,8 +354,10 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
-        p { margin: 0;
-    line-height: 21px; }
+        p {
+          margin: 0;
+          line-height: 21px;
+        }
       }
 
       tbody {
@@ -634,10 +638,12 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isCSBanner {
-          min-height: 600px;
+          min-height: 660px;
+          max-width: none;
 
           .promo-bg {
-            min-height: 600px !important;
+            min-height: 660px !important;
+            background-size: 100% 100%;
           }
         }
 

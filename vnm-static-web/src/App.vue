@@ -54,7 +54,7 @@ export default defineComponent({
       store.visitorId = sidParam;
 
       if (sidParam) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
           params: {
             way: "web",
             sid: sidParam,

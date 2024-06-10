@@ -111,10 +111,6 @@
     </q-dialog>
   </q-scroll-area>
 
-  <div id="sport-root"
-       v-if="visible && platformCodeImg === 'LuckySport'"
-       data-ck-props='{"theme":{"pbgc":"000","sbgc":"1a1a1a","pc":"D2B79E","sc":"333","tc":"333","tpc":"fff","tsc":"999","qlbc":"333","primaryColorLinearGradientParams":{"deg":"","color1":"F4E7D6","opacity1":"","color2":"D2B79E","opacity2":"","color3":"","opacity3":""},"quickLink":{"sponsor":true},"burger":false,"eventList":{"statementLink":true}},"displayHeader":false,"displayPCLeftSidebar":true,"displayPCNavbar":true,"displayPCNavHome":true,"displayPCNavSearch":true,"loginCart":false,"displaySports": "1,4"}'></div>
-
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
@@ -226,10 +222,6 @@ const transferInfo = ref({
 });
 const isClicked = ref("");
 
-watchEffect(() => {
-  console.log('isShowLsMainArea', window.isShowLsMainArea);
-})
-
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api
@@ -281,7 +273,7 @@ const goToDeposit = () => {
   // }, 500);
 };
 
-const platformCodeImg = ref();
+const platformCodeImg = ref("");
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
@@ -340,7 +332,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if(platformCode !== 'LuckySport'){
+        visible.value = true;
+      }
+
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -366,7 +361,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
+          if(platformCode === 'LuckySport'){
+            window.open(srcDoc ,"_blank");
+          }else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;

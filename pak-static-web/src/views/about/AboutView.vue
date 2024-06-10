@@ -4,10 +4,10 @@
       <a-tabs v-model:activeKey="activeTab" :tab-position="windowSize > 768 ? 'left' : 'top'">
         <!-- <template #tabBarExtraContent v-if="windowSize > 768">
         </template> -->
-        <a-tab-pane key="about" tab="About us">
+        <a-tab-pane key="about" :tab="$t('about.about.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">About us</span>
+              <span class="menu-title">{{ $t("about.about.title") }}</span>
             </div>
             <p>
               B9.game's missions and motto: To provide Customer with best betting odds and services: Our advantage:
@@ -19,7 +19,7 @@
               <span class="content-title">PRODUCT VARIETY</span>
             </div>
             <p>
-              B9.game is Philippines recognized specialist in sport live betting, we provide an average of about 10,000
+              B9.game is Pakistan recognized specialist in sport live betting, we provide an average of about 10,000
               live sport matches every month. Moreover, we support more than 400 different football leagues, other than
               just well-known professional leagues. The following league is supported: Greek League / Italian C League
               Cup / Serie A / Russian League / Croatian Cup / Bougainvillea/Leah Cup/Norway Cup/ Bundesliga/Roman
@@ -28,7 +28,7 @@
             </p>
             <p>
               Besides sport product, we offer a wide variety of product including live casino, live dealer, Esports
-              which you cannot missed. In order to satisfy members in Philippines. B9.game carefully select a variety of
+              which you cannot missed. In order to satisfy members in Pakistan. B9.game carefully select a variety of
               online games to provide you with the best game and platform choices. We continue to improve our products
               and add more exciting new products, allowing you to enjoy first-class services in live entertainment.
             </p>
@@ -36,9 +36,9 @@
               <span class="content-title">COMPANY PROFILE</span>
             </div>
             <p>
-              B9.game holds the Inland gaming license authorized by PAGCOR Philippines and headquartered in metro
-              Manila. At present, we are expert in bookmaking, gaming technologies, and possessing a professional team
-              of customer support and technical engineer. Through offering excellent products and high-quality customer
+              B9.game holds the Inland gaming license authorized by PAGCOR Pakistan and headquartered in metro Manila.
+              At present, we are expert in bookmaking, gaming technologies, and possessing a professional team of
+              customer support and technical engineer. Through offering excellent products and high-quality customer
               services, we provide customers with best online entertainment experiences. Compare to land-based casino,
               we offer by far better odds! To maintain fairness of the games, when it comes down to picking a platform,
               B9.game with professional 24/7 customer service team, facilitating financial team, strong financial
@@ -50,10 +50,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="data-collection" tab="Data Collection">
+        <a-tab-pane key="data-collection" :tab="$t('about.dataCollection.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Data collection</span>
+              <span class="menu-title">{{ $t("about.dataCollection.title") }}</span>
             </div>
             <div class="content-title-container">
               <span class="content-title">General information</span>
@@ -129,10 +129,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="legal-grounds" tab="Legal Grounds">
+        <a-tab-pane key="legal-grounds" :tab="$t('about.legalGround.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Legal grounds</span>
+              <span class="menu-title">{{ $t("about.legalGround.title") }}</span>
             </div>
             <ul class="content-list decimal-style">
               <li>This privacy policy strictly complies with relevant data protection laws;</li>
@@ -155,10 +155,10 @@
             </ul>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="betting-rules" tab="Betting Rules">
+        <a-tab-pane key="betting-rules" :tab="$t('about.bettingRule.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Betting Rules</span>
+              <span class="menu-title">{{ $t("about.bettingRule.title") }}</span>
             </div>
             <ul class="content-list decimal-style">
               <li>
@@ -228,10 +228,10 @@
             </ul>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="compensation" tab="Compensation">
+        <a-tab-pane key="compensation" :tab="$t('about.compensation.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Compensation</span>
+              <span class="menu-title">{{ $t("about.compensation.title") }}</span>
             </div>
             <p>
               B9.game's users hereby agree that when connect to our betting website, download or install our betting
@@ -244,10 +244,10 @@
             </p>
           </div>
         </a-tab-pane>
-        <a-tab-pane key="responsible-gambling" tab="Responsible Gambling">
+        <a-tab-pane key="responsible-gambling" :tab="$t('about.responsibleGambling.title')">
           <div>
             <div class="about-title-container">
-              <span class="menu-title">Responsible Gambling</span>
+              <span class="menu-title">{{ $t("about.responsibleGambling.title") }}</span>
             </div>
             <p>We hope all our valued users have fun at B9.game</p>
             <p>Gambling is a form of entertainment and should not burden your financial and emotional life</p>

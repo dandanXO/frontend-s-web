@@ -1,7 +1,7 @@
 <template>
   <div class="promo-container">
     <div class="banner-container">
-      <img src="../assets/images/promotion/banner.jpg" />
+      <!-- <img src="../assets/images/promotion/banner.jpg" /> -->
     </div>
     <div class="hot-promo">
       <HotPromotion :list="[{ name: '122' }]" />

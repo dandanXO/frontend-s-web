@@ -9,12 +9,12 @@
         <div class="account-profile-info">
           <!-- TODO: check name -->
           <span class="account-profile-info__name">{{ nickName }}</span>
-          <span class="account-profile-info__id">ID:{{ nickName }}</span>
+          <span class="account-profile-info__id">{{ $t("personalView.layout.accountMenu.info") }} {{ nickName }}</span>
         </div>
       </div>
       <div class="account-info-balance">
-        <span>Total Score</span>
-        <span class="account-info-balance-amount">₹{{ balance.toFixed(2) }}</span>
+        <span>{{ $t("personalView.layout.accountMenu.totalScore") }}</span>
+        <span class="account-info-balance-amount">₨{{ balance.toFixed(2) }}</span>
       </div>
       <div class="account-info-action-wrapper">
         <router-link
@@ -24,7 +24,7 @@
           :class="{ active: route.fullPath === action.path }"
           class="account-info-action-link"
         >
-          <img :src="require(`@/assets/images/account/${action.name.toLocaleLowerCase()}-icon.svg`)" />
+          <img :src="action.img" />
           <span>{{ action.name }}</span>
         </router-link>
       </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { userStore } from "@/store";
 import { storeToRefs } from "pinia";
@@ -55,24 +55,29 @@ import DiscountSvg from "@/assets/images/account/discount-icon.svg";
 import BankSvg from "@/assets/images/account/bank-icon.svg";
 import MessageSvg from "@/assets/images/account/message-icon.svg";
 import VIPSvg from "@/assets/images/account/vip-icon.svg";
+import DepositSvg from "@/assets/images/account/deposit-icon.svg";
+import WithdrawSvg from "@/assets/images/account/withdraw-icon.svg";
+import PromoSvg from "@/assets/images/account/promo-icon.svg";
+import { useI18n } from "vue-i18n";
 
 const store = userStore();
 const { profilePhoto, nickName, balance } = storeToRefs(store);
 const route = useRoute();
+const { t } = useI18n();
 
-const actions = ref([
-  { name: "Withdraw", path: "/center/top-up?tab=withdraw" },
-  { name: "Deposit", path: "/center/top-up" },
-  { name: "Promo", path: "/promotion" }
+const actions = computed(() => [
+  { name: t("personalView.layout.accountMenu.action.withdraw"), img: WithdrawSvg, path: "/center/top-up?tab=withdraw" },
+  { name: t("personalView.layout.accountMenu.action.deposit"), img: DepositSvg, path: "/center/top-up" },
+  { name: t("personalView.layout.accountMenu.action.promo"), img: PromoSvg, path: "/promotion" }
 ]);
 
 const links = ref([
-  { name: "Personal center", img: PersonalSvg, path: "/center/personal" },
-  { name: "Record", img: RecordSvg, path: "/center/transit-record" },
-  { name: "Discount", img: DiscountSvg, path: "/center/discount" },
-  { name: "Bank", img: BankSvg, path: "/center/withdrawbank" },
-  { name: "Message", img: MessageSvg, path: "/center/mailbox" },
-  { name: "VIP", img: VIPSvg, path: "/center/vip" }
+  { name: t("personalView.layout.accountMenu.link.personalCenter"), img: PersonalSvg, path: "/center/personal" },
+  { name: t("personalView.layout.accountMenu.link.record"), img: RecordSvg, path: "/center/transit-record" },
+  { name: t("personalView.layout.accountMenu.link.discount"), img: DiscountSvg, path: "/center/discount" },
+  { name: t("personalView.layout.accountMenu.link.bank"), img: BankSvg, path: "/center/withdrawbank" },
+  { name: t("personalView.layout.accountMenu.link.message"), img: MessageSvg, path: "/center/mailbox" },
+  { name: t("personalView.layout.accountMenu.link.vip"), img: VIPSvg, path: "/center/vip" }
 ]);
 </script>
 

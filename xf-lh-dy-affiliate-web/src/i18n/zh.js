@@ -152,6 +152,12 @@ export default {
     ASC: '顺序',
     DESC: '逆序',
   },
+  rebateStatus: {
+    PENDING: '审核中',
+    IN_PROGRESS: '处理中',
+    DISTRIBUTED: '已发送',
+    CANCEL: '已取消',
+  },
   fields: {
     account: '账号',
     accountInfo: '账号信息',
@@ -683,6 +689,7 @@ export default {
     'Daily Detail': '日报详情',
     'Daily Summary': '每日全总览',
     Withdraw: '银行提款',
+    'Rebate Report': '返水报表',
   },
   posterType: {
     OVERALL: '综合推广图',

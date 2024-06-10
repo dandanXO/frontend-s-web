@@ -22,7 +22,7 @@
 
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Virtual Account</div>
+        <div class="title">Choose Account</div>
       </div>
 
       <div class="mid-wrapper">
@@ -38,7 +38,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please Select A Virtual Account']"
+              :rules="[(val) => !!val || 'Please select account']"
               hide-bottom-space
             >
               <template v-slot:option="scope">
@@ -52,10 +52,10 @@
                         scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                       }}
                     </q-item-label>
-                    <q-item-label>
+                    <!-- <q-item-label>
                       IFSC
                       {{ scope.opt.cardAddress }}
-                    </q-item-label>
+                    </q-item-label> -->
                   </q-item-section>
                 </q-item>
               </template>
@@ -73,10 +73,10 @@
                       scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
                     }}
                   </q-item-label>
-                  <q-item-label>
+                  <!-- <q-item-label>
                     IFSC
                     {{ scope.opt.cardAddress }}
-                  </q-item-label>
+                  </q-item-label> -->
                 </q-item-section>
               </template>
             </q-select>
@@ -388,6 +388,7 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
+          withdrawalDialogTab.value= bankCardList.value[0].bankCode;
         } else {
           $q.notify({
             color: "negative",
@@ -715,8 +716,7 @@ const isValidCardAddress = () => {
       margin: 0 0 0.5rem 0;
       .title {
         color: rgba(255, 255, 255, 0.5);
-        font-size: 0.825rem;
-        font-weight: 700;
+        font-size: 14px;
       }
     }
 
@@ -776,8 +776,7 @@ const isValidCardAddress = () => {
       margin: 0 0 0.5rem 0;
       .title {
         color: #637387;
-        font-size: 0.825rem;
-        font-weight: 600;
+        font-size: 14px;
       }
     }
 

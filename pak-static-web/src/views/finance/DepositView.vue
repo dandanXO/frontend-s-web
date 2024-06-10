@@ -1,15 +1,17 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">{{ activeName }}</span>
+      <span class="menu-title">
+        {{ $t(`personalView.finance.${activeName.toLocaleLowerCase()}.title`) }}
+      </span>
     </div>
 
     <div class="account-content">
       <el-tabs v-model="activeName">
-        <el-tab-pane label="Deposit" name="Deposit">
+        <el-tab-pane :label="$t('personalView.finance.deposit.title')" name="Deposit">
           <DepositComponent />
         </el-tab-pane>
-        <el-tab-pane label="Withdraw" name="Withdraw">
+        <el-tab-pane :label="$t('personalView.finance.withdraw.title')" name="Withdraw">
           <WithdrawPage />
         </el-tab-pane>
       </el-tabs>
@@ -26,12 +28,15 @@ import { useRoute, useRouter } from "vue-router";
 import { onMounted } from "vue";
 import { userStore } from "@/store/index";
 import { ElMessage } from "element-plus";
+import { useI18n } from "vue-i18n";
 components: {
   DepositComponent, WithdrawPage;
 }
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
+
 const activeName = ref("Deposit");
 // Function to check the route query parameter and update activeName
 const checkRoute = () => {
@@ -43,7 +48,7 @@ const checkRoute = () => {
 };
 const checkNewUser = () => {
   if (store.realName == "" || store.realName == null) {
-    ElMessage.error("Please fill in your personal details");
+    ElMessage.error(t("personalView.finance.newUserError"));
     router.push(`/center/personal`);
   }
 };
@@ -82,7 +87,6 @@ watch(
   color: #ffffff;
 }
 :deep(.el-tabs__item.is-active) {
-
 }
 :deep(.el-tabs__active-bar.is-top) {
   background: #70bc62;

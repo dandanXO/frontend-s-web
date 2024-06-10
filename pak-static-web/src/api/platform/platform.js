@@ -136,3 +136,27 @@ export function getHotGames() {
     return respond;
   });
 }
+
+export function getPlatformHotGames(gameType) {
+  const regDevice = getDevice();
+  var way = null;
+  if (getDevice() === "MOBILE") {
+    way = getMobileOS();
+  }
+  const key = `PLATFORM_HOT_GAMES_${gameType}_${regDevice}`;
+
+  // sessionStorage.removeItem(key);
+
+  return cached.get(key, async () => {
+    const requestBody = {
+      params: {
+        gameLabel: "HOT",
+        device: regDevice,
+      }
+    };
+
+    let respond = await server.REST.get("/platformGamesByLabel", requestBody);
+
+    return respond;
+  });
+}

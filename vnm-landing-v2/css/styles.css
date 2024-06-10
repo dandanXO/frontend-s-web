@@ -11,6 +11,14 @@ body {
 * {
   box-sizing: border-box;
 }
+.banner-landing{
+  width: 100%;
+  aspect-ratio: 1000/400;
+  height: auto;
+  min-height: 120px;
+  border-radius: 12px;
+
+}
 
 img {
   display: block;
@@ -38,7 +46,7 @@ a:hover {
 }
 
 .main-wrapper {
-  background-image: url(../img/bg.jpg);
+  background-image: url(../assets/images/landing/bg.jpg);
   background-position: 0px 0px;
   background-size: cover;
   background-repeat: no-repeat;
@@ -54,6 +62,16 @@ a:hover {
   justify-content: center;
 }
 
+.text-a{
+  padding: 0px 20px;
+  color: rgb(245, 108, 108);
+}
+
+.text-a p{
+  font-size: 16px;
+  margin-top: 0px;
+}
+
 .top-wrapper img {
   width: 100%;
   max-width: 170px;
@@ -63,23 +81,29 @@ a:hover {
   padding: 0px 16px 16px;
 }
 
-.action-wrapper {
-  padding: 0px 16px 33px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
+.banner-wrapper img{
+  border-radius: 12px;
 }
 
-.action-wrapper > div {
+.action-wrapper {
+  padding: 0px 16px 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.action-wrapper > a {
   flex: 1;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
-  padding: 15px 0px;
+  padding: 15px 5px;
   color: #ffffff;
+  gap: 4px;
   border-radius: 10px;
+  aspect-ratio: 150/80;
   justify-content: space-evenly;
 }
 
@@ -92,11 +116,18 @@ a:hover {
 }
 
 .action-btn img {
-  width: 44px;
+  width: 40px;
+
+  @media(max-width: 420px){
+    width: 34px;
+  }
 }
+
+
 
 .action-btn__text-wrapper {
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
   gap: 0.25rem;
   /* font-family: FZHanZhenGuangBiaoS-GB; */
@@ -107,6 +138,11 @@ a:hover {
 .action-btn__title {
   font-size: 1.5rem;
   line-height: 1.8rem;
+
+  @media(max-width: 420px){
+    font-size: 1.15rem;
+    line-height: 1.4rem;
+  }
 }
 
 .action-btn__description {
@@ -333,4 +369,26 @@ a:hover {
   .main-sticky-btn__text-wrapper {
     width: 85px;
   }
+}
+
+#image-container {
+  position: relative;
+  width: calc(100% - 32px);
+  aspect-ratio: 1000/400;
+  height: auto;
+  min-height: 120px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#image-container img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
 }

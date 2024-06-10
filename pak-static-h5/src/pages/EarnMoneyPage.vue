@@ -1,6 +1,5 @@
 <template>
   <ProfileSummary :homeProfile="true" />
-
   <div class="earn-money-wrapper">
     <div class="earn-money-container">
       <div class="earn-money-title">Bonus Pot Arrived</div>
@@ -173,8 +172,8 @@
       <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tr>
-            <td style="color: #8c968f; font-size: 120%">Player</td>
-            <td style="color: #8c968f; font-size: 120%">Money</td>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">Player</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">Money</td>
           </tr>
         </table>
         <div class="table-container" ref="tableContainer">
@@ -187,13 +186,13 @@
             <template v-else>
               <template v-for="(item, index) in inviteesRecords" :key="index">
                 <tr>
-                  <td>
+                  <td style="width: 60%">
                     <div class="player-details">
-                      <img src="../assets/images/earn-money/profile-img-1.png" width="30" />
+                      <img :src="getRandomImage(index)" width="30" />
                       {{ item.loginName }}
                     </div>
                   </td>
-                  <td>{{ store.currency.value }} {{ item.finalAmount }}</td>
+                  <td style="width: 40%">{{ store.currency.value }} {{ item.finalAmount }}</td>
                 </tr>
               </template>
             </template>
@@ -276,8 +275,14 @@ const getLatestInvitees = () => {
     .then((response) => {
       if (response.code === 0) {
         latestInvitees.value = response.data;
+
         inviteesRecords.value = response.data.records;
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
+        inviteesRecords.value.push(...inviteesRecords.value);
         // startDisplayingRows();
+        // setTimeout(startDisplayingRows, 10000);
       }
     })
     .catch((e) => {
@@ -310,9 +315,9 @@ const startDisplayingRows = () => {
     } else {
       clearInterval(intervalId);
       currentIndex = 0;
-      startDisplayingRows(); // Restart the loop
+      // startDisplayingRows(); // Restart the loop
     }
-  }, 1000);
+  }, 2000);
 };
 
 const tableContainer = ref(null);
@@ -325,7 +330,10 @@ const startAutoScroll = () => {
   setInterval(() => {
     scrollPosition += 46;
     if (scrollPosition >= container.scrollHeight) {
-      scrollPosition = 0; // Reset scroll position if we reach the bottom
+      // scrollPosition = 0; // Reset scroll position if we reach the bottom
+      // startDisplayingRows();
+      // inviteesRecords.value.unshift(inviteesRecords.value);
+      // getLatestInvitees();
     }
     container.scrollTo({
       top: scrollPosition,
@@ -343,6 +351,15 @@ const checkIsShowDetail = () => {
   isShowDeposit.value = activeSetting.value.includes("DEPOSIT");
   isShowBet.value = activeSetting.value.includes("BET");
 };
+
+const getRandomImage = (index) => {
+  const randomNumber = (index % 10) + 1; // Ensures a number between 1 and 10
+  return require(`../assets/images/earn-money/profile-img-${randomNumber}.png`);
+};
+
+// const profileImagePath = computed(() => {
+//   return require(`../assets/images/account/${randomProfileImg.value}.png`);
+// });
 
 onMounted(() => {
   getOneTimeBonusSetting();
@@ -411,6 +428,7 @@ watch(activeSetting, checkIsShowDetail);
 
         .item-desc {
           color: #ffffff99;
+          font-size: 12px;
         }
 
         .item-img {
@@ -528,7 +546,9 @@ watch(activeSetting, checkIsShowDetail);
 
         .link-href {
           padding: 16px;
-          word-break: break-all;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           font-size: 11px;
         }
         .link-copy {
@@ -537,7 +557,8 @@ watch(activeSetting, checkIsShowDetail);
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 90px;
+          width: 80px;
+          min-width: 98px;
           font-weight: bold;
           border-radius: 12px;
           letter-spacing: -1px;
@@ -568,7 +589,7 @@ watch(activeSetting, checkIsShowDetail);
       margin-left: -20px;
       margin-right: -20px;
       .table-container {
-        max-height: 200px; /* Adjust height as needed to show 5 rows */
+        max-height: 181px;
         overflow-y: auto;
         position: relative;
         pointer-events: none;

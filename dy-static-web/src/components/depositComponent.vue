@@ -21,7 +21,7 @@
             <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">{{ copybtntxt0 }}</button>
           </div>
           <div class="linebox">
-            <span>银行账号：</span>
+            <span>银行户名：</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
             <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">{{ copybtntxt1 }}</button>
           </div>
@@ -29,6 +29,11 @@
             <span>银行卡号：</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
             <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">{{ copybtntxt2 }}</button>
+          </div>
+          <div class="linebox">
+            <span>支付行：</span>
+            <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
+            <button @blur="blurCode" @click="copyMessage('4')" class="common-btn">{{ copybtntxt4 }}</button>
           </div>
           <div class="linebox">
             <span>存款金额：</span>
@@ -187,10 +192,12 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
+const copybtntxt4 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -205,7 +212,7 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
@@ -213,7 +220,7 @@ const copyMessage = (position) => {
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });

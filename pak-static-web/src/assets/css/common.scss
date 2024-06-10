@@ -628,14 +628,14 @@ $glow-clr: #ff5a00;
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $primary;
+  background: rgba($primary, 20%);
 
   border-radius: 2px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: $primary-light;
+  background-color: rgba($primary-light, 20%);
 }
 .ant-modal-confirm-warning .ant-modal-confirm-body > .anticon,
 .ant-modal-confirm-confirm .ant-modal-confirm-body > .anticon {
@@ -669,6 +669,15 @@ $glow-clr: #ff5a00;
     border-radius: 20px;
     max-width: unset;
     background-size: 100% 400%;
+    background-color: #131313;
+    color: #ffffff;
+
+    .ant-modal-header,
+    .ant-modal-title {
+      background-color: #131313;
+      color: inherit;
+      border: none;
+    }
 
     .ant-modal-body {
       .modal-head-title {
@@ -1105,7 +1114,7 @@ li.ant-calendar-time-picker-select-option-selected {
 }
 
 .ant-select-dropdown {
-  background-color: #ffffff0d;
+  background: #232325;
   color: #8c968f;
   .ant-select-item-option:not(.ant-select-item-option-disabled) {
     &[class*="-active"] {
@@ -1533,6 +1542,8 @@ a {
 }
 
 .rich-content-control {
+  color: #9f9f9f;
+
   ::-webkit-scrollbar {
     // width: 2px;
     // height: 2px;
@@ -1558,12 +1569,11 @@ a {
   overflow: hidden;
 
   table {
-    width: auto !important;
     overflow: auto;
     display: inline-block;
     margin-block: 2rem;
     border: 1px solid #ffffff1a;
-    background: #70bc621a;
+    background: #131313;
     border-radius: 12px;
     color: #fff;
 
@@ -1584,7 +1594,6 @@ a {
 
     th {
       background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
-      color: #fff;
     }
     tr:first-child {
       td,
@@ -1593,7 +1602,6 @@ a {
       }
       td {
         background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
-        color: #fff;
         text-align: center;
       }
       td:first-child {
@@ -1607,6 +1615,18 @@ a {
         border-bottom: 0 !important;
       }
     }
+
+    tbody {
+      > :nth-child(even) {
+        background: #70bc621a;
+      }
+    }
+  }
+
+  font {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 16px;
   }
 }
 .dark-theme {

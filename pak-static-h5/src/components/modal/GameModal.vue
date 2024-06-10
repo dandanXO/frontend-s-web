@@ -383,6 +383,13 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         });
     } else {
       props.closeFullGameDialog();
+      $q.notify({
+        message: "Please login to continue",
+        color: "negative",
+        position: "top",
+        icon: "report_problem",
+        timeout: 2000
+      });
       router.push({ path: "/login", query: { redirect: route.path } });
     }
   }
@@ -845,15 +852,15 @@ defineExpose({
     border: 1px solid #5d8956;
     font-weight: 700;
     color: #ffffff;
-    border-radius: 8px;
+    border-radius: 12px;
   }
 
   .btn-confirm {
-    background: radial-gradient(68.92% 68.92% at 50% 50%, #00550e 0%, #57cd69 100%);
+    background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
     border: 1px solid #5d8956;
     font-weight: 700;
     color: #fff;
-    border-radius: 8px;
+    border-radius: 12px;
   }
 }
 .loader-container {

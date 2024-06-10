@@ -118,35 +118,38 @@
       </div>
 
       <div class="center-content">
-        <SectionWrapper title="🔥HOT" to="/hot" class="section-wrapper">
+        <SectionWrapper :title="$t('homeView.game.hot')" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
-            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platform, game.code)">
-              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'hot')" />
+            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platformCode, game.code)">
+              <!-- <img :src="loadHotGameIcon(`${game.icon}`)" /> -->
+              <div class="hotgame-icon" :style="{ backgroundImage: `url(${loadHotGameIcon(game.icon)})` }">
+                <img :src="require('@/assets/images/platform/game/default.png')" />
+              </div>
             </a>
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Live Casino" to="/live-casino" class="section-wrapper">
+        <SectionWrapper :title="$t('homeView.game.live')" to="/live-casino" class="section-wrapper">
           <div class="section-wrapper-content wide">
             <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game, game.code, game.name)">
               <img style="max-height: 228px" :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
             </a>
           </div>
         </SectionWrapper>
-        <SectionWrapper title="SLOT" to="/slot" class="section-wrapper">
+        <SectionWrapper :title="$t('homeView.game.slot')" to="/slot" class="section-wrapper">
           <div class="section-wrapper-content">
             <router-link v-for="(game, index) in slotGames" :key="index" :to="`/slot?plat=${game.code}`">
-              <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'slot')" />
+              <img :src="loadGameIcon(`item-game-${game.code.toLowerCase()}.png`, 'slot')" />
             </router-link>
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Fish" to="/aviator" class="section-wrapper">
+        <SectionWrapper :title="$t('homeView.game.fish')" to="/aviator" class="section-wrapper">
           <div class="section-wrapper-content">
             <a v-for="(game, index) in fishingGames" :key="index" @click="openGame(game, game.platformName, game.code)">
               <img :src="`${imgGamesURL}${game.icon}`" />
             </a>
           </div>
         </SectionWrapper>
-        <SectionWrapper title="Sport" to="/sport" class="section-wrapper">
+        <SectionWrapper :title="$t('homeView.game.sport')" to="/sport" class="section-wrapper">
           <div class="section-wrapper-content wide">
             <a v-for="(game, index) in sportGames" :key="index" @click="openGame(game, game.code, game.name)">
               <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'sport')" />
@@ -265,7 +268,7 @@
       :mask-closable="true"
       :footer="null"
       centered
-      title="Announcements"
+      :title="$t('homeView.announcementModal.title')"
       :style="{ padding: 0 }"
     >
       <a-tabs v-model:activeKey="announcementActive" class="announcementTabs" @change="announcementTabChange">
@@ -306,7 +309,7 @@ import GameModal from "@/components/modal/GameModal";
 import { RiVolumeUpLine, RiCloseCircleFill } from "vue-remix-icons";
 import { useRoute, useRouter } from "vue-router";
 import { getAnnouncement } from "@/api/personal/personal";
-import { getPlatformGames, getPlatformList, hotGame, topWin } from "@/api/platform/platform";
+import { getPlatformGames, getPlatformList, getPlatformHotGames, hotGame, topWin } from "@/api/platform/platform";
 import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 import { globalStore } from "@/store";
 import MarqueeText from "vue-marquee-text-component";
@@ -609,11 +612,17 @@ const hotTrendingGames = [
   }
 ];
 const hotGames = ref([]);
+const hotGamesList = ref([]);
 const getHotGames = () => {
-  hotGame("HOT").then((res) => {
+  // hotGame("HOT").then((res) => {
+  //   hotGames.value = res;
+  // });
+
+  getPlatformHotGames().then((res) => {
     hotGames.value = res;
   });
 };
+
 const topWinners = ref([]);
 
 const getTopWinners = () => {
@@ -825,9 +834,20 @@ const redirectToPromo = () => {
   router.push("/center/top-up?isFromWelcomePromo=true");
 };
 
+// const imgURL = process.env.IMAGE_CDN;
+// const imgURLGame = imgURL + "/game/";
+
 const loadGameIcon = (path, type) => {
   try {
     return require(`@/assets/images/platform/game/${type}/${path}`);
+  } catch (e) {
+    return require("@/assets/images/platform/game/default.png");
+  }
+};
+
+const loadHotGameIcon = (path) => {
+  try {
+    return `${imgGamesURL}${path}`;
   } catch (e) {
     return require("@/assets/images/platform/game/default.png");
   }
@@ -866,7 +886,7 @@ onMounted(async () => {
   homeState.trendingGames.push(...hotTrendingGames);
   homeState.hotMatchs.push(...hotMatchData);
 
-  initRegSuccessModal();
+  // initRegSuccessModal();
 });
 </script>
 
@@ -2376,6 +2396,16 @@ $link-color: #db7e42;
       gap: 16px;
       overflow: auto;
       padding-bottom: 16px;
+
+      .hotgame-icon {
+        background-position: center center;
+        background-size: 100% 100%;
+        border-radius: 12px;
+
+        img {
+          opacity: 0;
+        }
+      }
 
       img {
         max-width: 230px;

@@ -408,6 +408,7 @@ onMounted(() => {
     width: 100%;
     gap: 5px;
     text-wrap: nowrap;
+    white-space: nowrap;
     &:before, &:after {
       content: "";
       background: url(../../../assets/promo/lh-eurocup-manual/title-bar.png)no-repeat center center;
@@ -576,6 +577,11 @@ onMounted(() => {
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
+
+  @media(max-width: 410px){
+      display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .game-team {
@@ -585,6 +591,11 @@ onMounted(() => {
   width: 100%;
   max-width: 165px;
   padding: 4px;
+
+
+  @media(max-width: 410px){
+    padding:0px;
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.1);

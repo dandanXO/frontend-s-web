@@ -74,6 +74,23 @@
   <q-page class="bind-container">
     <div class="bind-wrapper">
       <q-form class="bind-item">
+
+        <q-label>
+          Virtual Wallet Type
+          <em>*</em>
+        </q-label>
+        <div class="type-toggle">
+          <q-btn
+            v-for="(bank, bankIndex) in bankList"
+            :key="`${bank}-${bankIndex}`"
+            :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
+            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
+          >
+            <img :src="imgURL + bank.bankIcon" alt="" />
+            <div>{{ bank.name }}</div>
+          </q-btn>
+        </div>
+
         <InputRowGrid>
           <template #fields>
             <InputField :label="`Virtual Wallet`">
@@ -81,19 +98,24 @@
                 <q-input
                   outlined
                   clearable
-                  lazy-rules
                   ref="cardNumberRef"
                   placeholder="Please insert virtual wallet"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert virtual wallet']"
+                  maxlength="11"
+                  :rules="[
+                    (val) => (val && val.length > 0) || 'Please insert virtual wallet',
+                    (val) => val.startsWith('03') || 'The phone number must start with \'03\'',
+                    (val) => (val && val.length === 11) || 'The virtual wallet must have 11 digits.',
+                  ]"
                 ></q-input>
               </template>
             </InputField>
           </template>
         </InputRowGrid>
 
-        <InputRowGrid>
+
+        <!-- <InputRowGrid>
           <template #fields>
             <InputField :label="`IFSC`">
               <template #input>
@@ -110,7 +132,7 @@
               </template>
             </InputField>
           </template>
-        </InputRowGrid>
+        </InputRowGrid> -->
 
         <!-- <q-label>
           Virtual Wallet
@@ -129,27 +151,13 @@
           :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
         ></q-input> -->
 
-        <q-label>
-          Virtual Wallet Type
-          <em>*</em>
-        </q-label>
-        <div class="type-toggle">
-          <q-btn
-            v-for="(bank, bankIndex) in bankList"
-            :key="`${bank}-${bankIndex}`"
-            :class="`${selectedTypeToggleIndex === bankIndex ? 'common-sm-btn' : 'common-sm-white-btn'} content`"
-            @click="onTypeToggleBtnClick(bankIndex, bank.name)"
-          >
-            <img :src="imgURL + bank.bankIcon" alt="" />
-            <div>{{ bank.name }}</div>
-          </q-btn>
-        </div>
 
-        <q-label>
+
+        <q-label style="display:none;">
           Protocol
           <em>*</em>
         </q-label>
-        <div class="category-toggle">
+        <div class="category-toggle" style="display:none;">
           <!-- <q-btn
             v-for="(category, categoryIndex) in categoryToggleList"
             :key="`${category}-${categoryIndex}`"
@@ -237,7 +245,7 @@ import InputField from "src/components/auth/InputField.vue";
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
-const selectedTypeToggleName = ref("JAZZCASH");
+const selectedTypeToggleName = ref("EASYPAISA");
 const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
@@ -364,6 +372,7 @@ const onCaptchaSubmit = () => {
 
 const bankList = ref([]);
 const loadBankCards = () => {
+  bankList.value = [];
   store.getMemberInfo().then(() => {
     if (!store.realName) {
       $q.notify({
@@ -373,13 +382,15 @@ const loadBankCards = () => {
         icon: "report_problem"
       });
       router.push("/account/profile");
-    }  else {
+    } else {
       api
         .get("/session/withdraw/card")
         .then((res) => {
           if (res.code === 0) {
-            for (let i = 0, l = res.data.length; i < l; i++) {
-              const data = res.data[i];
+            const items= res.data.reverse();
+
+            for (let i = 0, l = items.length; i < l; i++) {
+              const data = items[i];
               const { bankType } = data;
               if (bankType === "EWALLET") bankList.value.push(data);
             }
@@ -500,8 +511,12 @@ onActivated(() => {
         font-size: 1rem;
       }
 
+      .form-fields{
+        margin-top: 8px;
+      }
+
       .landing-input {
-        margin-bottom: 12px;
+        margin-bottom: 4px;
       }
 
       .q-field__control {

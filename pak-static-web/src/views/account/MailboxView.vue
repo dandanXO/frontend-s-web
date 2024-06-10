@@ -1,6 +1,6 @@
 <template>
   <div class="menu-title-container">
-    <span class="menu-title">Message</span>
+    <span class="menu-title">{{ $t("personalView.message.title") }}</span>
   </div>
   <div v-if="!isReadingMail" class="mailbox-mail-list">
     <template v-if="mailboxState.mailboxList.inbox.list.length">
@@ -10,17 +10,21 @@
         <div class="mailbox-mail-item__inner-wrapper">
           <span class="mailbox-mail-item__date">{{ moment(mail.sendTime).format("MM/DD/YYYY") }}</span>
           <button class="mailbox-mail-item__read-btn" @click="handleReadMail(mail.id)">
-            More
+            {{ $t("personalView.message.list.moreButton") }}
             <RiArrowRightSLine />
           </button>
         </div>
-        <div v-if="!mail.readTime" class="mailbox-mail-item__unread">NEW</div>
+        <div v-if="!mail.readTime" class="mailbox-mail-item__unread">
+          {{ $t("personalView.message.list.unread") }}
+        </div>
       </div>
     </template>
     <NoData v-else />
   </div>
   <div v-else class="mailbox-mail-detail">
-    <button class="mailbox-mail-detail__return-btn" @click="() => (isReadingMail = false)">back</button>
+    <button class="mailbox-mail-detail__return-btn" @click="() => (isReadingMail = false)">
+      {{ $t("personalView.message.detail.backButton") }}
+    </button>
     <div class="mailbox-mail-detail__inner-wrapper">
       <h3 class="mailbox-mail-detail__title">{{ readingMail.title }}</h3>
       <span class="mailbox-mail-detail__date">{{ moment(readingMail.sendTime).format("MM/DD/YYYY HH:mm") }}</span>

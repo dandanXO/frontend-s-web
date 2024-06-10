@@ -87,7 +87,8 @@
       </el-table-column>
       <el-table-column prop="winnerTeam" :label="t('fields.winnerTeam')" width="150">
         <template #default="scope">
-          <span v-if="scope.row.homeTeamResult - scope.row.awayTeamResult === 0">{{ t('fields.draw') }}</span>
+          <span v-if="scope.row.status === 'PENDING_MATCH'">-</span>
+          <span v-else-if="scope.row.homeTeamResult - scope.row.awayTeamResult === 0">{{ t('fields.draw') }}</span>
           <span v-else-if="scope.row.homeTeamResult - scope.row.awayTeamResult > 0">{{ scope.row.homeTeam }}</span>
           <span v-else>{{ scope.row.awayTeam }}</span>
         </template>

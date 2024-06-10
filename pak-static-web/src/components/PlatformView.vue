@@ -1,7 +1,7 @@
 <template>
   <div class="platform-section">
     <div class="platform-breadcrumb">
-      <span>Home</span>
+      <router-link to="/">{{ $t("platformView.breadcrumb") }}</router-link>
       <span>{{ platformType }}</span>
       <span v-if="activePlat && ['SLOT', 'FISH'].includes(platformGameType)">{{ activePlat.code }}</span>
     </div>

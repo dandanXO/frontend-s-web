@@ -206,23 +206,25 @@ const open = (gameName, platformCode, gameCode, gameType) => {
       launchSessionGame(platformCode, {
         gameCode: gameCode,
         isMobile: isMobile()
-      }).then((res) => {
-        let srcDoc = res.data;
-        var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-        if (firstFourChars === "http") {
-          src.value = srcDoc;
-        } else {
-          isInnerHtmlSrc.value = true;
+      })
+        .then((res) => {
+          let srcDoc = res.data;
+          var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+          if (firstFourChars === "http") {
+            src.value = srcDoc;
+          } else {
+            isInnerHtmlSrc.value = true;
 
-          const scriptEndTag = "</" + "script>";
-          srcDoc = srcDoc
-            .replace(/<\/script>/g, scriptEndTag)
-            .replace(/\\\"/g, '"')
-            .replace(/\n/g, "");
+            const scriptEndTag = "</" + "script>";
+            srcDoc = srcDoc
+              .replace(/<\/script>/g, scriptEndTag)
+              .replace(/\\\"/g, '"')
+              .replace(/\n/g, "");
 
-          src.value = srcDoc;
-        }
-      });
+            src.value = srcDoc;
+          }
+        })
+        .catch(() => {});
     } else {
       router.push("/login");
     }

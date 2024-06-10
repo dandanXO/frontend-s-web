@@ -1,6 +1,13 @@
 <template>
-  <confirm-modal v-model="visible" centered title="Logout" :footer="null" :width="335" @confirm="handleConfirm">
-    <span class="logout-modal-description">Confirm to log out?</span>
+  <confirm-modal
+    v-model="visible"
+    centered
+    :title="$t('layout.header.logoutModal.title')"
+    :footer="null"
+    :width="335"
+    @confirm="handleConfirm"
+  >
+    <span class="logout-modal-description">{{ $t("layout.header.logoutModal.description") }}</span>
   </confirm-modal>
 </template>
 <script setup>

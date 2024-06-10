@@ -646,9 +646,9 @@ body.body--dark .q-footer {
 
   .popout-close {
     position: absolute;
-    right: 0px;
-    top: 10px;
-    background: #cfcfcf;
+    right: 20px;
+    top: 30px;
+    // background: #cfcfcf;
     color: #787878;
   }
 
@@ -700,7 +700,7 @@ body.body--dark .q-footer {
 .android-low {
   .cat-selection-wrapper {
     .swiper-slide {
-      margin-right: 12px;
+      // margin-right: 12px;
     }
   }
 
@@ -760,6 +760,7 @@ body.body--dark .q-footer {
   background: #232325;
   border-radius: 6px;
   position: relative;
+  text-transform: uppercase;
 
   &:before {
     content: "";

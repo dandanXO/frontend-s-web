@@ -350,16 +350,16 @@ export default {
     },
     answers: {
       CSGO: {
-        handicapAbove: '-4.5 Or Above',
-        handicapBelow: '+4.5 Or Below',
+        handicapAbove: 'Team Difference 4.5 Or Above',
+        handicapBelow: 'Team Difference 4.5 Or Below',
         killBig: 'Total Rounds Big 21.5',
         killSmall: 'Total Rounds Small 21.5',
         killSignal: 'Signal',
         killDouble: 'Double',
       },
       LOL: {
-        handicapAbove: '-4.5 Or Above',
-        handicapBelow: '+4.5 Or Below',
+        handicapAbove: 'Team Difference 4.5 Or Above',
+        handicapBelow: 'Team Difference 4.5 Or Below',
         killBig: 'Total Kills Big 25.5',
         killSmall: 'Total Kills Small 25.5',
         killSignal: 'Signal',
@@ -2373,6 +2373,7 @@ export default {
     'VIP Rebate': 'VIP Rebate',
     VIP: 'VIP',
     Game: 'Game',
+    'Game Tag': 'Game Tag',
     'Financial Level': 'Financial Level',
     'Risk Level': 'Risk Level',
     'Ip Label': 'IP Label',

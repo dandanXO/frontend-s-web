@@ -3,16 +3,16 @@
     <div class="balance-withdrawal-container">
       <div class="balance">
         <div class="amt">{{ store.balance }}</div>
-        <div class="words">Cash balance</div>
+        <div class="words">{{ $t("personalView.finance.withdraw.balance") }}</div>
       </div>
       <div class="withdrawable">
         <div class="amt">{{ selectedWithdrawalMethod.withdrawableBalance }}</div>
-        <div class="words">Withdrawable</div>
+        <div class="words">{{ $t("personalView.finance.withdraw.withdrawable") }}</div>
       </div>
     </div>
 
     <div class="account-content last">
-      <span class="account-title">Withdrawal Method</span>
+      <span class="account-title">{{ $t("personalView.finance.withdraw.method") }}</span>
       <div class="flex-box account-content withdrawalmethod">
         <div
           v-for="(method, i) in withdrawalMethods"
@@ -21,7 +21,7 @@
           :class="{ active: i === activeItem }"
           @click="selectMethod(method, i)"
         >
-          <span v-if="method.recommended" class="promo">Recommended</span>
+          <span v-if="method.recommended" class="promo">{{ $t("personalView.finance.withdraw.recommend") }}</span>
           <img :src="imgURL + method.icon" />
           <div class="type-name">
             {{ method.name }}
@@ -29,26 +29,20 @@
         </div>
       </div>
       <a-form ref="formRef" :hide-required-mark="true" :model="withdrawInfo" :rules="withdrawRules" :colon="false">
-        <span class="account-title">{{ !isVirtual ? "Bank card" : "E-wallet" }}</span>
+        <span class="account-title">
+          {{ $t(`personalView.finance.withdraw.form.label.title.${isVirtual ? "eWallet" : "bank"}`) }}
+        </span>
 
-        <a-form-item
-          class="select"
-          name="cardId"
-          :rules="[
-            {
-              required: true,
-              message: !isVirtual ? 'Bank card is required' : 'E-wallet is required'
-            }
-          ]"
-        >
+        <a-form-item class="select" name="cardId">
           <a-select
             v-model:value="withdrawInfo.cardId"
-            :placeholder="!isVirtual ? 'Select bank card' : 'Select E-wallet'"
+            :placeholder="$t(`personalView.finance.withdraw.form.cardId.placeholder.${isVirtual ? 'eWallet' : 'bank'}`)"
           >
             <a-select-option v-for="b in withdrawState.bankCardList" :key="b.id" :value="b.id">
-              Acc No. **** {{ b.cardNumber.slice(b.cardNumber.length - 4, b.cardNumber.length) }}
+              {{ $t("personalView.finance.withdraw.form.cardId.option.prefix.cardNumber")
+              }}{{ b.cardNumber.slice(b.cardNumber.length - 4, b.cardNumber.length) }}
               <br />
-              IFSC {{ b.cardAddress }}
+              {{ $t("personalView.finance.withdraw.form.cardId.option.prefix.cardAddress") }} {{ b.cardAddress }}
             </a-select-option>
           </a-select>
         </a-form-item>
@@ -56,31 +50,30 @@
         <div class="bot-wrapper">
           <div class="info">
             <div class="desc-wrapper">
-              <div class="desc">Withdraw Amount</div>
+              <div class="desc">{{ $t("personalView.finance.withdraw.form.label.amount") }}</div>
             </div>
-            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
+            <div class="desc">₨:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
-              <div class="desc">{{ store.vip }} Daily Limit</div>
+              <div class="desc">{{ store.vip }} {{ $t("personalView.finance.withdraw.form.label.dailyLimit") }}</div>
             </div>
-            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
+            <div class="desc">₨:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
           </div>
           <div class="info">
             <div class="desc-wrapper">
-              <div class="desc">Remain Wagers</div>
+              <div class="desc">{{ $t("personalView.finance.withdraw.form.label.remain") }}</div>
             </div>
-            <div class="desc">RS:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
+            <div class="desc">₨:{{ convertToCommaAmount(selectedWithdrawalMethod.remainWagers) }}</div>
           </div>
         </div>
 
         <span class="account-title">
           {{
-            "Amount (" +
-            convertToCommaAmount(selectedWithdrawalMethod.withdrawMin) +
-            " - " +
-            convertToCommaAmount(selectedWithdrawalMethod.withdrawMax) +
-            ")"
+            $t("personalView.finance.withdraw.form.label.amountLimit", {
+              min: convertToCommaAmount(selectedWithdrawalMethod.withdrawMin),
+              max: convertToCommaAmount(selectedWithdrawalMethod.withdrawMax)
+            })
           }}
         </span>
 
@@ -88,7 +81,7 @@
           <a-input
             v-model:value="withdrawInfo.amount"
             class="form-input"
-            placeholder="Enter the withdrawal amount"
+            :placeholder="$t('personalView.finance.withdraw.form.amount.placeholder')"
             :prefix="store.currency.value"
           />
           <!-- <div class="account-tip remain-box" style="flex-direction: column; align-items: flex-start">
@@ -154,142 +147,156 @@
           <span style="color: #0b8f1a">1.00 USDT will be charged for each transaction</span>
         </div> -->
         <div class="flex-box flex-justify-start">
-          <button class="common-btn confirm-btn" @click="submitWithraw">Confirm Withdrawal</button>
+          <button class="common-btn confirm-btn" @click="submitWithraw">
+            {{ $t("personalView.finance.withdraw.confirmButton") }}
+          </button>
         </div>
       </a-form>
     </div>
   </div>
 </template>
 
-<script setup lang="js">
-import {defineComponent, reactive, ref, onMounted, computed} from "vue";
+<script setup>
+import { defineComponent, reactive, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import { loadBankCards, confirmWithdraw, withdrawEntrance
- } from "@/api/personal/personal";
+import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { message } from "ant-design-vue";
 import { userStore } from "@/store";
 import { convertToCommaAmount } from "@/utils/utils";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 
-    const store = userStore();
-    const router = useRouter();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/'
-    const formRef = ref();
-    const activeItem = ref(0);
-    const isUSDT = ref(false);
-    const withdrawState = reactive({
-      bankCardList: [],
-    });
-    const withdrawInfo = reactive({
-      cardId: undefined,
-      amount: "",
-    });
-    const withdrawalMethods = ref([])
-    const withdrawMethod= ref("BANK");
-    const isVirtual= computed(() => {
-      return (withdrawMethod.value === 'BANK') ? false : true;
-    })
-    onMounted(() => {
-      getWithdrawalMethods();
-    });
-    const submitWithraw = () => {
-      formRef.value
-        .validate()
-        .then(() => {
-          confirmWithdraw(withdrawInfo).then((response) => {
-            if(response.code === 0) {
-              store.getBalance();
-              message.success("Success");
-              getWithdrawalMethods();
-            } else {
-              // message.error(response.message);
-            }
-          }).catch((error) => {
-            console.log("error", error);
-            // message.error(error.message, 4);
-          });
-        }).catch((error) => {
-          console.log("error", error);
-        });
-    };
-    const withdrawRules = {
-      amount: [
-        {
-          required: true,
-          message: "Amount is required",
-          trigger: "blur",
-        },
-        {
-          pattern: '^([1-9][0-9]*)$',
-          message: "Amount should be a positive number",
-          trigger: "change",
-        },
-      ],
-    };
-    // withdrawPassword: [
-    //   {
-    //     required: true,
-    //     message: "Withdraw Password is required",
-    //     trigger: "blur"
-    //   },
-    //   {
-    //     min: 6,
-    //     max: 12,
-    //     message: "Length should be between 6 to 12",
-    //     trigger: "blur"
-    //   }
-    // ]
-    const selectedWithdrawalMethod = ref([])
-    const selectMethod = (method, index) => {
-      console.log(method)
-      withdrawMethod.value= method.code;
-
-      withdrawInfo.amount = null;
-      withdrawInfo.withdrawCode = null;
-      withdrawInfo.cardId = method.id;
-      // withdrawInfo.withdrawPassword = null;
-      selectedWithdrawalMethod.value = method
-      withdrawInfo.withdrawCode = method.code;
-      activeItem.value = index;
-      if (withdrawInfo.withdrawCode.includes('USDT')) {
-        isUSDT.value = true
-      } else {
-        isUSDT.value = false
-      }
-      loadCards()
-    }
-    const loadCards = () => {
-        withdrawState.bankCardList = []
-        loadBankCards().then((response) => {
+const store = userStore();
+const router = useRouter();
+const imgURL = process.env.VUE_APP_IMAGE_CDN + "/withdraw/";
+const formRef = ref();
+const activeItem = ref(0);
+const isUSDT = ref(false);
+const withdrawState = reactive({
+  bankCardList: []
+});
+const withdrawInfo = reactive({
+  cardId: undefined,
+  amount: ""
+});
+const withdrawalMethods = ref([]);
+const withdrawMethod = ref("BANK");
+const isVirtual = computed(() => {
+  return withdrawMethod.value === "BANK" ? false : true;
+});
+onMounted(() => {
+  getWithdrawalMethods();
+});
+const submitWithraw = () => {
+  formRef.value
+    .validate()
+    .then(() => {
+      confirmWithdraw(withdrawInfo)
+        .then((response) => {
           if (response.code === 0) {
-            response.data.forEach(element => {
-              if (element && element.bankType === 'BANK') {
-                  if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-                    withdrawState.bankCardList.push(element)
-                  }
-                } else {
-                  if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-                    withdrawState.bankCardList.push(element)
-                  }
-                }
-            });
+            store.getBalance();
+            message.success("Success");
+            getWithdrawalMethods();
+          } else {
+            // message.error(response.message);
           }
-        }).catch((error) => {
-          console.log("error", error);
         })
+        .catch((error) => {
+          console.log("error", error);
+          // message.error(error.message, 4);
+        });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+const withdrawRules = {
+  amount: [
+    {
+      required: true,
+      message: t("personalView.finance.withdraw.form.amount.error.required"),
+      trigger: "blur"
+    },
+    {
+      pattern: "^([1-9][0-9]*)$",
+      message: t("personalView.finance.withdraw.form.amount.error.pattern"),
+      trigger: "change"
     }
-    const getWithdrawalMethods = () => {
-      withdrawEntrance().then((response) => {
-        if (response.code === 0) {
-          withdrawalMethods.value = response.data
-          if (withdrawalMethods.value.length > 0) {
-            selectMethod(withdrawalMethods.value[0], 0)
+  ],
+  cardId: [
+    {
+      required: true,
+      message: t(`personalView.finance.withdraw.form.cardId.error.required.${isVirtual.value ? "eWallet" : "bank"}`)
+    }
+  ]
+};
+// withdrawPassword: [
+//   {
+//     required: true,
+//     message: "Withdraw Password is required",
+//     trigger: "blur"
+//   },
+//   {
+//     min: 6,
+//     max: 12,
+//     message: "Length should be between 6 to 12",
+//     trigger: "blur"
+//   }
+// ]
+const selectedWithdrawalMethod = ref([]);
+const selectMethod = (method, index) => {
+  console.log(method);
+  withdrawMethod.value = method.code;
+
+  withdrawInfo.amount = null;
+  withdrawInfo.withdrawCode = null;
+  withdrawInfo.cardId = method.id;
+  // withdrawInfo.withdrawPassword = null;
+  selectedWithdrawalMethod.value = method;
+  withdrawInfo.withdrawCode = method.code;
+  activeItem.value = index;
+  if (withdrawInfo.withdrawCode.includes("USDT")) {
+    isUSDT.value = true;
+  } else {
+    isUSDT.value = false;
+  }
+  loadCards();
+};
+const loadCards = () => {
+  withdrawState.bankCardList = [];
+  loadBankCards()
+    .then((response) => {
+      if (response.code === 0) {
+        response.data.forEach((element) => {
+          if (element && element.bankType === "BANK") {
+            if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
+          } else {
+            if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
           }
-        } else {
-          message.error(response.message);
-        }
-      })
+        });
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+const getWithdrawalMethods = () => {
+  withdrawEntrance().then((response) => {
+    if (response.code === 0) {
+      withdrawalMethods.value = response.data;
+      if (withdrawalMethods.value.length > 0) {
+        selectMethod(withdrawalMethods.value[0], 0);
+      }
+    } else {
+      message.error(response.message);
     }
+  });
+};
 </script>
 
 <style scoped lang="scss">

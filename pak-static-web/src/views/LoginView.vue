@@ -4,7 +4,7 @@
       <div class="logo"><img src="../assets/logo.png" /></div>
       <a-form ref="formRef" :model="loginForm" :rules="rules">
         <a-form-item ref="loginName" required name="loginName">
-          <a-input v-model:value="loginForm.loginName" placeholder="Login name">
+          <a-input v-model:value="loginForm.loginName" :placeholder="$t('loginView.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
               <span style="color: #ffffff">+92</span>
@@ -12,7 +12,12 @@
           </a-input>
         </a-form-item>
         <a-form-item ref="password" required name="password">
-          <a-input v-model:value="loginForm.password" type="password" placeholder="Password" @keypress.enter="onSubmit">
+          <a-input
+            v-model:value="loginForm.password"
+            type="password"
+            :placeholder="$t('loginView.form.password.placeholder')"
+            @keypress.enter="onSubmit"
+          >
             <template #prefix>
               <RiLock2Fill />
             </template>
@@ -35,9 +40,11 @@
         </a-form-item> -->
         <div class="bottomrow">
           <div class="txt-right" style="width: 100%; margin-bottom: 5px">
-            <router-link class="pwd-tip" to="/forgot-password">Forgot password ?</router-link>
+            <router-link class="pwd-tip" to="/forgot-password">{{ $t("loginView.forgetPasswordLink") }}</router-link>
           </div>
-          <a-button class="common-btn" :loading="loadingLogin" @click="onSubmit">Login Now</a-button>
+          <a-button class="common-btn" :loading="loadingLogin" @click="onSubmit">
+            {{ $t("loginView.loginButton") }}
+          </a-button>
 
           <!-- <button class="common-btn">
 
@@ -45,15 +52,15 @@
         </div>
       </a-form>
       <div class="txt-center">
-        Not on B9.GAME yet?
-        <router-link class="forget-pwd-tip" to="/register">Register Now</router-link>
+        {{ $t("loginView.register.description") }}
+        <router-link class="forget-pwd-tip" to="/register">{{ $t("loginView.register.link") }}</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode } from "@/api/index/login";
@@ -62,6 +69,9 @@ import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
 
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const isSpinWheel = ref(true);
 const store = userStore();
@@ -91,13 +101,13 @@ const getCode = () => {
       console.log(e.message);
     });
 };
-const rules = ref({
+const rules = computed(() => ({
   loginName: [
-    { len: 11, message: "Invalid phone number" },
-    { required: true, message: "Phone number is required" }
+    { len: 11, message: t("loginView.form.loginName.error.len") },
+    { required: true, message: t("loginView.form.loginName.error.required") }
   ],
-  password: [{ required: true, message: "Password is required" }]
-});
+  password: [{ required: true, message: t("loginView.form.password.error.required") }]
+}));
 const loadingLogin = ref(false);
 const onSubmit = () => {
   const fpPromise = FingerprintJS.load();

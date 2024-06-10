@@ -263,6 +263,14 @@ export const constantRoutes = [
         },
       },
       {
+        path: 'rebate',
+        component: () => import('../views/affiliate/rebate/index.vue'),
+        name: 'Rebate',
+        meta: {
+          title: 'Rebate',
+        },
+      },
+      {
         path: 'credit-flow',
         component: () => import('../views/affiliate/credit-flow/index.vue'),
         name: 'Credit Flow',

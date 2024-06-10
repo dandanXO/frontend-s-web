@@ -8,11 +8,11 @@
         <div class="fish-match-content-warp">
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">今日打码</div>
-            <div class="fish-match-game-detail">{{availableDraw}} 元</div>
+            <div class="fish-match-game-detail">{{validBet}} 元</div>
           </div>
           <div class="fish-match-game-content">
             <div class="fish-match-game-status">抽奖次数</div>
-            <div class="fish-match-game-detail">{{validBet}} 次</div>
+            <div class="fish-match-game-detail">{{availableDraw }} 次</div>
           </div>
         </div>
         <div class="fish-match-honbao-content">
@@ -48,12 +48,12 @@
             <td>18~88</td>
           </tr>
           <tr>
-            <td>60,000</td>
+            <td>300,000</td>
             <td>3</td>
             <td>88~288</td>
           </tr>
           <tr>
-            <td>300,000</td>
+            <td>1,200,000</td>
             <td>4</td>
             <td>388~888</td>
           </tr>
@@ -69,14 +69,14 @@
           </tr>
         </table>
         <div class="fish-content-sub-title">
-          例：用户 A 当日在捕鱼场馆娱乐金额为 500,000，用户 A 可分别获得对应 1,500 档位、60,000 档位、300,000 档位各一次红包抽奖。
+          例：用户A当日在捕鱼场馆娱乐金额为500,000，用户A可分别获得对应1,500档位、60,000档位、300,000档位各一次红包抽奖，彩金只需完成3倍流水即可出款；
         </div>
       </div>
       <div class="fish-match-game-bottom-rule">
         <div class="title"></div>
         <div class="content">
           <div class="item">
-            1.活动期间，用户投注 NBA 季后赛总决赛当日有效投注≥1,000 元后参与本活动竞猜，根据竞猜结果派发对应彩金；
+            1.活动期间，用户参与捕鱼场馆日总有效投注≥1500元即可获得对应档位抽奖次数，抽奖红包金额每个档位按顺序进行抽取1次，彩金只需完成3倍流水即可出款；
           </div>
           <div class="item">2.活动期间，捕鱼场馆总有效投注没 20 分钟刷新一次，若出现与会员总有效投注不符合的情况，请耐心等待 20 分钟即可，若仍未正确，请联系客服查询；</div>
           <div class="item">
@@ -86,7 +86,8 @@
             4.本活动根据博彩公平有序规则，任何用户或团体以不正常的方式进行投注，如有风险投注、对赌行为或欺骗方式，本站保留权力在不通知的情况下冻结或关闭相关账户；
           </div>
           <div class="item">
-            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P 地址视为同一账户，若有违规者，将不享受此红利；
+            5.本活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 P
+            地址视为同一账户，若有违规者，将不享受此红利；
           </div>
           <div class="item">
             6.为避免文字理解差异，雷火电竟保留此活动最终解释权；
@@ -100,7 +101,8 @@
         align-center
         :close-on-click-modal="false"
         class="fish-match-table-record-dialog"
-      >
+      > 
+        <div class="fish-img"><img src="../../../assets/promo/lh-fish-honbao/fish-dialog.png"></div>
         <template #header>
           <div class="title">恭喜你抽中</div>
         </template>
@@ -520,9 +522,19 @@ const claimHongBao = async () => {
 }
 
 :deep(.fish-match-table-record-dialog) {
-  width: 360px;
+  width: 320px;
   height: 360px;
   background-color: #FFF3DF;
+  font-family: "FZHanZhenGuangBiaoS-GB";
+  .fish-img {
+    position: absolute;
+    top: -110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+  }
   .el-dialog__header {
     background: #FFF3DF;
     display: flex;
@@ -548,7 +560,7 @@ const claimHongBao = async () => {
     height: 320px;
     .record-dialog-content-title{
       color:#EA5046;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 16.63px;
       letter-spacing: 0.2em;
@@ -562,8 +574,8 @@ const claimHongBao = async () => {
       letter-spacing: 0.2em;
       text-align: center;
       color:#EA5046;
-      span{
-        font-size: 48px;
+      span {
+        font-size: 72px;
       }
     }
     .hongbao-finish-btn{

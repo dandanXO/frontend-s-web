@@ -3,44 +3,49 @@
     <router-view :class="{ menuactive: globalStore.isMenuActive }" />
   </div>
 </template>
-<script>
+<script setup>
 import { defineComponent, onMounted, version } from "vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 
 import { globalStore } from "@/store";
-export default defineComponent({
-  setup() {
-    const checkSID = () => {
-      const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
-        const obj = {
-          identifier: sidParam,
-          affiliateCode: affiliateItem
-        };
+import { useLocalStorage } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
+import { LANGUAGE_DEFAULT_VALUE, LANGUAGE_KEY } from "./constant/localStorage";
 
-        memberAccessLog(obj);
-      })();
-    };
+const currentLanguage = useLocalStorage(LANGUAGE_KEY, LANGUAGE_DEFAULT_VALUE);
+const { locale } = useI18n();
 
-    onMounted(() => {
-      checkSID();
-      console.log("Vue Version:" + version);
-      // checkDevice();
+const checkSID = () => {
+  const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
+  const fpPromise = FingerprintJS.load();
+  (async () => {
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const excludes = { value: ["timezone", "timeZoneOffset"] };
+    const allComponents = { ...result.components };
+    excludes.value.forEach((element) => {
+      delete allComponents[element];
     });
-    return {
-      globalStore
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    const obj = {
+      identifier: sidParam,
+      affiliateCode: affiliateItem
     };
-  }
+
+    memberAccessLog(obj);
+  })();
+};
+
+const checkLanguage = () => {
+  locale.value = currentLanguage.value;
+};
+
+onMounted(() => {
+  checkSID();
+  checkLanguage();
+  console.log("Vue Version:" + version);
+  // checkDevice();
 });
 </script>
 

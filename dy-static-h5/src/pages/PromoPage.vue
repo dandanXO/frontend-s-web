@@ -90,7 +90,9 @@
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
-                  cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+                  cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
                   dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
                   lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
@@ -797,8 +799,8 @@ export default defineComponent({
           padding: 10px;
           background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
           p {
-            padding: 25px;
-            color: #7f4c00;
+            padding: 12px;
+            color: #00dede;
             font-family: Microsoft Yahei UI;
             max-width: 100%;
           }
@@ -819,7 +821,7 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 15px 18px;
 
           li {
             margin-bottom: 20px;

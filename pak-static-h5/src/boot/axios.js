@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
+import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 import { errorMessages } from "./error-messages";
@@ -20,21 +21,8 @@ const cashier = axios.create({ baseURL: crtApi });
 const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
-  var successRstUrl = localStorage.getItem(urlLsName);
+  var successRstUrl = sessionStorage.getItem(urlLsName);
   if (successRstUrl) {
-    axios
-      .get(successRstUrl + "/ping")
-      .then((res) => {
-        // console.log(res);
-        if (res.status !== 200) {
-          localStorage.removeItem(urlLsName);
-        }
-      })
-      .catch((err) => {
-        // console.log(err);
-        localStorage.removeItem(urlLsName);
-      });
-
     return successRstUrl;
   } else {
     if (typeof apiLinks === "string" || apiLinks instanceof String) {
@@ -44,14 +32,7 @@ function getInitApi(apiLinks, urlLsName) {
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
     }
 
-    axios.get(initApi + "/ping").then((res) => {
-      // console.log(res);
-      if (res.status === 200) {
-        localStorage.setItem(urlLsName, initApi);
-      } else {
-        localStorage.removeItem(urlLsName);
-      }
-    });
+    sessionStorage.setItem(urlLsName, initApi);
     return initApi;
   }
 }
@@ -162,15 +143,30 @@ export default boot(({ app, router }) => {
             router.push("/login");
           });
         }
-
+        if (
+          res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
+          res.code === ResponseCode.ERROR_NAME_EXIST ||
+          res.code === ResponseCode.ERROR_TOKEN_MISSED
+        ) {
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          window.location.href = "/";
+        }
+        if (res.code === ResponseCode.ERROR_TOKEN_LOGGED) {
+          SessionStorage.remove("TOKEN");
+          LocalStorage.remove("TOKEN");
+          window.location.href = "/";
+        }
         Notify.create({
           type: "negative",
           timeout: 1000,
           position: "top",
-          message: messageTranslated
+          // message: res.message || "错误"
+          message:
+            i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error"
         });
       }
-      throw new Error(messageTranslated);
+      throw new Error(res.message || "Error");
     } else {
       Loading.hide();
       return res;

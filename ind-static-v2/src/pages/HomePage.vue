@@ -20,7 +20,7 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURLPromo + banner.mobileImageUrl"
+      :img-src="returnBannerUrl(banner)"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
@@ -102,10 +102,6 @@
       }"
       :modules="modules"
       class="cat-selection-wrapper"
-      data-aos="fade-in"
-      :data-aos-delay="200"
-      data-aos-duration="1000"
-      data-aos-once="true"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -144,14 +140,14 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isHotGameLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
+            <!--            <template v-if="isHotGameLoading">-->
+            <!--              <div class="skeleton-lists">-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--                <q-skeleton class="slot-skeleton" />-->
+            <!--              </div>-->
+            <!--            </template>-->
 
             <swiper
               :slidesPerView="3.5"
@@ -174,18 +170,23 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      :data-aos-delay="100 * index"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
+                        <!--                        <p>{{ `hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png` }}</p>-->
                         <div
                           class="game--bg"
                           :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                             backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                         ></div>
                       </div>
@@ -199,13 +200,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      data-aos-delay="100"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -314,12 +309,12 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="casino-skeleton" />
-                <q-skeleton class="casino-skeleton" />
-              </div>
-            </template>
+<!--            <template v-if="isPlatLoading">-->
+<!--              <div class="skeleton-lists">-->
+<!--                <q-skeleton class="casino-skeleton" />-->
+<!--                <q-skeleton class="casino-skeleton" />-->
+<!--              </div>-->
+<!--            </template>-->
 
             <swiper
               :slidesPerView="1.5"
@@ -335,13 +330,7 @@
                   class="platform-game-item btn-effect"
                   @click="playGame(item.name, item.code, '', item.status, item.gameType, item.id)"
                 >
-                  <div
-                    data-aos="zoom-in"
-                    :data-aos-delay="100 * index"
-                    data-aos-duration="1200"
-                    data-aos-once="true"
-                    data-aos-anchor="#hotgames"
-                  >
+                  <div>
                     <img src="../assets/images/index/live/item-game-maintenance.png" />
                     <div
                       class="platform-live-item--img"
@@ -426,15 +415,6 @@
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
-
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
 
             <swiper
               :slidesPerView="3.5"
@@ -551,15 +531,6 @@
 
           <div class="platform-game-wrapper">
 
-            <template v-if="isPlatLoading">
-              <div class="skeleton-lists">
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-                <q-skeleton class="slot-skeleton" />
-              </div>
-            </template>
-
             <swiper
               :slidesPerView="3.5"
               :spaceBetween="10"
@@ -585,7 +556,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -611,7 +592,17 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                         }"
                       ></div>
                     </div>
@@ -1209,10 +1200,10 @@ const depositItems = reactive([
 
 const esport = ref([]);
 const sport = ref([]);
-const livecasino = ref([]);
+const livecasino = ref([{"id":123,"name":"Evo","code":"WCEvo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"id":4,"name":"Awc","code":"AWC","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":0},{"id":103,"name":"WCPT","code":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":5,"name":"Ezugi","code":"EZUGI","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":902},{"id":102,"name":"WCSW","code":"WCSW","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":101,"name":"WCMG","code":"WCMG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":100,"name":"WCOT","code":"WCOT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":99,"name":"WCAG","code":"WCAG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":98,"name":"WCBG","code":"WCBG","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([]);
+const slot = ref([{"id":124,"name":"Turbo","code":"Turbo","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":890},{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":900},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":901},{"id":8,"name":"JiliGames","code":"JILI","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":902},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JOKER","sequence":1000},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":110,"name":"Skywind","code":"WCSWS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":112,"name":"Quick Spin","code":"WCQS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":114,"name":"BNG","code":"WCBNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":115,"name":"Playson","code":"WCPS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":117,"name":"Elysium","code":"WCElysium","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":118,"name":"MG","code":"WCMGS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000},{"id":119,"name":"PT","code":"WCPTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":1000}]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -1245,7 +1236,11 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
-const banners = ref(null);
+const banners = ref([
+  {
+    mobileImageUrl: "empty-banner.png"
+  }
+]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -1293,13 +1288,8 @@ const filteredSubGameList = computed(() => {
 
 const subGameCode = ref("");
 
-const openHotGame = (hotGameList) => {
-  subGameList.value = hotGameList;
-  fullGameDialog.value = true;
-  hotGameOn.value = true;
-};
 
-const hotGameList = ref([]);
+const hotGameList = ref([{"id":19398,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":900,"siteName":null,"platformId":93,"platformName":null,"platformCode":"Spribe","gameType":"CASUAL","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Spribe"},{"code":"WCEvo","type":"platform","id":123,"name":"Evo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":0},{"id":22214,"name":"Aero","code":"aero","status":"OPEN","icon":"5/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png","sequence":700,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"id":22215,"name":"Crash X","code":"crash","status":"OPEN","icon":"5/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg","sequence":800,"siteName":null,"platformId":124,"platformName":null,"platformCode":"Turbo","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"Turbo"},{"code":"WCPT","type":"platform","id":103,"name":"WCPT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PlayTech","sequence":901},{"id":18956,"name":"Teen Patti","code":"72","status":"OPEN","icon":"5/JILI/097df233-0329-427c-a596-9af968062624.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT,NEW","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18957,"name":"Teen Patti Joker","code":"159","status":"OPEN","icon":"5/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"LISTHOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18959,"name":"Ludo Quick","code":"163","status":"OPEN","icon":"5/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18960,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"5/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18961,"name":"TeenPatti 20-20","code":"161","status":"OPEN","icon":"5/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18962,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"5/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18963,"name":"7up7down","code":"124","status":"OPEN","icon":"5/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"},{"id":18964,"name":"Baccarat","code":"152","status":"OPEN","icon":"5/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"type":"game","platform":"JILI"}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1375,14 +1365,13 @@ const loadHotGameList = () => {
           console.log("End")
           console.log(hotGameList.value);
           // console.log(livecasino.value);
-
-          isHotGameLoading.value= false;
+          // isHotGameLoading.value= false;
         });
     });
 
 };
 
-const fishGameJILIList = ref([]);
+const fishGameJILIList = ref([{"id":18886,"name":"Bombing Fishing","code":"20","status":"OPEN","icon":"5/JILI/20.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18887,"name":"Dinosaur Tycoon","code":"42","status":"OPEN","icon":"5/JILI/42.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"10/30/23, 2:36 PM"},{"id":18888,"name":"Jackpot Fishing","code":"32","status":"OPEN","icon":"5/JILI/32.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18889,"name":"Dragon Fortune","code":"60","status":"OPEN","icon":"5/JILI/60.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18890,"name":"Mega Fishing","code":"74","status":"OPEN","icon":"5/JILI/74.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18891,"name":"Boom Legend","code":"71","status":"OPEN","icon":"5/JILI/71.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18892,"name":"Happy Fishing","code":"82","status":"OPEN","icon":"5/JILI/82.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"10/30/23, 2:36 PM"},{"id":18893,"name":"All-star Fishing","code":"119","status":"OPEN","icon":"5/JILI/119.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18945,"name":"Royal Fishing","code":"1","status":"OPEN","icon":"5/JILI/1.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"},{"id":18949,"name":"Dinosaur Tycoon II","code":"212","status":"OPEN","icon":"5/JILI/212.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"9/29/23, 2:31 PM"}]);
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1408,10 +1397,12 @@ const loadJILIFishGameList = () => {
     )
     .then((res) => {
       fishGameJILIList.value = res;
+
+      // console.log(JSON.stringify(fishGameJILIList.value));
     });
 };
 
-const fishGameJDBList = ref([]);
+const fishGameJDBList = ref([{"id":19200,"name":"Dragon Fishing","code":"7001","status":"OPEN","icon":"5/JDB/7001.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19201,"name":"Dragon Fishing II","code":"7002","status":"OPEN","icon":"5/JDB/7002.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19202,"name":"Cai Shen Fishing","code":"7003","status":"OPEN","icon":"5/JDB/7003.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19203,"name":"Shade Dragons Fishing","code":"7004","status":"OPEN","icon":"5/JDB/7004.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19204,"name":"Fishing YiLuFa","code":"7005","status":"OPEN","icon":"5/JDB/7005.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19205,"name":"Dragon Master","code":"7006","status":"OPEN","icon":"5/JDB/7006.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"},{"id":19206,"name":"Fishing Disco","code":"7007","status":"OPEN","icon":"5/JDB/7007.png","sequence":1000,"siteName":null,"platformId":31,"platformName":null,"platformCode":null,"gameType":"FISH","device":"ALL","gameLabel":null,"updateBy":"admin","updateTime":"1/5/24, 5:18 PM"}]);
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1437,6 +1428,8 @@ const loadJDBFishGameList = () => {
     )
     .then((res) => {
       fishGameJDBList.value = res;
+
+      // console.log(JSON.stringify(fishGameJDBList.value));
     });
 };
 
@@ -1563,6 +1556,8 @@ const getPlatList = () => {
       var pf = data;
       ui.slotLists = [];
       // console.log(pf);
+      slot.value= [];
+      livecasino.value= [];
 
       pf.forEach((element) => {
         const { status } = element;
@@ -1619,8 +1614,8 @@ const getPlatList = () => {
 
       isPlatLoading.value= false;
 
-      // console.log("After");
-      // console.log(sport.value);
+      console.log("After");
+      // console.log(JSON.stringify(livecasino.value));
       loadHotGameList();
     })
     .catch((err) => {
@@ -1799,6 +1794,24 @@ const detectAndroidVersion = () => {
   return "not-android";
 };
 
+const returnBannerUrl = (banner) => {
+  try {
+    var bannerImg = "";
+    const bannerSplit= banner.mobileImageUrl.split("/");
+    // console.log(bannerSplit);
+    if(bannerSplit.length > 1){
+      bannerImg = bannerSplit[1];
+    }else{
+      bannerImg = bannerSplit[0];
+    }
+    return require(`../assets/images/banners/${bannerImg}`);
+  } catch (e) {
+    console.log("WERR")
+    return imgURLPromo + banner.mobileImageUrl;
+  }
+}
+
+
 const moveCsIcon = (ev) => {
   isDraggingCsIcon.value = ev.isFirst !== true && ev.isFinal !== true;
 
@@ -1851,7 +1864,7 @@ onActivated(() => {
 });
 
 onMounted(() => {
-  isHotGameLoading.value= true;
+  // isHotGameLoading.value= true;
   isPlatLoading.value = true;
   getPlatList();
   loadData();
