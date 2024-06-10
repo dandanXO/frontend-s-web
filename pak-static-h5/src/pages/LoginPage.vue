@@ -769,21 +769,21 @@ export default defineComponent({
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    // animation: smallbeat 1.5s infinite;
+    animation: smallbeat 1.5s infinite;
     animation-delay: 1s;
   }
   #whatapp-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    // animation: smallbeat 1.5s infinite;
+    animation: smallbeat 1.5s infinite;
     animation-delay: 0.5s;
   }
   #download-icon {
     width: 50px;
     height: 50px;
     margin-top: 10px;
-    // animation: smallbeat 1.5s infinite;
+    animation: smallbeat 1.5s infinite;
     //filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);;
   }
 }
