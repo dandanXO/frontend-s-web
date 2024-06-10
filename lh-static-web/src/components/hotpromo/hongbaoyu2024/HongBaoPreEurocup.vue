@@ -29,6 +29,7 @@
 import { ref, onMounted, defineProps } from "vue";
 import { claimDailyRainItem, getDailyRainListing } from "@/api/index/promo";
 import { userStore } from "@/store";
+import { ElMessage } from "element-plus";
 
 const props = defineProps({
   promoCode: {
@@ -80,6 +81,7 @@ const getPromotion = () => {
         bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
+        ElMessage.error(res.message)
       }
     })
     .catch((err) => {
