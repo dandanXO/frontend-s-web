@@ -338,7 +338,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh-lpl-summer24" ||
       this.list.redirectUrl === "lh-sport-zhongchao"||
-      this.list.redirectUrl === "lh-duanwujie24"
+      this.list.redirectUrl === "lh-duanwujie24" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {
