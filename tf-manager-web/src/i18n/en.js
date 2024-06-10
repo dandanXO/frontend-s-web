@@ -454,6 +454,10 @@ export default {
     PRIVI_HAS_ENDED: 'Privilge has ended',
     VIP_LEVEL_IS_NOT_ALLOWED: 'VIP level is not allowed',
     AFFILIATE_IS_NOT_ALLOWED: 'Affiliate is not allowed',
+    ERROR_MEMBER_PHONE_NOT_VERIFIED: 'Phone not verified',
+    ERROR_REGISTER_DUPLICATE_IP_OR_SID: 'Duplicate IP or Device',
+    ERROR_DEPOSIT_AMT_MIN_NOT_MEET: 'Minimum Deposit Amount not reach',
+    ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
   },
   rewardType: {
     BET: "BET",
