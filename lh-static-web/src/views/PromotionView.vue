@@ -281,7 +281,10 @@ export default defineComponent({
     const loadAll = () => {
       loadPromo().then((res) => {
         if(res.code === 0) {
-          promoState.promoList.push(...res.data);
+          if(promoState.promoList.length === 0){
+            promoState.promoList.push(...res.data);
+          }
+
           res.data.forEach(element => {
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
