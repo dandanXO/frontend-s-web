@@ -225,7 +225,6 @@ const bankCardInfo = reactive({
 });
 
 const validateBankLength = (val) => {
-  console.log('here', val.length)
   if (!/^\d+$/.test(val)) return "숫자를 입력하세요";
 
   if (selectedBankType.value === "BANK") {
