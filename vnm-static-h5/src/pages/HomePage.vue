@@ -135,7 +135,7 @@
 
         <div class="euro-countdown-txt">
           <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 70px" />
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />
           </div>
           <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
 
@@ -2971,7 +2971,7 @@ export default defineComponent({
       // background-size: 100% 100%;
       
     background-size: 100% 70%;
-      padding: 4px;
+      padding: 0 4px;
       margin-left: 12px;
 
       img {
@@ -2991,7 +2991,7 @@ export default defineComponent({
       color: #ffffff;
       line-height: 1;
       align-items: center;
-      width: 100%;
+      width: 94%;
       padding: 0px 10px;
 
       @media (min-width: 440px) {
