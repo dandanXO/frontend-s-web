@@ -11,6 +11,10 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crtArray = process.env.VUE_APP_CR_API.split(",");
 
+console.log(window.location.hostname);
+const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869"];
+const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
+
 const baseEvtUrl = getEvtUrl();
 const baseCrtUrl = getCrtUrl();
 
