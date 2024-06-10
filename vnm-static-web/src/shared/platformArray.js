@@ -310,15 +310,6 @@ export const fishingPlatforms = [
     message: "The DG entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience. We adopt state of the art equipment, and provide professional technical support thus ensure the",
     caption: "",
     gameCode: ""
-  },
-  {
-    code: "WS",
-    name: "WS168",
-    image: "WS",
-    message: "World class cockfighting online",
-    vimessage: "Sảnh Đá Gà sở hữu hơn 10 năm bề dày kinh nghiệm hoạt động trên thị trường với nhiều lựa chọn như: đá gà cựa, đá gà đòn, đá gà tre và đá gà Mỹ v.v….",
-    caption: "",
-    gameCode: 7202
   }
 ];
 // fishing

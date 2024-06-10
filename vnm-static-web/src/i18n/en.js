@@ -10,6 +10,7 @@ export default {
     fishing: "Fishing",
     cockfight: "Cock fight",
     minigame: "Mini Game",
+    hashgame: "Hash Game",
     promotion: "Promotion",
     agent: "Agent",
     app: "App",

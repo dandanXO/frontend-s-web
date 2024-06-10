@@ -317,7 +317,7 @@
         <template v-else>
           <img src="../assets/images/home/games/fish-icon.png" />
         </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_fishing") }}</span>
+        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_hashgame") }}</span>
       </div>
 
       <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
@@ -838,7 +838,7 @@
       </div>
     </q-card>
   </q-dialog>
-  
+
   <q-dialog
     width="100%"
     class="modal-update-div"
@@ -1085,6 +1085,9 @@ export default defineComponent({
       }
       if (tab === "cockfight") {
         scrollToSlide("cockfight-lists");
+      }
+      if (tab === "casual") {
+        scrollToSlide("casual-lists");
       }
     };
 
@@ -1536,7 +1539,7 @@ export default defineComponent({
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
-          
+
           ui.downloadUrl = downloadUrl.value;
         })
         .catch((err) => {
@@ -1774,7 +1777,7 @@ export default defineComponent({
       countDay01.value = parseInt(countDayString.value.substr(0, 1));
       countDay02.value = parseInt(countDayString.value.substr(1, 1));
     });
-    
+
       watch(
       () => route.query,
       (newQuery) => {
@@ -2308,7 +2311,7 @@ export default defineComponent({
             display: block;
           }
         }
-        &__title { 
+        &__title {
           color: #000000;
           font-size: 20px;
           font-weight: 900;

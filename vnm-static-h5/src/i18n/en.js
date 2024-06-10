@@ -58,8 +58,9 @@ export default {
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
+    menu_hashgame: "Hash Game",
     menu_cockfighting: "Cock Fighting",
-    menu_minigame: "Mini Game",
+    menu_minigame: "Others",
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
@@ -454,7 +455,7 @@ export default {
     please_select_query_time: "Please select the query time",
 
     // promo -- upgradeHongbao
-    congrats: "Congratulations",
+    hong_congrats: "Congratulations",
     claim: "Claim",
 
     // slot

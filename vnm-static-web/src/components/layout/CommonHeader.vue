@@ -68,7 +68,7 @@
             <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
             <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
+            <FishingMenu ref="el" v-if="selectedMenu === 'hashgame'" @load-modal="openGame" />
             <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />
             <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
@@ -540,9 +540,9 @@ export default defineComponent({
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
           { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
           { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
-          { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
+          { code: "hashgame", name: t('menu.hashgame'), enName: "Hash Game", path: "/hashgame", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
-          { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
+          { code: "minigame", name: t('menu.minigame'), enName: "Others", path: "/minigame", submenu: true },
           {
             code: "Promotion",
             name: t('menu.promotion'),
@@ -564,7 +564,7 @@ export default defineComponent({
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
           { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
           { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
-          { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
+          { code: "hashgame", name: t('menu.hashgame'), enName: "Hash Game", path: "/hashgame", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
           {

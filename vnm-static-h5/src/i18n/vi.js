@@ -61,8 +61,9 @@ export default {
     menu_lottery: "Xổ Số",
     menu_slots: "Nổ Hũ",
     menu_fishing: "Bắn Cá",
+    menu_hashgame: "Hash Game",
     menu_cockfighting: "ĐÁ GÀ",
-    menu_minigame: "Mini Game",
+    menu_minigame: "Khác",
     menu_rebate: "Hoàn Trả",
 
     // notify msg
@@ -460,7 +461,7 @@ export default {
     please_select_query_time: "Vui lòng chọn thời gian truy vấn",
 
     // promo -- upgradeHongbao
-    congrats: "Chúc mừng",
+    hong_congrats: "Chúc mừng",
     claim: "Nhận",
     // slot
     slot_search: "Tìm kiếm trò chơi",
@@ -1442,7 +1443,7 @@ export default {
       partner: "Đối tác",
       paymentMethod: "Phương thức"
     },
-    // Welcome 
+    // Welcome
     firstSlide: "TẢI XUỐNG ỨNG DỤNG",
     depositNow: "GỬI TIỀN NGAY",
     firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của TF88",
