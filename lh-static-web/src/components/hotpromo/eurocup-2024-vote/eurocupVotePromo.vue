@@ -20,7 +20,7 @@
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
       <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
-      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span></div>
+      <div class="right-count">我的投票次数: <span id="myVotes">{{ votesData.myVotes }} 次</span><span class="vote-record-btn" @click="isVoteRecordModalVisible = true" v-if="votesData?.votesRecord?.data?.length">【投票记录】</span></div>
       <div class="country-list" id="countrylist">
         <div id="btn_1" class="country-item" v-for="votesListItem in votesData.votesList">
           <div class="country-item-bottom-pattern"></div>
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="table-details pattern-wrapper">
+    <div class="table-details pattern-wrapper" style="display:none">
       <div class="table-title">投票历史</div>
       <div class="pattern-wrapper-bottom"></div>
       <table id="rankTable">
@@ -159,10 +159,33 @@
         </div>
       </el-form>
     </el-dialog>
+
+    <el-dialog align-center v-model="isVoteRecordModalVisible" width="700" style="background-color:#00192B;">
+      <div class="cast-vote-container">    
+        <div class=title>投票历史</div>
+        <div class="vote-records">
+          <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
+            <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
+            <div>2024/05/24 16:54</div>
+          </div>
+        </div>
+        <div class="pagination-wrapper">
+          <el-pagination
+            class="vote-record-pagination"
+            v-model:current-page="votesData.votesRecord.current"
+            :page-size="votesData.votesRecord.pageSize"
+            :small="small"
+            background
+            layout="total, prev, pager, next"
+            :total="votesData.votesRecord.data.length"
+          />
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { onMounted, ref, defineComponent, reactive } from "vue";
+import { onMounted, ref, defineComponent, reactive, computed } from "vue";
 import { poolPrizeVoteInit, poolPrizeCastVote } from "@/api/promotion/poolPrizeVote";
 import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
@@ -195,6 +218,7 @@ export default defineComponent({
     const castVoteFormRef = ref();
     const isSubmitting = ref(false);
     const isCastVoteModalVisible = ref(false);
+    const isVoteRecordModalVisible = ref(false);
     const castVoteFormData = reactive({
       teamId: undefined,
       teamName: '',
@@ -205,7 +229,11 @@ export default defineComponent({
       award: 0,
       myVotes: 0,
       votesList: [],
-      votesRecord: [],
+      votesRecord: {
+        data: [],
+        pageSize: 6,
+        current: 1
+      },
     });
     const castVote = ({ teamId, teamName, teamNameLocal }) => {
       isCastVoteModalVisible.value = true;
@@ -248,10 +276,36 @@ export default defineComponent({
       })
     }
 
+    const votesRecordChangePage = (page) => {
+      if(page < 1) {
+        votesData.value.votesRecord.current = 1;  
+      } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
+        votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
+      } else {
+        votesData.value.votesRecord.current = page;
+      }
+    }
+
+    const paginatedVoteRecords = computed(() => {
+      const votesRecord = votesData.value.votesRecord;
+      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize); 
+    })
+
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          votesData.value = res.data;
+          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+            const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
+            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
+          });
+
+          votesData.value = {
+            ...res.data,
+            votesRecord: {
+              ...votesData.value.votesRecord,
+              data: votesRecord,
+            }
+          }
         }
       });
     }
@@ -265,6 +319,7 @@ export default defineComponent({
     return {
       votesData,
       isCastVoteModalVisible,
+      isVoteRecordModalVisible,
       castVoteFormData,
       castVoteFormValidationRules,
       castVoteFormRef,
@@ -273,7 +328,9 @@ export default defineComponent({
       isSubmitting,
       convertToCommaAmount,
       store,
-      imgURL
+      imgURL,
+      paginatedVoteRecords,
+      votesRecordChangePage
     }
   }
 });
@@ -283,7 +340,84 @@ export default defineComponent({
 
 </script>
 
+<style lang="scss">
+.cast-vote-container {
+  .el-pagination.is-background .el-pager li, .el-pagination.is-background .btn-prev, .el-pagination.is-background .btn-next {
+    border: 2px solid #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: transparent;
+  }
+
+  .el-pagination__total {
+    color: #fff;
+  }
+
+  .el-pagination.is-background .el-pager li.is-active {
+    color: #102628;
+    background-color: #00EAFE;
+    border: 2px solid #00EAFE;
+    font-weight: bold;
+  } 
+}
+</style>
+
 <style scoped lang="scss">
+.cast-vote-container {
+  font-family: PingFang SC;
+  
+  .title {
+    font-size: 20px;
+    text-align: center;
+    color: #00E9FE;
+    }
+    
+    .vote-records {
+      display: grid;
+      padding: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+
+      @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+      }
+
+      .vote-record-item {
+        background-color: #0A243E;
+        border: 2px solid #00EAFE4D;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        white-space: nowrap;
+        color: #fff;
+        padding: 15px 33px;
+        gap: 40px;
+  
+        .vote-record-flag-wrapper {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+
+          .vote-record-item-flag {
+            width: 35px;
+            height: 25px;
+          }
+        }
+      }
+    }
+
+    .pagination-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+}
 .center-numbers {
   margin: 0px auto;
   position: relative;
@@ -469,6 +603,14 @@ export default defineComponent({
   color: #fff;
   span {
     color: #00E9FE;
+  }
+
+  .vote-record-btn {
+    cursor: pointer;
+
+    &:hover {
+      color: #b4f9ff;
+    }
   }
 }
 
