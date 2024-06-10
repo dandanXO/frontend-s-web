@@ -192,7 +192,7 @@
                 <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>VIP</q-item-label>
+                <q-item-label>{{ $t("settings.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -203,7 +203,7 @@
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  Message
+                  {{ $t("settings.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -213,7 +213,7 @@
                 <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Order</q-item-label>
+                <q-item-label>{{ $t("settings.order") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -224,7 +224,7 @@
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Bank</q-item-label>
+                <q-item-label>{{ $t("settings.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -233,7 +233,7 @@
                 <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Log out</q-item-label>
+                <q-item-label>{{ $t("settings.logout") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>

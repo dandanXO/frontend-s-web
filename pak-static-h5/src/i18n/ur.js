@@ -6,7 +6,9 @@ export default {
   header: {
     login: "لاگ ان",
     register: "رجسٹر",
-    download: "ڈاؤن لوڈ کریں"
+    download: "ڈاؤن لوڈ کریں",
+    withdraw: "واپسی",
+    personalCenter: "شخصی مرکز"
   },
   bottomNav: {
     home: "گھر/ہوم",
@@ -32,6 +34,8 @@ export default {
     email: "ای میل",
     email_placeholder: "براہ کرم ای میل درج کریں",
     email_rules_01: "براہ کرم ای میل درج کریں",
+    email_rules_02: "براہ کرم درست ای میل درج کریں",
+    send: "بھیجیں",
     verificationCode: "تصدیقی کوڈ",
     verificationCode_placeholder: "براہ کرم تصدیقی کوڈ درج کریں",
     verificationCode_rules_01: "براہ کرم تصدیقی کوڈ درج کریں",
@@ -58,12 +62,49 @@ export default {
     withdrawalAmount_rules_02: "واپسی کی رقم 0 سے زیادہ ہونی چاہئے",
     withdrawalAmount_rules_03: "واپسی کی رقم ناکافی ہے",
     withdrawalAmount_rules_04: "واپسی کی رقم کے درمیان ہونی چاہئے",
-    fullName: "پورا نام"
+    fullName: "پورا نام",
+    fullName_placeholder: "اپنا پورا نام درج کریں",
+    fullName_rules_01: "براہ کرم اپنا پورا نام درج کریں",
+    fullName_rules_02: "براہ کرم ایک درست پورا نام درج کریں",
+    changePassword: "پاس ورڈ تبدیل کریں",
+    currentPassword: "موجودہ پاس ورڈ",
+    currentPassword_placeholder: "موجودہ پاس ورڈ درج کریں",
+    currentPassword_rules_01: "براہ کرم موجودہ پاس ورڈ درج کریں",
+    pleaseCompleteKYC: "براہ کرم KYC مکمل کریں",
+    bindEmail: "ای میل بائنڈ کریں",
+    code: "کوڈ",
+    code_placeholder: "تصدیقی کوڈ درج کریں",
+    code_rules_01: "تصدیقی کوڈ درکار ہے",
+    captchaCodeCheck: "کیپچا کوڈ چیک",
+    captchaCode: "کیپچا کوڈ",
+    captchaCode_placeholder: "کیپچا کوڈ درج کریں",
+    captchaCode_rules_01: "براہ کرم کیپچا کوڈ درج کریں",
+    captchaCode_rules_02: "کیپچا کوڈ کی لمبائی 4 حروف ہے",
+    virtualWalletType: "ورچوئل والٹ کی قسم",
+    virtualWallet: "ورچوئل والٹ",
+    virtualWallet_placeholder: "براہ کرم ورچوئل والٹ درج کریں",
+    virtualWallet_rules_01: "براہ کرم ورچوئل والٹ درج کریں",
+    virtualWallet_rules_02: "فون نمبر '03' سے شروع ہونا چاہئے",
+    virtualWallet_rules_03: "ورچوئل والٹ میں 11 ہندسے ہونے چاہئیں",
+    virtualWallet_warmReminder:
+      "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
+    virtualWallet_untie: "براہ کرم ورچوئل والٹ کھولیں",
+    notMatch: " میچ نہیں"
   },
   btn: {
     confirm: "تصدیق کریں",
     submit: "جمع کرائیں",
-    addNewAccount: "نیا اکاؤنٹ شامل کریں"
+    addNewAccount: "نیا اکاؤنٹ شامل کریں",
+    updated: "اپ ڈیٹ کیا گیا",
+    updating: "اپ ڈیٹ کیا جا رہا ہے...",
+    addVirtualWallet: "ورچوئل والٹ شامل کریں",
+    untie: "کھولیں"
+  },
+  notify: {
+    noRecord: "کوئی ریکارڈ نہیں",
+    haventFoundAnyRecord: "کوئی ریکارڈ نہیں ملا",
+    updatedSuccessfully: "کامیابی سے اپ ڈیٹ کیا گیا",
+    emailVerificationSent: "ای میل کی تصدیق بھیجی گئی ہے"
   },
   sideNav: {
     inviteToEarn: "دعوت دیں اور کمائیں",
@@ -108,7 +149,8 @@ export default {
     message: "پیغام",
     feedback: "فیڈبیک",
     vip: "VIP",
-    logout: "لاگ آوٹ"
+    logout: "لاگ آوٹ",
+    depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
   },
   deposit: {
     selectAmount: "رقم منتخب کریں"
@@ -119,6 +161,48 @@ export default {
     withdrewAmount: "واپس لی گئی رقم",
     dailyLimit: "یومیہ حد",
     remainWagers: "باقی شرطیں"
+  },
+  bank: {
+    virtualWallet: "ورچوئل والٹ",
+    virtualAccount: "ورچوئل اکاؤنٹ"
+  },
+  vip: {
+    receiveMonthlyRewards: "ماہانہ انعامات وصول کریں",
+    received: "وصول کیا",
+    receive: "وصول کریں",
+    accumulateDeposit: "جمع شدہ جمع",
+    reward: "انعام",
+    levelUpgrade: "سطح اپ گریڈ",
+    monthly: "ماہانہ",
+    dailyWithdrawal: "یومیہ واپسی",
+    limit: "حد",
+    vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
+    upgrade: "اپ گریڈ",
+    experience: "تجربہ",
+    rewards: "انعامات",
+    monthly: "ماہانہ",
+    vipTable_txt:
+      "ایک بار جمع شدہ رقم اپ گریڈ کی ضروریات پوری کرتی ہے، آپ کا VIP سطح فوراً بلند کیا جائے گا، اور متعلقہ اپ گریڈ انعامات جاری کیے جائیں گے۔"
+  },
+  earnMoney: {
+    bonusPotArrived: "بونس پوٹ آ گیا",
+    myTotalIncome: "میری کل آمدنی",
+    myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
+    invite: "دعوت دیں",
+    topUp: "اپ ڈاؤن",
+    bet: "شرط لگائیں",
+    eligibleRefer: "اہل ریفر",
+    inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
+    howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
+    inviteList_01: "دوستوں کو دعوتی لنک کے ذریعے دعوت دیں",
+    inviteList_02: "لنک کے ذریعے رجسٹر کریں",
+    inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
+    copyLink: "لنک کاپی کریں",
+    friendCount: "دوست کی تعداد",
+    inviteBonus: "دعوت کی مکافات",
+    totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
+    player: "پلیئر",
+    money: "پیسہ"
   },
   error: {
     101: "Không tìm thấy nền tảng",

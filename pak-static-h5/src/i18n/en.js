@@ -6,7 +6,9 @@ export default {
   header: {
     login: "Login",
     register: "Register",
-    download: "Download"
+    download: "Download",
+    withdraw: "Withdraw",
+    personalCenter: "Personal Center"
   },
   bottomNav: {
     home: "Home",
@@ -32,6 +34,8 @@ export default {
     email: "Email",
     email_placeholder: "Please enter email",
     email_rules_01: "Please insert email",
+    email_rules_02: "Please enter valid email",
+    send: "Send",
     verificationCode: "Verification Code",
     verificationCode_placeholder: "Please enter Verification Code",
     verificationCode_rules_01: "Please insert Verification Code",
@@ -58,12 +62,49 @@ export default {
     withdrawalAmount_rules_02: "Withdraw Amount Must Be Greater Than 0",
     withdrawalAmount_rules_03: "Withdraw Amount Insufficient",
     withdrawalAmount_rules_04: "Withdraw Amount Must In Between",
-    fullName: "Full Name"
+    fullName: "Full Name",
+    fullName_placeholder: "Enter your full name",
+    fullName_rules_01: "Please insert your full name",
+    fullName_rules_02: "Please enter a Valid full name",
+    changePassword: "Change Password",
+    currentPassword: "Current Password",
+    currentPassword_placeholder: "Enter Current Password",
+    currentPassword_rules_01: "Please insert current password",
+    pleaseCompleteKYC: "Please Complete KYC",
+    bindEmail: "Bind Email",
+    code: "Code",
+    code_placeholder: "Enter verification code",
+    code_rules_01: "Verification code is required",
+    captchaCodeCheck: "Captcha Code Check",
+    captchaCode: "Captcha Code",
+    captchaCode_placeholder: "Enter Captcha Code",
+    captchaCode_rules_01: "Please insert captcha code",
+    captchaCode_rules_02: "Captcha code length is 4 characters",
+    virtualWalletType: "Virtual Wallet Type",
+    virtualWallet: "Virtual Wallet",
+    virtualWallet_placeholder: "Please insert virtual wallet",
+    virtualWallet_rules_01: "Please insert virtual wallet",
+    virtualWallet_rules_02: "The phone number must start with '03'",
+    virtualWallet_rules_03: "The virtual wallet must have 11 digits",
+    virtualWallet_warmReminder:
+      "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
+    virtualWallet_untie: "Please enter untie virtual wallet",
+    notMatch: " not match"
   },
   btn: {
     confirm: "Confirm",
     submit: "Submit",
-    addNewAccount: "Add New Account"
+    addNewAccount: "Add New Account",
+    updated: "Updated",
+    updating: "Updating...",
+    addVirtualWallet: "Add virtual wallet",
+    untie: "Untie"
+  },
+  notify: {
+    noRecord: "No Record",
+    haventFoundAnyRecord: "Haven’t found any record",
+    updatedSuccessfully: "Updated successfully",
+    emailVerificationSent: "Email verification sent"
   },
   sideNav: {
     inviteToEarn: "Invite to Earn",
@@ -108,7 +149,8 @@ export default {
     message: "Message",
     feedback: "Feedback",
     vip: "VIP",
-    logout: "LOG OUT"
+    logout: "LOG OUT",
+    depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
   },
   deposit: {
     selectAmount: "Select Amount"
@@ -119,6 +161,48 @@ export default {
     withdrewAmount: "Withdrew Amount",
     dailyLimit: "Daily Limit",
     remainWagers: "Remain Wagers"
+  },
+  bank: {
+    virtualWallet: "Virtual Wallet",
+    virtualAccount: "Virtual Account"
+  },
+  vip: {
+    receiveMonthlyRewards: "Receive monthly rewards",
+    received: "Received",
+    receive: "Receive",
+    accumulateDeposit: "Accummulate Deposit",
+    reward: "Reward",
+    levelUpgrade: "Level Upgrade",
+    monthly: "Monthly",
+    dailyWithdrawal: "Daily Withdrawal",
+    limit: "Limit",
+    vipStatus_txt: "VIP status can be upgraded by accumulating monthly deposits",
+    upgrade: "Upgrade",
+    experience: "Experience",
+    rewards: "Rewards",
+    monthly: "Monthly",
+    vipTable_txt:
+      "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
+  },
+  earnMoney: {
+    bonusPotArrived: "Bonus Pot Arrived",
+    myTotalIncome: "My Total Income",
+    myTotalNumberOfInvites: "My Total Number Of Invites",
+    invite: "Invite",
+    topUp: "Top Up",
+    bet: "Bet",
+    eligibleRefer: "Eligible Refer",
+    inviteFriendsViaLink: "Invite friends via link",
+    howToGetInvitationBonus: "How to get invitation bonus",
+    inviteList_01: "Invite friends via invitation link",
+    inviteList_02: "Register via link",
+    inviteList_03: "Complete deposit after registration",
+    copyLink: "Copy Link",
+    friendCount: "Friend Count",
+    inviteBonus: "Invite Bonus",
+    totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
+    player: "Player",
+    money: "Money"
   },
   error: {
     101: "Platform not found",

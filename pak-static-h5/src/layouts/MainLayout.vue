@@ -310,7 +310,7 @@ export default defineComponent({
         } else if (route.path === "/account/profile") {
           prevPage.value = "/account";
           hasPage.value = true;
-          pageName.value = "Personal Center";
+          pageName.value = t("header.personalCenter");
         } else if (route.path === "/account/records") {
           prevPage.value = "/account";
           hasPage.value = true;

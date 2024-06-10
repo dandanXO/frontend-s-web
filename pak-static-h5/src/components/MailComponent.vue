@@ -51,6 +51,7 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import moment from "moment";
+import { t } from "src/boot/lang";
 
 export default defineComponent({
   props: {

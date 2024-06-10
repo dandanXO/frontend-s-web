@@ -1,7 +1,7 @@
 <template>
   <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">

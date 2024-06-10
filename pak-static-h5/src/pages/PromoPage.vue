@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promotion" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('settings.promo')" />
+      <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
 

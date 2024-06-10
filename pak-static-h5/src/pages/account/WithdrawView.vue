@@ -267,7 +267,7 @@
           :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           @click="submitWithdraw"
         >
-          SUBMIT
+        {{ $t("btn.submit") }}
         </q-btn>
       </div>
     </template>

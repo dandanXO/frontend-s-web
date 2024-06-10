@@ -44,7 +44,7 @@
     </q-tabs> -->
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
