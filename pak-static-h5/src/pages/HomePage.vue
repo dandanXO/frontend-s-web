@@ -2254,7 +2254,6 @@ watch(
   }
 }
 
-
 .midd {
   width: 100%;
   margin-top: 10px;
@@ -2294,7 +2293,8 @@ watch(
     span {
       margin-right: 10px;
       cursor: pointer;
-      color: #5F6061;
+      // color: #5F6061;
+      color: #bacef1;
       font-family: "Poppins";
       font-size: 12px;
       font-weight: 400;
@@ -2816,12 +2816,11 @@ watch(
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
 
-  &:active{
+  &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
   }
 }
-
 
 .home-divider {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
