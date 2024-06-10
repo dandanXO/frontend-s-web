@@ -77,6 +77,22 @@
           maxlength="40"
           :placeholder="t('fields.loginName')"
         />
+        <el-select
+          v-model="request.paymentCard"
+          size="small"
+          :placeholder="t('fields.paymentCard')"
+          class="filter-item"
+          style="width: 250px; margin-left: 10px"
+          default-first-option
+          @focus="loadPaymentCards"
+        >
+          <el-option
+            v-for="item in paymentCardList.list"
+            :key="item.id"
+            :label="item.identifyCode"
+            :value="item.id"
+          />
+        </el-select>
         <el-button
           style="margin-left: 20px"
           icon="el-icon-search"
@@ -274,6 +290,19 @@
           align="center"
           min-width="120"
         />
+        <el-table-column
+          prop="paymentCard"
+          :label="t('fields.paymentCard')"
+          align="center"
+          min-width="200"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.paymentCard === null">-</span>
+            <span v-if="scope.row.paymentCard !== null">
+              {{ scope.row.paymentCard }}
+            </span>
+          </template>
+        </el-table-column>
         <el-table-column
           :label="t('fields.operate')"
           align="center"
