@@ -143,7 +143,7 @@
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
         <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-whatsapp.png" />
-        <div>Service</div>
+        <div>WhatsApp</div>
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
