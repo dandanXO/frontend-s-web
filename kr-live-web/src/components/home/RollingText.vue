@@ -67,6 +67,7 @@ const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
             height: 24px;
             display: flex;
             align-items: center;
+            min-width: 100px;
 
             @media (min-width: 769px) {
                 height: 32px;
@@ -74,12 +75,13 @@ const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
 
             .box {
                 color: #00FFFF;
-                width: 48px;
+                width: 100%;
                 font-size: 16px;
                 line-height: 22.4px;
                 border-radius: 2px;
                 display: flex;
                 justify-content: center;
+                white-space: nowrap;
 
                 @media (min-width: 769px) {
                     width: 60px;
