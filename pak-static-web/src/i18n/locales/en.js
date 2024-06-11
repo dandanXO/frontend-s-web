@@ -6,10 +6,13 @@ export default {
         casino: "casino",
         promotion: "promotions"
       },
-      downloadApp: "DOWNLOAD APP",
+      downloadApp: {
+        content: "DOWNLOAD",
+        highlight: "APP"
+      },
       inviteToEarn: {
-        title: "Invite to Earn",
-        description: "Simply share your exclusive QR code"
+        content: "INVITE TO",
+        highlight: "EARN"
       },
       navigation: {
         slot: "Slots",
