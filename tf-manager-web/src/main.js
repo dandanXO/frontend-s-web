@@ -64,6 +64,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_KRW_SOCKET;
     siteId = 'krw';
     break;
+  case process.env.VUE_APP_PAK_HOST:
+    baseApi = process.env.VUE_APP_PAK_API;
+    baseWss = process.env.VUE_APP_PAK_SOCKET;
+    siteId = 'pak';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
