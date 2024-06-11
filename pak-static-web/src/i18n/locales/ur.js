@@ -6,10 +6,13 @@ export default {
         casino: "کسینو",
         promotion: "پرومو"
       },
-      downloadApp: "App ڈاؤن لوڈ کریں",
+      downloadApp: {
+        content: "ڈاؤن لوڈ کریں",
+        highlight: "ایپ"
+      },
       inviteToEarn: {
-        title: "پیسے کمانے کیلئےدعوت دیں",
-        description: "بس اپنا خاص QR کوڈ شیئر کریں"
+        content: "مدعو کریں",
+        highlight: "کمائیں"
       },
       navigation: {
         live: "لائیو کیسینو",
