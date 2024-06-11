@@ -441,6 +441,7 @@ const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const LOGIN_USER_NAME = computed(() => store.state.user.name)
+const site = ref(null)
 const userTypeList = computed(() => {
   if (
     store.state.user.userType === MANAGER.value ||
@@ -483,6 +484,7 @@ const request = reactive({
   name: null,
   enable: null,
   siteId: null,
+  role: null
 })
 const options = ref([])
 
@@ -536,7 +538,8 @@ let chooseUser = []
 function resetQuery() {
   request.name = null
   request.enable = null
-  request.siteId = null
+  request.siteId = site.value ? site.value.id : null
+  request.role = null
 }
 
 function handleSelectionChange(val) {
@@ -592,6 +595,9 @@ function showDialog(type) {
     form.queryNumber = 10
     form.vcallId = null;
     uiControl.dialogTitle = t('fields.addUser')
+    uiControl.userTypeSelect = false
+    uiControl.siteSelectVisible = false
+    uiControl.rolesSelect = true
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editUser')
   } else {
@@ -621,7 +627,6 @@ function showEdit(user) {
       }
     }
     form.id = user.id;
-    // console.log(form);
   })
 }
 
@@ -750,12 +755,15 @@ watch(
     await loadRoles(form.siteId)
     if (uiControl.dialogType === 'CREATE') {
       form.roles = null
+      if (value) {
+        uiControl.rolesSelect = false
+      }
     } else if (uiControl.dialogType === 'EDIT') {
       if (oldValue && value && value !== oldValue) {
         form.roles = null;
       }
+      uiControl.rolesSelect = false
     }
-    uiControl.rolesSelect = false
   }
 )
 watch(
@@ -777,15 +785,17 @@ watch(
 )
 
 onMounted(async () => {
-  await loadRoles()
-  loadUser()
-  loadSites()
-  loadNetPhone()
+  await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     uiControl.userTypeSelect = true
     uiControl.siteSelectVisible = false
     uiControl.rolesSelect = false
+    site.value = siteList.list.find(s => s.siteName === store.state.user.siteName)
+    request.siteId = site.value.id
   }
+  await loadRoles()
+  await loadUser()
+  await loadNetPhone()
 })
 </script>
 

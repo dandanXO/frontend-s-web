@@ -133,19 +133,24 @@ onMounted(() => {
   }
   .news-listing {
     // font-family: 'Roboto';
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     .news {
+    width: 48%;
       display: flex;
       gap: 20px;
       &:first-child {
-        grid-column: span 2;
+        width: 100%;
         .news-image {
           width: 556px;
           height: 240px;
         }
         .news-contents {flex: 4;
+        .news-content {
+        
+        height: 150px;
+        }
         }
       }
       .news-image {
@@ -167,9 +172,11 @@ onMounted(() => {
           color: #444444;
           font-size: 20px;
           font-weight: 700;
+          height: 30px;
+          overflow: hidden;
         }
         .news-content {
-          height: 92px;
+        height: 60px;
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;

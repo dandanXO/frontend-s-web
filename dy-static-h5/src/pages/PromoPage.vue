@@ -90,9 +90,19 @@
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
                   dy2gamesteps: selectedPromo.promoCode === 'dy2-game-steps',
-                  cs2: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
+                  cs2:
+                    selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+                    selectedPromo.promoCode === 'dy2-cs2-blast-2024',
                   msi: selectedPromo.promoCode === 'dy2-msi-promo',
-                  dyEurocupHongbao: selectedPromo.promoCode === 'dy-eurocup-hongbao'
+                  dyEurocupHongbao: selectedPromo.promoCode === 'dy2-eurocup-hongbao',
+                  lplSummer2024: selectedPromo.promoCode === 'dy2-lpl-summer24',
+                  eurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
+                  duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
+                }"
+                :style="{
+                  backgroundImage: selectedPromo?.mobileImgBackgroundUrl
+                    ? `url(${imgURL + selectedPromo.mobileImgBackgroundUrl})`
+                    : 'none'
                 }"
               >
                 <div v-if="selectedPromo.hasPromo || selectedPromo.id === 259">
@@ -113,7 +123,10 @@
                     slot: selectedPromo.promoType.toLowerCase() === 'slot game'
                   }"
                 >
-                  <div v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241" v-html="selectedPromo.pageContent"></div>
+                  <div
+                    v-if="selectedPromo.id !== 259 && selectedPromo.id !== 241"
+                    v-html="selectedPromo.pageContent"
+                  ></div>
                 </div>
               </div>
             </div>
@@ -714,6 +727,30 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.eurocupManual {
+          margin: 0;
+          width: 100%;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+
+        &.duanwujie {
+          margin: 0px;
+          width: 100%;
+          background-size: 100% 100% !important;
+          padding-top: 0px !important;
+        }
+
+        &.lplSummer2024 {
+          margin: 0;
+          width: 100%;
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+
         &.dyEurocupHongbao {
           margin: 0;
           width: 100%;
@@ -762,8 +799,8 @@ export default defineComponent({
           padding: 10px;
           background: url(../assets/images/promotion/hotpromo/cs2/bg.png) no-repeat center center;
           p {
-            padding: 25px;
-            color: #7f4c00;
+            padding: 12px;
+            color: #00dede;
             font-family: Microsoft Yahei UI;
             max-width: 100%;
           }
@@ -784,7 +821,7 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 15px 18px;
 
           li {
             margin-bottom: 20px;
@@ -807,7 +844,7 @@ export default defineComponent({
             text-align: center;
             background-color: #ffffff;
             border: 1px solid #d0d1d3;
-            white-space: pre-wrap;
+            white-space: normal;
           }
         }
 

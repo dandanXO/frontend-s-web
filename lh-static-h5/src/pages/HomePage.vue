@@ -4,12 +4,12 @@
       <q-icon name="close" @click="closeTopBox" />
       <img class="headicon" src="../assets/logo-1.png" alt="download-logo" />
       <div class="download-txt-container">
-        <span class="download-title">雷火电竞app下载</span>
+        <span class="download-title">雷火电竞 app 下载</span>
         <span>亚洲第一实时滚球</span>
       </div>
       <div class="buttons">
         <div class="buttons">
-          <q-btn :href="`${downloadUrl}`" target="_blank" label="立即下载" color="brightbtn" class="top-btn" />
+          <q-btn @click="openDownloadAppLink" label="立即下载" color="brightbtn" class="top-btn" />
         </div>
       </div>
     </div>
@@ -19,10 +19,7 @@
     <div class="header-left">
       <img alt="logo" src="../assets/logo-1.png" />
     </div>
-    <div
-      class="header-right"
-      @click="() => (hasDrawer = !hasDrawer)"
-    >
+    <div class="header-right" @click="() => (hasDrawer = !hasDrawer)">
       <img
         class="btn-pointer"
         :src="
@@ -207,6 +204,22 @@
           />
         </template>
       </div>
+
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/casual-icon-active.png" />
+        </template>
+        <template v-else>
+          <img
+            :src="
+              $q.dark.isActive
+                ? require('../assets/images/home/games/casual-icon-dark.png')
+                : require('../assets/images/home/games/casual-icon.png')
+            "
+          />
+        </template>
+      </div>
+
       <!--
       <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
@@ -408,48 +421,14 @@
         </template>
       </div>
 
-      <!--
-      <div class="game-lists fade-in-image" id="others-lists">
-
-        <template v-for="(item, index) in lottery" :key="index">
+      <div class="game-lists " id="casual-lists">
+        <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
-            @click="playGame(item.gameName, item.code, item.gameCode)"
+            @click="playGame(item.gameName, item.code,0,  item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
-
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-label"></div>
-              <div class="platform-content">
-                <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
-                </div>
-                <div class="platform-title">{{ item.title }}</div>
-                <div class="platform-subtitle">{{ item.subtitle }}</div>
-                <div class="platform-rebate">
-                  最高返水
-                  <span>8%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-
-        <template v-for="(item, index) in fishing" :key="index">
-          <div
-            class="platform-block"
-            @click="playGame(item.gameName, item.code, 7202)"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
 
             <div
               class="platform-img-frame"
@@ -473,7 +452,6 @@
           </div>
         </template>
       </div>
-      -->
 
       <div class="game-lists" id="lottery-lists">
         <template v-for="(item, index) in lottery" :key="index">
@@ -507,39 +485,6 @@
         </template>
       </div>
 
-      <!-- <div class="game-lists" v-if="tab === 'slot'" id="slot-lists">
-      <template v-for="(item, index) in slot" :key="index">
-        <div
-          class="platform-block"
-          @click="router.push({ path: '/slot', query: { platform: item.code } })"
-          :class="item.underMaintenance === true ? 'maintenance' : ''"
-        >
-            <MaintenanceBox :item="item" :moment="moment(item.maintenanceStartTime)" />
-
-
-          <div
-            class="platform-img-frame"
-            :style="{
-              'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-            }"
-          >
-            <div class="platform-label"></div>
-            <div class="platform-content">
-              <div class="platform-logo">
-                <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
-              </div>
-              <div class="platform-title">{{ item.title }}</div>
-              <div class="platform-subtitle">{{ item.subtitle }}</div>
-              <div class="platform-rebate">
-                最高返水
-                <span>8%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </template>
-      </div> -->
-
       <div class="game-lists" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
@@ -571,284 +516,65 @@
           </div>
         </template>
       </div>
-
-      <!--      <div class="index-platform-container" style="overflow: hidden">-->
-      <!--        &lt;!&ndash; Main Swiper -> pass thumbs swiper instance &ndash;&gt;-->
-      <!--        <swiper-->
-      <!--          :modules="[Thumbs, Controller]"-->
-      <!--          :thumbs="{ swiper: thumbsSwiper }"-->
-      <!--          :direction="'vertical'"-->
-      <!--          slides-per-view="auto"-->
-      <!--          :rewind="true"-->
-      <!--          :scrollbar="{ draggable: true }"-->
-      <!--          @slide-change-transition-end="onSlideChange"-->
-      <!--          @swiper="setFirstSwiper"-->
-      <!--          :controller="{ control: firstSwiper }"-->
-      <!--          class="secondSwiper"-->
-      <!--          id="btm-second-swiper"-->
-      <!--        >-->
-      <!--          <swiper-slide id="id-esport-slide" v-for="(item, i) in esport" :key="i" :class="'esport-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-      <!--          <swiper-slide id="id-sport-slide" v-for="(item, i) in sport" :key="i" :class="'sport-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-      <!--          <swiper-slide id="id-live-slide" v-for="(item, i) in livecasino" :key="i" :class="'live-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-      <!--          <swiper-slide id="id-poker-slide" v-for="(item, i) in poker" :key="i" :class="'poker-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-
-      <!--          <swiper-slide id="id-others-slide" v-for="(item, i) in slot" :key="i" :class="'others-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-      <!--          <swiper-slide v-for="(item, i) in lottery" :key="i" :class="'others-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, item.gameCode)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-
-      <!--          <swiper-slide v-for="(item, i) in fishing" :key="i" :class="'others-' + i">-->
-      <!--            <div-->
-      <!--              class="platform-block"-->
-      <!--              @click="playGame(item.gameName, item.code, 7202)"-->
-      <!--              :class="item.underMaintenance === true ? 'maintenance' : ''"-->
-      <!--            >-->
-      <!--              <div class="maintenance-box" v-if="item.underMaintenance === true">-->
-      <!--                <p>维护中</p>-->
-      <!--                <p v-if="item.maintenanceStartTime && item.maintenanceEndTime" class="small-size">-->
-      <!--                  维护时间: {{ moment(item.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} - -->
-      <!--                  {{ moment(item.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}-->
-      <!--                </p>-->
-      <!--                <p class="small-size">请先前往其他场馆娱乐</p>-->
-      <!--              </div>-->
-
-      <!--              <div-->
-      <!--                class="platform-img-frame"-->
-      <!--                :style="{-->
-      <!--                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)-->
-      <!--              }"-->
-      <!--              >-->
-      <!--                <div class="platform-label"></div>-->
-      <!--                <div class="platform-content">-->
-      <!--                  <div class="platform-logo">-->
-      <!--                    <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />-->
-      <!--                  </div>-->
-      <!--                  <div class="platform-title">{{ item.title }}</div>-->
-      <!--                  <div class="platform-subtitle">{{ item.subtitle }}</div>-->
-      <!--                  <div class="platform-rebate">-->
-      <!--                    最高返水-->
-      <!--                    <span>8%</span>-->
-      <!--                  </div>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </swiper-slide>-->
-
-      <!--          <swiper-slide style="opacity: 0"></swiper-slide>-->
-      <!--        </swiper>-->
-      <!--      </div>-->
     </div>
   </div>
 
   <GameModal ref="allGames"></GameModal>
+
+  <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="gamePromo.length > 1 ? true : false"
+        v-model="rocketSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(game, i) in gamePromo"
+          :key="i"
+          :name="i"
+          @click="playGame(game.platform, game.platform, game.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
+  <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="floatPromo.length > 1 ? true : false"
+        v-model="promoSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="i"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
 
   <q-dialog
     width="100%"
@@ -919,14 +645,14 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal">
-    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
-      <q-card-section>
+    <q-card style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+      <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
         <div class="promo-banner-container">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
-          <div class="promo-banner-img" v-else>
+          <div class="promo-banner-img" @click="clickHomePopupImg(homePopupPath)" v-else>
             <img :src="homePopupImg" class="alert-img" />
           </div>
         </div>
@@ -936,7 +662,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onActivated, reactive, ref } from "vue";
+import { computed, defineComponent, onActivated, onUnmounted, reactive, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
@@ -944,7 +670,7 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-// import {RiVolumeUpLine} from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core"
 import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
@@ -959,6 +685,7 @@ import MaintenanceBox from "components/MaintenanceBox.vue";
 import UserProfile from "components/home/drawer/UserProfile.vue";
 import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
+import { onMounted } from "vue";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1036,6 +763,9 @@ export default defineComponent({
     };
 
     const onHomeScroll = (position) => {
+      if (isSelecting.value === true) {
+        return;
+      }
       // console.log("SCROLL");
       if (route.path === "/") {
         // console.log("SCROLL");
@@ -1053,7 +783,7 @@ export default defineComponent({
           var checkItem3 = document.getElementById("live-lists");
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("slot-lists");
-          // var checkItem6 = document.getElementById("others-lists");
+          var checkItem55 = document.getElementById("casual-lists");
           var checkItem6 = document.getElementById("lottery-lists");
           var checkItem7 = document.getElementById("fishing-lists");
 
@@ -1062,6 +792,7 @@ export default defineComponent({
           var positionTop3 = checkItem3.getBoundingClientRect().top - 335;
           var positionTop4 = checkItem4.getBoundingClientRect().top - 335;
           var positionTop5 = checkItem5.getBoundingClientRect().top - 335;
+          var positionTop55 = checkItem55.getBoundingClientRect().top - 335;
           var positionTop6 = checkItem6.getBoundingClientRect().top - 335;
           var positionTop7 = checkItem7.getBoundingClientRect().top - 335;
 
@@ -1084,6 +815,8 @@ export default defineComponent({
             tab.value = "fishing";
           } else if (0 > positionTop6 - 5) {
             tab.value = "lottery";
+          } else if (0 > positionTop55 - 5) {
+            tab.value = "casual";
           } else if (0 > positionTop5 - 5) {
             tab.value = "slot";
             gameLeftList.scrollTo({
@@ -1121,15 +854,13 @@ export default defineComponent({
       const scrollItem3 = document.getElementById("live-lists");
       const scrollItem4 = document.getElementById("poker-lists");
       const scrollItem5 = document.getElementById("slot-lists");
+      const scrollItem55 = document.getElementById("casual-lists");
       const scrollItem6 = document.getElementById("lottery-lists");
       const scrollItem7 = document.getElementById("fishing-lists");
 
       // console.log(tab.name);
       // var slideIndex = 0;
       if (tab === "esport") {
-        // slideIndex = 0;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("esport-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem1.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
@@ -1139,39 +870,26 @@ export default defineComponent({
           top: 0,
           behavior: "smooth"
         });
-
-        // rightPlatformContainer.value.scrollToSlide("esport-lists");
-        // rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
       }
       if (tab === "sport") {
-        // slideIndex = esport.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("sport-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem2.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
         });
       }
       if (tab === "live") {
-        // slideIndex = esport.value.length + sport.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("live-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem3.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
         });
       }
       if (tab === "poker") {
-        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("poker-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem4.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
         });
       }
       if (tab === "slot") {
-        // scrollToSlide("slot-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem5.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
@@ -1182,24 +900,26 @@ export default defineComponent({
           behavior: "smooth"
         });
       }
+      if (tab === "casual") {
+        gameRightPlatform.scrollTo({
+          top: scrollItem55.offsetTop - gameRightPlatform.offsetTop,
+          behavior: "smooth" // Optional: Use smooth scrolling
+        });
+
+        gameLeftList.scrollTo({
+          top: gameLeftList.scrollHeight,
+          behavior: "smooth"
+        });
+      }
       if (tab === "others") {
-        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("others-lists");
       }
       if (tab === "lottery") {
-        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("lottery-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem6.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
         });
       }
       if (tab === "fishing") {
-        // slideIndex = esport.value.length + sport.value.length + livecasino.value.length + poker.value.length;
-        // firstSwiper.value?.slideTo(slideIndex, 500);
-        // scrollToSlide("fishing-lists");
         gameRightPlatform.scrollTo({
           top: scrollItem7.offsetTop - gameRightPlatform.offsetTop,
           behavior: "smooth" // Optional: Use smooth scrolling
@@ -1223,7 +943,7 @@ export default defineComponent({
       const activeSlideClassName = activeSlide.className;
       // Check if the class name contains "sport," "slot," or "esport"
       // Array of keywords to check
-      const keywords = ["slot", "live", "sport", "esport", "slot", "lottery", "fishing"];
+      const keywords = ["slot", "live", "sport", "esport", "casual", "lottery", "fishing"];
 
       // Iterate over each keyword
       for (const keyword of keywords) {
@@ -1291,13 +1011,14 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
     const homePopupContent = ref("");
     const homePopupType = ref("");
+    const homePopupPath = ref("");
     const homePopupId = ref(0);
     const homePopupFrequency = ref(0);
     const homePopupFrequencyNum = ref(0);
@@ -1319,7 +1040,18 @@ export default defineComponent({
       };
       sessionStorage.setItem(key, JSON.stringify(item));
     };
-
+    const apiMockData = {
+      "code": 0,
+      "data": {
+        "title": "雷火 欧洲杯 TEST",
+        "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+        "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+        "content": null,
+        "type": "IMG",
+        "path": "?name=lh1-eurocup-2024",
+        "frequency": "EVERYDAY"
+      }
+    }
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
       if (!itemStr) {
@@ -1330,6 +1062,10 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
+          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+            res = apiMockData
+          }
+
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
@@ -1341,7 +1077,21 @@ export default defineComponent({
     };
 
     const isImpt = getWithExpiry("isImpt");
+    const clickHomePopupImg = (urlString)=>{
+      let regexUrl = new RegExp(/^(https:\/\/)/g)
+      if(regexUrl.test(urlString)){
+        // 跳轉
+        location.href = urlString;
+        return
+      }
+      let regexName = new RegExp(/^(name|\?name)/g)
+      if(regexName.test(urlString)){
+        //去優惠
+        router.push(`/promo${urlString}`);
+        return
+      }
 
+    }
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -1353,6 +1103,9 @@ export default defineComponent({
         api
           .get("/member/ads-popout")
           .then((res) => {
+            // if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+            //   res = apiMockData
+            // }
             if (res.code === 0) {
               // if (res.data[id] !== null) {
               if (isImpt === null) {
@@ -1371,9 +1124,10 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = process.env.IMAGE_CDN + "/adspopout/" + res.data["mobileImgUrl"];
+                homePopupImg.value = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
+                homePopupPath.value = res.data["path"];
                 homePopupId.value = res.data["id"];
                 homePopupFrequency.value = res.data["frequency"];
                 // if (homePopupImg.value) {
@@ -1450,7 +1204,7 @@ export default defineComponent({
                 espObj.title = "小艾电竞";
               }
               if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
+                espObj.title = "IM 电竞";
               }
               if (!espObj.title) {
                 espObj.title = espObj.code + "电竞";
@@ -1588,14 +1342,44 @@ export default defineComponent({
           esport.value = esport.value.sort((a, b) => {
             return a.sequence - b.sequence;
           });
+          // if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
+          var casualObj = {
+            id: 99,
+            name: "TFGaming",
+            code: "TFGaming",
+            status: "OPEN",
+            walletType: "SEAMLESS",
+            gameType: "CASUAL",
+            followType: "NEW",
+            underMaintenance: false,
+            maintenanceStartTime: null,
+            maintenanceEndTime: null,
+            alias: "小游戏",
+            sequence: 200,
+            title: "小游戏",
+            icon: "casual",
+            subtitle: "小游戏"
+          }
+          casuals.value.push(casualObj);
+          // }
         })
         .catch((err) => {});
     };
 
     const tab = ref("esport");
+    const isSelecting = ref(false);
+    const timerTimeout = ref(null);
     const selectTab = (item) => {
+      if (timerTimeout.value) {
+        clearTimeout(timerTimeout.value);
+      }
+      isSelecting.value = true;
       tab.value = item;
       setSelectedSwiper(item);
+
+      timerTimeout.value = setTimeout(() => {
+        isSelecting.value = false;
+      }, 750);
     };
 
     const liveTabs = ref("");
@@ -1654,8 +1438,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      if(banner.redirectUrl=="app://deposit"){
+        router.push("/finance/deposit");
+      }else{
+        const redirectU = "/promo?name=" + banner.redirectUrl;
+        router.push(`${redirectU}`);
+      }
     };
 
     const download_url = ref("");
@@ -1717,6 +1505,12 @@ export default defineComponent({
           console.log(err);
         });
     };
+
+    const openDownloadAppLink = () => {
+      const affiliate= sessionStorage.getItem("AFFILIATE_CODE");
+      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      window.open(theurl, "_blank");
+    }
 
     // const getImgPlatformLogo = (platform, code) => {
     //   try {
@@ -1800,6 +1594,115 @@ export default defineComponent({
         });
       }
     };
+    const gotoFloatPromo = (code) => {
+
+      router.push(`/promo?name=${code}`)
+    }
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
+      api
+        .get("/redirect")
+        .then((res) => {
+          if (res.code === 0) {
+            res.data.forEach(element => {
+              if (element.type === 'PROMO') {
+                floatPromo.push(element);
+                showFloatPromo.value = true;
+              }
+              if (element.type === 'GAME') {
+                gamePromo.push(element)
+                showRocket.value = true;
+              }
+            });
+            checkShowRocket();
+            checkFloatPromo();
+            updatePromo(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updatePromo, 3000);
+            updateRocket(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updateRocket, 3000);
+          } else {
+            ElMessage.error(res.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
+
+    const currentRocket = ref(null)
+    const currentRocketIndex = ref(0);
+    const updateRocket = () => {
+      currentRocket.value = gamePromo[currentRocketIndex.value];
+      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.length;
+    };
+    const imageLoading = ref(false);
+    const selectedLiveTab = ref();
+
+    const showRocket = ref(false);
+    const checkShowRocket = () => {
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showRocket.value = true;
+      // }
+    };
+
+    const hideRocket = () => {
+      showRocket.value = false;
+      promoPos.value = [18, 18]
+    };
+
+    const showFloatPromo = ref(false);
+    const checkFloatPromo = () => {
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showFloatPromo.value = true;
+      // }
+      if (gamePromo.length === 0) {
+        promoPos.value = [18, 18]
+      }
+    };
+
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const fabPos = ref([18, 18]);
+    const promoPos = ref([18, 128]);
+    const draggingRocketFab = ref(false);
+    const draggingPromoFab = ref(false);
+
+    const currentElement = ref(null);
+    const moveRocketFab = (ev) => {
+      console.log(ev)
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+    const movePromoFab = (ev) => {
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingPromoFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = promoPos.value[0] - ev.delta.x;
+      let newY = promoPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      promoPos.value = [newX, newY];
+
+    }
 
     onActivated(() => {
       getPlatList();
@@ -1807,18 +1710,29 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      checkShowImgTop();
+      if (store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
+        checkShowImgTop();
+      }
       getAppDownloadUrl();
       getUnreadTotal();
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
-    const imageLoading = ref(false);
-    const selectedLiveTab = ref();
+
+    onMounted(() => {
+      if ((store.token)) {
+        initFloating();
+      }
+    })
+    // Clear interval on unmounted
+    onUnmounted(() => {
+      clearInterval(intervalId);
+    });
 
     return {
       imageLoading,
       slide: ref(0),
+      clickHomePopupImg,
       tab,
       selectTab,
       imgNotFound,
@@ -1875,6 +1789,7 @@ export default defineComponent({
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
+      openDownloadAppLink,
       getAppDownloadUrl,
       downloadUrl,
       getWithExpiry,
@@ -1882,6 +1797,7 @@ export default defineComponent({
       setExpiryBanner,
       homePopupContent,
       homePopupType,
+      homePopupPath,
       homePopupId,
       homePopupFrequency,
       homePopupFrequencyNum,
@@ -1894,12 +1810,77 @@ export default defineComponent({
       getUnreadTotal,
       topBoxVisible,
       rightPlatformContainer,
-      handleScroll
+      handleScroll,
+      showRocket,
+      checkShowRocket,
+      fabPos,
+      draggingRocketFab,
+      draggingPromoFab,
+      moveRocketFab,
+      movePromoFab,
+      hideRocket,
+      promoPos,
+      hideFloatPromo,
+      showFloatPromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoFloatPromo,
+      floatPromo,
+      gamePromo,
+      currentElement,
+      imgURLFloat,
+      updateRocket,
+      currentRocket,
+      currentRocketIndex,
+      rocketSlide: ref(0),
+      promoSlide: ref(0)
     };
   }
 });
 </script>
+
 <style scoped lang="scss">
+// rocket animation
+.rebates-absolute {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn {
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+  min-height: 14px;
+  border-radius: 50%;
+  border: 1px solid #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 6px;
+  font-weight: bold;
+  margin-left: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 400;
+}
+
+.rocket-wrapper {
+  transition: all 0.3s;
+  // cursor: pointer;
+
+  img {
+    width: 105px;
+    pointer-events: none;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+}
+
 .q-page-container {
   min-height: 100vh;
 }
@@ -1982,6 +1963,17 @@ export default defineComponent({
   }
 }
 
+:deep(.q-carousel.float) {
+  height: unset;
+  background: transparent;
+
+}
+:deep(.q-carousel.float .q-carousel__navigation .q-btn) {
+  margin: 0;
+  padding: 0;
+  font-size: 4px !important;
+  color: #3382f4;
+}
 .home-header {
   display: flex;
   align-items: center;

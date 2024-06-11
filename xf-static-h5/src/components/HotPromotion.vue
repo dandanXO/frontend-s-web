@@ -9,7 +9,7 @@
     <TigerCardPromo v-if="!isCommonPromo && list.redirectUrl === 'tigercard'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYuPromo v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" />
-    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
+    <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser'" />
     <PrivilegeInvite
       v-if="
         !isCommonPromo &&
@@ -31,7 +31,14 @@
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
     />
 
-    <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+    />
+
+    <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
       <div class="tabs">
         <q-card-section>
           <q-tabs v-model="activeKey" dense color="black" indicator-color="black" align="justify" narrow-indicator>
@@ -207,6 +214,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
@@ -227,7 +235,7 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     WelcomeTaskPromo,
     PrivilegeInvite,
-    // CnySpinWheelPromo,
+    HongBaoPreEurocupPromo,
     BonusSpinWheelPromo,
     ReturnPromo,
     DepositAwardPromo
@@ -292,6 +300,7 @@ export default defineComponent({
       this.list.redirectUrl === "xf-return-promo" ||
       this.list.redirectUrl === "xf-deposit-award" ||
       this.list.redirectUrl === "xf-eurocup-hongbao" ||
+      this.list.redirectUrl === "tiqianhongbao" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
@@ -446,7 +455,15 @@ export default defineComponent({
         onlyMeParam = "&memberId=" + user_id;
       }
 
-      var filterUrl = "/privi/selectedNumbers?recordTime=" + filterDate + onlyMeParam;
+      if(filterDate){
+        var filterDateStart = moment(filterDate).format("YYYY-MM-DD 00:00:00");
+        var filterDateEnd =  moment(filterDate).format("YYYY-MM-DD 23:59:59");
+        var betweenDate= "recordTimeBetween=" + filterDateStart + "," + filterDateEnd;
+      }else{
+        var betweenDate = "";
+      }
+
+      var filterUrl = "/privi/selectedNumbers?" + betweenDate + onlyMeParam;
 
       // console.log(filterDate);
       eventapi

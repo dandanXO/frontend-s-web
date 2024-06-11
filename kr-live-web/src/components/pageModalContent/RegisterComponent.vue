@@ -1,279 +1,145 @@
 <template>
   <div class="main-section">
     <q-form class="register-form" @keypress.enter="onSubmit">
-
-      <div class="form-grid-list">
-        <div class="form-item">
-          <label>추천인</label>
-          <q-input
-            dense
-            placeholder="추천인입력"
-            ref="codeAffiliate"
-            filled
-            v-model="regForm.codeAffiliate"
-            color="white"
-            :disable="hasAffiliate"
-            clearable
-          ></q-input>
-        </div>
-        <div class="form-item">
-          <label>아이디</label>
-          <q-input
-            dense
-            ref="loginNameRef"
-            filled
-            v-model="regForm.loginName"
-            lazy-rules
-            :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
-          ]"
-            color="white"
-            clearable
-          />
-        </div>
-        <div class="form-item">
-          <label>비밀번호</label>
-          <div>
-            <q-input
-              dense
-              placeholder="비밀번호입력"
-              ref="pwdRef"
-              filled
-              v-model="regForm.password"
-              :type="isPwd ? 'password' : 'text'"
-              lazy-rules
-              :rules="[
+      <div class="form-item">
+        <label>{{ $t('lang.reg_referrer') }}</label>
+        <q-input dense placeholder="추천인입력" ref="codeAffiliate" outlined v-model="regForm.codeAffiliate"
+          :disable="hasAffiliate" clearable></q-input>
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_userid') }}</label>
+        <q-input dense ref="loginNameRef" outlined v-model="regForm.loginName" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+        ]" clearable />
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_pass') }}</label>
+        <div>
+          <q-input dense placeholder="비밀번호입력" ref="pwdRef" outlined v-model="regForm.password"
+            :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
               (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
               (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
               // (val) =>
               //   (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
-            ]"
-              color="white"
-              clearable
-            >
-              <template v-slot:append>
-                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-              </template>
-            </q-input>
-            <div v-if="regForm.password" class="password-str-div" style="display:none;">
-            <span
-              :class="{
-                'weak-pwd': pwdStrength == 'weak',
-                'normal-pwd': pwdStrength == 'normal',
-                'strong-pwd': pwdStrength == 'strong'
-              }"
-            >
+            ]" clearable>
+            <template v-slot:append>
+              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+            </template>
+          </q-input>
+          <div v-if="regForm.password" class="password-str-div" style="display:none;">
+            <span :class="{
+              'weak-pwd': pwdStrength == 'weak',
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }">
               {{ $t("lang.weak_level") }}
             </span>
-              <span
-                :class="{
-                'normal-pwd': pwdStrength == 'normal',
-                'strong-pwd': pwdStrength == 'strong'
-              }"
-              >
+            <span :class="{
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }">
               {{ $t("lang.medium_level") }}
             </span>
-              <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
-            </div>
+            <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
           </div>
         </div>
-        <div class="form-item">
-          <label>비밀번호확인</label>
-          <q-input
-            dense
-            placeholder="비밀번호확인입력"
-            ref="confirmPwdRef"
-            filled
-            :type="isCfmPwd ? 'password' : 'text'"
-            v-model="regForm.confirmPwd"
-            lazy-rules
-            :rules="[
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_confirm_pass') }}</label>
+        <q-input dense placeholder="비밀번호확인입력" ref="confirmPwdRef" outlined :type="isCfmPwd ? 'password' : 'text'"
+          v-model="regForm.confirmPwd" lazy-rules :rules="[
             (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
             (val) => val === regForm.password || $t('lang.password_do_not_match'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-          ]"
-            color="white"
-            clearable
-          >
-            <template v-slot:append>
-              <q-icon
-                :name="isCfmPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isCfmPwd = !isCfmPwd"
-              />
-            </template>
-          </q-input>
-        </div>
-        <div class="form-item">
-          <label>이메일</label>
-          <q-input
-            dense
-            placeholder="이메일"
-            ref="emailRef"
-            type="email"
-            filled
-            v-model="regForm.email"
-            lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]"
-            color="white"
-            clearable
-          />
+          ]" clearable>
+          <template v-slot:append>
+            <q-icon :name="isCfmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+              @click="isCfmPwd = !isCfmPwd" />
+          </template>
+        </q-input>
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_email') }}</label>
+        <q-input dense placeholder="이메일" ref="emailRef" type="email" outlined v-model="regForm.email" lazy-rules
+          :rules="[(val) => (val && val.length > 0) || $t('lang.email_cannot_be_empty'), isValidEmail]" clearable />
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_phone_num') }}</label>
+        <q-input dense placeholder="없이 숫자 만 입력" ref="telRef" outlined v-model="regForm.telephone" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+          (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
+          // isValidPhone
+        ]" clearable>
+          <template v-slot:append>
+            <div class="primary-button blue-square" :class="!regForm.telephone ? 'disabled' : ''" @click="openTelephoneVerificationModal">
+              {{ $t('lang.reg_phone_verification') }}
+            </div>
+          </template>
+        </q-input>
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_phone_otp') }}</label>
+        <div class="telephone-otp-row">
+          <q-input dense ref="telOtpCodeRef" v-model="regForm.smsCode" :placeholder="'6자리 숫자'" stack-label clearable
+            autocomplete="off" outlined lazy-rules
+            :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]" />
         </div>
       </div>
-      <div class="form-grid-list">
-        <div class="form-item">
-          <label>휴대폰번호</label>
-          <q-input
-            dense
-            placeholder="없이 숫자 만 입력"
-            ref="telRef"
-            filled
-            v-model="regForm.telephone"
-            lazy-rules
-            :rules="[
-            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
-            // isValidPhone
-          ]"
-            color="white"
-            clearable
-          >
-            <template v-slot:append>
-              <q-btn
-                class="primary-btn"
-                :label="'인증 코드'"
-                @click="openTelephoneVerificationModal"
-                :disabled="!regForm.telephone"
-              />
-            </template>
-          </q-input>
-        </div>
-        <div class="form-item">
-          <label>인증 코드</label>
-          <div class="telephone-otp-row">
-            <q-input
-              dense
-              ref="telOtpCodeRef"
-              v-model="regForm.smsCode"
-              :placeholder="'6자리 숫자'"
-              stack-label
-              clearable
-              autocomplete="off"
-              filled
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]"
-            />
-          </div>
-        </div>
-        <div class="form-item">
-          <label>은행명</label>
-          <q-select
-            dense
-            filled
-            label="은행선택"
-            ref="bankCardRef"
-            v-model="regForm.bankId"
-            :options="banksList"
-            option-value="id"
-            option-label="name"
-            emit-value
-            map-options
-            lazy-rules
-            :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]"
-          />
-        </div>
-        <div class="form-item">
-          <label>계좌번호</label>
-          <q-input
-            dense
-            type="number"
-            placeholder="'-'없이숫자만입력."
-            ref="cardNumRef"
-            filled
-            v-model="regForm.cardNumber"
-            lazy-rules
-            color="white"
-            clearable
-            :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"
-          ></q-input>
-        </div>
-        <div class="form-item">
-          <label>예금주</label>
-          <q-input
-            dense
-            placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)"
-            ref="cardAccRef"
-            filled
-            v-model="regForm.cardAccount"
-            lazy-rules
-            color="white"
-            clearable
-            :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"
-          ></q-input>
-        </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank') }}</label>
+        <q-select dense outlined label="은행선택" ref="bankCardRef" v-model="regForm.bankId" :options="banksList"
+          option-value="id" option-label="name" emit-value map-options lazy-rules
+          :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" />
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank_acc_num') }}</label>
+        <q-input dense type="number" placeholder="'-'없이숫자만입력." ref="cardNumRef" outlined v-model="regForm.cardNumber"
+          lazy-rules clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"></q-input>
+      </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank_acc_holder') }}</label>
+        <q-input dense placeholder="2자이상한글,영문만가능(예금주는수정불가/고객센터문의)" ref="cardAccRef" outlined
+          v-model="regForm.cardAccount" lazy-rules clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"></q-input>
       </div>
 
     </q-form>
 
-    <div class="row justify-center items-center gap-8" style="margin-top: 35px">
-      <q-btn
-        @click.prevent="onSubmit"
-        :label="'등록'"
-        type="submit"
-        class="common-large-btn form-button blue"
-        rounded
-        flat
-      />
-      <q-btn
-        @click="openLogin"
-        :label="'로그인'"
-        type="button"
-        class="common-large-btn form-button yellow"
-        rounded
-        flat
-      />
+    <div class="action-buttons">
+      <div @click="onSubmit" class="primary-button blue register-submit-btn" style="width:200px;">
+        {{ $t('lang.reg_submit') }}
+      </div>
     </div>
 
-    <q-dialog
-      v-model="isTelephoneVerificationModalVisible"
-      transition-show="slide-up"
-      transition-hide="slide-down"
-      class="register-form-captcha-dialog"
-    >
+    <q-dialog v-model="isTelephoneVerificationModalVisible" transition-show="slide-up" transition-hide="slide-down"
+      class="register-form-captcha-dialog">
       <q-card class="q-pa-md">
         <div class="modal-head-title q-pb-md">
-          {{ $t("lang.check_your_captcha_code") }}
+          {{ $t("lang.reg_check_captcha") }}
         </div>
         <q-form class="q-gutter-sm">
-          <q-input
-            class="verification-input"
-            ref="telephoneVerifyCaptchaCodeRef"
-            filled
-            type="text"
-            maxlength="4"
-            v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode"
-            :label="$t('lang.captcha_code')"
-            :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
-            color="white"
-          >
-            <template v-slot:append>
-              <img :src="telephoneVerificationCaptchaImg" @click="getTelephoneVerificationImgCode()" />
-            </template>
-            <template v-slot:prepend>
-              <q-icon name="security" />
-            </template>
-          </q-input>
+
+          <div class="captcha-code">
+            <q-input dense class="captcha-code-input" ref="telephoneVerifyCaptchaCodeRef" outlined type="text" maxlength="4"
+              v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
+              :rules="[(val) => (val && val.length > 3) || $t('lang.reg_enter_captcha')]">
+              <template v-slot:prepend>
+                <q-icon name="security" />
+              </template>
+            </q-input>
+            <div class="captcha-img-wrapper">
+              <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
+              <img v-else class="captcha-img" height="56px" :src="telephoneVerificationCaptchaImg" @click.prevent="getTelephoneVerificationImgCode" />
+            </div>
+          </div>
           <div class="row justify-center items-center gap-8" style="margin-top: 25px">
-            <q-btn
-              :disabled="isOtpSending"
-              :style="isOtpSending ? 'opacity: .6' : ''"
-              class="common-btn form-button blue"
-              @click.prevent="getOtpCode"
-            >
-              {{ isOtpSending ? $t("lang.verifying") : $t("lang.confirm_button") }}
-            </q-btn>
+            <div :style="isOtpSending ? 'opacity: .6' : ''" class="primary-button blue" :class="isOtpSending ? 'disabled' : ''"
+              @click.prevent="getOtpCode">
+              {{ isOtpSending ? $t("lang.reg_captcha_verifying") : $t("lang.reg_captcha_confirm") }}
+          </div>
           </div>
         </q-form>
       </q-card>
@@ -286,19 +152,19 @@ import { defineComponent, ref, reactive, onMounted, watch } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
-import vueI18n from "src/i18n";
 
 export default defineComponent({
   name: "RegisterPage",
   emits: ["closeModal"],
-  setup(props, { emit }) {
+  setup(_props, { emit }) {
     const { t } = useI18n();
     const store = userStore();
     const siteId = process.env.SITEID;
     const qs = require("qs");
+    const captchaLoading = ref(false);
 
     onMounted(() => {
       //getCode();
@@ -349,6 +215,10 @@ export default defineComponent({
 
     const isTelephoneVerificationModalVisible = ref(false);
     const openTelephoneVerificationModal = () => {
+      if(!regForm.telephone) {
+        return;
+      }
+
       telRef.value.validate();
 
       if (telRef.value.hasError) {
@@ -360,6 +230,8 @@ export default defineComponent({
     };
 
     const getTelephoneVerificationImgCode = () => {
+      captchaLoading.value = true;
+
       api
         .get("/member/verificationEasyCode")
         .then((res) => {
@@ -368,6 +240,8 @@ export default defineComponent({
             telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
             verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
           }
+
+          captchaLoading.value = false;
         })
         .catch((e) => {
           $q.notify({
@@ -376,10 +250,18 @@ export default defineComponent({
             message: e.message,
             icon: "report_problem"
           });
-        });
+
+          captchaLoading.value = false;
+        }).finally(() => {
+          captchaLoading.value = false;
+        });;
     };
 
     const getOtpCode = () => {
+      if(isOtpSending.value) {
+        return;
+      }
+
       const isTelephoneVerifyCaptchaCodeValid = telephoneVerifyCaptchaCodeRef.value.validate();
 
       if (!isTelephoneVerifyCaptchaCodeValid) {
@@ -475,7 +357,7 @@ export default defineComponent({
         (async () => {
           regForm.sid = sidParam;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
-          regForm.realName= regForm.cardAccount
+          // regForm.realName= regForm.cardAccount
 
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -650,7 +532,8 @@ export default defineComponent({
       isOtpSending,
       getOtpCode,
       verifyTelephoneForm,
-      openLogin
+      openLogin,
+      captchaLoading
     };
   }
 });
@@ -669,89 +552,49 @@ function charType(num) {
 }
 </script>
 
-<style lang="scss">
-.register-form,
-.register-form-captcha-dialog {
-  .q-field--filled.q-field--dark .q-field__control,
-  .q-field--filled.q-field--dark .q-field__control:before {
+<style lang="scss" scoped>
+.register-form {
+  // display: grid;
+  // grid-auto-flow: column;
+  // grid-gap: 20px;
+  // grid-template-columns: repeat(2, 1fr);
+  // grid-template-rows: repeat(5, auto);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  :deep(.q-field--filled.q-field--dark .q-field__control),
+  :deep(.q-field--filled.q-field--dark .q-field__control:before) {
     width: 100%;
     font-size: 14px;
-    border-radius: 8px;
     border: 1px solid #48b5b5;
-    background: #252e43;
     line-height: 40px;
     color: #fff;
+    background: #252e43;
+    border-radius: 8px;
   }
 
-  .form-item {
-    // display: flex;
-    // gap: 12px;
-    // align-items: center;
-  }
-}
-</style>
-
-<style lang="scss" scoped>
-.main-section {
-  margin-top: 24px;
+  // @media (max-width: 768px) {
+  //   grid-auto-flow: row;
+  //   grid-template-columns: none;
+  //   grid-template-rows: none;
+  // }
 }
 
-.form-button {
-  //display: inline-block;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-
-  &.blue {
-    // background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-    background: url("../../assets/home/btn-blue.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
-
-  &.yellow {
-    // background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-    background: url("../../assets/home/btn-orange.png") no-repeat center center;
-    background-size: 100% 100%;
-  }
-}
-
-.register-form {
+.form-item {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 30px;
-}
-.form-grid-list{
-  display:flex;
-  flex-direction: column;
-  row-gap: 25px;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  gap: 20px;
+
+  label {
+    text-align: right;
+  }
 }
 
-.primary-btn {
-  background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
-  border: 1px solid #2260ff66;
-  color: #ffffff;
-}
 .verification {
   display: flex;
   padding: 10px;
-}
-
-.space-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.txt-center {
-  text-align: center;
-  padding: 0 10px;
 }
 
 .password-str-div {
@@ -801,7 +644,7 @@ function charType(num) {
   max-width: 768px;
   margin: auto;
 
-  .q-field--filled .q-field__control {
+  .q-field--outlined .q-field__control {
     border-radius: 8px;
   }
 
@@ -817,17 +660,41 @@ function charType(num) {
   }
 }
 
-h5 {
-  font-size: 20px;
-  margin-bottom: 12px;
-  text-align: center;
-}
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px;
 
-@media (max-width: 768px) {
-  .register-form {
-    display: grid;
-    gap: 0px;
-    grid-template-columns: 1fr;
+  .register-submit-btn {
+    width: 145px;
+    height: 36px;
   }
 }
+
+.captcha-code {
+    width: 100%;
+    display: flex;
+  }
+
+  .captcha-code-input {
+    margin-right: 16px;
+    width: 100%;
+  }
+
+  .captcha-img-wrapper {
+    min-width: 120px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .captcha-img {
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>

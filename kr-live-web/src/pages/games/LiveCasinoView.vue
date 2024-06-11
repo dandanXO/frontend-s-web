@@ -85,7 +85,7 @@ const hotTrendingGames = [
     code: "Evo",
     name: "Evolution",
     gameName: "EVO",
-    logo: require("../../assets/images/common/logo/evo.png"),
+    // logo: require("../../assets/images/common/logo/evo.png"),
     text: "In the Evolution live casino, there are the world's first 6-card start, VIP tables, badge baccarat, intelligent control baccarat waiting for you to enjoy non-stop."
   },
   {
@@ -94,7 +94,7 @@ const hotTrendingGames = [
     status: "NORMAL",
     gameName: "AE Sexy",
     gameCode: "MX-LIVE-001",
-    logo: require("../../assets/images/common/logo/ae_2.png"),
+    // logo: require("../../assets/images/common/logo/ae_2.png"),
     text: "วิดีโอไลฟ์แอ็กชันที่มีศักยภาพสูงสุดในเอเชียผลิตภัณฑ์เกมคุณภาพสูง และวิดีโอเกมที่หลากหลาย การเชื่อมต่อข้ามแพลตฟอร์มที่ง่ายดาย ทำให้คุณสนุกได้ทุกที่ทุกเวลา!",
   },
   {
@@ -102,7 +102,7 @@ const hotTrendingGames = [
     name: "WM Casino",
     gameName: "WM",
     status: "NORMAL",
-    logo: require("../../assets/images/common/logo/WM.png"),
+    // logo: require("../../assets/images/common/logo/WM.png"),
     text: "AE Casino วิดีโอไลฟ์แอ็กชันที่มีศักยภาพมากที่สุดในเอเชีย เชื่อมต่อและใช้งานง่าย ข้ามแพลตฟอร์ม ฟรีดาวน์โหลด และสนุกได้ทุกที่ทุกเวลา!",
   },
   {
@@ -110,7 +110,7 @@ const hotTrendingGames = [
     name: "SA gaming",
     gameName: "SA",
     status: "NORMAL",
-    logo: require("../../assets/images/common/logo/SA.png"),
+    // logo: require("../../assets/images/common/logo/SA.png"),
     text: "แพลตฟอร์มความบันเทิง EZUGI ที่มีดีลเลอร์มืออาชีพที่ผ่านการฝึกอบรมมาอย่างดีหลายร้อยคน มอบประสบการณ์คาสิโนที่แท้จริงให้กับคุณ",
   },
 ];

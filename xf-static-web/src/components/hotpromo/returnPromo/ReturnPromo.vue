@@ -15,14 +15,18 @@
     <div class="return-promo-content">
       <div class="content-time">
         <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-time.png" />
-        <p>2024年5月7日00:00起</p>
+        <p>2024年5月7日 20:00起</p>
       </div>
 
       <template v-if="tabOption === 'returnLoginGift'">
         <div class="content-main">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
           <p>兴發娱乐回馈老会员，老会员登录账号后可免费领取对应VIP等级奖金，点击“立即领取”奖金自动派发至主钱包。</p>
-
+          <div class="return-claim-btn">
+            <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
+              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+            </div>
+          </div>
           <table class="return-table" border="0" cellpadding="0" cellspacing="0">
             <thead>
               <tr>
@@ -34,20 +38,20 @@
             <tbody>
               <tr>
                 <td>VIP1</td>
-                <td>8</td>
+                <td>5</td>
                 <td rowspan="12">3倍/不限场馆</td>
               </tr>
               <tr>
                 <td>VIP2</td>
-                <td>15</td>
+                <td>10</td>
               </tr>
               <tr>
                 <td>VIP3</td>
-                <td>38</td>
+                <td>25</td>
               </tr>
               <tr>
                 <td>VIP4</td>
-                <td>68</td>
+                <td>50</td>
               </tr>
               <tr>
                 <td>VIP5</td>
@@ -83,12 +87,6 @@
               <!--              </tr>-->
             </tbody>
           </table>
-
-          <div class="return-claim-btn">
-            <div @click="onReturnBonusClick('xf1-member-return-red-packet')">
-              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-            </div>
-          </div>
         </div>
 
         <div class="content-rules">
@@ -117,6 +115,12 @@
         <div class="content-main">
           <img src="../../../assets/images/promotion/hotpromo/return-promo/activity-content.png" />
           <p>活动期间，回归老会员完成单笔存款≥500元，即可申请对应档位的奖金，最高可领2,188元。</p>
+
+          <div class="return-claim-btn">
+            <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
+              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
+            </div>
+          </div>
 
           <table class="return-table" border="0" cellpadding="0" cellspacing="0">
             <thead>
@@ -158,12 +162,6 @@
               </tr>
             </tbody>
           </table>
-
-          <div class="return-claim-btn">
-            <div @click="onReturnBonusClick('xf1-member-return-first-deposit')">
-              <img src="../../../assets/images/promotion/hotpromo/return-promo/btn-claim.png" />
-            </div>
-          </div>
         </div>
 
         <div class="content-rules">

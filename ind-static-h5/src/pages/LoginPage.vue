@@ -1,18 +1,18 @@
 <template>
   <div class="login-container">
-    <div class="back-left">
+    <!-- <div class="back-left">
       <router-link :to="'/landing'">
         <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
       </router-link>
-    </div>
+    </div> -->
 
-    <div class="login-form-logo-img">
+    <!-- <div class="login-form-logo-img">
       <img src="../assets/55-ace-logo.png" />
-    </div>
+    </div> -->
 
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div v-if="!loginType" class="login-form-grid">
-        <span class="login-form-field-label">Phone Number</span>
+        <!--        <span class="login-form-field-label">Phone Number</span>-->
         <q-input
           type="tel"
           pattern="\d*"
@@ -27,11 +27,16 @@
           label-color="brand"
           autocomplete="username"
           outlined
+          placeholder="Phone Number"
           color="white"
           class="landing-input login-form-field"
-        ></q-input>
+        >
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/phone.svg" />
+          </template>
+        </q-input>
 
-        <span class="login-form-field-label">Password</span>
+        <!--        <span class="login-form-field-label">Password</span>-->
         <q-input
           ref="passwordRef"
           hide-bottom-space
@@ -42,6 +47,7 @@
           autocomplete="current-password"
           outlined
           color="white"
+          placeholder="Enter Password"
           class="landing-input login-form-field"
         >
           <template v-slot:append>
@@ -51,6 +57,10 @@
               class="cursor-pointer"
               @click="isPwd = !isPwd"
             />
+          </template>
+
+          <template v-slot:prepend>
+            <img class="white-svg" src="../assets/images/auth/pass.svg" />
           </template>
         </q-input>
         <!--        <q-input-->
@@ -112,6 +122,10 @@
       <router-link class="form-text" to="/register" style="color: #ae6def">Create account</router-link>
     </div>
 
+    <div class="register-form-logo-img">
+      <img src="../assets/55-ace-logo.png" />
+    </div>
+
     <!--
       <div class="tip-container">
       <router-link class="landing-tip" to="/forgot-password">Forgot Password ?</router-link>
@@ -157,7 +171,6 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
 
 export default defineComponent({
   name: "LoginPage",
@@ -441,7 +454,7 @@ export default defineComponent({
                 // alert(affQuickRegEvent.value);
                 Adjust.trackEvent(adjustEvent);
               } else {
-                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+                // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
                 // AdjustWeb.trackEvent({
                 //   eventToken: "vm6pjs"
                 // });
@@ -534,11 +547,12 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 .login-container {
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -572,7 +586,7 @@ export default defineComponent({
   width: 100%;
   height: 56px;
   border-radius: 4px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .forgot-password {
   margin: 8px 0px 0px;
@@ -580,7 +594,7 @@ export default defineComponent({
 }
 
 .end-of-form-separator {
-  margin: 35px 0px 0px;
+  margin: 15px 0px 0px;
   border-color: #ffffff26;
 }
 
@@ -616,6 +630,10 @@ export default defineComponent({
     background-color: #1e1f24;
     border-width: 2px;
   }
+
+  .white-svg {
+    filter: brightness(0) invert(1);
+  }
 }
 
 .rmb-checked-box {
@@ -633,6 +651,15 @@ export default defineComponent({
       color: #000;
       padding: 2px;
     }
+  }
+}
+
+.register-form-logo-img {
+  img {
+    display: block;
+    width: 95%;
+    margin: 20px auto;
+    max-width: 200px;
   }
 }
 </style>

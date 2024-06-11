@@ -24,8 +24,15 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'dy-eurocup-hongbao'"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao'"
     />
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+    />
+
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -65,9 +72,7 @@
     ></LplSummerPromo>
 
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
-    <BbDacha2024Promo
-      v-if="list.redirectUrl === 'dy2-bb-dacha-2024' && !isCommonPromo && store.token"
-    ></BbDacha2024Promo>
+    <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
     <CnyStepGame2024Promo
       v-if="list.redirectUrl === 'dy2-cny-step-game' && !isCommonPromo && store.token"
     ></CnyStepGame2024Promo>
@@ -81,6 +86,17 @@
     />
     <BonusSpinWheel v-if="list.redirectUrl === 'dy2-spin-wheel' && !isCommonPromo && store.token" />
     <LOLMsi2024Promo v-if="list.redirectUrl === 'dy2-msi-promo' && !isCommonPromo && store.token" />
+    <Nba24Match v-if="list.redirectUrl === 'dy2-nba24-match' && !isCommonPromo && store.token" />
+    <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
+    <DragonBoat v-if="list.redirectUrl === 'dy-duanwujie24' && !isCommonPromo && store.token" />
+    <EurocupManual v-if="list.redirectUrl === 'dy2-eurocup-manual' && !isCommonPromo && store.token" />
+
+    <BlastPremierPromo
+      v-if="list.redirectUrl === 'dy2-cs2-blast-2024' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
+    <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
+    <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -110,7 +126,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
@@ -130,12 +146,23 @@ import Dy2StepGamePromo from "../components/hotpromo/dy2stepgame/Dy2StepGameProm
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
+import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
+import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
+import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
+import EurocupManual from "./hotpromo/EurocupManual/EurocupManual.vue";
+import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
+import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
+import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 
 export default defineComponent({
   name: "HotPromo",
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    SportZhongChao,
+    BlastPremierPromo,
+    fishHongbao,
+    Nba24Match,
     ClaimPromo,
     TigerCardPromo,
     PrizePoolVotePromo,
@@ -158,7 +185,11 @@ export default defineComponent({
     CS2Sign,
     BonusSpinWheel,
     LOLMsi2024Promo,
-    HongBaoYuEurocupPromo
+    HongBaoYuEurocupPromo,
+    HongBaoPreEurocupPromo,
+    LPLSummer24,
+    DragonBoat,
+    EurocupManual
   },
   props: {
     list: {
@@ -230,13 +261,21 @@ export default defineComponent({
       this.list.redirectUrl === "dy-promo-application-A" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "dy2-cny2024-promo" ||
-      this.list.redirectUrl === "dy2-bb-dacha-2024" ||
+      this.list.redirectUrl === "dy2-asian-zone" ||
       this.list.redirectUrl === "dy2-cny-step-game" ||
       this.list.redirectUrl === "dy2-game-steps" ||
       this.list.redirectUrl === "dy2-cs2-copenhagen-major-2024" ||
       this.list.redirectUrl === "dy2-spin-wheel" ||
       this.list.redirectUrl === "dy2-msi-promo" ||
-      this.list.redirectUrl === "dy-eurocup-hongbao"
+      this.list.redirectUrl === "dy2-eurocup-hongbao" ||
+      this.list.redirectUrl === "dy2-lpl-summer24" ||
+      this.list.redirectUrl === "dy-duanwujie24" ||
+      this.list.redirectUrl === "dy2-nba24-match" ||
+      this.list.redirectUrl === "dy2-eurocup-manual" ||
+      this.list.redirectUrl === "dy2-cs2-blast-2024" ||
+      this.list.redirectUrl === "dy-sport-zhongchao" ||
+      this.list.redirectUrl === "dy-fish-hongbao" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {

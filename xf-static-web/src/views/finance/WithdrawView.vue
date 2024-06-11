@@ -142,7 +142,7 @@
         <div style="margin-left: 150px" v-else-if="isEWALLET">
           <div
             style="margin: 15px 0px; color: #ff7f10"
-            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
+            v-if="['KDPAY', 'OKPAY', 'EBPAY', 'BLBPAY', 'JDPAY', 'SZPAY'].includes(selectedWithdrawalMethod.code)"
           >
             *特别说明：提款钱包和游戏账号的姓名务必一致
           </div>
@@ -154,6 +154,8 @@
             <span v-if="selectedWithdrawalMethod.code === 'KDPAY'">K豆教程视频</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'EBPAY'">EB使用教程</span>
             <span v-else-if="selectedWithdrawalMethod.code === 'OKPAY'">OK教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'BLBPAY'">808钱包教程视频</span>
+            <span v-else-if="selectedWithdrawalMethod.code === 'JDPAY'">JDPAY教程视频</span>
           </el-button>
         </div>
 
@@ -187,6 +189,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -197,7 +200,7 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/withdraw/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);
@@ -385,7 +388,7 @@ export default defineComponent({
       withdrawInfo.withdrawCode = method.code;
       activeItem.value = index;
       isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY');
+      isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY') || withdrawInfo.withdrawCode.includes('JDPAY') || withdrawInfo.withdrawCode.includes('BLBPAY');
       isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
       loadCards()
     }
@@ -416,7 +419,9 @@ export default defineComponent({
       const urlMap = {
         'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
         'EBPAY': 'https://www.ebpay.org/',
-        'OKPAY': 'https://me-qr.com/l/okpay'
+        'OKPAY': 'https://me-qr.com/l/okpay',
+        'BLBPAY': 'http://808.com/tutorial.html',
+        'JDPAY': 'https://www.jdpay01.com/#/transactionFlow',
       };
 
       const url = urlMap[code];
@@ -565,6 +570,7 @@ export default defineComponent({
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
         // color: #ffd800;
+        pointer-events: none;
         .promo-img {
           border: 1px solid #45fdfb;
         }

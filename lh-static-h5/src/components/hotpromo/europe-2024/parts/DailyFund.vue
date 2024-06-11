@@ -13,7 +13,7 @@
         </div>
         <div class="fund-contest-time-left">
           <img src="../images/daily-fund-icon-time.svg" />
-          <span class="fund-contest-time-left__title">比赛剩余</span>
+          <span class="fund-contest-time-left__title">{{ matchStartAt }}</span>
           <span class="fund-contest-time-left__content" v-if="remainingTime">
             {{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}
           </span>
@@ -36,16 +36,11 @@
             {{ num.points }}
             <div v-if="i !== 0">
               <div class="claim">
-                <img
-                  @click="claimPoint(num.points)"
-                  v-if="
-                    matchPoints.currentPoints >= num.points &&
-                    matchPoints.pointsClaimed &&
-                    !matchPoints.pointsClaimed.includes(num.points)
-                  "
-                  src="../images/daily-fund-claim.png"
-                />
-                <img v-else src="../images/daily-fund-claimed.png" />
+                <template v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed">
+                  <img v-if="matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claimed.png" />
+                  <img v-else @click="claimPoint(num.points)" src="../images/daily-fund-claim.png" />
+                </template>
+                <img v-else src="../images/daily-fund-wait-for-claim.png" />
               </div>
             </div>
           </div>
@@ -103,79 +98,95 @@
         <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
         <button
           @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
-          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
-          <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM HH:mm") }}</div>
+          <div class="bracket-info__info-wrapper-VS">VS</div>
+          <button
+            @click="matchSubmit(match, 0, '平局')"
+            v-if="match.selectedTeamId === null"
+            class="bracket-team-select__button"
+          >
+            平局
+          </button>
+          <button v-else-if="match.selectedTeamId === 0" class="bracket-team-select__button active">已选</button>
+          <div v-else class="bracket-team-select__button pseudo" />
         </div>
       </div>
       <div class="bracket-team-select">
         <bracket-team :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
         <button
           @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
     </div>
   </div>
-  <table>
-    <tr>
-      <th>有效投注</th>
-      <th>投注彩金</th>
-      <th>专属队伍彩金</th>
-      <th>彩金倍数</th>
-    </tr>
-    <tr>
-      <td>≥3,000</td>
-      <td>8</td>
-      <td>18</td>
-      <td rowspan="4">3倍</td>
-    </tr>
-    <tr>
-      <td>≥6,000</td>
-      <td>28</td>
-      <td>58</td>
-    </tr>
-    <tr>
-      <td>≥10,000</td>
-      <td>68</td>
-      <td>88</td>
-    </tr>
-    <tr>
-      <td>≥100,000</td>
-      <td>158</td>
-      <td>188</td>
-    </tr>
-  </table>
+<!--  <table>-->
+<!--    <tr>-->
+<!--      <th>有效投注</th>-->
+<!--      <th>投注彩金</th>-->
+<!--      <th>专属队伍彩金</th>-->
+<!--      <th>彩金倍数</th>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥3,000</td>-->
+<!--      <td>8</td>-->
+<!--      <td>18</td>-->
+<!--      <td rowspan="4">3倍</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥6,000</td>-->
+<!--      <td>28</td>-->
+<!--      <td>58</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥10,000</td>-->
+<!--      <td>68</td>-->
+<!--      <td>88</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥100,000</td>-->
+<!--      <td>158</td>-->
+<!--      <td>188</td>-->
+<!--    </tr>-->
+<!--  </table>-->
 
   <div class="rule-title">活动规则</div>
   <ol class="rule-content">
     <li>
-      活动期间，会员在A组~F组每组选出一只队伍作为用户参赛队伍，若用户选择的队伍胜利且有效投注≥3,000元即可获的专属队伍奖金；
+      活动期间，会员当日任意存款即可获得参与竞猜机会，参与竞猜且竞猜结果正确即可获得100积分；
     </li>
     <li>
-      活动期间，用户参与免费竞猜，竞猜正确可获100积分，若用户选择的参与队伍获胜可额外加赠100积分，积分对应彩金仅限领取1次，积分≥6000分是可获188元；
+      活动期间，会员可在A组~F组各选出一只专属队伍，若当日参与竞猜后专属队伍获胜即可获得100专属加赠积分；
     </li>
-    <li>此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；</li>
+    <li>活动期间，积攒够对应积分总数即可兑换相应彩金，可点击领取按钮，彩金3倍流水即可出款；</li>
     <li>
-      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
+      此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；
     </li>
     <li>
-      每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关 
-      闭相关账户的权利，并不退还款项，且用户列入黑名单；
+      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.7、香港盘0.7赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
     </li>
+    <li>每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关闭相关账户的权利，
+      并不退还款项，且用户列入黑名单；</li>
     <li>为避免文字理解差异，本站保留最终解释权。</li>
   </ol>
 
@@ -203,8 +214,9 @@ import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import { userStore } from "src/stores";
 import moment from "moment";
+import {useLocalStorage} from "@vueuse/core"
 
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const $q = useQuasar();
 const store = userStore();
@@ -242,7 +254,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({
@@ -258,11 +270,17 @@ const ongoingMatches = ref();
 const remainingTime = ref();
 const teams = ref([]);
 
+const matchStartAt = ref("比赛剩余")
 const getMatchPoints = () => {
   eventapi.get("/uefa/matchPoints").then((res) => {
     if (res.code === 0) {
       matchPoints.value = res.data;
-      remainingTime.value = calculateRemainingTime(res.data.endDate);
+      if(moment().format("YYYY-MM-DD HH:mm") <= "2024-06-15 03:00"){
+        remainingTime.value = calculateRemainingTime("2024-06-15 02:59:59");
+        matchStartAt.value = "比赛倒计时"
+      }else{
+        remainingTime.value = calculateRemainingTime(res.data.endDate);
+      }
     } else {
       $q.notify({
         color: "negative",
@@ -322,7 +340,7 @@ const confirmMatchSelect = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "领取成功",
+          message: "投票成功",
           icon: "report_problem"
         });
         confirmDialog.value = false;
@@ -573,13 +591,14 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
 
 .bracket-wrapper {
   display: flex;
+  align-items: end;
   justify-content: space-between;
   color: #ffffff;
   background: #051d4766;
   border: 1px solid #ffffff66;
   border-radius: 8px;
   margin-bottom: 15px;
-  padding-bottom: 22px;
+  padding: 22px;
   font-family: Microsoft YaHei UI;
 
   .bracket-team-select {
@@ -588,23 +607,28 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    padding-top: 25px;
     gap: 18px;
-    .bracket-team-select__button {
-      background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
-      padding: 6px 23px;
-      border-radius: 33px;
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1.3rem;
-      letter-spacing: 0.12em;
-      color: #333333;
+  }
 
-      &:hover,
-      &.active {
-        background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
-        color: #ffffff;
-      }
+  .bracket-team-select__button {
+    background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
+    padding: 6px 23px;
+    border-radius: 33px;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3rem;
+    letter-spacing: 0.12em;
+    color: #333333;
+
+    &:hover,
+    &.active {
+      background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
+      color: #ffffff;
+    }
+
+    &.pseudo {
+      background: transparent;
+      padding-top: calc(1.3rem + 6px);
     }
   }
 
@@ -633,25 +657,33 @@ $ranking-list: 0.68rem, 0.96rem, 1rem, 1.15rem, 1.65rem, 2.5rem;
     .bracket-info__info-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 8px;
       align-items: center;
 
-      .bracket-info__info-wrapper-date {
-        background-color: #458bff1a;
-        padding: 3.5px 19px 7px 19px;
-        border-radius: 100px;
-        font-size: 1rem;
+      .bracket-info__info-wrapper-title {
+        font-family: Microsoft YaHei UI;
+        font-size: 1.2rem;
         font-weight: 700;
-        line-height: 1.3rem;
+        line-height: 1.5rem;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .bracket-info__info-wrapper-date {
+        font-size: 0.8rem;
+        font-weight: 700;
+        line-height: 1rem;
         letter-spacing: 0.12em;
         text-align: center;
       }
 
-      .bracket-info__info-wrapper-contest {
-        font-size: 1rem;
-        line-height: 1.3rem;
-        letter-spacing: 0.12em;
-        color: #ffffff99;
+      .bracket-info__info-wrapper-VS {
+        font-family: Poppins;
+        font-size: 3rem;
+        font-weight: 900;
+        line-height: 4rem;
+        text-align: center;
+        color: #73b2ff1a;
       }
     }
   }

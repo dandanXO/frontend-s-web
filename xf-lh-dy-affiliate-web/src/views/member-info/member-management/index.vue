@@ -172,11 +172,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col
-              :xl="8"
-              :lg="8"
-              :md="8"
-            >
+            <el-col :xl="8" :lg="8" :md="8">
               <div
                 style="margin-top: 10px; width: 100%; display: flex; align-items: center; justify-content: center"
               >
@@ -200,8 +196,18 @@
             </el-col>
           </el-row>
         </div>
-        <div class="inputs-wrap" v-if="store.state.user.siteCode !== 'VNM'">
+        <div class="inputs-wrap">
           <el-button
+            v-if="store.state.user.siteCode === 'KRW'"
+            icon="el-icon-plus"
+            size="normal"
+            type="primary"
+            @click="showCreateMember()"
+          >
+            {{ $t('fields.createMember') }}
+          </el-button>
+          <el-button
+            v-if="store.state.user.siteCode !== 'VNM'"
             size="normal"
             type="primary"
             :disabled="uiControl.editBtn"
@@ -286,6 +292,9 @@
                       </el-dropdown-item>
                       <el-dropdown-item @click="showGameRecord(item.loginName)">
                         {{ t('fields.betRecord') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item @click="showPrivilegeRecord(item)">
+                        {{ t('fields.privilegeRecord') }}
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
@@ -527,7 +536,7 @@
   <el-dialog
     :title="t('fields.depositRecord')"
     v-model="uiControl.depositDialogVisible"
-    width="900px"
+    width="1100px"
     append-to-body
   >
     <el-form label-suffix=" : " style="margin-top: -20px;">
@@ -547,6 +556,7 @@
           <tr>
             <th scope="col">{{ t('fields.sequence') }}</th>
             <th scope="col">{{ t('fields.serialNumber') }}</th>
+            <th scope="col">{{ t('fields.paymentType') }}</th>
             <th scope="col">{{ t('fields.depositAmount') }}</th>
             <th scope="col">{{ t('fields.depositDate') }}</th>
             <th scope="col">{{ t('fields.finishDate') }}</th>
@@ -560,6 +570,7 @@
           >
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
+            <td>{{ item.paymentType }}</td>
             <td>${{ item.depositAmount.toFixed(2) }}</td>
             <td>
               {{ formatDate(item.depositDate) }}
@@ -606,6 +617,118 @@
       />
     </el-form>
   </el-dialog>
+  <el-dialog
+    :title="t('fields.privilegeRecord')"
+    v-model="uiControl.privilegeDialogVisible"
+    width="1100px"
+    append-to-body
+  >
+    <el-form label-suffix=" : " style="margin-top: -20px;">
+      <div class="info-row-container">
+        <el-form-item :label="t('fields.loginName')">
+          {{ memberPrivilegeInfo.loginName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.realName')">
+          {{ memberPrivilegeInfo.realName }}
+        </el-form-item>
+        <el-form-item :label="t('fields.registerTime')">
+          {{ memberPrivilegeInfo.regTime }}
+        </el-form-item>
+      </div>
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th scope="col">{{ t('fields.serialNumber') }}</th>
+            <th scope="col">{{ t('fields.privilegeName') }}</th>
+            <th scope="col">{{ t('fields.amount') }}</th>
+            <th scope="col">{{ t('fields.rollover') }}</th>
+            <th scope="col">{{ t('fields.recordTime') }}</th>
+          </tr>
+        </thead>
+        <tbody v-if="memberPrivilegeInfo.page.records.length > 0">
+          <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
+            <td>{{ item.serialNumber }}</td>
+            <td>{{ item.privilegeName }}</td>
+            <td>${{ item.amount.toFixed(2) }}</td>
+            <td>{{ item.rollover }}</td>
+            <td>
+              {{ formatDate(item.recordTime) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div v-if="memberPrivilegeInfo.page.records.length === 0">
+        <emptyComp />
+      </div>
+      <el-pagination
+        class="pagination"
+        @current-change="changePrivilegePage"
+        layout="total, prev, pager, next"
+        :total="memberPrivilegeInfo.page.total"
+        :page-size="privilegeRequest.size"
+        :page-count="memberPrivilegeInfo.page.pages"
+        :current-page="privilegeRequest.current"
+      />
+    </el-form>
+  </el-dialog>
+  <el-dialog
+    :title="t('fields.createMember')"
+    v-model="uiControl.createMemberDialogVisible"
+    append-to-body
+    width="580px"
+  >
+    <el-form
+      ref="createForm"
+      class="create-form"
+      :model="createMemberForm"
+      :rules="createFormRules"
+      inline="true"
+      size="normal"
+      label-width="150px"
+    >
+      <el-form-item :label="t('fields.loginName')" prop="loginName">
+        <el-input
+          v-model="createMemberForm.loginName"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.password')" prop="password">
+        <el-input
+          v-model="createMemberForm.password"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.reenterPassword')" prop="reEnterPassword">
+        <el-input
+          v-model="createMemberForm.reEnterPassword"
+          type="password"
+          style="width: 350px;"
+          maxlength="11"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.telephone')" prop="telephone">
+        <el-input
+          v-model="createMemberForm.telephone"
+          style="width: 350px;"
+          maxlength="20"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.email')" prop="email">
+        <el-input v-model="createMemberForm.email" style="width: 350px;" />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.createMemberDialogVisible = false">
+          {{ $t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="createMember()">
+          {{ $t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -617,13 +740,16 @@ import {
   loadMemberInfo,
   assignTag,
   assignRemark,
+  registerMember,
 } from '../../../api/affiliate'
 import { getAffiliateTagList } from '../../../api/affiliate-tag'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { getMemberDepositRecords } from '../../../api/affiliate-deposit-record'
+import { getMemberPrivilegeRecords } from '../../../api/affiliate-privilege-record'
 import emptyComp from '@/components/empty'
+import { required, size } from '../../../utils/validate'
 const store = useStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -651,18 +777,20 @@ const uiControl = reactive({
   tagDialogVisible: false,
   remarkDialogVisible: false,
   depositDialogVisible: false,
+  privilegeDialogVisible: false,
+  createMemberDialogVisible: false,
   editBtn: true,
   editType: 'One',
   orderBy: [
     { display: 'totalDeposit', value: 'total_deposit' },
     { display: 'totalWithdraw', value: 'total_withdraw' },
     { display: 'lastLoginTime', value: 'last_login_time' },
+    { display: 'registerTime', value: 'reg_time' },
   ],
   sortType: [
     { display: 'DESC', value: 'DESC' },
     { display: 'ASC', value: 'ASC' },
   ],
-
 })
 
 const memberInfo = reactive({
@@ -697,10 +825,29 @@ const memberDepositInfo = reactive({
   },
 })
 
+const memberPrivilegeInfo = reactive({
+  loginName: '',
+  realName: '',
+  regTime: '',
+  page: {
+    pages: 0,
+    records: [],
+    loading: false,
+    total: 0,
+  },
+})
+
 const depositRequest = reactive({
   size: 10,
   current: 1,
   loginName: null,
+})
+
+const privilegeRequest = reactive({
+  size: 10,
+  current: 1,
+  loginName: null,
+  memberId: null,
 })
 
 const checkAll = ref(false)
@@ -717,7 +864,10 @@ const formatMoney = value => {
     return '-'
   }
   // Assuming you want to format to two decimal places
-  return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+  return value.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
 }
 
 const formatDateTime = value => {
@@ -873,6 +1023,48 @@ const page = reactive({
   loading: false,
 })
 
+const createForm = ref(null)
+const createMemberForm = reactive({
+  id: null,
+  loginName: null,
+  password: null,
+  reEnterPassword: null,
+  telephone: null,
+  email: null,
+  siteId: null,
+})
+
+const validatePassword = (rule, value, callback) => {
+  if (value !== '' && createMemberForm.reEnterPassword !== '') {
+    createForm.value.validateField('reEnterPassword')
+  }
+  callback()
+}
+
+const validateReEnterPassword = (rule, value, callback) => {
+  if (value !== createMemberForm.password) {
+    callback(new Error(t('message.twoPasswordNotMatch')))
+  }
+  callback()
+}
+
+const createFormRules = reactive({
+  loginName: [
+    required(t('message.requiredLoginName')),
+    size(6, 12, t('message.length6To12')),
+  ],
+  password: [
+    required(t('message.requiredPassword')),
+    size(6, 12, t('message.length6To12')),
+    { validator: validatePassword, trigger: 'blur' },
+  ],
+  reEnterPassword: [
+    required(t('message.reenterPassword')),
+    { validator: validateReEnterPassword, trigger: 'blur' },
+  ],
+  telephone: [required(t('message.requiredTelephone'))],
+})
+
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
@@ -962,6 +1154,13 @@ function changeDepositPage(page) {
   }
 }
 
+function changePrivilegePage(page) {
+  if (privilegeRequest.current >= 1) {
+    privilegeRequest.current = page
+    loadPrivilegeRecords()
+  }
+}
+
 function formatTag(tags) {
   if (tags.length > 0) {
     tags = tagList.list.filter(function(obj) {
@@ -1018,6 +1217,28 @@ async function loadDepositRecords() {
   )
   memberDepositInfo.page = ret
   memberDepositInfo.page.loading = false
+}
+
+function showPrivilegeRecord(member) {
+  memberPrivilegeInfo.loginName = member.loginName
+  memberPrivilegeInfo.realName = member.realName
+  memberPrivilegeInfo.regTime = member.regTime
+  uiControl.privilegeDialogVisible = true
+  privilegeRequest.current = 1
+  privilegeRequest.memberId = member.id
+  privilegeRequest.loginName = member.loginName
+  privilegeRequest.siteId = store.state.user.siteId
+  loadPrivilegeRecords()
+}
+
+async function loadPrivilegeRecords() {
+  memberPrivilegeInfo.page.loading = true
+  const { data: ret } = await getMemberPrivilegeRecords(
+    store.state.user.id,
+    privilegeRequest
+  )
+  memberPrivilegeInfo.page = ret
+  memberPrivilegeInfo.page.loading = false
 }
 
 function handleCheckAll(val) {
@@ -1133,6 +1354,25 @@ function formatDate(date) {
   return date ? moment(date).format('YYYY/MM/DD HH:mm:ss') : '-'
 }
 
+function showCreateMember() {
+  if (createForm.value) {
+    createForm.value.resetFields()
+  }
+  createMemberForm.siteId = store.state.user.siteId
+  uiControl.createMemberDialogVisible = true
+}
+
+async function createMember() {
+  createForm.value.validate(async valid => {
+    if (valid) {
+      await registerMember(createMemberForm)
+      uiControl.createMemberDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      await loadAffiliateMembers()
+    }
+  })
+}
+
 onMounted(async () => {
   await loadAllTags()
   await loadAffiliateMembers()
@@ -1233,6 +1473,10 @@ onMounted(async () => {
 .el-form-item {
   flex: 1;
   margin-bottom: 0;
+}
+
+.create-form > * {
+  margin-bottom: 22px;
 }
 
 .info-row-container:not(:first-child) {

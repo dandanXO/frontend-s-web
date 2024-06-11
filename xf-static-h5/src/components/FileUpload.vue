@@ -28,13 +28,17 @@ export default defineComponent({
   name: "UploadExample",
   setup: (props, {emit}) => {
     const store = userStore();
-
     var rstArray = Object.values(process.env.RST_API);
     var rstApi = rstArray[getRndInteger(0, rstArray.length)];
 
     const action = rstApi + '/session/image/uploadOrder?token=' + store.token;
     const $q = useQuasar();
     const file = ref();
+    const clear = () => {
+        file.value = null
+        emit("photoResponse", null);
+    }
+
     watch(file, (newValue, oldValue) => {
       uploadFile(newValue);
     });
@@ -82,6 +86,7 @@ export default defineComponent({
       action,
       // handleChange,
       uploadFile,
+      clear
       // uploadedCallBack,
     };
   },

@@ -46,16 +46,18 @@ export default route(function (/* { store, ssrContext } */) {
         sessionStorage.setItem("TOKEN", logintoken);
         next(`/`);
       } else {
-        next(`/register`);
+        next(`/?page=register`);
       }
     }
+
     if (to.name === "agentCode") {
       sessionStorage.setItem("AFFILIATE_CODE", to.params.affiliateCode);
-      next(`/register`);
+      next(`/?page=register`);
     }
+    
     if (to.name === "referCode") {
       sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);
-      next(`/register`);
+      next(`/?page=register`);
     }
 
     // console.log(location.href);

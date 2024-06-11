@@ -341,24 +341,24 @@ export default {
     },
     answers: {
       CSGO: {
-        handicapAbove: '-4.5 이상',
-        handicapBelow: '+4.5 이하',
+        handicapAbove: '두 팀은 4.5 이하의 차이가 있습니다',
+        handicapBelow: '두 팀은 4.5 이상 차이가 있습니다',
         killBig: '총 라운드 21.5 이상',
         killSmall: '총 라운드 21.5 이하',
         killSignal: '단일',
         killDouble: '더블',
       },
       LOL: {
-        handicapAbove: '-4.5 이상',
-        handicapBelow: '+4.5 이하',
+        handicapAbove: '두 팀은 4.5 이하의 차이가 있습니다',
+        handicapBelow: '두 팀은 4.5 이상 차이가 있습니다',
         killBig: '총 킬 25.5 이상',
         killSmall: '총 킬 25.5 이하',
         killSignal: '단일',
         killDouble: '더블',
       },
       DOTA2: {
-        handicapAbove: '-10.5 이상',
-        handicapBelow: '+10.5 이하',
+        handicapAbove: '두 팀은 10.5 이하의 차이가 있습니다',
+        handicapBelow: '두 팀은 10.5 이상 차이가 있습니다',
         killBig: '총 킬 49.5 이상',
         killSmall: '총 킬 49.5 이하',
         killSignal: '단일',
@@ -544,6 +544,7 @@ export default {
     allrisklevel: '전체 위험 수준',
     allmembers: '전체 회원',
     allmembertype: '전체 회원 유형',
+    announcement: '공고',
     announcementType: '공지 유형',
     answer: '답변',
     answerOne: '질문 하나 답변',
@@ -555,6 +556,7 @@ export default {
     approveBy: '승인자',
     assigned: '할당됨',
     assignment: '할당',
+    attachment: '첨부 파일',
     auditTime: '감사 시간',
     automaticPayment: '자동 결제',
     autopay: '자동 결제',
@@ -1672,6 +1674,11 @@ export default {
     unbind: '언바인드',
     winloss: '승패',
     profit2: '입출금',
+    batchDistributeRebate: '일괄 배분 리베이트',
+    distribute: '분배하다',
+    affiliateBetRebateRecord: '제휴 베팅 리베이트 기록',
+    affiliateBetRebateDetails: '제휴 베팅 리베이트 세부정보',
+    adjustRebateAmount: '리베이트 금액 조정',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -1709,6 +1716,10 @@ export default {
       '이 경기를 종료하시겠습니까? 이 작업은 취소할 수 없습니다.',
     confirmRebate:
       '모든 리베이트를 분배하시겠습니까? 이 작업은 취소할 수 없습니다.',
+    confirmBatchRebate:
+      '선택한 리베이트를 배포할 것인지 확인하세요. 작업은 취소할 수 없습니다.',
+    confirmSingleRebate:
+      '이 리베이트를 배포할 것인지 확인하세요. 작업은 취소할 수 없습니다.',
     confirmRedeem:
       '이 선물을 현금으로 교환하시겠습니까? 이 작업은 취소할 수 없습니다.',
     confirmRefer:
@@ -2243,6 +2254,7 @@ export default {
     'VIP Rebate': 'VIP 리베이트',
     VIP: 'VIP',
     Game: '게임',
+    'Game Tag': '게임 태그',
     'Financial Level': '금융 레벨',
     'Risk Level': '리스크 레벨',
     'Ip Label': 'IP 라벨',
@@ -2336,6 +2348,7 @@ export default {
     'Redirect Notification': '리디렉션 알림',
     'Member Summon Event': '회원 소환 이벤트',
     'Member Summon List': '회원 소환 목록',
+    'Affiliate Bet Rebate Record': '제휴 베팅 리베이트 기록',
   },
   google: {
     google_auth_menu: 'Google 인증자',

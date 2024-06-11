@@ -33,13 +33,14 @@
     <q-form ref="loginFormRef" @submit="onSubmit">
       <div class="login-form-container">
         <div v-if="!loginType" class="">
-          <q-label>
+          <!-- <q-label>
             {{ $t("lang.username") }}
             <em>*</em>
-          </q-label>
+          </q-label> -->
           <q-input
             rounded
             standout
+dense
             clearable
             ref="loginNameRef"
             v-model="loginForm.loginName"
@@ -57,14 +58,15 @@
             </template>
           </q-input>
 
-          <q-label>
+          <!-- <q-label>
             {{ $t("lang.password") }}
             <em>*</em>
-          </q-label>
+          </q-label> -->
           <q-input
             ref="passwordRef"
             rounded
             standout
+dense
             clearable
             v-model="loginForm.password"
             :placeholder="$t('lang.password')"
@@ -87,14 +89,15 @@
             </template>
           </q-input>
 
-          <q-label>
+          <!-- <q-label>
             {{ $t("lang.verification_code") }}
             <em>*</em>
-          </q-label>
+          </q-label> -->
           <q-input
             ref="verificationRef"
             rounded
             standout
+dense
             clearable
             type="text"
             maxlength="4"
@@ -117,10 +120,10 @@
         </div>
 
         <div v-if="loginType">
-          <q-label>
+          <!-- <q-label>
             {{ $t("lang.phone_number") }}
             <em>*</em>
-          </q-label>
+          </q-label> -->
           <q-input
             ref="telephoneRef"
             v-model="phoneLoginForm.phoneNumber"
@@ -133,6 +136,7 @@
             rounded
             type="number"
             standout
+dense
           >
             <template v-slot:prepend>
               <q-icon color="bright" name="phone" />
@@ -153,6 +157,7 @@
             color="white"
             rounded
             standout
+dense
           >
             <template v-slot:append>
               <q-btn
@@ -579,10 +584,10 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat center center;
+  background: url(../assets/images/login/login-bg.png) no-repeat center 20%;
   background-size: cover;
-  height: 100%;
-  min-height: 100vh;
+  // height: 100%;
+  // min-height: 100vh;
 
   .back-left {
     // position: absolute;
@@ -594,7 +599,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-
+    filter: brightness(100);
     img {
       width: 10px;
 
@@ -631,14 +636,17 @@ export default defineComponent({
   }
 
   .login-img {
-    padding: 0 0px 16px 0px;
-    display: flex;
-    justify-content: center;
-    position: relative;
+    // padding: 0 0px 16px 0px;
+    // display: flex;
+    // justify-content: center;
+    // position: relative;
+    height: 20vh;
+    min-height: 140px;
     img {
-      display: block;
-      width: 110%;
-      margin-right: -15%;
+      // display: block;
+      // width: 110%;
+      // margin-right: -15%;
+      display: none;
     }
 
     .login-text {
@@ -730,7 +738,7 @@ export default defineComponent({
     .veri-img {
       height: 80%;
       padding-right: 6px;
-      width: 125px;
+      // width: 125px;
     }
 
     .login-via-phone-div {
@@ -792,6 +800,7 @@ export default defineComponent({
       // width: auto;
       width: 100%;
       max-width: 135px;
+    opacity: 0;
     }
   }
 

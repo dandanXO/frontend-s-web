@@ -10,7 +10,6 @@
     <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="js/swiper-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/clipboard.min.js"></script>
-    <script type="text/javascript" src="js/download.js"></script>
 
     <style type="text/css">
         html,
@@ -88,7 +87,6 @@
 </div>
 
 
-
 <script>
     var dateTime = "2024-01-10 7.30pm";
     var andList = [
@@ -108,7 +106,20 @@
 
     var iosDownload = [];
     var androidDownload = [];
+
+    var realUrl = getQueryString("url");
+    var agentCode = getQueryString("agentCode");
+    var from = getQueryString("from");
+    var savedAgentCode = window.sessionStorage.getItem("AGENT_CODE");
+    if(savedAgentCode){
+        agentCode = savedAgentCode;
+    }
+    window.sessionStorage.setItem("AGENT_CODE", agentCode);
+
     var host = window.location.host;
+    var vv = {agentCode: agentCode, regFrom: realUrl, downloadUrl: host};
+    // console.log(vv);
+
     const dataUrl='https://tfwkal.f6pn3tik7ps.com'
     var liveUrl1 = "";
     var liveUrl2 = "";
@@ -116,6 +127,7 @@
     getApiUrl();
     getCustomerUrl();
 
+    var type = "ALL_AND";
     $('#dy_customer').click(() => {
         window.open(liveUrl1)
     })
@@ -213,9 +225,9 @@
                         androidHtml = `
             <div class="download_btn" id="btn_${index}">
             <a
+            class="click-btn"
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
@@ -224,21 +236,28 @@
                         websiteHtmlAnd = `
                         <div class="download_btn" id="btn_${index}">
             <a
+            class="click-btn"
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
 `;
-
                     }
                 }
             }
 
-            $("#android-lists").html(androidHtml + websiteHtmlAnd)
+            $("#android-lists").html(androidHtml + websiteHtmlAnd);
         })
+        androidDownload.forEach((list, index) => {
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
+            new ClipboardJS(`#download_${index}`);
+
+            $(`#download_${index}`).click(function () {
+                postDownloadExtra(type, host);
+            });
+        });
 
     }
 
@@ -294,6 +313,19 @@
 
         var iosHTMl = '';
         var websiteHtml = '';
+        var mobileConfigHTml= '';
+
+        mobileConfigHTml += `
+            <div class="download_btn" id="btn_${iosDownload.length}">
+            <a
+                id="download_kuaijie"
+                href="ios_kuaijie.mobileconfig"
+                data-clipboard-text='UIO{"agentCode":${agentCode},"regFrom":null,"downloadUrl":"${host}"}'
+            >全站APP 快捷版</a
+            >
+        </div>
+`;;
+
         iosDownload.forEach((list, index) => {
             for (const key in list) {
                 if (list.hasOwnProperty(key)) {
@@ -306,7 +338,6 @@
             <a
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
@@ -317,7 +348,6 @@
             <a
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
@@ -326,10 +356,52 @@
                 }
             }
 
-            $("#ios-lists").html(iosHTMl + websiteHtml)
+            $("#ios-lists").html(iosHTMl + websiteHtml + mobileConfigHTml)
         })
 
+        iosDownload.forEach((list, index) => {
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+
+            new ClipboardJS(`#download_${index}`);
+
+            $(`#download_${index}`).click(function () {
+                postDownloadExtra(type, host);
+            });
+        });
+
+        $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
+        new ClipboardJS(`#download_kuaijie`);
+        $(`#download_kuaijie`).click(function () {
+            postDownloadExtra(type, host);
+        });
+
     }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    function postDownloadExtra() {
+        $.ajax({
+            url: dataUrl + "/extra",
+            type:"GET",
+            data:{"agentCode":agentCode, siteCode : "lh1"},
+            success:function(d){}
+        });
+    }
+
+    // function getCustomerService(returnService){
+    //     var rUrl="https://yj8wz.ks1er9lyi8.com/rest/api/otherSetting";
+    //     $.ajax({
+    //         url: rUrl,
+    //         type:"GET",
+    //         success:function(d){
+    //             returnService(d);
+    //         }
+    //     });
+    // }
 
     var mySwiper = new Swiper(".swiper-container", {
         effect: "slide",

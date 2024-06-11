@@ -8,12 +8,7 @@
 
     <q-page-container>
       <div class="home-banner-wrapper">
-        <!-- <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.svg" /> -->
-        <div class="jackpot">
-          <img class="desktop" src="../assets/home/jackpot.png" />
-          <img class="mobile" src="../assets/home/jackpot-mobile.png" />
-          <div class="jackpot-txt">987,654,321.23</div>
-        </div>
+        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.png" />
 
         <LoginBar />
       </div>
@@ -37,7 +32,7 @@
           <img :src="items.imgUrl" alt="" />
         </div>
       </div>
-      <div class="copyright-text">ⓒ 2024 RS9 CASINO All right reserved</div>
+      <div class="copyright-text">ⓒ 2024 City 8 All right reserved</div>
     </footer>
   </q-layout>
 </template>
@@ -176,12 +171,12 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.deposit_header");
-          headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
+          // headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
         } else if (route.path === "/finance/withdraw") {
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.withdraw_header");
-          headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
+          // headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
         } else if (route.path === "/account/transit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -190,7 +185,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.account_header");
-          headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
+          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/display") {
           prevPage.value = "finance/deposit";
@@ -201,7 +196,7 @@ export default defineComponent({
           prevPage.value = "/";
           hasPage.value = true;
           pageName.value = t("lang.personal_header");
-          headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
+          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
           hasLang.value = true;
         } else if (route.path === "/account/withdraw") {
           prevPage.value = "/";
@@ -256,36 +251,7 @@ export default defineComponent({
         }
       }
     };
-    const footers = reactive({
-      home: {
-        icon: require("../assets/images/menu/home-icon-thai-theme.png"),
-        active: require("../assets/images/menu/home-icon-active-thai-theme.png")
-      },
-      deposit: {
-        icon: require("../assets/images/menu/deposit-icon-thai-theme.png"),
-        active: require("../assets/images/menu/deposit-icon-thai-theme.png")
-      },
-      withdraw: {
-        icon: require("../assets/images/menu/withdraw-icon-thai-theme.png"),
-        active: require("../assets/images/menu/withdraw-icon-active-thai-theme.png")
-      },
-      cs: {
-        icon: require("../assets/images/menu/cs-icon-thai-theme.png"),
-        active: require("../assets/images/menu/cs-icon-active-thai-theme.png")
-      },
-      notice: {
-        icon: require("../assets/images/menu/notice-icon-thai-theme.png"),
-        active: require("../assets/images/menu/notice-icon-active-thai-theme.png")
-      },
-      affiliate: {
-        icon: require("../assets/images/menu/affiliate-icon.png"),
-        active: require("../assets/images/menu/affiliate-icon-active.png")
-      },
-      app: {
-        icon: require("../assets/images/menu/download-icon-thai-theme.png"),
-        active: require("../assets/images/menu/download-icon-active-thai-theme.png")
-      }
-    });
+
 
     const closeWindowOrBack = () => {
       if (prevPage.value) {
@@ -337,7 +303,6 @@ export default defineComponent({
       prevPage,
       closeWindowOrBack,
       outOfApp,
-      footers,
       hasHeader,
       headerIcon,
       languageVal,
@@ -437,20 +402,6 @@ svg path {
     aspect-ratio: 58 / 58;
   }
 
-  .footer-icon-wrapper {
-    // background: linear-gradient(90deg, #cf027d 0%, #ff6370 100%),
-    //   linear-gradient(94.81deg, #fb3ca9 7.45%, #ffa9ab 95.9%);
-    background: url("../assets/images/menu/middle-btn-wrap.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 5px;
-  }
 }
 
 // .q-footer .q-tabs {
@@ -556,9 +507,28 @@ svg path {
 }
 
 .top-logo {
-  width: 33%;
+  position: absolute;
+  top: 50%;
+  margin-top: -42px;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: 1200px) {
+    width: 250px;
+  }
+
   @media (max-width: 768px) {
-    width: 66%;
+    width: 200px;
+    margin-top:0px;
+    top: calc(50% + 30px);
+    display: none; // temp
+  }
+
+  @media (max-width: 500px) {
+    width: 200px;
+    margin-top:0px;
+    display: none; // temp
   }
 }
 
@@ -569,19 +539,31 @@ svg path {
   flex-direction: column;
   position: relative;
   width: 100%;
-  background-image: url("../assets/home/home-banner-mobile.png");
-  // background-color: rgba(0, 0, 0, 0.3);
-  background-blend-mode: multiply;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: url("../assets/home/home-banner-sm.jpg") no-repeat top center;
   background-size: cover;
-  height: 380px;
+  height: 228px;
+  margin-top: 60px;
+
+  @media (min-width: 620px) {
+    background: url("../assets/home/home-banner-md.jpg") no-repeat top center;
+    background-size: cover;
+    height: 228px;
+  }
+
+  @media (min-width: 769px) {
+    background: url("../assets/home/home-banner-lg.jpg") no-repeat top center;
+    background-size: cover;
+    margin-top: 0px;
+    height: 345px;
+  }
 
   @media (min-width: 1200px) {
-    background-image: url("../assets/home/home-banner.png");
-    background-position: top center;
+    background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
+    background-size: cover;
     height: 480px;
   }
+
+  
 }
 
 footer {
@@ -669,49 +651,6 @@ footer {
   }
   .header-vip-btn {
     margin-left: 130px;
-  }
-}
-
-.jackpot {
-  display: flex;
-  justify-content: center;
-  margin: 30px auto;
-  position: relative;
-  padding-left: 16px;
-  padding-right: 16px;
-
-  .jackpot-txt {
-    display: flex;
-    position: absolute;
-    bottom: 9%;
-    font-size: 34px;
-    font-weight: bold;
-    color: #f1b252;
-    text-shadow: 0 0 5px #ff0000;
-    letter-spacing: 3px;
-
-    @media (max-width: 991px) {
-      font-size: 16px;
-    }
-  }
-
-  img.desktop {
-    display: none;
-    width: 100%;
-    max-width: 500px;
-    @media (min-width: 991px) {
-      display: block;
-      max-width: 880px;
-    }
-  }
-
-  img.mobile {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    @media (min-width: 991px) {
-      display: none;
-    }
   }
 }
 </style>

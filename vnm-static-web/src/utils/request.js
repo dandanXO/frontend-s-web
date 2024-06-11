@@ -14,6 +14,9 @@ const globalLinks= ["tf88won"];
 console.log(window.location.hostname);
 const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 
+const q7yxLinks= ["q7yxpdxwxk"];
+const isq7yxVN = q7yxLinks.some(link => window.location.hostname.includes(link));
+
 if(isGlobalVN){
   var rstGlobalArray = process.env.VUE_APP_GLOBAL_RST_API.split(",");
   var evtGlobalArray = process.env.VUE_APP_GLOBAL_EVT_API.split(",");
@@ -24,6 +27,15 @@ if(isGlobalVN){
   var crtApi = getInitApi(crGlobalArray, "VNM_WEB_CRT_URL");
 
   localStorage.setItem("IMAGE_CDN", process.env.VUE_APP_GLOBAL_IMAGE_CDN);
+
+}else if(isq7yxVN){
+  var rstArray2 = process.env.VUE_APP_Q7YX_RST_API.split(",");
+  var evtArray2 = process.env.VUE_APP_Q7YX_EVT_API.split(",");
+  var crArray2 = process.env.VUE_APP_Q7YX_CR_API.split(",");
+
+  var rstApi = getInitApi(rstArray2, "VNM_WEB_RST_URL");
+  var evtApi = getInitApi(evtArray2, "VNM_WEB_EVT_URL");
+  var crtApi = getInitApi(crArray2, "VNM_WEB_CRT_URL");
 
 }else{
   var rstApi = getInitApi(rstArray, "VNM_WEB_RST_URL");

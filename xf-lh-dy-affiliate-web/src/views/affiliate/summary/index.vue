@@ -71,9 +71,172 @@
             {{ t('fields.reset') }}
           </el-button>
         </div>
+        <el-row class="summary-container" v-if="(parseInt(store.state.user.siteId) === 10)">
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.affiliateTotalRebate') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.totalRebate }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.myRebate') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.totalAffiliateRebate }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.totalBet') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.totalBet }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.totalPayout') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.totalPayout }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.totalWinLoss') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.totalBet - affiliateSummary.totalPayout }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.todayDeposit') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.todayDeposit }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.todayWithdrawal') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.todayWithdrawal }}
+              </el-col>
+            </el-row>
+          </div>
+          <div class="summary-stat">
+            <el-row>
+              <el-col>
+                {{ t('fields.depositWithdrawalDiff') }}
+              </el-col>
+              <el-col>
+                {{ affiliateSummary.todayDeposit - affiliateSummary.todayWithdrawal }}
+              </el-col>
+            </el-row>
+          </div>
+        </el-row>
+        <table class="summary-container" v-if="(parseInt(store.state.user.siteId) === 10)">
+          <tr>
+            <th>
+              {{ t('fields.gameType') }}
+            </th>
+            <th>
+              {{ t('gameType.LIVE') }}
+            </th>
+            <th>
+              {{ t('gameType.SLOT') }}
+            </th>
+            <th>
+              {{ t('gameType.SPORT') }}
+            </th>
+            <th>
+              {{ t('gameType.ESPORT') }}
+            </th>
+            <th>
+              {{ t('gameType.FISH') }}
+            </th>
+          </tr>
+          <tr>
+            <td>
+              {{ t('fields.bet') }}
+            </td>
+            <td>
+              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet }}
+            </td>
+            <td>
+              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet }}
+            </td>
+            <td>
+              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ t('fields.payout') }}
+            </td>
+            <td>
+              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalPayout }}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{ t('fields.winLoss') }}
+            </td>
+            <td>
+              {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet - gameTypeFilter("LIVE")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet - gameTypeFilter("SLOT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout }}
+            </td>
+            <td>
+              {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet - gameTypeFilter("FISH")[0].totalPayout }}
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
-
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         height="600"
@@ -536,7 +699,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getAffiliateSummary } from '../../../api/affiliate-record'
+import { getAffiliateSummary, getTotalSummary } from '../../../api/affiliate-record'
 // import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
@@ -609,6 +772,16 @@ const allMemberRequest = reactive({
   siteId: null,
 })
 
+const affiliateSummary = reactive({
+  totalRebate: 0,
+  totalAffiliateRebate: 0,
+  totalBet: 0,
+  totalPayout: 0,
+  todayDeposit: 0,
+  todayWithdrawal: 0,
+  gameTypeBetSummaryVOList: []
+})
+
 // async function loadSites() {
 //   const { data: site } = await getSiteListSimple()
 //   siteList.list = site
@@ -626,6 +799,16 @@ function disabledDate(time) {
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
   )
+}
+
+function gameTypeFilter(type) {
+  if (affiliateSummary.gameTypeBetSummaryVOList === null ||
+  affiliateSummary.gameTypeBetSummaryVOList === undefined ||
+  affiliateSummary.gameTypeBetSummaryVOList.length === 0) {
+    return null;
+  }
+  const gameTypeSummary = affiliateSummary.gameTypeBetSummaryVOList.filter(rec => rec.gameType === type);
+  return gameTypeSummary.length === 0 ? null : gameTypeSummary
 }
 
 function resetQuery() {
@@ -684,6 +867,14 @@ async function loadRecord() {
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
+  if (parseInt(store.state.user.siteId) === 10) {
+    const { data: total } = await getTotalSummary(query)
+    Object.entries(total).forEach(([key, value]) => {
+      if (value) {
+        affiliateSummary[key] = value
+      }
+    })
+  }
   currentPageType = 'main'
   page.pages = ret.pages
   page.records = ret.records
@@ -888,5 +1079,32 @@ onMounted(async () => {
 
 .el-result {
   padding: 0;
+}
+
+.summary-container {
+  display: table;
+  table-layout: fixed;
+  width: inherit;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.summary-stat, .summary-container td {
+  display: table-cell;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  background: white;
+  padding: 5px;
+
+  .el-row {
+    display: grid;
+
+    .el-col:nth-child(2) {
+      margin-top: 5px;
+    }
+  }
+  .el-col {
+    text-align: center;
+  }
 }
 </style>

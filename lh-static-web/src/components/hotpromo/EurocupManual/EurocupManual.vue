@@ -1,16 +1,18 @@
 <template>
   <div class="eurocup-manual-container">
-    <div class="banner"></div>
+    <div class="fixed football"><img src="../../../assets/promo/lh-eurocup-manual/football.png"></div>
+    <div class="fixed person"><img src="../../../assets/promo/lh-eurocup-manual/person.png"></div>
+    <div class="fixed trophy"><img src="../../../assets/promo/lh-eurocup-manual/trophy.png"></div>  
     <div class="container">
       <div class="btn-group">
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'groupStage' }" @click="tab = 'groupStage'">
-          小組賽
+          小组赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'roundOf16' }" @click="tab = 'roundOf16'">
-          十六強賽
+          十六强赛
         </div>
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'quarterFinal' }" @click="tab = 'quarterFinal'">
-          4/1決賽
+          4/1决赛
         </div>
         <div
           class="btn btn-active"
@@ -20,61 +22,102 @@
           半/总决赛
         </div>
       </div>
+      <div class="common-title">欧洲杯{{ matchType }}赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
-          <div class="game-team" v-for="team in groupStageTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
-            <div class="game-time">
-              <div class="vs">VS</div>
-              <div class="time">{{ team.startTime }}</div>
+          <div class="game-team" v-for="team in groupStageTeamsList"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-time">
+              <div class="vs"><img src="../../../assets/promo/lh-eurocup-manual/vs.png"></div>
+              <div class="time">{{ team.startTime }}</div>
+              <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
+            </div>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'roundOf16'">
-          <div class="game-team" v-for="team in roundOf16TeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
-            <div class="game-time">
-              <div class="vs">VS</div>
-              <div class="time">{{ team.startTime }}</div>
+          <div class="game-team" v-for="team in roundOf16TeamsList"
+               @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-time">
+              <div class="vs"><img src="../../../assets/promo/lh-eurocup-manual/vs.png"></div>
+              <div class="time">{{ team.startTime }}</div>
+              <div class="clickBet">点击投注</div>
+            </div>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'quarterFinal'">
-          <div class="game-team" v-for="team in quarterFinalTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
-            <div class="game-time">
-              <div class="vs">VS</div>
-              <div class="time">{{ team.startTime }}</div>
+          <div class="game-team" v-for="team in quarterFinalTeamsList"
+               @click="openPlat(team.platformMatchId)"
+            >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-time">
+              <div class="vs"><img src="../../../assets/promo/lh-eurocup-manual/vs.png"></div>
+              <div class="time">{{ team.startTime }}</div>
+              <div class="clickBet">点击投注</div>
+            </div>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'semiFinalAndFinal'">
-          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList">
-            <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
-            <div class="game-time">
-              <div class="vs">VS</div>
-              <div class="time">{{ team.startTime }}</div>
+          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList"
+               @click="openPlat(team.platformMatchId)"
+          >
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon"></img>
+              <span>{{team.teamOneName}}</span>
             </div>
-            <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+            <div class="game-time">
+              <div class="vs"><img src="../../../assets/promo/lh-eurocup-manual/vs.png"></div>
+              <div class="time">{{ team.startTime }}</div>
+              <div class="clickBet">点击投注</div>
+            </div>
+            <div class="game-flag-div">
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"></img>
+              <span>{{team.teamTwoName}}</span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="alert-box">
-        <div class="alert-line" v-if="tab === 'groupStage'">
-        轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
-      </div>
-      <div class="alert-line" v-if="tab === 'roundOf16'">
-        第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      <div class="alert-line" v-if="tab === 'quarterFinal'">
-        第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-      </div>
+      <div class="shade">
+        <div class="common-title">活动详情</div>
+        <div class="alert-details">
+          <div class="alert-contents"><img src="../../../assets/promo/lh-eurocup-manual/alert-contents.png"></div>
+          <div class="alert-box">
+            <div class="alert-line" v-if="tab === 'groupStage'">
+            小组赛赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+          </div>
+          <div class="alert-line" v-if="tab === 'roundOf16'">
+            第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+          <div class="alert-line" v-if="tab === 'quarterFinal'">
+            第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+          <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+          </div>
+        </div>
     
       <div class="money-table">
-        <table v-if="tab === 'groupStage'">
+        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'groupStage'">
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>首当其冲</th>
@@ -112,7 +155,7 @@
             <td>388</td>
           </tr>
         </table>
-        <table v-if="tab === 'roundOf16'">
+        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'roundOf16'">
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>扭转乾坤</th>
@@ -150,7 +193,7 @@
             <td>388</td>
           </tr>
         </table>
-        <table v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
+        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
           <tr>
             <th>任意赛事早盘有效投注</th>
             <th>首当其冲</th>
@@ -207,6 +250,7 @@
           </tr>
         </table>
       </div>
+    </div>
       <div class="info" v-if="tab === 'groupStage' || tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
         <div class="info-item">
           <div class="title">首当其冲</div>
@@ -253,34 +297,56 @@
           </div>
         </div>
       </div>
-      <div class="notice">
+      <div class="notice shade">
+        <div class="common-title">活动规则</div>
         <ul>
           <li>1.活动期间，会员投注赛程任意赛事有效投注额≥500 即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；</li>
-          <li>2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
+          <li>2.本活动仅限FB体育、IM体育、熊猫体育（沙巴体育与平博体育不予计算）的早盘盘口参与，如会员同时在FB体育、IM体育、熊猫体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
           <li>3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
           <li>4.达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
           <li>5.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
-          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，亿博体育保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
+          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
           <li>7.为避免文字理解差异，本站保留本活动最终解释权。</li>
         </ul>
       </div>
     </div>
-  </div>
+ </div>
+
+  <GameModal ref="platformGame"></GameModal>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted,computed  } from "vue";
 import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
+import GameModal from "@/components/modal/GameModal";
+import { useLocalStorage } from "@vueuse/core";
 
+const platformGame = ref(null);
 const tab = ref("groupStage");
 
 const groupStageTeamsList = ref([]);
 const roundOf16TeamsList = ref([]);
 const quarterFinalTeamsList = ref([]);
 const semiFinalAndFinalTeamsList = ref([]);
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
+
+const openPlat = (platformMatchId) => {
+  var matchId = platformMatchId ?? "";
+  platformGame.value.open('FB体育', 'FB', matchId);
+}
+
+const matchType= computed(() => {
+  if(tab.value === "roundOf16"){
+    return "十六强赛"
+  }else if(tab.value === "quarterFinal"){
+    return "4/1决赛"
+  }else if(tab.value === "semiFinalAndFinal"){
+    return "半/总决赛"
+  }
+  return "小组赛"
+})
 
 const init = () => {
   getEurocupManualSchedule().then((res) => {
@@ -325,9 +391,47 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 .eurocup-manual-container {
-  background-image: url("../../../assets/promo/lh-eurocup-manual/background.png");
+  // background-image: url("../../../assets/promo/lh-eurocup-manual/background.png");
   position: relative;
+  .fixed {
+    position: absolute;
+    &.football {
+    right: 0px;
+    width: 250px;
+    top: 250px;
+    }
+    &.trophy {
+    left: -250px;
+    width: 250px;
+    top: 800px;
+    }
+    &.person {
+    right: 140px;
+    width: 250px;
+    top: 1500px;
+
+    }
+  }
+  .common-title { 
+    font-family: Play;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 15px auto 0;
+    color: #0099D8;
+    display: flex; justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 5px;
+    &:before, &:after {
+      content: "";
+      background: url(../../../assets/promo/lh-eurocup-manual/title-bar.png)no-repeat center center;
+      height: 40px;
+      width: 270px;
+    }
+  }
 }
 .banner {
   background-image: url("../../../assets/promo/lh-eurocup-manual/banner.png");
@@ -337,6 +441,7 @@ onMounted(() => {
   position: absolute;
   top: 0px;
   left: 0px;
+  pointer-events: none;
 }
 
 .container {
@@ -351,7 +456,7 @@ onMounted(() => {
   width: 1155px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 344px;
+  margin-top: 100px;
   z-index: 1;
 }
 .btn {
@@ -363,6 +468,13 @@ onMounted(() => {
   font-size: 28px;
   color: #fff;
   cursor: pointer;
+  width: 250px;
+  height: 70px;
+  font-size: 28px;
+  color: #fff;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .btn-active {
@@ -374,30 +486,43 @@ onMounted(() => {
 }
 
 .schedule {
-  width: 1305px;
-  background: linear-gradient(180deg, #0b52a0 0%, #00337f 100%);
+  width: 1200px;
   border-radius: 20px;
   margin-top: 27px;
   padding: 38px 36px;
+  border: 1px solid #1AF4FF;
+      background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
 }
-
+.shade {
+  margin: 27px 0;
+  border-radius: 20px;
+  width: 1200px;
+  padding: 38px 36px;
+  border: 1px solid #1AF4FF;
+  background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
+}
+.alert-details {
+  display: flex; 
+  gap: 10px;
+  align-items: center;
+  margin: 20px 0;
+}
 .alert-line {
-  color: #f4ffe1;
   font-size: 20px;
   line-height: 25.4px;
-  margin: 26px 0px;
+  color: #FFFFFF;
+
 }
 
 .money-table {
-  width: 1305px;
-  margin-bottom: 53px;
+  width: 100%;
+  margin: 27px 0;
   table {
     width: 100%;
     font-size: 24px;
     line-height: 30.48px;
     text-align: center;
     border-collapse: separate;
-    border-spacing: 0 3px;
   }
 
   tr {
@@ -413,14 +538,13 @@ onMounted(() => {
   }
 
   th {
-    background: #beebff;
-    color: #0d1057;
+    background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+    color: #ffffff;
     font-weight: 700;
   }
 
   td {
-
-    border-spacing: 0 16px;
+    border: 1px solid #ACD4F6;
     color: #fff;
     /* margin-top: 3px; */
     background: #04204a4d;
@@ -428,42 +552,44 @@ onMounted(() => {
 }
 
 .info {
-  width: 1305px;
+  width: 1200px;
   font-size: 24px;
   line-height: 30.48px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 43px;
   .info-item {
-    width: 373px;
+    width: 32%;
+    padding: 20px;
     position: relative;
+    background: url(../../../assets/promo/lh-eurocup-manual/info-bg.png)no-repeat center center;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
     .title {
-      background-image: url("../../../assets/promo/lh-eurocup-manual/info-back.png");
-      width: 207px;
-      height: 55px;
-      background-size: 100% 100%;
+      
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: center;  
       color: #fff;
+      font-family: Play;
+      font-size: 24px;
       font-weight: 700;
-      position: absolute;
-      top: -28px;
-      left: 50%;
-      translate: -50%;
+      line-height: 38.4px;
+      letter-spacing: 0.1em;
+
     }
     .content {
-      width: 373px;
-      height: 166px;
-      background: linear-gradient(180deg, #aae5ff 0%, #6fbaff 100%);
-      border: 2px solid #b0d4ff;
-      border-radius: 20px;
-      color: #0d4b57;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      font-family: Play;
+      font-size: 20px;
       font-weight: 400;
+      line-height: 32px;
+      letter-spacing: 0.1em;
+      text-align: center;
     }
   }
 }
@@ -480,8 +606,18 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 205px;
+  width: 300px;
+  .game-flag-div {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex:1;
+  }
   .game-time {
+    flex:2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -495,8 +631,16 @@ onMounted(() => {
     .time {
       font-size: 12px;
       line-height: 15.24px;
-      color: #fff;
       font-family: Microsoft YaHei UI;
+      color: #FFFFFF80;
+    }
+    .clickBet {
+      background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+      color: #ffffff;
+      padding: 3px 20px;
+      border-radius: 20px;
+      margin: 10px 0;
+      cursor: pointer;
     }
   }
   .game-logo {
@@ -508,16 +652,19 @@ onMounted(() => {
 }
 
 .notice {
-  width: 1305px;
+  width: 1200px;
   margin-bottom: 99px;
+  font-family: Play;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: 0.1em;
+  text-align: left;
   ul {
- padding: 0px;
+    padding: 0px;
     list-style: none;
     li {
-      font-size: 20px;
-      line-height: 25.4px;
-      color: #E1F2FF;
-      font-weight: 400;
+      color: #ffffff;
       padding: 10px 0;
     }
   }

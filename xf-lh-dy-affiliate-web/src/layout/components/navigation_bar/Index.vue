@@ -12,6 +12,7 @@
         <el-option key="2" value="zh">zh</el-option>
         <el-option key="3" value="th">th</el-option>
         <el-option key="4" value="vi">vi</el-option>
+        <el-option key="5" value="kr">kr</el-option>
       </el-select>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -100,6 +101,10 @@ export default {
         return router.push("/lh/login")
       } else if (siteId === "8" || siteId === 8) {
         return router.push("/vi/login")
+      } else if (siteId === "10" || siteId === 10) {
+        return router.push("/kr/login")
+      } else if (siteId === "11" || siteId === 11) {
+        return router.push("/pak/login")
       } else {
         return location.reload();
       }

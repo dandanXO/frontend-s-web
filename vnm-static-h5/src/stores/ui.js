@@ -9,7 +9,8 @@ export const useUI = defineStore("ui-store", {
       orientation: "landscape",
       themeColor: "primary",
       pageName: "优惠详细信息",
-      slotLists: []
+      slotLists: [],
+      downloadUrl: ""
     };
   },
   actions: {

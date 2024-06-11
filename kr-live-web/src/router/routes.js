@@ -132,18 +132,18 @@ const routes = [
         ],
         meta: {requiresAuth: true}
     },
-    {
-        path: "/getapp",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [
-            {
-                path: "",
-                name: "getapp",
-                component: () => import("pages/GetApp.vue")
-            }
-        ],
-        meta: {requiresAuth: false}
-    },
+    // {
+    //     path: "/getapp",
+    //     component: () => import("layouts/MainLayout.vue"),
+    //     children: [
+    //         {
+    //             path: "",
+    //             name: "getapp",
+    //             component: () => import("pages/GetApp.vue")
+    //         }
+    //     ],
+    //     meta: {requiresAuth: false}
+    // },
     {
         path: "/vip",
         component: () => import("layouts/MainLayout.vue"),

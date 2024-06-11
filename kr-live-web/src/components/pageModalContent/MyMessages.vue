@@ -1,28 +1,6 @@
 <template>
     <div class="" style="">
-      <div class="">
-        <q-item-section class="table-row-head">
-          <q-item-label>번호</q-item-label>
-          <q-item-label>제목</q-item-label>
-          <q-item-label>날짜</q-item-label>
-        </q-item-section>
-        <template v-for="item in articleData" :key="item.page">
-          <q-expansion-item group="somegroup" class="table-row-title">
-            <template v-slot:header>
-              <q-item-section class="table-row table-row-title">
-                <q-item-label>{{ item.id }}</q-item-label>
-                <q-item-label>{{ item.title }}</q-item-label>
-                <q-item-label>{{ item.sendTime }}</q-item-label>
-              </q-item-section>
-            </template>
-            <q-card>
-              <q-card-section class="table-row-article">
-                <article v-html="item.content"></article>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
-        </template>
-      </div>
+      <CustomerService/>
     </div>
   </template>
   
@@ -30,6 +8,7 @@
   import { ref, onMounted } from "vue";
   import { api } from "boot/axios";
   import { SessionStorage } from "quasar";
+  import CustomerService from 'components/pageModalContent/CustomerService.vue';
   
   //TODO
   const articleData = ref([]);

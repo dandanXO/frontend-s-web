@@ -17,7 +17,7 @@
     <el-row>
       <el-form-item :label="t('fields.desktopImage')" prop="desktopImgUrl">
         <el-row :gutter="5">
-          <el-col v-if="form.desktopImgUrl" :span="18" style="width: 250px">
+          <el-col v-if="form.desktopImgUrl" style="width: 250px">
             <el-image
               v-if="form.desktopImgUrl"
               :src="promoDir + form.desktopImgUrl"
@@ -26,16 +26,25 @@
               :preview-src-list="[promoDir + form.desktopImgUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('DESKTOP_IMAGE')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('DESKTOP_IMAGE')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('DESKTOP_IMAGE')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -47,7 +56,6 @@
         <el-row :gutter="5">
           <el-col
             v-if="form.desktopImgBackgroundUrl"
-            :span="18"
             style="width: 250px"
           >
             <el-image
@@ -58,23 +66,32 @@
               :preview-src-list="[promoDir + form.desktopImgBackgroundUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('DESKTOP_BACKGROUND_IMAGE')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('DESKTOP_BACKGROUND_IMAGE')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('DESKTOP_BACKGROUND_IMAGE')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
     <el-row>
       <el-form-item :label="t('fields.mobileImage')" prop="mobileImgUrl">
         <el-row :gutter="5">
-          <el-col v-if="form.mobileImgUrl" :span="18" style="width: 250px">
+          <el-col v-if="form.mobileImgUrl" style="width: 250px">
             <el-image
               v-if="form.mobileImgUrl"
               :src="promoDir + form.mobileImgUrl"
@@ -83,16 +100,25 @@
               :preview-src-list="[promoDir + form.mobileImgUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('MOBILE_IMAGE')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('MOBILE_IMAGE')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('MOBILE_IMAGE')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -104,7 +130,6 @@
         <el-row :gutter="5">
           <el-col
             v-if="form.mobileImgBackgroundUrl"
-            :span="18"
             style="width: 250px"
           >
             <el-image
@@ -115,16 +140,25 @@
               :preview-src-list="[promoDir + form.mobileImgBackgroundUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('MOBILE_BACKGROUND_IMAGE')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('MOBILE_BACKGROUND_IMAGE')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('MOBILE_BACKGROUND_IMAGE')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -140,16 +174,25 @@
               :preview-src-list="[promoDir + form.desktopBannerUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('DESKTOP_BANNER')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('DESKTOP_BANNER')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('DESKTOP_BANNER')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -165,16 +208,25 @@
               :preview-src-list="[promoDir + form.mobileBannerUrl]"
             />
           </el-col>
-          <el-col :span="6">
-            <el-button
-              icon="el-icon-search"
-              size="mini"
-              type="success"
-              @click="browseImage('MOBILE_BANNER')"
-            >
-              {{ t('fields.browse') }}
-            </el-button>
-          </el-col>
+        </el-row>
+        <el-row :gutter="5">
+          <el-button
+            icon="el-icon-plus"
+            size="mini"
+            type="primary"
+            v-permission="['sys:siteimage:add']"
+            @click="showDialog('MOBILE_BANNER')"
+          >
+            {{ t('fields.upload') }}
+          </el-button>
+          <el-button
+            icon="el-icon-search"
+            size="mini"
+            type="success"
+            @click="browseImage('MOBILE_BANNER')"
+          >
+            {{ t('fields.browse') }}
+          </el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -428,6 +480,148 @@
       </div>
     </div>
   </el-dialog>
+  <el-dialog
+    :title="uiControl.dialogTitle"
+    v-model="uiControl.dialogVisible"
+    append-to-body
+    width="600px"
+    :close-on-press-escape="false"
+  >
+    <el-form
+      ref="imageFormRef"
+      :model="imageForm"
+      :rules="imageFormRules"
+      :inline="true"
+      size="small"
+      label-width="180px"
+    >
+      <div id="preview">
+        <el-image
+          v-if="uploadedImage.url"
+          :src="uploadedImage.url"
+          :fit="contain"
+          :preview-src-list="[uploadedImage.url]"
+        />
+      </div>
+      <el-form-item :label="t('fields.image')" prop="path">
+        <el-row :gutter="10">
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputImage.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+          <el-col :span="1" />
+        </el-row>
+      </el-form-item>
+      <el-form-item :label="t('fields.imageName')" prop="name">
+        <el-input v-model="imageForm.name" style="width: 350px" />
+      </el-form-item>
+      <el-form-item :label="t('fields.category')" prop="category">
+        <span style="width: 350px">{{ t('fields.promo') }}</span>
+      </el-form-item>
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="imageForm.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 350px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        :label="t('fields.promoType')"
+        prop="promoType"
+      >
+        <!--insert image size-->
+        <div v-if="imageForm.promoType === 'DESKTOP_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.desktopImage') }}</span>
+          </el-row>
+          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 355*180</span>
+          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 800*188</span>
+          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 355*180</span>
+          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1920*600</span>
+        </div>
+        <div v-if="imageForm.promoType === 'DESKTOP_BACKGROUND_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.desktopBackgroundImage') }}</span>
+          </el-row>
+        </div>
+        <div v-if="imageForm.promoType === 'MOBILE_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.mobileImage') }}</span>
+          </el-row>
+          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1004*252</span>
+          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 1000*454</span>
+          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1004*252</span>
+          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1080*512</span>
+        </div>
+        <div v-if="imageForm.promoType === 'MOBILE_BACKGROUND_IMAGE'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.mobileBackgroundImage') }}</span>
+          </el-row>
+        </div>
+        <div v-if="imageForm.promoType === 'DESKTOP_BANNER'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.desktopBanner') }}</span>
+          </el-row>
+          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1920*500</span>
+          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 2000*500</span>
+          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1920*500</span>
+          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1920*568</span>
+        </div>
+        <div v-if="imageForm.promoType === 'MOBILE_BANNER'">
+          <el-row>
+            <span style="width: 350px" disabled>{{ t('fields.mobileBanner') }}</span>
+          </el-row>
+          <span v-if="imageForm.siteId === 1">{{ t('fields.imageSize') }}: 1080*534</span>
+          <span v-if="imageForm.siteId === 3">{{ t('fields.imageSize') }}: 1080*675</span>
+          <span v-if="imageForm.siteId === 6">{{ t('fields.imageSize') }}: 1080*534</span>
+          <span v-if="imageForm.siteId === 7">{{ t('fields.imageSize') }}: 1000*400</span>
+        </div>
+      </el-form-item>
+      <el-form-item :label="t('fields.remark')" prop="remark">
+        <el-input
+          v-model="imageForm.remark"
+          :rows="2"
+          type="textarea"
+          :placeholder="t('fields.pleaseInput')"
+          style="width: 350px"
+        />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImageUpload">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 <script setup>
 import { computed, nextTick, onMounted, reactive, ref } from 'vue'
@@ -438,9 +632,9 @@ import {
   getPromoPageById,
   updatePromoPages,
 } from '../../../../api/promoPages'
-import { getSiteImage } from '../../../../api/site-image'
+import { createSiteImage, getSiteImage } from '../../../../api/site-image'
 import { ElMessage } from 'element-plus'
-// import { uploadImage } from '../../../../api/image'
+import { uploadImage } from '../../../../api/image'
 import { useRoute, useRouter } from 'vue-router'
 import { getSiteListSimple } from '../../../../api/site'
 import { useStore } from '../../../../store'
@@ -452,9 +646,15 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
 const site = ref(null)
+const inputImage = ref(null)
+const imageFormRef = ref(null)
 const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 const promoForm = ref(null)
 const param = ref([])
+
+const uploadedImage = reactive({
+  url: null,
+})
 
 const form = reactive({
   id: null,
@@ -481,7 +681,21 @@ const form = reactive({
   param: null,
 })
 
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null,
+  promoType: null,
+})
+
 const uiControl = reactive({
+  dialogVisible: false,
+  dialogTitle: '',
   titleDisable: false,
   promoState: [
     { key: 1, displayName: 'active', value: true },
@@ -516,6 +730,14 @@ const formRules = reactive({
   promoCode: [required(t('message.validatePromoCodeRequired'))],
   pageContent: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
+})
+
+const imageFormRules = reactive({
+  path: [required(t('message.validateImageRequired'))],
+  name: [required(t('message.validateImageNameRequired'))],
+  category: [required(t('message.validateCategoryRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))],
+  promoType: [required(t('messsage.validatePromoTypeRequired'))],
 })
 
 const siteList = reactive({
@@ -805,6 +1027,85 @@ function submitImage() {
 
 const handleCancelClick = () => {
   form.labelType = null
+}
+
+function showDialog(type) {
+  if (imageFormRef.value) {
+    imageFormRef.value.resetFields()
+    uploadedImage.url = null
+    imageForm.id = null
+  }
+  imageForm.category = 'PROMO'
+  switch (type) {
+    case 'DESKTOP_IMAGE':
+      imageForm.promoType = 'DESKTOP_IMAGE'
+      break
+    case 'DESKTOP_BACKGROUND_IMAGE':
+      imageForm.promoType = 'DESKTOP_BACKGROUND_IMAGE'
+      break
+    case 'MOBILE_IMAGE':
+      imageForm.promoType = 'MOBILE_IMAGE'
+      break
+    case 'MOBILE_BACKGROUND_IMAGE':
+      imageForm.promoType = 'MOBILE_BACKGROUND_IMAGE'
+      break
+    case 'DESKTOP_BANNER':
+      imageForm.promoType = 'DESKTOP_BANNER'
+      break
+    case 'MOBILE_BANNER':
+      imageForm.promoType = 'MOBILE_BANNER'
+      break
+  }
+  uiControl.dialogTitle = t('fields.addImage')
+  uiControl.dialogVisible = true
+}
+
+async function attachImage(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    imageForm.path = data.data
+    inputImage.value.value = ''
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    uploadedImage.url = URL.createObjectURL(files)
+    return await uploadImage(formData)
+  }
+}
+
+function submitImageUpload() {
+  imageFormRef.value.validate(async valid => {
+    if (valid) {
+      await createSiteImage(imageForm)
+      uiControl.dialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
 }
 
 onMounted(() => {

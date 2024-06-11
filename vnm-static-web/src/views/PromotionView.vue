@@ -103,6 +103,10 @@
 
         <div
           class="inner"
+          :class="{
+            'isEurocup24': selectedPromo.redirectUrl === 'vnm-eurocup24',
+            'isEurocupLucky': selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
+          }"
           :style="
             selectedPromo?.desktopImgBackgroundUrl
               ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
@@ -256,6 +260,7 @@ export default defineComponent({
     };
     const loadAll = () => {
       loadPromo().then((res) => {
+        console.log(res,'dan')
         if(res.code === 0) {
           promoState.promoList.push(...res.data);
           res.data.forEach(element => {
@@ -856,16 +861,24 @@ export default defineComponent({
         background-position: top center;
         gap: 20px;
         background-repeat: no-repeat;
+
+        &.isEurocup24 {
+          padding: 0px;
+        }
+        &.isEurocupLucky {
+          background: #E7F1FD;
+        }
+
         .hot-promo {
           // background: #201f29;
           border-radius: 10px;
         }
         .promo-view-container {
           margin: 0 auto;
-          max-width: $maxwidth;
-          width: 95%;
+          max-width: 1050px;
+          width: 100%;
           text-align: left;
-          padding: 20px;
+          padding: 10px 0;
           color: $font-5;
           font-size: 20px;
           ol {

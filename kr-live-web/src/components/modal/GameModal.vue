@@ -49,7 +49,7 @@
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <img src="../../assets/logo-coming.png" style="width: 80%" />
+<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -259,6 +259,20 @@ const open = (gameName, platformCode, gameCode, gameType) => {
             }
 
             visible.value = true;
+          } else if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+            //
+            const newWin = window.open(`/`, "_self");
+
+            if(newWin){
+              newWin.location.href = srcDoc;
+            } else {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                icon: "report_problem"
+              });
+            }
           } else {
             window.open(srcDoc, "_blank");
           }

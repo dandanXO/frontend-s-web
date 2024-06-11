@@ -14,19 +14,11 @@
             <el-icon><Refresh style="color: #ffffff" /></el-icon>
           </div> -->
 
-          <el-button
-            type="success"
-            class="common-btn"
-            @click="transferOutAllModal"
-          >
-            一键转出
-          </el-button>
-          <el-button type="success" class="common-btn" @click="refreshAllModal">
-            一键刷新
-          </el-button>
+          <el-button type="success" class="common-btn" @click="transferOutAllModal">一键转出</el-button>
+          <el-button type="success" class="common-btn" @click="refreshAllModal">一键刷新</el-button>
 
           <div class="balance-transfer-button">
-            <span>自动平台转账: </span>
+            <span>自动平台转账:</span>
             <el-switch
               v-model="autoTransfer"
               class="ml-2"
@@ -62,15 +54,9 @@
               <el-icon><Refresh /></el-icon>
             </div>
           </div>
-          <div
-            class="flex-box flex-justify-space flex-wrap transfer-action-box"
-          >
-            <button v-if="!autoTransfer" class="outline transfer-btn" @click="transferModal(0, p)">
-              转进
-            </button>
-            <button v-if="!autoTransfer" class="transfer-btn" @click="transferModal(1, p)">
-              转出
-            </button>
+          <div class="flex-box flex-justify-space flex-wrap transfer-action-box">
+            <button v-if="!autoTransfer" class="outline transfer-btn" @click="transferModal(0, p)">转进</button>
+            <button v-if="!autoTransfer" class="transfer-btn" @click="transferModal(1, p)">转出</button>
           </div>
         </div>
       </div>
@@ -88,9 +74,7 @@
       <template #header>
         <div
           :style="
-            transferTypeIndex === 0
-              ? 'flex-direction: row'
-              : 'flex-direction: row-reverse; justify-content: flex-end;'
+            transferTypeIndex === 0 ? 'flex-direction: row' : 'flex-direction: row-reverse; justify-content: flex-end;'
           "
           class="el-dialog__title"
         >
@@ -101,19 +85,9 @@
           </el-tag>
         </div>
       </template>
-      <el-form
-        ref="formRef"
-        :hideRequiredMark="true"
-        :model="transferInfo"
-        :rules="rules"
-        :label-col="{ span: 4 }"
-      >
+      <el-form ref="formRef" :hideRequiredMark="true" :model="transferInfo" :rules="rules" :label-col="{ span: 4 }">
         <el-form-item ref="amount" name="amount">
-          <el-input
-            v-model="transferInfo.amount"
-            placeholder="金额"
-            @keyup.enter="submitTransfer"
-          />
+          <el-input v-model="transferInfo.amount" placeholder="金额" @keyup.enter="submitTransfer" />
         </el-form-item>
         <el-form-item class="txt-center">
           <!-- <button
@@ -123,24 +97,12 @@
           >
             {{ "common.confirm" }}
           </button> -->
-          <el-button
-            class="common-btn"
-            :loading="loadingTransfer"
-            @click="submitTransfer"
-          >
-            确认
-          </el-button>
+          <el-button class="common-btn" :loading="loadingTransfer" @click="submitTransfer">确认</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
 
-    <el-dialog
-      v-model="transferAllModalVisible"
-      title="转账金额"
-      :maskClosable="false"
-      :footer="null"
-      width="500px"
-    >
+    <el-dialog v-model="transferAllModalVisible" title="转账金额" :maskClosable="false" :footer="null" width="500px">
       <div class="transfer-all-list">
         <div class="transfer-item" v-for="(p, indx) in platforms" :key="indx">
           <div>
@@ -205,7 +167,7 @@ export default defineComponent({
       amount: ""
     });
 
-    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "EBET": "WE"};
+    const platNames = {"KY": "开元棋牌", "DT": "大唐棋牌", "BBINDY": "BBIN", "EBET": "WE" ,"AGF" : "AG捕鱼"};
 
     const transferOutAllModal = () => {
       transferAllModalVisible.value = true

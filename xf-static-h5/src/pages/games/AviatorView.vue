@@ -184,6 +184,7 @@ import {useQuasar, Platform} from "quasar";
 import {useRoute} from "vue-router";
 import BacktoTop from "components/backtotop.vue"
 import {scroll} from 'quasar'
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   components: {GameModal, BacktoTop},
@@ -287,8 +288,9 @@ export default defineComponent({
       })).then((res) => {
         isLoading.value = false;
         res.forEach(element => {
+          const imageCdnUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
           element.default = require("../../assets/images/games/aviator/default.png");
-          element.icon = `${process.env.IMAGE_CDN}/fish/${selectedPlat.value.code}/${element.icon}.png`;
+          element.icon = `${imageCdnUrl}/fish/${selectedPlat.value.code}/${element.icon}.png`;
         });
         gameListData.value = res;
       })

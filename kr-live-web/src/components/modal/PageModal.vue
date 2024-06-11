@@ -1,20 +1,13 @@
 <template>
-  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss>
+  <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
     <q-card style="max-width: none; background: transparent; box-shadow: none">
-      <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
-          <div class="left-group">
-            <div v-for="(item) in leftLinks" :key="item.key" class="page-dialog-links-btn"
-                 :class="tabIndex === item.key ? 'active' : ''">
-              <div @click="item.clickHandler()"  class="register-text">{{ item.info }}</div>
-            </div>
-          </div>
-      </div> -->
-      <p style="text-align: right">
-        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.png" @click="closeDialog()" />
-      </p>
+
+      <div style="text-align: right;">
+        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
+      </div>
 
       <div class="page-dialog-main">
-        <!-- <LangToggle v-if="showLangToggle"/> -->
+
         <div class="page-dialog-main-container">
           <q-toolbar class="page-dialog-main-header text-white">
             <p class="header-info-description">{{ headerInfo.description }}</p>
@@ -24,49 +17,40 @@
               <!-- <span>{{ headerInfo.subTitle }}</span> -->
             </p>
             <p>
-              <img
+              <!-- <img
                 class="header-close-btn"
-                src="../../assets/images/index/modal-close-btn.png"
+                src="../../assets/images/index/modal-close-btn.svg"
                 @click="closeDialog()"
-                style="opacity: 0"
-              />
+                style="padding-right:10px"
+              /> -->
             </p>
           </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
             <p class="header-info-description">{{ headerInfo.description }}</p>
-            <!-- <div class="left-group">
-              <div
-                v-for="item in leftLinks"
-                :key="item.key"
-                class="page-dialog-links-btn"
-                :class="tabIndex === item.key ? 'active' : ''"
-              >
-                <div @click="item.clickHandler()" class="register-text">{{ item.info }}</div>
-              </div>
-            </div> -->
           </div>
-          <div class="page-dialog-tabs">
+          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
             <template v-if="!isMinimalMode">
-              <q-tabs style="padding: 0px 30px; background-color: #212632" v-model="page" align="justify">
+              <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
                 <template v-for="item in formattedPagesInfo" :key="item.page">
-                  <q-tab
-                    @click="tabClick(item.page)"
-                    :name="item.page"
-                    :label="item.info"
-                    class="page-dialog-tab"
-                    v-if="item.tabIndex === tabIndex"
-                  >
-                    <img
-                      style="padding-right: 5px"
-                      :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
-                      :alt="item.info"
-                    />
-                  </q-tab>
+                  <template v-if="item.page === 'customer/service'">
+                    <q-route-tab :href="item?.href" target="_blank" :label="item.info" class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex">
+                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info" />
+                    </q-route-tab>
+                  </template>
+                  <template v-else>
+                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info" class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex">
+                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info" />
+                    </q-tab>
+                  </template>
                 </template>
               </q-tabs>
             </template>
 
-            <q-tab-panels v-model="page" animated class="">
+            <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;'">
               <template v-for="item in formattedPagesInfo" :key="item.page">
                 <q-tab-panel :name="item.page">
                   <component :is="item.component" @closeModal="closeDialog"></component>
@@ -83,6 +67,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { ref, defineExpose, reactive, computed, watch, nextTick, onMounted } from "vue";
+import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import NotifyComponent from "components/pageModalContent/NotifyComponent";
@@ -97,16 +82,16 @@ import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
 import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
-import LangToggle from "components/LangToggle.vue";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
+import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 const visible = ref(false);
 const store = userStore();
 const page = ref("");
 const tabIndex = ref("log");
-const showLangToggle = ref(process.env.NODE_ENV === "development");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {
@@ -136,7 +121,7 @@ watch(
         open(route.query.page);
       });
     } else {
-      router.push("/");
+      // router.push("/");
       visible.value = false;
     }
   },
@@ -174,12 +159,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "finance/deposit",
-    info: "송금신청",
+    info: t('lang.page_modal_deposit'),
     iconUrl: require("../../assets/icon/deposit.svg"),
-    iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     component: FinanceDeposit,
     headerInfo: {
-      title: "송금신청",
+      title: t('lang.page_modal_deposit'),
       subTitle: "DEPOSIT",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -187,12 +172,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "finance/withdraw",
-    info: "출금신청",
+    info: t('lang.page_modal_withdraw'),
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: FinanceWithdraw,
     headerInfo: {
-      title: "출금신청",
+      title: t('lang.page_modal_withdraw'),
       subTitle: "WITHDRAW",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -200,12 +185,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "personal/messages",
-    info: "쪽지",
+    info: t('lang.page_modal_message'),
     iconUrl: require("../../assets/icon/messages.svg"),
-    iconActiveUrl: require("../../assets/icon/messages-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MyMessages,
     headerInfo: {
-      title: "쪽지",
+      title: t('lang.page_modal_message'),
       subTitle: "MESSAGES",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -213,25 +198,26 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "promo/all",
-    info: "이벤트",
+    info: t('lang.page_modal_promo'),
     iconUrl: require("../../assets/icon/promo.svg"),
-    iconActiveUrl: require("../../assets/icon/promo-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
     component: PromoComponent,
     headerInfo: {
-      title: "이벤트",
+      title: t('lang.page_modal_promo'),
       subTitle: "EVENT",
       description: ""
     }
   },
   {
     tabIndex: "log",
+    href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
     page: "customer/service",
-    info: "고객센터",
+    info: t('lang.page_modal_customer_service'),
     iconUrl: require("../../assets/icon/customerService.svg"),
-    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
     component: CustomerService,
     headerInfo: {
-      title: "고객센터",
+      title: t('lang.page_modal_customer_service'),
       subTitle: "Q&A",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -239,9 +225,9 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "personal/info",
-    info: "개인정보",
+    info: t('lang.page_modal_personal_info'),
     iconUrl: require("../../assets/icon/personal-info.svg"),
-    iconActiveUrl: require("../../assets/icon/personal-info-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
@@ -252,12 +238,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "notify",
-    info: "공지사항",
+    info: t('lang.page_modal_announcement'),
     iconUrl: require("../../assets/icon/notify.svg"),
-    iconActiveUrl: require("../../assets/icon/notify-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     component: NotifyComponent,
     headerInfo: {
-      title: "공지사항",
+      title: t('lang.page_modal_announcement'),
       subTitle: "NOTICE",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -265,25 +251,38 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "withdrawcard",
-    info: "은행카드추가",
+    info: t('lang.page_modal_add_bank_card'),
     iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: AddWithdrawBankCard,
     headerInfo: {
-      title: "은행카드추가",
+      title: t('lang.page_modal_add_bank_card'),
       subTitle: "ADD BANK CARD",
       description: "출금 계좌에 새 은행 카드 추가"
     }
   },
+  // {
+  //   tabIndex: "my",
+  //   page: "bankcardlist",
+  //   info: t('lang.page_modal_bank_card_list'),
+  //   iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+  //   iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
+  //   component: WithdrawBankView,
+  //   headerInfo: {
+  //     title: t('lang.page_modal_bank_card_list'),
+  //     subTitle: "BANK CARD LIST",
+  //     description: ""
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "transaction/records",
-    info: "배팅/윈",
+    info: t('lang.page_modal_transaction_record'),
     iconUrl: require("../../assets/icon/transaction-record.svg"),
-    iconActiveUrl: require("../../assets/icon/transaction-record-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
     component: TransitRecord,
     headerInfo: {
-      title: "배팅/윈",
+      title: t('lang.page_modal_transaction_record'),
       subTitle: "TRANSACTIONS",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -304,12 +303,12 @@ const pagesInfo = reactive([
   {
     tabIndex: "my",
     page: "personal/updatePwd",
-    info: "비밀번호",
+    info: t('lang.page_modal_change_password'),
     iconUrl: require("../../assets/icon/password-update.svg"),
-    iconActiveUrl: require("../../assets/icon/password-update-active.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
     component: MyPasswordChange,
     headerInfo: {
-      title: "비밀번호",
+      title: t('lang.page_modal_change_password'),
       subTitle: "PASSWORD CHANGE",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
@@ -345,12 +344,12 @@ const pagesInfo = reactive([
 const minimalModePagesInfo = reactive([
   {
     page: "register",
-    info: "등록",
+    info: "회원가입",
     iconUrl: require("../../assets/icon/customerService.svg"),
     iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
     component: RegisterComponent,
     headerInfo: {
-      title: "등록",
+      title: "회원가입",
       subTitle: "REGISTER",
       description: ""
     }
@@ -436,12 +435,13 @@ onMounted(() => {
 <style scoped lang="scss">
 // reset app.scss
 
-.q-panel > div {
+.q-panel>div {
   height: unset;
 }
+
 .page-dialog {
-  .q-dialog__inner--minimized > div {
-    max-height: unset;
+  .q-dialog__inner--minimized>div {
+    // max-height: unset;
   }
 }
 
@@ -454,11 +454,13 @@ onMounted(() => {
   display: flex;
   //outline: 1px solid red;
 }
+
 .page-dialog-links {
   position: absolute;
   left: 0;
   top: 8px;
 }
+
 .page-dialog-main {
   --main-bg-color: #212632;
   // top: 80px;
@@ -469,19 +471,21 @@ onMounted(() => {
   width: 100%;
   max-width: 860px;
   max-height: 100%;
-  border-radius: 8px;
-  :deep(.q-panel) {
-  }
+
+  :deep(.q-panel) {}
+
   &,
   .q-tab-panel {
     //min-height: 624px;
   }
-  .q-tabs__content {
-  }
+
+  .q-tabs__content {}
+
   .q-tab {
     color: #767676;
   }
 }
+
 .page-dialog-links {
   .header-info-description {
     display: none;
@@ -495,6 +499,7 @@ onMounted(() => {
   line-height: 28px;
   margin-left: 5px;
 }
+
 .left-content {
   display: flex;
   flex-wrap: wrap;
@@ -502,31 +507,34 @@ onMounted(() => {
   justify-content: space-around;
   width: 40%;
 }
+
 .credit-info {
   display: flex;
   align-items: center;
 }
+
 .top-actions {
   display: flex;
   //justify-content: flex-end;
 }
+
 .page-dialog-tab {
   :deep(.q-tab__content) {
     flex-direction: row-reverse;
   }
 }
-:deep(.q-tab__label) {
-}
+
+:deep(.q-tab__label) {}
 
 :deep(.q-tab) {
-  border-bottom: 1px solid #767676;
+  border-bottom: 2px solid #32394B;
 }
 
 :deep(.q-tab--active) {
-  border-bottom: 1px solid #767676;
-  border-image: linear-gradient(to right, #767676, #0075fe, #767676) 0.8;
+  border-bottom: 2px solid #00FFFF;
+
   .q-tab__label {
-    color: #fff;
+    color: #00FFFF;
     font-weight: unset;
     font-size: unset;
   }
@@ -539,44 +547,13 @@ onMounted(() => {
   padding-right: 10px;
 }
 
-.page-dialog-links-btn {
-  width: 120px;
-  height: 36px;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  // background-image: url("../../assets/images/pages-modal/btn1-gray.svg");
-  background: linear-gradient(180deg, #e1e1e1 0%, #525252 100%);
-  border: 2px solid #0000008c;
-  color: #000;
-  border-radius: 2px;
-  &:hover {
-    filter: brightness(1.1);
-  }
-  &.active {
-    background: linear-gradient(180deg, #a7e1ff 0%, #275fff 100%);
-    color: #fff;
-    border: 2px solid rgb(104 146 255 / 40%);
-  }
-  .register-text {
-    font-size: 16px;
-    line-height: 22.4px;
-  }
-}
-
 .header-close-btn {
   // margin-right: 25px;
   width: 40px;
   cursor: pointer;
 
   &:hover {
-    opacity: 0.9;
-    filter: brightness(1.1);
+    filter: brightness(0.8);
   }
 }
 
@@ -585,13 +562,13 @@ onMounted(() => {
   height: 56px;
   width: 100%;
   padding: unset;
-  background-image: url("../../assets/images/pages-modal/modal-header.svg");
+  background-image: url("../../assets/images/pages-modal/modal-header.png");
   background-color: var(--main-bg-color);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 
   .header-title {
     text-align: center;
@@ -604,49 +581,58 @@ onMounted(() => {
     flex: 1;
     margin: auto;
     color: #fff;
+
     &.header-info-description {
       color: #000;
       text-align: left;
       margin-left: 10px;
     }
+
     &:nth-child(2) {
       text-align: center;
+
       span:first-child {
         font-weight: bold;
         font-size: 1.2rem;
       }
     }
+
     &:last-child {
       text-align: right;
     }
   }
 }
+
 .page-dialog-tabs {
-  min-height: calc(100vh - 240px);
-  // background: var(--main-bg-color);
+  // height: 600px;
+  // min-height: calc(100vh - 240px);
+  background: var(--main-bg-color);
 
   :deep(.q-tab) {
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
   }
+
   .q-tab-panels {
-    overflow-y: hidden;
+    overflow-y: auto;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
 }
+
 .q-panel {
   .q-tab-panel {
-    padding: 10px 20px 60px;
+    // padding: 10px 20px 60px;
     box-sizing: border-box;
-    overflow-y: scroll;
-    max-height: calc(90vh - 200px);
+    // overflow-y: scroll;
+    // max-height: calc(90vh - 200px);
   }
 }
 
 .q-tab-panels {
-  background-color: var(--main-bg-color);
+  background: var(--main-bg-color);
   height: 100%;
 }
+
 :deep(.modal-body-buttons) {
   background-color: var(--main-bg-color);
 }
@@ -660,22 +646,26 @@ onMounted(() => {
     min-width: auto;
     max-width: auto;
   }
+
   .page-dialog-main-container {
     // top: 50%;
     // transform: translate(-50%, -50%);
     // left: 50%;
     // position: relative;
   }
+
   .page-dialog-links {
     background-color: var(--main-bg-color);
     position: relative;
     top: 0px;
+
     .header-info-description {
       display: block;
       margin: unset;
       text-align: center;
       padding-top: 12px;
     }
+
     .left-group {
       display: flex;
       flex-direction: row;
@@ -684,21 +674,26 @@ onMounted(() => {
       padding: 0px 10px;
     }
   }
+
   .page-dialog-main-header {
-    height: 60px;
-    background-image: url("../../assets/images/pages-modal/modal-header-mobile.svg");
+    // height: 60px;
+    // background-image: url("../../assets/images/pages-modal/modal-header-mobile.png");
+
     .header-info-description {
       visibility: hidden;
     }
+
     .q-btn {
       margin-right: 15px;
     }
   }
+
   .page-dialog-tabs {
     :deep(.q-tab) {
       .q-tab__content {
         display: flex;
         flex-direction: column-reverse;
+
         .q-tab__label {
           margin-left: unset;
           margin-top: 4px;
@@ -710,10 +705,11 @@ onMounted(() => {
 
   .q-panel {
     .q-tab-panel {
-      padding: 10px 20px 100px;
-      max-height: calc(95vh - 250px);
+      // padding: 10px 20px 100px;
+      // max-height: calc(95vh - 250px);
     }
   }
+
   .modal-body-buttons {
     .form-button {
       width: 140px;

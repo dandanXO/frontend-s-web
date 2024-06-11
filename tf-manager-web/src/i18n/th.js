@@ -1617,6 +1617,7 @@ export default {
     'VIP Rebate': 'เงินคืน VIP',
     VIP: 'VIP',
     Game: 'เกม',
+    'Game Tag': 'แท็กเกม',
     'Financial Level': 'ระดับการเงิน',
     'Risk Level': 'ระดับความเสี่ยง',
     'IP Label': 'ฉลากไอพี',

@@ -23,7 +23,7 @@
           </button>
         </div>
         <div class="line">
-          <span>银行账号：</span>
+          <span>银行户名：</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
           <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
@@ -34,6 +34,13 @@
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
           <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
+          </button>
+        </div>
+        <div class="line">
+          <span>支付行</span>
+          <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
+          <button @blur="blurCode" @click="copyMessage('4')" class="common-btn">
+            {{ copybtntxt4 }}
           </button>
         </div>
         <div class="line">
@@ -96,6 +103,18 @@
           <label class="label">实时汇率</label>
           <span class="text-positive" style="font-size: 16px; font-weight: 600">
             1.00 USDT ≈ {{ activeMethod.currencyRate }}
+            {{ store.currency.value }}
+          </span>
+        </div>
+
+        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="预计到账">
+          <label class="label">预计到账</label>
+          <span class="text-positive" style="font-size: 16px; font-weight: 600">
+            {{
+              calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                ? "0.00"
+                : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+            }}
             {{ store.currency.value }}
           </span>
         </div>
@@ -244,10 +263,12 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
+const copybtntxt4 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -262,14 +283,14 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });

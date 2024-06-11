@@ -11,10 +11,6 @@
     </div>
   -->
 
-    <div class="forgot-password-form-logo-img">
-      <img src="../assets/images/auth/auth-logo-text-only.png" />
-    </div>
-
     <q-form v-if="!isRequestSent" class="q-gutter-y-md rounded-borders">
       <!-- <q-input
         hide-bottom-space
@@ -43,14 +39,6 @@
         color="white"
         class="landing-input"
       ></q-input> -->
-
-      <div class="forgot-password-form-grid">
-        <span class="forgot-password-form-title">Forgot Password</span>
-        <span class="forgot-password-form-desc">
-          Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
-        </span>
-
-
         <InputRowGrid>
           <template #fields>
             <InputField :label="'Phone Number'">
@@ -100,7 +88,19 @@
 
           </template>
         </InputRowGrid>
-      </div>
+
+
+        <!-- <div class="forgot-password-form-logo-img">
+          <img src="../assets/images/auth/auth-logo-text-only.png" />
+        </div> -->
+        <div class="forgot-password-form-grid">
+          <!-- <span class="forgot-password-form-title">Forgot Password</span> -->
+          <span class="forgot-password-form-desc">
+            Please Provide Your Username And Phone Number, We Will Send OTP To Your Registered Phone Number.
+          </span>
+
+
+              </div>
     </q-form>
     <q-form v-else class="q-gutter-y-md rounded-borders">
       <p>OTP Has Been Sent To Your Phone Number, Please Enter The OTP And New Password.</p>
@@ -182,7 +182,7 @@
                 </template>
               </q-input>
 
-              <div v-if="verificationForm.newPassword" class="password-str-div">
+              <!-- <div v-if="verificationForm.newPassword" class="password-str-div">
                 <span
                   :class="{
                     'weak-pwd': pwdStrength == 'weak',
@@ -201,7 +201,7 @@
                   Normal
                 </span>
                 <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">Strong</span>
-              </div>
+              </div> -->
             </template>
           </InputField>
 
@@ -505,11 +505,11 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .forgot-password-container {
-  min-height: 100vh;
+  // min-height: 100vh;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;

@@ -43,17 +43,74 @@
       </div>
     </div>
   </div>
+
+  <GameModal ref="gameMenu" />
+
+  <div
+    class="rocket-wrapper"
+    v-if="showRocket"
+    :class="'show-rocket'"
+    :style="{ top: rocketPosition.top + 'px', left: rocketPosition.left + 'px' }"
+    @mousedown="startDragging('rocket', $event)"
+  >
+    <div>
+      <div class="close-btn" @click="hideRocket()">X</div>
+      <!-- <div class="rocket-container" @click="openGame('TFGaming', 'TFGaming', '20')">
+        <div class="rocket">
+          <img :src="`${imgURL}/game/${game.icon}`" />
+        </div>
+      </div> -->
+      <el-carousel height="130px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+        <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
+            <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
+              <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
+            </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+  </div>
+
+    <div
+      class="rocket-wrapper"
+      v-if="showFloatPromo"
+      :class="'show-promo'"
+      :style="{ top: promoPosition.top + 'px', left: promoPosition.left + 'px' }"
+      @mousedown="startDragging('promo', $event)"
+    >
+      <div style="position: relative">
+        <div class="close-btn" @click="hideFloatPromo()">X</div>
+        <!-- <div @click="gotoPromo(currentPromo.code)" class="rocket-container">
+          <div class="rocket">
+            <img :src="`${imgURL}/promo/${currentPromo.icon}`" />
+          </div>
+        </div> -->
+        <el-carousel height="130px"  :indicator-position="floatPromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+          <el-carousel-item v-for="(promo, i) in floatPromo" :key="i">
+              <div @click="gotoPromo(promo.code)" class="rocket-container">
+                <div class="rocket"><img :src="`${imgURL}/promo/${promo.icon}`" /></div>
+              </div>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, onBeforeUnmount, watch } from "vue";
 import { userStore } from "@/store";
-import { getAppDownloadUrlFromServer } from "@/api/index/site";
+import { getAppDownloadUrlFromServer, getFloatingItems } from "@/api/index/site";
 import { uiStore } from "@/store/ui";
-import { useDark } from "@vueuse/core";
-
+import { useDark, useLocalStorage } from "@vueuse/core";
+import GameModal from "@/components/modal/GameModal.vue";
+import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
-  components: {},
+  components: {
+    GameModal
+  },
   setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value
     const customerHovered = ref(false);
     const scrollToTop = () => {
       window.scroll({ behavior: "smooth", left: 0, top: 0 });
@@ -63,6 +120,11 @@ export default defineComponent({
     const isDark = useDark();
 
     const handleDarkModeClick = () => (isDark.value = !isDark.value);
+
+    const gameMenu = ref(null);
+    const openGame = (gameName, platType, gameCode, scrollingState) => {
+      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+    };
 
     const downloadUrl = ref("");
     const getAppDownloadUrl = () => {
@@ -76,8 +138,106 @@ export default defineComponent({
         });
     };
 
+    const showRocket = ref(false);
+    const hideRocket = () => {
+      showRocket.value = false;
+      promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+    };
+    const showFloatPromo = ref(false);
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
+      getFloatingItems().then((res) => {
+        if (res.code === 0) {
+          res.data.forEach(element => {
+            if (element.type === 'PROMO') {
+              floatPromo.push(element);
+              showFloatPromo.value = true;
+            }
+            if (element.type === 'GAME') {
+              gamePromo.push(element)
+              showRocket.value = true;
+            }
+          });
+          checkFloatPromo();
+          updatePromo(); // Initially update the displayed promo
+          // Update the displayed promo every 5 seconds
+          setInterval(updatePromo, 3000);
+        } else {
+          ElMessage.error(res.message);
+        }
+      })
+    }
+    const checkFloatPromo = () => {
+      if (gamePromo.length === 0) {
+        promoPosition.value = {top: window.innerHeight - 200, left: window.innerWidth - 220}
+      }
+    }
+
+    const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
+    const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
+    const isDragging = ref(false);
+    const shiftX = ref(0);
+    const shiftY = ref(0);
+    const currentElement = ref(null);
+    const startDragging = (element, event) => {
+      currentElement.value = element
+      const rect = event.target.getBoundingClientRect();
+      shiftX.value = event.clientX - rect.left;
+      shiftY.value = event.clientY - rect.top;
+      isDragging.value = true;
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", stopDragging);
+
+      // Change cursor to dragging
+      document.body.style.cursor = "pointer";
+      event.target.style.cursor = "pointer";
+    }
+    const onMouseMove = (event) => {
+      if (isDragging.value) {
+        if (currentElement.value === 'rocket') {
+          rocketPosition.value.left = event.clientX - shiftX.value;
+          rocketPosition.value.top = event.clientY - shiftY.value;
+        } else if (currentElement.value === 'promo') {
+          promoPosition.value.left = event.clientX - shiftX.value;
+          promoPosition.value.top = event.clientY - shiftY.value;
+        }
+      }
+    };
+    const stopDragging = () => {
+      isDragging.value = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
+
+      // Reset cursor to default
+      document.body.style.cursor = "default";
+    };
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const gotoPromo = (code) => {
+
+      router.push(`/promotion?name=${code}`)
+    }
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
     onMounted(() => {
       getAppDownloadUrl();
+      if ((store.token)) {
+        initFloating();
+      }
+      document.addEventListener("mouseup", stopDragging);
+    });
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", stopDragging);
     });
 
     return {
@@ -86,13 +246,81 @@ export default defineComponent({
       scrollToTop,
       downloadUrl,
       isDark,
-      handleDarkModeClick
+      handleDarkModeClick,
+      gameMenu,
+      openGame,
+      showRocket,
+      rocketPosition,
+      hideRocket,
+      startDragging,
+      showFloatPromo,
+      promoPosition,
+      hideFloatPromo,
+      imgURL,
+      floatPromo,
+      gamePromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoPromo
     };
   }
 });
 </script>
 
 <style scoped lang="scss">
+/* rocket animation */
+.rocket-wrapper {
+  position: fixed;
+  z-index: 999;
+  // bottom: 220px;
+  // right: 0px;
+  transition: all 0.3s;
+  display: none;
+  width: 100px;
+  height: 100px;
+  user-select: none; /* Disable text selection */
+
+  &.show-promo {
+    display: block;
+  }
+
+  &.show-rocket {
+    display: block;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  .close-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
+    cursor: pointer;
+  }
+
+  .rocket {
+    pointer-events: none;
+    user-select: none;
+    img {
+      display: block;
+      width: 100px;
+      cursor: pointer;
+    }
+  }
+}
+
 .additional-info-items {
   display: flex;
   flex-direction: column;

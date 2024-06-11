@@ -18,6 +18,33 @@
       <Expand style="width: 20px" v-if="!isExpanded" />
     </el-button>
     <div class="navigation">
+      <div class="mini-profile" v-if="(parseInt(store.state.user.siteId) === 10) && isExpanded">
+        <div class="name">
+          <svg-icon
+            icon-class="user"
+            style="margin-right: 5px"
+          />
+          {{ store.state.user.name }}
+        </div>
+        <el-row justify="space-between">
+          <el-col :span="6"> {{ t('fields.rebateWallet') }} </el-col>
+          <el-col :span="6" style="flex: none"> {{ affBalance }} </el-col>
+        </el-row>
+        <el-row justify="space-between">
+          <el-col :span="6"> {{ t('fields.commissionWallet') }} </el-col>
+          <el-col :span="6" style="flex: none"> {{ commBalance }} </el-col>
+        </el-row>
+      </div>
+      <RouterLink to="/affiliate/withdraw" class="route" v-if="(parseInt(store.state.user.siteId) === 10) && isExpanded">
+        <div class="route-content">
+          <svg-icon
+            icon-class="money-bag"
+          />
+          <span style="color:grey">
+            {{ t('fields.affiliateWithdraw') }}
+          </span>
+        </div>
+      </RouterLink>
       <div
         v-for="nav in navigationData"
         :key="nav.id"
@@ -40,29 +67,36 @@
             child.isMenuShow ? 'height: auto;' : 'height: 0px; overflow:hidden'
           "
         >
-          <RouterLink
-            :to="nav.path + child.path"
-            class="route"
-            v-if="child.isMainNav"
+          <template
+            v-if="(parseInt(store.state.user.siteId) === 10)
+              ? (child.path === '/transfer' ? false : true)
+              : (child.path === '/rebate' ? false : true)
+            "
           >
-            <div
-              class="route-content"
-              :style="
-                !isExpanded && child.icon === 'speech-bubbles'
-                  ? 'margin-top: 50px'
-                  : ''
-              "
+            <RouterLink
+              :to="nav.path + child.path"
+              class="route"
+              v-if="child.isMainNav"
             >
-              <svg-icon
-                :icon-class="`${child.icon}`"
-                :style="child.active ? 'color: #179cff' : ''"
-                :className="child.active ? 'active-icon' : ''"
-              />
-              <span :class="child.active ? 'active' : ''" v-if="isExpanded">
-                {{ child.title }}
-              </span>
-            </div>
-          </RouterLink>
+              <div
+                class="route-content"
+                :style="
+                  !isExpanded && child.icon === 'speech-bubbles'
+                    ? 'margin-top: 50px'
+                    : ''
+                "
+              >
+                <svg-icon
+                  :icon-class="`${child.icon}`"
+                  :style="child.active ? 'color: #179cff' : ''"
+                  :className="child.active ? 'active-icon' : ''"
+                />
+                <span :class="child.active ? 'active' : ''" v-if="isExpanded">
+                  {{ child.title }}
+                </span>
+              </div>
+            </RouterLink>
+          </template>
         </div>
       </div>
     </div>
@@ -84,6 +118,7 @@ import {
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
+import { getAffiliateBalance, getAffiliateCommissionBalance } from '@/api/affiliate';
 
 const { t } = useI18n()
 const route = useRoute()
@@ -100,6 +135,8 @@ const mainNavigationData = [
 ]
 const isExpanded = ref(true)
 const store = useStore()
+let affBalance = 0
+let commBalance = 0
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
@@ -323,6 +360,14 @@ const getNavigationData = () => {
             icon: 'money',
           },
           {
+            path: '/rebate',
+            title: t('menu.Rebate Report'),
+            label: 'Rebate Report',
+            active: false,
+            isMainNav: true,
+            icon: 'monitor',
+          },
+          {
             path: '/credit-flow',
             title: t('fields.creditFlow'),
             label: 'creditFlow',
@@ -418,7 +463,7 @@ const getNavigationData = () => {
     ]
   }
 }
-onMounted(() => {
+onMounted(async () => {
   if (window.innerWidth < 768) {
     isExpanded.value = false
   } else {
@@ -455,6 +500,12 @@ onMounted(() => {
   //   }
   // })
   setActiveNav()
+  if (parseInt(store.state.user.siteId) === 10) {
+    const { data: affBal } = await getAffiliateBalance(store.state.user.id);
+    affBalance = affBal
+    const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
+    commBalance = commBal
+  }
 })
 
 watch(languageVal, newVal => {
@@ -584,6 +635,23 @@ watch(languageVal, newVal => {
     background-color: #ecf3ff;
     border-radius: 0.5rem;
     color: #3f8cff;
+  }
+  .mini-profile {
+    margin: 5px 20px;
+    .name {
+      display: flex;
+      justify-content: center;
+      background: lightgrey;
+      padding: 5px;
+      border-radius: 0.5rem;
+      margin-bottom: 10px;
+    }
+  }
+  .route-content {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 2rem 0.5rem 0.5rem;
+    margin: 0px 10px;
   }
 }
 @media (max-width: 992px) {

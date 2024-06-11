@@ -202,7 +202,7 @@
       </el-form>
 
       <el-form
-        v-if="uiControl.dialogType === 'END'"
+        v-if="uiControl.dialogType === 'END' || uiControl.dialogType === 'RESETTLE'"
         ref="endMatchForm"
         :model="endForm"
         :rules="endFormRules"
@@ -247,6 +247,11 @@
                 :label="endForm.teamTwoId"
                 size="small"
               >{{ endForm.teamTwoName }}
+              </el-radio-button>
+              <el-radio-button
+                label="0"
+                size="small"
+              >{{ t('fields.draw') }}
               </el-radio-button>
             </el-radio-group>
           </el-form-item>
@@ -296,6 +301,9 @@
           <div v-if="scope.row.winnerTeam" style="display: flex; align-items: center">
             <img :src="promoDir + scope.row.winnerTeamIcon" style="width: 20px; height: 20px; margin-right: 10px">
             <span>{{ scope.row.winnerTeam }}</span>
+          </div>
+          <div v-else-if="scope.row.status === 'ENDED' && !scope.row.winnerTeam" style="display: flex; align-items: center">
+            <el-tag size="mini" type="warning">{{ t('fields.draw') }}</el-tag>
           </div>
           <span v-else>-</span>
         </template>
@@ -384,7 +392,7 @@
             size="small"
             type="success"
             v-permission="['sys:uefa-match:update']"
-            @click="showEnd(scope.row)"
+            @click="showEnd(scope.row, false)"
             style="cursor: pointer; margin-left: 5px;"
           >
             {{ t('fields.endMatch') }}
@@ -398,6 +406,16 @@
             style="cursor: pointer; margin-left: 5px"
           >
             {{ t('fields.cancelMatch') }}
+          </el-button>
+          <el-button
+            v-if="scope.row.status === 'ENDED'"
+            size="small"
+            type="success"
+            v-permission="['sys:uefa-match:update']"
+            @click="showEnd(scope.row, true)"
+            style="cursor: pointer; margin-left: 5px;"
+          >
+            {{ t('fields.resettleMatch') }}
           </el-button>
         </template>
       </el-table-column>
@@ -528,7 +546,7 @@ import { computed, reactive, ref } from "vue";
 import { required } from "@/utils/validate";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { getSiteListSimple } from "@/api/site";
-import { getUefaMatch, getTeamBySite, createUefaMatch, updateUefaMatch, uefaMatchOngoing, endUefaMatch, cancelUefaMatch } from "@/api/uefa";
+import { getUefaMatch, getTeamBySite, createUefaMatch, updateUefaMatch, uefaMatchOngoing, endUefaMatch, endUefaMatchResettle, cancelUefaMatch } from "@/api/uefa";
 import { hasRole, hasPermission } from "@/utils/util";
 import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
@@ -590,6 +608,7 @@ const imageRequest = reactive({
 
 const formRef = ref(null);
 const endMatchForm = ref(null);
+const isResettle = ref(false);
 const sites = reactive({
   list: []
 });
@@ -715,6 +734,10 @@ function showDialog(type) {
     uiControl.dialogTitle = t('fields.edit');
   } else if (type === 'END') {
     uiControl.dialogTitle = t('fields.endMatch');
+    isResettle.value = false;
+  } else if (type === 'RESETTLE') {
+    uiControl.dialogTitle = t('fields.endMatch');
+    isResettle.value = true;
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -731,8 +754,12 @@ function showEdit(match) {
   });
 }
 
-function showEnd(match) {
-  showDialog('END');
+function showEnd(match, resettle) {
+  if (resettle) {
+    showDialog('RESETTLE');
+  } else {
+    showDialog('END');
+  }
   nextTick(() => {
     for (const key in match) {
       if (Object.keys(endForm).find(k => k === key)) {
@@ -796,7 +823,11 @@ function resetQuery() {
 async function endMatch() {
   endMatchForm.value.validate(async (valid) => {
     if (valid) {
-      await endUefaMatch(endForm.id, endForm.winner);
+      if (isResettle.value) {
+        await endUefaMatchResettle(endForm.id, endForm.winner);
+      } else {
+        await endUefaMatch(endForm.id, endForm.winner);
+      }
       uiControl.dialogVisible = false;
       await loadUefaMatch();
       ElMessage({ message: t('message.updateSuccess'), type: "success" });

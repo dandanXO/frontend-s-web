@@ -141,3 +141,33 @@ export function submitGameStep() {
 export function getStepRecords(current) {
   return eventapi.get(`/game-steps/records?size=10&current=${current}`, {});
 }
+
+export function selectNumber(promoCode, number) {
+  return eventapi.post('/uefa-lottery/select-number',
+    qs.stringify({
+      number: number,
+      promoCode: promoCode
+    }));
+}
+export function getSelectedNumber() {
+  return eventapi.get('/uefa-lottery/selected-number')
+}
+export function getWinners(promoCode) {
+  return eventapi.get(`/uefa-lottery/winners?promoCode=${promoCode}`);
+}
+export function getPrizeAmount(promoCode) {
+  return eventapi.get(`/uefa-lottery/get-prize-amount?promoCode=${promoCode}`);
+}
+
+export function getBetDetail(promoCode) {
+  return eventapi.get("/event-bet-reward/get-bet-detail", { params: { promoCode: promoCode } });
+}
+
+export function claimSummon(promoCode) {
+  return eventapi.post(
+    "/event-bet-reward/claim",
+    qs.stringify({
+      promoCode: promoCode
+    })
+  );
+}

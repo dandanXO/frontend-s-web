@@ -5,11 +5,11 @@
       <div class="game-title sub">{{ $t("lang.affiliate_program") }}</div>
       <div class="description">
         <div class="desc pro">
-          <img src="../assets/images/affiliate/01.png" />
+<!--          <img src="../assets/images/affiliate/01.png" />-->
           <span>{{ $t("lang.the_most_professional_team") }}</span>
         </div>
         <div class="desc best">
-          <img src="../assets/images/affiliate/02.png" />
+<!--          <img src="../assets/images/affiliate/02.png" />-->
           <span>{{ $t("lang.excellent_service") }}</span>
         </div>
       </div>
@@ -453,7 +453,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .wrapper {
-  background: url("../assets/images/affiliate/bg.png") no-repeat center center;
+  //background: url("../assets/images/affiliate/bg.png") no-repeat center center;
   background-size: cover;
   background-attachment: fixed;
 

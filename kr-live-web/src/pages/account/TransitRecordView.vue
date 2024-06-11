@@ -10,267 +10,216 @@
         <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
         <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>
-      <q-separator />
-      <q-tab-panels v-model="recordActive" animated>
+      <q-tab-panels v-model="recordActive" animated style="background: #212632;">
         <q-tab-panel name="deposit">
           <div>
             <q-form layout="inline" :model="searchForm.deposit">
               <div class="left">
-                <q-input filled v-model="searchForm.deposit.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.deposit.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.deposit.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.deposit.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <DateFilter 
+                  :startDate="searchForm.deposit.startDate" 
+                  :endDate="searchForm.deposit.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.deposit.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.deposit.endDate = endDate
+                  }" 
+                />
+
+                <div class="primary-button blue-square"  @click="searchRecord">{{ $t('lang.search') }}</div>
               </div>
             </q-form>
           </div>
           <!-- :grid="$q.screen.lt.md" -->
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.deposit"
-            :rows="dataState.deposit"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.deposit" :dataState="dataState.deposit"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
-            <template v-slot:item="props">
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+          <template #item="props">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.depositAmount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.depositAmount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                    <div class="q-table__grid-item-value">{{ getDepositStatus(props.row.status) }}</div>
+                    <div class="q-table__grid-item-value">{{ getDepositStatus(props?.props?.row.status) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.deposit_date") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.depositDate }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.depositDate }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
-                      <q-btn
-                        v-if="props.row.status === 'PENDING'"
-                        size="sm"
-                        :label="$t('lang.reminder')"
-                        color="brand"
-                        @click="($event) => openReminder(props)"
-                      />
+                      <div
+                        class="primary-button blue-square"
+                        v-if="props?.props?.row.status === 'PENDING'"
+                        @click="($event) => openReminder(props?.props)"
+                      >
+                      {{ $t('lang.reminder') }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </template>
 
-            <template v-slot:body-cell-status="props">
-              <q-td :props="props">
+            <template #body-cell-status="props">
+              <q-td>
                 <div>
-                  {{ getDepositStatus(props.value) }}
+                  {{ getDepositStatus(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
 
-            <template v-slot:body-cell-operation="props">
-              <q-td :props="props">
-                <q-btn
-                  v-if="props.row.status === 'PENDING'"
-                  size="sm"
-                  :label="$t('lang.reminder')"
-                  color="brand"
+            <template #body-cell-operation="props">
+              <q-td>
+                <div
+                  class="primary-button blue-square"
+                  v-if="props?.props?.row.status === 'PENDING'"
                   @click="($event) => openReminder(props)"
-                />
+                  style="width: 75px;height: 30px; font-size: 12px"
+                >
+                  {{ $t('lang.reminder') }}
+                </div>
               </q-td>
             </template>
-          </q-table>
+            </DataTable>
+
         </q-tab-panel>
         <q-tab-panel name="turnover">
           <div>
             <q-form layout="inline" :model="searchForm.turnover">
               <div class="left">
-                <q-input filled v-model="searchForm.turnover.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.turnover.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.turnover.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.turnover.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <DateFilter 
+                  :startDate="searchForm.turnover.startDate" 
+                  :endDate="searchForm.turnover.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.turnover.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.turnover.endDate = endDate
+                  }" 
+                />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.turnover"
-            :rows="dataState.turnover"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+          <DataTable :pagination="null" :loading="loading" :tableColumns="tableColumns.turnover" :dataState="dataState.turnover" :rowsPerPage="searchForm[recordActive].size"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
-            <template v-slot:item="props">
+          <template v-slot:item="props">
               <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.type") }}</div>
-                    <div class="q-table__grid-item-value">{{ getTurnoverType(props.row.type) }}</div>
+                    <div class="q-table__grid-item-value">{{ getTurnoverType(props?.props?.row.type) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.amount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.format") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.subType }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.subType }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.recordTime }}</div>
                   </div>
                 </div>
               </div>
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ getTurnoverType(props.value) }}
+                  {{ getTurnoverType(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
-          </q-table>
+        </DataTable>
         </q-tab-panel>
         <q-tab-panel name="withdraw">
           <div>
             <q-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
-                <q-input filled v-model="searchForm.withdraw.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.withdraw.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.withdraw.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <DateFilter 
+                  :startDate="searchForm.withdraw.startDate" 
+                  :endDate="searchForm.withdraw.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.withdraw.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.withdraw.endDate = endDate
+                  }" 
+                />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.withdraw"
-            :rows="dataState.withdraw"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.withdraw" :dataState="dataState.withdraw"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
             <template v-slot:item="props">
               <!-- <pre>{{props}}</pre> -->
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.serialNumber }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.withdrawAmount }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.withdrawAmount }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.status") }}</div>
-                    <div class="q-table__grid-item-value">{{ getWithdrawStatus(props.row.status) }}</div>
+                    <div class="q-table__grid-item-value">{{ getWithdrawStatus(props?.props?.row.status) }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.withdrawal_date") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.withdrawDate }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.withdrawDate }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
                       <q-btn
-                        v-if="props.row.status === 'STEP_1'"
+                        v-if="props?.props?.row.status === 'STEP_1'"
                         size="sm"
                         :label="$t('lang.reminder')"
                         color="brand"
-                        @click="($event) => openReminder(props)"
+                        @click="($event) => openReminder(props?.props)"
                       />
 
                       <q-btn
-                        v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                        v-if="props.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                         size="sm"
                         :label="$t('lang.confirm_withdraw_success')"
                         color="brand"
-                        @click="openWithdrawConfirmDialog(props)"
+                        @click="openWithdrawConfirmDialog(props?.props)"
                       />
                     </div>
                   </div>
@@ -279,201 +228,93 @@
             </template>
 
             <template v-slot:body-cell-status="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ getWithdrawStatus(props.value) }}
+                  {{ getWithdrawStatus(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
 
             <template v-slot:body-cell-operation="props">
-              <q-td :props="props">
+              <q-td>
                 <q-btn
                   v-if="props.row.status === 'STEP_1'"
                   size="sm"
                   :label="$t('lang.reminder')"
                   color="brand"
-                  @click="($event) => openReminder(props)"
+                  @click="($event) => openReminder(props?.prop)"
                 />
 
                 <q-btn
-                  v-if="props.row.status === 'SUCCESS' && props.row.confirmStatus === 0"
+                  v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                   size="sm"
                   :label="$t('lang.confirm_withdraw_success')"
                   color="brand"
-                  @click="openWithdrawConfirmDialog(props)"
+                  @click="openWithdrawConfirmDialog(props?.props)"
                 />
               </q-td>
             </template>
-          </q-table>
-        </q-tab-panel>
-        <q-tab-panel name="transfer">
-          <div>
-            <q-form layout="inline" :model="searchForm.transfer">
-              <div class="left">
-                <q-input filled v-model="searchForm.transfer.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.transfer.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.transfer.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.transfer.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
-              </div>
-            </q-form>
-          </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.transfer"
-            :rows="dataState.transfer"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
-          >
-            <template v-slot:item="props">
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
-                  <div class="q-table__grid-item-row">
-                    <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.serialNumber }}</div>
-                  </div>
-                  <div class="q-table__grid-item-row">
-                    <div class="q-table__grid-item-title">{{ $t("lang.privilege_name") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.privilegeName }}</div>
-                  </div>
-                  <div class="q-table__grid-item-row">
-                    <div class="q-table__grid-item-title">{{ $t("lang.amount") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.amount }}</div>
-                  </div>
-                  <div class="q-table__grid-item-row">
-                    <div class="q-table__grid-item-title">{{ $t("lang.record_time") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.recordTime }}</div>
-                  </div>
-                </div>
-              </div>
-            </template>
-
-            <template v-slot:body-cell-serialNumber="props">
-              <q-td :props="props">
-                <div>
-                  <q-badge color="purple" :label="props.value" />
-                </div>
-                <div class="my-table-details">
-                  {{ props.row.details }}
-                </div>
-              </q-td>
-            </template>
-          </q-table>
+          </DataTable>
         </q-tab-panel>
         <q-tab-panel name="rebates">
           <div>
             <q-form layout="inline" :model="searchForm.rebates">
               <div class="left">
-                <q-input filled v-model="searchForm.rebates.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.rebates.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.rebates.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.rebates.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <DateFilter 
+                  :startDate="searchForm.rebates.startDate" 
+                  :endDate="searchForm.rebates.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.rebates.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.rebates.endDate = endDate
+                  }" 
+                />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.rebates"
-            :rows="dataState.rebates"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.rebates" :dataState="dataState.rebates"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           />
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left wrap-box">
-                <q-input filled v-model="searchForm.gameBetRecord.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.gameBetRecord.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.gameBetRecord.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.gameBetRecord.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
+                <DateFilter 
+                  :startDate="searchForm.gameBetRecord.startDate" 
+                  :endDate="searchForm.gameBetRecord.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.gameBetRecord.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.gameBetRecord.endDate = endDate
+                  }" 
+                />
                 <q-select
                   style="width: 100%; max-width: 175px"
                   v-model="searchForm.gameBetRecord.platform"
-                  filled
+                  dense
+                  outlined
                   clearable
                   :options="platformsList"
                   label="게임 플랫폼"
                   color="white"
                   label-color="grey"
                   option-label="name"
-                  option-value="name"
+                  option-value="code"
                   emit-value
                   map-options
                 />
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
 
               <div class="payout-total">
@@ -488,106 +329,82 @@
               </div>
             </q-form>
           </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.gameBetRecord"
-            :rows="dataState.gameBetRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="serialNumber"
-          >
-            <!-- <template v-slot:body-cell-actions="props">
-              <q-td :props="props">
-                <q-btn color="deep-orange" @click="betDetails(props.row)" label="บันทึกการเดิมพัน"></q-btn>
-              </q-td>
-            </template> -->
-          </q-table>
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.gameBetRecord" :dataState="dataState.gameBetRecord"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          />
         </q-tab-panel>
         <q-tab-panel name="reminderRecord">
           <div>
             <q-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
-                <q-input filled v-model="searchForm.reminderRecord.startDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.reminderRecord.startDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-input filled v-model="searchForm.reminderRecord.endDate">
-                  <template v-slot:append>
-                    <q-icon name="event" class="cursor-pointer">
-                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                        <q-date v-model="searchForm.reminderRecord.endDate" mask="YYYY-MM-DD">
-                          <div class="row items-center justify-end">
-                            <q-btn v-close-popup :label="$t('lang.close_btn')" color="white" flat />
-                          </div>
-                        </q-date>
-                      </q-popup-proxy>
-                    </q-icon>
-                  </template>
-                </q-input>
-                <q-btn class="q-mb-md" :label="$t('lang.search')" color="brand" @click="searchRecord" />
+                <DateFilter 
+                  :startDate="searchForm.reminderRecord.startDate" 
+                  :endDate="searchForm.reminderRecord.endDate" 
+                  @updateStartDate="(startDate) => {
+                    searchForm.reminderRecord.startDate = startDate
+                  }" 
+                  @updateEndDate="(endDate) => {
+                    searchForm.reminderRecord.endDate = endDate
+                  }" 
+                />
+                <div class="primary-button blue-square" @click="searchRecord">
+                  {{ $t('lang.search') }}
+                </div>
               </div>
             </q-form>
           </div>
-          <q-table
-            :grid="$q.screen.lt.md"
-            :loading="loading"
-            :columns="tableColumns.reminderRecord"
-            :rows="dataState.reminderRecord"
-            :no-data-label="noDataLabel"
-            :rows-per-page-label="rowPerPageLabel"
-            row-key="orderNo"
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.reminderRecord" :dataState="dataState.reminderRecord" :rowKey="'orderNo'"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
           >
             <template v-slot:item="props">
-              <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.order_number") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.orderNo }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.orderNo }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.finance_remark") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.financeRemark }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.financeRemark }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.feedback_time") }}</div>
-                    <div class="q-table__grid-item-value">{{ props.row.feedbackTime }}</div>
+                    <div class="q-table__grid-item-value">{{ props?.props?.row.feedbackTime }}</div>
                   </div>
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.reminder_type") }}</div>
-                    <div class="q-table__grid-item-value">{{ checkType(props.row.type) }}</div>
+                    <div class="q-table__grid-item-value">{{ checkType(props?.props?.row.type) }}</div>
                   </div>
                 </div>
               </div>
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td :props="props">
+              <q-td>
                 <div>
-                  {{ checkType(props.value) }}
+                  {{ checkType(props?.props?.value) }}
                 </div>
               </q-td>
             </template>
-          </q-table>
+          </DataTable>
         </q-tab-panel>
       </q-tab-panels>
       <q-dialog style="margin: 20px" v-model="betRecordDialog">
-        <q-table
+        <q-table dense
+            class="datatable"
           :grid="$q.screen.lt.md"
           :loading="loading"
           :columns="tableColumns.betRecord"
           :rows="dataState.betRecord"
           :no-data-label="noDataLabel"
           :rows-per-page-label="rowPerPageLabel"
+          :rows-per-page-options="[]"
           row-key="serialNumber"
         ></q-table>
       </q-dialog>
@@ -614,7 +431,8 @@
             >
               <q-input
                 :label="$t('lang.order_number')"
-                filled
+                dense
+                outlined
                 v-model="reminderForm.orderNo"
                 color="white"
                 padding="none"
@@ -626,14 +444,17 @@
                 type="textarea"
                 v-model="reminderForm.memberRemark"
                 :label="$t('lang.finance_remark')"
-                filled
+                dense
+                outlined
                 autogrow
                 color="white"
                 class="q-mt-md"
                 :rows="2"
                 :max-rows="5"
               />
-              <q-btn class="common-btn q-mt-md" color="brand" :label="$t('lang.send')" @click="submitReminder" />
+              <div class="primary-button blue-square" @click="submitReminder" style="margin:15px 0px;">
+                {{ $t('lang.send') }}
+              </div>
             </q-form>
           </q-card-section>
 
@@ -668,11 +489,15 @@ import {userStore} from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
 import {useI18n} from "vue-i18n";
+import DateFilter from 'components/transaction/DateFilter';
+import DataTable from 'components/transaction/DataTable';
 
 export default defineComponent({
   name: "TransitRecordView",
   components: {
     FileUpload,
+    DateFilter,
+    DataTable
   },
   setup() {
 
@@ -680,7 +505,7 @@ export default defineComponent({
     const store = userStore();
     const {t} = useI18n();
     const uploadFileRef = ref();
-    const recordActive = ref("deposit");
+    const recordActive = ref("gameBetRecord");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
     const reminderForm = reactive({});
@@ -689,41 +514,109 @@ export default defineComponent({
       totalPayout: 0
     })
     const $q = useQuasar();
+    const dateLocale = {
+        days: [
+          t('lang.date_picker_sunday'),
+          t('lang.date_picker_monday'),
+          t('lang.date_picker_tuesday'),
+          t('lang.date_picker_wednesday'),
+          t('lang.date_picker_thursday'),
+          t('lang.date_picker_friday'),
+          t('lang.date_picker_saturday')
+        ],
+        daysShort: [
+          t('lang.date_picker_sun'),
+          t('lang.date_picker_mon'),
+          t('lang.date_picker_tue'),
+          t('lang.date_picker_wed'),
+          t('lang.date_picker_thu'),
+          t('lang.date_picker_fri'),
+          t('lang.date_picker_sat')
+        ],
+        months: [
+          t('lang.date_picker_january'),
+          t('lang.date_picker_february'),
+          t('lang.date_picker_march'),
+          t('lang.date_picker_april'),
+          t('lang.date_picker_may'),
+          t('lang.date_picker_june'),
+          t('lang.date_picker_july'),
+          t('lang.date_picker_august'),
+          t('lang.date_picker_september'),
+          t('lang.date_picker_october'),
+          t('lang.date_picker_november'),
+          t('lang.date_picker_december')
+        ],
+        monthsShort: [
+          t('lang.date_picker_jan'),
+          t('lang.date_picker_feb'),
+          t('lang.date_picker_mar'),
+          t('lang.date_picker_apr'),
+          t('lang.date_picker_may_short'),
+          t('lang.date_picker_jun'),
+          t('lang.date_picker_jul'),
+          t('lang.date_picker_aug'),
+          t('lang.date_picker_sep'),
+          t('lang.date_picker_oct'),
+          t('lang.date_picker_nov'),
+          t('lang.date_picker_dec')
+        ],
+        firstDayOfWeek: 0, // 0-6, 0 - Sunday, 1 Monday, ...
+        format24h: true,
+        pluralDay: '날들'
+      }
+
     const searchForm = reactive({
       turnover: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 20
       },
       rebates: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       transfer: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       withdraw: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       deposit: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       },
       gameBetRecord: {
         startDate: "",
         endDate: "",
         platform: "",
-        memberId: store.id
+        memberId: store.id,
+        current: 1,
+        size: 10
       },
       betRecord: {
         platform: "",
         gameType: "",
-        memberId: store.id
+        memberId: store.id,
+        current: 1,
+        size: 10
       },
       reminderRecord: {
         startDate: "",
-        endDate: ""
+        endDate: "",
+        current: 1,
+        size: 10
       }
     });
     const dataState = reactive({
@@ -912,20 +805,22 @@ export default defineComponent({
       ],
       gameBetRecord: [
         // {
-        //   label: "รหัสเดิมพัน",
+        //   title: "注单号",
         //   field: "betId"
         // },
-        // {
-        //   label: "รหัสธุรกรรม",
-        //   field: "transactionId"
-        // },
+        {
+          label: "게임 시간",
+          field: "betTime",
+          format: (val, row) => moment(val).format("YYYY-MM-DD HH:mm:ss"),
+        },
         {
           label: t('lang.game_name'),
           field: "gameName"
         },
         {
           label: t('lang.platform'),
-          field: "platform"
+          field: "platform",
+          format: (val, row) => val === 'WCEvo' ? 'Evo' : val,
         },
         {
           label: t('lang.bet'),
@@ -993,6 +888,7 @@ export default defineComponent({
     }
     const loading = ref(false);
     const pagination = reactive({
+      current: 1,
       pageSize: 10,
       total: 0
     });
@@ -1113,6 +1009,7 @@ export default defineComponent({
       if (recordActive.value === 'gameBetRecord') {
         getPlatList()
       }
+      console.log('here', searchForm[recordActive.value])
       api.get(recordUrl[recordActive.value], {
         params: searchForm[recordActive.value]
       }).then((ret) => {
@@ -1120,7 +1017,8 @@ export default defineComponent({
         const dataSource = dataState[recordActive.value];
         dataSource.value = [];
         if (response.code === 0) {
-          pagination.total = response.data.length;
+          pagination.total = response.data.total;
+          pagination.pages = response.data.pages;
           //clear array and then push new record
           dataSource.splice(0);
           dataSource.push(...response.data.records);
@@ -1224,11 +1122,11 @@ export default defineComponent({
       if (withdrawStatus === 'APPLY') {
         return t('lang.applying') //Applying
       } else if (withdrawStatus === 'FAIL') {
-        return t('lang.failed') // Failed
+        return '환전실패' // Failed
       } else if (withdrawStatus === 'PENDING') {
-        return t('lang.pending') // Pending
+        return '확인중' // Pending
       } else if (withdrawStatus === 'SUCCESS') {
-        return t('lang.success') // Success
+        return '충전완료' // Success
       } else if (withdrawStatus === 'STEP_1') {
         return t('lang.under_review') //Under review
       } else if (withdrawStatus === 'STEP_2') {
@@ -1290,6 +1188,7 @@ export default defineComponent({
     }
 
     return {
+      dateLocale,
       recordActive,
       searchForm,
       dataState,
@@ -1338,14 +1237,25 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.datatable {
+  box-shadow: none;
+  border: 1px solid grey;
+}
+
+.datatable-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 10px;
+}
+
 .payout-total {
-  margin-left: 15px;
+  margin-left: 10px;
   display: inline-flex;
   justify-content: right;
   align-items: center;
   gap: 20px;
-  margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 16px;
 
   strong {
     color: $orange;
@@ -1355,9 +1265,24 @@ export default defineComponent({
 }
 
 .account-content.transit {
-  min-height: 740px;
-  margin: 10px;
+  // margin: 10px;
   padding: 0;
+
+  :deep(.q-table__container), :deep(.q-table__grid-item-card) {
+    background: #212632;
+  }
+
+  .q-table__grid-item-card {
+    .primary-button {
+      width: 70px;
+      height: 30px;
+      font-size: 12px;
+    }
+  }
+
+  :deep(.q-tab) {
+    color: #fff;
+  }
 
   .form-wrapped {
     :deep(.ant-tabs-top-bar) {

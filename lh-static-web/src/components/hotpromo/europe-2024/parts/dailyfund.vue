@@ -10,7 +10,7 @@
         <div class="fund-status__point">{{ matchPoints.currentPoints }}</div>
         <div class="fund-contest-time-left">
           <img src="../images/daily-fund-icon-time.svg" />
-          <span class="fund-contest-time-left__title">比赛剩余</span>
+          <span class="fund-contest-time-left__title">{{ matchStartAt }}</span>
           <span class="fund-contest-time-left__content" v-if="remainingTime">
             {{ `${remainingTime.days} 天 ${remainingTime.hours} 小时` }}
           </span>
@@ -38,16 +38,11 @@
             {{ num.points }}
             <div v-if="i !== 0">
               <div class="claim">
-                <img
-                  @click="claimPoint(num.points)"
-                  v-if="
-                    matchPoints.currentPoints >= num.points &&
-                    matchPoints.pointsClaimed &&
-                    !matchPoints.pointsClaimed.includes(num.points)
-                  "
-                  src="../images/daily-fund-claim.png"
-                />
-                <img v-else src="../images/daily-fund-claimed.png" />
+                <template v-if="matchPoints.currentPoints >= num.points && matchPoints.pointsClaimed">
+                  <img v-if="matchPoints.pointsClaimed.includes(num.points)" src="../images/daily-fund-claimed.png" />
+                  <img v-else @click="claimPoint(num.points)" src="../images/daily-fund-claim.png" />
+                </template>
+                <img v-else src="../images/daily-fund-wait-for-claim.png" />
               </div>
             </div>
           </div>
@@ -63,7 +58,7 @@
           <div class="team-num">{{ team.name }} 组</div>
           <div class="chosen-items">
             <div class="selection">
-              {{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}
+              <span class="selection-prefix">{{ team.selection.length > 0 ? " 已选择：" : "请选队伍" }}</span>
               <div class="selected-items">
                 <div v-for="t in team.selection">
                   {{ t.name }}
@@ -104,79 +99,95 @@
         <bracket-team :img-url="imgUrl + match.teamOneIcon" :country="match.teamOneName" />
         <button
           @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamOneId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
       <div class="bracket-info">
-        <div class="bracket-info__status">{{ match.status === "ONGOING" ? "进行中" : "已结束" }}</div>
         <div class="bracket-info__info-wrapper">
-          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM hh:mm") }}</div>
-          <div class="bracket-info__info-wrapper-contest">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-title">{{ match.title }}</div>
+          <div class="bracket-info__info-wrapper-date">{{ moment(match.matchTime).format("DD/MM HH:mm") }}</div>
+          <div class="bracket-info__info-wrapper-VS">VS</div>
+          <button
+            @click="matchSubmit(match, 0, '平局')"
+            v-if="match.selectedTeamId === null"
+            class="bracket-team-select__button"
+          >
+            平局
+          </button>
+          <button v-else-if="match.selectedTeamId === 0" class="bracket-team-select__button active">已选</button>
+          <div v-else class="bracket-team-select__button pseudo" />
         </div>
       </div>
       <div class="bracket-team-select">
         <bracket-team :img-url="imgUrl + match.teamTwoIcon" :country="match.teamTwoName" />
         <button
           @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
-          v-if="!match.selectedTeamId"
+          v-if="match.selectedTeamId === null"
           class="bracket-team-select__button"
         >
           选择
         </button>
-        <button v-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">已选</button>
+        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="bracket-team-select__button active">
+          已选
+        </button>
+        <div v-else class="bracket-team-select__button pseudo" />
       </div>
     </div>
   </div>
-  <table>
-    <tr>
-      <th>有效投注</th>
-      <th>投注彩金</th>
-      <th>专属队伍彩金</th>
-      <th>彩金倍数</th>
-    </tr>
-    <tr>
-      <td>≥3,000</td>
-      <td>8</td>
-      <td>18</td>
-      <td rowspan="4">3倍</td>
-    </tr>
-    <tr>
-      <td>≥6,000</td>
-      <td>28</td>
-      <td>58</td>
-    </tr>
-    <tr>
-      <td>≥10,000</td>
-      <td>68</td>
-      <td>88</td>
-    </tr>
-    <tr>
-      <td>≥100,000</td>
-      <td>158</td>
-      <td>188</td>
-    </tr>
-  </table>
+<!--  <table>-->
+<!--    <tr>-->
+<!--      <th>有效投注</th>-->
+<!--      <th>投注彩金</th>-->
+<!--      <th>专属队伍彩金</th>-->
+<!--      <th>彩金倍数</th>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥3,000</td>-->
+<!--      <td>8</td>-->
+<!--      <td>18</td>-->
+<!--      <td rowspan="4">3倍</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥6,000</td>-->
+<!--      <td>28</td>-->
+<!--      <td>58</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥10,000</td>-->
+<!--      <td>68</td>-->
+<!--      <td>88</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td>≥100,000</td>-->
+<!--      <td>158</td>-->
+<!--      <td>188</td>-->
+<!--    </tr>-->
+<!--  </table>-->
 
   <div class="rule-title">活动规则</div>
   <ol class="rule-content">
     <li>
-      活动期间，会员在A组~F组每组选出一只队伍作为用户参赛队伍，若用户选择的队伍胜利且有效投注≥3,000元即可获的专属队伍奖金；
+      活动期间，会员当日任意存款即可获得参与竞猜机会，参与竞猜且竞猜结果正确即可获得100积分；
     </li>
     <li>
-      活动期间，用户参与免费竞猜，竞猜正确可获100积分，若用户选择的参与队伍获胜可额外加赠100积分，积分对应彩金仅限领取1次，积分≥6000分是可获188元；
+      活动期间，会员可在A组~F组各选出一只专属队伍，若当日参与竞猜后专属队伍获胜即可获得100专属加赠积分；
     </li>
-    <li>此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；</li>
+    <li>活动期间，积攒够对应积分总数即可兑换相应彩金，可点击领取按钮，彩金3倍流水即可出款；</li>
     <li>
-      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.5、香港盘0.5赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
+      此活动全体会员均可参与，参与前请完善个人资料，绑定手机号码及银行卡；
     </li>
     <li>
-      每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关 
-      闭相关账户的权利，并不退还款项，且用户列入黑名单；
+      仅计算已结算并产生输赢结果的注单，任何平局、串关、取消的注单不予计算，任何低于欧洲盘1.7、香港盘0.7赔率以下的注单以及在同一赛事中同时投注对等盘口将不予计算；
     </li>
+    <li>每位有效会员、每一手机号码、电子邮箱、相同银行卡、每一个IP地址、每一台电脑以及其他登录设备只能享受一次活动优惠，如有任何违规者或任何团体以不正常的方式进行套取活动优惠，我站保留在不通知的情况下冻结或关闭相关账户的权利，
+      并不退还款项，且用户列入黑名单；</li>
     <li>为避免文字理解差异，本站保留最终解释权。</li>
   </ol>
 
@@ -209,8 +220,9 @@ import {
 } from "@/api/promotion/eurocup";
 import { ElMessage } from "element-plus";
 import moment from "moment";
+import {  useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const props = defineProps({
   tabtitle: String
@@ -245,7 +257,7 @@ const rankPoints = [
     points: 6000
   }
 ];
-const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const confirmDialog = ref(false);
 const selectedMatch = ref("");
 const selectedItem = ref({
@@ -259,12 +271,20 @@ const getPercentage = (points) => {
 const isClaimed = ref(false);
 const ongoingMatches = ref();
 const remainingTime = ref();
+
+const matchStartAt = ref("比赛剩余")
+
 const teams = ref([]);
 const getMatchPoints = () => {
   euroMatchPoints().then((res) => {
     if (res.code === 0) {
       matchPoints.value = res.data;
-      remainingTime.value = calculateRemainingTime(res.data.endDate);
+      if(moment().format("YYYY-MM-DD HH:mm") <= "2024-06-15 03:00"){
+        remainingTime.value = calculateRemainingTime("2024-06-15 02:59:59");
+        matchStartAt.value = "比赛倒计时"
+      }else{
+        remainingTime.value = calculateRemainingTime(res.data.endDate);
+      }
     } else {
       ElMessage.error(res.message);
     }
@@ -297,9 +317,11 @@ const matchSubmit = (match, id, name) => {
 const confirmMatchSelect = () => {
   euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
     if (res.code === 0) {
-      ElMessage.success("提交成功");
+      ElMessage.success("投票成功");
       confirmDialog.value = false;
       getMatches();
+    } else {
+      ElMessage.error(res.message)
     }
   });
 };
@@ -349,6 +371,8 @@ function confirmSelection(team, choiceName) {
       if (res.code === 0) {
         team.isSelectionConfirmed = true;
         getTeamsData();
+      } else {
+        ElMessage.error(res.message)
       }
     });
   }
@@ -420,7 +444,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
     justify-content: center;
     align-items: center;
     gap: 10px;
-      width: 100px;
+    width: 100px;
     div {
       display: flex;
       gap: 5px;
@@ -430,7 +454,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
       font-size: 20px;
     }
     img {
-      width:90px;
+      width: 90px;
     }
   }
 }
@@ -447,7 +471,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
   letter-spacing: 0.12em;
   text-align: center;
   color: #faff00;
-  margin-bottom: 31.92px;
+  margin: 40px auto !important;
 }
 
 .fund-wrapper {
@@ -571,87 +595,82 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 
 .bracket-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  align-items: end;
+  padding: 20px 0;
   color: #ffffff;
   background: #051d4766;
   border: 1px solid #ffffff66;
   border-radius: 8px;
   font-family: Microsoft YaHei UI;
-  justify-content: space-evenly;
 
   .bracket-team-select {
-    height: 317px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    padding-top: 50px;
     gap: 35px;
+    flex: 1;
+  }
 
-    .bracket-team-select__button {
-      background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
-      padding: 12px 52px;
-      border-radius: 33px;
-      font-size: 32px;
-      font-weight: 700;
-      line-height: 42.56px;
-      letter-spacing: 0.12em;
-      color: #333333;
-      word-break: keep-all;
+  .bracket-team-select__button {
+    background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
+    padding: 12px 52px;
+    border-radius: 33px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: 0.12em;
+    color: #333333;
+    word-break: keep-all;
 
-      &:hover,
-      &.active {
-        background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
-        color: #ffffff;
-      }
+    &:hover,
+    &.active {
+      background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
+      color: #ffffff;
+    }
+
+    &.pseudo {
+      background: transparent;
+      padding-top: 44px;
     }
   }
 
   .bracket-info {
     display: flex;
     flex-direction: column;
-    align-self: flex-start;
-    gap: 45px;
-    flex-basis: 33%;
-
-    .bracket-info__status {
-      background: linear-gradient(180deg, #00d1ff 0%, #0d70d6 100%);
-      padding: 20px 59px;
-      border-radius: 0px 0px 20px 20px;
-      font-family: FZHanZhenGuangBiaoS-GB;
-      font-size: 32px;
-      line-height: 38px;
-      letter-spacing: 0.12em;
-      text-align: center;
-
-      &.finished {
-        background: linear-gradient(180deg, #f99500 0%, #b34b00 100%);
-      }
-    }
+    flex: 1;
 
     .bracket-info__info-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 22px;
+      gap: 10px;
       align-items: center;
 
-      .bracket-info__info-wrapper-date {
-        background-color: #458bff1a;
-        padding: 7px 36px 7px 36px;
-        border-radius: 100px;
-        font-size: 22px;
+      .bracket-info__info-wrapper-title {
+        font-family: Microsoft YaHei UI;
+        font-size: 36px;
         font-weight: 700;
-        line-height: 36.56px;
-        letter-spacing: 0.12em;
+        line-height: 47.88px;
+        text-align: center;
+        color: #ffffff;
+      }
+
+      .bracket-info__info-wrapper-date {
+        font-family: Microsoft YaHei UI;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 26.6px;
         text-align: center;
       }
 
-      .bracket-info__info-wrapper-contest {
-        font-size: 32px;
-        line-height: 42.56px;
-        letter-spacing: 0.12em;
-        color: #ffffff99;
+      .bracket-info__info-wrapper-VS {
+        font-family: Poppins;
+        font-size: 70.71px;
+        font-weight: 900;
+        line-height: 106.07px;
         text-align: center;
+        color: #73b2ff1a;
       }
     }
   }
@@ -673,9 +692,8 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 .doubling-gold {
   .teams {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    column-gap: 60px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 60px;
     margin: 20px auto;
 
     .team {
@@ -706,24 +724,30 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           align-items: center;
           color: #ffffff;
           font-family: Microsoft YaHei UI;
-          font-size: 24px;
+          font-size: 18px;
           font-weight: 400;
-          line-height: 31.92px;
+          line-height: 23.94px;
           letter-spacing: 0.12em;
+          text-align: left;
           padding: 10px;
 
           .selection {
             color: #ffffffcc;
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
+            align-self: flex-start;
+
+            .selection-prefix {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 18.62px;
+            }
 
             .selected-items {
               display: flex;
-              gap: 10px;
-              justify-content: center;
               align-items: center;
+              gap: 10px;
               color: #ffffff;
             }
           }
@@ -731,9 +755,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .unselectedbtn {
             background: linear-gradient(180deg, #fcf5ff 0%, #8db9ee 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #1a396f;
             cursor: disabled;
@@ -745,9 +769,9 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           .selectedbtn {
             background: linear-gradient(180deg, #008df9 0%, #0051b3 100%);
             font-family: Microsoft YaHei UI;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            line-height: 31.92px;
+            line-height: 28px;
             letter-spacing: 0.12em;
             color: #ffffff;
             padding: 5px 20px;
@@ -760,7 +784,7 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
           gap: 10px;
           align-items: center;
           justify-content: space-evenly;
-          padding: 50px 0;
+          padding: 25px 0;
           .choice {
             display: flex;
             flex-direction: column;
@@ -818,7 +842,6 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
 .rule-title,
 .rule-content {
   font-family: Microsoft YaHei UI;
-  line-height: 31.95px;
   letter-spacing: 0.12em;
   text-align: left;
   color: #ffffff;
@@ -830,7 +853,8 @@ $ranking-list: 36px, 49px, 50px, 59px, 85px, 95px, 90px;
   line-height: 42.6px;
 }
 .rule-content {
-  font-size: 24px;
+  font-size: 20px;
+  line-height: 24px;
   font-weight: 400;
 }
 </style>

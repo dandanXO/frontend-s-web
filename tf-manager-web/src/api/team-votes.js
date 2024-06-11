@@ -18,7 +18,7 @@ export const deleteTeamVotes = (id) => {
 };
 
 export const updateVotes = (vote) => {
-  return https().request(`/team-votes/${vote.id}/update-votes?virtualVotes=${vote.totalVotesVirtual}?_method=PUT`, Method.POST, {}, ContentType.form);
+  return https().request(`/team-votes/${vote.id}/update-votes?_method=PUT`, Method.POST, { virtualVotes: vote.totalVotesVirtual, sequence: vote.sequence }, ContentType.form);
 };
 
 export const updateAwards = (vote) => {

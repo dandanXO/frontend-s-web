@@ -36,3 +36,27 @@ export const createBatchGame = (games) => {
 export const getExport = (data) => {
   return https().request("/game/gameExport", Method.GET, data, ContentType.form);
 };
+
+export const getTagGames = (game) => {
+  return https().request("/game/queryTagGame", Method.GET, game, ContentType.form);
+};
+
+export const createTagGames = (game) => {
+  return https().request("/game/createTagGame", Method.POST, game, ContentType.form);
+};
+
+export const deleteTagGame = async (ids) => {
+  await https().request(`/game/deleteTagGame?_method=DELETE`, Method.POST, { ids: ids.join(",") }, ContentType.form);
+};
+
+export const getGamesList = (game) => {
+  return https().request("/game/queryGameListBySiteAndPlatform", Method.GET, game, ContentType.form);
+};
+
+export const updateTagGame = async (game) => {
+  await https().request(`/game/updateTagGame/${game.id}?_method=PUT`, Method.POST, game, ContentType.form);
+};
+
+export const getExportTagGame = (data) => {
+  return https().request("/game/tagGameExport", Method.GET, data, ContentType.form);
+};

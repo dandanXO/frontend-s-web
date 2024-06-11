@@ -54,6 +54,7 @@
         <el-table-column prop="betId" :label="t('fields.betId')" align="center" min-width="250" />
         <el-table-column prop="transactionId" :label="t('fields.transactionId')" align="center" min-width="250" />
         <el-table-column prop="platform" :label="t('fields.platform')" align="center" min-width="120" />
+        <el-table-column prop="gameName" :label="t('fields.gameName')" align="center" min-width="150" />
         <el-table-column prop="bet" :label="t('fields.bet')" align="center" min-width="100">
           <template #default="scope">
             $ <span v-formatter="{data: scope.row.bet,type: 'money'}" />

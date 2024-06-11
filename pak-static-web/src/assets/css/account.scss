@@ -1,0 +1,349 @@
+.account-title-container {
+  position: relative;
+  padding: 10px 0;
+  font-weight: bold;
+
+  .account-title {
+    position: relative;
+    font-size: 15px;
+    line-height: 32px;
+    letter-spacing: 0px;
+    text-align: left;
+  }
+}
+
+.account-content {
+  position: relative;
+  // padding: 20px 30px;
+  // background:  #23263c;
+
+  margin-bottom: 10px;
+
+  &.full {
+    margin-bottom: 0;
+    height: 740px;
+  }
+
+  &.last {
+    margin-bottom: 0;
+  }
+}
+
+$max-width: $container-width;
+.account-container {
+  margin: 0 auto;
+  padding: 0;
+
+  // background: url(../images/common/bg.jpg);
+  &-wrap {
+    width: 90%;
+    margin: 20px auto 80px;
+    box-shadow: 0px 2px 10px 0px #ffffff inset;
+
+    box-shadow: 0px 0px 17.600000381469727px 0px #ffffff inset;
+
+    box-shadow: 0px 4px 10px 0px #0000001a;
+
+    border-radius: 20px;
+    max-width: $max-width;
+    overflow: hidden;
+  }
+
+  .account-box {
+    // background-color: #1b232d;
+    // border: 1px solid #254e5a;
+  }
+
+  .account-box-wrapper {
+    width: 280px;
+    flex-shrink: 0;
+  }
+
+  .account-content-wrapper {
+    width: calc(100% - 280px);
+    padding: 30px;
+    background: #ffffff05;
+    border-radius: 4px;
+
+    .menu-title-container {
+      margin: 0px 0 20px;
+      position: relative;
+      font-size: 30px;
+      .menu-title {
+        font-size: 30px;
+        line-height: 32px;
+        letter-spacing: 0px;
+        text-align: left;
+      }
+    }
+
+    .ant-tabs-bar {
+      border-bottom: 4px solid #2b2b4b;
+      margin-bottom: 0;
+    }
+
+    .ant-tabs-nav .ant-tabs-tab {
+      // padding: 15px 48px;
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .ant-tabs-nav-container {
+      margin-bottom: -4px;
+    }
+
+    .ant-tabs-ink-bar {
+      height: 4px;
+      background-color: #2b2b4b;
+    }
+
+    .ant-form-item-label > label,
+    .ant-tabs {
+    }
+
+    .ant-form-item-label > label {
+      width: 100%;
+      min-width: 180px;
+    }
+
+    .left {
+      .ant-form-item-label > label {
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+    .ant-form-inline .ant-form-item {
+      align-items: center;
+      flex-direction: row;
+      margin: 0;
+    }
+
+    // .ant-tabs-bar {
+    //   border-bottom: 4px solid #2b2b4b;
+    // }
+
+    // .ant-tabs-ink-bar {
+    //   height: 4px;
+    //   background-color: #db7e42;
+    // }
+
+    .ant-input {
+      border-width: 1px;
+      border-style: solid;
+
+      &:not([disabled]):hover,
+      &:focus {
+        border-color: $primary-light;
+      }
+
+      &.ant-calendar-picker-input {
+        border: 1px solid #d7d7d7;
+        text-align: left;
+        border-radius: 8px;
+        padding: 10px;
+      }
+    }
+
+    .ant-calendar-picker {
+      width: 100%;
+      border-radius: 0;
+
+      svg {
+        fill: white;
+      }
+      .ant-calendar-picker-clear {
+        margin-right: 23px;
+        background: unset;
+      }
+
+      &:hover {
+        .ant-calendar-picker-clear {
+          svg {
+            fill: white;
+          }
+        }
+      }
+    }
+
+    .ant-tabs-bar {
+      border-bottom: 3px solid #ffffff0d;
+    }
+
+    .ant-tabs-nav {
+      .ant-tabs-tab {
+        color: #8c968f;
+      }
+      .ant-tabs-tab-active {
+        color: #ffffff;
+        background-color: transparent;
+      }
+      .ant-tabs-ink-bar {
+        // background: transparent;
+        position: relative;
+        &:after {
+          position: absolute;
+          content: "";
+          height: 4px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          border-radius: 8px;
+          background: #70bc62;
+        }
+      }
+    }
+
+    .about-container :deep(.ant-tabs) {
+      // background: url(../../assets/images/common/bg.jpg);
+      padding: 40px 0;
+    }
+
+    .about-container :deep(.ant-tabs .ant-tabs-left-bar) {
+      display: flex;
+      flex-direction: column-reverse;
+      background-repeat: no-repeat;
+      width: 250px;
+      border: 0;
+    }
+
+    .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-extra-content) {
+      padding: 30px 0;
+
+      img {
+        width: 114px;
+      }
+    }
+
+    .about-container :deep(.ant-tabs .ant-tabs-left-bar .ant-tabs-tab) {
+      margin: 0 0 56px 0;
+      padding: 14px 40px;
+      text-align: center;
+
+      &:hover {
+        color: #db7e42;
+      }
+    }
+
+    .ant-table {
+      background-color: transparent;
+    }
+
+    .account-tip {
+      margin: 0;
+      padding: 0;
+
+      &.danger {
+      }
+
+      &-text {
+        position: relative;
+        padding-left: 20px;
+        color: #83a3ca;
+        &:before {
+          content: "";
+          width: 8px;
+          height: 8px;
+          background: linear-gradient(270deg, #25ac92 0%, #7cc24e 100%);
+          position: absolute;
+          transform: rotateZ(45deg);
+          left: 0px;
+          top: 5px;
+        }
+        a {
+          color: #db7e42;
+          display: inline-block;
+          margin-left: 3px;
+        }
+
+        svg {
+          fill: #db7e42;
+          margin-right: 5px;
+          width: 20px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        &.wbot {
+          margin-bottom: 10px;
+        }
+      }
+
+      // &-text {
+      //   &:before {
+      //     content: "";
+      //     padding: 10px;
+      //     background: #db7e42;
+      //     margin-right: 10px;
+      //   }
+      // }
+    }
+  }
+}
+
+.dark-theme {
+  .account-container .account-content-wrapper .ant-tabs-nav .ant-tabs-tab {
+    color: rgb(255 255 255 / 40%);
+  }
+  .ant-tabs-tab-prev,
+  .ant-tabs-tab-next {
+    color: #ffffff;
+  }
+  .account-menu-container {
+    background: rgb(20 20 20 / 10%);
+    .account-menu-wrapper {
+      .account-menu-item {
+        &.router-link-active,
+        &:hover {
+          background: linear-gradient(270deg, rgba(7, 91, 232, 0.2) 0%, rgba(7, 91, 232, 0) 100%);
+          color: #ffffff;
+        }
+      }
+    }
+  }
+  .account-container .account-content-wrapper {
+    background: rgb(20 20 20 / 50%);
+  }
+  .account-container .account-content-wrapper .ant-input.ant-calendar-picker-input {
+    background: #ffffff0f;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.0588235294);
+  }
+}
+
+@media (max-width: 767px) {
+  .ant-form-inline .ant-form-item {
+    width: 100%;
+  }
+  .account-title-container {
+    padding: 10px;
+  }
+  .account-container {
+    display: block;
+    width: 95%;
+    height: unset;
+    min-height: unset;
+    margin-top: 0;
+    padding: 0 0 40px;
+
+    &-wrap {
+      margin: 0 auto;
+    }
+
+    .account-box-wrapper {
+      width: 100%;
+    }
+
+    .account-content-wrapper {
+      margin: 0 auto;
+      width: 100%;
+      // padding: 30px 10px;
+      // padding-left: 10px;
+      // padding-right: 10px;
+
+      .menu-title-container {
+        margin: 0 0 20px;
+      }
+    }
+  }
+}

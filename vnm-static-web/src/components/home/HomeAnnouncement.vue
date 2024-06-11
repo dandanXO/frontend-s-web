@@ -54,7 +54,7 @@
           />
           <div class="station-notice">
             <Vue3Marquee :clone="false"
-                         :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 1 + 10 : 140">
+                          :duration="calculateMaxContentLength() * 0.3">
               <div
                 v-for="(word, index) in announcementList"
                 :key="index"

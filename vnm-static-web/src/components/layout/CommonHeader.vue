@@ -68,8 +68,9 @@
             <SportsMenu ref="el" v-if="selectedMenu === 'sports'" @load-modal="openGame" />
             <LotteryMenu ref="el" v-if="selectedMenu === 'lottery'" @load-modal="openGame" />
             <PokerMenu ref="el" v-if="selectedMenu === 'poker'" @load-modal="openGame" />
-            <FishingMenu ref="el" v-if="selectedMenu === 'fish'" @load-modal="openGame" />
+            <FishingMenu ref="el" v-if="selectedMenu === 'others'" @load-modal="openGame" />
             <CockfightMenu ref="el" v-if="selectedMenu === 'cockfight'" @load-modal="openGame" />
+            <MinigameMenu ref="el" v-if="selectedMenu === 'minigame'" @load-modal="openGame" />
             <PromotionMenu ref="el" v-if="selectedMenu === 'Promotion'" />
             <AppMenu ref="el" v-if="selectedMenu === 'App'" />
           </div>
@@ -315,9 +316,11 @@
       style="max-width: 1080px"
       @close="store.loginPageVisible = false"
     >
-      <div class="acc-dialog-container login-container">
-        <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
+      <div class="acc-dialog-container login-container" :class="isLandingClub == 'tf88club' ? 'acc-dialog-landing' : '' ">
+        <div class="acc-dialog-left" >
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
+          <img v-if="isLandingClub !== 'tf88club'" src="../../assets/home/acc-dialog-img-login-eurocup.png" />
+          <img v-else  src="../../assets/home/tf88club-img.png">
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -341,7 +344,8 @@
     >
       <div class="acc-dialog-container signup-container">
         <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" />
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-signup-${languageVal}.png`)}`" width="150" /> -->
+          <img src="../../assets/home/acc-dialog-img-signup-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <RegisterAccount
@@ -404,7 +408,8 @@
     >
       <div class="acc-dialog-container login-container">
         <div class="acc-dialog-left">
-          <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" />
+          <!-- <img :src="`${require(`../../assets/home/acc-dialog-bg-login-${languageVal}.png`)}`" width="150" /> -->
+          <img src="../../assets/home/acc-dialog-img-login-eurocup.png" />
         </div>
         <div class="acc-dialog-right">
           <div class="acc-dialog-content">
@@ -482,6 +487,7 @@ import LotteryMenu from "@/components/menu/LotteryMenu.vue";
 import PokerMenu from "@/components/menu/PokerMenu.vue";
 import FishingMenu from "@/components/menu/FishingMenu.vue";
 import CockfightMenu from "@/components/menu/CockfightMenu.vue";
+import MinigameMenu from "@/components/menu/MinigameMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
@@ -509,6 +515,7 @@ export default defineComponent({
     PokerMenu,
     FishingMenu,
     CockfightMenu,
+    MinigameMenu,
     PromotionMenu,
     AppMenu,
     RiRefreshLine,
@@ -523,21 +530,57 @@ export default defineComponent({
     const { t } = useI18n();
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const navigations = computed(() => [
-      { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
-      { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
-      { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
-      { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
-      { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
-      { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
-      { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: t('menu.fishing'), enName: "Fishing", path: "/fishing", submenu: true },
-      { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
-      { code: "Promotion", name: t('menu.promotion'), enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
-      { code: "Agent", name:t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
-      { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
-    ]);
+    const navigations = computed(() => {
+      if (store && store.token && store.memberType === 'TEST') {
+        return [
+          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
+          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+          { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
+          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          {
+            code: "Promotion",
+            name: t('menu.promotion'),
+            enName: "Promotion",
+            path: "/promotion",
+            submenu: false,
+            hasicon: true
+          },
+          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
+        ]
+      } else {
+        return [
+          { code: "home", name: t('menu.home'), enName: "Home", path: "/home" },
+          { code: "sports", name: t('menu.sports'), enName: "Sports", path: "/sports", submenu: true },
+          { code: "live", name: t('menu.liveCasino'), enName: "Live", path: "/live-casino", submenu: true },
+          { code: "slot", name: t('menu.slot'), enName: "Slots", path: "/slot", submenu: true },
+          { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
+          { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
+          { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
+          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
+          // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
+          {
+            code: "Promotion",
+            name: t('menu.promotion'),
+            enName: "Promotion",
+            path: "/promotion",
+            submenu: false,
+            hasicon: true
+          },
+          { code: "Agent", name: t('menu.agent'), enName: "Agent", path: "/affiliate", hasicon: true },
+          { code: "App", name: t('menu.app'), enName: "App", path: "/app", submenu: false, hasicon: true },
+          { code: "VIP", name: t('menu.vip'), enName: "VIP", path: "/vip", hasicon: true }
+        ]
+      }
+    });
 
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
@@ -1143,6 +1186,8 @@ export default defineComponent({
     };
     const rebateAmt = ref(0);
     const isRebateDialogVisible = ref(false);
+    const isLandingClub= ref(route.query.landing);
+
     const showRebateValue = () => {
       dailyRebateAmt().then((res) => {
         if (res.code === 0) {
@@ -1197,8 +1242,11 @@ export default defineComponent({
         loginDialogVisible.value = false;
       }
 
-      // console.log(route);
-      // alert(route.name)
+
+      // alert(isLanding);
+      if(isLandingClub.value === "tf88club"){
+        loginDialogVisible.value = true;
+      }
 
 
     });
@@ -1530,7 +1578,8 @@ export default defineComponent({
       claimRebate,
       rebateAmt,
       claimNow,
-      welcomeDialogVisible
+      welcomeDialogVisible,
+      isLandingClub
     };
   }
 });
@@ -2471,17 +2520,15 @@ body {
       .acc-dialog-container {
         display: flex;
         background: url(../../assets/home/acc-dialog-bg-full.png) no-repeat left center;
-        min-height: 600px;
-        align-items: center;
-        padding-top: 30px;
-        padding-bottom: 30px;
+        // min-height: 500px;
+        // align-items: center;
+        padding-top: 0px;
+        padding-bottom: 0px;
       }
 
       .acc-dialog-left {
-        width:60%;
-        background-size: 100% 100%;
-        background-position: center center;
-        background-color: transparent;
+        width: 60%;
+
         border-top-left-radius: 20px;
         border-bottom-left-radius: 20px;
         // background-color: #ffffff;
@@ -2505,31 +2552,69 @@ body {
         }
       }
 
-      .login-container{
+      .login-container {
+
         .acc-dialog-left {
+          display: flex;
+          align-items: flex-end;
+          background-image: url(../../assets/home/acc-dialog-bg-login-eurocup.png);
+          background-size: 100% 100%;
+          background-position: center center;
+          min-height: 500px;
+
+
           img {
             display: block;
-            width: auto;
-            height: 500px;
-            margin: auto;
+            // width: 100%;
+            width: calc(100% + 90px);
+            margin: -50px 0px -45px -90px;
           }
+
+
+
+        }
+
+        &.acc-dialog-landing{
+          .acc-dialog-left{
+            background-image: url(../../assets/home/tf88club.png);
+            max-height:95vh;
+
+            img{
+              width: calc(100% + 20px);
+              margin: -50px -10px 0px -10px;
+            }
+          }
+
+          .acc-dialog-right{
+            padding-left: 20px;
+          }
+
         }
       }
 
-      .signup-container{
-        padding-top: 10px;
-        padding-bottom: 10px;
+      .signup-container {
+        // padding-top: 10px;
+        // padding-bottom: 10px;
 
         .acc-dialog-left {
+          display: flex;
+          align-items: flex-end;
+          background-image: url(../../assets/home/acc-dialog-bg-signup-eurocup.png);
+          background-size: 100% 100%;
+          background-position: center center;
+          // min-height: 750px;
+          // background-color:salmon;
+
           img {
             display: block;
-            width: auto;
-            max-height: 750px;
-            margin: auto;
+            // width: 100%;
+            // width: calc(100% + 70px);
+            // margin: -50px 0px -10px -60px;
+            width: calc(80% + 70px);
+            margin: -190px 0px -10px -20px;
           }
         }
       }
-
 
       .acc-dialog-right {
         width: 40%;

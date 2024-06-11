@@ -790,7 +790,7 @@ function charType(num) {
   .veri-img {
     height: 80%;
     padding-right: 6px;
-    width: 125px;
+    // width: 125px;
   }
 
   .login-via-phone-div {

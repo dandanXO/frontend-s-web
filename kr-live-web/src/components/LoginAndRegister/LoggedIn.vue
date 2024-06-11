@@ -3,15 +3,8 @@
     <div class="information">
       <div class="member">
         <img src="../../assets/images/login/member.svg" alt="" />
-        <div>{{ store.nickName }}</div>
+        <div>{{ store.name2 || store.realName }}</div>
       </div>
-      <!-- <div class="letter">
-        <img src="../../assets/images/login/letter.svg" alt="" />
-        <div>
-          쪽지
-          <span>(0)</span>
-        </div>
-      </div> -->
       <div class="money">
         <img src="../../assets/images/login/money.svg" alt="" />
         <div>
@@ -19,31 +12,43 @@
           <span>원</span>
         </div>
       </div>
-      <!-- <div class="item">
-        <img src="../../assets/images/login/item.svg" alt="" />
-        <div>
-          0
-          <span>P</span>
-        </div>
-      </div> -->
     </div>
-
     <div class="btn-group">
       <div class="left-group">
-        <!-- <div class="points-conversion">
-          <div class="register-text" @click="goToTransactions">포인트전환</div>
-        </div> -->
-        <div class="my-page">
-          <div class="register-text" @click="goToPersonalInfo">마이페이지</div>
+        <div class="primary-button blue" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
+          마이페이지
         </div>
       </div>
       <div class="right-group">
-        <div class="other-points-conversion" @click.prevent="onLogoutSubmit">
-          <div class="register-text">로그 아웃</div>
+        <div class="primary-button yellow" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
+          로그 아웃
         </div>
-        <!-- <div class="other-points-conversion">
-          <div class="register-text" @click="goToTransfer">포인트전환</div>
-        </div> -->
+      </div>
+    </div>
+    <div class="actions-topbar">
+      <div class="name-balance-info" v-if="props.isH5TopBar">
+        <div>{{ store.nickName }}</div>
+        <div class="money-topbar">
+          <span>₩</span>
+          <span class="balance">{{ store.balance }}</span>
+          <span>원</span>
+        </div>
+      </div>
+      <div class="actions-topbar-controls">
+        <div class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
+          마이페이지
+        </div>
+        <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
+          로그 아웃
+        </div>
+      </div>
+      <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
+        <router-link class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/deposit">
+          송금신청
+        </router-link>
+        <router-link class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;" to="/?page=finance/withdraw">
+          출금신청
+        </router-link>
       </div>
     </div>
   </div>
@@ -53,6 +58,7 @@
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 
+const props = defineProps(['isH5TopBar']);
 const store = userStore();
 const router = useRouter();
 
@@ -71,34 +77,35 @@ const onLogoutSubmit = () => {
 
 <style scoped lang="scss">
 .logginedin-container {
-  width: 528px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-  @media (min-width: 760px) {
-    flex-direction: row;
-    justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 }
 
 .information {
   display: flex;
-  flex-wrap: wrap;
+  white-space: nowrap;
   row-gap: 8px;
   column-gap: 24px;
   width: 60%;
   font-size: 16px;
   justify-content: center;
   align-items: center;
-  @media (min-width: 1200px) {
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 .member,
 .letter,
 .money,
 .item {
-  width: 125px;
   display: flex;
   align-items: center;
   img {
@@ -111,36 +118,13 @@ const onLogoutSubmit = () => {
 
 .btn-group {
   display: flex;
-  width: 40%;
-  // height: 100%;
   align-items: flex-start;
-  // justify-content: center;
-  // margin-top: 16px;
-  @media (min-width: 1200px) {
-    margin-top: 10px;
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
-.left-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  row-gap: 2px;
-
-  @media (max-width: 769px) {
-    flex-direction: row;
-    margin-bottom: 10px;
-  }
-}
-.right-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: 12px;
-  row-gap: 8px;
-}
-
-.points-conversion,
 .my-page {
   width: 80px;
   height: 36px;
@@ -151,6 +135,15 @@ const onLogoutSubmit = () => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(2px);
+  }
+
   @media (min-width: 1200px) {
     width: 100px;
   }
@@ -165,27 +158,43 @@ const onLogoutSubmit = () => {
   }
 }
 
-.other-points-conversion {
-  width: 80px;
-  height: 36px;
-  background-image: url("../../assets/home/btn-orange.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
+.actions-topbar {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  @media (min-width: 1200px) {
-    width: 100px;
+  
+  .name-balance-info {
+    display: flex;
+    align-items: center;
   }
-  .register-text {
-    font-size: 12px;
-    line-height: 16.8px;
-    color: #fff;
-    @media (min-width: 1200px) {
-      font-size: 14px;
-      line-height: 1;
+  
+  .actions-topbar-controls, .actions-bottombar-controls {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    display: flex;
+
+    .actions-bottombar-controls {
+      display: flex;
+      padding: 10px 0;
+    }
+  }
+
+  .money-topbar {
+    display: flex;
+    gap: 5px;
+    background-color: #2E324B;
+    border-radius: 4px;
+    padding: 5px 10px;
+    min-width: 100px;
+    min-height: 30px;
+    font-size: 14px;
+    margin: auto 10px;
+
+    .balance {
+      color: #00FFFF;
     }
   }
 }

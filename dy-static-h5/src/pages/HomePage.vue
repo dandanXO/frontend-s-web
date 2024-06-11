@@ -2171,8 +2171,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      if (banner.redirectUrl == "app://deposit") {
+        router.push("/finance/deposit");
+      } else {
+        const redirectU = "/promo?name=" + banner.redirectUrl;
+        router.push(`${redirectU}`);
+      }
     };
 
     const download_url = ref("");
@@ -3161,6 +3165,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
 
+    margin: 0;
     > span {
       height: 30px;
       color: var(--q-primary);
@@ -3171,8 +3176,13 @@ export default defineComponent({
       justify-content: center;
       text-align: center;
     }
+    &::after {
+      display: none;
+    }
   }
-
+  .q-tabs--horizontal .q-tabs__arrow {
+    height: unset;
+  }
   .swiper-button-prev {
     background: rgba(0, 0, 0, 0.3);
     height: 60px;
@@ -3184,6 +3194,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 
     > span {
       height: 30px;
@@ -3194,6 +3205,9 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       text-align: center;
+    }
+    &::after {
+      display: none;
     }
   }
 }

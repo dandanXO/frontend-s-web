@@ -165,11 +165,7 @@
           <el-input disabled v-model="bankCardInfo.cardAccount" />
         </el-form-item>
         <el-form-item prop="cardNumber" name="cardNumber">
-          <el-input
-            v-model="bankCardInfo.cardNumber"
-            :placeholder="numAddress()"
-            :type="isSZPAY ? 'number' : ''"
-          />
+          <el-input v-model="bankCardInfo.cardNumber" :placeholder="numAddress()" :type="isSZPAY ? 'number' : ''" />
         </el-form-item>
         <el-form-item prop="cardAddress" name="cardAddress" v-if="!isUSDT && !isEWALLET && !isALIPAY">
           <el-input
@@ -260,6 +256,7 @@ import {
   loadMemberTelephone
 } from "@/api/personal/personal";
 import {userStore} from "@/store";
+import {useLocalStorage} from "@vueuse/core";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
 import {InfoFilled} from "@element-plus/icons-vue";
@@ -334,6 +331,12 @@ export default defineComponent({
         } else if (selectedCode === 'OKPAY') {
           min = 16;
           max = 16;
+        } else if(selectedCode === 'BLBPAY') {
+          min = 32;
+          max = 32;
+        } else if(selectedCode === 'JDPAY') {
+          min = 34;
+          max = 34;
         } else if (selectedCode === 'SZPAY') {
           // if (!/^\d+$/.test(v)) {
           //   return Promise.reject('请输入数字人民币使用的手机号');
@@ -362,7 +365,7 @@ export default defineComponent({
     };
 
     const tblLoading = ref(false);
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);

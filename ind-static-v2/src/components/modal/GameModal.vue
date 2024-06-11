@@ -110,13 +110,14 @@
       </q-card>
     </q-dialog>
   </q-scroll-area>
+
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
 // import { launchSessionGame } from "api/platform/platform";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
-import { ref, defineExpose, reactive, shallowRef, onActivated, onUnmounted, onDeactivated } from "vue";
+import { ref, defineExpose, reactive, shallowRef, watchEffect } from "vue";
 import DepositComponent from "components/depositComponent.vue";
 
 import { App } from "@capacitor/app";
@@ -220,6 +221,7 @@ const transferInfo = ref({
   platform: null
 });
 const isClicked = ref("");
+
 const submitTransfer = (amount) => {
   transferInfo.value.amount = amount;
   api
@@ -271,7 +273,7 @@ const goToDeposit = () => {
   // }, 500);
 };
 
-const platformCodeImg = ref();
+const platformCodeImg = ref("");
 const open = (gameName, platformCode, gameCode, gameType) => {
   // debugger;
   // AppFullscreen.request()
@@ -330,7 +332,10 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if(platformCode !== 'LuckySport'){
+        visible.value = true;
+      }
+
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -356,7 +361,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
+          if(platformCode === 'LuckySport'){
+            window.open(srcDoc ,"_blank");
+          }else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;

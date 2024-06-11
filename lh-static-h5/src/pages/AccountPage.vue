@@ -4,8 +4,8 @@
       <div class="left">
         <div class="avatar" @click="updateProfilePhoto">
           <img v-if="!store.profilePhoto" src="../assets/images/account/avatar.png" />
-        <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../assets/images/profile/${store.profilePhoto}.png`)" />
-        <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
+          <img v-if="store.profilePhoto && store.profilePhoto.includes('default')" :src="require(`../assets/images/profile/${store.profilePhoto}.png`)" />
+          <img v-if="store.profilePhoto && !store.profilePhoto.includes('default')" :src="imageDir + store.profilePhoto + '?v=' + timestamp" />
         </div>
         <div class="pro-details">
           <span class="nickname-span">{{ store.nickName }}</span>
@@ -382,30 +382,30 @@
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
           <img :src="require(`../assets/images/profile/default-${profIndex + 1}.png`)">
         </div>
-      <div class="grid-item">
-              <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
-              </div>
-    </div>
+        <div class="grid-item">
+          <div @click="updateDialogVisible = true" style="border-radius: 50%; width: 100px; height: 100px; background: #E7F3FF; color: #A4AABB; font-size: 80px; cursor: pointer; padding-bottom: 10px; display: flex; justify-content: center; align-items: center;"> +
+          </div>
+        </div>
       </div>
       <div class="dialog-footer">
-          <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">确认</q-btn>
-        </div>
-      </q-card>
-    </q-dialog>
-    <q-dialog
-      v-model="updateDialogVisible"
-      persistent
-      class="profile-dialog">
-      <q-card style="flex-direction: column; display: flex;">
-        <div class="header">
-          修改头像
-      <q-btn dense flat icon="close" v-close-popup>
-        <q-tooltip>Close</q-tooltip>
-      </q-btn>
-        </div>
+        <q-btn :loading="submitPhotoLoading" class="submitImgBtn" @click="submitPhoto">确认</q-btn>
+      </div>
+    </q-card>
+  </q-dialog>
+  <q-dialog
+    v-model="updateDialogVisible"
+    persistent
+    class="profile-dialog">
+    <q-card style="flex-direction: column; display: flex;">
+      <div class="header">
+        修改头像
+        <q-btn dense flat icon="close" v-close-popup>
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </div>
 
-        <div class="uploader">
-      <div class="leftBox">
+      <div class="uploader">
+        <div class="leftBox">
           <el-form-item class="upload-box" v-if="!uploadedImage.url" style="margin: 0;" prop="path">
             <input
               id="uploadFile"
@@ -416,42 +416,42 @@
               @change="attachImage"
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
 
           </el-form-item>
           <cropper
             v-if="uploadedImage.url"
-              background-class="cropper-background"
-              ref="cropperRef"
-              class="cropper"
-              :src="uploadedImage.url ? uploadedImage.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'"
-              circle-stencil
-              :stencil-props="{
+            background-class="cropper-background"
+            ref="cropperRef"
+            class="cropper"
+            :src="uploadedImage.url ? uploadedImage.url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH_pqa6TIV5oR8BeTCCNhAbkqIrri2Xi8qbMusW_ulvA&s'"
+            circle-stencil
+            :stencil-props="{
                 handlers: {},
                 movable: false,
                 resizable: false,
                 aspectRatio: 1/1
               }"
-              :stencil-size="{
-                width:250,
-                height: 250
+            :stencil-size="{
+                width:150,
+                height: 150
               }"
-              image-restriction="stencil"
-              @change="change"
-            />
-          </div>
-      <div class="rightBox">
-        <div class="cropped_title">头像预览</div>
-        <div v-if="!croppedImg" class="croppedImgHolder"></div>
-        <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px;" :src="croppedImg">
-      </div>
-    </div>
-      <div v-if="croppedImg" class="dialog-footer">
-          <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
+            image-restriction="stencil"
+            @change="change"
+          />
         </div>
-      </q-card>
+        <div class="rightBox">
+          <div class="cropped_title">头像预览</div>
+          <div v-if="!croppedImg" class="croppedImgHolder"></div>
+          <img v-if="croppedImg" style="border-radius: 50%; width: 150px; height: 150px;" :src="croppedImg">
+        </div>
+      </div>
+      <div v-if="croppedImg" class="dialog-footer">
+        <q-btn :loading="isLoadingUpload" class="submitImgBtn" @click="saveCroppedImage()">保存</q-btn>
+      </div>
+    </q-card>
 
-    </q-dialog>
+  </q-dialog>
 </template>
 
 <script>
@@ -459,7 +459,7 @@ import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } 
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
-// import { RiRefreshLine } from "vue-remix-icons";
+import {useLocalStorage} from "@vueuse/core"
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { Cropper } from 'vue-advanced-cropper'
@@ -480,7 +480,7 @@ export default defineComponent({
       if (cropperRef.value) {
         // Access the cropper instance using the value of cropperRef
         const { coordinates, canvas } = cropperRef.value.getResult();
-        croppedImg.value = canvas.toDataURL();
+        croppedImg.value = canvas.toDataURL('image/jpeg', 0.6);
       }
     };
     const change = ({ coordinates, canvas }) => {
@@ -589,8 +589,8 @@ export default defineComponent({
       }
     });
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
-    const imageDir = process.env.IMAGE_CDN + "/profile/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/profile/";
     const btm_banners = ref([]);
     const getPromoImage = () => {
       api
@@ -688,133 +688,160 @@ export default defineComponent({
     const selectImage = (item) => {
       selectedImage.value = item
     }
-const onShowProfile = () => {
-  if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
-    return;
-  }
+    const onShowProfile = () => {
+      if(!(store.memberType==='TEST' || store.memberType==='PROMO_TEST')){
+        return;
+      }
 
-  imageForm.path = null
-  inputImage.value = null
-  uploadedImage.url = null
-  croppedImg.value = null
-  profileDialogVisible.value = true
-};
-async function saveCroppedImage() {
-  isLoadingUpload.value = true
-  if (croppedImg.value) {
-    const data = await attachPhoto(croppedImg.value)
-  if (data.code === 0) {
-    selectedImage.value = data.data
-    inputImage.value = ''
-    isLoadingUpload.value = false
+      imageForm.path = null
+      inputImage.value = null
+      uploadedImage.url = null
+      croppedImg.value = null
+      profileDialogVisible.value = true
+    };
+    async function saveCroppedImage() {
+      isLoadingUpload.value = true
+      if (croppedImg.value) {
+        const data = await attachPhoto(croppedImg.value)
+        if (data.code === 0) {
+          selectedImage.value = data.data
+          inputImage.value = ''
+          isLoadingUpload.value = false
 
-    submitPhoto();
-  } else {
-    // Handle case when croppedImg is not available
-    console.error('No cropped image available');
-    isLoadingUpload.value = false
-  }
-}
-}
-
-async function attachImage(event) {
-  const file = event.target.files[0];
-  uploadedImage.url = URL.createObjectURL(file);
-}
-
-function isBase64(str) {
-  // Regular expression to match Base64 encoding pattern
-  const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
-
-  // Test if the string matches the Base64 pattern
-  return base64Regex.test(str);
-}
-async function attachPhoto(fileImg) {
-  var file = null;
-  if (typeof fileImg === 'string' && isBase64(fileImg)) {
-    console.log("Treating input as base64");
-    // Extract the MIME type from the base64 string
-    const mimeType = fileImg.split(';')[0].split(':')[1];
-    var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
-    // Decode the Base64 string
-    const byteCharacters = atob(data);
-    const byteNumbers = new Array(byteCharacters.length);
-
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
+          submitPhoto();
+        } else {
+          // Handle case when croppedImg is not available
+          console.error('No cropped image available');
+          isLoadingUpload.value = false
+        }
+      }
     }
-    // Convert to an ArrayBuffer
-    const byteArray = new Uint8Array(byteNumbers);
 
-    // Create a Blob from the ArrayBuffer
-    const blob = new Blob([byteArray], { type: mimeType });
+    async function attachImage(event) {
+      console.log(event.target.files[0].size)
+      // if (event.target.files[0].size > 1000000) {
+      //   return $q.notify({
+      //     type: "negative",
+      //     position: "top",
+      //     message: "图片必须小于1MB,请重新上传",
+      //     icon: "report_problem"
+      //   });
+      // } else {
+        const file = event.target.files[0];
+        uploadedImage.url = URL.createObjectURL(file);
+      // }
+    }
 
-    // Create a File object from the Blob
-    file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
-  } else {
-    file = fileImg;
-  }
-  // Use the File object for further processing
-  const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  const dir = 'temp';
+    function isBase64(str) {
+      // Regular expression to match Base64 encoding pattern
+      const base64Regex = /^(data:image\/\w+;base64,)?([A-Za-z0-9+/]+={0,2})(\s|$)/;
 
-  if (!file || !allowFileTypes.includes(file.type)) {
-    ElMessage({ message: '照片格式错误', type: 'error' });
-    isLoadingUpload.value = false;
-    return null; // Exit the function if file is not valid
-  }
+      // Test if the string matches the Base64 pattern
+      return base64Regex.test(str);
+    }
+    async function attachPhoto(fileImg) {
+      var file = null;
+      if (typeof fileImg === 'string' && isBase64(fileImg)) {
+        console.log("Treating input as base64");
+        // Extract the MIME type from the base64 string
+        const mimeType = fileImg.split(';')[0].split(':')[1];
+        var data = fileImg.replace(/^data:image\/\w+;base64,/, "");
+        // Decode the Base64 string
+        const byteCharacters = atob(data);
+        const byteNumbers = new Array(byteCharacters.length);
 
-  var formData = new FormData();
-  formData.append('files', file);
-  formData.append('dir', dir);
-  formData.append('overwrite', false);
-  selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
-  var rstUrl = localStorage.getItem("LH_H5_RST_URL");
-  if(!rstUrl){
-    rstUrl = process.env.RST_API.split(",")[0];
-  }
-  try {
-            const response = await fetch(
-                `${rstUrl}/session/profile-photo/upload`,
-                {
-                  method: "POST",
-                  body: formData,
-                  headers: {
-                    token: `${store.token}`
-                  }
-                }
-            );
-            return await response.json();
-          } catch (error) {
-            console.error(error);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        // Convert to an ArrayBuffer
+        const byteArray = new Uint8Array(byteNumbers);
+
+        // Create a Blob from the ArrayBuffer
+        const blob = new Blob([byteArray], { type: mimeType });
+
+        // Create a File object from the Blob
+        file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
+      } else {
+        file = fileImg;
+      }
+      // Use the File object for further processing
+      const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      const dir = 'temp';
+
+      if (!file || !allowFileTypes.includes(file.type)) {
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: "照片格式错误",
+          icon: "report_problem"
+        });
+
+        isLoadingUpload.value = false;
+        return null; // Exit the function if file is not valid
+      }
+      if(file && file.size > 1000000){
+        $q.notify({
+          type: "negative",
+          position: "top",
+          message: "上传的图片已大于1mb，请刷新页面重新上传",
+          icon: "report_problem"
+        });
+        isLoadingUpload.value = false;
+        return null; // Exit the function if file is not valid
+      }
+
+      var formData = new FormData();
+      formData.append('files', file);
+      formData.append('dir', dir);
+      formData.append('overwrite', false);
+      selectedImage.value = URL.createObjectURL(file); // Set the URL for preview
+      var rstUrl = localStorage.getItem("LH_H5_RST_URL");
+      if(!rstUrl){
+        rstUrl = process.env.RST_API.split(",")[0];
+      }
+      try {
+        const response = await fetch(
+          `${rstUrl}/session/profile-photo/upload`,
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              token: `${store.token}`
+            }
           }
-}
-const updateDialogVisible = ref(false);
+        );
+        return await response.json();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const updateDialogVisible = ref(false);
     const submitPhoto = async() => {
       submitPhotoLoading.value = true
       if (!selectedImage.value) {
         return $q.notify({
-              type: "negative",
-              position: "top",
-              message: "请选择图片",
-              icon: "report_problem"
-            });
+          type: "negative",
+          position: "top",
+          message: "请选择图片",
+          icon: "report_problem"
+        });
       }
       await api.post('/session/profile-photo/save', qs.stringify({ 'imageUuid': selectedImage.value }))
-      .then(data => {
+        .then(data => {
           // Handle response here
-        store.profilePhoto = data.data
-        $q.notify({
-          color: "positive",
-          position: "top",
-          message: "修改成功",
-          icon: "check_circle_outline"
-        });
-        submitPhotoLoading.value = false
-        profileDialogVisible.value = false
-        isLoadingUpload.value = false
-        updateDialogVisible.value = false
-      })
+          store.profilePhoto = data.data
+          $q.notify({
+            color: "positive",
+            position: "top",
+            message: "修改成功",
+            icon: "check_circle_outline"
+          });
+          submitPhotoLoading.value = false
+          profileDialogVisible.value = false
+          isLoadingUpload.value = false
+          updateDialogVisible.value = false
+          window.location.reload();
+        })
     }
     return {
       header: "Account",
@@ -857,7 +884,8 @@ const updateDialogVisible = ref(false);
       attachPhoto,
       cropperRef,
       change,
-      timestamp
+      timestamp,
+      isLoadingUpload
     };
   }
 });
@@ -883,15 +911,19 @@ const updateDialogVisible = ref(false);
 
   .avatar {
     width: 50px;
+    height:50px;
     max-width: 60px;
     min-width: 60px;
+    max-height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
 
     img {
-      width: 100%;
-    border-radius: 50%;
+      width:50px;
+      height: 50px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
     }
 
     flex: 1;
@@ -1495,24 +1527,24 @@ const updateDialogVisible = ref(false);
   justify-content: space-between;
 }
 .profile-dialog .submitImgBtn {
-      background-image: url("../assets/images/download/active-tab-bg.png");
-      background-size: 100% 100%;
-      color: #ffffff;
-      width: 100px;
-      margin: 20px auto;
-      display: block;
-      box-shadow: none;
-      &:before {
-        box-shadow: none;
-      }
+  background-image: url("../assets/images/download/active-tab-bg.png");
+  background-size: 100% 100%;
+  color: #ffffff;
+  width: 100px;
+  margin: 20px auto;
+  display: block;
+  box-shadow: none;
+  &:before {
+    box-shadow: none;
+  }
 }
 .grid-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    max-width: 400px;
-    padding: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-width: 400px;
+  padding: 20px;
 }
 
 .grid-item {
@@ -1523,7 +1555,7 @@ const updateDialogVisible = ref(false);
   transition: transform 0.5s;
   img {
     width: 80px;
-  cursor: pointer;
+    cursor: pointer;
   }
 }
 
@@ -1532,14 +1564,14 @@ const updateDialogVisible = ref(false);
 }
 
 .grid-item.selected {
-    position:relative;
-    color: #ffffff;
+  position:relative;
+  color: #ffffff;
   img {
     border: 3px solid #33BC03;
     border-radius: 50%;
   }
-    &:after {
-      content: "✓";
+  &:after {
+    content: "✓";
     position: absolute;
     background: #33BC03;
     font-size: 13px;
@@ -1552,83 +1584,84 @@ const updateDialogVisible = ref(false);
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    }
+  }
 }
 .uploader {
+  display: flex;
+  gap: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px 50px 20px;
+  .leftBox {
     display: flex;
-    gap: 10px;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    margin: 10px 50px 20px;
-    .leftBox {
+    gap: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    .upload-box {
+      gap: 10px;
+      padding: 10px;
+      width: 200px;
+      height: 150px;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      color: #A4AABB;
+      background: #E7F3FF;
       border-radius: 20px;
-      overflow: hidden;
-      .upload-box {
-        gap: 10px;
-        padding: 10px;
-        width: 250px;
-        height: 250px;
+      flex-direction: column;
+      text-align: center;
+      .el-form-item__content {
         display: flex;
         justify-content: center;
-        align-items: center;
-        color: #A4AABB;
-        background: #E7F3FF;
-        border-radius: 20px;
-    flex-direction: column;
-        .el-form-item__content {
-          display: flex;
-          justify-content: center;
-          align-items: flex-end;
-          padding: 50px 0;
-          text-align: center;
-          gap: 10px;
-        }
-
-
-        .upload-btn {
-          cursor: pointer;
-           padding: 8px 20px;
-          background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-
-          box-shadow: 0px -0.96px 3.51px 0px #A2BFF4 inset;
-
-        }
-      }
-    }
-    .rightBox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 10px;
-      .cropped_title {
-        color: #7A80A1;
-        font-family: PingFang SC;
-        font-size: 20px;
-        font-weight: 500;
-        line-height: 28px;
+        align-items: flex-end;
+        padding: 50px 0;
         text-align: center;
-
-
+        gap: 10px;
       }
-      .croppedImgHolder {
-        border: 3px dotted #7A80A1;
-        width: 250px;
-        height: 250px;
-        border-radius: 50%;
+
+
+      .upload-btn {
+        cursor: pointer;
+        padding: 8px 20px;
+        background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
+
+        box-shadow: 0px -0.96px 3.51px 0px #A2BFF4 inset;
+
       }
     }
   }
+  .rightBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    .cropped_title {
+      color: #7A80A1;
+      font-family: PingFang SC;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 28px;
+      text-align: center;
+
+
+    }
+    .croppedImgHolder {
+      border: 3px dotted #7A80A1;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+  }
+}
 .cropper {
-	height: 250px;
-	width: 250px;
+  height: 150px;
+  width: 150px;
   border-radius: 10px;
-	background: aliceblue;
+  background: aliceblue;
 }
 .vue-preview__wrapper {
   border-radius: 20px;
@@ -1637,7 +1670,7 @@ const updateDialogVisible = ref(false);
   border-radius: 50%;
 }
 .cropper-background {
-	background: aliceblue;
+  background: aliceblue;
 }
 .profile-dialog.update {
 

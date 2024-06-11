@@ -2,24 +2,18 @@
   <div class="home">
     <el-carousel height="500px">
       <el-carousel-item v-for="banner in banners" :key="banner">
-        <router-link :to="`/promotion?name=${banner.redirectUrl}`">
+        <a @click="goBannerPage(banner.redirectUrl)">
           <div
             class="promo-bg"
-            :style="
-              'background-image: url(' + imgURL + banner.desktopImageUrl + ')'
-            "
-            style="background-repeat: no-repeat; background-size: cover;"
+            :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'"
+            style="background-repeat: no-repeat; background-size: cover"
           ></div>
-        </router-link>
+        </a>
       </el-carousel-item>
     </el-carousel>
     <div class="index-container">
       <div class="avg-fox">
-        <img
-          class="game-title"
-          src="../assets/home/hot_game.png"
-          alt="热门游戏"
-        />
+        <img class="game-title" src="../assets/home/hot_game.png" alt="热门游戏" />
         <div class="game-item">
           <div class="game-left">
             <img src="../assets/home/game_left.png" alt="" />
@@ -96,24 +90,14 @@
               </span>
               秒
             </div>
-            <img
-              src="../assets/home/avg_time_active_bg.png"
-              class="avg-active-bg"
-            />
+            <img src="../assets/home/avg_time_active_bg.png" class="avg-active-bg" />
             <div class="avg-circle-container">
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-left"
-              >
-                <div
-                  id="avgDepAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-dep"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-left">
+                <div id="avgDepAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-dep">
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-right"
-              >
+              <div class="avg-schedule avg-schedule-container avg-schedule-right">
                 <div class="avg-schedule avg-schedule-box avg-schedule-left">
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
@@ -145,24 +129,14 @@
               </span>
               秒
             </div>
-            <img
-              src="../assets/home/avg_wit_time_active_bg.png"
-              class="avg-active-bg"
-            />
+            <img src="../assets/home/avg_wit_time_active_bg.png" class="avg-active-bg" />
             <div class="avg-circle-container">
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-left"
-              >
-                <div
-                  id="avgWithdrawAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-withdraw"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-left">
+                <div id="avgWithdrawAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-withdraw">
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-right"
-              >
+              <div class="avg-schedule avg-schedule-container avg-schedule-right">
                 <div class="avg-schedule avg-schedule-box avg-schedule-left">
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
@@ -194,28 +168,15 @@
               </span>
               家
             </div>
-            <img
-              src="../assets/home/avg_pay_active_bg.png"
-              class="avg-active-bg"
-            />
+            <img src="../assets/home/avg_pay_active_bg.png" class="avg-active-bg" />
             <div class="avg-circle-container">
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-left"
-              >
-                <div
-                  id="avgPayFullAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-left">
+                <div id="avgPayFullAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full">
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-right"
-              >
-                <div
-                  id="avgPayAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-pay"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-right">
+                <div id="avgPayAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-pay">
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
               </div>
@@ -246,28 +207,15 @@
               </span>
               万
             </div>
-            <img
-              src="../assets/home/avg_down_active_bg.png"
-              class="avg-active-bg"
-            />
+            <img src="../assets/home/avg_down_active_bg.png" class="avg-active-bg" />
             <div class="avg-circle-container">
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-left"
-              >
-                <div
-                  id="avgDownFullAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-left">
+                <div id="avgDownFullAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-full">
                   <div class="avg-circle avg-circle-left"></div>
                 </div>
               </div>
-              <div
-                class="avg-schedule avg-schedule-container avg-schedule-right"
-              >
-                <div
-                  id="avgDownAni"
-                  class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-down"
-                >
+              <div class="avg-schedule avg-schedule-container avg-schedule-right">
+                <div id="avgDownAni" class="avg-schedule avg-schedule-box avg-schedule-left avg-animate-down">
                   <div class="avg-circle avg-circle-right"></div>
                 </div>
               </div>
@@ -288,9 +236,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_profession.png"
-              />
+              <img src="../assets/home/index_bottom_profession.png" />
             </div>
             <div>
               <div class="serve_tip">更专业</div>
@@ -301,9 +247,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_safe.png"
-              />
+              <img src="../assets/home/index_bottom_safe.png" />
             </div>
             <div>
               <div class="serve_tip">更安全</div>
@@ -316,9 +260,7 @@
         <div class="index-bottom-box">
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_easy.png"
-              />
+              <img src="../assets/home/index_bottom_easy.png" />
             </div>
             <div>
               <div class="serve_tip">更便捷</div>
@@ -330,9 +272,7 @@
           </div>
           <div class="index-our-tc">
             <div>
-              <img
-                src="../assets/home/index_bottom_fast.png"
-              />
+              <img src="../assets/home/index_bottom_fast.png" />
             </div>
             <div>
               <div class="serve_tip">更快速</div>
@@ -347,20 +287,9 @@
   </div>
   <GameModal ref="gameMenu"></GameModal>
 
-  <el-dialog
-    @close="setExpiryBanner"
-    class="imptann-modal"
-    v-model="isImportantAnnoucementModal"
-  >
-    <div
-      class="promo-banner-container"
-      :class="homePopupType === 'TEXT ' ? 'promo-text' : 'promo-img'"
-    >
-      <div
-        class="promo-banner-content"
-        v-if="homePopupType === 'TEXT'"
-        v-html="homePopupContent"
-      ></div>
+  <el-dialog @close="setExpiryBanner" class="imptann-modal" v-model="isImportantAnnoucementModal">
+    <div class="promo-banner-container" :class="homePopupType === 'TEXT ' ? 'promo-text' : 'promo-img'">
+      <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
       <div class="promo-banner-img" v-else>
         <img :src="homePopupImg" class="alert-img" />
       </div>
@@ -373,7 +302,7 @@
 import GameModal from "@/components/modal/GameModal";
 import { defineComponent, ref, onMounted } from "vue";
 import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
-// import { numberCounter } from "vue3-number-counter";
+import { useLocalStorage } from "@vueuse/core";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
@@ -386,7 +315,7 @@ export default defineComponent({
     Vue3autocounter
   },
   setup() {
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
     const gameMenu = ref(null);
     const banners = ref([
       {
@@ -443,15 +372,11 @@ export default defineComponent({
       const now = new Date();
       loadHomePromoBanner()
         .then((res) => {
-          if (
-            now.getTime() > item.expiry ||
-            item.id !== res.data["id"] ||
-            item.frequency !== res.data["frequency"]
-          ) {
+          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
             homePopupImg.value =
-              process.env.VUE_APP_IMAGE_CDN +
+              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
               "/adspopout/" +
               res.data["desktopImgUrl"];
             homePopupContent.value = res.data["content"];
@@ -497,7 +422,7 @@ export default defineComponent({
 
                 isImportantAnnoucementModal.value = true;
                 homePopupImg.value =
-                  process.env.VUE_APP_IMAGE_CDN +
+                  useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
                   "/adspopout/" +
                   res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
@@ -531,6 +456,14 @@ export default defineComponent({
       return;
     };
 
+    const goBannerPage = (redirectUrl) => {
+      if (redirectUrl == "app://deposit") {
+        router.push("/center/deposit");
+      } else {
+        router.push(`/promotion?name=${redirectUrl}`);
+      }
+    };
+
     onMounted(() => {
       loadBanners();
       checkShowImgTop();
@@ -551,7 +484,8 @@ export default defineComponent({
       homePopupFrequency,
       homePopupFrequencyNum,
       checkMaintenance,
-      isImpt
+      isImpt,
+      goBannerPage
     };
   }
 });

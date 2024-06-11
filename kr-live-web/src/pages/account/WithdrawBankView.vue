@@ -1,91 +1,41 @@
 <template>
   <div>
-    <div class="menu-title-container">
-      <!-- <span class="menu-title">ถอนไปยังบัญชีธนาคาร</span> -->
-    </div>
-    <div class="q-pa-md">
-      <div class="account-title-container">
-        <span class="account-title">{{ $t("lang.choose_a_card") }}</span>
-      </div>
-      <div class="account-content">
-        <div class="account-tip-text wbot">
-          <RiSpamLine />
-          {{ $t("lang.register_bank_acc_para") }}
-        </div>
-        <div class="addbuttons"></div>
-        <div class="flex-box flex-wrap bank-card-list">
-          <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
-            <div
-              class="bank-card-item"
-              :class="{
-                active: index === isCardActive,
-                inactive: index > isCardActive
-              }"
-              v-if="bc.bankName"
-              @click="showCard(bc, index)"
-            >
-              <div class="icon">
-                <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
-              </div>
-              <div class="cardname">
-                <div class="txt-center">
-                  <strong>{{ bc.bankName }}</strong>
-                  <!-- <div>Bank Account Number</div> -->
-                </div>
-              </div>
-              <!--              <div class="unlink-btn" @click="unbindBankCard(bc)">-->
-              <!--                <RiLinkUnlink />-->
-              <!--              </div>-->
-
-              <div class="flex-box cards">
-                <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
-                  {{ b }}
-                </div>
-                <!-- <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  {{ b.slice(0, 4) }}
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  ****
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  ****
-                </div>
-                <div
-                  v-for="b in bc.cardNumber.split()"
-                  :key="b"
-                  class="card-num-box"
-                >
-                  {{ b.slice(b.length - 4, b.length) }}
-                </div> -->
-              </div>
+    <div class="bank-card-list">
+      <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
+        <div
+          class="bank-card-item active"
+          v-if="bc.bankName"
+          @mouseover="showCard(bc, index)"
+        >
+          <div class="icon">
+            <img v-if="bc.bankIcon" :src="imgURL + bc.bankIcon" />
+          </div>
+          <div class="cardname">
+            <div class="txt-center">
+              <strong>{{ bc.bankName }}</strong>
             </div>
-          </template>
-          <div
-            class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
-            @click="bankCardModal('bank')"
-          >
-            <RiLink />
-            {{ $t("lang.add_a_card") }}
+          </div>
+          <div class="unlink-btn" @click="unbindBankCard(bc)">
+              <RiLinkUnlink />
+          </div>
+          <div class="">
+            <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
+              {{ b }}
+            </div>
           </div>
         </div>
+      </template>
+      <div
+        v-if="personalState.bankCardList.length === 0"
+        class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
+      >
+        <span>카드 없음</span>
       </div>
     </div>
     <div class="account-title-container bindunbind">
       <span class="account-title">{{ $t("lang.bank_card_unbind_record") }}</span>
     </div>
-    <div class="account-content last bindunbind">
+    <div class="last bindunbind">
       <div class="searchbar">
         <q-form layout="inline" :model="searchForm">
           <div class="left">
@@ -117,15 +67,10 @@
             </q-input>
           </div>
           <q-btn label="ค้นหา" />
-          <!-- <q-form-item>
-            <button class="common-btn outline search-btn" type="submit">
-              Search For
-            </button>
-          </q-form-item> -->
         </q-form>
       </div>
       <div class="unbind-record-wrapper">
-        <q-table :columns="columns"></q-table>
+        <!-- <q-table :columns="columns"></q-table> -->
       </div>
     </div>
     <q-dialog v-model="bankCardModalState.visible" persistent>
@@ -311,56 +256,12 @@
         </div>
       </q-card>
     </q-dialog>
-
-    <!-- <q-dialog
-      wrap-class-name="bankModal"
-      width="100%"
-      v-model:visible="virtualCurrencyModalState.visible"
-      :footer="null"
-    >
-      <div class="modal-head-title">Add a virtual currency</div>
-      <q-form
-        ref="virtualCurrencyFormRef"
-        :hideRequiredMark="true"
-        :model="bankCardInfo"
-        :colon="false"
-        :label-col="{ span: 8 }"
-      >
-        <q-input
-          v-model:value="virtualCurrencyInfo.wallet"
-          label="Card Account"
-          placeholder="Enter card account"
-        />
-        <q-input
-          v-model:value="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-        />
-        <q-input
-          v-model="virtualCurrencyInfo.digitalCurrency"
-          label="Digital Currency"
-          placeholder="Enter digital currency"
-          disable
-        />
-
-        <q-input
-          v-model="virtualCurrencyInfo.protocol"
-          label="Protocol"
-          placeholder="Enter protocol"
-          disable
-        />
-        <q-btn color="brand" type="submit" @click="submitVirtualCurrency">
-          Confirm
-        </q-btn>
-      </q-form>
-    </q-dialog> -->
   </div>
 </template>
 
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
-import {RiSpamLine, RiLink} from "vue-remix-icons";
-// RiLinkUnlink
+import { RiLinkUnlink } from "vue-remix-icons";
 // import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar";
@@ -373,8 +274,7 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    RiSpamLine,
-    RiLink
+    RiLinkUnlink
   },
   setup() {
     const store = userStore();
@@ -491,7 +391,7 @@ export default defineComponent({
             message: t('lang.fill_in_information'),
             icon: "report_problem"
           });
-          router.push("/account/personal");
+          router.push("/?page=personal/info");
         } else {
           bankCardInfo.bankId = undefined;
           bankCardInfo.cardNumber = "";
@@ -709,67 +609,6 @@ export default defineComponent({
         getInnerCode();
       })
     }
-
-
-    //add virtual card
-    // const virtualCurrencyModalState = reactive({
-    //   visible: false,
-    //   banks: []
-    // });
-    // const virtualCurrencyFormRef = ref();
-    // const virtualCurrencyInfo = reactive({
-    //   wallet: undefined,
-    //   digitalCurrency: 'SGD',
-    //   protocol: 'protocol_01'
-    // });
-    // const virtualCurrencyModal = () => {
-    //   virtualCurrencyInfo.bankId = undefined;
-    //   virtualCurrencyInfo.cardNumber = "";
-    //   virtualCurrencyInfo.cardAccount = "";
-    //   virtualCurrencyInfo.cardAddress = "";
-    //   virtualCurrencyModalState.visible = true;
-    //   if (virtualCurrencyModalState.banks.length === 0) {
-    //     loadBanks(3).then((res) => {
-    //       if (res.code === 0) {
-    //         virtualCurrencyModalState.banks.push(...res.data);
-    //       }
-    //     }).catch((e) => {
-    //       console.log("error", e);
-    //     });
-    //   }
-    // };
-    // const submitvirtualCurrency = () => {
-
-    // };
-    // const virtualCurrencyRules = {
-    //   cardNumber: [
-    //     {
-    //       required: true,
-    //       message: "card number is required",
-    //       trigger: "blur",
-    //     },
-    //     {
-    //       min: 6,
-    //       max: 12,
-    //       message: "Length should be 6 to 12",
-    //       trigger: "blur",
-    //     }
-    //   ],
-    //   cardAccount: [
-    //     {
-    //       required: true,
-    //       message: "card account is required",
-    //       trigger: "blur"
-    //     }
-    //   ],
-    //   cardAddress: [
-    //     {
-    //       required: true,
-    //       message: "card address is required",
-    //       trigger: "blur"
-    //     }
-    //   ]
-    // };
     let validateBankLength = (val) => {
       if (selectedBankType.value === 'Bank') {
         return (val.length > 5 && val.length < 13) || t('lang.length_between_6_12')
@@ -826,7 +665,8 @@ export default defineComponent({
       selectedBankType,
       selectBankType,
       banksList,
-      imgURL
+      imgURL,
+      loadCards
     };
   }
 });
@@ -969,7 +809,7 @@ export default defineComponent({
 
   .bank-card-item {
     border-radius: 5px;
-    background-image: $linear-bg-2;
+    background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
     background-size: cover;
     display: flex;
     justify-content: center;
@@ -1067,6 +907,7 @@ export default defineComponent({
       align-items: center;
       padding: 0;
       filter: none;
+      color: #fff;
     }
 
     .unlink-btn {
@@ -1266,10 +1107,10 @@ export default defineComponent({
 
     .txt-center {
       transform: none;
-      padding-top: 13px;
+      // padding-top: 13px;
       width: 250px;
       text-align: center;
-      margin-left: 30px;
+      // margin-left: 30px;
     }
 
     &.active {
