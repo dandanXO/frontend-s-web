@@ -250,7 +250,7 @@
             $("#android-lists").html(androidHtml + websiteHtmlAnd);
         })
         androidDownload.forEach((list, index) => {
-            $(`#download_${index}`).attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
             new ClipboardJS(`#download_${index}`);
 
@@ -320,7 +320,7 @@
             <a
                 id="download_kuaijie"
                 href="ios_kuaijie.mobileconfig"
-                data-clipboard-text='FGH{"agentCode":${agentCode},"regFrom":null,"downloadUrl":"${host}"}'
+                data-clipboard-text='UIO{"agentCode":${agentCode},"regFrom":null,"downloadUrl":"${host}"}'
             >全站APP 快捷版</a
             >
         </div>
@@ -360,7 +360,7 @@
         })
 
         iosDownload.forEach((list, index) => {
-            $(`#download_${index}`).attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+            $(`#download_${index}`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
 
             new ClipboardJS(`#download_${index}`);
 
@@ -369,7 +369,7 @@
             });
         });
 
-        $(`#download_kuaijie`).attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+        $(`#download_kuaijie`).attr('data-clipboard-text', "UIO" + JSON.stringify(vv));
         new ClipboardJS(`#download_kuaijie`);
         $(`#download_kuaijie`).click(function () {
             postDownloadExtra(type, host);
@@ -387,7 +387,7 @@
         $.ajax({
             url: dataUrl + "/extra",
             type:"GET",
-            data:{"agentCode":agentCode, sideCode : "lh1"},
+            data:{"agentCode":agentCode, siteCode : "lh1"},
             success:function(d){}
         });
     }
