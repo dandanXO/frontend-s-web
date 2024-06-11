@@ -259,8 +259,18 @@
                       <div
                         class="game--bg"
                         :style="{
-                        backgroundImage: `url(${imgURLGame}${item.icon})`
-                      }"
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/games/hot-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                try {
+                                  return `url(${imgURLGame}${item.icon})`;
+                                } catch (e) {
+                                  return `url(https://m.indwin7.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                }
+                              }
+                            })()
+                          }"
                       ></div>
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -309,12 +319,12 @@
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
 
-<!--            <template v-if="isPlatLoading">-->
-<!--              <div class="skeleton-lists">-->
-<!--                <q-skeleton class="casino-skeleton" />-->
-<!--                <q-skeleton class="casino-skeleton" />-->
-<!--              </div>-->
-<!--            </template>-->
+            <!--            <template v-if="isPlatLoading">-->
+            <!--              <div class="skeleton-lists">-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--                <q-skeleton class="casino-skeleton" />-->
+            <!--              </div>-->
+            <!--            </template>-->
 
             <swiper
               :slidesPerView="1.5"
@@ -734,8 +744,18 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.icon})`
-                  }"
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jili-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
+                        }"
                 ></div>
               </div>
               <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
@@ -751,8 +771,18 @@
                 <div
                   class="game--bg"
                   :style="{
-                    backgroundImage: `url(${imgURLGame}${item.icon})`
-                  }"
+                          backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/games/fish/jdb-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                             try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.indwin7.com/static/images/index/fish/item-game-${item.name.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
+                        }"
                 ></div>
               </div>
               <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
