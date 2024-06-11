@@ -500,6 +500,13 @@ export default {
     withdrawRecord: '银行提款',
     createMember: '新增会员',
     shareRatio: '佣金比例',
+    rebateWallet: '返水钱包',
+    affiliateTotalRebate: '代理返水',
+    myRebate: '我的返水',
+    totalWinLoss: '总输赢',
+    todayDeposit: '今日总存款',
+    todayWithdrawal: '今日总提款',
+    depositWithdrawalDiff: '存提差',
   },
   google: {
     google_auth_menu: '谷歌验证',
