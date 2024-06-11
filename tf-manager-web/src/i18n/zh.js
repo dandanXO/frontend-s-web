@@ -1788,6 +1788,16 @@ export default {
     virtualMultiplier: '虚拟奖金倍数',
     batchDistributeRebate: '批量发送返水',
     distribute: '发送',
+    whitelist: '白名单',
+    blacklist: '黑名单',
+    accessType: '访问类型',
+    domainType: '域名类型',
+    valueType: '值类型',
+    ipList: 'IP组',
+    ipRange: 'IP范围',
+    countryCode: '国家代码',
+    lower: '下限',
+    Upper: '上限',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2445,6 +2455,7 @@ export default {
     'Member Refer Record': '会员邀请记录',
     'Member Refer Reward List': '会员邀请奖励记录',
     'Refer Rebate': '邀请奖励',
+    'Domain Access': '域名访问设置',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2586,6 +2597,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_ESPORT: '净盈利佣金-电竞',
     AGENT_SHARE_PROFIT_RATIO_LIVE: '净盈利佣金-真人',
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
+  },
+  domainType: {
+    LANDING: '落地页',
+    DOWNLOAD: '下载页',
+    AFFILIATE: '代理',
   },
   error: {
     400: '请求无效',

@@ -1786,6 +1786,16 @@ export default {
     virtualMultiplier: 'Virtual Multiplier',
     batchDistributeRebate: 'Batch Distribute Rebate',
     distribute: 'Distribute',
+    whitelist: 'Whitelist',
+    blacklist: 'Blacklist',
+    accessType: 'Access Type',
+    domainType: 'Domain Type',
+    valueType: 'Value Type',
+    ipList: 'IP List',
+    ipRange: 'IP Range',
+    countryCode: 'Country Code',
+    lower: 'Lower',
+    Upper: 'Upper',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2485,6 +2495,7 @@ export default {
     'Member Refer Record': 'Member Refer Record',
     'Member Refer Reward List': 'Member Refer Reward List',
     'Refer Rebate': 'Refer Rebate',
+    'Domain Access': 'Domain Access',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2627,6 +2638,11 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_ESPORT: 'Profit Ratio-ESPORT',
     AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
+  },
+  domainType: {
+    LANDING: 'Landing',
+    DOWNLOAD: 'Download',
+    AFFILIATE: 'Affiliate',
   },
   error: {
     400: 'Bad Request',
