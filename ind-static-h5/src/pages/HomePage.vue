@@ -102,10 +102,6 @@
       }"
       :modules="modules"
       class="cat-selection-wrapper"
-      data-aos="fade-in"
-      :data-aos-delay="200"
-      data-aos-duration="1000"
-      data-aos-once="true"
     >
       <template v-for="(item, index) in categoriesList" :key="index">
         <swiper-slide>
@@ -1216,9 +1212,11 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
-const banners = ref({
-  mobileImageUrl: "empty-banner.png"
-});
+const banners = ref([
+  {
+    mobileImageUrl: "empty-banner.png"
+  }
+]);
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -1667,6 +1665,7 @@ const gotoPromo = (banner) => {
     window.open(banner.redirectUrl, "_blank");
   }
 };
+
 
 const returnBannerUrl = (banner) => {
   try {
