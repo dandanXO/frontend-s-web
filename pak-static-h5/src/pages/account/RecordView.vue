@@ -44,7 +44,7 @@
     </q-tabs> -->
 
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
 
     <template v-else>
       <NoInfoComponent
@@ -64,7 +64,7 @@
               'btn--yellow': e.betStatus === 'UNSETTLED',
               'btn--blue': ['JACKPOT', 'BONUS'].includes(e.betStatus)
             }"
-            :label="`${e.betStatus}`"
+            :label="getRecordStatus(e.betStatus)"
           ></q-btn>
         </q-card-section>
 
@@ -75,8 +75,8 @@
 
         <q-card-section class="bot-wrapper">
           <div class="origin">
-            <div class="bet">Bet</div>
-            <div class="game-platform">Game Platform</div>
+            <div class="bet">{{ $t("records.bet") }}</div>
+            <div class="game-platform">{{ $t("records.gamePlatform") }}</div>
           </div>
           <div class="origin-val">
             <div class="bet-val">{{ convertToCommaAmount(e.bet, true) }}</div>
@@ -95,7 +95,7 @@
 </template>
 
 <script setup>
-import { onActivated, onMounted, reactive, ref } from "vue";
+import { onActivated, onMounted, reactive, ref, computed } from "vue";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
@@ -106,6 +106,7 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { convertToCommaAmount } from "src/boot/utils";
 import { useQuasar } from "quasar";
+import { t } from "src/boot/lang";
 
 const router = useRouter();
 const store = userStore();
@@ -265,6 +266,32 @@ const getGameBetRecordTotal = () => {
       totalBetRecord.totalPayout = totalPayout;
     }
   });
+};
+
+const getRecordStatus = (recordStatus) => {
+  if (recordStatus === "SETTLE") {
+    return t("records.settle"); // Settle
+  } else if (recordStatus === "SETTLED") {
+    return t("records.settled"); // Settled
+  } else if (recordStatus === "BET_N_SETTLE") {
+    return t("records.betAndSettle"); // Bet and Settle
+  } else if (recordStatus === "CANCEL") {
+    return t("records.cancel"); // Cancel
+  } else if (recordStatus === "ROLLBACK") {
+    return t("records.rollback"); // Rollback
+  } else if (recordStatus === "PATCH") {
+    return t("records.patch"); // Patch
+  } else if (recordStatus === "BET") {
+    return t("records.bet"); // Bet
+  } else if (recordStatus === "UNSETTLED") {
+    return t("records.unsettled"); // Unsettled
+  } else if (recordStatus === "JACKPOT") {
+    return t("records.jackpot"); // Jackpot
+  } else if (recordStatus === "BONUS") {
+    return t("records.bonus"); // Bonus
+  } else {
+    return recordStatus;
+  }
 };
 
 onActivated(() => {

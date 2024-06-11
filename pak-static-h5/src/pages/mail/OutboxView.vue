@@ -5,14 +5,14 @@
 
   <div class="bottom-btn">
     <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="isPostCommentsModal = true">
-      POST COMMENTS
+      {{ $t("btn.postComments") }}
     </q-btn>
   </div>
 
   <q-dialog v-model="isPostCommentsModal">
     <q-card class="post-dialog-card">
       <q-toolbar class="post-dialog-toolbar">
-        <q-toolbar-title>Post Comments</q-toolbar-title>
+        <q-toolbar-title>{{ $t("btn.postComments") }}</q-toolbar-title>
         <q-btn flat v-close-popup round dense icon="close" />
       </q-toolbar>
       <WriteComponent @close-modal="closeModal" />

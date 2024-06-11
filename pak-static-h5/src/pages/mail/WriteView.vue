@@ -222,6 +222,7 @@ const closePage = () => {
   mailDetailList.value.title = "";
   mailDetailList.value.content = "";
 };
+
 onMounted(() => {
   loadFeedbackType();
 });

@@ -2,7 +2,7 @@
   <div>
     <q-inner-loading :showing="loading">
       <q-spinner-gears size="50px" color="brand" />
-      <div class="label">Loading</div>
+      <div class="label">{{ $t("btn.loading") }}</div>
     </q-inner-loading>
     <!-- <pre>truncatedList{{ truncatedList }}</pre> -->
     <div v-if="!loading">
@@ -12,7 +12,7 @@
           :key="n"
           class="q-pa-sm mailBox"
           :class="{ active: isSelectedMail === det.title }"
-          @click="selectMail(det)"
+          @click="onDetailsClick(det)"
         >
           <div style="display: flex; justify-content: space-between; align-items: center">
             <div>
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div v-else class="q-pa-md" style="text-align: center">
-            {{ truncatedList.length === 0 ? "No record" : "No more record" }}
+            {{ truncatedList.length === 0 ? $t("records.noRecord") : $t("records.noMoreRecord") }}
           </div>
         </template>
       </q-infinite-scroll>
@@ -51,6 +51,9 @@
 <script>
 import { defineComponent, onMounted, ref } from "vue";
 import moment from "moment";
+import { t } from "src/boot/lang";
+import { userStore } from "stores/index";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   props: {
@@ -95,6 +98,15 @@ export default defineComponent({
       isSelectedMail.value = mail.title;
       // context.emit('readMsg', mail.id);
     };
+    const store = userStore();
+    const router = useRouter();
+    const onDetailsClick = (mailData) => {
+      store.setMailData(mailData);
+
+      // NOTE: /session/inbox/read api call inside message-detail page onMounted
+      router.push("/account/feedback-detail");
+    };
+
     onMounted(() => {
       onLoad;
     });
@@ -106,7 +118,8 @@ export default defineComponent({
       truncatedList,
       comList,
       selectMail,
-      isSelectedMail
+      isSelectedMail,
+      onDetailsClick
     };
   }
 });

@@ -23,8 +23,8 @@
 
     <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
-        <q-tab name="login" label="Log in" />
-        <q-tab name="register" label="Register" />
+        <q-tab name="login" :label="$t('header.login')" />
+        <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
     </div>
 
@@ -32,7 +32,7 @@
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="'Phone'">
+            <InputField :label="$t('form.phone')">
               <template #input>
                 <!-- <q-icon name="lock" class="input-icon" /> -->
                 <q-input
@@ -43,14 +43,14 @@
                   ref="loginNameRef"
                   v-model="loginForm.loginName"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits'
+                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                    (val) => (val && val.length === 11) || $t('form.phone_rules_02')
                   ]"
                   label-color="brand"
                   autocomplete="username"
                   outlined
                   color="green"
-                  placeholder="Please enter your mobile number"
+                  :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
@@ -60,19 +60,19 @@
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField :label="$t('form.password')">
               <template #input>
                 <q-input
                   ref="passwordRef"
                   hide-bottom-space
                   v-model="loginForm.password"
                   :type="isPwd ? 'password' : 'text'"
-                  :rules="[(val) => (val && val.length > 0) || 'Please insert password']"
+                  :rules="[(val) => (val && val.length > 0) || $t('form.password_rules_01')]"
                   label-color="brand"
                   autocomplete="current-password"
                   outlined
                   color="green"
-                  placeholder="Please enter password"
+                  :placeholder="$t('form.password_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="lock" />
@@ -114,7 +114,7 @@
         </InputRowGrid>
 
         <div class="forgot-password">
-          <router-link class="form-text" to="/forgot-password">Forgot Password</router-link>
+          <router-link class="form-text" to="/forgot-password">{{ $t("form.forgotPassword") }}</router-link>
         </div>
 
         <!-- <div style="padding-top: 30px"> -->
@@ -137,7 +137,9 @@
     </div>
 
     <div class="bottom-btn">
-      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">Confirm</q-btn>
+      <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">
+        {{ $t("btn.confirm") }}
+      </q-btn>
     </div>
 
     <div class="btn-lists">
@@ -147,7 +149,7 @@
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>Download App</div>
+        <div>{{ $t("btn.downloadApp") }}</div>
       </div>
       <div class="list-item" @click="openTiktok()">
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />

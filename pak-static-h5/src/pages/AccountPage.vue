@@ -9,7 +9,7 @@
         <InputRowGrid>
           <template #fields>
             <div class="pc-form-item">
-              <InputField :label="'Full Name'">
+              <InputField :label="$t('form.fullName')">
                 <template #input>
                   <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
                 </template>
@@ -17,7 +17,7 @@
             </div>
 
             <div class="pc-form-item" :class="{ 'item-click': !formDetail.emailVerified }" @click="openBindEmailDialog">
-              <InputField :label="'Email'">
+              <InputField :label="$t('form.email')">
                 <template #input>
                   <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
                     <template v-slot:append>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="pc-form-item item-click" @click="openChangePasswordDialog">
-              <InputField :label="'Password'">
+              <InputField :label="$t('form.password')">
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly type="password">
                     <template v-slot:append>
@@ -41,7 +41,7 @@
             </div>
 
             <div class="pc-form-item" @click="openPersonalCenterDialog">
-              <InputField :label="'Phone'">
+              <InputField :label="$t('form.phone')">
                 <template #input>
                   <q-input v-model="formDetail.phone" outlined clearable hide-bottom-space readonly></q-input>
                 </template>
@@ -101,7 +101,7 @@
 
         <div class="pc-tip">
           <div>
-            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">Change Password</a>
+            <a class="pc-tip-chg-pwd" @click="openChangePasswordDialog">{{ $t("form.changePassword") }}</a>
 
             <div class="pc-ver" v-if="appVersionNo">
               Version:
@@ -114,13 +114,13 @@
               class="btn-refresh"
               no-caps
               icon="refresh"
-              label="Updated"
+              :label="$t('btn.updated')"
               :loading="loadingUpdated"
               @click="startRefresh"
             >
               <template v-slot:loading>
                 <q-spinner class="on-left" style="color: #00ae00" />
-                Updating...
+                {{ $t("btn.updating") }}
               </template>
             </q-btn>
           </div>
@@ -278,23 +278,23 @@
 
   <q-dialog width="100%" v-model="bindEmailDialog" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="text-black popout-close" @click="openBindEmailDialog()" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" @click="openBindEmailDialog()" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Bind Email</div>
+        <div class="txt-title">{{ $t("form.bindEmail") }}</div>
         <div class="pc-form">
           <InputRowGrid>
             <template #fields>
-              <InputField :label="'Email'">
+              <InputField :label="$t('form.email')">
                 <template #input>
                   <q-input
                     outlined
                     clearable
-                    placeholder="Enter email"
+                    :placeholder="$t('form.email_placeholder')"
                     v-model="updateEmailInfo.email"
                     ref="updateEmailRef"
                     hide-bottom-space
                     type="text"
-                    :rules="[(val) => /.+@.+\..+/.test(val) || 'Please enter valid email']"
+                    :rules="[(val) => /.+@.+\..+/.test(val) || $t('form.email_rules_02')]"
                   >
                     <template v-slot:append>
                       <div class="pc-form-side-btn">
@@ -302,7 +302,7 @@
                           no-caps
                           dense
                           class="text-green"
-                          :label="!startCountdownResendOTP && 'Send'"
+                          :label="!startCountdownResendOTP && $t('form.send')"
                           :disable="!formDetail.phone || startCountdownResendOTP"
                           @click="openVerificationCodeDialog"
                         />
@@ -312,17 +312,17 @@
                 </template>
               </InputField>
 
-              <InputField :label="'Code'">
+              <InputField :label="$t('form.code')">
                 <template #input>
                   <q-input
                     outlined
                     clearable
-                    placeholder="Enter verification code"
+                    :placeholder="$t('form.code_placeholder')"
                     v-model="updateEmailInfo.code"
                     ref="updateEmailCodeRef"
                     hide-bottom-space
                     type="text"
-                    :rules="[(val) => val.length !== 0 || 'Verification code is required']"
+                    :rules="[(val) => val.length !== 0 || $t('form.code_rules_01')]"
                   >
                     <template v-slot:append v-if="startCountdownResendOTP">{{ countdownOTP }}s</template>
                   </q-input>
@@ -333,7 +333,9 @@
         </div>
 
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">Confirm</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdateEmail">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
 
         <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
@@ -350,26 +352,26 @@
         dense
         rounded
         icon="close"
-        class="text-black popout-close"
+        class="text-white popout-close"
         @click="openChangePasswordDialog()"
         v-close-popup
       />
       <div class="popout-dialog-container">
-        <div class="txt-title">Change Password</div>
+        <div class="txt-title">{{ $t("form.changePassword") }}</div>
         <div class="pc-form">
           <InputRowGrid>
             <template #fields>
-              <InputField :label="'Password'">
+              <InputField :label="$t('form.currentPassword')">
                 <template #input>
                   <q-input
                     outlined
                     clearable
-                    placeholder="Enter Current Password"
+                    :placeholder="$t('form.currentPassword_placeholder')"
                     v-model="updatePwdInfo.oldPassword"
                     ref="oldPasswordRef"
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
-                    :rules="[(val) => (val && val.length > 0) || 'Please insert old password']"
+                    :rules="[(val) => (val && val.length > 0) || $t('form.currentPassword_rules_01')]"
                   >
                     <template v-slot:append>
                       <q-icon
@@ -382,19 +384,19 @@
                 </template>
               </InputField>
 
-              <InputField :label="'New Password'">
+              <InputField :label="$t('form.newPassword')">
                 <template #input>
                   <q-input
                     outlined
                     clearable
-                    placeholder="Enter New Password"
+                    :placeholder="$t('form.newPassword_placeholder')"
                     v-model="updatePwdInfo.password"
                     ref="passwordRef"
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
                     :rules="[
-                      (val) => (val && val.length > 0) || 'Please insert password',
-                      (val) => val.length > 6 || 'The characters of password must be above 6'
+                      (val) => (val && val.length > 0) || $t('form.newPassword_rules_01'),
+                      (val) => val.length > 6 || $t('form.newPassword_rules_02')
                     ]"
                   >
                     <template v-slot:append>
@@ -408,19 +410,19 @@
                 </template>
               </InputField>
 
-              <InputField :label="'Confirm New Password'">
+              <InputField :label="$t('form.confirmNewPassword')">
                 <template #input>
                   <q-input
                     outlined
                     clearable
-                    placeholder="Enter Confirm New Password"
+                    :placeholder="$t('form.confirmNewPassword_placeholder')"
                     v-model="updatePwdInfo.confirmNewPwd"
                     ref="confirmPasswordRef"
                     hide-bottom-space
                     :type="isPwd ? 'password' : 'text'"
                     :rules="[
-                      (val) => (val && val.length > 0) || 'Please insert confirm new password',
-                      (val) => val === updatePwdInfo.password || 'Confirm password does not match with new password'
+                      (val) => (val && val.length > 0) || $t('form.confirmNewPassword_rules_01'),
+                      (val) => val === updatePwdInfo.password || $t('form.confirmNewPassword_rules_02')
                     ]"
                   >
                     <template v-slot:append>
@@ -438,7 +440,9 @@
         </div>
 
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePwd">Confirm</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitUpdatePwd">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
 
         <!-- <div class="q-mt-md q-pl-lg q-pr-lg"> -->
@@ -563,22 +567,22 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Captcha Code Check</div>
+        <div class="txt-title">{{ $t("form.captchaCodeCheck") }}</div>
 
         <div class="pc-form">
           <div class="pc-form-item">
-            <div class="pc-form-label">Captcha Code</div>
+            <div class="pc-form-label">{{ $t("form.captchaCode") }}</div>
             <div class="pc-form-input">
               <q-input
                 filled
                 hide-bottom-space
                 dense
                 clearable
-                placeholder="Enter Captcha Code"
+                :placeholder="$t('form.captchaCode_placeholder')"
                 v-model="captchaRef"
                 :rules="[
-                  (val) => (val && val.length > 0) || 'Please insert captcha code',
-                  (val) => (val && val.length > 3 && val.length < 5) || 'Captcha code length is 4 characters'
+                  (val) => (val && val.length > 0) || $t('form.captchaCode_rules_01'),
+                  (val) => (val && val.length > 3 && val.length < 5) || $t('form.captchaCode_rules_02')
                 ]"
               >
                 <template v-slot:append>
@@ -590,7 +594,9 @@
         </div>
 
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">Confirm</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onCaptchaSubmit">
+            {{ $t("btn.confirm") }}
+          </q-btn>
           <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
         </div>
       </div>
@@ -630,6 +636,7 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+import { t } from "src/boot/lang";
 
 let slideList = ref(["Personal Center", "Discount", "Record", "Order", "Bank", "Message"]);
 let slideListPath = ref([
@@ -995,7 +1002,7 @@ const updateState = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Updated successfully",
+          message: t("notify.updatedSuccessfully"),
           icon: "check_circle_outline"
         });
 
@@ -1201,7 +1208,7 @@ const onCaptchaSubmit = () => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "Email verification sent",
+          message: t("notify.emailVerificationSent"),
           icon: "check_circle_outline"
         });
       } else color = "negative";

@@ -8,14 +8,14 @@
         <q-icon name="close" size="24px" style="color: #81889a" @click="closeTopdownload()" />
       </div>
       <div class="download-logo"><img src="../assets/images/index/download/download-logo.png" /></div>
-      <div class="download-btn">
+      <!-- <div class="download-btn">
         <a :href="topDownloadUrl">
           <img src="../assets/images/index/download/top-download-btn.png" />
         </a>
-      </div>
-      <!-- <div class="download-btn">
-        <a :href="topDownloadUrl">Download</a>
       </div> -->
+      <div class="download-btn-yel">
+        <a :href="topDownloadUrl">{{ $t("header.download") }}</a>
+      </div>
       <!-- <div class="download-count">({{ topDownloadCount }}s)</div> -->
     </div>
   </div>
@@ -23,10 +23,10 @@
   <div class="menu-open" :class="{ open: menuOpen }" @click="handleMenuBackgroundClick">
     <div style="height: 56px" v-if="topDownload"></div>
     <div class="side-menu" @click.stop>
-      <div class="side-menu-item side-menu-item__invite" @click="router.push('/earn-money')">
+      <div class="side-menu-item side-menu-item__invite" @click="handleMenuRouteClick('/earn-money')">
         <div>
-          Invite to Earn
-          <span>share your exclusive QR code</span>
+          {{ $t("sideNav.inviteToEarn") }}
+          <span>{{ $t("sideNav.shareYourExclusiveQRCode") }}</span>
         </div>
         <div class="item-icon">
           <img src="../assets/images/auth/menu-invite.png" />
@@ -55,42 +55,42 @@
 
       <div class="side-menu-item" @click="activateSlide('Slot')">
         <div class="item-icon"><img src="../assets/images/auth/menu-slot.png" /></div>
-        Slots
+        {{ $t("sideNav.slots") }}
       </div>
       <div class="side-menu-item" @click="activateSlide('Live')">
         <div class="item-icon"><img src="../assets/images/auth/menu-live.png" /></div>
-        Live Casino
+        {{ $t("sideNav.livecasino") }}
       </div>
       <div class="side-menu-item" @click="activateSlide('Fish')">
         <div class="item-icon"><img src="../assets/images/auth/menu-fish.png" /></div>
-        Fishing
+        {{ $t("sideNav.fishing") }}
       </div>
       <div class="side-menu-item" @click="activateSlide('Poker')">
         <div class="item-icon"><img src="../assets/images/auth/menu-poker.png" /></div>
-        Poker
+        {{ $t("sideNav.poker") }}
       </div>
       <div class="side-menu-item" @click="activateSlide('Sport')">
         <div class="item-icon"><img src="../assets/images/auth/menu-sport.png" /></div>
-        Sport
+        {{ $t("sideNav.sport") }}
       </div>
 
       <div class="side-menu-divider"></div>
 
       <div class="side-menu-item side-menu-item__transparent" @click="openCSInNewTab(ui.CSAUrl)">
         <div class="item-icon"><img src="../assets/images/auth/menu-livesupport.png" /></div>
-        Live Support
+        {{ $t("sideNav.livesupport") }}
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="router.push('/account/feedback')">
+      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
-        Feedback
+        {{ $t("sideNav.feedback") }}
       </div>
 
       <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
         <div class="item-icon">
           <img src="../assets/images/auth/menu-telegram.png" />
         </div>
-        Telegram
+        {{ $t("sideNav.telegram") }}
       </a>
 
       <a
@@ -99,8 +99,19 @@
         target="_blank"
       >
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        Whatsapp
+        {{ $t("sideNav.whatsapp") }}
       </a>
+
+      <div
+        class="side-menu-item side-menu-item__transparent"
+        @click="handleMenuRouteClick('/language')"
+        v-if="sideLang"
+      >
+        <div class="item-icon">
+          <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
+        </div>
+        {{ $t("sideNav.language") }}
+      </div>
 
       <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
         <div class="item-icon">
@@ -147,7 +158,7 @@
                   {{ store.currency.value }}
                 </span>
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
+                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
 
                 <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
@@ -190,7 +201,7 @@
                 <q-avatar icon="diamond" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>VIP</q-item-label>
+                <q-item-label>{{ $t("settings.vip") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -201,7 +212,7 @@
               <q-item-section>
                 <q-item-label>
                   <span class="message-amt" v-if="store.unreadInboxMail > 0">{{ store.unreadInboxMail }}</span>
-                  Message
+                  {{ $t("settings.message") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -211,7 +222,7 @@
                 <q-avatar icon="receipt" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Order</q-item-label>
+                <q-item-label>{{ $t("settings.order") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -222,7 +233,7 @@
                 <q-avatar icon="account_balance" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Bank</q-item-label>
+                <q-item-label>{{ $t("settings.bank") }}</q-item-label>
               </q-item-section>
             </q-item>
 
@@ -231,7 +242,7 @@
                 <q-avatar icon="logout" />
               </q-item-section>
               <q-item-section>
-                <q-item-label>Log out</q-item-label>
+                <q-item-label>{{ $t("settings.logout") }}</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
@@ -423,6 +434,12 @@ const handleMenuBackgroundClick = (event) => {
   // }
 };
 
+const handleMenuRouteClick = (route) => {
+  router.push(route);
+  menuOpen.value = false;
+};
+
+const sideLang = ref(false);
 const handleBackBtn = () => {
   if (props.homeProfile) {
     emits("closeslot");
@@ -444,6 +461,7 @@ onMounted(() => {
   checkTopDownloadAppear();
   loadCustomerAddress();
 
+  sideLang.value = store.memberType === "TEST";
   if (isAndroid()) {
     isSideDownload.value = false;
   } else {
@@ -508,22 +526,33 @@ onMounted(() => {
     .download-btn {
       // margin-left: auto;
       margin-left: auto;
-
-      // a {
-      //   text-decoration: none;
-      //   background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
-      //   color: #131313;
-      //   font-weight: bold;
-      //   font-size: 12px;
-      //   padding: 12px 16px;
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      // }
+      display: none;
 
       img {
         width: 100%;
         display: block;
+      }
+    }
+
+    .download-btn-yel {
+      margin-left: auto;
+      // display: none;
+
+      a {
+        text-decoration: none;
+        background: linear-gradient(163.93deg, #bdff00 11.18%, #ff9900 112.24%);
+        color: #131313;
+        font-weight: bold;
+        font-size: 12px;
+        min-width: 104px;
+        padding: 0 8px;
+        height: 36px;
+        border-radius: 40px;
+        // padding: 12px 16px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
 
@@ -556,13 +585,15 @@ onMounted(() => {
     padding-top: 72px;
     background-color: #131313;
     width: 202px;
-    height: 100%;
+    height: calc(100vh - 72px);
     display: flex;
     flex-direction: column;
     padding-left: 16px;
     padding-right: 16px;
     gap: 12px;
     transition: 0.3s all;
+
+    overflow-y: auto;
 
     .side-menu-divider {
       background: rgba(255, 255, 255, 0.05);
@@ -663,6 +694,10 @@ onMounted(() => {
         align-items: center;
         img {
           display: block;
+
+          &.flag {
+            width: 26px;
+          }
         }
       }
     }

@@ -18,7 +18,7 @@
         <q-card-section class="bottom-wrapper">
           <div class="time">{{ convertToGMT55(e.sendTime) }}</div>
           <q-btn class="detail-btn" @click="onDetailsClick(e)" flat unelevated>
-            More&nbsp;
+            {{ $t("btn.more") }}&nbsp;
             <q-icon class="forward-icon" name="arrow_forward_ios" size="small" />
           </q-btn>
         </q-card-section>

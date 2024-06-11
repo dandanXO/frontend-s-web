@@ -34,7 +34,7 @@
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-sm">Select Amount</div>
+    <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -88,7 +88,7 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title">Amount</div>
+          <div class="lil-title">{{ $t("form.depositAmount") }}</div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -183,7 +183,7 @@
         :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
       >
-        SUBMIT
+        {{ $t("btn.submit") }}
       </q-btn>
     </div>
   </div>
@@ -232,6 +232,7 @@ import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
+import { t } from "src/boot/lang";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -306,8 +307,8 @@ const blurCode = () => {
 };
 
 const verifyDepositAmount = ref([
-  (val) => !!val || "Please enter the amount",
-  (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
+  (val) => !!val || t("form.depositAmount_placeholder"),
+  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
@@ -354,7 +355,7 @@ const isLoadingInitPay = ref(true);
 function initPay() {
   isLoadingInitPay.value = true;
   $q.loading.show({
-    message: "Loading data... Please wait..."
+    message: t("btn.loading_plsWait")
   });
 
   payMethods.value = [];

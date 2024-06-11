@@ -3,7 +3,7 @@
     <div class="withdrawal-summary">
       <div class="balance">
         <span class="amount">{{ convertToCommaAmount(store.balance, false) }}</span>
-        <div class="title">Cash Balance</div>
+        <div class="title">{{ $t("withdraw.cashBalance") }}</div>
       </div>
 
       <div class="separator"></div>
@@ -16,13 +16,13 @@
               : "0.00"
           }}
         </span>
-        <div class="title">Withdrawable</div>
+        <div class="title">{{ $t("withdraw.withdrawable") }}</div>
       </div>
     </div>
 
     <div class="bank-account-container" v-if="bankCardList.length > 0">
       <div class="top-wrapper">
-        <div class="title">Choose Account</div>
+        <div class="title">{{ $t("form.withdrawChoose_placeholder") }}</div>
       </div>
 
       <div class="mid-wrapper">
@@ -38,7 +38,7 @@
               option-value="id"
               emit-value
               map-options
-              :rules="[(val) => !!val || 'Please select account']"
+              :rules="[(val) => !!val || $t('form.withdrawChoose_rules_01')]"
               hide-bottom-space
             >
               <template v-slot:option="scope">
@@ -89,7 +89,7 @@
           <div class="card-icon">
             <q-icon key="md" size="md" name="add" />
           </div>
-          <div class="card-label">Add New Account</div>
+          <div class="card-label">{{ $t("btn.addNewAccount") }}</div>
         </div>
       </div>
     </div>
@@ -162,7 +162,9 @@
       <InputRowGrid>
         <template #fields>
           <InputField
-            :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
+            :label="`${$t('form.withdrawalAmount')} (${convertToCommaAmount(
+              withdrawalMethods[withdrawalDialogTab].withdrawMin
+            )} -
           ${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax)} RS)`"
           >
             <template #input>
@@ -171,17 +173,20 @@
                 ref="amountRef"
                 outlined
                 clearable
-                placeholder="Withdraw Amount"
+                :placeholder="$t('form.withdrawalAmount_placeholder')"
                 v-model="withdrawInfo.amount"
                 :rules="[
-                  (val) => !!val || 'Please Enter Withdraw Amount',
-                  (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
+                  (val) => !!val || $t('form.withdrawalAmount_rules_01'),
+                  (val) => val > 0 || $t('form.withdrawalAmount_rules_02'),
                   (val) =>
-                    val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                    val <= withdrawalMethods[withdrawalDialogTab].withdrawableBalance ||
+                    $t('form.withdrawalAmount_rules_03'),
                   (val) =>
                     (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                       val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
-                    `Withdraw Amount Must In Between ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${withdrawalMethods[withdrawalDialogTab].withdrawMax}`
+                    `${$t('form.withdrawalAmount_rules_04')} ${withdrawalMethods[withdrawalDialogTab].withdrawMin} - ${
+                      withdrawalMethods[withdrawalDialogTab].withdrawMax
+                    }`
                 ]"
                 hide-bottom-space
               ></q-input>
@@ -232,13 +237,13 @@
       <div class="bot-wrapper">
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">Withdrew Amount</div>
+            <div class="desc">{{ $t("withdraw.withdrewAmount") }}</div>
           </div>
           <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">{{ store.vip }} Daily Limit</div>
+            <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
           </div>
           <div class="desc">
             RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
@@ -246,7 +251,7 @@
         </div>
         <div class="info">
           <div class="desc-wrapper">
-            <div class="desc">Remain Wagers</div>
+            <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
           </div>
           <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
         </div>
@@ -262,7 +267,7 @@
           :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           @click="submitWithdraw"
         >
-          SUBMIT
+        {{ $t("btn.submit") }}
         </q-btn>
       </div>
     </template>
