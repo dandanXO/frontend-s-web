@@ -102,7 +102,11 @@
         {{ $t("sideNav.whatsapp") }}
       </a>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
+      <div
+        class="side-menu-item side-menu-item__transparent"
+        @click="handleMenuRouteClick('/language')"
+        v-if="sideLang"
+      >
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
@@ -427,6 +431,8 @@ const handleMenuRouteClick = (route) => {
   menuOpen.value = false;
 };
 
+const sideLang = ref(false);
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -438,6 +444,8 @@ onMounted(() => {
   getTopDownloadUrl();
   checkTopDownloadAppear();
   loadCustomerAddress();
+
+  sideLang.value = store.memberType === "TEST";
 });
 </script>
 
