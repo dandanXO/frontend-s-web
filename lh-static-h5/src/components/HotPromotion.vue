@@ -122,6 +122,7 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
+    <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -188,6 +189,7 @@ import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
+import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -234,7 +236,8 @@ export default defineComponent({
     SportZhongChao,
     Nba24Match,
     LPLSummer2024,
-    DuanWuJiePromo
+    DuanWuJiePromo,
+    DepositRebates
   },
   props: {
     list: {
@@ -339,7 +342,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-lpl-summer24" ||
       this.list.redirectUrl === "lh-sport-zhongchao"||
       this.list.redirectUrl === "lh-duanwujie24" ||
-      this.list.redirectUrl === "tiqianhongbao"
+      this.list.redirectUrl === "tiqianhongbao" ||
+      this.list.redirectUrl === "lh1-deposit-rebates"
     ) {
       this.isCommonPromo = false;
     } else {
