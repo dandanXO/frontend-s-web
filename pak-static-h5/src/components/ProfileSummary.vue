@@ -102,6 +102,13 @@
         Whatsapp
       </a>
 
+      <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
+        <div class="item-icon">
+          <img src="../assets/images/auth/download-icon.png" />
+        </div>
+        Download App
+      </a>
+
       <!-- <div class="side-menu-item side-menu-item__transparent"> -->
       <!-- <LangOptions /> -->
       <!-- </div> -->
@@ -143,13 +150,7 @@
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
 
-                <q-btn
-                  square
-                  class="style-blue-btn"
-                  icon="wallet"
-                  dense
-                  @click="router.push('/deposit?from=' + route.path)"
-                />
+                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -291,6 +292,9 @@ const activateSlide = (item) => {
   router
     .push(`/home#${item}`)
     .then(() => {
+      if (props.homeProfile) {
+        emits("closeslot");
+      }
       emits("activateSlide", item);
       menuOpen.value = false;
     })
@@ -419,6 +423,15 @@ const handleMenuBackgroundClick = (event) => {
   // }
 };
 
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/deposit?from=" + route.path);
+};
+
+const isSideDownload = ref(false);
+
 onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
@@ -430,6 +443,12 @@ onMounted(() => {
   getTopDownloadUrl();
   checkTopDownloadAppear();
   loadCustomerAddress();
+
+  if (isAndroid()) {
+    isSideDownload.value = false;
+  } else {
+    isSideDownload.value = true;
+  }
 });
 </script>
 
@@ -446,7 +465,7 @@ onMounted(() => {
   padding: 12px 16px 28px;
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
   backdrop-filter: blur(6px);
-  z-index: 98;
+  z-index: 2003;
 
   .download-container {
     display: flex;
@@ -565,6 +584,19 @@ onMounted(() => {
       font-weight: bold;
       line-height: 1.2;
       text-decoration: none;
+
+      &__download {
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        color: #000a01;
+        font-weight: bold;
+
+        .item-icon {
+          img {
+            display: block;
+            width: 20px;
+          }
+        }
+      }
 
       &__transparent {
         background-color: transparent;

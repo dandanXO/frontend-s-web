@@ -13,20 +13,15 @@
         </div>
       </button> -->
       <a-form ref="updateFormRef" :model="updateFormDetails" class="personal-info-wrapper" hide-required-mark>
-        <a-form-item
-          required
-          name="nickName"
-          :label="$t('personalView.personal.form.loginName.label')"
-          label-align="left"
-        >
+        <a-form-item required name="nickName" :label="$t('common.form.loginName.label')" label-align="left">
           <a-input
             :disabled="true"
             v-model:value="updateFormDetails.nickName"
-            :placeholder="$t('personalView.personal.form.loginName.placeholder')"
+            :placeholder="$t('common.form.loginName.placeholder')"
           />
         </a-form-item>
         <div class="datewsend">
-          <a-form-item label="Email" name="email">
+          <a-form-item :label="$t('personalView.personal.form.email.label')" name="email">
             <div class="fake-field">
               <div class="fake-input">
                 {{ personalState.memberInfo.email }}

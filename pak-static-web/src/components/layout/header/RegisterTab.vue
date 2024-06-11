@@ -1,14 +1,10 @@
 <template>
   <a-form ref="formRef" :model="registerForm" :rules="registerFormRules" hide-required-mark>
     <div>
-      <a-form-item
-        name="loginName"
-        :label="$t('layout.header.accountModal.register.form.loginName.label')"
-        label-align="left"
-      >
+      <a-form-item name="loginName" :label="$t('common.form.loginName.label')" label-align="left">
         <a-input
           v-model:value="registerForm.loginName"
-          :placeholder="$t('layout.header.accountModal.register.form.loginName.placeholder')"
+          :placeholder="$t('common.form.loginName.placeholder')"
           autocomplete="new-password"
         >
           <template #prefix>
@@ -17,17 +13,12 @@
           </template>
         </a-input>
       </a-form-item>
-      <a-form-item
-        required
-        name="password"
-        :label="$t('layout.header.accountModal.register.form.password.label')"
-        label-align="left"
-      >
+      <a-form-item name="password" :label="$t('common.form.password.label')" label-align="left">
         <a-input
           v-model:value="registerForm.password"
           type="password"
           placeholder="Password"
-          :placeholder="$t('layout.header.accountModal.register.form.password.placeholder')"
+          :placeholder="$t('common.form.password.placeholder')"
           autocomplete="new-password"
           @keypress.enter="onSubmit"
         >
@@ -363,7 +354,7 @@ import { useRouter } from "vue-router";
 import InvitationIcon from "@/assets/images/layout/header/invitation-icon.svg";
 import { register } from "@/api/index/login";
 import { ElMessage } from "element-plus";
-import { validateLoginName } from "@/utils/validator";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const emit = defineEmits(["close-modal"]);
 
@@ -382,7 +373,7 @@ const registerForm = ref({
 });
 const registerFormRules = ref({
   loginName: [{ validator: validateLoginName, trigger: "blur" }],
-  password: [{ required: true, message: t("layout.header.accountModal.register.form.password.error.required") }]
+  password: [{ validator: validatePassword, trigger: "blur" }]
 });
 
 const onSubmit = () => {
