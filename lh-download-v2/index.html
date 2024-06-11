@@ -26,10 +26,10 @@
     <div class="download_bg" style="height: auto">
         <img src="./assets/images/logo-gold.png" style="width: 73%;max-width:280px;margin-top: 20px;"/>
         <!--        <div class="host_address" id="web_show">leihuo6.com</div>-->
-<!--        <img class="customer_icon" id="dy_customer" src="img/download_customer.png"/>-->
+        <img class="customer_icon" id="dy_customer" src="img/download_customer.png"/>
         <!--<img src="img/download_pic.png" style="width: 90%;margin-top: 10px;"/> -->
-<!--        <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>-->
-<!--        <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;"/>-->
+        <img src="img/download_text.png" style="width: 90%;max-width:650px;margin-top: 15px;"/>
+        <img src="img/download-icons_2.png" style="width: 80%;max-width:500px;margin-top: 25px;"/>
         <div id="desc" style="display:none;color:#fff;">安装新APP，必须先卸载旧版本</div>
         <div class="games_title_container"></div>
         <div style="width:100%; text-align: center;padding:20px 0px 10px;font-size:18px;font-weight: bold;color:#fff;"
@@ -44,8 +44,8 @@
 
         </div>
 
-<!--        <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>-->
-<!--        <div class="download_install_des">下滑查看安装教程</div>-->
+        <div class="download_des">下载安装过程中请勿切换网络，推荐使用手机自带浏览器打开本页面下滑查看安装教程。</div>
+        <div class="download_install_des">下滑查看安装教程</div>
     </div>
 
     <div class="swiper_parent">
@@ -124,28 +124,26 @@
     var liveUrl2 = "";
 
     getApiUrl();
-    // getCustomerUrl();
+    getCustomerUrl();
 
     var type = "ALL_AND";
     $('#dy_customer').click(() => {
         window.open(liveUrl1)
     })
 
-    // async function getCustomerUrl() {
-    //     try {
-    //         const response = await fetch(`${dataUrl}/getDownData`, {headers: {
-    //                 'Content-Type': 'text/plain; charset=UTF-8'
-    //             }});
-    //         const data = await response.json();
-    //         if (data&&data.code === 0) {
-    //             liveUrl1 = data.data.liveUrl1;
-    //             liveUrl2 = data.data.liveUrl2;
-    //         }
-    //
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    async function getCustomerUrl() {
+        try {
+            const response = await fetch(dataUrl+`/getCustomerService`);
+            const data = await response.json();
+            if (data&&data.code === 0) {
+                liveUrl1 = data.data.liveUrl1;
+                liveUrl2 = data.data.liveUrl2;
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     async function getApiUrl() {
         try {
@@ -390,17 +388,7 @@
             success:function(d){}
         });
     }
-
-    // function getCustomerService(returnService){
-    //     var rUrl="https://yj8wz.ks1er9lyi8.com/rest/api/otherSetting";
-    //     $.ajax({
-    //         url: rUrl,
-    //         type:"GET",
-    //         success:function(d){
-    //             returnService(d);
-    //         }
-    //     });
-    // }
+    
 
     var mySwiper = new Swiper(".swiper-container", {
         effect: "slide",
