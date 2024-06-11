@@ -133,7 +133,7 @@
             v-model="form.content"
             :rows="6"
             style="width: 350px;"
-            maxlength="500"
+            maxlength="2000"
             show-word-limit
           />
         </el-form-item>
@@ -146,6 +146,38 @@
             @keypress="restrictInput($event)"
             controls-position="right"
           />
+        </el-form-item>
+        <el-form-item :label="t('fields.attachment')" prop="attachment">
+          <el-row :gutter="10">
+            <el-col v-if="form.attachment" style="width: 250px">
+              <el-image
+                v-if="form.attachment"
+                :src="announcementDir + form.attachment"
+                fit="contain"
+                class="preview"
+                :preview-src-list="[announcementDir + form.attachment]"
+              />
+            </el-col>
+          </el-row>
+          <el-row :gutter="10">
+            <el-button
+              icon="el-icon-plus"
+              size="mini"
+              type="primary"
+              v-permission="['sys:siteimage:add']"
+              @click="showImageDialog()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+            <el-button
+              icon="el-icon-search"
+              size="mini"
+              type="success"
+              @click="browseImage()"
+            >
+              {{ t('fields.browse') }}
+            </el-button>
+          </el-row>
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -237,10 +269,206 @@
       :current-page="request.current"
     />
   </div>
+  <el-dialog
+    :title="uiControl.imageDialogTitle"
+    v-model="uiControl.imageDialogVisible"
+    append-to-body
+    width="600px"
+    :close-on-press-escape="false"
+  >
+    <el-form
+      ref="imageFormRef"
+      :model="imageForm"
+      :rules="imageFormRules"
+      :inline="true"
+      size="small"
+      label-width="180px"
+    >
+      <div id="preview">
+        <el-image
+          v-if="uploadedImage.url"
+          :src="uploadedImage.url"
+          :fit="contain"
+          :preview-src-list="[uploadedImage.url]"
+        />
+      </div>
+      <el-form-item :label="t('fields.image')" prop="path">
+        <el-row :gutter="10">
+          <el-col :span="2">
+            <!-- eslint-disable -->
+            <input
+              id="uploadFile"
+              type="file"
+              ref="inputImage"
+              style="display: none"
+              accept="image/*"
+              @change="attachImage"
+            />
+            <el-button
+              icon="el-icon-upload"
+              size="mini"
+              type="success"
+              @click="$refs.inputImage.click()"
+            >
+              {{ t('fields.upload') }}
+            </el-button>
+          </el-col>
+          <el-col :span="1" />
+        </el-row>
+      </el-form-item>
+      <el-form-item :label="t('fields.imageName')" prop="name">
+        <el-input v-model="imageForm.name" style="width: 350px" />
+      </el-form-item>
+      <el-form-item :label="t('fields.category')" prop="category">
+        <span style="width: 350px">{{ t('fields.announcement') }}</span>
+      </el-form-item>
+      <el-form-item :label="t('fields.site')" prop="siteId">
+        <el-select
+          v-model="imageForm.siteId"
+          size="small"
+          :placeholder="t('fields.site')"
+          class="filter-item"
+          style="width: 350px"
+          default-first-option
+          @focus="loadSites"
+        >
+          <el-option
+            v-for="item in siteList.list"
+            :key="item.id"
+            :label="item.siteName"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.remark')" prop="remark">
+        <el-input
+          v-model="imageForm.remark"
+          :rows="2"
+          type="textarea"
+          :placeholder="t('fields.pleaseInput')"
+          style="width: 350px"
+        />
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImageUpload">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
+  <el-dialog
+    :title="uiControl.imageSelectionTitle"
+    v-model="uiControl.imageSelectionVisible"
+    append-to-body
+    width="50%"
+    :close-on-press-escape="false"
+  >
+    <div class="search">
+      <el-input
+        v-model="imageRequest.name"
+        size="small"
+        style="width: 200px"
+        :placeholder="t('fields.imageName')"
+      />
+      <el-select
+        v-model="imageRequest.siteId"
+        size="small"
+        :placeholder="t('fields.site')"
+        class="filter-item"
+        style="width: 120px; margin-left: 5px"
+      >
+        <el-option
+          v-for="item in siteList.list"
+          :key="item.id"
+          :label="item.siteName"
+          :value="item.id"
+        />
+      </el-select>
+      <el-button
+        style="margin-left: 20px"
+        icon="el-icon-search"
+        size="mini"
+        type="success"
+        ref="searchImage"
+        @click="loadSiteImage()"
+      >
+        {{ t('fields.search') }}
+      </el-button>
+      <el-button
+        icon="el-icon-refresh"
+        size="mini"
+        type="warning"
+        @click="resetImageQuery()"
+      >
+        {{ t('fields.reset') }}
+      </el-button>
+    </div>
+    <div class="grid-container">
+      <div
+        v-for="item in imageList.list"
+        :key="item"
+        class="grid-item"
+        :class="item.id === selectedImage.id ? 'selected' : ''"
+      >
+        <el-image
+          :src="announcementDir + item.path"
+          fit="contain"
+          style="aspect-ratio: 1/1"
+          @click="selectImage(item)"
+        />
+      </div>
+    </div>
+    <el-pagination
+      class="pagination"
+      @current-change="changeImagePage"
+      layout="prev, pager, next"
+      :page-size="imageRequest.size"
+      :page-count="imageList.pages"
+      :current-page="imageRequest.current"
+    />
+    <div class="image-info" v-if="selectedImage.id !== 0">
+      <el-row>
+        <el-col :span="4">
+          <h3>{{ t('fields.selectedImage') }}</h3>
+        </el-col>
+        <el-col :span="20">
+          <el-image
+            :src="announcementDir + selectedImage.path"
+            fit="contain"
+            class="smallPreview"
+            :preview-src-list="[announcementDir + selectedImage.path]"
+          />
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageSite') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.siteName }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageName') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">{{ t('fields.imageRemark') }} :</el-col>
+        <el-col :span="20">{{ selectedImage.remark }}</el-col>
+      </el-row>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.imageSelectionVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="submitImage">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </div>
+  </el-dialog>
 </template>
 
 <script setup>
-import { nextTick, onMounted, reactive, ref } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import { required } from '../../../../utils/validate'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import {
@@ -253,20 +481,53 @@ import {
 import { getActiveAnnouncementType } from '../../../../api/announcement-type'
 import { hasRole, hasPermission } from '../../../../utils/util'
 import { useI18n } from 'vue-i18n'
+import { createSiteImage, getSiteImage } from '../../../../api/site-image'
+import { uploadImage } from '../../../../api/image'
+import { getSiteListSimple } from '../../../../api/site'
+import { store } from '../../../../store'
+import { TENANT } from '../../../../store/modules/user/action-types'
 
 const { t } = useI18n()
 const announcementForm = ref(null)
+const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
+const site = ref(null)
+const inputImage = ref(null)
+const imageFormRef = ref(null)
+const announcementDir = process.env.VUE_APP_IMAGE + '/announcement/'
 const uiControl = reactive({
   dialogVisible: false,
   dialogTitle: '',
   dialogType: 'CREATE',
+  imageDialogVisible: false,
+  imageDialogTitle: '',
   editBtn: true,
   removeBtn: true,
   announcementState: [
     { key: 1, displayName: 'active', value: true },
     { key: 2, displayName: 'disable', value: false },
   ],
+  imageSelectionTitle: '',
+  imageSelectionVisible: false,
 })
+const siteList = reactive({
+  list: [],
+})
+const imageList = reactive({
+  dataList: [],
+  pages: 0,
+})
+const selectedImage = reactive({
+  id: 0,
+  name: '',
+  siteName: '',
+  remark: '',
+  path: '',
+})
+
+const uploadedImage = reactive({
+  url: null,
+})
+
 const page = reactive({
   pages: 0,
   records: [],
@@ -280,6 +541,14 @@ const request = reactive({
   status: null,
 })
 
+const imageRequest = reactive({
+  size: 10,
+  current: 1,
+  name: null,
+  siteId: null,
+  category: 'ANNOUNCEMENT',
+})
+
 const form = reactive({
   id: null,
   title: null,
@@ -288,6 +557,18 @@ const form = reactive({
   dueDate: null,
   content: null,
   sequence: null,
+  attachment: null
+})
+
+const imageForm = reactive({
+  id: null,
+  name: null,
+  path: null,
+  displayPath: null,
+  category: null,
+  siteId: null,
+  remark: null,
+  imageDimension: null
 })
 
 const formRules = reactive({
@@ -296,6 +577,13 @@ const formRules = reactive({
   dueDate: [required(t('message.validateEndDateRequired'))],
   content: [required(t('message.validateContentRequired'))],
   sequence: [required(t('message.validateSequenceRequired'))],
+})
+
+const imageFormRules = reactive({
+  path: [required(t('message.validateImageRequired'))],
+  name: [required(t('message.validateImageNameRequired'))],
+  category: [required(t('message.validateCategoryRequired'))],
+  siteId: [required(t('message.validateSiteRequired'))]
 })
 
 let chooseAnnouncement = []
@@ -308,6 +596,11 @@ function disabledDate(time) {
 function resetQuery() {
   request.title = null
   request.status = null
+}
+
+function resetImageQuery() {
+  imageRequest.name = null
+  imageRequest.siteId = site.value ? site.value.id : null
 }
 
 function handleSelectionChange(val) {
@@ -340,6 +633,13 @@ async function loadActiveAnnouncementType() {
 function changePage(page) {
   request.current = page
   loadAnnouncement()
+}
+
+async function changeImagePage(page) {
+  imageRequest.current = page
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
 }
 
 function showDialog(type) {
@@ -439,9 +739,106 @@ function restrictInput(event) {
   }
 }
 
-onMounted(() => {
-  loadAnnouncement()
-  loadActiveAnnouncementType()
+async function loadSites() {
+  const { data: site } = await getSiteListSimple()
+  siteList.list = site
+}
+
+async function loadSiteImage() {
+  selectedImage.id = 0
+  const { data: ret } = await getSiteImage(imageRequest)
+  imageList.list = ret.records
+  imageList.pages = ret.pages
+}
+
+function submitImage() {
+  form.attachment = selectedImage.path
+  uiControl.imageSelectionVisible = false
+}
+
+function showImageDialog() {
+  if (imageFormRef.value) {
+    imageFormRef.value.resetFields()
+    uploadedImage.url = null
+    imageForm.id = null
+  }
+  imageForm.category = 'ANNOUNCEMENT'
+  uiControl.imageDialogTitle = t('fields.addImage')
+  uiControl.imageDialogVisible = true
+}
+
+async function attachImage(event) {
+  const data = await attachPhoto(event)
+  if (data.code === 0) {
+    imageForm.path = data.data
+    inputImage.value.value = ''
+  } else {
+    ElMessage({ message: t('message.failedToUploadImage'), type: 'error' })
+  }
+}
+
+async function attachPhoto(event) {
+  const files = event.target.files[0]
+
+  // record file dimension
+  var fr = new FileReader()
+  fr.onload = function() {
+    var img = new Image()
+    img.onload = function() {
+      imageForm.imageDimension = img.width + ' * ' + img.height
+    }
+    img.src = fr.result
+  }
+  fr.readAsDataURL(files)
+
+  const allowFileType = ['image/jpeg', 'image/png', 'image/gif']
+  const dir = 'temp'
+  if (!allowFileType.find(ftype => ftype.includes(files.type))) {
+    ElMessage({ message: t('message.invalidFileType'), type: 'error' })
+  } else {
+    var formData = new FormData()
+    formData.append('files', files)
+    formData.append('dir', dir)
+    formData.append('overwrite', false)
+    uploadedImage.url = URL.createObjectURL(files)
+    return await uploadImage(formData)
+  }
+}
+
+function submitImageUpload() {
+  imageFormRef.value.validate(async valid => {
+    if (valid) {
+      await createSiteImage(imageForm)
+      uiControl.imageDialogVisible = false
+      ElMessage({ message: t('message.addSuccess'), type: 'success' })
+    }
+  })
+}
+
+function selectImage(item) {
+  selectedImage.id = item.id
+  selectedImage.name = item.name
+  selectedImage.siteName = item.siteName
+  selectedImage.path = item.path
+  selectedImage.remark = item.remark
+}
+
+async function browseImage() {
+  loadSiteImage()
+  uiControl.imageSelectionTitle = t('fields.attachment')
+  uiControl.imageSelectionVisible = true
+}
+
+onMounted(async() => {
+  await loadSites()
+  if (LOGIN_USER_TYPE.value === TENANT.value) {
+    site.value = siteList.list.find(
+      s => s.siteName === store.state.user.siteName
+    )
+    imageRequest.siteId = site.value.id
+  }
+  await loadAnnouncement()
+  await loadActiveAnnouncementType()
 })
 </script>
 
