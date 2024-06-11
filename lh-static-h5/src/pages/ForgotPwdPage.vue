@@ -84,7 +84,7 @@
             autocomplete="username">
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
-                <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
+                <img class="input-icon" src="../assets/images/login/email-icon.png" />
                 <label class="input-label">邮箱</label>
               </div>
             </template>

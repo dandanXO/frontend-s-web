@@ -32,22 +32,22 @@
               @click="isPwd = !isPwd" />
           </template>
         </q-input>
-        <div v-if="regForm.password" class="password-str-div">
-          <span :class="{
-            'weak-pwd': pwdStrength == 'weak',
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }">
-            弱
-          </span>
-          <span :class="{
-            'normal-pwd': pwdStrength == 'normal',
-            'strong-pwd': pwdStrength == 'strong'
-          }">
-            好
-          </span>
-          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
-        </div>
+<!--        <div v-if="regForm.password" class="password-str-div">-->
+<!--          <span :class="{-->
+<!--            'weak-pwd': pwdStrength == 'weak',-->
+<!--            'normal-pwd': pwdStrength == 'normal',-->
+<!--            'strong-pwd': pwdStrength == 'strong'-->
+<!--          }">-->
+<!--            弱-->
+<!--          </span>-->
+<!--          <span :class="{-->
+<!--            'normal-pwd': pwdStrength == 'normal',-->
+<!--            'strong-pwd': pwdStrength == 'strong'-->
+<!--          }">-->
+<!--            好-->
+<!--          </span>-->
+<!--          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>-->
+<!--        </div>-->
 
         <q-input ref="confirmPwdRef" standout clearable :type="isCfmPwd ? 'password' : 'text'"
           v-model="regForm.confirmPwd" placeholder="请再次输入密码" lazy-rules :rules="[
@@ -120,7 +120,7 @@
       </div>
     </q-form>
 
-    <div class="q-py-md">
+    <div class="">
       <q-btn @click.prevent="onSubmit" type="submit" class="bottom-btn common-large-btn" label="注册" width="100%"
         color="brightbtn" style="width: 100%" />
       <router-link to="/login">
@@ -376,42 +376,42 @@ export default defineComponent({
       }
     };
 
-    watch(
-      () => regForm.password,
-      () => {
-        pwdStrength.value = "";
-
-        var pwd = regForm.password;
-        var result = 0;
-        for (var i = 0, len = pwd.length; i < len; ++i) {
-          result |= charType(pwd.charCodeAt(i));
-        }
-
-        var level = 0;
-        for (var i = 0; i <= 4; i++) {
-          if (result & 1) {
-            level++;
-          }
-          result = result >>> 1;
-        }
-        if (pwd.length >= 6) {
-          switch (level) {
-            case 1:
-              pwdStrength.value = "weak";
-              break;
-            case 2:
-              pwdStrength.value = "normal";
-              break;
-            case 3:
-            case 4:
-              pwdStrength.value = "strong";
-              break;
-          }
-        } else {
-          pwdStrength.value = "weak";
-        }
-      }
-    );
+    // watch(
+    //   () => regForm.password,
+    //   () => {
+    //     pwdStrength.value = "";
+    //
+    //     var pwd = regForm.password;
+    //     var result = 0;
+    //     for (var i = 0, len = pwd.length; i < len; ++i) {
+    //       result |= charType(pwd.charCodeAt(i));
+    //     }
+    //
+    //     var level = 0;
+    //     for (var i = 0; i <= 4; i++) {
+    //       if (result & 1) {
+    //         level++;
+    //       }
+    //       result = result >>> 1;
+    //     }
+    //     if (pwd.length >= 6) {
+    //       switch (level) {
+    //         case 1:
+    //           pwdStrength.value = "weak";
+    //           break;
+    //         case 2:
+    //           pwdStrength.value = "normal";
+    //           break;
+    //         case 3:
+    //         case 4:
+    //           pwdStrength.value = "strong";
+    //           break;
+    //       }
+    //     } else {
+    //       pwdStrength.value = "weak";
+    //     }
+    //   }
+    // );
 
     const openPhoneVeriDialog = () => {
       telRef.value.validate();
@@ -521,9 +521,22 @@ function charType(num) {
 <style lang="scss">
 .login-container {
   .q-field--standout .q-field__control {
-    border-radius: 12px;
+    border-radius: 8px;
     background: #f7f8fb;
     box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+    height: 44px;
+  }
+
+  .q-field__marginal{
+    height: 44px;
+  }
+
+  .q-input{
+    height: 68px;
+  }
+
+  .q-field__bottom{
+    padding: 0px 12px 8px;
   }
 }
 </style>

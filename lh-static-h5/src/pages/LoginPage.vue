@@ -449,9 +449,22 @@ export default defineComponent({
 <style lang="scss">
 .login-container {
   .q-field--standout .q-field__control {
-    border-radius: 12px;
+    border-radius: 8px;
     background: #f7f8fb;
     box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+    height: 44px;
+  }
+
+  .q-field__marginal{
+    height: 44px;
+  }
+
+  .q-input{
+    height: 68px;
+  }
+
+  .q-field__bottom{
+    padding: 0px 12px 8px;
   }
 }
 </style>
