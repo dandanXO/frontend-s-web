@@ -31,7 +31,7 @@
     "vue-remix-icons": "^1.1.1",
     "vue-request": "^1.2.4",
     "vue-resizable": "^2.1.5",
-    "vue-router": "^4.0.3",
+    "vue-router": "4.3.0",
     "vue-snip": "^2.0.0",
     "vue-uuid": "^3.0.0",
     "vue3-carousel": "^0.1.40"
