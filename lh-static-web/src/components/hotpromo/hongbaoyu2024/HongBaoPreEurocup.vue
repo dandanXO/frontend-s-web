@@ -78,7 +78,7 @@ const getPromotion = () => {
         privilegeClaimedModalVisible.value = true;
         store.getBalance();
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
         ElMessage.error(res.message)

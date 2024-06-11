@@ -181,7 +181,7 @@ const promoParam = ref(props.promoParam);
 const getDateRange = (param) => {
   try {
     const promoObject = JSON.parse(param);
-    const dateTimeRange = promoObject[" datetime"].trim(); // Trim the property name
+    const dateTimeRange = promoObject["datetime"].trim(); // Trim the property name
     return dateTimeRange;
   } catch (error) {
     console.error("Error parsing promoParam:", error);
@@ -200,7 +200,7 @@ const getPromotion = () => {
 
         isClaimModal.value = true;
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
         store.getBalance();
       } else {
         bonusOpened.value = false;
