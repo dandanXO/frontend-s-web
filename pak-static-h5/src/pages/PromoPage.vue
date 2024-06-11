@@ -29,13 +29,10 @@
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
-                <div
-                  v-for="(promo, i) in filteredArray"
-                  :key="i"
-                  data-aos="zoom-in"
+                <div v-for="(promo, i) in filteredArray" :key="i">
+                  <!-- data-aos="zoom-in"
                   data-aos-easing="ease-out"
-                  data-aos-duration="1000"
-                >
+                  data-aos-duration="1000" -->
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <!-- <div class="pad-title">
