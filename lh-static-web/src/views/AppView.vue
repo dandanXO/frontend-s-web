@@ -281,7 +281,7 @@ export default defineComponent({
   .buttons {
     display: flex;
     gap: 20px;
-    padding-top: 20px;
+    padding-top: 0px;
     .btn {
       background: url(../assets/app/btn.png) no-repeat center center;
       background-size: contain;
