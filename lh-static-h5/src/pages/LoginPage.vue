@@ -2,178 +2,94 @@
   <div class="login-container">
     <div class="back-left">
       <router-link :to="'/'">
-        <img
-          class="left-back"
-          :src="
-            $q.dark.isActive
-              ? require('../assets/images/common/left-back-icon-dark.svg')
-              : require('../assets/images/common/left-back-icon.svg')
-          "
-        />
+        <img class="back-left-img" :src="$q.dark.isActive
+          ? require('../assets/images/common/left-back-icon-dark.svg')
+          : require('../assets/images/common/left-back-icon.svg')
+          " />
       </router-link>
     </div>
 
-    <div class="logo">
-      <img @click="backHome" src="../assets/images/login/logo-login.png" />
-    </div>
+    <div class="login-content">
+      <div class="logo">
+        <img class="logo-img" @click="backHome" src="../assets/images/login/logo-login.png" />
+      </div>
 
-    <!--    <q-tabs v-model="tab" active-color="white" indicator-color="bright" align="justify">-->
-    <!--      <q-tab name="login" label="登录" />-->
-    <!--      <q-tab name="register" label="注册" />-->
-    <!--    </q-tabs>-->
-    <q-form ref="loginFormRef" @submit="onSubmit">
-      <div class="login-form-container">
-        <div v-if="!loginType" class="">
-          <q-label>
-            请输入用户名:
-            <em>*</em>
-          </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            ref="loginNameRef"
-            v-model="loginForm.loginName"
-            placeholder="用户名"
-            :rules="[
-              (val) => (val && val.length > 0) || '请输入用户名',
-              (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
-            ]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+      <img class="login-banner-img" src="../assets/images/login/login-banner.jpg" />
+
+      <q-form ref="loginFormRef" @submit="onSubmit">
+        <div v-if="!loginType">
+          <q-input standout clearable ref="loginNameRef" v-model="loginForm.loginName" placeholder="请输入用户名" :rules="[
+            (val) => (val && val.length > 0) || '请输入用户名',
+            (val) => (val && val.length >= 6 && val.length <= 12) || '长度要在 6-12 之间'
+          ]" autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+                <label class="input-label">用户名</label>
+              </div>
             </template>
           </q-input>
 
-          <q-label>
-            请输入密码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="passwordRef"
-            rounded
-            standout
-            clearable
-            v-model="loginForm.password"
-            placeholder="用户密码"
-            :type="isPwd ? 'password' : 'text'"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户密码']"
-            color="white"
-            label-color="brand"
-            autocomplete="current-password"
-          >
+          <q-input ref="passwordRef" standout clearable v-model="loginForm.password" placeholder="请输入密码"
+            :type="isPwd ? 'password' : 'text'" :rules="[(val) => (val && val.length > 0) || '请输入用户密码']" color="white"
+            label-color="brand" autocomplete="current-password">
             <template v-slot:prepend>
-              <img src="../assets/images/login/password-icon.png" width="24" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+                <label class="input-label">密码</label>
+              </div>
             </template>
             <template v-slot:append>
-              <q-icon
-                color="dark"
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
+              <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                @click="isPwd = !isPwd" />
             </template>
           </q-input>
 
-          <q-label>
-            请输入验证码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="verificationRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="loginForm.captchaCode"
-            placeholder="验证码"
-            :rules="[
+          <q-input ref="verificationRef" standout clearable type="text" maxlength="4" v-model="loginForm.captchaCode"
+            placeholder="请输入验证码" :rules="[
               (val) => (val && val.length > 0) || '请输入验证码',
               (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <label class="input-label">验证码</label>
+              </div>
             </template>
           </q-input>
         </div>
 
         <div v-if="loginType">
-          <q-label>
-            电话号码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            hide-bottom-space
-            ref="telephoneRef"
-            v-model="phoneLoginForm.phoneNumber"
-            label="电话号码"
-            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]"
-            color="white"
-            :readonly="phoneLoginForm.smsCodeId ? true : false"
-            clearable
-            autocomplete="username"
-            rounded
-            standout
-          >
+          <q-input ref="telephoneRef" v-model="phoneLoginForm.phoneNumber" placeholder="请输入电话号码"
+            :rules="[(val) => (val && val.length > 0) || '请输入电话号码', isValidCnPhone]" color="white"
+            :readonly="phoneLoginForm.smsCodeId ? true : false" clearable autocomplete="username" standout>
             <template v-slot:prepend>
-              <q-icon color="bright" name="phone" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
+                <label class="input-label">电话号码</label>
+              </div>
             </template>
           </q-input>
-          <q-label>
-            短信验证码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            @pressEnter="alert('ah')"
-            ref="phoneVerificationRef"
-            hide-bottom-space
-            type="text"
-            v-model="phoneLoginForm.code"
-            label="短信验证码"
-            clearable
-            :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']"
-            color="white"
-            rounded
-            standout
-          >
+
+          <q-input @pressEnter="alert('ah')" ref="phoneVerificationRef" type="text" v-model="phoneLoginForm.code"
+            placeholder="短信验证码" clearable :rules="[(val) => (val && val.length > 3) || '请输入短信验证码']" color="white"
+            standout>
             <template v-slot:append>
-              <q-btn
-                size="md"
-                color="brightbtn"
-                label="发送验证码"
-                @click="toggleInnerCode"
-                style="white-space: nowrap"
-              />
+              <q-btn size="md" color="brightbtn" label="发送验证码" @click="toggleInnerCode" style="white-space: nowrap" />
             </template>
             <template v-slot:prepend>
-              <q-icon color="bright" name="security" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <label class="input-label">验证码</label>
+              </div>
             </template>
           </q-input>
         </div>
 
-        <div class="row items-center justify-between q-mt-xs">
-          <div :class="isCheckRmb ? 'checked' : ''">
-            <q-checkbox
-              rounded
-              v-model="isCheckRmb"
-              label="记住密码"
-              size="xs"
-              checked-icon="task_alt"
-              unchecked-icon="highlight_off"
-              color="light-blue-4"
-            />
-          </div>
-
+        <div class="row items-center justify-between">
           <div class="login-via-phone-div">
             <span @click="loginType = !loginType">
               {{ loginType ? "用户名登录" : "手机号登录" }}
@@ -181,31 +97,27 @@
           </div>
 
           <div class="text-center">
-            <router-link class="forget-pwd-tip" to="/forgot-password">忘记密码？</router-link>
+            <router-link class="forget-pwd-tip" to="/forgot-password">忘记密码</router-link>
           </div>
         </div>
-      </div>
-      <div class="bottom-btn-list">
-        <q-btn
-          @click.prevent="onSubmit"
-          type="submit"
-          class="common-large-btn bottom-btn"
-          label="登录"
-          color="brightbtn"
-          rounded
-        />
-        <router-link to="/register">
-          <q-btn class="common-large-white-btn bottom-btn" label="注册" rounded />
-        </router-link>
-      </div>
-      <div class="text-center q-pb-lg">
-        <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">联系客服</router-link>
-      </div>
-    </q-form>
 
-    <!-- <div class="login-bottom-div">
-      <img src="../assets/images/login/login-banner.png" />
-    </div> -->
+        <div class="q-py-md">
+          <q-btn @click.prevent="onSubmit" type="submit" class="common-large-btn bottom-btn" label="登录"
+            color="brightbtn" flat />
+          <router-link to="/register">
+            <q-btn class="common-large-white-btn bottom-btn" flat label="注册" />
+          </router-link>
+        </div>
+      </q-form>
+    </div>
+
+    <div class="text-center q-pt-lg customer-service-link">
+      <div class="decor-lines" />
+      <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
+        <img width="18" src="../assets/images/login/cs-icon.svg" />联系客服
+      </router-link>
+      <div class="decor-lines" />
+    </div>
   </div>
 
   <q-dialog v-model="showCaptchaDialog" width="100%" no-backdrop-dismiss>
@@ -220,12 +132,8 @@
         <q-card-section class="q-mb-md q-pa-md">
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
-              <img
-                :src="phoneVerificationImg"
-                title="点击刷新验证码"
-                style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode"
-              />
+              <img :src="phoneVerificationImg" title="点击刷新验证码" style="margin-top: 6px; cursor: pointer"
+                @click="getInnerCode" />
             </template>
           </q-input>
         </q-card-section>
@@ -239,9 +147,8 @@
 import { defineComponent, ref, reactive, onMounted, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
-import { useQuasar, Platform } from "quasar";
+import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 
 export default defineComponent({
@@ -539,171 +446,192 @@ export default defineComponent({
 });
 </script>
 
+<style lang="scss">
+.login-container {
+  .q-field--standout .q-field__control {
+    border-radius: 8px;
+    background: #f7f8fb;
+    box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+    height: 44px;
+  }
+
+  .q-field__marginal{
+    height: 44px;
+  }
+
+  .q-input{
+    height: 68px;
+  }
+
+  .q-field__bottom{
+    padding: 0px 12px 8px;
+  }
+}
+</style>
+
 <style scoped lang="scss">
 .login-container {
   position: relative;
-  background: url(../assets/images/login/login-bg.png) no-repeat top center;
+  background: url(../assets/images/login/login-bg.jpg) no-repeat top center;
   background-size: 100% auto;
-  background-color: #ffffff;
+  background-color: #fff;
   height: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  display: flex;
+  padding: 20px;
+  gap: 10px;
+  justify-content: space-between;
 
   .back-left {
     position: absolute;
     left: 6px;
-    top: 6px;
+    top: 20px;
     height: 40px;
     width: 40px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 
-    img {
+    .back-left-img {
       width: 14px;
     }
   }
 
-  .logo {
-    margin: 0 auto;
-    padding: 40px 0 40px;
+  .login-content {
     display: flex;
-    width: 135px;
+    flex-direction: column;
+    gap: 10px;
 
-    img {
-      width: 100%;
-    }
-  }
+    .logo {
+      margin: 0 auto;
+      display: flex;
+      width: 125px;
 
-  .login-h2 {
-    width: 200px;
-    text-align: center;
-    margin: 0 auto 10px;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .q-tabs {
-    background: rgba(113, 125, 146, 0.2);
-    border-radius: 30px;
-    width: 80%;
-    margin: 0 auto;
-  }
-
-  .q-tab {
-    min-height: 40px;
-  }
-
-  .q-tab__content {
-    width: 100%;
-  }
-
-  .q-tab--active .q-tab__indicator {
-    height: 100%;
-
-    border-radius: 30px;
-  }
-
-  .q-tab__label {
-    z-index: 1;
-  }
-
-  .q-tab-panels {
-    background: none;
-    padding: 10px;
-  }
-
-  .align-right {
-    text-align: right;
-    color: #acacac;
-    margin-top: 0px;
-  }
-
-  .forget-pwd-tip {
-    color: $font-1;
-    font-size: 1rem;
-    text-decoration: none;
-  }
-
-  .login-form-container {
-    width: $box-width;
-    margin: 0 auto;
-    background: $white;
-    border-radius: 10px;
-    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
-    padding: 15px 12px 15px;
-
-    q-label {
-      padding-top: 3px;
-      padding-left: 8px;
-      padding-bottom: 3px;
-      color: $font-2;
-      font-size: 1rem;
-
-      em {
-        color: $negative;
+      .logo-img {
+        width: 100%;
       }
     }
 
-    .q-input {
-      margin-bottom: 4px;
+    .login-banner-img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+
+    .input-icon-label-wrapper {
+      width: 100px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      padding-left: 10px;
+      padding-right: 20px;
+
+      .input-icon {
+        width: 16px;
+      }
+
+      .input-label {
+        font-weight: bold;
+        color: #424F72;
+        font-size: 16px;
+      }
     }
 
     .veri-img {
-      height: 80%;
-      padding-right: 6px;
-      width: 125px;
+      height: 65%;
+      width: 100%;
+      min-width: 40px;
+      max-width: 120px;
+      border-radius: 10px;
     }
 
     .login-via-phone-div {
       color: $primary;
       font-size: 1rem;
+      font-weight: bold;
     }
-  }
 
-  .bottom-btn-list {
-    margin: 10px auto;
-    width: $box-width;
-    // padding: 0 16px;
-    box-sizing: border-box;
-  }
+    .forget-pwd-tip {
+      color: $font-1;
+      font-size: 1rem;
+      text-decoration: none;
+    }
 
-  .bottom-btn {
-    width: 100%;
-    margin: 10px auto 10px;
-  }
-
-  .cs-web-id {
-    color: $primary;
-    font-size: 1rem;
-  }
-
-  .login-bottom-div {
-    width: 100%;
-    margin-top: 10px;
-
-    img {
+    .bottom-btn {
       width: 100%;
+      margin: 10px auto 10px;
     }
   }
-}
 
-.checked {
-  color: #0089ed;
+  .customer-service-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .decor-lines {
+      width: 80px;
+      height: 1px;
+      background-color: #7a80a1;
+      margin: 0 20px;
+    }
+
+    .cs-web-id {
+      color: $primary;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #7A80A1;
+      font-weight: bold;
+    }
+  }
 }
 
 .body--dark {
   .login-container {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
     background-size: 100% auto;
-    .login-form-container {
-      @include content-block-dark-with-border;
-      q-label {
-        color: $font-3-dark;
-      }
-    }
+  }
+}
+
+.common-large-btn {
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: $white;
+  border-radius: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.common-large-white-btn {
+  background: linear-gradient(180deg, rgba(115, 178, 255, 0.1) 0%, rgba(57, 129, 255, 0.1) 100%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #424F72;
+  border-radius: 10px;
+  box-shadow: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 </style>

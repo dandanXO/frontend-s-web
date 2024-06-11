@@ -1,5 +1,5 @@
 <template>
-  <q-page class="">
+  <q-page class="forgot-pass-container">
     <template v-if="!isEmailSent">
       <div class="fgtpwd-tabs-div">
         <div class="fgtpwd-item" @click="goToTab('tabSms')" :class="fgtpwdTab === 'tabSms' ? 'is-active' : ''">
@@ -23,262 +23,157 @@
     <div class="forgetpass-board q-gutter-y-md">
       <q-form v-if="!isEmailSent" class="q-mt-xs">
         <template v-if="fgtpwdTab === 'tabSms'">
-          <q-label>
-            用户名:
-            <em>*</em>
-          </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormPhone.loginName"
-            placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+          <q-input standout clearable v-model="passwordFormPhone.loginName" placeholder="请输入用户名"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名']" color="white" label-color="secondary"
+            autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
-            </template>
-          </q-input>
-
-          <q-label>
-            手机号码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormPhone.phone"
-            placeholder="请输入手机号码"
-            :rules="[(val) => (val && val.length > 0) || '请输入手机号码']"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
-            <template v-slot:prepend>
-              <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/phone-icon.png" width="18" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+                <label class="input-label">用户名</label>
               </div>
             </template>
           </q-input>
 
-          <q-label>
-            验证码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="ftCaptchaRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="passwordFormPhone.captchaCode"
-            placeholder="请输入验证码"
-            :rules="[
+          <q-input standout clearable v-model="passwordFormPhone.phone" placeholder="请输入手机号码"
+            :rules="[(val) => (val && val.length > 0) || '请输入手机号码']" color="white" label-color="secondary"
+            autocomplete="username">
+            <template v-slot:prepend>
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/phone-icon.svg" />
+                <label class="input-label">手机号码</label>
+              </div>
+            </template>
+          </q-input>
+
+          <q-input ref="ftCaptchaRef" standout clearable type="text" maxlength="4"
+            v-model="passwordFormPhone.captchaCode" placeholder="请输入验证码" :rules="[
               (val) => (val && val.length > 0) || '请输入验证码',
               (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <label class="input-label">验证码</label>
+              </div>
             </template>
           </q-input>
 
-          <div class="row justify-between items-center">
-            <q-btn
-              @click.prevent="onSubmitForgotPwd('phone')"
-              class="common-large-btn"
-              label="提交"
-              width="100%"
-              color="brightbtn"
-              style="width: 100%"
-            />
+          <div class="row justify-between items-center q-py-md">
+            <q-btn @click.prevent="onSubmitForgotPwd('phone')" class="common-large-btn" label="提交" width="100%"
+              color="brightbtn" style="width: 100%" />
           </div>
         </template>
 
         <template v-if="fgtpwdTab === 'tabEmail'">
-          <q-label>
-            用户名:
-            <em>*</em>
-          </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormEmail.loginName"
-            placeholder="请输入用户名"
-            :rules="[(val) => (val && val.length > 0) || '请输入用户名']"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
+          <q-input standout clearable v-model="passwordFormEmail.loginName" placeholder="请输入用户名"
+            :rules="[(val) => (val && val.length > 0) || '请输入用户名']" color="white" label-color="secondary"
+            autocomplete="username">
             <template v-slot:prepend>
-              <img src="../assets/images/login/user-icon.png" width="24" />
-            </template>
-          </q-input>
-
-          <q-label>
-            邮箱:
-            <em>*</em>
-          </q-label>
-          <q-input
-            rounded
-            standout
-            clearable
-            v-model="passwordFormEmail.email"
-            placeholder="请输入邮箱"
-            :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]"
-            color="white"
-            label-color="secondary"
-            autocomplete="username"
-          >
-            <template v-slot:prepend>
-              <div style="width: 24px; display: flex; align-items: center">
-                <img src="../assets/images/login/mail-icon.png" width="27" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/user-icon.svg" />
+                <label class="input-label">用户名</label>
               </div>
             </template>
           </q-input>
 
-          <q-label>
-            验证码:
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="ftCaptchaRef"
-            rounded
-            standout
-            clearable
-            type="text"
-            maxlength="4"
-            v-model="passwordFormEmail.captchaCode"
-            placeholder="请输入验证码"
-            :rules="[
+          <q-input standout clearable v-model="passwordFormEmail.email" placeholder="请输入邮箱"
+            :rules="[(val) => (val && val.length > 0) || '请输入邮箱', isValidEmail]" color="white" label-color="secondary"
+            autocomplete="username">
+            <template v-slot:prepend>
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/email-icon.png" />
+                <label class="input-label">邮箱</label>
+              </div>
+            </template>
+          </q-input>
+
+          <q-input ref="ftCaptchaRef" standout clearable type="text" maxlength="4"
+            v-model="passwordFormEmail.captchaCode" placeholder="请输入验证码" :rules="[
               (val) => (val && val.length > 0) || '请输入验证码',
               (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
-            ]"
-            color="white"
-            label-color="brand"
-          >
+            ]" color="white" label-color="brand">
             <template v-slot:append>
               <img class="veri-img" :src="verificationImg" @click="getCode" />
             </template>
             <template v-slot:prepend>
-              <img src="../assets/images/login/veri-icon.png" width="24" />
+              <div class="input-icon-label-wrapper">
+                <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+                <label class="input-label">验证码</label>
+              </div>
             </template>
           </q-input>
 
-          <div class="row justify-between items-center">
-            <q-btn
-              @click.prevent="onSubmitForgotPwd('email')"
-              class="common-large-btn"
-              label="提交"
-              width="100%"
-              color="brightbtn"
-              style="width: 100%"
-            />
+          <div class="row justify-between items-center q-py-md">
+            <q-btn @click.prevent="onSubmitForgotPwd('email')" class="common-large-btn" label="提交" width="100%"
+              color="brightbtn" style="width: 100%" />
           </div>
         </template>
       </q-form>
 
-      <div  v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的{{ (fgtpwdTab ==='tabSms') ? '手机短信' : '电子邮件' }}中, 请输入验证码和新密码。</div>
-      <q-form v-if="isEmailSent" class="q-gutter-y-md rounded-borders">
-        <q-input
-          ref="codeRef"
-          filled
-          hide-bottom-space
-          v-model="verificationForm.code"
-          label="验证码"
-          lazy-rules
-          clearable
-          :rules="[(val) => (val && val.length > 0) || '请输入验证码']"
-        >
+      <div v-if="isEmailSent" class="text-blue q-px-md">验证码已发送到您的{{ (fgtpwdTab === 'tabSms') ? '手机短信' : '电子邮件' }}中,
+        请输入验证码和新密码。</div>
+      <q-form v-if="isEmailSent" class="q-gutter-y-md">
+        <q-input ref="codeRef" standout hide-bottom-space v-model="verificationForm.code" placeholder="请输入验证码"
+          lazy-rules clearable :rules="[(val) => (val && val.length > 0) || '请输入验证码']">
           <template v-slot:prepend>
-            <q-icon name="qr_code" />
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <label class="input-label">验证码</label>
+            </div>
           </template>
         </q-input>
-        <q-input
-          ref="newPwdRef"
-          :type="isPwd ? 'password' : 'text'"
-          filled
-          hide-bottom-space
-          v-model="verificationForm.newPassword"
-          label="新密码"
-          clearable
-          lazy-rules
-          :rules="[
+        <q-input ref="newPwdRef" :type="isPwd ? 'password' : 'text'" standout hide-bottom-space
+          v-model="verificationForm.newPassword" placeholder="请输入密码" clearable lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入密码',
             (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12',
             (val) => (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || '密码安全级别必须至少为好'
-          ]"
-        >
+          ]">
           <template v-slot:prepend>
-            <q-icon name="lock_open" />
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/password-icon.svg" />
+              <label class="input-label">新密码</label>
+            </div>
           </template>
           <template v-slot:append>
-            <q-icon
-              color="bright"
-              :name="isPwd ? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"
-            />
+            <q-icon color="bright" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+              @click="isPwd = !isPwd" />
           </template>
         </q-input>
         <div v-if="verificationForm.newPassword" class="password-str-div">
-          <span
-            :class="{
-              'weak-pwd': pwdStrength == 'weak',
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
+          <span :class="{
+            'weak-pwd': pwdStrength == 'weak',
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }">
             弱
           </span>
-          <span
-            :class="{
-              'normal-pwd': pwdStrength == 'normal',
-              'strong-pwd': pwdStrength == 'strong'
-            }"
-          >
+          <span :class="{
+            'normal-pwd': pwdStrength == 'normal',
+            'strong-pwd': pwdStrength == 'strong'
+          }">
             好
           </span>
           <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>
         </div>
-        <q-input
-          ref="captchaRef"
-          filled
-          hide-bottom-space
-          type="text"
-          v-model="verificationForm.captchaCode"
-          label="验证码"
-          lazy-rules
-          :rules="[(val) => (val && val.length > 3) || '请输入验证码']"
-        >
+        <q-input ref="captchaRef" standout hide-bottom-space type="text" v-model="verificationForm.captchaCode"
+          placeholder="请输入验证码" lazy-rules :rules="[(val) => (val && val.length > 3) || '请输入验证码']">
           <template v-slot:append>
-            <img :src="verificationImg" @click="getCode()" />
+            <img class="veri-img" :src="verificationImg" @click="getCode()" />
           </template>
           <template v-slot:prepend>
-            <q-icon name="security" />
+            <div class="input-icon-label-wrapper">
+              <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
+              <label class="input-label">验证码</label>
+            </div>
           </template>
         </q-input>
 
-        <div class="row justify-between items-center">
-          <q-btn
-            @click.prevent="onVerifyForgotPassword"
-            label="提交"
-            width="100%"
-            class="common-large-btn"
-            color="brightbtn"
-            style="width: 100%"
-          />
+        <div class="row justify-between items-center q-py-md">
+          <q-btn @click.prevent="onVerifyForgotPassword" label="提交" width="100%" class="common-large-btn"
+            color="brightbtn" style="width: 100%" />
         </div>
       </q-form>
     </div>
@@ -571,6 +466,52 @@ function charType(num) {
 </script>
 
 <style lang="scss">
+.forgot-pass-container {
+  .q-field--standout .q-field__control {
+    border-radius: 12px;
+    background: #f7f8fb;
+    box-shadow: 0px 0px 4px 0px #A9C9EA inset;
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.veri-img {
+  height: 65%;
+  width: 100%;
+  min-width: 40px;
+  max-width: 120px;
+  border-radius: 10px;
+}
+
+.forgot-pass-container {
+  position: relative;
+  background: url(../assets/images/login/login-bg.jpg) no-repeat top center;
+  background-size: 100% auto;
+  background-color: #fff;
+}
+
+.input-icon-label-wrapper {
+  width: 100px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding-left: 10px;
+  padding-right: 20px;
+
+  .input-icon {
+    width: 16px;
+  }
+
+  .input-label {
+    font-weight: bold;
+    color: #424F72;
+    font-size: 16px;
+  }
+}
+
 .page-header {
   background-image: linear-gradient(to right, #de4545, #db7e42);
   -webkit-background-clip: text;
@@ -598,11 +539,9 @@ function charType(num) {
 
 .forgetpass-board {
   width: $box-width;
-  margin: 10px auto 30px;
-  background: $white;
+  margin: 0px auto 30px;
   border-radius: 10px;
-  box-shadow: $shadow-bg;
-  padding: 16px 12px 25px;
+  padding: 16px 0px 25px;
 
   .q-field--standout.q-field--rounded .q-field__control {
     border-radius: 12px;
@@ -631,7 +570,7 @@ function charType(num) {
     //border: 1px solid #fff;
     border-radius: 5px;
     background: #434343;
-    color:#fff;
+    color: #fff;
     width: 33%;
     text-align: center;
   }
@@ -652,42 +591,6 @@ function charType(num) {
   }
 }
 
-.login-form-container {
-  width: $box-width;
-  margin: 0 auto;
-  background: $white;
-  border-radius: 10px;
-  box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
-  padding: 15px 12px 20px;
-
-  q-label {
-    padding-top: 3px;
-    padding-left: 8px;
-    padding-bottom: 3px;
-    color: $font-2;
-    font-size: 1rem;
-
-    em {
-      color: $negative;
-    }
-  }
-
-  .q-input {
-    margin-bottom: 4px;
-  }
-
-  .veri-img {
-    height: 80%;
-    padding-right: 6px;
-    width: 125px;
-  }
-
-  .login-via-phone-div {
-    color: $primary;
-    font-size: 1rem;
-  }
-}
-
 .fgtpwd-tabs-div {
   cursor: pointer;
   gap: 14px;
@@ -695,9 +598,7 @@ function charType(num) {
   grid-template-columns: repeat(2, 1fr);
   width: $box-width;
   padding: 1rem 0.9rem 1rem;
-  margin: 10px auto;
-  background: $white;
-  box-shadow: $shadow-bg;
+  margin: 0px auto;
   border-radius: 10px;
 
   .fgtpwd-item {
@@ -731,6 +632,41 @@ function charType(num) {
         font-weight: bold;
       }
     }
+  }
+}
+
+.common-large-btn {
+  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: $white;
+  border-radius: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
+  }
+}
+
+.common-large-white-btn {
+  background: linear-gradient(180deg, rgba(115, 178, 255, 0.1) 0%, rgba(57, 129, 255, 0.1) 100%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #424F72;
+  border-radius: 10px;
+  box-shadow: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 </style>
