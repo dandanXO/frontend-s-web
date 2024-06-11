@@ -1,7 +1,7 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title" style="display: flex; justify-content: space-between;">{{ $t('personal.personalInfo') }}
+      <div class="menu-title" style="display: flex; gap: 20px;">{{ $t('personal.personalInfo') }}
       <span style="font-size: 14px;">{{ $t('personal.url') }}: <a :href="evipWeb" style="color:#468cff;">{{ evipWeb }}</a></span></div>
     </div>
     <el-tabs v-model="selectedTab">

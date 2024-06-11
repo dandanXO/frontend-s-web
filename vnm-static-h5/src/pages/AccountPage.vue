@@ -100,6 +100,19 @@
             <q-btn :label="$t('lang.menu_rebate')" no-caps class="btn-main btn-pointer" @click="getRebateAmt" />
             <!-- <q-btn :label="$t('lang.transfer_btn')" no-caps class="btn-main btn-pointer" @click="openTransfer" /> -->
           </div>
+            <div class="eshare-div">
+            <span v-if="store.evip">
+              {{ $t("lang.personal_exclusiveurl") }}:
+              <a class="share-link" :href="'https://' +store.evip" target="_blank">
+                {{ 'https://' + store.evip }}
+              </a>
+              <!-- <img
+                class="copy-btn btn-pointer"
+                src="../assets/images/account/account-copy-icon.png"
+                @click="copyLink"
+              /> -->
+            </span>
+          </div>
         </q-card-section>
 
         <!-- <q-separator /> -->
@@ -740,7 +753,10 @@ export default defineComponent({
     }
 
     .left-sect {
+      display: flex;
       flex-wrap: nowrap;
+      align-items: center;
+      gap: 10px;
 
       .label {
         display: flex;
@@ -752,6 +768,7 @@ export default defineComponent({
         span {
           font-size: 1rem;
           line-height: 1rem;
+          width: 32px;
         }
 
         img {
@@ -788,8 +805,8 @@ export default defineComponent({
     color: $white;
     font-size: 1rem;
     font-weight: bold;
-    width: calc(100% - 25px);
-    margin-left: 25px;
+    width: calc(100% - 135px);
+    // margin-left: 25px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -862,30 +879,29 @@ export default defineComponent({
       }
     }
 
-    .eshare-div {
+  }
+
+  .eshare-div {
       margin-right: auto;
       width: 100%;
-      color: $grey-color;
-      font-size: 1.2rem;
+      color: $white;
+      font-size: 1rem;
 
       > span {
         display: flex;
-        align-items: center;
         justify-content: flex-start;
-        gap: 14px;
-      }
+        gap: 10px;
+          }
 
       .copy-btn {
         width: 20px;
       }
 
       .share-link {
-        color: $white;
+        color: $primary;
         text-decoration: none;
       }
     }
-  }
-
   //.bluecard {
   //  width: 98%;
   //  margin: 0 0px !important;
