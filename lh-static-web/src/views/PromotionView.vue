@@ -103,6 +103,7 @@
               selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
                 : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
+            backgroundImage: selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'',
             backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
             backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
             backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : ''
