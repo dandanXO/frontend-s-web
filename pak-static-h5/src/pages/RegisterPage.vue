@@ -222,7 +222,7 @@
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>Download App</div>
+        <div>{{ $t("btn.downloadApp") }}</div>
       </div>
       <div class="list-item" @click="openTiktok()">
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />

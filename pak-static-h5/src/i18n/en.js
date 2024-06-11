@@ -160,7 +160,8 @@ export default {
     back: "Back",
     moreGames: "More Games",
     addCash: "Add Cash",
-    search: "Search"
+    search: "Search",
+    downloadApp: "Download App"
   },
   notify: {
     noRecord: "No Record",

@@ -160,7 +160,8 @@ export default {
     back: "واپس",
     moreGames: "مزید کھیل",
     addCash: "کیش شامل کریں",
-    search: "تلاش"
+    search: "تلاش",
+    downloadApp: "ایپ ڈاؤن لوڈ کریں"
   },
   notify: {
     noRecord: "کوئی ریکارڈ نہیں",
