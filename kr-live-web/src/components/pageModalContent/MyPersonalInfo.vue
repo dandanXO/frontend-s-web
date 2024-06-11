@@ -3,8 +3,9 @@
     <form class="personal-info-form form-template">
       <div class="form-item">
         <label>아이디(개인정보)</label>
-        <q-input dense v-model="formDetail.nickName" :readonly="!!store.token" outlined
-          @update:model-value="updateTouch" />
+        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
+          @update:model-value="updateTouch" ref="name2Ref"  lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']"/>
       </div>
       <div class="form-item">
         <label>실제 이름</label>
@@ -12,18 +13,18 @@
           :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
           @update:model-value="updateTouch" />
       </div>
-      <div class="form-item">
+      <!-- <div class="form-item">
         <label>잔액</label>
         <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
           @update:model-value="updateTouch" />
-      </div>
+      </div> -->
       <div class="form-item">
         <label>이메일</label>
-        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.token" @update:model-value="updateTouch" />
+        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
       </div>
       <div class="form-item">
         <label>전화</label>
-        <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.token"
+        <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
           @update:model-value="updateTouch" />
       </div>
     </form>
@@ -51,6 +52,7 @@ const $q = useQuasar();
 const hasTouched = ref(false);
 const formDetail = reactive({});
 const realNameRef = ref();
+const name2Ref = ref();
 const personalState = reactive({
   memberInfo: {}
 });
@@ -67,7 +69,7 @@ const updateTouch = () => {
 const loadInfo = () => {
   personalState.memberInfo = userStore();
   formDetail.realName = personalState.memberInfo.realName;
-  formDetail.nickName = personalState.memberInfo.nickName;
+  formDetail.name2 = personalState.memberInfo.name2;
   formDetail.mainWallet = personalState.memberInfo.token ? mainWallet : ''
   formDetail.email = personalState.memberInfo.email || '';
   formDetail.telephone = personalState.memberInfo.telephone || ''
@@ -80,15 +82,15 @@ const updateState = () => {
 
   const updateInfo = {};
 
-  if (personalState.memberInfo.realName !== formDetail.realName) {
-    realNameRef.value.validate();
-    if (realNameRef.value.hasError) {
+  if (personalState.memberInfo.name2 !== formDetail.name2) {
+    name2Ref.value.validate();
+    if (name2Ref.value.hasError) {
       return;
     }
 
-    updateInfo.realName = formDetail.realName;
+    updateInfo.name2 = formDetail.name2;
 
-    api.post("/session/accounta", qs.stringify(updateInfo)).then(({ data }) => {
+    api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
       const res = data
       if (res.code === 0) {
         $q.notify({

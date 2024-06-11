@@ -3,7 +3,7 @@
     <div class="information">
       <div class="member">
         <img src="../../assets/images/login/member.svg" alt="" />
-        <div>{{ store.nickName }}</div>
+        <div>{{ store.name2 || store.realName }}</div>
       </div>
       <div class="money">
         <img src="../../assets/images/login/money.svg" alt="" />
