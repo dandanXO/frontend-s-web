@@ -1,12 +1,12 @@
 <template>
   <div class="hongbaoyu-container">
-    <!--    <div>-->
-    <!--      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />-->
-    <!--    </div>-->
+    <div>
+      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />
+    </div>
 
-    <!--    <div class="hongbao-subtitle">-->
-    <!--      <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-01.png" />-->
-    <!--    </div>-->
+    <div class="hongbao-subtitle">
+      <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-01.png" />
+    </div>
 
     <div class="receive-container" v-if="!promoNotReady && !bonusOpened">
       <div @click="getPromotion" class="hongbao-open">
@@ -14,94 +14,94 @@
       </div>
     </div>
 
-    <!--    <div class="winner-container">-->
-    <!--      <div class="title-wrapper">-->
-    <!--        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-ribbon.png`)" />-->
-    <!--        <span>中奖记录</span>-->
-    <!--      </div>-->
+    <div class="winner-container">
+      <div class="title-wrapper">
+        <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-ribbon.png`)" />
+        <span>中奖记录</span>
+      </div>
 
-    <!--      <div class="winner-wrapper">-->
-    <!--        <div class="contents">-->
-    <!--          <div class="winner" v-for="(item, index) in visibleItems" :key="index">-->
-    <!--            <div>{{ item.date }}</div>-->
-    <!--            <div>{{ item.name }}</div>-->
-    <!--            <div class="amount-txt">{{ item.amount }}</div>-->
-    <!--          </div>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+      <div class="winner-wrapper">
+        <div class="contents">
+          <div class="winner" v-for="(item, index) in visibleItems" :key="index">
+            <div>{{ item.date }}</div>
+            <div>{{ item.name }}</div>
+            <div class="amount-txt">{{ item.amount }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!--    <div class="content-container">-->
-    <!--      <div class="hongbao-subtitle">-->
-    <!--        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-02.png" />-->
-    <!--      </div>-->
+    <div class="content-container">
+      <div class="hongbao-subtitle">
+        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-02.png" />
+      </div>
 
-    <!--      <div class="contents">-->
-    <!--        <div class="event-details">-->
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动时间</div>-->
-    <!--            <div class="event-txt">{{ getDateRange(promoParam) }}</div>-->
-    <!--          </div>-->
+      <div class="contents">
+        <div class="event-details">
+          <div class="details-item">
+            <div class="event-frame">活动时间</div>
+            <div class="event-txt">{{ getDateRange(promoParam) }}</div>
+          </div>
 
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动对象</div>-->
-    <!--            <div class="event-txt">东赢全体会员</div>-->
-    <!--          </div>-->
+          <div class="details-item">
+            <div class="event-frame">活动对象</div>
+            <div class="event-txt">东赢全体会员</div>
+          </div>
 
-    <!--          <div class="details-item">-->
-    <!--            <div class="event-frame">活动期间</div>-->
-    <!--            <div class="event-txt">-->
-    <!--              根据欧洲杯赛事-->
-    <!--              <span class="color-red">当日进球粒数</span>-->
-    <!--              派发开启红包雨，-->
-    <!--              <span class="color-red">所有会员</span>-->
-    <!--              均可参与，红包仅需-->
-    <!--              <span class="color-red">一倍流水</span>-->
-    <!--              即可转出。-->
-    <!--            </div>-->
-    <!--          </div>-->
+          <div class="details-item">
+            <div class="event-frame">活动期间</div>
+            <div class="event-txt">
+              根据欧洲杯赛事
+              <span class="color-red">当日进球粒数</span>
+              派发开启红包雨，
+              <span class="color-red">所有会员</span>
+              均可参与，红包仅需
+              <span class="color-red">一倍流水</span>
+              即可转出。
+            </div>
+          </div>
 
-    <!--          <table class="details-table" border="0" cellpadding="0" cellspacing="0">-->
-    <!--            <thead>-->
-    <!--              <tr>-->
-    <!--                <td>进*粒球</td>-->
-    <!--                <td>红包雨总奖金</td>-->
-    <!--                <td>流水倍数</td>-->
-    <!--              </tr>-->
-    <!--            </thead>-->
-    <!--            <tbody>-->
-    <!--              <tr>-->
-    <!--                <td>≥1</td>-->
-    <!--                <td>10,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--              <tr>-->
-    <!--                <td>≥3</td>-->
-    <!--                <td>50,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--              <tr>-->
-    <!--                <td>≥5</td>-->
-    <!--                <td>100,000</td>-->
-    <!--                <td>1倍/不限场馆</td>-->
-    <!--              </tr>-->
-    <!--            </tbody>-->
-    <!--          </table>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+          <table class="details-table" border="0" cellpadding="0" cellspacing="0">
+            <thead>
+              <tr>
+                <td>进*粒球</td>
+                <td>红包雨总奖金</td>
+                <td>流水倍数</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>≥1</td>
+                <td>10,000</td>
+                <td>1倍/不限场馆</td>
+              </tr>
+              <tr>
+                <td>≥3</td>
+                <td>50,000</td>
+                <td>1倍/不限场馆</td>
+              </tr>
+              <tr>
+                <td>≥5</td>
+                <td>100,000</td>
+                <td>1倍/不限场馆</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
-    <!--    <div class="content-container">-->
-    <!--      <div class="hongbao-subtitle">-->
-    <!--        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-03.png" />-->
-    <!--      </div>-->
+    <div class="content-container">
+      <div class="hongbao-subtitle">
+        <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-03.png" />
+      </div>
 
-    <!--      <div class="contents">-->
-    <!--        <div class="rules-content">-->
-    <!--          <div v-html="promoContent" />-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+      <div class="contents">
+        <div class="rules-content">
+          <div v-html="promoContent" />
+        </div>
+      </div>
+    </div>
   </div>
 
   <el-dialog

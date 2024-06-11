@@ -14,7 +14,7 @@
       :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao' && store.token"
     />
-    <HongBaoYuEurocupPromo
+    <HongBaoPreEurocupPromo
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
@@ -177,7 +177,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
-import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
@@ -204,7 +204,7 @@ export default defineComponent({
     BonusSpinWheel,
     ReturnPromo,
     DepositAwardPromo,
-    HongBaoPreEurocup
+    HongBaoPreEurocupPromo
     // DailyBonus
   },
   props: {

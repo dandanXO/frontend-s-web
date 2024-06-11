@@ -24,7 +24,9 @@
         >
           打开红包
         </el-button> -->
-        <div @click="getPromotion" class="hongbao-open">
+        <div @click="getPromotion"
+             :class="loadingClaim ? 'disabled' : ''"
+             class="hongbao-open">
           <img :src="require(`../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/hongbao-open.png`)" />
         </div>
       </div>
@@ -307,19 +309,39 @@ onMounted(() => {
 
   .receive-container {
     position: relative;
-    margin: 0 0 25px 0;
+    margin: 0 0 10px 0;
 
     .contents {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-left: 40px;
-      margin-top: 20px;
+      margin-top: 0px;
 
       img {
         display: block;
         width: 100%;
         max-width: 300px;
+      }
+
+      .hongbao-open {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.8;
+        }
+
+        &:hover {
+          filter: brightness(0.9);
+        }
+        &:active {
+          filter: brightness(0.8);
+          transform: translate(0px, 1px);
+        }
       }
     }
   }
