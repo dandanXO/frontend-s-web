@@ -884,8 +884,9 @@ export default defineComponent({
   .eshare-div {
       margin-right: auto;
       width: 100%;
-      color: $white;
+      color: #A4AABB;
       font-size: 1rem;
+      // font-weight: bold;
 
       > span {
         display: flex;
@@ -898,7 +899,8 @@ export default defineComponent({
       }
 
       .share-link {
-        color: $primary;
+        color: $white;
+        font-weight: bold;
         text-decoration: none;
       }
     }
