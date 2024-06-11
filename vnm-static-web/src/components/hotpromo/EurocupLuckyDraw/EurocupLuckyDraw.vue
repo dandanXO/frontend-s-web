@@ -30,8 +30,14 @@
         </div>
         <el-button :loading="isLoadingJackpot" @click="onSubmitJackpot" class="jackpot-button">CHỌN SỐ</el-button>
       </div>
-      <div class="jackpot-note">Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
-    </div>
+      <div class="jackpot-note">
+        <div class="note">
+        Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
+ 
+        <div class="more" @click="openTableDialog">
+          「Xem hồ sơ」
+        </div>
+      </div>       </div>
     <div class="luckydraw-details">
         <div class="luckydraw-title">Quy tắc hoạt động</div>
         <div class="luckydraw-info">
@@ -249,6 +255,48 @@
             </div>
         </div>
     </div>
+      <el-dialog class="bankModal" width="600" v-model="isDialogShow" :footer="null">
+        <div class="close-btn" @click="isDialogShow = !isDialogShow"><img style="position: absolute; z-index: 2; cursor: pointer; right: 10px;
+        top: 10px;" src="../../../assets/promo/eurocup-luckydraw/close.png"></div>
+        <el-tabs v-model="tab" class="demo-tabs">
+        <el-tab-pane label="Hồ sơ bỏ phiếu" name="voting">
+          
+              <el-table :data="votingDataSource">
+                <template #empty>
+                  <emptyData />
+                </template>
+                <el-table-column prop="loginName" :label="t('promo.list_of_winners')" />
+                <el-table-column prop="number" :label="t('promo.lucky_number_of_win')" />
+                <el-table-column prop="winStatus" :label="t('promo.record_win_status')">
+                  <template #default="scope">
+                    <span :class="{ win: scope.row.winStatus === 'WIN', loss: scope.row.winStatus === 'LOSS'}">{{ getWinStatus(scope.row.winStatus) }}</span>
+                  </template>
+                </el-table-column>
+               <el-table-column prop="recordTime" :label="t('promo.date_of_win')" />
+                <el-table-column prop="winPrize" :label="t('promo.record_win_prize')">
+                  <template #default="scope">
+                    {{ getWinPrize(scope.row.winPrize) }}
+                  </template>
+                </el-table-column>
+              </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="Kỷ lục chiến thắng" name="winning">
+              <el-table :data="winnerDataSource">
+                <template #empty>
+                  <emptyData />
+                </template>
+                <el-table-column prop="loginName" :label="t('promo.list_of_winners')" />
+                <el-table-column prop="resultTime" :label="t('promo.date_of_win')" />
+                <el-table-column prop="number" :label="t('promo.lucky_number_of_win')" />
+                <el-table-column prop="winStatus" :label="t('promo.record_win_status')">
+                  <template #default="scope">
+                    <span :class="{ win: scope.row.winStatus === 'WIN', loss: scope.row.winStatus === 'LOSS'}">{{ getWinStatus(scope.row.winStatus) }}</span>
+                  </template>
+                </el-table-column>
+              </el-table>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
@@ -256,6 +304,11 @@
 import { ref, onMounted, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { selectNumber, getSelectedNumber, getWinners, getPrizeAmount } from "@/api/index/promo";
+
+import { useI18n } from "vue-i18n";
+
+const tab = ref('voting');
+const { t } = useI18n();
 const inputs = [1, 2, 3]; // Three inputs
 const inputValues = ref(["", "", ""]); // Reactive array to store input values
 const inputRefs = ref([]);
@@ -305,21 +358,65 @@ const onSubmitJackpot = () => {
     }
   });
 };
+const votingDataSource = ref([]);
+const winnerDataSource = ref([]);
 const initSelectedNumber = () => {
+  votingDataSource.value = [];
     getSelectedNumber().then((res) => {
         if (res.code === 0) {
-            console.log(res.data)
+        res.data.forEach(element => {
+          votingDataSource.value.push(element);
+        });
+        } else {
+          ElMessage.error(res.message)
         }
     })
 
 }
 const initGetWinners = () => {
-
+  winnerDataSource.value = [];
     getWinners(promoCode.value).then((res) => {
         if (res.code === 0) {
-            console.log(res.data)
+          res.data.forEach((element) => {
+            element.winners.forEach((win) => {
+              win.resultTime = element.resultTime;
+              winnerDataSource.value.push(win);
+            });
+          });
+        } else {
+          ElMessage.error(res.message)
         }
     })
+}
+const getWinStatus = (status) => {
+  switch (status) {
+    case 'WIN':
+      return 'Thua';
+    case 'LOSS':
+      return 'Thắng';
+    case 'BET':
+      return 'Cược';
+    default:
+      return '';
+  }
+}
+const getWinPrize = (prize) => {
+  switch (prize) {
+    case 'FIRST_PRIZE':
+      return 'Giải nhất';
+    case 'GROUP_THREE':
+      return 'Nhóm ba';
+    case 'GROUP_SIX':
+      return 'Nhóm sáu';
+    case 'TWO_D':
+      return 'Hai chữ số';
+    default:
+      return '';
+  }
+}
+const isDialogShow = ref(false);
+const openTableDialog = () => {
+  isDialogShow.value = true;
 }
 onMounted(() => {
   getJackpotAmt();
@@ -455,6 +552,20 @@ onMounted(() => {
       width: 100%;
       margin-top: 5px;
       color: #000000;
+      display: flex;
+      justify-content: space-between;
+      gap:10px;
+      .note {
+        flex: 2;
+        text-align: left;
+      }
+      .more { flex: 1; text-align: right;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 19.36px; color: #0080FF;
+        cursor: pointer;
+        }
     }
   }
   .luckydraw-details {
@@ -608,5 +719,43 @@ onMounted(() => {
         }
     }
   }
+}
+:deep(.el-table .el-table__cell) {
+  border-color:  #ACD4F6;
+  .win {
+    color: #51ACFF;
+  }
+  .loss {
+    color: #FF5151;
+  }
+}
+:deep(.el-table:not(.el-table--border) .el-table__cell) {
+  border-right: none;
+}
+</style>
+<style lang="scss">
+body .el-tabs__nav {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+.el-tabs__header {
+  margin: 0;
+}
+
+body .el-tabs__item {
+  border: 1px solid #51ACFF;
+  color: #51ACFF; 
+  padding: 10px !important;
+}
+.el-table th .cell {
+  color: #51acff;
+}
+body .el-tabs__item.is-active {
+  background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+  color: #ffffff;
+
+}
+body .el-tabs__item.is-active:after {
+  display: none;
 }
 </style>

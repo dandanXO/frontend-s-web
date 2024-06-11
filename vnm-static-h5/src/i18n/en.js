@@ -192,7 +192,7 @@ export default {
     maintenance_time: "Maintenance Time",
 
     // personal | verify
-    personal_exclusiveurl: "Exclusive URL",
+    personal_exclusiveurl: "URL",
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
@@ -444,6 +444,7 @@ export default {
     record_fill_up_record_time: "Fill up record time",
     record_choose_lucky_number: "Choose lucky number",
     record_win_status: "Win status",
+    record_win_prize: "Winner Prize",
     record_no_data: "No data, please check other day",
     record_date_of_win: "Date of win",
     record_winner_list: "Winner list",

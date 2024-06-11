@@ -197,7 +197,7 @@ export default {
     maintenance_time: "Thời gian bảo trì",
 
     // personal | verify
-    personal_exclusiveurl: "URL riêng",
+    personal_exclusiveurl: "Truy Cập",
     personal_username: "Tên tài khoản",
     personal_realname: "Họ Tên",
     personal_realname_val: "Vui lòng nhập Họ Tên",
@@ -451,6 +451,7 @@ export default {
     record_fill_up_record_time: "Thời gian điền ghi chú",
     record_choose_lucky_number: "Chọn số may mắn",
     record_win_status: "Tình trạng thắng",
+    record_win_prize: "Giải thưởng",
     record_no_data: "Không có dữ liệu, vui lòng kiểm tra ngày khác",
     record_date_of_win: "Ngày thắng",
     record_winner_list: "Danh sách người chiến thắng",
