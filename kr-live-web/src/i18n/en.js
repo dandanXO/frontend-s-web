@@ -34,6 +34,7 @@ export default {
     menu_withdraw: "Withdraw",
     menu_message: "Message",
     menu_customer_service: "Customer Service",
+    menu_transaction_record: "Transaction Record",
     // menu end
     // page modal start
     page_modal_deposit: "Deposit",
