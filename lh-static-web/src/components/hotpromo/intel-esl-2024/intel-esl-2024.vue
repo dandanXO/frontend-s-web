@@ -227,24 +227,12 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
-import { getLplSummer24Match } from "@/api/index/promo.js";
-import moment from "moment";
-import { useLocalStorage } from "@vueuse/core";
+import { ref } from "vue";
 
 const activeTab = ref("first");
-const matchList = ref([]);
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
-onMounted(async () => {
-  const apiRes = await getLplSummer24Match();
-  console.log(apiRes);
-  matchList.value = apiRes.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).format("M 月 DD 日 HH:mm"),
-    teamOneIcon: imgURL + res.teamOneIcon,
-    teamTwoIcon: imgURL + res.teamTwoIcon
-  }));
-});
+
+
+
 </script>
 
 <style scoped lang="scss">
@@ -282,15 +270,14 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   margin-bottom: 15px;
 }
 .intel-els-tab-item {
-  font-family: FZLanTingHeiS-EB-GB;
-  font-size: 28px;
+  font-family: 'FZHanZhenGuangBiaoS';
+  font-size: 40px;
   font-weight: 400;
   line-height: 34.75px;
-  color: #948b73;
+  color: rgba(252, 191, 17, 1);
   background-image: url("@/assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -316,7 +303,7 @@ onMounted(async () => {
     background-image: url("@/assets/promo/intel-esl-24/title.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 29px;
+    margin-bottom: 25px;
   }
   .intel-els-rule-title {
     width: 100%;
@@ -324,7 +311,8 @@ onMounted(async () => {
     background-image: url("@/assets/promo/intel-esl-24/rule.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 57px;
+    margin-top: 40px;
+    margin-bottom: 25px;
   }
 
   .intel-els-team-box {
@@ -401,6 +389,7 @@ onMounted(async () => {
     border-top: 2px solid rgba(255, 207, 148, 0.3);
     margin-bottom: 16px;
     thead {
+      border-top: 3px solid rgba(255, 225, 183, 1);
       color: #FECE94;
       background: #333840;
       tr {
@@ -411,7 +400,8 @@ onMounted(async () => {
       }
     }
     tbody {
-      color: #fdffe9;
+      color: #C2C2C2;
+      background: #202427;
       tr {
         height: 60px;
         td {
@@ -463,11 +453,11 @@ onMounted(async () => {
 
   .intel-els-rule-content {
     border-top: 3px solid rgba(255, 225, 183, 1);
-    padding-left: 16px;
-    padding-right: 54px;
+    padding: 0px 16px;
+    
     padding-top: 41px;
     padding-bottom: 30px;
-    height: 445px;
+    background-color: #202427;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -487,10 +477,10 @@ onMounted(async () => {
       }
       .item-text {
         width: calc(100% - 40px);
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 400;
         line-height: 25.4px;
-        color: #fdffe9;
+        color: #C2C2C2;
       }
     }
   }
@@ -506,7 +496,7 @@ onMounted(async () => {
     background-image: url("@/assets/promo/intel-esl-24/title.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 29px;
+    margin-bottom: 25px;
   }
   .intel-els-activities {
     font-size: 20px;
@@ -530,6 +520,7 @@ onMounted(async () => {
     border-top: 2px solid rgba(255, 207, 148, 0.3);
     margin-bottom: 16px;
     thead {
+      border-top: 3px solid rgba(255, 225, 183, 1);
       color: #FECE94;
       background: #333840;
 
@@ -541,7 +532,8 @@ onMounted(async () => {
       }
     }
     tbody {
-      color: #fdffe9;
+      color: #C2C2C2;
+      background: #202427;
       tr {
         height: 41px;
         td {
@@ -594,16 +586,16 @@ onMounted(async () => {
     background-image: url("@/assets/promo/intel-esl-24/rule.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 57px;
+    margin-top: 40px;
+    margin-bottom: 25px;
   }
 
   .intel-els-rule-content {
     border-top: 3px solid rgba(255, 225, 183, 1);
-    padding-left: 16px;
-    padding-right: 54px;
+    padding: 0px 16px;
     padding-top: 41px;
     padding-bottom: 30px;
-    height: 445px;
+    background-color: #202427;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -623,10 +615,10 @@ onMounted(async () => {
       }
       .item-text {
         width: calc(100% - 40px);
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 400;
         line-height: 25.4px;
-        color: #fdffe9;
+        color: #C2C2C2;
       }
     }
   }
