@@ -308,7 +308,8 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || t("form.depositAmount_placeholder"),
-  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value
+  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value + '-' + calculatedMaxDeposit.value,
+  (val) => val < calculatedMaxDeposit.value + 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value + '-' + calculatedMaxDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
@@ -323,6 +324,7 @@ const form = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
+const calculatedMaxDeposit = ref("500,000");
 
 const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
@@ -448,7 +450,8 @@ const onSelect = (value) => {
 
 function checkMinDepositAmt() {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 100;
+  calculatedMinDeposit.value = 300;
+  calculatedMaxDeposit.value = 50000;
 }
 
 function checkPrivilege(v) {
