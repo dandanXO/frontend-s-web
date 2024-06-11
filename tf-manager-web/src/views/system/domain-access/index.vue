@@ -76,6 +76,7 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
+          v-permission="['sys:domain-access:create']"
           @click="showDialog('CREATE')"
         >
           {{ t('fields.add') }}
@@ -312,6 +313,7 @@
         align="right"
         fixed="right"
         width="200"
+        v-permission="['sys:domain-access:update', 'sys:domain-access:del']"
       >
         <template #default="scope">
           <el-button
@@ -319,6 +321,7 @@
             size="mini"
             type="success"
             @click="showEdit(scope.row)"
+            v-permission="['sys:domain-access:update']"
           />
           <el-button v-permission="['sys:domain-access:del']" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px" @click="removeSetting(scope.row.id)" />
         </template>
