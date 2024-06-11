@@ -180,6 +180,7 @@ import {userStore} from "stores/index";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
+import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -320,7 +321,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: 'Please login to continue',
+          message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
         router.push(`/login`)

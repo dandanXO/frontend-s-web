@@ -143,7 +143,7 @@
                   {{ store.currency.value }}
                 </span>
                 <span class="balance-amount" :style="`${store.balance > 9999999 && 'font-size: 10px'}`">
-                  {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
+                  {{ isLoadingBalance ? `${$t("btn.loading")}...` : convertToCommaAmount(store.balance, false) }}
                 </span>
 
                 <q-btn

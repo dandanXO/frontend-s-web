@@ -4,15 +4,15 @@
       <q-form ref="formRef" :model="mailDetailList" class="q-px-md">
         <div class="write-board-div q-py-sm">
           <div class="top q-pb-md">
-            <div class="title">Feedback type</div>
+            <div class="title">{{ $t("form.feedbackType") }}</div>
           </div>
           <q-select
             name="title"
             v-model="mailDetailList.feedbackType"
             :options="feedbackTypes"
-            :label="`${mailDetailList.feedbackType || 'Please select the opinion type'}`"
+            :label="`${mailDetailList.feedbackType || $t('form.feedbackType_select')}`"
             ref="feedbackTypeRef"
-            :rules="[(val) => !!val || 'Please select']"
+            :rules="[(val) => !!val || $t('form.feedbackType_pleaseSelect')]"
             label-color="brand"
             outlined
             color="green"
@@ -33,12 +33,12 @@
         </div>
         <div class="write-board-div q-py-sm">
           <div class="top q-pb-md">
-            <div class="title">Subject title</div>
+            <div class="title">{{ $t("form.subjectTitle") }}</div>
           </div>
           <q-input
             :rules="[
-              (val) => (val && val.length > 0) || 'Please enter subject title',
-              (val) => (val && val.length <= 200) || 'Subject title length is 200 words or less'
+              (val) => (val && val.length > 0) || $t('form.subjectTitle_rules_01'),
+              (val) => (val && val.length <= 200) || $t('form.subjectTitle_rules_02')
             ]"
             ref="titleRef"
             name="title"
@@ -51,7 +51,7 @@
             label-color="brand"
             outlined
             color="green"
-            placeholder="Please enter subject title"
+            :placeholder="$t('form.subjectTitle_placeholder')"
             bg-color="black"
           />
         </div>
@@ -81,17 +81,17 @@
         </InputRowGrid> -->
 
         <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md title">Upload image</div>
+          <div class="top q-pb-md title">{{ $t("form.uploadImage") }}</div>
           <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
         </div>
 
         <div class="write-board-div q-py-sm">
-          <div class="top q-pb-md title">Content</div>
+          <div class="top q-pb-md title">{{ $t("form.content") }}</div>
           <q-input
             ref="contentRef"
             :rules="[
-              (val) => (val && val.length > 0) || 'Please enter content',
-              (val) => (val && val.length < 501) || 'Content length is 500 words or less'
+              (val) => (val && val.length > 0) || $t('form.content_rules_01'),
+              (val) => (val && val.length < 501) || $t('form.content_rules_02')
             ]"
             name="content"
             standout
@@ -101,7 +101,7 @@
             counter
             maxlength="500"
             v-model="mailDetailList.content"
-            placeholder="Please enter content"
+            :placeholder="$t('form.content_placeholder')"
             label-color="brand"
             outlined
             color="green"
@@ -109,7 +109,7 @@
           ></q-input>
         </div>
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">POST</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="onSubmit">{{ $t("btn.post") }}</q-btn>
         </div>
       </q-form>
     </div>
@@ -119,8 +119,8 @@
     <div class="popout-dialog">
       <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
       <div class="popout-dialog-container">
-        <div class="txt-title">Message Sent</div>
-        <div class="txt-content q-mt-md text-center">Your feedback has been sent successfully!</div>
+        <div class="txt-title">{{ $t("notify.messageSent") }}</div>
+        <div class="txt-content q-mt-md text-center">{{ $t("notify.feedbackSentSuccess") }}</div>
         <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
           <q-btn label="Confirm" no-caps class="btn-confirm" v-close-popup @click="emitClose()" />
         </div>

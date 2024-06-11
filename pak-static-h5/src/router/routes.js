@@ -251,6 +251,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/account/feedback-detail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/FeedbackDetailView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/account/write",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/mail/WriteView.vue") }],

@@ -11,7 +11,7 @@
       <div class="discount-row discount-row--content">
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
-          Amount:
+          {{ $t("records.amount") }}:
           <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
         </div>
       </div>

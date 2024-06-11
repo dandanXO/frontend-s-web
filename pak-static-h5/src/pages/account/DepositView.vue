@@ -355,7 +355,7 @@ const isLoadingInitPay = ref(true);
 function initPay() {
   isLoadingInitPay.value = true;
   $q.loading.show({
-    message: "Loading data... Please wait..."
+    message: t("btn.loading_plsWait")
   });
 
   payMethods.value = [];

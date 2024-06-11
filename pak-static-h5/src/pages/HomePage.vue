@@ -962,7 +962,7 @@
             </div>
 
             <div class="fullgame-search">
-              <q-input standout v-model="searchText" label="Search" clearable clear-icon="close">
+              <q-input standout v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
                 <template v-slot:prepend>
                   <q-icon name="search" size="20px" />
                 </template>
@@ -975,7 +975,7 @@
               <div>
                 <q-spinner color="green" size="10em" :thickness="10" />
               </div>
-              <div>Loading... Please wait...</div>
+              <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
           </template>
 
@@ -1063,7 +1063,7 @@
               </div>
 
               <q-btn class="btn-more-games btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
-                More Games
+                {{ $t("btn.moreGames") }}
               </q-btn>
             </div>
           </template>
@@ -1384,10 +1384,10 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        // .get("/sitePlatformAndGamesByLabel", {
-        .get("/member/hot", {
+        .get("/sitePlatformAndGamesByLabel", {
+          // .get("/member/hot", {
           params: {
-            // gameLabel: "HOT",
+            gameLabel: "HOT",
             device: regDevice
           }
         })
