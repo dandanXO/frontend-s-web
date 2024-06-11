@@ -169,7 +169,7 @@ const getPromotion = () => {
 
         isClaimModal.value = true;
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
         store.getBalance();
       } else {
         bonusOpened.value = false;
