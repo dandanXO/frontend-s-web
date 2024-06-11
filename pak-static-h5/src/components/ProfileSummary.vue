@@ -102,7 +102,6 @@
         {{ $t("sideNav.whatsapp") }}
       </a>
 
-<<<<<<< HEAD
       <div
         class="side-menu-item side-menu-item__transparent"
         @click="handleMenuRouteClick('/language')"
@@ -113,7 +112,7 @@
         </div>
         {{ $t("sideNav.language") }}
       </div>
-=======
+
       <a class="side-menu-item side-menu-item__download" :href="topDownloadUrl" v-if="isSideDownload">
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
@@ -124,7 +123,6 @@
       <!-- <div class="side-menu-item side-menu-item__transparent"> -->
       <!-- <LangOptions /> -->
       <!-- </div> -->
->>>>>>> production
     </div>
   </div>
 
