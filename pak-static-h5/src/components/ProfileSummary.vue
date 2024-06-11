@@ -143,13 +143,7 @@
                   {{ isLoadingBalance ? "Loading..." : convertToCommaAmount(store.balance, false) }}
                 </span>
 
-                <q-btn
-                  square
-                  class="style-blue-btn"
-                  icon="wallet"
-                  dense
-                  @click="router.push('/deposit?from=' + route.path)"
-                />
+                <q-btn square class="style-blue-btn" icon="wallet" dense @click="handleBackBtn()" />
                 <!-- <div class="btn-refresh">
                   <q-icon name="sync" size="16px" color="white-7"></q-icon>
                 </div> -->
@@ -417,6 +411,13 @@ const handleMenuBackgroundClick = (event) => {
   // if (event.target === event.currentTarget) {
   menuOpen.value = false;
   // }
+};
+
+const handleBackBtn = () => {
+  if (props.homeProfile) {
+    emits("closeslot");
+  }
+  router.push("/deposit?from=" + route.path);
 };
 
 onMounted(() => {

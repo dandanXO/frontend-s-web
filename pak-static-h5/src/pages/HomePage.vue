@@ -845,18 +845,18 @@
                     <div
                       class="game--bg"
                       :style="{
-                          backgroundImage: (() => {
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
                             try {
-                              return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                              return `url(${imgURLGame}${item.icon})`;
                             } catch (e) {
-                              try {
-                                return `url(${imgURLGame}${item.icon})`;
-                              } catch (e) {
-                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
-                              }
+                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
                             }
-                          })()
-                        }"
+                          }
+                        })()
+                      }"
                     ></div>
                   </div>
 
@@ -4120,7 +4120,7 @@ watch(
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
-      border-radius: 8px;
+      border-radius: 20px;
 
       &.game-fish {
         aspect-ratio: 1/1.2;
@@ -4283,7 +4283,10 @@ watch(
 
   .fullgame-header {
     // background-image: url(../assets/images/index/fullgame-banner.jpg);
-
+    position: sticky;
+    top: 60px;
+    // background: salmon;
+    z-index: 99;
     margin: 0 -2.5%;
     // min-height: 200px;
     padding: 12px;
