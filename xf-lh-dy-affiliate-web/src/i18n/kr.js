@@ -502,6 +502,13 @@ export default {
     withdrawRecord: '은행 출금',
     createMember: '회원 생성',
     shareRatio: '지분율',
+    rebateWallet: '롤링지갑',
+    affiliateTotalRebate: '총롤링포인트',
+    myRebate: '내롤링포인트',
+    totalWinLoss: '총손익',
+    todayDeposit: '오늘충전금액',
+    todayWithdrawal: '오늘총환전',
+    depositWithdrawalDiff: '충환손익',
   },
   google: {
     google_auth_menu: '구글 인증',
