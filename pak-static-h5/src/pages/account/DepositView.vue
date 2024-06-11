@@ -324,7 +324,7 @@ const form = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
-const calculatedMaxDeposit = ref("500,000");
+const calculatedMaxDeposit = ref("");
 
 const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },

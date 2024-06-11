@@ -252,7 +252,6 @@ export default {
     upgrade: "Upgrade",
     experience: "Experience",
     rewards: "Rewards",
-    monthly: "Monthly",
     vipTable_txt:
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
   },
