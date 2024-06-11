@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-   <div class="web">{{ $t("lang.personal_exclusiveurl") }}: <a :href="`https://${personalState.memberInfo.evip}`">{{ 'https://' + personalState.memberInfo.evip }}</a></div>
+   <!-- <div class="web">{{ $t("lang.personal_exclusiveurl") }}: <a :href="`https://${personalState.memberInfo.evip}`">{{ 'https://' + personalState.memberInfo.evip }}</a></div> -->
     <q-form ref="profileFormRef">
       <q-input
         standout

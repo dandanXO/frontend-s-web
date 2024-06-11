@@ -255,7 +255,7 @@
             </div>
         </div>
     </div>
-      <el-dialog class="bankModal" width="600" v-model="isDialogShow" :footer="null">
+      <el-dialog class="votewinModal" width="600" v-model="isDialogShow" :footer="null">
         <div class="close-btn" @click="isDialogShow = !isDialogShow"><img style="position: absolute; z-index: 2; cursor: pointer; right: 10px;
         top: 10px;" src="../../../assets/promo/eurocup-luckydraw/close.png"></div>
         <el-tabs v-model="tab" class="demo-tabs">
@@ -734,28 +734,28 @@ onMounted(() => {
 }
 </style>
 <style lang="scss">
-body .el-tabs__nav {
+body .votewinModal .el-tabs__nav {
   border-radius: 10px 10px 0 0;
   overflow: hidden;
 }
-.el-tabs__header {
+.votewinModal .el-tabs__header {
   margin: 0;
 }
 
-body .el-tabs__item {
+body .votewinModal .el-tabs__item {
   border: 1px solid #51ACFF;
   color: #51ACFF; 
   padding: 10px !important;
 }
-.el-table th .cell {
+.votewinModal .el-table th .cell {
   color: #51acff;
 }
-body .el-tabs__item.is-active {
+body .votewinModal .el-tabs__item.is-active {
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
   color: #ffffff;
 
 }
-body .el-tabs__item.is-active:after {
+body .votewinModal .el-tabs__item.is-active:after {
   display: none;
 }
 </style>
