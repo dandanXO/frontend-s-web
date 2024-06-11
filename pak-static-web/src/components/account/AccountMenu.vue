@@ -71,7 +71,7 @@ const actions = computed(() => [
   { name: t("personalView.layout.accountMenu.action.promo"), img: PromoSvg, path: "/promotion" }
 ]);
 
-const links = ref([
+const links = computed(() => [
   { name: t("personalView.layout.accountMenu.link.personalCenter"), img: PersonalSvg, path: "/center/personal" },
   { name: t("personalView.layout.accountMenu.link.record"), img: RecordSvg, path: "/center/transit-record" },
   { name: t("personalView.layout.accountMenu.link.discount"), img: DiscountSvg, path: "/center/discount" },

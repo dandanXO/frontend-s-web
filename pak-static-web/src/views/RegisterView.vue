@@ -184,7 +184,7 @@
 
       <a-form ref="formRef" :model="regForm" :rules="rules">
         <a-form-item ref="loginName" name="loginName">
-          <a-input v-model:value="regForm.loginName" :placeholder="$t('registerView.form.loginName.placeholder')">
+          <a-input v-model:value="regForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
             </template>
@@ -194,7 +194,7 @@
           <a-input
             v-model:value="regForm.password"
             :type="togglePwd ? 'password' : 'text'"
-            :placeholder="$t('registerView.form.password.placeholder')"
+            :placeholder="$t('common.form.password.placeholder')"
           >
             <template #prefix>
               <RiLock2Fill />
@@ -671,7 +671,7 @@ import { getVerificationCode, sendTelephoneOtp } from "@/api/index/login";
 import { message } from "ant-design-vue";
 import { userStore, globalStore } from "@/store";
 import { useI18n } from "vue-i18n";
-import { validateLoginName } from "@/utils/validator";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const router = useRouter();
 const { t } = useI18n();
@@ -855,7 +855,7 @@ let validatePhoneNumber = async (r, v) => {
 };
 const rules = computed(() => ({
   loginName: [{ validator: validateLoginName, trigger: "blur" }],
-  password: [{ required: true, message: t("registerView.form.password.error.required") }]
+  password: [{ validator: validatePassword, trigger: "blur" }]
 }));
 const loadingRegister = ref(false);
 const onSubmit = () => {

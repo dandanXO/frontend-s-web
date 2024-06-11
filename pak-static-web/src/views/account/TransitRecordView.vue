@@ -463,7 +463,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import {
   loadRecords,
   gameBetRecordTotal,
@@ -481,10 +481,10 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const dateRangeOptions = ref([
-  { value: "1d", label: "1 Days" },
-  { value: "3d", label: "3 Days" },
-  { value: "7d", label: "7 Days" }
+const dateRangeOptions = computed(() => [
+  { value: "1d", label: t("personalView.record.option.1days") },
+  { value: "3d", label: t("personalView.record.option.3days") },
+  { value: "7d", label: t("personalView.record.option.7days") }
 ]);
 const selectedDateRange = ref({
   deposit: "1d",

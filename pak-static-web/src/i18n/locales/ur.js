@@ -78,36 +78,12 @@ export default {
       accountModal: {
         login: {
           tab: "لاگ ان",
-          form: {
-            loginName: {
-              label: "فون نمبر",
-              placeholder: "براہ کرم فون نمبر داخل کریں"
-            },
-            password: {
-              label: "پاس ورڈ",
-              placeholder: "براہ کرم فون نمبر پاس ورڈ داخل کریں",
-              error: {
-                required: "براہ کرم فون نمبر پاس ورڈ داخل کریں"
-              }
-            }
-          },
           forgetPassword: "پاس ورڈ بھول گئے",
           submitButton: "جمع کرایں"
         },
         register: {
           tab: "رجسٹر",
           form: {
-            loginName: {
-              label: "فون نمبر",
-              placeholder: "براہ کرم فون نمبر داخل کریں"
-            },
-            password: {
-              label: "پاس ورڈ",
-              placeholder: "براہ کرم فون نمبر پاس ورڈ داخل کریں",
-              error: {
-                required: "براہ کرم فون نمبر پاس ورڈ داخل کریں"
-              }
-            },
             codeAffiliate: {
               label: "دعوتی کوڈ (اختیاری)",
               placeholder: "دعوتی کوڈ درج کریں (اختیاری)"
@@ -131,10 +107,6 @@ export default {
         forgetPwd: {
           title: "اپنا پاس ورڈ بازیابی کریں",
           infoForm: {
-            loginName: {
-              label: "فون نمبر",
-              placeholder: "براہ کرم فون نمبر داخل کریں"
-            },
             email: {
               label: "ای میل",
               placeholder: "ای میل",
@@ -182,7 +154,7 @@ export default {
         }
       },
       downloadAppModal: {
-        title: "App ڈاؤن لوڈ کریں",
+        title: "ایپ ڈاؤن لوڈ کریں",
         description: "اپنے فون کو کھولیں اور اسکین کریں"
       },
       languageModal: {
@@ -190,7 +162,7 @@ export default {
         confirmButton: "تصدیق کریں"
       },
       common: {
-        downloadApp: "App ڈاؤن لوڈ کریں"
+        downloadApp: "ایپ ڈاؤن لوڈ کریں"
       }
     },
     footer: {
@@ -253,10 +225,6 @@ export default {
     personal: {
       title: "شخصی مرکز",
       form: {
-        loginName: {
-          label: "فون نمبر",
-          placeholder: "براہ کرم فون نمبر داخل کریں"
-        },
         email: {
           label: "ای میل",
           verifyButton: "تصدیق"
@@ -322,6 +290,11 @@ export default {
             suspend: "تعطیل"
           }
         }
+      },
+      option: {
+        "1days": "1 دن",
+        "3days": "3 دن",
+        "7days": "7 دن"
       }
     },
     discount: {
@@ -544,17 +517,6 @@ export default {
     }
   },
   loginView: {
-    form: {
-      loginName: {
-        placeholder: "فون نمبر"
-      },
-      password: {
-        placeholder: "پاس ورڈ",
-        error: {
-          required: "براہ کرم فون نمبر پاس ورڈ داخل کریں"
-        }
-      }
-    },
     forgetPasswordLink: "پاس ورڈ بھول گئے؟",
     loginButton: "اب لاگ ان کریں",
     register: {
@@ -564,17 +526,6 @@ export default {
   },
   registerView: {
     title: "اکاؤنٹ رجسٹر کریں",
-    form: {
-      loginName: {
-        placeholder: "فون نمبر"
-      },
-      password: {
-        placeholder: "پاس ورڈ",
-        error: {
-          required: "براہ کرم فون نمبر پاس ورڈ داخل کریں"
-        }
-      }
-    },
     privacy: {
       description: "میں راضی ہوں",
       link: "پرائیویسی ایگریمنٹ استعمال کریں"
@@ -593,10 +544,6 @@ export default {
     },
     submitButton: "جمع کرایں",
     infoForm: {
-      loginName: {
-        label: "فون نمبر",
-        placeholder: "براہ کرم فون نمبر داخل کریں"
-      },
       email: {
         label: "ای میل",
         placeholder: "ای میل",
@@ -679,11 +626,23 @@ export default {
     loading: {
       text: "لوڈنگ..."
     },
-    validator: {
+    form: {
       loginName: {
-        len: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
-        required: "براہ کرم فون نمبر درج کریں",
-        pattern: "فون نمبر '03' سے شروع ہونا چاہئے"
+        label: "فون نمبر",
+        placeholder: "براہ کرم اپنا موبائل نمبر درج کریں",
+        error: {
+          required: "براہ کرم فون نمبر درج کریں",
+          len: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
+          pattern: "فون نمبر '03' سے شروع ہونا چاہئے"
+        }
+      },
+      password: {
+        label: "پاس ورڈ",
+        placeholder: "براہ کرم پاس ورڈ درج کریں",
+        error: {
+          required: "براہ کرم پاس ورڈ درج کریں",
+          min: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں"
+        }
       }
     }
   },
