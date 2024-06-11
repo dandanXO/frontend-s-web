@@ -34,6 +34,7 @@ export default {
     menu_withdraw: "환전",
     menu_message: "문의",
     menu_customer_service: "고객센터",
+    menu_transaction_record: "입출금기록",
     // menu end
     // page modal start
     page_modal_deposit: "송금신청",

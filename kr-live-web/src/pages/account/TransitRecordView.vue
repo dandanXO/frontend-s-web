@@ -505,7 +505,7 @@ export default defineComponent({
     const store = userStore();
     const {t} = useI18n();
     const uploadFileRef = ref();
-    const recordActive = ref("deposit");
+    const recordActive = ref("gameBetRecord");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
     const reminderForm = reactive({});
