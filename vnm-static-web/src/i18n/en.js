@@ -164,6 +164,7 @@ export default {
     euroCountdown02: " DAYS LEFT"
   },
   personal: {
+    url: "URL",
     personalInfo: "Personal information",
     bank: "Bank",
     chgPwd: "Change Password",
@@ -282,7 +283,10 @@ export default {
 
     // vi-mualixi-redpacket
     congrats: "Congratulations",
-    claim: "Claim"
+    claim: "Claim",
+    
+    record_win_status: "Win status",
+    record_win_prize: "Winner Prize",
   },
   mail: {
     inbox: "Inbox",

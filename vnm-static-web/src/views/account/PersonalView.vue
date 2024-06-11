@@ -1,7 +1,8 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">{{ $t('personal.personalInfo') }}</div>
+      <div class="menu-title" style="display: flex; justify-content: space-between;">{{ $t('personal.personalInfo') }}
+      <span style="font-size: 14px;">{{ $t('personal.url') }}: <a :href="evipWeb" style="color:#468cff;">{{ evipWeb }}</a></span></div>
     </div>
     <el-tabs v-model="selectedTab">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">
@@ -434,7 +435,7 @@
 </template>
 
 <script setup lang="js">
-import { reactive, ref, onMounted, toRaw } from "vue";
+import { reactive, ref, onMounted, toRaw, computed } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
@@ -1160,6 +1161,15 @@ const sendOTPEmail = () => {
     });
   }
 };
+
+const evipWeb = computed(() => {
+      const evipString = personalState.memberInfo.evip;
+      if (evipString) { // Check if evipString is defined
+        const evipObject = JSON.parse(evipString);
+        return 'https://' + evipObject.web;
+      }
+      return ''; // Return empty string if evipString is undefined
+    });
 </script>
 
 <style scoped lang="scss">

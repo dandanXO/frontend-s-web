@@ -163,6 +163,7 @@ export default {
     euroCountdown02: " NGÀY",
   },
   personal: {
+    url: "Truy Cập",
     personalInfo: "Thông tin cá nhân",
     bank: "Ngân hàng",
     chgPwd: "Thay đổi mật khẩu",
@@ -281,6 +282,9 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
     claim: "Nhận",
+    
+    record_win_status: "Tình trạng thắng",
+    record_win_prize: "Giải thưởng",
   },
   mail: {
     inbox: "Hộp thư đến",
