@@ -79,7 +79,7 @@
       <div class="c-note">举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
       </div>
     </div>
-    <div class="table-details pattern-wrapper">
+    <!-- <div class="table-details pattern-wrapper">
       <div class="table-title">投票历史</div>
       <div class="pattern-wrapper-bottom"></div>
       <table id="rankTable">
@@ -93,7 +93,7 @@
         <tbody>
         </tbody>
       </table>
-      <!-- <div id="table-pagination"></div> -->
+      <!- <div id="table-pagination"></div> ->
 
       <div class="listing-footer">
         <div class="footer-div">
@@ -104,7 +104,7 @@
           <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="promo-content">
 
