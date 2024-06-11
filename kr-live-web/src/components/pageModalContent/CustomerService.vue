@@ -7,7 +7,8 @@
         </div>
         <div class="form-item">
           <label>유형</label>
-          <q-select outlined dense name="title" v-model="serviceForm.feedbackType" :options="feedbackTypes" ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
+          <q-select outlined dense name="title" v-model="serviceForm.feedbackType" :options="feedbackTypes"
+            ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
         </div>
         <div class="form-item">
           <label>제목을</label>
@@ -37,17 +38,12 @@
 
 
 
-    <div class="feedback-replies-list">
-      <q-list bordered class="rounded-borders">
+      <div class="feedback-replies-list">
+        <q-list bordered class="rounded-borders">
           <div style="max-height: 500px;overflow-y:auto;">
-            <q-expansion-item
-              v-for="item in outboxData" :key="item.page"
-              @click="readFeedback(item.id)"
-              expand-separator
-              :icon="item.readTime ? 'mark_email_read' : 'mark_email_unread'"
-              :label="item.title"
-              :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`"
-            >
+            <q-expansion-item v-for="item in outboxData" :key="item.page" @click="readFeedback(item.id)"
+              expand-separator :icon="item.readTime ? 'mark_email_read' : 'mark_email_unread'" :label="item.title"
+              :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`">
               <q-card style="background:transparent;padding:10px;margin:0px;">
                 <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
                   {{ item.content }}
@@ -56,7 +52,7 @@
             </q-expansion-item>
           </div>
         </q-list>
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -131,7 +127,7 @@ const initOutbox = () => {
 const readFeedback = (id) => {
   const currentMail = outboxData.value.find((data) => data.id === id);
 
-  if(!currentMail?.content) {
+  if (!currentMail?.content) {
     api.get(`/session/feedback/${id}/read`).then((res) => {
       const { code, data } = res.data
 
@@ -147,9 +143,9 @@ const readFeedback = (id) => {
       currentMail.content = data.content;
       currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
     })
-    .catch((error) => {
-      console.log(error);
-    });
+      .catch((error) => {
+        console.log(error);
+      });
   }
 }
 
@@ -166,6 +162,7 @@ onMounted(() => {
     gap: 10px;
     margin: 0;
   }
+
   .back-btn {
     width: 100px;
     height: 30px;
@@ -181,7 +178,7 @@ onMounted(() => {
   }
 
   .feedback-replies-list {
-    max-width: 485px;
+    // max-width: 485px;
   }
 }
 

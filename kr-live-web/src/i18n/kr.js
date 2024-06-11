@@ -35,6 +35,19 @@ export default {
     menu_message: "문의",
     menu_customer_service: "고객센터",
     // menu end
+    // page modal start
+    page_modal_deposit: "송금신청",
+    page_modal_withdraw: "출금신청",
+    page_modal_message: "문의",
+    page_modal_customer_service: "고객센터",
+    page_modal_promo: "이벤트",
+    page_modal_personal_info: "개인정보",
+    page_modal_announcement: "공지사항",
+    page_modal_add_bank_card: "은행카드추가",
+    page_modal_bank_card_list: "은행 카드 목록",
+    page_modal_transaction_record: "입출금기록",
+    page_modal_change_password: "비밀번호",
+    // page modal end
     // rolling text start
     roll_text_no_content: "아직 콘텐츠가 없습니다",
     // rolling text end
