@@ -196,7 +196,7 @@
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+          <el-button type="primary" @click="submit" :disabled="uiControl.submitBtn">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
 
@@ -703,7 +703,8 @@ const uiControl = reactive({
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
-  imageSelectionVisible: false
+  imageSelectionVisible: false,
+  submitBtn: false
 });
 const page = reactive({
   pages: 0,
@@ -953,7 +954,9 @@ function submit() {
 
 function create() {
   form.choiceOne = constructChoice()
+  uiControl.submitBtn = true;
   bbDachaForm.value.validate(async (valid) => {
+    console.log(valid)
     if (valid) {
       await createBbDacha(form);
       uiControl.dialogVisible = false;
@@ -961,10 +964,12 @@ function create() {
       ElMessage({ message: t('message.addSuccess'), type: "success" });
     }
   });
+  uiControl.submitBtn = false;
 }
 
 function edit() {
   form.choiceOne = constructChoice()
+  uiControl.submitBtn = true;
   bbDachaForm.value.validate(async (valid) => {
     if (valid) {
       await updateBbDacha(form.id, form);
@@ -973,6 +978,7 @@ function edit() {
       ElMessage({ message: t('message.updateSuccess'), type: "success" });
     }
   });
+  uiControl.submitBtn = false;
 }
 
 async function loadSites() {

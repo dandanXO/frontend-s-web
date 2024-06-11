@@ -2795,6 +2795,7 @@ export default {
     22001: 'Member VIP Level max bonus is $',
     21005: 'App exists with same site, OS, App Type & Apk Type',
     21006: 'File and os that choosing not the same',
+    22003: 'Match already exists',
     30000: 'PG update transaction status failed',
     24003: 'Result is already processed',
     27000: 'Key quantity is not enough',
