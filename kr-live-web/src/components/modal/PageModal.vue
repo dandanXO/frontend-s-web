@@ -261,19 +261,19 @@ const pagesInfo = reactive([
       description: "출금 계좌에 새 은행 카드 추가"
     }
   },
-  {
-    tabIndex: "my",
-    page: "bankcardlist",
-    info: t('lang.page_modal_bank_card_list'),
-    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
-    component: WithdrawBankView,
-    headerInfo: {
-      title: t('lang.page_modal_bank_card_list'),
-      subTitle: "BANK CARD LIST",
-      description: ""
-    }
-  },
+  // {
+  //   tabIndex: "my",
+  //   page: "bankcardlist",
+  //   info: t('lang.page_modal_bank_card_list'),
+  //   iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+  //   iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
+  //   component: WithdrawBankView,
+  //   headerInfo: {
+  //     title: t('lang.page_modal_bank_card_list'),
+  //     subTitle: "BANK CARD LIST",
+  //     description: ""
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "transaction/records",

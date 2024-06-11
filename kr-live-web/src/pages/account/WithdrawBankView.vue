@@ -3,11 +3,7 @@
     <div class="bank-card-list">
       <template v-for="(bc, index) in personalState.bankCardList" :key="bc.id">
         <div
-          class="bank-card-item"
-          :class="{
-            active: index === isCardActive,
-            inactive: index > isCardActive
-          }"
+          class="bank-card-item active"
           v-if="bc.bankName"
           @mouseover="showCard(bc, index)"
         >
@@ -29,13 +25,12 @@
           </div>
         </div>
       </template>
-      <router-link
-        to="/?page=withdrawcard"
+      <div
+        v-if="personalState.bankCardList.length === 0"
         class="flex-box flex-align-center flex-justify-center bank-card-item add-bank-card"
       >
-        <RiLink />
-        {{ $t("lang.add_a_card") }}
-      </router-link>
+        <span>카드 없음</span>
+      </div>
     </div>
     <div class="account-title-container bindunbind">
       <span class="account-title">{{ $t("lang.bank_card_unbind_record") }}</span>
@@ -266,8 +261,7 @@
 
 <script lang="js">
 import {defineComponent, reactive, ref, onMounted, computed} from "vue";
-import { RiLink, RiLinkUnlink } from "vue-remix-icons";
-// RiLinkUnlink
+import { RiLinkUnlink } from "vue-remix-icons";
 // import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar";
@@ -280,7 +274,6 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    RiLink,
     RiLinkUnlink
   },
   setup() {
@@ -672,7 +665,8 @@ export default defineComponent({
       selectedBankType,
       selectBankType,
       banksList,
-      imgURL
+      imgURL,
+      loadCards
     };
   }
 });
