@@ -9,7 +9,7 @@
       </div>
       <div class="buttons">
         <div class="buttons">
-          <q-btn :href="`${downloadUrl}`" target="_blank" label="立即下载" color="brightbtn" class="top-btn" />
+          <q-btn @click="openDownloadAppLink" label="立即下载" color="brightbtn" class="top-btn" />
         </div>
       </div>
     </div>
@@ -1041,15 +1041,15 @@ export default defineComponent({
       sessionStorage.setItem(key, JSON.stringify(item));
     };
     const apiMockData = {
-    "code": 0,
+      "code": 0,
       "data": {
-          "title": "雷火 欧洲杯 TEST",
-          "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-          "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-          "content": null,
-          "type": "IMG",
-          "path": "?name=lh1-eurocup-2024",
-          "frequency": "EVERYDAY"
+        "title": "雷火 欧洲杯 TEST",
+        "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+        "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
+        "content": null,
+        "type": "IMG",
+        "path": "?name=lh1-eurocup-2024",
+        "frequency": "EVERYDAY"
       }
     }
     const getWithExpiry = (key) => {
@@ -1343,7 +1343,7 @@ export default defineComponent({
             return a.sequence - b.sequence;
           });
           // if (store.token && store.memberType === 'TEST' || store.memberType === 'PROMO_TEST') {
-            var casualObj = {
+          var casualObj = {
             id: 99,
             name: "TFGaming",
             code: "TFGaming",
@@ -1360,7 +1360,7 @@ export default defineComponent({
             icon: "casual",
             subtitle: "小游戏"
           }
-            casuals.value.push(casualObj);
+          casuals.value.push(casualObj);
           // }
         })
         .catch((err) => {});
@@ -1506,6 +1506,12 @@ export default defineComponent({
         });
     };
 
+    const openDownloadAppLink = () => {
+      const affiliate= sessionStorage.getItem("AFFILIATE_CODE");
+      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      window.open(theurl, "_blank");
+    }
+
     // const getImgPlatformLogo = (platform, code) => {
     //   try {
     //     return `${require(`../assets/images/home/${platform}/logo-${code.toLowerCase()}.png`)}`;
@@ -1600,28 +1606,28 @@ export default defineComponent({
       api
         .get("/redirect")
         .then((res) => {
-            if (res.code === 0) {
-              res.data.forEach(element => {
-                if (element.type === 'PROMO') {
-                  floatPromo.push(element);
-                  showFloatPromo.value = true;
-                }
-                if (element.type === 'GAME') {
-                  gamePromo.push(element)
-                  showRocket.value = true;
-                }
-              });
-              checkShowRocket();
-              checkFloatPromo();
-              updatePromo(); // Initially update the displayed promo
-              // Update the displayed promo every 5 seconds
-              setInterval(updatePromo, 3000);
-              updateRocket(); // Initially update the displayed promo
-              // Update the displayed promo every 5 seconds
-              setInterval(updateRocket, 3000);
-            } else {
-              ElMessage.error(res.message);
-            }
+          if (res.code === 0) {
+            res.data.forEach(element => {
+              if (element.type === 'PROMO') {
+                floatPromo.push(element);
+                showFloatPromo.value = true;
+              }
+              if (element.type === 'GAME') {
+                gamePromo.push(element)
+                showRocket.value = true;
+              }
+            });
+            checkShowRocket();
+            checkFloatPromo();
+            updatePromo(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updatePromo, 3000);
+            updateRocket(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updateRocket, 3000);
+          } else {
+            ElMessage.error(res.message);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -1711,13 +1717,13 @@ export default defineComponent({
       getUnreadTotal();
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
-  });
+    });
 
-  onMounted(() => {
-    if ((store.token)) {
+    onMounted(() => {
+      if ((store.token)) {
         initFloating();
       }
-  })
+    })
     // Clear interval on unmounted
     onUnmounted(() => {
       clearInterval(intervalId);
@@ -1783,6 +1789,7 @@ export default defineComponent({
       refreshBalance,
       isLoadingBalance,
       closeTopBox,
+      openDownloadAppLink,
       getAppDownloadUrl,
       downloadUrl,
       getWithExpiry,
@@ -1961,12 +1968,12 @@ export default defineComponent({
   background: transparent;
 
 }
-  :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
-    margin: 0;
-    padding: 0;
-    font-size: 4px !important;
-    color: #3382f4;
-  }
+:deep(.q-carousel.float .q-carousel__navigation .q-btn) {
+  margin: 0;
+  padding: 0;
+  font-size: 4px !important;
+  color: #3382f4;
+}
 .home-header {
   display: flex;
   align-items: center;
