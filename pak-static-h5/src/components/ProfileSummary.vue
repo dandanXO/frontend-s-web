@@ -285,6 +285,9 @@ const activateSlide = (item) => {
   router
     .push(`/home#${item}`)
     .then(() => {
+      if (props.homeProfile) {
+        emits("closeslot");
+      }
       emits("activateSlide", item);
       menuOpen.value = false;
     })
