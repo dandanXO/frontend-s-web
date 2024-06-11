@@ -9,7 +9,7 @@
         <div class="cards">
             <div class="deposit-card" v-for="(card, i) in depositCards" :key="(i)" :class="{active: selectedCard === card.code}">
                 <div class="bg"><img src="./images/card-design.png"></div>
-                
+
                 <div class="deposit-card__logo" :class="card.code"><img :src="require(`./images/${card.code}.png`)"></div>
                 <div class="deposit-content">
                     <div class="deposit-content__title">{{ card.title }}充值加码</div>
@@ -255,7 +255,7 @@
                     padding-top: 30px;
                     &__title {
                         font-family: Microsoft YaHei UI;
-                        
+
                         font-size: 4.5vw;
 
                         font-weight: 700;
@@ -264,7 +264,7 @@
                     }
                     &__details {
                         font-family: Microsoft YaHei UI;
-                       
+
                         font-size: 3.5vw;
 
                         font-weight: 400;
@@ -295,7 +295,7 @@
             max-width: 1000px;
             width: 95%;
             margin: 30px auto;
-            img{ 
+            img{
                 width: 100%;
             }
         }
@@ -306,7 +306,7 @@
                 border: 1px solid #DC91FF;
                 td, th {
                     background: #191643 !important;
-                    border: 1px solid #C0BCB74D;
+                    border: 1px solid #C0BCB74D !important;
                     padding: 10px;
                     text-align: center;
                     color:  #EF94FE;
@@ -325,7 +325,7 @@
                     font-weight: 400;
                     line-height: 17.92px;
 
-                    border: 1px solid #C0BCB74D;
+                    border: 1px solid #C0BCB74D !important;
                     padding: 10px;
                     text-align: center;
                     color: #F1D4FF;
@@ -341,14 +341,14 @@
             li {
                 font-family: Microsoft YaHei UI;
                 color: #F1D4FF;
-                font-size: 14px;
+                font-size: 15px;
                 font-weight: 400;
                 line-height: 17.6px;
                 margin-bottom: 10px;
 
                 margin-left: 15px;
 
-            }   
+            }
         }
     }
     @media screen and (max-width: 500px) {
@@ -362,7 +362,7 @@
             }
         }
     }
-    
+
     @media screen and (max-width: 400px) {
         .deposit-rebates-container {
             .cards-tabs {
