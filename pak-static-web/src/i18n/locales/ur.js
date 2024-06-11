@@ -78,10 +78,6 @@ export default {
           form: {
             loginName: {
               label: "فون نمبر",
-              error: {
-                len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے",
-                required: "براہ کرم فون نمبر داخل کریں"
-              },
               placeholder: "براہ کرم فون نمبر داخل کریں"
             },
             password: {
@@ -100,10 +96,6 @@ export default {
           form: {
             loginName: {
               label: "فون نمبر",
-              error: {
-                len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے",
-                required: "براہ کرم فون نمبر داخل کریں"
-              },
               placeholder: "براہ کرم فون نمبر داخل کریں"
             },
             password: {
@@ -138,10 +130,6 @@ export default {
           infoForm: {
             loginName: {
               label: "فون نمبر",
-              error: {
-                len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے",
-                required: "براہ کرم فون نمبر داخل کریں"
-              },
               placeholder: "براہ کرم فون نمبر داخل کریں"
             },
             email: {
@@ -555,11 +543,7 @@ export default {
   loginView: {
     form: {
       loginName: {
-        placeholder: "فون نمبر",
-        error: {
-          required: "براہ کرم فون نمبر داخل کریں",
-          len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے"
-        }
+        placeholder: "فون نمبر"
       },
       password: {
         placeholder: "پاس ورڈ",
@@ -579,14 +563,10 @@ export default {
     title: "اکاؤنٹ رجسٹر کریں",
     form: {
       loginName: {
-        placeholder: "فون نمبر",
-        error: {
-          required: "براہ کرم فون نمبر داخل کریں",
-          len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے"
-        }
+        placeholder: "فون نمبر"
       },
       password: {
-        placeholder: "",
+        placeholder: "پاس ورڈ",
         error: {
           required: "براہ کرم فون نمبر پاس ورڈ داخل کریں"
         }
@@ -599,7 +579,7 @@ export default {
     registerButton: "اب رجسٹر کریں",
     haveAccount: {
       description: "پہلے سے رکن ہیں؟",
-      link: ""
+      link: "ابھی لاگ ان کریں"
     }
   },
   forgotPwdView: {
@@ -612,10 +592,6 @@ export default {
     infoForm: {
       loginName: {
         label: "فون نمبر",
-        error: {
-          len: "فون نمبر 10 ہند سوں پر         مشتمل ہونا چاہیے",
-          required: "براہ کرم فون نمبر داخل کریں"
-        },
         placeholder: "براہ کرم فون نمبر داخل کریں"
       },
       email: {
@@ -699,6 +675,13 @@ export default {
     },
     loading: {
       text: "لوڈنگ..."
+    },
+    validator: {
+      loginName: {
+        len: "فون نمبر میں 11 ہندسے ہونے چاہئیں",
+        required: "براہ کرم فون نمبر درج کریں",
+        pattern: "فون نمبر '03' سے شروع ہونا چاہئے"
+      }
     }
   },
   error: {

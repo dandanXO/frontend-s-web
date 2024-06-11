@@ -167,7 +167,6 @@ const links = ref([
       align-items: center;
       justify-content: space-between;
       padding: 12px 14px;
-      margin-top: -6px;
       background-color: #2e303466;
       border-radius: 4px;
       backdrop-filter: blur(5px);
