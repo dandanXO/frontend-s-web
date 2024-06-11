@@ -144,13 +144,13 @@ const iconInfo = reactive([
       router.push(`/?page=finance/withdraw`);
     }
   },
-  // {
-  //   info: "배팅내역",
-  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=transaction/records`);
-  //   }
-  // },
+  {
+    info: "lang.menu_transaction_record",
+    iconUrl: require("../../assets/icon/icon-betting.svg"),
+    goPage: () => {
+      router.push(`/?page=transaction/records`);
+    }
+  },
   {
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),

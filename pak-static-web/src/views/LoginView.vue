@@ -4,18 +4,18 @@
       <div class="logo"><img src="../assets/logo.png" /></div>
       <a-form ref="formRef" :model="loginForm" :rules="rules">
         <a-form-item ref="loginName" name="loginName">
-          <a-input v-model:value="loginForm.loginName" :placeholder="$t('loginView.form.loginName.placeholder')">
+          <a-input v-model:value="loginForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
               <span style="color: #ffffff">+92</span>
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item ref="password" required name="password">
+        <a-form-item ref="password" name="password">
           <a-input
             v-model:value="loginForm.password"
             type="password"
-            :placeholder="$t('loginView.form.password.placeholder')"
+            :placeholder="$t('common.form.password.placeholder')"
             @keypress.enter="onSubmit"
           >
             <template #prefix>
@@ -70,7 +70,7 @@ import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
-import { validateLoginName } from "@/utils/validator";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const { t } = useI18n();
 
@@ -104,7 +104,7 @@ const getCode = () => {
 };
 const rules = computed(() => ({
   loginName: [{ validator: validateLoginName, trigger: "blur" }],
-  password: [{ required: true, message: t("loginView.form.password.error.required") }]
+  password: [{ validator: validatePassword, trigger: "blur" }]
 }));
 const loadingLogin = ref(false);
 const onSubmit = () => {

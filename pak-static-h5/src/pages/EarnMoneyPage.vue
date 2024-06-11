@@ -128,6 +128,8 @@
             </tr>
           </template>
         </table>
+
+        <div class="table-hint q-pa-md">Eligibility: Invitee's deposit must be ≥ 300.</div>
       </div>
 
       <div class="earn-money-sent-ytd">
@@ -657,6 +659,11 @@ watch(activeSetting, checkIsShowDetail);
     //     }
     //   }
     // }
+
+    .table-hint {
+      color: #8c968f;
+      text-align: center;
+    }
 
     .earn-money-sent-ytd {
       margin-top: 16px;

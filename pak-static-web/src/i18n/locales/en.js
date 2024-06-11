@@ -6,10 +6,13 @@ export default {
         casino: "casino",
         promotion: "promotions"
       },
-      downloadApp: "DOWNLOAD APP",
+      downloadApp: {
+        content: "DOWNLOAD",
+        highlight: "APP"
+      },
       inviteToEarn: {
-        title: "Invite to Earn",
-        description: "Simply share your exclusive QR code"
+        content: "INVITE TO",
+        highlight: "EARN"
       },
       navigation: {
         slot: "Slots",
@@ -75,36 +78,12 @@ export default {
       accountModal: {
         login: {
           tab: "Log in",
-          form: {
-            loginName: {
-              label: "Phone",
-              placeholder: "Please enter your account or mobile number"
-            },
-            password: {
-              label: "password",
-              placeholder: "Please enter password",
-              error: {
-                required: "Password is required"
-              }
-            }
-          },
           forgetPassword: "Forget password",
           submitButton: "SUBMIT"
         },
         register: {
           tab: "Register",
           form: {
-            loginName: {
-              label: "Phone",
-              placeholder: "Please enter your account or mobile number"
-            },
-            password: {
-              label: "password",
-              placeholder: "Please enter password",
-              error: {
-                required: "Password is required"
-              }
-            },
             codeAffiliate: {
               label: "Invitation Code (Optional)",
               placeholder: "Enter Invitation Code (Optional)"
@@ -128,10 +107,6 @@ export default {
         forgetPwd: {
           title: "Recover your password",
           infoForm: {
-            loginName: {
-              label: "Phone",
-              placeholder: "Please enter your account or mobile number"
-            },
             email: {
               label: "Email",
               placeholder: "Email",
@@ -250,10 +225,6 @@ export default {
     personal: {
       title: "Personal center",
       form: {
-        loginName: {
-          label: "Phone number",
-          placeholder: "Please enter your nick name"
-        },
         email: {
           label: "Email",
           verifyButton: "Verify"
@@ -319,6 +290,11 @@ export default {
             suspend: "Suspend"
           }
         }
+      },
+      option: {
+        "1days": "1 Days",
+        "3days": "3 Days",
+        "7days": "7 Days"
       }
     },
     discount: {
@@ -542,17 +518,6 @@ export default {
     }
   },
   loginView: {
-    form: {
-      loginName: {
-        placeholder: "Login name"
-      },
-      password: {
-        placeholder: "Password",
-        error: {
-          required: "Password is required"
-        }
-      }
-    },
     forgetPasswordLink: "Forgot password ?",
     loginButton: "Login Now",
     register: {
@@ -562,17 +527,6 @@ export default {
   },
   registerView: {
     title: "Register Account",
-    form: {
-      loginName: {
-        placeholder: "Login name"
-      },
-      password: {
-        placeholder: "Password",
-        error: {
-          required: "Please enter your password"
-        }
-      }
-    },
     privacy: {
       description: "I have Agree to the",
       link: "Use Privacy Agreement"
@@ -591,10 +545,6 @@ export default {
     },
     submitButton: "SUBMIT",
     infoForm: {
-      loginName: {
-        label: "Phone",
-        placeholder: "Please enter your account or mobile number"
-      },
       email: {
         label: "Email",
         placeholder: "Email",
@@ -677,11 +627,23 @@ export default {
     loading: {
       text: "Loading..."
     },
-    validator: {
+    form: {
       loginName: {
-        len: "The phone number must have 11 digits",
-        required: "Phone number is required",
-        pattern: "The phone number must start with '03'"
+        label: "Phone",
+        placeholder: "Please enter your mobile number",
+        error: {
+          len: "The phone number must have 11 digits",
+          required: "Phone number is required",
+          pattern: "The phone number must start with '03'"
+        }
+      },
+      password: {
+        label: "password",
+        placeholder: "Please enter password",
+        error: {
+          required: "Please insert password",
+          min: "The characters of password must be above 6"
+        }
       }
     }
   },

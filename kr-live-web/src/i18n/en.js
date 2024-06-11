@@ -34,7 +34,21 @@ export default {
     menu_withdraw: "Withdraw",
     menu_message: "Message",
     menu_customer_service: "Customer Service",
+    menu_transaction_record: "Transaction Record",
     // menu end
+    // page modal start
+    page_modal_deposit: "Deposit",
+    page_modal_withdraw: "Withdraw",
+    page_modal_message: "Message",
+    page_modal_customer_service: "Customer Service",
+    page_modal_promo: "Promo",
+    page_modal_personal_info: "Personal Info",
+    page_modal_announcement: "Announcement",
+    page_modal_add_bank_card: "Add Bank Card",
+    page_modal_bank_card_list: "Bank Card List",
+    page_modal_transaction_record: "Transaction Record",
+    page_modal_change_password: "Change Password",
+    // page modal end
     // rolling text start
     roll_text_no_content: "No content yet",
     // rolling text end
