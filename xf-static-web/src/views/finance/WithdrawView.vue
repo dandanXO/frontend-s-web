@@ -189,6 +189,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import { userStore } from "@/store";
 import { RiArrowRightSLine } from "vue-remix-icons";
 import { useRouter } from "vue-router";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -199,7 +200,7 @@ export default defineComponent({
     const router = useRouter();
     const loadingBtn = ref(false);
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/withdraw/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/withdraw/';
     const formRef = ref();
     const activeItem = ref(0);
     const isUSDT = ref(false);

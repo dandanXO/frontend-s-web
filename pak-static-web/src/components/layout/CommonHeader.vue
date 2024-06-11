@@ -451,6 +451,13 @@ watch(
     }
   }
 );
+
+watch(
+  () => route.path,
+  () => {
+    activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
+  }
+);
 const scroll = computed(() => windowScroll.value);
 
 var showMobileMenu = () => {
@@ -861,7 +868,7 @@ $link-color: #ffffff;
     .invite-to-earn {
       background: url(@/assets/images/layout/header/invite-to-earn.png) no-repeat;
       background-size: contain;
-      min-height: 80px;
+      min-height: 75px;
       width: 100%;
       position: relative;
 
@@ -869,18 +876,19 @@ $link-color: #ffffff;
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 25px;
+        top: 14px;
         left: 20px;
+        gap: 8px;
 
         .invite-to-earn__title {
-          font-size: 14px;
+          font-size: 16px;
           font-weight: 700;
           line-height: 14px;
           color: #fff;
         }
 
         .invite-to-earn__description {
-          font-size: 8px;
+          font-size: 10px;
           font-weight: 700;
           line-height: 14px;
           color: #ffe500;

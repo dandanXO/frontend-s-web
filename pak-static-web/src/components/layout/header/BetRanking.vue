@@ -9,7 +9,7 @@
         <div v-for="(record, index) in records" :key="index" class="bet-ranking-record-wrapper">
           <img v-if="index < 3" :src="require(`@/assets/images/layout/header/bet-ranking-${index + 1}.png`)" />
           <span v-else class="bet-ranking-record__rank">{{ index + 1 }}</span>
-          <span class="bet-ranking-record__name">{{ record.loginName }}</span>
+          <span class="bet-ranking-record__name">{{ getDisplayLoginName(record.loginName) }}</span>
           <span class="bet-ranking-record__amount">₨ {{ record.bet.toFixed(2) }}</span>
         </div>
       </template>
@@ -33,6 +33,10 @@ const loadBetRankingData = () => {
     records.value = res.data;
     loading.value = false;
   });
+};
+
+const getDisplayLoginName = (loginName) => {
+  return `${loginName.slice(0, 3)}****${loginName.slice(-1)}`;
 };
 
 onMounted(() => {

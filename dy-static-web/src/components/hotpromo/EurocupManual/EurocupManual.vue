@@ -1,8 +1,8 @@
 <template>
   <div class="eurocup-manual-container">
-    <div class="fixed football"><img src="../../../assets/promo/dy-eurocup-manual/football.png"></div>
-    <div class="fixed person"><img src="../../../assets/promo/dy-eurocup-manual/person.png"></div>
-    <div class="fixed trophy"><img src="../../../assets/promo/dy-eurocup-manual/trophy.png"></div>  
+    <div class="fixed football"><img src="../../../assets/promo/dy-eurocup-manual/football.png" /></div>
+    <div class="fixed person"><img src="../../../assets/promo/dy-eurocup-manual/person.png" /></div>
+    <div class="fixed trophy"><img src="../../../assets/promo/dy-eurocup-manual/trophy.png" /></div>
     <div class="container">
       <div class="btn-group">
         <div class="btn btn-active" :class="{ 'btn-inactive': tab !== 'groupStage' }" @click="tab = 'groupStage'">
@@ -22,81 +22,73 @@
           半/总决赛
         </div>
       </div>
-      <div class="common-title">欧洲杯小组赛赛程</div>
+      <div class="common-title">欧洲杯{{ matchType }}赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
-          <div class="game-team" v-for="team in groupStageTeamsList"
-            @click="openPlat(team.platformMatchId)"
-          >
+          <div class="game-team" v-for="team in groupStageTeamsList" @click="openPlat(team.platformMatchId)">
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamOneIcon"/>
-              <span>{{team.teamOneName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <span>{{ team.teamOneName }}</span>
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
-              <div class="clickBet" @click="openPlat(team.platformMatchId)">点击投注</div>
+              <div class="clickBet">点击投注</div>
             </div>
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"/>
-              <span>{{team.teamTwoName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <span>{{ team.teamTwoName }}</span>
             </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'roundOf16'">
-          <div class="game-team" v-for="team in roundOf16TeamsList"
-               @click="openPlat(team.platformMatchId)"
-          >
+          <div class="game-team" v-for="team in roundOf16TeamsList" @click="openPlat(team.platformMatchId)">
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamOneIcon"/>
-              <span>{{team.teamOneName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <span>{{ team.teamOneName }}</span>
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet">点击投注</div>
             </div>
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"/>
-              <span>{{team.teamTwoName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <span>{{ team.teamTwoName }}</span>
             </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'quarterFinal'">
-          <div class="game-team" v-for="team in quarterFinalTeamsList"
-               @click="openPlat(team.platformMatchId)"
-            >
+          <div class="game-team" v-for="team in quarterFinalTeamsList" @click="openPlat(team.platformMatchId)">
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamOneIcon"/>
-              <span>{{team.teamOneName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <span>{{ team.teamOneName }}</span>
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet">点击投注</div>
             </div>
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"/>
-              <span>{{team.teamTwoName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <span>{{ team.teamTwoName }}</span>
             </div>
           </div>
         </div>
         <div class="schedule-item" v-if="tab === 'semiFinalAndFinal'">
-          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList"
-               @click="openPlat(team.platformMatchId)"
-          >
+          <div class="game-team" v-for="team in semiFinalAndFinalTeamsList" @click="openPlat(team.platformMatchId)">
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamOneIcon"/>
-              <span>{{team.teamOneName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamOneIcon" />
+              <span>{{ team.teamOneName }}</span>
             </div>
             <div class="game-time">
-              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png"></div>
+              <div class="vs"><img src="../../../assets/promo/dy-eurocup-manual/vs.png" /></div>
               <div class="time">{{ team.startTime }}</div>
               <div class="clickBet">点击投注</div>
             </div>
             <div class="game-flag-div">
-              <img class="game-logo" :src="imgUrl + team.teamTwoIcon"/>
-              <span>{{team.teamTwoName}}</span>
+              <img class="game-logo" :src="imgUrl + team.teamTwoIcon" />
+              <span>{{ team.teamTwoName }}</span>
             </div>
           </div>
         </div>
@@ -104,154 +96,163 @@
       <div class="shade">
         <div class="common-title">活动详情</div>
         <div class="alert-details">
-          <div class="alert-contents"><img src="../../../assets/promo/dy-eurocup-manual/alert-contents.png"></div>
+          <div class="alert-contents"><img src="../../../assets/promo/dy-eurocup-manual/alert-contents.png" /></div>
           <div class="alert-box">
             <div class="alert-line" v-if="tab === 'groupStage'">
-            小组赛赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
-          </div>
-          <div class="alert-line" v-if="tab === 'roundOf16'">
-            第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-          <div class="alert-line" v-if="tab === 'quarterFinal'">
-            第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
-          <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。</div>
+              小组赛赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            </div>
+            <div class="alert-line" v-if="tab === 'roundOf16'">
+              第二轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            </div>
+            <div class="alert-line" v-if="tab === 'quarterFinal'">
+              第三轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            </div>
+            <div class="alert-line" v-if="tab === 'semiFinalAndFinal'">
+              第四轮赛事期间，投注赛程任意赛事有效投注额≥500，若投注赛事中触发以下事件，即可获得彩金奖励，触发多个事件彩金累积计算。
+            </div>
           </div>
         </div>
-    
-      <div class="money-table">
-        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'groupStage'">
-          <tr>
-            <th>任意赛事早盘有效投注</th>
-            <th>首当其冲</th>
-            <th>梅开二度</th>
-            <th>势如破竹</th>
-          </tr>
-          <tr>
-            <td>500</td>
-            <td>3</td>
-            <td>5</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>1,000</td>
-            <td>8</td>
-            <td>10</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td>5,000</td>
-            <td>18</td>
-            <td>36</td>
-            <td>38</td>
-          </tr>
-          <tr>
-            <td>10,000</td>
-            <td>36</td>
-            <td>58</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>50,000</td>
-            <td>188</td>
-            <td>288</td>
-            <td>388</td>
-          </tr>
-        </table>
-        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'roundOf16'">
-          <tr>
-            <th>任意赛事早盘有效投注</th>
-            <th>扭转乾坤</th>
-            <th>绝处逢生</th>
-            <th>帽子戏法</th>
-          </tr>
-          <tr>
-            <td>500</td>
-            <td>3</td>
-            <td>5</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>1,000</td>
-            <td>8</td>
-            <td>10</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td>5,000</td>
-            <td>18</td>
-            <td>36</td>
-            <td>38</td>
-          </tr>
-          <tr>
-            <td>10,000</td>
-            <td>36</td>
-            <td>58</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>50,000</td>
-            <td>188</td>
-            <td>288</td>
-            <td>388</td>
-          </tr>
-        </table>
-        <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
-          <tr>
-            <th>任意赛事早盘有效投注</th>
-            <th>首当其冲</th>
-            <th>扭转乾坤</th>
-            <th>梅开二度</th>
-            <th>绝处逢生</th>
-            <th>势如破竹</th>
-            <th>帽子戏法</th>
-          </tr>
-          <tr>
-            <td>500</td>
-            <td>3</td>
-            <td>3</td>
-            <td>5</td>
-            <td>5</td>
-            <td>6</td>
-            <td>6</td>
-          </tr>
-          <tr>
-            <td>1,000</td>
-            <td>8</td>
-            <td>8</td>
-            <td>10</td>
-            <td>10</td>
-            <td>12</td>
-            <td>12</td>
-          </tr>
-          <tr>
-            <td>5,000</td>
-            <td>18</td>
-            <td>18</td>
-            <td>36</td>
-            <td>36</td>
-            <td>38</td>
-            <td>38</td>
-          </tr>
-          <tr>
-            <td>10,000</td>
-            <td>36</td>
-            <td>36</td>
-            <td>58</td>
-            <td>58</td>
-            <td>88</td>
-            <td>88</td>
-          </tr>
-          <tr>
-            <td>50,000</td>
-            <td>188</td>
-            <td>188</td>
-            <td>288</td>
-            <td>288</td>
-            <td>388</td>
-            <td>388</td>
-          </tr>
-        </table>
+
+        <div class="money-table">
+          <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'groupStage'">
+            <tr>
+              <th>任意赛事早盘有效投注</th>
+              <th>首当其冲</th>
+              <th>梅开二度</th>
+              <th>势如破竹</th>
+            </tr>
+            <tr>
+              <td>500</td>
+              <td>3</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>1,000</td>
+              <td>8</td>
+              <td>10</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>5,000</td>
+              <td>18</td>
+              <td>36</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>10,000</td>
+              <td>36</td>
+              <td>58</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>50,000</td>
+              <td>188</td>
+              <td>288</td>
+              <td>388</td>
+            </tr>
+          </table>
+          <table cellpadding="0" cellspacing="0" border="0" v-if="tab === 'roundOf16'">
+            <tr>
+              <th>任意赛事早盘有效投注</th>
+              <th>扭转乾坤</th>
+              <th>绝处逢生</th>
+              <th>帽子戏法</th>
+            </tr>
+            <tr>
+              <td>500</td>
+              <td>3</td>
+              <td>5</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>1,000</td>
+              <td>8</td>
+              <td>10</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>5,000</td>
+              <td>18</td>
+              <td>36</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>10,000</td>
+              <td>36</td>
+              <td>58</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>50,000</td>
+              <td>188</td>
+              <td>288</td>
+              <td>388</td>
+            </tr>
+          </table>
+          <table
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            v-if="tab === 'quarterFinal' || tab === 'semiFinalAndFinal'"
+          >
+            <tr>
+              <th>任意赛事早盘有效投注</th>
+              <th>首当其冲</th>
+              <th>扭转乾坤</th>
+              <th>梅开二度</th>
+              <th>绝处逢生</th>
+              <th>势如破竹</th>
+              <th>帽子戏法</th>
+            </tr>
+            <tr>
+              <td>500</td>
+              <td>3</td>
+              <td>3</td>
+              <td>5</td>
+              <td>5</td>
+              <td>6</td>
+              <td>6</td>
+            </tr>
+            <tr>
+              <td>1,000</td>
+              <td>8</td>
+              <td>8</td>
+              <td>10</td>
+              <td>10</td>
+              <td>12</td>
+              <td>12</td>
+            </tr>
+            <tr>
+              <td>5,000</td>
+              <td>18</td>
+              <td>18</td>
+              <td>36</td>
+              <td>36</td>
+              <td>38</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>10,000</td>
+              <td>36</td>
+              <td>36</td>
+              <td>58</td>
+              <td>58</td>
+              <td>88</td>
+              <td>88</td>
+            </tr>
+            <tr>
+              <td>50,000</td>
+              <td>188</td>
+              <td>188</td>
+              <td>288</td>
+              <td>288</td>
+              <td>388</td>
+              <td>388</td>
+            </tr>
+          </table>
+        </div>
       </div>
-    </div>
       <div class="info" v-if="tab === 'groupStage' || tab === 'quarterFinal' || tab === 'semiFinalAndFinal'">
         <div class="info-item">
           <div class="title">首当其冲</div>
@@ -301,23 +302,32 @@
       <div class="notice shade">
         <div class="common-title">活动规则</div>
         <ul>
-          <li>1.活动期间，会员投注赛程任意赛事有效投注额≥500 即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；</li>
-          <li>2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；</li>
-          <li>3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；</li>
+          <li>
+            1.活动期间，会员投注赛程任意赛事有效投注额≥500
+            即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；
+          </li>
+          <li>
+            2.本活动仅限FB体育、IM体育、熊猫体育（沙巴体育与平博体育不予计算）的早盘盘口参与，如会员同时在FB体育、IM体育、熊猫体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；
+          </li>
+          <li>
+            3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
+          </li>
           <li>4.达到活动要求的会员，彩金于次日24点前派发至福利中心，彩金仅需一倍流水即可出款；</li>
           <li>5.同一手机号、姓名、邮箱地址、银行卡号等信息的游戏账号，仅可参与一次，若有违规者，将不享受此红利；</li>
-          <li>6.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；</li>
+          <li>
+            6.任何用户或团体以不正常的方式进行套取活动优惠，本站保留在不通知的情况下冻结或关闭相关账户的权利，并不退还款项，且用户会被列入黑名单；
+          </li>
           <li>7.为避免文字理解差异，本站保留本活动最终解释权。</li>
         </ul>
       </div>
     </div>
- </div>
+  </div>
 
   <GameModal ref="platformGame"></GameModal>
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import { getEurocupManualSchedule } from "@/api/promotion/eurocupManual";
 import { ref } from "vue";
 import moment from "moment";
@@ -334,8 +344,19 @@ const imgUrl = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
 const openPlat = (platformMatchId) => {
   var matchId = platformMatchId ?? "";
-  platformGame.value.open('FB体育', 'FB', matchId);
-}
+  platformGame.value.open("FB体育", "FB", matchId);
+};
+
+const matchType = computed(() => {
+  if (tab.value === "roundOf16") {
+    return "十六强赛";
+  } else if (tab.value === "quarterFinal") {
+    return "4/1决赛";
+  } else if (tab.value === "semiFinalAndFinal") {
+    return "半/总决赛";
+  }
+  return "小组赛";
+});
 
 const init = () => {
   getEurocupManualSchedule().then((res) => {
@@ -380,43 +401,43 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
-
-@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
 .eurocup-manual-container {
   // background-image: url("../../../assets/promo/dy-eurocup-manual/background.png");
   position: relative;
   .fixed {
     position: absolute;
     &.football {
-    right: 0px;
-    width: 250px;
-    top: 250px;
+      right: 0px;
+      width: 250px;
+      top: 250px;
     }
     &.trophy {
-    left: -250px;
-    width: 250px;
-    top: 800px;
+      left: -250px;
+      width: 250px;
+      top: 800px;
     }
     &.person {
-    right: 140px;
-    width: 250px;
-    top: 1500px;
-
+      right: 140px;
+      width: 250px;
+      top: 1500px;
     }
   }
-  .common-title { 
+  .common-title {
     font-family: Play;
     font-size: 32px;
     font-weight: 700;
     margin: 15px auto 0;
-    color: #0099D8;
-    display: flex; justify-content: center;
+    color: #0099d8;
+    display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
     gap: 5px;
-    &:before, &:after {
+    &:before,
+    &:after {
       content: "";
-      background: url(../../../assets/promo/dy-eurocup-manual/title-bar.png)no-repeat center center;
+      background: url(../../../assets/promo/dy-eurocup-manual/title-bar.png) no-repeat center center;
       height: 40px;
       width: 270px;
     }
@@ -479,19 +500,35 @@ onMounted(() => {
   border-radius: 20px;
   margin-top: 27px;
   padding: 38px 36px;
-  border: 1px solid #1AF4FF;
-      background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
+  border: 1px solid #1af4ff;
+  background: linear-gradient(
+    243.03deg,
+    #1960ac 0%,
+    rgba(25, 96, 172, 0.6) 6.15%,
+    rgba(25, 96, 172, 0) 12.62%,
+    rgba(25, 96, 172, 0) 87.87%,
+    rgba(25, 96, 172, 0.6) 93.2%,
+    #1960ac 100%
+  );
 }
 .shade {
   margin: 27px 0;
   border-radius: 20px;
   width: 1200px;
   padding: 38px 36px;
-  border: 1px solid #1AF4FF;
-  background: linear-gradient(243.03deg, #1960AC 0%, rgba(25, 96, 172, 0.6) 6.15%, rgba(25, 96, 172, 0) 12.62%, rgba(25, 96, 172, 0) 87.87%, rgba(25, 96, 172, 0.6) 93.2%, #1960AC 100%);
+  border: 1px solid #1af4ff;
+  background: linear-gradient(
+    243.03deg,
+    #1960ac 0%,
+    rgba(25, 96, 172, 0.6) 6.15%,
+    rgba(25, 96, 172, 0) 12.62%,
+    rgba(25, 96, 172, 0) 87.87%,
+    rgba(25, 96, 172, 0.6) 93.2%,
+    #1960ac 100%
+  );
 }
 .alert-details {
-  display: flex; 
+  display: flex;
   gap: 10px;
   align-items: center;
   margin: 20px 0;
@@ -499,8 +536,7 @@ onMounted(() => {
 .alert-line {
   font-size: 20px;
   line-height: 25.4px;
-  color: #FFFFFF;
-
+  color: #ffffff;
 }
 
 .money-table {
@@ -527,13 +563,13 @@ onMounted(() => {
   }
 
   th {
-    background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+    background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
     color: #ffffff;
     font-weight: 700;
   }
 
   td {
-    border: 1px solid #ACD4F6;
+    border: 1px solid #acd4f6;
     color: #fff;
     /* margin-top: 3px; */
     background: #04204a4d;
@@ -550,22 +586,20 @@ onMounted(() => {
     width: 32%;
     padding: 20px;
     position: relative;
-    background: url(../../../assets/promo/dy-eurocup-manual/info-bg.png)no-repeat center center;
+    background: url(../../../assets/promo/dy-eurocup-manual/info-bg.png) no-repeat center center;
     gap: 10px;
     display: flex;
     flex-direction: column;
     .title {
-      
       display: flex;
       align-items: center;
-      justify-content: center;  
+      justify-content: center;
       color: #fff;
       font-family: Play;
       font-size: 24px;
       font-weight: 700;
       line-height: 38.4px;
       letter-spacing: 0.1em;
-
     }
     .content {
       color: #fff;
@@ -603,10 +637,10 @@ onMounted(() => {
     gap: 10px;
     justify-content: center;
     align-items: center;
-    flex:1;
+    flex: 1;
   }
   .game-time {
-    flex:2;
+    flex: 2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -621,10 +655,10 @@ onMounted(() => {
       font-size: 12px;
       line-height: 15.24px;
       font-family: Microsoft YaHei UI;
-      color: #FFFFFF80;
+      color: #ffffff80;
     }
     .clickBet {
-      background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+      background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
       color: #ffffff;
       padding: 3px 20px;
       border-radius: 20px;

@@ -2,7 +2,6 @@
   <a-form ref="formRef" :model="loginForm" :rules="loginFormRules" hide-required-mark>
     <div>
       <a-form-item
-        required
         name="loginName"
         :label="$t('layout.header.accountModal.login.form.loginName.label')"
         label-align="left"
@@ -54,6 +53,7 @@ import { userStore } from "@/store/index";
 import { RiSmartphoneFill, RiLock2Fill } from "vue-remix-icons";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useRoute, useRouter } from "vue-router";
+import { validateLoginName } from "@/utils/validator";
 
 const emit = defineEmits(["close-modal"]);
 
@@ -69,10 +69,7 @@ const loginForm = ref({
   password: ""
 });
 const loginFormRules = ref({
-  loginName: [
-    { len: 11, message: t("layout.header.accountModal.login.form.loginName.error.len") },
-    { required: true, message: t("layout.header.accountModal.login.form.loginName.error.required") }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   password: [{ required: true, message: t("layout.header.accountModal.login.form.password.error.required") }]
 });
 

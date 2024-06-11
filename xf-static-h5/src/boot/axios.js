@@ -10,9 +10,27 @@ const rstArray = process.env.RST_API;
 const crArray = process.env.CR_API;
 const evtArray =process.env.EVT_API;
 
-var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
-var crtApi = getInitApi(crArray,"XF_H5_CRT_URL");
-var evtApi = getInitApi(evtArray,"XF_H5_EVT_URL");
+console.log(window.location.hostname);
+const globalLinks= ["xf13140"];
+const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+
+if(isGlobalLH){
+  var rstApi = "https://apbldfsqgl.ornpoicvw5y.com";
+  var evtApi = "https://prr4bi80gl.7jko99gysa.com";
+  var crtApi = "https://ca8tpj9cal.vay0qv35d4y.com";
+
+  localStorage.setItem("XF_H5_RST_URL", rstApi);
+  localStorage.setItem("XF_H5_EVT_URL",evtApi);
+  localStorage.setItem("XF_H5_CRT_URL",crtApi);
+
+  var cdnApi= "https://urle7rqimtl.enkpdmqvhc.com"
+  localStorage.setItem("IMAGE_CDN", cdnApi);
+
+}else{
+  var rstApi = getInitApi(rstArray, "XF_H5_RST_URL");
+  var crtApi = getInitApi(crArray,"XF_H5_CRT_URL");
+  var evtApi = getInitApi(evtArray,"XF_H5_EVT_URL");
+}
 
 
 const api = axios.create({baseURL: rstApi});

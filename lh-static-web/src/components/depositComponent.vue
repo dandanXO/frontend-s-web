@@ -565,7 +565,7 @@ async function verifyDepositDecimal(r, v) {
     if (v.match(decimalPattern) !== null) {
       return Promise.resolve();
     } else {
-      return Promise.reject("金额因为正数");
+      return Promise.reject("金额应为正数");
     }
   }
 }

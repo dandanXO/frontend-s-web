@@ -330,6 +330,7 @@ import {api} from "boot/axios"
 import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
 import * as _ from "lodash";
+import {useLocalStorage} from "@vueuse/core";
 
 import {useRouter} from "vue-router";
 
@@ -352,7 +353,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
-    const imgURL = process.env.IMAGE_CDN + '/payment/'
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + '/payment/'
     const columns = [
       {
         title: "Bank Name",

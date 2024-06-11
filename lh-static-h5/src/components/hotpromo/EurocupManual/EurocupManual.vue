@@ -19,7 +19,7 @@
           半/总决赛
         </div>
       </div>
-      <div class="common-title">欧洲杯小组赛赛程</div>
+      <div class="common-title">欧洲杯{{matchType}}赛程</div>
       <div class="schedule">
         <div class="schedule-item" v-if="tab === 'groupStage'">
           <div
@@ -312,7 +312,7 @@
             即可参与活动，若投注赛事触发事件则可以获得对应彩金，若触发多个事件彩金累计计算；
           </li>
           <li>
-            2.本活动限所有体育场馆的早盘盘口参与，如会员同时在各体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；
+            2.本活动仅限FB体育、IM体育、熊猫体育（沙巴体育与平博体育不予计算）的早盘盘口参与，如会员同时在FB体育、IM体育、熊猫体育场馆投注同一场比赛，该场比赛的有效投注额将累计计算；
           </li>
           <li>
             3.本活动有效投注额仅对已结算并产生输赢结果的早盘盘口投注额进行计算，任何滚球、走水、串关、提前结算的投注、取消的赛事将不计算在有效投注，任何低于欧洲盘1.70或亚洲盘0.70水位的投注以及在同一赛事中同时投注对等盘口，将不计算在投注额内；
@@ -330,7 +330,7 @@
   <GameModal ref="platformGame"></GameModal>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { getEurocupManualSchedule } from "../../../api/index/promo";
 import GameModal from "components/modal/GameModal.vue";
 import moment from "moment";
@@ -356,6 +356,17 @@ const init = () => {
     }
   });
 };
+
+const matchType= computed(() => {
+  if(tab.value === "roundOf16"){
+    return "十六强赛"
+  }else if(tab.value === "quarterFinal"){
+    return "4/1决赛"
+  }else if(tab.value === "semiFinalAndFinal"){
+    return "半/总决赛"
+  }
+  return "小组赛"
+})
 
 function filterTeamsByStage(teams) {
   console.log(teams);
@@ -449,7 +460,7 @@ onMounted(() => {
   align-items: center;
   width: 100px;
   height: 40px;
-  font-size: 12px;
+  font-size: 16px;
   color: #fff;
   cursor: pointer;
 }
@@ -486,7 +497,7 @@ onMounted(() => {
   margin-bottom: 20px;
   .alert-line {
     color: #f4ffe1;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 25.4px;
     margin: 14px 0px;
   }
@@ -496,7 +507,7 @@ onMounted(() => {
   width: 100%;
   table {
     width: 100%;
-    font-size: 10px;
+    font-size: 14px;
     line-height: 16px;
     text-align: center;
     border-collapse: separate !important;
@@ -532,7 +543,7 @@ onMounted(() => {
 
 .info {
   width: 100%;
-  font-size: 12px;
+  font-size: 16px;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -554,7 +565,7 @@ onMounted(() => {
       justify-content: center;
       color: #fff;
       font-family: Play;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 700;
     }
     .content {
@@ -564,7 +575,7 @@ onMounted(() => {
       align-items: center;
       justify-content: center;
       font-family: Play;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 400;
       text-align: center;
     }
@@ -616,7 +627,7 @@ onMounted(() => {
         width: 20px;
     }
     .time {
-      font-size: 10px;
+      font-size: 12px;
       line-height: 15.24px;
       color: #FFFFFF80;
       font-family: Microsoft YaHei UI;
@@ -629,7 +640,7 @@ onMounted(() => {
       border-radius: 20px;
       margin: 5px 0;
       cursor: pointer;
-      font-size: 10px;
+      font-size: 12px;
     }
   }
   .game-logo {
@@ -662,11 +673,11 @@ onMounted(() => {
     padding: 0px;
     list-style: none;
     li {
-      font-size: 10px;
-      line-height: 12px;
+      font-size: 14px;
+      line-height: 18px;
+      margin-bottom: 10px !important;
       color: #e1f2ff;
       font-weight: 400;
-      margin-bottom: 5px !important;
     }
   }
 }

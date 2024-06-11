@@ -105,7 +105,7 @@
           <img src="@/assets/images/common/volume-up.svg" />
           <div class="station-notice-box">
             <div class="station-notice">
-              <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 10">
+              <marquee-text :repeat="announcementList.length" :duration="announcementList.length * 30">
                 <div v-if="announcementList">
                   <span v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                     {{ a.content }}
