@@ -158,11 +158,6 @@
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
                     <div
-                      data-aos="zoom-in"
-                      :data-aos-delay="100 * index"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
                     >
                       <div class="platform-game-img">
                         <div
@@ -181,6 +176,11 @@
                             })()
                           }"
                         ></div>
+
+                        <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo' || item.code==='51' || item.code==='72' || item.code==='163' || item.code==='123' " class="burning-hot">
+                          <img src="../assets/images/index/hot.png" />
+                        </div>
+
                       </div>
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
@@ -215,19 +215,11 @@
                             })()
                           }"
                         ></div>
-                        <!-- <div
-                          class="game--bg"
-                          :style="{
-                            backgroundImage: (() => {
-                              try {
-                                return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
-                              } catch (e) {
-                                return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                                // return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
-                              }
-                            })()
-                          }"
-                        ></div> -->
+
+                        <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
+                          <img src="../assets/images/index/hot.png" />
+                        </div>
+
                       </div>
 
                       <div class="platform-game-title">
@@ -265,6 +257,11 @@
                           })()
                         }"
                       ></div>
+
+                      <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo' || item.code==='51' || item.code==='72' || item.code==='163' || item.code==='123' " class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
@@ -292,6 +289,11 @@
                           })()
                         }"
                       ></div>
+
+                      <div v-if="item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                     </div>
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
@@ -351,7 +353,7 @@
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
                         "
                         class="burning-hot"
                       >
@@ -387,7 +389,7 @@
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
                         "
                         class="burning-hot"
                       >
@@ -451,7 +453,7 @@
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                    <div v-if="index < 2" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
@@ -492,7 +494,7 @@
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                  <div v-if="index < 2" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -555,6 +557,11 @@
                           })()
                         }"
                       ></div>
+
+                      <div v-if="index < 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
@@ -737,6 +744,11 @@
                       })()
                     }"
                   ></div>
+
+                  <div v-if="index < 1" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+
                 </div>
                 <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
@@ -824,9 +836,10 @@
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                    <div v-if="index < 3" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
+
 
                     <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                   </div>
@@ -871,7 +884,7 @@
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                  <div v-if="index < 3" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -913,7 +926,18 @@
                       }
                     })()
                   }"
-                ></div>
+                >
+
+                  <div
+                    v-if="
+                          item.name === 'LuckySport' || item.name==='BTI'
+                        "
+                    class="burning-hot"
+                  >
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+
+                </div>
               </div>
             </template>
           </div>
