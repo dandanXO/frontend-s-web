@@ -109,16 +109,21 @@
     var realUrl = getQueryString("url");
     var agentCode = getQueryString("agentCode");
     var from = getQueryString("from");
-    var savedAgentCode = window.sessionStorage.getItem("AGENT_CODE");
-    if(savedAgentCode && savedAgentCode !== "null" && savedAgentCode !== null){
-        agentCode = savedAgentCode;
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
     }
-    window.sessionStorage.setItem("AGENT_CODE", agentCode);
+    if(realUrl===null || realUrl==='null'){
+        realUrl= "";
+    }
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
+    }
 
     var host = window.location.host;
     var vv = {agentCode: agentCode, regFrom: realUrl, downloadUrl: host};
     // console.log(vv);
 
+    const apiUrl ='https://apti7i0607tl.hz3wk041.com';
     const dataUrl='https://tfwkal.uz3moln2yn6.com'
     var liveUrl1 = "";
     var liveUrl2 = "";
@@ -147,6 +152,7 @@
 
     async function getApiUrl() {
         try {
+            // const response = await fetch(apiUrl + `/app/download/affiliate/url?siteCode=LH1&affiliateCode=${agentCode}`);
             const response = await fetch(dataUrl+`/getDownData`);
             const data = await response.json();
 

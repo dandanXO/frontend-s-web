@@ -114,6 +114,15 @@
     if(savedAgentCode){
         agentCode = savedAgentCode;
     }
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
+    }
+    if(realUrl===null || realUrl==='null'){
+        realUrl= "";
+    }
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
+    }
     window.sessionStorage.setItem("AGENT_CODE", agentCode);
 
     var host = window.location.host;
