@@ -615,14 +615,6 @@ svg {
   }
 }
 
-.login-container {
-  .q-field--standout.q-field--rounded .q-field__control {
-    border-radius: 12px;
-    border: 1px solid #ecedf0;
-    background: #f7f8fb;
-  }
-}
-
 .station-notice-wrapper {
   display: flex;
   gap: 10px;
@@ -713,14 +705,12 @@ svg {
   }
 
   .login-container {
-    .login-form-container {
-      .q-field--standout.q-field--rounded {
+      .q-field--standout {
         .q-field__control {
           background: $background-dark;
           border: none;
         }
       }
-    }
   }
 
   .q-field--standout.q-field--highlighted .q-field__control {

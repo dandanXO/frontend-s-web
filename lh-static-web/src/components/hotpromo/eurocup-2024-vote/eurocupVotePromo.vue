@@ -8,15 +8,15 @@
       </div>
     </div>
     
-    <div class="winner-bar">
-      <div class="winner-bar__bg">
-        <div class="winner-bar__inner">
-          <div class="winner-bar__text">
-            恭喜玩家SAFA赢得21314元
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="winner-bar">-->
+<!--      <div class="winner-bar__bg">-->
+<!--        <div class="winner-bar__inner">-->
+<!--          <div class="winner-bar__text">-->
+<!--            恭喜玩家SAFA赢得21314元-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
       <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
@@ -248,7 +248,7 @@ export default defineComponent({
         if (Number(castVoteFormData.votes) > votesData.value.myVotes) {
           ElMessage.error({
             type: "error",
-            message: "选票数量不足"
+            message: "投票次数不足"
           })
           return;
         }

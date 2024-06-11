@@ -43,7 +43,7 @@
                 <div class="content">
                     <ol>
                         <li>Thành viên nạp thành công lệnh gửi tiền tối thiểu là 7,000 VNDP, sau đó có thể chọn 1 đội
-                            bóng bất kì làm đội bóng yêu thích <a href="https://docs.google.com/forms/d/e/1FAIpQLSfVI_Qn7QEFPZXlpQpNRF4aabjndFioRyO5A-wWAoC3qBlR-g/viewform?usp=sf_link" target="_blank" class="pill">TẠI ĐÂY</a></li>
+                            bóng bất kì làm đội bóng yêu thích <a style="width: 100px;text-align: center" href="https://docs.google.com/forms/d/e/1FAIpQLSfVI_Qn7QEFPZXlpQpNRF4aabjndFioRyO5A-wWAoC3qBlR-g/viewform?usp=sf_link" target="_blank" class="pill">TẠI ĐÂY</a></li>
                         <li>Sau khi chọn được đội bóng yêu thích, vào những ngày đội bóng yêu thích thi đấu, Thành Viên
                             tham gia cược vào đội bóng yêu thích với tiền cược tối thiểu là 3,500 VNDP.</li>
                         <li>Sau khi đội bóng yêu thích chiến thắng trận đấu đó, Thành Viên liên hệ với CSKH 24/7 để cung

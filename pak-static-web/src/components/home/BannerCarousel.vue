@@ -4,12 +4,11 @@
       <swiper-slide v-for="(banner, index) in banners" :key="`main-${index}`" class="main-swiper-slide">
         <router-link :to="`/promotion${banner.redirectUrl}`">
           <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
-          <!-- <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" /> -->
         </router-link>
       </swiper-slide>
     </swiper-container>
     <!-- TODO: click action ? -->
-    <swiper-container
+    <!-- <swiper-container
       v-if="displayPaginationSwiper"
       ref="paginationSwiperRef"
       class="pagination-swiper"
@@ -20,10 +19,9 @@
       <swiper-slide v-for="(banner, index) in banners" :key="`pagination-${index}`" class="pagination-swiper-slide">
         <a @click="handlePaginationClick(index)">
           <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
-          <!-- <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" /> -->
         </a>
       </swiper-slide>
-    </swiper-container>
+    </swiper-container> -->
   </div>
 </template>
 <script setup>
@@ -49,7 +47,7 @@ const handlePaginationClick = (index) => {
 
 // avoid loading 2 swiper at same time
 onMounted(() => {
-  setTimeout(() => (displayPaginationSwiper.value = true), 300);
+  // setTimeout(() => (displayPaginationSwiper.value = true), 300);
 });
 </script>
 <style scoped lang="scss">

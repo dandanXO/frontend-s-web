@@ -45,15 +45,15 @@
         {{ store.currency.value }} {{ convertToCommaAmount(votesData.award) }}
       </div>
     </div>
-    <div class="winner-bar">
-      <div class="winner-bar__bg">
-        <div class="winner-bar__inner">
-          <div class="winner-bar__text">
-            恭喜玩家SAFA赢得21314元
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="winner-bar">-->
+<!--      <div class="winner-bar__bg">-->
+<!--        <div class="winner-bar__inner">-->
+<!--          <div class="winner-bar__text">-->
+<!--            恭喜玩家SAFA赢得21314元-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
 
     <div class="countries-wrapper pattern-wrapper">
@@ -177,7 +177,7 @@
       </div>
 
       <q-dialog v-model="isVoteRecordModalVisible">
-        <div class="cast-vote-container">    
+        <div class="cast-vote-container">
           <div class=title>投票历史</div>
           <div class="vote-records">
             <div class="vote-record-item" v-for="voteRecord, index in paginatedVoteRecords" :key="index">
@@ -271,7 +271,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "选票数量不足",
+          message: "投票次数不足",
           icon: "report_problem"
         });
         return;
@@ -300,7 +300,7 @@ export default defineComponent({
 
     const votesRecordChangePage = (page) => {
       if(page < 1) {
-        votesData.value.votesRecord.current = 1;  
+        votesData.value.votesRecord.current = 1;
       } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
         votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
       } else {
@@ -310,7 +310,7 @@ export default defineComponent({
 
     const paginatedVoteRecords = computed(() => {
       const votesRecord = votesData.value.votesRecord;
-      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize); 
+      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
     })
 
 
@@ -394,14 +394,14 @@ export default defineComponent({
 .cast-vote-container {
   background-color: #00192B;
   padding: 10px 20px;
-  
+
   .title {
     font-size: 20px;
     text-align: center;
     color: #00E9FE;
     font-family: "PingFang", "Roboto";
   }
-    
+
   .vote-records {
     display: grid;
     padding: 20px;

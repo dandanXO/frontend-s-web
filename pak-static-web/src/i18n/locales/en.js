@@ -6,10 +6,13 @@ export default {
         casino: "casino",
         promotion: "promotions"
       },
-      downloadApp: "DOWNLOAD APP",
+      downloadApp: {
+        content: "DOWNLOAD",
+        highlight: "APP"
+      },
       inviteToEarn: {
-        title: "Invite to Earn",
-        description: "Simply share your exclusive QR code"
+        content: "INVITE TO",
+        highlight: "EARN"
       },
       navigation: {
         slot: "Slots",
@@ -78,10 +81,6 @@ export default {
           form: {
             loginName: {
               label: "Phone",
-              error: {
-                len: "Invalid phone number",
-                required: "Phone number is required"
-              },
               placeholder: "Please enter your account or mobile number"
             },
             password: {
@@ -100,10 +99,6 @@ export default {
           form: {
             loginName: {
               label: "Phone",
-              error: {
-                len: "Invalid phone number",
-                required: "Phone number is required"
-              },
               placeholder: "Please enter your account or mobile number"
             },
             password: {
@@ -138,10 +133,6 @@ export default {
           infoForm: {
             loginName: {
               label: "Phone",
-              error: {
-                len: "Invalid phone number",
-                required: "Phone number is required"
-              },
               placeholder: "Please enter your account or mobile number"
             },
             email: {
@@ -556,11 +547,7 @@ export default {
   loginView: {
     form: {
       loginName: {
-        placeholder: "Login name",
-        error: {
-          required: "Phone number is required",
-          len: "Invalid phone number"
-        }
+        placeholder: "Login name"
       },
       password: {
         placeholder: "Password",
@@ -580,14 +567,10 @@ export default {
     title: "Register Account",
     form: {
       loginName: {
-        placeholder: "Login name",
-        error: {
-          required: "Phone number is required",
-          len: "Invalid phone number"
-        }
+        placeholder: "Login name"
       },
       password: {
-        placeholder: "",
+        placeholder: "Password",
         error: {
           required: "Please enter your password"
         }
@@ -600,7 +583,7 @@ export default {
     registerButton: "Register Now",
     haveAccount: {
       description: "Already a member?",
-      link: ""
+      link: "Login Now"
     }
   },
   forgotPwdView: {
@@ -613,10 +596,6 @@ export default {
     infoForm: {
       loginName: {
         label: "Phone",
-        error: {
-          len: "Invalid phone number",
-          required: "Phone number is required"
-        },
         placeholder: "Please enter your account or mobile number"
       },
       email: {
@@ -700,6 +679,13 @@ export default {
     },
     loading: {
       text: "Loading..."
+    },
+    validator: {
+      loginName: {
+        len: "The phone number must have 11 digits",
+        required: "Phone number is required",
+        pattern: "The phone number must start with '03'"
+      }
     }
   },
   error: {

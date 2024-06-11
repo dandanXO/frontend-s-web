@@ -23,6 +23,8 @@
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
+    <HongBaoPreEurocup v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'" :promo-code="list.promoCode" />
+
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1-esport-safety') ||
@@ -120,6 +122,7 @@
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
+    <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -149,7 +152,7 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
+import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
@@ -186,6 +189,7 @@ import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
+import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -213,6 +217,7 @@ export default defineComponent({
     // PrivilegeInvite,
     // AsiaCup2024Promo,
     // BasketballHot,
+    HongBaoPreEurocup,
     LplSummerPromo,
     // Cny2024Promo,
     BbDacha2024Promo,
@@ -231,7 +236,8 @@ export default defineComponent({
     SportZhongChao,
     Nba24Match,
     LPLSummer2024,
-    DuanWuJiePromo
+    DuanWuJiePromo,
+    DepositRebates
   },
   props: {
     list: {
@@ -335,7 +341,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh-lpl-summer24" ||
       this.list.redirectUrl === "lh-sport-zhongchao"||
-      this.list.redirectUrl === "lh-duanwujie24"
+      this.list.redirectUrl === "lh-duanwujie24" ||
+      this.list.redirectUrl === "tiqianhongbao" ||
+      this.list.redirectUrl === "lh1-deposit-rebates"
     ) {
       this.isCommonPromo = false;
     } else {

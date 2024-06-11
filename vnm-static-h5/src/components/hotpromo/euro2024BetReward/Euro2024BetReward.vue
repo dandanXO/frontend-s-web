@@ -80,7 +80,7 @@
             </tr>
             <tr>
               <td>≥108,000 VNDP</td>
-              <td>1,888 VNDP</td>
+              <td>1,188 VNDP</td>
               <td>3</td>
             </tr>
             <tr>
@@ -215,6 +215,7 @@ onMounted(() => {
     justify-content: center;
     .section-title {
       display: flex;
+      width: 100%;
       color: #0080ff;
       font-size: 16px;
       font-weight: 700;
@@ -222,10 +223,15 @@ onMounted(() => {
       align-items: center;
       margin: 0 auto;
       text-align: center;
+      justify-content: space-between;
+
+      span{
+        white-space: nowrap;
+      }
 
       .decor {
         aspect-ratio: 195/44;
-        width: 53px;
+        width: 10%;
       }
     }
     .moneyBg {
@@ -283,6 +289,7 @@ onMounted(() => {
 
     .section-title {
       display: flex;
+      width: 100%;
       color: #0080ff;
       font-size: 20px;
       font-weight: 800;
@@ -291,10 +298,15 @@ onMounted(() => {
       align-items: center;
       margin: 0 auto;
       text-align: center;
+      justify-content: space-between;
+
+      span{
+        white-space: nowrap;
+      }
 
       .decor {
         aspect-ratio: 195/44;
-        width: 45px;
+        width: 10%;
       }
     }
 

@@ -135,9 +135,9 @@
 
         <div class="euro-countdown-txt">
           <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 100px" />
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />
           </div>
-          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 80px" /></div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
 
           <div class="euro-countdown-num-wrap">
             {{ $t("lang.euroCountdown01a") }}
@@ -160,7 +160,7 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper">
+    <div class="hot-matches-title-wrapper" style="display:none;">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -175,7 +175,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container">
+    <div class="hot-matches-container" style="display:none;">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -257,7 +257,7 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -310,15 +310,25 @@
         <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
-      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/minigame-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
+          <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_hashgame") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
       </div>
+      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
+        <template v-if="tab === 'fishing'">
+          <img src="../assets/images/home/games/others-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/others-icon.png" />
+        </template>
+        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
+      </div>
+    </div>
 
       <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
       <!--        <template v-if="tab === 'cockfight'">-->
@@ -330,16 +340,6 @@
       <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
       <!--      </div>-->
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/casual-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/casual-icon.png" />
-        </template>
-        <span :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
-      </div>
-    </div>
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
       <!-- <div class="game-lists fade-in-image" id="esport-lists">
@@ -515,6 +515,31 @@
         </template>
       </div>
 
+
+      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
+        <template v-for="(item, index) in casuals" :key="index">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
       <div class="game-lists fade-in-image" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
@@ -584,31 +609,6 @@
         </template>
       </div>
 
-
-      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
-        <template v-for="(item, index) in casuals" :key="index">
-          <div
-            class="platform-block"
-            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
-            :class="item.underMaintenance === true ? 'maintenance' : ''"
-          >
-            <MaintenanceBox :item="item" />
-
-            <div
-              class="platform-img-frame"
-              :style="{
-                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
-              }"
-            >
-              <div class="platform-content">
-                <div class="platform-title">
-                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
     </div>
   </div>
 
@@ -1023,6 +1023,7 @@ export default defineComponent({
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("esport-lists");
           var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem6half = document.getElementById("casual-lists");
           var checkItem7 = document.getElementById("fishing-lists");
           var checkItem8 = document.getElementById("cockfight-lists");
 
@@ -1032,6 +1033,7 @@ export default defineComponent({
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
+          var positionTop6half = checkItem6half.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
           var positionTop8 = checkItem8.getBoundingClientRect().top;
 
@@ -1043,7 +1045,9 @@ export default defineComponent({
             tab.value = "cockfight";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop6half - 5 && positionTop7 >= blockHeight) {
+            tab.value = "casual";
+          } else if (0 > positionTop6 - 5 && positionTop6half >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "esport";
@@ -1412,8 +1416,8 @@ export default defineComponent({
             if (platTypes.indexOf("CASUAL") > -1 ) {
               var casualObj = Object.assign({}, element);
 
-              casualObj.title_vn = casualObj.name + " MiniGame";
-              casualObj.title_en = casualObj.name  + " MiniGame";
+              casualObj.title_vn = casualObj.name + " Hash Game";
+              casualObj.title_en = casualObj.name  + " Hash Game";
 
               casualObj.icon = "casual";
               casuals.value.push(casualObj);
@@ -2107,7 +2111,7 @@ export default defineComponent({
 
 .q-carousel.home {
   width: calc(100% - 2rem);
-  margin: 10px auto;
+  margin: 6px auto;
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
@@ -2191,7 +2195,7 @@ export default defineComponent({
 .mid-announcement-section {
   width: $box-width;
   margin: 10px auto 10px;
-  height: 36px;
+  height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2892,8 +2896,9 @@ export default defineComponent({
 }
 
 .hot-matches-wrapper {
-  width: calc(100% - 2rem);
-  margin: 20px auto 0px;
+  width: calc(100% - 1rem);
+  margin: auto;
+  // margin: 20px auto 0px;
 
   .euro-countdown {
     display: flex;
@@ -2901,8 +2906,8 @@ export default defineComponent({
     align-items: baseline;
     // padding-bottom: 35px;
     // padding-top: 15px;
-    padding-bottom: 20px;
-    padding-top: 10px;
+    // padding-bottom: 8px;
+    // padding-top: 8px;
     position: relative;
 
     img {
@@ -2962,9 +2967,11 @@ export default defineComponent({
       justify-content: center;
       width: max-content;
       position: relative;
-      background-image: url(../assets/images/home/eurocup-countdown-content-frame.png);
-      background-size: 100% 100%;
-      padding: 4px;
+      background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
+      // background-size: 100% 100%;
+      
+    background-size: 100% 70%;
+      padding: 0 4px;
       margin-left: 12px;
 
       img {
@@ -2984,7 +2991,7 @@ export default defineComponent({
       color: #ffffff;
       line-height: 1;
       align-items: center;
-      width: 100%;
+      width: 94%;
       padding: 0px 10px;
 
       @media (min-width: 440px) {
@@ -3019,25 +3026,28 @@ export default defineComponent({
 
         .num {
           background-image: url(../assets/images/home/eurocup-countdown-number.png);
-          height: 40px;
-          width: 40px;
+          // height: 40px;
+          // width: 40px;
+          
+    height: 30px;
+    width: 30px;
           background-size: 100% 100%;
           display: flex;
           align-items: center;
           justify-content: center;
 
-          @media (min-width: 440px) {
-            height: 50px;
-            width: 50px;
-          }
+          // @media (min-width: 440px) {
+          //   height: 50px;
+          //   width: 50px;
+          // }
 
-          @media (min-width: 500px) {
-            height: 60px;
-            width: 60px;
-          }
+          // @media (min-width: 500px) {
+          //   height: 60px;
+          //   width: 60px;
+          // }
 
           &:last-child {
-            margin-left: -5px;
+            margin-left: -3px;
           }
         }
         span {

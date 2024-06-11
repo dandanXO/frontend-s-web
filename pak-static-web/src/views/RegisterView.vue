@@ -671,6 +671,7 @@ import { getVerificationCode, sendTelephoneOtp } from "@/api/index/login";
 import { message } from "ant-design-vue";
 import { userStore, globalStore } from "@/store";
 import { useI18n } from "vue-i18n";
+import { validateLoginName } from "@/utils/validator";
 
 const router = useRouter();
 const { t } = useI18n();
@@ -779,15 +780,6 @@ const getOtpCode = () => {
       isOtpSending.value = false;
     });
 };
-let validateName = async (r, v) => {
-  if (v === "") {
-    return Promise.reject("Login name is required");
-  } else if (!checkName(v)) {
-    return Promise.reject("Only English letters and numbers are allowed.");
-  } else {
-    return Promise.resolve();
-  }
-};
 const checkName = (v) => {
   var alphanumeric = /^[A-Za-z0-9]+$/;
   return v.match(alphanumeric);
@@ -862,10 +854,7 @@ let validatePhoneNumber = async (r, v) => {
   }
 };
 const rules = computed(() => ({
-  loginName: [
-    { len: 11, message: t("registerView.form.loginName.error.len") },
-    { required: true, message: t("registerView.form.loginName.error.required") }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   password: [{ required: true, message: t("registerView.form.password.error.required") }]
 }));
 const loadingRegister = ref(false);

@@ -142,11 +142,11 @@
 
     <div class="btn-lists">
       <div class="list-item" @click="openWhatsApp()">
-        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/icon-whatsapp.png" />
+        <img class="btn-icon" id="whatapp-icon" src="../assets/images/auth/whatsapp-icon.png" />
         <div>WhatsApp</div>
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
-        <img class="btn-icon" id="download-icon" src="../assets/images/auth/icon-download.png" />
+        <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
         <div>Download App</div>
       </div>
       <div class="list-item" @click="openTiktok()">

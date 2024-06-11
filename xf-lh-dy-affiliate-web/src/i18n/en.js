@@ -501,6 +501,13 @@ export default {
     authenticator: 'Authenticator',
     createMember: 'Create Member',
     shareRatio: 'Share Ratio',
+    rebateWallet: 'Rebate Wallet',
+    affiliateTotalRebate: 'Affiliate Rebate',
+    myRebate: 'My Rebate',
+    totalWinLoss: 'Total Win/Loss',
+    todayDeposit: 'Today Deposit',
+    todayWithdrawal: 'Today Withdrawal',
+    depositWithdrawalDiff: 'Deposit Withdrawal Difference',
   },
   google: {
     google_auth_menu: 'Google Authenticator',

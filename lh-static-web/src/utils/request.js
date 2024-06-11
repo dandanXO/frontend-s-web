@@ -11,7 +11,7 @@ const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
 console.log(window.location.hostname);
-const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869"];
+const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869", "lh866", "lh068", "lh988"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
 const specialLinks= ["lh93371", "lh76390", "lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100"];
@@ -151,7 +151,7 @@ const onResponse = (response) => {
         store.token = null;
         location.reload();
       }
-      if (res.code === ResponseCode.ERROR_USER_TOO_FAST) {
+      if (res.code === ResponseCode.ERROR_USER_TOO_FAST || res.code=== ResponseCode.ERROR_PROMO_NOT_STARTED) {
         ElMessage.error(res.message);
       }
       // if (res.code === 36001 || 36002 || 36003 || 36004 || 36005 || 36006 || 36007 || 36008 || 36009) {

@@ -14,7 +14,7 @@
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
     <HongBaoYuPromo
-      v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao1' && store.token"
       :promo-code="list.promoCode"
     />
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
@@ -59,6 +59,13 @@
       :pageContent="list.pageContent"
       :promoParam="list.param"
       v-if="!isCommonPromo && list.redirectUrl === 'dy2-eurocup-hongbao' && store.token"
+    />
+
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promoParam="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
     />
 
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
@@ -114,6 +121,7 @@ import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
 import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import LPLSummer24 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import DragonBoat from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
@@ -159,6 +167,7 @@ export default defineComponent({
     BonusSpinWheel,
     LOLMsi2024Promo,
     HongBaoYuEurocupPromo,
+    HongBaoPreEurocupPromo,
     LPLSummer24,
     DragonBoat,
     EurocupManual
@@ -318,7 +327,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-eurocup-manual" ||
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
-      this.list.redirectUrl === "dy-fish-hongbao"
+      this.list.redirectUrl === "dy-fish-hongbao" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {

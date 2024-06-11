@@ -155,6 +155,7 @@ import {
   verifyForgetPasswordPhone
 } from "@/api/index/forgotPwd";
 import { useI18n } from "vue-i18n";
+import { validateLoginName } from "@/utils/validator";
 
 const { t } = useI18n();
 
@@ -184,19 +185,7 @@ const otp = ref(Array(6).fill(""));
 const inputRefs = ref([]);
 
 const passwordFormRules = computed(() => ({
-  loginName: [
-    {
-      required: true,
-      message: t("forgotPwdView.infoForm.loginName.error.required"),
-      trigger: "blur"
-    },
-    {
-      min: 6,
-      max: 12,
-      message: t("forgotPwdView.infoForm.loginName.error.required"),
-      trigger: "blur"
-    }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   email: [
     {
       required: true,
