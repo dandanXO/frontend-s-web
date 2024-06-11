@@ -1,6 +1,5 @@
 <template>
   <div class="intel-els">
-    <!-- <div class="intel-els-background-img"></div> -->
     <div class="intel-els-box">
       <div class="intel-els-tab">
         <div class="intel-els-tab-item" :class="{ active: activeTab === 'first' }" @click="activeTab = 'first'">
@@ -13,9 +12,11 @@
       <div class="intel-els-first-container" v-if="activeTab === 'first'">
         <div class="intel-els-fisrt-title"></div>
         <div class="intel-els-team-box">
-          <table class="intel-els-table">
+         
+        </div>
+        <table class="intel-els-table">
             <thead>
-              <tr>
+              <tr style="border-top: 2px solid;">
                 <th >IEM 达拉斯总有效投注</th>
                 <th >开赛金</th>
                 <th >奖金派发时间</th>
@@ -37,11 +38,9 @@
               </tr>
             </tbody>
           </table>
-        </div>
-        <div class="intel-els-team-box">
           <table class="intel-els-table">
             <thead>
-              <tr>
+              <tr style="border-top: 2px solid;">
                 <th >有效投注</th>
                 <th >投注嘉奖</th>
                 <th >雷火专属金</th>
@@ -95,11 +94,6 @@
               </tr>
             </tbody>
           </table>
-        </div>
-        <div class="intel-els-activities">
-          注：会员参与 IEM 达拉斯总有效投注达到≥3000 元后在 IEM 科隆赛开赛日可获得对应开赛彩金；
-        </div>
-        
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
@@ -113,6 +107,7 @@
             </div>
           </div>
           <div class="item-content">
+
             <div class="item-text">
               3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
             </div>
@@ -126,13 +121,9 @@
       </div>
       <div class="intel-els-second-container" v-if="activeTab === 'second'">
         <div class="intel-els-second-title"></div>
-        <!-- <div class="special-discounts-rebates">
-          <div class="title">特惠返利场</div>
-          <div class="line"></div>
-        </div> -->
         <table class="intel-els-table">
             <thead>
-              <tr>
+              <tr style="border-top: 2px solid;">
                 <th rowspan="2">有效投注</th>
                 <th rowspan="2">投注嘉奖</th>
                 <th colspan="2">奖上奖</th>
@@ -199,6 +190,10 @@
               </tr>
             </tbody>
           </table>
+        
+        <div class="intel-els-notice">
+          注：会员参与 IEM 达拉斯与 IEM 科隆每个赛事的总有效投注≥3000 元，参与 IEM 里约赛事每日符合对应有效投注可获得对应的加赠金；
+        </div>
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
@@ -212,6 +207,7 @@
             </div>
           </div>
           <div class="item-content">
+
             <div class="item-text">
               3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
             </div>
@@ -227,29 +223,18 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
-import { getLplSummer24Match } from "@/api/index/promo.js";
+import { ref } from "vue";
+import { getLplSummer24Match } from "../../../api/index/promo.js";
 import moment from "moment";
-import { useLocalStorage } from "@vueuse/core";
+import {useLocalStorage} from "@vueuse/core"
 
 const activeTab = ref("first");
 const matchList = ref([]);
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
-onMounted(async () => {
-  const apiRes = await getLplSummer24Match();
-  console.log(apiRes);
-  matchList.value = apiRes.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).format("M 月 DD 日 HH:mm"),
-    teamOneIcon: imgURL + res.teamOneIcon,
-    teamTwoIcon: imgURL + res.teamTwoIcon
-  }));
-});
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 </script>
 
 <style scoped lang="scss">
 .intel-els {
-  //font-family: FZLanTingHeiS-EB-GB;
   width: 100%;
   height: 100%;
   display: flex;
@@ -259,18 +244,20 @@ onMounted(async () => {
   position: relative;
   padding-top: 40px;
   padding-bottom: 80px;
+  background-color: #1d1d1e;
   .intel-els-background-img {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 1074px;
-    background-image: url("@/assets/promo/lh-lpl-summer-24/background-img.png");
+    background-image: url("../../../assets/promo/lh-lpl-summer-24/background-img.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
   .intel-els-box {
-    width: 1200px;
+    width: 100%;
+    padding: 0px 20px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -282,20 +269,21 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   margin-bottom: 15px;
+  width: 100%;
 }
 .intel-els-tab-item {
   font-family: FZLanTingHeiS-EB-GB;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 400;
-  line-height: 34.75px;
+  line-height: 39.71px;
   color: #948b73;
-  background-image: url("@/assets/promo/intel-esl-24/inactive.png");
+  background-image: url("../../../assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 257px;
-  height: 78px;
+  max-width: 200px;
+  width: 100%;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -303,60 +291,60 @@ onMounted(async () => {
 }
 .active {
   color: #f8e1a3;
-  background-image: url("@/assets/promo/intel-esl-24/active.png");
+  background-image: url("../../../assets/promo/intel-esl-24/active.png");
 }
 
 .intel-els-first-container {
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  background-color: #1d1d1e;
   .intel-els-fisrt-title {
-    // width: 100%;
+    width: 50%;
     height: 48px;
-    background-image: url("@/assets/promo/intel-esl-24/title.png");
+    background-image: url("../../../assets/promo/intel-esl-24/title.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 29px;
+    margin-bottom: 10px;
   }
   .intel-els-rule-title {
-    width: 100%;
+    width: 50%;
     height: 48px;
-    background-image: url("@/assets/promo/intel-esl-24/rule.png");
+    background-image: url("../../../assets/promo/intel-esl-24/rule.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 57px;
+    background-position: center;
+    margin-bottom: 28px;
   }
 
   .intel-els-team-box {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 27px;
     .intel-els-game-team {
-      width: 567px;
-      height: 184px;
-      background-image: url("@/assets/promo/lh-lpl-summer-24/team-back.png");
+      width: 100%;
+      height: 110px;
+      background-image: url("../../../assets/promo/lh-lpl-summer-24/team-back.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       display: flex;
       align-items: center;
       justify-content: space-around;
-      padding: 0 87px;
+      margin-bottom: 20px;
       .intel-els-game-team-item {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         .intel-els-game-team-icon {
-          width: 91px;
-          height: 91px;
+          width: 50px;
+          height: 50px;
         }
         .intel-els-game-team-name {
-          font-size: 20px;
+          font-size: 16px;
           font-weight: 400;
           line-height: 24.82px;
           color: #fff;
-          margin-top: 16px;
         }
       }
 
@@ -366,16 +354,16 @@ onMounted(async () => {
         justify-content: center;
         flex-direction: column;
         .vs-icon {
-          width: 91px;
-          height: 91px;
-          background-image: url("@/assets/promo/lh-lpl-summer-24/vs.png");
+          width: 60px;
+          height: 60px;
+          background-image: url("../../../assets/promo/lh-lpl-summer-24/vs.png");
           background-repeat: no-repeat;
           background-size: 100% 100%;
         }
         .vs-time {
           color: #aeafa2;
-          margin-top: 8px;
-          font-size: 20px;
+          margin-top: 5px;
+          font-size: 18px;
           font-weight: 400;
           line-height: 25.4px;
         }
@@ -384,38 +372,48 @@ onMounted(async () => {
   }
 
   .intel-els-activities {
-    color: #FECE94;
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 25.4px;
+    color: #fdffe9;
+    padding: 16px 24px;
+    border: 3px solid #3d3d3d;
+    margin-bottom: 27px;
+    span {
+      color: #fabf34;
+    }
   }
 
-  .intel-els-table {
+  :deep(.intel-els-table) {
     width: 100%;
     height: 100%;
     text-align: center;
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 25.4px;
     border-collapse: collapse;
     border: 1px solid #ffdba633;
-    border-top: 2px solid rgba(255, 207, 148, 0.3);
     margin-bottom: 16px;
     thead {
-      color: #FECE94;
-      background: #333840;
+      color: #f8e1a3;
+
       tr {
         height: 41px;
         th {
           border: 1px solid #ffdba633;
+          background: #ffdba633 !important;
         }
       }
     }
     tbody {
       color: #fdffe9;
+      background: #1d1d1e !important;
       tr {
-        height: 60px;
+        height: 41px;
         td {
-          border: 1px solid #ffdba633;
+          border: 1px solid #ffdba633 !important;
+          background: #1d1d1e !important;
         }
       }
     }
@@ -423,18 +421,19 @@ onMounted(async () => {
 
   .winning-bonus,
   .reversal-bonus {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px;
+    height: 50px;
+    justify-content: flex-start;
     .title {
-      width: 176px;
+      width: 25%;
       height: 100%;
       background: linear-gradient(90deg, #ff4d00 0%, #ffc700 100%);
       display: flex;
@@ -445,49 +444,54 @@ onMounted(async () => {
       font-weight: 700;
     }
     .content {
-      width: calc(100% - 176px);
-      padding-left: 27px;
+      width: 75%;
+      padding: 25px;
     }
   }
 
   .intel-els-example {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
     padding: 16px 24px;
     border: 3px solid #3d3d3d;
-    margin-bottom: 17px;
-    margin-bottom: 57px;
+    margin-bottom: 28px;
   }
 
   .intel-els-rule-content {
-    border-top: 3px solid rgba(255, 225, 183, 1);
-    padding-left: 16px;
-    padding-right: 54px;
-    padding-top: 41px;
-    padding-bottom: 30px;
-    height: 445px;
+    border-top: 3px solid #FFE1B7;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
     .item-content {
       display: flex;
-      align-items: center;
+    align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
+      font-size: 16px;
+      .item-icon-box {
+        display: flex;
+        align-items: start;
+        height: 100%;
+        padding-top: 10px;
+      }
       .item-icon {
-        width: 20px;
-        height: 20px;
-        background-image: url("@/assets/promo/lh-lpl-summer-24/rule-icon.png");
+        width: 12px;
+        height: 12px;
+        background-image: url("../../../assets/promo/lh-lpl-summer-24/rule-icon.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        margin-right: 17px;
+        margin-right: 10px;
       }
       .item-text {
-        width: calc(100% - 40px);
-        font-size: 20px;
         font-weight: 400;
         line-height: 25.4px;
         color: #fdffe9;
@@ -499,44 +503,45 @@ onMounted(async () => {
 .intel-els-second-container {
   width: 100%;
   height: 100%;
-  background-color: transparent;
+  background-color: #1d1d1e;
   .intel-els-second-title {
-    width: 100%;
+    width: 50%;
     height: 48px;
-    background-image: url("@/assets/promo/intel-esl-24/title.png");
+    background-image: url("../../../assets/promo/intel-esl-24/title.png");
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
     margin-bottom: 29px;
   }
   .intel-els-activities {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #fdffe9;
     padding: 16px 24px;
     border: 3px solid #3d3d3d;
-    margin-bottom: 27px;
+    margin-bottom: 20px;
   }
   .intel-els-table {
     width: 100%;
     height: 100%;
     text-align: center;
     vertical-align: middle;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     border-collapse: collapse;
     border: 1px solid #ffdba633;
-    border-top: 2px solid rgba(255, 207, 148, 0.3);
     margin-bottom: 16px;
     thead {
-      color: #FECE94;
-      background: #333840;
+      color: #f8e1a3;
+      background: #2c2a27;
 
       tr {
         height: 41px;
         th {
           border: 1px solid #ffdba633;
+          background: #ffdba633 !important;
         }
       }
     }
@@ -545,7 +550,8 @@ onMounted(async () => {
       tr {
         height: 41px;
         td {
-          border: 1px solid #ffdba633;
+          border: 1px solid #ffdba633 !important;
+          background: #1d1d1e !important;
         }
       }
     }
@@ -579,51 +585,58 @@ onMounted(async () => {
     }
   }
   .intel-els-notice {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
     color: #FECE94;
     padding: 16px 0px;
     margin-bottom: 17px;
-    margin-bottom: 57px;
+    margin-bottom: 0px;
   }
 
   .intel-els-rule-title {
-    width: 100%;
+    width: 50%;
     height: 48px;
-    background-image: url("@/assets/promo/intel-esl-24/rule.png");
+    background-image: url("../../../assets/promo/intel-esl-24/rule.png");
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 57px;
+    background-position: center;
+    margin-bottom: 28px;
   }
 
   .intel-els-rule-content {
-    border-top: 3px solid rgba(255, 225, 183, 1);
-    padding-left: 16px;
-    padding-right: 54px;
-    padding-top: 41px;
-    padding-bottom: 30px;
-    height: 445px;
+    border-top: 3px solid #FFE1B7;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
     .item-content {
       display: flex;
-      align-items: center;
+    align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
+      font-size: 16px;
+      .item-icon-box {
+        display: flex;
+        align-items: start;
+        height: 100%;
+        padding-top: 10px;
+      }
       .item-icon {
-        width: 20px;
-        height: 20px;
-        background-image: url("@/assets/promo/lh-lpl-summer-24/rule-icon.png");
+        width: 12px;
+        height: 12px;
+        background-image: url("../../../assets/promo/lh-lpl-summer-24/rule-icon.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        margin-right: 17px;
+        margin-right: 10px;
       }
       .item-text {
-        width: calc(100% - 40px);
-        font-size: 20px;
         font-weight: 400;
         line-height: 25.4px;
         color: #fdffe9;

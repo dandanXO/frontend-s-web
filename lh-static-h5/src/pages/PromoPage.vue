@@ -169,14 +169,16 @@
                   lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24',
                   lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
                 }"
-                :style="
-        selectedPromo.promoCode === 'lh-eurocup-manual'
-          ? 'background-image: url(' +
-            imgURL +
-            (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
-            ')'
-          : ''
-      "
+                :style="[selectedPromo.promoCode === 'lh-eurocup-manual'
+                    ? 'background-image: url(' +
+                      imgURL +
+                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+                      ')'
+                    : '',
+                    
+                    {
+                  backgroundImage: selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'',
+                }]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
