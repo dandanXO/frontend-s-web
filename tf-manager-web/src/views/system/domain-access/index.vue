@@ -138,7 +138,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item :label="t('sitePlatform.accessType')" prop="accessType">
+        <el-form-item :label="t('fields.accessType')" prop="accessType">
           <el-radio-group
             v-model="form.accessType"
             size="mini"
