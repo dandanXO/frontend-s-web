@@ -1257,7 +1257,7 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const categoriesList = computed(() => [
+const categoriesList = ref( [
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
