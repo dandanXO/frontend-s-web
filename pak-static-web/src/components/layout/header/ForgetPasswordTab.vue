@@ -165,6 +165,7 @@ import { sendForgetPasswordEmail, verifyForgetPasswordEmail } from "@/api/index/
 import { useRoute, useRouter } from "vue-router";
 import { Input, message } from "ant-design-vue";
 import { LockFilled, EyeFilled, EyeInvisibleFilled } from "@ant-design/icons-vue";
+import { validateLoginName } from "@/utils/validator";
 const emit = defineEmits(["back-to-login"]);
 
 const { t } = useI18n();
@@ -192,19 +193,7 @@ const step = ref(1);
 const verificationImg = ref("");
 
 const passwordFormRules = computed(() => ({
-  loginName: [
-    {
-      required: true,
-      message: t("layout.header.accountModal.forgetPwd.infoForm.loginName.error.required"),
-      trigger: "blur"
-    },
-    {
-      min: 6,
-      max: 12,
-      message: t("layout.header.accountModal.forgetPwd.infoForm.loginName.error.required"),
-      trigger: "blur"
-    }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   email: [
     {
       required: true,

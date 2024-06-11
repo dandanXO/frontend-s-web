@@ -3,7 +3,7 @@
     <div class="margin-center login-form-wrapper">
       <div class="logo"><img src="../assets/logo.png" /></div>
       <a-form ref="formRef" :model="loginForm" :rules="rules">
-        <a-form-item ref="loginName" required name="loginName">
+        <a-form-item ref="loginName" name="loginName">
           <a-input v-model:value="loginForm.loginName" :placeholder="$t('loginView.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
@@ -70,6 +70,7 @@ import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
+import { validateLoginName } from "@/utils/validator";
 
 const { t } = useI18n();
 
@@ -102,10 +103,7 @@ const getCode = () => {
     });
 };
 const rules = computed(() => ({
-  loginName: [
-    { len: 11, message: t("loginView.form.loginName.error.len") },
-    { required: true, message: t("loginView.form.loginName.error.required") }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   password: [{ required: true, message: t("loginView.form.password.error.required") }]
 }));
 const loadingLogin = ref(false);
