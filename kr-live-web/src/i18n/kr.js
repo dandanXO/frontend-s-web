@@ -106,6 +106,11 @@ export default {
     withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     // withdraw end
+    // announcement start
+    announcement_no_selected: "선택하지 않음",
+    announcement_total: "총",
+    announcement_has_attachment: "첨부파일 있음",
+    // announcement end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
