@@ -241,14 +241,14 @@
           </div>
           <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
         </div>
-        <div class="info">
+        <!-- <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} {{ $t("withdraw.dailyLimit") }}</div>
           </div>
           <div class="desc">
             RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMaxAmount) }}
           </div>
-        </div>
+        </div> -->
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ $t("withdraw.remainWagers") }}</div>
