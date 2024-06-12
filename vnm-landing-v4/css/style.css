@@ -1,12 +1,11 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 body {
     padding: 0;
     margin: 0;
     font-family: Inter;
 }
 .wrapper {
-    background: url(../images/bg.png)no-repeat center center;
+    background: url(../images/bg.png) no-repeat center center;
     background-size: cover;
     min-height: 100vh;
     width: 100%;
@@ -15,18 +14,26 @@ body {
 .wrapper .flex-container .logo {
     max-width: 500px;
     width: 80%;
+    margin: auto;
+}
+.wrapper .flex-container .logo img {
+    display: block;
+    margin: auto;
+    max-width: 260px;
 }
 .abs {
     position: absolute;
     z-index: 0;
 }
 .abs.ftball {
-    right: 0;
+    left: -10px;
     top: 20%;
+    transform: scaleX(-1);
 }
 .abs.badge {
-    left: 0;
+    right: -10px;
     top: 40%;
+    transform: scaleX(-1);
 }
 .flex-container {
     display: flex;
@@ -42,20 +49,22 @@ body {
 .main-header {
     font-size: 80px;
     font-weight: 700;
-    background: linear-gradient(180deg, #EDB55B 0%, #FDEF94 49%, #EEBC5F 100%);
+    background: linear-gradient(180deg, #edb55b 0%, #fdef94 49%, #eebc5f 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-align: center;
 }
 .sub-header {
-    font-size: 44px;
+    font-size: 36px;
     font-weight: 700;
-    line-height: 68px;
+    line-height: 50px;
     text-align: center;
     color: #ffffff;
     max-width: 800px;
+    margin-bottom: 30px;
 }
 .hongbao {
-    background: url(../images/hongbao.png)no-repeat top center;
+    background: url(../images/hongbao.png) no-repeat top center;
     background-size: contain;
     width: 95%;
     max-width: 524px;
@@ -79,28 +88,28 @@ body {
     font-weight: 700;
     line-height: 34.59px;
     text-align: center;
-    color: #F45837;
+    color: #f45837;
 }
 .hongbao-input {
-    border: 2.38px solid #F45837;
-    background: #FFF3D7;
+    border: 2.38px solid #f45837;
+    background: #fff3d7;
     padding: 10px;
     border-radius: 10px;
     width: 100%;
     text-align: center;
-    color: #F45837;
+    color: #f45837;
 }
 
-.hongbao-input:focus, 
+.hongbao-input:focus,
 .hongbao-input:focus-visible,
 .hongbao-input:active {
-    border: 2.38px solid #F45837;
+    border: 2.38px solid #f45837;
     outline: none;
 }
 
 .hongbao-btn {
     border: 0;
-    color: #F45837;
+    color: #f45837;
     font-weight: 700;
     background: none;
     cursor: pointer;
@@ -108,6 +117,11 @@ body {
     font-size: 20px;
     margin-left: 4px;
 }
+
+.hongbao-img {
+    margin-bottom: 10px;
+}
+
 .tabs {
     width: 100%;
 }
@@ -115,7 +129,7 @@ body {
 .tab-buttons {
     display: flex;
     border-radius: 10px 10px 0 0;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     overflow: hidden;
     align-items: center;
     justify-content: center;
@@ -124,28 +138,28 @@ body {
 }
 .tab-btn {
     padding: 10px 20px;
-    background: linear-gradient(180deg, #418CEB 0%, #285EB6 100%);
+    background: linear-gradient(180deg, #418ceb 0%, #285eb6 100%);
     color: #ffffff;
     cursor: pointer;
 }
 .tab-btn.active {
-    background: #D8EDFC;
-    color: #3F88E7;
-    font-weight:700;
-
+    background: #d8edfc;
+    color: #3f88e7;
+    font-weight: 700;
 }
 .tab-content {
     display: none;
     padding: 20px;
-    border: 5px solid #FFFFFF;
-    background: #D8EDFC;
-    box-shadow: 0px 0px 20px 6px #3E86E4 inset;
+    border: 5px solid #ffffff;
+    background: #d8edfc;
+    box-shadow: 0px 0px 20px 6px #3e86e4 inset;
     border-radius: 10px;
 }
 .tab-content.active {
     display: block;
 }
-.tab-content h3, .tab-content p {
+.tab-content h3,
+.tab-content p {
     margin: 0;
 }
 .tab-content .matches {
@@ -158,7 +172,7 @@ body {
 .tab-content .matches .match {
     display: flex;
     gap: 10px;
-    border: 1px solid #408AE9;
+    border: 1px solid #408ae9;
     padding: 20px;
     border-radius: 12px;
     justify-content: space-between;
@@ -166,13 +180,13 @@ body {
 }
 
 .tab-content .matches .match .match-team {
-    border-right: 1px solid #408AE9;
+    border-right: 1px solid #408ae9;
     padding-right: 15px;
     display: flex;
     gap: 10px;
     flex-direction: column;
     align-items: flex-start;
-    
+
     width: 55%;
 }
 .tab-content .matches .match .match-team .team {
@@ -194,15 +208,17 @@ body {
 }
 .content-bar {
     width: 95%;
-    padding: 20px;
-    border: 5px solid #FFFFFF;
-    background: #D8EDFC;
-    box-shadow: 0px 0px 20px 6px #3E86E4 inset;
+    padding: 20px 30px;
+    border: 5px solid #ffffff;
+    background: #d8edfc;
+    box-shadow: 0px 0px 20px 6px #3e86e4 inset;
     border-radius: 10px;
     max-width: 1200px;
     margin-top: 20px;
 }
-.content-bar .secinner-content {display: flex;}
+.content-bar .secinner-content {
+    display: flex;
+}
 .content-bar .secinner-content .left-contents {
     display: flex;
     gap: 10px;
@@ -213,15 +229,14 @@ body {
 }
 
 .content-bar .secinner-content .left-contents .caption {
-    color: #006DFF;
+    color: #006dff;
     font-size: 36px;
     font-weight: 700;
     line-height: 43.57px;
     text-align: left;
-    
 }
 .content-bar .secinner-content .left-contents .login-btn {
-    background: url(../images/login-btn.png)no-repeat center center;
+    background: url(../images/login-btn.png) no-repeat center center;
     background-size: contain;
     padding: 20px 50px;
     font-weight: 700;
@@ -238,19 +253,18 @@ body {
     text-align: center;
     font-size: 32px;
     font-weight: 700;
-    color: #006DFF;
-
+    color: #006dff;
 }
 .content-bar .thirdinner-content ol li {
-    color: #006DFF;
+    color: #006dff;
     font-size: 24px;
     font-weight: 400;
     margin: 0 0 10px;
 }
 @media screen and (max-width: 768px) {
-    
     .wrapper .flex-container .logo img {
         width: 100%;
+        max-width: 150px;
     }
     .main-header {
         font-size: 32px;
@@ -274,8 +288,7 @@ body {
         grid-template-columns: repeat(1, 1fr);
     }
     .tab-btn {
-        
-    font-size: 10px;
+        font-size: 10px;
     }
     .hongbao {
         height: 310px;
