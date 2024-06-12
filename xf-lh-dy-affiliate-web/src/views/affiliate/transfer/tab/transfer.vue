@@ -20,10 +20,27 @@
   </el-card>
   <el-row>
     <el-form ref="formRef" :model="form" label-position="right" :rules="formRules" label-width="200px" label-suffix=":">
-      <el-form-item :label="t('fields.downlineMember')" prop="loginName">
+      <el-form-item :label="t('fields.memberType')">
+        <el-select
+          size="normal"
+          v-model="form.memberType"
+          :placeholder="t('fields.memberType')"
+          prop="memberType"
+        >
+          <el-option
+            v-for="item in uiControl.memberType"
+            :key="item.key"
+            :value="item.value"
+            :label="t(`fields.${item.displayName}`)"
+          >
+            {{ $t(`fields.${item.displayName}`) }}
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="t('fields.loginName')" prop="loginName">
         <el-input
           v-model="form.loginName"
-          :placeholder="t('fields.downlineMember')"
+          :placeholder="t('fields.loginName')"
         />
       </el-form-item>
       <el-form-item :label="t('fields.transferAmount')" prop="transferAmount">
@@ -72,7 +89,14 @@ const balance = ref(0);
 const showBalance = ref(false);
 const formRef = ref();
 const isLoading = ref(false);
+const uiControl = reactive({
+  memberType: [
+    { key: 1, displayName: 'member', value: 'MEMBER' },
+    { key: 2, displayName: 'affiliate', value: 'AFFILIATE' },
+  ]
+})
 const form = reactive({
+  memberType: null,
   loginName: null,
   transferAmount: null,
   rollover: null,

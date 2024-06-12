@@ -284,6 +284,7 @@ export default {
     memberProfitDownlineProfitUnsettleCommission:
       'Lợi nhuận của Thành viên / Lợi nhuận Dưới đường / Hoa hồng chưa giải quyết',
     memberInfo: 'Thông tin Thành viên',
+    memberType: 'Loại Thành Viên',
     month: 'Tháng',
     monthlyAffiliateCommission: 'Hoa hồng hàng tháng của Đại lý',
     monthBeforeLastTotal: 'Hoa hồng tháng này',
@@ -759,6 +760,7 @@ export default {
     901: 'Bản ghi liên kết đại lý không tồn tại',
     902: 'Thành viên không phải là đại lý',
     903: 'Tài khoản là một đại lý',
+    904: 'Tài khoản này là thành viên',
     905: 'Tên thật chưa được thiết lập',
     1000: 'Tên đăng nhập hoặc mật khẩu không đúng',
     1001: 'Tài khoản đăng nhập đã bị vô hiệu hóa',

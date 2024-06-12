@@ -291,6 +291,7 @@ export default {
     memberProfitDownlineProfitUnsettleCommission:
       'Member Profit / Downline Profit / Unsettle Commission',
     memberInfo: 'Member Info',
+    memberType: 'Member Type',
     minActiveMemberCount: 'Minimum Active Member Count',
     month: 'Month',
     monthlyAffiliateCommission: 'Monthly Affiliate Commission',
@@ -784,6 +785,7 @@ export default {
     901: 'Affiliate record does not exists',
     902: 'Member is not an affiliate',
     903: 'Account is an affiliate',
+    904: 'Account is a member',
     905: 'Real name has not been set',
     1000: 'Login name or password is error',
     1001: 'Login account is disable',
