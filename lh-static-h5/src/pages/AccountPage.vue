@@ -270,7 +270,7 @@
     <router-link to="/account/invite">
       <div class="acct-nav-item">
         <img src="../assets/images/account/account-share-icon.png" />
-        <div class="acct-nav-label">分享赚钱</div>
+        <div class="acct-nav-label">推广赚钱</div>
       </div>
     </router-link>
 
