@@ -182,17 +182,19 @@
           <div class="vote-records">
             <div class="vote-record-item" v-for="(voteRecord, index) in paginatedVoteRecords" :key="index">
               <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-              <div>{{ voteRecord.voteTime }}</div>
+              <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
             </div>
           </div>
           <div class="pagination-wrapper">
             <q-pagination
               class="vote-record-pagination"
               v-model="votesData.votesRecord.current"
-              :max="votesData.votesRecord.data.length / votesData.votesRecord.pageSize"
+              :max="Math.ceil(votesData.votesRecord.data.length / votesData.votesRecord.pageSize)"
               direction-links
               boundary-numbers
               :max-pages="6"
+
+        @input="votesRecordChangePage"
             />
           </div>
         </div>
@@ -207,6 +209,7 @@ import { useQuasar } from "quasar";
 import { convertToCommaAmount } from "boot/utils"
 import { userStore } from "src/stores";
 import {useLocalStorage} from "@vueuse/core"
+import moment from "moment";
 
 export default defineComponent({
   name: "EurocupVotePromo",
@@ -304,16 +307,17 @@ export default defineComponent({
 
       isSubmitting.value = false;
     }
-
     const votesRecordChangePage = (page) => {
-      if(page < 1) {
+      const totalPages = Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
+
+      if (page < 1) {
         votesData.value.votesRecord.current = 1;
-      } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
-        votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
+      } else if (page > totalPages) {
+        votesData.value.votesRecord.current = totalPages;
       } else {
         votesData.value.votesRecord.current = page;
       }
-    }
+    };
 
     const paginatedVoteRecords = computed(() => {
       const votesRecord = votesData.value.votesRecord;
@@ -360,7 +364,8 @@ export default defineComponent({
       imgURL,
       isVoteRecordModalVisible,
       paginatedVoteRecords,
-      votesRecordChangePage
+      votesRecordChangePage,
+      moment
     }
   }
 });
@@ -425,8 +430,8 @@ export default defineComponent({
       justify-content: space-between;
       white-space: nowrap;
       color: #fff;
-      padding: 10px 25px;
-      gap: 40px;
+      padding: 10px;
+      gap: 30px;
 
       .vote-record-flag-wrapper {
         display: flex;
