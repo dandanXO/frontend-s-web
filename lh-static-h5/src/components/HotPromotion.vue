@@ -121,6 +121,7 @@
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
+    <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl' && !isCommonPromo && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && !isCommonPromo && store.token" />
   </div>
@@ -188,6 +189,7 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
+import IntelEls24 from "../components/hotpromo/intel-els-24/intel-els-24.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
 
@@ -196,6 +198,7 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    IntelEls24,
     fishHongbao,
     ClaimPromo,
     DragonCardPromo,
@@ -340,6 +343,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh-nba24-match" ||
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh-lpl-summer24" ||
+      this.list.redirectUrl === "lh1-intel-esl"||
       this.list.redirectUrl === "lh-sport-zhongchao"||
       this.list.redirectUrl === "lh-duanwujie24" ||
       this.list.redirectUrl === "tiqianhongbao" ||
