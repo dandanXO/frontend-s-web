@@ -174,6 +174,8 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
+    <div class="q-mt-lg tutorial-link" @click="isDepositTutorial = true">Deposit Tutorial</div>
+
     <div class="bottom-btn">
       <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
       <q-btn
@@ -187,6 +189,17 @@
       </q-btn>
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="isDepositTutorial">
+    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+      <q-card-section>
+        <div class="close-alert" v-close-popup>
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <img src="../../assets/images/account/tutorial-deposit.jpg" class="tutorial-img" width="100%" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
@@ -308,8 +321,12 @@ const blurCode = () => {
 
 const verifyDepositAmount = ref([
   (val) => !!val || t("form.depositAmount_placeholder"),
-  (val) => val > calculatedMinDeposit.value - 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value + '-' + calculatedMaxDeposit.value,
-  (val) => val < calculatedMaxDeposit.value + 1 || t("form.depositAmount_rules_01") + calculatedMinDeposit.value + '-' + calculatedMaxDeposit.value
+  (val) =>
+    val > calculatedMinDeposit.value - 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value,
+  (val) =>
+    val < calculatedMaxDeposit.value + 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
@@ -714,6 +731,8 @@ const refreshNode = () => {
   nodeKey.value += 1;
 };
 
+const isDepositTutorial = ref(false);
+
 onActivated(() => {
   checkNewUser();
   loadInfo();
@@ -997,5 +1016,18 @@ onMounted(() => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+}
+
+.tutorial-link {
+  color: #70bc62;
+  text-decoration: underline;
+}
+
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
 }
 </style>

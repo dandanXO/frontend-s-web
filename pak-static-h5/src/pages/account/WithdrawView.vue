@@ -258,6 +258,8 @@
       </div>
     </div>
 
+    <div class="q-mt-lg tutorial-link" @click="isWithdrawTutorial = true">Withdraw Tutorial</div>
+
     <template v-if="bankCardList.length > 0">
       <div class="bottom-btn">
         <q-btn
@@ -267,7 +269,7 @@
           :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
           @click="submitWithdraw"
         >
-        {{ $t("btn.submit") }}
+          {{ $t("btn.submit") }}
         </q-btn>
       </div>
     </template>
@@ -284,6 +286,17 @@
         </q-btn>
       </div>
     </template>
+
+    <q-dialog width="100%" v-model="isWithdrawTutorial">
+      <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+        <q-card-section>
+          <div class="close-alert" v-close-popup>
+            <q-icon size="24px" name="close"></q-icon>
+          </div>
+          <img src="../../assets/images/account/tutorial-withdraw.jpg" class="tutorial-img" width="100%" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
 
     <!-- <div class="bottom-tnc q-mt-md">
       Note: 3%+6Rs of the withdrawal amount will be deducted as bank commission Please double check the withdrawal
@@ -393,7 +406,7 @@ const loadCards = () => {
 
         if (bankCardList.value.length > 0) {
           withdrawInfo.cardId = bankCardList.value[0].id;
-          withdrawalDialogTab.value= bankCardList.value[0].bankCode;
+          withdrawalDialogTab.value = bankCardList.value[0].bankCode;
         } else {
           $q.notify({
             color: "negative",
@@ -625,6 +638,8 @@ const checkNewUser = () => {
 //     router.push(`/account/bank`);
 //   }
 // };
+
+const isWithdrawTutorial = ref(false);
 
 onMounted(() => {
   getWithdrawalMethods();
@@ -864,5 +879,18 @@ const isValidCardAddress = () => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+}
+
+.tutorial-link {
+  color: #70bc62;
+  text-decoration: underline;
+}
+
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
 }
 </style>
