@@ -1,5 +1,5 @@
 <template>
-    <div class="deposit-rebates-container">
+    <div class="deposit-rebates-container isEuro">
         <div class="cards-tabs">
             <div @click="selectedCard = card.code " class="tab" v-for="(card, i) in depositCards" :key="i" :class="{active: selectedCard === card.code}">
                 <img :src="require(`./images/${card.code}.png`)">
@@ -8,7 +8,7 @@
         </div>
         <div class="cards">
             <div class="deposit-card" v-for="(card, i) in depositCards" :key="(i)" :class="{active: selectedCard === card.code}">
-                <div class="bg"><img src="./images/card-design.png"></div>
+                <div class="bg"><img src="./euroimages/card-design.png"></div>
 
                 <div class="deposit-card__logo" :class="card.code"><img :src="require(`./images/${card.code}.png`)"></div>
                 <div class="deposit-content">
@@ -16,13 +16,13 @@
                     <div class="deposit-content__details">{{ card.content }}</div>
                 </div>
                 <div class="deposit-buttons">
-                    <div class="btn deposit-buttons__go-deposit"><router-link to="/finance/deposit"><img src="./images/depositnow-btn.png"></router-link></div>
-                    <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a :href="card.lesson" target="_blank"><img src="./images/checklesson-btn.png"></a></div>
+                    <div class="btn deposit-buttons__go-deposit"><router-link to="/finance/deposit"><img src="./euroimages/depositnow-btn.png"></router-link></div>
+                    <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a :href="card.lesson" target="_blank"><img src="./euroimages/checklesson-btn.png"></a></div>
                 </div>
             </div>
         </div>
         <div class="similar-title">
-            <img src="./images/title-details.png">
+            <img src="./euroimages/title-details.png">
         </div>
 
         <table cellpadding="0" cellspacing="0" border="0" class="happy-table">
@@ -86,7 +86,7 @@
             </tbody>
                 </table>
         <div class="similar-title">
-            <img src="./images/title-rules.png">
+            <img src="./euroimages/title-rules.png">
         </div>
         <ol class="happy-rules">
             <li>活动期间使用指定存款方式进行存款达到指定要求即可获得彩金；</li>
@@ -155,6 +155,55 @@
 </script>
 <style lang="scss">
     .deposit-rebates-container {
+        
+        &.isEuro {
+            .cards-tabs {
+                .tab{
+                    background: #0E0F40;
+                    &.active {
+                    background: linear-gradient(180deg, #2E9BFF 0%, #1300ED 100%);
+
+                }
+                }
+            }
+            .cards {
+                .deposit-card {
+                    background: linear-gradient(180deg, #149AFB 6.55%, #01178E 100%);
+                    border: 3px solid #95ECFF;
+                    .deposit-content {
+                        &__details {
+                            color: #D1ECFF;
+
+                        }
+                    }
+                }
+            }
+            .happy-table {
+                thead {
+                    th {
+                        background: #0047FF;
+                        color: #CFF6FF;
+                    }
+                }
+                tbody {
+                    tr {
+                        
+                        &:nth-child(even) {
+                            background: #C9DCFF33;
+
+                            border: 1px solid #C0BCB74D;
+                        }
+                    }
+                    td {
+                        color: #CFF6FF;
+                    }
+                }
+            }
+            ol.happy-rules {
+                li {color: #CFF6FF;
+                }
+            }
+        }
         width: 100%;
         max-width: 1200px;
         margin: 0 auto;
@@ -201,6 +250,7 @@
                 margin: 40px auto 10px;
                 border-radius: 10px;
                 flex-direction: column;
+                border: 3px solid #CA95FF;
                 .bg {
                     position: absolute;
                     width: 100%;
@@ -218,9 +268,9 @@
                 }
                 &__logo {
                     position: absolute;
-                    right: 38%;
-                    top: -30px;
-                    background: url(./images/hexagon.png)no-repeat center center;
+                    right: 35%;
+                    top: -35px;
+                    background: url(./euroimages/hexagon.png)no-repeat center center;
                     background-size: contain;
                     padding: 5px;
                     display: flex;
@@ -351,7 +401,7 @@
             }
         }
     }
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 2000px) {
         .deposit-rebates-container {
             .cards-tabs {
                 display: grid;
