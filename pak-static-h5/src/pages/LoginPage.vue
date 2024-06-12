@@ -198,8 +198,6 @@ import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-// import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
 import { useUI } from "stores/ui";
@@ -495,17 +493,17 @@ export default defineComponent({
               });
 
               //ADJUST TRACKEVENT.
-              if (Platform.is.android && Platform.is.capacitor) {
-                affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
-                var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
-                // alert(affQuickRegEvent.value);
-                Adjust.trackEvent(adjustEvent);
-              } else {
-                const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+              // if (Platform.is.android && Platform.is.capacitor) {
+              //   affQuickRegEvent.value = sessionStorage.getItem("AFFILIATE_QUICK_REGISTER_EVENT");
+              //   var adjustEvent = new AdjustEvent(affQuickRegEvent.value);
+              //   // alert(affQuickRegEvent.value);
+              //   Adjust.trackEvent(adjustEvent);
+              // } else {
+                // const AdjustWeb = require("@adjustcom/adjust-web-sdk");
                 // AdjustWeb.trackEvent({
                 //   eventToken: "vm6pjs"
                 // });
-              }
+              // }
 
               store.autoLogin(res.data);
               sessionStorage.removeItem("REFERRAL_CODE");
