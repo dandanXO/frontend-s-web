@@ -75,7 +75,6 @@
           class="wTip"
           v-model="regForm.telephone"
           :placeholder="$t('login.mobileNo')"
-          :rules="[{ required: true, message: t('placeholder.mobileNo') }]"
           clearable
         >
           <template #append></template>
@@ -194,18 +193,19 @@ let validateName = async (r, v) => {
     return Promise.resolve();
   }
 };
-
 let validatePhoneNumber = async (r, v) => {
-  var reg = /^\d+$/;
   if (v === "") {
     return Promise.reject(t("placeholder.verifyPhone"));
-  } else if (!reg.test(v)) {
+  } else if (!/^\d+$/.test(v)) {
     return Promise.reject(t("placeholder.onlyNumber"));
+  } else if (v.length !== 10) {
+    return Promise.reject(t("placeholder.invalidPhoneLength"));
+  } else if (v.charAt(0) !== '0') {
+    return Promise.reject(t("placeholder.invalidPhoneStartsWith0"));
   } else {
     return Promise.resolve();
   }
 };
-
 let validateRealName = async (r, v) => {
   if (v === "") {
     return Promise.reject(t("placeholder.realName"));

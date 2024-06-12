@@ -225,6 +225,8 @@ export default {
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
+    invalidPhoneLength: 'Mobile number must be 10 digits long.',
+    invalidPhoneStartsWith0: 'Mobile number must start with 0.',
     phoneVerification: "Please enter phone verification",
     min6: "Length should be 6 characters",
     lessthan50: "Length should be 50 characters",

@@ -257,7 +257,7 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -317,7 +317,7 @@
         <template v-else>
           <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
@@ -677,7 +677,7 @@
       </a>
     </div>
   </div>
-
+<!-- 
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
@@ -685,7 +685,7 @@
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
-  </q-page-sticky>
+  </q-page-sticky> -->
 
   <q-dialog
     width="100%"
@@ -2576,6 +2576,7 @@ export default defineComponent({
         transform: translateX(-50%);
         color: #7a80a1;
         line-height: 1;
+        font-weight: bold;
 
         &.active {
           color: #ffffff;
