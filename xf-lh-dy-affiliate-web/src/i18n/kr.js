@@ -290,6 +290,7 @@ export default {
     memberProfit: '대리 이익',
     memberProfitDownlineProfitUnsettleCommission:
       '대리 이익/하위 이익/지난 달 잔액',
+    memberType: '회원 유형',
     minActiveMemberCount: '최소 활성 회원 수',
     month: '월',
     monthlyAffiliateCommission: '이번 달 대리 커미션',
@@ -777,6 +778,7 @@ export default {
     901: '대리 기록이 없음',
     902: '이 사용자는 대리가 아님',
     903: '이 계정은 이미 대리임',
+    904: '이 계정은 회원입니다',
     905: '실제 이름이 아직 입력되지 않음',
     1000: '로그인 이름 또는 비밀번호가 잘못됨',
     1001: '로그인 실패, 계정이 비활성화됨',
