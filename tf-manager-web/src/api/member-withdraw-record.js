@@ -181,8 +181,8 @@ export const fromApplyToAutopay = (id, withdrawPlatformId, wd, siteId) => {
   return https().request(`/memberWithdrawRecord/${id}/applyToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };
 
-export const autoWithdrawToFail = (id, wd, siteId) => {
-  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { withdrawDate: wd, siteId: siteId }, ContentType.form);
+export const autoWithdrawToFail = (id, cancelType, remark, withdrawDate, siteId) => {
+  return https().request(`/memberWithdrawRecord/${id}/autoWithdrawToFail?_method=PUT`, Method.POST, { id, cancelType, remark, withdrawDate, siteId }, ContentType.form);
 };
 
 export const autoWithdrawToSuccess = (id, wd, siteId) => {
