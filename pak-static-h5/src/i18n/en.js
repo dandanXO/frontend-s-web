@@ -221,14 +221,16 @@ export default {
     depositMonthlytoWinGifts: "Deposit Monthly To Win Gifts"
   },
   deposit: {
-    selectAmount: "Select Amount"
+    selectAmount: "Select Amount",
+    depositTutorial: "Deposit Tutorial"
   },
   withdraw: {
     cashBalance: "Cash Balance",
     withdrawable: "Withdrawable",
     withdrewAmount: "Withdrew Amount",
     dailyLimit: "Daily Limit",
-    remainWagers: "Remain Wagers"
+    remainWagers: "Remain Wagers",
+    withdrawTutorial: "Withdraw Tutorial"
   },
   bank: {
     virtualWallet: "Virtual Wallet",
@@ -273,7 +275,8 @@ export default {
     inviteBonus: "Invite Bonus",
     totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
     player: "Player",
-    money: "Money"
+    money: "Money",
+    eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300."
   },
   records: {
     gamePlatform: "Game Platform",
