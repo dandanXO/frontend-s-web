@@ -2,24 +2,28 @@
     <div class="jackpot">
       <div class="jackpot-txt">
         <q-spinner-pie  v-if="isLoading" color="purple" size="20"/>
-        <span v-else>{{ jackpotPrizeAmt }}</span>
+        <span v-else>{{ (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) || '' }}</span>
       </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { api } from 'boot/axios';
 
 const jackpotPrizeAmt = ref();
 const isLoading = ref(false);
+const refetchJackpotInterval = ref();
+const jackpotTickerInterval = ref();
 
-const initData = () => {
-  isLoading.value = true;
+const fetchJackpot = (isInit) => {
+  if(isInit) {
+    isLoading.value = true;
+  }
 
   api.get("/member/jackpot-amount").then((res) => {
       const response = res.data
-      jackpotPrizeAmt.value = response.data;
+      jackpotPrizeAmt.value = Math.round(response.data);
       isLoading.value = false;
   })
   .catch((e) => {
@@ -31,7 +35,21 @@ const initData = () => {
 }
 
 onMounted(() => {
-    initData();
+  fetchJackpot(true);
+
+  jackpotTickerInterval.value = setInterval(() => {
+    jackpotPrizeAmt.value++;
+  }, 100);
+
+  refetchJackpotInterval.value = setInterval(() => {
+    fetchJackpot();
+  }, 10000)
+})
+
+onUnmounted(() => {
+  clearInterval(jackpotTickerInterval.value);
+
+  clearInterval(refetchJackpotInterval);
 })
 </script>
 

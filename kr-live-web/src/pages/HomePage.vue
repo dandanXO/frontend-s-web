@@ -1474,7 +1474,7 @@ export default defineComponent({
           const response = res.data;
 
           if (response.code === 0) {
-            depositRecordList.value = response.data.records;
+            depositRecordList.value = response.data;
           } else {
             $q.notify({
               color: "negative",
