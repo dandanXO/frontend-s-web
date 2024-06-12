@@ -143,7 +143,7 @@ export default defineComponent({
 
     const getAffiliateByDomain = () => {
       var host = window.location.host;
-      // host = "";
+      // host = "www.lh56917.com";
       api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
         console.log(res);
         if (res.code === 0 && res.data !== "") {
