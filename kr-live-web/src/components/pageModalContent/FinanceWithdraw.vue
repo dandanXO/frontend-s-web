@@ -105,11 +105,6 @@
                     <template v-else>{{ store.currency.value }}</template>
                   </span>
               </template>
-              <!-- <template v-slot:append>
-                  <span style="z-index:1;">
-                    <div @click="updateWithdrawAmt" class="update-withdraw-btn">삭제</div>
-                  </span>
-              </template> -->
             </q-input>
 
             <div class="select-amt-btn-wrapper">
@@ -155,9 +150,6 @@
             </div>
             <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
           </div>
-          <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
-          <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
-          <!--          </div>-->
           <div v-else-if="isEWALLET">
             <div class="q-mt-sm text-neontb">*특별히 언급합니다: 출금 지갑과 게임 계정의 이름은 반드시 일치해야 합니다</div>
             <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
@@ -221,8 +213,6 @@ const withdrawLoading = ref(false);
 
 const activeItem = ref(0);
 const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
-const isLoadingBankCard = ref(false);
-const bankCardList = ref([]);
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -352,10 +342,6 @@ const submitWithdraw = () => {
   }
 };
 
-const updateWithdrawAmt = () => {
-  withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
-};
-
 const tutorialLabel = () => {
   if (selectedWithdrawalMethod.value.code === 'KDPAY') {
     return 'KDPAY 튜토리얼 비디오'
@@ -444,10 +430,11 @@ onMounted(() => {
         return code === availableBankType;
       });
     
-      selectMethod(withdrawMethods[methodIndex], methodIndex);
+      withdrawalMethods.value = [withdrawMethods[methodIndex]];
+      selectMethod(withdrawMethods[methodIndex], 0);
     }
   })
-  
+
   store.getBalance();
 });
 </script>

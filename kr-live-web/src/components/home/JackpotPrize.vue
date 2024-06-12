@@ -80,7 +80,21 @@ onUnmounted(() => {
     transform: translate(-50%, -50%);
     font-size: 34px;
     font-weight: bold;
-    font-family: monospace;
+
+    background-clip: text;
+    background-image: linear-gradient(to right, #d62727, #d62727);
+    color: #EBD5A9;
+    letter-spacing: calc(3em / 8);
+    padding: calc(calc(3em / 16) / 2);
+    -webkit-text-stroke-color: transparent;
+    -webkit-text-stroke-width: calc(3em / 16);
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+      letter-spacing: calc(2em / 8);
+    }
+
+    /**
     color: #f5c681;
     text-shadow: 2px 0 #ff3c3c, -2px 0 #ff3c3c, 0 2px #ff3c3c, 0 -2px #ff3c3c, 1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
     letter-spacing: 3px;
@@ -89,6 +103,7 @@ onUnmounted(() => {
       font-size: 18px;
       text-shadow: 1px 0 #ff3c3c, -1px 0 #ff3c3c, 0 1px #ff3c3c, 0 -1px #ff3c3c, 1px 1px #ff3c3c, -1px -1px #ff3c3c, 1px -1px #ff3c3c, -1px 1px #ff3c3c;
     }
+    */
   }
 }
 </style>
