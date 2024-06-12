@@ -27,7 +27,7 @@
         <div class="attachment" v-if="selected.attachment">
           <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
         </div>
-        <div class="content">{{ selected.content }}</div>
+        <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
       </div>
       <div class="announcement-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
     </q-scroll-area>
