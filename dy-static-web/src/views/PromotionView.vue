@@ -64,7 +64,8 @@
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024',
-            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
+            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
+            isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24'
           }"
         >
           <div
@@ -99,9 +100,9 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy-duanwujie24' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-cs2-blast-2024'
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -647,6 +648,16 @@ export default defineComponent({
           }
         }
 
+        &.isDuanwuBanner {
+          height: 376px !important;
+          min-height: 376px;
+
+          .promo-bg {
+            height: 376px !important;
+            min-height: 376px;
+          }
+        }
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -702,6 +713,20 @@ export default defineComponent({
           width: 100%;
           max-width: 100%;
           margin: 0;
+
+          .promo-view-container {
+            display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+        &.duanwujie {
+          width: 100%;
+          max-width: 1920px;
+          margin: 0 auto;
+          background-image: url(../assets/images/promotion/web-bg.jpg) !important;
 
           .promo-view-container {
             display: none;
