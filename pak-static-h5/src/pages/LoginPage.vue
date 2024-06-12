@@ -593,7 +593,7 @@ export default defineComponent({
           })
         )
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           var url = data.liveUrl1;
           ui.CSAUrl = url;
         });
