@@ -129,7 +129,7 @@
           </template>
         </table>
 
-        <div class="table-hint q-pa-md">Eligibility: Invitee's deposit must be ≥ 300.</div>
+        <div class="table-hint q-pa-md">{{ $t("earnMoney.eligibility_tips") }}</div>
       </div>
 
       <div class="earn-money-sent-ytd">

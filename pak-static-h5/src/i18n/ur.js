@@ -221,14 +221,16 @@ export default {
     depositMonthlytoWinGifts: "انعامات جیتنے کے لئے ماہانہ جمع کریں"
   },
   deposit: {
-    selectAmount: "رقم منتخب کریں"
+    selectAmount: "رقم منتخب کریں",
+    depositTutorial: "جمع کرنے کا ٹیوٹوریل"
   },
   withdraw: {
     cashBalance: "کیش بیلنس",
     withdrawable: "واپسی کے قابل",
     withdrewAmount: "واپس لی گئی رقم",
     dailyLimit: "یومیہ حد",
-    remainWagers: "باقی شرطیں"
+    remainWagers: "باقی شرطیں",
+    withdrawTutorial: "نکالنے کا ٹیوٹوریل"
   },
   bank: {
     virtualWallet: "ورچوئل والٹ",
@@ -274,7 +276,8 @@ export default {
     inviteBonus: "دعوت کی مکافات",
     totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
     player: "پلیئر",
-    money: "پیسہ"
+    money: "پیسہ",
+    eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔"
   },
   records: {
     gamePlatform: "گیم پلیٹ فارم",

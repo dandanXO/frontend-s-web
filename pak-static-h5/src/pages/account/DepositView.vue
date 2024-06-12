@@ -174,7 +174,7 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-lg tutorial-link" @click="isDepositTutorial = true">Deposit Tutorial</div>
+    <div class="q-mt-lg tutorial-link" @click="isDepositTutorial = true">{{ $t("deposit.depositTutorial") }}</div>
 
     <div class="bottom-btn">
       <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->

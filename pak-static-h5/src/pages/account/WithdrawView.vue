@@ -258,7 +258,7 @@
       </div>
     </div>
 
-    <div class="q-mt-lg tutorial-link" @click="isWithdrawTutorial = true">Withdraw Tutorial</div>
+    <div class="q-mt-lg tutorial-link" @click="isWithdrawTutorial = true">{{ $t("withdraw.withdrawTutorial") }}</div>
 
     <template v-if="bankCardList.length > 0">
       <div class="bottom-btn">
