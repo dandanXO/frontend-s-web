@@ -1269,7 +1269,6 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { useI18n } from "vue-i18n";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
