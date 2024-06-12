@@ -29,7 +29,7 @@
             type="text/javascript"
             src="./style/js/swiper-3.4.1.min.js?v=5"
     ></script>
-    <script type="text/javascript" src="./style/js/download.js?v=6"></script>
+<!--    <script type="text/javascript" src="./style/js/download.js?v=6"></script>-->
     <script
             type="text/javascript"
             src="./style/js/clipboard.min.js?v=5"
@@ -172,6 +172,8 @@
 <script>
     var dateTime = "2024-01-10 7.30pm";
 
+    const dataUrl='https://apd83ad.eyylcbnjki.com'
+
     var andList = [
         {imgurl: "./style/images/web/android/01.png"},
         {imgurl: "./style/images/web/android/02.png"},
@@ -190,8 +192,28 @@
 
     var iosDownload = [];
     var androidDownload = [];
-    var cnNums= ['一','二','三','四','五','六','七','八','九','十']
+
+    var realUrl = getQueryString("url");
+    var agentCode = getQueryString("agentCode");
+    var from = getQueryString("from");
+    var savedAgentCode = window.sessionStorage.getItem("AGENT_CODE");
+    if(savedAgentCode && savedAgentCode!==null && savedAgentCode!=='null'){
+        agentCode = savedAgentCode;
+    }
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
+    }
+    if(realUrl===null || realUrl==='null'){
+        realUrl= "";
+    }
+    if(agentCode===null || agentCode==='null'){
+        agentCode= "";
+    }
+    window.sessionStorage.setItem("AGENT_CODE", agentCode);
+
+
     var host = window.location.host;
+    var vv = {agentCode: agentCode, regFrom: realUrl, downloadUrl: host};
 
     getApiUrl();
 
@@ -201,7 +223,7 @@
 
     async function getApiUrl() {
         try {
-            const response = await fetch(`https://apd83ad.eyylcbnjki.com/app/getDownloadPage?siteCode=dy2`);
+            const response = await fetch(`${dataUrl}/app/getDownloadPage?siteCode=dy2`);
             const data = await response.json();
 
             $("#before-load").hide();
@@ -275,9 +297,9 @@
                     androidHtml = `
             <div class="download_btn" id="btn_${index}">
             <a
+            class="click-btn"
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
@@ -288,6 +310,15 @@
             $("#android-lists").html(androidHtml)
         })
 
+        androidDownload.forEach((list, index) => {
+            $(`#download_${index}`).attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+
+            new ClipboardJS(`#download_${index}`);
+
+            $(`#download_${index}`).click(function () {
+                postDownloadExtra();
+            });
+        });
 
     }
 
@@ -310,9 +341,9 @@
                     iosHTMl = iosHTMl + `
             <div class="download_btn" id="btn_${index}">
             <a
+            class="click-btn"
                 id="download_${index}"
                 href="${value}"
-                data-clipboard-text='FGH{"agentCode":null,"regFrom":null,"downloadUrl":"${host}"}'
             >${key}</a
             >
         </div>
@@ -323,6 +354,67 @@
             $("#ios-lists").html(iosHTMl)
         })
 
+        iosDownload.forEach((list, index) => {
+            $(`#download_${index}`).attr('data-clipboard-text', "FGH" + JSON.stringify(vv));
+
+            new ClipboardJS(`#download_${index}`);
+
+            $(`#download_${index}`).click(function () {
+                postDownloadExtra();
+            });
+        });
+
+    }
+
+    function detectIfSafari() {
+        // console.log(navigator.userAgent)
+        if (isSafari()) {
+            // Safari detected
+            console.log("You are using Safari.");
+        } else {
+            // Not Safari
+            console.log("You are not using Safari.");
+            $("#id-url-input").text(window.location.href);
+
+            $(".modal-open").show();
+
+
+            $("#id-copy-btn").click(function(e){
+                var textToCopy= $("#id-url-input").text();
+
+                copyTextToClipboard(textToCopy);
+                alert("复制成功。")
+            })
+        }
+    }
+
+    function isSafari() {
+        return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    }
+
+    function copyTextToClipboard(text) {
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+    }
+
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+
+    function postDownloadExtra() {
+        $.ajax({
+            url: 'https://tfwkal.f6pn3tik7ps.com' + "/extra",
+            type:"GET",
+            data:{"agentCode":agentCode, siteCode : "dy2"},
+            success:function(d){}
+        });
     }
 
     var mySwiper = new Swiper(".swiper-container", {
