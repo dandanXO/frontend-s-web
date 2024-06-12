@@ -105,6 +105,10 @@ export default {
     withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
     withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
     // withdraw end
+    // announcement start
+    announcement_no_selected: "No selected",
+    announcement_total: "Total",
+    // announcement end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

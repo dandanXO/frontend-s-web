@@ -70,7 +70,7 @@ import { ref, defineExpose, reactive, computed, watch, nextTick, onMounted } fro
 import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
-import NotifyComponent from "components/pageModalContent/NotifyComponent";
+import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
 import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
@@ -237,11 +237,11 @@ const pagesInfo = reactive([
   },
   {
     tabIndex: "my",
-    page: "notify",
+    page: "announcement",
     info: t('lang.page_modal_announcement'),
     iconUrl: require("../../assets/icon/notify.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    component: NotifyComponent,
+    component: AnnouncementComponent,
     headerInfo: {
       title: t('lang.page_modal_announcement'),
       subTitle: "NOTICE",
