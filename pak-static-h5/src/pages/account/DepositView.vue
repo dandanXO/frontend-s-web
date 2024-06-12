@@ -174,19 +174,19 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
-    <div class="q-mt-lg tutorial-link" @click="isDepositTutorial = true">{{ $t("deposit.depositTutorial") }}</div>
+    <div class="bottom-content" style="height: 110px"></div>
 
     <div class="bottom-btn">
-      <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
       <q-btn
         no-caps
         unelevated
-        class="btn-primary btn-primary__full"
+        class="btn-primary btn-primary__full bottom-fixed"
         :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
       >
         {{ $t("btn.submit") }}
       </q-btn>
+      <div class="tutorial-link q-mt-sm" @click="isDepositTutorial = true">{{ $t("deposit.depositTutorial") }}</div>
     </div>
   </div>
 
@@ -1016,6 +1016,14 @@ onMounted(() => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 32px);
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0e1412;
+  // margin: 16px;
 }
 
 .tutorial-link {
