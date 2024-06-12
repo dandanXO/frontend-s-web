@@ -1,5 +1,8 @@
 import { Platform } from "quasar";
 import moment from "moment/moment";
+import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
 
 export const MAIN = "MAIN";
 
@@ -115,3 +118,26 @@ export const convertToCommaAmount = (amount, isForceDecimal) => {
 function isNonNumericString(value) {
   return typeof value === "string" && isNaN(value);
 }
+
+export const getVisitorId = async () => {
+  const { getData } = useVisitorData({ extendedResult: true }, { immediate: false });
+
+  const fp = await getData({ ignoreCache: true });
+
+  if (fp && fp.visitorId) {
+    console.log("use Visitor ID");
+    localStorage.setItem("VISITOR_ID", fp.visitorId);
+    return fp.visitorId;
+  } else {
+    const fpPromise = FingerprintJS.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    const { timezone, ...allComponents } = result.components;
+    // console.log(allComponents);
+    const sidParam = FingerprintJS.hashComponents(allComponents);
+    console.log("Use Normal Fingerprint");
+    console.log(sidParam);
+    localStorage.setItem("VISITOR_ID", sidParam);
+    return sidParam;
+  }
+};

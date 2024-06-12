@@ -5,7 +5,6 @@
 <script>
 import { defineComponent, onMounted, ref, nextTick } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
@@ -15,6 +14,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
+import { getVisitorId } from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -27,18 +27,15 @@ export default defineComponent({
     $q.dark.set(true);
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -239,25 +236,15 @@ export default defineComponent({
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
-      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
-      console.log(theSid);
 
-      if (theSid) {
+      if (sidParam) {
         const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
           params: {
             way: way,
-            sid: theSid,
+            sid: store.visitorId,
             siteCode: "pak"
           }
         });

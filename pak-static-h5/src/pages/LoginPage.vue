@@ -196,7 +196,6 @@ import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import qs from "qs";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
@@ -355,17 +354,9 @@ export default defineComponent({
       $q.loading.show({
         message: "Logging in"
       });
-      const fpPromise = FingerprintJS.load();
-      (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = store.visitorId;
 
+      (async () => {
         if (loginType.value === false) {
           loginNameRef.value.validate();
           passwordRef.value.validate();
