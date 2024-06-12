@@ -272,6 +272,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
   font-size: 22px;
   font-weight: 400;
   line-height: 39.71px;
+  margin-top: 18px;
   background-image: url("../../../assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
