@@ -113,7 +113,9 @@
               selectedPromo.promoCode === 'lh1-game-steps' ||
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
-              selectedPromo.promoCode === 'lh-lpl-summer24',
+              selectedPromo.promoCode === 'lh-lpl-summer24' ||
+              selectedPromo.promoCode === 'lh1-intel-esl' 
+              ,
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
