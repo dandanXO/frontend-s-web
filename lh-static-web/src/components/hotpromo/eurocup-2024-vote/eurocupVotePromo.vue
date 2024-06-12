@@ -166,7 +166,7 @@
         <div class="vote-records">
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-            <div>2024/05/24 16:54</div>
+            <div>{{ voteRecord.voteTime }}</div>
           </div>
         </div>
         <div class="pagination-wrapper">
