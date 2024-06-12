@@ -283,8 +283,7 @@ const activeTab = ref("first");
   justify-content: center;
   align-items: center;
   cursor: pointer;
-}
-.color-box {
+  .color-box {
     height: 78px;
     background: linear-gradient(180deg, #ffdaa6 0%, #ffffff 100%);
     background-clip: text;
@@ -294,16 +293,17 @@ const activeTab = ref("first");
     justify-content: center;
     align-items: center;
   }
+}
+
 
 .active {
-  color: rgba(252, 191, 17, 1);
   background-image: url("@/assets/promo/intel-esl-24/active.png");
   .color-box {
     height: 78px;
-    /* background: linear-gradient(180deg, #ffdaa6 0%, #ffffff 100%);
+    background: linear-gradient(180deg, #fcbf11 0%, #ffdaa6 100%);
     background-clip: text;
-    -webkit-background-clip: text; */
-    color: rgba(252, 191, 17, 1);
+    -webkit-background-clip: text;
+    color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;

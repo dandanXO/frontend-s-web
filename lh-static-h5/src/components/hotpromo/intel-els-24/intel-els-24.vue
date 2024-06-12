@@ -3,102 +3,101 @@
     <div class="intel-els-box">
       <div class="intel-els-tab">
         <div class="intel-els-tab-item" :class="{ active: activeTab === 'first' }" @click="activeTab = 'first'">
-          IEM 科隆
+          <div class="color-box">IEM 科隆</div>
         </div>
         <div class="intel-els-tab-item" :class="{ active: activeTab === 'second' }" @click="activeTab = 'second'">
-          IEM 里约
+          <div class="color-box">IEM 里约</div>
         </div>
       </div>
       <div class="intel-els-first-container" v-if="activeTab === 'first'">
         <div class="intel-els-fisrt-title"></div>
-        <div class="intel-els-team-box">
-         
-        </div>
+        <div class="intel-els-team-box"></div>
         <table class="intel-els-table">
-            <thead>
-              <tr style="border-top: 2px solid;">
-                <th >IEM 达拉斯总有效投注</th>
-                <th >开赛金</th>
-                <th >奖金派发时间</th>
-                <th >奖金派发形式</th>
-                <th >奖金流水</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥3,000</td>
-                <td>8 元</td>
-                <td rowspan="2">IEM 科隆开赛日</td>
-                <td rowspan="2">自动派发</td>
-                <td rowspan="2">3 倍不限场馆</td>
-              </tr>
-              <tr>
-                <td>≥10,000</td>
-                <td>58 元</td>
-              </tr>
-            </tbody>
-          </table>
-          <table class="intel-els-table">
-            <thead>
-              <tr style="border-top: 2px solid;">
-                <th >有效投注</th>
-                <th >投注嘉奖</th>
-                <th >雷火专属金</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥1,000</td>
-                <td>8 元</td>
-                <td>10 元</td>
-              </tr>
-              <tr>
-                <td>≥5,000</td>
-                <td>18 元</td>
-                <td>38 元</td>
-              </tr>
-              <tr>
-                <td>≥10,000</td>
-                <td>58 元</td>
-                <td>88 元</td>
-              </tr>
-              <tr>
-                <td>≥30,000</td>
-                <td>88 元</td>
-                <td>108 元</td>
-              </tr>
-              <tr>
-                <td>≥50,000</td>
-                <td>188 元</td>
-                <td>328 元</td>
-              </tr>
-              <tr>
-                <td>≥100,000</td>
-                <td>328 元</td>
-                <td>588 元</td>
-              </tr>
-              <tr>
-                <td>≥200,000</td>
-                <td>588 元</td>
-                <td>888 元</td>
-              </tr>
-              <tr>
-                <td>≥500,000</td>
-                <td>1,088 元</td>
-                <td>1,588 元</td>
-              </tr>
-              <tr>
-                <td>≥1,000,000</td>
-                <td>1,888 元</td>
-                <td>2,188 元</td>
-              </tr>
-            </tbody>
-          </table>
+          <thead>
+            <tr style="border-top: 2px solid">
+              <th>IEM 达拉斯总有效投注</th>
+              <th>开赛金</th>
+              <th>奖金派发时间</th>
+              <th>奖金派发形式</th>
+              <th>奖金流水</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>≥3,000</td>
+              <td>8 元</td>
+              <td rowspan="2">IEM 科隆开赛日</td>
+              <td rowspan="2">自动派发</td>
+              <td rowspan="2">3 倍不限场馆</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>58 元</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="intel-els-table">
+          <thead>
+            <tr style="border-top: 2px solid">
+              <th>有效投注</th>
+              <th>投注嘉奖</th>
+              <th>雷火专属金</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>≥1,000</td>
+              <td>8 元</td>
+              <td>10 元</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>18 元</td>
+              <td>38 元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>58 元</td>
+              <td>88 元</td>
+            </tr>
+            <tr>
+              <td>≥30,000</td>
+              <td>88 元</td>
+              <td>108 元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>188 元</td>
+              <td>328 元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>328 元</td>
+              <td>588 元</td>
+            </tr>
+            <tr>
+              <td>≥200,000</td>
+              <td>588 元</td>
+              <td>888 元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,088 元</td>
+              <td>1,588 元</td>
+            </tr>
+            <tr>
+              <td>≥1,000,000</td>
+              <td>1,888 元</td>
+              <td>2,188 元</td>
+            </tr>
+          </tbody>
+        </table>
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
             <div class="item-text">
-              1.任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+              1.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </div>
           </div>
           <div class="item-content">
@@ -107,98 +106,98 @@
             </div>
           </div>
           <div class="item-content">
-
             <div class="item-text">
-              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              地址视为同一账户，若有违规者，将不享受此红利；
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">
-              4.为避免文字理解差异，雷火电竞保留此活动最终解释权；
-            </div>
+            <div class="item-text">4.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
       <div class="intel-els-second-container" v-if="activeTab === 'second'">
         <div class="intel-els-second-title"></div>
         <table class="intel-els-table">
-            <thead>
-              <tr style="border-top: 2px solid;">
-                <th rowspan="2">有效投注</th>
-                <th rowspan="2">投注嘉奖</th>
-                <th colspan="2">奖上奖</th>
-              </tr>
-              <tr>
-                <th >IEM 达拉斯总有效投注≥5,000</th>
-                <th >IEM 科隆总有效投注≥5,000</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>≥1,000</td>
-                <td>5 元</td>
-                <td>5 元</td>
-                <td>5 元</td>
-              </tr>
-              <tr>
-                <td>≥5,000</td>
-                <td>12 元</td>
-                <td>8 元</td>
-                <td>8 元</td>
-              </tr>
-              <tr>
-                <td>≥10,000</td>
-                <td>58 元</td>
-                <td>18 元</td>
-                <td>18 元</td>
-              </tr>
-              <tr>
-                <td>≥30,000</td>
-                <td>88 元</td>
-                <td>28 元</td>
-                <td>28 元</td>
-              </tr>
-              <tr>
-                <td>≥50,000</td>
-                <td>188 元</td>
-                <td>58 元</td>
-                <td>58 元</td>
-              </tr>
-              <tr>
-                <td>≥100,000</td>
-                <td>328 元</td>
-                <td>108 元</td>
-                <td>108 元</td>
-              </tr>
-              <tr>
-                <td>≥200,000</td>
-                <td>588 元</td>
-                <td>218 元</td>
-                <td>218 元</td>
-              </tr>
-              <tr>
-                <td>≥500,000</td>
-                <td>1,088 元</td>
-                <td>388 元</td>
-                <td>388 元</td>
-              </tr>
-              <tr>
-                <td>≥1,000,000</td>
-                <td>1,888 元</td>
-                <td>588 元</td>
-                <td>588 元</td>
-              </tr>
-            </tbody>
-          </table>
-        
+          <thead>
+            <tr style="border-top: 2px solid">
+              <th rowspan="2">有效投注</th>
+              <th rowspan="2">投注嘉奖</th>
+              <th colspan="2">奖上奖</th>
+            </tr>
+            <tr>
+              <th>IEM 达拉斯总有效投注≥5,000</th>
+              <th>IEM 科隆总有效投注≥5,000</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>≥1,000</td>
+              <td>5 元</td>
+              <td>5 元</td>
+              <td>5 元</td>
+            </tr>
+            <tr>
+              <td>≥5,000</td>
+              <td>12 元</td>
+              <td>8 元</td>
+              <td>8 元</td>
+            </tr>
+            <tr>
+              <td>≥10,000</td>
+              <td>58 元</td>
+              <td>18 元</td>
+              <td>18 元</td>
+            </tr>
+            <tr>
+              <td>≥30,000</td>
+              <td>88 元</td>
+              <td>28 元</td>
+              <td>28 元</td>
+            </tr>
+            <tr>
+              <td>≥50,000</td>
+              <td>188 元</td>
+              <td>58 元</td>
+              <td>58 元</td>
+            </tr>
+            <tr>
+              <td>≥100,000</td>
+              <td>328 元</td>
+              <td>108 元</td>
+              <td>108 元</td>
+            </tr>
+            <tr>
+              <td>≥200,000</td>
+              <td>588 元</td>
+              <td>218 元</td>
+              <td>218 元</td>
+            </tr>
+            <tr>
+              <td>≥500,000</td>
+              <td>1,088 元</td>
+              <td>388 元</td>
+              <td>388 元</td>
+            </tr>
+            <tr>
+              <td>≥1,000,000</td>
+              <td>1,888 元</td>
+              <td>588 元</td>
+              <td>588 元</td>
+            </tr>
+          </tbody>
+        </table>
+
         <div class="intel-els-notice">
-          注：会员参与 IEM 达拉斯与 IEM 科隆每个赛事的总有效投注≥3000 元，参与 IEM 里约赛事每日符合对应有效投注可获得对应的加赠金；
+          注：会员参与 IEM 达拉斯与 IEM 科隆每个赛事的总有效投注≥3000 元，参与 IEM
+          里约赛事每日符合对应有效投注可获得对应的加赠金；
         </div>
         <div class="intel-els-rule-title"></div>
         <div class="intel-els-rule-content">
           <div class="item-content">
             <div class="item-text">
-              1.任何低于欧洲盘 1.7 或亚洲盘 0.7 水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
+              1.任何低于欧洲盘 1.7 或亚洲盘 0.7
+              水位的投注及在同一局游戏中同时投注对等盘口、当日注单取消或本金退还，将不计算为有效投注额内；
             </div>
           </div>
           <div class="item-content">
@@ -207,15 +206,13 @@
             </div>
           </div>
           <div class="item-content">
-
             <div class="item-text">
-              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP 地址视为同一账户，若有违规者，将不享受此红利；
+              3.此活动只适用于拥有一个账户的会员，每一个住址、每一个电子邮箱地址、每一个电话号码、相同支付方式及 IP
+              地址视为同一账户，若有违规者，将不享受此红利；
             </div>
           </div>
           <div class="item-content">
-            <div class="item-text">
-              4.为避免文字理解差异，雷火电竞保留此活动最终解释权；
-            </div>
+            <div class="item-text">4.为避免文字理解差异，雷火电竞保留此活动最终解释权；</div>
           </div>
         </div>
       </div>
@@ -226,23 +223,21 @@
 import { ref } from "vue";
 import { getLplSummer24Match } from "../../../api/index/promo.js";
 import moment from "moment";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 
 const activeTab = ref("first");
 const matchList = ref([]);
-const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 </script>
 
 <style scoped lang="scss">
 .intel-els {
   width: 100%;
-  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-top: 40px;
   padding-bottom: 8px;
   background-color: #1d1d1e;
   .intel-els-background-img {
@@ -277,7 +272,6 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
   font-size: 22px;
   font-weight: 400;
   line-height: 39.71px;
-  color: #948b73;
   background-image: url("../../../assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -288,10 +282,39 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  .color-box {
+    height: 48px;
+    background: linear-gradient(180deg, #ffdaa6 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
+/* .color-box {
+    height: 48px;
+    background: linear-gradient(180deg, #ffdaa6 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
 .active {
-  color: #f8e1a3;
   background-image: url("../../../assets/promo/intel-esl-24/active.png");
+  .color-box {
+    height: 48px;
+    background: linear-gradient(180deg, #fcbf11 0%, #ffdaa6 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .intel-els-first-container {
@@ -407,7 +430,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       }
     }
     tbody {
-      color: #C2C2C2 !important;
+      color: #c2c2c2 !important;
       background: #202427 !important;
       tr {
         height: 41px;
@@ -460,7 +483,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
   }
 
   .intel-els-rule-content {
-    border-top: 3px solid #FFE1B7;
+    border-top: 3px solid #ffe1b7;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -473,7 +496,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
     gap: 10px;
     .item-content {
       display: flex;
-    align-items: flex-start;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
       font-size: 16px;
@@ -494,7 +517,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       .item-text {
         font-weight: 400;
         line-height: 25.4px;
-        color: #C2C2C2;
+        color: #c2c2c2;
       }
     }
   }
@@ -548,7 +571,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       }
     }
     tbody {
-      color: #C2C2C2 !important;
+      color: #c2c2c2 !important;
       tr {
         height: 41px;
         td {
@@ -590,7 +613,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
     font-size: 16px;
     font-weight: 400;
     line-height: 25.4px;
-    color: #FECE94;
+    color: #fece94;
     padding: 16px 0px;
     margin-bottom: 17px;
     margin-bottom: 0px;
@@ -607,7 +630,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
   }
 
   .intel-els-rule-content {
-    border-top: 3px solid #FFE1B7;
+    border-top: 3px solid #ffe1b7;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -620,7 +643,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
     gap: 10px;
     .item-content {
       display: flex;
-    align-items: flex-start;
+      align-items: flex-start;
       justify-content: flex-start;
       width: 100%;
       font-size: 16px;
@@ -641,7 +664,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       .item-text {
         font-weight: 400;
         line-height: 25.4px;
-        color: #C2C2C2;
+        color: #c2c2c2;
       }
     }
   }
