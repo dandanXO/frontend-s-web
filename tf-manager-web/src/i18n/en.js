@@ -2668,6 +2668,7 @@ export default {
     801: 'Captcha code has expired',
     900: 'Member details could not be found',
     901: 'Affiliate record could not be found',
+    912: 'Login name could not be found',
     922: 'Your account haven link to vcall config',
     1000: 'Login failed, username or password is wrong',
     1001: 'Login failed, account is disabled',
