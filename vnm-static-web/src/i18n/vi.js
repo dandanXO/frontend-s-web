@@ -223,6 +223,8 @@ export default {
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
+    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
+    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",

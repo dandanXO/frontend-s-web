@@ -152,7 +152,12 @@ dense
           maxlength="11"
           clearable
           type="number"
-          :rules="[(val) => (val && val.length > 7) || $t('lang.mobile_number_valid')]"
+          :rules="[
+            val => !!val || $t('lang.mobile_number_required'), 
+            val => val.length === 10 || $t('lang.mobile_number_length'),
+            val => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
+            val => (val && val.length > 7) || $t('lang.mobile_number_valid')
+          ]"
           color="white"
         >
           <template v-slot:prepend>

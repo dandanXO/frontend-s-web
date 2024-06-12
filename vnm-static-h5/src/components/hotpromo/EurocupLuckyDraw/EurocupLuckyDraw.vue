@@ -525,10 +525,10 @@ const getWinPrize = (prize) => {
 const isDialogShow = ref(false);
 const openTableDialog = () => {
   isDialogShow.value = true;
-}
-onMounted(() => {
   initSelectedNumber();
   initGetWinners();
+}
+onMounted(() => {
   getJackpotAmt();
   nextTick(() => {
     if (inputRefs.value[0]) {

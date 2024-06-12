@@ -417,11 +417,11 @@ const getWinPrize = (prize) => {
 const isDialogShow = ref(false);
 const openTableDialog = () => {
   isDialogShow.value = true;
+  initSelectedNumber();
+  initGetWinners();
 }
 onMounted(() => {
   getJackpotAmt();
-  initSelectedNumber();
-  initGetWinners();
   nextTick(() => {
     if (inputRefs.value[0]) {
       inputRefs.value[0].focus();

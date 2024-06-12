@@ -257,7 +257,7 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -277,7 +277,7 @@
         <template v-else>
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
-        <span :class="tab === 'slot' && 'active'">{{ $t("lang.menu_slots") }}</span>
+        <span :class="tab === 'slot' && 'active'" style="white-space: nowrap;">{{ $t("lang.menu_slots") }}</span>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
@@ -307,7 +307,7 @@
         <template v-else>
           <img src="../assets/images/home/games/lottery-icon.png" />
         </template>
-        <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
+        <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap;">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
       <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
@@ -317,7 +317,7 @@
         <template v-else>
           <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
@@ -677,7 +677,7 @@
       </a>
     </div>
   </div>
-
+<!--
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
@@ -685,7 +685,7 @@
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
-  </q-page-sticky>
+  </q-page-sticky> -->
 
   <q-dialog
     width="100%"
@@ -2570,12 +2570,17 @@ export default defineComponent({
       span {
         position: absolute;
         text-align: center;
-        font-size: 9px;
+        font-size: 11px;
         top: 35px;
         left: 50%;
         transform: translateX(-50%);
         color: #7a80a1;
         line-height: 1;
+        font-weight: bold;
+
+        @media(max-width: 400px){
+          font-size: 9px;
+        }
 
         &.active {
           color: #ffffff;
@@ -2969,7 +2974,7 @@ export default defineComponent({
       position: relative;
       background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
       // background-size: 100% 100%;
-      
+
     background-size: 100% 70%;
       padding: 0 4px;
       margin-left: 12px;
@@ -3028,7 +3033,7 @@ export default defineComponent({
           background-image: url(../assets/images/home/eurocup-countdown-number.png);
           // height: 40px;
           // width: 40px;
-          
+
     height: 30px;
     width: 30px;
           background-size: 100% 100%;
