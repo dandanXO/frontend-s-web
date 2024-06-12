@@ -236,14 +236,14 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
 <style scoped lang="scss">
 .intel-els {
   width: 100%;
-  height: 100%;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   padding-top: 40px;
-  padding-bottom: 80px;
+  padding-bottom: 8px;
   background-color: #1d1d1e;
   .intel-els-background-img {
     position: absolute;
@@ -397,23 +397,23 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
     margin-bottom: 16px;
     thead {
       color: #f8e1a3;
-
+      background: rgba(51, 56, 64, 1);
       tr {
         height: 41px;
         th {
           border: 1px solid #ffdba633;
-          background: #ffdba633 !important;
+          background: #333840 !important;
         }
       }
     }
     tbody {
-      color: #fdffe9;
-      background: #1d1d1e !important;
+      color: #C2C2C2 !important;
+      background: #202427 !important;
       tr {
         height: 41px;
         td {
           border: 1px solid #ffdba633 !important;
-          background: #1d1d1e !important;
+          background: #202427 !important;
         }
       }
     }
@@ -494,7 +494,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       .item-text {
         font-weight: 400;
         line-height: 25.4px;
-        color: #fdffe9;
+        color: #C2C2C2;
       }
     }
   }
@@ -535,23 +535,25 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
     margin-bottom: 16px;
     thead {
       color: #f8e1a3;
-      background: #2c2a27;
+      background-color: rgba(51, 56, 64, 1) !important;
 
       tr {
         height: 41px;
+        background: rgba(32, 36, 39, 1);
+
         th {
+          background: #333840 !important;
           border: 1px solid #ffdba633;
-          background: #ffdba633 !important;
         }
       }
     }
     tbody {
-      color: #fdffe9;
+      color: #C2C2C2 !important;
       tr {
         height: 41px;
         td {
           border: 1px solid #ffdba633 !important;
-          background: #1d1d1e !important;
+          background: #202427 !important;
         }
       }
     }
@@ -639,7 +641,7 @@ const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
       .item-text {
         font-weight: 400;
         line-height: 25.4px;
-        color: #fdffe9;
+        color: #C2C2C2;
       }
     }
   }
