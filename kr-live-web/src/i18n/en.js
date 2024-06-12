@@ -108,6 +108,7 @@ export default {
     // announcement start
     announcement_no_selected: "No selected",
     announcement_total: "Total",
+    announcement_has_attachment: "Has attachment",
     // announcement end
     langVal: "en",
     register: "Register",

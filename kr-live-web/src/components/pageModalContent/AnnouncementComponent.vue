@@ -7,16 +7,13 @@
         <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
           :active="item === selected" active-class="active-announcement">
           <q-item-section>
-            <q-item-label><span class="title">{{ item.title }}</span></q-item-label>
-            <q-item-label caption lines="3"><span class="caption">{{ item.content }}</span></q-item-label>
-          </q-item-section>
-
-          <q-item-section top thumbnail class="q-ml-none" v-if="item.attachment">
-            <img class="attachment" :src="getAttachmentImgSrc(item.attachment)" />
-          </q-item-section>
-
-          <q-item-section side top>
-            <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+            <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
+            <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
+            </q-item-section>
+            
+            <q-item-section side top class="info-wrapper">
+              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+              <q-icon name="image" v-if="item.attachment" :title="$t('lang.announcement_has_attachment')" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -38,7 +35,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import { userStore } from "stores/index";
 import moment from "moment";
 import { storeToRefs } from "pinia";
@@ -46,12 +43,24 @@ import { storeToRefs } from "pinia";
 const store = userStore();
 const { announcementList } = storeToRefs(store);
 const selected = ref();
-const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
+const formatDate = (timestamp) => moment(timestamp).locale('ko').format("LL");
 const getAttachmentImgSrc = (attachmentPath) => process.env.IMAGE_CDN + '/announcement/' + attachmentPath;
 
-watch(() => announcementList.value, () => {
+const selectFirstAnnouncement = () => {
   if (!selected.value && announcementList.value) {
-    selected.value = announcementList.value[0];
+    // if don't have timeout, ellipsis for title won't show
+    setTimeout(() => {
+      selected.value = announcementList.value[0];
+    },100)
+  }
+}
+watch(() => announcementList.value, () => {
+  selectFirstAnnouncement();
+})
+
+onMounted(() => {
+  if(announcementList.value) {
+    selectFirstAnnouncement();
   }
 })
 
@@ -76,6 +85,7 @@ watch(() => announcementList.value, () => {
     .announcement-list {
       overflow-y: auto;
       max-height: 550px;
+      height: 100%;
 
       .active-announcement {
         background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
@@ -133,7 +143,7 @@ watch(() => announcementList.value, () => {
     .q-item {
       display: flex;
       flex-direction: column;
-      padding: 4px 8px;
+      padding: 0;
       font-size: 0.7rem;
 
       .title {
@@ -153,6 +163,13 @@ watch(() => announcementList.value, () => {
       .q-item__section {
         padding-left: 0;
         align-items: flex-start;
+        padding: 5px;
+
+        &.info-wrapper {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
       }
     }
 

@@ -109,6 +109,7 @@ export default {
     // announcement start
     announcement_no_selected: "선택하지 않음",
     announcement_total: "총",
+    announcement_has_attachment: "첨부파일 있음",
     // announcement end
     langVal: "en",
     register: "Register",

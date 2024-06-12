@@ -232,7 +232,7 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 1280px;
+    width: 1400px;
     flex-direction: row;
     height: 80px;
     display: flex;
