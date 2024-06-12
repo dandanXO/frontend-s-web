@@ -197,7 +197,7 @@
     var agentCode = getQueryString("agentCode");
     var from = getQueryString("from");
     var savedAgentCode = window.sessionStorage.getItem("AGENT_CODE");
-    if(savedAgentCode && savedAgentCode!==null && savedAgentCode!=='null'){
+    if(savedAgentCode && savedAgentCode!=='null'){
         agentCode = savedAgentCode;
     }
     if(agentCode===null || agentCode==='null'){
@@ -410,7 +410,7 @@
 
     function postDownloadExtra() {
         $.ajax({
-            url: 'https://tfwkal.f6pn3tik7ps.com' + "/extra",
+            url: 'https://apkoxeal.hwd3dn5efw5.com' + "/app/download/extra",
             type:"GET",
             data:{"agentCode":agentCode, siteCode : "dy2"},
             success:function(d){}
