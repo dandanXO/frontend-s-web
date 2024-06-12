@@ -657,33 +657,6 @@
   </div>
 
   <div class="">
-    <!--<div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">이벤트</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : '/?page=login'">+ 더보기</router-link>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-    </div>-->
-
     <div class="news-section">
       <div class="news-title news-title__sub">
         <div class="title-text">출금현황</div>
@@ -693,10 +666,13 @@
       <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
         <div class="news-item-left">
           <div class="news-item-title">
+            {{ formatTransactionType(d.transactionType) }}
             {{ d.loginName }}
             <span style="color: #01e1ff">{{ d.amount }}원</span>
-            <span style="color: #92959f; margin-left: 20px">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</span>
           </div>
+        </div>
+        <div class="news-item-right">
+          <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
         </div>
       </div>
     </div>
@@ -1651,6 +1627,18 @@ export default defineComponent({
       // console.log(target)
     };
 
+    const formatTransactionType = (transactionType) => {
+        if(transactionType === 'DEPOSIT') {
+            return `[${t('lang.menu_deposit')}]`;
+        }
+
+        if(transactionType === 'WITHDRAW') {
+            return `[${t('lang.menu_withdraw')}]`;
+        }
+
+        return '';
+    }
+
     // const checkRedeemSpecialInviteBonusEligiblity = () => {
     //   if (store.hasToken()) {
     //     eventapi
@@ -1892,7 +1880,8 @@ export default defineComponent({
       getBackgroundImageStyle,
       gameItemLoad,
       depositRecordList,
-      moment
+      moment,
+      formatTransactionType 
     };
   }
 });
@@ -2481,7 +2470,11 @@ export default defineComponent({
   border-bottom: 1px solid #3f3f3f;
 
   display: grid;
-  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(100px, 10%);
+  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(120px, 10%);
+
+  @media (min-width: 769px) {
+    grid-template-columns: minmax(calc(80% - 100px), 90%) minmax(200px, 20%);
+  }
 
   &:hover {
     .news-item-title,
@@ -2529,6 +2522,7 @@ export default defineComponent({
     .news-item-date {
       transition: 0.3s all;
       color: #92959f;
+      text-align: right;
     }
   }
 }

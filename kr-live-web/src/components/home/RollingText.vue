@@ -37,11 +37,11 @@ const { t } = useI18n();
 
 const formatTransactionType = (transactionType) => {
     if(transactionType === 'DEPOSIT') {
-        return `【${t('lang.menu_deposit')}】`;
+        return `[${t('lang.menu_deposit')}]`;
     }
 
     if(transactionType === 'WITHDRAW') {
-        return `【${t('lang.menu_withdraw')}】`;
+        return `[${t('lang.menu_withdraw')}]`;
     }
 
     return '';
