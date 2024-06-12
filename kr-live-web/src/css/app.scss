@@ -618,6 +618,10 @@ svg {
   background: #2d3039;
 }
 
+.q-field--outlined.q-field--disabled .q-field__control:before {
+  border-color: grey;
+}
+
 .verification-input:hover :before {
   opacity: 0 !important;
 }

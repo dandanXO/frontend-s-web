@@ -236,41 +236,45 @@ const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
 const loadCards = () => {
-  api.get("/session/bankCard").then((resp) => {
-    const response= resp.data;
-    isLoaded.value = true;
-    withdrawState.bankCardList = [];
-    if (response.code === 0) {
-      // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-      response.data.forEach(element => {
-        if (element.bankType === "BANK") {
-          if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-            withdrawState.bankCardList.push(element)
+  return new Promise((resolve) => {
+    api.get("/session/bankCard").then((resp) => {
+      const response= resp.data;
+      isLoaded.value = true;
+      withdrawState.bankCardList = [];
+      if (response.code === 0) {
+        // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
+        response.data.forEach(element => {
+          if (element.bankType === "BANK") {
+            if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element)
+            }
+            if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+              withdrawState.bankCardList.push(element)
+            }
+          } else {
+            if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
           }
-          if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-            withdrawState.bankCardList.push(element)
-          }
-        } else {
-          if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-            withdrawState.bankCardList.push(element);
-          }
+        });
+
+
+        if (cardRef.value) {
+          cardRef.value.resetValidation();
         }
-      });
+        withdrawInfo.amount = "";
+        if (amountRef.value) {
+          setTimeout(()=>{
+            amountRef.value.resetValidation();
+          },0)
+        }
 
-
-      if (cardRef.value) {
-        cardRef.value.resetValidation();
+        resolve(response.data);
       }
-      withdrawInfo.amount = "";
-      if (amountRef.value) {
-        setTimeout(()=>{
-          amountRef.value.resetValidation();
-        },0)
-      }
-    }
-  }).catch((error) => {
-    console.log("error", error);
-  });
+    }).catch((error) => {
+      console.log("error", error);
+    });
+  })
 };
 
 const updateWithdrawItem = (amt) => {
@@ -383,26 +387,27 @@ const isValidUSDTAmt = (val) => {
 }
 
 const getWithdrawalMethods = () => {
-  api.get("/session/withdraw/entrance").then((resp) => {
-    const response= resp.data;
-    if (response.code === 0) {
-      withdrawalMethods.value = response.data;
-      //Remove this for real data
-      // withdrawalMethods.value = [
-      //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-      //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-      if (withdrawalMethods.value.length > 0) {
-        selectMethod(withdrawalMethods.value[0], 0);
+  return new Promise((resolve) => {
+    api.get("/session/withdraw/entrance").then((resp) => {
+      const response= resp.data;
+      if (response.code === 0) {
+        withdrawalMethods.value = response.data;
+        //Remove this for real data
+        // withdrawalMethods.value = [
+        //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+        //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+
+        resolve(response.data);
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: response.message,
+          icon: "report_problem"
+        });
       }
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: response.message,
-        icon: "report_problem"
-      });
-    }
-  });
+    });
+  })
 };
 
 const chooseLabel = () => {
@@ -426,9 +431,24 @@ const chooseCard = () => {
 }
 
 onMounted(() => {
-  loadCards();
+  Promise.all([loadCards(), getWithdrawalMethods()]).then(([cards,withdrawMethods]) => {
+    const availableBankType = cards?.[0]?.bankType;
+    
+    if (availableBankType) {
+      const methodIndex = withdrawMethods.findIndex(({ code }) => {
+      
+        if(availableBankType === 'CRYPTO' && code.includes('USDT')) {
+          return true;
+        }
+
+        return code === availableBankType;
+      });
+    
+      selectMethod(withdrawMethods[methodIndex], methodIndex);
+    }
+  })
+  
   store.getBalance();
-  getWithdrawalMethods();
 });
 </script>
 
