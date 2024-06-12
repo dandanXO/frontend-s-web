@@ -166,7 +166,9 @@
         <div class="vote-records">
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-            <div>{{ voteRecord.voteTime }}</div>
+            <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
+            
+
           </div>
         </div>
         <div class="pagination-wrapper">
@@ -191,6 +193,7 @@ import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
 import { userStore } from "@/store/index"
 import { useLocalStorage } from "@vueuse/core";
+import moment from 'moment'
 
 
 export default defineComponent({
@@ -337,7 +340,8 @@ export default defineComponent({
       store,
       imgURL,
       paginatedVoteRecords,
-      votesRecordChangePage
+      votesRecordChangePage,
+      moment
     }
   }
 });
@@ -403,7 +407,7 @@ export default defineComponent({
       justify-content: space-between;
       white-space: nowrap;
       color: #fff;
-      padding: 15px 33px;
+      padding: 15px;
       gap: 40px;
 
       .vote-record-flag-wrapper {
