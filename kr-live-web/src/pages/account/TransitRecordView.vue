@@ -215,7 +215,7 @@
                       />
 
                       <q-btn
-                        v-if="props.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
+                        v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                         size="sm"
                         :label="$t('lang.confirm_withdraw_success')"
                         color="brand"
@@ -238,7 +238,7 @@
             <template v-slot:body-cell-operation="props">
               <q-td>
                 <q-btn
-                  v-if="props.row.status === 'STEP_1'"
+                  v-if="props?.props?.row.status === 'STEP_1'"
                   size="sm"
                   :label="$t('lang.reminder')"
                   color="brand"
