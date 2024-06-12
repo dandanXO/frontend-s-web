@@ -2289,8 +2289,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
-          console.log(hotGameList.value);
+          // console.log("End");
+          // console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
