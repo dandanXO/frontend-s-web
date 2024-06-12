@@ -129,8 +129,8 @@ if (siteId === 'dy') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
 } else if (siteId === 'krw') {
-  link.href = '/favicon.ico';
-  title.innerText = 'Bet2Won';
+  link.href = '/kr-favicon.ico';
+  title.innerText = 'City8';
 } else if (siteId === 'iw2') {
   link.href = '/iw2-favicon.ico';
   title.innerText = '789F';
