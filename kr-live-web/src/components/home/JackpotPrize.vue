@@ -39,11 +39,11 @@ onMounted(() => {
 
   jackpotTickerInterval.value = setInterval(() => {
     jackpotPrizeAmt.value++;
-  }, 100);
+  }, 200);
 
   refetchJackpotInterval.value = setInterval(() => {
     fetchJackpot();
-  }, 10000)
+  }, 30000)
 })
 
 onUnmounted(() => {
