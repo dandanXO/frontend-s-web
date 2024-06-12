@@ -141,10 +141,26 @@ export default defineComponent({
       }
     };
 
+    const getAffiliateByDomain = () => {
+      var host = window.location.host;
+      // host = "";
+      api.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`).then((res) => {
+        console.log(res);
+        if (res.code === 0 && res.data !== "") {
+          // alert(res.data)
+          var agentCode = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode)
+        }
+      });
+
+    }
+
     onMounted(() => {
       checkSID();
       // initCsWeb();
       getCSA();
+
+      getAffiliateByDomain();
 
       onlineStatTimeout.value = setTimeout(getOnlineStatApi, 2000);
       onlineStatInterval.value = setInterval(getOnlineStatApi, 60000);
