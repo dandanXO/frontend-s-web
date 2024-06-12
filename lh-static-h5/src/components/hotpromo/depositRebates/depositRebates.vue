@@ -181,8 +181,8 @@
             .happy-table {
                 thead {
                     th {
-                        background: #0047FF;
-                        color: #CFF6FF;
+                        background: #0047FF !important;
+                        color: #CFF6FF !important;
                     }
                 }
                 tbody {
@@ -268,7 +268,7 @@
                 }
                 &__logo {
                     position: absolute;
-                    right: 35%;
+                    right: 10%;
                     top: -35px;
                     background: url(./euroimages/hexagon.png)no-repeat center center;
                     background-size: contain;
@@ -302,7 +302,7 @@
                     gap: 10px;
                     justify-content: space-between;
                     height: 100%;
-                    padding-top: 30px;
+                    // padding-top: 30px;
                     &__title {
                         font-family: Microsoft YaHei UI;
 
@@ -329,7 +329,7 @@
                     display: flex;
                     flex: 1;
                     gap: 15px;
-                    justify-content: center;
+                    justify-content: flex-end;
                     align-items: center;
                     width: 100%;
                     .btn {
@@ -408,20 +408,15 @@
                 grid-template-columns: repeat(3, 1fr);
                 .tab {
                     width: 100%;
+    font-size: 11px;
+
+                    img {
+                        
+    margin: 0 -4px;
+                    }
                 }
             }
         }
     }
 
-    @media screen and (max-width: 400px) {
-        .deposit-rebates-container {
-            .cards-tabs {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                .tab {
-                    width: 100%;
-                }
-            }
-        }
-    }
 </style>
