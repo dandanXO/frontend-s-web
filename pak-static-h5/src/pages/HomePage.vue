@@ -113,7 +113,7 @@
       data-aos-duration="1000"
       data-aos-once="true"
     >
-      <template v-for="(item, index) in categoriesList" :key="index">
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
@@ -157,8 +157,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -177,10 +176,20 @@
                           }"
                         ></div>
 
-                        <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo' || item.code==='51' || item.code==='72' || item.code==='163' || item.code==='123' " class="burning-hot">
+                        <div
+                          v-if="
+                            index < 4 ||
+                            item.code === 'Evo' ||
+                            item.code === 'WCEvo' ||
+                            item.code === '51' ||
+                            item.code === '72' ||
+                            item.code === '163' ||
+                            item.code === '123'
+                          "
+                          class="burning-hot"
+                        >
                           <img src="../assets/images/index/hot.png" />
                         </div>
-
                       </div>
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
@@ -219,7 +228,6 @@
                         <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
                           <img src="../assets/images/index/hot.png" />
                         </div>
-
                       </div>
 
                       <div class="platform-game-title">
@@ -258,10 +266,20 @@
                         }"
                       ></div>
 
-                      <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo' || item.code==='51' || item.code==='72' || item.code==='163' || item.code==='123' " class="burning-hot">
+                      <div
+                        v-if="
+                          index < 4 ||
+                          item.code === 'Evo' ||
+                          item.code === 'WCEvo' ||
+                          item.code === '51' ||
+                          item.code === '72' ||
+                          item.code === '163' ||
+                          item.code === '123'
+                        "
+                        class="burning-hot"
+                      >
                         <img src="../assets/images/index/hot.png" />
                       </div>
-
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
@@ -293,7 +311,6 @@
                       <div v-if="item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
                       </div>
-
                     </div>
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
@@ -561,7 +578,6 @@
                       <div v-if="index < 1" class="burning-hot">
                         <img src="../assets/images/index/hot.png" />
                       </div>
-
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
@@ -748,7 +764,6 @@
                   <div v-if="index < 1" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
-
                 </div>
                 <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
@@ -840,7 +855,6 @@
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
-
                     <div class="platform-game-title">{{ truncateText(item.alias ? item.alias : item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -927,16 +941,9 @@
                     })()
                   }"
                 >
-
-                  <div
-                    v-if="
-                          item.name === 'LuckySport' || item.name==='BTI'
-                        "
-                    class="burning-hot"
-                  >
+                  <div v-if="item.name === 'LuckySport' || item.name === 'BTI'" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
-
                 </div>
               </div>
             </template>
@@ -1281,7 +1288,7 @@ const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
 const { t } = useI18n();
 
-const categoriesList = ref( [
+const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
@@ -1291,19 +1298,39 @@ const categoriesList = ref( [
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false }
 ]);
 
+const translatedCategoriesList = computed(() => {
+  return categoriesList.value.map((category) => ({
+    ...category,
+    label: t(`home.menu_${category.title.toLowerCase()}`)
+  }));
+});
+
+const activeCategoryLabel = computed(() => {
+  const activeCategory = translatedCategoriesList.value.find((category) => category.active);
+  return activeCategory ? activeCategory.label : "";
+});
+
 // const activateSlide = (clickedItem) => {
 //   categoriesList.value.forEach((item) => {
 //     item.active = item === clickedItem;
 //   });
 // };
 
+// const activateSlide = (item) => {
+//   translatedCategoriesList.value.forEach((category) => (category.active = false));
+//   item.active = true;
+// };
+
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
-  item.active = true;
+  const category = categoriesList.value.find(cat => cat.title === item.title);
+  if (category) {
+    category.active = true;
+  }
 };
 
 const handleActivateSlide = (slot) => {
-  const item = categoriesList.value.find((cat) => cat.title === slot);
+  const item = translatedCategoriesList.value.find((cat) => cat.title === slot);
   if (item) {
     activateSlide(item);
   }
