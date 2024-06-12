@@ -59,6 +59,7 @@ export default {
     menu_slots: "Slots",
     menu_fishing: "Fishing",
     menu_hashgame: "Hash Game",
+    menu_others: "Others",
     menu_cockfighting: "Cock Fighting",
     menu_minigame: "Others",
     // notify msg
