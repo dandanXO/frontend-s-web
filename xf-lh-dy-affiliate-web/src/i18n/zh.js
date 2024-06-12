@@ -612,6 +612,7 @@ export default {
     requiredCommission: '请输入佣金',
     requiredEmail: '请输入邮箱',
     requiredLoginName: '请输入用户名',
+    requiredMemberType: '请选择会员类型',
     requiredOldPassword: '请输入当前密码',
     requiredPassword: '请输入密码',
     requiredRealName: '请输入姓名',

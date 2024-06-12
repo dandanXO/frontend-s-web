@@ -614,6 +614,7 @@ export default {
     requiredCommission: '커미션을 입력하십시오',
     requiredEmail: '이메일을 입력하십시오',
     requiredLoginName: '사용자 이름을 입력하십시오',
+    requiredMemberType: '회원 유형을 선택하십시오',
     requiredOldPassword: '현재 비밀번호를 입력하십시오',
     requiredPassword: '비밀번호를 입력하십시오',
     requiredRealName: '이름을 입력하십시오',

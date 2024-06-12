@@ -607,6 +607,7 @@ export default {
     requiredCommission: 'Hoa hồng là bắt buộc',
     requiredEmail: 'Vui lòng nhập địa chỉ email',
     requiredLoginName: 'Vui lòng nhập tên tài khoản đại lý',
+    requiredMemberType: 'Vui lòng chọn loại thành viên',
     requiredOldPassword: 'Mật khẩu hiện tại là bắt buộc',
     requiredPassword: 'Vui lòng nhập mật khẩu',
     requiredRealName: 'Tên thật là bắt buộc',
