@@ -258,8 +258,6 @@
       </div>
     </div>
 
-    <div class="q-mt-lg tutorial-link" @click="isWithdrawTutorial = true">{{ $t("withdraw.withdrawTutorial") }}</div>
-
     <template v-if="bankCardList.length > 0">
       <div class="bottom-btn">
         <q-btn
@@ -271,6 +269,10 @@
         >
           {{ $t("btn.submit") }}
         </q-btn>
+
+        <div class="q-mt-sm tutorial-link" @click="isWithdrawTutorial = true">
+          {{ $t("withdraw.withdrawTutorial") }}
+        </div>
       </div>
     </template>
     <template v-else>
@@ -284,6 +286,10 @@
         >
           SUBMIT
         </q-btn>
+
+        <div class="q-mt-sm tutorial-link" @click="isWithdrawTutorial = true">
+          {{ $t("withdraw.withdrawTutorial") }}
+        </div>
       </div>
     </template>
 
