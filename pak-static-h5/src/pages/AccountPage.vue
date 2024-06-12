@@ -1308,10 +1308,10 @@ const submitUpdateEmail = () => {
             message: "Email binded successfully",
             icon: "check_circle_outline"
           });
-
           bindEmailDialog.value = false;
-          store.getMemberInfo();
-          startRefresh();
+          setTimeout(() => {
+            startRefresh();
+          }, 2000);
         } else {
           $q.notify({
             color: "negative",

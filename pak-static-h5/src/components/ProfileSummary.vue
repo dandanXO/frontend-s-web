@@ -102,10 +102,7 @@
         {{ $t("sideNav.whatsapp") }}
       </a>
 
-      <div
-        class="side-menu-item side-menu-item__transparent"
-        @click="handleMenuRouteClick('/language')"
-      >
+      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
@@ -771,6 +768,9 @@ onMounted(() => {
       img {
         display: block;
         width: 24px;
+        filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+        // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
+        animation: hueBlink 1s infinite ;
       }
     }
 
@@ -1038,5 +1038,14 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+@keyframes hueBlink {
+  0% {
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(0%) contrast(0%);
+  }
+  100% {
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+  }
 }
 </style>
