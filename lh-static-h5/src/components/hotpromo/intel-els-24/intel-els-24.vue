@@ -252,7 +252,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
   }
   .intel-els-box {
     width: 100%;
-    padding: 0px 20px;
+    padding: 0px 0px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -266,13 +266,14 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
   align-items: center;
   margin-bottom: 15px;
   width: 100%;
+  max-width: 350px;
 }
 .intel-els-tab-item {
-  font-family: FZLanTingHeiS-EB-GB;
+  font-family: FZHanZhenGuangBiaoS-GB;
   font-size: 22px;
   font-weight: 400;
   line-height: 39.71px;
-  margin-top: 18px;
+  margin-top: 10px;
   background-image: url("../../../assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -320,6 +321,7 @@ const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/pro
 
 .intel-els-first-container {
   width: 100%;
+  padding:0px 16px;
   height: 100%;
   background-color: #1d1d1e;
   .intel-els-fisrt-title {

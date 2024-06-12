@@ -255,11 +255,12 @@ const activeTab = ref("first");
   }
   .intel-els-box {
     width: 1200px;
+    min-height:1366px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
   }
 }
 .intel-els-tab {
@@ -269,15 +270,15 @@ const activeTab = ref("first");
   margin-bottom: 15px;
 }
 .intel-els-tab-item {
-  font-family: "FZHanZhenGuangBiaoS";
-  font-size: 40px;
+  font-family: FZHanZhenGuangBiaoS-GB;
+  font-size: 36px;
   font-weight: 400;
   line-height: 34.75px;
   /* color: #f8e1a3; */
   background-image: url("@/assets/promo/intel-esl-24/inactive.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  width: 257px;
+  width: 330px;
   height: 78px;
   display: flex;
   justify-content: center;
