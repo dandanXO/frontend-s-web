@@ -20,12 +20,11 @@
   </el-card>
   <el-row>
     <el-form ref="formRef" :model="form" label-position="right" :rules="formRules" label-width="200px" label-suffix=":">
-      <el-form-item :label="t('fields.memberType')">
+      <el-form-item :label="t('fields.memberType')" prop="memberType">
         <el-select
           size="normal"
           v-model="form.memberType"
           :placeholder="t('fields.memberType')"
-          prop="memberType"
         >
           <el-option
             v-for="item in uiControl.memberType"
@@ -105,6 +104,7 @@ const form = reactive({
 });
 
 const formRules = reactive({
+  memberType: [required(t('message.requiredMemberType'))],
   loginName: [required(t('message.requiredLoginName'))],
   transferAmount: [required(t('message.requiredTransferAmount')), isNumeric(t('message.validateNumberOnly'))],
   rollover: [required(t('message.requiredRollover')), {

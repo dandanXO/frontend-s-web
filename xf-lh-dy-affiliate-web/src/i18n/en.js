@@ -617,6 +617,7 @@ export default {
     requiredCommission: 'Commission is required',
     requiredEmail: 'Email is required',
     requiredLoginName: 'Login name is required',
+    requiredMemberType: 'Please select member type.',
     requiredOldPassword: 'Current Password is required',
     requiredPassword: 'Password is required',
     requiredRealName: 'Real name is required',

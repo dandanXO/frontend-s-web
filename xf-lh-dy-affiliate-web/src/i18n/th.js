@@ -414,6 +414,7 @@ export default {
     requiredCommission: 'โปรดป้อนคอมมิชชัน',
     requiredEmail: 'โปรดป้อนอีเมล',
     requiredLoginName: 'โปรดป้อนชื่อผู้ใช้',
+    requiredMemberType: 'โปรดเลือกประเภทสมาชิก',
     requiredOldPassword: 'โปรดป้อนรหัสผ่านปัจจุบัน',
     requiredPassword: 'โปรดป้อนรหัสผ่าน',
     requiredRealName: 'โปรดป้อนชื่อจริง',
