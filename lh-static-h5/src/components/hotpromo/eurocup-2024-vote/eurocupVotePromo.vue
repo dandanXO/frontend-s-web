@@ -292,7 +292,14 @@ export default defineComponent({
           icon: "check_circle_outline"
         });
         isCastVoteModalVisible.value= false;
-        loadVoteTeam();
+        // loadVoteTeam();
+        if(votesData.value.myVotes > 0){
+          votesData.value.myVotes--;
+        }
+        setTimeout(()=>{
+          loadVoteTeam();
+        },2000)
+
       }
 
       isSubmitting.value = false;
