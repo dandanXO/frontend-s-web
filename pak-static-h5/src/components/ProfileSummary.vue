@@ -105,7 +105,6 @@
       <div
         class="side-menu-item side-menu-item__transparent"
         @click="handleMenuRouteClick('/language')"
-        v-if="sideLang"
       >
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
@@ -117,7 +116,7 @@
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
-        Download App
+        {{ $t("sideNav.downloadApp") }}
       </a>
 
       <!-- <div class="side-menu-item side-menu-item__transparent"> -->
@@ -253,6 +252,7 @@
         <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
   </div>
@@ -712,7 +712,7 @@ onMounted(() => {
   background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
+  overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
@@ -766,6 +766,13 @@ onMounted(() => {
     margin-bottom: 4px;
     width: 100%;
     position: relative;
+
+    .btn-lang {
+      img {
+        display: block;
+        width: 24px;
+      }
+    }
 
     .unread-total {
       position: absolute;

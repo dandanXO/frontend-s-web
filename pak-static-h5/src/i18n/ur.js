@@ -186,7 +186,8 @@ export default {
     feedback: "رائے",
     telegram: "ٹیلیگرام",
     whatsapp: "واٹس ایپ",
-    language: "زبان"
+    language: "زبان",
+    downloadApp: "ایپ ڈاؤن لوڈ کریں"
   },
   home: {
     menu_lobby: "لابی",
