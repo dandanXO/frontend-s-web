@@ -212,8 +212,11 @@
             <button class="common-btn login-btn" @click="openAccountModal">
               {{ $t("layout.header.notLogin.loginButton") }}
             </button>
-            <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
+            <button class="common-btn reg-btn" @click="openAccountModal('register')">
               {{ $t("layout.header.notLogin.registerButton") }}
+            </button>
+            <button class="language-btn" @click="handleLanguageClick">
+              <RiGlobalLine />
             </button>
           </template>
         </div>
@@ -249,7 +252,8 @@ import {
   RiLogoutCircleLine,
   RiShareBoxLine,
   RiListSettingsLine,
-  RiLoginBoxLine
+  RiLoginBoxLine,
+  RiGlobalLine
 } from "vue-remix-icons";
 import { useRoute } from "vue-router";
 import { kycAPI, loadPromo } from "@/api/index/promo";
@@ -628,6 +632,16 @@ $link-color: #ffffff;
       line-height: 20px;
       color: #ffffff;
     }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      background: none;
+      svg {
+        width: 30px;
+        fill: #9f9f9f;
+      }
+    }
   }
 }
 
@@ -748,7 +762,7 @@ $link-color: #ffffff;
   }
 
   img {
-    width: 20px;
+    width: 25px;
   }
 }
 
