@@ -274,6 +274,11 @@ export function loadSummon(promoCode) {
 export function claimSummon(promoCode) {
   return server.EVENT.post("/member-summon/claim", { promoCode });
 }
+
+export function loadAffiliateByDomain(host){
+  return server.REST.get(`/app/getAffiliateCode?siteCode=lh1&domain=${host}`);
+}
+
 export function getSummonRewardRecord(page) {
   return server.EVENT.get("/member-summon/get-summon-reward-record", {
     param: {
