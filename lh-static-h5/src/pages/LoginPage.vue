@@ -25,7 +25,7 @@
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/user-icon.svg" />
-                <label class="input-label">用户名</label>
+                <label class="input-label"><em>*</em>用户名</label>
               </div>
             </template>
           </q-input>
@@ -36,7 +36,7 @@
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/password-icon.svg" />
-                <label class="input-label">密码</label>
+                <label class="input-label"><em>*</em>密码</label>
               </div>
             </template>
             <template v-slot:append>
@@ -56,7 +56,7 @@
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
-                <label class="input-label">验证码</label>
+                <label class="input-label"><em>*</em>验证码</label>
               </div>
             </template>
           </q-input>
@@ -539,6 +539,16 @@ export default defineComponent({
         font-weight: bold;
         color: #424F72;
         font-size: 16px;
+        display:flex;
+        align-items: center;
+        gap: 5px;
+
+        em{
+          line-height: 22px;
+          color: #f53434;
+          display: inline-block;
+          padding-top: 2px;
+        }
       }
     }
 
