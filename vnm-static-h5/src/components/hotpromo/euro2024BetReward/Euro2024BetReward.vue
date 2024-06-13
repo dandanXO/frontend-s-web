@@ -165,10 +165,14 @@
 import { onMounted, ref } from "vue";
 import { getBetDetail, claimSummon } from "../../../api/index/promo.js";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
+import { useI18n } from "vue-i18n";
 const $q = useQuasar();
 
 const betMoney = ref(0);
 const clickBtn = ref(false);
+const store= userStore();
+const { t } = useI18n();
 
 const getBetDetailData = () => {
   getBetDetail("vnm-euro-2024-bet-reward").then((res) => {
@@ -181,6 +185,16 @@ const getBetDetailData = () => {
 };
 
 const postClaimSummon = () => {
+  if(!store.token){
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("lang.system_please_login"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   if (clickBtn.value) {
     claimSummon("vnm-euro-2024-bet-reward")
       .then((res) => {
