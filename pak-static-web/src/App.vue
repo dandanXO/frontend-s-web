@@ -12,9 +12,11 @@ import { globalStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
 import { LANGUAGE_DEFAULT_VALUE, LANGUAGE_KEY } from "./constant/localStorage";
+import { useMemberStatistics } from "@/hooks/memberStatistics";
 
 const currentLanguage = useLocalStorage(LANGUAGE_KEY, LANGUAGE_DEFAULT_VALUE);
 const { locale } = useI18n();
+useMemberStatistics("https://memsta.thilhe946li.com", "pak");
 
 const checkSID = () => {
   const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
