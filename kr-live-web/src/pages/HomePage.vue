@@ -656,27 +656,7 @@
     </div>
   </div>
 
-  <div class="">
-    <div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">출금현황</div>
-        <!-- <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link> -->
-      </div>
-      
-      <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            {{ formatTransactionType(d.transactionType) }}
-            {{ d.loginName }}
-            <span style="color: #01e1ff">{{ d.amount }}원</span>
-          </div>
-        </div>
-        <div class="news-item-right">
-          <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <DepositRecords :depositRecordList="depositRecordList"/>
 
   <GameModal ref="gameModalRef"></GameModal>
 
@@ -935,6 +915,7 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import GameItem from "components/game/GameItem";
 import GameCategory from "components/game/GameCategory";
+import DepositRecords from "components/home/DepositRecords.vue";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
@@ -966,7 +947,8 @@ export default defineComponent({
     MinigamesGrid,
     LangToggle,
     RollingText,
-    JackpotPrize
+    JackpotPrize,
+    DepositRecords
   },
   setup() {
     const $q = useQuasar();
@@ -1627,18 +1609,6 @@ export default defineComponent({
       // console.log(target)
     };
 
-    const formatTransactionType = (transactionType) => {
-        if(transactionType === 'DEPOSIT') {
-            return `[${t('lang.menu_deposit')}]`;
-        }
-
-        if(transactionType === 'WITHDRAW') {
-            return `[${t('lang.menu_withdraw')}]`;
-        }
-
-        return '';
-    }
-
     // const checkRedeemSpecialInviteBonusEligiblity = () => {
     //   if (store.hasToken()) {
     //     eventapi
@@ -1880,8 +1850,7 @@ export default defineComponent({
       getBackgroundImageStyle,
       gameItemLoad,
       depositRecordList,
-      moment,
-      formatTransactionType 
+      moment
     };
   }
 });
