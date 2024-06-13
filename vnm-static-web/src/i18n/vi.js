@@ -849,7 +849,8 @@ export default {
     tiktok: "Tiktok",
     automatic_payment: "Thanh toán tự động",
     otp_success_send_email: "OTP Code đã được gửi đến email của bạn",
-    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn."
+    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn.",
+    login_to_continue: "Vui lòng đăng nhập để tiếp tục"
   },
   response: {
     101: "Không tìm thấy nền tảng",

@@ -857,7 +857,8 @@ export default {
     otp_success_send_email: "OTP Code has been sent to your email",
     otp_success_send_phone: "OTP Code has been sent to your mobile number",
     claimed: "Claimed",
-    pending: "Pending"
+    pending: "Pending",
+    login_to_continue: "Please login to continue"
   },
   response: {
     101: "Platform not found",
