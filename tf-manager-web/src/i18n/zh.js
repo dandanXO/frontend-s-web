@@ -224,8 +224,8 @@ export default {
     sportMatch: {
       ACTIVE: '进行中',
       ENDED: '已结束',
-      SETTLED: '已结算'
-    }
+      SETTLED: '已结算',
+    },
   },
   betStatus: {
     BET: '下注',
@@ -448,7 +448,7 @@ export default {
       GROUP_THREE: '组三',
       GROUP_SIX: '组六',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: '核实中',
@@ -468,9 +468,9 @@ export default {
     ERROR_SIMILAR_SID_DETECTED: '侦测到相同设备',
   },
   rewardType: {
-    BET: "投注",
-    DEPOSIT: "存款",
-    ONE_TIME: "一次",
+    BET: '投注',
+    DEPOSIT: '存款',
+    ONE_TIME: '一次',
   },
   fields: {
     account: '账号',
@@ -1801,7 +1801,7 @@ export default {
     ipRange: 'IP范围',
     countryCode: '国家代码',
     lower: '下限',
-    Upper: '上限',
+    upper: '上限',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2607,6 +2607,7 @@ export default {
     LANDING: '落地页',
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
+    HOME: '首页',
   },
   error: {
     400: '请求无效',
@@ -2632,7 +2633,7 @@ export default {
     801: '验证码已失效',
     900: '无法找到会员信息',
     901: '无法找到此代理信息',
-    912: "用户名不存在",
+    912: '用户名不存在',
     922: '你的账号还未连接到VCall',
     1000: '登录名或密码错误',
     1001: '登录失败, 账号已被禁用',
@@ -2782,6 +2783,6 @@ export default {
     24003: '结果已结算',
     27000: '钥匙数量不足',
     31000: '所选日期还有赛事未结束，请待所有赛事结束了再结算',
-    31001: '所选日期无赛事'
+    31001: '所选日期无赛事',
   },
 }
