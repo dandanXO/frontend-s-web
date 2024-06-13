@@ -9,11 +9,11 @@
           <q-item-section>
             <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
             <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
-            </q-item-section>
-            
-            <q-item-section side top class="info-wrapper">
-              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
-              <q-icon name="image" v-if="item.attachment" :title="$t('lang.announcement_has_attachment')" />
+          </q-item-section>
+
+          <q-item-section side top class="info-wrapper">
+            <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+            <q-icon name="image" v-if="item.attachment" :title="$t('lang.announcement_has_attachment')" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -51,7 +51,7 @@ const selectFirstAnnouncement = () => {
     // if don't have timeout, ellipsis for title won't show
     setTimeout(() => {
       selected.value = announcementList.value[0];
-    },100)
+    }, 100)
   }
 }
 watch(() => announcementList.value, () => {
@@ -59,7 +59,7 @@ watch(() => announcementList.value, () => {
 })
 
 onMounted(() => {
-  if(announcementList.value) {
+  if (announcementList.value) {
     selectFirstAnnouncement();
   }
 })
@@ -69,7 +69,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .announcement-container {
   display: grid;
-  grid-template-columns: minmax(300px, 30%) auto;
+  grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
   min-height: 550px;
 
   .total {

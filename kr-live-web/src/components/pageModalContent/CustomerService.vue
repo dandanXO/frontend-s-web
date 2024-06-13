@@ -1,64 +1,81 @@
 <template>
-  <div class="feedback-form">
-    <div class="form-wrapper" v-if="isCreateMode">
-      <form class="content-form form-template">
-        <div class="primary-button blue-square back-btn" @click="isCreateMode = false">
-          전 페이지로 이동
-        </div>
-        <div class="form-item">
-          <label>유형</label>
-          <q-select outlined dense name="title" v-model="serviceForm.feedbackType" :options="feedbackTypes"
-            ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
-        </div>
-        <div class="form-item">
-          <label>제목을</label>
-          <q-input dense outlined ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" clearable
-            lazy-rules :rules="[
-              (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
-            ]" />
-        </div>
-        <div class="form-item">
-          <label>내용물</label>
-
-          <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" clearable
-            lazy-rules :rules="[
-              (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
-            ]" />
-        </div>
-      </form>
-
-      <div class="action-buttons">
-        <div class="primary-button blue" @click.prevent="sendMessage">확신하는</div>
+  <div class="form-wrapper" v-if="isCreateMode">
+    <form class="content-form form-template">
+      <div class="primary-button blue-square back-btn" @click="isCreateMode = false">
+        전 페이지로 이동
       </div>
+      <div class="form-item">
+        <label>유형</label>
+        <q-select outlined dense name="title" v-model="serviceForm.feedbackType" :options="feedbackTypes"
+          ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
+      </div>
+      <div class="form-item">
+        <label>제목을</label>
+        <q-input dense outlined ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" clearable
+          lazy-rules :rules="[
+            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+          ]" />
+      </div>
+      <div class="form-item">
+        <label>내용물</label>
+
+        <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" clearable
+          lazy-rules :rules="[
+            (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
+          ]" />
+      </div>
+    </form>
+
+    <div class="action-buttons">
+      <div class="primary-button blue" @click.prevent="sendMessage">확신하는</div>
     </div>
-    <div class="feedback-compose-form" v-else>
-      <div class="primary-button blue-square compose-btn" @click="isCreateMode = true" style="margin-left:auto">
-        글쓰기
-      </div>
-
-
-
-      <div class="feedback-replies-list">
-        <q-list bordered class="rounded-borders">
-          <div style="max-height: 500px;overflow-y:auto;">
-            <q-expansion-item v-for="item in outboxData" :key="item.page" @click="readFeedback(item.id)"
-              expand-separator :icon="item.readTime ? 'mark_email_read' : 'mark_email_unread'" :label="item.title"
-              :caption="`보낸 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')} | 읽는 시간 ${moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')}`">
-              <q-card style="background:transparent;padding:10px;margin:0px;">
-                <q-card-section style="white-space:pre-wrap;max-height:400px;overflow-y:auto;">
-                  {{ item.content }}
-                </q-card-section>
-              </q-card>
-            </q-expansion-item>
+  </div>
+  <div class="feedback-compose-form" v-else>
+    <div class="feedback-container">
+      <div class="feedback-list-wrapper">
+        <div class="header">
+          <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
+            글쓰기
           </div>
+          <span class="total">{{ $t('lang.announcement_total') }} {{ feedbackReplies.length }}</span>
+        </div>
+
+        <q-list bordered separator class="feedback-list">
+          <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
+            :active="item === selected" active-class="active-announcement">
+            <q-item-section>
+              <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
+              <!-- <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label> -->
+            </q-item-section>
+
+            <q-item-section side top class="info-wrapper">
+              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+              <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
+              <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
+            </q-item-section>
+          </q-item>
         </q-list>
       </div>
+      <q-scroll-area class="feedback-content-wrapper">
+        <div v-if="selected" class="feedback-content">
+          <div>
+            <div class="title">{{ selected.title }}</div>
+          </div>
+          <span class="date-time">{{ formatDate(selected.createTime) }}</span>
+          <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
+          <div class="content-loading" v-if="isFetchingContent">
+            <q-spinner-gears size="50px" /><span>{{ $t('lang.feedback_loading_content') }}</span>
+          </div>
+          <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
+        </div>
+        <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+      </q-scroll-area>
     </div>
   </div>
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onMounted, watch } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
@@ -68,6 +85,7 @@ const $q = useQuasar();
 const isCreateMode = ref(false);
 const titleRef = ref();
 const contentRef = ref();
+const selected = ref();
 
 const serviceForm = reactive({
   title: "",
@@ -75,9 +93,31 @@ const serviceForm = reactive({
   feedbackType: ""
 });
 
+const isFetchingContent = ref(false);
+
 const feedbackTypes = ref([]);
 
-const outboxData = ref([]);
+const feedbackReplies = ref([]);
+
+const selectFirstFeedback = () => {
+  if (!selected.value && feedbackReplies.value) {
+    // if don't have timeout, ellipsis for title won't show
+    setTimeout(() => {
+      selected.value = feedbackReplies.value[0];
+    }, 100)
+  }
+}
+watch(() => feedbackReplies.value, () => {
+  selectFirstFeedback();
+})
+
+onMounted(() => {
+  if (feedbackReplies.value) {
+    selectFirstFeedback();
+  }
+})
+
+const formatDate = (timestamp, format) => moment(timestamp).locale('ko').format(format || "LL");
 
 const sendMessage = () => {
   titleRef.value.validate();
@@ -114,7 +154,7 @@ const initOutbox = () => {
     const { code, data } = res.data
 
     if (code === 0) {
-      outboxData.value = data.records;
+      feedbackReplies.value = data.records;
     }
   })
 
@@ -125,9 +165,12 @@ const initOutbox = () => {
 }
 
 const readFeedback = (id) => {
-  const currentMail = outboxData.value.find((data) => data.id === id);
+  const currentMail = feedbackReplies.value.find((data) => data.id === id);
+  selected.value = currentMail;
 
   if (!currentMail?.content) {
+    isFetchingContent.value = true;
+
     api.get(`/session/feedback/${id}/read`).then((res) => {
       const { code, data } = res.data
 
@@ -142,9 +185,12 @@ const readFeedback = (id) => {
 
       currentMail.content = data.content;
       currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+      isFetchingContent.value = false;
     })
       .catch((error) => {
         console.log(error);
+        isFetchingContent.value = false;
       });
   }
 }
@@ -155,135 +201,161 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.feedback-form {
-  .feedback-compose-form {
+.feedback-compose-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+
+.back-btn {
+  width: 100px;
+  height: 30px;
+  font-size: 12px;
+  letter-spacing: -1px;
+}
+
+.compose-btn {
+  width: 60px;
+  height: 30px;
+  font-size: 12px;
+  letter-spacing: -1px;
+}
+
+.feedback-container {
+  display: grid;
+  grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
+  min-height: 550px;
+
+  .total {
+    margin-left: auto;
+  }
+
+  .feedback-list-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin: 0;
-  }
+    gap: 5px;
+    padding-right: 10px;
 
-  .back-btn {
-    width: 100px;
-    height: 30px;
-    font-size: 12px;
-    letter-spacing: -1px;
-  }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-  .compose-btn {
-    width: 60px;
-    height: 30px;
-    font-size: 12px;
-    letter-spacing: -1px;
-  }
+    .feedback-list {
+      overflow-y: auto;
+      max-height: 550px;
+      height: 100%;
 
-  .feedback-replies-list {
-    // max-width: 485px;
-  }
-}
+      .active-announcement {
+        background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
 
-.modal-body-content {
-  .table-row-head {
-    padding-top: 4px;
-    display: grid;
-    grid-template-columns: 50px 1fr 100px;
-
-    .q-item__label {
-      margin: auto;
-      padding-bottom: 12px;
-
-      &:nth-child(2) {
-        text-align: left;
-        margin-left: unset;
-        margin-right: unset;
+        .title {
+          color: #fff;
+          font-weight: bold;
+        }
       }
     }
   }
 
-  .table-row {
-    padding: 0 10px 0 10px;
-    display: grid;
-    grid-template-columns: 50px 1fr 100px;
+  .feedback-content-wrapper {
+    height: 100%;
 
-    .q-item__label {
-      margin: auto;
+    .feedback-content {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 550px;
+      overflow-y: auto;
+      padding-right: 10px;
 
-      //padding-bottom: 12px;
-      &:nth-child(2) {
-        text-align: left;
-        margin-left: unset;
-        margin-right: unset;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+      .title {
+        font-size: 3rem;
+        line-height: 4rem;
+        font-weight: bold;
+      }
+
+      .date-time {
+        margin-left: auto;
+      }
+
+      .content-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        gap: 5px;
+      }
+
+      .attachment-img {
+        max-width: 100%;
+      }
+
+      .content {
+        line-height: 1.7rem;
       }
     }
-  }
 
-  .table-row-title {
-    background: #212121;
-    margin-bottom: 5px;
-    padding: 10px 0;
-  }
-
-  .content-form {
-    p {
-      margin-top: 20px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5c5c5c;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
+    .feedback-no-data {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
-}
 
-.modal-body-buttons {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: minmax(150px, 30%) 70%;
 
-.modal-body-content {}
+    .q-item {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      font-size: 0.7rem;
 
-.modal-body-buttons {
-  width: 100%;
+      .title {
+        font-size: 15px;
+        line-height: 20px;
+      }
 
-  .form-button {
-    //display: inline-block;
-    height: 70px;
-    width: 200px;
-    background-size: contain;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 18px;
-    padding-bottom: 5px;
+      .text-caption {
+        font-size: 12px;
+        line-height: 20px;
+      }
 
-    &.blue {
-      background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+      .attachment {
+        margin: 5px 0px;
+      }
+
+      .q-item__section {
+        padding-left: 0;
+        align-items: flex-start;
+        padding: 5px;
+
+        &.info-wrapper {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
     }
 
-    &.yellow {
-      background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
-    }
-  }
-}
+    .feedback-content-wrapper {
 
-@media (max-width: 768px) {
-  .modal-body-buttons {
-    .form-button {
-      width: 140px;
-      height: 40px;
-      max-width: 40vw;
+      .feedback-content {
+        font-size: 12px;
+
+        .title {
+          font-size: 24px;
+          line-height: 28px;
+        }
+
+        .content {
+          line-height: 20px;
+        }
+      }
     }
   }
 }

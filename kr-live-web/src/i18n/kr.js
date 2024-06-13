@@ -34,7 +34,8 @@ export default {
     menu_withdraw: "환전",
     menu_message: "문의",
     menu_customer_service: "고객센터",
-    menu_transaction_record: "입출금기록",
+    menu_transaction_record: "내역기록",
+    menu_rebates: "리베이트",
     // menu end
     // page modal start
     page_modal_deposit: "송금신청",
@@ -46,7 +47,7 @@ export default {
     page_modal_announcement: "공지사항",
     page_modal_add_bank_card: "은행카드추가",
     page_modal_bank_card_list: "은행 카드 목록",
-    page_modal_transaction_record: "입출금기록",
+    page_modal_transaction_record: "내역기록",
     page_modal_change_password: "비밀번호",
     // page modal end
     // rolling text start
@@ -111,6 +112,12 @@ export default {
     announcement_total: "총",
     announcement_has_attachment: "첨부파일 있음",
     // announcement end
+    // feedback start
+    feedback_loading_content: "콘텐츠 로드 중...",
+    feedback_unread: "읽히지 않는",
+    feedback_read: "읽었다",
+    feedback_read_at: "에서 읽다",
+    // feedback end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

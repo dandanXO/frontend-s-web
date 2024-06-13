@@ -35,6 +35,7 @@ export default {
     menu_message: "Message",
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
+    menu_rebates: "Rebates",
     // menu end
     // page modal start
     page_modal_deposit: "Deposit",
@@ -110,6 +111,13 @@ export default {
     announcement_total: "Total",
     announcement_has_attachment: "Has attachment",
     // announcement end
+    // feedback start
+    feedback_loading_content: "Loading content...",
+    feedback_unread: "Unread",
+    feedback_read: "Read",
+    feedback_read_at: "Read at",
+    // feedback end
+    
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -366,7 +374,7 @@ export default {
     turnover: "Profit",
     withdraw: "Withdraw",
     transfer: "Transfer",
-    rebates: "Rebate",
+    rebates: "Rebates",
     gameBetRecord: "Bet Record",
     reminderRecord: "Reminder Record",
     search: "Search",

@@ -188,7 +188,7 @@ const pagesInfo = reactive([
     info: t('lang.page_modal_message'),
     iconUrl: require("../../assets/icon/messages.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: MyMessages,
+    component: CustomerService,
     headerInfo: {
       title: t('lang.page_modal_message'),
       subTitle: "MESSAGES",
