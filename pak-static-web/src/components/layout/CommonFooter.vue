@@ -2,7 +2,8 @@
   <footer class="footer" :class="{ menuactive: globalStore.isMenuActive }">
     <div class="container">
       <div class="wrapper">
-        <span class="logo">{{ $t("layout.footer.logo") }}</span>
+        <!-- <span class="logo">{{ $t("layout.footer.logo") }}</span> -->
+        <img src="@/assets/logo.png" class="logo" />
         <div class="grid">
           <router-link class="footer-link" to="/about">{{ $t("layout.footer.link.about") }}</router-link>
 
@@ -120,10 +121,7 @@ import { globalStore } from "@/store";
     gap: 120px;
 
     .logo {
-      font-size: 40px;
-      font-weight: 700;
-      line-height: 53.2px;
-      color: #ffffff;
+      max-width: 162px;
     }
   }
 

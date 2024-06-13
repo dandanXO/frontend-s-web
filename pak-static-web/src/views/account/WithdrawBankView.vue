@@ -53,8 +53,7 @@
                 <span v-else>{{ cardNumber }}</span>
               </div>
             </div>
-            <!-- TODO: check  -->
-            <div class="card-address">{{ bc.cardAddress }}</div>
+            <!-- <div class="card-address">{{ bc.cardAddress }}</div> -->
             <!-- <div
               v-for="b in bc.cardNumber.split()"
               :key="b"
@@ -145,6 +144,20 @@
         :colon="false"
       >
         <a-form-item name="bankId">
+          <div class="bank-btn-wrapper">
+            <a-button
+              v-for="(bank, index) in bankCardModalState.banks"
+              :key="index"
+              class="bank-btn"
+              :class="{ selected: bankCardInfo.bankId === bank.id }"
+              @click="handleSelectBank(bank.id)"
+            >
+              <img :src="imgURL + bank.bankIcon" class="bank-btn__img" />
+              {{ bank.name }}
+            </a-button>
+          </div>
+        </a-form-item>
+        <!-- <a-form-item name="bankId">
           <a-space style="width: 100%; justify-content: space-between">
             <a-select
               v-model:value="selectedBankType"
@@ -183,9 +196,9 @@
               </a-select-option>
             </a-select>
           </a-space>
-        </a-form-item>
+        </a-form-item> -->
 
-        <a-form-item
+        <!-- <a-form-item
           name="cardAccount"
           label-align="left"
           :label="$t('personalView.bank.addModal.form.cardAccount.label')"
@@ -195,7 +208,7 @@
             v-model:value="bankCardInfo.cardAccount"
             :placeholder="$t('personalView.bank.addModal.form.cardAccount.placeholder')"
           />
-        </a-form-item>
+        </a-form-item> -->
         <a-form-item
           ref="cardNumber"
           name="cardNumber"
@@ -221,7 +234,7 @@
         <!-- <a-form-item v-if="!(isVirtual || isEwallet)"  name="cardNumber" label-align="left" label="Account Number">
           <a-input v-model:value="bankCardInfo.cardNumber" placeholder="Enter Account Number" />
         </a-form-item> -->
-        <a-form-item
+        <!-- <a-form-item
           name="cardAddress"
           label-align="left"
           :label="$t('personalView.bank.addModal.form.cardAddress.label')"
@@ -230,6 +243,9 @@
             v-model:value="bankCardInfo.cardAddress"
             :placeholder="$t('personalView.bank.addModal.form.cardAddress.placeholder')"
           />
+        </a-form-item> -->
+        <a-form-item>
+          <span class="remind">{{ $t("personalView.bank.addModal.remind") }}</span>
         </a-form-item>
         <a-form-item class="txt-center">
           <button class="txt-center common-btn" type="submit" @click="submitBankCard">
@@ -402,9 +418,10 @@ const bankCardModalState = reactive({
 });
 const bankCardFormRef = ref();
 const bankCardInfo = reactive({
-  cardNumber: "",
-  cardAccount: "",
-  cardAddress: ""
+  bankId: "",
+  cardNumber: ""
+  // cardAccount: "",
+  // cardAddress: ""
 });
 const bankName = ref();
 const banksList = ref([]);
@@ -417,7 +434,7 @@ const bankCardModal = () => {
       bankCardInfo.bankId = undefined;
       bankCardInfo.cardNumber = "";
       bankCardInfo.cardAccount = store.realName;
-      bankCardInfo.cardAddress = "";
+      // bankCardInfo.cardAddress = "";
       bankCardModalState.visible = true;
       if (bankCardModalState.banks.length === 0) {
         loadBanks()
@@ -571,6 +588,10 @@ const handleOk = (e) => {
 
 const handleCancel = (e) => {
   open.value = false;
+};
+
+const handleSelectBank = (id) => {
+  bankCardInfo.bankId = id;
 };
 </script>
 
@@ -944,6 +965,37 @@ const handleCancel = (e) => {
 
   .ant-form-item {
     margin-right: 0;
+  }
+}
+
+.remind {
+  color: #ffa031;
+}
+
+.bank-btn-wrapper {
+  display: flex;
+  gap: 20px;
+  .bank-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #072a19;
+    border-radius: 8px;
+    position: relative;
+    color: #fff;
+
+    &:hover,
+    &:focus,
+    &.selected {
+      border-color: #1baa99;
+    }
+
+    .bank-btn__img {
+      max-width: 24px;
+    }
   }
 }
 </style>

@@ -398,6 +398,8 @@ export default {
             }
           }
         },
+        remind:
+          "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
         confirmButton: "CONFIRM"
       },
       removeModal: {
