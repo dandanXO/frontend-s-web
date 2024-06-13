@@ -116,7 +116,7 @@
               </div>
             </template>
           </div>
-          <div class="plat-options-container" v-if="selectedTab==='cockfight'">
+          <!-- <div class="plat-options-container" v-if="selectedTab==='cockfight'">
             <template v-for="(item, index) in platformsListDisplay2" :key="index">
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
                 <div class="text">
@@ -125,7 +125,7 @@
                 </div>
               </div>
             </template>
-          </div>
+          </div> -->
         </div>
 
         <div class="plat-games-container" v-if="selectedTab==='fishing'">
