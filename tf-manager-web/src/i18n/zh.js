@@ -464,6 +464,8 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: '侦测到相同IP或设备',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: '最低存款要求未达成',
     ERROR_BET_AMT_MIN_NOT_MEET: '最低下注要求未达成',
+    ERROR_SIMILAR_IP_DETECTED: '侦测到相同IP',
+    ERROR_SIMILAR_SID_DETECTED: '侦测到相同设备',
   },
   rewardType: {
     BET: "投注",

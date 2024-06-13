@@ -460,6 +460,8 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: 'Duplicate IP or Device',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: 'Minimum Deposit Amount not reach',
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
+    ERROR_SIMILAR_IP_DETECTED: 'Similar IP Detected',
+    ERROR_SIMILAR_SID_DETECTED: 'Similar Device Detected',
   },
   rewardType: {
     BET: "BET",
