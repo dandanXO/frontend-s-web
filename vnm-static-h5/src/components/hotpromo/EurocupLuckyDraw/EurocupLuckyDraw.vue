@@ -292,7 +292,7 @@
                   </div>
                 </q-td>
               </template>
-              
+
               <template v-slot:body-cell-winPrize="props">
                   <q-td :props="props">
                     <div>
@@ -312,7 +312,7 @@
               :rows-per-page-options="[0]"
               :hide-pagination="true"
             >
-            
+
             <template v-slot:body-cell-winStatus="props">
                 <q-td :props="props">
                   <div :class="{ win: props.value === 'WIN', loss: props.value === 'LOSS'}">
@@ -333,7 +333,9 @@ import { ref, reactive, onMounted, nextTick } from "vue";
 import { selectNumber, getSelectedNumber, getWinners, getPrizeAmount } from "../../../api/index/promo";
 
 import { useI18n } from "vue-i18n";
+import { useQuasar } from "quasar";
 
+const $q= useQuasar()
 const { t } = useI18n();
 const inputs = [1, 2, 3]; // Three inputs
 const inputValues = ref(["", "", ""]); // Reactive array to store input values
@@ -384,12 +386,13 @@ const onSubmitJackpot = () => {
         icon: "check_circle_outline"
       });
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
+      // debugger;
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: res.message,
+      //   icon: "report_problem"
+      // });
     }
   });
 };
@@ -446,7 +449,7 @@ const winningColumns = [
     field: "recordTime",
     align: "center",
     sortable: true
-  },  
+  },
   {
     name: "number",
     label: t("lang.record_choose_lucky_number"),
@@ -478,7 +481,7 @@ const initSelectedNumber = () => {
 const initGetWinners = () => {
   winnerDataSource.value = [];
   getWinners(promoCode.value).then((res) => {
-        
+
         if (res.code === 0) {
           res.data.forEach((element) => {
             element.winners.forEach((win) => {
@@ -691,7 +694,7 @@ onMounted(() => {
       width: 100%;
       margin-top: 5px;
       color: #000000;
-      display: flex; 
+      display: flex;
       justify-content: space-between;
       gap:10px;
       .note {
