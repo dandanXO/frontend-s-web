@@ -1044,18 +1044,6 @@ export default defineComponent({
       };
       sessionStorage.setItem(key, JSON.stringify(item));
     };
-    const apiMockData = {
-      "code": 0,
-      "data": {
-        "title": "雷火 欧洲杯 TEST",
-        "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-        "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-        "content": null,
-        "type": "IMG",
-        "path": "?name=lh1-eurocup-2024",
-        "frequency": "EVERYDAY"
-      }
-    }
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
       if (!itemStr) {
@@ -1066,9 +1054,6 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
-          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
-            res = apiMockData
-          }
 
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
