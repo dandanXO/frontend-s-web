@@ -189,7 +189,7 @@
 
               <button
                 class="standard-button btn-color-blue"
-                v-if="!isEdit && !personalState.memberInfo.birthday"
+                v-if="!isEdit && (!personalState.memberInfo.birthday || !personalState.memberInfo.realName)"
                 @click="isEdit = !isEdit"
               >
                 编辑
