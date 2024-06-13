@@ -4,7 +4,6 @@
         <h1>403</h1>
         <h2>Forbidden</h2>
         <p>Sorry, but you don't have permission to access this page.</p>
-        <router-link to="/">Go to Home</router-link>
       </div>
     </div>
   </template>
