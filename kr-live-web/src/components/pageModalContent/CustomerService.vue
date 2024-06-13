@@ -31,15 +31,14 @@
     </div>
   </div>
   <div class="feedback-compose-form" v-else>
-    <div class="primary-button blue-square compose-btn" @click="isCreateMode = true" style="margin-left:auto">
-      글쓰기
-    </div>
-
-
-
     <div class="feedback-container">
       <div class="feedback-list-wrapper">
-        <span class="total">{{ $t('lang.announcement_total') }} {{ feedbackReplies.length }}</span>
+        <div class="header">
+          <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
+            글쓰기
+          </div>
+          <span class="total">{{ $t('lang.announcement_total') }} {{ feedbackReplies.length }}</span>
+        </div>
 
         <q-list bordered separator class="feedback-list">
           <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
@@ -237,6 +236,12 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     padding-right: 10px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     .feedback-list {
       overflow-y: auto;

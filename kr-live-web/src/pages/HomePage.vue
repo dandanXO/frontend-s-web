@@ -1356,7 +1356,7 @@ export default defineComponent({
 
           //TODO:: HArdcoded.
           console.log(liveCasinoGames.value);
-          liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
+          // liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
 
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
 
