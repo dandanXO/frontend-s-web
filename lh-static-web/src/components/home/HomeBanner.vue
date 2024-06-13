@@ -32,6 +32,8 @@
       </a>
     </el-carousel-item>
   </el-carousel>
+
+  <GameModal ref="allGames"></GameModal>
 </template>
 
 <script setup>
@@ -41,6 +43,7 @@ import { ElMessage } from "element-plus";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import GameModal from "@/components/modal/GameModal.vue";
 
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -49,6 +52,7 @@ const banners = ref([]);
 const isDark = useDark();
 const store = userStore();
 const router = useRouter();
+const allGames= ref();
 
 const goBannerPage = (redirectUrl) => {
   if (redirectUrl == "app://deposit") {
@@ -117,6 +121,15 @@ const homePopupType = ref("");
 const homePopupId = ref(0);
 
 const clickHomePopupImg = (urlString)=>{
+  const openPattern = /^\/open\/(.*)/;
+  if (urlString.match(openPattern)) {
+    const extractedUrl = urlString.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+    allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+    return;
+  }
+
   // debugger;
   let regexUrl = new RegExp(/^(https:\/\/)/g)
   if(regexUrl.test(urlString)){
@@ -181,11 +194,7 @@ const checkShowImgTop = () => {
                 break;
             }
             isImportantAnnoucementModal.value = true;
-            if (data["path"].includes("https://")) {
-              homePopupPath.value = data["path"];
-            } else {
-              homePopupPath.value = "/promotion?name=" + data["path"];
-            }
+            homePopupPath.value = data["path"];
             homePopupImg.value = imgURL + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
