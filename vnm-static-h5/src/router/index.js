@@ -38,7 +38,6 @@ export default route(function (/* { store, ssrContext } */) {
     if (
       to.path === "/login" ||
       to.path === "/register" ||
-      to.path === "/promotion" ||
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
@@ -56,7 +55,6 @@ export default route(function (/* { store, ssrContext } */) {
     // }
 
     if (
-      to.path === "/promotion" ||
       to.path === "/deposit" ||
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
