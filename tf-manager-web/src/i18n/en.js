@@ -217,8 +217,8 @@ export default {
     sportMatch: {
       ACTIVE: 'Active',
       ENDED: 'Ended',
-      SETTLED: 'Settled'
-    }
+      SETTLED: 'Settled',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -444,7 +444,7 @@ export default {
       GROUP_THREE: 'GROUP THREE',
       GROUP_SIX: 'GROUP SIX',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: 'PENDING',
@@ -462,9 +462,9 @@ export default {
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
   },
   rewardType: {
-    BET: "BET",
-    DEPOSIT: "DEPOSIT",
-    ONE_TIME: "ONE TIME",
+    BET: 'BET',
+    DEPOSIT: 'DEPOSIT',
+    ONE_TIME: 'ONE TIME',
   },
   fields: {
     account: 'Account',
@@ -1797,7 +1797,7 @@ export default {
     ipRange: 'IP Range',
     countryCode: 'Country Code',
     lower: 'Lower',
-    Upper: 'Upper',
+    upper: 'Upper',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -1817,7 +1817,8 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
-    confirmCancel: 'Confirm that you want to cancel this record, the operation cannot be undone',
+    confirmCancel:
+      'Confirm that you want to cancel this record, the operation cannot be undone',
     confirmCancelBbDacha:
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelMatch:
@@ -2646,6 +2647,7 @@ export default {
     LANDING: 'Landing',
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
+    HOME: 'Home',
   },
   error: {
     400: 'Bad Request',
@@ -2822,6 +2824,6 @@ export default {
     24003: 'Result is already processed',
     27000: 'Key quantity is not enough',
     31000: 'Some matches are not ended on the selected date, please wait until all matches are ended',
-    31001: 'No matches on the selected date'
+    31001: 'No matches on the selected date',
   },
 }
