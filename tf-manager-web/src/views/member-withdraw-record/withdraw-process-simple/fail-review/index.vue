@@ -189,6 +189,14 @@
             >
               {{ t('fields.fail') }}
             </el-button>
+            <el-button
+              v-permission="['sys:withdraw:simple:fail']"
+              size="mini"
+              type="success"
+              @click="toSuccess(scope.row)"
+            >
+              {{ t('fields.success') }}
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -421,7 +429,8 @@ import { getBankInfoListSimple } from '../../../../api/bank-info'
 import {
   autoWithdrawToFail,
   getMemberWithdrawRecordFailReview,
-  getTotalWithdrawAmountByStatus
+  getTotalWithdrawAmountByStatus,
+  autoWithdrawToSuccess
 } from '../../../../api/member-withdraw-record'
 import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
@@ -638,6 +647,13 @@ async function toFail(memberWithdrawRecord) {
     await loadRecord()
     ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
   }
+}
+
+async function toSuccess(val) {
+  page.loading = true
+  await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
+  await loadRecord()
+  page.loading = false
 }
 
 async function showDialog(type, memberWithdrawRecord) {
