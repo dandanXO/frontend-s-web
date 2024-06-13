@@ -452,7 +452,7 @@ export default defineComponent({
     const isForgotWithdrawPassword = ref(false);
 
     const verifyOtpAndChangePassword = () => {
-      api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
+      api.post(`/session/withdrawPassword`, qs.stringify({
         password: formChgWithdrawPwd.password,
         code: formChgWithdrawPwd.otpCode,
         codeId: secondCodeId.value,
@@ -462,6 +462,7 @@ export default defineComponent({
             formChgWithdrawPwd.password = "";
             formChgWithdrawPwd.confirmNewPwd = "";
             formChgWithdrawPwd.otpCode= "";
+            store.registeredWithdrawPassword = true;
 
             $q.notify({
               color: "positive",
