@@ -3,7 +3,7 @@
     <q-form @submit="onSubmit">
       <div class="login-form-container">
         <q-input ref="realNameRef" standout clearable v-model="regForm.loginName" placeholder="6-12个字符，包含大小写字母"
-          lazy-rules :rules="[
+                 lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入用户名',
             (val) => (val && val.length >= 6 && val.length <= 12) || '用户名个数必须在6和12之间',
             validLoginName
@@ -19,7 +19,7 @@
         </q-input>
 
         <q-input ref="pwdRef" standout clearable v-model="regForm.password" placeholder="请输入密码" lazy-rules
-          :type="isPwd ? 'password' : 'text'" :rules="[
+                 :type="isPwd ? 'password' : 'text'" :rules="[
             (val) => (val && val.length > 0) || '请输入密码',
             (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
           ]" color="white">
@@ -31,28 +31,28 @@
           </template>
           <template v-slot:append>
             <q-icon color="dark" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-              @click="isPwd = !isPwd" />
+                    @click="isPwd = !isPwd" />
           </template>
         </q-input>
-<!--        <div v-if="regForm.password" class="password-str-div">-->
-<!--          <span :class="{-->
-<!--            'weak-pwd': pwdStrength == 'weak',-->
-<!--            'normal-pwd': pwdStrength == 'normal',-->
-<!--            'strong-pwd': pwdStrength == 'strong'-->
-<!--          }">-->
-<!--            弱-->
-<!--          </span>-->
-<!--          <span :class="{-->
-<!--            'normal-pwd': pwdStrength == 'normal',-->
-<!--            'strong-pwd': pwdStrength == 'strong'-->
-<!--          }">-->
-<!--            好-->
-<!--          </span>-->
-<!--          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>-->
-<!--        </div>-->
+        <!--        <div v-if="regForm.password" class="password-str-div">-->
+        <!--          <span :class="{-->
+        <!--            'weak-pwd': pwdStrength == 'weak',-->
+        <!--            'normal-pwd': pwdStrength == 'normal',-->
+        <!--            'strong-pwd': pwdStrength == 'strong'-->
+        <!--          }">-->
+        <!--            弱-->
+        <!--          </span>-->
+        <!--          <span :class="{-->
+        <!--            'normal-pwd': pwdStrength == 'normal',-->
+        <!--            'strong-pwd': pwdStrength == 'strong'-->
+        <!--          }">-->
+        <!--            好-->
+        <!--          </span>-->
+        <!--          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">强</span>-->
+        <!--        </div>-->
 
         <q-input ref="confirmPwdRef" standout clearable :type="isCfmPwd ? 'password' : 'text'"
-          v-model="regForm.confirmPwd" placeholder="请再次输入密码" lazy-rules :rules="[
+                 v-model="regForm.confirmPwd" placeholder="请再次输入密码" lazy-rules :rules="[
             (val) => (val && val.length > 0) || '请输入确认密码',
             (val) => val === regForm.password || '密码不一样',
             (val) => (val.length > 5 && val.length <= 12) || '密码长度为 6 到 12'
@@ -65,7 +65,7 @@
           </template>
           <template v-slot:append>
             <q-icon color="dark" :name="isCfmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-              @click="isCfmPwd = !isCfmPwd" />
+                    @click="isCfmPwd = !isCfmPwd" />
           </template>
         </q-input>
 
@@ -84,7 +84,7 @@
         </q-input>
 
         <q-input ref="verificationRef" standout clearable type="text" v-model="regForm.captchaCode" placeholder="验证码"
-          lazy-rules color="white" :rules="[
+                 lazy-rules color="white" :rules="[
             (val) => (val && val.length > 0) || '请输入验证码',
             (val) => (val && val.length > 3 && val.length < 5) || '验证码长度为4个'
           ]">
@@ -101,7 +101,7 @@
 
         <template v-if="!hasReferSummon">
           <q-input v-if="!hasAffiliate" ref="affiliateCodeRef" standout clearable v-model="regForm.codeAffiliate"
-            placeholder="如不是合营玩家不用填写">
+                   placeholder="如不是合营玩家不用填写">
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
@@ -110,7 +110,7 @@
             </template>
           </q-input>
           <q-input v-else ref="affiliateCodeRef" standout clearable v-model="regForm.codeAffiliate"
-            placeholder="如不是合营玩家不用填写" readonly disable>
+                   placeholder="如不是合营玩家不用填写" readonly disable>
             <template v-slot:prepend>
               <div class="input-icon-label-wrapper">
                 <img class="input-icon" src="../assets/images/login/veri-icon.svg" />
@@ -124,7 +124,7 @@
 
     <div class="">
       <q-btn @click.prevent="onSubmit" type="submit" class="bottom-btn common-large-btn" label="注册" width="100%"
-        color="brightbtn" style="width: 100%" />
+             color="brightbtn" style="width: 100%" />
       <router-link to="/login">
         <q-btn class="common-large-white-btn bottom-btn" flat label="登录" />
       </router-link>
@@ -152,7 +152,7 @@
           <q-input v-model="innerCaptchaRef" placeholder="验证码">
             <template v-slot:append>
               <img :src="phoneVerificationImg" title="点击刷新验证码" style="margin-top: 6px; cursor: pointer"
-                @click="getInnerCode" />
+                   @click="getInnerCode" />
             </template>
           </q-input>
         </q-card-section>
@@ -628,7 +628,7 @@ function charType(num) {
 }
 
 .input-icon-label-wrapper {
-  width: 100px;
+  width: 106px;
   white-space: nowrap;
   display: flex;
   align-items: center;
