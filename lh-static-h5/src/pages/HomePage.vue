@@ -645,7 +645,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
-    <q-card style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+    <q-card flat style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
       <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
@@ -1068,6 +1068,16 @@ export default defineComponent({
     const isImpt = getWithExpiry("isImpt");
     const clickHomePopupImg = (urlString)=>{
       // debugger;
+      const openPattern = /^\/open\/(.*)/;
+      if (urlString.match(openPattern)) {
+        const extractedUrl = urlString.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+        // /open/FB体育/FB/XXXX-123/OPEN
+
+        allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+        return;
+      }
+
       let regexUrl = new RegExp(/^(https:\/\/)/g)
       if(regexUrl.test(urlString)){
         // 跳轉
