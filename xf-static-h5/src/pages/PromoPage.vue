@@ -91,9 +91,30 @@
     </div>
   </div>
 
-  <q-dialog v-model="isAppPromo" persistent :maximized="true" transition-show="slide-up" transition-hide="slide-down">
-    <iframe :src="appPromoUrl" id="promo-iframe" scrolling="auto" frameborder="0" class="game-iframe"></iframe>
+  <q-dialog v-model="modalVisible" class="gameDialog" full-height full-width>
+    <q-toolbar>
+      <div class="topActions">
+        <q-toolbar-title></q-toolbar-title>
+        <q-btn
+          flat
+          @click="closeDialog()"
+          round
+          dense
+          icon="close"
+          style="width: 24px; height: 24px; min-height: 24px; min-width: 24px"
+        />
+      </div>
+
+    <iframe
+      :src="promoSrc"
+      id="promo-iframe"
+      scrolling="auto"
+      frameborder="0"
+      class="promo-iframe"
+    ></iframe>
+    </q-toolbar>
   </q-dialog>
+
 
   <q-dialog width="100%" v-model="isDisplayLogin">
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-center">
@@ -114,15 +135,13 @@
 import {ref, defineComponent, onMounted, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
-import {useQuasar} from "quasar";
+import {AppFullscreen, useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
-import { isAndroid } from "boot/utils";
+import {isAndroid, isHuaweiPhone} from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
 import {useLocalStorage} from "@vueuse/core";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
 
 import HotPromotion from 'components/HotPromotion'
 // import HotPromotion from 'components/HotPromotion'
@@ -158,6 +177,9 @@ export default defineComponent({
     const isDisplayLogin = ref(false);
     const isSpecialPromo= ref(false);
 
+    const modalVisible = ref(false);
+    const promoSrc= ref("");
+
     const isFetchingPromo = ref(false);
 
     // extension
@@ -185,28 +207,14 @@ export default defineComponent({
       { name: "fish", label: '捕鱼'},
       { name: "live casino", label: '真人'},
       { name: "poker", label: '棋牌'},
-
-      // {
-      //   name: "all",
-      //   label: "全部",
-      // },
-      // {
-      //   name: "sport",
-      //   label: "体育",
-      // },
-      // {
-      //   name: "esport",
-      //   label: "电竞",
-      // },
-      // {
-      //   name: "live casino",
-      //   label: "真人",
-      // },
-      // {
-      //   name: "slot game",
-      //   label: "电游",
-      // },
     ];
+
+    const loadGame = () => {
+      if (promoSrc.value !== "") {
+        logoShow.value = false;
+      }
+    };
+
 
     watch(() => route.query, () => {
       if (route.query === null) {
@@ -217,11 +225,6 @@ export default defineComponent({
       }
     });
     const loadBanner = () => {
-      // loadPromoBanner("PROMO").then((res) => {
-      //   if (res.code === 0) {
-      //       banner.value = res.data[0]
-      //   }
-      // })
       api
         .get("/promo/banner?category=PROMO")
         .then((response) => {
@@ -229,14 +232,7 @@ export default defineComponent({
             banner.value = response.data[0];
             // console.log(banner.value)
           } else {
-            // $q.notify({
-            //   color: "negative",
-            //   position: "top",
-            //   message: ret.message,
-            //   icon: "report_problem"
-            // });
           }
-          // banners.value = response.data;
         })
     }
     const showPromoDetails = (promo) => {
@@ -254,7 +250,6 @@ export default defineComponent({
           isAppPromo.value= true;
           appPromoUrl.value= promoUrl.value + "/promotion?name=" + promo.redirectUrl + "&token=" + extensionToken.value;
 
-          // router.push({ path: currentPath.value, query: { name: promo.redirectUrl, token: extensionToken.value } });
         }
         isPromoDetail.value = true;
 
@@ -270,13 +265,32 @@ export default defineComponent({
           if (promo.redirectUrl.includes("page-vip")) {
             router.push({path: '/account/vip'});
           } else {
-            if (route.query.fromAccount) {
-              router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
-            } else {
-              router.push({path: '/promo', query: {name: promo.redirectUrl}})
+
+            if(true || isAndroid()){
+              modalVisible.value= true;
+
+              var preUrl = `https://m.xf3658.com/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              // alert(preUrl);
+              // promoSrc.value= preUrl;
+
+              var ref = cordova.InAppBrowser.open(
+                preUrl,
+                "_blank",
+                "location=no,zoom=no"
+              );
+
+            }else{
+
+              if (route.query.fromAccount) {
+                router.push({path: '/promo', query: {name: promo.redirectUrl, fromAccount: true}})
+              } else {
+                router.push({path: '/promo', query: {name: promo.redirectUrl}})
+              }
+              isPromoDetail.value = true
+              selectedPromo.value = promo
+
             }
-            isPromoDetail.value = true
-            selectedPromo.value = promo
+
           }
       }
     }
@@ -291,27 +305,26 @@ export default defineComponent({
       }
     };
 
+    const logoShow = ref(true);
+    const closeDialog = () => {
+      modalVisible.value = false;
+      promoSrc.value = "";
+    };
+
     const loadAll = () => {
       const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
 
       isFetchingPromo.value = window.location.pathname === "/promotion";
 
-
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
           promoState.promoList = [];
           var promoItems = res.data;
-          // promoState.promoList.push(...res.data);
-
           promoItems.forEach(element => {
-            // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
-            // } else {
             promoState.promoList.push(element);
             if (route.query.name && String(element.redirectUrl) === route.query.name) {
               showPromoDetails(element)
             }
-            // }
           });
 
           switchPromoType(promoState.active)
@@ -322,7 +335,8 @@ export default defineComponent({
 
     }
     onMounted(() => {
-      loadBanner();
+      //TODO:: 我觉得没有Banner，所以我隐藏了
+      // loadBanner();
 
       checkExtension();
       loadAll();
@@ -346,7 +360,12 @@ export default defineComponent({
       isDisplayLogin,
       isFetchingPromo,
       appPromoUrl,
-      isAppPromo
+      isAppPromo,
+      modalVisible,
+      promoSrc,
+      closeDialog,
+      logoShow,
+      loadGame
     }
   },
 });
@@ -892,7 +911,25 @@ export default defineComponent({
   }
 }
 
-.game-iframe {
+.q-toolbar {
+  height: calc(100%);
+
+  max-height: unset !important;
+  max-width: unset !important;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: 0;
+
+  .topActions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 26px;
+  }
+}
+
+.promo-iframe {
   height: calc(100%);
   position: fixed;
   width: 100vw;
@@ -900,7 +937,7 @@ export default defineComponent({
   top: 0px;
   bottom: 0px;
 
-  &.game-header-iframe {
+  &.promo-header-iframe {
     height: calc(100% - 26px);
 
     top: 26px;
