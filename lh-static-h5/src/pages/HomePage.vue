@@ -1078,6 +1078,7 @@ export default defineComponent({
 
     const isImpt = getWithExpiry("isImpt");
     const clickHomePopupImg = (urlString)=>{
+      // debugger;
       let regexUrl = new RegExp(/^(https:\/\/)/g)
       if(regexUrl.test(urlString)){
         // 跳轉
@@ -1091,6 +1092,7 @@ export default defineComponent({
         return
       }
 
+      router.push(`/promo?name=${urlString}`);
     }
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
@@ -1726,7 +1728,7 @@ export default defineComponent({
     })
     // Clear interval on unmounted
     onUnmounted(() => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
     });
 
     return {
