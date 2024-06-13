@@ -87,30 +87,18 @@ const setWithExpiry = (key, value, interval) => {
     value: value,
     expiry: now.getTime() + interval
   };
-  localStorage.setItem(key, JSON.stringify(item));
+  sessionStorage.setItem(key, JSON.stringify(item));
 };
 
-const apiMockData = {
-  code: 0,
-  data: {
-    title: "雷火 欧洲杯 TEST",
-    desktopImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-    mobileImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-    content: null,
-    type: "IMG",
-    path: "?name=lh1-eurocup-2024",
-    frequency: "EVERYDAY"
-  }
-};
 
 const getWithExpiry = (key) => {
-  const itemStr = localStorage.getItem(key);
+  const itemStr = sessionStorage.getItem(key);
   if (!itemStr) return null;
 
   const item = JSON.parse(itemStr);
   const now = new Date();
   if (now.getTime() > item.expiry) {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
     return null;
   }
   return item.value;
@@ -147,7 +135,7 @@ const clickHomePopupImg = (urlString)=>{
 }
 
 const checkShowImgTop = () => {
-  const lastTime = localStorage.getItem("indexImgTop");
+  const lastTime = sessionStorage.getItem("indexImgTop");
   if (lastTime) {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
