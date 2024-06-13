@@ -38,6 +38,7 @@ const clearEmptyParam = (config) => {
   })
 }
 const onRequest = (config) => {
+  console.log(config)
   clearEmptyParam(config);
   return config;
 }
@@ -103,6 +104,8 @@ const onResponse = (response) => {
         router.go("/pak/login")
       }
       location.reload()
+    } else if (res.code === ResponseCode.ERROR_FORBIDDEN_XFLHDY || res.code === ResponseCode.ERROR_FORBIDDEN) {
+      router.push("/403")
     } else {
       // const router = useRouter()
       if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED || res.code === ResponseCode.ERROR_TOKEN_INVALID) {
@@ -145,6 +148,10 @@ const onResponse = (response) => {
 };
 
 const onResponseError = (error) => {
+  const router = useRouter()
+  if (error.code === ResponseCode.ERROR_FORBIDDEN_XFLHDY || error.code === ResponseCode.ERROR_FORBIDDEN) {
+    router.push("/403")
+  } 
   ElMessage({
     message: error.message,
     type: "error"
@@ -198,6 +205,9 @@ const https = (api) => {
 
     default:
       apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)
+  }
+  if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
+    apiUrl = isAff ? 'https://api-gayeway.mpg1cxp9.com/aff' : (isCr ? 'https://api-gayeway.mpg1cxp9.com/csr' : 'https://api-gayeway.mpg1cxp9.com/rst')
   }
   const config = {
     baseURL: apiUrl,
