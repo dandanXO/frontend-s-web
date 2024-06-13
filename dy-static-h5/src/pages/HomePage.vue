@@ -13,8 +13,7 @@
             <q-btn
               rounded
               size="12px"
-              :href="`${downloadUrl}`"
-              target="_blank"
+              @click="openDownloadAppLink"
               label="立即下载"
               color="primary"
               class="top-btn no-shadow"
@@ -2171,8 +2170,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      if (banner.redirectUrl == "app://deposit") {
+        router.push("/finance/deposit");
+      } else {
+        const redirectU = "/promo?name=" + banner.redirectUrl;
+        router.push(`${redirectU}`);
+      }
     };
 
     const download_url = ref("");
@@ -2262,6 +2265,12 @@ export default defineComponent({
       });
     };
 
+    const openDownloadAppLink = () => {
+      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
+      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      window.open(theurl, "_blank");
+    };
+
     const closeTopBox = () => {
       isH5.value = false;
       store.hasClosedDL = true;
@@ -2312,6 +2321,7 @@ export default defineComponent({
       // casinoGame,
       gamePage,
       selectedPlatId,
+      openDownloadAppLink,
       searchList,
       liveTabs,
       selectedLiveTab,
@@ -3161,6 +3171,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
 
+    margin: 0;
     > span {
       height: 30px;
       color: var(--q-primary);
@@ -3171,8 +3182,13 @@ export default defineComponent({
       justify-content: center;
       text-align: center;
     }
+    &::after {
+      display: none;
+    }
   }
-
+  .q-tabs--horizontal .q-tabs__arrow {
+    height: unset;
+  }
   .swiper-button-prev {
     background: rgba(0, 0, 0, 0.3);
     height: 60px;
@@ -3184,6 +3200,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 
     > span {
       height: 30px;
@@ -3194,6 +3211,9 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       text-align: center;
+    }
+    &::after {
+      display: none;
     }
   }
 }

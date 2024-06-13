@@ -184,6 +184,7 @@ export default defineComponent({
         }
         .account-avatar {
           width: 75px;
+          height: 75px;
           position: relative;
           cursor: pointer;
           border-radius: 50%;

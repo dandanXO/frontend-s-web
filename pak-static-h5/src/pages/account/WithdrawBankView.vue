@@ -1,0 +1,534 @@
+<template>
+  <q-dialog width="100%" v-model="isUnbindModalOpen" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
+      <div class="popout-dialog-container">
+        <div class="txt-title">{{ getTitleText() }}</div>
+        <div class="pc-form">
+          <InputField :label="unbindCardLabel()">
+            <template #input>
+              <q-input
+                outlined
+                clearable
+                ref="unbindBankCardNoRef"
+                v-model="unbindBankCardNo"
+                type="text"
+                :rules="[
+                  (val) => (val && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + $t('form.notMatch')
+                ]"
+              ></q-input>
+            </template>
+          </InputField>
+        </div>
+
+        <div class="bottom-btn">
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="unbindBankCard()">
+            {{ $t("btn.confirm") }}
+          </q-btn>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
+
+  <!-- <q-dialog width="100%" v-model="isUnbindModalOpen" :showCancelButton="false" :showConfirmButton="false">
+    <div class="popout-dialog">
+      <q-card style="width: 100%">
+        <div class="headers">
+          <div class="titles">{{ getTitleText() }}</div>
+          <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
+        </div>
+        <q-form class="unbind-form">
+          <q-input
+            class="unbind-input"
+            filled
+            clearable
+            ref="unbindBankCardNoRef"
+            v-model="unbindBankCardNo"
+            :label="unbindCardLabel()"
+            :rules="[
+              (val) =>
+                (val && val.length > 10 && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + '不正确'
+            ]"
+          />
+        </q-form>
+        <div class="btnsreas">
+          <div class="confirmsbtns common-md-btn" @click="unbindBankCard()">确定</div>
+          <q-btn class="cacnels common-md-white-btn" v-close-popup>取消</q-btn>
+        </div>
+      </q-card>
+    </div>
+  </q-dialog> -->
+
+  <q-page class="bank-detail-container">
+    <div class="bank-detail-wrapper">
+      <div class="bank-bind-item q-my-sm">
+        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
+          <span>+ Add bank card</span>
+        </div> -->
+        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
+          <span>+添加虚拟币账户</span>
+        </div> -->
+        <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
+          <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
+          <span>+ {{ $t("btn.addVirtualWallet") }}</span>
+        </div>
+        <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
+          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
+          <span>+添加支付宝</span>
+        </div> -->
+      </div>
+
+      <div v-if="bankCardList[BANK_CARD].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(BANK_CARD)">
+        <div class="bank-detail-type">银行卡</div>
+        <div :class="`bank-detail-arrow ${isCardVisible[BANK_CARD] ? 'rotate' : ''}`">></div>
+      </div>
+      <template v-if="isCardVisible[BANK_CARD]">
+        <div
+          v-for="(bankCard, bankCardIndex) in bankCardList[BANK_CARD]"
+          :key="`${bankCard}-${bankCardIndex}`"
+          class="bank-card"
+        >
+          <div class="left-container">
+            <div class="bank-name">
+              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <div>{{ bankCard.bankName }}</div>
+            </div>
+            <div class="bank-number-wrapper">
+              <div>ss卡号：</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+              <!-- <img
+                class="copy-btn"
+                src="../../assets/images/account/account-copy-icon.png"
+                @click="copy(bankCard.cardNumber)"
+              /> -->
+            </div>
+          </div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+        </div>
+      </template>
+
+      <div v-if="bankCardList[CRYPTO].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(CRYPTO)">
+        <div class="bank-detail-type">虚拟账户</div>
+        <div :class="`bank-detail-arrow ${isCardVisible[CRYPTO] ? 'rotate' : ''}`">></div>
+      </div>
+      <template v-if="isCardVisible[CRYPTO]">
+        <div
+          v-for="(bankCard, bankCardIndex) in bankCardList[CRYPTO]"
+          :key="`${bankCard}-${bankCardIndex}`"
+          class="bank-card"
+        >
+          <div class="left-container">
+            <div class="bank-name">
+              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <div>{{ bankCard.bankName }}</div>
+            </div>
+            <div class="bank-number-wrapper">
+              <div>dd卡号：</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+              <!-- <img
+                class="copy-btn"
+                src="../../assets/images/account/account-copy-icon.png"
+                @click="copy(bankCard.cardNumber)"
+              /> -->
+            </div>
+          </div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+        </div>
+      </template>
+
+      <div v-if="bankCardList[EWALLET].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(EWALLET)">
+        <div class="bank-detail-type">{{ $t("bank.virtualWallet") }}</div>
+        <div :class="`bank-detail-arrow ${isCardVisible[EWALLET] ? 'rotate' : ''}`">></div>
+      </div>
+      <template v-if="isCardVisible[EWALLET]">
+        <div
+          v-for="(bankCard, bankCardIndex) in bankCardList[EWALLET]"
+          :key="`${bankCard}-${bankCardIndex}`"
+          class="bank-card"
+        >
+          <div class="left-container">
+            <div class="bank-name">
+              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <div>{{ bankCard.bankName }}</div>
+            </div>
+            <div class="bank-number-wrapper">
+              <div>{{ $t("bank.virtualAccount") }}: &nbsp;</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+              <!-- <img
+                class="copy-btn"
+                src="../../assets/images/account/account-copy-icon.png"
+                @click="copy(bankCard.cardNumber)"
+              /> -->
+            </div>
+          </div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
+        </div>
+      </template>
+
+      <div v-if="bankCardList[ALIPAY].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(ALIPAY)">
+        <div class="bank-detail-type">支付宝</div>
+        <div :class="`bank-detail-arrow ${isCardVisible[ALIPAY] ? 'rotate' : ''}`">></div>
+      </div>
+      <template v-if="isCardVisible[ALIPAY]">
+        <div
+          v-for="(bankCard, bankCardIndex) in bankCardList[ALIPAY]"
+          :key="`${bankCard}-${bankCardIndex}`"
+          class="bank-card"
+        >
+          <div class="left-container">
+            <div class="bank-name">
+              <img style="width: 30px" :src="imgURL + bankCard.bankIcon" />
+              <div>{{ bankCard.bankName }}</div>
+            </div>
+            <div class="bank-number-wrapper">
+              <div>gg卡号：</div>
+              <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
+              <!-- <img
+                class="copy-btn"
+                src="../../assets/images/account/account-copy-icon.png"
+                @click="copy(bankCard.cardNumber)"
+              /> -->
+            </div>
+          </div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">解绑</div>
+        </div>
+      </template>
+    </div>
+  </q-page>
+</template>
+
+<script setup>
+import { reactive, ref, onActivated } from "vue";
+import { api } from "boot/axios";
+import { useQuasar, copyToClipboard } from "quasar";
+import { useRouter } from "vue-router";
+import * as _ from "lodash";
+import InputRowGrid from "src/components/auth/InputRowGrid.vue";
+import InputField from "src/components/auth/InputField.vue";
+import { t } from "src/boot/lang";
+
+// constants (the string synced w/ BE API bankType)
+const BANK_CARD = "BANK";
+const CRYPTO = "CRYPTO";
+const EWALLET = "EWALLET";
+const ALIPAY = "ALIPAY";
+
+const $q = useQuasar();
+const router = useRouter();
+
+const imgURL = process.env.IMAGE_CDN + "/payment/";
+
+const onBindCardClick = (path) => {
+  router.push(path);
+};
+
+const isCardVisible = reactive({ BANK: true, CRYPTO: true, EWALLET: true, ALIPAY: true });
+const onShowCardClick = (key) => {
+  isCardVisible[key] = !isCardVisible[key];
+};
+
+const copy = (val) => {
+  copyToClipboard(val)
+    .then(() => {
+      $q.notify({
+        color: "position",
+        position: "top",
+        message: `${val} 已复制`,
+        icon: "check_circle_outline"
+      });
+    })
+    .catch(() => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: "复制失败",
+        icon: "report_problem"
+      });
+    });
+};
+
+const unbindBankCardNoRef = ref();
+const unbindBankCardNo = ref();
+
+const isUnbindModalOpen = ref(false);
+const selectedUnbindBankCard = ref();
+const onUnbindClick = (card) => {
+  unbindBankCardNo.value = "";
+  isUnbindModalOpen.value = true;
+
+  selectedUnbindBankCard.value = card;
+};
+
+const getTitleText = () => {
+  const { bankType, bankCode } = selectedUnbindBankCard.value;
+
+  if (isAlipay(bankCode)) return "请输入解绑支付宝号";
+  else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
+  else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
+  else if (bankType === EWALLET) return t("form.virtualWallet_untie");
+};
+
+const unbindBankCard = () => {
+  unbindBankCardNoRef.value.validate();
+  if (unbindBankCardNoRef.value.hasError) return;
+
+  api.post(`/session/bankCard/${selectedUnbindBankCard.value.id}?_method=delete`).then((response) => {
+    if (response.code === 0) {
+      $q.notify({
+        color: "positive",
+        position: "top",
+        message: "Untie successfully",
+        icon: "check_circle_outline"
+      });
+
+      isUnbindModalOpen.value = false;
+      loadCards();
+    }
+  });
+};
+
+const isAlipay = (bankID) => {
+  return bankID === 78 ? true : false;
+};
+
+const unbindCardLabel = () => {
+  const { bankType, bankCode } = selectedUnbindBankCard.value;
+  if (isAlipay(bankCode)) return "支付宝号";
+  else if (bankType === BANK_CARD) return "银行卡号";
+  else if (bankType === CRYPTO) return "钱包地址";
+  else if (bankType === EWALLET) return t("form.virtualWallet");
+};
+
+let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });
+const loadCards = () => {
+  api
+    .get("/session/allBankCard")
+    .then((res) => {
+      if (res.code === 0) {
+        // Empty each array in bankCardList
+        Object.keys(bankCardList).forEach((key) => {
+          bankCardList[key] = [];
+        });
+
+        for (let i = 0, l = res.data.length; i < l; i++) {
+          const data = res.data[i];
+          const { bankType, bankCode } = data;
+
+          if (isAlipay(bankCode)) {
+            const alipayBankType = "ALIPAY";
+            bankCardList[alipayBankType].push(data);
+          } else {
+            bankCardList[bankType].push(data);
+          }
+        }
+      }
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
+const formatCardNumber = (cardNumber) => {
+  const firstFourDigits = cardNumber.slice(0, 4);
+  const lastFourDigits = cardNumber.slice(-4);
+  const middleDigits = cardNumber.slice(4, -4);
+  const maskedPortion = " **** **** "; // Mask all digits in the middle
+
+  return firstFourDigits + maskedPortion + lastFourDigits;
+};
+
+onActivated(() => {
+  loadCards();
+});
+</script>
+
+<style scoped lang="scss">
+.bank-detail-container {
+  .bank-detail-wrapper {
+    width: calc(100% - 2rem);
+    margin: 0 auto;
+    padding: 1rem 0;
+
+    .bank-bind-item {
+      // background: $white;
+      box-shadow: 0px -1px 3px 0px rgba(195, 212, 230, 0.5) inset;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      margin: 0 auto 14px;
+      padding: 1.25rem;
+      gap: 15px;
+
+      .bank-bind-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // width: 47.5%;
+        background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+        padding: 12px 12px;
+        border-radius: 8px;
+        color: #000a01;
+        font-size: 1.2rem;
+        font-weight: 500;
+        //   font-weight: 500;
+
+        .bank-bind-img {
+          margin-left: auto;
+          display: block;
+          width: 100%;
+        }
+
+        // span {
+        //   position: absolute;
+        //   font-size: 1.2rem;
+        //   font-weight: 500;
+        //   color: #000a01;
+        // }
+      }
+    }
+
+    .bank-detail-item {
+      // background: $white;
+      box-shadow: 0px -4px 6px 0px rgba(195, 212, 230, 0.2) inset;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 auto 14px;
+      padding: 1.25rem;
+      gap: 15px;
+      // color: $font-1;
+      font-size: 1rem;
+      font-weight: 400;
+
+      .bank-detail-arrow {
+        transition: 0.3s;
+        &.rotate {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    .bank-card {
+      // background: url(../../assets/images/account/bank-card-bg.png);
+      box-shadow: inset 0px 0px 9px rgb(255, 255, 255, 0.3);
+      background-size: 100% 100%;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 auto 14px;
+      padding: 1.25rem;
+      gap: 15px;
+
+      .left-container {
+        .bank-name {
+          display: flex;
+          gap: 10px;
+          // color: $font-2;
+          font-size: 1.1rem;
+          font-weight: 600;
+          margin: 0 0 0.5rem 0;
+        }
+
+        .bank-number-wrapper {
+          display: flex;
+          align-items: center;
+          // color: $font-1;
+          font-size: 1rem;
+          font-weight: 400;
+
+          .bank-number {
+            max-width: 15rem;
+            word-break: break-all;
+          }
+
+          .copy-btn {
+            width: 1.5rem;
+            margin: 0 0 0 1rem;
+          }
+        }
+      }
+
+      .right-container {
+        color: #3dff47;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.unbind-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 1rem 0;
+
+  .unbind-input {
+    width: calc(100% - 16px);
+    margin: auto;
+  }
+}
+
+.body--dark {
+  .bank-detail-container {
+    .bank-detail-wrapper {
+      .bank-bind-item {
+        // @include content-block-dark;
+      }
+    }
+  }
+}
+
+.pc-form {
+  margin-top: 20px;
+  width: 100%;
+  .pc-form-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+
+    &.item-click {
+      &:after {
+        content: "";
+        background: rgba(255, 255, 255, 0.05);
+        height: calc(100% - 45px);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-radius: 8px;
+      }
+    }
+  }
+  .pc-form-label {
+    color: rgba(255, 255, 255, 1);
+  }
+  .pc-form-input {
+    border-radius: 5px;
+    position: relative;
+
+    :deep(.q-field__control) {
+      background: rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px;
+    }
+
+    :deep(.q-field__native) {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+}
+
+.bottom-btn {
+  display: flex;
+  width: 100%;
+  margin-top: 20px;
+}
+</style>

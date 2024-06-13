@@ -48,6 +48,10 @@ export default {
     play_now: "Chơi Ngay",
     bet_now: "Cược Ngay",
     hotMatches: "Trận Đấu Hot",
+    euroCountdown01: "ĐƯỜNG TỚI ",
+    euroCountdown01a: "CÒN ",
+    euroCountdown02: " NGÀY",
+    helloUsername: "Xin chào,",
 
     // side menu
     menu_sports: "Thể Thao",
@@ -57,7 +61,10 @@ export default {
     menu_lottery: "Xổ Số",
     menu_slots: "Nổ Hũ",
     menu_fishing: "Bắn Cá",
+    menu_hashgame: "Hash Game",
+    menu_others: "Khác",
     menu_cockfighting: "ĐÁ GÀ",
+    menu_minigame: "Hash Game",
     menu_rebate: "Hoàn Trả",
 
     // notify msg
@@ -190,7 +197,7 @@ export default {
     maintenance_time: "Thời gian bảo trì",
 
     // personal | verify
-    personal_exclusiveurl: "URL riêng",
+    personal_exclusiveurl: "Truy Cập",
     personal_username: "Tên tài khoản",
     personal_realname: "Họ Tên",
     personal_realname_val: "Vui lòng nhập Họ Tên",
@@ -444,6 +451,7 @@ export default {
     record_fill_up_record_time: "Thời gian điền ghi chú",
     record_choose_lucky_number: "Chọn số may mắn",
     record_win_status: "Tình trạng thắng",
+    record_win_prize: "Giải thưởng",
     record_no_data: "Không có dữ liệu, vui lòng kiểm tra ngày khác",
     record_date_of_win: "Ngày thắng",
     record_winner_list: "Danh sách người chiến thắng",
@@ -455,7 +463,7 @@ export default {
     please_select_query_time: "Vui lòng chọn thời gian truy vấn",
 
     // promo -- upgradeHongbao
-    congrats: "Chúc mừng",
+    hong_congrats: "Chúc mừng",
     claim: "Nhận",
     // slot
     slot_search: "Tìm kiếm trò chơi",
@@ -524,8 +532,10 @@ export default {
     vip_lottery_rebate: "Xổ Số",
     vip_unachieved: "Chưa đạt được",
     vip_achieved: "Đã đạt được",
-    vip_cumulative_deposits: "Tiền gửi tích lũy:",
-
+    vip_cumulative_deposits: "YÊU CẦU DUY TRÌ CẤP ĐỘ VIP:",
+    vip_upgrade_require: "YÊU CẦU CẤP ĐỘ VIP:",
+    vip_3timedeposit: "NẠP THÀNH CÔNG 01 LẦN TRONG THÁNG",
+    totalBetMonth: "TỔNG CƯỢC TRONG THÁNG",
     have_one_successful_deposit: "Có một giao dịch nạp tiền thành công",
     accumulated_deposits: "Tổng số tiền nạp",
     turnover_requirements: "Yêu cầu doanh số",
@@ -867,7 +877,7 @@ export default {
     withdraw_date: "Ngày rút",
     type: "Loại",
     transfer_date: "Ngày chuyển khoản",
-    privilege_name: "Tên đặc quyền",
+    privilege_name: "Tên khuyến mãi",
     record_time: "Thời gian ghi chú",
     sub_type: "Loại phụ",
     bet_code: "Mã cược",
@@ -1204,7 +1214,7 @@ export default {
     col_finacneremark: "Ghi Chú Tài Chính",
     col_feedbacktime: "Thời Gian Phản Hồi",
     col_type: "Loại",
-    col_privilegename: "Tên Đặc Quyền",
+    col_privilegename: "Tên khuyến mãi",
     str_alipay: "ALIPAY",
     str_alipaycode: "ALIPAYCODE",
     str_wechatpay: "WECHATPAY",
@@ -1434,7 +1444,17 @@ export default {
         "TF88 CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",
       partner: "Đối tác",
       paymentMethod: "Phương thức"
-    }
+    },
+    // Welcome
+    firstSlide: "TẢI XUỐNG ỨNG DỤNG",
+    depositNow: "GỬI TIỀN NGAY",
+    firstSlideContent: "Trải nghiệm siêu mượt trên ứng dụng đẳng cấp của TF88",
+    firstSlideSub: "TẢI XUỐNG +60VNPD",
+    secondSlide: "THƯỞNG GỬI TIỀN HẤP DẪN",
+    secondSlideContent: "THƯỞNG NẠP ĐẦU 100% LÊN ĐẾN 2,000 VNDP",
+    thirdSlide: "NHÀ PHÁT TRIỂN ESPORTS",
+    thirdSlideContent:
+      "TF88 là nhà phát triển tiên phong của cá cược E-Sports tại Châu Á. Cược ngay E-Sports với hơn 500 sự kiện mỗi ngày!"
   },
   error: {
     101: "Không tìm thấy nền tảng",
@@ -1514,6 +1534,7 @@ export default {
     30005: "Chưa hoàn thành số lượng quay lại theo điều kiện",
     30006: "Thành viên được liệt kê là tài khoản cấm nhận quyền lợi này",
     30007: "Lịch sử tiền gửi của người dùng không đạt yêu cầu.",
+    30009: "Số tiền cược của người dùng không đáp ứng yêu cầu.",
     31000: "Không có khuyến mãi này",
     32000: "Không có cấp độ VIP này",
     32003: "Chưa đạt cấp VIP yêu cầu",

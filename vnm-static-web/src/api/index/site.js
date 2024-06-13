@@ -14,3 +14,7 @@ export function getAppDownloadUrlFromServer() {
 export function getCSAFromServer() {
   return server.REST.get("/config/customerAddress/v2");
 }
+
+export function getRedEnvelopeFromServer() {
+  return server.EVENT.get("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP");
+}

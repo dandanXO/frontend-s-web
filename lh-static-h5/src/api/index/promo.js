@@ -165,3 +165,18 @@ export function getLOLMsiMatchRecord() {
 export function getEurocupManualSchedule() {
   return eventapi.get("/uefa/match/all");
 }
+
+export function getSportMatch() {
+  return eventapi.get('/sport-match/today')
+}
+
+export function getLplSummer24Match() {
+  return eventapi.get("game-match/upcoming/MSI");
+}
+
+export function duanwuVipUpgrade() {
+  return eventapi.post("/duan-wu/vip-upgrade");
+}
+export function duanwuDepositBet() {
+  return eventapi.post("/duan-wu/deposit-bet");
+}

@@ -36,6 +36,11 @@
         {{ $t("lang.register") }}
       </q-btn>
     </div>
+    <div class="header-middle" v-else>
+      <div @click="router.push('/account')">
+        {{ $t("lang.helloUsername") }} {{ store.nickName }}
+      </div>
+    </div>
     <div class="header-lang">
       <LangOptions />
     </div>
@@ -86,10 +91,7 @@
     />
   </q-carousel>
 
-  <PushNotification
-    :pushNotificationData="pushNotificationData"
-    v-if="Platform.is.android && Platform.is.capacitor"
-  />
+  <PushNotification :pushNotificationData="pushNotificationData" v-if="Platform.is.android && Platform.is.capacitor" />
 
   <div class="mid-announcement-section">
     <div class="midd">
@@ -109,7 +111,56 @@
   </div>
 
   <div class="hot-matches-wrapper">
-    <div class="hot-matches-title-wrapper">
+    <div class="euro-countdown">
+      <div class="euro-countdown-fly-01">
+        <img src="../assets/images/home/eurocup-countdown-fly-01.png" />
+      </div>
+      <div class="euro-countdown-fly-02">
+        <img src="../assets/images/home/eurocup-countdown-fly-02.png" />
+      </div>
+      <div class="euro-countdown-fly-03">
+        <img src="../assets/images/home/eurocup-countdown-fly-03.png" />
+      </div>
+      <div class="euro-countdown-fly-04">
+        <img src="../assets/images/home/eurocup-countdown-fly-04.png" />
+      </div>
+      <div class="euro-countdown-fly-05">
+        <img src="../assets/images/home/eurocup-countdown-fly-05.png" />
+      </div>
+      <div class="euro-countdown-fly-06">
+        <img src="../assets/images/home/eurocup-countdown-fly-06.png" />
+      </div>
+      <div class="euro-countdown-content">
+        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />
+
+        <div class="euro-countdown-txt">
+          <div class="txt-logo">
+            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />
+          </div>
+          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
+
+          <div class="euro-countdown-num-wrap">
+            {{ $t("lang.euroCountdown01a") }}
+            <div class="euro-countdown-num">
+              <!-- <img src="../assets/images/home/eurocup-countdown-numbers.png" /> -->
+              <div class="num">
+                <span>{{ countDay01 }}</span>
+              </div>
+              <div class="num">
+                <span>{{ countDay02 }}</span>
+              </div>
+            </div>
+            {{ $t("lang.euroCountdown02") }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="euro-countdown">
+      <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
+    </div> -->
+
+    <div class="hot-matches-title-wrapper" style="display:none;">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -123,7 +174,8 @@
       <!--        </q-btn>-->
       <!--      </div>-->
     </div>
-    <div class="hot-matches-container">
+
+    <div class="hot-matches-container" style="display:none;">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -151,20 +203,14 @@
               <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
-                <q-btn
-                  rounded
-                  no-caps
-                  color="brightbtn"
-                  class="sm-screen-txt"
-                  @click="openHotMatch(item)"
-                >
+                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="openHotMatch(item)">
                   {{ $t("lang.play_now") }}
                 </q-btn>
               </div>
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" />
+                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -211,7 +257,7 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -264,26 +310,36 @@
         <span :class="tab === 'lottery' && 'active'">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
+      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
+        <template v-if="tab === 'casual'">
+          <img src="../assets/images/home/games/minigame-icon-active.png" />
+        </template>
+        <template v-else>
+          <img src="../assets/images/home/games/minigame-icon.png" />
+        </template>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '28px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
+      </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
+          <img src="../assets/images/home/games/others-icon-active.png" />
         </template>
         <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
+          <img src="../assets/images/home/games/others-icon.png" />
         </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_fishing") }}</span>
-      </div>
-
-      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">
-        <template v-if="tab === 'cockfight'">
-          <img src="../assets/images/home/games/cockfight-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/cockfight-icon.png" />
-        </template>
-        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>
+        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
       </div>
     </div>
+
+      <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
+      <!--        <template v-if="tab === 'cockfight'">-->
+      <!--          <img src="../assets/images/home/games/cockfight-icon-active.png" />-->
+      <!--        </template>-->
+      <!--        <template v-else>-->
+      <!--          <img src="../assets/images/home/games/cockfight-icon.png" />-->
+      <!--        </template>-->
+      <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
+      <!--      </div>-->
+
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
       <!-- <div class="game-lists fade-in-image" id="esport-lists">
@@ -459,6 +515,31 @@
         </template>
       </div>
 
+
+      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
+        <template v-for="(item, index) in casuals" :key="index">
+          <div
+            class="platform-block"
+            @click="router.push({ path: '/minigame', query: { platform: item.code } })"
+            :class="item.underMaintenance === true ? 'maintenance' : ''"
+          >
+            <MaintenanceBox :item="item" />
+
+            <div
+              class="platform-img-frame"
+              :style="{
+                'background-image': getImgPlatformBg(item.icon, item.name, item.alias)
+              }"
+            >
+              <div class="platform-content">
+                <div class="platform-title">
+                  {{ $t("lang.langVal") === "en" ? item.title_en : item.title_vn }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
       <div class="game-lists fade-in-image" id="fishing-lists">
         <template v-for="(item, index) in fishing" :key="index">
           <div
@@ -527,6 +608,7 @@
           </template>
         </template>
       </div>
+
     </div>
   </div>
 
@@ -596,7 +678,10 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index:999">
+  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+    </div>
     <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
       {{ $t("lang.rebates") }}
     </div>
@@ -610,7 +695,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%" class="bg-bright text-black">
+    <q-card style="width: 100%; padding: none;" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -753,9 +838,54 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <q-dialog
+    width="100%"
+    class="modal-update-div"
+    v-model="isWelcomeFlag"
+    show-cancel-button
+    :showCancelButton="false"
+    :showConfirmButton="false"
+    persistent
+    @hide="removeRouterWelcome"
+  >
+    <q-card style="width: 100%; border-radius: 15px; padding: 10px; background: none;">
+      <div class="modalcontent welcome">
+        <div class="q-pa-sm" style="text-align: right; width: 100%;">
+          <q-btn class="color-font-1" border v-close-popup round dense icon="close" />
+        </div>
+        <div class="welcome-header">
+          <div class="welcome-header__ball"><img src="../assets/images/welcome/ball.png"></div>
+          <div class="welcome-header__title">Đăng ký thành công</div>
+        </div>
+        <div class="section">
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.firstSlide') }}</div>
+            <div class="main-text">{{ $t('lang.firstSlideContent') }}</div>
+            <div class="slide-qr"><VueQRCodeComponent :size="70" :text="ui.downloadUrl" /></div>
+            <div class="lastline">{{ $t('lang.firstSlideSub') }}</div>
+          </div>
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.secondSlide') }}</div>
+            <div class="main-text">{{ $t('lang.secondSlideContent') }}</div>
+            <div class="slide-img"><img src="../assets/images/welcome/secondslideimg.png"></div>
+            <router-link to="/finance/deposit" class="deposit-btn">{{ $t('lang.depositNow') }}</router-link>
+          </div>
+        </div>
+        <div class="section last">
+          <div class="section-card">
+            <div class="main-header">{{ $t('lang.thirdSlide') }}</div>
+            <div class="main-text">{{ $t('lang.thirdSlideContent') }}</div>
+            <div class="slide-img full"><img src="../assets/images/welcome/thirdslideimg.png"></div>
+          </div>
+        </div>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
+import VueQRCodeComponent from 'vue-qrcode-component';
 import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
@@ -786,7 +916,7 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 import { translateRecord } from "src/directives/translate";
 import MaintenanceBox from "components/MaintenanceBox.vue";
-import { useLocalStorage } from '@vueuse/core'
+import { useLocalStorage } from "@vueuse/core";
 import OneSignal from "onesignal-cordova-plugin";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
@@ -804,9 +934,11 @@ export default defineComponent({
     LangOptions,
     Swiper,
     SwiperSlide,
-    PushNotification
+    PushNotification,
+    VueQRCodeComponent
   },
   setup() {
+    const isWelcomeFlag = ref(true);
     const fabPos = ref([18, 18]);
     const draggingFab = ref(false);
     const isRebateModalVisible = ref(false);
@@ -891,6 +1023,7 @@ export default defineComponent({
           var checkItem4 = document.getElementById("poker-lists");
           var checkItem5 = document.getElementById("esport-lists");
           var checkItem6 = document.getElementById("lottery-lists");
+          var checkItem6half = document.getElementById("casual-lists");
           var checkItem7 = document.getElementById("fishing-lists");
           var checkItem8 = document.getElementById("cockfight-lists");
 
@@ -900,6 +1033,7 @@ export default defineComponent({
           var positionTop4 = checkItem4.getBoundingClientRect().top;
           var positionTop5 = checkItem5.getBoundingClientRect().top;
           var positionTop6 = checkItem6.getBoundingClientRect().top;
+          var positionTop6half = checkItem6half.getBoundingClientRect().top;
           var positionTop7 = checkItem7.getBoundingClientRect().top;
           var positionTop8 = checkItem8.getBoundingClientRect().top;
 
@@ -911,7 +1045,9 @@ export default defineComponent({
             tab.value = "cockfight";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
             tab.value = "fishing";
-          } else if (0 > positionTop6 - 5 && positionTop7 >= blockHeight) {
+          } else if (0 > positionTop6half - 5 && positionTop7 >= blockHeight) {
+            tab.value = "casual";
+          } else if (0 > positionTop6 - 5 && positionTop6half >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
             tab.value = "esport";
@@ -953,6 +1089,9 @@ export default defineComponent({
       }
       if (tab === "cockfight") {
         scrollToSlide("cockfight-lists");
+      }
+      if (tab === "casual") {
+        scrollToSlide("casual-lists");
       }
     };
 
@@ -1019,7 +1158,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL =useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -1045,6 +1184,23 @@ export default defineComponent({
         frequency: homePopupFrequency.value
       };
       localStorage.setItem(key, JSON.stringify(item));
+    };
+
+    const isRedPacketShow = ref(true);
+    const getRedEnvelope = () => {
+      router.push("/promo?name=vi-mualixi-redpacket");
+    };
+
+    const getCheckRedPacket = () => {
+      if (store && store.token && store.memberType === "TEST") {
+        eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
+          .then((res) => {
+            if (res.code === 0) {
+              isRedPacketShow.value = res.data.nowIsRain;
+            }
+          })
+          .catch((err) => {});
+      }
     };
 
     const getWithExpiry = (key) => {
@@ -1242,15 +1398,29 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
             }
-            if (platTypes.indexOf("POKER") > -1) {
+            if (platTypes.indexOf("POKER") > -1 ) {
               var pokerObj = Object.assign({}, element);
-              pokerObj.title_vn = pokerObj.name + " Poker";
-              pokerObj.title_en = pokerObj.name + " Poker";
+              if (pokerObj.name === "Spribe") {
+                pokerObj.title_vn = pokerObj.name ;
+                pokerObj.title_en = pokerObj.name ;
+              }else{
+                pokerObj.title_vn = pokerObj.name + " Poker";
+                pokerObj.title_en = pokerObj.name + " Poker";
+              }
               pokerObj.icon = "poker";
               if (pokerObj.code === "GPI") {
                 pokerObj.gameCode = "";
               }
               poker.value.push(pokerObj);
+            }
+            if (platTypes.indexOf("CASUAL") > -1 ) {
+              var casualObj = Object.assign({}, element);
+
+              casualObj.title_vn = casualObj.name + " Hash Game";
+              casualObj.title_en = casualObj.name  + " Hash Game";
+
+              casualObj.icon = "casual";
+              casuals.value.push(casualObj);
             }
             if (platTypes.indexOf("LOTTERY") > -1) {
               var lottObj = Object.assign({}, element);
@@ -1373,6 +1543,8 @@ export default defineComponent({
         .then((res) => {
           // console.log(res);
           downloadUrl.value = res.data.downloadPageUrl;
+
+          ui.downloadUrl = downloadUrl.value;
         })
         .catch((err) => {
           console.log(err);
@@ -1433,12 +1605,15 @@ export default defineComponent({
       });
     };
 
-    onMounted(()=>{
+    onMounted(() => {
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
 
-    })
+      // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
+      //   console.log(resp);
+      // })
+    });
 
     onActivated(() => {
       getPlatList();
@@ -1452,14 +1627,15 @@ export default defineComponent({
       getNewsDetails();
       runMenuFloat();
       loadHotMatches();
+      getCheckRedPacket();
     });
 
     const runMenuFloat = () => {
-      toggleMenuFloat()
+      toggleMenuFloat();
       setTimeout(() => {
-        toggleMenuFloat()
+        toggleMenuFloat();
       }, 2000);
-    }
+    };
 
     const imageLoading = ref(false);
 
@@ -1488,7 +1664,7 @@ export default defineComponent({
       if (urlSplit.length >= 2) {
         const type = urlSplit[0];
         if (type === "page") {
-          router.push(`/${banner.redirectUrl}`);
+          router.push(`/${urlSplit[1]}`);
         } else {
           router.push(`/promo?name=${banner.redirectUrl}`);
         }
@@ -1546,21 +1722,21 @@ export default defineComponent({
 
     const hotMatchesImgURL = process.env.IMAGE_CDN + "/promo/";
 
-    const openHotMatch= (item) => {
-      if(!store.token){
-        router.push("/login")
-      }else{
+    const openHotMatch = (item) => {
+      if (!store.token) {
+        router.push("/login");
+      } else {
         console.log(item);
-        playGame(item.platformName, item.platformCode, item.gameCode)
+        playGame(item.platformName, item.platformCode, item.gameCode);
       }
-    }
+    };
 
     const formattedTime = (timeString) => {
       if (!timeString) {
         return "";
       }
 
-      const dateTime= moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
+      const dateTime = moment(timeString, "YYYY-MM-DD HH:mm:ss").format("DD/MM HH:mm");
       return dateTime;
 
       // const dateTime = new Date(timeString);
@@ -1578,6 +1754,45 @@ export default defineComponent({
     const onSwiper = (swiper) => {};
 
     const modulesHot = [Navigation, Pagination];
+
+    // const countDay = ref(25);
+    const euroCupStartDate = moment("2024-06-15");
+    const daysDiff = ref(euroCupStartDate.diff(moment(), "days"));
+
+    if (daysDiff.value <= 0) {
+      daysDiff.value = 0;
+    }
+
+    const countDayString = computed(() => {
+      return daysDiff.value.toString().padStart(2, "0");
+    });
+
+    const countDay01 = computed(() => {
+      return parseInt(countDayString.value.substr(0, 1));
+    });
+
+    const countDay02 = computed(() => {
+      return parseInt(countDayString.value.substr(1, 1));
+    });
+    const removeRouterWelcome = () => {
+      router.push('/');
+    }
+    watch(countDayString, () => {
+      countDay01.value = parseInt(countDayString.value.substr(0, 1));
+      countDay02.value = parseInt(countDayString.value.substr(1, 1));
+    });
+
+      watch(
+      () => route.query,
+      (newQuery) => {
+        if (newQuery.name === "welcome") {
+          isWelcomeFlag.value = true;
+        } else {
+          isWelcomeFlag.value = false;
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       imageLoading,
@@ -1621,7 +1836,7 @@ export default defineComponent({
       onSlideChange,
       Thumbs,
       thumbsSwiper,
-      modules: [Scrollbar,Pagination],
+      modules: [Scrollbar, Pagination],
       Controller,
       firstSwiper,
       secondSwiper,
@@ -1686,7 +1901,17 @@ export default defineComponent({
       onSwiper,
       modulesHot,
       Platform,
-      pushNotificationData
+      pushNotificationData,
+      euroCupStartDate,
+      getRedEnvelope,
+      isRedPacketShow,
+      daysDiff,
+      countDayString,
+      countDay01,
+      countDay02,
+      isWelcomeFlag,
+      ui,
+      removeRouterWelcome
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1698,6 +1923,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap");
 .home-news {
   width: calc(100% - 2rem);
   margin: 0 auto 32px;
@@ -1885,7 +2111,7 @@ export default defineComponent({
 
 .q-carousel.home {
   width: calc(100% - 2rem);
-  margin: 10px auto;
+  margin: 6px auto;
   height: auto;
   border-radius: 16px;
   aspect-ratio: 1000/400;
@@ -1969,7 +2195,7 @@ export default defineComponent({
 .mid-announcement-section {
   width: $box-width;
   margin: 10px auto 10px;
-  height: 36px;
+  height: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2071,6 +2297,108 @@ export default defineComponent({
 
 .modal-update-div {
   .modalcontent {
+    &.welcome {
+      font-family: 'Inter';
+      background: #FFFFFFCC;
+      margin-top: 50px;
+    padding: 0;
+      .welcome-header {
+        display: flex;
+        flex-direction: column;
+        margin-top: -100px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        &__ball {
+          margin-bottom: -10px;
+          img {
+            display: block;
+          }
+        }
+        &__title {
+          color: #000000;
+          font-size: 20px;
+          font-weight: 900;
+          line-height: 24.2px;
+          text-align: center;
+        }
+      }
+      .section {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        &.last {
+          padding-top: 0;
+        }
+        .section-card {
+          box-shadow: 0px 0px 10px 0px #0000001A;
+          background: #FFFFFFCC;
+          border: 1px solid #FFFFFF;
+          border-radius: 15px;
+          padding: 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
+          flex: 1;
+          .main-header {
+            color: #424F72;
+            font-size: 16px;
+            font-weight: 900;
+            line-height: 19.36px;
+            text-align: center;
+            width: 85%;
+           }
+           .main-text {
+             width: 95%;
+            color: #7A80A1;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
+            text-align: center;
+
+           }
+           .slide-img {
+            width: 80%;
+            margin: 0 auto;
+            &.full {
+              width: 100%;
+            }
+            img {
+              width: 100%;
+            }
+           }
+           .slide-qr {
+                background: url('../assets/images/welcome/welcome-qrbg.png')no-repeat center center;
+                background-size: contain;
+                width: 100px;
+                height: 110px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+           }
+           .lastline {
+            color: #424F72;
+            font-size: 12px;
+            font-weight: 900;
+            line-height: 16px;
+            text-align: center;
+
+           }
+          .deposit-btn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 90%;
+              padding: 10px;
+              font-weight: 500;
+              background: url('../assets/images/welcome/title-bg-blue.png')no-repeat center center;
+              background-size: contain;
+              color: #ffffff;
+          }
+        }
+      }
+    }
     background: $white;
     // height: 232px;
     height: auto;
@@ -2449,7 +2777,7 @@ export default defineComponent({
     box-shadow: none;
   }
   .q-card__section {
-    background:none;
+    background: none;
     box-shadow: none;
   }
   .q-card-section {
@@ -2470,6 +2798,16 @@ export default defineComponent({
 //Above is New One (LH)
 
 @media (max-width: 480px) {
+  .modal-update-div .modalcontent.welcome .section .section-card {
+    gap: 5px;
+  }
+  .modal-update-div .modalcontent.welcome .section .section-card .main-header {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .modal-update-div .modalcontent.welcome .section .section-card .deposit-btn {
+    font-size: 12px;
+  }
 }
 
 @media (max-width: 410px) {
@@ -2485,6 +2823,8 @@ export default defineComponent({
 
   .home-header {
     .header-middle {
+      color: #313441;
+
       :deep(.q-btn) {
         min-width: 75px;
       }
@@ -2492,9 +2832,244 @@ export default defineComponent({
   }
 }
 
+@keyframes fly {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(5vh) translateX(20px) rotate(45deg);
+    opacity: 0.9;
+  }
+  40% {
+    transform: translateY(10vh) translateX(-20px) rotate(90deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translateY(15vh) translateX(15px) rotate(135deg);
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateY(20vh) translateX(-15px) rotate(180deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(25vh) translateX(10px) rotate(225deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  75% { transform: translateX(-10px); }
+  100% { transform: translateX(0); }
+}
+
+.red-envelope {
+  width: 85px;
+  margin-left: 30px;
+  cursor: pointer;
+  animation: shake 1s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+@keyframes shake-with-pause {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-10px); }
+  20% { transform: translateX(10px); }
+  30% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+.red-envelope {
+  animation: tilt-shaking 1s infinite;
+}
+
 .hot-matches-wrapper {
-  width: calc(100% - 2rem);
-  margin: 20px auto 0px;
+  width: calc(100% - 1rem);
+  margin: auto;
+  // margin: 20px auto 0px;
+
+  .euro-countdown {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    // padding-bottom: 35px;
+    // padding-top: 15px;
+    // padding-bottom: 8px;
+    // padding-top: 8px;
+    position: relative;
+
+    img {
+      width: 30px;
+    }
+
+    .euro-countdown-fly-01 {
+      position: absolute;
+      left: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 8s linear infinite;
+    }
+
+    .euro-countdown-fly-02 {
+      position: absolute;
+      left: 4px;
+      top: -10px;
+      width: 30px;
+      animation: fly 7s linear infinite;
+    }
+
+    .euro-countdown-fly-03 {
+      position: absolute;
+      left: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 6s linear infinite;
+    }
+
+    .euro-countdown-fly-04 {
+      position: absolute;
+      right: -7px;
+      top: -10px;
+      width: 30px;
+      animation: fly 7s linear infinite;
+    }
+
+    .euro-countdown-fly-05 {
+      position: absolute;
+      right: 0px;
+      top: -10px;
+      width: 30px;
+      animation: fly 8s linear infinite;
+    }
+
+    .euro-countdown-fly-06 {
+      position: absolute;
+      right: -6px;
+      top: -10px;
+      width: 30px;
+      animation: fly 10s linear infinite;
+    }
+
+    .euro-countdown-content {
+      display: flex;
+      justify-content: center;
+      width: max-content;
+      position: relative;
+      background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
+      // background-size: 100% 100%;
+      
+    background-size: 100% 70%;
+      padding: 0 4px;
+      margin-left: 12px;
+
+      img {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .euro-countdown-txt {
+      position: absolute;
+      display: flex;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 1;
+      align-items: center;
+      width: 94%;
+      padding: 0px 10px;
+
+      @media (min-width: 440px) {
+        font-size: 20px;
+      }
+
+      @media (min-width: 500px) {
+        font-size: 28px;
+      }
+
+      .txt-logo {
+        margin-left: -30px;
+      }
+
+      .txt-2024 {
+        margin-right: 10px;
+        @media (min-width: 440px) {
+          margin: 0 auto;
+        }
+      }
+
+      .euro-countdown-num-wrap {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .euro-countdown-num {
+        position: relative;
+        display: flex;
+
+        .num {
+          background-image: url(../assets/images/home/eurocup-countdown-number.png);
+          // height: 40px;
+          // width: 40px;
+          
+    height: 30px;
+    width: 30px;
+          background-size: 100% 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          // @media (min-width: 440px) {
+          //   height: 50px;
+          //   width: 50px;
+          // }
+
+          // @media (min-width: 500px) {
+          //   height: 60px;
+          //   width: 60px;
+          // }
+
+          &:last-child {
+            margin-left: -3px;
+          }
+        }
+        span {
+          background: linear-gradient(180deg, #087df6 0%, #0011ac 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          font-weight: 800;
+          font-size: 22px;
+          line-height: 1;
+          font-family: Arial;
+
+          @media (min-width: 440px) {
+            font-size: 32px;
+          }
+
+          @media (min-width: 440px) {
+            font-size: 36px;
+          }
+        }
+      }
+    }
+  }
 
   .hot-matches-title-wrapper {
     display: flex;
@@ -2517,10 +3092,9 @@ export default defineComponent({
   }
 
   .hot-matches-container {
-
-    :deep(.swiper-pagination){
+    :deep(.swiper-pagination) {
       //bottom: -20px;
-      position:relative;
+      position: relative;
       margin-top: 10px;
     }
   }
@@ -2623,8 +3197,8 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         img {
-          width: 100%;
-          max-width: 70px;
+          width: unset;
+          height: 60px;
         }
       }
 
@@ -2634,5 +3208,10 @@ export default defineComponent({
       }
     }
   }
+}
+
+.alert-img {
+  width: 70% !important;
+  margin: auto;
 }
 </style>

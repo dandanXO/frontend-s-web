@@ -160,3 +160,18 @@ export function claimCheckInTreasure(promoCode, days) {
 export function getLOLMsiMatchRecord() {
   return eventapi.get("/game-match/upcoming/MSI");
 }
+
+export function getLplSummer24Match() {
+  return eventapi.get("game-match/upcoming/MSI");
+}
+
+export function duanwuVipUpgrade() {
+  return eventapi.post("/duan-wu/vip-upgrade");
+}
+export function duanwuDepositBet() {
+  return eventapi.post("/duan-wu/deposit-bet");
+}
+
+export function getEurocupManualSchedule() {
+  return eventapi.get("/uefa/match/all");
+}

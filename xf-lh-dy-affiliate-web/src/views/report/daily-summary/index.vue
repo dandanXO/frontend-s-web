@@ -309,6 +309,10 @@ function convertDate(date) {
 }
 
 function disabledDate(time) {
+  if (store.state.user.siteId === "5" || store.state.user.siteId === "9") {
+    return false;
+  }
+
   return (
     time.getTime() <
       moment(new Date())

@@ -55,7 +55,7 @@ const goToUrl = (redirectUrl) => {
   if(urlSplit.length >= 2){
     const type= urlSplit[0];
     if(type==='page'){
-      router.push(`/${redirectUrl}`);
+      router.push(`/${urlSplit[1]}`);
     }else{
       router.push(`/promotion?name=${redirectUrl}`);
     }
@@ -194,11 +194,11 @@ onMounted(() => {
 <style lang="scss">
 .imptann-modal {
   background: transparent;
-  max-width: 600px;
-  margin-top: 50px !important;
+  max-width: 450px;
+  margin-top: 170px !important;
 
   .el-dialog__body {
-    padding: 0 !important;
+    padding: 20px !important;
     border-radius:12px;
   }
 

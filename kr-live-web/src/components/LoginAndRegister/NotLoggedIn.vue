@@ -1,94 +1,31 @@
 <template>
   <div class="not-loggedin-container">
     <form action="" class="login-form" @keypress.enter="onLoginSubmit">
-      <!-- <div class="left-container">
-        <div class="account">
-          <q-input
-            ref="loginNameRef"
-            dense
-            borderless
-            type="text"
-            class="account-input"
-            placeholder="계정"
-            v-model="loginForm.loginName"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty')
-            ]"
-          />
-        </div>
-        <div class="password">
-          <q-input
-            ref="pwdRef"
-            dense
-            borderless
-            type="password"
-            class="password-input"
-            placeholder="암호"
-            v-model="loginForm.password"
-            lazy-rules
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
-           />
-        </div>
-        <div class="captcha-code">
-          <q-input
-            dense
-            borderless
-            ref="captchaRef"
-            type="text"
-            class="captcha-code-input"
-            placeholder="암호"
-            v-model="loginForm.captchaCode"
-            lazy-rules
-            :rules="[
-                (val) => (val && val.length > 0) || $t('lang.enter_captcha_code')
-              ]"
-          />
-        </div>
-        <img class="captcha-img" :src="verificationImg" @click.prevent="toGetCode" />
-      </div> -->
-
       <div class="right-container">
-        <div class="register" @click="goToRegister">
-          <div class="register-text">회원가입</div>
-        </div>
-        <div class="login" @click="goToLogin">
-          <!-- @click.prevent="onLoginSubmit" -->
-          <div class="login-text">로그인</div>
-        </div>
+        <q-btn class="primary-button blue" @click="goToRegister">
+          {{ $t('lang.login_register') }}
+        </q-btn>
+        <q-btn class="primary-button yellow" @click="goToLogin">
+          {{ $t('lang.login') }}
+        </q-btn>
+      </div>
+      <div class="actions-topbar" v-if="!props.isH5Banner">
+        <q-btn class="primary-button blue-square" @click="goToRegister">
+          {{ $t('lang.login_register') }}
+        </q-btn>
+        <q-btn class="primary-button yellow-square" @click="goToLogin">
+          {{ $t('lang.login') }}
+        </q-btn>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref, onMounted } from "vue";
-import { userStore } from "stores/index";
-import { api } from "boot/axios";
 import { useRouter } from "vue-router";
-import { useBreakpoints } from "@vueuse/core";
 
-const loginNameRef = ref();
-const pwdRef = ref();
-const captchaRef = ref();
-
-const breakpoints = useBreakpoints({
-  laptop: 768
-});
-
-const loginWindow = breakpoints.smaller("laptop");
-
-const store = userStore();
 const router = useRouter();
-const verificationImg = ref("");
-
-const loginForm = reactive({
-  loginName: "",
-  password: "",
-  captchaCode: "",
-  codeId: ""
-});
+const props = defineProps(['isH5Banner']);
 
 const goToRegister = () => {
   router.push("/?page=register");
@@ -97,67 +34,6 @@ const goToRegister = () => {
 const goToLogin = () => {
   router.push("/?page=login");
 };
-
-const toGetCode = () => {
-  getCode();
-};
-
-const onLoginSubmit = () => {
-  if (loginWindow.value) {
-    router.push("/?page=login");
-  } else {
-    (async () => {
-      loginNameRef.value.validate();
-      pwdRef.value.validate();
-      captchaRef.value.validate();
-
-      if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
-        // has error
-      } else {
-        store
-          .memberLogin({
-            loginName: loginForm.loginName.trim(),
-            password: loginForm.password,
-            sid: store.visitorId,
-            captchaCode: loginForm.captchaCode,
-            codeId: loginForm.codeId
-          })
-          .then(() => {
-            location.reload();
-          })
-          .catch((error) => {
-            console.log(error);
-            getCode();
-          });
-      }
-    })();
-  }
-};
-
-const getCode = () => {
-  api
-    .get("/member/verificationEasyCode")
-    .then((res) => {
-      const response = res.data;
-      if (response.code === 0) {
-        verificationImg.value = "data:image/png;base64," + response.data.img;
-        loginForm.codeId = response.data.id;
-        loginForm.captchaCode = "";
-      }
-    })
-    .catch((e) => {
-      // $q.notify({
-      //   color: "negative",
-      //   position: "top",
-      //   message: res.data.message,
-      //   icon: "report_problem"
-      //     });
-    });
-};
-
-onMounted(() => {
-  getCode();
-});
 </script>
 
 <style scoped lang="scss">
@@ -196,10 +72,15 @@ onMounted(() => {
   justify-content: flex-end;
   align-items: center;
   margin-left: 0px;
+  gap: 10px;
 
   @media (min-width: 1200px) {
     margin-left: 16px;
     margin-top: 0px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 .account,
@@ -272,30 +153,20 @@ onMounted(() => {
   }
 }
 
-.login {
-  width: 124px;
-  min-height: 36px;
-  background-image: url("../../assets/home/btn-orange.svg");
-  background-size: 124px 36px;
-  background-repeat: no-repeat;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-left: 16px;
-  &:hover {
-    filter: brightness(1.1);
-  }
-  &:active {
-    transform: translateY(2px);
-  }
-  .login-text {
-    font-size: 12px;
-    line-height: 1;
-    color: #fff;
-    @media (min-width: 1200px) {
-      font-size: 16px;
+.actions-topbar {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+
+    .register {
+      background-image: url("../../assets/home/btn-blue-square.svg");
+      background-size: 100% 100%;
+    }
+
+    .login {
+      background-image: url("../../assets/home/btn-yellow-square.svg");
+      background-size: 100% 100%; 
     }
   }
 }

@@ -1,0 +1,48 @@
+import { server } from "@/utils/request";
+
+export function loadMailbox(type, pageNum, pageSize) {
+  return server.REST.post("auth/mailbox", {
+    type,
+    pageNum,
+    pageSize
+  });
+}
+
+export function mailInbox(mailQuery) {
+  return server.REST.get("/session/inbox", {
+    params: {
+      type: mailQuery.type,
+      current: mailQuery.current,
+      size: mailQuery.size,
+      orderBy: mailQuery.orderBy
+    }
+  });
+}
+
+export function mailOutbox(mailQuery) {
+  return server.REST.get("/session/outbox", {
+    params: {
+      type: mailQuery.type,
+      current: mailQuery.current,
+      size: mailQuery.size,
+      orderBy: mailQuery.orderBy
+    }
+  });
+}
+
+export function wirteMail(mail) {
+  return server.REST.post("/session/writeOutbox", mail);
+}
+
+export function readMail(id) {
+  return server.REST.post("/session/inbox/read", id);
+}
+
+export function getFeedbackType() {
+  return server.REST.get("/session/feedback/types", {});
+}
+
+export function submitFeedback(param) {
+  const { feedbackType, title, content, photo } = param;
+  return server.REST.post("/session/feedback", { feedbackType, title, content, photo });
+}

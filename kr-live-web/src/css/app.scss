@@ -9,6 +9,7 @@ html {
 // app global css in SCSS form
 body {
   background: $white;
+  font-family: 'NotoSansKR';
 }
 
 #q-app {
@@ -18,31 +19,30 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 3px;
   height: 2px;
   // display: none;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #23263c;
+  box-shadow: inset 0 0 5px #4351b8;
   border-radius: 2px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $dark-old;
-  border-radius: 2px;
+  background: linear-gradient(#2DE0D7, #2E9CE8, #3873FE);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: $dark-old;
+  background:linear-gradient(#2DE0D7, #2E9CE8, #3873FE);
 }
 
 .q-toolbar {
   padding-top: env(safe-area-inset-top, 0);
-  background: $dark-old;
+  background: linear-gradient(#2DE0D7, #2E9CE8, #3873FE);
 }
 
 .q-page-container {
@@ -57,9 +57,14 @@ body {
 }
 
 .main {
-  background-image: url("../assets/home/background-phone2.png");
-  background-repeat: no-repeat;
-  background-size: contain;
+  background: #1C1C2D;
+  
+  @media (min-width: 768px) {
+    background-image: url("../assets/home/background-phone2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
   @media (min-width: 1200px) {
     background-image: url("../assets/home/home-background.jpg");
     background-size: cover;
@@ -90,7 +95,7 @@ body.body--dark {
 }
 
 body.body--dark .q-header {
-  background-image: url(../assets/images/common/header-btm-bg-thai-theme.png);
+  //background-image: url(../assets/images/common/header-btm-bg-thai-theme.png);
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
@@ -598,10 +603,23 @@ svg {
   color: $text-footer;
 }
 
-.q-field--filled.q-field--dark .q-field__control,
-.q-field--filled.q-field--dark .q-field__control:before {
+.q-field--outlined.q-field--dark .q-field__control,
+.q-field--outlined.q-field--dark .q-field__control:before {
   // background: #5d0d0d;
-  background: #212121;
+  border-color: $primary;
+  border-width: 2px;
+  border-radius: 8px;
+  background: #252e43;
+}
+
+.q-field--outlined.q-field--readonly .q-field__control:before {
+  border-color: grey;
+  border-style: solid;
+  background: #2d3039;
+}
+
+.q-field--outlined.q-field--disabled .q-field__control:before {
+  border-color: grey;
 }
 
 .verification-input:hover :before {
@@ -632,8 +650,8 @@ input:internal-autofill-selected {
   background-image: url("../assets/home/btn-blue.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 154px;
-  height: 56px;
+  width: 104px;
+  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -696,33 +714,87 @@ input:internal-autofill-selected {
   // }
 }
 
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 500px;
+
+  .form-template {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px 10px;
+    margin: 20px auto;
+  }
+}
+
 .primary-button {
-  width: 200px;
-  height: 70px;
+  width: 124px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
+  line-height: 1;
+  margin: auto 5px;
   white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 1;
+  border: 2px solid #fff;
+  border-radius: 24px;
 
-  &:hover {
-      filter: brightness(1.1);
+  &.disabled {
+    filter: grayscale(1);
   }
 
-  &:active {
+  &:hover:not(.disabled) {
+      filter: brightness(1.2);
+  }
+
+  &:active:not(.disabled) {
       transform: translateY(2px);
   }
 
   &.blue {
       background: url("../assets/home/btn-blue.svg") no-repeat center center;
-      background-size: 100% 100%;
+      background-size: cover;
   }
 
   &.yellow {
-      background: url("../assets/home/btn-orange.svg") no-repeat center center;
-      background-size: 100% 100%;
+    background: url("../assets/home/btn-yellow.svg") no-repeat center center;
+    background-size: cover;
+}
+
+  &.blue-square {
+    background: url("../assets/home/btn-blue-square.svg") no-repeat center center;
+    background-size: cover;
+    width: 100px;
+    border-radius: 8px;
+  }
+
+  &.yellow-square {
+    background: url("../assets/home/btn-yellow-square.svg") no-repeat center center;
+    background-size: cover;
+    width: 100px;
+    border-radius: 8px;
+  }
+
+  &.red {
+    background: url("../assets/home/btn-red.svg") no-repeat center center;
+    background-size: cover;
   }
 }

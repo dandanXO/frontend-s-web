@@ -66,7 +66,7 @@ npx cap run android -l
 3. So it will build and run App on your device, and you can do a LiveReload on it.
 
 4. If you want to change port/host, can try RUN:
-npx cap run android -l --host=192.168.10.22 --port=9090
+npx cap run android -l --host=192.168.79.69 --port=9090
 
 ```
 

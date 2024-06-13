@@ -196,6 +196,7 @@ import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
+import {useLocalStorage} from "@vueuse/core"
 
 // NOTE: temp mock
 const selectedTypeToggleIndex = ref(0);
@@ -218,7 +219,7 @@ const store = userStore();
 const router = useRouter();
 const isSZPAY = ref(false);
 
-const imgURL = process.env.IMAGE_CDN + "/payment/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/payment/";
 
 const bankCardRef = ref();
 const cardNumberRef = ref();
@@ -245,6 +246,10 @@ const validateBankLength = (val) => {
       return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "OKPAY":
       return (val.length > 15 && val.length < 17) || "长度应为16个字符";
+    case "BLBPAY":
+      return (val.length > 31 && val.length < 33) || "长度应为32个字符";
+    case "JDPAY":
+      return (val.length > 33 && val.length < 35) || "长度应为34个字符";
     case "SZPAY":
       return (val.length > 10 && val.length < 13) || "长度应为11个字符";
     default:
@@ -400,7 +405,7 @@ const submitBankCard = () => {
           $q.notify({
             color: "positive",
             position: "top",
-            message: "已添加银行卡",
+            message: "已添加电子钱包",
             icon: "check_circle_outline"
           });
           router.push("/account/withdraw");

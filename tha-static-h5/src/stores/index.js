@@ -144,6 +144,24 @@ export const userStore = defineStore("userStore", {
           });
       }
     },
+    getDeviceType() {
+      var regDevice = Platform.is.mobile ? "H5" : "WEB";
+      if ("standalone" in window.navigator && window.navigator.standalone) {
+        regDevice = "IOS";
+      } else {
+        regDevice = Platform.is.mobile ? "H5" : "WEB";
+        if (Platform.is.capacitor && Platform.is.android) {
+          regDevice = "ANDROID";
+        }
+      }
+      return regDevice;
+    },
+    isMobileSafari() {
+      if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
+        return true;
+      }
+      return false;
+    },
     memberLogout() {
       return api.post("/session/logout").then(() => {
         SessionStorage.remove("TOKEN");

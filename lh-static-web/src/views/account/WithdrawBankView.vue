@@ -364,6 +364,7 @@ import {userStore} from "@/store";
 import {useRouter} from "vue-router";
 import {sendSessionSms} from "@/api/personal/personal";
 import {InfoFilled} from "@element-plus/icons-vue";
+import { useLocalStorage } from "@vueuse/core";
 // import moment from "moment";
 
 export default defineComponent({
@@ -435,7 +436,13 @@ export default defineComponent({
         } else if(selectedCode === 'OKPAY') {
           min = 16;
           max = 16;
-        } else if(selectedCode === 'SZPAY') {
+        } else if(selectedCode === 'BLBPAY') {
+          min = 32;
+          max = 32;
+        } else if(selectedCode === 'JDPAY') {
+          min = 34;
+          max = 34;
+        }  else if(selectedCode === 'SZPAY') {
           min = 11;
           max = 11;
         }
@@ -457,7 +464,7 @@ export default defineComponent({
       }
     };
     const tblLoading = ref(false);
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/payment/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/payment/';
     const isCardActive = ref();
     const isUSDT = ref(false);
     const isEWALLET = ref(false);

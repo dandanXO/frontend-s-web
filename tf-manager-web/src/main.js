@@ -64,6 +64,11 @@ switch (currentHost) {
     baseWss = process.env.VUE_APP_KRW_SOCKET;
     siteId = 'krw';
     break;
+  case process.env.VUE_APP_PAK_HOST:
+    baseApi = process.env.VUE_APP_PAK_API;
+    baseWss = process.env.VUE_APP_PAK_SOCKET;
+    siteId = 'pak';
+    break;
   default:
     baseApi = process.env.VUE_APP_BASE_API;
     baseWss = process.env.VUE_APP_SOCKET;
@@ -124,8 +129,8 @@ if (siteId === 'dy') {
   link.href = '/favicon.ico';
   title.innerText = 'TF88';
 } else if (siteId === 'krw') {
-  link.href = '/favicon.ico';
-  title.innerText = 'Bet2Won';
+  link.href = '/kr-favicon.ico';
+  title.innerText = 'City8';
 } else if (siteId === 'iw2') {
   link.href = '/iw2-favicon.ico';
   title.innerText = '789F';

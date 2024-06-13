@@ -1,7 +1,7 @@
 <template>
     <div class="modal-body-wrap promo-list">
         <table>
-            <tr>
+            <!-- <tr>
                 <th>번호</th>
                 <th>제목</th>
                 <th>작성일</th>
@@ -25,7 +25,7 @@
                 <td>4</td>
                 <td>TEST</td>
                 <td>2024-05-16 00:04:26</td>
-            </tr>
+            </tr> -->
         </table>
     </div>
 </template>

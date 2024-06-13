@@ -24,7 +24,7 @@
         </el-input>
       </el-form-item>
     </div>
-
+<!-- 
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/password-icon.png" />
       <el-form-item :label="$t('login.confirmPwd')" prop="confirmPwd">
@@ -39,7 +39,7 @@
           <template #append></template>
         </el-input>
       </el-form-item>
-    </div>
+    </div> -->
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/username-icon.png" />
       <el-form-item :label="$t('login.realName')" prop="realName">
@@ -54,7 +54,7 @@
         </el-input>
       </el-form-item>
     </div>
-    <div class="light-bg form-field">
+    <!-- <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/email-icon.png" />
       <el-form-item :label="$t('login.email')" prop="email">
         <el-input
@@ -67,7 +67,7 @@
           <template #append></template>
         </el-input>
       </el-form-item>
-    </div>
+    </div> -->
     <div class="light-bg form-field">
       <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
       <el-form-item :label="$t('login.mobileNo')" prop="telephone">

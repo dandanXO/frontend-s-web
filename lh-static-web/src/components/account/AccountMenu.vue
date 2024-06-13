@@ -103,7 +103,7 @@
               @change="attachImage"
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
-            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于2MB
+            上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
               
           </el-form-item>
           <cropper 
@@ -120,8 +120,8 @@
             aspectRatio: 1/1
               }"
               :stencil-size="{
-                width:250,
-                height: 250
+                width:150,
+                height: 150
               }"
               image-restriction="stencil"
               @change="change"
@@ -150,6 +150,7 @@ import { ElMessage } from "element-plus";
 import { Cropper, CircleStencil } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
+import { useLocalStorage } from "@vueuse/core";
 components: {
   Cropper,
   CircleStencil
@@ -163,7 +164,7 @@ const getImageFromCropper = () => {
   if (cropperRef.value) {
     // Access the cropper instance using the value of cropperRef
     const { coordinates, canvas } = cropperRef.value.getResult();
-    croppedImg.value = canvas.toDataURL();
+    croppedImg.value = canvas.toDataURL('image/jpeg', 0.7);
   }
 };
 const change = ({ coordinates, canvas }) => {
@@ -181,7 +182,7 @@ const refreshBalance = () => {
     isLoadingBalance.value = false;
   });
 };
-const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
+const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
 const loginName = computed(() => {
   return store.nickName;
@@ -260,8 +261,12 @@ async function saveCroppedImage() {
 }
 
 async function attachImage(event) {
-  const file = event.target.files[0];
-  uploadedImage.url = URL.createObjectURL(file); 
+  if (event.target.files[0].size > 1000000) {
+    return ElMessage.error('图片必须小于1MB,请重新上传');
+  } else {
+    const file = event.target.files[0];
+    uploadedImage.url = URL.createObjectURL(file); 
+  }
 }
 
 function isBase64(str) {
@@ -302,6 +307,11 @@ async function attachPhoto(fileImg) {
 
   if (!file || !allowFileTypes.includes(file.type)) {
     ElMessage({ message: '照片格式错误', type: 'error' });
+    isLoadingUpload.value = false;
+    return null; // Exit the function if file is not valid
+  }
+  if(file && file.size > 1024000){
+    ElMessage({ message: '上传的图片已大于1mb，请刷新页面重新上传', type: 'error' });
     isLoadingUpload.value = false;
     return null; // Exit the function if file is not valid
   }

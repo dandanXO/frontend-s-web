@@ -131,10 +131,24 @@
           :label="t('fields.maxWithdrawAmount')"
           prop="withdrawAmountMax"
           :rules="numberRules.repeatNumberValidation"
+          v-if="request.siteId !== 11"
         >
           <el-input-number
             v-model="form.withdrawAmountMax"
             :min="form.withdrawAmountMin"
+            class="form-input"
+            :controls="false"
+            style="width: 200px;"
+          />
+        </el-form-item>
+        <el-form-item
+          :label="t('fields.sequence')"
+          prop="sequence"
+          v-if="request.siteId === 11"
+        >
+          <el-input-number
+            v-model="form.sequence"
+            :min="0"
             class="form-input"
             :controls="false"
             style="width: 200px;"
@@ -168,7 +182,7 @@
             <div class="clearfix">
               <span style="margin-left: 60px; font-size: small;font-weight:bold">{{ t('fields.withdrawPlatform') }}</span>
             </div>
-            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;">
+            <el-table :data="props.row.systemAutoWithdrawPlatfromVO" ref="table" size="small" style="margin-left: 60px; width: 50%;" v-if="request.siteId !== 11">
               <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
               <el-table-column :label="t('fields.minWithdrawAmount')" prop="withdrawAmountMin" align="center">
                 <template #default="scope">
@@ -203,6 +217,71 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-table :data="props.row.withdrawalChannelOrderVO" ref="table" size="small" style="margin-left: 60px; width: 60%;" v-if="request.siteId === 11">
+              <el-table-column :label="t('fields.withdrawPlatformName')" prop="withdrawPlatformName" />
+              <el-table-column prop="status" :label="t('fields.status')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+                <template #default="scope">
+                  <el-switch
+                    v-model="scope.row.status"
+                    active-color="#409EFF"
+                    inactive-color="#F56C6C"
+                    @change="changePlatformStatus(scope.row, scope.row.status)"
+                  />
+                </template>
+              </el-table-column>
+              <el-table-column :label="t('fields.sequence')" prop="sequence">
+                <template #default="scope">
+                  <el-input-number v-model="scope.row.sequence" :min="1" :max="50" @change="handleChange" size="small" />
+                </template>
+              </el-table-column>
+              <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+                <template #default="scope">
+                  <el-button
+                    icon="el-icon-save"
+                    size="mini"
+                    type="success"
+                    @click="saveOrder(scope.row)"
+                  >save</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <el-table :data="props.row.withdrawalChannelOrderTest" ref="table" size="small" style="margin-left: 60px; width: 60%;">
+              <el-table-column :label="t('types.TEST') + ' ' + t('fields.withdrawPlatformName')" prop="withdrawPlatformName">
+                <template #default="scope">
+                  <el-select
+                    filterable
+                    clearable
+                    v-model="scope.row.withdrawPlatformId"
+                    size="small"
+                    :placeholder="t('fields.pleaseChoose')"
+                    class="filter-item"
+                    style="width: 200px;"
+                  >
+                    <el-option
+                      v-for="item in list.siteWithdrawPlatform"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
+                    />
+                  </el-select>
+                </template>
+              </el-table-column>
+              <el-table-column prop="loginName" :label="t('types.TEST') + ' ' + t('fields.loginName')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+                <template #default="scope">
+                  <el-input v-model="scope.row.loginName" style="width: 240px" placeholder="Please input" size="small" />
+                </template>
+              </el-table-column>
+              <el-table-column :label="t('fields.action')" v-if="hasPermission(['sys:systemautowithdraw:update'])">
+                <template #default="scope">
+                  <el-button
+                    icon="el-icon-save"
+                    size="mini"
+                    type="success"
+                    @click="saveOrder(scope.row)"
+                  >save</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </template>
         </el-table-column>
         <el-table-column prop="paymentTypeCode" :label="t('fields.payTypeName')" />
@@ -230,6 +309,7 @@
               size="mini"
               type="warning"
               @click="showPlatfromDialog('CREATE', scope.row)"
+              v-if="request.siteId !== 11"
             />
           </template>
         </el-table-column>
@@ -252,6 +332,7 @@ import { getSiteListSimple } from '../../../api/site'
 import { getActivePaymentTypes } from '../../../api/payment-type'
 import { getCurrencyNames } from '../../../api/currency'
 import { disableSystemAutoPaymentTypeBySite, getSystemAutoPaymentTypeList, createSystemAutoPaymentType, createSystemAutoPaymentPlaltform, updateystemAutoPaymentType, deleteSystemAutoPaymentPlaltform } from '../../../api/system-auto-withdraw-type'
+import { createWithdrawalChannelOrder } from '../../../api/withdrawal-channel-order'
 import { getWithdrawPlatforms } from "../../../api/withdraw-platform";
 import { getSiteWithdrawPlatform } from "../../../api/site-withdraw-platform";
 import { required } from '../../../utils/validate'
@@ -295,6 +376,7 @@ const list = reactive({
 const page = reactive({
   pages: 1,
   records: [],
+  withdrawalRecords: [],
   loading: false,
 })
 const form = reactive({
@@ -409,6 +491,14 @@ async function disableAll() {
 function changeStatus(data, status) {
   data.status = status
   updateystemAutoPaymentType(data)
+}
+
+async function saveOrder(data) {
+  data.siteId = request.siteId
+  console.log(data)
+  await createWithdrawalChannelOrder(data)
+  await loadAutoPaymentType()
+  ElMessage({ message: t('message.addSuccess'), type: 'success' })
 }
 
 function showEdit(data) {

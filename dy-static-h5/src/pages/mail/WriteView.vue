@@ -35,6 +35,12 @@
           placeholder="请输入标题"
         />
       </div>
+
+      <div class="write-board-div q-pa-md">
+        <div class="top q-pb-md">上传图片</div>
+        <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
+      </div>
+
       <div class="q-pa-md bg-white q-ma-sm">
         <div class="top title q-pb-xs">内容</div>
         <q-input
@@ -66,12 +72,19 @@ import { onMounted, ref } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { useRouter } from "vue-router";
+import FileUpload from "components/FileUpload.vue";
 
 var qs = require("qs");
 const $q = useQuasar();
 const router = useRouter();
 
 const feedbackTypes = ref([]);
+
+const uploadFileRef = ref();
+const getImageLink = (linkId) => {
+  mailDetailList.value.photo = linkId;
+};
+
 const loadFeedbackType = () => {
   api
     .get("/session/feedback/types", {})

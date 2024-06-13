@@ -73,8 +73,7 @@
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
-            selectedPromo.promoCode !== 'lh1-ftd-promo' &&
-            selectedPromo.promoCode !== 'lh-eurocup-manual'
+            selectedPromo.promoCode !== 'lh1-ftd-promo'
           "
         >
           <div class="promo-bg isDesktop">
@@ -96,14 +95,27 @@
         </div>
         <div
           class="inner"
-          :style="
-            selectedPromo?.desktopImgBackgroundUrl
-              ? `background-image: url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-              : 'background-image: url(' + require(`../assets/promo/web-bg.jpg`) + '\''
-          "
+          :style="{
+            backgroundImage:
+              selectedPromo?.desktopImgBackgroundUrl ||
+              selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
+              selectedPromo?.promoCode === 'lh-nba24-match' ||
+              selectedPromo?.promoCode === 'lh-lpl-summer24'
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
+            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : ''
+          }"
           :class="{
-            fullwidth: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh-eurocup-manual',
-            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot'
+            fullwidth:
+              selectedPromo.promoCode === 'lh1-game-steps' ||
+              selectedPromo.promoCode === 'lh1-ftd-promo' ||
+              selectedPromo.promoCode === 'lh-eurocup-manual' ||
+              selectedPromo.promoCode === 'lh-lpl-summer24' ||
+               selectedPromo.promoCode === 'lh1-intel-esl'  ,
+            'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
+            bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -119,14 +131,12 @@
               liveCasino: selectedPromo.promoType?.toLowerCase() === 'livecasino',
               slot: selectedPromo.promoType?.toLowerCase() === 'slot game'
             }"
-            v-if="
-            selectedPromo.promoCode !== 'lh-eurocup-manual'
-          "
+            v-if="selectedPromo.promoCode !== 'lh-eurocup-manual'"
           >
             <div v-html="selectedPromo.pageContent"></div>
           </div>
           <div
-            v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-cct-major-2024'].includes(selectedPromo.redirectUrl)"
+            v-if="['lh-cs2-copenhagen-major-2024', 'lh-cs2-blast-2024'].includes(selectedPromo.redirectUrl)"
             class="corner-decor"
             style="position: absolute; left: 0px; bottom: 0px"
           >
@@ -136,8 +146,8 @@
               src="../assets/images/promotion/hotpromo/cs2/bottombg.png"
             />
             <img
-              v-if="selectedPromo.redirectUrl === 'lh-cs2-cct-major-2024'"
-              src="@/assets/images/promotion/hotpromo/CS2CCTPromo/bg.png"
+              v-if="selectedPromo.redirectUrl === 'lh-cs2-blast-2024'"
+              src="@/assets/images/promotion/hotpromo/blastpremier/bg.png"
             />
           </div>
         </div>
@@ -156,6 +166,7 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import moment from "moment";
 
 import HotPromotion from '@/components/HotPromotion'
+import { useLocalStorage } from "@vueuse/core";
 export default defineComponent({
   name: "PromoView",
   components: {
@@ -163,7 +174,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
       active: "ALL",
@@ -218,7 +229,6 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-
       if (!store.token) {
         ElMessageBox.alert('请登录后再操作', '系统提示', {
           // if you want to disable its autofocus
@@ -246,7 +256,7 @@ export default defineComponent({
           // }
           // isPromoDetail.value = true;
 
-          console.log(promo)
+          console.log(promo,'promo')
           selectedPromo.value = promo
         }
       }
@@ -272,7 +282,10 @@ export default defineComponent({
     const loadAll = () => {
       loadPromo().then((res) => {
         if(res.code === 0) {
-          promoState.promoList.push(...res.data);
+          if(promoState.promoList.length === 0){
+            promoState.promoList.push(...res.data);
+          }
+
           res.data.forEach(element => {
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
             //   promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
@@ -320,11 +333,11 @@ export default defineComponent({
       loadAll();
     });
 
-    // watch(() => route.query.name, () => {
-    //   if (!route.query.name) {
-    //     isPromoDetail.value = false
-    //   }
-    // });
+    watch(() => route.query.name, () => {
+      if (route.query.name) {
+        loadAll();
+      }
+    });
 
     return {
       promoState,
@@ -804,14 +817,18 @@ export default defineComponent({
         gap: 20px;
         background-repeat: no-repeat;
 
+        &.bgautosize {
+          background-size: 100% auto;
+        }
+
         &.fullwidth {
           width: 100%;
           max-width: 100%;
           margin: 0;
           padding: 0;
 
-          .hot-promo{
-            border-radius: 0px
+          .hot-promo {
+            border-radius: 0px;
           }
 
           .promo-view-container {
@@ -825,6 +842,7 @@ export default defineComponent({
 
         &.europe-first-shoot {
           background-color: #0d3173;
+          background-image: none !important;
         }
 
         .hot-promo {

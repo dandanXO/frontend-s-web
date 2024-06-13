@@ -136,12 +136,6 @@
       </div>
     </div>
 
-    <JollyVIP 
-      v-if="list.id === 194 && !isCommonPromo && store.hasToken()"
-      @claim-festival-bonus="handleSlot('jolly88-vip-monthly')"
-      @claim-birthday-bonus="handleSlot('jolly88-vip-birthday')"
-     />
-
     <ClaimPromo
       v-if="isCommonPromo && store.hasToken()"
       :promo-id="list.id"
@@ -149,18 +143,6 @@
       @daily-slot="handleSlot()"
     />
 
-    <SJBPromo v-if="list.id === 40 && !isCommonPromo && store.hasToken()" class="promo-sjb" />
-
-
-    <template v-if="list.promoCode === 'multi-wheel'">
-      <template v-if="store.hasToken()">
-        <PromoSpinWheel></PromoSpinWheel>
-        <PromoSpinWheelWinner></PromoSpinWheelWinner>
-      </template>
-      <div v-else class="row items-center justify-center">
-        <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.loginToCont") }}</q-btn>
-      </div>
-    </template>
 
     <!--    <InviteFriendPromo v-if="list.id === 80 && !isCommonPromo" class="promo-invt" />-->
   </div>
@@ -189,11 +171,6 @@ import { useQuasar } from "quasar";
 import * as _ from "lodash";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import SJBPromo from "../components/hotpromo/40/shiJieBei.vue";
-import InviteFriendPromo from "../components/hotpromo/35/inviteFriendPromo.vue";
-import PromoSpinWheel from "components/hotpromo/80/PromoSpinWheel.vue";
-import PromoSpinWheelWinner from "components/hotpromo/80/PromoSpinWheelWinner.vue";
-import JollyVIP from "components/hotpromo/194/JollyVIP.vue";
 import { useI18n } from "vue-i18n";
 import qs from "qs";
 
@@ -203,10 +180,6 @@ export default defineComponent({
   // setup: (props, { emit }) => {},
   components: {
     ClaimPromo,
-    SJBPromo,
-    PromoSpinWheel,
-    PromoSpinWheelWinner,
-    JollyVIP
     // InviteFriendPromo
   },
   props: {
@@ -782,7 +755,7 @@ export default defineComponent({
   min-width: 300px;
 
   .bonus-svg-div {
-    background-image: url("../assets/promo/BONUS.svg");
+    //background-image: url("../assets/promo/BONUS.svg");
     background-repeat: no-repeat;
     width: 270px;
     height: 214px;

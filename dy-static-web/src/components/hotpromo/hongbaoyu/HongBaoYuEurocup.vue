@@ -25,7 +25,7 @@
           <div class="winner" v-for="(item, index) in visibleItems" :key="index">
             <div>{{ item.date }}</div>
             <div>{{ item.name }}</div>
-            <div class="amount-txt">{{ item.amount }}</div>
+            <div class="amount-txt">{{ item.amount.toFixed(2) }}</div>
           </div>
         </div>
       </div>
@@ -174,7 +174,7 @@ const getPromotion = () => {
         privilegeClaimedModalVisible.value = true;
         store.getBalance();
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
       }
@@ -295,6 +295,14 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       margin-left: 60px;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+      &:active {
+        filter: brightness(0.85);
+        transform: translate(0px, 1px);
+      }
     }
   }
 

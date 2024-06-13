@@ -10,7 +10,7 @@
           :rules="[
             { required: true, message: '姓名必须与提款银行卡账号姓名一致' },
             {
-              pattern: '^([\u4e00-\u9fa5]*)$',
+              pattern: /^[\u4e00-\u9fa5·]+$/,
               message: '请输入中文字符',
               trigger: 'change'
             }
@@ -174,7 +174,7 @@ const checkName2 = (v) => {
 
 const checkRealName = (v) => {
   // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-  const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+  const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
   return v.match(chineseCharOnly);
 };
 

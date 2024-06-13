@@ -1,191 +1,189 @@
 <template>
-  <div class="modal-body-wrap">
-    <q-card-section class="modal-body-content">
+  <div class="form-wrapper">
+    <div class="modal-body-wrap">
+      <q-card-section class="modal-body-content">
 
-      <div class="withdrawalmethod">
-        <div
-          v-for="(method, i) in withdrawalMethods"
-          :key="i"
-          class="withdraw-type-item"
-          @click="selectMethod(method, i)"
-          :class="{ active: i === activeItem }"
-        >
-          <span class="promo" v-if="method.recommended">Recommended</span>
-          <div class="withdraw-img">
-            <img :src="imgURL + '/withdraw/' + method.icon" />
-          </div>
-          <div class="type-name">{{ method.name }}</div>
-
-          <div class="promo-label">
-            <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
-          </div>
-        </div>
-      </div>
-
-      <q-form ref="withdrawFormRef">
-        <q-select
-          v-show="isLoaded"
-          hide-bottom-space
-          filled
-          ref="cardRef"
-          v-model="withdrawInfo.cardId"
-          option-value="id"
-          emit-value
-          :label="chooseLabel()"
-          class="withdraw-selection q-mt-sm q-mb-sm"
-          :options="withdrawState.bankCardList"
-          map-options
-          :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]"
-        >
-          <template v-slot:no-option>
-            <q-item>
-              <q-item-section class="text-grey">
-                {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
-                <router-link class="text-bright" to="/?page=withdrawcard">
-                  {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
-                </router-link>
-              </q-item-section>
-            </q-item>
-          </template>
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section avatar v-if="scope.opt.bankIcon">
-                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>
-                  {{ scope.opt.bankName }} - ****{{
-                    scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                  }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-          <template v-slot:selected-item="scope">
-            <q-item-section avatar v-if="scope.opt.bankIcon">
-              <img
-                style="width: 30px; margin-top: 10px; margin-bottom: 10px"
-                :src="imgURL + '/payment/' + scope.opt.bankIcon"
-              />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                {{ scope.opt.bankName }} - ****{{
-                  scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
-                }}
-              </q-item-label>
-            </q-item-section>
-          </template>
-        </q-select>
-
-        <q-input
-          hide-bottom-space
-          ref="amountRef"
-          v-model="withdrawInfo.amount"
-          label="출금금액"
-          class="withdraw-field"
-          :rules="[
-              (val) => (val && val.length > 0) || '출금 금액을 입력해주세요',
-              (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
-              (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-              (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
-              isValidUSDTAmt
-            ]"
-          clearable
-        >
-          <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
-              </span>
-          </template>
-          <template v-slot:append>
-              <span style="font-size: 26px;" class="text-bright">
-                <q-btn @click="updateWithdrawAmt" label="삭제" color="brightbtn" text-color="black" />
-              </span>
-          </template>
-        </q-input>
-
-        <div class="option-btns">
-          <q-btn class="bg-brightbtn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="item + '원'"
-                 @click="updateWithdrawItem(item)"
-          ></q-btn>
-        </div>
-
-        <div
-          class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
-          style="border-bottom: 1px solid #434343"
-          v-show="selectedWithdrawalMethod"
-        >
-          <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
-            {{
-              "출금금액/건: " +
-              selectedWithdrawalMethod.withdrawMin +
-              "만 - " +
-              selectedWithdrawalMethod.withdrawMax +
-              "만"
-            }}
-            <br />
-          </template>
-          <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
-            {{ `출금금액/일:${selectedWithdrawalMethod.withdrawMaxTimes}회 총 ${selectedWithdrawalMethod.withdrawMaxAmount}억` }}
-          </template>
-        </div>
-        <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-          <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">실시간 환율：</span>
-            <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
-                {{ store.currency.value }}
-              </span>
-          </div>
-          <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
-            <span style="flex: 1">예상 입금：</span>
-            <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
-                USDT
-              </span>
-          </div>
-          <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
-        </div>
-        <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
-        <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
-        <!--          </div>-->
-        <div v-else-if="isEWALLET">
-          <div class="q-mt-sm text-neontb">*특별히 언급합니다: 출금 지갑과 게임 계정의 이름은 반드시 일치해야 합니다</div>
-          <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
-            <q-btn
-              style="border: 1px solid #33bcd4; color: #33bcd4"
-              @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
-              :label="tutorialLabel()"
-            />
-          </div>
-        </div>
-
-        <div class="flex-box-c-c">
-          <q-btn 
-            :loading="withdrawLoading"
-            :disable="withdrawLoading"
-            @click="submitWithdraw"
-            :label="'환전신청'" 
-            type="button" 
-            class="primary-button blue"
-            rounded 
-            flat 
-          />
-        </div>
-        <div class="q-py-md">
+        <div class="withdrawalmethod">
           <div
-            v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
-            class="selected-tip"
-            v-html="selectedWithdrawalMethod.tips"
-          ></div>
-          <div v-if="isALIPAY" class="selected-tip">
-            "알리페이 인출" 사용 가능 시간: 오전 10시 ~ 오후 12시, 다른 시간에 제출하면 시스템이 자동으로 취소됩니다！
+            v-for="(method, i) in withdrawalMethods"
+            :key="i"
+            class="withdraw-type-item"
+            @click="selectMethod(method, i)"
+            :class="{ active: i === activeItem }"
+          >
+            <span class="promo" v-if="method.recommended">Recommended</span>
+            <div class="withdraw-img">
+              <img :src="imgURL + '/withdraw/' + method.icon" />
+            </div>
+            <div class="type-name">{{ method.name }}</div>
+
+            <div class="promo-label">
+              <img class="promo-img" v-if="method.privilegeIcon" :src="`${imgWithdrawURL}${method.privilegeIcon}`" />
+            </div>
           </div>
         </div>
-      </q-form>
 
-    </q-card-section>
+        <q-form ref="withdrawFormRef">
+          <div class="form-item">
+            <label>{{ chooseLabel() }}</label>
+            <q-select
+              dense
+              v-show="isLoaded"
+              hide-bottom-space
+              outlined
+              ref="cardRef"
+              v-model="withdrawInfo.cardId"
+              option-value="id"
+              emit-value
+              class="withdraw-selection q-mt-sm q-mb-sm"
+              :options="withdrawState.bankCardList"
+              map-options
+              :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]"
+            >
+              <template v-slot:no-option>
+                <q-item>
+                  <q-item-section class="text-grey">
+                    {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
+                    <router-link class="text-bright" to="/?page=withdrawcard">
+                      {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
+                    </router-link>
+                  </q-item-section>
+                </q-item>
+              </template>
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar v-if="scope.opt.bankIcon">
+                    <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>
+                      {{ scope.opt.bankName }} - ****{{
+                        scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                      }}
+                    </q-item-label>
+                  </q-item-section>
+                </q-item>
+              </template>
+              <template v-slot:selected-item="scope">
+                <q-item-section avatar v-if="scope.opt.bankIcon">
+                  <img
+                    style="width: 30px; margin-top: 10px; margin-bottom: 10px"
+                    :src="imgURL + '/payment/' + scope.opt.bankIcon"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                    {{ scope.opt.bankName }} - ****{{
+                      scope.opt.cardNumber.slice(scope.opt.cardNumber.length - 4, scope.opt.cardNumber.length)
+                    }}
+                  </q-item-label>
+                </q-item-section>
+              </template>
+            </q-select>
+          </div>
+
+          <div class="form-item">
+            <label>출금금액</label>
+            <q-input
+              dense
+              outlined
+              ref="amountRef"
+              v-model="withdrawInfo.amount"
+              class="withdraw-field"
+              :rules="[
+                  (val) => !!val || '출금 금액을 입력해주세요',
+                  (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
+                  (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
+                  (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
+                  isValidUSDTAmt
+                ]"
+              clearable
+            >
+              <template v-slot:prepend>
+                  <span style="z-index:1;font-size:16px;">
+                    <template v-if="isUSDT">USDT</template>
+                    <template v-else>{{ store.currency.value }}</template>
+                  </span>
+              </template>
+            </q-input>
+
+            <div class="select-amt-btn-wrapper">
+              <q-btn class="select-amt-btn" v-for="(item, index) in countOptions" :key="index" size="md"  :label="isUSDT ? `${item} USDT` : item + '만원'"
+                    @click="updateWithdrawItem(item)"
+              />
+            </div>
+          </div>
+
+          <div
+            class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm"
+            style="border-bottom: 1px solid #434343"
+            v-show="selectedWithdrawalMethod"
+          >
+            <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
+              {{
+                "출금금액/건: " +
+                selectedWithdrawalMethod.withdrawMin +
+                "만 - " +
+                selectedWithdrawalMethod.withdrawMax +
+                "만"
+              }}
+              <br />
+            </template>
+            <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
+              {{ `출금금액/일:${selectedWithdrawalMethod.withdrawMaxTimes}회 총 ${selectedWithdrawalMethod.withdrawMaxAmount}억` }}
+            </template>
+          </div>
+          <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
+            <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
+              <span style="flex: 1">실시간 환율：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+                  1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+                  {{ store.currency.value }}
+                </span>
+            </div>
+            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
+              <span style="flex: 1">예상 입금：</span>
+              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
+                  {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
+                  USDT
+                </span>
+            </div>
+            <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
+          </div>
+          <div v-else-if="isEWALLET">
+            <div class="q-mt-sm text-neontb">*특별히 언급합니다: 출금 지갑과 게임 계정의 이름은 반드시 일치해야 합니다</div>
+            <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
+              <q-btn
+                style="border: 1px solid #33bcd4; color: #33bcd4"
+                @click="openEWalletTutorial(selectedWithdrawalMethod.code)"
+                :label="tutorialLabel()"
+              />
+            </div>
+          </div>
+
+          <div class="q-py-md">
+            <div
+              v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips"
+              class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips"
+            ></div>
+            <div v-if="isALIPAY" class="selected-tip">
+              "알리페이 인출" 사용 가능 시간: 오전 10시 ~ 오후 12시, 다른 시간에 제출하면 시스템이 자동으로 취소됩니다！
+            </div>
+          </div>
+        </q-form>
+
+      </q-card-section>
+    </div>
+    <div class="action-buttons">
+      <div
+        @click="submitWithdraw" 
+        class="primary-button blue"
+        :class="withdrawLoading ? 'disabled' : ''"
+      >
+      {{ btnLoading ? $t('lang.loading') : '환전신청' }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -215,8 +213,6 @@ const withdrawLoading = ref(false);
 
 const activeItem = ref(0);
 const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
-const isLoadingBankCard = ref(false);
-const bankCardList = ref([]);
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
@@ -230,46 +226,52 @@ const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
 const loadCards = () => {
-  api.get("/session/bankCard").then((resp) => {
-    const response= resp.data;
-    isLoaded.value = true;
-    withdrawState.bankCardList = [];
-    if (response.code === 0) {
-      // response.data = [{"id":381,"cardNumber":"234567","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"Maybank","bankType":"BANK, GCASH"},{"id":384,"cardNumber":"789456","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"},{"id":385,"cardNumber":"654987","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"CIMB Bank","bankType":"BANK"},{"id":386,"cardNumber":"963852","cardAccount":"frank li","cardAddress":"sdsadddsfsdfdsf","bankName":"GCASH","bankType":"GCASH"}]
-      response.data.forEach(element => {
-        if (element.bankType === "BANK") {
-          if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-            withdrawState.bankCardList.push(element)
+  return new Promise((resolve) => {
+    api.get("/session/bankCard").then((resp) => {
+      const response= resp.data;
+      isLoaded.value = true;
+      withdrawState.bankCardList = [];
+      if (response.code === 0) {
+        response.data.forEach(element => {
+          if (element.bankType === "BANK") {
+            if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element)
+            }
+            if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+              withdrawState.bankCardList.push(element)
+            }
+          } else {
+            if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
+              withdrawState.bankCardList.push(element);
+            }
           }
-          if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
-            withdrawState.bankCardList.push(element)
-          }
-        } else {
-          if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-            withdrawState.bankCardList.push(element);
-          }
+        });
+
+
+        if (cardRef.value) {
+          cardRef.value.resetValidation();
         }
-      });
+        withdrawInfo.amount = "";
+        if (amountRef.value) {
+          setTimeout(()=>{
+            amountRef.value.resetValidation();
+          },0)
+        }
 
-
-      if (cardRef.value) {
-        cardRef.value.resetValidation();
+        resolve(response.data);
       }
-      withdrawInfo.amount = "";
-      if (amountRef.value) {
-        setTimeout(()=>{
-          amountRef.value.resetValidation();
-        },0)
-      }
-    }
-  }).catch((error) => {
-    console.log("error", error);
-  });
+    }).catch((error) => {
+      console.log("error", error);
+    });
+  })
 };
 
 const updateWithdrawItem = (amt) => {
   // debugger;
-  withdrawInfo.amount= amt.toString();
+  const multiple = isUSDT.value ? 1 : 10000;
+  // 1원 = 10000;
+
+  withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);
 }
 
 const selectMethod = (method, index) => {
@@ -287,6 +289,10 @@ const selectMethod = (method, index) => {
 
 
 const submitWithdraw = () => {
+  if(withdrawLoading.value) {
+    return;
+  }
+
   cardRef.value.validate();
   amountRef.value.validate();
   $q.loading.show({
@@ -335,10 +341,6 @@ const submitWithdraw = () => {
   }
 };
 
-const updateWithdrawAmt = () => {
-  withdrawInfo.amount = JSON.stringify(Math.floor(store.balance));
-};
-
 const tutorialLabel = () => {
   if (selectedWithdrawalMethod.value.code === 'KDPAY') {
     return 'KDPAY 튜토리얼 비디오'
@@ -370,26 +372,27 @@ const isValidUSDTAmt = (val) => {
 }
 
 const getWithdrawalMethods = () => {
-  api.get("/session/withdraw/entrance").then((resp) => {
-    const response= resp.data;
-    if (response.code === 0) {
-      withdrawalMethods.value = response.data;
-      //Remove this for real data
-      // withdrawalMethods.value = [
-      //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-      //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
-      if (withdrawalMethods.value.length > 0) {
-        selectMethod(withdrawalMethods.value[0], 0);
+  return new Promise((resolve) => {
+    api.get("/session/withdraw/entrance").then((resp) => {
+      const response= resp.data;
+      if (response.code === 0) {
+        withdrawalMethods.value = response.data;
+        //Remove this for real data
+        // withdrawalMethods.value = [
+        //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
+        //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
+
+        resolve(response.data);
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: response.message,
+          icon: "report_problem"
+        });
       }
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: response.message,
-        icon: "report_problem"
-      });
-    }
-  });
+    });
+  })
 };
 
 const chooseLabel = () => {
@@ -413,9 +416,25 @@ const chooseCard = () => {
 }
 
 onMounted(() => {
-  loadCards();
+  Promise.all([loadCards(), getWithdrawalMethods()]).then(([cards,withdrawMethods]) => {
+    const availableBankType = cards?.[0]?.bankType;
+    
+    if (availableBankType) {
+      const methodIndex = withdrawMethods.findIndex(({ code }) => {
+      
+        if(availableBankType === 'CRYPTO' && code.includes('USDT')) {
+          return true;
+        }
+
+        return code === availableBankType;
+      });
+    
+      withdrawalMethods.value = [withdrawMethods[methodIndex]];
+      selectMethod(withdrawMethods[methodIndex], 0);
+    }
+  })
+
   store.getBalance();
-  getWithdrawalMethods();
 });
 </script>
 
@@ -481,22 +500,31 @@ onMounted(() => {
     }
   }
 
-  .option-btns {
-    display: grid;
-    margin-top: 10px;
-    grid-template-columns: auto auto auto auto auto auto auto;
-    grid-row-gap: 12px;
-    grid-column-gap: 12px;
-    :deep(.q-btn) {
-      height: 40px;
-      color: #fff;
-      font-size: 14px;
-      border-radius: 3px;
-      background: #18324A;
-      &.active {
-        background: #237BFF;
-      }
-    }
+  // .option-btns {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   gap: 8px;
+
+  //   :deep(.q-btn) {
+  //     height: 40px;
+  //     color: #fff;
+  //     font-size: 14px;
+  //     border-radius: 3px;
+  //     background: #18324A;
+  //   }
+  // }
+
+  .select-amt-btn-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .select-amt-btn {
+    background: #18324A;
+    color: #fff;
+    white-space: nowrap;
   }
 }
 
@@ -509,24 +537,26 @@ onMounted(() => {
   background:#fff;
 }
 .withdrawalmethod {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  text-align: center;
-  overflow-x: unset;
-  padding: 0px 5px;
+  display: flex;
   grid-gap: 10px;
-  grid-column-gap: 10px;
-  grid-row-gap: 5px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 
   .withdraw-type-item {
     display: flex;
-    justify-content: center;
-    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    width: 100%;
+    min-width: 150px;
+    width: 200px;
     text-align: center;
     position: relative;
     cursor: pointer;
+
+    background: #252e43;
+    border-radius: 6px;
+    border: 2px solid #4b4b4b;
+    color: #ffffff;
 
     .promo-label {
       position: absolute;
@@ -545,7 +575,8 @@ onMounted(() => {
     .withdraw-img {
       border: 2px solid transparent;
       border-radius: 10px;
-      max-width: 4.5rem;
+      // max-width: 4.5rem;
+      max-width: 50px;
     }
 
     img {
@@ -554,10 +585,14 @@ onMounted(() => {
     }
 
     &.active {
-      img {
-        border: 3px solid #33bcd4;
-        border-radius: 10px;
-      }
+      background: $linear-bg-2;
+      border: 3px solid $primary;
+      border-radius: 6px;
+
+      // img {
+      //   border: 3px solid #33bcd4;
+      //   border-radius: 10px;
+      // }
 
       .promo-img {
         border: none;
@@ -596,6 +631,14 @@ onMounted(() => {
     }
   }
 
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    .withdraw-type-item {
+      width: 100%;
+    }
+  }
+
   .withdraw-btn {
     margin: 30px auto;
 
@@ -609,7 +652,6 @@ onMounted(() => {
 }
 
 .withdraw-field{
-  margin-top: 15px;
   :deep(.q-field__control){
     background:#252E43;
   }
@@ -620,6 +662,19 @@ onMounted(() => {
 .withdraw-selection{
   :deep(.q-field__control){
     background:#252E43;
+  }
+}
+
+.update-withdraw-btn {
+  background: #38F3FF;
+  color: #131313;
+  padding: 0 10px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.1);
   }
 }
 

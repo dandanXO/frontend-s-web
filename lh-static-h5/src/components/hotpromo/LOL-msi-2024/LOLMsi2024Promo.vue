@@ -27,13 +27,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { getLOLMsiMatchRecord } from "../../../api/index/promo.js";
-
+import {useLocalStorage} from "@vueuse/core"
 import PlayInStage from "./components/PlayInStage.vue";
 import BracketStage from "./components/BracketStage.vue";
 import FinalStage from "./components/FinalStage.vue";
 import MatchInfoSwiper from "./components/MatchInfoSwiper.vue";
 
-const imgURL = process.env.IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
 const tabPosition = ref("play-in");
 const matchList = ref([]);

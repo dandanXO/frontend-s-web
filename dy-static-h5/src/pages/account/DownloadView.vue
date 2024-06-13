@@ -1,10 +1,6 @@
 <template>
   <div class="download">
-    <q-tabs
-      v-model="tab"
-      indicator-color="white"
-      align="justify"
-    >
+    <q-tabs v-model="tab" indicator-color="white" align="justify">
       <q-tab name="android" label="安卓系统" />
       <q-tab name="apple" label="苹果系统" />
     </q-tabs>
@@ -12,19 +8,16 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel name="android">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm q-mb-md"
-            v-for="(dn, i) in androidItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm q-mb-md" v-for="(dn, i) in androidItems" :key="i">
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
               <div class="textcont">
-                {{ dn.title }}<br />
+                {{ dn.title }}
+                <br />
                 <span class="dn-content">{{ dn.content }}</span>
               </div>
             </div>
-            <a :href="dn.downloadLink" target="_blank">
+            <a @click="openDownloadAppLink(dn.downloadLink)">
               <RiDownload2Fill />
             </a>
           </div>
@@ -33,19 +26,16 @@
 
       <q-tab-panel name="apple">
         <div class="downloads">
-          <div
-            class="download-item q-my-sm q-mb-md"
-            v-for="(dn, i) in appleItems"
-            :key="i"
-          >
+          <div class="download-item q-my-sm q-mb-md" v-for="(dn, i) in appleItems" :key="i">
             <div class="imgtext">
               <img :src="require(`../../assets/download/${dn.icon}.png`)" />
               <div class="textcont">
-                {{ dn.title }}<br />
+                {{ dn.title }}
+                <br />
                 <span class="dn-content">{{ dn.content }}</span>
               </div>
             </div>
-            <a :href="dn.downloadLink" target="_blank">
+            <a @click="openDownloadAppLink(dn.downloadLink)">
               <RiDownload2Fill />
             </a>
           </div>
@@ -56,7 +46,6 @@
 </template>
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { api } from "boot/axios";
 
 import { RiDownload2Fill } from "vue-remix-icons";
 import { userStore } from "stores/index";
@@ -65,6 +54,16 @@ const store = userStore();
 const tab = ref("android");
 
 const downloadUrl = ref("");
+
+const openDownloadAppLink = (link) => {
+  const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
+  if (affiliate) {
+    const theurl = `${link}?agentCode=${affiliate}`;
+    window.open(theurl, "_blank");
+  } else {
+    window.open(link, "_blank");
+  }
+};
 
 const androidItems = computed(() => {
   return [
@@ -75,7 +74,7 @@ const androidItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
+});
 
 const appleItems = computed(() => {
   return [
@@ -86,7 +85,7 @@ const appleItems = computed(() => {
       downloadLink: downloadUrl.value
     }
   ];
-})
+});
 
 // const androidItems = [
 //   {
@@ -168,7 +167,7 @@ onMounted(getAppDownloadUrl);
   }
   .q-tab--active .q-tab__indicator {
     height: 100%;
-    background: #DBF0FF;
+    background: #dbf0ff;
   }
   .q-tab__label {
     z-index: 1;
@@ -209,7 +208,7 @@ onMounted(getAppDownloadUrl);
       }
     }
     a {
-      background: #0089ED10;
+      background: #0089ed10;
       padding: 10px;
       display: flex;
       justify-content: center;
@@ -226,7 +225,7 @@ onMounted(getAppDownloadUrl);
       display: block;
     }
     .dn-content {
-      color: #343A4080;
+      color: #343a4080;
     }
   }
 }

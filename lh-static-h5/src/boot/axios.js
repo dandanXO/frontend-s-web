@@ -11,14 +11,37 @@ const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
-const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835"];
 console.log(window.location.hostname);
+const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835", "lh869", "lh866", "lh068", "lh988"];
 const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
+
+const specialLinks= ["lh93371", "lh76390" ,"lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100"];
+const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
+
 
 if (isGlobalLH) {
   var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
   var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
   var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+
+  localStorage.setItem("LH_H5_RST_URL", rstApi);
+  localStorage.setItem("LH_H5_EVT_URL",evtApi);
+  localStorage.setItem("LH_H5_CRT_URL",crtApi);
+
+}else if (isSpecialLH){
+  var rstSpecialArray = ["https://apodnbo0tl.anipoius54d.com", "https://ap2gh538tl.se17xiasedy.com"];
+  var evtSpecialArray = ["https://prk46vfitl.111z35h0mt.com", "https://prkuo09ctl.1rqrhcll8p.com"];
+  var crtSpecialArray =["https://cauomdoptl.baw7xptuqr1.com", "https://caaukstntl.ectuu384q0h.com"];
+
+  var rstApi = getInitApi(rstSpecialArray, "LH_H5_RST_URL");
+  var evtApi = getInitApi(evtSpecialArray, "LH_H5_EVT_URL");
+  var crtApi = getInitApi(crtSpecialArray, "LH_H5_CRT_URL");
+
+  var cdnSpecialArray =["https://url9jr173tl.acj39bv80x.com", "https://url847fkttl.b5chotsxy0.com"];
+
+  var cdnApi = cdnSpecialArray[getRndInteger(0, cdnSpecialArray.length)];
+  localStorage.setItem("IMAGE_CDN", cdnApi);
+
 } else if(window.location.hostname.includes("leihuo")){
   var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
   var evtGlobalArray = Object.values(process.env.GLOBAL_EVT_API);

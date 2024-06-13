@@ -108,7 +108,7 @@
             暂无记录
           </div>
         </el-tab-pane>
-        <el-tab-pane name="write" :label="'写信'">
+        <el-tab-pane name="write" :label="'意见反馈'">
           <div>
             <el-form
               ref="formRef"
@@ -119,9 +119,32 @@
               :label-col="{ span: 2 }"
               label-width="100"
             >
+            
+
+            <el-form-item
+                ref="feedback"
+                prop="feedback"
+                label="意见类型"
+                :wrapperCol="{ span: 6 }"
+              >
+              <el-select
+                    class="feedback-select"
+                    placeholder="意见类型选择"
+                    v-model="mailboxState.mailboxList.write.feedbackType"
+                  >
+                    <el-option
+                      v-for="(feedback, feedbackIndex) in feedbackTypes"
+                      :key="`feedback-${feedbackIndex}`"
+                      :value="feedback"
+                    >
+                      {{ feedback }}
+                    </el-option>
+                  </el-select>
+              </el-form-item>
+
               <el-form-item
                 ref="title"
-                name="title"
+                prop="title"
                 label="标题"
                 :wrapperCol="{ span: 6 }"
               >
@@ -131,8 +154,18 @@
                 />
               </el-form-item>
               <el-form-item
+                ref="photo"
+                prop="photo"
+                label="上传图片"
+                :wrapperCol="{ span: 6 }"
+              >
+              <FileUpload class="upload-photo-board" @photo-response="getImageLink" ref="uploadFileRef" />
+
+              </el-form-item>
+
+              <el-form-item
                 ref="content"
-                name="content"
+                prop="content"
                 label="内容"
               >
                 <el-input
@@ -160,18 +193,22 @@
 
 <script lang="js">
 import { ref, defineComponent, reactive, onMounted } from "vue";
-import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
+import { mailInbox, mailOutbox, submitFeedback, getFeedbackType } from "@/api/personal/mailbox";
 // import { message } from "ant-design-vue";
 import { ElMessage } from "element-plus";
 import { Calendar } from "@element-plus/icons-vue";
+import { userStore } from "@/store";
+import FileUpload from "@/components/feedback/FileUpload.vue";
 
 
 export default defineComponent({
   name: "MailboxView",
   components: {
-    Calendar
+    Calendar,
+    FileUpload
   },
   setup() {
+const store = userStore();
     const mailboxData = ref([]);
     const isLoading= reactive({
       inbox: false,
@@ -195,6 +232,8 @@ export default defineComponent({
         write: {
           title: "",
           content: "",
+          feedbackType: "",
+          photo: ""
         },
       },
     });
@@ -256,8 +295,33 @@ export default defineComponent({
       }
     };
 
+    const feedbackTypes = ref("");
+    const loadFeedbackType = () => {
+      getFeedbackType()
+        .then((res) => {
+          const { code, data } = res;
+          if (code === 0) feedbackTypes.value = data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const uploadFileRef = ref();
+    const getImageLink = (linkId) => {
+      mailboxState.mailboxList.write.photo = linkId;
+      if (linkId) {
+        ElMessage.success({
+          type: "success",
+          message: "上传成功"
+        });
+      }
+    };
     onMounted(() => {
       loadPersonalMailbox();
+      if (store.token) {
+        loadFeedbackType();
+      }
       // mailboxState.mailboxList[mailboxState.active].list.push(...mailboxData);
     });
 
@@ -287,29 +351,40 @@ export default defineComponent({
           trigger: "change",
         },
       ],
+      feedback: [
+        {
+          required: true,
+          message: "选择意见类型",
+          trigger: "blur",
+        },
+      ]
     };
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+  e.preventDefault();
       formRef.value
         .validate()
         .then(() => {
-            wirteMail(mailboxState.mailboxList.write)
-              .then((response) => {
-                if(response.code === 0) {
-                    ElMessage({
-                      message: '成功',
-                      type: 'success',
-                    })
+          submitFeedback(mailboxState.mailboxList.write)
+            .then((response) => {
+              if (response.code === 0) {
+                ElMessage({
+                  message: "提交成功",
+                  type: "success"
+                });
+                loadPersonalMailbox();
 
-                  mailboxState.mailboxList.write.title = "";
-                  mailboxState.mailboxList.write.content = "";
-                } else {
-                  // message.error(response.message);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-                // message.error(error.message, 4)
-              });
+                mailboxState.mailboxList.write.feedbackType = "";
+                mailboxState.mailboxList.write.title = "";
+                mailboxState.mailboxList.write.content = "";
+                uploadFileRef.value.clear();
+              } else {
+                ElMessage.error(response.message);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              // message.error(error.message, 4)
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -325,7 +400,11 @@ export default defineComponent({
       formRef,
       rules,
       onSubmit,
-      isLoading
+      isLoading,
+      feedbackTypes,
+      FileUpload,
+      uploadFileRef,
+      getImageLink
     }
   },
 });

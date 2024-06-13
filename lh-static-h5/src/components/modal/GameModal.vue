@@ -399,7 +399,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             let srcData = response.data;
 
-            if (platformCode === "PT") {
+            if (platformCode === "PT" ||
+              (platformCode === 'TFGaming' && gameCode === 0)
+            ) {
               if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
                 const newWin = window.open(`/`, "_self");
                 if(newWin){

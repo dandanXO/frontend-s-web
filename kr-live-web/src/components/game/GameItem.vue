@@ -18,6 +18,7 @@
         />
         <img class="active-overlay" :src="require(`../../assets/home/games/game-bg--active.png`)" />
         <div class="game-info-wrapper">
+          <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
           <div class="game-name">{{ game.name }}</div>
           <img class="game-logo"
             :src="
@@ -58,7 +59,7 @@
               />
         </div>
         <div class="game-entry-btn">
-          <div class="btn-w-blue">게임입장</div>
+          <div class="primary-button blue"><img class="star" src="../../assets/home/games/game-entry-button-star.svg" />게임입장<img class="star" src="../../assets/home/games/game-entry-button-star.svg" /></div>
         </div>
       </div>
     </div>
@@ -72,11 +73,17 @@ const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .game-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 170px));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
   padding: 20px;
   width: 100%;
+
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
 
   .game-item {
     aspect-ratio: 290 / 530;
@@ -88,6 +95,10 @@ const gameType = ref(props.gameType);
     padding: 20px;
     max-width: 170px;
     width: 100%;
+
+    @media (max-width: 769px) {
+      max-width: 130px;
+    }
 
     .active-overlay, .bg-overlay {
       transition: 0.3s all;
@@ -112,7 +123,7 @@ const gameType = ref(props.gameType);
 
       .game-info-wrapper {
         position: absolute;
-        top: 10%;
+        top: 12%;
         left: 50%;
         transform: translate(-50%, -50%);
         display: flex;
@@ -120,14 +131,31 @@ const gameType = ref(props.gameType);
         justify-content: center;
         align-items: center;
 
+        @media (max-width: 769px) {
+          top: 12%;
+        }
+
+        .arrow {
+          width: 24px;
+
+          @media (max-width: 769px) {
+            width: 16px;
+          }
+        }
+
         .game-name {
           color: #fff;
           font-size: 24px;
+          line-height: 1;
+
+          @media (max-width: 769px) {
+            font-size: 14px;
+          }
         }
 
         .game-logo {
           max-width: 160px;
-          width: 100%;
+          // width: 100%;
         }
       }
 
@@ -144,12 +172,24 @@ const gameType = ref(props.gameType);
 
       .game-entry-btn {
         position: absolute;
-        bottom: 2%;
+        bottom: 11%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
         display: flex;
         justify-content: center;
+
+        .star {
+          padding: 0 5px;
+        }
+
+        @media (max-width: 769px) {
+          bottom: 7%;
+          .primary-button.blue {
+            width: 100px;
+            height: 30px;
+          }
+        }
 
         &:hover {
           filter: brightness(0.9);
@@ -173,8 +213,6 @@ const gameType = ref(props.gameType);
   }
 
   @media (min-width: 769px) {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 220px));
-
     .game-item {
       max-width: 220px;
     }

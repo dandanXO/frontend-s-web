@@ -812,12 +812,10 @@ function showNodesUpdated() {
   isNodesUpdated.value = false
 }
 onMounted(async () => {
-  await loadSearchCondition()
   if (LOGIN_USER_SITEID.value != null) {
     searchCondition.siteId = LOGIN_USER_SITEID.value
   }
-  await loadFinancialLevels()
-  await loadPayments()
+  await loadSearchCondition()
   bus.on('addNodesToSelectedGroup', addNodesToSelectedGroup)
   bus.on('exportChildItem', getSelectedChild)
   bus.on('exportNodes', showNodesUpdated)
@@ -848,7 +846,9 @@ async function loadFinancialLevels() {
   const { data: financial } = await getFinancialLevels({
     siteId: searchCondition.siteId,
   })
-  page.financials = financial
+  if (financial && financial.length > 0) {
+    page.financials = financial
+  }
 }
 async function loadPayments() {
   const { data: records } = await getAllPayments({

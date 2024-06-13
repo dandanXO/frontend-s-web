@@ -310,6 +310,9 @@ function clearInfo() {
 
 const depositAmtRef = ref("");
 
+const btnLoading = ref(false);
+const isDisplay = ref(false);
+
 async function confirmDeposit() {
   depositAmtRef.value.validate();
   if (depositAmtRef.value.hasError) {
@@ -337,9 +340,49 @@ async function confirmDeposit() {
         Platform.is.name !== "webkit" &&
         !liff.isInClient()
       ) {
-        // if ((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit') {
-        const newWin = window.open(`/depositLoading`, "Bank");
-        newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+        // const newWin = window.open(`/depositLoading`, "Bank");
+        // newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+
+        await cashier
+          .get(`/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`)
+          .then((d) => {
+            if (d.data.code === 11002) {
+              if (d.data && d.data.suggestion) {
+                form.localAmount = d.data.suggestion;
+                btnLoading.value = false;
+              }
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: d.message,
+                icon: "report_problem"
+              });
+            } else {
+              if (freePrivilege.value) {
+                if (selectedPrivilege.value) {
+                  form.privilegeId = selectedPrivilege.value.id + "," + freePrivilege.value.id;
+                } else {
+                  form.privilegeId = "," + freePrivilege.value.id;
+                }
+              } else {
+                if (selectedPrivilege.value) {
+                  form.privilegeId = selectedPrivilege.value.id;
+                } else {
+                  form.privilegeId = null;
+                }
+              }
+              form.paymentId = activeMethod.value.paymentId;
+              const copy = { ...form };
+              const data = {};
+              Object.entries(copy).forEach(([key, value]) => {
+                if (value) {
+                  data[key] = value;
+                }
+              });
+              data.bankCardId = 0;
+              pDepo(data);
+            }
+          });
       } else {
         localStorage.setItem("formDetails", JSON.stringify(form));
         router.push({ path: "/depositLoading" });
@@ -415,39 +458,151 @@ async function confirmDeposit() {
   }
 }
 
-// async function verifyDepositAmount(r, v) {
-//   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
-//     if (
-//       v < activeMethod.value.depositMin ||
-//       v > activeMethod.value.depositMax
-//     ) {
-//       return Promise.reject(
-//         "Deposit should be between " +
-//           activeMethod.value.depositMin +
-//           " - " +
-//           activeMethod.value.depositMax
-//       );
-//     } else {
-//       if (checkAmount.flag) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject(checkAmount.errorMessage);
-//       }
-//     }
-//   }
-// }
+const submitMessage = ref("");
+async function pDepo(deposit) {
+  btnLoading.value = true;
+  const obj = {
+    bankCardId: deposit.bankCardId,
+    localAmount: deposit.localAmount,
+    paymentId: deposit.paymentId,
+    bankId: deposit.bankId
+  };
 
-// async function verifyBank(r, v) {
-//   if (bankCardList.value.length) {
-//     return payTypeClass.value.validateBank(v).then((d) => {
-//       if (d) {
-//         return Promise.resolve();
-//       } else {
-//         return Promise.reject("Bank is required");
-//       }
-//     });
-//   }
-// }
+  if (deposit.privilegeId) {
+    obj.privilegeId = deposit.privilegeId;
+  }
+  await cashier
+    .post("/session/payment/submit", qs.stringify(obj))
+    .then((ret) => {
+      const res = ret.data;
+      // console.log(res)
+
+      if (res.code === 0) {
+        console.log("After SDubmit");
+        console.log(res);
+
+        const response = res.data.result;
+        if (res.data.result.payResultType === "OFFLINE") {
+          btnLoading.value = false;
+        }
+        if (res.data.result.payResultType === "RENDER_HTML") {
+          isDisplay.value = true;
+          const submitResult = res.data.result.data;
+          submitMessage.value = submitResult.split(",");
+          btnLoading.value = false;
+        } else {
+          if (
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+          ) {
+            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+                btnLoading.value = false;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                }
+              }
+            } else {
+              const newWin = window.open(`/`);
+              if (!newWin) {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message:
+                    'ไม่สามารถเปิดหน้าเติมเงินได้ กรุณาตรวจสอบว่าเบราว์เซอร์บล็อกหน้าต่างป๊อปอัพหรือไม่ และแก้ไขเป็น "อนุญาตให้แสดงหน้าต่างป๊อปอัพ" ก่อนทำการเติมเงิน',
+                  icon: "report_problem"
+                });
+                btnLoading.value = false;
+                return;
+              }
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+                btnLoading.value = false;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                }
+              }
+            }
+          } else {
+            localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+              ) {
+                location.href = response.requestUrl;
+                btnLoading.value = false;
+              } else {
+                // openURL(response.requestUrl);
+                // btnLoading.value = false;
+              }
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              localStorage.setItem("responseDetails", JSON.stringify(response));
+              if (response.paramKey === null || response.paramKey === "") {
+                if (store.getDeviceType() === "ANDROID") {
+                  // alert("Adnroid");
+                  var preUrl =
+                    "https://" +
+                    store.evip +
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+
+                  // alert(preUrl);
+                  const newWin = window.open(preUrl, `_blank`);
+                } else {
+                  router.push(
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+                }
+              } else {
+                router.push(
+                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              }
+            }
+          }
+        }
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+        btnLoading.value = false;
+      }
+    })
+    .catch((error) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: error.message,
+        icon: "report_problem"
+      });
+      btnLoading.value = false;
+    });
+}
 
 const amountPlaceholder = computed(() => {
   if (calculatedMinDeposit.value && activeMethod.value.depositMax)

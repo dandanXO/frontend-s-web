@@ -1,89 +1,10 @@
 <template>
   <div class="main-section">
-    <!-- <div v-for="e in snowCount" :key="`snow-${e}`" class="snow"></div> -->
+    <LangToggle />
 
-    <!-- <img class="home-decor-flower" src="../assets/home/home-decor-flower.png" />
-    <img class="home-decor-bike" src="../assets/home/home-decor-bike.png" />
-    <img class="home-decor-bike-2" src="../assets/home/home-decor-bike-2.png" />
-    <img class="home-decor-tree" src="../assets/home/home-decor-tree.png" /> -->
+    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="isLoadingDepositRecordList"/>
 
-    <!-- <q-carousel
-        :class="!$q.screen.gt.sm ? 'home-banner-h5' : 'home-banner-web'"
-        autoplay
-        navigation
-        v-model="slide"
-        swipeable
-        infinite
-      > -->
-    <!-- <template v-slot:navigation-icon="{ active, onClick }">
-          <q-btn padding="3px 10px" v-if="active" size="xs" color="brand" @click="onClick" />
-          <q-btn padding="3px 10px" v-else size="xs" color="white" @click="onClick" />
-        </template> -->
-
-    <!--      <q-carousel-slide-->
-    <!--        name="mainSlide"-->
-    <!--        class="column no-wrap flex-center"-->
-    <!--        :img-src="-->
-    <!--          !$q.screen.gt.sm-->
-    <!--            ? require('../assets/images/index/main-home-banner-mobile.jpg')-->
-    <!--            : require('../assets/images/index/main-home-banner-desktop.jpg')-->
-    <!--        "-->
-    <!--        @click="gotoPromo(0)"-->
-    <!--      >-->
-    <!--        <h1 class="main-slide-txt">ออนไลน์คาสิโนที่ไว้ใจได้-Jolly88</h1>-->
-    <!--      </q-carousel-slide>-->
-    <!-- <q-carousel-slide
-          v-for="(banner, i) in banners"
-          :key="i"
-          :name="i"
-          class="column no-wrap flex-center"
-          :img-src="!$q.screen.gt.sm ? imgURL + banner.mobileImageUrl : imgURL + banner.desktopImageUrl"
-          @click="gotoPromo(banner)"
-        >
-        </q-carousel-slide>
-      </q-carousel> -->
-
-    <!-- <div class="grid-wrapper">
-      <div class="items-center grid" ref="gameBoardRef">
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'xfj' ? 'active-board' : ''"
-          @click="switchMenu('xfj')"
-        >
-          <img src="../assets/images/index/home-cf.png" />
-          <span>{{ $t("lang.fish2_list") }}</span>
-        </div>
-        <div
-          class="game-board-item"
-          :class="currentSelectedMenu == 'fish2' ? 'active-board' : ''"
-          @click="switchMenu('fish2')"
-        >
-          <img src="../assets/images/index/home-fish2.png" />
-          <span>เกมส์เล็ก ๆ</span>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div class="midd">
-      <div class="station-notice-wrapper">
-        <div class="volume">
-          <div class="box">
-            <div class="text">공지</div>
-          </div>
-        </div>
-        <marquee-text :repeat="store.announcementList.length" :duration="store.announcementList.length * 20">
-          <div v-if="store.announcementList">
-            <span v-for="(a, i) in store.announcementList" :key="i" @click="openPopup(a)">
-              {{ a.content }}
-            </span>
-          </div>
-        </marquee-text>
-      </div>
-    </div> -->
-
-    <div class="jackpot">
-      <div class="jackpot-txt">987,654,321.23</div>
-    </div>
+    <JackpotPrize />
 
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
@@ -211,8 +132,8 @@
           <div class="search-list">
             <q-form @submit="searchList">
               <q-input
-                color="white"
-                filled
+                dense
+                outlined
                 class="search-input"
                 v-model="gamePage.searchKey"
                 :label="$t('lang.keyin_keyword')"
@@ -692,65 +613,10 @@
       </div>
     </Transition>
     <!-- cq9 end -->
+    
+
     <Transition>
-      <div class="game-grid-lists" id="id-minigame-board" v-if="currentSelectedMenu === 'casual' && isShow">
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="ui.themeColor" size="8em" />
-        </div>
-        <template v-if="!isLoading">
-          <template v-for="(game, index) in miniGames" :key="index">
-            <div class="game-item btn-pointer btn-slot-game" @click="playGame(game.name, selectedPlat.code, game.code)">
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${game.icon})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </template>
-
-          <template v-if="selectedPlat.code === 'TFGaming'">
-            <div
-              class="game-item minigame-select-div"
-              v-for="(game, index) in miniGamesMore"
-              :key="index"
-              @click="showTypeH5(game.id)"
-              @mouseover="showTypeWeb(game.id)"
-              @mouseleave="showTypeWeb(0)"
-            >
-              <img :src="game.logo" />
-
-              <transition appear>
-                <div class="select-type-div" v-if="showMiniType == game.id">
-                  <div
-                    class="game-type btn-pointer"
-                    id="copper-type"
-                    @click="playGame(game.name, 'TFGaming', game.copper)"
-                  >
-                    1,000 - 65K
-                  </div>
-                  <div
-                    class="game-type btn-pointer"
-                    id="silver-type"
-                    @click="playGame(game.id, 'TFGaming', game.silver)"
-                  >
-                    100K - 130K
-                  </div>
-                  <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
-                    1,000 - 20K
-                  </div>
-                </div>
-              </transition>
-            </div>
-          </template>
-        </template>
-      </div>
+      <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
 
     <Transition>
@@ -767,93 +633,48 @@
   <div class="news-section">
     <div class="news-title">
       <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
     </div>
-    <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
-      <div class="news-item-left">
-        <div class="news-item-title">
-          [
-          {{ item.title }}
-          ] ※
-          {{ item.content }}
-          ※
+    <template v-if="newsList.length > 0">
+      <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
+        <div class="news-item-left">
+          <div class="news-item-title" :title="item.title">
+            [
+            {{ item.title }}
+            ] ※
+            {{ item.content }}
+            ※
+          </div>
+        </div>
+        <div class="news-item-right">
+          <div class="news-item-date">{{ item.createTime }}</div>
         </div>
       </div>
-      <div class="news-item-right">
-        <div class="news-item-date">{{ item.createTime }}</div>
-      </div>
+    </template>
+    <div v-else class="news-item-box" style="justify-content: center;">
+      아직 콘텐츠가 없습니다
     </div>
   </div>
 
-  <div class="news-split">
-    <div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">이벤트</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : ''">+ 더보기</router-link>
-      </div>
-      <!-- <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div> -->
-    </div>
-
+  <div class="">
     <div class="news-section">
       <div class="news-title news-title__sub">
         <div class="title-text">출금현황</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : ''">+ 더보기</router-link>
+        <!-- <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link> -->
       </div>
-      <!-- <div class="news-item-box">
+      
+      <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
         <div class="news-item-left">
           <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
+            {{ formatTransactionType(d.transactionType) }}
+            {{ d.loginName }}
+            <span style="color: #01e1ff">{{ d.amount }}원</span>
           </div>
+        </div>
+        <div class="news-item-right">
+          <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
         </div>
       </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            카***팟
-            <span style="color: #01e1ff">6,660,220원</span>
-            <span style="color: #92959f; margin-left: 20px">2024-05-15 15:19:03</span>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 
@@ -1123,10 +944,13 @@ import { RiStarLine, RiStarFill } from "vue-remix-icons";
 import { useUI } from "stores/ui";
 import { isMobile } from "boot/utils";
 import { App } from "@capacitor/app";
-import liff from "@line/liff";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import MinigamesGrid from 'components/game/MinigamesGrid';
+import LangToggle from "src/components/LangToggle.vue";
+import RollingText from "src/components/home/RollingText.vue";
+import JackpotPrize from "src/components/home/JackpotPrize.vue";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1138,25 +962,17 @@ export default defineComponent({
     RiStarLine,
     RiStarFill,
     GameItem,
-    GameCategory
-    // RiVolumeUpLine,
-    // RiBilliardsLine,
-    // RiBasketballLine,
-    // RiUserShared2Line
+    GameCategory,
+    MinigamesGrid,
+    LangToggle,
+    RollingText,
+    JackpotPrize
   },
   setup() {
-    const snowCount = 10;
-
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
-    // ui.$onAction(({ name, args }) => {
-    //   switch (name) {
-    //     case "setScrollPosition":
-    //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
-    //   }
-    // });
     const specialInviteBonusEligible = ref(false);
     const specialInviteBonusAmt = ref(0);
     const specialInviteBonusPopupVisible = ref(false);
@@ -1165,7 +981,6 @@ export default defineComponent({
     const gameBoardRef = ref();
     const gameBoardItemRef = ref();
 
-    const route = useRoute();
     const router = useRouter();
     const store = userStore();
 
@@ -1215,19 +1030,6 @@ export default defineComponent({
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
-
-      // gameInfo && console.log(gameInfo);
-      // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-      // const clickCount = favGames[gameInfo.id]
-      //     ? favGames[gameInfo.id].gameClicked + 1
-      //     : 1;
-      // const lastPlayedAt = moment().unix();
-      // const revisedGameInfo = {...gameInfo, gameClicked: clickCount, lastPlayed: lastPlayedAt};
-      // gameInfo.gameClicked = clickCount;
-      //
-      // favGames[gameInfo.id] = revisedGameInfo;
-      // localStorage.setItem("FAV_GAMES", JSON.stringify(favGames));
-      // favGamesList.value = favGames;
     };
 
     const favGamesList = ref([]);
@@ -1238,12 +1040,6 @@ export default defineComponent({
       return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
     });
 
-    // const updateSortedFavGamesList = () => {
-    //   favGamesList.value = Object.fromEntries(
-    //       Object.entries(favGamesList.value).sort(([, a], [, b]) => b.lastPlayed - a.lastPlayed)
-    //   );
-    // };
-
     const isHomePromoModal = ref(false);
     const favLists = computed(() => {
       let lists = [];
@@ -1252,71 +1048,17 @@ export default defineComponent({
       });
       return lists;
     });
-    // const getFavGameList = () => {
-    //   // const favGames = JSON.parse(localStorage.getItem("FAV_GAMES")) || {};
-    //   // favGamesList.value = favGames;
-    //   // updateSortedFavGamesList();
-    //
-    //   api.get("/session/member/fav-games").then((res) => {
-    //     if (res.data.code === 0) {
-    //       favGamesList.value = res.data.data;
-    //
-    //       favGamesList.value.forEach((element) => {
-    //         element.default = require("../assets/images/games/aviator/default.png");
-    //         if (element.icon.startsWith("3/")) {
-    //           element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
-    //         } else {
-    //           element.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${element.platformCode.toLowerCase()}/${
-    //             element.icon
-    //           }.png`;
-    //         }
-    //       });
-    //     }
-    //   });
-    // };
 
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     const pokerGames = [
-      // {
-      //   code: "JILI",
-      //   name: "Jili Games",
-      //   gameName: "Jili",
-      //   gameCode: "64",
-      //   bg: require("../assets/images/games/poker/poker_1.jpg"),
-      //   main: require("../assets/images/games/poker/poker1_1.png"),
-      //   logo: require("../assets/images/common/logo/jl.png")
-      // },
-      // {
-      //   code: "RICH88",
-      //   name: "Rich88",
-      //   gameName: "Rich88",
-      //   bg: require("../assets/images/games/poker/poker_2.jpg"),
-      //   main: require("../assets/images/games/poker/poker2_01.png"),
-      //   logo: require("../assets/images/common/logo/RICH88.png")
-      // },
-      // {
-      //   code: "KM",
-      //   name: "KM",
-      //   gameName: "KM",
-      //   bg: require("../assets/images/games/poker/poker_3.jpg"),
-      //   main: require("../assets/images/games/poker/poker3_01.png"),
-      //   logo: require("../assets/images/common/logo/km.png")
-      // }
+      
     ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
     const esportsGame = ref([]);
     const sportsGame = ref([]);
-
-    // {
-    //   code: "TFGaming",
-    //     name: "TF Gaming",
-    //   gameName: "AE Sexy",
-    //   gameCode: "MX-LIVE-001",
-    //   logo: require("../assets/logo/TF88.png"),
-    // },
     const platformMinigame = ref([]);
     const miniGames = ref([]);
     const miniGamesMore = ref([
@@ -1357,20 +1099,13 @@ export default defineComponent({
           }
         })
         .catch(() => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: "Loading failed",
-          //   icon: "report_problem"
-          // });
         });
     }
 
     const platforms = ref([]);
     const newsList = ref([]);
+    const isLoadingDepositRecordList = ref(false);
     const depositRecordList = ref([]);
-
-    // /member/withdraw-deposit-record
 
     const selectedPlatId = ref();
     const selectedPlat = reactive({
@@ -1385,14 +1120,7 @@ export default defineComponent({
       searchKey: "",
       total: 0
     });
-    const favGamePage = reactive({
-      gameList: [],
-      currentPage: 1,
-      pageSize: 40,
-      searchType: "",
-      searchKey: "",
-      total: 0
-    });
+    
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const esportPlatform = ref([]);
@@ -1715,18 +1443,14 @@ export default defineComponent({
     };
 
     const loadDepositRecordList = () => {
+      isLoadingDepositRecordList.value = true;
       api
         .get("/member/withdraw-deposit-record")
         .then((res) => {
-          const {
-            data: {
-              code,
-              data: { depositRecord }
-            }
-          } = res;
+          const response = res.data;
 
-          if (code === 0) {
-            depositRecordList.value = depositRecord;
+          if (response.code === 0) {
+            depositRecordList.value = response.data;
           } else {
             $q.notify({
               color: "negative",
@@ -1735,9 +1459,14 @@ export default defineComponent({
               icon: "report_problem"
             });
           }
+
+          isLoadingDepositRecordList.value = false;
         })
         .catch((err) => {
           console.log(err);
+          isLoadingDepositRecordList.value = false;
+        }).finally(() => {
+          isLoadingDepositRecordList.value = false;
         });
     };
 
@@ -1898,6 +1627,18 @@ export default defineComponent({
       // console.log(target)
     };
 
+    const formatTransactionType = (transactionType) => {
+        if(transactionType === 'DEPOSIT') {
+            return `[${t('lang.menu_deposit')}]`;
+        }
+
+        if(transactionType === 'WITHDRAW') {
+            return `[${t('lang.menu_withdraw')}]`;
+        }
+
+        return '';
+    }
+
     // const checkRedeemSpecialInviteBonusEligiblity = () => {
     //   if (store.hasToken()) {
     //     eventapi
@@ -1949,38 +1690,10 @@ export default defineComponent({
       getVersionNo();
       checkSticky();
       loadDepositRecordList();
-
-      // checkSpinWheelPromo();
-      // checkRedeemSpecialInviteBonusEligiblity();
     });
 
     const popupInterval = ref(null);
     const isSpinWheelPromo = ref(false);
-    // const checkSpinWheelPromo = () => {
-    //   if (store.hasToken()) {
-    //     setTimeout(() => {
-    //       console.log("Check Spin Wheel.");
-    //       getSpinWheelCount();
-    //       popupInterval.value = setInterval(() => {
-    //         // alert("YEs");
-    //         getSpinWheelCount();
-    //       }, 3600000);
-    //     }, 60000);
-    //   }
-    // };
-
-    // const getSpinWheelCount = () => {
-    //   eventapi.get("/multiWheel/init?promoCode=multi-wheel").then((res) => {
-    //     const { code, data } = res.data;
-    //     if (code === 0) {
-    //       console.log(data);
-    //       const { leftCount, unlock } = data;
-    //       if (leftCount > 0) {
-    //         isSpinWheelPromo.value = true;
-    //       }
-    //     }
-    //   });
-    // };
 
     const gotoPromoSpinWheel = () => {
       isSpinWheelPromo.value = false;
@@ -1998,7 +1711,7 @@ export default defineComponent({
         // getFavGameList();
         store.getUnreadTotal();
       }
-      loadData();
+      // loadData();
       loadAnnouncement();
       getPlatList();
     };
@@ -2072,7 +1785,7 @@ export default defineComponent({
     };
 
     return {
-      snowCount,
+      isLoadingDepositRecordList,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
@@ -2165,7 +1878,10 @@ export default defineComponent({
       toggleSpecialInviteBonusPopup,
       newsList,
       getBackgroundImageStyle,
-      gameItemLoad
+      gameItemLoad,
+      depositRecordList,
+      moment,
+      formatTransactionType 
     };
   }
 });
@@ -2185,70 +1901,6 @@ export default defineComponent({
   width: 100%;
   height: 440px;
   background: url("../assets/images/headerBanner/banner.svg") no-repeat center center;
-}
-
-.midd {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 15px;
-  /* margin: 10px 10px 5px; */
-
-  @media (min-width: 769px) {
-    padding: 20px;
-  }
-
-  .station-notice-wrapper {
-    display: flex;
-    border-radius: 8px;
-    background-color: #000;
-    gap: 10px;
-    padding: 6px;
-    justify-content: center;
-    align-items: center;
-    width: 85%;
-    flex: 1;
-    @media (min-width: 769px) {
-      padding: 8px 12px;
-    }
-
-    .volume {
-      height: 24px;
-      background-color: #ff3c3c;
-      display: flex;
-      align-items: center;
-      @media (min-width: 769px) {
-        height: 32px;
-      }
-      .box {
-        width: 48px;
-        font-size: 16px;
-        line-height: 22.4px;
-        border-radius: 2px;
-        display: flex;
-        justify-content: center;
-        @media (min-width: 769px) {
-          width: 60px;
-        }
-      }
-    }
-
-    span {
-      margin-right: 10px;
-      cursor: pointer;
-    }
-  }
-
-  .share {
-    background-image: $linear-bg-red;
-    padding: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    flex: 1;
-  }
 }
 
 .slot-grid,
@@ -2381,30 +2033,6 @@ export default defineComponent({
   }
 }
 
-.jackpot {
-  display: flex;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 816px;
-  height: 130px;
-  background: url('../assets/home/jackpot.png') no-repeat center center;
-  background-size: 100% 100%;
-  position: relative;
-
-  .jackpot-txt {
-    display: flex;
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 34px;
-    font-weight: bold;
-    color: #f1b252;
-    text-shadow: 0 0 5px #ff0000;
-    letter-spacing: 3px;
-  }
-}
-
 .home-bottom-section {
   margin-top: 16px;
 
@@ -2517,13 +2145,11 @@ export default defineComponent({
   }
 
   .bookmarks {
-    width: 70px;
+    width: 60px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     grid-gap: 0px;
-    margin: 0px auto 10px 0px;
-    padding: 0px 10px 10px;
     justify-content: flex-start;
 
     .plat-item {
@@ -2534,7 +2160,7 @@ export default defineComponent({
       padding: 10px 10px;
       justify-content: center;
       align-items: center;
-      background: $third-color;
+      background: #4f4f4f36;
 
       .platform-img {
         max-width: 85px;
@@ -2558,11 +2184,11 @@ export default defineComponent({
       }
 
       &:first-of-type {
-        border-radius: 10px 10px 0px 0px;
+        // border-radius: 10px 10px 0px 0px;
       }
 
       &:last-of-type {
-        border-radius: 0px 0px 10px 10px;
+        // border-radius: 0px 0px 10px 10px;
       }
 
       span {
@@ -2572,7 +2198,7 @@ export default defineComponent({
       }
 
       &.active {
-        background: linear-gradient(180deg, #39c4ff 0%, #2555ff 100%);
+        background: linear-gradient(312deg, #0286FF 0%, #00FF85 100%);
         box-shadow: inset 0 0 5px #ffffff;
 
         img {
@@ -2749,7 +2375,7 @@ export default defineComponent({
     height: 110px;
     margin: 0 auto 15px;
     padding: 9px;
-    background-image: url("../assets/images/index/thai-tcg-bg.png");
+    //background-image: url("../assets/images/index/thai-tcg-bg.png");
     background-size: 100% 100%;
 
     .platform-img {
@@ -2843,6 +2469,13 @@ export default defineComponent({
   line-height: 16.8px;
   border-bottom: 1px solid #3f3f3f;
 
+  display: grid;
+  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(120px, 10%);
+
+  @media (min-width: 769px) {
+    grid-template-columns: minmax(calc(80% - 100px), 90%) minmax(200px, 20%);
+  }
+
   &:hover {
     .news-item-title,
     .news-item-date {
@@ -2857,7 +2490,7 @@ export default defineComponent({
     line-height: 22px;
   }
   .news-item-left {
-    width: 175px;
+    width: 100%;
     @media (min-width: 769px) {
       width: 60%;
     }
@@ -2869,6 +2502,9 @@ export default defineComponent({
       transition: 0.3s all;
       padding-right: 8px;
       padding-left: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       @media (max-width: 769px) {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -2886,6 +2522,7 @@ export default defineComponent({
     .news-item-date {
       transition: 0.3s all;
       color: #92959f;
+      text-align: right;
     }
   }
 }
@@ -2911,7 +2548,7 @@ export default defineComponent({
 
   .game-scroll-lists {
     .bookmarks {
-      width: 100px;
+      width: 80px;
 
       .plat-item {
         img {
@@ -3143,7 +2780,7 @@ export default defineComponent({
 }
 
 .special-invite-bonus-sticky {
-  background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
+  //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 115px;
@@ -3211,7 +2848,7 @@ export default defineComponent({
   }
 
   .special-invite-bonus-content {
-    background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
+    //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     margin: 30px;
@@ -3249,7 +2886,7 @@ export default defineComponent({
     }
 
     .special-invite-bonus-popup-confirm-btn {
-      background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
+      //background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
       max-width: 200px;
@@ -3315,7 +2952,7 @@ export default defineComponent({
       // box-shadow: 0px 0px 5px 3px #8000ffd9;
       cursor: pointer;
       text-shadow: 1px 2px 2px #000000;
-      background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
+      //background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
       background-size: 100% 100%;
 
       &:hover {
@@ -3384,8 +3021,7 @@ export default defineComponent({
 
     width: 125px;
     aspect-ratio: 184/518;
-    background: url("../assets/home/line-board.png");
-    //background: url(../assets/home/xmas-line-btn.png);
+    //background: url("../assets/home/line-board.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     //padding: 10px 0;
@@ -3434,50 +3070,6 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
-  }
-}
-
-@function random_range($min, $max) {
-  $rand: random();
-  $random_range: $min + floor($rand * (($max - $min) + 1));
-  @return $random_range;
-}
-
-.snow {
-  $total: 50;
-  position: absolute;
-  z-index: 0;
-  width: 23px;
-  height: 23px;
-  background: url(../assets/images/common/snow.png);
-  background-repeat: no-repeat;
-
-  @for $i from 1 through $total {
-    $random-x: random(1000000) * 0.0001vw;
-    $random-offset: random_range(-100000, 100000) * 0.0001vw;
-    $random-x-end: $random-x + $random-offset;
-    $random-x-end-yoyo: $random-x + ($random-offset / 2);
-    $random-yoyo-time: random_range(30000, 80000) / 100000;
-    $random-yoyo-y: $random-yoyo-time * 100vh;
-    $random-scale: random(10000) * 0.0001 + 1;
-    $fall-duration: random_range(10, 30) * 1s;
-    $fall-delay: random(10) * -1s;
-
-    &:nth-child(#{$i}) {
-      opacity: random(10000) * 0.0001;
-      transform: translate($random-x, -10px) scale($random-scale);
-      animation: fall-#{$i} $fall-duration $fall-delay linear infinite;
-    }
-
-    @keyframes fall-#{$i} {
-      #{percentage($random-yoyo-time)} {
-        transform: translate($random-x-end, $random-yoyo-y) scale($random-scale);
-      }
-
-      to {
-        transform: translate($random-x-end-yoyo, 100vh) scale($random-scale);
-      }
-    }
   }
 }
 </style>

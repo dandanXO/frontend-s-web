@@ -11,7 +11,7 @@
     <keep-alive>
       <common-footer v-if="!shouldHideHeaderAndFooter" />
     </keep-alive>
-    <common-sidebar v-if="!shouldHideHeaderAndFooter" />
+    <common-sidebar v-if="!shouldHideHeaderAndFooter" :hasToken="hasToken" />
   </div>
 </template>
 
@@ -21,6 +21,7 @@ import CommonHeader from "@/components/layout/CommonHeader.vue";
 import CommonFooter from "@/components/layout/CommonFooter.vue";
 import CommonSidebar from "@/components/layout/CommonSidebar.vue";
 import { useRoute } from "vue-router";
+import { userStore } from "@/store";
 
 export default defineComponent({
   name: "LayoutView",
@@ -65,10 +66,12 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute();
+    const store = userStore();
     return {
       shouldHideHeaderAndFooter: computed(() => {
         return route.path === "/maintenance";
       }),
+      hasToken: store.hasToken()
     };
   },
 });

@@ -5,7 +5,7 @@
 
 .payment-method-item {
   width: calc(33% - 20px);
-  padding: 0.4rem 0.75rem !important;
+  padding: 0.2rem 0.35rem !important;
   justify-content: flex-start !important;
   box-shadow: none !important;
 
@@ -13,13 +13,21 @@
 
   &.active {
     background: $linear-bg-2 !important;
-    border: 2px solid $purple-color !important;
+    border: 3px solid $primary !important;
     background: $linear-bg-2;
     box-shadow: 0px -26px 20px 0px rgba($purple-color, 0.76) inset, 0px 8px 8px 0px rgba(221, 178, 255, 0.26) inset;
   }
 
+  .node-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: #128787;
+    padding: 5px;
+    border-radius: 4px; 
+  }
+
   img {
-    aspect-ratio: 1;
     width: 1.6rem;
   }
 

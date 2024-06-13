@@ -27,8 +27,9 @@ import PlayInStage from "./components/PlayInStage.vue";
 import BracketStage from "./components/BracketStage.vue";
 import FinalStage from "./components/FinalStage.vue";
 import MatchInfoSwiper from "./components/MatchInfoSwiper.vue";
+import { useLocalStorage } from "@vueuse/core";
 
-const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 
 const tabPosition = ref("play-in");
 const matchList = ref([]);

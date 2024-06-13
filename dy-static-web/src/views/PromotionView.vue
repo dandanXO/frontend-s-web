@@ -58,10 +58,13 @@
             selectedPromo.promoCode !== 'dy2-cny-step-game' &&
             selectedPromo.promoCode !== 'dy2-game-steps' &&
             selectedPromo.promoCode !== 'dy2-msi-promo' &&
-            selectedPromo.promoCode !== 'dy-eurocup-hongbao'
+            selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
           "
           :class="{
-            isCSBanner: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024'
+            isCSBanner:
+              selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
           }"
         >
           <div
@@ -89,11 +92,21 @@
           :class="{
             isCS: selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024',
             isMSI: selectedPromo.promoCode === 'dy2-msi-promo',
+            isEurocupManual: selectedPromo.promoCode === 'dy2-eurocup-manual',
             fullwidth:
               selectedPromo.promoCode === 'dy2-cny2024-promo' ||
               selectedPromo.promoCode === 'dy2-cny-step-game' ||
               selectedPromo.promoCode === 'dy2-game-steps' ||
-              selectedPromo.promoCode === 'dy-eurocup-hongbao'
+              selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
+              selectedPromo.promoCode === 'dy2-lpl-summer24' ||
+              selectedPromo.promoCode === 'dy-duanwujie24' ||
+              selectedPromo.promoCode === 'dy2-eurocup-manual' ||
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024'
+          }"
+          :style="{
+            backgroundImage: selectedPromo?.desktopImgBackgroundUrl
+              ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+              : 'none'
           }"
         >
           <div class="hot-promo" v-if="selectedPromo.hasPromo">
@@ -328,7 +341,6 @@ export default defineComponent({
       margin: 10px auto;
       min-width: 80%;
       text-align: center;
-
       &:not(:has(thead)) {
         tr:first-child td {
           background-image: linear-gradient(0deg, #0094ff 0, #19c6ff 100%), linear-gradient(#2e3039, #2e3039);
@@ -342,6 +354,10 @@ export default defineComponent({
       th,
       td {
         padding: 10px;
+        p {
+          margin: 0;
+          line-height: 21px;
+        }
       }
 
       tbody {
@@ -622,10 +638,12 @@ export default defineComponent({
         margin: 0 auto;
 
         &.isCSBanner {
-          min-height: 600px;
+          min-height: 660px;
+          max-width: none;
 
           .promo-bg {
-            min-height: 600px !important;
+            min-height: 660px !important;
+            background-size: 100% 100%;
           }
         }
 
@@ -644,6 +662,17 @@ export default defineComponent({
             height: 220px;
           }
         }
+
+        &.isEurocupManualBanner {
+          max-width: 100%;
+
+          .promo-bg {
+            height: 500px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+          }
+        }
       }
 
       .inner {
@@ -653,6 +682,12 @@ export default defineComponent({
         display: flex;
         flex-direction: column;
         gap: 20px;
+
+        &.isEurocupManual {
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: 100% 100%;
+        }
 
         &.isMSI {
           padding: 0px 0 0px;
@@ -670,6 +705,10 @@ export default defineComponent({
 
           .promo-view-container {
             display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
           }
         }
         &.isCS {

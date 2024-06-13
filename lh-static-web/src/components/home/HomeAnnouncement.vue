@@ -194,6 +194,7 @@ onMounted(() => {
     gap: 5px;
 
     .station-notice-container {
+      width: 100%;
       flex: 3;
 
       .station-notice-box {

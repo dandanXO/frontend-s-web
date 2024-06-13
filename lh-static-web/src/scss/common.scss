@@ -1,10 +1,18 @@
+// @font-face {
+//   font-family: "FZHanZhenGuangBiaoS-GB";
+//   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
+//   src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
+//     url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+//   font-weight: normal;
+//   font-style: normal;
+//   font-display: swap;
+// }
+
 @font-face {
   font-family: "FZHanZhenGuangBiaoS-GB";
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot");
-  src: url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.eot?#iefix") format("embedded-opentype"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff") format("woff"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.woff2") format("woff2"),
-    url("@/assets/fonts/5f69dea23a26b8d713b2c85c831bebc7.ttf") format("truetype");
+  src: url("@/assets/fonts/FZHanZhenGuangBiaoS.ttf");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -26,6 +34,13 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "DIN";
+  src: url("@/assets/fonts/DIN Bold.ttf");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 body {
   padding: 0;
   margin: 0;
@@ -210,6 +225,24 @@ body {
   .el-dialog__header {
     border-radius: 12px 12px 0 0;
     background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  }
+
+  .imptann-modal {
+    background: transparent;
+    max-width: 750px;
+    margin-top: 10px !important;
+
+    .el-dialog__body {
+      padding: 20px !important;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .alert-img {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+    }
   }
 }
 .full-modal {

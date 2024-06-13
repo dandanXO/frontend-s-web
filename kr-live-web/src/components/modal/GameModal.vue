@@ -49,7 +49,7 @@
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-      <img src="../../assets/logo-coming.png" style="width: 80%" />
+<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -260,9 +260,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
             visible.value = true;
           } else if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
-            // 
+            //
             const newWin = window.open(`/`, "_self");
-            
+
             if(newWin){
               newWin.location.href = srcDoc;
             } else {

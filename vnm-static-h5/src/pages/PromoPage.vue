@@ -35,16 +35,21 @@
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-label"  v-if="promo.labelType !== 2"
-                        >
-                          <div class="promo-ribbon"
-                               :class="{
-                          labelhot: promo.labelType === 1,
-                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                          labellimit: promo.labelType === 6,
-                          labelnew: promo.labelType === 0,
-                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
-                       }"
+                        <div class="promo-label" v-if="promo.labelType !== 2">
+                          <div
+                            class="promo-ribbon"
+                            :class="{
+                              labelhot: promo.labelType === 1,
+                              labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                              labellimit: promo.labelType === 6,
+                              labelnew: promo.labelType === 0,
+                              labelother:
+                                promo.labelType !== 6 &&
+                                promo.labelType !== 1 &&
+                                promo.labelType !== 0 &&
+                                promo.labelType !== 3 &&
+                                promo.labelType !== 5
+                            }"
                           >
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
@@ -81,16 +86,21 @@
                   <div class="promo-item" v-if="tab.name === 'all'">
                     <a @click="showPromoDetails(promo)">
                       <div>
-                        <div class="promo-label" v-if="promo.labelType !== 2"
-                        >
-                          <div class="promo-ribbon"
-                               :class="{
-                          labelhot: promo.labelType === 1,
-                          labelrecommend: promo.labelType === 3 || promo.labelType === 5,
-                          labellimit: promo.labelType === 6,
-                          labelnew: promo.labelType === 0,
-                        labelother: promo.labelType !== 6 && promo.labelType !== 1 && promo.labelType !== 0 && promo.labelType !== 3 && promo.labelType !== 5,
-                       }"
+                        <div class="promo-label" v-if="promo.labelType !== 2">
+                          <div
+                            class="promo-ribbon"
+                            :class="{
+                              labelhot: promo.labelType === 1,
+                              labelrecommend: promo.labelType === 3 || promo.labelType === 5,
+                              labellimit: promo.labelType === 6,
+                              labelnew: promo.labelType === 0,
+                              labelother:
+                                promo.labelType !== 6 &&
+                                promo.labelType !== 1 &&
+                                promo.labelType !== 0 &&
+                                promo.labelType !== 3 &&
+                                promo.labelType !== 5
+                            }"
                           >
                             {{ getPromoLabel(promo.labelType) }}
                           </div>
@@ -140,7 +150,14 @@
                   style="display: block; width: 100%"
                 />
               </div>
-              <div class="inner">
+              <div
+                class="inner"
+                :class="{
+                  isEurocup24: selectedPromo.redirectUrl === 'vnm-eurocup24',
+                  isEurocup24Bet: selectedPromo.redirectUrl === 'vnm-euro-2024-bet-reward',
+                  isEurocupLucky: selectedPromo.redirectUrl === 'vnm-eurocup-luckydraw'
+                }"
+              >
                 <!-- <h2>{{ selectedPromo.title }}</h2> -->
 
                 <div v-if="selectedPromo.hasPromo">
@@ -546,7 +563,6 @@ export default defineComponent({
             padding: 4px 20px 4px 8px;
             background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
 
-
             &:after {
               content: "";
               position: absolute;
@@ -560,26 +576,25 @@ export default defineComponent({
               overflow: hidden;
             }
 
-            &.labelhot{
-              background: linear-gradient(89.92deg, #D7353F 0.06%, #FEA4A4 106.89%, #A4CEFF 106.9%);
+            &.labelhot {
+              background: linear-gradient(89.92deg, #d7353f 0.06%, #fea4a4 106.89%, #a4ceff 106.9%);
             }
 
-            &.labellimit{
-              background: linear-gradient(89.92deg, #454BC2 0.06%, #B1A5F0 106.9%);
+            &.labellimit {
+              background: linear-gradient(89.92deg, #454bc2 0.06%, #b1a5f0 106.9%);
             }
 
-            &.labelnew{
-              background: linear-gradient(89.92deg, #EAA318 0.06%, #F0DBA5 106.9%);
+            &.labelnew {
+              background: linear-gradient(89.92deg, #eaa318 0.06%, #f0dba5 106.9%);
             }
 
-            &.labelrecommend{
-              background: linear-gradient(89.92deg, #6DB73F 0.06%, #A5F0B6 106.9%);
+            &.labelrecommend {
+              background: linear-gradient(89.92deg, #6db73f 0.06%, #a5f0b6 106.9%);
             }
 
-            &.labelother{
-              background: linear-gradient(89.92deg, #4DA9FF 0.06%, #A4CEFF 106.9%);
+            &.labelother {
+              background: linear-gradient(89.92deg, #4da9ff 0.06%, #a4ceff 106.9%);
             }
-
           }
 
           .promo-item-date {
@@ -597,7 +612,7 @@ export default defineComponent({
             font-weight: bold;
             font-size: 1rem;
             max-width: 160px;
-            font-family: 'Roboto';
+            font-family: "Roboto";
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -789,6 +804,22 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.isEurocup24 {
+          width: 100%;
+          margin: 0px;
+        }
+        &.isEurocup24Bet {
+          width: 100%;
+          margin: 0px;
+          background: #e7f1fd;
+        }
+        &.isEurocupLucky {
+          background: #E7F1FD;
+          margin: 0px;
+          width: 100%;
+        }
+
 
         h2 {
           font-size: 18px;

@@ -68,9 +68,27 @@ export const sportsPlatforms = [
     gameCode: ""
   },
   {
+    code: "IM",
+    name: "IM",
+    image: "im",
+    message: "IM Sports is a leading sports betting platform in Asia, offering over 20,000 events per month throughout the season. With a professional team of approximately 700 traders conducting odds trading, providing attractive and real-time odds!",
+    vimessage: 'IM Sports là nền tảng cá cược thể thao hàng đầu châu Á, với tối đa hơn 20.000 sự kiện mỗi tháng trong suốt mùa giải. Một đội ngũ chuyên nghiệp gồm khoảng 700 nhà giao dịch tiến hành giao dịch tỷ lệ cược, cung cấp tỷ lệ cược hấp dẫn và theo thời gian thực nhất !',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
     code: "GFSBO",
     name: "SBOBET",
     image: "gfsbo",
+    message: "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
+    vimessage: 'Thể thao SBOBET là nhà cung cấp tỷ lệ cá cược tin cậy hàng đầu khu vực, mạng lưới phủ sóng rộng khắp các quốc gia châu Á. Hỗ trợ hàng trăm kiểu cược và hàng nghìn sự kiện mỗi năm. Phát sóng trực tiếp các kèo đấu chính xác tới từng giây tới người chơi đam mê chiến thắng.',
+    caption: "专业品牌，尽享满贯",
+    gameCode: ""
+  },
+  {
+    code: "SBO",
+    name: "SBOBET",
+    image: "sbo",
     message: "SBOBET Sports is a trusted leading provider of betting odds in the region, with a wide coverage network across Asian countries. Supporting hundreds of betting types and thousands of events per year. Live broadcasts of accurate match odds to passionate players.",
     vimessage: 'Thể thao SBOBET là nhà cung cấp tỷ lệ cá cược tin cậy hàng đầu khu vực, mạng lưới phủ sóng rộng khắp các quốc gia châu Á. Hỗ trợ hàng trăm kiểu cược và hàng nghìn sự kiện mỗi năm. Phát sóng trực tiếp các kèo đấu chính xác tới từng giây tới người chơi đam mê chiến thắng.',
     caption: "专业品牌，尽享满贯",
@@ -185,7 +203,7 @@ export const pokerPlatforms = [
     name: "King Poker",
     image: "kp",
     message: "Texas Hold'em, Dragon Tiger Fight and many other Poker genres as you choose",
-    vimessage: "Texas Hold'em, Long Hổ Đấu và nhiều thể loại Poker khác tùy Bạn chọn",
+    vimessage: "Nơi thỏa mãn đam mê của dân chơi Texas Hold'em, Bài Cào với giao diện thân thiện, dễ thao tác với người chơi",
     caption: "",
     gameCode: ""
   },
@@ -194,7 +212,7 @@ export const pokerPlatforms = [
     name: "King Maker",
     image: "km",
     message: "The leading provider of 3D games, play Bau Cua, Xoc Dia at Kingmaker now!",
-    vimessage: "Nhà cung cấp trò chơi 3D hàng đầu, chơi  Bầu Cua, Xóc Đĩa tại Kingmaker ngay!",
+    vimessage: "Đơn vị đứng đầu trong giới sản xuất những tựa game được cập nhật theo xu hướng mới của thị trường và thời đại. ",
     caption: "",
     gameCode: ""
   },
@@ -203,7 +221,7 @@ export const pokerPlatforms = [
     name: "V8 Poker",
     image: "v8",
     message: "The V8 PLeading technology in Asia",
-    vimessage: "Công nghệ hàng đầu của châu Á",
+    vimessage: "Cổng game Poker quốc tế với giao diện chuyên nghiệp, trò chơi phong phú, mới mẻ được vận hành với quy mô lớn và được ưa chuộng bởi sự tận tâm với khách hàng.",
     caption: "",
     gameCode: ""
   },
@@ -212,7 +230,7 @@ export const pokerPlatforms = [
     name: "Rich88",
     image: "rich88",
     message: "Rich88 offers 3D games with attractive odds, Blackjack, Xoc Dia, Sicbo...",
-    vimessage: "Rich88 cung cấp trò chơi 3D với tỷ lệ cược hấp dẫn, Xì Dách, Xóc Đĩa, Sicbo... ",
+    vimessage: "Rich88 – Sảnh Poker hàng đầu Châu Á với giao diện Game Bài đặc sắc, thân thiện, quen thuộc với những dân chơi Poker kì cựu. ",
     caption: "",
     gameCode: ""
   },
@@ -222,6 +240,15 @@ export const pokerPlatforms = [
     image: "gpi",
     message: "LEG Corporation is expanding its investment in developing LEG Poker",
     vimessage: "Tập đoàn LEG khuếch trương đầu tư phát triển Poker LEG",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "KP",
+    name: "King Poker",
+    image: "kp",
+    message: "Spribe Corporation is expanding its investment in developing Spribe Poker",
+    vimessage: "Tập đoàn Spribe khuếch trương đầu tư phát triển Poker Spribe",
     caption: "",
     gameCode: ""
   },
@@ -242,7 +269,7 @@ export const lotteryPlatforms = [
     name: "TCG",
     image: "tcg",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép người chơi cài đặt cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. ",
     caption: "",
     gameCode: ""
   },
@@ -251,7 +278,7 @@ export const lotteryPlatforms = [
     name: "GPI",
     image: "gpi",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
     caption: "",
     gameCode: "sode"
   },
@@ -260,7 +287,7 @@ export const lotteryPlatforms = [
     name: "LOTO",
     image: "loto",
     message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
-    vimessage: "Xổ số tại TF88 có tỷ lệ cược hấp dẫn đa dạng về hình thức đặt cược, trả thưởng cực nhanh sau giờ quay.",
+    vimessage: "Một sảnh xổ số nổi bật với chức năng xem Livestream quay số kéo dài cả ngày ở tất cả những trò chơi số trong sảnh. Ngoài ra kết quả xổ số của các miền đều được cập nhật nhanh chóng và chính xác.",
     caption: "",
     gameCode: ""
   }
@@ -292,9 +319,22 @@ export const cockfightPlatforms = [
     name: "WS168",
     image: "WS",
     message: "World class cockfighting online",
-    vimessage: "Sành đá gà đẳng cấp hàng đầu thế giới",
+    vimessage: "Sảnh Đá Gà sở hữu hơn 10 năm bề dày kinh nghiệm hoạt động trên thị trường với nhiều lựa chọn như: đá gà cựa, đá gà đòn, đá gà tre và đá gà Mỹ v.v….",
     caption: "",
     gameCode: 7202
+  }
+];
+
+
+export const minigamePlatforms = [
+  {
+    code: "TFGaming",
+    name: "TFGaming",
+    image: "TFGaming",
+    message: "World class minigame online",
+    vimessage: "",
+    caption: "",
+    gameCode: "CASUAL"
   }
 ];
 

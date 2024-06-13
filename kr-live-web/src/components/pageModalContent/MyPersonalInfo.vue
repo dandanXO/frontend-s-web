@@ -1,59 +1,132 @@
 <template>
-  <div class="modal-body-wrap">
-    <q-card-section class="modal-body-content">
-      <form class="personal-info-form">
-        <div>
-          <label>아이디(개인정보)</label>
-          <input
-            :value="store.nickName || ''"
-            :readonly="store.token ? 'readonly' : false"
-            placeholder=""
-          />
-        </div>
-        <div>
-          <label>잔액</label>
-          <input
-            :value="store.token ? mainWallet : ''"
-            :readonly="store.token ?  'readonly' : false"
-            placeholder=""
-          />
-        </div>
-        <div>
-          <label>이메일</label>
-          <input
-            :value="store.email || ''"
-            :readonly="store.token ? 'readonly' : false"
-            placeholder=""
-          />
-        </div>
-        <div>
-          <label>전화</label>
-          <input
-            :value="store.telephone || ''"
-            :readonly="store.token ? 'readonly' : false"
-            placeholder=""
-          />
-        </div>
-      </form>
-      <div class="action-buttons">
-        <q-btn rounded flat style="width:200px;height:70px;" @click="closetheModal" :label="'닫기'" class="primary-button blue" />
+  <div class="form-wrapper">
+    <form class="personal-info-form form-template">
+      <div class="form-item">
+        <label>아이디(개인정보)</label>
+        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
+          @update:model-value="updateTouch" ref="name2Ref"  lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']"/>
       </div>
-    </q-card-section>
+      <div class="form-item">
+        <label>실제 이름</label>
+        <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
+          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
+          @update:model-value="updateTouch" />
+      </div>
+      <!-- <div class="form-item">
+        <label>잔액</label>
+        <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
+          @update:model-value="updateTouch" />
+      </div> -->
+      <div class="form-item">
+        <label>이메일</label>
+        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
+      </div>
+      <div class="form-item">
+        <label>전화</label>
+        <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
+          @update:model-value="updateTouch" />
+      </div>
+    </form>
+    <div class="action-buttons">
+      <div @click="closetheModal" class="primary-button blue">
+        닫기
+      </div>
+      <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
+        제출하다
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup id="RegisterComponent">
 import { reactive, ref, onMounted, computed, defineEmits } from "vue";
 import { userStore } from "stores/index";
-
+import { api } from "boot/axios";
+import { useQuasar } from "quasar";
+const qs = require("qs");
 const emits = defineEmits(["closeModal"]);
 
+const $q = useQuasar();
 
+const hasTouched = ref(false);
+const formDetail = reactive({});
+const realNameRef = ref();
+const name2Ref = ref();
+const personalState = reactive({
+  memberInfo: {}
+});
 const store = userStore();
 const mainWallet = computed(() => {
   const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
   return store.currency.value + " " + balanceWithTwoDecimalPlaces;
 });
+
+const updateTouch = () => {
+  hasTouched.value = true;
+}
+
+const loadInfo = () => {
+  personalState.memberInfo = userStore();
+  formDetail.realName = personalState.memberInfo.realName;
+  formDetail.name2 = personalState.memberInfo.name2;
+  formDetail.mainWallet = personalState.memberInfo.token ? mainWallet : ''
+  formDetail.email = personalState.memberInfo.email || '';
+  formDetail.telephone = personalState.memberInfo.telephone || ''
+}
+
+const updateState = () => {
+  if (!hasTouched.value) {
+    return;
+  }
+
+  const updateInfo = {};
+
+  if (personalState.memberInfo.name2 !== formDetail.name2) {
+    name2Ref.value.validate();
+    if (name2Ref.value.hasError) {
+      return;
+    }
+
+    updateInfo.name2 = formDetail.name2;
+
+    api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
+      const res = data
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "업데이트 완료",
+          icon: "check_circle_outline"
+        });
+
+        store.getMemberInfo().then(() => {
+          loadInfo();
+        });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: r.message,
+          icon: "report_problem"
+        });
+      }
+    });
+  } else {
+    $q.notify({
+      color: "negative",
+      position: "top",
+      message: '변경 사항 없음',
+      icon: "report_problem"
+    });
+  }
+};
+
+onMounted(() => {
+  store.getMemberInfo().then(() => {
+    loadInfo();
+  });
+})
 
 const closetheModal = () => {
   emits("closeModal");
@@ -62,48 +135,4 @@ const closetheModal = () => {
 </script>
 
 <style lang="scss" scoped>
-.modal-body-content {
-  .personal-info-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 30px;
-
-    label {
-      margin-bottom: 10px;
-      display: block;
-      font-size: 14px;
-      color: #fff;
-
-    }
-
-    input,
-    select {
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5C5C5C;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
-    }
-
-    select {
-      height: 52px;
-    }
-
-    label,
-    input,
-    select {
-      width: 100%;
-    }
-  }
-
-  .action-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-    padding: 20px 10px 10px;
-  }
-}
 </style>

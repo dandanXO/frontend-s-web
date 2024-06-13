@@ -18,8 +18,15 @@
 
     <ViPennyBankPromo v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
 
-    <upgradeHongBaoPromo v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'" :promo-code="list.promoCode" />
+    <EuroCup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" />
 
+    <upgradeHongBaoPromo
+      v-if="!isCommonPromo && list.redirectUrl === 'vi-mualixi-redpacket'"
+      :promo-code="list.promoCode"
+    />
+
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo" />
+    <EuroCup2024BetReward v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -52,6 +59,9 @@ import ViPokerCashbackPromo from "../components/hotpromo/vipokercashback/viPoker
 import ViSlotNetLossPromo from "../components/hotpromo/vislotnetloss/viSlotNetLossPromo.vue";
 import ViPennyBankPromo from "../components/hotpromo/vipennybank/viPennyBankPromo.vue";
 import upgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
+import EuroCup2024 from "./hotpromo/EuroCup2024/EuroCup2024.vue";
+import EuroCup2024BetReward from "./hotpromo/euro2024BetReward/Euro2024BetReward.vue";
+import EurocupLuckyDraw from "./hotpromo/EurocupLuckyDraw/EurocupLuckyDraw.vue"
 
 export default defineComponent({
   name: "HotPromo",
@@ -64,7 +74,10 @@ export default defineComponent({
     ViPokerCashbackPromo,
     ViSlotNetLossPromo,
     ViPennyBankPromo,
-    upgradeHongBaoPromo
+    upgradeHongBaoPromo,
+    EuroCup2024,
+    EuroCup2024BetReward,
+    EurocupLuckyDraw
     // CnyStepGame2024Promo
   },
   props: {
@@ -121,7 +134,10 @@ export default defineComponent({
       this.list.redirectUrl === "vi-poker-cashback" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
       this.list.redirectUrl === "vi-penny-bank" ||
-      this.list.redirectUrl === "vi-mualixi-redpacket"
+      this.list.redirectUrl === "vi-mualixi-redpacket" ||
+      this.list.redirectUrl === "vnm-eurocup24" ||
+      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
+      this.list.redirectUrl === "vnm-euro-2024-bet-reward"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -236,6 +252,7 @@ export default defineComponent({
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+
 
   .promo-bg {
     background-size: cover;

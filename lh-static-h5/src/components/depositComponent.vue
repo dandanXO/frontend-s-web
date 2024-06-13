@@ -20,7 +20,7 @@
           </q-btn>
         </div>
         <div class="line">
-          <span>银行账号：</span>
+          <span>银行户名：</span>
           <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('1')" class="common-btn">
             {{ copybtntxt1 }}
@@ -31,6 +31,13 @@
           <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('2')" class="common-btn">
             {{ copybtntxt2 }}
+          </q-btn>
+        </div>
+        <div class="line">
+          <span>支付行</span>
+          <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
+          <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('4')" class="common-btn">
+            {{ copybtntxt4 }}
           </q-btn>
         </div>
         <div class="line">
@@ -93,13 +100,28 @@
           -
           {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
-
-        <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="兑换率">
-          <span class="text-positive">
-            1.00 USDT ≈ {{ activeMethod.currencyRate }}
-            {{ store.currency.value }}
-          </span>
+        
+        <div v-if="isUSDT && activeMethod.currencyRate">
+          <div style="display: flex; justify-content: center; align-items: center">
+            <span style="flex: 1">实时汇率：</span>
+            <span style="flex: 3" class="q-pa-sm text-positive">
+              1.00 USDT ≈ {{ activeMethod.currencyRate }}
+              {{ store.currency.value }}
+            </span>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center">
+            <span style="flex: 1">预计到帐：</span>
+            <span style="flex: 3" class="q-pa-sm text-positive">
+              {{
+                calculatedMinDeposit && form.localAmount < calculatedMinDeposit
+                  ? "0.00"
+                  : (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+              {{ store.currency.value }}
+            </span>
+          </div>
         </div>
+
         <BankComponent
           v-show="selectedPayType && bankCardList.length"
           ref="payTypeClass"
@@ -261,10 +283,12 @@ const subMsg0 = ref();
 const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
+const subMsg4 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
+const copybtntxt4 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -279,14 +303,14 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
   // copybtntxt0.value = 'คัดลอกแล้ว'
 };
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });

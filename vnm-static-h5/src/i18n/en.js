@@ -45,6 +45,10 @@ export default {
     play_now: "Play now",
     bet_now: "Bet Now",
     hotMatches: "Hot Matches",
+    euroCountdown01: "ROAD TO ",
+    euroCountdown01a: "",
+    euroCountdown02: " DAYS LEFT",
+    helloUsername: "Hi,",
 
     // side menu
     menu_sports: "Sports",
@@ -54,7 +58,10 @@ export default {
     menu_lottery: "Lottery",
     menu_slots: "Slots",
     menu_fishing: "Fishing",
+    menu_hashgame: "Hash Game",
+    menu_others: "Others",
     menu_cockfighting: "Cock Fighting",
+    menu_minigame: "Others",
     // notify msg
     msg_update_successful: "Update successful",
     msg_bind_card_first: "Please bind your bank card first",
@@ -186,7 +193,7 @@ export default {
     maintenance_time: "Maintenance Time",
 
     // personal | verify
-    personal_exclusiveurl: "Exclusive URL",
+    personal_exclusiveurl: "URL",
     personal_username: "Username",
     personal_realname: "Real name",
     personal_realname_val: "Please enter your real name",
@@ -438,6 +445,7 @@ export default {
     record_fill_up_record_time: "Fill up record time",
     record_choose_lucky_number: "Choose lucky number",
     record_win_status: "Win status",
+    record_win_prize: "Winner Prize",
     record_no_data: "No data, please check other day",
     record_date_of_win: "Date of win",
     record_winner_list: "Winner list",
@@ -449,7 +457,7 @@ export default {
     please_select_query_time: "Please select the query time",
 
     // promo -- upgradeHongbao
-    congrats: "Congratulations",
+    hong_congrats: "Congratulations",
     claim: "Claim",
 
     // slot
@@ -519,8 +527,10 @@ export default {
     vip_lottery_rebate: "Lottery Rebate",
     vip_unachieved: "Unachieved",
     vip_achieved: "Achieved",
-    vip_cumulative_deposits: "Cumulative deposits:",
-
+    vip_cumulative_deposits: "VIP MAINTAIN REQUIRED:",
+    vip_upgrade_require: "VIP UPGRADE REQUIRED:",
+    vip_3timedeposit: "DEPOSIT 1 TIME",
+    totalBetMonth: "TOTAL BET OF MONTH",
     have_one_successful_deposit: "have one successful deposit",
     accumulated_deposits: "Accumulated deposits",
     turnover_requirements: "Turnover requirements",
@@ -1433,7 +1443,19 @@ export default {
         "TF88 PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",
       partner: "Partner",
       paymentMethod: "Payment Method"
-    }
+    },
+    depositNow: "DEPOSIT NOW",
+    congrats: "Registered successfully",
+    webapp: "Web App",
+    esportapp: "Esports App",
+    firstSlide: "DOWN LOAD APPS",
+    firstSlideContent: "Super smooth experience on TF88's high class apps",
+    firstSlideSub: "DOWNLOAD +60 VNDP",
+    secondSlide: "GET WELCOME BONUS",
+    secondSlideContent: "FIRST TIME DEPOSIT 100% UP TO 2,000 VNDP",
+    thirdSlide: "ESPORTS BETTING DEVELOPER",
+    thirdSlideContent:
+      "TF88 is the pioneer developer of E-Sports betting in Asia. Bet now on E-Sports with over 500 events every day!"
   },
   error: {
     101: "Platform not found",
@@ -1512,6 +1534,8 @@ export default {
     30004: "Member deposit does not meet the requirements",
     30005: "Turnover has not reached the requirements",
     30006: "Members listed as account holders are prohibited from receiving this privilege",
+    30007: "Member deposit does not meet the requirements",
+    30009: "The user's bet amount does not meet the requirement.",
     31000: "Promotion not found",
     32000: "VIP level not found",
     32003: "Haven't reached the required VIP level",

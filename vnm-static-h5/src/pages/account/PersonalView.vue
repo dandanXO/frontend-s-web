@@ -1,6 +1,6 @@
 <template>
   <div class="personal-account">
-<!--    <div class="web">{{ $t("lang.personal_exclusiveurl") }}: {{ personalState.memberInfo.evip }}</div>-->
+   <!-- <div class="web">{{ $t("lang.personal_exclusiveurl") }}: <a :href="`https://${personalState.memberInfo.evip}`">{{ 'https://' + personalState.memberInfo.evip }}</a></div> -->
     <q-form ref="profileFormRef">
       <q-input
         standout
@@ -223,7 +223,7 @@ export default defineComponent({
       personalState.memberInfo = userStore();
       // console.log(personalState.memberInfo.realName);
       if (personalState.memberInfo.birthday > 0) {
-        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).format("YYYY-MM-DD");
+        personalState.memberInfo.birthday = moment(personalState.memberInfo.birthday).utcOffset('+08:00').format("YYYY-MM-DD");
       }
       formDetail.nickName = personalState.memberInfo.nickName;
       formDetail.realName = personalState.memberInfo.realName;
@@ -536,11 +536,15 @@ export default defineComponent({
   }
 
   .web {
-    color: $primary;
     text-align: center;
     font-size: 1.1rem;
     padding: 0 0 10px;
     font-weight: bold;
+    color: #aaaaaa;
+    a {
+      color: $primary;
+      
+    }
   }
 }
 </style>

@@ -13,6 +13,7 @@
       "
     >
       <q-tabs
+        scroll-target=".q-tab--active"
         v-if="!isPromoDetail"
         v-model="tab"
         align="justify"
@@ -150,8 +151,7 @@
                   selectedPromo &&
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
-                  selectedPromo.promoCode !== 'lh1-ftd-promo'&&
-                  selectedPromo.promoCode !== 'lh-eurocup-manual'
+                  selectedPromo.promoCode !== 'lh1-ftd-promo'
                 "
               >
                 <img
@@ -163,10 +163,22 @@
               <div
                 class="inner"
                 :class="{
-                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-eurocup-manual',
+                  lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo'
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl' ,
+                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24',
+                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
                 }"
+                :style="[selectedPromo.promoCode === 'lh-eurocup-manual'
+                    ? 'background-image: url(' +
+                      imgURL +
+                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+                      ')'
+                    : '',
+
+                    {
+                  backgroundImage: selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'',
+                }]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -185,11 +197,11 @@
                   <div v-html="selectedPromo.pageContent"></div>
                 </div>
                 <div
-                  v-if="['lh-cs2-cct-major-2024'].includes(selectedPromo.promoCode)"
+                  v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)"
                   class="corner-decor"
                 >
                   <img
-                    v-if="selectedPromo.promoCode === 'lh-cs2-cct-major-2024'"
+                    v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
                 </div>
@@ -232,8 +244,7 @@ import { userStore } from "stores/index";
 import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 import LocalStorage from "boot/local-storage";
-// import { loadPromo } from "src/api/index/promo.js";
-// import { loadPromoBanner } from "src/api/index/promo";
+import {useLocalStorage} from "@vueuse/core"
 
 import HotPromotion from "components/HotPromotion";
 
@@ -244,7 +255,7 @@ export default defineComponent({
   },
   setup() {
     const store = userStore();
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
     const banner = ref([]);
     const promoState = reactive({
       active: { value: "ALL", label: "ALL" },
@@ -353,14 +364,12 @@ export default defineComponent({
       }
     };
     const switchPromoType = (type) => {
-      // TODO: write back
-      const hasPromoList = promoState.promoList.filter(p => p.hasPromo)
       if (type.value !== "ALL") {
-        filteredArray.value = hasPromoList.filter(function(promo) {
+        filteredArray.value = promoState.promoList.filter(function(promo) {
           return promo.promoType.toLowerCase().split(",").includes(type.value.toLowerCase());
         });
       } else {
-        filteredArray.value = hasPromoList;
+        filteredArray.value = promoState.promoList;
       }
     };
 
@@ -377,21 +386,21 @@ export default defineComponent({
 
           promoItems.forEach(element => {
             // if (store.memberType !== "TEST" && element.privilegeStatus === "TEST") {
-              // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
+            // promoState.promoList.splice(promoState.promoList.indexOf(element), 1);
             // } else {
-              promoState.promoList.push(element);
+            promoState.promoList.push(element);
 
-              if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
-                showPromoDetails(element);
-              }
+            if ((route.query.name === "lh1-invite-2" || route.query.name === "lh1-invite-3") && String(element.redirectUrl) === "lh1-invite") {
+              showPromoDetails(element);
+            }
 
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
+            if (route.query.name && String(element.redirectUrl) === route.query.name) {
+              showPromoDetails(element);
+            }
 
-              if ((route.query.name === "/vip")) {
-                router.push("/account/vip");
-              }
+            if ((route.query.name === "/vip")) {
+              router.push("/account/vip");
+            }
             // }
           });
 
@@ -819,6 +828,17 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
 
+        &.lheuromanual{
+          margin:0px;
+          width: 100%;
+          gap:0px;
+
+          .hot-promo {
+            border-radius: 0px;
+            padding: 15px 12px;
+          }
+        }
+
         &.lhftd {
           margin: 0px;
           width: 100%;
@@ -826,6 +846,18 @@ export default defineComponent({
 
           .hot-promo {
             border-radius: 0px;
+          }
+        }
+
+        &.lhduanwu{
+          margin:0px;
+          background-image:url("../assets/images/promo/hotpromo/dragonboat/h5bg.jpg");
+          width: 100%;
+          background-position: top center;
+          background-size: 100% auto;
+
+          .hot-promo{
+            padding: 15px;
           }
         }
 
@@ -855,7 +887,7 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 15px 18px;
 
           li {
             margin-bottom: 20px;

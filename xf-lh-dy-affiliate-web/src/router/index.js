@@ -134,6 +134,24 @@ export const constantRoutes = [
       ),
   },
   {
+    path: '/pak/login',
+    name: 'PAK Login',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "loginAffiliate" */ '../views/pak/login/index.vue'
+      ),
+  },
+  {
+    path: '/pak/register',
+    name: 'PAK Register',
+    meta: { hidden: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "registerAffiliate" */ '../views/pak/register/index.vue'
+      ),
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -242,6 +260,14 @@ export const constantRoutes = [
         name: 'Settlement',
         meta: {
           title: 'Settlement',
+        },
+      },
+      {
+        path: 'rebate',
+        component: () => import('../views/affiliate/rebate/index.vue'),
+        name: 'Rebate',
+        meta: {
+          title: 'Rebate',
         },
       },
       {

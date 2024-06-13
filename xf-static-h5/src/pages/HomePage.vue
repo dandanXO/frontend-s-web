@@ -236,9 +236,16 @@
             />
           </template>
 
-          <template v-if="fish.code === 'AG' && fish.name === 'AG'">
+          <template v-if="fish.code === 'AGF' && fish.name === 'AGF'">
             <PlatformBlock
                 @click="playGame(fish.name, fish.code, '6')"
+                dataType="fish"
+                :data="fish"
+            />
+          </template>
+          <template v-if="fish.code === 'SG' && fish.name === 'SG'">
+            <PlatformBlock
+                @click="playGame(fish.name, fish.code, 'F-SF01')"
                 dataType="fish"
                 :data="fish"
             />
@@ -436,6 +443,7 @@ import {Thumbs, Controller} from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
+import {useLocalStorage} from "@vueuse/core";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -669,7 +677,7 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = process.env.IMAGE_CDN + "/promo/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -755,7 +763,7 @@ export default defineComponent({
                   }
                   isImportantAnnoucementModal.value = true;
                   homePopupImg.value =
-                      process.env.IMAGE_CDN +
+                    useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value +
                       "/adspopout/" +
                       res.data["mobileImgUrl"];
                   homePopupContent.value = res.data["content"];
@@ -926,12 +934,13 @@ export default defineComponent({
                   slot.value.push(slotObj);
                 }
               }
-              if (platTypes.indexOf("FISH") > -1  && element.code !=='AGF') {
+              if (platTypes.indexOf("FISH") > -1) {
                 var fishObj = Object.assign({}, element);
                 fishObj.title = fishObj.name + " 捕鱼";
                 fishObj.icon = "fish";
                 fishObj.subtitle = "捕鱼游戏";
                 fishing.value.push(fishObj);
+                console.log(fishObj)
               }
               if (platTypes.indexOf("POKER") > -1) {
                 var pokerObj = Object.assign({}, element);
@@ -1013,8 +1022,12 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      const redirectU = "/promo?name=" + banner.redirectUrl;
-      router.push(`${redirectU}`);
+      if(banner.redirectUrl=="app://deposit"){
+        router.push("/finance/deposit");
+      }else{
+        const redirectU = "/promo?name=" + banner.redirectUrl;
+        router.push(`${redirectU}`);
+      }
     };
 
     const download_url = ref("");

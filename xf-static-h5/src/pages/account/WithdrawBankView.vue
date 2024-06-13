@@ -330,6 +330,7 @@ import {api} from "boot/axios"
 import {useQuasar} from "quasar";
 import {userStore} from "stores/index";
 import * as _ from "lodash";
+import {useLocalStorage} from "@vueuse/core";
 
 import {useRouter} from "vue-router";
 
@@ -352,7 +353,7 @@ export default defineComponent({
       start: "",
       end: ""
     });
-    const imgURL = process.env.IMAGE_CDN + '/payment/'
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + '/payment/'
     const columns = [
       {
         title: "Bank Name",
@@ -551,12 +552,21 @@ export default defineComponent({
         api.post("/session/bankCard", qs.stringify(bankCardInfo)).then((response) => {
           if (response.code === 0) {
             bankCardModalState.visible = false;
-            $q.notify({
+            if (isEWALLET.value === true) {
+              $q.notify({
               color: "positive",
               position: "top",
-              message: "已添加银行卡",
+              message: "已添加电子钱包",
               icon: "check_circle_outline"
             });
+            } else {
+              $q.notify({
+                color: "positive",
+                position: "top",
+                message: "已添加银行卡",
+                icon: "check_circle_outline"
+              });
+            }
             loadCards();
           } else {
             // $q.notify({
@@ -755,6 +765,10 @@ export default defineComponent({
           return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'OKPAY') {
           return (val.length > 15 && val.length < 17) || '长度应为16个字符'
+        }  else if(selectedCode === 'BLBPAY') {
+          return (val.length > 31 && val.length < 33) || '长度应为32个字符'
+        } else if(selectedCode === 'JDPAY') {
+          return (val.length > 33 && val.length < 35) || '长度应为34个字符'
         } else if(selectedCode === 'SZPAY') {
           if (isNaN(val) || (/\s/.test(val))) {
             return '请输入数字人民币使用的手机号';

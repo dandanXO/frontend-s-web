@@ -1,6 +1,7 @@
 <template>
-  <PlatformMenu
+  <PlatformMenuFishing
     :platforms="fishingPlatforms"
+    :platform2="cockfightPlatforms"
     :platformGameType="platformGameType"
     :platformType="platformType"
     platformName="fishing"
@@ -10,8 +11,9 @@
 
 <script setup>
 import { ref, defineEmits } from "vue";
-import PlatformMenu from "@/components/menu/PlatformMenu.vue";
-import { fishingPlatforms } from "@/shared/platformArray";
+import PlatformMenuFishing from "@/components/menu/PlatformMenuFishing.vue";
+import { fishingPlatforms, cockfightPlatforms} from "@/shared/platformArray";
+
 
 const emits = defineEmits(["load-modal"]);
 const platformType = ref("fishing");

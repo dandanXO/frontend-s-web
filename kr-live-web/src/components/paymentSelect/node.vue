@@ -2,7 +2,7 @@
   <div class="node" v-if="list && list.length !== 0">
     <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
-    <div class="account-title-container" v-else>
+    <div v-else>
       <span class="account-title">{{ name }}</span>
     </div>
     <div class="node-content payment-method-wrapper">
@@ -18,8 +18,8 @@
         v-for="(item, i) in list"
       >
         <div class="node-text">
-          <img :src="imgURL + item.nodeIcon" />
-          <div class="overflow">{{ item.nodeName }}</div>
+          <div class="node-icon"><img :src="imgURL + item.nodeIcon" /></div>
+          <div class="">{{ item.nodeName }}</div>
           <div
             class="promo"
             :style="
@@ -271,14 +271,22 @@ $node-color: #dd4645;
   // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    .node-item {
+      width: 100%;
+    }
+  }
 
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: solid 1px #484460;
+    border: 2px solid #4b4b4b;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
@@ -321,8 +329,6 @@ $node-color: #dd4645;
 }
 .node {
   .node {
-    margin: 0 -30px;
-    padding: 0 30px;
     .account-title-container {
       // margin: 0 -30px;
       padding: 15px 0;
@@ -336,7 +342,7 @@ $node-color: #dd4645;
       text-align: center;
       padding: 10px 8px;
       cursor: pointer;
-      background: #2b2b4b;
+      background: #252e43;
       box-shadow: 6px 6px #161b23;
 
       &:hover {
@@ -352,6 +358,8 @@ $node-color: #dd4645;
     .node-item {
       display: flex;
       justify-content: center;
+      min-width: 100px;
+
       .payment-method-wrapper {
         display: none;
       }
@@ -361,8 +369,8 @@ $node-color: #dd4645;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      overflow: hidden;
-      width: 140px;
+      // overflow: hidden;
+      // width: 140px;
       justify-content: flex-start;
       .overflow {
         text-overflow: ellipsis;

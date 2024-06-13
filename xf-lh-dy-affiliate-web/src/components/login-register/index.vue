@@ -6,6 +6,7 @@
       props.siteId !== '7' ? '' : 'lh',
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
+      props.siteId !== '11' ? '' : 'pak',
     ]"
   >
     <div class="inner">
@@ -573,7 +574,8 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
-import krLogo from '@/assets/images/kr/kr-logo.svg'
+import krLogo from '@/assets/images/kr/kr-logo.png'
+import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
 import {
   getVerificationCode,
@@ -948,7 +950,7 @@ export default defineComponent({
       handleLogin: () => {
         loginFormRef.value.validate(async valid => {
           if (valid) {
-            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
+            if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
               methods.userLogin()
             } else {
               methods.onGetImage()
@@ -1015,7 +1017,7 @@ export default defineComponent({
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
           router
             .push({
               path: state.redirect || '/',
@@ -1115,7 +1117,7 @@ export default defineComponent({
       onGetImage: async () => {
         state.dialogLoading = true
         state.coordinates.splice(0)
-        const imgType = languageVal === 'vi' || languageVal === 'en' ? 1 : 0
+        const imgType = languageVal === 'vi' || languageVal === 'en' || languageVal === 'kr' ? 1 : 0
         const { data } = await getVerificationImage(imgType)
         Object.keys({ ...data.data }).forEach(field => {
           state[field] = data.data[field]
@@ -1308,12 +1310,20 @@ export default defineComponent({
         setLanguage('vi')
       }
       if (props.siteId === '10') {
-        currentSite.value.firstLiner = 'Start From BET2WON'
+        currentSite.value.firstLiner = 'Start From CITY8'
         currentSite.value.secondLiner =
           'Become a legend<br>Or become the eulogist of legend?'
         currentSite.value.logo = krLogo
         state.loginForm.site = 'KRW'
-        setLanguage('en')
+        setLanguage('kr')
+      }
+      if (props.siteId === '11') {
+        currentSite.value.firstLiner = 'Start From B9'
+        currentSite.value.secondLiner =
+          'Become a legend<br>Or become the eulogist of legend?'
+        currentSite.value.logo = pakLogo
+        state.loginForm.site = 'PAK'
+        setLanguage('zh')
       }
     }
     onMounted(() => {

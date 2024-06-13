@@ -402,6 +402,18 @@
                 :prop="tbl.dataIndex"
                 :label="tbl.title"
               >
+                <template v-if="tbl.dataIndex === 'betId'" #default="scope">
+                  <div style="display: flex; align-items: center;">
+                    <el-tooltip
+                      class="box-item"
+                      effect="dark"
+                      :content="scope.row.betId"
+                      placement="top-start"
+                    >
+                      <a @click="copy(scope.row.betId)">复制 <span style="color: black">{{scope.row.betId.slice(0, 1)}}...</span></a>
+                    </el-tooltip>
+                  </div>
+                </template>
                 <template v-if="tbl.dataIndex === 'betTime'" #default="scope">
                   <div style="display: flex; align-items: center">
                     <span>{{ getFormatBetTime(scope.row.betTime) }}</span>
@@ -608,6 +620,15 @@ import {userStore} from "@/store";
 import FileUpload from "@/components/FileUpload.vue"
 import EmptyData from "@/components/emptyData.vue"
 
+const copy = (text) => {
+  const el = document.createElement('textarea');
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  ElMessage.success('已复制');
+}
 const loadingBtn = ref(false);
 const store = userStore()
 const uploadFileRef = ref();
@@ -805,6 +826,10 @@ const tableColumns = {
     }
   ],
   gameBetRecord: [
+    {
+      title: "注单号",
+      dataIndex: "betId"
+    },
     {
       title: "游戏时间",
       dataIndex: "betTime",
@@ -1432,6 +1457,8 @@ export default defineComponent({
         return 'QQ支付' // QQ支付
       } else if (depositType === 'KDPAY') {
         return 'K豆' // K豆
+      } else if (depositType === 'BLBPAY') {
+        return '808钱包' // 808钱包
       } else if (depositType === 'DDPAY') {
         return '钉钉' // 钉钉
       } else if (depositType === 'HBPAY') {
@@ -1444,7 +1471,7 @@ export default defineComponent({
         return '云闪付' // 云闪付
       }  else if (depositType === 'DYPAY') {
         return '抖音' // 抖音
-      }   else if (depositType === 'AUTOPAY') {
+      } else if (depositType === 'AUTOPAY') {
         return '自动支付' // 自动支付
       } else {
         return depositType
@@ -1598,7 +1625,8 @@ export default defineComponent({
       getPlatform,
       imgURL,
       getGameName,
-      getFormatBetTime
+      getFormatBetTime,
+      copy
     };
   }
 });

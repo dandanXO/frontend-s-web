@@ -42,7 +42,7 @@ export default defineComponent({
       {
         code: "write",
         icon: "write",
-        name: "写信"
+        name: "意见反馈"
       }
     ]);
 

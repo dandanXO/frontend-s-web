@@ -41,13 +41,16 @@
             </span>
           </div>
           <div class="vip-card-info">
-            <div class="level q-mt-md">
+            <div class="level q-mt-xs">
               <div class="vip-level">VIP{{ vipIndex + 1 }}</div>
               <div class="vip-card-common-text">{{ vip.title }}</div>
             </div>
-            <div class="amount q-mt-sm">
-              <div class="vip-card-common-text">{{ $t("lang.vip_cumulative_deposits") }}</div>
-              <div class="vip-card-common-text amount-text">{{ vip.amount }}</div>
+            <div class="amount q-mt-xs">
+              <div class="vip-card-common-text">{{ $t("lang.vip_upgrade_require") }}</div>
+              <div class="vip-card-common-text amount-text">
+                <span v-if="vipIndex === 0">{{ $t('lang.vip_3timedeposit') }}</span>
+                <span v-else>{{ $t('lang.totalBetMonth') }} {{ vip.amount }}</span>
+              </div>
             </div>
             <div class="progress">
               <q-linear-progress
@@ -1002,7 +1005,8 @@ onActivated(() => {
 
       .amount {
         display: flex;
-        gap: 3.5vw;
+        // gap: 3.5vw;
+        flex-direction: column;
 
         .amount-text {
           color: $accent;
@@ -1305,7 +1309,7 @@ onActivated(() => {
   }
 
   .vip-card-common-text {
-    font-size: 3vw;
+    font-size: 2.7vw;
     font-weight: 400;
     color: $font-1;
   }

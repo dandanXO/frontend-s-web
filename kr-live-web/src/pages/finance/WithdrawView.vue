@@ -230,7 +230,7 @@ export default defineComponent({
           message: t('lang.verify_phone_number'),
           icon: "report_problem"
         });
-        router.push("/account/personal");
+        router.push("/?page=personal/info");
       }
     })
 

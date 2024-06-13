@@ -207,7 +207,7 @@ export default defineComponent({
           hasPage.value = true;
           pageName.value = "Login";
         } else if (route.path === "/register") {
-          prevPage.value = "/login";
+          prevPage.value = "/home";
           hasPage.value = true;
           pageName.value = "Register";
         } else if (route.path === "/forgot-account") {

@@ -8,9 +8,17 @@
 
         <div class="navigations">
           <template v-for="nav in navigations" :key="nav.name">
-            <template v-if="!nav.hasicon">
+            <template v-if="!nav.hasicon && !nav.isTest">
               <div class="header-menu-item" :class="{ active: route.name === nav.code || route.name === nav.enName.toLowerCase() }">
-                <a @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
+                <img v-if="nav.code === 'sports'"
+                     class="hot-label"
+                     :src="require(`../../assets/images/home/menu/hot-game-label.png`)"
+                />
+                <a v-if="nav.code==='minigame'" @click="openMiniGame" @mouseup="selectedMenu = ''" @mouseover="showSubMenu(nav)" >
+                  <h2 class="nav-title cn">{{ nav.name }}</h2>
+                  <h2 class="nav-title">{{ nav.enName }}</h2>
+                </a>
+                <a v-else @mouseover="showSubMenu(nav)" @mouseup="selectedMenu = ''" @click="goPath(nav.path, $event)">
                   <template v-if="route.name === nav.code || route.name === nav.enName.toLowerCase()">
                     <!-- <img
                       class="menu-icon"
@@ -31,6 +39,15 @@
               </div>
             </template>
           </template>
+          <div
+            class="header-menu-item"
+            @mouseover="selectedMenu = ''"
+            @click="getPlatformListAndGoImSport">
+            <img
+              class="eroup-menu-icon"
+              :src="require(`../../assets/images/home/header-eroup.png`)"
+            />
+          </div>
         </div>
 
         <div class="navigations second-nav">
@@ -165,7 +182,7 @@
             </div>
             <a @click="refreshBalance" class="details-balance">
               <div class="flex-wrap" style="display: flex; align-items: center; flex-wrap: nowrap">
-                <span class="assets-text">总资产:</span>
+                <span class="assets-text">总资产：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">加载中...</span>
                   <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
@@ -451,7 +468,7 @@ import FishingMenu from "@/components/menu/FishingMenu.vue";
 import PromotionMenu from "@/components/menu/PromotionMenu.vue";
 import AppMenu from "@/components/menu/AppMenu.vue";
 import "vue3-marquee/dist/style.css";
-import { useDark, useElementSize } from "@vueuse/core";
+import { useDark, useElementSize, useLocalStorage } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import GameModal from "@/components/modal/GameModal";
 import moment from "moment";
@@ -461,6 +478,7 @@ import LoginDialog from "@/views/LoginDialog.vue";
 import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from '@/api/personal/common'
+import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
 
 export default defineComponent({
   name: "CommonHeader",
@@ -481,27 +499,10 @@ export default defineComponent({
     RegisterAccount,
     RiChatUploadLine
   },
-  data: () => ({
-    // carousel settings
-    navigations: [
-      { code: "home", name: "首页", enName: "Home", path: "/home" },
-      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true },
-      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true },
-      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true },
-      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true },
-      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true },
-      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true },
-      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true },
-      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true },
-      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true },
-      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true },
-      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true }
-    ]
-  }),
   setup() {
     const registerTelephoneKey = `registerTelephoneKey`;
     const registerSendOtpDisabledKey = `registeredSendOtpDisabled`;
-    const imageDir = process.env.VUE_APP_IMAGE_CDN + "/profile/";
+    const imageDir = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/profile/";
 
     const registerSendOtpDisabledTimeout = 60;
     const registerSendOtpDisabledTimeoutLeft = getTimeout(registerSendOtpDisabledKey);
@@ -525,6 +526,32 @@ export default defineComponent({
 
     const loadingBtn = ref(false);
     const store = userStore();
+
+    const checkToken = () => {
+      if (store.token) {
+        if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
+          return false
+        }
+        return true
+      } else {
+        return true
+      }
+    }
+    const navigations = reactive([
+      { code: "home", name: "首页", enName: "Home", path: "/home" },
+      { code: "esports", name: "电竞", enName: "Esports", path: "/esports", submenu: true, isTest: false },
+      { code: "sports", name: "体育", enName: "Sports", path: "/sports", submenu: true, isTest: false },
+      { code: "live", name: "真人", enName: "Live", path: "/live-casino", submenu: true, isTest: false },
+      { code: "poker", name: "棋牌", enName: "Poker", path: "/poker", submenu: true, isTest: false },
+      { code: "slot", name: "电子", enName: "Slots", path: "/slot", submenu: true, isTest: false },
+      { code: "minigame", name: "小游戏", enName: "MiniGame", path: "", submenu: false, isTest: false },
+      { code: "lottery", name: "彩票", enName: "Lottery", path: "/lottery", submenu: true, isTest: false },
+      { code: "fish", name: "捕鱼", enName: "Fishing", path: "/fishing", submenu: true, isTest: false },
+      { code: "Promotion", name: "优惠", enName: "Promotion", path: "/promotion", submenu: false, hasicon: true, isTest: false },
+      { code: "Agent", name: "加盟", enName: "Agent", path: "/affiliate", hasicon: true, isTest: false },
+      { code: "App", name: "APP", enName: "App", path: "/app", submenu: true, hasicon: true, isTest: false },
+      { code: "VIP", name: "VIP", enName: "VIP", path: "/vip", hasicon: true, isTest: false }
+    ])
     const { token } = storeToRefs(store);
     const router = useRouter();
     const route = useRoute();
@@ -649,8 +676,7 @@ export default defineComponent({
       return v.match(alphanumeric);
     };
     const checkRealName = (v) => {
-      // const alphanumeric = /^[\p{L}\p{N}]*$/u;
-      const chineseCharOnly = /^([\u4e00-\u9fa5]*)$/u;
+      const chineseCharOnly = /^[\u4e00-\u9fa5·]+$/;
       return v.match(chineseCharOnly);
     };
     let validatePass2 = async (r, v) => {
@@ -1112,9 +1138,19 @@ export default defineComponent({
       modalGame.value.open(gameName, code, gameCode);
     };
 
+    const getPlatformListAndGoImSport = () => {
+      selectedMenu.value = ''
+
+      const fetchFunction = store.token ? getLoggedInPlatformList : getPlatformListDisplay;
+
+      fetchFunction().then((res) => {
+        const imSport = res.filter(item=> item.code==='IM')
+        openGame(imSport[0].name,imSport[0].code,imSport[0].gameType)
+
+      });
+    };
 
     onMounted(() => {
-
       if (regCountdown.value > 0)
         countdownTimer("REGISTER");
       getAffiliateCode();
@@ -1297,7 +1333,9 @@ export default defineComponent({
     //   })
     // }
     const pwdStrength = ref();
-
+    const openMiniGame = () => {
+      openGame("TFGaming", "TFGaming", 0)
+    };
     function charType(num) {
       if (num >= 48 && num <= 57) {
         return 1;
@@ -1410,6 +1448,7 @@ export default defineComponent({
         "bonjour",
         "안녕하세요"
       ],
+      getPlatformListAndGoImSport,
       loginForm,
       loginDialogVisible,
       forgetPassDialogVisible,
@@ -1464,7 +1503,10 @@ export default defineComponent({
       openRegDialog,
       openForgotpwdDialog,
       isDark,
-      timestamp
+      timestamp,
+      openMiniGame,
+      navigations,
+      checkToken
     };
   }
 });
@@ -1534,6 +1576,7 @@ body {
       display: block;
       width: 100%;
       border-radius: 50%;
+      aspect-ratio: 1/1;
     }
 
     .dropdown-icon {
@@ -1751,13 +1794,13 @@ body {
     box-shadow: $shadow-header;
 
     .top-nav-inner {
-      max-width: 1250px;
+      max-width: 1300px;
       margin: 0 auto;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
 
       &.logged-in-nav {
         max-width: 1400px;
@@ -1785,23 +1828,35 @@ body {
           display: block;
         }
       }
-
       .navigations {
         display: flex;
         justify-content: center;
         align-items: center;
         // width: 750px;
         // padding: 0px 16px;
-        gap: 30px;
+        gap: 20px;
         text-align: center;
-        padding: 0px 15px;
+        padding: 0px 12px;
 
         &.second-nav {
           margin-left: auto;
           margin-right: auto;
-          gap: 24px;
+          gap: 9px;
+          padding-left:5px;
+          padding-right: 5px;
         }
+        .eroup-menu-icon{
+          cursor: pointer;
+          width: 58px;
+          height: 58px;
 
+          &:hover{
+            filter: brightness(0.9);
+          }
+          &:active{
+            transform: translate(0px, 1px);
+          }
+        }
         a {
           // padding-top: 10px;
           display: flex;
@@ -1815,9 +1870,13 @@ body {
           }
 
           &:hover {
-            filter: brightness(0.85);
-          }
+            //filter: brightness(0.85);
 
+            .nav-title{
+              color: #333;
+              font-weight: bold;
+            }
+          }
           .menu-icon {
             width: 50px;
           }
@@ -1851,7 +1910,7 @@ body {
 
             img.hover-icon {
               filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
-                contrast(102%);
+              contrast(102%);
             }
           }
         }
@@ -2510,26 +2569,33 @@ body {
 }
 
 .header-menu-item {
+  min-width: 40px;
   position: relative;
-    &.active {
-      &:after {
-        content: "";
-        background: #468CFF;
-        width: 80%;
-        height: 5px;
-        bottom: -24px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: auto;
-        border-radius: 4px;
-      }
+  &.active {
+    &:after {
+      content: "";
+      background: #468CFF;
+      width: 80%;
+      height: 5px;
+      bottom: -24px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      border-radius: 4px;
     }
+  }
   // display: flex;
   a {
     position: relative;
   }
-
+  .hot-label {
+    width: 12px;
+    height:12px;
+    position: absolute;
+    right: -10px;
+    top: -7px;
+  }
   .nav-title {
     // position: absolute;
     // margin: 0px;
@@ -2538,13 +2604,14 @@ body {
     z-index: 2;
     text-align: center;
     font-family: PingFang SC;
-    color: #7A80A1;
-    font-weight: 400;
+    //color: #7A80A1;
+    color: #52597d;
+    font-weight: 600;
     font-size: 12px;
     margin: 0;
     &.cn {
       font-weight: 600;
-    font-size: 16px;
+      font-size: 16px;
     }
 
     &.active {
@@ -2621,10 +2688,10 @@ body {
 
 .grid-container {
   margin: 20px auto;
-    display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .grid-item {
@@ -2635,7 +2702,7 @@ body {
   transition: transform 0.5s;
   img {
     width: 100px;
-  cursor: pointer;
+    cursor: pointer;
     border-radius: 50%;
   }
 }
@@ -2645,13 +2712,13 @@ body {
 }
 
 .grid-item.selected {
-    position:relative;
-    color: #ffffff;
+  position:relative;
+  color: #ffffff;
   img {
     border: 3px solid #33BC03;
   }
-    &:after {
-      content: "✓";
+  &:after {
+    content: "✓";
     position: absolute;
     background: #33BC03;
     font-size: 15px;
@@ -2664,7 +2731,7 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    }
+  }
 }
 
 
@@ -2677,14 +2744,14 @@ body {
 }
 
 .profile-dialog .standard-button {
-    width: 400px;
-    display: block;
-    margin: 10px auto;
-    height: unset;
-    border-radius: 40px;
+  width: 400px;
+  display: block;
+  margin: 10px auto;
+  height: unset;
+  border-radius: 40px;
 }
 .profile-dialog .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
-  
+
   background: #7A8EB966;
   border-radius: 25px;
   top: 8px;
