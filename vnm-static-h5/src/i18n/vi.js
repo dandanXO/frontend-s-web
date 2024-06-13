@@ -1529,6 +1529,8 @@ export default {
     14003: "Không có mã đối tác",
     15201: "Mật khẩu cũ không chính xác",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ",
+    15204: "Số điện thoại không đúng.",
+    15205: "Mật khẩu không đúng.",
     21000: "Bạn đã thêm trò chơi này vào danh sách yêu thích",
     24001: "Danh sách này đã tồn tại",
     24002: "Phát hiện cùng một IP",

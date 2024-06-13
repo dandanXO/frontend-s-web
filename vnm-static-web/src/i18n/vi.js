@@ -919,6 +919,8 @@ export default {
     14003: "Không tìm thấy mã đại lý",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
+    15204: "Số điện thoại không đúng.",
+    15205: "Mật khẩu không đúng.",
     21000: "Trò chơi này đã có trong danh sách trò chơi yêu thích của bạn.",
     24001: "Bản ghi điểm danh đã tồn tại.",
     24002: "Phát hiện cùng địa chỉ IP",

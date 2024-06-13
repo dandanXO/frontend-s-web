@@ -31,6 +31,10 @@ const routes = [
     children: [{ path: "", component: () => import("pages/PromoPage.vue") }]
   },
   {
+    path: "/promotion",
+    redirect: "/promo"
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
@@ -334,13 +338,6 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/finance/WithdrawView.vue") }],
     meta: { requiresAuth: true }
-  },
-
-  {
-    path: "/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
-    meta: { requiresAuth: true, isApp: true }
   },
   {
     path: "/deposit",

@@ -140,7 +140,7 @@ export default boot(({ app, router }) => {
         location.reload();
       } else {
         if (
-          (window.location.pathname === "/promotion" ||
+          (
             window.location.pathname === "/deposit" ||
             window.location.pathname === "/invitefriend" ||
             window.location.pathname === "/vip" ||
