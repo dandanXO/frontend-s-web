@@ -730,7 +730,7 @@ async function downloadTemplate() {
 
   const wb = XLSX.utils.book_new();
   wb.SheetNames.push('Member');
-  wb.Sheets.Member_Privileges = wsMemberPrivilege;
+  wb.Sheets.Member = wsMemberPrivilege;
   XLSX.writeFile(wb, 'member_redirect_notification.xlsx');
 }
 
