@@ -304,10 +304,12 @@ export default defineComponent({
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+          const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
             const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
-          });
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+
+            return extendedVoteRecords
+        });
 
           votesData.value = {
             ...res.data,
