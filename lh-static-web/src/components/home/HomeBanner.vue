@@ -6,8 +6,7 @@
     v-if="!isImpt"
   >
     <a
-      :href="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' ? homePopupPath : ''"
-      :target="homePopupPath.includes('https://') ? '_blank' : '_self'"
+      @click="clickHomePopupImg(homePopupPath)"
     >
       <img :src="homePopupImg" class="alert-img" />
     </a>
@@ -36,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark, useLocalStorage } from "@vueuse/core";
@@ -129,20 +128,24 @@ const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
 
-// const clickHomePopupImg = (urlString) => {
-//   let regexUrl = new RegExp(/^(https:\/\/)/g);
-//   if (regexUrl.test(urlString)) {
-//     // 跳轉
-//     location.href = urlString;
-//     return;
-//   }
-//   let regexName = new RegExp(/^(name|\?name)/g);
-//   if (regexName.test(urlString)) {
-//     //去優惠
-//     router.push(`/promo${urlString}`);
-//     return;
-//   }
-// };
+const clickHomePopupImg = (urlString)=>{
+  // debugger;
+  let regexUrl = new RegExp(/^(https:\/\/)/g)
+  if(regexUrl.test(urlString)){
+    // 跳轉
+    location.href = urlString;
+    return
+  }
+  let regexName = new RegExp(/^(name|\?name)/g)
+  if(regexName.test(urlString)){
+    //去優惠
+    router.push(`/promotion${urlString}`);
+    return
+  }
+
+  router.push(`${urlString}`);
+}
+
 const checkShowImgTop = () => {
   const lastTime = localStorage.getItem("indexImgTop");
   if (lastTime) {
@@ -209,6 +212,15 @@ const checkShowImgTop = () => {
       .catch(() => {});
   }
 };
+
+// watch(
+//   () => store.token,
+//   () => {
+//     if(store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")){
+//       checkShowImgTop();
+//     }
+//   }
+// );
 
 onMounted(() => {
   loadBanners();
