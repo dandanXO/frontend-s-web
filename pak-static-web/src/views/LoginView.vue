@@ -108,39 +108,27 @@ const rules = computed(() => ({
 }));
 const loadingLogin = ref(false);
 const onSubmit = () => {
-  const fpPromise = FingerprintJS.load();
-  (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
-
-    formRef.value.validate().then(() => {
-      loadingLogin.value = true;
-      store
-        .memberLogin({
-          loginName: loginForm.loginName,
-          password: loginForm.password,
-          sid: sidParam
-          // captchaCode: loginForm.captchaCode,
-          // codeId: loginForm.codeId
-        })
-        .then(() => {
-          const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-          router.push(jumpUrl);
-          loadingLogin.value = false;
-        })
-        .catch((error) => {
-          console.log(error.message);
-          loadingLogin.value = false;
-          // getCode();
-        });
-    });
-  })();
+  formRef.value.validate().then(() => {
+    loadingLogin.value = true;
+    store
+      .memberLogin({
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: store.visitorId
+        // captchaCode: loginForm.captchaCode,
+        // codeId: loginForm.codeId
+      })
+      .then(() => {
+        const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+        router.push(jumpUrl);
+        loadingLogin.value = false;
+      })
+      .catch((error) => {
+        console.log(error.message);
+        loadingLogin.value = false;
+        // getCode();
+      });
+  });
 };
 const resetForm = () => {
   formRef.value.resetFields();
