@@ -95,6 +95,8 @@ export default {
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付',
     WAITING_AUTO_PAY: '待自动支付',
+    FAIL_REVIEW: '失败审核',
+    WAITING_RETRY: '等待重试',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -2300,6 +2302,7 @@ export default {
     'Waiting Auto Pay': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Withdrawal Record': '提交记录',
+    'Fail Review': '失败审核',
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
