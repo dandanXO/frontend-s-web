@@ -644,7 +644,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
+  <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
     <q-card style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
       <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
@@ -1029,6 +1029,10 @@ export default defineComponent({
       }
       isImportantAnnoucementModal.value = false;
     };
+
+    const offPopupModal = () => {
+      setExpiryBanner();
+    }
 
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();
@@ -1805,6 +1809,7 @@ export default defineComponent({
       homePopupFrequencyNum,
       isImpt,
       isImportantAnnoucementModal,
+      offPopupModal,
       getImgPlatformLogo,
       getImgPlatformBg,
       moment,
