@@ -193,6 +193,10 @@ export const getMemberWithdrawRecordApplySimple = (memberWithdrawRecord) => {
   return https().request("/memberWithdrawRecord/getSimpleApply", Method.GET, memberWithdrawRecord, ContentType.form);
 };
 
+export const getMemberWithdrawRecordFailReview = (memberWithdrawRecord) => {
+  return https().request("/memberWithdrawRecord/getFailReview", Method.GET, memberWithdrawRecord, ContentType.form);
+};
+
 export const fromPayToAutopay = (id, withdrawPlatformId, wd, siteId) => {
   return https().request(`/memberWithdrawRecord/${id}/payToAutopay?_method=PUT`, Method.POST, { withdrawPlatformId: withdrawPlatformId, withdrawDate: wd, siteId: siteId }, ContentType.form);
 };

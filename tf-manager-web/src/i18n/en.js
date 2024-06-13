@@ -95,6 +95,8 @@ export default {
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying',
     WAITING_AUTO_PAY: 'Waiting Auto Payment',
+    FAIL_REVIEW: 'Fail Review',
+    WAITING_RETRY: 'Waiting Retry',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -2341,6 +2343,7 @@ export default {
     'Waiting Auto Pay': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
+    'Fail Review': 'Fail Review',
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
