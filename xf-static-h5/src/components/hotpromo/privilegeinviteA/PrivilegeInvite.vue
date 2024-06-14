@@ -468,7 +468,7 @@ export default defineComponent({
 
     const shareInvite = () => {
       if(window.location.pathname === "/promotion"){
-        window.location.href = "xfapp://GO";
+        window.location.href = "xfapp:/account/invite";
 
       } else{
         router.push("/account/invite")
