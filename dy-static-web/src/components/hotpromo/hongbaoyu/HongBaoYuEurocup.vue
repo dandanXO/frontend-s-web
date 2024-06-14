@@ -294,7 +294,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 60px;
+      margin-left: 0px;
 
       &:hover {
         filter: brightness(0.9);
