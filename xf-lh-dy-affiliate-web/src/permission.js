@@ -4,7 +4,7 @@ import router from "@/router";
 import { useStore } from "./store";
 import { MenuActionType } from "@/store/modules/menu/action-types";
 
-const whiteList = ['/403', '/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register']
+const whiteList = ['/login', '/my/login', '/my/register', '/ph/login', '/ph/register', '/th/login', '/th/register', '/xf/login', '/xf/register', '/dy/login', '/dy/register', '/poster', '/ind/login', '/ind/register', '/lh/login', '/lh/register', '/vi/login', '/vi/register', '/ind2/login', '/ind2/register', '/kr/login', '/kr/register', '/pak/login', '/pak/register']
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach(async (to, _, next) => {
@@ -13,9 +13,6 @@ router.beforeEach(async (to, _, next) => {
   // Determine whether the user has logged in, if logged in can visit any page
   if (store.state.user.token) {
     await store.dispatch(MenuActionType.ACTION_SET_ROUTES, undefined);
-    if (to.path === '/403') {
-      next({ path: "/403" })
-    }
     if (to.path === "/login") {
       next({ path: "/" });
       NProgress.done();
