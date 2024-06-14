@@ -254,7 +254,7 @@ export default defineComponent({
               var ref = cordova.InAppBrowser.open(
                 preUrl,
                 "_blank",
-                "location=no,zoom=no"
+                "location=no,zoom=no,footer=yes"
               );
 
               window.addEventListener('message', function(event) {

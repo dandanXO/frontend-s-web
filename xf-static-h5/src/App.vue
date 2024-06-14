@@ -104,7 +104,6 @@ export default defineComponent({
     };
 
     const getOnlineStatApi = async () => {
-      console.log("Ok Online.");
       const sidParam = store.visitorId;
       const way = "h5";
 

@@ -467,7 +467,7 @@ export default defineComponent({
     };
 
     const shareInvite = () => {
-      if(isAndroid()){
+      if(window.location.pathname === "/promotion"){
         window.parent.postMessage('Hello from InAppBrowser', '*');
 
       } else{
