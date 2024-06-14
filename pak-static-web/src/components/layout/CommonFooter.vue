@@ -121,6 +121,7 @@ import { globalStore } from "@/store";
     gap: 120px;
 
     .logo {
+      align-self: start;
       max-width: 162px;
     }
   }
