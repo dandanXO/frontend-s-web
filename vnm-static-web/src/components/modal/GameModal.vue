@@ -240,7 +240,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "TCG" ||
         platformCode === "PT" ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
-        platformCode === 'GA'
+        (platformCode === 'GA')
       ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
