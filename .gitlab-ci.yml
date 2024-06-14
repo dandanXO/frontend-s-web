@@ -218,6 +218,13 @@ deploy-vnm-download:
 
 #===============================================================================================
 
+deploy-vnm-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-download-v2
+
+#===============================================================================================
+
 deploy-vnm-landing:
   extends: .s3-deploy
   variables:
