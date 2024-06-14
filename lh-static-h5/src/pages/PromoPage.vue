@@ -165,20 +165,19 @@
                 :class="{
                   lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl' ,
-                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24',
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
                   lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
                 }"
-                :style="[selectedPromo.promoCode === 'lh-eurocup-manual'
+                :style="[
+                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
+                 selectedPromo.promoCode === 'lh1-deposit-rebates'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
                       ')'
-                    : '',
-
-                    {
-                  backgroundImage: selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'',
-                }]"
+                    : (selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'')
+                  ]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
