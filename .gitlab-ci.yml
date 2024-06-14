@@ -246,10 +246,10 @@ deploy-vnm-landing-v4:
 
 #===============================================================================================
 
-deploy-vnm-landing-v4:
+deploy-vnm-landing-v5:
   extends: .s3-deploy
   variables:
-    PROJECT: vnm-landing-v4
+    PROJECT: vnm-landing-v5
 
 #===============================================================================================
 
