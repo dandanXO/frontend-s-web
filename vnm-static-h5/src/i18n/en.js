@@ -1510,6 +1510,7 @@ export default {
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",
     1404: "Failed to send OTP code",
+    14010: "Network IP or SID duplicate",
     10000: "Insufficient remaining balance error",
     10001: "Withdrawal error",
     10002: "Deposit error",

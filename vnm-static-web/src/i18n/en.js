@@ -925,6 +925,7 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    14010: "Network IP or SID duplicate",
     15202: "The new password cannot be the same as the old password.",
     15201: "Old password is incorrect.",
     15204: "Phone number is incorrect.",
