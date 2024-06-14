@@ -217,6 +217,7 @@ export default {
           record: "Record",
           discount: "Discount",
           bank: "Bank",
+          order: "Order",
           message: "Message",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "Record",
+      recordEndTitle: "You have reached the end of the page.",
+      betTitle: "Bet",
+      platformTitle: "Game Platform"
+    },
+    order: {
       title: "Transaction Record",
       tab: {
         deposit: {
@@ -646,6 +653,20 @@ export default {
           required: "Please insert password",
           min: "The characters of password must be above 6"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "Settle",
+        settled: "Settled",
+        betAndSettle: "Bet and Settle",
+        cancel: "Cancel",
+        rollback: "Rollback",
+        patch: "Patch",
+        bet: "Bet",
+        unsettled: "Unsettled",
+        jackpot: "Jackpot",
+        bonus: "Bonus"
       }
     }
   },
