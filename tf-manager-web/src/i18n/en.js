@@ -1790,6 +1790,8 @@ export default {
     virtualMultiplier: 'Virtual Multiplier',
     batchDistributeRebate: 'Batch Distribute Rebate',
     distribute: 'Distribute',
+    totalAmountDistribute: 'Total Amount Distribute',
+    noOfBonusRecord: 'Number of Bonus Record',
     whitelist: 'Whitelist',
     blacklist: 'Blacklist',
     accessType: 'Access Type',

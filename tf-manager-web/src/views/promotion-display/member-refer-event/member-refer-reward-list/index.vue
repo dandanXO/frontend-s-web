@@ -194,6 +194,13 @@
       @current-change="loadRecord"
       @size-change="loadRecord"
     />
+    <div class="table-footer">
+        <span>{{ t('fields.noOfBonusRecord') }} :</span>
+        <span style="margin-left: 10px">{{ page.total }}</span>
+        <span style="margin-left: 30px">{{ t('fields.totalAmountDistribute') }} :</span>
+        <span style="margin-left: 10px">$ </span>
+        <span v-formatter="{data: page.totalAmount, type: 'money'}" />
+      </div>
   </div>
 </template>
 
@@ -326,6 +333,11 @@ async function loadRecord() {
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total
+  if (page.records.length !== 0) {
+    page.totalAmount = ret.sums.finalAmount;
+  } else {
+    page.totalAmount = 0;
+  }
   page.loading = false
 }
 
