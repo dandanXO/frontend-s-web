@@ -301,7 +301,6 @@ import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "v
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
@@ -478,7 +477,14 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         (async () => {
-          regForm.sid = sidParam;
+          if (store.googleadid) {
+            regForm.sid = store.googleadid;
+          } else if (store.aaid) {
+            regForm.sid = store.aaid;
+          } else {
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger= "1";
+          }
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";

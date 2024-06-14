@@ -5,7 +5,6 @@
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import CsClient from "csweb-client";
@@ -29,23 +28,7 @@ export default defineComponent({
     const onlineStatTimeout = ref();
     const onlineStatInterval = ref();
 
-    const checkSID = () => {
-      // const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      // (async () => {
-      //   const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
-      //   store.visitorId = visitorId;
-      //   console.log("SID");
-      //   console.log(visitorId);
-      //   const obj = {
-      //     identifier: store.visitorId,
-      //     affiliateCode: affiliateItem
-      //   };
-      //   api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-      //     if (res.code === 0) {
-      //     }
-      //   });
-      // })();
-    };
+
     let csclient;
     let CSAUrl;
 
@@ -244,22 +227,16 @@ export default defineComponent({
       });
     };
 
+    const checkSID = async () => {
+      const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = visitorId;
+    }
+
     const getOnlineStatApi = async () => {
-      // const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
-      // store.visitorId = sidParam;
-      // const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
-
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+
       const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
       console.log(theSid);
 
@@ -332,7 +309,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      // checkSID();
+      checkSID();
       // initCsWeb();
       getCSA();
       getAppInfo();
