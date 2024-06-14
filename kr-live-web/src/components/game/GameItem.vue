@@ -87,7 +87,7 @@ const gameType = ref(props.gameType);
 
   .game-item {
     aspect-ratio: 290 / 530;
-    background: url('../../assets/home/games/live/game-bg-empty.png') no-repeat center center;
+    background: url('../../assets/home/games/background-placeholder.png') no-repeat center center;
     background-size: 100% 100%;
     position: relative;
     cursor: pointer;
@@ -158,6 +158,10 @@ const gameType = ref(props.gameType);
           max-width: 120px;
           aspect-ratio: 283 / 96;
           // width: 100%;
+
+          @media (max-width: 769px) {
+            max-width: 75px;
+          }
         }
       }
 

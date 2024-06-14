@@ -1,7 +1,7 @@
 <template>
     <div class="jackpot">
       <div class="jackpot-txt">
-        <q-spinner-pie  v-if="isLoading" color="purple" size="20"/>
+        <q-spinner-gears  v-if="isLoading" color="purple" size="1em"/>
         <span v-else>{{ (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) || '' }}</span>
       </div>
     </div>
@@ -29,8 +29,6 @@ const fetchJackpot = (isInit) => {
   .catch((e) => {
       console.log(e);
       isLoading.value = false;
-  }).finally(() => {
-    isLoading.value = false;
   });
 }
 
