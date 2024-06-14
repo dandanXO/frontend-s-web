@@ -97,6 +97,9 @@
     />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
+      <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
+    </div>
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -258,6 +261,7 @@ export default defineComponent({
       this.list.redirectUrl === "asian-cup-2024" ||
       this.list.redirectUrl === "/dy-promo-basketball" ||
       this.list.redirectUrl === "lpl-summer" ||
+      this.list.redirectUrl === "fankuijianyi" ||
       this.list.redirectUrl === "dy-promo-application-A" ||
       this.list.redirectUrl === "dy-promo-application-B" ||
       this.list.redirectUrl === "dy2-cny2024-promo" ||
