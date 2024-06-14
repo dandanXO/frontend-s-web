@@ -86,7 +86,7 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
-    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && !isCommonPromo && store.token" />
+    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
     <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && !isCommonPromo && store.token" />
     
