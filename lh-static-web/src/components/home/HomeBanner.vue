@@ -227,10 +227,19 @@ const checkShowImgTop = () => {
 
 onMounted(() => {
   loadBanners();
-  if(store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")){
+  if(store.token){
     checkShowImgTop();
   }
 });
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token) {
+      checkShowImgTop();
+    }
+  }
+);
 </script>
 
 <style scoped lang="scss">

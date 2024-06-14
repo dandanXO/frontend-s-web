@@ -1439,7 +1439,7 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      
+
       const openPattern = /^\/open\/(.*)/;
       if ((banner.redirectUrl).match(openPattern)) {
         const extractedUrl = banner.redirectUrl.match(openPattern)[1];
@@ -1719,7 +1719,7 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      if (store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
+      if (store.token) {
         checkShowImgTop();
       }
       getAppDownloadUrl();
