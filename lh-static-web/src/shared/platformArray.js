@@ -105,7 +105,7 @@ export const sportsPlatforms = [
   },
   {
     code: "PINNACLE",
-    cnname: "平博体育",
+    cnname: "AP体育",
     image: "pinnacle",
     message: "25年专业体育品牌，行业标杆，提供最优质赔率水位，业界超高限额，畅享独一无二投注体验",
     caption: "专业品牌，尽享满贯",

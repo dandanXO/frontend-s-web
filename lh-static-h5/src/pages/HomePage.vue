@@ -1245,7 +1245,7 @@ export default defineComponent({
                 spObj.title = "FB体育";
               }
               if (spObj.code === "PINNACLE") {
-                spObj.title = "平博体育";
+                spObj.title = "AP体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";

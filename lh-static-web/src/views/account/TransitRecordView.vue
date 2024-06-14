@@ -1401,7 +1401,7 @@ export default defineComponent({
       } else if (platformName === "TCG") {
         return "TCG彩票"; // TCG
       } else if (platformName === "PINNACLE") {
-        return "平博体育"; // BBINDY
+        return "AP体育"; // AP
       } else if (platformName === "EBET") {
         return "WE真人"; // EBET
       } else if (platformName === "ALLBET") {

@@ -147,7 +147,7 @@ export const translateRecord = (rec, type = "") => {
   } else if (rec === "BBINDY" || rec === "BBIN") {
     return "BBIN真人"; // BBINDY
   } else if (rec === "PINNACLE") {
-    return "平博体育"; // BBINDY
+    return "AP体育"; // AP
   } else if (rec === "EBET") {
     return "WE真人"; // EBET
   } else if (rec === "ALLBET") {
