@@ -163,7 +163,7 @@ export default {
     chgpwd_confirm: "Xác nhận",
     chgpwd_please_enter_old_withdraw_password: "Vui lòng nhập mật khẩu rút tiền cũ",
     chgpwd_please_enter_login_password: "Vui lòng nhập mật khẩu đăng nhập",
-    chgpwd_please_enter_telephone: "Vui lòng nhập Mật khẩu Rút tiền mới",
+    chgpwd_please_enter_telephone: "Vui lòng nhập số điện thoại",
     chgpwd_old_withdraw_password: "Mật khẩu rút tiền cũ chưa chính xác",
     chgpwd_login_password: "Mật khẩu đăng nhập",
     chgpwd_telephone: "Số điện thoại",
