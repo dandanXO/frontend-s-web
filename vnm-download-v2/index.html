@@ -796,38 +796,7 @@
         var agentCode = getQueryString("agentCode");
         console.log(agentCode);
 
-        function is_weixin() {
-            var ua = navigator.userAgent.toLowerCase();
-            if (ua.match(/MicroMessenger/i) == "micromessenger"){
-                return true;
-            } else {
-                return false;
-            }
-        }
-        var isWeixin = is_weixin();
-
-        if(isWeixin){
-            $(".weixin_tip").show();
-            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-                $("#tips").attr("src","/style/images/wxtips_ios.png");
-            }else if (/(Android)/i.test(navigator.userAgent)){
-                $("#tips").attr("src","/style/images/wxtips_android.png");
-            }
-        }else{
-            $(".download").show();
-            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-                getIosPath();
-            }else if (/(Android)/i.test(navigator.userAgent)){
-                showAndroid();
-                getApiUrl();
-            }else {
-                showAndroid();
-                getApiUrl();
-
-            };
-            // var host = window.location.host;
-            // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
-        }
+        getApiUrl();
 
         // if (pp_pid) {
         //     console.log('ad: get pid from url: ', pp_pid);
