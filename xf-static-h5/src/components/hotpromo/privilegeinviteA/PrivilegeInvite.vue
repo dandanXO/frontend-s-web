@@ -411,6 +411,7 @@ import Swal from "sweetalert2";
 import { useRoute, useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../../../api/privilegeInvite/privilegeInvite";
 import { userStore } from "stores/index";
+import {isAndroid} from "boot/utils";
 
 export default defineComponent({
   name: "PrivilegeInvite",
@@ -466,7 +467,12 @@ export default defineComponent({
     };
 
     const shareInvite = () => {
-      router.push("/account/invite");
+      if(isAndroid()){
+        window.parent.postMessage('Hello from InAppBrowser', '*');
+
+      } else{
+        router.push("/account/invite")
+      }
     };
 
     onMounted(() => {

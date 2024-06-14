@@ -58,6 +58,8 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
+
             <div class="selected-promo-wrapper" :class="`bg__${selectedPromo.promoCode}`">
               <div class="banner-container" v-if="!isSpecialPromo">
                 <img
@@ -90,30 +92,6 @@
       </q-tab-panels>
     </div>
   </div>
-
-  <q-dialog v-model="modalVisible" class="gameDialog" full-height full-width>
-    <q-toolbar>
-      <div class="topActions">
-        <q-toolbar-title></q-toolbar-title>
-        <q-btn
-          flat
-          @click="closeDialog()"
-          round
-          dense
-          icon="close"
-          style="width: 24px; height: 24px; min-height: 24px; min-width: 24px"
-        />
-      </div>
-
-    <iframe
-      :src="promoSrc"
-      id="promo-iframe"
-      scrolling="auto"
-      frameborder="0"
-      class="promo-iframe"
-    ></iframe>
-    </q-toolbar>
-  </q-dialog>
 
 
   <q-dialog width="100%" v-model="isDisplayLogin">
@@ -189,7 +167,7 @@ export default defineComponent({
 
     const isAppPromo= ref(false);
     const promoUrl= ref('https://' + store.evip);
-    const appPromoUrl= ref("");
+    // const appPromoUrl= ref("");
 
     const checkExtension = () => {
       if (currentPath.value === "/promotion") {
@@ -242,13 +220,14 @@ export default defineComponent({
         isSpecialPromo.value = false
       }
 
+      // debugger;
       if (extensionState.value) {
 
         if (promo.redirectUrl.includes("page-vip")) {
           router.push({path: '/account/vip'});
         } else {
           isAppPromo.value= true;
-          appPromoUrl.value= promoUrl.value + "/promotion?name=" + promo.redirectUrl + "&token=" + extensionToken.value;
+          // appPromoUrl.value= promoUrl.value + "/promotion?name=" + promo.redirectUrl + "&token=" + extensionToken.value;
 
         }
         isPromoDetail.value = true;
@@ -267,17 +246,21 @@ export default defineComponent({
           } else {
 
             if(true || isAndroid()){
-              modalVisible.value= true;
+              // modalVisible.value= true;
 
-              var preUrl = `https://m.xf3658.com/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = `http://192.168.79.121:9090/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
               // promoSrc.value= preUrl;
-
               var ref = cordova.InAppBrowser.open(
                 preUrl,
                 "_blank",
                 "location=no,zoom=no"
               );
+
+              window.addEventListener('message', function(event) {
+                console.log("Message received from InAppBrowser: ", event.data);
+                alert(event.data);
+              }, false);
 
             }else{
 
@@ -328,8 +311,10 @@ export default defineComponent({
           });
 
           switchPromoType(promoState.active)
+          isFetchingPromo.value = false;
         }
       }).catch((e) => {
+        isFetchingPromo.value = false;
         console.log("error", e);
       });
 
@@ -359,7 +344,7 @@ export default defineComponent({
       tabItems,
       isDisplayLogin,
       isFetchingPromo,
-      appPromoUrl,
+      // appPromoUrl,
       isAppPromo,
       modalVisible,
       promoSrc,
@@ -941,6 +926,38 @@ export default defineComponent({
     height: calc(100% - 26px);
 
     top: 26px;
+  }
+}
+</style>
+<style scoped lang="scss">
+.loader {
+  margin: auto;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 150px;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 </style>
