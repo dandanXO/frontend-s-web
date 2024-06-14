@@ -1,5 +1,5 @@
-const axios = require('axios')
-
+import router from '../router';
+const axios = require('axios');
 export const getVerificationImage = async (type = 0) => {
   var url = 'https://sumbtf.tebarncale.com/validator/img/1/200/100';
   // if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
@@ -27,8 +27,4 @@ export const getVerificationImage = async (type = 0) => {
   } catch (error) {
     console.log(error)
   }
-
-  return await axios.get(
-    url
-  )
 }
