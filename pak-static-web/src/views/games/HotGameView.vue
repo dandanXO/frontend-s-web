@@ -10,7 +10,7 @@
         <div class="plat-games-container">
           <div class="game-list-wrapper hot">
             <div class="game-slot animate__animated animate__fadeInRight" v-for="game in games" :key="game.id">
-              <a @click="openGame(game, game.platform, game.code)">
+              <a @click="openGame(game.name, game.platformCode, game.code, game.gameType)">
                 <div class="slot-img">
                   <el-image :src="loadGameIcon(game.icon)" lazy>
                     <template #placeholder>
@@ -56,9 +56,8 @@ const loadGames = () => {
   getPlatformHotGames().then((res) => (games.value = res));
 };
 
-const openGame = (item, platformCode, gameCode) => {
-  const platName = item.alias ?? item.cnname ?? item.name;
-  platformGame.value.open(platName, platformCode, gameCode);
+const openGame = (gameName, platformCode, gameCode, gameType) => {
+  platformGame.value.open(gameName, platformCode, gameCode, gameType);
 };
 
 onMounted(() => {

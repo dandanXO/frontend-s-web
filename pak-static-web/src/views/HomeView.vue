@@ -42,7 +42,7 @@
     <div class="main-wrapper">
       <!-- Hero Slider-->
       <div class="top-container-wrapper">
-        <BannerCarousel :banners="banners" />
+        <BannerCarousel :banners="banners" @play-game="openGame" />
         <!-- <div class="top-container">
           <div class="banner-slider">
             <a-carousel ref="refCarousel" autoplay :slides-to-show="1">
@@ -120,7 +120,11 @@
       <div class="center-content">
         <SectionWrapper :title="$t('homeView.game.hot')" to="/hot" class="section-wrapper">
           <div class="section-wrapper-content">
-            <a v-for="(game, index) in hotGames" :key="index" @click="openGame(game, game.platformCode, game.code)">
+            <a
+              v-for="(game, index) in hotGames"
+              :key="index"
+              @click="openGame(game.name, game.platformCode, game.code, game.gameType)"
+            >
               <!-- <img :src="loadHotGameIcon(`${game.icon}`)" /> -->
               <div class="hotgame-icon" :style="{ backgroundImage: `url(${loadHotGameIcon(game.icon)})` }">
                 <img :src="require('@/assets/images/platform/game/default.png')" />
@@ -130,7 +134,7 @@
         </SectionWrapper>
         <SectionWrapper :title="$t('homeView.game.live')" to="/live-casino" class="section-wrapper">
           <div class="section-wrapper-content wide">
-            <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game, game.code, game.name)">
+            <a v-for="(game, index) in liveGames" :key="index" @click="openGame(game.name, game.code, '', 'LIVE')">
               <img style="max-height: 228px" :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'live')" />
             </a>
           </div>
@@ -144,14 +148,22 @@
         </SectionWrapper>
         <SectionWrapper :title="$t('homeView.game.fish')" to="/aviator" class="section-wrapper">
           <div class="section-wrapper-content">
-            <a v-for="(game, index) in fishingGames" :key="index" @click="openGame(game, game.platformName, game.code)">
+            <a
+              v-for="(game, index) in fishingGames"
+              :key="index"
+              @click="openGame(game.name, game.platformName, game.code, game.gameType)"
+            >
               <img :src="`${imgGamesURL}${game.icon}`" />
             </a>
           </div>
         </SectionWrapper>
         <SectionWrapper :title="$t('homeView.game.sport')" to="/sport" class="section-wrapper">
           <div class="section-wrapper-content wide">
-            <a v-for="(game, index) in sportGames" :key="index" @click="openGame(game, game.code, game.name)">
+            <a
+              v-for="(game, index) in sportGames"
+              :key="index"
+              @click="openGame(game.name, game.code, '', game.gameType)"
+            >
               <img :src="loadGameIcon(`${game.code.toLowerCase()}.png`, 'sport')" />
             </a>
           </div>
@@ -544,14 +556,8 @@ const platformSection = computed(() => {
   return _platform;
 });
 
-const openGame = (game, platformCode, gameCode) => {
-  const platName = game.alias ?? game.cnname ?? game.name;
-  slotsGame.value.open(platName, platformCode, gameCode);
-  // if (game.gameType && (game.gameType === "SLOT" || game.gameType === "FISH" || game.gameType === "BINGO")) {
-  //   slotsGame.value.open(game.name, platName, game.code, platStatus);
-  // } else {
-  //   slotsGame.value.open(game.gameName, game.name, game.code, platStatus);
-  // }
+const openGame = (gameName, platformCode, gameCode, gameType) => {
+  slotsGame.value.open(gameName, platformCode, gameCode, gameType);
 };
 const hotTrendingGames = [
   {
