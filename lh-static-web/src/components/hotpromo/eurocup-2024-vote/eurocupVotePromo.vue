@@ -78,7 +78,7 @@
       </div>
 
       <div class="content-info">
-        <div class="content-info-item">活动时间：2024年06月15号00:00至07月14号23:59:59</div>
+        <div class="content-info-item">活动时间：2024年06月13号00:00至07月14号23:59:59</div>
         <div class="content-info-item" >
           活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
         </div>

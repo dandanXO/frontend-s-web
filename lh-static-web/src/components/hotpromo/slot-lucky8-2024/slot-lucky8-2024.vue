@@ -19,21 +19,21 @@
             <th>活动彩金</th>
             <th>操作</th>
           </tr>
-          <tr>
-            <td>平台名</td>
-            <td>2024.4.2 23:32:32</td>
-            <td>*******8888</td>
-            <td>388</td>
-            <td>388</td>
-            <td><button class="option-btn-active">领取彩金</button></td>
-          </tr>
-          <tr>
-            <td>平台名</td>
-            <td>2024.4.2 23:32:32</td>
-            <td>*******8888</td>
-            <td>388</td>
-            <td>388</td>
-            <td><button class="option-btn-disable">已领取</button></td>
+          
+          <tr v-for="(item, index) in tableData" :key="index">
+            <td>
+              {{ item.platformName }}
+              <!-- <span class="inner-time">{{ item.time }}</span> -->
+            </td>
+            <td>{{ item.time }}</td>
+            <td>{{ item.acctNumber }}</td>
+            <td>{{ item.first }}</td>
+            <td>{{ item.second }}</td>
+            <td>
+              <button @click="!item.claimed ? handleSubmitVote(item): null" :class="!item.claimed ? 'option-btn-active' : 'option-btn-disable'">
+                {{ item.claimed ? '已领取' : '领取彩金' }}
+              </button>
+            </td>
           </tr>
         </table>
       </div>
@@ -160,30 +160,24 @@
 <script setup>
 import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
+import { getSlotLucky8, submitSlotLucky8 } from "@/api/promotion/slotlucky";
 import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
-const matchList = ref([]);
+const tableData = ref([]);
 
 const store= userStore();
 
 const recordList = ref([]);
 
-let submitParam = reactive({ matchId: 0, team: "" });
-
-const handleVoteClick = (selectedData) => {
-  submitParam = selectedData;
-  confirmVoteDialog.value = true;
-};
-
-const handleSubmitVote = () => {
-  console.log(submitParam);
-  submitNbaMatch(submitParam)
+const handleSubmitVote = (item) => {
+  submitSlotLucky8(promoCode.value, item.id)
     .then((res) => {
       if(res.code === 0) {
         ElMessage.success({
@@ -234,27 +228,32 @@ const displayGuessResult = (record) => {
   }
 };
 
-const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
-  matchList.value = res.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
-    awayTeamIcon: imgURL + res.awayTeamIcon,
-    homeTeamIcon: imgURL + res.homeTeamIcon
-  }));
+const getSlotLucky8Data = async () => {
+  const res = await getSlotLucky8(promoCode.value);
+  tableData.value = [
+    {
+        "id": 1,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": false
+    },
+    {
+      "id": 2,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": true
+    }
+]
 }
 
 
-watch(tableRecordDialog, async () => {
-  if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
-
-    recordList.value = res.data.map((res) => ({
-      ...res,
-      updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
-    }));
-  }
-});
+onMounted(getSlotLucky8Data);
 </script>
 
 <style scoped lang="scss">
@@ -623,6 +622,7 @@ watch(tableRecordDialog, async () => {
   border-radius: 100px;
   background: rgba(217, 217, 217, 1);
   color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
 
 }
 .luck8-game-bottom-rule {

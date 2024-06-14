@@ -18,21 +18,20 @@
             <th>活动彩金</th>
             <th>操作</th>
           </tr>
-          <tr>
-            <td>平台名 <br><span class="inner-time">2024.4.2 23:32:32</span></td>
-            <td>*******8888</td>
-            <td>388</td>
-            <td>388</td>
-            <td><button class="option-btn-active">领取彩金</button></td>
-          </tr>
-          <tr>
-            <td>平台名 <br><span class="inner-time">2024.4.2 23:32:32</span></td>
-            <td>*******8888</td>
-            <td>388</td>
-            <td>388</td>
-            <td><button class="option-btn-disable">已领取</button></td>
-          </tr>
-
+          <tr v-for="(item, index) in tableData" :key="index">
+            <td>
+              {{ item.platformName }} <br>
+              <span class="inner-time">{{ item.time }}</span>
+            </td>
+            <td>{{ item.acctNumber }}</td>
+            <td>{{ item.first }}</td>
+            <td>{{ item.second }}</td>
+            <td>
+              <button @click="!item.claimed ? handleSubmitVote(item): null" :class="!item.claimed ? 'option-btn-active' : 'option-btn-disable'">
+                {{ item.claimed ? '已领取' : '领取彩金' }}
+              </button>
+            </td>
+          </tr>\
         </table>
       </div>
       <div class="slot-lacky8-game-info">
@@ -209,27 +208,46 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
-import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
+import { getSlotLucky8, submitSlotLucky8 } from "../../../api/promotion/slotlucky";
 import { useQuasar } from "quasar";
 import {useLocalStorage} from "@vueuse/core"
 import { userStore } from "src/stores";
 const $q = useQuasar();
 
+const props = defineProps(["promoCode"]);
+const promoCode = ref(props.promoCode);
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
 const store= userStore();
-const matchList = ref([]);
+const tableData = ref([]);
 
 const recordList = ref([]);
-
-let submitParam = reactive({ matchId: 0, team: "" });
-
-const handleVoteClick = (selectedData) => {
-  submitParam = selectedData;
-  confirmVoteDialog.value = true;
+const handleSubmitVote = (item) => {
+  submitSlotLucky8(promoCode.value, item.id)
+    .then((res) => {
+      if (res.code === 0) {
+        $q.notify({
+          color: "positive",
+          position: "top",
+          message: "投票成功！",
+          icon: "check_circle_outline"
+        });
+        getSlotLucky8Data();
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: res.message,
+          icon: "report_problem"
+        });
+      }
+    })
+    .finally(() => {
+      confirmVoteDialog.value = false;
+    });
 };
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
@@ -263,27 +281,33 @@ const displayGuessResult = (record) => {
   }
 };
 
-const getNbaMatchData = async () => {
-  const res = await getNbaMatch();
-  matchList.value = res.data.map((res) => ({
-    ...res,
-    matchTime: moment(res.matchTime).locale("zh-cn").format("MMMDo HH:mm"),
-    awayTeamIcon: imgURL + res.awayTeamIcon,
-    homeTeamIcon: imgURL + res.homeTeamIcon
-  }));
+const getSlotLucky8Data = async () => {
+  
+  const res = await getSlotLucky8(promoCode.value);
+  tableData.value = [
+    {
+        "id": 1,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": false
+    },
+    {
+      "id": 2,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": true
+    }
+]
 };
 
+onMounted(getSlotLucky8Data);
 
-
-watch(tableRecordDialog, async () => {
-  if (tableRecordDialog.value) {
-    const res = await getNbaRecord();
-    recordList.value = res.data.map((res) => ({
-      ...res,
-      updateTime: moment(res.updateTime).format("M 月 DD 日 HH:mm")
-    }));
-  }
-});
 </script>
 
 <style scoped lang="scss">
@@ -669,6 +693,7 @@ watch(tableRecordDialog, async () => {
   border: none;
   background: rgba(217, 217, 217, 1);
   color: rgba(255, 255, 255, 1);
+  pointer-events: none;
 
 }
 
