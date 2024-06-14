@@ -11,10 +11,10 @@ const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
 console.log(window.location.hostname);
-const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869", "lh866", "lh068", "lh988"];
+const globalLinks = ["lh318", "lh165", "lh765", "lh730", "lh971", "lh835", "lh869", "lh866", "lh068", "lh988", "lh050", "lh360", "lh537", "lh768", "lh887"];
 const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(link));
 
-const specialLinks= ["lh93371", "lh76390", "lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737.com", "lh36987.com"];
+const specialLinks= ["lh93371", "lh76390", "lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987"];
 const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
 if (isGlobalLH) {
