@@ -524,7 +524,7 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
+      <div class="game-lists fade-in-image" id="casual-lists" v-show="store.memberType === 'TEST'">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"

@@ -145,29 +145,31 @@ export default defineComponent({
       //   affiliateCode = "3B1BFB";
       // }
 
-      sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          if (res.data.adjust_register_event) {
-            ui.adjust_register_event = res.data.adjust_register_event;
+      if(affiliateCode) {
+        sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
+        api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+          if (res.code === 0) {
+            sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+            // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+            // sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+            if (res.data.adjust_register_event) {
+              ui.adjust_register_event = res.data.adjust_register_event;
+            }
+            if (res.data.adjust_open_app_event) {
+              ui.adjust_open_app_event = res.data.adjust_open_app_event;
+            }
+            if (res.data.adjust_register_fail_event) {
+              ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
+            }
+            if (res.data.adjust_click_register_event) {
+              ui.adjust_click_register_event = res.data.adjust_click_register_event;
+            }
+            affAppToken.value = res.data.adjust_app_token;
+            initAdjustEventTrack();
+            // alert(affAppToken.value);
           }
-          if (res.data.adjust_open_app_event) {
-            ui.adjust_open_app_event = res.data.adjust_open_app_event;
-          }
-          if (res.data.adjust_register_fail_event) {
-            ui.adjust_register_fail_event = res.data.adjust_register_fail_event;
-          }
-          if (res.data.adjust_click_register_event) {
-            ui.adjust_click_register_event = res.data.adjust_click_register_event;
-          }
-          affAppToken.value = res.data.adjust_app_token;
-          initAdjustEventTrack();
-          // alert(affAppToken.value);
-        }
-      });
+        });
+      }
     };
 
     const errorHandler = (error) => {
