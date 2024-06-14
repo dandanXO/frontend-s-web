@@ -32,7 +32,6 @@
       </a>
     </el-carousel-item>
   </el-carousel>
-
   <GameModal ref="allGames"></GameModal>
 </template>
 
@@ -52,10 +51,17 @@ const banners = ref([]);
 const isDark = useDark();
 const store = userStore();
 const router = useRouter();
-const allGames= ref();
 
+const allGames = ref(null);
 const goBannerPage = (redirectUrl) => {
-  if (redirectUrl == "app://deposit") {
+  const openPattern = /^\/open\/(.*)/;
+  if (redirectUrl.match(openPattern)) {
+    const extractedUrl = redirectUrl.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+    allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+    return;
+  } else if (redirectUrl == "app://deposit") {
     router.push("/center/deposit");
   } else {
     router.push(`/promotion?name=${redirectUrl}`);
