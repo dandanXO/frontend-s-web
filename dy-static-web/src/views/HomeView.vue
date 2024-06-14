@@ -764,7 +764,13 @@ export default defineComponent({
     };
 
     const goBannerPage = (redirectUrl) => {
-      if (redirectUrl == "app://deposit") {
+      const openPattern = /^\/open\/(.*)/;
+      if (redirectUrl.match(openPattern)) {
+        const extractedUrl = redirectUrl.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+        gameMenu.value.open(gameName, platformCode, gameCode, "OPEN");
+      } else if (redirectUrl == "app://deposit") {
         router.push("/center/deposit");
       } else {
         router.push(`/promotion?name=${redirectUrl}`);

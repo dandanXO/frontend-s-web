@@ -2170,7 +2170,13 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      if (banner.redirectUrl == "app://deposit") {
+      const openPattern = /^\/open\/(.*)/;
+      if (banner.redirectUrl.match(openPattern)) {
+        const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+      } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
