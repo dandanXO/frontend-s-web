@@ -107,43 +107,43 @@
     {
         "code": "usdt",
         "title": "USDT",
-        "content": "充值即送1.5%彩金​ 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的1.5%加码彩金，单日优惠最高上限588元​",
+        "content": "充值即送1.5%彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的1.5%加码彩金，单日优惠最高上限588元 ",
         "lesson": "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
     },
     {
         "code": "okpay",
         "title": "OKpay",
-        "content": "充值即送1.0%彩金​OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值\"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。​",
+        "content": "充值即送1.0%彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值\"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。 ",
         "lesson": "https://me-qr.com/l/okpayjiaocheng"
     },
     {
         "code": "blbpay",
         "title": "808钱包",
-        "content": "充值即送1%彩金​808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1%加码彩金，单日优惠最高上限200元​​",
+        "content": "充值即送1%彩金 808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1%加码彩金，单日优惠最高上限200元 ",
         "lesson": "http://808.com/tutorial.html"
     },
     {
         "code": "ebpay",
         "title": "EBPAY",
-        "content": "充值即送1.0%彩金​仅只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款≥1000元,享受存款金额的1.0%加码彩金，单日优惠最高上限200元​​",
+        "content": "充值即送1.0%彩金 仅只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款≥1000元,享受存款金额的1.0%加码彩金，单日优惠最高上限200元 ",
         "lesson": "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
     },
     {
         "code": "kdou",
         "title": "K豆",
-        "content": "充值即送1.0%彩金​K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限200元​​",
+        "content": "充值即送1.0%彩金 K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限200元 ",
         "lesson": "https://kdxz1848.com/"
     },
     {
         "code": "jdpay",
         "title": "JDpay",
-        "content": "充值即送1.0%彩金​JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
+        "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
         "lesson": "https://www.jdpay01.com/#/transactionFlow"
     },
     {
         "code": "szrmb",
         "title": "数字人民币",
-        "content": "充值即送1%彩金​数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥1000元，即可享受存款金额的1%加码彩金，单日优惠最高上限100元​"
+        "content": "充值即送1%彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥1000元，即可享受存款金额的1%加码彩金，单日优惠最高上限100元 "
     },
     {
         "code": "zfb",
@@ -155,7 +155,8 @@
 </script>
 <style lang="scss">
     .deposit-rebates-container {
-        
+      padding-top: 20px;
+
         &.isEuro {
             .cards-tabs {
                 .tab{
@@ -187,7 +188,7 @@
                 }
                 tbody {
                     tr {
-                        
+
                         &:nth-child(even) {
                             background: #C9DCFF33;
 
@@ -329,7 +330,7 @@
                     display: flex;
                     flex: 1;
                     gap: 15px;
-                    justify-content: flex-end;
+                    justify-content: center;
                     align-items: center;
                     width: 100%;
                     .btn {
@@ -411,7 +412,7 @@
     font-size: 11px;
 
                     img {
-                        
+
     margin: 0 -4px;
                     }
                 }
