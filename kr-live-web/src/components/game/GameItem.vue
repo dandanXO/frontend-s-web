@@ -19,7 +19,7 @@
         <img class="active-overlay" :src="require(`../../assets/home/games/game-bg--active.png`)" />
         <div class="game-info-wrapper">
           <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
-          <div class="game-name">{{ game.name }}</div>
+          <div class="game-name">{{ game?.alias || game.name }}</div>
           <img class="game-logo"
             :src="
               (() => {
@@ -145,8 +145,9 @@ const gameType = ref(props.gameType);
 
         .game-name {
           color: #fff;
-          font-size: 24px;
+          font-size: 20px;
           line-height: 1;
+          white-space: nowrap;
 
           @media (max-width: 769px) {
             font-size: 14px;
@@ -154,7 +155,8 @@ const gameType = ref(props.gameType);
         }
 
         .game-logo {
-          max-width: 160px;
+          max-width: 120px;
+          aspect-ratio: 283 / 96;
           // width: 100%;
         }
       }
