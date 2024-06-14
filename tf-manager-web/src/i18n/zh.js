@@ -1786,6 +1786,8 @@ export default {
     virtualMultiplier: '虚拟奖金倍数',
     batchDistributeRebate: '批量发送返水',
     distribute: '发送',
+    totalAmountDistribute: '派发奖金总数',
+    noOfBonusRecord: '奖金记录总数',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

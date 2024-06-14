@@ -1784,6 +1784,8 @@ export default {
     virtualMultiplier: 'Virtual Multiplier',
     batchDistributeRebate: 'Batch Distribute Rebate',
     distribute: 'Distribute',
+    totalAmountDistribute: 'Total Amount Distribute',
+    noOfBonusRecord: 'Number of Bonus Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
