@@ -854,6 +854,7 @@ export default defineComponent({
           width: 100%;
           background-position: top center;
           background-size: 100% auto;
+          background-repeat: no-repeat;
 
           .hot-promo{
             padding: 15px;
