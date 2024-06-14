@@ -55,6 +55,25 @@
             padding: 16px;
         }
     </style>
+
+    <script>
+        !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = "2.0";
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    </script>
 </head>
 <body>
 <div class="download" style="background-image:url('style/images/bg.png')">
@@ -114,15 +133,23 @@
     var type = "ALL_AND";
 
     const searchParams = new URLSearchParams(window.location.search);
-    let affidValue = searchParams.get('id');
-    const campaignname = searchParams.get('campaignname');
-    const campaignid = searchParams.get('campaignid');
-    const adsetid = searchParams.get('adsetid');
-    const adsetname = searchParams.get('adsetname');
-    const adname = searchParams.get('adname');
-    const adid = searchParams.get('adid');
+    let affidValue = searchParams.get('p0') || searchParams.get('id');
+    const campaignname =  searchParams.get('p1') || searchParams.get('campaignname');
+    const campaignid = searchParams.get('p2') || searchParams.get('campaignid');
+    const adsetid = searchParams.get('p3') || searchParams.get('adsetid');
+    const adsetname = searchParams.get('p4') || searchParams.get('adsetname');
+    const adname = searchParams.get('p5') || searchParams.get('adname');
+    const adid = searchParams.get('p6') || searchParams.get('adid');
     const fbclid = searchParams.get('fbclid');
     const fbpid = searchParams.get('fbpid');
+
+    const pp= searchParams.get("pp");
+    // debugger;
+    if (pp) {
+        pp_pid = new URLSearchParams(atob(pp)).get('fb_pixel_id');
+    }
+
+
     const autoDownload = searchParams.get("autoDownload");
 
     affidValue = affidValue ?? '45D757';
@@ -221,6 +248,14 @@
             };
             // var host = window.location.host;
             // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
+        }
+
+        if (pp_pid) {
+            console.log('ad: get pid from url: ', pp_pid);
+            window.pId = pp_pid;
+
+            fbq("init", pp_pid);
+            fbq("track", "PageView");
         }
 
     });
