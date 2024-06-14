@@ -2122,8 +2122,8 @@ export default defineComponent({
     background-size: cover;
   }
 
-  .q-carousel__navigation--bottom {
-    bottom: 30px;
+  :deep(.q-carousel__navigation--bottom) {
+    bottom: 0px;
   }
 }
 
