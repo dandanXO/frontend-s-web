@@ -341,9 +341,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken()) ? "/session/loggedInPromoPages" : "/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -391,11 +391,11 @@ export default defineComponent({
 
 
     const checkExtension = () => {
-      if (currentPath.value === "/promotion") {
-        // const eToken = ref(route.query.name);
-        extensionToken.value = route.query.token;
-        extensionState.value = true;
-      }
+      // if (currentPath.value === "/promotion") {
+      //   // const eToken = ref(route.query.name);
+      //   extensionToken.value = route.query.token;
+      //   extensionState.value = true;
+      // }
 
     };
 
@@ -618,7 +618,7 @@ export default defineComponent({
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 3rem;
+            height: 3.3rem;
             display: flex;
             align-items: center;
 

@@ -334,6 +334,7 @@ import { selectNumber, getSelectedNumber, getWinners, getPrizeAmount } from "../
 
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
 const $q= useQuasar()
 const { t } = useI18n();
@@ -374,8 +375,19 @@ const getJackpotAmt = () => {
   jackpotNumber.value = jackpotNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 var qs = require("qs");
-const tab = ref('voting')
+const tab = ref('voting');
+const store= userStore();
 const onSubmitJackpot = () => {
+  if(!store.token){
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("lang.system_please_login"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   const number = parseInt(inputValues.value.join(""));
   selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
     if (res.code === 0) {

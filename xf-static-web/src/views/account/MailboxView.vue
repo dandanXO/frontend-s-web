@@ -353,7 +353,7 @@ const store = userStore();
       ],
       feedback: [
         {
-          required: true,
+          // required: true,
           message: "选择意见类型",
           trigger: "blur",
         },

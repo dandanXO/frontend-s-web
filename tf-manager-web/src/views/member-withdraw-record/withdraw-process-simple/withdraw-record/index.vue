@@ -311,6 +311,13 @@
         >
           <template #default="scope">
             <el-button
+              size="mini"
+              type="primary"
+              @click="showDialog('LOG', scope.row)"
+            >
+              {{ t('fields.viewLog') }}
+            </el-button>
+            <el-button
               v-if="scope.row.status !== 'FAIL' && hasPermission(['sys:withdraw:simple:fail'])"
               size="mini"
               type="danger"
@@ -362,7 +369,7 @@
     </el-dialog>
 
     <el-dialog
-      v-if="uiControl.dialogType !== 'FAIL'"
+      v-if="uiControl.dialogType === 'LOG'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -683,7 +690,7 @@
       </el-form>
     </el-dialog>
     <el-dialog
-      v-if="uiControl.dialogType !== 'SEARCH'"
+      v-if="uiControl.dialogType === 'FAIL'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -844,6 +851,8 @@ const uiControl = reactive({
     { key: 11, displayName: t('withdrawStatus.FAIL'), value: 'FAIL' },
     { key: 12, displayName: t('withdrawStatus.PENDING'), value: 'PENDING' },
     { key: 13, displayName: t('withdrawStatus.WAITING_AUTO_PAY'), value: 'WAITING_AUTO_PAY' },
+    { key: 14, displayName: t('withdrawStatus.FAIL_REVIEW'), value: 'FAIL_REVIEW' },
+    { key: 15, displayName: t('withdrawStatus.WAITING_RETRY'), value: 'WAITING_RETRY' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },

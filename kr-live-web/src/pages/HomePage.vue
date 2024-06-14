@@ -9,24 +9,26 @@
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
     <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'live'"
-        :games="liveCasinoGames"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
+      <div class="game-list" v-if="currentSelectedMenu === 'live'">
+        <GameItem
+          :games="liveCasinoGames"
+          :gameType="currentSelectedMenu"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+      </div>
     </Transition>
 
     <!-- slot start -->
     <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'slots' && !isShow">
       <GameItem
-        v-if="currentSelectedMenu === 'slots' && !isShow"
         :games="platforms"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectSlotPlat"
       />
+    </div>
     </Transition>
 
     <Transition>
@@ -421,23 +423,31 @@
     </Transition>
 
     <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'esport'"
-        :games="esportPlatform"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
+      <div class="game-list" v-if="currentSelectedMenu === 'sport'">
+        <GameItem
+          :games="esportPlatform"
+          :gameType="'esport'"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+        <GameItem
+          :games="sportPlatform"
+          :gameType="currentSelectedMenu"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+      </div>
     </Transition>
 
     <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'casual' && !isShow">
       <GameItem
-        v-if="currentSelectedMenu === 'casual' && !isShow"
         :games="platformMinigame"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectCasualPlat"
       />
+    </div>
     </Transition>
     <!-- cq9 start -->
     <Transition>
@@ -619,21 +629,22 @@
       <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
 
-    <Transition>
+    <!-- <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'sport'">
       <GameItem
-        v-if="currentSelectedMenu === 'sport'"
         :games="sportPlatform"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="openGame"
       />
-    </Transition>
+    </div>
+    </Transition> -->
   </div>
 
   <div class="news-section">
     <div class="news-title">
       <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
+      <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+ 더보기</router-link>
     </div>
     <template v-if="newsList.length > 0">
       <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
@@ -3039,6 +3050,27 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
+  }
+}
+
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
+
+  @media (min-width: 769px) {
+    .game-item {
+      max-width: 220px;
+    }
   }
 }
 </style>

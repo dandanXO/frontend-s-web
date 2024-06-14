@@ -77,6 +77,12 @@
     />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
+      <img
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
+        src="../assets/images/promotion/webfeedback.png"
+      />
+    </div>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -328,7 +334,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao"
+      this.list.redirectUrl === "tiqianhongbao" ||
+      this.list.redirectUrl === "fankuijianyi"
     ) {
       this.isCommonPromo = false;
     } else {

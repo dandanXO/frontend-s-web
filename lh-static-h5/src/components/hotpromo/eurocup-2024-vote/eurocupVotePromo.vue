@@ -113,7 +113,7 @@
       </div>
 
       <div class="content-info">
-        <div class="content-info-item">活动时间：2024年06月15号00:00至07月14号23:59:59</div>
+        <div class="content-info-item">活动时间：2024年06月13号00:00至07月14号23:59:59</div>
         <div class="content-info-item" >
           活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
         </div>
@@ -328,10 +328,11 @@ export default defineComponent({
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+          const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
             const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
-          });
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+            return extendedVoteRecords
+        });
 
           votesData.value = {
             ...res.data,

@@ -1243,7 +1243,7 @@ export default defineComponent({
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value;
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `${imgURL}/order/1/${linkId}`
+      reminderForm.photos = `${linkId}`
     }
 
     const getFormatBetTime = (betTime) => {

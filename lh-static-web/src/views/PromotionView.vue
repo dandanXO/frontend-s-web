@@ -3,9 +3,6 @@
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
         <img src="../assets/promo/top-promo-banner.jpg" />
-        <div class="countdown-day">
-          <span>{{ countDay }}</span>
-        </div>
       </div>
     </div>
 
@@ -96,16 +93,17 @@
         <div
           class="inner"
           :style="{
+            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : '',
+            backgroundColor: selectedPromo?.promoCode === 'lh1-slot-lucky8' ? '#E7F1FD' : '',
             backgroundImage:
               selectedPromo?.desktopImgBackgroundUrl ||
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh-lpl-summer24'
-                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
-                : 'url(' + require(`../assets/promo/web-bg.jpg`) + ')',
-            backgroundColor: selectedPromo?.promoCode === 'lh-sport-zhongchao' ? '#F5F6F8' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-nba24-match' ? '#E7F1FD' : '',
-            backgroundColor: selectedPromo?.promoCode === 'lh-lpl-summer24' ? '#1D1D1E' : ''
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`:''
+            
           }"
           :class="{
             fullwidth:
@@ -371,25 +369,6 @@ export default defineComponent({
     .promo-banner-image {
       position: relative;
       overflow: hidden;
-
-      .countdown-day {
-        position: absolute;
-        font-size: 140px;
-        font-weight: bold;
-        color: blue;
-        background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 0.1px;
-        -webkit-text-stroke-color: white;
-        top: 150px;
-        left: 700px;
-        height: 140px;
-        width: 150px;
-        line-height: 140px;
-        text-align: center;
-      }
     }
   }
 

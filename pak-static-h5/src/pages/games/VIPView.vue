@@ -54,13 +54,13 @@
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  <template v-if="vip.vipLevel !== 0">
-                    {{ `VIP${+vip.vipLevel - 1}` }}
-                  </template>
+                  {{ `VIP${+vip.vipLevel}` }}
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  {{ `VIP${vip.vipLevel}` }}
+                  <template v-if="vipItems.length - 1 !== vip.vipLevel">
+                    {{ `VIP${vip.vipLevel + 1}` }}
+                  </template>
                 </div>
               </div>
             </div>

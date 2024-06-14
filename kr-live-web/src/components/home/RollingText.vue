@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
-                <q-spinner-pie color="purple" size="20"/>
+                <q-spinner-gears color="purple" size="2em"/>
             </div>
             <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
                 v-else-if="props.depositRecordList && props.depositRecordList.length > 0">
@@ -80,7 +80,7 @@ const formatTransactionType = (transactionType) => {
             height: 24px;
             display: flex;
             align-items: center;
-            min-width: 100px;
+            gap: 5px;
 
             @media (min-width: 769px) {
                 height: 32px;

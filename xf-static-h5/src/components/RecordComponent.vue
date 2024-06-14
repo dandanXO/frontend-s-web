@@ -394,7 +394,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `https://file.rd7etvkrgt.com/order/1/${linkId}`;
+      reminderForm.photos = `${linkId}`;
     };
 
     const submitReminder = () => {

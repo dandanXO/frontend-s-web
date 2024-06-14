@@ -95,6 +95,8 @@ export default {
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying',
     WAITING_AUTO_PAY: 'Waiting Auto Payment',
+    FAIL_REVIEW: 'Fail Review',
+    WAITING_RETRY: 'Waiting Retry',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -215,8 +217,8 @@ export default {
     sportMatch: {
       ACTIVE: 'Active',
       ENDED: 'Ended',
-      SETTLED: 'Settled'
-    }
+      SETTLED: 'Settled',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -442,7 +444,7 @@ export default {
       GROUP_THREE: 'GROUP THREE',
       GROUP_SIX: 'GROUP SIX',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: 'PENDING',
@@ -458,11 +460,13 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: 'Duplicate IP or Device',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: 'Minimum Deposit Amount not reach',
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
+    ERROR_SIMILAR_IP_DETECTED: 'Similar IP Detected',
+    ERROR_SIMILAR_SID_DETECTED: 'Similar Device Detected',
   },
   rewardType: {
-    BET: "BET",
-    DEPOSIT: "DEPOSIT",
-    ONE_TIME: "ONE TIME",
+    BET: 'BET',
+    DEPOSIT: 'DEPOSIT',
+    ONE_TIME: 'ONE TIME',
   },
   fields: {
     account: 'Account',
@@ -1786,6 +1790,8 @@ export default {
     virtualMultiplier: 'Virtual Multiplier',
     batchDistributeRebate: 'Batch Distribute Rebate',
     distribute: 'Distribute',
+    totalAmountDistribute: 'Total Amount Distribute',
+    noOfBonusRecord: 'Number of Bonus Record',
     whitelist: 'Whitelist',
     blacklist: 'Blacklist',
     accessType: 'Access Type',
@@ -1795,7 +1801,7 @@ export default {
     ipRange: 'IP Range',
     countryCode: 'Country Code',
     lower: 'Lower',
-    Upper: 'Upper',
+    upper: 'Upper',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -1815,7 +1821,8 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
-    confirmCancel: 'Confirm that you want to cancel this record, the operation cannot be undone',
+    confirmCancel:
+      'Confirm that you want to cancel this record, the operation cannot be undone',
     confirmCancelBbDacha:
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelMatch:
@@ -2341,6 +2348,7 @@ export default {
     'Waiting Auto Pay': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
+    'Fail Review': 'Fail Review',
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
@@ -2643,6 +2651,7 @@ export default {
     LANDING: 'Landing',
     DOWNLOAD: 'Download',
     AFFILIATE: 'Affiliate',
+    HOME: 'Home',
   },
   error: {
     400: 'Bad Request',
@@ -2819,6 +2828,6 @@ export default {
     24003: 'Result is already processed',
     27000: 'Key quantity is not enough',
     31000: 'Some matches are not ended on the selected date, please wait until all matches are ended',
-    31001: 'No matches on the selected date'
+    31001: 'No matches on the selected date',
   },
 }

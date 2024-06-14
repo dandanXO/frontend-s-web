@@ -53,6 +53,20 @@
         <el-input v-model="request.loginName" style="width: 200px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.loginName')" />
         <el-input v-model="request.serialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.serialNo')" />
         <el-input v-model="request.thirdSerialNumber" style="width: 300px; margin-left: 10px" size="small" maxlength="50" :placeholder="t('fields.thirdSerialNo')" />
+        <el-select
+          v-model="request.sort"
+          size="small"
+          :placeholder="t('fields.sorting')"
+          class="filter-item"
+          style="width: 210px;margin-left:10px"
+        >
+          <el-option
+            v-for="item in uiControl.sortList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
         <el-button style="margin-left: 20px" icon="el-icon-search" size="mini" type="success" @click="loadRecord()" :disabled="page.loading">
           {{ t('fields.search') }}
         </el-button>
@@ -253,7 +267,11 @@ const uiControl = reactive({
   status: [
     // 隐藏其他status
     { key: 1, displayName: "PENDING", value: "PENDING" }
-  ]
+  ],
+  sortList: [
+    { label: t('fields.byDepositDateDesc'), value: 1 },
+    { label: t('fields.byDepositDateAsc'), value: 2 },
+  ],
 });
 
 const siteList = reactive({
@@ -273,7 +291,8 @@ const request = reactive({
   serialNumber: null,
   loginName: null,
   siteId: null,
-  thirdSerialNumber: null
+  thirdSerialNumber: null,
+  sort: 1
 });
 
 const suppForm = reactive({
@@ -322,6 +341,7 @@ function resetQuery() {
   request.loginName = null;
   request.thirdSerialNumber = null;
   request.siteId = siteList.list[0].id;
+  request.sort = 1
 };
 
 const page = reactive({

@@ -6,8 +6,7 @@
     v-if="!isImpt"
   >
     <a
-      :href="store.memberType === 'TEST' || store.memberType === 'PROMO_TEST' ? homePopupPath : ''"
-      :target="homePopupPath.includes('https://') ? '_blank' : '_self'"
+      @click="clickHomePopupImg(homePopupPath)"
     >
       <img :src="homePopupImg" class="alert-img" />
     </a>
@@ -33,15 +32,18 @@
       </a>
     </el-carousel-item>
   </el-carousel>
+
+  <GameModal ref="allGames"></GameModal>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePopup } from "@/api/index/promo";
 import { ElMessage } from "element-plus";
 import { useDark, useLocalStorage } from "@vueuse/core";
 import { userStore } from "@/store";
 import { useRouter } from "vue-router";
+import GameModal from "@/components/modal/GameModal.vue";
 
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
@@ -50,6 +52,7 @@ const banners = ref([]);
 const isDark = useDark();
 const store = userStore();
 const router = useRouter();
+const allGames= ref();
 
 const goBannerPage = (redirectUrl) => {
   if (redirectUrl == "app://deposit") {
@@ -88,30 +91,18 @@ const setWithExpiry = (key, value, interval) => {
     value: value,
     expiry: now.getTime() + interval
   };
-  localStorage.setItem(key, JSON.stringify(item));
+  sessionStorage.setItem(key, JSON.stringify(item));
 };
 
-const apiMockData = {
-  code: 0,
-  data: {
-    title: "雷火 欧洲杯 TEST",
-    desktopImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-    mobileImgUrl: "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-    content: null,
-    type: "IMG",
-    path: "?name=lh1-eurocup-2024",
-    frequency: "EVERYDAY"
-  }
-};
 
 const getWithExpiry = (key) => {
-  const itemStr = localStorage.getItem(key);
+  const itemStr = sessionStorage.getItem(key);
   if (!itemStr) return null;
 
   const item = JSON.parse(itemStr);
   const now = new Date();
   if (now.getTime() > item.expiry) {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
     return null;
   }
   return item.value;
@@ -129,22 +120,35 @@ const homePopupContent = ref("");
 const homePopupType = ref("");
 const homePopupId = ref(0);
 
-// const clickHomePopupImg = (urlString) => {
-//   let regexUrl = new RegExp(/^(https:\/\/)/g);
-//   if (regexUrl.test(urlString)) {
-//     // 跳轉
-//     location.href = urlString;
-//     return;
-//   }
-//   let regexName = new RegExp(/^(name|\?name)/g);
-//   if (regexName.test(urlString)) {
-//     //去優惠
-//     router.push(`/promo${urlString}`);
-//     return;
-//   }
-// };
+const clickHomePopupImg = (urlString)=>{
+  const openPattern = /^\/open\/(.*)/;
+  if (urlString.match(openPattern)) {
+    const extractedUrl = urlString.match(openPattern)[1];
+    const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+    allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+    return;
+  }
+
+  // debugger;
+  let regexUrl = new RegExp(/^(https:\/\/)/g)
+  if(regexUrl.test(urlString)){
+    // 跳轉
+    location.href = urlString;
+    return
+  }
+  let regexName = new RegExp(/^(name|\?name)/g)
+  if(regexName.test(urlString)){
+    //去優惠
+    router.push(`/promotion${urlString}`);
+    return
+  }
+
+  router.push(`${urlString}`);
+}
+
 const checkShowImgTop = () => {
-  const lastTime = localStorage.getItem("indexImgTop");
+  const lastTime = sessionStorage.getItem("indexImgTop");
   if (lastTime) {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) isFirstView.value = true;
@@ -190,11 +194,7 @@ const checkShowImgTop = () => {
                 break;
             }
             isImportantAnnoucementModal.value = true;
-            if (data["path"].includes("https://")) {
-              homePopupPath.value = data["path"];
-            } else {
-              homePopupPath.value = "/promotion?name=" + data["path"];
-            }
+            homePopupPath.value = data["path"];
             homePopupImg.value = imgURL + data["desktopImgUrl"];
             homePopupContent.value = data["content"];
             homePopupType.value = data["type"];
@@ -209,6 +209,15 @@ const checkShowImgTop = () => {
       .catch(() => {});
   }
 };
+
+// watch(
+//   () => store.token,
+//   () => {
+//     if(store.token && (store.memberType === "TEST" || store.memberType === "PROMO_TEST")){
+//       checkShowImgTop();
+//     }
+//   }
+// );
 
 onMounted(() => {
   loadBanners();

@@ -644,8 +644,8 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog width="100%" v-model="isImportantAnnoucementModal">
-    <q-card style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+  <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
+    <q-card flat style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
       <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
@@ -1030,6 +1030,10 @@ export default defineComponent({
       isImportantAnnoucementModal.value = false;
     };
 
+    const offPopupModal = () => {
+      setExpiryBanner();
+    }
+
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();
       const item = {
@@ -1040,18 +1044,6 @@ export default defineComponent({
       };
       sessionStorage.setItem(key, JSON.stringify(item));
     };
-    const apiMockData = {
-      "code": 0,
-      "data": {
-        "title": "雷火 欧洲杯 TEST",
-        "desktopImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-        "mobileImgUrl": "7/7a3c2eb1-2d1e-4a19-b4d5-47d409c2293c.png",
-        "content": null,
-        "type": "IMG",
-        "path": "?name=lh1-eurocup-2024",
-        "frequency": "EVERYDAY"
-      }
-    }
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
       if (!itemStr) {
@@ -1062,9 +1054,6 @@ export default defineComponent({
       api
         .get("/member/ads-popout")
         .then((res) => {
-          if (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')  {
-            res = apiMockData
-          }
 
           if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
             sessionStorage.removeItem(key);
@@ -1078,6 +1067,17 @@ export default defineComponent({
 
     const isImpt = getWithExpiry("isImpt");
     const clickHomePopupImg = (urlString)=>{
+      // debugger;
+      const openPattern = /^\/open\/(.*)/;
+      if (urlString.match(openPattern)) {
+        const extractedUrl = urlString.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+        // /open/FB体育/FB/XXXX-123/OPEN
+
+        allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+        return;
+      }
+
       let regexUrl = new RegExp(/^(https:\/\/)/g)
       if(regexUrl.test(urlString)){
         // 跳轉
@@ -1091,6 +1091,7 @@ export default defineComponent({
         return
       }
 
+      router.push(`/promo?name=${urlString}`);
     }
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
@@ -1244,7 +1245,7 @@ export default defineComponent({
                 spObj.title = "FB体育";
               }
               if (spObj.code === "PINNACLE") {
-                spObj.title = "平博体育";
+                spObj.title = "AP体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -1726,7 +1727,7 @@ export default defineComponent({
     })
     // Clear interval on unmounted
     onUnmounted(() => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
     });
 
     return {
@@ -1803,6 +1804,7 @@ export default defineComponent({
       homePopupFrequencyNum,
       isImpt,
       isImportantAnnoucementModal,
+      offPopupModal,
       getImgPlatformLogo,
       getImgPlatformBg,
       moment,

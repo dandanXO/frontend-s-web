@@ -640,6 +640,7 @@ $link-color: #ffffff;
       svg {
         width: 30px;
         fill: #9f9f9f;
+        animation: fillChange 2s infinite;
       }
     }
   }
@@ -1583,6 +1584,18 @@ $link-color: #ffffff;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fillChange {
+  0% {
+    fill: #9f9f9f;
+  }
+  50% {
+    fill: #33bd46;
+  }
+  100% {
+    fill: #9f9f9f;
   }
 }
 </style>

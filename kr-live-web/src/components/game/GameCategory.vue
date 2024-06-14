@@ -16,7 +16,7 @@ import { ref } from 'vue';
 const categoryList = [
     { name: "live", label: "라이브<br/>카지노", enLabel: "LIVE CASINO" },
     { name: "slots", label: "슬롯게임", enLabel: "SLOT GAME" },
-    { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
+    // { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
     { name: "sport", label: "스포츠", enLabel: "SPORTS" },
     { name: "casual", label: "미니게임", enLabel: "MINI GAME" }
     // { name: "fish", label: "낚시 게임" }

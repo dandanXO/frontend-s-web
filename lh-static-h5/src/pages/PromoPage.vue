@@ -144,7 +144,7 @@
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
-            <div class="selected-promo-wrapper">
+            <div class="selected-promo-wrapper" :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;':'',]">
               <div
                 class="banner-container"
                 v-if="
@@ -165,20 +165,19 @@
                 :class="{
                   lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl' ,
-                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24',
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
                   lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
                 }"
-                :style="[selectedPromo.promoCode === 'lh-eurocup-manual'
+                :style="[
+                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
+                 selectedPromo.promoCode === 'lh1-deposit-rebates'
                     ? 'background-image: url(' +
                       imgURL +
                       (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
                       ')'
-                    : '',
-
-                    {
-                  backgroundImage: selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'',
-                }]"
+                    : (selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'')
+                  ]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -855,6 +854,7 @@ export default defineComponent({
           width: 100%;
           background-position: top center;
           background-size: 100% auto;
+          background-repeat: no-repeat;
 
           .hot-promo{
             padding: 15px;

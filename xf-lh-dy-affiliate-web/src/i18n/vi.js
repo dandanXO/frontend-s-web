@@ -745,7 +745,6 @@ export default {
   error: {
     400: 'Yêu cầu không hợp lệ',
     403: 'Cấm truy cập',
-    4030000: 'Cấm truy cập',
     405: 'Phương thức không được phép',
     500: 'Lỗi hệ thống',
     501: 'ID Yêu Cầu Trùng Lặp',

@@ -1,7 +1,5 @@
 <template>
-    <q-intersection @visibility="(a) => {
-        console.log('here')
-    }">
+    <div>
         <div class="news-section">
             <div class="news-title news-title__sub">
                 <div class="title-text">출금현황</div>
@@ -20,7 +18,7 @@
                 </div>
             </div>
         </div>
-    </q-intersection>
+    </div>
 </template>
 
 <script setup>

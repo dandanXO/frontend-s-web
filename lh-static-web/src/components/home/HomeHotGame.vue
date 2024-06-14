@@ -296,7 +296,7 @@ const hotgameData = ref([
         // },
         // {
         //   key: "pinnacle",
-        //   name: "平博体育",
+        //   name: "AP体育",
         //   icon: require("../../assets/home/hotgame/content/sports/provider_pinnacle.png"),
         //   providerInfo: {}
         // },
@@ -324,7 +324,7 @@ const hotgameData = ref([
       //   charImgPath: require("../../assets/home/hotgame/content/sports/saba/character.png")
       // },
       // pinnacle: {
-      //   title: "平博体育",
+      //   title: "AP体育",
       //   subtitle: "SPORTS",
       //   charImgPath: require("../../assets/home/hotgame/content/sports/pinnacle/character.png")
       // },
