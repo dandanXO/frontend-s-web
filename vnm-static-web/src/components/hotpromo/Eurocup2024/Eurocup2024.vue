@@ -52,6 +52,18 @@
                     </ol>
                 </div>
             </div>
+            <div class="section-wrapper border">
+                <div class="title">
+                    <div class="title-prefix" />
+                    Đặc biệt
+                </div>
+                <div class="content">
+                    <ol>
+                        <li>Thành viên sẽ được nhận thêm 3 lần chọn số may mắn của khuyến mãi TỶ PHÚ MÙA EURO khi chọn hợp lệ đội bóng yêu thích . </li>
+                        <li>Khi đội bóng yêu thích mà thành viên lựa chọn và đặt cược chiến thắng trận đấu đó , sẽ được nhận thêm 1 lần chọn số may mắn <a style="width: 100px;text-align: center" href="https://docs.google.com/forms/d/e/1FAIpQLSeIgng8JZ2zoX4MMCNVksVD8v1MBjJ2aNUCa5r-qGJhq3F1HA/viewform" target="_blank" class="pill">TẠI ĐÂY</a></li>
+                    </ol>
+                </div>
+            </div>
 
             <div class="section-wrapper border">
                 <div class="title">
