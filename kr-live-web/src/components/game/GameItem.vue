@@ -1,7 +1,6 @@
 <template>
 
   <!-- <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" /> -->
-  <div class="game-list">
     <div :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"  @click="() => props.onClickGameItem(game)">
       <div class="game-item-content">
         <img
@@ -63,7 +62,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -72,18 +70,6 @@ const props = defineProps(["games", "onClickGameItem", "gameType", "gameItemLoad
 const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
-.game-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 20px;
-  width: 100%;
-
-  @media (max-width: 769px) {
-    padding: 0px 10px;
-    gap: 5px;
-  }
 
   .game-item {
     aspect-ratio: 290 / 530;
@@ -93,7 +79,7 @@ const gameType = ref(props.gameType);
     cursor: pointer;
     transition: 0.3s all;
     padding: 20px;
-    max-width: 170px;
+    max-width: 200px;
     width: 100%;
 
     @media (max-width: 769px) {
@@ -217,13 +203,6 @@ const gameType = ref(props.gameType);
       }
     }
   }
-
-  @media (min-width: 769px) {
-    .game-item {
-      max-width: 220px;
-    }
-  }
-}
 
 
 
