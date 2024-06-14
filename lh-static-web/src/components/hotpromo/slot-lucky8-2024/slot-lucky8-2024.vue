@@ -3,6 +3,9 @@
     <div class="luck8-container">
       <div class="luck8-game-money-info">
         <div class="title"></div>
+        <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+          还没完成，不要测试先。
+        </div>
         <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
         <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
         <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
@@ -160,11 +163,14 @@ import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "@/api/promotion/nba24";
 import { ElMessage } from "element-plus";
 import { useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store";
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
 const matchList = ref([]);
+
+const store= userStore();
 
 const recordList = ref([]);
 

@@ -3,6 +3,9 @@
     <div class="slot-lacky8-container">
       <div class="slot-lacky8-game-money-info">
         <div class="title"></div>
+        <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+          还没完成，不要测试先。
+        </div>
         <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
         <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
         <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
@@ -29,7 +32,7 @@
             <td>388</td>
             <td><button class="option-btn-disable">已领取</button></td>
           </tr>
-         
+
         </table>
       </div>
       <div class="slot-lacky8-game-info">
@@ -93,7 +96,7 @@
           </div>
           <div class="item">
             5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；
-          </div> 
+          </div>
         </div>
       </div>
 
@@ -211,11 +214,13 @@ import moment from "moment";
 import { getNbaMatch, getNbaRecord, submitNbaMatch } from "../../../api/promotion/nba24";
 import { useQuasar } from "quasar";
 import {useLocalStorage} from "@vueuse/core"
+import { userStore } from "src/stores";
 const $q = useQuasar();
 
 const tableRecordDialog = ref(false);
 const confirmVoteDialog = ref(false);
 
+const store= userStore();
 const matchList = ref([]);
 
 const recordList = ref([]);
@@ -653,7 +658,7 @@ watch(tableRecordDialog, async () => {
   border: none;
   color: rgba(255, 255, 255, 1);
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-  
+
 
 }
 .option-btn-disable{
