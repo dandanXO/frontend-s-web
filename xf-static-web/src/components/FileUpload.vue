@@ -104,11 +104,7 @@ export default defineComponent({
 </style> -->
 <template>
   <el-space>
-    <el-input
-      :readonly="true"
-      v-model.number="ruleForm.icon"
-      autocomplete="off"
-    />
+    <el-input :readonly="true" v-model.number="ruleForm.icon" autocomplete="off" />
     <!-- eslint-disable -->
     <input
       id="uploadFile"
@@ -118,9 +114,7 @@ export default defineComponent({
       accept="image/*"
       @change="attachPhoto($event, 'payment')"
     />
-    <el-button class="common-btn" @click="$refs.input.click()">
-      上传图片
-    </el-button>
+    <el-button class="common-btn" @click="$refs.input.click()">上传图片</el-button>
   </el-space>
   <!-- <el-input v-model.number="ruleForm.icon" autocomplete="off" /> -->
 </template>
@@ -161,6 +155,8 @@ export default defineComponent({
           formData.append("dir", dirPaymentLabel);
         }
         formData.append("overwrite", false);
+        formData.append("includeDir", true);
+
         const data = await uploadImage(formData);
         if (data.code === 0) {
           if (type === "payment") {
