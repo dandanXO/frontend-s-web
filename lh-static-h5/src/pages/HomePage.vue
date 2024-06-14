@@ -645,7 +645,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
-    <q-card flat style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+    <q-card flat style="width: 70%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
       <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
