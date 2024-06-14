@@ -57,15 +57,15 @@
           v-if="
             selectedPromo.promoCode !== 'dy2-cny-step-game' &&
             selectedPromo.promoCode !== 'dy2-game-steps' &&
-            selectedPromo.promoCode !== 'dy2-msi-promo' &&
-            selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
+            selectedPromo.promoCode !== 'dy2-msi-promo'
           "
           :class="{
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024',
             isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
-            isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24'
+            isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
           }"
         >
           <div
@@ -655,6 +655,16 @@ export default defineComponent({
           .promo-bg {
             height: 376px !important;
             min-height: 376px;
+          }
+        }
+
+        &.iseurocupBanner {
+          max-width: none;
+          aspect-ratio: 1920/500;
+
+          .promo-bg {
+            height: auto !important;
+            aspect-ratio: 1920/500;
           }
         }
 
