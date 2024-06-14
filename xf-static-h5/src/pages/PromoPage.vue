@@ -257,10 +257,16 @@ export default defineComponent({
                 "location=no,zoom=no,footer=yes"
               );
 
-              window.addEventListener('message', function(event) {
-                console.log("Message received from InAppBrowser: ", event.data);
-                alert(event.data);
-              }, false);
+              ref.addEventListener('loadstart', function(event) {
+                var url = event.url;
+                alert(url);
+                if (url.startsWith("xfapp://")) {
+                  var message = url.split("xfapp://")[1];
+                  console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                  alert(message);
+                  ref.close();
+                }
+              });
 
             }else{
 

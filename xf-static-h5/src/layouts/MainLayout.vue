@@ -230,6 +230,18 @@ export default defineComponent({
               prevPage.value = "promo";
             }
           }
+        }else if (route.path === "/promotion") {
+          hasPage.value = true;
+          pageName.value = "优惠活动";
+          prevPage.value = "";
+          // if (route.query.name) {
+          //   if (route.query.fromAccount) {
+          //     prevPage.value = "account/promotion";
+          //   } else {
+          //     hasPage.value = true;
+          //     prevPage.value = "promo";
+          //   }
+          // }
         }else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
