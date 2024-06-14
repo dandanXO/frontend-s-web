@@ -14,7 +14,7 @@
 <div class="main-wrapper">
   <div class="full-container">
     <div class="top-wrapper">
-      <a href="https://newtf88.com/register" target="_blank"> <img src="img/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" /></a>
+      <a href="https://newtf88.com/register" class="hyperlink" target="_blank"> <img src="img/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" /></a>
     </div>
 
     <div id="image-container" class="banner-wrapper">
@@ -26,7 +26,7 @@
     </div>
 
     <div class="action-wrapper">
-      <a href="https://newtf88.com/register" target="_blank" class="action-a action-btn register" >
+      <a href="https://newtf88.com/register" target="_blank" class="action-a action-btn register hyperlink" >
         <!-- <img src="img/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
         <div class="action-btn__text-wrapper">
           <span class="action-btn__title">Đăng Ký Ngay</span>
@@ -70,7 +70,7 @@
 
     <div class="game-wrapper">
       <img class="section-title" src="img/game-title.png" alt="Trò Chơi Nổi Bật" title="Trò Chơi Nổi Bật" />
-      <a href="https://newtf88.com/register" target="_blank" class="game-inner-wrapper">
+      <a href="https://newtf88.com/register" target="_blank" class="game-inner-wrapper hyperlink">
         <img src="img/game-sport.png" alt="" title="" />
         <img src="img/game-casino.png" alt="" title="" />
         <img src="img/game-esport.png" alt="" title="" />
@@ -82,7 +82,7 @@
   </div>
 
   <div class="main-sticky-wrapper" id="scrolldown-tbn">
-    <a href="https://newtf88.com/register" target="_blank">
+    <a href="https://newtf88.com/register" class="hyperlink" target="_blank">
       <div class="main-sticky-btn benefit">
         <img class="main-sticky-btn__icon" src="img/gift-icon.png" alt="AN TOÀN TUYỆT ĐỐI" title="AN TOÀN TUYỆT ĐỐI" />
         <div class="main-sticky-btn__text-wrapper">
@@ -107,6 +107,33 @@
 </div>
 
 <script>
+  const host= window.location.hostname;
+  console.log(host);
+  var tf88Url = "https://newtf88.com";
+  if(host.indexOf("z888686") > -1){
+    tf88Url= "https://tf884fun.com";
+  }else if(host.indexOf("h866866") > -1){
+    tf88Url= "https://tfpro88.com";
+  }else if(host.indexOf("u868886") > -1){
+    tf88Url= "https://hd88123.com";
+  }else if(host.indexOf("p886866") > -1){
+    tf88Url= "https://hsbc88123.com";
+  }else if(host.indexOf("m868686") > -1){
+    tf88Url= "https://linkvaotf88.com";
+  }else if(host.indexOf("r886866") > -1){
+    tf88Url= "https://mb88123.com";
+  }else if(host.indexOf("q888686") > -1){
+    tf88Url= "https://tf88369.com";
+  }
+
+  var elements = document.getElementsByClassName('hyperlink');
+
+  // 遍历所有找到的元素并修改它们的 href 属性
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].href = tf88Url + "/register";
+  }
+
+
   document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.querySelector(".overlay");
     const closeOverlay = document.querySelector(".close-overlay");
