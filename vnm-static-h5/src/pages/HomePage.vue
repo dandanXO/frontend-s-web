@@ -32,14 +32,12 @@
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
       </q-btn>
-      <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="router.push('/register')">
+      <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToRegister">
         {{ $t("lang.register") }}
       </q-btn>
     </div>
     <div class="header-middle" v-else>
-      <div @click="router.push('/account')">
-        {{ $t("lang.helloUsername") }} {{ store.nickName }}
-      </div>
+      <div @click="router.push('/account')">{{ $t("lang.helloUsername") }} {{ store.nickName }}</div>
     </div>
     <div class="header-lang">
       <LangOptions />
@@ -160,7 +158,7 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper" style="display:none;">
+    <div class="hot-matches-title-wrapper" style="display: none">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -175,7 +173,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container" style="display:none;">
+    <div class="hot-matches-container" style="display: none">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -210,7 +208,10 @@
             </div>
             <div class="team-details team-details__away">
               <div class="team-icon">
-                <img :src="hotMatchesImgURL + item.teamTwoLogo" :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);': ''" />
+                <img
+                  :src="hotMatchesImgURL + item.teamTwoLogo"
+                  :style="item.teamTwoName === 'FC Tokyo' ? 'transform: scale(1.45);' : ''"
+                />
               </div>
               <div class="team-name">{{ item.teamTwoName }}</div>
             </div>
@@ -257,7 +258,9 @@
         <template v-else>
           <img src="../assets/images/home/games/sport-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'sport' && 'active'">{{ $t("lang.menu_sports") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'sport' && 'active'">
+          {{ $t("lang.menu_sports") }}
+        </span>
       </div>
 
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
@@ -277,7 +280,7 @@
         <template v-else>
           <img src="../assets/images/home/games/slot-icon.png" />
         </template>
-        <span :class="tab === 'slot' && 'active'" style="white-space: nowrap;">{{ $t("lang.menu_slots") }}</span>
+        <span :class="tab === 'slot' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_slots") }}</span>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
@@ -307,17 +310,24 @@
         <template v-else>
           <img src="../assets/images/home/games/lottery-icon.png" />
         </template>
-        <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap;">{{ $t("lang.menu_lottery") }}</span>
+        <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" v-if="store.memberType === 'TEST'" id="casual-platform">
+      <div
+        @click="selectTab('casual')"
+        class="game-platform btn-pointer"
+        v-if="store.memberType === 'TEST'"
+        id="casual-platform"
+      >
         <template v-if="tab === 'casual'">
           <img src="../assets/images/home/games/minigame-icon-active.png" />
         </template>
         <template v-else>
           <img src="../assets/images/home/games/minigame-icon.png" />
         </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">{{ $t("lang.menu_minigame") }}</span>
+        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">
+          {{ $t("lang.menu_minigame") }}
+        </span>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
@@ -330,16 +340,15 @@
       </div>
     </div>
 
-      <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
-      <!--        <template v-if="tab === 'cockfight'">-->
-      <!--          <img src="../assets/images/home/games/cockfight-icon-active.png" />-->
-      <!--        </template>-->
-      <!--        <template v-else>-->
-      <!--          <img src="../assets/images/home/games/cockfight-icon.png" />-->
-      <!--        </template>-->
-      <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
-      <!--      </div>-->
-
+    <!--      <div @click="selectTab('cockfight')" class="game-platform btn-pointer" id="cockfight-platform">-->
+    <!--        <template v-if="tab === 'cockfight'">-->
+    <!--          <img src="../assets/images/home/games/cockfight-icon-active.png" />-->
+    <!--        </template>-->
+    <!--        <template v-else>-->
+    <!--          <img src="../assets/images/home/games/cockfight-icon.png" />-->
+    <!--        </template>-->
+    <!--        <span :class="tab === 'cockfight' && 'active'">{{ $t("lang.menu_cockfighting") }}</span>-->
+    <!--      </div>-->
 
     <div class="game-right-platform" v-scroll="onHomeScroll" id="id-right-platform">
       <!-- <div class="game-lists fade-in-image" id="esport-lists">
@@ -515,8 +524,7 @@
         </template>
       </div>
 
-
-      <div class="game-lists fade-in-image" id="casual-lists" v-if="store.memberType === 'TEST'">
+      <div class="game-lists fade-in-image" id="casual-lists" v-show="store.memberType === 'TEST'">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
@@ -608,7 +616,6 @@
           </template>
         </template>
       </div>
-
     </div>
   </div>
 
@@ -677,7 +684,7 @@
       </a>
     </div>
   </div>
-<!--
+  <!--
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
@@ -695,7 +702,7 @@
     :showCancelButton="false"
     :showConfirmButton="false"
   >
-    <q-card style="width: 100%; padding: none;" class="bg-bright text-black">
+    <q-card style="width: 100%; padding: none" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
           <div style="width: 16px">&nbsp;</div>
@@ -849,34 +856,34 @@
     persistent
     @hide="removeRouterWelcome"
   >
-    <q-card style="width: 100%; border-radius: 15px; padding: 10px; background: none;">
+    <q-card style="width: 100%; border-radius: 15px; padding: 10px; background: none">
       <div class="modalcontent welcome">
-        <div class="q-pa-sm" style="text-align: right; width: 100%;">
+        <div class="q-pa-sm" style="text-align: right; width: 100%">
           <q-btn class="color-font-1" border v-close-popup round dense icon="close" />
         </div>
         <div class="welcome-header">
-          <div class="welcome-header__ball"><img src="../assets/images/welcome/ball.png"></div>
+          <div class="welcome-header__ball"><img src="../assets/images/welcome/ball.png" /></div>
           <div class="welcome-header__title">Đăng ký thành công</div>
         </div>
         <div class="section">
           <div class="section-card">
-            <div class="main-header">{{ $t('lang.firstSlide') }}</div>
-            <div class="main-text">{{ $t('lang.firstSlideContent') }}</div>
+            <div class="main-header">{{ $t("lang.firstSlide") }}</div>
+            <div class="main-text">{{ $t("lang.firstSlideContent") }}</div>
             <div class="slide-qr"><VueQRCodeComponent :size="70" :text="ui.downloadUrl" /></div>
-            <div class="lastline">{{ $t('lang.firstSlideSub') }}</div>
+            <div class="lastline">{{ $t("lang.firstSlideSub") }}</div>
           </div>
           <div class="section-card">
-            <div class="main-header">{{ $t('lang.secondSlide') }}</div>
-            <div class="main-text">{{ $t('lang.secondSlideContent') }}</div>
-            <div class="slide-img"><img src="../assets/images/welcome/secondslideimg.png"></div>
-            <router-link to="/finance/deposit" class="deposit-btn">{{ $t('lang.depositNow') }}</router-link>
+            <div class="main-header">{{ $t("lang.secondSlide") }}</div>
+            <div class="main-text">{{ $t("lang.secondSlideContent") }}</div>
+            <div class="slide-img"><img src="../assets/images/welcome/secondslideimg.png" /></div>
+            <router-link to="/finance/deposit" class="deposit-btn">{{ $t("lang.depositNow") }}</router-link>
           </div>
         </div>
         <div class="section last">
           <div class="section-card">
-            <div class="main-header">{{ $t('lang.thirdSlide') }}</div>
-            <div class="main-text">{{ $t('lang.thirdSlideContent') }}</div>
-            <div class="slide-img full"><img src="../assets/images/welcome/thirdslideimg.png"></div>
+            <div class="main-header">{{ $t("lang.thirdSlide") }}</div>
+            <div class="main-text">{{ $t("lang.thirdSlideContent") }}</div>
+            <div class="slide-img full"><img src="../assets/images/welcome/thirdslideimg.png" /></div>
           </div>
         </div>
       </div>
@@ -885,7 +892,7 @@
 </template>
 
 <script>
-import VueQRCodeComponent from 'vue-qrcode-component';
+import VueQRCodeComponent from "vue-qrcode-component";
 import { computed, defineComponent, onActivated, onMounted, reactive, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { api, eventapi } from "boot/axios";
@@ -924,6 +931,7 @@ SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 import { Swiper, SwiperSlide } from "swiper/vue";
 import PushNotification from "../components/modal/PushNotification.vue";
 import "swiper/css/pagination";
+import { isAndroid } from "src/boot/utils";
 
 export default defineComponent({
   name: "IndexPage",
@@ -1398,12 +1406,12 @@ export default defineComponent({
               fishObj.icon = "fish";
               fishing.value.push(fishObj);
             }
-            if (platTypes.indexOf("POKER") > -1 ) {
+            if (platTypes.indexOf("POKER") > -1) {
               var pokerObj = Object.assign({}, element);
               if (pokerObj.name === "Spribe") {
-                pokerObj.title_vn = pokerObj.name ;
-                pokerObj.title_en = pokerObj.name ;
-              }else{
+                pokerObj.title_vn = pokerObj.name;
+                pokerObj.title_en = pokerObj.name;
+              } else {
                 pokerObj.title_vn = pokerObj.name + " Poker";
                 pokerObj.title_en = pokerObj.name + " Poker";
               }
@@ -1413,11 +1421,11 @@ export default defineComponent({
               }
               poker.value.push(pokerObj);
             }
-            if (platTypes.indexOf("CASUAL") > -1 ) {
+            if (platTypes.indexOf("CASUAL") > -1) {
               var casualObj = Object.assign({}, element);
 
               casualObj.title_vn = casualObj.name + " Hash Game";
-              casualObj.title_en = casualObj.name  + " Hash Game";
+              casualObj.title_en = casualObj.name + " Hash Game";
 
               casualObj.icon = "casual";
               casuals.value.push(casualObj);
@@ -1775,14 +1783,28 @@ export default defineComponent({
       return parseInt(countDayString.value.substr(1, 1));
     });
     const removeRouterWelcome = () => {
-      router.push('/');
-    }
+      router.push("/");
+    };
+
+    const trackRegisterClickEvent = () => {
+      if (ui.adjust_click_register_event && isAndroid()) {
+        console.log("Track Click Reg");
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    const goToRegister = () => {
+      trackRegisterClickEvent();
+      router.push("/register");
+    };
+
     watch(countDayString, () => {
       countDay01.value = parseInt(countDayString.value.substr(0, 1));
       countDay02.value = parseInt(countDayString.value.substr(1, 1));
     });
 
-      watch(
+    watch(
       () => route.query,
       (newQuery) => {
         if (newQuery.name === "welcome") {
@@ -1911,7 +1933,9 @@ export default defineComponent({
       countDay02,
       isWelcomeFlag,
       ui,
-      removeRouterWelcome
+      removeRouterWelcome,
+      trackRegisterClickEvent,
+      goToRegister
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2298,10 +2322,10 @@ export default defineComponent({
 .modal-update-div {
   .modalcontent {
     &.welcome {
-      font-family: 'Inter';
-      background: #FFFFFFCC;
+      font-family: "Inter";
+      background: #ffffffcc;
       margin-top: 50px;
-    padding: 0;
+      padding: 0;
       .welcome-header {
         display: flex;
         flex-direction: column;
@@ -2331,9 +2355,9 @@ export default defineComponent({
           padding-top: 0;
         }
         .section-card {
-          box-shadow: 0px 0px 10px 0px #0000001A;
-          background: #FFFFFFCC;
-          border: 1px solid #FFFFFF;
+          box-shadow: 0px 0px 10px 0px #0000001a;
+          background: #ffffffcc;
+          border: 1px solid #ffffff;
           border-radius: 15px;
           padding: 10px;
           display: flex;
@@ -2342,23 +2366,22 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #424F72;
+            color: #424f72;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
             text-align: center;
             width: 85%;
-           }
-           .main-text {
-             width: 95%;
-            color: #7A80A1;
+          }
+          .main-text {
+            width: 95%;
+            color: #7a80a1;
             font-size: 12px;
             font-weight: 500;
             line-height: 16px;
             text-align: center;
-
-           }
-           .slide-img {
+          }
+          .slide-img {
             width: 80%;
             margin: 0 auto;
             &.full {
@@ -2367,34 +2390,33 @@ export default defineComponent({
             img {
               width: 100%;
             }
-           }
-           .slide-qr {
-                background: url('../assets/images/welcome/welcome-qrbg.png')no-repeat center center;
-                background-size: contain;
-                width: 100px;
-                height: 110px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-           }
-           .lastline {
-            color: #424F72;
+          }
+          .slide-qr {
+            background: url("../assets/images/welcome/welcome-qrbg.png") no-repeat center center;
+            background-size: contain;
+            width: 100px;
+            height: 110px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+          .lastline {
+            color: #424f72;
             font-size: 12px;
             font-weight: 900;
             line-height: 16px;
             text-align: center;
-
-           }
+          }
           .deposit-btn {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 90%;
-              padding: 10px;
-              font-weight: 500;
-              background: url('../assets/images/welcome/title-bg-blue.png')no-repeat center center;
-              background-size: contain;
-              color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            padding: 10px;
+            font-weight: 500;
+            background: url("../assets/images/welcome/title-bg-blue.png") no-repeat center center;
+            background-size: contain;
+            color: #ffffff;
           }
         }
       }
@@ -2578,7 +2600,7 @@ export default defineComponent({
         line-height: 1;
         font-weight: bold;
 
-        @media(max-width: 400px){
+        @media (max-width: 400px) {
           font-size: 9px;
         }
 
@@ -2865,11 +2887,21 @@ export default defineComponent({
 }
 
 @keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  50% { transform: translateX(10px); }
-  75% { transform: translateX(-10px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .red-envelope {
@@ -2881,20 +2913,44 @@ export default defineComponent({
 }
 
 @keyframes shake-with-pause {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(-10px); }
-  20% { transform: translateX(10px); }
-  30% { transform: translateX(-10px); }
-  40% { transform: translateX(10px); }
-  50% { transform: translateX(0); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(-10px);
+  }
+  20% {
+    transform: translateX(10px);
+  }
+  30% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 @keyframes tilt-shaking {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(5deg); }
-  50% { transform: rotate(0eg); }
-  75% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 .red-envelope {
   animation: tilt-shaking 1s infinite;
@@ -2972,10 +3028,10 @@ export default defineComponent({
       justify-content: center;
       width: max-content;
       position: relative;
-      background: url(../assets/images/home/eurocup-countdown-content-frame.png)no-repeat center center;
+      background: url(../assets/images/home/eurocup-countdown-content-frame.png) no-repeat center center;
       // background-size: 100% 100%;
 
-    background-size: 100% 70%;
+      background-size: 100% 70%;
       padding: 0 4px;
       margin-left: 12px;
 
@@ -3034,8 +3090,8 @@ export default defineComponent({
           // height: 40px;
           // width: 40px;
 
-    height: 30px;
-    width: 30px;
+          height: 30px;
+          width: 30px;
           background-size: 100% 100%;
           display: flex;
           align-items: center;

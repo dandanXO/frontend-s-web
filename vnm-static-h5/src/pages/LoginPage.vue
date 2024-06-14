@@ -40,7 +40,7 @@
           <q-input
             rounded
             standout
-dense
+            dense
             clearable
             ref="loginNameRef"
             v-model="loginForm.loginName"
@@ -66,7 +66,7 @@ dense
             ref="passwordRef"
             rounded
             standout
-dense
+            dense
             clearable
             v-model="loginForm.password"
             :placeholder="$t('lang.password')"
@@ -97,7 +97,7 @@ dense
             ref="verificationRef"
             rounded
             standout
-dense
+            dense
             clearable
             type="text"
             maxlength="4"
@@ -136,7 +136,7 @@ dense
             rounded
             type="number"
             standout
-dense
+            dense
           >
             <template v-slot:prepend>
               <q-icon color="bright" name="phone" />
@@ -157,7 +157,7 @@ dense
             color="white"
             rounded
             standout
-dense
+            dense
           >
             <template v-slot:append>
               <q-btn
@@ -208,9 +208,15 @@ dense
           no-caps
           rounded
         />
-        <router-link to="/register">
-          <q-btn class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')" no-caps rounded />
-        </router-link>
+        <div>
+          <q-btn
+            @click="goToRegister"
+            class="common-large-white-btn bottom-btn"
+            :label="$t('lang.register_btn')"
+            no-caps
+            rounded
+          />
+        </div>
       </div>
       <div class="text-center q-pb-lg">
         <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
@@ -264,6 +270,8 @@ import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import { isAndroid } from "src/boot/utils";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "LoginPage",
@@ -532,6 +540,21 @@ export default defineComponent({
       }
     };
 
+    const ui = useUI();
+
+    const trackRegisterClickEvent = () => {
+      if (ui.adjust_click_register_event && isAndroid()) {
+        console.log("Track Click Reg");
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    const goToRegister = () => {
+      trackRegisterClickEvent();
+      router.push("/register");
+    };
+
     onMounted(() => {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has("register")) {
@@ -575,7 +598,10 @@ export default defineComponent({
       LangOptions,
       appVersionNo,
       getVersionNo,
-      languageVal
+      languageVal,
+      trackRegisterClickEvent,
+      ui,
+      goToRegister
     };
   }
 });
@@ -792,7 +818,7 @@ export default defineComponent({
     // margin-left: 12px;
 
     // @media (max-width: 400px) {
-      // height: 40px;
+    // height: 40px;
     // }
 
     img {
@@ -800,7 +826,7 @@ export default defineComponent({
       // width: auto;
       width: 100%;
       max-width: 135px;
-    opacity: 0;
+      opacity: 0;
     }
   }
 
