@@ -29,6 +29,10 @@ export const addRecord = (record) => {
   return https().request("/privi-uefa-lottery/add-lottery-record", Method.POST, record, ContentType.form);
 };
 
+export const addFakeRecord = (record) => {
+  return https().request("/privi-uefa-lottery/add-fake-lottery-record", Method.POST, record, ContentType.form);
+};
+
 export const addLotteryResult = (lottery) => {
   return https().request("/privi-uefa-lottery/add-result", Method.POST, lottery, ContentType.form);
 };

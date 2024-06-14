@@ -1802,6 +1802,8 @@ export default {
     countryCode: 'Country Code',
     lower: 'Lower',
     upper: 'Upper',
+    addMemberLotteryRecord: 'Add Member Lottery Record',
+    addFakeLotteryRecord: 'Add Fake Lottery Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
