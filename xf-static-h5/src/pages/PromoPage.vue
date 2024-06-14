@@ -259,12 +259,13 @@ export default defineComponent({
 
               ref.addEventListener('loadstart', function(event) {
                 var url = event.url;
-                alert(url);
-                if (url.startsWith("xfapp://")) {
-                  var message = url.split("xfapp://")[1];
+                // alert("This" + url);
+                if (url.indexOf("xfapp:") > -1) {
+                  var message = url.split("xfapp:")[1];
                   console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
-                  alert(message);
+                  // alert(message);
                   ref.close();
+                  router.push(message)
                 }
               });
 
