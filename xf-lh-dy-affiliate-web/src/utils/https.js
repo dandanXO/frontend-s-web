@@ -4,7 +4,7 @@ import { useStore } from "@/store";
 import { ResponseCode } from "../api/response";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import _cloneDeep from 'lodash/cloneDeep';
-import { useRouter } from "vue-router";
+import router from "../router";
 import i18n from "../i18n/index";
 
 const toRawType = (value) => {
@@ -49,7 +49,6 @@ const onResponse = (response) => {
   }
   if (res.code !== ResponseCode.SUCCESS) {
     const store = useStore()
-    const router = useRouter()
     const siteId = store.state.user.siteId
     if (res.code === ResponseCode.ERROR_FORBIDDEN_XFLHDY || res.code === ResponseCode.ERROR_FORBIDDEN) {
       router.push("/403")
