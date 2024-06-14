@@ -770,6 +770,7 @@ export default {
   error: {
     400: 'Bad Request',
     403: 'Forbidden',
+    4030000: 'Forbidden',
     405: 'Method Not Allowed',
     500: 'System Error',
     501: 'Duplicate Request ID',
