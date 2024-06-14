@@ -3,9 +3,6 @@
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
         <img src="../assets/promo/top-promo-banner.jpg" />
-        <div class="countdown-day">
-          <span>{{ countDay }}</span>
-        </div>
       </div>
     </div>
 
@@ -371,25 +368,6 @@ export default defineComponent({
     .promo-banner-image {
       position: relative;
       overflow: hidden;
-
-      .countdown-day {
-        position: absolute;
-        font-size: 140px;
-        font-weight: bold;
-        color: blue;
-        background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        -webkit-text-stroke-width: 0.1px;
-        -webkit-text-stroke-color: white;
-        top: 150px;
-        left: 700px;
-        height: 140px;
-        width: 150px;
-        line-height: 140px;
-        text-align: center;
-      }
     }
   }
 
