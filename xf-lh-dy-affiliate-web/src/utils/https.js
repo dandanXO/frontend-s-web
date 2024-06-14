@@ -38,7 +38,6 @@ const clearEmptyParam = (config) => {
   })
 }
 const onRequest = (config) => {
-  console.log(config)
   clearEmptyParam(config);
   return config;
 }
@@ -52,6 +51,9 @@ const onResponse = (response) => {
     const store = useStore()
     const router = useRouter()
     const siteId = store.state.user.siteId
+    if (res.code === ResponseCode.ERROR_FORBIDDEN_XFLHDY || res.code === ResponseCode.ERROR_FORBIDDEN) {
+      router.push("/403")
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
@@ -148,10 +150,6 @@ const onResponse = (response) => {
 };
 
 const onResponseError = (error) => {
-  const router = useRouter()
-  if (error.code === ResponseCode.ERROR_FORBIDDEN_XFLHDY || error.code === ResponseCode.ERROR_FORBIDDEN) {
-    router.push("/403")
-  } 
   ElMessage({
     message: error.message,
     type: "error"

@@ -13,6 +13,9 @@ router.beforeEach(async (to, _, next) => {
   // Determine whether the user has logged in, if logged in can visit any page
   if (store.state.user.token) {
     await store.dispatch(MenuActionType.ACTION_SET_ROUTES, undefined);
+    if (to.path === '/403') {
+      next({ path: "/403" })
+    }
     if (to.path === "/login") {
       next({ path: "/" });
       NProgress.done();
