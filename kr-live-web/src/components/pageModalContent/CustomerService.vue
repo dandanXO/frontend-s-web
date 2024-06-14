@@ -10,14 +10,14 @@
           ref="feedbackTypeRef" :rules="[(val) => !!val || '선택해주세요']" />
       </div>
       <div class="form-item">
-        <label>제목을</label>
-        <q-input dense outlined ref="titleRef" placeholder="제목을 입력해주세요." v-model="serviceForm.title" clearable
+        <label>제목</label>
+        <q-input dense outlined ref="titleRef" placeholder="제목 입력해주세요." v-model="serviceForm.title" clearable
           lazy-rules :rules="[
             (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
           ]" />
       </div>
       <div class="form-item">
-        <label>내용물</label>
+        <label>내용</label>
 
         <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="serviceForm.content" clearable
           lazy-rules :rules="[
@@ -27,7 +27,7 @@
     </form>
 
     <div class="action-buttons">
-      <div class="primary-button blue" @click.prevent="sendMessage">확신하는</div>
+      <div class="primary-button blue" @click.prevent="sendMessage">확인</div>
     </div>
   </div>
   <div class="feedback-compose-form" v-else>
