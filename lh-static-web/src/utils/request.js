@@ -17,10 +17,6 @@ const isGlobalLH = globalLinks.some((link) => window.location.hostname.includes(
 const specialLinks= ["lh93371", "lh76390", "lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737.com", "lh36987.com"];
 const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
-
-
-lh36987.com
-
 if (isGlobalLH) {
   var rstApi = "https://aptvpnubglgl.conoibue6er.com";
   var evtApi = "https://przl4oufglgl.anpoxuaq9ae.com";
