@@ -3,23 +3,27 @@
     <div class="margin-center login-form-wrapper">
       <div class="logo"><img src="../assets/logo.png" /></div>
       <a-form ref="formRef" :model="loginForm" :rules="rules">
-        <a-form-item ref="loginName" required name="loginName">
-          <a-input v-model:value="loginForm.loginName" :placeholder="$t('loginView.form.loginName.placeholder')">
+        <a-form-item ref="loginName" name="loginName">
+          <a-input v-model:value="loginForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
               <span style="color: #ffffff">+92</span>
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item ref="password" required name="password">
+        <a-form-item ref="password" name="password">
           <a-input
             v-model:value="loginForm.password"
-            type="password"
-            :placeholder="$t('loginView.form.password.placeholder')"
+            :type="isPasswordVisible ? 'text' : 'password'"
+            :placeholder="$t('common.form.password.placeholder')"
             @keypress.enter="onSubmit"
           >
             <template #prefix>
               <RiLock2Fill />
+            </template>
+            <template #suffix>
+              <RiEyeOffFill v-if="!isPasswordVisible" @click="handlePasswordVisibleClick" />
+              <RiEyeFill v-else @click="handlePasswordVisibleClick" />
             </template>
           </a-input>
         </a-form-item>
@@ -65,15 +69,17 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode } from "@/api/index/login";
 // import { message } from "ant-design-vue";
-import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
+import { RiUserFill, RiLock2Fill, RiEyeFill, RiEyeOffFill } from "vue-remix-icons";
 
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const { t } = useI18n();
 
 const isSpinWheel = ref(true);
+const isPasswordVisible = ref(false);
 const store = userStore();
 const router = useRouter();
 const route = useRoute();
@@ -102,51 +108,37 @@ const getCode = () => {
     });
 };
 const rules = computed(() => ({
-  loginName: [
-    { len: 11, message: t("loginView.form.loginName.error.len") },
-    { required: true, message: t("loginView.form.loginName.error.required") }
-  ],
-  password: [{ required: true, message: t("loginView.form.password.error.required") }]
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
+  password: [{ validator: validatePassword, trigger: "blur" }]
 }));
 const loadingLogin = ref(false);
 const onSubmit = () => {
-  const fpPromise = FingerprintJS.load();
-  (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
-
-    formRef.value.validate().then(() => {
-      loadingLogin.value = true;
-      store
-        .memberLogin({
-          loginName: loginForm.loginName,
-          password: loginForm.password,
-          sid: sidParam
-          // captchaCode: loginForm.captchaCode,
-          // codeId: loginForm.codeId
-        })
-        .then(() => {
-          const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-          router.push(jumpUrl);
-          loadingLogin.value = false;
-        })
-        .catch((error) => {
-          console.log(error.message);
-          loadingLogin.value = false;
-          // getCode();
-        });
-    });
-  })();
+  formRef.value.validate().then(() => {
+    loadingLogin.value = true;
+    store
+      .memberLogin({
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: store.visitorId
+        // captchaCode: loginForm.captchaCode,
+        // codeId: loginForm.codeId
+      })
+      .then(() => {
+        const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+        router.push(jumpUrl);
+        loadingLogin.value = false;
+      })
+      .catch((error) => {
+        console.log(error.message);
+        loadingLogin.value = false;
+        // getCode();
+      });
+  });
 };
 const resetForm = () => {
   formRef.value.resetFields();
 };
+const handlePasswordVisibleClick = () => (isPasswordVisible.value = !isPasswordVisible.value);
 </script>
 <style scoped lang="scss">
 .login-container {

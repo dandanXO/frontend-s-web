@@ -452,7 +452,7 @@ const vipTableData = ref([
 }
 
 .vip-container {
-  color: #ffffff;
+  color: #8c968f;
 }
 
 .vip-badge-swiper {
@@ -502,7 +502,6 @@ const vipTableData = ref([
       flex: 1;
       font-size: 12px;
       line-height: 18px;
-      color: #ffffff;
 
       .vip-reward-ticket__title {
         font-weight: 700;
@@ -555,6 +554,7 @@ const vipTableData = ref([
 
   thead {
     background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+    color: #ffffff;
     td {
       padding: 8px 0;
       font-size: 16px;
@@ -576,6 +576,5 @@ const vipTableData = ref([
   font-size: 14px;
   font-weight: 400;
   line-height: 23.8px;
-  color: #ffffffcc;
 }
 </style>

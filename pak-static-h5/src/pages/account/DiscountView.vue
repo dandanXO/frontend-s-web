@@ -1,7 +1,7 @@
 <template>
   <q-page class="account-table-page">
     <LoadingComponent v-if="isLoading"></LoadingComponent>
-    <NoInfoComponent v-else-if="isNoInfo" noInfoTitle="No Record"></NoInfoComponent>
+    <NoInfoComponent v-else-if="isNoInfo" :noInfoTitle="$t('notify.noRecord')"></NoInfoComponent>
     <div v-else v-for="(e, i) in discountData" :key="`${e}-${i}`" class="discount-table">
       <div class="discount-row discount-row--title">
         <div class="discount-col">
@@ -11,7 +11,7 @@
       <div class="discount-row discount-row--content">
         <div class="discount-col">{{ e.privilegeName }}</div>
         <div class="discount-col">
-          Amount:
+          {{ $t("records.amount") }}:
           <span class="txt-yellow">{{ convertToCommaAmount(e.amount, true) }}</span>
         </div>
       </div>

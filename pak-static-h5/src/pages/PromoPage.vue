@@ -10,8 +10,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab name="promo" label="Promotion" />
-      <q-tab name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('settings.promo')" />
+      <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
 
@@ -29,13 +29,10 @@
             <div class="promo-main-container">
               <div class="promo-type-wrapper"></div>
               <div class="promo-list-wrapper">
-                <div
-                  v-for="(promo, i) in filteredArray"
-                  :key="i"
-                  data-aos="zoom-in"
+                <div v-for="(promo, i) in filteredArray" :key="i">
+                  <!-- data-aos="zoom-in"
                   data-aos-easing="ease-out"
-                  data-aos-duration="1000"
-                >
+                  data-aos-duration="1000" -->
                   <div class="promo-item" v-if="promo.promoType.toLowerCase().split(',').includes(tab.name)">
                     <a @click="showPromoDetails(promo)">
                       <!-- <div class="pad-title">
@@ -180,6 +177,7 @@ import {userStore} from "stores/index";
 import ProfileSummary from "components/ProfileSummary.vue";
 import HotPromotion from 'components/HotPromotion'
 import GameModal from "components/modal/GameModal.vue";
+import { t } from "src/boot/lang";
 // import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
@@ -320,7 +318,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: 'Please login to continue',
+          message: t("notify.plsLoginToContinue"),
           icon: "report_problem"
         });
         router.push(`/login`)

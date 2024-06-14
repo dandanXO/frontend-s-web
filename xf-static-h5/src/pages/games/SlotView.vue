@@ -100,6 +100,7 @@ import {useUI} from "stores/ui";
 import BacktoTop from "components/backtotop.vue"
 import {scroll, SessionStorage} from 'quasar'
 import {userStore} from "src/stores";
+import {useLocalStorage} from "@vueuse/core";
 
 const qs = require("qs");
 export default defineComponent({
@@ -214,10 +215,11 @@ export default defineComponent({
       })).then((res) => {
         res.forEach(element => {
           element.default = require("../../assets/images/games/aviator/default.png");
+          const imageCdnUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
           if(element.icon.indexOf('/') > -1){
-            element.icon = `${process.env.IMAGE_CDN}/game/${element.icon}`;
+            element.icon = `${imageCdnUrl}/game/${element.icon}`;
           }else{
-            element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
+            element.icon = `${imageCdnUrl}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
           }
           // element.icon = `${process.env.IMAGE_CDN}/game/${selectedPlat.value.code.toLowerCase()}/slot/${element.icon}.png`;
 

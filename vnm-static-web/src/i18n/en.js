@@ -11,6 +11,7 @@ export default {
     cockfight: "Cock fight",
     minigame: "Mini Game",
     hashgame: "Hash Game",
+    others: "Others",
     promotion: "Promotion",
     agent: "Agent",
     app: "App",
@@ -163,11 +164,13 @@ export default {
     euroCountdown02: " DAYS LEFT"
   },
   personal: {
+    url: "URL",
     personalInfo: "Personal information",
     bank: "Bank",
     chgPwd: "Change Password",
     chgWithdrawPwd: "Change withdrawal password",
     confirmWithdrawPwd: "Confirm withdrawal password",
+    loginPwd: "Login password",
     realName: "Real Name",
     birthday: "Birthday",
     zalo: "Zalo",
@@ -206,6 +209,7 @@ export default {
     oldWithdrawPwd: "Please enter Old Withdraw Password",
     newWithdrawPwd: "Please enter New Withdraw Password",
     confirmWithdrawPwd: "Please enter Confirm Withdraw Password",
+    loginPwd: "Please enter Login Password",
     title: "Please enter title",
     content: "Please enter content",
     usernamereq: "Please enter username",
@@ -223,6 +227,8 @@ export default {
     noMatch: "Confirmation password does not match the new password",
     verifyPhone: "Please verify mobile number",
     onlyNumber: "Only numbers allowed",
+    invalidPhoneLength: 'Mobile number must be 10 digits long.',
+    invalidPhoneStartsWith0: 'Mobile number must start with 0.',
     phoneVerification: "Please enter phone verification",
     min6: "Length should be 6 characters",
     lessthan50: "Length should be 50 characters",
@@ -281,7 +287,10 @@ export default {
 
     // vi-mualixi-redpacket
     congrats: "Congratulations",
-    claim: "Claim"
+    claim: "Claim",
+    
+    record_win_status: "Win status",
+    record_win_prize: "Winner Prize",
   },
   mail: {
     inbox: "Inbox",
@@ -850,7 +859,8 @@ export default {
     otp_success_send_email: "OTP Code has been sent to your email",
     otp_success_send_phone: "OTP Code has been sent to your mobile number",
     claimed: "Claimed",
-    pending: "Pending"
+    pending: "Pending",
+    login_to_continue: "Please login to continue"
   },
   response: {
     101: "Platform not found",
@@ -915,8 +925,11 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    14010: "Network IP or SID duplicate",
     15202: "The new password cannot be the same as the old password.",
     15201: "Old password is incorrect.",
+    15204: "Phone number is incorrect.",
+    15205: "Login Password is incorrect",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

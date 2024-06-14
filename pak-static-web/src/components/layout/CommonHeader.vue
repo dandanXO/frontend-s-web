@@ -18,13 +18,18 @@
 
         <div class="header-menu-container mobile-menu-hide" :class="globalStore.isMenuActive ? 'active' : ''">
           <button class="download-app" @click="handleDownloadAppClick">
-            <span class="download-app__content">{{ $t("layout.header.downloadApp") }}</span>
+            <span class="download-app__content">
+              {{ $t("layout.header.downloadApp.content") }}
+              <span class="highlight">{{ $t("layout.header.downloadApp.highlight") }}</span>
+            </span>
           </button>
           <router-link class="invite-to-earn" to="/share">
-            <div class="invite-to-earn__content-wrapper">
-              <span class="invite-to-earn__title">{{ $t("layout.header.inviteToEarn.title") }}</span>
-              <span class="invite-to-earn__description">{{ $t("layout.header.inviteToEarn.description") }}</span>
-            </div>
+            <span class="invite-to-earn__content">
+              {{ $t("layout.header.inviteToEarn.content") }}
+              <span class="highlight">
+                {{ $t("layout.header.inviteToEarn.highlight") }}
+              </span>
+            </span>
           </router-link>
           <ul class="header-menu-list">
             <li v-for="nav in sortedNavigations" :key="nav.name" class="header-menu-item">
@@ -207,8 +212,11 @@
             <button class="common-btn login-btn" @click="openAccountModal">
               {{ $t("layout.header.notLogin.loginButton") }}
             </button>
-            <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
+            <button class="common-btn reg-btn" @click="openAccountModal('register')">
               {{ $t("layout.header.notLogin.registerButton") }}
+            </button>
+            <button class="language-btn" @click="handleLanguageClick">
+              <RiGlobalLine />
             </button>
           </template>
         </div>
@@ -244,7 +252,8 @@ import {
   RiLogoutCircleLine,
   RiShareBoxLine,
   RiListSettingsLine,
-  RiLoginBoxLine
+  RiLoginBoxLine,
+  RiGlobalLine
 } from "vue-remix-icons";
 import { useRoute } from "vue-router";
 import { kycAPI, loadPromo } from "@/api/index/promo";
@@ -451,6 +460,13 @@ watch(
     }
   }
 );
+
+watch(
+  () => route.path,
+  () => {
+    activateTab.value = route.path === "/promotion" ? "promotion" : "casino";
+  }
+);
 const scroll = computed(() => windowScroll.value);
 
 var showMobileMenu = () => {
@@ -616,6 +632,17 @@ $link-color: #ffffff;
       line-height: 20px;
       color: #ffffff;
     }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      background: none;
+      svg {
+        width: 30px;
+        fill: #9f9f9f;
+        animation: fillChange 2s infinite;
+      }
+    }
   }
 }
 
@@ -736,7 +763,7 @@ $link-color: #ffffff;
   }
 
   img {
-    width: 20px;
+    width: 25px;
   }
 }
 
@@ -844,46 +871,45 @@ $link-color: #ffffff;
     .download-app {
       background: url(@/assets/images/layout/header/download-app.png) no-repeat;
       background-size: contain;
-      min-height: 63px;
+      min-height: 70px;
       width: 100%;
       position: relative;
 
       .download-app__content {
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 14px;
         position: absolute;
-        left: 26px;
-        top: 28px;
+        left: 20px;
+        top: 20px;
+        max-width: 130px;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 22px;
+        text-align: left;
+
+        .highlight {
+          color: #ebff00;
+        }
       }
     }
 
     .invite-to-earn {
       background: url(@/assets/images/layout/header/invite-to-earn.png) no-repeat;
       background-size: contain;
-      min-height: 80px;
+      min-height: 94px;
       width: 100%;
       position: relative;
 
-      .invite-to-earn__content-wrapper {
-        display: flex;
-        flex-direction: column;
+      .invite-to-earn__content {
         position: absolute;
-        top: 25px;
+        top: 26px;
         left: 20px;
+        max-width: 140px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 25px;
+        color: #fff;
 
-        .invite-to-earn__title {
-          font-size: 14px;
-          font-weight: 700;
-          line-height: 14px;
-          color: #fff;
-        }
-
-        .invite-to-earn__description {
-          font-size: 8px;
-          font-weight: 700;
-          line-height: 14px;
-          color: #ffe500;
+        .highlight {
+          color: #ebff00;
         }
       }
       &::after {
@@ -1558,6 +1584,18 @@ $link-color: #ffffff;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fillChange {
+  0% {
+    fill: #9f9f9f;
+  }
+  50% {
+    fill: #33bd46;
+  }
+  100% {
+    fill: #9f9f9f;
   }
 }
 </style>

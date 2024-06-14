@@ -25,7 +25,7 @@ export const userStore = defineStore("userStore", {
       memberType: "",
       balance: 0,
       vip: "",
-      currency: { value: "₹", label: "RS" },
+      currency: { value: "₨", label: "RS" },
       currentDeposit: "0.0000",
       levelUpDeposit: "0",
       isAffiliateA: false,
@@ -34,7 +34,8 @@ export const userStore = defineStore("userStore", {
       profilePhoto: "",
       accountModalVisible: false,
       accountModalRegVisible: false,
-      unreadInboxMail: 0
+      unreadInboxMail: 0,
+      visitorId: ""
     };
   },
   actions: {

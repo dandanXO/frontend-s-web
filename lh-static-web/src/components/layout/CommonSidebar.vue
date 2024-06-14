@@ -235,6 +235,15 @@ export default defineComponent({
       document.addEventListener("mouseup", stopDragging);
     });
 
+    watch(
+      () => store.token,
+      () => {
+        if (store.token) {
+          initFloating();
+        }
+      }
+    );
+
     onBeforeUnmount(() => {
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);

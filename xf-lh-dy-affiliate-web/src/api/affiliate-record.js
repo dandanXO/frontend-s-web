@@ -12,3 +12,7 @@ export const getAffiliateList = (id) => {
 export const getAffiliateSummary = (query) => {
   return https().request("/downline/summaryChild", Method.GET, query, ContentType.form);
 };
+
+export const getTotalSummary = (query) => {
+  return https().request("/downline/affiliateSummary", Method.GET, query, ContentType.form);
+};

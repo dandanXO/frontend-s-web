@@ -400,14 +400,12 @@
                 :label="tbl.title"
               >
                 <template v-if="tbl.dataIndex === 'betId'" #default="scope">
-                  <div style="display: flex; align-items: center;">
-                    <el-tooltip
-                      class="box-item"
-                      effect="dark"
-                      :content="scope.row.betId"
-                      placement="top-start"
-                    >
-                      <a @click="copy(scope.row.betId)">复制 <span style="color: black">{{scope.row.betId.slice(0, 1)}}...</span></a>
+                  <div style="display: flex; align-items: center">
+                    <el-tooltip class="box-item" effect="dark" :content="scope.row.betId" placement="top-start">
+                      <a @click="copy(scope.row.betId)">
+                        复制
+                        <span style="color: black">{{ scope.row.betId.slice(0, 1) }}...</span>
+                      </a>
                     </el-tooltip>
                   </div>
                 </template>
@@ -611,6 +609,7 @@ import {
   cancellationOfWithdrawalReceived
 } from "@/api/personal/personal";
 import moment from "moment";
+import {useLocalStorage} from "@vueuse/core";
 // import { message } from "ant-design-vue";
 import {getPlatformList, getLoggedInPlatformList} from "@/api/platform/platform";
 import {userStore} from "@/store";
@@ -1241,10 +1240,10 @@ export default defineComponent({
       })
     }
 
-    const imgURL = process.env.VUE_APP_IMAGE_CDN;
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value;
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = `${imgURL}/order/1/${linkId}`
+      reminderForm.photos = `${linkId}`
     }
 
     const getFormatBetTime = (betTime) => {

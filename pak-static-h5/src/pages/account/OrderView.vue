@@ -8,8 +8,8 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab class="left" name="withdrawal" label="Withdrawal" />
-      <q-tab class="right" name="recharge" label="Recharge" />
+      <q-tab class="left" name="withdrawal" :label="$t('order.withdrawal')" />
+      <q-tab class="right" name="recharge" :label="$t('order.recharge')" />
     </q-tabs>
 
     <LoadingComponent v-if="isLoading[orderOptionTab]"></LoadingComponent>
@@ -25,7 +25,7 @@
       <q-tab-panel name="withdrawal">
         <div v-for="(e, i) in withdrawalData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
 
@@ -42,7 +42,7 @@
           <div class="order-row order-row--content">
             <div class="order-subrow">
               <div class="order-col">{{ convertToCommaAmount(e.withdrawAmount, true) }}</div>
-              <div class="order-col">BANK</div>
+              <div class="order-col">{{ $t("records.bank") }}</div>
             </div>
             <div class="order-subrow">
               <div class="order-col">
@@ -70,7 +70,7 @@
       <q-tab-panel name="recharge">
         <div v-for="(e, i) in depositData" :key="`${e}-${i}`" class="order-table">
           <div class="order-row order-row--title">
-            <div class="order-col">Order NO.</div>
+            <div class="order-col">{{ $t("records.orderNo") }}</div>
             <div class="order-col flex-c-end gap-8">
               {{ e.serialNumber }}
 
@@ -128,6 +128,7 @@ import LoadingComponent from "../../components/LoadingComponent.vue";
 import NoInfoComponent from "../../components/NoInfoComponent.vue";
 import { useQuasar } from "quasar";
 import { convertToCommaAmount } from "src/boot/utils";
+import { t } from "src/boot/lang";
 
 const $q = useQuasar();
 const router = useRouter();
@@ -244,12 +245,12 @@ const getWithdrawStatus = (withdrawStatus) => {
     case "STEP_2":
     case "STEP_3":
     case "STEP_4":
-      return "Pending";
+      return t("records.pending");
     case "FAIL":
     case "STEP_5":
-      return "Failed";
+      return t("records.failed");
     case "SUCCESS":
-      return "Success";
+      return t("records.success");
     default:
       return withdrawStatus;
   }
@@ -258,13 +259,13 @@ const getWithdrawStatus = (withdrawStatus) => {
 const getDepositStatus = (depositStatus) => {
   switch (depositStatus) {
     case "PENDING":
-      return "Pending";
+      return t("records.pending");
     case "SUCCESS":
-      return "Success";
+      return t("records.success");
     case "SUPPLEMENT_SUCCESS":
-      return "Success";
+      return t("records.success");
     case "CLOSED":
-      return "Closed";
+      return t("records.closed");
     default:
       return depositStatus;
   }

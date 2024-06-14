@@ -57,8 +57,9 @@
 // import { loadPromoBanner } from "@/api/index/promo";
 import { onMounted, ref } from "vue";
 import GameModal from "components/modal/GameModal";
+import {useLocalStorage} from "@vueuse/core";
 import { api } from "boot/axios";
-const imgURL = process.env.IMAGE_CDN + "/";
+const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/";
 
 const casinoGame = ref(null);
 function playGame(gameName, platformCode, gameCode, gameStatus) {

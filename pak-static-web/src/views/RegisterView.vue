@@ -184,7 +184,7 @@
 
       <a-form ref="formRef" :model="regForm" :rules="rules">
         <a-form-item ref="loginName" name="loginName">
-          <a-input v-model:value="regForm.loginName" :placeholder="$t('registerView.form.loginName.placeholder')">
+          <a-input v-model:value="regForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
             <template #prefix>
               <RiUserFill />
             </template>
@@ -194,7 +194,7 @@
           <a-input
             v-model:value="regForm.password"
             :type="togglePwd ? 'password' : 'text'"
-            :placeholder="$t('registerView.form.password.placeholder')"
+            :placeholder="$t('common.form.password.placeholder')"
           >
             <template #prefix>
               <RiLock2Fill />
@@ -671,6 +671,7 @@ import { getVerificationCode, sendTelephoneOtp } from "@/api/index/login";
 import { message } from "ant-design-vue";
 import { userStore, globalStore } from "@/store";
 import { useI18n } from "vue-i18n";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const router = useRouter();
 const { t } = useI18n();
@@ -779,15 +780,6 @@ const getOtpCode = () => {
       isOtpSending.value = false;
     });
 };
-let validateName = async (r, v) => {
-  if (v === "") {
-    return Promise.reject("Login name is required");
-  } else if (!checkName(v)) {
-    return Promise.reject("Only English letters and numbers are allowed.");
-  } else {
-    return Promise.resolve();
-  }
-};
 const checkName = (v) => {
   var alphanumeric = /^[A-Za-z0-9]+$/;
   return v.match(alphanumeric);
@@ -862,18 +854,19 @@ let validatePhoneNumber = async (r, v) => {
   }
 };
 const rules = computed(() => ({
-  loginName: [
-    { len: 11, message: t("registerView.form.loginName.error.len") },
-    { required: true, message: t("registerView.form.loginName.error.required") }
-  ],
-  password: [{ required: true, message: t("registerView.form.password.error.required") }]
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
+  password: [{ validator: validatePassword, trigger: "blur" }]
 }));
 const loadingRegister = ref(false);
 const onSubmit = () => {
   formRef.value
     .validate()
     .then(() => {
-      register(regForm)
+      const params = {
+        ...regForm,
+        sid: store.visitorId
+      };
+      register(params)
         .then((response) => {
           const regResult = response.code;
           if (regResult === 0) {

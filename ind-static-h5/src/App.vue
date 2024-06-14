@@ -10,10 +10,8 @@ import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
 import { isAndroid } from "boot/utils";
-// import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
-// import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
 
@@ -250,7 +248,7 @@ export default defineComponent({
       console.log(theSid);
 
       if (theSid) {
-        const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
+        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
           params: {
             way: way,
             sid: theSid,

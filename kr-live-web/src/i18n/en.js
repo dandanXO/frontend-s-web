@@ -34,7 +34,22 @@ export default {
     menu_withdraw: "Withdraw",
     menu_message: "Message",
     menu_customer_service: "Customer Service",
+    menu_transaction_record: "Transaction Record",
+    menu_rebates: "Rebates",
     // menu end
+    // page modal start
+    page_modal_deposit: "Deposit",
+    page_modal_withdraw: "Withdraw",
+    page_modal_message: "Message",
+    page_modal_customer_service: "Customer Service",
+    page_modal_promo: "Promo",
+    page_modal_personal_info: "Personal Info",
+    page_modal_announcement: "Announcement",
+    page_modal_add_bank_card: "Add Bank Card",
+    page_modal_bank_card_list: "Bank Card List",
+    page_modal_transaction_record: "Transaction Record",
+    page_modal_change_password: "Change Password",
+    // page modal end
     // rolling text start
     roll_text_no_content: "No content yet",
     // rolling text end
@@ -79,6 +94,30 @@ export default {
     date_picker_close: "Close",
     date_picker_confirm: "Confirm",
     // transaction record end
+    // withdraw start
+    withdraw_method: "Withdraw Method",
+    withdraw_bank: "Bank",
+    withdraw_bank_choose: "Select a bank",
+    withdraw_bank_num: "Bank Number",
+    withdraw_bank_num_choose: "Please enter bank number",
+    withdraw_bank_holder: "Bank Account Holder",
+    withdraw_bank_address: "Bank Address",
+    withdraw_bank_address_placeholder: "Account opening bank address",
+    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
+    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
+    // withdraw end
+    // announcement start
+    announcement_no_selected: "No selected",
+    announcement_total: "Total",
+    announcement_has_attachment: "Has attachment",
+    // announcement end
+    // feedback start
+    feedback_loading_content: "Loading content...",
+    feedback_unread: "Unread",
+    feedback_read: "Read",
+    feedback_read_at: "Read at",
+    // feedback end
+    
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -335,7 +374,7 @@ export default {
     turnover: "Profit",
     withdraw: "Withdraw",
     transfer: "Transfer",
-    rebates: "Rebate",
+    rebates: "Rebates",
     gameBetRecord: "Bet Record",
     reminderRecord: "Reminder Record",
     search: "Search",
@@ -613,6 +652,7 @@ export default {
     1307: "Exceeded daily withdrawal limit",
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
+    1317: "Have binded card",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",

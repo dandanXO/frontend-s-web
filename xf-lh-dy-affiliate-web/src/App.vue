@@ -32,7 +32,7 @@ onMounted(() => {
   }else if(window.location.pathname.indexOf("ind") > -1 || window.location.hostname.indexOf("iw2-") > -1){
     link.href = '/ind2-favicon.ico';
   }else if(window.location.pathname.indexOf("krw") > -1 || window.location.hostname.indexOf("krw-") > -1){
-    link.href = '/favicon.ico';
+    link.href = '/kr-favicon.ico';
   }else{
     link.href = '/favicon.ico';
   }

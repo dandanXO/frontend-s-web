@@ -141,7 +141,7 @@ export const userStore = defineStore("userStore", {
           .then((ret) => {
             const res = ret.data;
             if (res.code === 0) {
-              this.balance = res.data;
+              this.balance = Math.floor(res.data);
             } else {
               this.balance = 0;
             }

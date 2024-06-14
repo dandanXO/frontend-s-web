@@ -30,7 +30,7 @@
         class="progress-bar"
         color="grey"
       ></q-linear-progress>
-      <div class="win-gift-text">Deposit Monthly To Win Gifts</div>
+      <div class="win-gift-text">{{ $t("settings.depositMonthlytoWinGifts") }}</div>
     </div>
   </div>
 </template>
@@ -126,7 +126,7 @@ const profileImagePath = computed(() => {
           padding-top: 2px;
           padding-bottom: 4px;
           z-index: 3;
-          color: #00AE00;
+          color: #00ae00;
           font-weight: bold;
         }
       }
@@ -156,7 +156,7 @@ const profileImagePath = computed(() => {
     .progress-bar {
       // border: 1px solid #fed87d;
       // background: linear-gradient(180deg, #fff0a0 17.41%, #fff8d4 17.41%, #ffdc26 67.56%);
-      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+      background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
       border-radius: 100px;
       color: #320b5b;
     }

@@ -95,6 +95,8 @@ export default {
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付',
     WAITING_AUTO_PAY: '待自动支付',
+    FAIL_REVIEW: '失败审核',
+    WAITING_RETRY: '等待重试',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -222,8 +224,8 @@ export default {
     sportMatch: {
       ACTIVE: '进行中',
       ENDED: '已结束',
-      SETTLED: '已结算'
-    }
+      SETTLED: '已结算',
+    },
   },
   betStatus: {
     BET: '下注',
@@ -446,7 +448,7 @@ export default {
       GROUP_THREE: '组三',
       GROUP_SIX: '组六',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: '核实中',
@@ -462,11 +464,13 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: '侦测到相同IP或设备',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: '最低存款要求未达成',
     ERROR_BET_AMT_MIN_NOT_MEET: '最低下注要求未达成',
+    ERROR_SIMILAR_IP_DETECTED: '侦测到相同IP',
+    ERROR_SIMILAR_SID_DETECTED: '侦测到相同设备',
   },
   rewardType: {
-    BET: "投注",
-    DEPOSIT: "存款",
-    ONE_TIME: "一次",
+    BET: '投注',
+    DEPOSIT: '存款',
+    ONE_TIME: '一次',
   },
   fields: {
     account: '账号',
@@ -592,6 +596,7 @@ export default {
     amount: '金额',
     amountLimitPerRain: '每场红包雨金额限制',
     adjust: '调整',
+    announcement: '公告',
     announcementType: '公告类型',
     answer: '答案',
     answerOne: '题目一答案',
@@ -603,6 +608,7 @@ export default {
     approveBy: '批准人',
     assigned: '已分配',
     assignment: '分配',
+    attachment: '附件',
     auditTime: '审计时间',
     automaticPayment: '自动支付',
     autopay: '自动支付',
@@ -1788,6 +1794,16 @@ export default {
     distribute: '发送',
     totalAmountDistribute: '派发奖金总数',
     noOfBonusRecord: '奖金记录总数',
+    whitelist: '白名单',
+    blacklist: '黑名单',
+    accessType: '访问类型',
+    domainType: '域名类型',
+    valueType: '值类型',
+    ipList: 'IP组',
+    ipRange: 'IP范围',
+    countryCode: '国家代码',
+    lower: '下限',
+    upper: '上限',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2290,6 +2306,7 @@ export default {
     'Waiting Auto Pay': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Withdrawal Record': '提交记录',
+    'Fail Review': '失败审核',
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
@@ -2351,6 +2368,7 @@ export default {
     UEFA: '欧洲杯',
     'UEFA Team': '欧洲杯队伍',
     'UEFA Match': '欧洲杯赛事',
+    'UEFA Winner': '欧洲杯获胜名单',
     'Refer Friend Manager': '邀请好友管理',
     'Sport Match': '中超角逐',
     'Nba Match': 'NBA季后赛',
@@ -2444,6 +2462,7 @@ export default {
     'Member Refer Record': '会员邀请记录',
     'Member Refer Reward List': '会员邀请奖励记录',
     'Refer Rebate': '邀请奖励',
+    'Domain Access': '域名访问设置',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -2586,6 +2605,12 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_LIVE: '净盈利佣金-真人',
     AGENT_SHARE_PROFIT_RATIO_SPORT: '净盈利佣金-体育',
   },
+  domainType: {
+    LANDING: '落地页',
+    DOWNLOAD: '下载页',
+    AFFILIATE: '代理',
+    HOME: '首页',
+  },
   error: {
     400: '请求无效',
     401: '用户未授权',
@@ -2610,6 +2635,7 @@ export default {
     801: '验证码已失效',
     900: '无法找到会员信息',
     901: '无法找到此代理信息',
+    912: '用户名不存在',
     922: '你的账号还未连接到VCall',
     1000: '登录名或密码错误',
     1001: '登录失败, 账号已被禁用',
@@ -2754,10 +2780,11 @@ export default {
     22001: '会员VIP等级最高奖金为 $',
     21005: '应用程序已存在',
     21006: '操作系统和上载应用程序不匹配',
+    22003: '赛事已存在',
     30000: 'PG注单设置失败',
     24003: '结果已结算',
     27000: '钥匙数量不足',
     31000: '所选日期还有赛事未结束，请待所有赛事结束了再结算',
-    31001: '所选日期无赛事'
+    31001: '所选日期无赛事',
   },
 }

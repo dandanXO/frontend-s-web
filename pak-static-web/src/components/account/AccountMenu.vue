@@ -45,10 +45,12 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { userStore } from "@/store";
 import { storeToRefs } from "pinia";
+import { useI18n } from "vue-i18n";
+
 import PersonalSvg from "@/assets/images/account/personal-center-icon.svg";
 import RecordSvg from "@/assets/images/account/record-icon.svg";
 import DiscountSvg from "@/assets/images/account/discount-icon.svg";
@@ -58,7 +60,7 @@ import VIPSvg from "@/assets/images/account/vip-icon.svg";
 import DepositSvg from "@/assets/images/account/deposit-icon.svg";
 import WithdrawSvg from "@/assets/images/account/withdraw-icon.svg";
 import PromoSvg from "@/assets/images/account/promo-icon.svg";
-import { useI18n } from "vue-i18n";
+import OrderSvg from "@/assets/images/account/order-icon.svg";
 
 const store = userStore();
 const { profilePhoto, nickName, balance } = storeToRefs(store);
@@ -71,11 +73,12 @@ const actions = computed(() => [
   { name: t("personalView.layout.accountMenu.action.promo"), img: PromoSvg, path: "/promotion" }
 ]);
 
-const links = ref([
+const links = computed(() => [
   { name: t("personalView.layout.accountMenu.link.personalCenter"), img: PersonalSvg, path: "/center/personal" },
-  { name: t("personalView.layout.accountMenu.link.record"), img: RecordSvg, path: "/center/transit-record" },
+  { name: t("personalView.layout.accountMenu.link.record"), img: RecordSvg, path: "/center/bet-record" },
   { name: t("personalView.layout.accountMenu.link.discount"), img: DiscountSvg, path: "/center/discount" },
   { name: t("personalView.layout.accountMenu.link.bank"), img: BankSvg, path: "/center/withdrawbank" },
+  { name: t("personalView.layout.accountMenu.link.order"), img: OrderSvg, path: "/center/transit-record" },
   { name: t("personalView.layout.accountMenu.link.message"), img: MessageSvg, path: "/center/mailbox" },
   { name: t("personalView.layout.accountMenu.link.vip"), img: VIPSvg, path: "/center/vip" }
 ]);
@@ -167,7 +170,6 @@ const links = ref([
       align-items: center;
       justify-content: space-between;
       padding: 12px 14px;
-      margin-top: -6px;
       background-color: #2e303466;
       border-radius: 4px;
       backdrop-filter: blur(5px);

@@ -1,11 +1,9 @@
 <template>
     <div class="container">
         <div class="wrapper border">
-            <div class="section-title">
-                <img class="decor" src="../../../assets/images/promo/hotpromo/eurocup24/section-title-decor-left.svg" />
-                <span>Quy tắc hoạt động</span>
-                <img class="decor" src="../../../assets/images/promo/hotpromo/eurocup24/section-title-decor-right.svg" />
-            </div>
+            <div class="luckydraw-title">
+                Quy tắc hoạt động
+                        </div>
 
             <div class="bullet-points">
                 <div class="point">
@@ -43,7 +41,7 @@
                 <div class="content">
                     <ol>
                         <li>Thành viên nạp thành công lệnh gửi tiền tối thiểu là 7,000 VNDP, sau đó có thể chọn 1 đội
-                            bóng bất kì làm đội bóng yêu thích <a href="https://docs.google.com/forms/d/e/1FAIpQLSfVI_Qn7QEFPZXlpQpNRF4aabjndFioRyO5A-wWAoC3qBlR-g/viewform?usp=sf_link" target="_blank" class="pill">TẠI ĐÂY</a></li>
+                            bóng bất kì làm đội bóng yêu thích <a style="width: 100px;text-align: center" href="https://docs.google.com/forms/d/e/1FAIpQLSfVI_Qn7QEFPZXlpQpNRF4aabjndFioRyO5A-wWAoC3qBlR-g/viewform?usp=sf_link" target="_blank" class="pill">TẠI ĐÂY</a></li>
                         <li>Sau khi chọn được đội bóng yêu thích, vào những ngày đội bóng yêu thích thi đấu, Thành Viên
                             tham gia cược vào đội bóng yêu thích với tiền cược tối thiểu là 3,500 VNDP.</li>
                         <li>Sau khi đội bóng yêu thích chiến thắng trận đấu đó, Thành Viên liên hệ với CSKH 24/7 để cung
@@ -111,23 +109,31 @@
         background-color: #F2F8FE;
         padding: 20px;
         border-radius: 6px;
+        width: 100%;
+        overflow: hidden;
 
-        .section-title {
-            display: flex;
-            color: #0080FF;
-            font-size: 20px;
-            font-weight: 800;
-            line-height: 20px;
-            gap: 20px;
-            align-items: center;
-            margin: 0 auto;
-            text-align: center;
+        
+    .luckydraw-title {
+      white-space: nowrap;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #0080FF;
+      font-size: 22px;
+      font-weight: 700;
+      gap: 10px;
+      &:before, &:after {
+        content: "";
+        background: url(../../../assets/images/promo/hotpromo/eurocup-luckydraw/titledecal.png)no-repeat center center;
+        background-size: cover;
+        padding: 10px 50px;
+      }
+      &:after {
 
-            .decor {
-                aspect-ratio: 195/44;
-                width: 120px;
-            }
-        }
+        transform: rotateY(180deg);
+      }
+    }
 
         .bullet-points {
             display: flex;

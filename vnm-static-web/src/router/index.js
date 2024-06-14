@@ -79,8 +79,8 @@ const routes = [
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {
-        path: "/hashgame",
-        name: "hashgame",
+        path: "/others",
+        name: "others",
         component: () => import(/* webpackChunkName: "Game" */ "../views/FishingView.vue")
       },
       {

@@ -68,6 +68,11 @@
 	font-weight: bold;
 	font-size: 100%;
 	text-align: center;
+	cursor: pointer;
+}
+.download_btn:active{
+	filter: brightness(0.86);
+	transform: translate(0px, 1px);
 }
 
 .download_des {

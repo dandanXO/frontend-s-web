@@ -9,6 +9,12 @@
           :placeholder="t('fields.loginName')"
         />
         <el-input
+          v-model="request.telephone"
+          size="small"
+          style="width: 200px; margin-left: 5px;"
+          :placeholder="t('fields.telephone')"
+        />
+        <el-input
           v-model="request.affiliateCode"
           size="small"
           style="width: 200px; margin-left: 5px;"
@@ -248,7 +254,11 @@
               maxlength="50"
             />
           </el-form-item>
-          <el-form-item :label="t('fields.commission')" prop="commission" v-loading="uiControl.shareRatioSettingLoading">
+          <el-form-item
+            :label="t('fields.commission')"
+            prop="commission"
+            v-loading="uiControl.shareRatioSettingLoading"
+          >
             <el-input
               v-model="form.commission"
               style="width: 350px;"
@@ -266,8 +276,16 @@
               />
             </el-form-item>
           </div>
-          <el-form-item v-else :label="t('fields.shareRatio')" prop="shareRatio">
-            <div v-for="item in shareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
+          <el-form-item
+            v-else
+            :label="t('fields.shareRatio')"
+            prop="shareRatio"
+          >
+            <div
+              v-for="item in shareRatioList.list"
+              :key="item.code"
+              style="width: 350px; display: flex; margin-bottom:5px;"
+            >
               <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
               <el-input
                 v-model="item.value"
@@ -650,10 +668,10 @@ import {
   listApproveAffiliate,
   listDisableAffiliate,
 } from '../../../api/member-affiliate'
-import { updateRisk } from "../../../api/member";
+import { updateRisk } from '../../../api/member'
 import { getSiteListSimple } from '../../../api/site'
-import { selectList } from "../../../api/risk-level";
-import { getConfigListByGroup } from "../../../api/config";
+import { selectList } from '../../../api/risk-level'
+import { getConfigListByGroup } from '../../../api/config'
 import { hasPermission } from '../../../utils/util'
 import { notEmpty } from '../../../utils/common'
 import { useStore } from '../../../store'
@@ -668,20 +686,20 @@ const LOGIN_USER_NAME = computed(() => store.state.user.name)
 const site = ref(null)
 const memberForm = ref(null)
 const freezeMemberForm = ref(null)
-const updateRiskForm = ref(null);
+const updateRiskForm = ref(null)
 const table = ref(null)
 const siteList = reactive({
   list: [],
 })
 const riskList = reactive({
-  list: []
-});
+  list: [],
+})
 const shareRatioList = reactive({
   list: [],
 })
 const selectedRiskColor = reactive({
   levelColor: null,
-});
+})
 
 let timeZone = null
 const freezeType = reactive({
@@ -761,6 +779,7 @@ const request = reactive({
   size: 30,
   current: 1,
   loginName: null,
+  telephone: null,
   affiliateStatus: null,
   affiliateCode: null,
   siteId: null,
@@ -794,8 +813,8 @@ const freezeForm = reactive({
 })
 
 const riskForm = reactive({
-  risk: null
-});
+  risk: null,
+})
 
 const validatePassword = (rule, value, callback) => {
   if (value !== '' && form.reEnterPassword !== '') {
@@ -820,7 +839,7 @@ const validateCommission = (rule, value, callback) => {
 
 const validateShareRatio = (rule, value, callback) => {
   if (form.commissionModel === 'DETAILS') {
-    shareRatioList.list.forEach((item) => {
+    shareRatioList.list.forEach(item => {
       if (item.value === '' || item.value < 0 || item.value > 1) {
         callback(new Error(t('message.validateShareRatioFormat')))
       }
@@ -916,6 +935,7 @@ const freezeFormRules = reactive({
 
 function resetQuery() {
   request.loginName = null
+  request.telephone = null
   request.affiliateStatus = null
   request.affiliateCode = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
@@ -995,18 +1015,18 @@ function showDialog(type, affiliate) {
     uiControl.dialogTitle = t('fields.disableAffiliate')
   } else if (type === 'RISK') {
     if (updateRiskForm.value) {
-      updateRiskForm.value.resetFields();
+      updateRiskForm.value.resetFields()
     }
     riskForm.id = affiliate.id
     if (affiliate.riskLevel) {
-      const risk = riskList.list.find(r => r.levelName === affiliate.riskLevel);
-      riskForm.risk = risk.id;
-      selectedRiskColor.levelColor = risk.levelColor;
+      const risk = riskList.list.find(r => r.levelName === affiliate.riskLevel)
+      riskForm.risk = risk.id
+      selectedRiskColor.levelColor = risk.levelColor
     } else {
-      riskForm.risk = riskList.list[0].id;
-      selectedRiskColor.levelColor = riskList.list[0].levelColor;
+      riskForm.risk = riskList.list[0].id
+      selectedRiskColor.levelColor = riskList.list[0].levelColor
     }
-    uiControl.dialogTitle = t('fields.updateRiskLevel');
+    uiControl.dialogTitle = t('fields.updateRiskLevel')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -1022,11 +1042,19 @@ function addAffiliate() {
     if (valid) {
       if (form.commissionModel === 'DETAILS') {
         // join share ratio by comma
-        form.shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
+        form.shareRatio = shareRatioList.list
+          .map(item => item.code + ':' + item.value)
+          .join(',')
       }
       await registerAffiliate(form)
       uiControl.dialogVisible = false
-      ElMessage({ message: form.siteId === 5 || form.siteId === 9 ? t('message.registerSuccessInd') : t('message.registerSuccess'), type: 'success' })
+      ElMessage({
+        message:
+          form.siteId === 5 || form.siteId === 9
+            ? t('message.registerSuccessInd')
+            : t('message.registerSuccess'),
+        type: 'success',
+      })
       if (page.records.length !== 0) {
         await loadAffiliates()
       }
@@ -1036,16 +1064,19 @@ function addAffiliate() {
 
 async function performUpdate() {
   console.log(riskForm.id)
-  updateRiskForm.value.validate(async (valid) => {
+  updateRiskForm.value.validate(async valid => {
     if (valid) {
-      await updateRisk(riskForm.id, riskForm.risk, request.siteId);
-      uiControl.dialogVisible = false;
-      ElMessage({ message: t('message.updateRiskLevelSuccess'), type: "success" });
+      await updateRisk(riskForm.id, riskForm.risk, request.siteId)
+      uiControl.dialogVisible = false
+      ElMessage({
+        message: t('message.updateRiskLevelSuccess'),
+        type: 'success',
+      })
       if (page.records.length !== 0) {
         await loadAffiliates()
       }
     }
-  });
+  })
 }
 
 async function loadSites() {
@@ -1054,20 +1085,20 @@ async function loadSites() {
 }
 
 const loadRiskLevels = async () => {
-  const { data: risk } = await selectList({ siteId: request.siteId });
-  riskList.list = risk;
-};
+  const { data: risk } = await selectList({ siteId: request.siteId })
+  riskList.list = risk
+}
 
 const populateRiskColor = () => {
-  const risk = riskList.list.find(r => r.id === riskForm.risk);
-  selectedRiskColor.levelColor = risk.levelColor;
-};
+  const risk = riskList.list.find(r => r.id === riskForm.risk)
+  selectedRiskColor.levelColor = risk.levelColor
+}
 
 async function approve(affiliate) {
   await listApproveAffiliate(affiliate.id, LOGIN_USER_NAME.value)
   await loadAffiliates()
-  ElMessage({ message: t('message.affiliateApproved'), type: 'success' });
-  page.loading = false;
+  ElMessage({ message: t('message.affiliateApproved'), type: 'success' })
+  page.loading = false
 }
 
 function freeze() {
@@ -1086,8 +1117,8 @@ function displayShareRatio() {
     uiControl.shareRatioSettingVisible = true
     uiControl.shareRatioSettingLoading = true
     getConfigListByGroup('AGENT_SHARE_RATIO', form.siteId).then(res => {
-      shareRatioList.list = res.data;
-    });
+      shareRatioList.list = res.data
+    })
     uiControl.shareRatioSettingLoading = false
   } else {
     uiControl.shareRatioSettingVisible = false
@@ -1104,7 +1135,7 @@ onMounted(async () => {
     request.siteId = site.value.id
   }
 
-  await loadRiskLevels();
+  await loadRiskLevels()
 })
 </script>
 

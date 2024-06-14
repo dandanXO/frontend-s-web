@@ -389,7 +389,7 @@ const site = ref(null)
 const inputImage = ref(null)
 const imageForm = ref(null)
 const imageDir = process.env.VUE_APP_IMAGE
-const categoryList = ['/promo/', '/game/', '/payment/', '/poster/']
+const categoryList = ['/promo/', '/game/', '/payment/', '/poster/', '/announcement/']
 const siteList = reactive({
   list: [],
 })
@@ -409,6 +409,7 @@ const uiControl = reactive({
     { name: 'GAME', display: t('menu.Game') },
     { name: 'PAYMENT', display: t('fields.payment') },
     { name: 'POSTER', display: t('fields.poster') },
+    { name: 'ANNOUNCEMENT', display: t('fields.announcement') },
   ],
   posterType: [
     { name: 'OVERALL', display: t('posterType.overall') },
@@ -589,6 +590,9 @@ async function loadSiteImage() {
         break
       case 'POSTER':
         categoryDir = categoryList[3]
+        break
+      case 'ANNOUNCEMENT':
+        categoryDir = categoryList[4]
         break
       default:
         categoryDir = '/temp/'

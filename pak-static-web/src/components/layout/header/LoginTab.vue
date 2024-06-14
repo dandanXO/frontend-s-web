@@ -1,15 +1,11 @@
 <template>
   <a-form ref="formRef" :model="loginForm" :rules="loginFormRules" hide-required-mark>
     <div>
-      <a-form-item
-        required
-        name="loginName"
-        :label="$t('layout.header.accountModal.login.form.loginName.label')"
-        label-align="left"
-      >
+      <a-form-item name="loginName" :label="$t('common.form.loginName.label')" label-align="left">
         <a-input
           v-model:value="loginForm.loginName"
-          :placeholder="$t('layout.header.accountModal.login.form.loginName.placeholder')"
+          maxlength="11"
+          :placeholder="$t('common.form.loginName.placeholder')"
         >
           <template #prefix>
             <RiSmartphoneFill />
@@ -17,20 +13,19 @@
           </template>
         </a-input>
       </a-form-item>
-      <a-form-item
-        required
-        name="password"
-        :label="$t('layout.header.accountModal.login.form.password.label')"
-        label-align="left"
-      >
+      <a-form-item name="password" :label="$t('common.form.password.label')" label-align="left">
         <a-input
           v-model:value="loginForm.password"
-          type="password"
-          :placeholder="$t('layout.header.accountModal.login.form.password.placeholder')"
+          :type="isPasswordVisible ? 'text' : 'password'"
+          :placeholder="$t('common.form.password.placeholder')"
           @keypress.enter="onSubmit"
         >
           <template #prefix>
             <RiLock2Fill />
+          </template>
+          <template #suffix>
+            <RiEyeOffFill v-if="!isPasswordVisible" @click="handlePasswordVisibleClick" />
+            <RiEyeFill v-else @click="handlePasswordVisibleClick" />
           </template>
         </a-input>
       </a-form-item>
@@ -49,52 +44,39 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import { useI18n } from "vue-i18n";
 import { userStore } from "@/store/index";
-import { RiSmartphoneFill, RiLock2Fill } from "vue-remix-icons";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { RiSmartphoneFill, RiLock2Fill, RiEyeFill, RiEyeOffFill } from "vue-remix-icons";
 import { useRoute, useRouter } from "vue-router";
+import { validateLoginName, validatePassword } from "@/utils/validator";
 
 const emit = defineEmits(["close-modal"]);
 
-const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
 const route = useRoute();
 
 const formRef = ref();
+const isPasswordVisible = ref(false);
 const loadingLogin = ref(false);
 const loginForm = ref({
   loginName: "",
   password: ""
 });
 const loginFormRules = ref({
-  loginName: [
-    { len: 11, message: t("layout.header.accountModal.login.form.loginName.error.len") },
-    { required: true, message: t("layout.header.accountModal.login.form.loginName.error.required") }
-  ],
-  password: [{ required: true, message: t("layout.header.accountModal.login.form.password.error.required") }]
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
+  password: [{ validator: validatePassword, trigger: "blur" }]
 });
 
 const onSubmit = () => {
-  const fpPromise = FingerprintJS.load();
-  (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
-
-    formRef.value.validate().then(() => {
+  formRef.value
+    .validate()
+    .then(() => {
       loadingLogin.value = true;
       store
         .memberLogin({
           loginName: loginForm.value.loginName,
           password: loginForm.value.password,
-          sid: sidParam
+          sid: store.visitorId
         })
         .then(() => {
           const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
@@ -107,12 +89,14 @@ const onSubmit = () => {
           loadingLogin.value = false;
           // getCode();
         });
-    });
-  })();
+    })
+    .catch(() => {});
 };
 const onForgetPwd = () => {
   emit("forget-pwd");
 };
+
+const handlePasswordVisibleClick = () => (isPasswordVisible.value = !isPasswordVisible.value);
 </script>
 <style scoped lang="scss">
 @import "./style/accountModalTab.scss";

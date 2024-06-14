@@ -22,6 +22,7 @@ import "element-plus/theme-chalk/dark/css-vars.css";
 import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 import { i18n } from "./i18n/index";
 import { register } from "swiper/element/bundle";
+import fpjsPlugin from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 
 const app = createApp(App);
 Object.keys(directives).forEach((key) => {
@@ -44,5 +45,11 @@ app
   .use(VueSnip)
   .use(ElementPlus, {
     locale: zhCn
+  })
+  .use(fpjsPlugin, {
+    loadOptions: {
+      apiKey: "b1A4V9htZ4ySmb8ycMQb",
+      region: "ap"
+    }
   })
   .mount("#app");

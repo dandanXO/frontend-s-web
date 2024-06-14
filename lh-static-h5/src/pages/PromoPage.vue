@@ -144,7 +144,7 @@
             }"
           >
             <div class="loader" v-if="isFetchingPromo" />
-            <div class="selected-promo-wrapper">
+            <div class="selected-promo-wrapper" :style="[selectedPromo.promoCode === 'lh1-slot-lucky8' ? 'background:#E7F1FD;':'',]">
               <div
                 class="banner-container"
                 v-if="
@@ -165,9 +165,19 @@
                 :class="{
                   lhstepgame: selectedPromo.promoCode === 'lh1-game-steps' || selectedPromo.promoCode === 'lh-sport-zhongchao' || selectedPromo.promoCode === 'lh-lpl-summer24',
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
-                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' ,
-                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'
+                  lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
+                  lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
+                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
                 }"
+                :style="[
+                  selectedPromo.promoCode === 'lh-eurocup-manual' ||
+                 selectedPromo.promoCode === 'lh1-deposit-rebates'
+                    ? 'background-image: url(' +
+                      imgURL +
+                      (selectedPromo.mobileImgBackgroundUrl ? selectedPromo.mobileImgBackgroundUrl : '') +
+                      ')'
+                    : (selectedPromo?.promoCode === 'lh1-intel-esl' ? 'url(' + require(`../assets/promo/intel-esl-24/bg.png`) + ')':'')
+                  ]"
               >
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -816,6 +826,17 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lheuromanual{
+          margin:0px;
+          width: 100%;
+          gap:0px;
+
+          .hot-promo {
+            border-radius: 0px;
+            padding: 15px 12px;
+          }
+        }
 
         &.lhftd {
           margin: 0px;

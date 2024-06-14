@@ -31,6 +31,13 @@
       v-if="!isCommonPromo && list.redirectUrl === 'xf-eurocup-hongbao'"
     />
 
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+    />
+
     <div v-if="list.redirectUrl === 'fucaiiphone' " class="promo-4">
       <div class="tabs">
         <q-card-section>
@@ -207,6 +214,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import HongBaoYu2024Promo from "../components/hotpromo/hongbaoyu/HongBaoYu2024.vue";
 import HongBaoYuEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoYuEurocup.vue";
+import HongBaoPreEurocupPromo from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
 // import CnySpinWheelPromo from "../components/hotpromo/cnySpinWheel/CnySpinWheel.vue";
@@ -227,7 +235,7 @@ export default defineComponent({
     HongBaoYuEurocupPromo,
     WelcomeTaskPromo,
     PrivilegeInvite,
-    // CnySpinWheelPromo,
+    HongBaoPreEurocupPromo,
     BonusSpinWheelPromo,
     ReturnPromo,
     DepositAwardPromo
@@ -292,6 +300,7 @@ export default defineComponent({
       this.list.redirectUrl === "xf-return-promo" ||
       this.list.redirectUrl === "xf-deposit-award" ||
       this.list.redirectUrl === "xf-eurocup-hongbao" ||
+      this.list.redirectUrl === "tiqianhongbao" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;

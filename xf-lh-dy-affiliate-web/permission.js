@@ -43,6 +43,8 @@ router.beforeEach(async (to, _, next) => {
           next(`/ind/login?redirect=${to.path}`)
         } else if (siteCode === 'vnm') {
           next(`/vi/login?redirect=${to.path}`)
+        } else if (siteCode === 'krw') {
+          next(`/kr/login?redirect=${to.path}`)
         } else if (siteCode === 'pak') {
           next(`/pak/login?redirect=${to.path}`)
         } else {

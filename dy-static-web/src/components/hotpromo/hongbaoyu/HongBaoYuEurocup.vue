@@ -1,8 +1,8 @@
 <template>
   <div class="eurocup-hongbaoyu-container">
-    <div>
-      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />
-    </div>
+    <!--    <div>-->
+    <!--      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />-->
+    <!--    </div>-->
 
     <div class="hongbao-subtitle">
       <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-01.png" />
@@ -174,7 +174,7 @@ const getPromotion = () => {
         privilegeClaimedModalVisible.value = true;
         store.getBalance();
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
       }

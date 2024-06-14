@@ -137,7 +137,7 @@
         </template>
         </q-input>
 
-<!-- 
+<!--
         <q-label>
           {{ $t("lang.mobile_number") }}
           <em>*</em>
@@ -152,7 +152,12 @@ dense
           maxlength="11"
           clearable
           type="number"
-          :rules="[(val) => (val && val.length > 7) || $t('lang.mobile_number_valid')]"
+          :rules="[
+            val => !!val || $t('lang.mobile_number_required'),
+            val => val.length === 10 || $t('lang.mobile_number_length'),
+            val => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
+            val => (val && val.length > 7) || $t('lang.mobile_number_valid')
+          ]"
           color="white"
         >
           <template v-slot:prepend>
@@ -300,6 +305,8 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
+import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -427,6 +434,22 @@ export default defineComponent({
     };
 
     const router = useRouter();
+    const ui = useUI();
+
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
+    const trackRegisterFailedEvent = () => {
+      if(ui.adjust_register_fail_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -479,12 +502,16 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
+
                 // $q.notify({
                 //   color: "positive",
                 //   position: "top",
                 //   message: t("lang.register_successful"),
                 //   icon: "check_circle_outline"
                 // });
+
+                //ADJUST TRACKEVENT.
+                trackRegisterSuccessEvent();
 
                 // FB tracking :: signup-success
                 if (store.isAffiliateA) {
@@ -512,6 +539,7 @@ export default defineComponent({
               $q.loading.hide();
             })
             .catch((error) => {
+              trackRegisterFailedEvent();
               $q.loading.hide();
             });
           getCode();
@@ -637,7 +665,10 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      trackRegisterSuccessEvent,
+      trackRegisterFailedEvent,
+      ui
     };
   }
 });

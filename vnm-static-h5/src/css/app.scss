@@ -574,10 +574,10 @@ svg {
 .station-notice-wrapper {
   display: flex;
   gap: 10px;
-  padding: 5px 10px;
+  padding: 0px 4px;
   justify-content: center;
   align-items: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
 
   .volume {
     display: flex;
@@ -585,7 +585,8 @@ svg {
     align-items: center;
 
     img {
-      width: 28px;
+      // width: 28px;
+      width: 20px;
       height: auto;
     }
   }

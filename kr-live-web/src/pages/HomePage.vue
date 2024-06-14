@@ -9,24 +9,26 @@
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
     <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'live'"
-        :games="liveCasinoGames"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
+      <div class="game-list" v-if="currentSelectedMenu === 'live'">
+        <GameItem
+          :games="liveCasinoGames"
+          :gameType="currentSelectedMenu"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+      </div>
     </Transition>
 
     <!-- slot start -->
     <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'slots' && !isShow">
       <GameItem
-        v-if="currentSelectedMenu === 'slots' && !isShow"
         :games="platforms"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectSlotPlat"
       />
+    </div>
     </Transition>
 
     <Transition>
@@ -421,23 +423,31 @@
     </Transition>
 
     <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'esport'"
-        :games="esportPlatform"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
+      <div class="game-list" v-if="currentSelectedMenu === 'sport'">
+        <GameItem
+          :games="esportPlatform"
+          :gameType="'esport'"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+        <GameItem
+          :games="sportPlatform"
+          :gameType="currentSelectedMenu"
+          :gameItemLoad="gameItemLoad"
+          :onClickGameItem="openGame"
+        />
+      </div>
     </Transition>
 
     <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'casual' && !isShow">
       <GameItem
-        v-if="currentSelectedMenu === 'casual' && !isShow"
         :games="platformMinigame"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="selectCasualPlat"
       />
+    </div>
     </Transition>
     <!-- cq9 start -->
     <Transition>
@@ -619,21 +629,22 @@
       <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
 
-    <Transition>
+    <!-- <Transition>
+      <div class="game-list" v-if="currentSelectedMenu === 'sport'">
       <GameItem
-        v-if="currentSelectedMenu === 'sport'"
         :games="sportPlatform"
         :gameType="currentSelectedMenu"
         :gameItemLoad="gameItemLoad"
         :onClickGameItem="openGame"
       />
-    </Transition>
+    </div>
+    </Transition> -->
   </div>
 
   <div class="news-section">
     <div class="news-title">
       <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
+      <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+ 더보기</router-link>
     </div>
     <template v-if="newsList.length > 0">
       <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
@@ -656,51 +667,7 @@
     </div>
   </div>
 
-  <div class="">
-    <!--<div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">이벤트</div>
-        <router-link class="more-text" :to="store.hasToken() ? '/?page=promo/all' : '/?page=login'">+ 더보기</router-link>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-      <div class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title">[필독] ※ 카지노 잭팟, 고배당 양방성 배팅 제재 안내 ※</div>
-        </div>
-      </div>
-    </div>-->
-
-    <div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">출금현황</div>
-        <!-- <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link> -->
-      </div>
-      
-      <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            {{ d.loginName }}
-            <span style="color: #01e1ff">{{ d.amount }}원</span>
-            <span style="color: #92959f; margin-left: 20px">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <DepositRecords :depositRecordList="depositRecordList"/>
 
   <GameModal ref="gameModalRef"></GameModal>
 
@@ -959,6 +926,7 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import GameItem from "components/game/GameItem";
 import GameCategory from "components/game/GameCategory";
+import DepositRecords from "components/home/DepositRecords.vue";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
@@ -990,7 +958,8 @@ export default defineComponent({
     MinigamesGrid,
     LangToggle,
     RollingText,
-    JackpotPrize
+    JackpotPrize,
+    DepositRecords
   },
   setup() {
     const $q = useQuasar();
@@ -1398,7 +1367,7 @@ export default defineComponent({
 
           //TODO:: HArdcoded.
           console.log(liveCasinoGames.value);
-          liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
+          // liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
 
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
 
@@ -1474,7 +1443,7 @@ export default defineComponent({
           const response = res.data;
 
           if (response.code === 0) {
-            depositRecordList.value = response.data.records;
+            depositRecordList.value = response.data;
           } else {
             $q.notify({
               color: "negative",
@@ -2481,7 +2450,11 @@ export default defineComponent({
   border-bottom: 1px solid #3f3f3f;
 
   display: grid;
-  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(100px, 10%);
+  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(120px, 10%);
+
+  @media (min-width: 769px) {
+    grid-template-columns: minmax(calc(80% - 100px), 90%) minmax(200px, 20%);
+  }
 
   &:hover {
     .news-item-title,
@@ -2529,6 +2502,7 @@ export default defineComponent({
     .news-item-date {
       transition: 0.3s all;
       color: #92959f;
+      text-align: right;
     }
   }
 }
@@ -3076,6 +3050,27 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
+  }
+}
+
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
+
+  @media (min-width: 769px) {
+    .game-item {
+      max-width: 220px;
+    }
   }
 }
 </style>

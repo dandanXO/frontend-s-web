@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="menu-title-container">
-      <span class="menu-title">{{ $t("personalView.record.title") }}</span>
+      <span class="menu-title">{{ $t("personalView.order.title") }}</span>
     </div>
     <div class="account-content transit">
       <a-tabs v-model:activeKey="recordActive" class="form-wrapped" @change="handleFilterChange">
-        <a-tab-pane key="deposit" :tab="$t('personalView.record.tab.deposit.title')">
+        <a-tab-pane key="deposit" :tab="$t('personalView.order.tab.deposit.title')">
           <a-select
             v-model:value="selectedDateRange.deposit"
             style="width: 124px"
@@ -25,99 +25,8 @@
             </template>
             <NoData v-else />
           </div>
-          <!-- <div>
-            <a-form layout="inline" :model="searchForm.deposit">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.deposit.startDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.deposit.endDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item class="search">
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.deposit"
-              :data-source="dataState.deposit"
-              :row-key="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #depositDate="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #operation="{ record }">
-                <template v-if="record.status === 'PENDING'">
-                  <a-button class="common-btn" style="margin: auto" @click="openReminder(record)">Reminder</a-button>
-                </template>
-              </template>
-              <template #status="{ text }">
-                <span>{{ getDepositStatus(text) }}</span>
-              </template>
-            </a-table>
-          </div> -->
         </a-tab-pane>
-        <!-- <a-tab-pane key="turnover" tab="Turnover">
-          <div>
-            <a-form layout="inline" :model="searchForm.turnover">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.turnover.startDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.turnover.endDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.turnover"
-              :data-source="dataState.turnover"
-              :row-key="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #recordTime="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #type="{ text }">
-                <span>{{ getTurnoverType(text) }}</span>
-              </template>
-            </a-table>
-          </div>
-        </a-tab-pane> -->
-        <a-tab-pane key="withdraw" :tab="$t('personalView.record.tab.withdraw.title')">
+        <a-tab-pane key="withdraw" :tab="$t('personalView.order.tab.withdraw.title')">
           <a-select
             v-model:value="selectedDateRange.withdraw"
             style="width: 124px"
@@ -137,264 +46,7 @@
             </template>
             <NoData v-else />
           </div>
-          <!-- <div>
-            <a-form layout="inline" :model="searchForm.withdraw">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.withdraw.startDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.withdraw.endDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.withdraw"
-              :data-source="dataState.withdraw"
-              :row-key="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #withdrawDate="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #operation="{ record }">
-                <template v-if="record.status === 'STEP_1'">
-                  <a-button class="common-btn" style="margin: auto" @click="openReminder(record)">Reminder</a-button>
-                </template>
-              </template>
-
-              <template #status="{ text }">
-                <span>{{ getWithdrawStatus(text) }}</span>
-              </template>
-            </a-table>
-          </div> -->
         </a-tab-pane>
-        <!-- <a-tab-pane key="transfer" tab="โอน">
-          <div>
-            <a-form layout="inline" :model="searchForm.transfer">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.transfer.startDate"
-                    valueFormat="yyyy-MM-DD"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.transfer.endDate"
-                    valueFormat="yyyy-MM-DD"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button
-                  class="common-btn search-btn"
-                  type="submit"
-                  @click="searchRecord"
-                >
-                  Search
-                </button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.transfer"
-              :data-source="dataState.transfer"
-              :row-key="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #type="{ record }">
-                <span> {{ record.type }} - {{ record.platform }} </span>
-              </template>
-              <template #status="{ text, record }">
-                <span>
-                  <a-tag
-                    :color="
-                      record.status === 'SUCCESS'
-                        ? '#87d068'
-                        : record.status === 'SENDING'
-                        ? '#55acee'
-                        : '#cd201f'
-                    "
-                  >
-                    {{ text }}
-                  </a-tag>
-                </span>
-              </template>
-              <template #transferDate="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-            </a-table>
-          </div>
-        </a-tab-pane> -->
-        <!-- <a-tab-pane key="rebates" tab="Rebates">
-          <div>
-            <a-form layout="inline" :model="searchForm.rebates">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.rebates.startDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.rebates.endDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.rebates"
-              :data-source="dataState.rebates"
-              :row-key="(record) => record.serialNumber"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #recordTime="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-            </a-table>
-          </div>
-        </a-tab-pane>
-        <a-tab-pane key="gameBetRecord" tab="Bet record">
-          <div class="payout-total">
-            <div>Bet amount: {{ totalBetRecord.totalBet }}</div>
-            <div>Total payout: {{ totalBetRecord.totalPayout }}</div>
-          </div>
-          <div>
-            <a-form layout="inline" :model="searchForm.gameBetRecord">
-              <div class="left">
-                <a-form-item label="Platform">
-                  <a-select
-                    v-model:value="searchForm.gameBetRecord.platform"
-                    allow-clear
-                    style="width: 300px"
-                    placeholder="Platform"
-                    @change="searchRecord"
-                  >
-                    <a-select-option v-for="p in platformsList" :key="p.name" :value="p.name">
-                      {{ p.name }}
-                    </a-select-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.gameBetRecord.startDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.gameBetRecord.endDate"
-                    value-format="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.gameBetRecord"
-              :data-source="dataState.gameBetRecord"
-              :row-key="(record) => record.gameType"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #actions="{ record }">
-                <a-button class="common-btn" @click="betDetails(record)">Bet record</a-button>
-              </template>
-            </a-table>
-          </div>
-        </a-tab-pane>
-        <a-tab-pane key="reminderRecord" tab="Reminder record">
-          <div>
-            <a-form layout="inline" :model="searchForm.reminderRecord">
-              <div class="left">
-                <a-form-item label="Start">
-                  <a-date-picker
-                    v-model:value="searchForm.reminderRecord.startDate"
-                    valueFormat="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-                <a-form-item label="End">
-                  <a-date-picker
-                    v-model:value="searchForm.reminderRecord.endDate"
-                    valueFormat="yyyy-MM-DD"
-                    format="MM/DD/yyyy"
-                    placeholder=""
-                  />
-                </a-form-item>
-              </div>
-              <a-form-item>
-                <button class="common-btn search-btn" type="submit" @click="searchRecord">Search</button>
-              </a-form-item>
-            </a-form>
-          </div>
-          <div class="unbind-record-wrapper">
-            <a-table
-              :columns="tableColumns.reminderRecord"
-              :data-source="dataState.reminderRecord"
-              :row-key="(record) => record.orderNo"
-              :loading="loading"
-              :pagination="pagination"
-              @change="recordPage"
-            >
-              <template #feedbackTime="{ text }">
-                <span>{{ humanDatetime(text) }}</span>
-              </template>
-              <template #type="{ text }">
-                <span>{{ checkType(text) }}</span>
-              </template>
-              <template #actions="{ record }">
-                <a-button class="common-btn" @click="betDetails(record)">Bet record</a-button>
-              </template>
-            </a-table>
-          </div>
-        </a-tab-pane> -->
       </a-tabs>
 
       <a-modal v-model:visible="betRecordDialog" width="90%" :mask-closable="false" :closable="true" :footer="null">
@@ -463,7 +115,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { computed, onMounted, reactive, ref } from "vue";
 import {
   loadRecords,
   gameBetRecordTotal,
@@ -481,10 +133,10 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const dateRangeOptions = ref([
-  { value: "1d", label: "1 Days" },
-  { value: "3d", label: "3 Days" },
-  { value: "7d", label: "7 Days" }
+const dateRangeOptions = computed(() => [
+  { value: "1d", label: t("personalView.order.option.1days") },
+  { value: "3d", label: t("personalView.order.option.3days") },
+  { value: "7d", label: t("personalView.order.option.7days") }
 ]);
 const selectedDateRange = ref({
   deposit: "1d",
@@ -1061,23 +713,23 @@ const getTurnoverType = (turnoverType) => {
 };
 const getWithdrawStatus = (withdrawStatus) => {
   if (withdrawStatus === "APPLY") {
-    return t("personalView.record.tab.withdraw.status.applying"); //Applying
+    return t("personalView.order.tab.withdraw.status.applying"); //Applying
   } else if (withdrawStatus === "FAIL") {
-    return t("personalView.record.tab.withdraw.status.failed"); // Failed
+    return t("personalView.order.tab.withdraw.status.failed"); // Failed
   } else if (withdrawStatus === "SUCCESS") {
-    return t("personalView.record.tab.withdraw.status.success"); // Success
+    return t("personalView.order.tab.withdraw.status.success"); // Success
   } else if (withdrawStatus === "STEP_1") {
-    return t("personalView.record.tab.withdraw.status.underReview"); //Under review
+    return t("personalView.order.tab.withdraw.status.underReview"); //Under review
   } else if (withdrawStatus === "STEP_2") {
-    return t("personalView.record.tab.withdraw.status.toBePaid"); // To be paid
+    return t("personalView.order.tab.withdraw.status.toBePaid"); // To be paid
   } else if (withdrawStatus === "STEP_3") {
-    return t("personalView.record.tab.withdraw.status.paying"); // Payment on going
+    return t("personalView.order.tab.withdraw.status.paying"); // Payment on going
   } else if (withdrawStatus === "STEP_4") {
-    return t("personalView.record.tab.withdraw.status.automaticPayment"); // Automatic Payment
+    return t("personalView.order.tab.withdraw.status.automaticPayment"); // Automatic Payment
   } else if (withdrawStatus === "STEP_5") {
-    return t("personalView.record.tab.withdraw.status.suspend"); //Suspend
+    return t("personalView.order.tab.withdraw.status.suspend"); //Suspend
   } else if (withdrawStatus === "WAITING_CALLBACK") {
-    return t("personalView.record.tab.withdraw.status.paying"); //Paying
+    return t("personalView.order.tab.withdraw.status.paying"); //Paying
   } else {
     return withdrawStatus;
   }
@@ -1087,13 +739,13 @@ const getDepositStatus = (depositStatus) => {
     return "";
   }
   if (depositStatus === "PENDING") {
-    return t("personalView.record.tab.deposit.status.pending"); // Pending
+    return t("personalView.order.tab.deposit.status.pending"); // Pending
   } else if (depositStatus === "SUCCESS") {
-    return t("personalView.record.tab.deposit.status.success"); // Success
+    return t("personalView.order.tab.deposit.status.success"); // Success
   } else if (depositStatus === "SUPPLEMENT_SUCCESS") {
-    return t("personalView.record.tab.deposit.status.supplementSuccess"); // Supplement Success
+    return t("personalView.order.tab.deposit.status.supplementSuccess"); // Supplement Success
   } else if (depositStatus === "CLOSED") {
-    return t("personalView.record.tab.deposit.status.closed"); // Closed
+    return t("personalView.order.tab.deposit.status.closed"); // Closed
   } else {
     return depositStatus;
   }

@@ -45,7 +45,7 @@
 
           <div class="details-item">
             <div class="event-frame">活动对象</div>
-            <div class="event-txt">东赢全体会员</div>
+            <div class="event-txt">兴发全体会员</div>
           </div>
 
           <div class="details-item">
@@ -174,7 +174,7 @@ const getPromotion = () => {
         privilegeClaimedModalVisible.value = true;
         store.getBalance();
 
-        bonusOpened.value = true;
+        // bonusOpened.value = true;
       } else {
         bonusOpened.value = false;
       }

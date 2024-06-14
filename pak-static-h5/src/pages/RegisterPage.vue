@@ -23,8 +23,8 @@
 
     <div class="auth-tab-wrapper">
       <q-tabs v-model="regLoginTab" dense no-caps class="auth-tab-toggle" indicator-color="transparent" align="justify">
-        <q-tab name="login" label="Log in" />
-        <q-tab name="register" label="Register" />
+        <q-tab name="login" :label="$t('header.login')" />
+        <q-tab name="register" :label="$t('header.register')" />
       </q-tabs>
     </div>
 
@@ -32,7 +32,7 @@
       <q-form class="rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone'">
+            <InputField :label="$t('form.phone')">
               <template #input>
                 <q-input
                   type="tel"
@@ -42,14 +42,14 @@
                   hide-bottom-space
                   v-model="regForm.loginName"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert Phone number',
-                    (val) => (val && val.length === 11) || 'The phone number must have 11 digits',
-                    (val) => val.startsWith('03') || 'The phone number must start with \'03\''
+                    (val) => (val && val.length > 0) || $t('form.phone_rules_01'),
+                    (val) => (val && val.length === 11) || $t('form.phone_rules_01'),
+                    (val) => val.startsWith('03') || $t('form.phone_rules_03')
                   ]"
                   color="green"
                   outlined
                   label-color="brand"
-                  placeholder="Please enter your mobile number"
+                  :placeholder="$t('form.phone_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="smartphone" />
@@ -59,7 +59,7 @@
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField :label="$t('form.password')">
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -67,13 +67,13 @@
                   v-model="regForm.password"
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert password',
-                    (val) => val.length > 6 || 'The characters of password must be above 6'
+                    (val) => (val && val.length > 0) || $t('form.password_rules_01'),
+                    (val) => val.length > 6 || $t('form.password_rules_02')
                   ]"
                   color="green"
                   outlined
                   label-color="brand"
-                  placeholder="Please enter password"
+                  :placeholder="$t('form.password_placeholder')"
                 >
                   <template v-slot:prepend>
                     <q-icon name="lock" />
@@ -204,14 +204,14 @@
         :loading="isLoading"
         @click="onSubmit"
       >
-        Confirm
+        {{ $t("btn.confirm") }}
       </q-btn>
     </div>
 
     <div class="mui-row q-mt-sm q-mx-sm" :class="isAgreeReg ? 'checked' : ''">
       <q-checkbox rounded v-model="isAgreeReg" size="md" class="rmb-checked-box">
-        I have Agree To The
-        <a href="#" style="text-decoration: none; color: #61ff00">Use Privacy Agreement</a>
+        {{ $t("form.register_agree_01") }}
+        <a href="#" style="text-decoration: none; color: #61ff00">{{ $t("form.register_agree_02") }}</a>
       </q-checkbox>
     </div>
 
@@ -222,7 +222,7 @@
       </div>
       <div class="list-item" v-if="!isAndroid()" @click="downloadApp()">
         <img class="btn-icon" id="download-icon" src="../assets/images/auth/app-icon.png" />
-        <div>Download App</div>
+        <div>{{ $t("btn.downloadApp") }}</div>
       </div>
       <div class="list-item" @click="openTiktok()">
         <img class="btn-icon" id="tiktok-icon" src="../assets/images/auth/icon-tiktok.png" />
@@ -241,11 +241,8 @@ import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "v
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
@@ -415,25 +412,10 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
+
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
-          // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
-          if (store.googleadid) {
-            regForm.sid = store.googleadid;
-          } else if (store.aaid) {
-            regForm.sid = store.aaid;
-          } else {
-            regForm.sid = "fp-" + sidParam;
-            regForm.isfinger = "1";
-          }
+          regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -447,9 +429,6 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
-            regForm.sid = sidParam;
-          }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";

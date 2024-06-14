@@ -290,6 +290,7 @@ import {userStore} from "stores/index";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import AcctBal from "../../components/AcctBal.vue";
+import {useLocalStorage} from "@vueuse/core";
 
 export default defineComponent({
   name: "WithdrawView",
@@ -297,8 +298,8 @@ export default defineComponent({
   setup() {
     const store = userStore();
     const $q = useQuasar();
-    const imgURL = process.env.IMAGE_CDN;
-    const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
+    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value;
+    const imgWithdrawURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/withdraw/";
 
 
     const amountRef = ref();

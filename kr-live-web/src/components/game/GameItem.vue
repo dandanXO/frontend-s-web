@@ -1,7 +1,6 @@
 <template>
 
   <!-- <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" /> -->
-  <div class="game-list">
     <div :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"  @click="() => props.onClickGameItem(game)">
       <div class="game-item-content">
         <img
@@ -19,7 +18,7 @@
         <img class="active-overlay" :src="require(`../../assets/home/games/game-bg--active.png`)" />
         <div class="game-info-wrapper">
           <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
-          <div class="game-name">{{ game.name }}</div>
+          <div class="game-name">{{ game?.alias || game.name }}</div>
           <img class="game-logo"
             :src="
               (() => {
@@ -63,7 +62,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -72,28 +70,16 @@ const props = defineProps(["games", "onClickGameItem", "gameType", "gameItemLoad
 const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
-.game-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  padding: 20px;
-  width: 100%;
-
-  @media (max-width: 769px) {
-    padding: 0px 10px;
-    gap: 5px;
-  }
 
   .game-item {
     aspect-ratio: 290 / 530;
-    background: url('../../assets/home/games/live/game-bg-empty.png') no-repeat center center;
+    background: url('../../assets/home/games/background-placeholder.png') no-repeat center center;
     background-size: 100% 100%;
     position: relative;
     cursor: pointer;
     transition: 0.3s all;
     padding: 20px;
-    max-width: 170px;
+    max-width: 200px;
     width: 100%;
 
     @media (max-width: 769px) {
@@ -145,8 +131,9 @@ const gameType = ref(props.gameType);
 
         .game-name {
           color: #fff;
-          font-size: 24px;
+          font-size: 20px;
           line-height: 1;
+          white-space: nowrap;
 
           @media (max-width: 769px) {
             font-size: 14px;
@@ -154,8 +141,13 @@ const gameType = ref(props.gameType);
         }
 
         .game-logo {
-          max-width: 160px;
+          max-width: 120px;
+          aspect-ratio: 283 / 96;
           // width: 100%;
+
+          @media (max-width: 769px) {
+            max-width: 75px;
+          }
         }
       }
 
@@ -211,13 +203,6 @@ const gameType = ref(props.gameType);
       }
     }
   }
-
-  @media (min-width: 769px) {
-    .game-item {
-      max-width: 220px;
-    }
-  }
-}
 
 
 

@@ -2,8 +2,8 @@
   <div class="platform-menu-container special" :style="checkPlatLength()">
 
     <div class="platform-menu-item">
-      <h4>{{ $t('menu.fishing') }}</h4>
-      <div class="platform-menu-extra">
+      <!-- <h4>{{ $t('menu.fishing') }}</h4> -->
+      <div class="platform-menu">
         <template v-for="(item, index) in platformsListDisplay" :key="index">
           <div class="platform-menu-item" @click="gotoGame(item, platformType)"
                :class="item.underMaintenance === true ? 'maintenance' : ''">
@@ -36,7 +36,7 @@
     </div>
 
     <div class="platform-menu-item">
-      <h4>{{ $t('menu.cockfight') }}</h4>
+      <!-- <h4>{{ $t('menu.cockfight') }}</h4> -->
       <div class="platform-menu-extra">
         <template v-for="(item, index) in platformsListDisplay2" :key="index">
           <div class="platform-menu-item" @click="gotoGame(item, 'COCKFIGHT')"
@@ -146,9 +146,9 @@ const gotoGame = (item, platformType) => {
   if (platformType === "slot") {
     router.push(`/slot?plat=${item.code}`);
   }else if (platformType === "COCKFIGHT") {
-    router.push(`/hashgame?type=cockfight`);
+    router.push(`/others?type=cockfight`);
   } else if (platformType === "fishing") {
-    router.push(`/hashgame?plat=${item.code}`);
+    router.push(`/others?plat=${item.code}`);
   } else if (platformType === "casual") {
     router.push(`/minigame?plat=${item.code}`);
   } else {

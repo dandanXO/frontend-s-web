@@ -311,6 +311,13 @@
         >
           <template #default="scope">
             <el-button
+              size="mini"
+              type="primary"
+              @click="showDialog('LOG', scope.row)"
+            >
+              {{ t('fields.viewLog') }}
+            </el-button>
+            <el-button
               v-if="scope.row.status !== 'FAIL' && hasPermission(['sys:withdraw:simple:fail'])"
               size="mini"
               type="danger"
@@ -362,6 +369,7 @@
     </el-dialog>
 
     <el-dialog
+      v-if="uiControl.dialogType === 'LOG'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -681,6 +689,77 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog
+      v-if="uiControl.dialogType === 'FAIL'"
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'FAIL'"
+        ref="toFailForm"
+        :model="failForm"
+        :rules="failFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.reasonType')" prop="reasonType">
+          <el-select
+            v-model="failForm.reasonType"
+            size="small"
+            :placeholder="t('fields.reasonType')"
+            class="filter-item"
+            style="width: 300px;"
+            default-first-option
+            @focus="loadReasonTypes"
+          >
+            <el-option
+              v-for="item in reasonTypeList.list"
+              :key="item.id"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.reasonTemplate')" prop="reasonTemplate">
+          <el-select
+            v-model="failForm.reasonTemplate"
+            size="small"
+            :placeholder="t('fields.reasonTemplate')"
+            class="filter-item"
+            style="width: 300px;"
+            default-first-option
+            @focus="loadReasonTemplates"
+            @change="populateFailReason($event)"
+          >
+            <el-option
+              v-for="item in reasonTemplateList.list"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.failReason')" prop="failReason">
+          <el-input
+            type="textarea"
+            v-model="failForm.failReason"
+            :rows="6"
+            style="width: 300px;"
+            maxlength="500"
+            show-word-limit
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button :disabled="clickedFail" type="primary" @click="fail">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -706,6 +785,8 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getSiteListSimple } from "@/api/site";
 import { TENANT } from "@/store/modules/user/action-types";
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { ElMessage } from 'element-plus'
+
 const { t } = useI18n();
 const store = useStore()
 const LOGIN_USER_SITEID = computed(() => store.state.user.siteId)
@@ -713,6 +794,8 @@ const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const siteId = ref(null)
 const searchForm = ref(null)
+const toFailForm = ref(null)
+const clickedFail = ref(null)
 const vipList = reactive({
   list: [],
 })
@@ -768,6 +851,8 @@ const uiControl = reactive({
     { key: 11, displayName: t('withdrawStatus.FAIL'), value: 'FAIL' },
     { key: 12, displayName: t('withdrawStatus.PENDING'), value: 'PENDING' },
     { key: 13, displayName: t('withdrawStatus.WAITING_AUTO_PAY'), value: 'WAITING_AUTO_PAY' },
+    { key: 14, displayName: t('withdrawStatus.FAIL_REVIEW'), value: 'FAIL_REVIEW' },
+    { key: 15, displayName: t('withdrawStatus.WAITING_RETRY'), value: 'WAITING_RETRY' },
   ],
   colors: [
     { color: '#f56c6c', percentage: 30 },
@@ -778,6 +863,19 @@ const uiControl = reactive({
     { key: 0, displayName: t('dateType.withdrawDate'), value: 0 },
     { key: 1, displayName: t('dateType.paymentDate'), value: 1 },
   ],
+})
+const failForm = reactive({
+  id: null,
+  reasonType: [],
+  reasonTemplate: [],
+  failReason: null,
+  withdrawDate: ''
+})
+const reasonTypeList = reactive({
+  list: [],
+})
+const reasonTemplateList = reactive({
+  list: [],
 })
 
 const startDate = new Date()
@@ -965,6 +1063,22 @@ async function loadCancelTypes() {
   }
 }
 
+async function loadReasonTypes() {
+  const { data: reasonType } = await getConfigList(
+    'cancel_type',
+    request.siteId ? request.siteId : null
+  )
+  reasonTypeList.list = reasonType
+}
+
+async function loadReasonTemplates() {
+  const { data: reasonTemplate } = await getConfigList(
+    'cancel_cause',
+    request.siteId ? request.siteId : null
+  )
+  reasonTemplateList.list = reasonTemplate
+}
+
 async function advancedSearch() {
   searchForm.value.validate(async valid => {
     if (valid) {
@@ -974,11 +1088,15 @@ async function advancedSearch() {
   })
 }
 
-async function toFail(val) {
-  page.loading = true
-  await autoWithdrawToFail(val.id, val.withdrawDate, val.siteId)
-  await loadRecord()
-  page.loading = false
+async function toFail(memberWithdrawRecord) {
+  if (request.siteId === 11) {
+    showDialog('FAIL', memberWithdrawRecord)
+  } else {
+    page.loading = true
+    await autoWithdrawToFail(memberWithdrawRecord.id, '', '', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await loadRecord()
+    page.loading = false
+  }
 }
 
 async function toSuccess(val) {
@@ -1087,7 +1205,16 @@ async function loadRecord() {
 }
 
 async function showDialog(type, memberWithdrawRecord) {
-  if (type === 'LOG') {
+  if (type === 'FAIL') {
+    if (toFailForm.value) {
+      toFailForm.value.resetFields()
+    }
+    failForm.id = memberWithdrawRecord.id
+    failForm.withdrawDate = memberWithdrawRecord.withdrawDate
+    await loadReasonTypes()
+    failForm.reasonType = reasonTypeList.list[0].value
+    uiControl.dialogTitle = t('fields.failReason')
+  } else if (type === 'LOG') {
     uiControl.dialogTitle = t('fields.memberWithdrawLog')
     logPage.loading = true
     const { data: ret } = await getMemberWithdrawLog(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
@@ -1108,6 +1235,25 @@ async function requestExportExcel() {
   if (ret) {
     uiControl.messageVisible = true;
   }
+}
+
+async function fail() {
+  toFailForm.value.validate(async valid => {
+    if (valid) {
+      clickedFail.value = true
+      await autoWithdrawToFail(
+        failForm.id,
+        failForm.reasonType,
+        failForm.failReason,
+        failForm.withdrawDate,
+        request.siteId
+      )
+      uiControl.dialogVisible = false
+      clickedFail.value = false
+      await loadRecord()
+      ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+    }
+  })
 }
 
 onMounted(async () => {

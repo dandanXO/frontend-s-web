@@ -1,8 +1,8 @@
 <template>
   <div class="transaction-landing">
     <q-tabs v-model="activeKey" class="deposit-tabs" color="black" no-caps indicator-color="transparent">
-      <q-route-tab class="left" to="/deposit" name="deposit" label="Deposit"></q-route-tab>
-      <q-route-tab class="right" to="/withdraw" name="withdraw" label="Withdraw"></q-route-tab>
+      <q-route-tab class="left" to="/deposit" name="deposit" :label="$t('settings.deposit')"></q-route-tab>
+      <q-route-tab class="right" to="/withdraw" name="withdraw" :label="$t('settings.withdraw')"></q-route-tab>
     </q-tabs>
 
     <q-tab-panels v-model="activeKey" class="deposit-panels">

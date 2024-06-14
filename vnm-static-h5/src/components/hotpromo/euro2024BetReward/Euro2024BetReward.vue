@@ -80,7 +80,7 @@
             </tr>
             <tr>
               <td>≥108,000 VNDP</td>
-              <td>1,888 VNDP</td>
+              <td>1,188 VNDP</td>
               <td>3</td>
             </tr>
             <tr>
@@ -165,10 +165,14 @@
 import { onMounted, ref } from "vue";
 import { getBetDetail, claimSummon } from "../../../api/index/promo.js";
 import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
+import { useI18n } from "vue-i18n";
 const $q = useQuasar();
 
 const betMoney = ref(0);
 const clickBtn = ref(false);
+const store= userStore();
+const { t } = useI18n();
 
 const getBetDetailData = () => {
   getBetDetail("vnm-euro-2024-bet-reward").then((res) => {
@@ -181,6 +185,16 @@ const getBetDetailData = () => {
 };
 
 const postClaimSummon = () => {
+  if(!store.token){
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("lang.system_please_login"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   if (clickBtn.value) {
     claimSummon("vnm-euro-2024-bet-reward")
       .then((res) => {
@@ -215,6 +229,7 @@ onMounted(() => {
     justify-content: center;
     .section-title {
       display: flex;
+      width: 100%;
       color: #0080ff;
       font-size: 16px;
       font-weight: 700;
@@ -222,10 +237,15 @@ onMounted(() => {
       align-items: center;
       margin: 0 auto;
       text-align: center;
+      justify-content: space-between;
+
+      span{
+        white-space: nowrap;
+      }
 
       .decor {
         aspect-ratio: 195/44;
-        width: 53px;
+        width: 10%;
       }
     }
     .moneyBg {
@@ -283,6 +303,7 @@ onMounted(() => {
 
     .section-title {
       display: flex;
+      width: 100%;
       color: #0080ff;
       font-size: 20px;
       font-weight: 800;
@@ -291,10 +312,15 @@ onMounted(() => {
       align-items: center;
       margin: 0 auto;
       text-align: center;
+      justify-content: space-between;
+
+      span{
+        white-space: nowrap;
+      }
 
       .decor {
         aspect-ratio: 195/44;
-        width: 45px;
+        width: 10%;
       }
     }
 

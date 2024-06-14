@@ -116,15 +116,16 @@
               </div>
             </template>
           </div>
-          <div class="plat-options-container" v-if="selectedTab==='cockfight'">
+          <!-- <div class="plat-options-container" v-if="selectedTab==='cockfight'">
             <template v-for="(item, index) in platformsListDisplay2" :key="index">
               <div class="plat-option" @click="clickPlat(item)" :class="{ active: selectedPlat === item.code }">
                 <div class="text">
-                  <span>{{ item.code }}</span>
+                  <span v-if="item.code === 'WS'">{{ item.alias }}</span>
+                  <span v-else>{{ item.code }}</span>
                 </div>
               </div>
             </template>
-          </div>
+          </div> -->
         </div>
 
         <div class="plat-games-container" v-if="selectedTab==='fishing'">
@@ -202,7 +203,7 @@
               :key="game.id"
             >
               <a @click="openGame(game, selectedPlat, game.code)">
-                <div class="slot-img">
+                <div class="cockfight-img">
                   <div class="platform-menu-img">
                     <img
                       :src="
@@ -220,7 +221,7 @@
 
                 <div class="slot-details">
                   <div class="slot-name">
-                    {{ game.name }}
+                    {{ game.alias }}
                   </div>
 
                   <div class="slot-fav">
@@ -374,7 +375,7 @@ const setSelectedPlat = () => {
 
 const clickPlat = (plat) => {
   if(plat.gameType==='COCKFIGHT'){
-    router.push("/hashgame?type=COCKFIGHT")
+    router.push("/others?type=COCKFIGHT")
     return;
   }
 

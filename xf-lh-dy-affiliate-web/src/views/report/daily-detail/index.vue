@@ -344,13 +344,17 @@ function convertDate(date) {
 }
 
 function disabledDate(time) {
-  return (
-    time.getTime() <
+  if(store.state.user.siteId === "5" || store.state.user.siteId === "9"){
+    return false;
+  }
+
+    return (
+      time.getTime() <
       moment(new Date())
         .subtract(2, 'months')
         .startOf('month')
         .format('x') || time.getTime() > new Date().getTime()
-  )
+    )
 }
 
 function resetQuery() {

@@ -47,22 +47,17 @@
           </div> -->
           <template v-for="(det, idx) in platforms" :key="idx">
             <div class="platform-button-w-qr-code">
-              <div class="platform-button" @click="clickPlat(det)">{{ det.name }}</div>
-              <div :class="`platform-qr-code ${selectedPlat === det.code ? 'visible' : ''}`">
-                <div class="close-btn" @click="closePlatformQRCode">&#x2716;</div>
+              <div :class="`platform-qr-code visible`">
+                <!-- <div class="close-btn" @click="closePlatformQRCode">&#x2716;</div> -->
                 <div class="qr-code-wrapper">
-                  <VueQRCodeComponent :size="120" :text="det.link" />
-                </div>
-                <div class="supported-mobile-os">
-                  <img src="../assets/app/ios-icon.png" />
-                  <img src="../assets/app/android-icon.png" />
-                  <span v-if="det.mobile">手机访问</span>
-                </div>
-                <div>
-                  <a v-if="det.mobile" :href="det.mobile" target="_blank">{{ det.mobile }}</a>
-                  <span v-else>手机用户扫码下载</span>
+                  <VueQRCodeComponent :size="90" :text="det.link" v-if="det.code != 'APP'"/>
+                  <img v-else src="../assets/app/book.png" />
                 </div>
               </div>
+              <div class="supported-mobile-os">
+                <span>{{ det.content }}</span>
+              </div>
+              <div class="platform-button" @click="clickPlat(det)">{{ det.name }}</div>
             </div>
           </template>
         </div>
@@ -125,19 +120,22 @@ export default defineComponent({
     const platforms = ref([
       {
         code: "H5",
-        name: "手机H5网页",
+        name: "手机 H5 网页",
         link: window.location.host,
-        mobile: window.location.host
+        mobile: window.location.host,
+        content:'扫码进入访问'
       },
       {
         code: "QZ",
-        name: "全站APP下载",
-        link: ""
+        name: "全站 APP 下载",
+        link: "",
+        content:'扫码进入下载页面'
       },
       {
         code: "APP",
-        name: "APP下载教程",
-        link: "/app-tutorial"
+        name: "APP 下载教程",
+        link: "/app-tutorial",
+        content:'点击下载教程'
       }
     ]);
     const selectedPlat = ref();
@@ -283,7 +281,7 @@ export default defineComponent({
   .buttons {
     display: flex;
     gap: 20px;
-    padding-top: 90px;
+    padding-top: 0px;
     .btn {
       background: url(../assets/app/btn.png) no-repeat center center;
       background-size: contain;
@@ -328,18 +326,21 @@ export default defineComponent({
       display: flex;
       justify-content: center;
       position: relative;
+      margin-top: 32px;
+      flex-direction: column;
     }
 
     .platform-button {
       width: 242px;
-      height: 68px;
+      height: 48px;
+      margin-top: 6px;
       font-size: 22px;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #fff;
       line-height: 30px;
-      padding: 10px 20px;
+      padding: 0px 20px;
       border-radius: 100px;
       background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
       box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
@@ -353,15 +354,31 @@ export default defineComponent({
         color: #468cff;
       }
     }
-
+    .supported-mobile-os {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        span {
+          word-break: keep-all;
+          text-align: center;
+          font-size: 16px;
+          color:#fff;
+          width: 100%;
+          line-height: 29px;
+          padding: 0px 3px;
+        }
+      }
     .platform-qr-code {
-      position: absolute;
-      bottom: -20px;
+      // position: absolute;
+      background-image: url('./../assets/app/blue-bg.png');
+      background-repeat: no-repeat;
+      background-size: contain;
+      bottom: 0px;
       margin: auto;
-      width: 280px;
-      height: 297px;
+      width: 138px;
+      height: 131px;
       box-shadow: 0px 4px 34px 0px #00000033;
-      background-color: #ffffffd6;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -370,16 +387,6 @@ export default defineComponent({
       padding: 20px;
       display: none;
 
-      .supported-mobile-os {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        span {
-          line-height: 29px;
-          padding: 0px 3px;
-        }
-      }
 
       .close-btn {
         position: absolute;
@@ -390,9 +397,13 @@ export default defineComponent({
       }
 
       .qr-code-wrapper {
-        background-image: url("./../assets/app/square-crosshair.png");
         background-size: 100% 100%;
-        padding: 8px;
+        margin-top: 7px;
+        margin-right: 7px;
+        img{
+          width: 90px;
+          height: 90px;
+        }
       }
 
       &.visible {

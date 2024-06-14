@@ -341,9 +341,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promotion" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken()) ? "/session/loggedInPromoPages" : "/promo/page";
 
-      isFetchingPromo.value = window.location.pathname === "/promotion";
+      // isFetchingPromo.value = window.location.pathname === "/promotion";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -391,11 +391,11 @@ export default defineComponent({
 
 
     const checkExtension = () => {
-      if (currentPath.value === "/promotion") {
-        // const eToken = ref(route.query.name);
-        extensionToken.value = route.query.token;
-        extensionState.value = true;
-      }
+      // if (currentPath.value === "/promotion") {
+      //   // const eToken = ref(route.query.name);
+      //   extensionToken.value = route.query.token;
+      //   extensionState.value = true;
+      // }
 
     };
 
@@ -613,6 +613,14 @@ export default defineComponent({
             font-size: 1rem;
             max-width: 160px;
             font-family: "Roboto";
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 3rem;
+            display: flex;
+            align-items: center;
 
             @media (min-width: 500px) {
               max-width: calc(100% - 220px);
@@ -651,11 +659,14 @@ export default defineComponent({
 
             img {
               display: block;
-              // height: 100%;
-              // width: auto;
-              width: 100%;
-              max-width: calc(100% - 180px);
+              height: 100%;
+              max-height: 112px;
+              width: auto;
               margin-left: auto;
+
+              @media (min-width: 500px) {
+                max-height: 130px;
+              }
             }
           }
 
@@ -815,11 +826,10 @@ export default defineComponent({
           background: #e7f1fd;
         }
         &.isEurocupLucky {
-          background: #E7F1FD;
+          background: #e7f1fd;
           margin: 0px;
           width: 100%;
         }
-
 
         h2 {
           font-size: 18px;

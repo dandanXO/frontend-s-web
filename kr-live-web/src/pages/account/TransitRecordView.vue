@@ -215,7 +215,7 @@
                       />
 
                       <q-btn
-                        v-if="props.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
+                        v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                         size="sm"
                         :label="$t('lang.confirm_withdraw_success')"
                         color="brand"
@@ -238,7 +238,7 @@
             <template v-slot:body-cell-operation="props">
               <q-td>
                 <q-btn
-                  v-if="props.row.status === 'STEP_1'"
+                  v-if="props?.props?.row.status === 'STEP_1'"
                   size="sm"
                   :label="$t('lang.reminder')"
                   color="brand"
@@ -491,6 +491,7 @@ import moment from "moment"
 import {useI18n} from "vue-i18n";
 import DateFilter from 'components/transaction/DateFilter';
 import DataTable from 'components/transaction/DataTable';
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -504,8 +505,9 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const {t} = useI18n();
+    const route = useRoute();
     const uploadFileRef = ref();
-    const recordActive = ref("deposit");
+    const recordActive = ref(route.query.tab || "gameBetRecord");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
     const reminderForm = reactive({});
@@ -513,6 +515,7 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
+    
     const $q = useQuasar();
     const dateLocale = {
         days: [

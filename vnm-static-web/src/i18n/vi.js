@@ -9,8 +9,9 @@ export default {
     lottery: "Xổ số",
     fishing: "Bắn Cá",
     cockfight: "Đá Gà",
-    minigame: "Khác",
+    minigame: "Hash Game",
     hashgame: "Hash Game",
+    others: "Khác",
     promotion: "Khuyến Mãi",
     agent: "Đại lý",
     app: "Ứng dụng",
@@ -162,6 +163,7 @@ export default {
     euroCountdown02: " NGÀY",
   },
   personal: {
+    url: "Truy Cập",
     personalInfo: "Thông tin cá nhân",
     bank: "Ngân hàng",
     chgPwd: "Thay đổi mật khẩu",
@@ -178,6 +180,7 @@ export default {
     oldWithdrawPwd: "Mật khẩu Rút tiền cũ",
     newWithdrawPwd: "Mật khẩu Rút tiền mới",
     confirmWithdrawPwd: "Xác nhận Mật khẩu Rút tiền",
+    loginPwd: "Mật khẩu đăng nhập",
     securityVerification: "Xác minh bảo mật",
     phoneVerification: "Xác minh Số điện thoại",
     captcha: "Mã xác minh",
@@ -204,6 +207,7 @@ export default {
     oldWithdrawPwd: "Vui lòng nhập Mật khẩu Rút tiền cũ",
     newWithdrawPwd: "Vui lòng nhập Mật khẩu Rút tiền mới",
     confirmWithdrawPwd: "Vui lòng nhập Xác nhận Mật khẩu Rút tiền",
+    loginPwd: "Vui lòng nhập Mật khẩu đăng nhập",
     title: "Vui lòng nhập tiêu đề",
     content: "Vui lòng nhập nội dung",
     usernamereq: "Tên tài khoản không thể để trống",
@@ -221,6 +225,8 @@ export default {
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
+    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
+    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",
@@ -280,6 +286,9 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Chúc mừng",
     claim: "Nhận",
+    
+    record_win_status: "Tình trạng thắng",
+    record_win_prize: "Giải thưởng",
   },
   mail: {
     inbox: "Hộp thư đến",
@@ -842,7 +851,8 @@ export default {
     tiktok: "Tiktok",
     automatic_payment: "Thanh toán tự động",
     otp_success_send_email: "OTP Code đã được gửi đến email của bạn",
-    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn."
+    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn.",
+    login_to_continue: "Vui lòng đăng nhập để tiếp tục"
   },
   response: {
     101: "Không tìm thấy nền tảng",
@@ -907,8 +917,11 @@ export default {
     14001: "Số điện thoại này đã được đăng ký",
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
+    14010: "IP hoặc SID trùng lặp",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
+    15204: "Số điện thoại không đúng.",
+    15205: "Mật khẩu không đúng.",
     21000: "Trò chơi này đã có trong danh sách trò chơi yêu thích của bạn.",
     24001: "Bản ghi điểm danh đã tồn tại.",
     24002: "Phát hiện cùng địa chỉ IP",

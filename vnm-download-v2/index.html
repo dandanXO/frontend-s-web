@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TF APP</title>
+    <!--<link rel="shortcut icon" href="images/test.ico" />-->
+    <link rel="stylesheet" type="text/css" href="/style/css/ba.css?v=3">
+    <link rel="stylesheet" type="text/css" href="/style/css/download.css?v=1">
+    <link rel="stylesheet" type="text/css" href="/style/css/swiper-3.4.1.min.css?v=3" />
+    <script type="text/javascript" src="/js/jquery-3.6.1.min.js?v=5" ></script>
+    <script type="text/javascript" src="/style/js/swiper-3.4.1.min.js"></script>
+    <script src="js/jquery-3.6.1.min.js?v=5" type="text/javascript"></script>
+    <script type="text/javascript" src="/style/js/download.js?v=5"></script>
+    <script type="text/javascript" src="/style/js/clipboard.min.js?v=5"></script>
+    <!--    <script type="text/javascript" src="https://village.muinegoodview.com/tf-website.txt"></script>-->
+    <style type="text/css">
+        html,body {
+            height: 100%;
+            width:100%
+        }
+        .weixin_tip{
+            /* background: linear-gradient( to right bottom,#077CCE,#01E9FF); 
+            padding: 30px 30px; */
+            color: white;
+            font-size: 14px;
+            height: 100%;
+            text-align: center;
+            line-height: 20px;
+        }
+        .under-line{
+            margin: 10px 0 30px 0;
+        }
+        .under-line:before{
+            content: "";
+            background: #53B9E8;
+            height: 1px;
+            display: block;
+        }
+        .tip-list{
+            display: block;
+            text-align: left;
+            margin: 10px 0;
+            padding-left: 40px;
+        }
+        .tip-list i{
+            border-radius: 50%;
+            background: #02476C;
+            color: white;
+            font-size: 13px;
+            padding: 5px 9px;
+            margin-right: 10px;
+        }
+        .content {
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="download" style="background-image:url('style/images/bg.png')">
+    <div class="remind">
+        <div class="content">
+            <a class="logo"><img src="/style/images/logo.png" width="73px" height="73px"/></a>
+            <h3>TF App <span id="ver-no">().</span></h3>
+            <div class="remind-txt">
+                Hỗ trợ tất cả các game thể thao, Live Casino, Slots, Bắn cá trong một ứng dụng<br>
+                đặt cược dễ dàng và nhanh chóng<br>
+                ứng dụng Hỗ trợ tải xuống cho tất cả các dòng điện thoại Androi và IOS
+            </div>
+            <div class="load">
+                <a class="install" id="installButton">tải xuống</a>
+            </div>
+            <p class="tuto">kéo xuống để xem chỉ dẫn</p>
+            <span id="consult"></span>
+        </div>
+    </div>
+    <div class="torial">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</div>
+<div class="weixin_tip" style="display: none;">
+    <!--    <img id="tips" src="/style/images/wxtips_android.png" alt="" style="width:100%;height:auto;"/>-->
+    <!-- <div class="wx_title">
+        <span>由于腾讯的安全机制，阁下无法直接下载我们的产品，请跟随下列步骤进行下载。</span>
+        <div class="under-line"></div>
+        <span class="tip-list"><i>1</i>请点击右上角的菜单按钮，打开菜单</span>
+        <span class="tip-list"><i>2</i>点击使用默认浏览器打开下载</span>
+    </div> -->
+</div>
+<script>
+    //NEED TO CHANGE THIS VERSION NO.
+    var versionNo= "1.0.6";
+
+    var andList=[
+        {imgurl:'/style/images/web/android/1.png'},
+        {imgurl:'/style/images/web/android/2.png'},
+        {imgurl:'/style/images/web/android/3.png'},
+        {imgurl:'/style/images/web/android/4.png'},
+        {imgurl:'/style/images/web/android/5.png'},
+        {imgurl:'/style/images/web/android/6.png'}
+    ];
+    var iosList=[
+        {imgurl:'/style/images/web/ios/1.png'},
+        {imgurl:'/style/images/web/ios/2.png'},
+        {imgurl:'/style/images/web/ios/3.png'},
+        {imgurl:'/style/images/web/ios/4.png'},
+        {imgurl:'/style/images/web/ios/5.png'},
+        {imgurl:'/style/images/web/ios/6.png'}
+    ];
+    var type = "ALL_AND";
+
+    const searchParams = new URLSearchParams(window.location.search);
+    let affidValue = searchParams.get('id');
+    const campaignname = searchParams.get('campaignname');
+    const campaignid = searchParams.get('campaignid');
+    const adsetid = searchParams.get('adsetid');
+    const adsetname = searchParams.get('adsetname');
+    const adname = searchParams.get('adname');
+    const adid = searchParams.get('adid');
+    const fbclid = searchParams.get('fbclid');
+    const fbpid = searchParams.get('fbpid');
+    const autoDownload = searchParams.get("autoDownload");
+
+    affidValue = affidValue ?? '45D757';
+    console.log(window.location.href)
+    // *** Add AffiliateCode By Url Here.
+
+    // if (affidValue === '' && (window.location.hostname.indexOf("jo2.app") > -1)) {
+    //     affidValue = "75DC1D";
+    // } else if (affidValue === '' && window.location.hostname.indexOf("jo3.app") > -1) {
+    //     affidValue = "C128A1";
+    // }else if (affidValue === '' && window.location.hostname.indexOf("d83za.cu9.app") > -1) {
+    //     affidValue = "5443AD";
+    // }else if (affidValue === '' && window.location.hostname.indexOf("g4r6k.xu5.app") > -1) {
+    //     affidValue = "14965A";
+    // }
+
+    var apkUrl = '';
+
+    async function getApiUrl() {
+        var button;
+
+        let affiliateLists = {
+            "574438": {
+                "adCode": "1cp06cvu",
+                "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1795664473090998273/android/apk/1.0.22_20240607170631.apk"
+            },
+            "CC8223": {
+                "adCode": "1cfe63d7",
+                "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1795665549542342657/android/apk/1.0.22_20240607170144.apk"
+            },
+            "45D757": {
+                "adCode": "1cg3muik",
+                "url": "https://p8s1-ind-files.s3.ap-south-1.amazonaws.com/app/9/affiliate/1795665028915970049/android/apk/1.0.22_20240607170430.apk"
+            },
+        };
+
+        apkUrl = affiliateLists[affidValue]["url"];
+
+        button = document.getElementById("installButton");
+        // //Android or Browser.
+        // //Change URL ./download/jb_app.apk when go Live.
+        button.classList.remove("disabled-btn");
+        button.onclick = function () {
+            downloadApk(apkUrl, affidValue)
+            return false;
+        }
+    }
+
+    function downloadApk(apkUrl) {
+        console.log(apkUrl);
+
+        const link = document.createElement("a");
+        link.style.display = "none";
+        link.href = apkUrl;
+        link.download = `tf88-app-${versionNo}.apk`
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+
+    $(document).ready(function (e) {
+        $("#ver-no").html("(v" + versionNo + ")");
+
+        var agentCode = getQueryString("agentCode");
+        console.log(agentCode);
+
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger"){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        var isWeixin = is_weixin();
+
+        if(isWeixin){
+            $(".weixin_tip").show();
+            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+                $("#tips").attr("src","/style/images/wxtips_ios.png");
+            }else if (/(Android)/i.test(navigator.userAgent)){
+                $("#tips").attr("src","/style/images/wxtips_android.png");
+            }
+        }else{
+            $(".download").show();
+            if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+                getIosPath();
+            }else if (/(Android)/i.test(navigator.userAgent)){
+                showAndroid();
+                getApiUrl();
+            }else {
+                showAndroid();
+                getApiUrl();
+
+            };
+            // var host = window.location.host;
+            // var vv={agentCode:getQueryString("agentCode"),regFrom:getQueryString("url"),downloadUrl:host};
+        }
+
+    });
+
+    function showAndroid(){
+        for(var i=0;i<andList.length;i++){
+            $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+andList[i].imgurl+'" alt=""/></div>')
+        };
+        // $('#download').attr('href',`https://file.rd7etvkrgt.com/apps/8/tf88-app-${versionNo}.apk?v=`+Math.random());
+    }
+
+    function showIOS()
+    {
+        $("#ver-no").html("(iOS " + versionNo + ")");
+
+        $("#installButton").attr("href", "./download/TF88.mobileconfig");
+        $("#installButton").attr("download", "TF88.mobileconfig");
+    }
+    function getIosPath()
+    {
+        try
+        {	type = "ALL_IOS";
+            for(var i=0;i<iosList.length;i++){
+                $(".swiper-wrapper").append('<div class="swiper-slide"><img src="'+iosList[i].imgurl+'" alt=""/></div>')
+            };
+            if(getIsPath())
+            {
+                showIOS();
+                // var path=getTestFlightIosPath();
+                // $('#download').attr('href',path);
+            }
+            else
+            {
+                showIOS();
+            }
+        }catch(err)
+        {
+            showIOS();
+        }
+
+    };
+
+
+    var mySwiper = new Swiper('.swiper-container',{
+        effect : 'slide',
+        pagination : '.swiper-pagination',
+        initialSlide :0,
+        observer:true,
+        observeParents:true
+    });
+
+</script>
+
+</body>
+
+</html>

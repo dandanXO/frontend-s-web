@@ -1,10 +1,45 @@
 <template>
-  <div class="modal-body-wrap form-wrapper">
-    <q-card-section class="modal-body-content">
+  <div class="form-wrapper">
+    <q-card-section>
+      <div style="display: grid;grid-template-columns: 1fr 300px;gap:10px;">
+        <div>
         <q-form class="form-template">
-          <div class="">
+          <div class="form-item">
             <q-label>
-              개설 은행
+              {{ $t('lang.withdraw_method') }}
+              <em>*</em>
+            </q-label>
+            <q-select
+              dense
+              v-model="selectedBankType"
+              outlined
+              :options="bankTypes"
+              option-label="name"
+              option-value="code"
+              emit-value
+              map-options
+              @update:model-value="bankCardInfo.bankId = ''"
+            >
+            <template v-slot:selected-item="scope">
+                <q-item-section avatar>
+                  <img
+                    v-if="scope.opt.icon"
+                    style="width: 24px; margin-top: 3px; margin-bottom:0px"
+                    :src="imgURL + '/withdraw/' + scope.opt.icon"
+                  />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
+                </q-item-section>
+              </template>
+            </q-select>
+          </div>
+
+          <div class="form-item">
+            <q-label>
+              {{ $t('lang.withdraw_bank') }}
               <em>*</em>
             </q-label>
             <q-select
@@ -13,15 +48,14 @@
               outlined
               v-model="bankCardInfo.bankId"
               class="q-pb-xs"
-              label="선택하세요"
               lazy-rules
               clearable
-              :options="bankList"
+              :options="filteredBankListByType"
               option-value="id"
               option-label="name"
               emit-value
               map-options
-              :rules="[(val) => val || '선택하세요']"
+              :rules="[(val) => val || $t('lang.withdraw_bank_choose')]"
             >
               <template v-slot:selected-item="scope">
                 <q-item-section avatar>
@@ -54,9 +88,9 @@
             </q-select>
           </div>
 
-          <div class="">
+          <div class="form-item">
             <q-label>
-              은행 카드 번호
+              {{ $t('lang.withdraw_bank_num') }}
               <em>*</em>
             </q-label>
             <q-input
@@ -66,16 +100,15 @@
               outlined
               v-model="bankCardInfo.cardNumber"
               class="q-pb-xs"
-              label="은행 카드 번호를 입력하세요"
               lazy-rules
               clearable
-              :rules="[(val) => (val && val.length > 0) || '은행 카드 번호를 입력하세요', validateBankLength]"
+              :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_bank_num_choose'), validateBankLength]"
             ></q-input>
           </div>
 
-          <div class="">
+          <div class="form-item">
             <q-label> 
-              카드 계좌
+              {{ $t('lang.withdraw_bank_holder') }}
               <em>*</em> 
             </q-label> 
             <q-input 
@@ -83,16 +116,15 @@
               outlined 
               v-model="bankCardInfo.cardAccount" 
               class="q-pb-xs"
-              label="카드 계좌" 
               lazy-rules 
               clearable 
               readonly 
             ></q-input> 
           </div>
 
-          <div class="">
+          <div class="form-item">
             <q-label>
-              카드 주소
+              {{ $t('lang.withdraw_bank_address') }}
             </q-label>
             <q-input
               ref="cardAddressRef"
@@ -100,61 +132,16 @@
               outlined
               v-model="bankCardInfo.cardAddress"
               class="q-pb-xs"
-              label="계좌 개설 은행 주소를"
+              :label="$t('lang.withdraw_bank_address_placeholder')"
               clearable
             ></q-input>
           </div>
-
-          <!-- since onMount API forced update name & phone, hence no validation needed. -->
-<!--          <q-label>-->
-<!--            手机号-->
-<!--            <em>*</em>-->
-<!--          </q-label>-->
-<!--          <q-input-->
-<!--            standout-->
-<!--            v-model="bankCardInfo.telephone"-->
-<!--            class="q-pb-xs"-->
-<!--            hide-bottom-space-->
-<!--            label="请输入您绑定的手机号"-->
-<!--            lazy-rules-->
-<!--            clearable-->
-<!--            readonly-->
-<!--          >-->
-<!--            <template v-slot:append>-->
-<!--              <q-btn-->
-<!--                @click="openPhoneVeriDialog()"-->
-<!--                type="submit"-->
-<!--                class="common-sm-btn bottom-btn get-otp-btn"-->
-<!--                label="获取验证码"-->
-<!--                color="brightbtn"-->
-<!--                rounded-->
-<!--              />-->
-<!--            </template>-->
-<!--          </q-input>-->
-
-<!--          <template v-if="isOtpSent">-->
-<!--            <q-label>-->
-<!--              验证码-->
-<!--              <em>*</em>-->
-<!--            </q-label>-->
-<!--            <q-input-->
-<!--              ref="phoneVerificationRef"-->
-<!--              standout-->
-<!--              v-model="bankCardInfo.smsCode"-->
-<!--              class="q-pb-xs"-->
-<!--              hide-bottom-space-->
-<!--              label="请输入您的注册手机验证"-->
-<!--              lazy-rules-->
-<!--              clearable-->
-<!--              maxlength="6"-->
-<!--              :rules="[(val) => (val && val.length > 3) || '请输入您的注册手机验证']"-->
-<!--              @keydown.enter.prevent="handleEnterKey"-->
-<!--              @keydown.enter="submitBankCard()"-->
-<!--            ></q-input>-->
-<!--          </template>-->
         </q-form>
-        <div class="note">결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다.</div>
-        <div class="note">안내: 카드 소지자 이름이 일치하지 않을 경우 온라인 고객 서비스에 문의하여 정보를 수정할 수 있습니다. 지원과 이해에 감사드립니다！</div>
+        <div class="note">{{ $t('lang.withdraw_bank_holder_cannot_amend') }}.</div>
+        <div class="note">{{ $t('lang.withdraw_bank_holder_mismatch') }}！</div>
+      </div>
+        <WithdrawBankView ref="bankCardListRef" />  
+      </div>
     </q-card-section>
     <div class="action-buttons">
       <div class="primary-button blue" @click="submitBankCard()">
@@ -165,12 +152,15 @@
 </template>
 
 <script setup id="AddWithdrawBankCard">
-import { reactive, ref, onActivated, watch, onMounted } from "vue";
+import { reactive, ref, watch, onMounted, computed } from "vue";
+
+
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { storeToRefs } from "pinia";
+import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -181,6 +171,7 @@ const imgURL = process.env.IMAGE_CDN;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
+const bankCardListRef = ref();
 const phoneVerificationRef = ref();
 const { realName } = storeToRefs(store);
 
@@ -194,7 +185,12 @@ const bankCardInfo = reactive({
 
 const validateBankLength = (val) => {
   if (!/^\d+$/.test(val)) return "숫자를 입력하세요";
-  return (val.length > 10 && val.length < 21) || "길이는 10에서 20자 여야 합니다";
+
+  if (selectedBankType.value === "BANK") {
+    return ((val.length > 10 && val.length < 21) || "길이는 10에서 20자 여야 합니다");
+  } else if (selectedBankType.value.includes("USDT")) {
+    return ((val.length >= 34 && val.length <= 36) || "길이는 34에서 36자 여야 합니다");
+  }
 };
 
 // NOTE: no chance to validate, e.g. member telephone = 44****77
@@ -266,7 +262,16 @@ const onCaptchaSubmit = () => {
     });
 };
 
+const selectedBankType = ref("BANK");
+const bankTypes = ref([]);
 const bankList = ref([]);
+const filteredBankListByType = computed(() => bankList.value.filter(({ bankType }) => {
+  if(selectedBankType.value.includes('USDT') && bankType === "CRYPTO") {
+    return true;
+  } else {
+    return bankType === selectedBankType.value;
+  }
+}))
 const loadBankCards = () => {
   bankCardInfo.bankId = null;
   bankCardInfo.cardNumber = "";
@@ -346,7 +351,7 @@ const submitBankCard = () => {
             message: "은행 카드가 추가되었습니다",
             icon: "check_circle_outline"
           });
-          router.push("/?page=bankcardlist");
+          bankCardListRef.value.loadCards();
         }
       })
       .catch((error) => {
@@ -373,6 +378,11 @@ watch(
 
 onMounted(() => {
   loadBankCards();
+  api.get('/session/withdraw/entrance').then(({data: response}) => {
+    if(response.code === 0) {
+      bankTypes.value = response.data;
+    }
+  });
 });
 
 </script>
@@ -388,35 +398,6 @@ onMounted(() => {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 30px;
-
-    label {
-      margin-bottom: 10px;
-      display: block;
-      font-size: 14px;
-      color: #fff;
-
-    }
-
-    input,
-    select {
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5C5C5C;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
-    }
-
-    select {
-      height: 52px;
-    }
-
-    label,
-    input,
-    select {
-      width: 100%;
-    }
   }
 
   .action-buttons {
@@ -428,16 +409,8 @@ onMounted(() => {
   }
 }
 
-
-.flex-box-c-c{
-  display:flex;
-  align-items: center;
-  justify-content: center;
-}
-
 q-label {
   color: #fff;
-  margin: 8px 0 4px 0;
   display: inline-block;
 
   em {

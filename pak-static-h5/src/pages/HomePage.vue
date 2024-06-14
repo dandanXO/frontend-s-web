@@ -20,7 +20,7 @@
       :key="i"
       :name="i"
       class="column no-wrap flex-center"
-      :img-src="imgURLPromo + banner.mobileImageUrl"
+      :img-src="returnBannerUrl(banner)"
       @click="gotoPromo(banner)"
     ></q-carousel-slide>
 
@@ -109,18 +109,17 @@
       :navigation="true"
       :modules="modules"
       class="cat-selection-wrapper"
-      data-aos="fade-in"
       :data-aos-delay="200"
       data-aos-duration="1000"
       data-aos-once="true"
     >
-      <template v-for="(item, index) in categoriesList" :key="index">
+      <template v-for="(item, index) in translatedCategoriesList" :key="index">
         <swiper-slide>
           <div class="cat-selection-item" :class="item.active && 'active'" @click="activateSlide(item)">
             <div class="cat-icon">
               <img :src="require(`../assets/images/index/category/cat-${item.icon.toLowerCase()}.png`)" alt="" />
             </div>
-            <div class="cat-title">{{ item.title }}</div>
+            <div class="cat-title">{{ item.label }}</div>
           </div>
         </swiper-slide>
       </template>
@@ -137,8 +136,9 @@
       <template v-if="(category.title === 'Hot' && category.active) || (category.title === 'Lobby' && category.active)">
         <div class="games-selection-wrapper" id="hotgames">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" />
-            <!-- <div class="txt-style">Hot Games</div> -->
+            <!-- <img src="../assets/images/index/menu-label-hotgames.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-hotgames.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_hotgames") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -151,33 +151,45 @@
               :modules="gameModules"
               class="platform-game-container"
             >
-              <!-- Add Evolution in Hot Game -->
-              <!-- <template v-for="(item, index) in livecasino" :key="index"> -->
-              <!--  -->
-              <!-- </template> -->
-
-              <!-- <pre>{{ filteredHotGameList }}</pre> -->
-
               <template v-for="(item, index) in hotGameList" :key="index">
                 <template v-if="item.type && item.type === 'game'">
                   <swiper-slide
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.platformCode, item.code, item.status, item.gameType, item.id)"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      :data-aos-delay="100 * index"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
                           :style="{
-                            backgroundImage: `url(${imgURLGame}${item.icon})`
+                            backgroundImage: (() => {
+                              try {
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                              } catch (e) {
+                                try {
+                                  return `url(${imgURLGame}${item.icon})`;
+                                } catch (e) {
+                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                                }
+                              }
+                            })()
                           }"
                         ></div>
+
+                        <div
+                          v-if="
+                            index < 4 ||
+                            item.code === 'Evo' ||
+                            item.code === 'WCEvo' ||
+                            item.code === '51' ||
+                            item.code === '72' ||
+                            item.code === '163' ||
+                            item.code === '123'
+                          "
+                          class="burning-hot"
+                        >
+                          <img src="../assets/images/index/hot.png" />
+                        </div>
                       </div>
                       <div class="platform-game-title">{{ truncateText(item.platform, 22) }}</div>
                     </div>
@@ -201,14 +213,21 @@
                           :style="{
                             backgroundImage: (() => {
                               try {
-                                return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                                return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
                               } catch (e) {
-                                return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                                // return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.name.toLowerCase()}.png)`;
+                                try {
+                                  return `url(${imgURLGame}${item.icon})`;
+                                } catch (e) {
+                                  return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                                }
                               }
                             })()
                           }"
                         ></div>
+
+                        <div v-if="index < 4 || item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
+                          <img src="../assets/images/index/hot.png" />
+                        </div>
                       </div>
 
                       <div class="platform-game-title">
@@ -233,9 +252,34 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.platform.toLowerCase()}-${item.code.toLowerCase()}.png)`;
+                              }
+                            }
+                          })()
                         }"
                       ></div>
+
+                      <div
+                        v-if="
+                          index < 4 ||
+                          item.code === 'Evo' ||
+                          item.code === 'WCEvo' ||
+                          item.code === '51' ||
+                          item.code === '72' ||
+                          item.code === '163' ||
+                          item.code === '123'
+                        "
+                        class="burning-hot"
+                      >
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
                     </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
@@ -252,14 +296,21 @@
                         :style="{
                           backgroundImage: (() => {
                             try {
-                              return `url(${require(`../assets/images/games/hot-games-${item.name.toLowerCase()}.png`)})`;
+                              return `url(${require(`../assets/images/index/hot/item-game-${item.code.toLowerCase()}.png`)})`;
                             } catch (e) {
-                              return `url(${require(`../assets/images/games/mini-game-bg.png`)})`;
-                              // return `url(https://m.b9mega1.com/static/images/games/item-game-${item.name.toLowerCase()}.png)`;
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/hot/item-game-${item.code.toLowerCase()}.png)`;
+                              }
                             }
                           })()
                         }"
                       ></div>
+
+                      <div v-if="item.code === 'Evo' || item.code === 'WCEvo'" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
                     </div>
                     <div class="platform-game-title">
                       {{ truncateText(item.alias ? item.alias : item.name, 22) }}
@@ -271,14 +322,15 @@
           </div>
         </div>
       </template>
-
       <template
         v-if="(category.title === 'Live' && category.active) || (category.title === 'Lobby' && category.active)"
       >
         <div class="games-selection-wrapper" id="Live">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-livecasino.png" class="label-img" /> -->
             <!-- <span class="txt-style">Live Casino</span> -->
+            <img src="../assets/images/index/menu-label-icon-livecasino.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_livecasino") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -311,14 +363,14 @@
                           try {
                             return `url(${require(`../assets/images/index/live/item-game-${item.name.toLowerCase()}.png`)})`;
                           } catch (e) {
-                            return `url(http://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
+                            return `url(https://m.b9mega1.com/static/images/index/live/item-game-${item.name.toLowerCase()}.png)`;
                           }
                         })()
                       }"
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
                         "
                         class="burning-hot"
                       >
@@ -354,7 +406,7 @@
                     >
                       <div
                         v-if="
-                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PT' || item.name === 'WCOT'
+                          item.name === 'Evo' || item.name === 'WCEvo' || item.name === 'PP' || item.name === 'WCPP'
                         "
                         class="burning-hot"
                       >
@@ -374,9 +426,11 @@
       >
         <div class="games-selection-wrapper" id="Slot">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-slotgame.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/slots-games-icon-label.png" /> -->
             <!-- <span class="txt-style">Slots Games</span> -->
+            <img src="../assets/images/index/menu-label-icon-slotsgame.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_slotsgame") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -416,7 +470,7 @@
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                    <div v-if="index < 2" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
@@ -457,7 +511,7 @@
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                  <div v-if="index < 2" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -474,9 +528,11 @@
       >
         <div class="games-selection-wrapper" id="Fish" v-if="category.title === 'Lobby' && category.active">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/fishing-icon-label.png" /> -->
             <!-- <span class="txt-style">Fishing</span> -->
+            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
           </div>
 
           <div class="platform-game-wrapper">
@@ -505,11 +561,24 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            }
+                          })()
                         }"
                       ></div>
-                    </div>
 
+                      <div v-if="index < 1" class="burning-hot">
+                        <img src="../assets/images/index/hot.png" />
+                      </div>
+                    </div>
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -531,11 +600,20 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            }
+                          })()
                         }"
                       ></div>
                     </div>
-
                     <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
                   </div>
                 </swiper-slide>
@@ -654,7 +732,9 @@
 
         <div class="games-selection-wrapper" id="fishing" v-else>
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-fishing.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-fishing.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-fishing.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_fishing") }}</div>
           </div>
 
           <div class="platform-game-container grid-view">
@@ -667,9 +747,23 @@
                   <div
                     class="game--bg"
                     :style="{
-                      backgroundImage: `url(${imgURLGame}${item.icon})`
+                      backgroundImage: (() => {
+                        try {
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                        } catch (e) {
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                          }
+                        }
+                      })()
                     }"
                   ></div>
+
+                  <div v-if="index < 1" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
                 </div>
                 <div class="platform-game-title">{{ truncateText(item.name, 22) }}</div>
               </div>
@@ -684,7 +778,17 @@
                   <div
                     class="game--bg"
                     :style="{
-                      backgroundImage: `url(${imgURLGame}${item.icon})`
+                      backgroundImage: (() => {
+                        try {
+                          return `url(${require(`../assets/images/index/fish/item-game-${item.code.toLowerCase()}.png`)})`;
+                        } catch (e) {
+                          try {
+                            return `url(${imgURLGame}${item.icon})`;
+                          } catch (e) {
+                            return `url(https://m.b9mega1.com/static/images/index/fish/item-game-${item.code.toLowerCase()}.png)`;
+                          }
+                        }
+                      })()
                     }"
                   ></div>
                 </div>
@@ -700,7 +804,9 @@
       >
         <div class="games-selection-wrapper" id="Poker">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-poker.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-poker.png" class="label-img" /> -->
+            <img src="../assets/images/index/menu-label-icon-poker.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_poker") }}</div>
           </div>
 
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
@@ -730,12 +836,22 @@
                       <div
                         class="game--bg"
                         :style="{
-                          backgroundImage: `url(${imgURLGame}${item.icon})`
+                          backgroundImage: (() => {
+                            try {
+                              return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                            } catch (e) {
+                              try {
+                                return `url(${imgURLGame}${item.icon})`;
+                              } catch (e) {
+                                return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                              }
+                            }
+                          })()
                         }"
                       ></div>
                     </div>
 
-                    <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                    <div v-if="index < 3" class="burning-hot">
                       <img src="../assets/images/index/hot.png" />
                     </div>
 
@@ -767,12 +883,22 @@
                     <div
                       class="game--bg"
                       :style="{
-                        backgroundImage: `url(${imgURLGame}${item.icon})`
+                        backgroundImage: (() => {
+                          try {
+                            return `url(${require(`../assets/images/index/poker/item-game-${item.code.toLowerCase()}.png`)})`;
+                          } catch (e) {
+                            try {
+                              return `url(${imgURLGame}${item.icon})`;
+                            } catch (e) {
+                              return `url(https://m.b9mega1.com/static/images/index/poker/item-game-${item.code.toLowerCase()}.png)`;
+                            }
+                          }
+                        })()
                       }"
                     ></div>
                   </div>
 
-                  <div v-if="item.name === 'JOKER' || item.name === 'PG'" class="burning-hot">
+                  <div v-if="index < 3" class="burning-hot">
                     <img src="../assets/images/index/hot.png" />
                   </div>
 
@@ -790,9 +916,11 @@
       >
         <div class="games-selection-wrapper" id="Sport">
           <div class="title-game">
-            <img src="../assets/images/index/menu-label-sport.png" class="label-img" />
+            <!-- <img src="../assets/images/index/menu-label-sport.png" class="label-img" /> -->
             <!-- <img src="../assets/images/index/sport-icon-label.png" /> -->
             <!-- <span class="txt-style">Sports</span> -->
+            <img src="../assets/images/index/menu-label-icon-sport.png" class="label-img" />
+            <div class="txt-style">{{ $t("home.cat_sport") }}</div>
           </div>
           <div class="platform-game-container sport-platform">
             <template v-for="(item, index) in sport" :key="index">
@@ -812,7 +940,11 @@
                       }
                     })()
                   }"
-                ></div>
+                >
+                  <div v-if="item.name === 'LuckySport' || item.name === 'BTI'" class="burning-hot">
+                    <img src="../assets/images/index/hot.png" />
+                  </div>
+                </div>
               </div>
             </template>
           </div>
@@ -949,7 +1081,7 @@
             </div>
 
             <div class="fullgame-search">
-              <q-input standout v-model="searchText" label="Search" clearable clear-icon="close">
+              <q-input standout v-model="searchText" :label="$t('btn.search')" clearable clear-icon="close">
                 <template v-slot:prepend>
                   <q-icon name="search" size="20px" />
                 </template>
@@ -962,7 +1094,7 @@
               <div>
                 <q-spinner color="green" size="10em" :thickness="10" />
               </div>
-              <div>Loading... Please wait...</div>
+              <div>{{ $t("btn.loading_plsWait") }}</div>
             </div>
           </template>
 
@@ -1050,7 +1182,7 @@
               </div>
 
               <q-btn class="btn-more-games btn-effect" @click="scrollDownFullGames" v-if="!isShowAllFullGames">
-                More Games
+                {{ $t("btn.moreGames") }}
               </q-btn>
             </div>
           </template>
@@ -1137,7 +1269,7 @@ import KYCUserForm from "../components/KYCUserForm.vue";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { isAndroid } from "boot/utils";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
+import { useI18n } from "vue-i18n";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 // import { ref, onMounted, onUnmounted } from 'vue';
@@ -1153,15 +1285,29 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core
 const modules = ref([Scrollbar, Navigation, Pagination]);
 const gameModules = ref([Scrollbar, Navigation, Pagination]);
 
+const { t } = useI18n();
+
 const categoriesList = ref([
-  { title: "Lobby", icon: "lobby", active: true },
-  { title: "Hot", icon: "hot", active: false },
-  { title: "Live", icon: "live", active: false },
-  { title: "Fish", icon: "fish", active: false },
-  { title: "Slot", icon: "slot", active: false },
-  { title: "Poker", icon: "poker", active: false },
-  { title: "Sport", icon: "sport", active: false }
+  { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
+  { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
+  { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
+  { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
+  { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
+  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false }
 ]);
+
+const translatedCategoriesList = computed(() => {
+  return categoriesList.value.map((category) => ({
+    ...category,
+    label: t(`home.menu_${category.title.toLowerCase()}`)
+  }));
+});
+
+const activeCategoryLabel = computed(() => {
+  const activeCategory = translatedCategoriesList.value.find((category) => category.active);
+  return activeCategory ? activeCategory.label : "";
+});
 
 // const activateSlide = (clickedItem) => {
 //   categoriesList.value.forEach((item) => {
@@ -1169,13 +1315,21 @@ const categoriesList = ref([
 //   });
 // };
 
+// const activateSlide = (item) => {
+//   translatedCategoriesList.value.forEach((category) => (category.active = false));
+//   item.active = true;
+// };
+
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
-  item.active = true;
+  const category = categoriesList.value.find(cat => cat.title === item.title);
+  if (category) {
+    category.active = true;
+  }
 };
 
 const handleActivateSlide = (slot) => {
-  const item = categoriesList.value.find((cat) => cat.title === slot);
+  const item = translatedCategoriesList.value.find((cat) => cat.title === slot);
   if (item) {
     activateSlide(item);
   }
@@ -1256,11 +1410,364 @@ const depositItems = reactive([
 ]);
 
 const esport = ref([]);
-const sport = ref([]);
-const livecasino = ref([]);
+const sport = ref([
+  {
+    id: 133,
+    name: "LuckySport",
+    code: "LuckySport",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SPORT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  },
+  {
+    id: 95,
+    name: "BTI",
+    code: "BTI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SPORT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  },
+  {
+    id: 50,
+    name: "SABA",
+    code: "SABA",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SPORT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  }
+]);
+const livecasino = ref([
+  {
+    id: 123,
+    name: "Evo",
+    code: "WCEvo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Evolution",
+    sequence: 1
+  },
+  {
+    id: 4,
+    name: "Awc",
+    code: "AWC",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Sexy",
+    sequence: 999
+  },
+  {
+    id: 5,
+    name: "Ezugi",
+    code: "EZUGI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 999
+  },
+  {
+    id: 100,
+    name: "WCOT",
+    code: "WCOT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "One Touch",
+    sequence: 999
+  },
+  {
+    id: 143,
+    name: "WCPP",
+    code: "WCPP",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Evolution",
+    sequence: 999
+  }
+]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([]);
+const slot = ref([
+  {
+    id: 8,
+    name: "JiliGames",
+    code: "JILI",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JiliGames",
+    sequence: 1
+  },
+  {
+    id: 124,
+    name: "Turbo",
+    code: "Turbo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 2
+  },
+  {
+    id: 21,
+    name: "PG",
+    code: "PG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Relax Gaming",
+    sequence: 3
+  },
+  {
+    id: 51,
+    name: "JOKER",
+    code: "JOKER",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "JOKER",
+    sequence: 4
+  },
+  {
+    id: 31,
+    name: "JDB",
+    code: "JDB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT,FISH",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: null,
+    sequence: 5
+  },
+  {
+    id: 107,
+    name: "Big time Gaming",
+    code: "WCBTG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Big Time",
+    sequence: 6
+  },
+  {
+    id: 111,
+    name: "Relax",
+    code: "WCRelax",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Relax Gaming",
+    sequence: 7
+  },
+  {
+    id: 106,
+    name: "No limit city",
+    code: "WCNLC",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "No Limit City",
+    sequence: 999
+  },
+  {
+    id: 108,
+    name: "Wazdan",
+    code: "WCWazdan",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Wazdan",
+    sequence: 999
+  },
+  {
+    id: 104,
+    name: "Netent",
+    code: "WCNetent",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Netent",
+    sequence: 999
+  },
+  {
+    id: 105,
+    name: "Red tiger",
+    code: "WCRT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Red Tiger",
+    sequence: 999
+  },
+  {
+    id: 109,
+    name: "One touch",
+    code: "WCOTS",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "One Touch Slot",
+    sequence: 999
+  },
+  {
+    id: 120,
+    name: "World Match",
+    code: "WCWM",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "World Match",
+    sequence: 999
+  },
+  {
+    id: 113,
+    name: "PNG",
+    code: "WCPNG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "PNG",
+    sequence: 999
+  },
+  {
+    id: 116,
+    name: "Habanero",
+    code: "WCHB",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Habanero",
+    sequence: 999
+  },
+  {
+    id: 121,
+    name: "Spinix",
+    code: "WCSpinix",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Spinix",
+    sequence: 999
+  },
+  {
+    id: 142,
+    name: "FiveG",
+    code: "FiveG",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "SLOT",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "5G",
+    sequence: 999
+  }
+]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -1295,7 +1802,28 @@ const checkPlatform = () => {
 // });
 const qs = require("qs");
 const $q = useQuasar();
-const banners = ref(null);
+const banners = ref([
+  {
+    mobileImageUrl: "empty-banner.png"
+  }
+]);
+
+const returnBannerUrl = (banner) => {
+  try {
+    var bannerImg = "";
+    const bannerSplit = banner.mobileImageUrl.split("/");
+    // console.log(bannerSplit);
+    if (bannerSplit.length > 1) {
+      bannerImg = bannerSplit[1];
+    } else {
+      bannerImg = bannerSplit[0];
+    }
+    return require(`../assets/images/banners/${bannerImg}`);
+  } catch (e) {
+    return imgURLPromo + banner.mobileImageUrl;
+  }
+};
+
 const route = useRoute();
 const router = useRouter();
 const store = userStore();
@@ -1347,7 +1875,344 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([]);
+const hotGameList = ref([
+  {
+    id: 30338,
+    name: "Aviator",
+    code: "aviator",
+    status: "OPEN",
+    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
+    sequence: 0,
+    siteName: null,
+    platformId: 93,
+    platformName: null,
+    platformCode: "Spribe",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "Spribe",
+    type: "game"
+  },
+  {
+    id: 30372,
+    name: "Mines",
+    code: "229",
+    status: "OPEN",
+    icon: "11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg",
+    sequence: 0,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 24846,
+    name: "Aero",
+    code: "aero",
+    status: "OPEN",
+    icon: "11/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
+    sequence: 1,
+    siteName: null,
+    platformId: 124,
+    platformName: null,
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "Turbo",
+    type: "game"
+  },
+  {
+    id: 24847,
+    name: "Crash X",
+    code: "crash",
+    status: "OPEN",
+    icon: "11/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
+    sequence: 2,
+    siteName: null,
+    platformId: 124,
+    platformName: null,
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "Turbo",
+    type: "game"
+  },
+  {
+    id: 24855,
+    name: "Limbo Rider",
+    code: "limbo",
+    status: "OPEN",
+    icon: "11/Turbo/8fcab37e-10a6-4629-a684-a998298c260a.jpg",
+    sequence: 10,
+    siteName: null,
+    platformId: 124,
+    platformName: null,
+    platformCode: "Turbo",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "Turbo",
+    type: "game"
+  },
+  {
+    code: "WCEvo",
+    platform: "WCEvo",
+    type: "platform",
+    id: 123,
+    name: "Evo",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "Evolution",
+    sequence: 1
+  },
+  {
+    code: "WCOT",
+    platform: "WCOT",
+    type: "platform",
+    id: 100,
+    name: "WCOT",
+    status: "OPEN",
+    walletType: "SEAMLESS",
+    gameType: "LIVE",
+    followType: "FOLLOW",
+    underMaintenance: false,
+    maintenanceStartTime: null,
+    maintenanceEndTime: null,
+    alias: "One Touch",
+    sequence: 999
+  },
+  {
+    id: 25340,
+    name: "Money Coming",
+    code: "51",
+    status: "OPEN",
+    icon: "11/JILI/51.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25375,
+    name: "Fortune Gems 2",
+    code: "223",
+    status: "OPEN",
+    icon: "11/JILI/109.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25378,
+    name: "Cricket King 18",
+    code: "225",
+    status: "OPEN",
+    icon: "11/JILI/225.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25379,
+    name: "Teen Patti",
+    code: "72",
+    status: "OPEN",
+    icon: "11/JILI/097df233-0329-427c-a596-9af968062624.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25380,
+    name: "Teen Patti Joker",
+    code: "159",
+    status: "OPEN",
+    icon: "11/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25382,
+    name: "Ludo Quick",
+    code: "163",
+    status: "OPEN",
+    icon: "11/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25383,
+    name: "Andar Bahar",
+    code: "79",
+    status: "OPEN",
+    icon: "11/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25384,
+    name: "TeenPatti 20-20",
+    code: "161",
+    status: "OPEN",
+    icon: "11/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25385,
+    name: "Dragon & Tiger",
+    code: "123",
+    status: "OPEN",
+    icon: "11/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25386,
+    name: "7up7down",
+    code: "124",
+    status: "OPEN",
+    icon: "11/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "SLOT",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  },
+  {
+    id: 25387,
+    name: "Baccarat",
+    code: "152",
+    status: "OPEN",
+    icon: "11/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: "JILI",
+    gameType: "POKER",
+    device: null,
+    gameLabel: "HOT",
+    updateBy: null,
+    updateTime: null,
+    platform: "JILI",
+    type: "game"
+  }
+]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -1368,10 +2233,10 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        // .get("/sitePlatformAndGamesByLabel", {
-        .get("/member/hot", {
+        .get("/sitePlatformAndGamesByLabel", {
+          // .get("/member/hot", {
           params: {
-            // gameLabel: "HOT",
+            gameLabel: "HOT",
             device: regDevice
           }
         })
@@ -1424,15 +2289,289 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
-          console.log(hotGameList.value);
+          // console.log("End");
+          // console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
 };
 
-const fishGameJILIList = ref([]);
-const pokerGameJILIList = ref([]);
+const fishGameJILIList = ref([
+  {
+    id: 25309,
+    name: "Bombing Fishing",
+    code: "20",
+    status: "OPEN",
+    icon: "11/JILI/20.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25310,
+    name: "Dinosaur Tycoon",
+    code: "42",
+    status: "OPEN",
+    icon: "11/JILI/42.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25311,
+    name: "Jackpot Fishing",
+    code: "32",
+    status: "OPEN",
+    icon: "11/JILI/32.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25312,
+    name: "Dragon Fortune",
+    code: "60",
+    status: "OPEN",
+    icon: "11/JILI/60.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xf-martin",
+    updateTime: "6/7/24, 10:14 AM"
+  },
+  {
+    id: 25313,
+    name: "Mega Fishing",
+    code: "74",
+    status: "OPEN",
+    icon: "11/JILI/74.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25314,
+    name: "Boom Legend",
+    code: "71",
+    status: "OPEN",
+    icon: "11/JILI/71.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25315,
+    name: "Happy Fishing",
+    code: "82",
+    status: "OPEN",
+    icon: "11/JILI/82.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25316,
+    name: "All-star Fishing",
+    code: "119",
+    status: "OPEN",
+    icon: "11/JILI/119.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25368,
+    name: "Royal Fishing",
+    code: "1",
+    status: "OPEN",
+    icon: "11/JILI/1.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25372,
+    name: "Dinosaur Tycoon II",
+    code: "212",
+    status: "OPEN",
+    icon: "11/JILI/212.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  }
+]);
+const pokerGameJILIList = ref([
+  {
+    id: 25379,
+    name: "Teen Patti",
+    code: "72",
+    status: "OPEN",
+    icon: "11/JILI/097df233-0329-427c-a596-9af968062624.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:31 AM"
+  },
+  {
+    id: 25380,
+    name: "Teen Patti Joker",
+    code: "159",
+    status: "OPEN",
+    icon: "11/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:31 AM"
+  },
+  {
+    id: 25382,
+    name: "Ludo Quick",
+    code: "163",
+    status: "OPEN",
+    icon: "11/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:31 AM"
+  },
+  {
+    id: 25383,
+    name: "Andar Bahar",
+    code: "79",
+    status: "OPEN",
+    icon: "11/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:31 AM"
+  },
+  {
+    id: 25384,
+    name: "TeenPatti 20-20",
+    code: "161",
+    status: "OPEN",
+    icon: "11/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:31 AM"
+  },
+  {
+    id: 25387,
+    name: "Baccarat",
+    code: "152",
+    status: "OPEN",
+    icon: "11/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
+    sequence: 1000,
+    siteName: null,
+    platformId: 8,
+    platformName: null,
+    platformCode: null,
+    gameType: "POKER",
+    device: "ALL",
+    gameLabel: "HOT",
+    updateBy: "xf-martin",
+    updateTime: "5/31/24, 8:32 AM"
+  }
+]);
 
 const loadJILIFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1457,6 +2596,7 @@ const loadJILIFishGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
+      fishGameJILIList.value = [];
       fishGameJILIList.value = res;
     });
 };
@@ -1484,11 +2624,81 @@ const loadJILIPokerhGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
+      pokerGameJILIList.value = [];
       pokerGameJILIList.value = res;
     });
 };
 
-const fishGameJDBList = ref([]);
+const fishGameJDBList = ref([
+  {
+    id: 25188,
+    name: "Cai Shen Fishing",
+    code: "7003",
+    status: "OPEN",
+    icon: "11/JDB/7003.png",
+    sequence: 1123,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25189,
+    name: "Shade Dragons Fishing",
+    code: "7004",
+    status: "OPEN",
+    icon: "11/JDB/7004.png",
+    sequence: 1124,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25190,
+    name: "Fishing YiLuFa",
+    code: "7005",
+    status: "OPEN",
+    icon: "11/JDB/7005.png",
+    sequence: 1125,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  },
+  {
+    id: 25191,
+    name: "Dragon Master",
+    code: "7006",
+    status: "OPEN",
+    icon: "11/JDB/7006.png",
+    sequence: 1126,
+    siteName: null,
+    platformId: 31,
+    platformName: null,
+    platformCode: null,
+    gameType: "FISH",
+    device: "ALL",
+    gameLabel: null,
+    updateBy: "xiaozhu",
+    updateTime: "5/28/24, 3:02 PM"
+  }
+]);
 
 const loadJDBFishGameList = () => {
   const regDevice = Platform.is.mobile ? "MOBILE" : "WEB";
@@ -1513,6 +2723,7 @@ const loadJDBFishGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
+      fishGameJDBList.value = [];
       fishGameJDBList.value = res;
     });
 };
@@ -1605,6 +2816,7 @@ function loadData() {
     .get("/promo/banner?category=HOME")
     .then((res) => {
       if (res.code === 0) {
+        banners.value = [];
         banners.value = res.data;
         // banners.value = [
         //   {
@@ -1633,6 +2845,9 @@ const getPlatList = () => {
     .then((data) => {
       var pf = data;
       ui.slotLists = [];
+      livecasino.value = [];
+      slot.value = [];
+      sport.value = [];
       // console.log(pf);
 
       pf.forEach((element) => {
@@ -2907,7 +4122,7 @@ watch(
     margin-right: -8px;
     padding: 0px 12px 0px;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
     // background-image: url("../assets/images/index/title-bg.png");
     // background-repeat: no-repeat;
@@ -2921,8 +4136,8 @@ watch(
     }
 
     .txt-style {
-      font-family: "Dongle", sans-serif;
-      font-size: 2.6rem;
+      // font-family: "Dongle", sans-serif;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 1px;
       line-height: 1;
@@ -2971,7 +4186,7 @@ watch(
       background-position: center center;
       position: relative;
       background-image: url("../assets/images/index/mini-game-bg.png");
-      border-radius: 8px;
+      border-radius: 20px;
 
       &.game-fish {
         aspect-ratio: 1/1.2;
@@ -3134,7 +4349,10 @@ watch(
 
   .fullgame-header {
     // background-image: url(../assets/images/index/fullgame-banner.jpg);
-
+    position: sticky;
+    top: 60px;
+    // background: salmon;
+    z-index: 99;
     margin: 0 -2.5%;
     // min-height: 200px;
     padding: 12px;

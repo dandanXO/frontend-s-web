@@ -10,17 +10,17 @@
       indicator-color="transparent"
       align="justify"
     >
-      <q-tab class="left" name="promo" label="Promotion" />
-      <q-tab class="right" name="vip" label="VIP" />
+      <q-tab name="promo" :label="$t('settings.promo')" />
+      <q-tab name="vip" :label="$t('settings.vip')" />
     </q-tabs>
   </div>
 
   <div class="receive-monthly">
     <div class="monthly-img"><img src="../../assets/images/vip/receive-monthly-img.png" width="120" /></div>
-    <div class="monthly-txt">Receive monthly rewards</div>
+    <div class="monthly-txt">{{ $t("vip.receiveMonthlyRewards") }}</div>
     <div class="monthly-btn" @click="getMonthlyVip" :class="!monthlyVipReceive && 'disable'">
-      <span v-if="!monthlyVipReceive">RECEIVED</span>
-      <span v-else>RECEIVE</span>
+      <span v-if="!monthlyVipReceive">{{ $t("vip.received") }}</span>
+      <span v-else>{{ $t("vip.receive") }}</span>
     </div>
   </div>
 
@@ -39,7 +39,7 @@
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
               <div class="upgrade-requirements">
-                <span v-if="vip.vipLevel !== '0'">Accummulate Deposit</span>
+                <span v-if="vip.vipLevel !== '0'">{{ $t("vip.accumulateDeposit") }}</span>
                 {{ vip.ugprade }}
               </div>
 
@@ -54,13 +54,13 @@
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  <template v-if="vip.vipLevel !== 0">
-                    {{ `VIP${+vip.vipLevel - 1}` }}
-                  </template>
+                  {{ `VIP${+vip.vipLevel}` }}
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  {{ `VIP${vip.vipLevel}` }}
+                  <template v-if="vipItems.length - 1 !== vip.vipLevel">
+                    {{ `VIP${vip.vipLevel + 1}` }}
+                  </template>
                 </div>
               </div>
             </div>
@@ -80,9 +80,9 @@
               <img src="../../assets/images/vip/level-upgrade-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Level Upgrade</span>
+              <span class="bold">{{ $t("vip.levelUpgrade") }}</span>
               <br />
-              Reward
+              {{ $t("vip.reward") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.levelUpgrade }}</div>
@@ -102,9 +102,9 @@
               <img src="../../assets/images/vip/monthly-reward-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Monthly</span>
+              <span class="bold">{{ $t("vip.monthly") }}</span>
               <br />
-              Reward
+              {{ $t("vip.reward") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.monthlyReward }}</div>
@@ -124,9 +124,9 @@
               <img src="../../assets/images/vip/daily-withdrawal-limit-icon.svg" />
             </div>
             <div class="title">
-              <span class="bold">Daily Withdrawal</span>
+              <span class="bold">{{ $t("vip.dailyWithdrawal") }}</span>
               <br />
-              Limit
+              {{ $t("vip.limit") }}
             </div>
             <div class="reward-amt-wrapper">
               <div class="reward-amt bold">{{ currentVipLevelStats.dailyWithdrawalLimit }}</div>
@@ -143,7 +143,7 @@
       </div>
 
       <div class="header-wrapper">
-        <div class="header">VIP status can be upgraded by accumulating monthly deposits</div>
+        <div class="header">{{ $t("vip.vipStatus_txt") }}</div>
       </div>
 
       <q-table
@@ -175,19 +175,19 @@
               <div><img src="../../assets/images/vip/vip-col-level.png" /></div>
             </q-td>
             <q-td>
-              Upgrade
+              {{ $t("vip.upgrade") }}
               <br />
-              Experience
+              {{ $t("vip.experience") }}
             </q-td>
             <q-td>
-              Upgrade
+              {{ $t("vip.upgrade") }}
               <br />
-              Rewards
+              {{ $t("vip.rewards") }}
             </q-td>
             <q-td>
-              Monthly
+              {{ $t("vip.monthly") }}
               <br />
-              Rewards
+              {{ $t("vip.rewards") }}
             </q-td>
           </q-tr>
         </template>
@@ -210,16 +210,14 @@
         <template v-slot:bottom-row>
           <q-tr style="display: none">
             <q-td colspan="100%" class="bottom-note text-left">
-              Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the
-              corresponding upgrade rewards will be issued.
+              {{ $t("vip.vipTable_txt") }}
             </q-td>
           </q-tr>
         </template>
       </q-table>
 
       <div class="hint-msg">
-        Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the
-        corresponding upgrade rewards will be issued.
+        {{ $t("vip.vipTable_txt") }}
       </div>
 
       <!-- <q-table

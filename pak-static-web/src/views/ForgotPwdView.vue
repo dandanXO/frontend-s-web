@@ -8,11 +8,8 @@
         <a-tab-pane key="phonePwd" tab="Retrieve password via phone">
           <a-form v-if="step === 1" ref="formRef" :model="passwordForm" :rules="passwordFormRules" hide-required-mark>
             <p>Please enter the account and the mobile number associated with your account for password recovery.</p>
-            <a-form-item name="loginName" :label="$t('forgotPwdView.infoForm.loginName.label')" label-align="left">
-              <a-input
-                v-model:value="passwordForm.loginName"
-                :placeholder="$t('forgotPwdView.infoForm.loginName.placeholder')"
-              >
+            <a-form-item name="loginName" :label="$t('common.form.loginName.label')" label-align="left">
+              <a-input v-model:value="passwordForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
                 <template #prefix>
                   <RiSmartphoneFill />
                   <span style="color: #ffffff">+92</span>
@@ -155,6 +152,7 @@ import {
   verifyForgetPasswordPhone
 } from "@/api/index/forgotPwd";
 import { useI18n } from "vue-i18n";
+import { validateLoginName } from "@/utils/validator";
 
 const { t } = useI18n();
 
@@ -184,19 +182,7 @@ const otp = ref(Array(6).fill(""));
 const inputRefs = ref([]);
 
 const passwordFormRules = computed(() => ({
-  loginName: [
-    {
-      required: true,
-      message: t("forgotPwdView.infoForm.loginName.error.required"),
-      trigger: "blur"
-    },
-    {
-      min: 6,
-      max: 12,
-      message: t("forgotPwdView.infoForm.loginName.error.required"),
-      trigger: "blur"
-    }
-  ],
+  loginName: [{ validator: validateLoginName, trigger: "blur" }],
   email: [
     {
       required: true,

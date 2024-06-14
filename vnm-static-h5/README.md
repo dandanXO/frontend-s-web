@@ -19,13 +19,21 @@ npm install
 quasar dev
 ```
 
-### Lint the files
+### Run LiveReload on Device
 ```bash
-yarn lint
-# or
-npm run lint
-```
+1. Run CMD
+quasar dev
 
+2. Plug your Device, Open 2nd CMD and run:
+cd src-capacitor
+npx cap run android -l
+
+3. So it will build and run App on your device, and you can do a LiveReload on it.
+
+4. If you want to change port/host, can try RUN:
+npx cap run android -l --host=192.168.79.69 --port=9090
+
+```
 
 ### Build the app for production
 ```bash

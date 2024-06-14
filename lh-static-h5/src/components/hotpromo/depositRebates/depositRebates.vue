@@ -1,0 +1,423 @@
+<template>
+    <div class="deposit-rebates-container isEuro">
+        <div class="cards-tabs">
+            <div @click="selectedCard = card.code " class="tab" v-for="(card, i) in depositCards" :key="i" :class="{active: selectedCard === card.code}">
+                <img :src="require(`./images/${card.code}.png`)">
+                {{ card.title }}
+            </div>
+        </div>
+        <div class="cards">
+            <div class="deposit-card" v-for="(card, i) in depositCards" :key="(i)" :class="{active: selectedCard === card.code}">
+                <div class="bg"><img src="./euroimages/card-design.png"></div>
+
+                <div class="deposit-card__logo" :class="card.code"><img :src="require(`./images/${card.code}.png`)"></div>
+                <div class="deposit-content">
+                    <div class="deposit-content__title">{{ card.title }}充值加码</div>
+                    <div class="deposit-content__details">{{ card.content }}</div>
+                </div>
+                <div class="deposit-buttons">
+                    <div class="btn deposit-buttons__go-deposit"><router-link to="/finance/deposit"><img src="./euroimages/depositnow-btn.png"></router-link></div>
+                    <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a :href="card.lesson" target="_blank"><img src="./euroimages/checklesson-btn.png"></a></div>
+                </div>
+            </div>
+        </div>
+        <div class="similar-title">
+            <img src="./euroimages/title-details.png">
+        </div>
+
+        <table cellpadding="0" cellspacing="0" border="0" class="happy-table">
+                <thead>
+                <tr>
+                    <th>存款方式</th>
+                    <th>存款返利</th>
+                    <th>单笔存款限制</th>
+                    <th>单日彩金上限</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>USDT</td>
+                    <td>1.5%</td>
+                    <td>≥200</td>
+                    <td>588</td>
+                </tr>
+                <tr>
+                    <td>808钱包</td>
+                    <td>1.0%</td>
+                    <td>任意金额</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>EBPAY</td>
+                    <td>1.0%</td>
+                    <td>任意金额</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>OKPAY</td>
+                    <td>1.0%</td>
+                    <td>任意金额</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>JDPAY</td>
+                    <td>1.0%</td>
+                    <td>任意金额</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>K豆</td>
+                    <td>1.0%</td>
+                    <td>任意金额</td>
+                    <td>200</td>
+                </tr>
+                <tr>
+                    <td>数字人民币</td>
+                    <td>1.0%</td>
+                    <td>≥1000</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>支付宝转卡</td>
+                    <td>0.5%</td>
+                    <td>任意金额</td>
+                    <td>50</td>
+                </tr>
+            </tbody>
+                </table>
+        <div class="similar-title">
+            <img src="./euroimages/title-rules.png">
+        </div>
+        <ol class="happy-rules">
+            <li>活动期间使用指定存款方式进行存款达到指定要求即可获得彩金；</li>
+            <li>存款不限制存款次数，存款到账后会自动派发至主账户；</li>
+            <li>此优惠不予任何存送优惠共享；</li>
+            <li>存款需存入指定存款通道，如存入非指定通道，将无法享受此存款优惠；</li>
+            <li>此优惠促销只适用于拥有一个独立账户的玩家。住址、电子邮箱地址、电话号码、支付方式（相同借记卡/信用卡/银行账户号码）IP地址、同一网络环境等将可以作为判定是否独立玩家的条件；</li>
+            <li>对于发现任何有违背、欺骗、或利用规则和条款进行非法获利的会员，雷火电竞保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</li>
+            <li>雷火电竞有权延长、缩短、终止，或者修改此活动！此活动最终解释权归雷火电竞所有；</li>
+        </ol>
+    </div>
+
+</template>
+<script setup>
+    import { ref } from "vue";
+    const selectedCard = ref('usdt')
+    const depositCards = ref([
+    {
+        "code": "usdt",
+        "title": "USDT",
+        "content": "充值即送1.5%彩金 使用USDT充值更安全更便捷，24小时充值不等待。活动期间，每位玩家每笔使用“TRC 20”“ERC20-2”或“ERC20”充值≥200U，即可享受存款金额的1.5%加码彩金，单日优惠最高上限588元 ",
+        "lesson": "https://fil2e5sal.vmip991b92n.com/media/deposit_guide.mp4"
+    },
+    {
+        "code": "okpay",
+        "title": "OKpay",
+        "content": "充值即送1.0%彩金 OKpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“OKpay充值\"方式成功存款，即可获得OKpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。 ",
+        "lesson": "https://me-qr.com/l/okpayjiaocheng"
+    },
+    {
+        "code": "blbpay",
+        "title": "808钱包",
+        "content": "充值即送1%彩金 808钱包方便快捷、快速到账、安全。用户每日任何时间在雷火使用“808钱包”方式成功存款，即可享受存款金额的1%加码彩金，单日优惠最高上限200元 ",
+        "lesson": "http://808.com/tutorial.html"
+    },
+    {
+        "code": "ebpay",
+        "title": "EBPAY",
+        "content": "充值即送1.0%彩金 仅只支持银行卡。活动期间，每位玩家每笔使用EBpay单笔充值成功存款≥1000元,享受存款金额的1.0%加码彩金，单日优惠最高上限200元 ",
+        "lesson": "https://fil2e5sal.vmip991b92n.com/media/intro.mp4"
+    },
+    {
+        "code": "kdou",
+        "title": "K豆",
+        "content": "充值即送1.0%彩金 K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限200元 ",
+        "lesson": "https://kdxz1848.com/"
+    },
+    {
+        "code": "jdpay",
+        "title": "JDpay",
+        "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
+        "lesson": "https://www.jdpay01.com/#/transactionFlow"
+    },
+    {
+        "code": "szrmb",
+        "title": "数字人民币",
+        "content": "充值即送1%彩金 数字人民币充值火热上线，速度快，够安全。用户每日任何时间在雷火使用“数字人民币”方式成功存款≥1000元，即可享受存款金额的1%加码彩金，单日优惠最高上限100元 "
+    },
+    {
+        "code": "zfb",
+        "title": "支付宝转卡",
+        "content": "充值即送0.5%彩金​活动期间，每日用户任何时间在雷火使用“支付宝转卡”方式成功存款，即可获得支付宝转卡存款金额的0.5%的彩金返还，单日优惠最高上限50元。​"
+    }
+]);
+
+</script>
+<style lang="scss">
+    .deposit-rebates-container {
+      padding-top: 20px;
+
+        &.isEuro {
+            .cards-tabs {
+                .tab{
+                    background: #0E0F40;
+                    &.active {
+                    background: linear-gradient(180deg, #2E9BFF 0%, #1300ED 100%);
+
+                }
+                }
+            }
+            .cards {
+                .deposit-card {
+                    background: linear-gradient(180deg, #149AFB 6.55%, #01178E 100%);
+                    border: 3px solid #95ECFF;
+                    .deposit-content {
+                        &__details {
+                            color: #D1ECFF;
+
+                        }
+                    }
+                }
+            }
+            .happy-table {
+                thead {
+                    th {
+                        background: #0047FF !important;
+                        color: #CFF6FF !important;
+                    }
+                }
+                tbody {
+                    tr {
+
+                        &:nth-child(even) {
+                            background: #C9DCFF33;
+
+                            border: 1px solid #C0BCB74D;
+                        }
+                    }
+                    td {
+                        color: #CFF6FF;
+                    }
+                }
+            }
+            ol.happy-rules {
+                li {color: #CFF6FF;
+                }
+            }
+        }
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        .cards-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            .tab {
+                border-radius: 10px;
+                display: flex;
+                border: 1px solid #FFFFFFBA;
+                background: #1E1F4A;
+                padding: 2px;
+                justify-content: flex-start;
+                align-items: center;
+                color: #ffffff;
+                font-family: Microsoft YaHei UI;
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 26.6px;
+                gap: 5px;
+                width: 120px;
+
+                &.active {
+                    background: linear-gradient(180deg, #9514FB 6.55%, #37018E 100%);
+                }
+                img {
+                    width: 40px !important;
+                }
+            }
+        }
+        .cards {
+            display: flex;
+            gap: 20px;
+            .deposit-card {
+                display:none;
+                align-items: flex-end;
+                position: relative;
+                background: linear-gradient(180deg, #30228B 0%, #622ACE 100%);
+
+                background-size: contain;
+                padding: 30px;
+                gap: 25px;
+                margin: 40px auto 10px;
+                border-radius: 10px;
+                flex-direction: column;
+                border: 3px solid #CA95FF;
+                .bg {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    bottom: 0;
+                    display: flex;
+                    z-index: 1;
+                    img {
+                        height: 100%;
+                    }
+                }
+                &.active {
+                    display: flex;
+                }
+                &__logo {
+                    position: absolute;
+                    right: 10%;
+                    top: -35px;
+                    background: url(./euroimages/hexagon.png)no-repeat center center;
+                    background-size: contain;
+                    padding: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    img {
+                        width: 80px !important;
+                        margin-bottom: 0 !important;
+                    }
+                    // &.blbpay {
+                    //     top: 48px;
+                    //     right: 40px;
+                    //     img {
+                    //         height: 30px;
+                    //     }
+                    // }
+                    // &.jdpay {
+                    //     top: 40px;
+                    //     right: 50px;
+                    //     img {
+                    //         height: 55px;
+                    //     }
+                    // }
+                }
+                .deposit-content {
+                    flex: 3;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    justify-content: space-between;
+                    height: 100%;
+                    // padding-top: 30px;
+                    &__title {
+                        font-family: Microsoft YaHei UI;
+
+                        font-size: 4.5vw;
+
+                        font-weight: 700;
+                        line-height: 42.56px;
+                        color: #ffffff;
+                    }
+                    &__details {
+                        font-family: Microsoft YaHei UI;
+
+                        font-size: 3.5vw;
+
+                        font-weight: 400;
+                        line-height: 23.94px;
+
+                        color: #C4A8FF;
+                    }
+                }
+                .deposit-buttons {
+                    position: relative;
+                    z-index: 1;
+                    display: flex;
+                    flex: 1;
+                    gap: 15px;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    .btn {
+                        width: 120px;
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+        .similar-title {
+            max-width: 1000px;
+            width: 95%;
+            margin: 30px auto;
+            img{
+                width: 100%;
+            }
+        }
+        .happy-table {
+            width: 100%;
+            thead {
+                background: #191643;
+                border: 1px solid #DC91FF;
+                td, th {
+                    background: #191643 !important;
+                    border: 1px solid #C0BCB74D !important;
+                    padding: 10px;
+                    text-align: center;
+                    color:  #EF94FE;
+                    font-family: Microsoft YaHei UI;
+                    font-size: 12px;
+                    font-weight: 700;
+                    line-height: 17.92px;
+
+                }
+            }
+            tbody {
+                td, th {
+                    background: transparent !important;
+                    font-family: Microsoft YaHei UI;
+                    font-size: 12px;
+                    font-weight: 400;
+                    line-height: 17.92px;
+
+                    border: 1px solid #C0BCB74D !important;
+                    padding: 10px;
+                    text-align: center;
+                    color: #F1D4FF;
+
+                }
+            }
+            tr {
+
+            }
+        }
+        ol.happy-rules {
+            padding: 0 !important;
+            li {
+                font-family: Microsoft YaHei UI;
+                color: #F1D4FF;
+                font-size: 15px;
+                font-weight: 400;
+                line-height: 17.6px;
+                margin-bottom: 10px;
+
+                margin-left: 15px;
+
+            }
+        }
+    }
+    @media screen and (max-width: 2000px) {
+        .deposit-rebates-container {
+            .cards-tabs {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                .tab {
+                    width: 100%;
+    font-size: 11px;
+
+                    img {
+
+    margin: 0 -4px;
+                    }
+                }
+            }
+        }
+    }
+
+</style>

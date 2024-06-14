@@ -1,12 +1,5 @@
 <template>
-  <div
-    style="
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    "
-  ></div>
+  <div style="display: flex; justify-content: center; align-items: center; height: 100vh"></div>
 </template>
 <script setup>
 import { onMounted } from "vue";
@@ -19,23 +12,22 @@ import liff from "@line/liff";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { userStore } from "src/stores";
-import {useUI} from "stores/ui";
+import { useUI } from "stores/ui";
 
 const { t } = useI18n();
 const qs = require("qs");
-const ui= useUI()
+const ui = useUI();
 
 async function pDepo(deposit) {
   const obj = {
     bankId: deposit.bankId,
     bankCardId: deposit.bankCardId,
     localAmount: deposit.localAmount,
-    paymentId: deposit.paymentId,
+    paymentId: deposit.paymentId
   };
   if (deposit.privilegeId) {
     obj.privilegeId = deposit.privilegeId;
   }
-
 
   await cashier
     .post("/session/payment/submit", qs.stringify(obj))
@@ -54,10 +46,7 @@ async function pDepo(deposit) {
       } else {
         postMessage(
           {
-            msg:
-              res.message === "too often request"
-                ? t("error.504")
-                : i18n.global.t("error." + res.code),
+            msg: res.message === "too often request" ? t("error.504") : i18n.global.t("error." + res.code)
           },
           "*"
         );
@@ -126,7 +115,7 @@ const store = userStore();
 onMounted(async () => {
   await store.getMemberInfo();
   $q.loading.show({
-    message: t("lang.loading") + "...",
+    message: t("lang.loading") + "..."
   });
   if (
     (Platform.is.desktop || Platform.is.webkit) &&
@@ -147,13 +136,7 @@ onMounted(async () => {
   // console.log(form);
 
   cashier
-    .get(
-      "/session/payment/" +
-        form.paymentId +
-        "/amount/" +
-        form.localAmount +
-        "/verify"
-    )
+    .get("/session/payment/" + form.paymentId + "/amount/" + form.localAmount + "/verify")
     .then((res) => {
       const d = res.data;
       if (d.code === 0) {

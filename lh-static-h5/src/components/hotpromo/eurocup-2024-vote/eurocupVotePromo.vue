@@ -45,15 +45,15 @@
         {{ store.currency.value }} {{ convertToCommaAmount(votesData.award) }}
       </div>
     </div>
-    <div class="winner-bar">
-      <div class="winner-bar__bg">
-        <div class="winner-bar__inner">
-          <div class="winner-bar__text">
-            恭喜玩家SAFA赢得21314元
-          </div>
-        </div>
-      </div>
-    </div>
+<!--    <div class="winner-bar">-->
+<!--      <div class="winner-bar__bg">-->
+<!--        <div class="winner-bar__inner">-->
+<!--          <div class="winner-bar__text">-->
+<!--            恭喜玩家SAFA赢得21314元-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
 
     <div class="countries-wrapper pattern-wrapper">
@@ -79,7 +79,7 @@
       <div class="c-note">举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
       </div>
     </div>
-    <div class="table-details pattern-wrapper">
+    <!-- <div class="table-details pattern-wrapper">
       <div class="table-title">投票历史</div>
       <div class="pattern-wrapper-bottom"></div>
       <table id="rankTable">
@@ -93,7 +93,7 @@
         <tbody>
         </tbody>
       </table>
-      <!-- <div id="table-pagination"></div> -->
+      <!- <div id="table-pagination"></div> ->
 
       <div class="listing-footer">
         <div class="footer-div">
@@ -104,7 +104,7 @@
           <span class="pointer-s next-page">&nbsp;&nbsp;&gt;&nbsp;</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="promo-content">
 
@@ -177,22 +177,24 @@
       </div>
 
       <q-dialog v-model="isVoteRecordModalVisible">
-        <div class="cast-vote-container">    
+        <div class="cast-vote-container">
           <div class=title>投票历史</div>
           <div class="vote-records">
-            <div class="vote-record-item" v-for="voteRecord, index in paginatedVoteRecords" :key="index">
+            <div class="vote-record-item" v-for="(voteRecord, index) in paginatedVoteRecords" :key="index">
               <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-              <div>2024/05/24 16:54</div>
+              <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
             </div>
           </div>
           <div class="pagination-wrapper">
             <q-pagination
               class="vote-record-pagination"
               v-model="votesData.votesRecord.current"
-              :max="votesData.votesRecord.data.length / votesData.votesRecord.pageSize"
+              :max="Math.ceil(votesData.votesRecord.data.length / votesData.votesRecord.pageSize)"
               direction-links
               boundary-numbers
               :max-pages="6"
+
+        @input="votesRecordChangePage"
             />
           </div>
         </div>
@@ -207,6 +209,7 @@ import { useQuasar } from "quasar";
 import { convertToCommaAmount } from "boot/utils"
 import { userStore } from "src/stores";
 import {useLocalStorage} from "@vueuse/core"
+import moment from "moment";
 
 export default defineComponent({
   name: "EurocupVotePromo",
@@ -271,7 +274,7 @@ export default defineComponent({
         $q.notify({
           color: "negative",
           position: "top",
-          message: "选票数量不足",
+          message: "投票次数不足",
           icon: "report_problem"
         });
         return;
@@ -292,35 +295,44 @@ export default defineComponent({
           icon: "check_circle_outline"
         });
         isCastVoteModalVisible.value= false;
-        loadVoteTeam();
+        // loadVoteTeam();
+        if(votesData.value.myVotes > 0){
+          votesData.value.myVotes--;
+        }
+        setTimeout(()=>{
+          loadVoteTeam();
+        },2000)
+
       }
 
       isSubmitting.value = false;
     }
-
     const votesRecordChangePage = (page) => {
-      if(page < 1) {
-        votesData.value.votesRecord.current = 1;  
-      } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
-        votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
+      const totalPages = Math.ceil(votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize);
+
+      if (page < 1) {
+        votesData.value.votesRecord.current = 1;
+      } else if (page > totalPages) {
+        votesData.value.votesRecord.current = totalPages;
       } else {
         votesData.value.votesRecord.current = page;
       }
-    }
+    };
 
     const paginatedVoteRecords = computed(() => {
       const votesRecord = votesData.value.votesRecord;
-      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize); 
+      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
     })
 
 
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+          const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
             const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
-          });
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+            return extendedVoteRecords
+        });
 
           votesData.value = {
             ...res.data,
@@ -353,7 +365,8 @@ export default defineComponent({
       imgURL,
       isVoteRecordModalVisible,
       paginatedVoteRecords,
-      votesRecordChangePage
+      votesRecordChangePage,
+      moment
     }
   }
 });
@@ -394,14 +407,14 @@ export default defineComponent({
 .cast-vote-container {
   background-color: #00192B;
   padding: 10px 20px;
-  
+
   .title {
     font-size: 20px;
     text-align: center;
     color: #00E9FE;
     font-family: "PingFang", "Roboto";
   }
-    
+
   .vote-records {
     display: grid;
     padding: 20px;
@@ -418,8 +431,8 @@ export default defineComponent({
       justify-content: space-between;
       white-space: nowrap;
       color: #fff;
-      padding: 10px 25px;
-      gap: 40px;
+      padding: 10px;
+      gap: 30px;
 
       .vote-record-flag-wrapper {
         display: flex;

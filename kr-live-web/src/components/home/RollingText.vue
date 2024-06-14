@@ -8,13 +8,13 @@
                 </div>
             </div>
             <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
-                <q-spinner-pie color="purple" size="20"/>
+                <q-spinner-gears color="purple" size="2em"/>
             </div>
             <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
                 v-else-if="props.depositRecordList && props.depositRecordList.length > 0">
                 <div>
                     <span style="color: #fff;" v-for="(a, i) in props.depositRecordList" :key="i">
-                        {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
+                       {{ formatTransactionType(a.transactionType) }} {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
                     </span>
                 </div>
             </marquee-text>
@@ -30,9 +30,22 @@
 <script setup>
 import MarqueeText from "vue-marquee-text-component";
 import moment from 'moment';
+import { useI18n } from "vue-i18n";
 
 const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
+const { t } = useI18n();
 
+const formatTransactionType = (transactionType) => {
+    if(transactionType === 'DEPOSIT') {
+        return `[${t('lang.menu_deposit')}]`;
+    }
+
+    if(transactionType === 'WITHDRAW') {
+        return `[${t('lang.menu_withdraw')}]`;
+    }
+
+    return '';
+}
 </script>
 
 <style lang="scss" scoped>
@@ -67,7 +80,7 @@ const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
             height: 24px;
             display: flex;
             align-items: center;
-            min-width: 100px;
+            gap: 5px;
 
             @media (min-width: 769px) {
                 height: 32px;

@@ -95,6 +95,8 @@ export default {
     WAITING_CALLBACK: 'Waiting Callback',
     PAYING: 'Paying',
     WAITING_AUTO_PAY: 'Waiting Auto Payment',
+    FAIL_REVIEW: 'Fail Review',
+    WAITING_RETRY: 'Waiting Retry',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -215,8 +217,8 @@ export default {
     sportMatch: {
       ACTIVE: 'Active',
       ENDED: 'Ended',
-      SETTLED: 'Settled'
-    }
+      SETTLED: 'Settled',
+    },
   },
   betStatus: {
     BET: 'BET',
@@ -442,7 +444,7 @@ export default {
       GROUP_THREE: 'GROUP THREE',
       GROUP_SIX: 'GROUP SIX',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: 'PENDING',
@@ -458,11 +460,13 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: 'Duplicate IP or Device',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: 'Minimum Deposit Amount not reach',
     ERROR_BET_AMT_MIN_NOT_MEET: 'Minimum Bet Amount not reach',
+    ERROR_SIMILAR_IP_DETECTED: 'Similar IP Detected',
+    ERROR_SIMILAR_SID_DETECTED: 'Similar Device Detected',
   },
   rewardType: {
-    BET: "BET",
-    DEPOSIT: "DEPOSIT",
-    ONE_TIME: "ONE TIME",
+    BET: 'BET',
+    DEPOSIT: 'DEPOSIT',
+    ONE_TIME: 'ONE TIME',
   },
   fields: {
     account: 'Account',
@@ -588,6 +592,7 @@ export default {
     allrisklevel: 'All Risk Level',
     allmembers: 'All Members',
     allmembertype: 'All Member Type',
+    announcement: 'Announcement',
     announcementType: 'Announcement Type',
     answer: 'Answer',
     answerOne: 'Question One Answer',
@@ -599,6 +604,7 @@ export default {
     approveBy: 'Approve By',
     assigned: 'Assigned',
     assignment: 'Assignment',
+    attachment: 'Attachment',
     auditTime: 'Audit Time',
     automaticPayment: 'Automatic Payment',
     autopay: 'Auto Pay',
@@ -1786,6 +1792,16 @@ export default {
     distribute: 'Distribute',
     totalAmountDistribute: 'Total Amount Distribute',
     noOfBonusRecord: 'Number of Bonus Record',
+    whitelist: 'Whitelist',
+    blacklist: 'Blacklist',
+    accessType: 'Access Type',
+    domainType: 'Domain Type',
+    valueType: 'Value Type',
+    ipList: 'IP List',
+    ipRange: 'IP Range',
+    countryCode: 'Country Code',
+    lower: 'Lower',
+    upper: 'Upper',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -1805,7 +1821,8 @@ export default {
     commissionPaySuccess: 'Commission Pay Success',
     confirmToAdjust:
       'Are you sure to make adjustment? Unable to make other adjustment after confirmation.',
-    confirmCancel: 'Confirm that you want to cancel this record, the operation cannot be undone',
+    confirmCancel:
+      'Confirm that you want to cancel this record, the operation cannot be undone',
     confirmCancelBbDacha:
       'Confirm that you want to cancel this BB Dacha, the operation cannot be undone',
     confirmCancelMatch:
@@ -2331,6 +2348,7 @@ export default {
     'Waiting Auto Pay': 'Waiting Auto Pay',
     'AutoWithdraw Under review': 'Under review',
     'AutoWithdraw Withdrawal Record': 'Withdrawal Record',
+    'Fail Review': 'Fail Review',
     Suspend: 'Suspend',
     Promotion: 'Promotion',
     'Privilege Info': 'Privilege Info',
@@ -2391,6 +2409,7 @@ export default {
     UEFA: 'UEFA',
     'UEFA Team': 'UEFA Team',
     'UEFA Match': 'UEFA Match',
+    'UEFA Winner': 'UEFA Winner',
     'Refer Friend Manager': 'Refer Friend Manager',
     'Sport Match': 'Sport Match',
     'Nba Match': 'NBA Playoffs',
@@ -2484,6 +2503,7 @@ export default {
     'Member Refer Record': 'Member Refer Record',
     'Member Refer Reward List': 'Member Refer Reward List',
     'Refer Rebate': 'Refer Rebate',
+    'Domain Access': 'Domain Access',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
@@ -2627,6 +2647,12 @@ export default {
     AGENT_SHARE_PROFIT_RATIO_LIVE: 'Profit Ratio-LIVE',
     AGENT_SHARE_PROFIT_RATIO_SPORT: 'Profit Ratio-SPORT',
   },
+  domainType: {
+    LANDING: 'Landing',
+    DOWNLOAD: 'Download',
+    AFFILIATE: 'Affiliate',
+    HOME: 'Home',
+  },
   error: {
     400: 'Bad Request',
     401: 'Unauthorized Request',
@@ -2651,6 +2677,7 @@ export default {
     801: 'Captcha code has expired',
     900: 'Member details could not be found',
     901: 'Affiliate record could not be found',
+    912: 'Login name could not be found',
     922: 'Your account haven link to vcall config',
     1000: 'Login failed, username or password is wrong',
     1001: 'Login failed, account is disabled',
@@ -2796,10 +2823,11 @@ export default {
     22001: 'Member VIP Level max bonus is $',
     21005: 'App exists with same site, OS, App Type & Apk Type',
     21006: 'File and os that choosing not the same',
+    22003: 'Match already exists',
     30000: 'PG update transaction status failed',
     24003: 'Result is already processed',
     27000: 'Key quantity is not enough',
     31000: 'Some matches are not ended on the selected date, please wait until all matches are ended',
-    31001: 'No matches on the selected date'
+    31001: 'No matches on the selected date',
   },
 }

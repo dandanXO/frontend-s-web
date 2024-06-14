@@ -162,6 +162,7 @@ const https = (api) => {
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const vnmHost = "vnm-affiliate.th80to83w1.com"
+  const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
@@ -189,6 +190,10 @@ const https = (api) => {
 
     case vnmHost:
       apiUrl = isAff ? process.env.VUE_APP_VNM_RST_API : (isCr ? process.env.VUE_APP_VNM_CR_API : process.env.VUE_APP_VNM_BASE_API)
+      break
+
+    case krwHost:
+      apiUrl = isAff ? process.env.VUE_APP_KRW_RST_API : (isCr ? process.env.VUE_APP_KRW_CR_API : process.env.VUE_APP_KRW_BASE_API)
       break
 
     default:

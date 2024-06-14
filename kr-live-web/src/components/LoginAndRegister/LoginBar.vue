@@ -16,7 +16,7 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              <span v-if="store.token">{{ store.nickName }}<br/>님 환영합니다 </span>
+              <span v-if="store.token">{{ store.nickName }}<br />님 환영합니다 </span>
               <span v-else>로그인</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
@@ -120,7 +120,7 @@ const iconInfo = reactive([
     info: 'lang.menu_announcement',
     iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     goPage: () => {
-      router.push(`/?page=notify`);
+      router.push(`/?page=announcement`);
     }
   },
   // {
@@ -144,13 +144,20 @@ const iconInfo = reactive([
       router.push(`/?page=finance/withdraw`);
     }
   },
-  // {
-  //   info: "배팅내역",
-  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=transaction/records`);
-  //   }
-  // },
+  {
+    info: "lang.menu_transaction_record",
+    iconUrl: require("../../assets/icon/icon-betting.svg"),
+    goPage: () => {
+      router.push(`/?page=transaction/records`);
+    }
+  },
+  {
+    info: "lang.menu_rebates",
+    iconUrl: require("../../assets/icon/icon-betting.svg"),
+    goPage: () => {
+      router.push(`/?page=transaction/records&tab=rebates`);
+    }
+  },
   {
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
@@ -232,7 +239,7 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 1280px;
+    width: 1400px;
     flex-direction: row;
     height: 80px;
     display: flex;
@@ -306,7 +313,7 @@ const iconInfo = reactive([
         border-radius: 4px;
       }
     }
-    
+
     .sidebar-section {
       width: 100%;
       display: flex;
@@ -390,7 +397,8 @@ const iconInfo = reactive([
       backdrop-filter: none;
       border: none;
 
-      .sidebar-section-wrapper, .sidebar-logout-button {
+      .sidebar-section-wrapper,
+      .sidebar-logout-button {
         display: none;
       }
     }
@@ -401,7 +409,7 @@ const iconInfo = reactive([
   .actions-topbar-controls {
     display: none;
   }
-  
+
   @media (min-width: 769px) {
     display: flex;
     justify-content: center;
@@ -429,6 +437,7 @@ const iconInfo = reactive([
   display: flex;
   flex-direction: column;
   align-items: center;
+
   &:hover .info-text {
     color: #00FFFF;
     font-weight: bold;
@@ -437,9 +446,11 @@ const iconInfo = reactive([
   img {
     width: 20px;
   }
+
   @media (min-width: 769px) {
     flex-direction: row;
     align-items: center;
+
     img {
       width: 22px;
     }

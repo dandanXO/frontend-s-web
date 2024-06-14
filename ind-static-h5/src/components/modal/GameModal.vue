@@ -330,7 +330,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     visibleComingSoon.value = true;
   } else {
     if (store.hasToken()) {
-      visible.value = true;
+      if(platformCode !== 'LuckySport'){
+        visible.value = true;
+      }
 
       var way = null;
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -356,7 +358,9 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         .then((res) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-          if (firstFourChars === "http") {
+          if(platformCode === 'LuckySport'){
+            window.open(srcDoc ,"_blank");
+          }else if (firstFourChars === "http") {
             src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;
