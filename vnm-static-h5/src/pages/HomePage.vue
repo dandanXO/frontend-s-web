@@ -1202,7 +1202,7 @@ export default defineComponent({
     };
 
     const getCheckRedPacket = () => {
-      // if (store && store.token && store.memberType === "TEST") {
+      if (store && store.token) {
         eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
           .then((res) => {
             if (res.code === 0) {
@@ -1210,7 +1210,7 @@ export default defineComponent({
             }
           })
           .catch((err) => {});
-      // }
+      }
     };
 
     const getWithExpiry = (key) => {
