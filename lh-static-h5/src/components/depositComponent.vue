@@ -2,8 +2,8 @@
 
   <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
-    <div class="q-mb-lg">
-      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>
+    <div class="q-mb-sm">
+<!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
     </div>
 
     <div class="node-wrapper">
@@ -100,7 +100,7 @@
           -
           {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
-        
+
         <div v-if="isUSDT && activeMethod.currencyRate">
           <div style="display: flex; justify-content: center; align-items: center">
             <span style="flex: 1">实时汇率：</span>
@@ -791,18 +791,7 @@ onMounted(() => {
   background: #fff !important;
 }
 
-.deposit-field {
-  &.q-field {
-    border-radius: 10px;
-    padding: 0px 8px 10px;
-    background: rgba(0, 0, 0, 0.05);
-    box-shadow: $shadow-bg;
-  }
 
-  .q-field--highlighted .q-field__label {
-    color: $dark;
-  }
-}
 
 .deposit-selection {
   &.q-field--labeled {
@@ -820,6 +809,32 @@ onMounted(() => {
     background: $background-dark-light;
   }
 }
+
+.deposit-field {
+  &.q-field {
+    border-radius: 10px;
+    padding: 0px 8px 10px;
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: $shadow-bg;
+  }
+
+  .q-field--highlighted .q-field__label {
+    color: $dark;
+  }
+
+  .q-field__control{
+    min-height: 48px;
+    height: 48px;
+
+    .q-field__control-container{
+      padding-top: 0px;
+    }
+    .q-field__marginal{
+      height: 48px;
+    }
+  }
+}
+
 </style>
 <style scoped lang="scss">
 .loader {

@@ -318,7 +318,7 @@ $node-color: #468cff;
 
   .node-content {
     column-gap: 10px;
-    row-gap: 16px;
+    row-gap: 10px;
 
     .payment-method-item {
       text-align: center;
