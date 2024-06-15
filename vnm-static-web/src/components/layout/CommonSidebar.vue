@@ -87,7 +87,7 @@ export default defineComponent({
     const isPacketChecked= ref(null);
     const getCheckRedPacket = () => {
       isPacketChecked.value= setInterval(() => {
-        // if(store && store.token && store.memberType==='TEST') {
+        if(store && store.token) {
           getRedEnvelopeFromServer()
             .then((res) => {
               clearInterval(isPacketChecked.value);
@@ -99,7 +99,7 @@ export default defineComponent({
             .catch((err) => {
               clearInterval(isPacketChecked.value);
             });
-        // }
+        }
       },10000)
     }
 
