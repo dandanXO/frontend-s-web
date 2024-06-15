@@ -158,22 +158,22 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
-      <div class="hot-matches-title">
-        <div>
-          <img src="../assets/images/home/icon-hot-matches.png" />
-        </div>
-        {{ $t("lang.hotMatches") }}
-      </div>
+<!--    <div class="hot-matches-title-wrapper">-->
+<!--      <div class="hot-matches-title">-->
+<!--        <div>-->
+<!--          <img src="../assets/images/home/icon-hot-matches.png" />-->
+<!--        </div>-->
+<!--        {{ $t("lang.hotMatches") }}-->
+<!--      </div>-->
 
       <!--      <div>-->
       <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
       <!--          {{ $t("lang.bet_now") }}-->
       <!--        </q-btn>-->
       <!--      </div>-->
-    </div>
+<!--    </div>-->
 
-    <div class="hot-matches-container" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
+    <div class="hot-matches-container">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
