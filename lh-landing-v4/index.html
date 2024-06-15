@@ -168,6 +168,18 @@
   });
 </script>
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-<script>LA.init({id:"KTF9ydpVNaBYTHZs",ck:"KTF9ydpVNaBYTHZs"})</script>
+<script>
+  var hostname= window.location.hostname;
+  console.log(hostname);
+  if(hostname.indexOf("96730.biz") > -1){
+    LA.init({id:"KTQx8ks32tLjR6yY",ck:"KTQx8ks32tLjR6yY"})
+  } else if(hostname.indexOf("86915.biz") > -1){
+    LA.init({id:"KTQxYiB9R4hxFTQo",ck:"KTQxYiB9R4hxFTQo"})
+  } else if(hostname.indexOf("69813.biz") > -1){
+    LA.init({id:"KTQxsmDuRpXuVGb4",ck:"KTQxsmDuRpXuVGb4"})
+  }else{
+    LA.init({id:"KTF9ydpVNaBYTHZs",ck:"KTF9ydpVNaBYTHZs"})
+  }
+</script>
 </body>
 </html>
