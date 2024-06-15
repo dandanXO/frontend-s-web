@@ -186,7 +186,7 @@
       >
         {{ $t("btn.submit") }}
       </q-btn>
-      <div class="tutorial-link q-mt-sm" @click="isDepositTutorial = true">{{ $t("deposit.depositTutorial") }}</div>
+      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>
     </div>
   </div>
 
@@ -732,6 +732,19 @@ const refreshNode = () => {
 };
 
 const isDepositTutorial = ref(false);
+
+const openDepositPage = () => {
+  // alert(selectedPayType.value);
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    isDepositTutorial.value= true;
+  }else if(selectedPayType.value === "BANK"){
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+  }else{
+
+  }
+}
 
 onActivated(() => {
   checkNewUser();
