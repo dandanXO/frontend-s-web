@@ -3,7 +3,7 @@
   <div class="loader" v-if="isFetchingApi" />
   <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
     <div class="q-mb-sm">
-<!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
+      <!--      <span class="additional-tips">如果遇到存款问题，请立即联系在线客服解决！</span>-->
     </div>
 
     <div class="node-wrapper">
@@ -71,27 +71,47 @@
               <template v-else>{{ store.currency.value }}</template>
             </span>
           </template>
+          <template v-slot:append>
+            <q-btn
+              class="common-large-btn deposit-btn"
+              :loading="btnLoading"
+              color="brightbtn"
+              @click="confirmDeposit"
+              label="确认"
+            />
+          </template>
         </q-input>
 
-        <q-select
-          v-else
-          ref="depositAmtRef"
-          label="选择金额"
-          name="localAmount"
-          class="deposit-selection"
-          filled
-          color="accent"
-          :options="amountList"
-          v-model="form.localAmount"
-          :rules="verifyDepositAmount"
-          padding="none"
-        >
-          <template v-slot:prepend>
+        <div  v-else class="flex-c-center">
+          <q-select
+
+            ref="depositAmtRef"
+            label="选择金额"
+            name="localAmount"
+            class="deposit-selection"
+            filled
+            color="accent"
+            :options="amountList"
+            v-model="form.localAmount"
+            :rules="verifyDepositAmount"
+            padding="none"
+          >
+            <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
               {{ store.currency.value }}
             </span>
-          </template>
-        </q-select>
+            </template>
+          </q-select>
+
+          <q-btn
+            class="common-large-btn deposit-btn"
+            :loading="btnLoading"
+            color="brightbtn"
+            @click="confirmDeposit"
+            label="确认"
+          />
+        </div>
+
 
         <div class="q-mt-sm q-mb-sm text-grey text-bold">
           单笔存款：{{
@@ -154,15 +174,15 @@
             </q-item>
           </template>
         </q-select>
-        <div class="q-mt-md">
-          <q-btn
-            class="common-large-btn"
-            :loading="btnLoading"
-            color="brightbtn fit"
-            @click="confirmDeposit"
-            label="确定存款"
-          />
-        </div>
+        <!--        <div class="q-mt-xs" v-if="amountList.length !== 0">-->
+        <!--          <q-btn-->
+        <!--            class="common-large-btn"-->
+        <!--            :loading="btnLoading"-->
+        <!--            color="brightbtn fit"-->
+        <!--            @click="confirmDeposit"-->
+        <!--            label="确定存款"-->
+        <!--          />-->
+        <!--        </div>-->
         <div class="q-mt-sm" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
       </q-form>
@@ -791,9 +811,22 @@ onMounted(() => {
   background: #fff !important;
 }
 
+.flex-c-center{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 
+  .deposit-btn{
+    width: 25%;
+    height: 56px;
+  }
+}
 
 .deposit-selection {
+  width: 75%;
+  padding-bottom: 0px;
+
   &.q-field--labeled {
     color: #fff;
   }
@@ -811,6 +844,7 @@ onMounted(() => {
 }
 
 .deposit-field {
+  margin-top: 7px;
   &.q-field {
     border-radius: 10px;
     padding: 0px 8px 10px;
@@ -834,6 +868,7 @@ onMounted(() => {
     }
   }
 }
+
 
 </style>
 <style scoped lang="scss">

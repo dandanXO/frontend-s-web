@@ -198,7 +198,7 @@ $node-color: #468cff;
   // display: flex;
   grid-gap: 15px;
   display: grid;
-  margin-bottom: 15px;
+  margin-bottom: 6px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
   padding-right: 15px;
@@ -297,7 +297,7 @@ $node-color: #468cff;
       }
       .node-text {
         display: flex;
-        gap: 5px;
+        gap: 3px;
         justify-content: center;
         align-items: center;
         & > div {
@@ -310,7 +310,7 @@ $node-color: #468cff;
           //background-color: #2a313e;
           // max-width: 1.5rem;
           padding: 0px;
-          margin-bottom: 0;
+          margin-bottom: -3px;
         }
       }
     }
