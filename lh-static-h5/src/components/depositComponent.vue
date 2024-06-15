@@ -813,13 +813,15 @@ onMounted(() => {
 
 .flex-c-center{
   display:flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
 
   .deposit-btn{
     width: 25%;
     height: 56px;
+    font-size: 20px;
+    white-space:nowrap;
   }
 }
 
@@ -850,6 +852,8 @@ onMounted(() => {
     padding: 0px 8px 10px;
     background: rgba(0, 0, 0, 0.05);
     box-shadow: $shadow-bg;
+    margin-bottom: 18px;
+    height: 56px;
   }
 
   .q-field--highlighted .q-field__label {
