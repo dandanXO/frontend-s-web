@@ -738,7 +738,8 @@ const openDepositPage = () => {
   if(selectedPayType.value === "EASYPAISA"){
     window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
   }else if(selectedPayType.value === "JAZZCASH"){
-    isDepositTutorial.value= true;
+    // isDepositTutorial.value= true;
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
   }else if(selectedPayType.value === "BANK"){
     window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
   }else{
