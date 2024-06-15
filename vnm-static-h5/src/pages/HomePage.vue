@@ -158,24 +158,24 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
-      <div class="hot-matches-title">
-        <div>
-          <img src="../assets/images/home/icon-hot-matches.png" />
-        </div>
-        {{ $t("lang.hotMatches") }}
-      </div>
+<!--    <div class="hot-matches-title-wrapper">-->
+<!--      <div class="hot-matches-title">-->
+<!--        <div>-->
+<!--          <img src="../assets/images/home/icon-hot-matches.png" />-->
+<!--        </div>-->
+<!--        {{ $t("lang.hotMatches") }}-->
+<!--      </div>-->
 
       <!--      <div>-->
       <!--        <q-btn @click="playGame('', 'SABA', '')" rounded no-caps color="brightbtn" class="sm-screen-txt">-->
       <!--          {{ $t("lang.bet_now") }}-->
       <!--        </q-btn>-->
       <!--      </div>-->
-    </div>
+<!--    </div>-->
 
-    <div class="hot-matches-container" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
+    <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1.2"
+        :slides-per-view="1"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
@@ -684,15 +684,15 @@
       </a>
     </div>
   </div>
-  <!--
+
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
     </div>
-    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
-      {{ $t("lang.rebates") }}
-    </div>
-  </q-page-sticky> -->
+<!--    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">-->
+<!--      {{ $t("lang.rebates") }}-->
+<!--    </div>-->
+  </q-page-sticky>
 
   <q-dialog
     width="100%"
@@ -1196,13 +1196,13 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
-    const isRedPacketShow = ref(true);
+    const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
       router.push("/promo?name=vi-mualixi-redpacket");
     };
 
     const getCheckRedPacket = () => {
-      if (store && store.token && store.memberType === "TEST") {
+      // if (store && store.token && store.memberType === "TEST") {
         eventapi("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP")
           .then((res) => {
             if (res.code === 0) {
@@ -1210,7 +1210,7 @@ export default defineComponent({
             }
           })
           .catch((err) => {});
-      }
+      // }
     };
 
     const getWithExpiry = (key) => {
@@ -3170,10 +3170,13 @@ export default defineComponent({
   }
 
   .hot-matches-container {
+    width:100%;
+    height: 125px;
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
       margin-top: 10px;
+      transform: scale(0.75)
     }
   }
 
@@ -3196,28 +3199,33 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 16px;
-    margin-top: 10px;
+    margin: auto;
+    max-width: 450px;
+    margin-top: 0px;
     padding: 8px 18px 6px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 6px 0px #00324433;
+
 
     .top-match-title {
-      color: #ffffff;
+      color: #033AC8;
       font-weight: 700;
       font-size: 14px;
       text-align: center;
       width: 100%;
-      margin: -20px auto 0;
+      margin: -10px auto 0;
 
       .title-frame {
-        background-image: url("../assets/images/home/top-match-title.png");
-        background-size: auto 100%;
+        background-image: url("../assets/images/home/top-title-btn.png");
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center center;
         padding: 4px 12px;
         margin: auto;
+        width: 70%;
+        max-width: 200px;
       }
     }
 
