@@ -498,7 +498,7 @@ onMounted(() => {
         align-items: center;
         flex-direction: column;
         color: #000000;
-        font-size: 18px;
+        font-size: 16px;
         &__content {
           font-weight: 500;
         }
@@ -614,14 +614,14 @@ onMounted(() => {
             background-size: contain;
             padding: 2px 20px;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 16px;
             color: #ffffff;
             width: 130px;
             text-align: center;
             }
             &__sub {
                 color: #000000;
-                font-size: 20px;
+                font-size: 16px;
             }
         }
     }
@@ -636,7 +636,7 @@ onMounted(() => {
             width: 100%;
             border: 1px solid #ACD4F6;
             padding: 20px;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 400;
             line-height: 28px;
             background: #FFFFFF;
@@ -649,7 +649,7 @@ onMounted(() => {
                 gap: 10px;
                 color: #0080FF;
                 font-weight: 600;
-                font-size: 28px;
+                font-size: 20px;
                 margin-bottom: 20px;
                 &:before {
                     content: "";
@@ -703,7 +703,7 @@ onMounted(() => {
             table {
                 width: 100%;
                 th {
-                    font-size: 20px;
+                    font-size: 16px;
                     font-weight: 700;
                     line-height: 24.2px;
                     text-align: center;

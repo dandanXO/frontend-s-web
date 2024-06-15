@@ -28,7 +28,7 @@
     <div class="header-left" @click="router.push('/')">
       <img alt="logo" src="../assets/logo-web.svg" />
     </div>
-    <div class="header-middle" v-if="!store.token">
+    <div class="header-middle" v-if="!isLogined">
       <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="router.push('/login')">
         {{ $t("lang.login") }}
       </q-btn>
@@ -128,37 +128,37 @@
       <div class="euro-countdown-fly-06">
         <img src="../assets/images/home/eurocup-countdown-fly-06.png" />
       </div>
-      <div class="euro-countdown-content">
-        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />
+      <!--      <div class="euro-countdown-content">-->
+      <!--        <img src="../assets/images/home/eurocup-countdown-content-empty.png" />-->
 
-        <div class="euro-countdown-txt">
-          <div class="txt-logo">
-            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />
-          </div>
-          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>
+      <!--        <div class="euro-countdown-txt">-->
+      <!--          <div class="txt-logo">-->
+      <!--            <img src="../assets/images/home/eurocup-countdown-logo.png" style="width: 60px" />-->
+      <!--          </div>-->
+      <!--          <div class="txt-2024"><img src="../assets/images/home/eurocup-countdown-2024.png" style="width: 60px" /></div>-->
 
-          <div class="euro-countdown-num-wrap">
-            {{ $t("lang.euroCountdown01a") }}
-            <div class="euro-countdown-num">
-              <!-- <img src="../assets/images/home/eurocup-countdown-numbers.png" /> -->
-              <div class="num">
-                <span>{{ countDay01 }}</span>
-              </div>
-              <div class="num">
-                <span>{{ countDay02 }}</span>
-              </div>
-            </div>
-            {{ $t("lang.euroCountdown02") }}
-          </div>
-        </div>
-      </div>
+      <!--          <div class="euro-countdown-num-wrap">-->
+      <!--            {{ $t("lang.euroCountdown01a") }}-->
+      <!--            <div class="euro-countdown-num">-->
+      <!--              &lt;!&ndash; <img src="../assets/images/home/eurocup-countdown-numbers.png" /> &ndash;&gt;-->
+      <!--              <div class="num">-->
+      <!--                <span>{{ countDay01 }}</span>-->
+      <!--              </div>-->
+      <!--              <div class="num">-->
+      <!--                <span>{{ countDay02 }}</span>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--            {{ $t("lang.euroCountdown02") }}-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
 
     <!-- <div class="euro-countdown">
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper" style="display: none">
+    <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -173,7 +173,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container" style="display: none">
+    <div class="hot-matches-container" >
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -1157,6 +1157,8 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance;
     });
+    const isLogined= ref(false);
+
     const allGames = ref(null);
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       // console.log(gameName)
@@ -1636,6 +1638,11 @@ export default defineComponent({
       runMenuFloat();
       loadHotMatches();
       getCheckRedPacket();
+      if(store.token){
+        isLogined.value= true;
+      }else{
+        isLogined.value= false;
+      }
     });
 
     const runMenuFloat = () => {
@@ -1816,6 +1823,15 @@ export default defineComponent({
       { immediate: true }
     );
 
+    watch(
+      () => store.token,
+      () => {
+        if (store.token) {
+          isLogined.value = true;
+        }
+      }
+    );
+
     return {
       imageLoading,
       slide: ref(0),
@@ -1829,6 +1845,7 @@ export default defineComponent({
       store,
       platforms,
       mainWallet,
+      isLogined,
       playGame,
       allGames,
       gamePage,
@@ -3179,8 +3196,8 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 20px;
-    margin-top: 12px;
-    padding: 18px 18px 12px;
+    margin-top: 10px;
+    padding: 10px 18px 8px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -3210,7 +3227,7 @@ export default defineComponent({
       flex-direction: column;
       gap: 4px;
       align-items: center;
-      margin-top: 12px;
+      margin-top: 6px;
 
       img {
         display: block;
@@ -3227,12 +3244,12 @@ export default defineComponent({
         color: #444444;
         font-size: 14px;
         text-align: center;
-        margin-top: 12px;
+        margin-top: 4px;
       }
 
       .match-btn {
         // margin-top: auto;
-        margin-top: 6px;
+        margin-top: 0px;
       }
     }
 

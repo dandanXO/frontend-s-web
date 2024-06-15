@@ -1,41 +1,41 @@
 <template>
   <div class="hot-matches-wrapper">
-    <div class="euro-countdown">
-      <div class="euro-countdown-fly-01">
-        <img src="../../assets/home/eurocup-countdown-fly-01.png" />
-      </div>
-      <div class="euro-countdown-fly-02">
-        <img src="../../assets/home/eurocup-countdown-fly-02.png" />
-      </div>
-      <div class="euro-countdown-fly-03">
-        <img src="../../assets/home/eurocup-countdown-fly-03.png" />
-      </div>
-      <div class="euro-countdown-fly-04">
-        <img src="../../assets/home/eurocup-countdown-fly-04.png" />
-      </div>
-      <div class="euro-countdown-fly-05">
-        <img src="../../assets/home/eurocup-countdown-fly-05.png" />
-      </div>
-      <div class="euro-countdown-fly-06">
-        <img src="../../assets/home/eurocup-countdown-fly-06.png" />
-      </div>
-      <div class="euro-countdown-content">
-        <img src="../../assets/home/eurocup-countdown-content.png" />
-      </div>
+<!--    <div class="euro-countdown">-->
+<!--      <div class="euro-countdown-fly-01">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-01.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-02">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-02.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-03">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-03.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-04">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-04.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-05">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-05.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-fly-06">-->
+<!--        <img src="../../assets/home/eurocup-countdown-fly-06.png" />-->
+<!--      </div>-->
+<!--      <div class="euro-countdown-content">-->
+<!--        <img src="../../assets/home/eurocup-countdown-content.png" />-->
+<!--      </div>-->
 
-      <div class="euro-countdown-txt">
-        {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}
-        <div class="euro-countdown-num">
-          <div class="num">
-            <span>{{ countDay01 }}</span>
-          </div>
-          <div class="num">
-            <span>{{ countDay02 }}</span>
-          </div>
-        </div>
-        {{ $t("home.euroCountdown02") }}
-      </div>
-    </div>
+<!--      <div class="euro-countdown-txt">-->
+<!--        {{ $t("home.euroCountdown01") }} {{ $t("home.euroCountdown01a") }}-->
+<!--        <div class="euro-countdown-num">-->
+<!--          <div class="num">-->
+<!--            <span>{{ countDay01 }}</span>-->
+<!--          </div>-->
+<!--          <div class="num">-->
+<!--            <span>{{ countDay02 }}</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        {{ $t("home.euroCountdown02") }}-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="hot-matches-title-wrapper">
       <div class="hot-matches-title">
