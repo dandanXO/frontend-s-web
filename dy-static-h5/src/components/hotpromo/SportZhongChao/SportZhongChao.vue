@@ -197,7 +197,7 @@
           </td>
           <td style="color: #05a5ff !important; font-size: 14px; line-height: 28px; font-weight: 500">
             <div>四队总比分</div>
-            <div>单数彩金</div>
+            <div>双数彩金</div>
           </td>
           <td style="color: #05a5ff !important; font-size: 14px; line-height: 28px">
             <div>四队总比分</div>
