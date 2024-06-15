@@ -3201,23 +3201,24 @@ export default defineComponent({
     border-radius: 16px;
     margin: auto;
     max-width: 450px;
-    margin-top: 10px;
+    margin-top: 0px;
     padding: 8px 18px 6px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    box-shadow: -1px 5px 11px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 6px 0px #00324433;
+
 
     .top-match-title {
-      color: #ffffff;
+      color: #033AC8;
       font-weight: 700;
       font-size: 14px;
       text-align: center;
       width: 100%;
-      margin: -20px auto 0;
+      margin: -10px auto 0;
 
       .title-frame {
-        background-image: url("../assets/images/home/top-match-title.png");
+        background-image: url("../assets/images/home/top-title-btn.png");
         background-size: auto 100%;
         background-repeat: no-repeat;
         background-position: center center;
