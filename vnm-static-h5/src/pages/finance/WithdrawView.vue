@@ -731,8 +731,8 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: $box-width;
-  padding: 1rem 0.9rem 1rem;
-  margin: 10px auto;
+  padding: 0.6rem 0.9rem 0.6rem;
+  margin: 6px auto;
   background: $white;
   box-shadow: $shadow-bg;
   border-radius: 10px;
@@ -744,7 +744,7 @@ export default defineComponent({
     background-image: url("../../assets/images/download/inactive-tab-bg.png");
     background-size: 100% 100%;
     background-color: $secondary;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     border-radius: 10px;
 
