@@ -1790,6 +1790,8 @@ export default {
     virtualMultiplier: 'Virtual Multiplier',
     batchDistributeRebate: 'Batch Distribute Rebate',
     distribute: 'Distribute',
+    totalAmountDistribute: 'Total Amount Distribute',
+    noOfBonusRecord: 'Number of Bonus Record',
     whitelist: 'Whitelist',
     blacklist: 'Blacklist',
     accessType: 'Access Type',
@@ -1800,6 +1802,8 @@ export default {
     countryCode: 'Country Code',
     lower: 'Lower',
     upper: 'Upper',
+    addMemberLotteryRecord: 'Add Member Lottery Record',
+    addFakeLotteryRecord: 'Add Fake Lottery Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

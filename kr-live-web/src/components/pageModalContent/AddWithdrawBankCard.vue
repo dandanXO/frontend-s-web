@@ -1,7 +1,7 @@
 <template>
   <div class="form-wrapper">
     <q-card-section>
-      <div style="display: grid;grid-template-columns: 1fr 1fr;">
+      <div style="display: grid;grid-template-columns: 1fr 300px;gap:10px;">
         <div>
         <q-form class="form-template">
           <div class="form-item">

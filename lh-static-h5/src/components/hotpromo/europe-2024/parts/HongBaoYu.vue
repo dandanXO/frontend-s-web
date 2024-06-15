@@ -5,6 +5,7 @@
   <div class="redpacket">
     <div class="hongbao"><img src="../images/hongbao.png" /></div>
     <div class="claim-button" @click="getPromotion"></div>
+    <div class="note">注：每场比赛触发进球红包雨后将在1~3分钟内开启15分钟进球红包雨</div>
   </div>
   <div class="remark">
     欧洲杯赛程期间，当日每一场比赛进球后1-3分钟内将开启进球红包雨庆祝。红包雨金额跟随每一场比赛总进球粒数增加红包雨奖金，先到先得，抢完截止。
@@ -119,9 +120,13 @@ const props = defineProps({
     background-image: url(../images/claim-btn.png);
     background-size: contain;
     width: 140px;
-    height: 120px;
+    height: 60px;
     cursor: pointer;
   }
+    .note {
+      font-size: 14px;
+      padding: 0;
+    }
 }
 .rule-title,
 .rule-content {

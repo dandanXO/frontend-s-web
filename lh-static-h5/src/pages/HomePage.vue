@@ -645,7 +645,7 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
-    <q-card flat style="width: 90%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
+    <q-card flat style="width: 70%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
       <q-card-section style="background-color: transparent;">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
@@ -1245,7 +1245,7 @@ export default defineComponent({
                 spObj.title = "FB体育";
               }
               if (spObj.code === "PINNACLE") {
-                spObj.title = "平博体育";
+                spObj.title = "AP体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -1439,7 +1439,15 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      if(banner.redirectUrl=="app://deposit"){
+
+      const openPattern = /^\/open\/(.*)/;
+      if ((banner.redirectUrl).match(openPattern)) {
+        const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+        allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+        return;
+      } else if(banner.redirectUrl=="app://deposit"){
         router.push("/finance/deposit");
       }else{
         const redirectU = "/promo?name=" + banner.redirectUrl;
@@ -1711,7 +1719,7 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      if (store.token && (store.memberType === 'TEST' || store.memberType === 'PROMO_TEST')) {
+      if (store.token) {
         checkShowImgTop();
       }
       getAppDownloadUrl();

@@ -1,8 +1,8 @@
 <template>
   <div class="eurocup-hongbaoyu-container">
-    <div>
-      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />
-    </div>
+    <!--    <div>-->
+    <!--      <img class="banner-img" src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/banner-img.png" />-->
+    <!--    </div>-->
 
     <div class="hongbao-subtitle">
       <img src="../../../assets/images/promotion/hotpromo/hongbaoyu/eurocup/subtitle-01.png" />
@@ -25,7 +25,7 @@
           <div class="winner" v-for="(item, index) in visibleItems" :key="index">
             <div>{{ item.date }}</div>
             <div>{{ item.name }}</div>
-            <div class="amount-txt">{{ item.amount.toFixed(2) }}</div>
+            <div class="amount-txt">{{ item.amount ? parseFloat(item.amount).toFixed(2) : 1.0 }}</div>
           </div>
         </div>
       </div>

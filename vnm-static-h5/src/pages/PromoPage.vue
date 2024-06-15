@@ -618,7 +618,7 @@ export default defineComponent({
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 3rem;
+            height: 3.3rem;
             display: flex;
             align-items: center;
 

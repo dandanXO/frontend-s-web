@@ -72,21 +72,22 @@
           (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
           // isValidPhone
         ]" clearable>
-          <template v-slot:append>
-            <div class="primary-button blue-square" :class="!regForm.telephone ? 'disabled' : ''" @click="openTelephoneVerificationModal">
+          <!-- <template v-slot:append>
+            <div class="primary-button blue-square" :class="!regForm.telephone ? 'disabled' : ''"
+              @click="openTelephoneVerificationModal">
               {{ $t('lang.reg_phone_verification') }}
             </div>
-          </template>
+          </template> -->
         </q-input>
       </div>
-      <div class="form-item">
+      <!-- <div class="form-item">
         <label>{{ $t('lang.reg_phone_otp') }}</label>
         <div class="telephone-otp-row">
           <q-input dense ref="telOtpCodeRef" v-model="regForm.smsCode" :placeholder="'6자리 숫자'" stack-label clearable
             autocomplete="off" outlined lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.otp_cannot_be_empty')]" />
         </div>
-      </div>
+      </div> -->
       <div class="form-item">
         <label>{{ $t('lang.reg_bank') }}</label>
         <q-select dense outlined label="은행선택" ref="bankCardRef" v-model="regForm.bankId" :options="banksList"
@@ -123,8 +124,8 @@
         <q-form class="q-gutter-sm">
 
           <div class="captcha-code">
-            <q-input dense class="captcha-code-input" ref="telephoneVerifyCaptchaCodeRef" outlined type="text" maxlength="4"
-              v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
+            <q-input dense class="captcha-code-input" ref="telephoneVerifyCaptchaCodeRef" outlined type="text"
+              maxlength="4" v-model="verifyTelephoneForm.telephoneVerifyCaptchaCode" :label="$t('lang.captcha_code')"
               :rules="[(val) => (val && val.length > 3) || $t('lang.reg_enter_captcha')]">
               <template v-slot:prepend>
                 <q-icon name="security" />
@@ -132,14 +133,15 @@
             </q-input>
             <div class="captcha-img-wrapper">
               <q-spinner-hourglass :color="'blue'" size="30px" v-if="captchaLoading" />
-              <img v-else class="captcha-img" height="56px" :src="telephoneVerificationCaptchaImg" @click.prevent="getTelephoneVerificationImgCode" />
+              <img v-else class="captcha-img" height="56px" :src="telephoneVerificationCaptchaImg"
+                @click.prevent="getTelephoneVerificationImgCode" />
             </div>
           </div>
           <div class="row justify-center items-center gap-8" style="margin-top: 25px">
-            <div :style="isOtpSending ? 'opacity: .6' : ''" class="primary-button blue" :class="isOtpSending ? 'disabled' : ''"
-              @click.prevent="getOtpCode">
+            <div :style="isOtpSending ? 'opacity: .6' : ''" class="primary-button blue"
+              :class="isOtpSending ? 'disabled' : ''" @click.prevent="getOtpCode">
               {{ isOtpSending ? $t("lang.reg_captcha_verifying") : $t("lang.reg_captcha_confirm") }}
-          </div>
+            </div>
           </div>
         </q-form>
       </q-card>
@@ -215,7 +217,7 @@ export default defineComponent({
 
     const isTelephoneVerificationModalVisible = ref(false);
     const openTelephoneVerificationModal = () => {
-      if(!regForm.telephone) {
+      if (!regForm.telephone) {
         return;
       }
 
@@ -258,7 +260,7 @@ export default defineComponent({
     };
 
     const getOtpCode = () => {
-      if(isOtpSending.value) {
+      if (isOtpSending.value) {
         return;
       }
 
@@ -331,7 +333,7 @@ export default defineComponent({
       pwdRef.value.validate();
       confirmPwdRef.value.validate();
       telRef.value.validate();
-      telOtpCodeRef.value.validate();
+      // telOtpCodeRef.value.validate();
       emailRef.value.validate();
       cardNumRef.value.validate();
       cardAccRef.value.validate();
@@ -345,7 +347,7 @@ export default defineComponent({
         pwdRef.value.hasError ||
         confirmPwdRef.value.hasError ||
         telRef.value.hasError ||
-        telOtpCodeRef.value.hasError ||
+        // telOtpCodeRef.value.hasError ||
         emailRef.value.hasError ||
         cardNumRef.value.hasError ||
         cardAccRef.value.hasError ||
@@ -504,7 +506,7 @@ export default defineComponent({
       telRef,
       cardNumRef,
       cardAccRef,
-      telOtpCodeRef,
+      // telOtpCodeRef,
       telephoneVerifyCaptchaCodeRef,
       emailRef,
       cardNumberRef,
@@ -675,26 +677,26 @@ function charType(num) {
 }
 
 .captcha-code {
+  width: 100%;
+  display: flex;
+}
+
+.captcha-code-input {
+  margin-right: 16px;
+  width: 100%;
+}
+
+.captcha-img-wrapper {
+  min-width: 120px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .captcha-img {
+    border-radius: 8px;
     width: 100%;
-    display: flex;
+    height: 100%;
   }
-
-  .captcha-code-input {
-    margin-right: 16px;
-    width: 100%;
-  }
-
-  .captcha-img-wrapper {
-    min-width: 120px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .captcha-img {
-      border-radius: 8px;
-      width: 100%;
-      height: 100%;
-    }
-  }
+}
 </style>

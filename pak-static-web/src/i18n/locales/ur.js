@@ -217,6 +217,7 @@ export default {
           record: "ریکارڈ",
           discount: "رعایت",
           bank: "بنک",
+          order: "اورڈر",
           message: "پیغام",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "ریکارڈ",
+      recordEndTitle: "آپ صفحے کے آخر تک پہنچ چکے ہیں۔",
+      betTitle: "شرط",
+      platformTitle: "گیم پلیٹ فارم"
+    },
+    order: {
       title: "لین دین کا ریکارڈ",
       tab: {
         deposit: {
@@ -645,6 +652,20 @@ export default {
           required: "براہ کرم پاس ورڈ درج کریں",
           min: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "سیٹل",
+        settled: "سیٹلڈ",
+        betAndSettle: "شرط اور سیٹل",
+        cancel: "منسوخ کریں",
+        rollback: "رول بیک",
+        bet: "شرط",
+        patch: "پیچ",
+        unsettled: "غیر سیٹلڈ",
+        jackpot: "جیک پاٹ",
+        bonus: "بونس"
       }
     }
   },

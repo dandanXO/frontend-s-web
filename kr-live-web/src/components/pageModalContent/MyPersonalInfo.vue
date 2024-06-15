@@ -2,7 +2,7 @@
   <div class="form-wrapper">
     <form class="personal-info-form form-template">
       <div class="form-item">
-        <label>아이디(개인정보)</label>
+        <label>닉네임</label>
         <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
           @update:model-value="updateTouch" ref="name2Ref"  lazy-rules
           :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']"/>
@@ -13,15 +13,15 @@
           :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
           @update:model-value="updateTouch" />
       </div>
-      <!-- <div class="form-item">
-        <label>잔액</label>
-        <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
-          @update:model-value="updateTouch" />
-      </div> -->
       <div class="form-item">
+        <label>사용자 이름</label>
+        <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
+          @update:model-value="updateTouch" />
+      </div>
+      <!-- <div class="form-item">
         <label>이메일</label>
         <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
-      </div>
+      </div> -->
       <div class="form-item">
         <label>전화</label>
         <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
@@ -57,10 +57,6 @@ const personalState = reactive({
   memberInfo: {}
 });
 const store = userStore();
-const mainWallet = computed(() => {
-  const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
-  return store.currency.value + " " + balanceWithTwoDecimalPlaces;
-});
 
 const updateTouch = () => {
   hasTouched.value = true;
@@ -70,7 +66,7 @@ const loadInfo = () => {
   personalState.memberInfo = userStore();
   formDetail.realName = personalState.memberInfo.realName;
   formDetail.name2 = personalState.memberInfo.name2;
-  formDetail.mainWallet = personalState.memberInfo.token ? mainWallet : ''
+  formDetail.loginName = personalState.memberInfo.nickName;
   formDetail.email = personalState.memberInfo.email || '';
   formDetail.telephone = personalState.memberInfo.telephone || ''
 }

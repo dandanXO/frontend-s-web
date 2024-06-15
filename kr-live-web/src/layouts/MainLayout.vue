@@ -68,14 +68,14 @@ export default defineComponent({
       { imgUrl: require("assets/images/footer/logo-cq9.png") },
       { imgUrl: require("assets/images/footer/logo-habanero.png") },
       { imgUrl: require("assets/images/footer/logo-ag.png") },
-      { imgUrl: require("../assets/images/footer/company5.png") },
-      { imgUrl: require("../assets/images/footer/company6.png") },
-      { imgUrl: require("../assets/images/footer/company7.png") },
-      { imgUrl: require("../assets/images/footer/company8.png") },
-      { imgUrl: require("../assets/images/footer/company9.png") },
+      { imgUrl: require("../assets/images/footer/logo-bcongo.png") },
+      { imgUrl: require("../assets/images/footer/logo-stargames.png") },
+      { imgUrl: require("../assets/images/footer/logo-rtg-slots.png") },
+      { imgUrl: require("../assets/images/footer/logo-dreamtech.png") },
+      { imgUrl: require("../assets/images/footer/logo-playngo.png") },
       { imgUrl: require("assets/images/footer/logo-dg.png") },
       { imgUrl: require("assets/images/footer/logo-ps.png") },
-      { imgUrl: require("../assets/images/footer/company12.png") },
+      { imgUrl: require("../assets/images/footer/logo-gameart.png") },
       { imgUrl: require("../assets/images/footer/logo-evo.png") },
       { imgUrl: require("../assets/images/footer/logo-ae.png") },
       { imgUrl: require("../assets/images/footer/logo-tfgaming.png") },
@@ -581,9 +581,8 @@ footer {
 
 .footer-box {
   margin: 15px 0px;
-  max-width: 1280px;
-  column-gap: 5px;
-  row-gap: 5px;
+  max-width: 1400px;
+  gap: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -595,6 +594,10 @@ footer {
     width: 75px;
     height: 32px;
     background-color: #272a30;
+
+    background: linear-gradient(275deg, hsl(0deg 0% 11.17%) 0%, hsl(223deg 12.03% 13.49%) 100%);
+
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -614,7 +617,7 @@ footer {
   line-height: 16.8px;
   padding-bottom: 20px;
   @media (min-width: 1200px) {
-    font-size: 20px;
+    font-size: 17px;
     line-height: 28px;
     padding-bottom: 20px;
   }

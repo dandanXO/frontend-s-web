@@ -16,7 +16,7 @@
       <a-form-item name="password" :label="$t('common.form.password.label')" label-align="left">
         <a-input
           v-model:value="registerForm.password"
-          type="password"
+          :type="isPasswordVisible ? 'text' : 'password'"
           placeholder="Password"
           :placeholder="$t('common.form.password.placeholder')"
           autocomplete="new-password"
@@ -24,6 +24,10 @@
         >
           <template #prefix>
             <RiLock2Fill />
+          </template>
+          <template #suffix>
+            <RiEyeOffFill v-if="!isPasswordVisible" @click="handlePasswordVisibleClick" />
+            <RiEyeFill v-else @click="handlePasswordVisibleClick" />
           </template>
         </a-input>
       </a-form-item>
@@ -59,7 +63,7 @@
       </a-button>
     </div>
   </a-form>
-  <a-modal closable v-model:visible="isUserRegistrationModalVisible" width="90%">
+  <!-- <a-modal closable v-model:visible="isUserRegistrationModalVisible" width="90%">
     <div class="game-title sub">User Registration Protocol</div>
 
     <div class="user-protocol">
@@ -342,16 +346,14 @@
 
       <p>play4win.cc is not affiliated with Valve Corporation or Steam.</p>
     </div>
-  </a-modal>
+  </a-modal> -->
 </template>
 <script setup>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { userStore } from "@/store/index";
-import { RiSmartphoneFill, RiLock2Fill } from "vue-remix-icons";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { RiSmartphoneFill, RiLock2Fill, RiEyeFill, RiEyeOffFill } from "vue-remix-icons";
 import { useRouter } from "vue-router";
-import InvitationIcon from "@/assets/images/layout/header/invitation-icon.svg";
 import { register } from "@/api/index/login";
 import { ElMessage } from "element-plus";
 import { validateLoginName, validatePassword } from "@/utils/validator";
@@ -363,6 +365,7 @@ const store = userStore();
 const router = useRouter();
 
 const formRef = ref();
+const isPasswordVisible = ref(false);
 const agreePrivacy = ref(true);
 const isUserRegistrationModalVisible = ref(false);
 const loadingRegister = ref(false);
@@ -375,6 +378,8 @@ const registerFormRules = ref({
   loginName: [{ validator: validateLoginName, trigger: "blur" }],
   password: [{ validator: validatePassword, trigger: "blur" }]
 });
+
+const handlePasswordVisibleClick = () => (isPasswordVisible.value = !isPasswordVisible.value);
 
 const onSubmit = () => {
   formRef.value
@@ -403,6 +408,7 @@ const onSubmit = () => {
     .catch((error) => {
       console.log("error", error);
     });
+
   // formRef.value
   //   .validate()
   //   .then(() => {

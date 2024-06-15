@@ -234,7 +234,8 @@
                     <li>II: Ngày chọn số từ 01/07/2024 – 15/07/2024, ngày mở thưởng là 16/07/2024.</li>
                 </ul>
                 <p class="likeli"><span class="point">4</span>Thông qua việc hoàn thành yêu cầu nạp tiền mỗi ngày, Thành Viên đều có thể chọn 1 số may mắn, tối đa 15 số cho 1 đợt. </p>
-                <p class="likeli"><span class="point">5</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
+                <p class="likeli"><span class="point">5</span><span>Thành viên sẽ nhận được 3 lần chọn số may mắn khi đăng ký hợp lệ khuyến mãi TRAO MAY MẮN TỚI ĐỘI BÓNG YÊU THÍCH và sẽ nhận được thêm 1 lần chọn số sau khi đội bóng yêu thích mà thành viên đã chọn và đặt cược chiến thắng trận đấu đó <a href="https://docs.google.com/forms/d/e/1FAIpQLSeIgng8JZ2zoX4MMCNVksVD8v1MBjJ2aNUCa5r-qGJhq3F1HA/viewform" target="_blank" class="pill">TẠI ĐÂY</a></span></p>
+                <p class="likeli"><span class="point">6</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
             </div>
             <div class="section tnc">
                 <div class="section-title">Điều khoản và điều kiện</div>
@@ -664,6 +665,16 @@ onMounted(() => {
                 display: grid;
                 grid-template-columns: 30px 1fr;
                 gap: 10px;
+
+                .pill {
+                    white-space: nowrap;
+                    border-radius: 100px;
+                    padding: 4px 8px;
+                    color: #FFFFFF;
+                    width: fit-content;
+                    display: inline-block;
+                    background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+                }
                 .point {
                     width: 100%;
                     color: #ffffff;
