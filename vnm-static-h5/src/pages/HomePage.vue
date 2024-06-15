@@ -175,7 +175,7 @@
 
     <div class="hot-matches-container">
       <swiper
-        :slides-per-view="1.2"
+        :slides-per-view="1"
         :modules="modules"
         :loop="false"
         @swiper="onSwiper"
@@ -3170,10 +3170,13 @@ export default defineComponent({
   }
 
   .hot-matches-container {
+    width:100%;
+    height: 125px;
     :deep(.swiper-pagination) {
       //bottom: -20px;
       position: relative;
       margin-top: 10px;
+      transform: scale(0.75)
     }
   }
 
@@ -3196,6 +3199,8 @@ export default defineComponent({
   .hot-matches-item {
     background: #f4f9fe;
     border-radius: 16px;
+    margin: auto;
+    max-width: 450px;
     margin-top: 10px;
     padding: 8px 18px 6px;
     display: flex;
