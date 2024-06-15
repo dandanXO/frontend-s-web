@@ -135,7 +135,7 @@
           </div>
         </el-form-item>
         <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="" style="color: #9bffd1">
-          *特别说明：三方自动收取提币 1.00 USDT 手续费！
+          *提币手续费：1.00 USDT
         </div>
 
         <!-- K豆教程视频 -->
