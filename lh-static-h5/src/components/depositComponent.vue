@@ -51,37 +51,37 @@
     </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
-        <q-input
-          v-if="amountList.length === 0"
-          hide-bottom-space
-          ref="depositAmtRef"
-          :label="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
-          class="deposit-field"
-          color="accent"
-          name="localAmount"
-          v-model="form.localAmount"
-          placeholder="请输入存款金额"
-          :rules="verifyDepositAmount"
-          padding="none"
-          clearable
-        >
-          <template v-slot:prepend>
+
+        <div v-if="amountList.length === 0" class="flex-c-center" >
+          <q-input
+            hide-bottom-space
+            ref="depositAmtRef"
+            :label="isUSDT ? '请输入USDT金额' : '请输入存款金额'"
+            class="deposit-field"
+            color="accent"
+            name="localAmount"
+            v-model="form.localAmount"
+            placeholder="请输入存款金额"
+            :rules="verifyDepositAmount"
+            padding="none"
+            clearable
+          >
+            <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
               <template v-if="isUSDT">USDT</template>
               <template v-else>{{ store.currency.value }}</template>
             </span>
-          </template>
-          <template v-slot:append>
-            <q-btn
-              class="common-large-btn deposit-btn"
-              :loading="btnLoading"
-              color="brightbtn"
-              @click="confirmDeposit"
-              label="确认"
-            />
-          </template>
-        </q-input>
+            </template>
+          </q-input>
 
+          <q-btn
+            class="common-large-btn deposit-btn"
+            :loading="btnLoading"
+            color="brightbtn"
+            @click="confirmDeposit"
+            label="确认"
+          />
+        </div>
         <div  v-else class="flex-c-center">
           <q-select
 
@@ -844,7 +844,7 @@ onMounted(() => {
 }
 
 .deposit-field {
-  margin-top: 7px;
+  width: 75%;
   &.q-field {
     border-radius: 10px;
     padding: 0px 8px 10px;
