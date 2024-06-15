@@ -44,9 +44,9 @@
         <div>{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
-    <!-- <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+    <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../../assets/home/red_envelope.png" />
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -83,9 +83,11 @@ export default defineComponent({
       router.push("/promotion?name=vi-mualixi-redpacket");
     };
 
+    const isRedPacketShow= ref(false);
+    const isPacketChecked= ref(null);
     const getCheckRedPacket = () => {
       isPacketChecked.value= setInterval(() => {
-        if(store && store.token && store.memberType==='TEST') {
+        // if(store && store.token && store.memberType==='TEST') {
           getRedEnvelopeFromServer()
             .then((res) => {
               clearInterval(isPacketChecked.value);
@@ -97,12 +99,11 @@ export default defineComponent({
             .catch((err) => {
               clearInterval(isPacketChecked.value);
             });
-        }
+        // }
       },10000)
     }
 
-    const isRedPacketShow= ref(false);
-    const isPacketChecked= ref(null);
+
     onMounted(() => {
       getAppDownloadUrl();
       getCheckRedPacket();

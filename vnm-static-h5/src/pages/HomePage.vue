@@ -684,15 +684,15 @@
       </a>
     </div>
   </div>
-  <!--
+
   <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
     </div>
-    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">
-      {{ $t("lang.rebates") }}
-    </div>
-  </q-page-sticky> -->
+<!--    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">-->
+<!--      {{ $t("lang.rebates") }}-->
+<!--    </div>-->
+  </q-page-sticky>
 
   <q-dialog
     width="100%"
@@ -1196,7 +1196,7 @@ export default defineComponent({
       localStorage.setItem(key, JSON.stringify(item));
     };
 
-    const isRedPacketShow = ref(true);
+    const isRedPacketShow = ref(false);
     const getRedEnvelope = () => {
       router.push("/promo?name=vi-mualixi-redpacket");
     };
@@ -3219,11 +3219,13 @@ export default defineComponent({
 
       .title-frame {
         background-image: url("../assets/images/home/top-title-btn.png");
-        background-size: auto 100%;
+        background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center center;
         padding: 4px 12px;
         margin: auto;
+        width: 70%;
+        max-width: 200px;
       }
     }
 
