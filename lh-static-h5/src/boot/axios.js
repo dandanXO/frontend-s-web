@@ -15,7 +15,7 @@ console.log(window.location.hostname);
 const globalLinks= ["lh050","lh068","lh131","lh165","lh318","lh338","lh360","lh537","lh556","lh730","lh739","lh765","lh768","lh835","lh866","lh869","lh887","lh970","lh971","lh988"];
 const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
 
-const specialLinks= ["lh93371", "lh76390" ,"lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987"];
+const specialLinks= ["lh93371", "lh76390", "lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
 if (isGlobalLH) {
