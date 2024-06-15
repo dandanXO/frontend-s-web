@@ -158,7 +158,7 @@
       <span>{{ $t("lang.euroCountdown01")}}</span><img src="../assets/images/home/eurocup-logo.png" /><em>{{ $t("lang.euroCountdown01a")}}</em><strong>{{ countDay }}</strong><span>{{$t("lang.euroCountdown02")}}</span>
     </div> -->
 
-    <div class="hot-matches-title-wrapper" style="display:none;">
+    <div class="hot-matches-title-wrapper" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
       <div class="hot-matches-title">
         <div>
           <img src="../assets/images/home/icon-hot-matches.png" />
@@ -173,7 +173,7 @@
       <!--      </div>-->
     </div>
 
-    <div class="hot-matches-container" style="display:none;">
+    <div class="hot-matches-container" v-show="store.token && (store.memberType==='TEST' || store.memberType==='PROMO_TEST')">
       <swiper
         :slides-per-view="1.2"
         :modules="modules"
@@ -201,7 +201,7 @@
               <div class="match-vs"><img src="../assets/images/home/icon-vs.png" /></div>
               <div class="match-time">{{ formattedTime(item.competitionTime) }}</div>
               <div class="match-btn">
-                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt" @click="openHotMatch(item)">
+                <q-btn rounded no-caps color="brightbtn" class="sm-screen-txt match-btn-button" @click="openHotMatch(item)">
                   {{ $t("lang.play_now") }}
                 </q-btn>
               </div>
@@ -3156,7 +3156,7 @@ export default defineComponent({
   }
 
   .hot-matches-title {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: #313441;
     display: flex;
@@ -3165,7 +3165,7 @@ export default defineComponent({
 
     img {
       display: block;
-      width: 30px;
+      width: 24px;
     }
   }
 
@@ -3195,9 +3195,9 @@ export default defineComponent({
 
   .hot-matches-item {
     background: #f4f9fe;
-    border-radius: 20px;
+    border-radius: 16px;
     margin-top: 10px;
-    padding: 10px 18px 8px;
+    padding: 8px 18px 6px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -3206,10 +3206,9 @@ export default defineComponent({
     .top-match-title {
       color: #ffffff;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 14px;
       text-align: center;
       width: 100%;
-      margin-bottom: 4px;
       margin: -20px auto 0;
 
       .title-frame {
@@ -3231,7 +3230,7 @@ export default defineComponent({
 
       img {
         display: block;
-        width: 70px;
+        width: 30px;
       }
 
       .match-title {
@@ -3242,14 +3241,20 @@ export default defineComponent({
       }
       .match-time {
         color: #444444;
-        font-size: 14px;
+        font-size: 13px;
         text-align: center;
-        margin-top: 4px;
+        margin-top: 0px;
       }
 
       .match-btn {
         // margin-top: auto;
         margin-top: 0px;
+
+        .match-btn-button{
+          min-height:15px;
+          padding:3px 8px;
+          font-size: 10px !important;
+        }
       }
     }
 
@@ -3258,7 +3263,7 @@ export default defineComponent({
       justify-content: center;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       width: 100%;
       max-width: 30%;
 
@@ -3270,13 +3275,13 @@ export default defineComponent({
 
       .team-icon {
         // border-radius: 50%;
-        height: 70px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
         img {
           width: unset;
-          height: 60px;
+          height: 40px;
         }
       }
 
