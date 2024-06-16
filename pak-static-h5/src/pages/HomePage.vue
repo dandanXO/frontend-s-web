@@ -1291,10 +1291,10 @@ const categoriesList = ref([
   { title: "Lobby", label: t("home.menu_lobby"), icon: "lobby", active: true },
   { title: "Hot", label: t("home.menu_hot"), icon: "hot", active: false },
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
-  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
+  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
   { title: "Slot", label: t("home.menu_slot"), icon: "slot", active: false },
   { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
-  { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false }
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
 ]);
 
 const translatedCategoriesList = computed(() => {
@@ -3481,11 +3481,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 2.05%,
-      rgba(255, 255, 255, 0.05) 44.93%,
-      rgba(255, 255, 255, 0.05) 53.13%,
-      rgba(255, 255, 255, 0) 98.21%
+        90deg,
+        rgba(255, 255, 255, 0) 2.05%,
+        rgba(255, 255, 255, 0.05) 44.93%,
+        rgba(255, 255, 255, 0.05) 53.13%,
+        rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -4535,10 +4535,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-      180deg,
-      rgba(115, 115, 115, 0) 0%,
-      rgba(153, 153, 153, 0.4) 48.5%,
-      rgba(115, 115, 115, 0) 100%
+        180deg,
+        rgba(115, 115, 115, 0) 0%,
+        rgba(153, 153, 153, 0.4) 48.5%,
+        rgba(115, 115, 115, 0) 100%
     );
   }
 
