@@ -1719,18 +1719,15 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      if (store.token) {
-        checkShowImgTop();
-      }
       getAppDownloadUrl();
       getUnreadTotal();
-
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
 
     onMounted(() => {
       if ((store.token)) {
         initFloating();
+        checkShowImgTop();
       }
     })
     // Clear interval on unmounted
