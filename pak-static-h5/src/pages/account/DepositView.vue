@@ -175,7 +175,7 @@
     </div>
 
     <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">graphic tutorial</span></p>
+      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
       <p>2. Fill in the correct wallet account number</p>
       <p>3. Fill in the correct CNIC number</p>
       <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
@@ -747,10 +747,18 @@ const openDepositPage = () => {
   }else if(selectedPayType.value === "JAZZCASH"){
     // isDepositTutorial.value= true;
     window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
-  }else if(selectedPayType.value === "BANK"){
+  }else {
     window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
-  }else{
+  }
+}
 
+const openDepositVideo =() => {
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
+  }else {
+    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
   }
 }
 
