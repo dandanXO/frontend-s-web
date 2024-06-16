@@ -91,21 +91,25 @@ const imgUrl = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/pro
 
 const platformGame = ref(null);
 const matches = ref([]);
-const activeDayTab = ref("2024-06-15");
-const groupByDateTabList = ref([
-  "2024-06-15",
-  "2024-06-16",
-  "2024-06-17",
-  "2024-06-18",
-  "2024-06-19",
-  "2024-06-20",
-  "2024-06-21",
-  "2024-06-22",
-  "2024-06-23",
-  "2024-06-24",
-  "2024-06-25",
-  "2024-06-26",
-]);
+var startDate= moment().format("YYYY-MM-DD")
+const activeDayTab = ref(startDate);
+
+const groupByDateTabList = ref(
+  [
+    "2024-06-16",
+    "2024-06-17",
+    "2024-06-18",
+    "2024-06-19",
+    "2024-06-20",
+    "2024-06-21",
+    "2024-06-22",
+    "2024-06-23",
+    "2024-06-24",
+    "2024-06-25",
+    "2024-06-26",
+  ]);
+groupByDateTabList.value = groupByDateTabList.value.filter(number => number >= moment().format("YYYY-MM-DD"));
+
 
 const teams = ref([]);
 const activeGroupTab = ref("A");
