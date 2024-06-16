@@ -113,7 +113,7 @@
         </div>
 
 
-        <div class="q-mt-sm q-mb-sm text-grey text-bold">
+        <div class="q-mb-xs text-grey text-bold">
           单笔存款：{{
             calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
           }}
@@ -124,14 +124,14 @@
         <div v-if="isUSDT && activeMethod.currencyRate">
           <div style="display: flex; justify-content: center; align-items: center">
             <span style="flex: 1">实时汇率：</span>
-            <span style="flex: 3" class="q-pa-sm text-positive">
+            <span style="flex: 3" class=" text-positive">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
           <div style="display: flex; justify-content: center; align-items: center">
             <span style="flex: 1">预计到帐：</span>
-            <span style="flex: 3" class="q-pa-sm text-positive">
+            <span style="flex: 3" class=" text-positive">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
                   ? "0.00"
