@@ -175,7 +175,7 @@
     </div>
 
     <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>1. Recharge tutorial: graphic tutorial</p>
+      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">graphic tutorial</span></p>
       <p>2. Fill in the correct wallet account number</p>
       <p>3. Fill in the correct CNIC number</p>
       <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
