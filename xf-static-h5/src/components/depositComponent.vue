@@ -3,12 +3,6 @@
       class="q-pa-md"
       style="overflow: auto;  margin: 8px 8px"
   >
-    <div class="q-mb-lg">
-      <span class="additional-tips">
-        如果遇到存款问题，请立即联系在线客服解决！
-      </span>
-    </div>
-
     <div class="node-wrapper">
       <Node
           :level="1"
@@ -60,8 +54,9 @@
     </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
+        <div class="flex-c-center" v-if="amountList.length === 0">
         <q-input
-            v-if="amountList.length === 0"
+            class="deposit-input"
             hide-bottom-space
             ref="depositAmtRef"
             label="存款金额"
@@ -79,7 +74,8 @@
             </span>
           </template>
         </q-input>
-
+        <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+      </div>
         <q-select
             v-else
             ref="depositAmtRef"
@@ -99,7 +95,7 @@
           </template>
         </q-select>
 
-        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-sm text-grey text-bold ">
           单笔存款：{{
             calculatedMinDeposit
                 ? calculatedMinDeposit +
@@ -177,14 +173,14 @@
         </q-select>
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-        <div class="q-mt-md">
+        <!-- <div class="q-mt-md">
           <q-btn
               :loading="btnLoading"
               color="brightbtn fit"
               @click="confirmDeposit"
               label="确定存款"
           />
-        </div>
+        </div> -->
       </q-form>
     </div>
   </div>
@@ -764,7 +760,20 @@ onMounted(() => {
     }
   }
 }
-
+.flex-c-center{
+  display:flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  .deposit-input{
+    width: 70%;
+  }
+  .deposit-btn{
+    width: 25%;
+    height: 56px;
+    font-size: 20px;
+    white-space:nowrap;
+  }
+}
 .additional-tips {
   text-align: center;
   display: flex;
