@@ -17,9 +17,11 @@
       <a href="https://newtf88.com/register" class="hyperlink" target="_blank"> <img src="img/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" /></a>
     </div>
 
-    <div id="image-container" class="banner-wrapper">
-      <img id="banner-img" src="img/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />
-    </div>
+    <a href="https://newtf88.com/register" class="hyperlink" target="_blank">
+      <div id="image-container" class="banner-wrapper">
+        <img id="banner-img" src="img/banner.png" alt="2024 Eurocup" title="2024 Eurocup" />
+      </div>
+    </a>
 
     <div id="announcement-marquee">
       <marquee>Tặng thưởng 100% và nhiều khuyến mãi...</marquee>
@@ -59,13 +61,15 @@
 
     <div class="new-user-wrapper">
       <img class="section-title" src="img/new-user-title.png" alt="Khuyến Mãi" title="Khuyến Mãi" />
-      <div class="new-user-discount-wrapper">
-        <img src="img/discount-1.png" alt="Thưởng 3 tỷ 8 mùa Euro 2024" title="Thưởng 3 tỷ 8 mùa Euro 2024" />
-        <img src="img/discount-2.png" alt="Đăng ký nhận ngay 21k miễn phí. " title="Đăng ký nhận ngay 21k miễn phí. " />
-        <img src="img/discount-3.png" alt="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " title="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " />
-        <img src="img/discount-4.png" alt="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " title="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " />
-        <img src="img/discount-5.png" alt="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " title="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " />
-      </div>
+      <a href="https://newtf88.com/register" class="hyperlink" target="_blank">
+        <div class="new-user-discount-wrapper">
+          <img src="img/discount-1.png" alt="Thưởng 3 tỷ 8 mùa Euro 2024" title="Thưởng 3 tỷ 8 mùa Euro 2024" />
+          <img src="img/discount-2.png" alt="Đăng ký nhận ngay 21k miễn phí. " title="Đăng ký nhận ngay 21k miễn phí. " />
+          <img src="img/discount-3.png" alt="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " title="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " />
+          <img src="img/discount-4.png" alt="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " title="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " />
+          <img src="img/discount-5.png" alt="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " title="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " />
+        </div>
+      </a>
     </div>
 
     <div class="game-wrapper">
@@ -110,6 +114,7 @@
   const host= window.location.hostname;
   console.log(host);
   var tf88Url = "https://newtf88.com";
+  var c = "https://files.fbok59j8xi.com/app/8/affiliate/1798286660569628674/android/apk/1.0.8_20240614191523.apk";
   if(host.indexOf("z888686") > -1){
     tf88Url= "https://tf884fun.com";
   }else if(host.indexOf("h866866") > -1){
@@ -118,21 +123,26 @@
     tf88Url= "https://hd88123.com";
   }else if(host.indexOf("p886866") > -1){
     tf88Url= "https://hsbc88123.com";
-  }else if(host.indexOf("m868686") > -1){
+  }else if(host.indexOf("m868686.com") > -1){
     tf88Url= "https://linkvaotf88.com";
-  }else if(host.indexOf("r886866") > -1){
+    downloadUrl = "https://files.fbok59j8xi.com/app/8/affiliate/1802609337550508034/android/apk/1.0.8_20240617162500.apk";
+  }else if(host.indexOf("r886866.com") > -1){
     tf88Url= "https://mb88123.com";
-  }else if(host.indexOf("q888686") > -1){
+    downloadUrl = "https://files.fbok59j8xi.com/app/8/affiliate/1802609337550508034/android/apk/1.0.8_20240617162500.apk";
+  }else if(host.indexOf("q888686s") > -1){
     tf88Url= "https://tf88369.com";
+    downloadUrl = "https://files.fbok59j8xi.com/app/8/affiliate/1802609337550508034/android/apk/1.0.8_20240617162500.apk";
   }
 
   var elements = document.getElementsByClassName('hyperlink');
-
-  // 遍历所有找到的元素并修改它们的 href 属性
   for (var i = 0; i < elements.length; i++) {
     elements[i].href = tf88Url + "/register";
   }
 
+  var elements2 = document.getElementsByClassName('download');
+  for (var i = 0; i < elements2.length; i++) {
+    elements2[i].href = downloadUrl ;
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.querySelector(".overlay");
