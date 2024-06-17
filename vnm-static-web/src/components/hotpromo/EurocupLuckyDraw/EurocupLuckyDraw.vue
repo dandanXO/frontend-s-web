@@ -34,9 +34,9 @@
         <div class="note">
         Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
  
-        <div class="more" @click="openTableDialog">
-          「Xem hồ sơ」
-        </div>
+<!--        <div class="more" @click="openTableDialog">-->
+<!--          「Xem hồ sơ」-->
+<!--        </div>-->
       </div>       </div>
     <div class="luckydraw-details">
         <div class="luckydraw-title">Quy tắc hoạt động</div>
