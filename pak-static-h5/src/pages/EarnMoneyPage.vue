@@ -93,23 +93,24 @@
         </div>
 
         <div class="invite-share-social">
-          <a class="social-item" :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+          <a
+            class="social-item"
+            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
+            target="_blank"
+          >
             <img src="../assets/images/earn-money/social-whatsapp.png" />
           </a>
           <a
             class="social-item"
-            :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`"
+            :href="`instagram://sharesheet?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
             target="_blank"
           >
             <img src="../assets/images/earn-money/social-instagram.png" />
           </a>
-          <a
-            class="social-item"
-            :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`"
-            target="_blank"
-          >
+          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
             <img src="../assets/images/earn-money/social-tiktok.png" />
           </a>
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
           <a class="social-item"><img src="../assets/images/earn-money/social-more.png" /></a>
         </div>
       </div>
@@ -206,14 +207,16 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
-import { useQuasar } from "quasar";
+import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
+import { useI18n } from "vue-i18n";
 
 const $q = useQuasar();
 const store = userStore();
+const { t } = useI18n();
 
 const copyHrefLink = () => {
   navigator.clipboard
@@ -294,6 +297,7 @@ const getLatestInvitees = () => {
 
 const selfTgurl = ref("");
 const waUrl = ref("");
+const tiktokRef = ref();
 
 const getRewardAmount = (type) => {
   const rewards = memberDetail.value.rewardAmountByType;
@@ -357,6 +361,12 @@ const checkIsShowDetail = () => {
 const getRandomImage = (index) => {
   const randomNumber = (index % 10) + 1; // Ensures a number between 1 and 10
   return require(`../assets/images/earn-money/profile-img-${randomNumber}.png`);
+};
+
+const handleShareToTikTok = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  copyToClipboard(shareText);
+  tiktokRef.value.click();
 };
 
 // const profileImagePath = computed(() => {

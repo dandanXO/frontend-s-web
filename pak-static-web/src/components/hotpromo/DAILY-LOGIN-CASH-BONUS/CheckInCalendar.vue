@@ -13,7 +13,12 @@
           src="../../../assets/images/promotion/hotpromo/DAILY-LOGIN-CASH-BONUS/calendar-icon.png"
         />
         <div class="month-text">{{ moment(datesInMonth?.[0]).format("MMM") }}</div>
-        <input ref="monthPickerRef" type="month" style="width:0px;border:none;margin:0;padding:0;" @change="changeMonth" />
+        <input
+          ref="monthPickerRef"
+          type="month"
+          style="width: 0px; border: none; margin: 0; padding: 0"
+          @change="changeMonth"
+        />
       </div>
       <div class="total-days-signed-in">
         Signed in:
@@ -41,7 +46,13 @@
           >
             Sign In
           </div>
-          <template v-else-if="moment(date).isSameOrBefore(moment(new Date), 'date') && moment(date).isSameOrAfter(moment(eventStart), 'date') && moment(date, YEAR_MONTH_DAY_FORMAT).isSameOrBefore(moment(new Date, YEAR_MONTH_DAY_FORMAT), 'date')">
+          <template
+            v-else-if="
+              moment(date).isSameOrBefore(moment(new Date()), 'date') &&
+              moment(date).isSameOrAfter(moment(eventStart), 'date') &&
+              moment(date, YEAR_MONTH_DAY_FORMAT).isSameOrBefore(moment(new Date(), YEAR_MONTH_DAY_FORMAT), 'date')
+            "
+          >
             <template v-if="checkedInDates.includes(date)">
               <div v-if="globalStore.isDarkMode" class="signed-in-btn">Signed In</div>
               <img
@@ -86,27 +97,27 @@ const eventEnd = ref();
 const monthPickerRef = ref();
 
 const getDaysFromMonth = (date, format) => {
-    const start = moment(date || moment().format(YEAR_MONTH_FORMAT), format || YEAR_MONTH_FORMAT).startOf('month');
-    const end = moment(date || moment().format(YEAR_MONTH_FORMAT), format || YEAR_MONTH_FORMAT).endOf('month');
+  const start = moment(date || moment().format(YEAR_MONTH_FORMAT), format || YEAR_MONTH_FORMAT).startOf("month");
+  const end = moment(date || moment().format(YEAR_MONTH_FORMAT), format || YEAR_MONTH_FORMAT).endOf("month");
 
-    const current = start.clone();
-    const daysInMonthArr = [];
+  const current = start.clone();
+  const daysInMonthArr = [];
 
-    while (current.isBefore(end)) {
-        daysInMonthArr.push(current.format(YEAR_MONTH_DAY_FORMAT));
-        current.add(1, "day");
-    }
+  while (current.isBefore(end)) {
+    daysInMonthArr.push(current.format(YEAR_MONTH_DAY_FORMAT));
+    current.add(1, "day");
+  }
 
-    return daysInMonthArr;
-}
+  return daysInMonthArr;
+};
 
 const openMonthPicker = () => {
-    monthPickerRef.value.showPicker();
-}
+  monthPickerRef.value.showPicker();
+};
 
 const changeMonth = (ev) => {
-    datesInMonth.value = getDaysFromMonth(ev.target.value);
-}
+  datesInMonth.value = getDaysFromMonth(ev.target.value);
+};
 
 const onClickCheckIn = () => {
   if (!store.token) {
@@ -184,7 +195,6 @@ onMounted(() => {
     .month {
       font-size: 1.5rem;
       color: #fff;
-      font-weight: 700;
       display: flex;
       gap: 10px;
       align-items: center;
@@ -206,7 +216,6 @@ onMounted(() => {
     .total-days-signed-in {
       font-size: 20px;
       color: #fff;
-      font-weight: 700;
       display: flex;
       gap: 5px;
       align-items: center;
@@ -242,7 +251,6 @@ onMounted(() => {
       .day-wrapper {
         color: #2b2b82;
         font-size: 1rem;
-        font-weight: 700;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -280,8 +288,8 @@ onMounted(() => {
         }
         .signed-in-btn {
           font-size: 12px;
-          background: url(../../../assets/images/promotion/hotpromo/DAILY-LOGIN-CASH-BONUS/signed-in.png) no-repeat center
-            center;
+          background: url(../../../assets/images/promotion/hotpromo/DAILY-LOGIN-CASH-BONUS/signed-in.png) no-repeat
+            center center;
           background-size: contain;
           width: 100%;
           display: flex;

@@ -373,7 +373,7 @@ const activePlat = ref("");
 const gamePage = reactive({
   gameList: [],
   currentPage: 1,
-  pageSize: 15,
+  pageSize: 20,
   searchType: "",
   searchKey: "",
   total: 0
