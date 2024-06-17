@@ -17,7 +17,7 @@
         </div>
         <div class="deposit-buttons">
           <div class="btn deposit-buttons__go-deposit"><a @click="goDeposit"><img src="./euroimages/depositnow-btn.png"></a></div>
-          <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a :href="card.lesson" target="_blank"><img src="./euroimages/checklesson-btn.png"></a></div>
+          <div class="btn deposit-buttons__check-lesson" v-if="card.lesson"><a @click="openLession(card)" ><img src="./euroimages/checklesson-btn.png"></a></div>
         </div>
       </div>
     </div>
@@ -162,6 +162,10 @@ const goDeposit = () => {
     router.push("/finance/deposit")
   }
 
+}
+
+const openLession = (card) => {
+  window.open(card.lesson, "_blank");
 }
 
 </script>
