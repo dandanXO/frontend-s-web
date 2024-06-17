@@ -11,7 +11,7 @@
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
-<div class="main-wrapper">
+<div class="main-wrapper" id="lh-landing-v4">
   <div class="full-container">
     <div class="top-wrapper">
       <div class="top-logo">
@@ -189,17 +189,24 @@
 </script>
 <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
 <script>
-  var hostname= window.location.hostname;
+  var hostname = window.location.hostname;
   console.log(hostname);
-  if(hostname.indexOf("96730.biz") > -1){
-    LA.init({id:"KTQx8ks32tLjR6yY",ck:"KTQx8ks32tLjR6yY"})
-  } else if(hostname.indexOf("86915.biz") > -1){
-    LA.init({id:"KTQxYiB9R4hxFTQo",ck:"KTQxYiB9R4hxFTQo"})
-  } else if(hostname.indexOf("69813.biz") > -1){
-    LA.init({id:"KTQxsmDuRpXuVGb4",ck:"KTQxsmDuRpXuVGb4"})
-  }else{
-    LA.init({id:"KTF9ydpVNaBYTHZs",ck:"KTF9ydpVNaBYTHZs"})
+  if (hostname.indexOf("96730.biz") > -1) {
+    LA.init({ id: "KTQx8ks32tLjR6yY", ck: "KTQx8ks32tLjR6yY" })
+  } else if (hostname.indexOf("86915.biz") > -1) {
+    LA.init({ id: "KTQxYiB9R4hxFTQo", ck: "KTQxYiB9R4hxFTQo" })
+  } else if (hostname.indexOf("69813.biz") > -1) {
+    LA.init({ id: "KTQxsmDuRpXuVGb4", ck: "KTQxsmDuRpXuVGb4" })
+  } else if (hostname.indexOf("43.207.153.157") > -1) {
+    LA.init({ id: "KTYlWPXzwFJtforO", ck: "KTYlWPXzwFJtforO" })
+  } else if (hostname.indexOf("13.215.122.127") > -1) {
+    LA.init({id:"KTYlbSgpBNVcsc5x",ck:"KTYlbSgpBNVcsc5x"})
+  } else if (hostname.indexOf("18.140.251.26") > -1) {
+    LA.init({id:"KTYlfa2ta7xp875Y",ck:"KTYlfa2ta7xp875Y"})
+  } else {
+    LA.init({ id: "KTF9ydpVNaBYTHZs", ck: "KTF9ydpVNaBYTHZs" })
   }
+
 </script>
 </body>
 </html>
