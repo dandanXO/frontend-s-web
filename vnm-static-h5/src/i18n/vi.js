@@ -371,7 +371,7 @@ export default {
     bd_account_bank: "Tài khoản ngân hàng",
     bd_please_select: "Vui lòng chọn",
     bd_bank_acc_number: "Số tài khoản ngân hàng",
-    bd_please_enter_bank_card: "Vui lòng nhập số thẻ ngân hàng",
+    bd_please_enter_bank_card: "Vui lòng nhập số tài khoản ngân",
     bd_real_name: "Tên thật",
     bd_please_enter_real_name: "Vui lòng nhập tên thật",
     bd_acc_bank_address: "Địa chỉ tài khoản ngân hàng",
