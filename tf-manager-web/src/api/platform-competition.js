@@ -73,10 +73,11 @@ export const deleteCompetitionCode = async ids => {
   )
 }
 
-export const getCompetitionGameList = () => {
+export const getCompetitionGameList = (platformId) => {
   return https().request(
     '/platform-competition-code/game-list',
     Method.GET,
+    { platformId },
     ContentType.form
   )
 }
