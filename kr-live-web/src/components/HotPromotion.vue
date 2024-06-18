@@ -11,7 +11,7 @@
 
     <div v-if="list.id === 30 && store.hasToken()" class="promo-4">
       <div class="tabs">
-        <q-card-section>
+        <!-- <q-card-section>
           <q-tabs
             v-model="activeKey"
             dense
@@ -132,7 +132,7 @@
               />
             </q-tab-panel>
           </q-tab-panels>
-        </q-card-section>
+        </q-card-section> -->
       </div>
     </div>
 

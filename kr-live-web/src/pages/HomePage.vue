@@ -1248,13 +1248,6 @@ export default defineComponent({
   display: none;
 }
 
-.home-banner-wrapper {
-  position: relative;
-  width: 100%;
-  height: 440px;
-  background: url("../assets/images/headerBanner/banner.svg") no-repeat center center;
-}
-
 .slot-grid,
 .fish-grid {
   display: grid;
