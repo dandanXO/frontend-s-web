@@ -90,6 +90,21 @@
             </div>
           </div>
 
+          <div class="form-item q-pt-xs">
+            <label>출금 비밀번호</label>
+            <q-input
+              :type="isPwd ? 'password' : 'text'"
+              dense outlined ref="withdrawPassRef" v-model="withdrawInfo.withdrawPassword" class="withdraw-field"
+                     :rules="[
+              (val) => !!val || '출금 비밀번호를 입력하세요',
+              (val) => val && val.length === 4 || '출금 비밀번호는 4자리여야 합니다',
+            ]" clearable>
+              <template v-slot:append>
+                <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+              </template>
+            </q-input>
+          </div>
+
           <div class="q-mt-sm q-mb-sm text-grey text-bold q-pb-sm" style="border-bottom: 1px solid #434343"
             v-show="selectedWithdrawalMethod">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
@@ -170,6 +185,9 @@ const withdrawState = reactive({
 });
 const qs = require("qs");
 
+const isPwd = ref(true)
+const withdrawPassRef= ref()
+
 const isUSDT = ref(false);
 const isEWALLET = ref(false);
 const isALIPAY = ref(false);
@@ -180,7 +198,8 @@ const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: "",
-  withdrawCode: ""
+  withdrawCode: "",
+  withdrawPassword : ""
 });
 
 const amountRef = ref();
@@ -257,13 +276,15 @@ const submitWithdraw = () => {
     return;
   }
 
+  withdrawPassRef.value.validate();
   cardRef.value.validate();
   amountRef.value.validate();
+
   $q.loading.show({
     message: "확인 중。。。"
   });
   withdrawLoading.value = true;
-  if (cardRef.value.hasError || amountRef.value.hasError) {
+  if (cardRef.value.hasError || amountRef.value.hasError || withdrawPassRef.value.hasError) {
     $q.loading.hide();
     withdrawLoading.value = false;
   } else {
