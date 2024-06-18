@@ -806,7 +806,6 @@ const handleSelectBank = (id) => {
             align-items: center;
             gap: 8px;
             font-size: 16.64px;
-            font-weight: 700;
             line-height: 18.69px;
           }
 

@@ -585,7 +585,6 @@ $link-color: #ffffff;
       border-radius: 6px;
       gap: 10.53px;
       font-size: 12px;
-      font-weight: 700;
       line-height: 16.8px;
       letter-spacing: -0.0008em;
       color: #000a01;
@@ -601,7 +600,6 @@ $link-color: #ffffff;
       position: relative;
       position: relative;
       font-size: 12px;
-      font-weight: 700;
       line-height: 16.8px;
       color: #ffffff;
 
@@ -628,7 +626,6 @@ $link-color: #ffffff;
       position: relative;
       border: 1px solid #cbe3ad;
       font-size: 16px;
-      font-weight: 700;
       line-height: 20px;
       color: #ffffff;
     }
@@ -881,7 +878,6 @@ $link-color: #ffffff;
         top: 20px;
         max-width: 130px;
         font-size: 18px;
-        font-weight: 700;
         line-height: 22px;
         text-align: left;
 
@@ -904,7 +900,6 @@ $link-color: #ffffff;
         left: 20px;
         max-width: 140px;
         font-size: 20px;
-        font-weight: 700;
         line-height: 25px;
         color: #fff;
 
@@ -1567,7 +1562,6 @@ $link-color: #ffffff;
       background: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
       background-clip: text;
       font-size: 16px;
-      font-weight: 700;
       line-height: 20px;
       color: transparent;
 

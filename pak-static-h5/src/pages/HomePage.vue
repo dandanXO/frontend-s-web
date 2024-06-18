@@ -60,8 +60,18 @@
 
   <div class="home-wrapper" :class="detectAndroidVersion()">
     <q-page-sticky position="bottom-right" :offset="csDragPos" class="floating-btn">
-      <div v-touch-pan.prevent.mouse="moveCsIcon" @click="openCSInNewTab(ui.CSAUrl)">
-        <div class="cs-icon-wrapper"></div>
+      <div v-touch-pan.prevent.mouse="moveCsIcon" ref="csTabRef" @click="toggleCSTab">
+        <div class="cs-icon-wrapper" :class="{ active: isCsTabVisible }">
+          <a class="cs-icon tiktok" href="https://www.tiktok.com/@b9game" target="_blank">
+            <img src="../assets/images/index/cs-tiktok.png" />
+          </a>
+          <a class="cs-icon whatsapp" href="https://whatsapp.com/channel/0029VacTtkK9RZAWeWe6NI3l" target="_blank">
+            <img src="../assets/images/index/cs-whatsapp.png" />
+          </a>
+          <a class="cs-icon cs" :href="ui.CSAUrl" target="_blank">
+            <img src="../assets/images/index/cs-cs.png" />
+          </a>
+        </div>
       </div>
     </q-page-sticky>
 
@@ -420,7 +430,6 @@
           </div>
         </div>
       </template>
-
 
       <template
         v-if="(category.title === 'Slot' && category.active) || (category.title === 'Lobby' && category.active)"
@@ -912,8 +921,6 @@
         </div>
       </template>
 
-
-
       <template
         v-if="(category.title === 'Sport' && category.active) || (category.title === 'Lobby' && category.active)"
       >
@@ -1283,6 +1290,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 // Import Swiper modules
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper/core";
+import { onClickOutside, useEventListener } from "@vueuse/core";
 // import SwiperCore, { Scrollbar, Navigation, Pagination, EffectCoverflow } from "swiper";
 // Use ref to hold the modules
 const modules = ref([Scrollbar, Navigation, Pagination]);
@@ -1297,8 +1305,11 @@ const categoriesList = ref([
   { title: "Live", label: t("home.menu_live"), icon: "live", active: false },
   { title: "Sport", label: t("home.menu_sport"), icon: "sport", active: false },
   { title: "Poker", label: t("home.menu_poker"), icon: "poker", active: false },
-  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false },
+  { title: "Fish", label: t("home.menu_fish"), icon: "fish", active: false }
 ]);
+
+const isCsTabVisible = ref(false);
+const csTabRef = ref();
 
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
@@ -1325,7 +1336,7 @@ const activeCategoryLabel = computed(() => {
 
 const activateSlide = (item) => {
   categoriesList.value.forEach((category) => (category.active = false));
-  const category = categoriesList.value.find(cat => cat.title === item.title);
+  const category = categoriesList.value.find((cat) => cat.title === item.title);
   if (category) {
     category.active = true;
   }
@@ -2804,10 +2815,10 @@ const closeDepositDialog = () => {
   depositDialog.value = false;
 };
 
-const openCSInNewTab = (url) => {
-  const absoluteUrl = url;
-  window.open(absoluteUrl, "_blank");
-};
+const toggleCSTab = () => (isCsTabVisible.value = !isCsTabVisible.value);
+const closeCSTab = () => isCsTabVisible.value && (isCsTabVisible.value = false);
+onClickOutside(csTabRef, closeCSTab);
+useEventListener(document, "scroll", closeCSTab);
 
 const detectAndroidVersion = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -3245,11 +3256,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 2.05%,
-        rgba(255, 255, 255, 0.05) 44.93%,
-        rgba(255, 255, 255, 0.05) 53.13%,
-        rgba(255, 255, 255, 0) 98.21%
+      90deg,
+      rgba(255, 255, 255, 0) 2.05%,
+      rgba(255, 255, 255, 0.05) 44.93%,
+      rgba(255, 255, 255, 0.05) 53.13%,
+      rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -3789,15 +3800,48 @@ watch(
 }
 
 .cs-icon-wrapper {
-  display: flex;
   width: 70px;
   height: 76px;
   background: url("../assets/images/index/icon-cs.png") no-repeat center center;
   background-size: contain;
+  position: relative;
 
   &:active {
     filter: brightness(0.85);
     transform: translate(0px, 1px);
+  }
+
+  .cs-icon {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+
+    &.tiktok {
+      left: -72px;
+      top: 50%;
+    }
+
+    &.whatsapp {
+      left: -48px;
+      top: -22px;
+      transition-delay: 0.25s;
+    }
+
+    &.cs {
+      top: -72px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition-delay: 0.5s;
+    }
+  }
+
+  &.active {
+    .cs-icon {
+      opacity: 1;
+    }
   }
 }
 
@@ -4299,10 +4343,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-        180deg,
-        rgba(115, 115, 115, 0) 0%,
-        rgba(153, 153, 153, 0.4) 48.5%,
-        rgba(115, 115, 115, 0) 100%
+      180deg,
+      rgba(115, 115, 115, 0) 0%,
+      rgba(153, 153, 153, 0.4) 48.5%,
+      rgba(115, 115, 115, 0) 100%
     );
   }
 

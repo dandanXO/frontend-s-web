@@ -130,7 +130,6 @@ const links = computed(() => [
 
         .account-profile-info__name {
           font-size: 20px;
-          font-weight: 700;
           line-height: 20px;
           color: #ffffff;
         }
@@ -156,11 +155,9 @@ const links = computed(() => [
       line-height: 12px;
       letter-spacing: -0.0008em;
       color: #ffffff;
-      margin: 0 30px;
 
       .account-info-balance-amount {
         font-size: 20px;
-        font-weight: 700;
         line-height: 20px;
       }
     }

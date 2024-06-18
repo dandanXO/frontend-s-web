@@ -855,7 +855,6 @@ const humanDatetime = (ts) => {
     }
 
     .finance-record-item__amount {
-      font-weight: 700;
       font-size: 20px;
       text-align: right;
       color: #00b900;

@@ -32,7 +32,7 @@
         </div>
 
         <div class="loader-container">
-          <div><q-spinner color="green" size="10em" :thickness="10" /></div>
+          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
           <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
@@ -872,6 +872,11 @@ defineExpose({
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+
+  .loader-logo {
+    max-width: 130px;
+    animation: blink 1.5s infinite;
+  }
 }
 
 .full-deposit-card {
@@ -889,5 +894,19 @@ defineExpose({
   align-items: center;
   padding: 16px;
   margin: 0 -16px;
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+
+  50% {
+    filter: brightness(1.3) saturate(1) contrast(1);
+  }
+
+  100% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
 }
 </style>

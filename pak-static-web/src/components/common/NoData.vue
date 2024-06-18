@@ -28,7 +28,6 @@ defineProps({
   h3 {
     margin-bottom: 0;
     font-size: 24px;
-    font-weight: 700;
     line-height: 24px;
     color: #8c968f;
   }

@@ -964,7 +964,6 @@ onMounted(async () => {
             border-bottom: 1px solid #83a3ca33;
             color: #ffffff;
             font-size: 18px;
-            font-weight: 700;
           }
 
           .ant-collapse > .ant-collapse-item > .ant-collapse-content {
