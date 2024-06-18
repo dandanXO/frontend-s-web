@@ -564,9 +564,11 @@ export default defineComponent({
           { code: "poker", name: t('menu.poker'), enName: "Poker", path: "/poker", submenu: true },
           { code: "esports", name: t('menu.esports'), enName: "Esports", path: "/esports", submenu: true },
           { code: "lottery", name: t('menu.lottery'), enName: "Lottery", path: "/lottery", submenu: true },
-          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
+          // { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           // { code: "cockfight", name: t('menu.cockfight'), enName: "Cock Fight", path: "/cockfight", submenu: true },
           // { code: "minigame", name: t('menu.minigame'), enName: "Mini Game", path: "/minigame", submenu: true },
+          { code: "minigame", name: t('menu.hashgame'), enName: "Hash Game", path: "/minigame", submenu: true },
+          { code: "others", name: t('menu.others'), enName: "Others", path: "/others", submenu: true },
           {
             code: "Promotion",
             name: t('menu.promotion'),
