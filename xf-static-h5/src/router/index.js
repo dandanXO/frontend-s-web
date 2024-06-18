@@ -26,8 +26,8 @@ export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -43,11 +43,12 @@ export default route(function (/* { store, ssrContext } */) {
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
-    if (to.path === "/login" || to.path === "/register") {
+    if (to.path === "/login" || to.path === "/register" || to.path==="/promotion") {
       ui.hiddenFooter()
     } else {
       ui.showFooter()
     }
+
 
     if (
       to.path === "/promotion"
