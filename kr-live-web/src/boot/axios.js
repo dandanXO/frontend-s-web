@@ -89,7 +89,7 @@ export default boot(({app, router}) => {
         }
 
         if (res.code !== ResponseCode.SUCCESS) {
-            if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
+            if ( res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
                 return response;
             }
             if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
