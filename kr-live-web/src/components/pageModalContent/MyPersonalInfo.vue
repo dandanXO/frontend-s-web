@@ -3,9 +3,8 @@
     <form class="personal-info-form form-template">
       <div class="form-item">
         <label>닉네임</label>
-        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
-          @update:model-value="updateTouch" ref="name2Ref"  lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']"/>
+        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
+          ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
       </div>
       <div class="form-item">
         <label>실제 이름</label>
@@ -33,7 +32,7 @@
         닫기
       </div>
       <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
-        제출하다
+        확인
       </div>
     </div>
   </div>
@@ -130,5 +129,4 @@ const closetheModal = () => {
 
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
