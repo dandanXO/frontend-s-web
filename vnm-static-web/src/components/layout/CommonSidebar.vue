@@ -255,7 +255,7 @@ export default defineComponent({
     onMounted(() => {
       getAppDownloadUrl();
       getCheckRedPacket();
-      if (store.token && store.memberType === 'TEST') {
+      if (store.token) {
         initFloating();
       }
     });
@@ -264,7 +264,7 @@ export default defineComponent({
     watch(
       () => store.token,
       () => {
-        if (store.token && store.memberType === 'TEST') {
+        if (store.token) {
           initFloating();
         }
       }

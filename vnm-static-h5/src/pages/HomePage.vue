@@ -316,7 +316,6 @@
       <div
         @click="selectTab('casual')"
         class="game-platform btn-pointer"
-        v-if="store.memberType === 'TEST'"
         id="casual-platform"
       >
         <template v-if="tab === 'casual'">
@@ -524,7 +523,7 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="casual-lists" v-show="store.memberType === 'TEST'">
+      <div class="game-lists fade-in-image" id="casual-lists">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
@@ -1667,7 +1666,7 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
-      if (store.token && store.memberType === 'TEST') {
+      if (store.token) {
         initFloating();
       }
 
@@ -1928,9 +1927,9 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showRocket.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showRocket.value = true;
+      // }
     };
 
     const hideRocket = () => {
@@ -1940,9 +1939,9 @@ export default defineComponent({
 
     const showFloatPromo = ref(false);
     const checkFloatPromo = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showFloatPromo.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showFloatPromo.value = true;
+      // }
       if (gamePromo.length === 0) {
         promoPos.value = [18, 18]
       }
