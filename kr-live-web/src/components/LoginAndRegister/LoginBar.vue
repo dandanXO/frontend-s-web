@@ -102,6 +102,8 @@ const showNotify = () => {
     message: "로그인 해주세요",
     icon: "report_problem"
   });
+
+  router.push('/?page=login')
 };
 
 const logout = () => {

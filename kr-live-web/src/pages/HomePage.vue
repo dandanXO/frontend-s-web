@@ -8,7 +8,8 @@
 
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
 
-    <Transition>
+    <div class="game-list-wrapper" style="min-height:300px;">
+      <Transition>
       <div class="game-list" v-if="currentSelectedMenu === 'live'">
         <GameItem
           :games="liveCasinoGames"
@@ -65,65 +66,11 @@
               ></div>
             </div>
           </div>
-          <q-scroll-observer axis="vertical" />
         </q-scroll-area>
 
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
+          <q-spinner-gears :color="'primary'" size="8em" />
         </div>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">
-                      {{ game.name }}
-                    </div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
 
         <q-scroll-area
           v-if="!isLoading && selectedPlatId !== -99"
@@ -206,223 +153,6 @@
     <!-- slot end -->
 
     <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && !isShow"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <template v-for="p in fishPlatforms" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </Transition>
-
-    <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && isShow"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <q-scroll-area
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
-        >
-          <div class="bookmarks">
-            <div
-              class="plat-item"
-              v-for="p in fishPlatforms"
-              :class="{ active: p.id === selectedPlatId }"
-              :key="p"
-              @click="switchPlat(p, 'fish')"
-            >
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-          <q-scroll-observer axis="vertical" />
-        </q-scroll-area>
-
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
-        </div>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="fish-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-fish-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-fish-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="fish-name">
-                      {{ game.name }}
-                    </div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId !== -99"
-          ref="scrollFishRef"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="search-list">
-            <q-form @submit="searchList">
-              <q-input
-                color="white"
-                filled
-                class="search-input"
-                v-model="gamePage.searchKey"
-                :label="$t('lang.keyin_keyword')"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    style="margin-right: 5px"
-                    @click="clearSearchInput"
-                    class="clear-input-icon btn-pointer"
-                    name="close"
-                  ></q-icon>
-
-                  <q-icon
-                    color="brightbtn"
-                    name="search"
-                    style=""
-                    @click="searchList"
-                    class="clear-input-icon btn-pointer"
-                  ></q-icon>
-                </template>
-              </q-input>
-            </q-form>
-          </div>
-          <div class="fish-grid" style="padding-bottom: 20px">
-            <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-fish-game q-col-gutter-none"
-                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="fish-name">{{ game.name }}</div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-          <q-scroll-observer @scroll="scrolling" />
-        </q-scroll-area>
-      </div>
-    </Transition>
-
-    <Transition>
       <div class="game-list" v-if="currentSelectedMenu === 'sport'">
         <GameItem
           :games="esportPlatform"
@@ -488,61 +218,8 @@
         </q-scroll-area>
 
         <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
+          <q-spinner-gears :color="'primary'" size="8em" />
         </div>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">
-                      {{ game.name }}
-                    </div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
 
         <q-scroll-area
           v-if="!isLoading && selectedPlatId !== -99"
@@ -628,99 +305,15 @@
     <Transition>
       <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
     </Transition>
-
-    <!-- <Transition>
-      <div class="game-list" v-if="currentSelectedMenu === 'sport'">
-      <GameItem
-        :games="sportPlatform"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
     </div>
-    </Transition> -->
+
   </div>
 
-  <div class="news-section">
-    <div class="news-title">
-      <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+ 더보기</router-link>
-    </div>
-    <template v-if="newsList.length > 0">
-      <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title" :title="item.title">
-            [
-            {{ item.title }}
-            ] ※
-            {{ item.content }}
-            ※
-          </div>
-        </div>
-        <div class="news-item-right">
-          <div class="news-item-date">{{ item.createTime }}</div>
-        </div>
-      </div>
-    </template>
-    <div v-else class="news-item-box" style="justify-content: center;">
-      아직 콘텐츠가 없습니다
-    </div>
-  </div>
+  <AnnouncementList />
 
   <DepositRecords :depositRecordList="depositRecordList"/>
 
   <GameModal ref="gameModalRef"></GameModal>
-
-  <!--  <q-dialog width="100%" v-model="isStationNotice">-->
-  <!--    <q-card style="width: 100%" class="bg-primary text-white">-->
-  <!--      <q-card-section class="q-mb-md">-->
-  <!--        <div class="menu-title flex justify-between items-center">-->
-  <!--          <div style="margin-right: auto">&nbsp;</div>-->
-  <!--          <div>{{ $t("lang.announcement") }}</div>-->
-  <!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
-  <!--        </div>-->
-
-  <!--        <q-tabs-->
-  <!--          v-model="activeKey"-->
-  <!--          dense-->
-  <!--          class="text-grey"-->
-  <!--          active-color="brand"-->
-  <!--          indicator-color="black"-->
-  <!--          align="justify"-->
-  <!--          narrow-indicator-->
-  <!--        >-->
-  <!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
-  <!--        </q-tabs>-->
-
-  <!--        <q-separator />-->
-
-  <!--        <q-tab-panels v-model="activeKey" animated>-->
-  <!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
-  <!--            <q-list style="min-height: 65vh">-->
-  <!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
-  <!--                <span v-if="ann.typeId === tab.id">-->
-  <!--                  <q-expansion-item-->
-  <!--                    style="max-height: 65vh; overflow: auto"-->
-  <!--                    group="somegroup"-->
-  <!--                    icon="volume_up"-->
-  <!--                    :label="ann.title"-->
-  <!--                  >-->
-  <!--                    <q-card>-->
-  <!--                      <q-card-section>-->
-  <!--                        {{ ann.content }}-->
-  <!--                      </q-card-section>-->
-  <!--                    </q-card>-->
-  <!--                  </q-expansion-item>-->
-
-  <!--                  <q-separator></q-separator>-->
-  <!--                </span>-->
-  <!--              </div>-->
-  <!--            </q-list>-->
-  <!--          </q-tab-panel>-->
-  <!--        </q-tab-panels>-->
-  <!--      </q-card-section>-->
-  <!--    </q-card>-->
-  <!--  </q-dialog>-->
 
   <q-dialog
     width="100%"
@@ -749,170 +342,6 @@
       </div>
     </q-card>
   </q-dialog>
-
-  <!-- <q-page-sticky
-    v-if="showSticky || specialInviteBonusEligible"
-    class="home-sticky-div"
-    position="right"
-    :offset="[0, 0]"
-  >
-    <div v-if="showSticky" class="home-sticky"> -->
-  <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
-  <!-- <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
-        <q-icon name="close"></q-icon>
-      </q-btn>
-      <div class="sticky-container">
-        <div class="line-title">LINE</div>
-        <img src="../assets/home/line-bg-thai-theme.png" class="line-img" />
-        <div class="line-bottom">line ID:@jolly88</div>
-      </div>
-    </div>
-
-    <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
-      <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
-    </div>
-  </q-page-sticky> -->
-
-  <!--  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">-->
-  <!--    <div class="special-invite-bonus-container">-->
-  <!--      <div class="header-decoration-wrapper">-->
-  <!--        <div class="header-decoration">-->
-  <!--          <img-->
-  <!--            class="confetti"-->
-  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"-->
-  <!--            width="250"-->
-  <!--          />-->
-  <!--          <img-->
-  <!--            class="money-bags"-->
-  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"-->
-  <!--            width="150"-->
-  <!--          />-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--      <div class="special-invite-bonus-content">-->
-  <!--        <div class="title-wrapper">-->
-  <!--          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>-->
-  <!--          <div class="reward-amt">200</div>-->
-  <!--        </div>-->
-  <!--        <div class="desc-wrapper">-->
-  <!--          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>-->
-  <!--          <div class="desc-content">-->
-  <!--            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น-->
-  <!--            <br />-->
-  <!--            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท-->
-  <!--            <br />-->
-  <!--            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ-->
-  <!--            <br />-->
-  <!--            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้-->
-  <!--            <br />-->
-  <!--            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">-->
-  <!--          {{ $t("lang.confirm") }}-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </q-dialog>-->
-
-  <!-- <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
-    <div class="promo-popup-div">
-      <q-btn
-        round
-        dense
-        icon="close"
-        class="btn-pointer popup-btn"
-        color="white"
-        text-color="dark"
-        @click="closePopupModal"
-        v-close-popup
-      />
-
-      <img src="../assets/images/common/home-popup-img-thai-theme.png" />
-
-      <div class="popup-list">
-        <router-link to="/promo?id=81">
-          <div class="popup-item">
-            <span>
-              หมุนวงล้อ รับโบนัส
-              <em>8,880</em>
-              รางวัลสูงสุด
-              <em>IPHONE</em>
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=217">
-          <div class="popup-item">
-            <span>
-              รับโบนัสรายวัน เทิร์นโอเวอร์
-              <em>3</em>
-              เท่า
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=80">
-          <div class="popup-item">
-            <span>
-              แนะนำเพื่อนรับเงินคืนสูงสุด
-              <em>20,000</em>
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=216">
-          <div class="popup-item">
-            <span>
-              ฝาก
-              <em>200%</em>
-              รับ
-              <em>300</em>
-              ทุกวันศุกร์
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=77">
-          <div class="popup-item">
-            <span>
-              ยอดฝากรายวันรับ
-              <em>30%</em>
-              สูงสุด
-              <em>2,000</em>
-            </span>
-          </div>
-        </router-link>
-        <router-link to="/promo?id=168">
-          <div class="popup-item">
-            <span>
-              สะสมยอดฝาก
-              <em>300</em>
-              รับทันทีฟรีสปรินสล็อต
-            </span>
-          </div>
-        </router-link>
-      </div>
-    </div>
-  </q-dialog> -->
-
-  <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
-    <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
-      <q-card-section class="q-mb-md">
-        <div class="menu-title flex justify-between items-center">
-          <div style="margin-right: auto">&nbsp;</div>
-          <div>{{ $t("lang.announcement") }}</div>
-          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
-        </div>
-
-        <div class="">
-          {{ $t("lang.you_got_new_spin_wheel_spin") }}
-          <br />
-        </div>
-      </q-card-section>
-      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.close_btn')" color="brand" />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -927,6 +356,7 @@ import GameModal from "components/modal/GameModal";
 import GameItem from "components/game/GameItem";
 import GameCategory from "components/game/GameCategory";
 import DepositRecords from "components/home/DepositRecords.vue";
+import AnnouncementList from "components/home/AnnouncementList.vue";
 import * as _ from "lodash";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
@@ -959,7 +389,8 @@ export default defineComponent({
     LangToggle,
     RollingText,
     JackpotPrize,
-    DepositRecords
+    DepositRecords,
+    AnnouncementList
   },
   setup() {
     const $q = useQuasar();
@@ -976,12 +407,6 @@ export default defineComponent({
 
     const router = useRouter();
     const store = userStore();
-
-    const getBackgroundImageStyle = (name) => {
-      return {
-        backgroundImage: `url(${require(`../assets/home/menu/menu-${name}.png`)})`
-      };
-    };
 
     const showSticky = ref(true);
     const checkSticky = () => {
@@ -1096,7 +521,7 @@ export default defineComponent({
     }
 
     const platforms = ref([]);
-    const newsList = ref([]);
+    
     const isLoadingDepositRecordList = ref(false);
     const depositRecordList = ref([]);
 
@@ -1278,7 +703,7 @@ export default defineComponent({
               //   message: "Loading failed",
               //   icon: "report_problem"
               // });
-            })
+            }) 
         )
         .then((res) => {
           isLoading.value = false;
@@ -1349,6 +774,7 @@ export default defineComponent({
       // const result = await res.json();
 
       // const resData = result.data;
+      
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -1393,47 +819,8 @@ export default defineComponent({
         .catch((err) => {});
     };
 
-    const getLength = (tab, ann) => {
-      var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
-      return categoryLength.length;
-    };
     // const announcementList = ref([]);
     const announcementTypes = ref([]);
-    const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-    const loadAnnouncement = () => {
-      api
-        .get("/announcement")
-        .then((res) => {
-          const {
-            data: {
-              code,
-              data: { announcements }
-            }
-          } = res;
-
-          if (code === 0) {
-            console.log(announcements);
-            const announcementsFormattedData = announcements.map((item) => ({
-              ...item,
-              createTime: formatDate(item.createTime)
-            }));
-            newsList.value = announcementsFormattedData;
-            store.announcementList = announcements;
-          } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: "資料讀取失敗",
-              icon: "report_problem"
-            });
-          }
-
-          // newsList.value = announcements;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
 
     const loadDepositRecordList = () => {
       isLoadingDepositRecordList.value = true;
@@ -1674,12 +1061,7 @@ export default defineComponent({
     });
 
     const popupInterval = ref(null);
-    const isSpinWheelPromo = ref(false);
 
-    const gotoPromoSpinWheel = () => {
-      isSpinWheelPromo.value = false;
-      // router.push(`/promo?id=81`);
-    };
 
     onUnmounted(() => {
       clearInterval(popupInterval.value);
@@ -1690,10 +1072,9 @@ export default defineComponent({
         await store.getMemberInfo();
 
         // getFavGameList();
-        store.getUnreadTotal();
+        // store.getUnreadTotal();
       }
       // loadData();
-      loadAnnouncement();
       getPlatList();
     };
     const imageLoading = ref(false);
@@ -1831,7 +1212,6 @@ export default defineComponent({
       openSlotGame,
       openFavGame,
       scrollPageRef,
-      // announcementList,
       isStationNotice,
       closeLineSticky,
       showSticky,
@@ -1840,10 +1220,7 @@ export default defineComponent({
       noticeTitle,
       announcementTypes,
       activeKey,
-      getLength,
-      isSpinWheelPromo,
       gotoPromo,
-      gotoPromoSpinWheel,
       router,
       isAppUpdateModal,
       isH5,
@@ -1851,17 +1228,12 @@ export default defineComponent({
       cancelUpdate,
       favGamesList,
       sortedFavGamesList,
-      // updateSortedFavGamesList,
-      // getFavGameList,
       specialInviteBonusEligible,
       specialInviteBonusPopupVisible,
       redeemSpecialInviteBonus,
       toggleSpecialInviteBonusPopup,
-      newsList,
-      getBackgroundImageStyle,
       gameItemLoad,
-      depositRecordList,
-      moment
+      depositRecordList
     };
   }
 });
@@ -2370,139 +1742,6 @@ export default defineComponent({
       line-height: 14px;
       height: 30px;
       text-align: center;
-    }
-  }
-}
-
-.news-section {
-  margin-top: 20px;
-  padding: 0 16px;
-}
-
-.news-split {
-  display: flex;
-  flex-wrap: wrap;
-
-  @media (min-width: 769px) {
-    gap: 10px;
-  }
-
-  .news-section {
-    width: 100%;
-    @media (min-width: 769px) {
-      width: calc(50% - 5px);
-    }
-  }
-
-  .news-item-left {
-    width: 100% !important;
-  }
-}
-
-.news-title {
-  // background: linear-gradient(#3f4146, #202226);
-  background: linear-gradient(180deg, #384a70 0%, #121c31 100%);
-
-  height: 61px;
-  border: 1px #454545 solid;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px;
-
-  &__sub {
-    background: linear-gradient(180deg, #385f70 0%, #122931 100%);
-  }
-
-  @media (min-width: 769px) {
-    padding: 0px 40x;
-  }
-  .title-text {
-    font-size: 14px;
-    line-height: 19.6px;
-    @media (min-width: 769px) {
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-  .more-text {
-    font-size: 14px;
-    line-height: 19.6px;
-    color: #ff3c3c;
-    cursor: pointer;
-    @media (min-width: 769px) {
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-}
-
-.news-item-box {
-  width: 100%;
-  height: 60px;
-  background-color: #192235;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 25px;
-  font-size: 12px;
-  line-height: 16.8px;
-  border-bottom: 1px solid #3f3f3f;
-
-  display: grid;
-  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(120px, 10%);
-
-  @media (min-width: 769px) {
-    grid-template-columns: minmax(calc(80% - 100px), 90%) minmax(200px, 20%);
-  }
-
-  &:hover {
-    .news-item-title,
-    .news-item-date {
-      transform: scale(1.02);
-      color: #01e1ff !important;
-    }
-  }
-
-  @media (min-width: 769px) {
-    padding: 0px 40x;
-    font-size: 16px;
-    line-height: 22px;
-  }
-  .news-item-left {
-    width: 100%;
-    @media (min-width: 769px) {
-      width: 60%;
-    }
-
-    .news-item-sort {
-      padding-right: 8px;
-    }
-    .news-item-title {
-      transition: 0.3s all;
-      padding-right: 8px;
-      padding-left: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      @media (max-width: 769px) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .news-item-box {
-    @media (min-width: 769px) {
-      width: 100%;
-    }
-  }
-  .news-item-right {
-    .news-item-date {
-      transition: 0.3s all;
-      color: #92959f;
-      text-align: right;
     }
   }
 }
@@ -3053,6 +2292,9 @@ export default defineComponent({
   }
 }
 
+.game-list-wrapper {
+  display: flex;
+}
 
 .game-list {
   display: flex;
