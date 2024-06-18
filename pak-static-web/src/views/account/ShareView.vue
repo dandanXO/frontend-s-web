@@ -44,21 +44,21 @@
               <div class="invitation-link__link">
                 {{ selfTgurl }}
               </div>
-              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">
+              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink(selfTgurl)">
                 {{ $t("shareView.inviteLink.copyButton") }}
               </button>
             </div>
             <div class="invitation-link__action-wrapper">
-              <a :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('whatsapp')">
                 <img src="@/assets/images/account/share/logo_whatsapp.png" alt="Whatsapp" />
               </a>
-              <a :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('tiktok')">
                 <img src="@/assets/images/account/share/logo_tik-tok.png" alt="TikTok" />
               </a>
-              <a :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('instagram')">
                 <img src="@/assets/images/account/share/logo_ins.png" alt="Instagram" />
               </a>
-              <button class="invitation-link__action-more">
+              <button class="invitation-link__action-more" @click="handleMoreSocialMediaClick">
                 <RiMoreFill />
               </button>
             </div>
@@ -164,6 +164,7 @@
         </table>
       </div>
     </div>
+    <SocialMediaModal v-model="isSocialMediaModalVisible" @share-click="handleShareClick" />
   </div>
 </template>
 
@@ -192,15 +193,17 @@ import { convertToCommaAmount } from "@/utils/utils";
 import { server } from "@/utils/request";
 import { useI18n } from "vue-i18n";
 
+import SocialMediaModal from "@/components/share/SocialMediaModal.vue";
+
 const INVITED_FRIEND_PER_VIEW = 3;
 const INVITED_FRIEND_ROW_HEIGHT = 44;
 
 const { t } = useI18n();
 
 const store = userStore();
-const copyHrefLink = () => {
+const copyHrefLink = (url) => {
   navigator.clipboard
-    .writeText(selfTgurl.value)
+    .writeText(url)
     .then(() => {
       ElMessage.success(t("shareView.inviteLink.copySuccess"));
     })
@@ -232,6 +235,7 @@ const memberDetail = ref([]);
 const latestInvitees = ref([]);
 const inviteesRecords = ref([]);
 const timer = ref();
+const isSocialMediaModalVisible = ref(false);
 
 const getOneTimeBonusSetting = () => {
   getOneTimeBonus()
@@ -301,6 +305,44 @@ const startDisplayingRows = async () => {
     invitedFriendRef.value.scrollTo({ top: currentScrollTop, behavior: "smooth" });
   }, 2000);
 };
+
+const handleMoreSocialMediaClick = () => (isSocialMediaModalVisible.value = true);
+
+const handleShareClick = (media) => {
+  const content = t("shareView.inviteLink.shareText", { url: selfTgurl.value });
+  let openUrl = "";
+
+  switch (media) {
+    case "whatsapp":
+      openUrl = `whatsapp://send?text=${encodeURIComponent(content)}`;
+      break;
+    case "tiktok":
+      copyHrefLink(content);
+      openUrl = "https://www.tiktok.com/messages";
+      break;
+    case "instagram":
+      copyHrefLink(content);
+      openUrl = "https://www.instagram.com/direct/";
+      break;
+    case "youtube":
+      copyHrefLink(content);
+      openUrl = "https://www.youtube.com/";
+      break;
+    case "facebook":
+      copyHrefLink(content);
+      // openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(selfTgurl.value)}`;
+      openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://www.google.com")}`;
+      break;
+    case "email":
+      const title = encodeURIComponent(t("shareView.inviteLink.shareTitle"));
+      const body = encodeURIComponent(content);
+      openUrl = `mailto:?subject=${title}&body=${body}`;
+      break;
+  }
+
+  openUrl && window.open(openUrl, "_blank");
+};
+
 onMounted(() => {
   getOneTimeBonusSetting();
   getMemberDetail();
