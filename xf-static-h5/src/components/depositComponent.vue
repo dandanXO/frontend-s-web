@@ -1,21 +1,15 @@
 <template>
   <div
-      class="q-pa-md"
-      style="overflow: auto;  margin: 8px 8px"
+    class="q-pa-md"
+    style="overflow: auto;  margin: 8px 8px"
   >
-    <div class="q-mb-lg">
-      <span class="additional-tips">
-        如果遇到存款问题，请立即联系在线客服解决！
-      </span>
-    </div>
-
     <div class="node-wrapper">
       <Node
-          :level="1"
-          :list="payMethods"
-          :gridcol="4"
-          ref="paymentNode"
-          @clicked="onSelect"
+        :level="1"
+        :list="payMethods"
+        :gridcol="4"
+        ref="paymentNode"
+        @clicked="onSelect"
       />
     </div>
 
@@ -60,8 +54,9 @@
     </div>
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
-        <q-input
-            v-if="amountList.length === 0"
+        <div class="flex-c-center" v-if="amountList.length === 0">
+          <q-input
+            class="deposit-input"
             hide-bottom-space
             ref="depositAmtRef"
             label="存款金额"
@@ -71,17 +66,19 @@
             color="white"
             :rules="verifyDepositAmount"
             padding="none"
-        >
-          <template v-slot:prepend>
+          >
+            <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
               <template v-if="isUSDT">USDT</template>
               <template v-else>{{ store.currency.value }}</template>
             </span>
-          </template>
-        </q-input>
-
-        <q-select
-            v-else
+            </template>
+          </q-input>
+          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+        </div>
+        <div class="flex-c-center" v-else>
+          <q-select
+            class="deposit-input"
             ref="depositAmtRef"
             label="选择金额"
             name="localAmount"
@@ -91,27 +88,29 @@
             color="bright"
             :rules="verifyDepositAmount"
             padding="none"
-        >
-          <template v-slot:prepend>
+          >
+            <template v-slot:prepend>
             <span style="font-size: 26px" class="text-bright">
               {{ store.currency.value }}
             </span>
-          </template>
-        </q-select>
+            </template>
+          </q-select>
+          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+        </div>
 
-        <div class="q-mt-md q-mb-md text-grey text-bold q-pb-md">
+        <div class="q-mt-sm text-grey text-bold ">
           单笔存款：{{
             calculatedMinDeposit
-                ? calculatedMinDeposit +
-                " " +
-                (isUSDT ? "USDT" : store.currency.value)
-                : 0
+              ? calculatedMinDeposit +
+              " " +
+              (isUSDT ? "USDT" : store.currency.value)
+              : 0
           }}  -   {{
             activeMethod.depositMax
-                ? activeMethod.depositMax +
-                " " +
-                (isUSDT ? "USDT" : store.currency.value)
-                : "No Limit"
+              ? activeMethod.depositMax +
+              " " +
+              (isUSDT ? "USDT" : store.currency.value)
+              : "No Limit"
           }}
         </div>
 
@@ -137,33 +136,33 @@
         </div>
 
         <BankComponent
-            v-show="selectedPayType && bankCardList.length"
-            ref="payTypeClass"
-            :is="selectedPayType"
-            v-model="form.bankId"
-            :bank-list="bankCardList"
-            @selected="selectedBank"
-            @successful="isDeposited = true"
+          v-show="selectedPayType && bankCardList.length"
+          ref="payTypeClass"
+          :is="selectedPayType"
+          v-model="form.bankId"
+          :bank-list="bankCardList"
+          @selected="selectedBank"
+          @successful="isDeposited = true"
         ></BankComponent>
         <q-select
-            ref="offerRef"
-            class="q-mt-md"
-            label="选择优惠"
-            filled
-            :options="unselectedPrivileges"
-            v-model="selectedPrivilege"
-            emit-value
-            v-if="hasPrivilege && !isUSDT"
-            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
-            clearable
-            color="white"
-            @update:model-value="checkMinDepositAmt"
+          ref="offerRef"
+          class="q-mt-md"
+          label="选择优惠"
+          filled
+          :options="unselectedPrivileges"
+          v-model="selectedPrivilege"
+          emit-value
+          v-if="hasPrivilege && !isUSDT"
+          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`"
+          clearable
+          color="white"
+          @update:model-value="checkMinDepositAmt"
         >
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section>
                 <q-item-label
-                    style="
+                  style="
                     text-overflow: ellipsis;
                     overflow: auto;
                     white-space: nowrap;
@@ -177,14 +176,14 @@
         </q-select>
         <div class="q-mt-md" v-html="activeMethod.msg"></div>
         <!-- <div class="q-mt-md">更新个人信息的新帐户可以参与促销活动。</div> -->
-        <div class="q-mt-md">
+        <!-- <div class="q-mt-md">
           <q-btn
               :loading="btnLoading"
               color="brightbtn fit"
               @click="confirmDeposit"
               label="确定存款"
           />
-        </div>
+        </div> -->
       </q-form>
     </div>
   </div>
@@ -192,8 +191,8 @@
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
       <q-card-section
-          style="padding: 10px 20px"
-          class="q-pa-md bg-primary text-white"
+        style="padding: 10px 20px"
+        class="q-pa-md bg-primary text-white"
       >
         已存款
       </q-card-section>
@@ -340,17 +339,17 @@ const isValidDecimal = () => {
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
   (val) =>
-      val > calculatedMinDeposit.value - 1 ||
-      "存款应介于 " +
-      calculatedMinDeposit.value +
-      " - " +
-      activeMethod.value.depositMax,
+    val > calculatedMinDeposit.value - 1 ||
+    "存款应介于 " +
+    calculatedMinDeposit.value +
+    " - " +
+    activeMethod.value.depositMax,
   (val) =>
-      val < activeMethod.value.depositMax + 1 ||
-      "存款应介于 " +
-      calculatedMinDeposit.value +
-      " - " +
-      activeMethod.value.depositMax
+    val < activeMethod.value.depositMax + 1 ||
+    "存款应介于 " +
+    calculatedMinDeposit.value +
+    " - " +
+    activeMethod.value.depositMax
 ]);
 
 const form = reactive({
@@ -389,12 +388,12 @@ function initPay() {
     }
 
     if (
-        !(
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-        )
+      !(
+        (Platform.is.desktop || Platform.is.webkit) &&
+        !Platform.is.capacitor &&
+        Platform.is.name !== "webkit" &&
+        !liff.isInClient()
+      )
     ) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
@@ -410,27 +409,27 @@ async function loadPrivilege(val) {
   privilegeList.value = [];
   hasPrivilege.value = false;
   await cashier
-      .get(`/session/payment/${val.paymentId}/privileges`)
-      .then((res) => {
-        if (res.code === 0) {
-          privilegeList.value = res.data.privileges;
-          hasPrivilege.value = true;
-          unselectedPrivileges.value = [];
-          freePrivilege.value = null;
-          privilegeList.value.map((p) => {
-            if (p.payTypes.indexOf(val.payType) >= 0) {
-              if (p.triggerType == "FREE") {
-                freePrivilege.value = p;
-              } else {
-                unselectedPrivileges.value.push(p);
-              }
+    .get(`/session/payment/${val.paymentId}/privileges`)
+    .then((res) => {
+      if (res.code === 0) {
+        privilegeList.value = res.data.privileges;
+        hasPrivilege.value = true;
+        unselectedPrivileges.value = [];
+        freePrivilege.value = null;
+        privilegeList.value.map((p) => {
+          if (p.payTypes.indexOf(val.payType) >= 0) {
+            if (p.triggerType == "FREE") {
+              freePrivilege.value = p;
+            } else {
+              unselectedPrivileges.value.push(p);
             }
-          });
-        } else {
-          hasPrivilege.value = false;
-          privilegeList.value = [];
-        }
-      });
+          }
+        });
+      } else {
+        hasPrivilege.value = false;
+        privilegeList.value = [];
+      }
+    });
 }
 
 function selectPayType(value) {
@@ -488,8 +487,8 @@ function checkMinDepositAmt() {
     calculatedMinDeposit.value = activeMethod.value.depositMin;
   } else {
     calculatedMinDeposit.value = Math.max(
-        activeMethod.value.depositMin,
-        selectedPrivilege.value.depositMin
+      activeMethod.value.depositMin,
+      selectedPrivilege.value.depositMin
     );
   }
 }
@@ -525,48 +524,48 @@ async function confirmDeposit() {
     btnLoading.value = false;
   } else {
     await cashier
-        .get(
-            `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
-        )
-        .then((d) => {
-          if (d.code === 11002) {
-            if (d.data && d.data.suggestion) {
-              form.localAmount = d.data.suggestion;
-              btnLoading.value = false;
-            }
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: d.message,
-              icon: "report_problem"
-            });
-          } else {
-            if (freePrivilege.value) {
-              if (selectedPrivilege.value) {
-                form.privilegeId =
-                    selectedPrivilege.value.id + "," + freePrivilege.value.id;
-              } else {
-                form.privilegeId = "," + freePrivilege.value.id;
-              }
-            } else {
-              if (selectedPrivilege.value) {
-                form.privilegeId = selectedPrivilege.value.id;
-              } else {
-                form.privilegeId = null;
-              }
-            }
-            form.paymentId = activeMethod.value.paymentId;
-            const copy = {...form};
-            const data = {};
-            Object.entries(copy).forEach(([key, value]) => {
-              if (value) {
-                data[key] = value;
-              }
-            });
-            data.bankCardId = 0;
-            pDepo(data);
+      .get(
+        `/session/payment/${activeMethod.value.paymentId}/amount/${form.localAmount}/verify`
+      )
+      .then((d) => {
+        if (d.code === 11002) {
+          if (d.data && d.data.suggestion) {
+            form.localAmount = d.data.suggestion;
+            btnLoading.value = false;
           }
-        });
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: d.message,
+            icon: "report_problem"
+          });
+        } else {
+          if (freePrivilege.value) {
+            if (selectedPrivilege.value) {
+              form.privilegeId =
+                selectedPrivilege.value.id + "," + freePrivilege.value.id;
+            } else {
+              form.privilegeId = "," + freePrivilege.value.id;
+            }
+          } else {
+            if (selectedPrivilege.value) {
+              form.privilegeId = selectedPrivilege.value.id;
+            } else {
+              form.privilegeId = null;
+            }
+          }
+          form.paymentId = activeMethod.value.paymentId;
+          const copy = {...form};
+          const data = {};
+          Object.entries(copy).forEach(([key, value]) => {
+            if (value) {
+              data[key] = value;
+            }
+          });
+          data.bankCardId = 0;
+          pDepo(data);
+        }
+      });
   }
 }
 
@@ -583,136 +582,136 @@ async function pDepo(deposit) {
     obj.privilegeId = deposit.privilegeId;
   }
   await cashier
-      .post("/session/payment/submit", qs.stringify(obj))
-      .then((res) => {
-        // const res = ret.data
-        // console.log(res)
+    .post("/session/payment/submit", qs.stringify(obj))
+    .then((res) => {
+      // const res = ret.data
+      // console.log(res)
 
-        if (res.code === 0) {
-          console.log("After SDubmit");
-          console.log(res);
+      if (res.code === 0) {
+        console.log("After SDubmit");
+        console.log(res);
 
-          const response = res.data.result;
-          if (res.data.result.payResultType === "OFFLINE") {
-            btnLoading.value = false;
-          }
-          if (res.data.result.payResultType === "RENDER_HTML") {
-            isDisplay.value = true;
-            const submitResult = res.data.result.data;
-            submitMessage.value = submitResult.split(",");
-            btnLoading.value = false;
-          } else {
-            if (
-                (Platform.is.desktop || Platform.is.webkit) &&
-                !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
-            ) {
-              if (store.getDeviceType() === 'IOS' || store.isMobileSafari()) {
-                const newWin = window.open(`/`, `_self`);
-                if (response.payResultType === "GET_SUBMIT") {
-                  newWin.location.href = response.requestUrl;
-                  btnLoading.value = false;
-                }
-                if (response.payResultType === "POST_SUBMIT") {
-                  if (response.paramKey === null || response.paramKey === "") {
-                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                    btnLoading.value = false;
-                  } else {
-                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                    btnLoading.value = false;
-                  }
-                }
-
-              } else {
-                const newWin = window.open(`/`);
-                newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-                if (response.payResultType === "GET_SUBMIT") {
-                  newWin.location.href = response.requestUrl;
-                  btnLoading.value = false;
-                }
-                if (response.payResultType === "POST_SUBMIT") {
-                  if (response.paramKey === null || response.paramKey === "") {
-                    newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                    btnLoading.value = false;
-                  } else {
-                    newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                    btnLoading.value = false;
-                  }
-                }
-              }
-
-
-            } else {
-              localStorage.setItem("formDetails", JSON.stringify(form));
+        const response = res.data.result;
+        if (res.data.result.payResultType === "OFFLINE") {
+          btnLoading.value = false;
+        }
+        if (res.data.result.payResultType === "RENDER_HTML") {
+          isDisplay.value = true;
+          const submitResult = res.data.result.data;
+          submitMessage.value = submitResult.split(",");
+          btnLoading.value = false;
+        } else {
+          if (
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+          ) {
+            if (store.getDeviceType() === 'IOS' || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
               if (response.payResultType === "GET_SUBMIT") {
-                if (
-                    (Platform.is.desktop || Platform.is.webkit) &&
-                    !Platform.is.capacitor &&
-                    Platform.is.name !== "webkit" &&
-                    !liff.isInClient()
-                ) {
-                  location.href = response.requestUrl;
-                  btnLoading.value = false;
-                } else {
-                  openURL(response.requestUrl);
-                  btnLoading.value = false;
-                }
+                newWin.location.href = response.requestUrl;
+                btnLoading.value = false;
               }
               if (response.payResultType === "POST_SUBMIT") {
-                localStorage.setItem("responseDetails", JSON.stringify(response));
                 if (response.paramKey === null || response.paramKey === "") {
-
-                  if (store.getDeviceType() == 'ANDROID') {
-                    // alert("Adnroid");
-                    var preUrl = 'https://' + store.evip + `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-
-                    // alert(preUrl);
-                    const newWin = window.open(preUrl, `_blank`);
-                  } else {
-                    router.push(
-                        `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-                    );
-                    btnLoading.value = false;
-
-                  }
-
-
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
                 } else {
-                  router.push(
-                      `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
-                  );
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                }
+              }
+
+            } else {
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+                btnLoading.value = false;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                  btnLoading.value = false;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
                   btnLoading.value = false;
                 }
               }
             }
 
+
+          } else {
+            localStorage.setItem("formDetails", JSON.stringify(form));
+            if (response.payResultType === "GET_SUBMIT") {
+              if (
+                (Platform.is.desktop || Platform.is.webkit) &&
+                !Platform.is.capacitor &&
+                Platform.is.name !== "webkit" &&
+                !liff.isInClient()
+              ) {
+                location.href = response.requestUrl;
+                btnLoading.value = false;
+              } else {
+                openURL(response.requestUrl);
+                btnLoading.value = false;
+              }
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              localStorage.setItem("responseDetails", JSON.stringify(response));
+              if (response.paramKey === null || response.paramKey === "") {
+
+                if (store.getDeviceType() == 'ANDROID') {
+                  // alert("Adnroid");
+                  var preUrl = 'https://' + store.evip + `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+
+                  // alert(preUrl);
+                  const newWin = window.open(preUrl, `_blank`);
+                } else {
+                  router.push(
+                    `/display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                  );
+                  btnLoading.value = false;
+
+                }
+
+
+              } else {
+                router.push(
+                  `/display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`
+                );
+                btnLoading.value = false;
+              }
+            }
           }
-        } else {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: res.message,
-            icon: "report_problem"
-          });
-          btnLoading.value = false;
+
         }
-      })
-      .catch((error) => {
+      } else {
         $q.notify({
           color: "negative",
           position: "top",
-          message: error.message,
+          message: res.message,
           icon: "report_problem"
         });
         btnLoading.value = false;
-        // postMessage(
-        //   {
-        //     msg: error.message
-        //   },
-        //   "*"
-        // );
+      }
+    })
+    .catch((error) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: error.message,
+        icon: "report_problem"
       });
+      btnLoading.value = false;
+      // postMessage(
+      //   {
+      //     msg: error.message
+      //   },
+      //   "*"
+      // );
+    });
 }
 
 onMounted(() => {
@@ -764,7 +763,21 @@ onMounted(() => {
     }
   }
 }
-
+.flex-c-center{
+  display:flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  .deposit-input{
+    width: 70%;
+  }
+  .deposit-btn{
+    width: 25%;
+    height: 56px;
+    font-size: 20px;
+    white-space:nowrap;
+    background-color: #33bcd4;
+  }
+}
 .additional-tips {
   text-align: center;
   display: flex;

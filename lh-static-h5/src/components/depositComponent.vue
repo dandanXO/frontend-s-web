@@ -52,7 +52,7 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs">
 
-        <div v-if="amountList.length === 0" class="flex-c-center" >
+        <div v-if="amountList.length === 0" class="flex-c-center input-money" >
           <q-input
             hide-bottom-space
             ref="depositAmtRef"
@@ -152,6 +152,7 @@
           @successful="isDeposited = true"
         ></BankComponent>
         <q-select
+          style="width:100%;"
           ref="offerRef"
           class="deposit-selection q-mt-xs"
           label="选择优惠"
@@ -885,6 +886,11 @@ onMounted(() => {
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+.input-money{
+  :deep(.q-field--standard .q-field__control):before{
+    border-bottom: 0px;
+  }
 }
 
 @-webkit-keyframes spin {
