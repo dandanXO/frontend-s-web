@@ -1093,8 +1093,9 @@ async function toFail(memberWithdrawRecord) {
     showDialog('FAIL', memberWithdrawRecord)
   } else {
     page.loading = true
-    await autoWithdrawToFail(memberWithdrawRecord.id, '', '', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
     await loadRecord()
+    ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
     page.loading = false
   }
 }
