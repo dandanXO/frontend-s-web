@@ -10,8 +10,7 @@
 
   <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
 
-  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-  <script>LA.init({id:"KTMu3492Pv5UeUxm",ck:"KTMu3492Pv5UeUxm"})</script>
+
 </head>
 
 <body>
@@ -202,11 +201,12 @@
   var hostname = window.location.hostname;
   console.log(hostname);
   if (hostname.indexOf("97012.cc") > -1) {
-    LA.init({id:"KTdcIelBRlHRvmJu",ck:"KTdcIelBRlHRvmJu"})
-  }else{
-    LA.init({id:"KSr3RkhpE2hIViNC",ck:"KSr3RkhpE2hIViNC"})
+    LA.init({ id: "KTdcIelBRlHRvmJu", ck: "KTdcIelBRlHRvmJu" })
+  } else if(hostname.indexOf("01065.ooo") > -1) {
+    LA.init({ id: "KTMu3492Pv5UeUxm", ck: "KTMu3492Pv5UeUxm" })
+  }else {
+    LA.init({ id: "KSr3RkhpE2hIViNC", ck: "KSr3RkhpE2hIViNC" })
   }
-
 </script>
 </body>
 
