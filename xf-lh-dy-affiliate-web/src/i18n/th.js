@@ -457,6 +457,7 @@ export default {
     depositNotification1:
       'คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน',
     depositNotification2: 'หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่',
+    depositShouldBetween: 'จำนวนเงินฝากควรอยู่ระหว่าง '
   },
   menu: {
     undefined: '',

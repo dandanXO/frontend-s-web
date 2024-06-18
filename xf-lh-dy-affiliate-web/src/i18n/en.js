@@ -672,6 +672,7 @@ export default {
     validateAppNameRequired: 'App Name is required',
     validateAppIconRequired: 'App Icon is required',
     validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
+    depositShouldBetween: 'Deposit amount should be between '
   },
   menu: {
     undefined: '',

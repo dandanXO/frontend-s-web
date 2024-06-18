@@ -664,6 +664,7 @@ export default {
     validateAppNameRequired: '应用名必填',
     validateAppIconRequired: '应用图标必填',
     validateShareRatioFormat: '佣金比例必须介于 0 至 1 之间',
+    depositShouldBetween: '存入金额介于 '
   },
   menu: {
     undefined: '',
