@@ -255,20 +255,18 @@ export default defineComponent({
     onMounted(() => {
       getAppDownloadUrl();
       getCheckRedPacket();
-      if (store.token) {
-        initFloating();
-      }
+      initFloating();
     });
 
 
-    watch(
-      () => store.token,
-      () => {
-        if (store.token) {
-          initFloating();
-        }
-      }
-    );
+    // watch(
+    //   () => store.token,
+    //   () => {
+    //     if (store.token) {
+    //       initFloating();
+    //     }
+    //   }
+    // );
     return {
       store,
       customerHovered,

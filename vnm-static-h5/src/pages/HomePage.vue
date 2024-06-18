@@ -1666,9 +1666,7 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
-      if (store.token) {
         initFloating();
-      }
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -3005,7 +3003,7 @@ export default defineComponent({
   min-width: 14px;
   height: 14px;
   min-height: 14px;
-  border-radius: 50%; 
+  border-radius: 50%;
   color: #aaaaaa;
   display: flex;
   justify-content: center;
