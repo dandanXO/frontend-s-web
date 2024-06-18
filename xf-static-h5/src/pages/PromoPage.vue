@@ -245,16 +245,15 @@ export default defineComponent({
             router.push({path: '/account/vip'});
           } else {
 
-            if(true || isAndroid()){
+            if(isAndroid()){
               // modalVisible.value= true;
-
-              var preUrl = `http://192.168.79.121:9090/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = 'https://' + store.evip + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
               // promoSrc.value= preUrl;
               var ref = cordova.InAppBrowser.open(
                 preUrl,
                 "_blank",
-                "location=no,zoom=no,footer=yes"
+                "location=no,zoom=no,footer=no"
               );
 
               ref.addEventListener('loadstart', function(event) {

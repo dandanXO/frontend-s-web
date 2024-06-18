@@ -29,9 +29,9 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'">
+        <a @click="goToPrevPage(prevPage)">
           <RiArrowDropLeftLine/>
-        </router-link>
+        </a>
         {{ pageName }}
         <q-btn v-if="hasDrawer" style="position:absolute; right: 10px;" flat @click="ui.drawerRight = !ui.drawerRight"
                round dense icon="menu"/>
@@ -158,6 +158,15 @@ export default defineComponent({
     //       scrollPageRef.value.setScrollPosition(args[0], args[1], args[2]);
     //   }
     // });
+    const goToPrevPage = (prePage) => {
+      if(prePage === "/"){
+        router.push("/")
+      }else if(window.location.pathname === "/promotion"){
+        window.location.href = "xfapp:/promo"
+      }else{
+        router.push('/' + prePage)
+      }
+    }
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
@@ -232,7 +241,7 @@ export default defineComponent({
           }
         }else if (route.path === "/promotion") {
           hasPage.value = true;
-          pageName.value = "优惠活动";
+          pageName.value = "优惠详情";
           prevPage.value = "";
           // if (route.query.name) {
           //   if (route.query.fromAccount) {
@@ -472,6 +481,7 @@ export default defineComponent({
       hasPage,
       ui,
       prevPage,
+      goToPrevPage,
       hasDrawer,
       platformsList,
       changePlatform
