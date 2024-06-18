@@ -6,8 +6,11 @@
                 <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+
                     더보기</router-link>
             </div>
-            <template v-if="newsList.length > 0">
-                <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
+            <div class="news-item-box" v-if="isLoading" style="display:flex;justify-content:center;">
+                <q-spinner-gears size="2em" />
+            </div>
+            <template v-else-if="announcementList.length > 0">
+                <div v-for="(item, index) in announcementList" :key="index" class="news-item-box">
                     <div class="news-item-left">
                         <div class="news-item-title" :title="item.title">
                             [
@@ -31,47 +34,24 @@
 
 <script setup>
 import { ref } from 'vue';
-import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
-import moment from 'moment';
 
 const $q = useQuasar();
 const store = userStore();
-const newsList = ref([]);
-const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-const loadAnnouncement = () => {
-    // check store first
-    api
-        .get("/announcement")
-        .then((res) => {
-            const {
-                data: {
-                    code,
-                    data: { announcements }
-                }
-            } = res;
+const isLoading = ref(false);
+const announcementList = ref([]);
 
-            if (code === 0) {
-                console.log(announcements);
-                const announcementsFormattedData = announcements.map((item) => ({
-                    ...item,
-                    createTime: formatDate(item.createTime)
-                }));
-                newsList.value = announcementsFormattedData;
-                store.announcementList = announcements;
-            } else {
-                $q.notify({
-                    color: "negative",
-                    position: "top",
-                    message: "資料讀取失敗",
-                    icon: "report_problem"
-                });
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+const loadAnnouncement = () => {
+    isLoading.value = true;
+
+    store.getAnnouncementList().then((announcements) => {
+        announcementList.value = announcements;
+        isLoading.value = false;
+    }).catch((err) => {
+        console.log(err)
+        isLoading.value = false;
+    });
 };
 </script>
 
