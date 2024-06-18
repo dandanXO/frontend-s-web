@@ -284,6 +284,7 @@ export default {
     memberProfitDownlineProfitUnsettleCommission:
       'Lợi nhuận của Thành viên / Lợi nhuận Dưới đường / Hoa hồng chưa giải quyết',
     memberInfo: 'Thông tin Thành viên',
+    memberType: 'Loại Thành Viên',
     month: 'Tháng',
     monthlyAffiliateCommission: 'Hoa hồng hàng tháng của Đại lý',
     monthBeforeLastTotal: 'Hoa hồng tháng này',
@@ -606,6 +607,7 @@ export default {
     requiredCommission: 'Hoa hồng là bắt buộc',
     requiredEmail: 'Vui lòng nhập địa chỉ email',
     requiredLoginName: 'Vui lòng nhập tên tài khoản đại lý',
+    requiredMemberType: 'Vui lòng chọn loại thành viên',
     requiredOldPassword: 'Mật khẩu hiện tại là bắt buộc',
     requiredPassword: 'Vui lòng nhập mật khẩu',
     requiredRealName: 'Tên thật là bắt buộc',
@@ -659,6 +661,7 @@ export default {
     channelPackUrlCopied: 'Url gói kênh đã được sao chép vào bảng ghi tạm.',
     validateAppNameRequired: 'Tên ứng dụng là bắt buộc',
     validateAppIconRequired: 'Biểu tượng ứng dụng là bắt buộc',
+    depositShouldBetween: 'Số tiền gửi phải nằm trong khoảng '
   },
   menu: {
     undefined: '',
@@ -759,6 +762,7 @@ export default {
     901: 'Bản ghi liên kết đại lý không tồn tại',
     902: 'Thành viên không phải là đại lý',
     903: 'Tài khoản là một đại lý',
+    904: 'Tài khoản này là thành viên',
     905: 'Tên thật chưa được thiết lập',
     1000: 'Tên đăng nhập hoặc mật khẩu không đúng',
     1001: 'Tài khoản đăng nhập đã bị vô hiệu hóa',

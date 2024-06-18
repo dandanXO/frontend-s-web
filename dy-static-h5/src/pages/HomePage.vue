@@ -13,8 +13,7 @@
             <q-btn
               rounded
               size="12px"
-              :href="`${downloadUrl}`"
-              target="_blank"
+              @click="openDownloadAppLink"
               label="立即下载"
               color="primary"
               class="top-btn no-shadow"
@@ -2171,7 +2170,13 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-      if (banner.redirectUrl == "app://deposit") {
+      const openPattern = /^\/open\/(.*)/;
+      if (banner.redirectUrl.match(openPattern)) {
+        const extractedUrl = banner.redirectUrl.match(openPattern)[1];
+        const [gameName, platformCode, gameCode] = extractedUrl.split("/");
+
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
+      } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
@@ -2266,6 +2271,12 @@ export default defineComponent({
       });
     };
 
+    const openDownloadAppLink = () => {
+      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
+      const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
+      window.open(theurl, "_blank");
+    };
+
     const closeTopBox = () => {
       isH5.value = false;
       store.hasClosedDL = true;
@@ -2316,6 +2327,7 @@ export default defineComponent({
       // casinoGame,
       gamePage,
       selectedPlatId,
+      openDownloadAppLink,
       searchList,
       liveTabs,
       selectedLiveTab,

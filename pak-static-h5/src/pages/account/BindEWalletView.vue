@@ -74,9 +74,8 @@
   <q-page class="bind-container">
     <div class="bind-wrapper">
       <q-form class="bind-item">
-
         <q-label>
-          Virtual Wallet Type
+          {{ $t("form.virtualWalletType") }}
           <em>*</em>
         </q-label>
         <div class="type-toggle">
@@ -93,27 +92,26 @@
 
         <InputRowGrid>
           <template #fields>
-            <InputField :label="`Virtual Wallet`">
+            <InputField :label="$t('form.virtualWallet')">
               <template #input>
                 <q-input
                   outlined
                   clearable
                   ref="cardNumberRef"
-                  placeholder="Please insert virtual wallet"
+                  :placeholder="$t('form.virtualWallet_placeholder')"
                   v-model="bankCardInfo.cardNumber"
                   hide-bottom-space
                   maxlength="11"
                   :rules="[
-                    (val) => (val && val.length > 0) || 'Please insert virtual wallet',
-                    (val) => val.startsWith('03') || 'The phone number must start with \'03\'',
-                    (val) => (val && val.length === 11) || 'The virtual wallet must have 11 digits.',
+                    (val) => (val && val.length > 0) || $t('form.virtualWallet_rules_01'),
+                    (val) => val.startsWith('03') || $t('form.virtualWallet_rules_02'),
+                    (val) => (val && val.length === 11) || $t('form.virtualWallet_rules_03')
                   ]"
                 ></q-input>
               </template>
             </InputField>
           </template>
         </InputRowGrid>
-
 
         <!-- <InputRowGrid>
           <template #fields>
@@ -151,13 +149,11 @@
           :rules="[(val) => (val && val.length > 0) || '请输入电子钱包', validateBankLength, validateEWalletNumber]"
         ></q-input> -->
 
-
-
-        <q-label style="display:none;">
+        <q-label style="display: none">
           Protocol
           <em>*</em>
         </q-label>
-        <div class="category-toggle" style="display:none;">
+        <div class="category-toggle" style="display: none">
           <!-- <q-btn
             v-for="(category, categoryIndex) in categoryToggleList"
             :key="`${category}-${categoryIndex}`"
@@ -219,12 +215,13 @@
       </q-form>
 
       <div class="note">
-        Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the
-        information. Thank you for your support and understanding!
+        {{ $t("form.virtualWallet_warmReminder") }}
       </div>
 
       <div class="bottom-btn">
-        <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitBankCard()">Confirm</q-btn>
+        <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="submitBankCard()">
+          {{ $t("btn.confirm") }}
+        </q-btn>
         <!-- <q-btn rounded flat no-caps class="btn-purple-pattern" v-close-popup @click="onCaptchaSubmit">Confirm</q-btn> -->
       </div>
 
@@ -250,6 +247,7 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
+  bankCardInfo.currencyId = bankList.value[index].currencyIds;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -275,7 +273,8 @@ const bankCardInfo = reactive({
   cardNumber: "",
   cardAccount: store.realName,
   cardAddress: "",
-  telephone: store.phone
+  telephone: store.phone,
+  currencyId: ""
   // smsCode: "",
   // smsCodeId: ""
 });
@@ -387,7 +386,7 @@ const loadBankCards = () => {
         .get("/session/withdraw/card")
         .then((res) => {
           if (res.code === 0) {
-            const items= res.data.reverse();
+            const items = res.data.reverse();
 
             for (let i = 0, l = items.length; i < l; i++) {
               const data = items[i];
@@ -396,6 +395,7 @@ const loadBankCards = () => {
             }
 
             bankCardInfo.bankId = bankList.value[0].id;
+            bankCardInfo.currencyId = bankList.value[0].currencyIds;
           }
         })
         .catch((e) => {
@@ -511,7 +511,7 @@ onActivated(() => {
         font-size: 1rem;
       }
 
-      .form-fields{
+      .form-fields {
         margin-top: 8px;
       }
 

@@ -244,13 +244,16 @@
               </td>
               <td :data-label="t('fields.loginName')">{{ item.loginName }}</td>
               <td :data-label="t('fields.totalDeposit')">
-                {{ '$' + formatMoney(item.totalDeposit) }}
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ formatMoney(item.totalDeposit) }}
               </td>
               <td :data-label="t('fields.totalWithdraw')">
-                {{ '$' + formatMoney(item.totalWithdraw) }}
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ formatMoney(item.totalWithdraw) }}
               </td>
               <td :data-label="t('fields.netProfit')">
-                {{ '$' + formatMoney(item.revenueShare) }}
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ formatMoney(item.revenueShare) }}
               </td>
               <td :data-label="t('fields.regTime')">
                 <span v-if="item.regTime === null">-</span>
@@ -571,7 +574,7 @@
             <td>{{ (depositRequest.current - 1) * 10 + index + 1 }}</td>
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.paymentType }}</td>
-            <td>${{ item.depositAmount.toFixed(2) }}</td>
+            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.depositAmount.toFixed(0) : item.depositAmount.toFixed(2) }}</td>
             <td>
               {{ formatDate(item.depositDate) }}
             </td>
@@ -649,7 +652,7 @@
           <tr v-for="item in memberPrivilegeInfo.page.records" :key="item.id">
             <td>{{ item.serialNumber }}</td>
             <td>{{ item.privilegeName }}</td>
-            <td>${{ item.amount.toFixed(2) }}</td>
+            <td>{{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}{{ parseInt(store.state.user.siteId) === 10 ? item.amount.toFixed(0) : item.amount.toFixed(2) }}</td>
             <td>{{ item.rollover }}</td>
             <td>
               {{ formatDate(item.recordTime) }}

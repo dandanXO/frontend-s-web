@@ -44,6 +44,12 @@ export default [
     component: () => import(/* webpackChunkName: "transit-record" */ "../views/account/TransitRecordView.vue")
   },
   {
+    path: "bet-record",
+    name: "bet-record",
+    meta: { requiresAuth: true },
+    component: () => import(/* webpackChunkName: "bet-record" */ "../views/account/BetRecordView.vue")
+  },
+  {
     path: "top-up",
     name: "deposit",
     meta: { requiresAuth: true },

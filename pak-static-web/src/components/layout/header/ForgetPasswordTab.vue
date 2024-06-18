@@ -2,15 +2,8 @@
   <div class="forget-password-containier">
     <a-form ref="formRef" :model="passwordForm" :rules="passwordFormRules" hide-required-mark>
       <div v-if="step === 1">
-        <a-form-item
-          name="loginName"
-          :label="$t('layout.header.accountModal.forgetPwd.infoForm.loginName.label')"
-          label-align="left"
-        >
-          <a-input
-            v-model:value="passwordForm.loginName"
-            :placeholder="$t('layout.header.accountModal.forgetPwd.infoForm.loginName.placeholder')"
-          >
+        <a-form-item name="loginName" :label="$t('common.form.loginName.label')" label-align="left">
+          <a-input v-model:value="passwordForm.loginName" :placeholder="$t('common.form.loginName.placeholder')">
             <template #prefix>
               <RiSmartphoneFill />
               <span style="color: #ffffff">+92</span>
@@ -454,7 +447,6 @@ function charType(num) {
       .title {
         color: #ffffff;
         font-size: 20px;
-        font-weight: 700;
         line-height: 24px;
       }
       .submessage {

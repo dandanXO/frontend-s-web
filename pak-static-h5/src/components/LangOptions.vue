@@ -10,10 +10,15 @@
     map-options
   >
     <template v-slot:selected>
-      Lang: {{ languageVal }}
-      <!-- <img :src="require(`../assets/images/home/flag-${languageVal}.png`)" /> -->
+      <img :src="require(`../assets/images/auth/country-flag-${languageVal}.png`)" />
+      <div style="margin-left: 8px">{{ $t("lang.language") }}</div>
     </template>
   </q-select>
+
+  <!-- <div class="lang-wrapper">
+    <div class="item-icon"><img :src="require(`../assets/images/auth/country-flag-${languageVal}.png`)" /></div>
+    {{ $t("sideNav.slots") }}
+  </div> -->
 </template>
 
 <script setup>
@@ -44,7 +49,21 @@ const langOptions = [
 </script>
 
 <style scoped lang="scss">
+.lang-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.item-icon {
+  img {
+    display: block;
+    width: 26px;
+  }
+}
+
 .lang-container {
+  color: #9f9f9f;
   img {
     display: block;
     width: 30px;
@@ -74,6 +93,8 @@ const langOptions = [
     min-height: 30px;
     height: 30px;
     padding: 0;
+    color: #9f9f9f;
+    font-weight: bold;
   }
 }
 </style>

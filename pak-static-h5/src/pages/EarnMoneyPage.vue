@@ -2,18 +2,18 @@
   <ProfileSummary :homeProfile="true" />
   <div class="earn-money-wrapper">
     <div class="earn-money-container">
-      <div class="earn-money-title">Bonus Pot Arrived</div>
+      <div class="earn-money-title">{{ $t("earnMoney.bonusPotArrived") }}</div>
       <div class="earn-money-pots">
         <div class="pot-item">
           <div class="item-amount">
             RS {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
           </div>
-          <div class="item-desc">My Total Income</div>
+          <div class="item-desc">{{ $t("earnMoney.myTotalIncome") }}</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-01.png" /></div>
         </div>
         <div class="pot-item pot-item__2">
           <div class="item-amount">{{ memberDetail.totalRefer ? memberDetail.totalRefer : "0" }}</div>
-          <div class="item-desc">My Total Number Of Invites</div>
+          <div class="item-desc">{{ $t("earnMoney.myTotalNumberOfInvites") }}</div>
           <div class="item-img"><img src="../assets/images/earn-money/pot-item-02.png" /></div>
         </div>
       </div>
@@ -24,7 +24,7 @@
             Rs
             <span>{{ getRewardAmount("ONE_TIME") }}</span>
           </div>
-          <div class="item-title">Invite</div>
+          <div class="item-title">{{ $t("earnMoney.invite") }}</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-01.png" /></div>
         </div>
 
@@ -33,7 +33,7 @@
             Rs
             <span>{{ getRewardAmount("DEPOSIT") }}</span>
           </div>
-          <div class="item-title">Top Up</div>
+          <div class="item-title">{{ $t("earnMoney.topUp") }}</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-02.png" /></div>
         </div>
 
@@ -42,7 +42,7 @@
             Rs
             <span>{{ getRewardAmount("BET") }}</span>
           </div>
-          <div class="item-title">Bet</div>
+          <div class="item-title">{{ $t("earnMoney.bet") }}</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-03.png" /></div>
         </div>
 
@@ -50,7 +50,7 @@
           <div class="item-amount">
             <span>{{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}</span>
           </div>
-          <div class="item-title">Eligible Refer</div>
+          <div class="item-title">{{ $t("earnMoney.eligibleRefer") }}</div>
           <div class="item-icon"><img src="../assets/images/earn-money/details-icon-04.png" /></div>
         </div>
 
@@ -67,58 +67,61 @@
       </div>
 
       <div class="earn-money-invite">
-        <div class="invite-title">Invite friends via link</div>
-        <div class="invite-desc">How to get invitation bonus</div>
+        <div class="invite-title">{{ $t("earnMoney.inviteFriendsViaLink") }}</div>
+        <div class="invite-desc">{{ $t("earnMoney.howToGetInvitationBonus") }}</div>
 
         <div class="invite-listing">
           <div class="listing-item">
             <span class="list-num">1</span>
-            Invite friends via invitation link
+            {{ $t("earnMoney.inviteList_01") }}
           </div>
 
           <div class="listing-item">
             <span class="list-num">2</span>
-            Register via link
+            {{ $t("earnMoney.inviteList_02") }}
           </div>
 
           <div class="listing-item">
             <span class="list-num">3</span>
-            Complete deposit after registration
+            {{ $t("earnMoney.inviteList_03") }}
           </div>
         </div>
 
         <div class="invite-share-link">
           <div class="link-href">{{ selfTgurl }}</div>
-          <div class="link-copy" @click="copyHrefLink">Copy Link</div>
+          <div class="link-copy" @click="copyHrefLink">{{ $t("earnMoney.copyLink") }}</div>
         </div>
 
         <div class="invite-share-social">
-          <a class="social-item" :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+          <a
+            class="social-item"
+            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
+            target="_blank"
+          >
             <img src="../assets/images/earn-money/social-whatsapp.png" />
           </a>
           <a
             class="social-item"
-            :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`"
+            :href="`instagram://sharesheet?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
             target="_blank"
           >
             <img src="../assets/images/earn-money/social-instagram.png" />
           </a>
-          <a
-            class="social-item"
-            :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`"
-            target="_blank"
-          >
+          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
             <img src="../assets/images/earn-money/social-tiktok.png" />
           </a>
-          <a class="social-item"><img src="../assets/images/earn-money/social-more.png" /></a>
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+          <a class="social-item" @click="modalSocialShare = true">
+            <img src="../assets/images/earn-money/social-more.png" />
+          </a>
         </div>
       </div>
 
       <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tr>
-            <td style="color: #8c968f; font-size: 120%">Friend Count</td>
-            <td style="color: #8c968f; font-size: 120%">Invite Bonus</td>
+            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.friendCount") }}</td>
+            <td style="color: #8c968f; font-size: 120%">{{ $t("earnMoney.inviteBonus") }}</td>
           </tr>
 
           <template v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
@@ -128,6 +131,8 @@
             </tr>
           </template>
         </table>
+
+        <div class="table-hint q-pa-md">{{ $t("earnMoney.eligibility_tips") }}</div>
       </div>
 
       <div class="earn-money-sent-ytd">
@@ -136,7 +141,7 @@
         </div>
 
         <div class="sent-ytd-amount">
-          Total amount sent as of yesterday
+          {{ $t("earnMoney.totalAmountSentAsOfYesterday") }}
           <span>{{ oneTimeBonusSetting.totalAmount }}</span>
         </div>
       </div>
@@ -172,15 +177,15 @@
       <div class="earn-money-friendcount">
         <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
           <tr>
-            <td style="color: #8c968f; font-size: 120%; width: 60%">Player</td>
-            <td style="color: #8c968f; font-size: 120%; width: 40%">Money</td>
+            <td style="color: #8c968f; font-size: 120%; width: 60%">{{ $t("earnMoney.player") }}</td>
+            <td style="color: #8c968f; font-size: 120%; width: 40%">{{ $t("earnMoney.money") }}</td>
           </tr>
         </table>
         <div class="table-container" ref="tableContainer">
           <table border="0" cellpadding="8" cellspacing="0" width="100%" style="text-align: center">
             <template v-if="inviteesRecords && inviteesRecords.length === 0">
               <tr>
-                <td colspan="2">No Records</td>
+                <td colspan="2">{{ $t("notify.noRecord") }}</td>
               </tr>
             </template>
             <template v-else>
@@ -201,17 +206,44 @@
       </div>
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="modalSocialShare" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+
+      <div class="popout-dialog-container">
+        <div class="txt-title">Share and Earn</div>
+        <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
+        <div class="modal-invite-share-social">
+          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
+            <img src="../assets/images/earn-money/social-youtube.png" />
+          </a>
+          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
+            <img src="../assets/images/earn-money/social-facebook.png" />
+          </a>
+          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
+            <img src="../assets/images/earn-money/social-sms.png" />
+          </a>
+          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
+            <img src="../assets/images/earn-money/social-email.png" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
-import { useQuasar } from "quasar";
+import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
+import { useI18n } from "vue-i18n";
 
 const $q = useQuasar();
 const store = userStore();
+const { t } = useI18n();
 
 const copyHrefLink = () => {
   navigator.clipboard
@@ -292,6 +324,8 @@ const getLatestInvitees = () => {
 
 const selfTgurl = ref("");
 const waUrl = ref("");
+const tiktokRef = ref();
+const youtubeRef = ref();
 
 const getRewardAmount = (type) => {
   const rewards = memberDetail.value.rewardAmountByType;
@@ -357,9 +391,50 @@ const getRandomImage = (index) => {
   return require(`../assets/images/earn-money/profile-img-${randomNumber}.png`);
 };
 
+const handleShareToTikTok = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  copyToClipboard(shareText);
+  tiktokRef.value.click();
+};
+
+const handleShareToYoutube = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+    shareText
+  )}`;
+  window.open(youtubeShareUrl, "_self");
+};
+
+const handleShareToFacebookPost = (url) => {
+  const shareText = t("earnMoney.shareText");
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    url
+  )}&quote=${encodeURIComponent(shareText)}`;
+  copyToClipboard(shareText);
+  window.open(facebookShareUrl, "_blank");
+};
+
+const handleShareToSMS = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const smsBody = `${shareText}`;
+  const smsShareUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
+  window.location.href = smsShareUrl;
+};
+
+const handleShareToEmail = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const shareTitle = t("earnMoney.shareTitle");
+  const emailSubject = encodeURIComponent(`${shareTitle}`);
+  const emailBody = encodeURIComponent(`${shareText}`);
+  const emailShareUrl = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+  window.open(emailShareUrl, "_self");
+};
+
 // const profileImagePath = computed(() => {
 //   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 // });
+
+const modalSocialShare = ref(false);
 
 onMounted(() => {
   getOneTimeBonusSetting();
@@ -658,6 +733,11 @@ watch(activeSetting, checkIsShowDetail);
     //   }
     // }
 
+    .table-hint {
+      color: #8c968f;
+      text-align: center;
+    }
+
     .earn-money-sent-ytd {
       margin-top: 16px;
       background: #ffffff0d;
@@ -693,6 +773,22 @@ watch(activeSetting, checkIsShowDetail);
           border-radius: 8px;
         }
       }
+    }
+  }
+}
+
+.modal-invite-share-social {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 12px;
+  margin-top: 16px;
+  // display: none !important;
+  .social-item {
+    img {
+      display: block;
+      width: 100%;
+      max-width: 50px;
+      margin: auto;
     }
   }
 }

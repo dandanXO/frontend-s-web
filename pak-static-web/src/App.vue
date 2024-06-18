@@ -8,31 +8,28 @@ import { defineComponent, onMounted, version } from "vue";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { memberAccessLog } from "@/api/index/login";
 
-import { globalStore } from "@/store";
+import { globalStore, userStore } from "@/store";
 import { useLocalStorage } from "@vueuse/core";
 import { useI18n } from "vue-i18n";
-import { LANGUAGE_DEFAULT_VALUE, LANGUAGE_KEY } from "./constant/localStorage";
+import { LANGUAGE_DEFAULT_VALUE, LANGUAGE_KEY } from "@/constant/localStorage";
+import { useMemberStatistics } from "@/hooks/memberStatistics";
+import { getVisitorId } from "@/utils/utils";
 
 const currentLanguage = useLocalStorage(LANGUAGE_KEY, LANGUAGE_DEFAULT_VALUE);
 const { locale } = useI18n();
+const store = userStore();
+useMemberStatistics("https://memsta.thilhe946li.com", "pak");
 
 const checkSID = () => {
   const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-  const fpPromise = FingerprintJS.load();
   (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
+    const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+    store.visitorId = visitorId;
+
     const obj = {
-      identifier: sidParam,
+      identifier: store.visitorId,
       affiliateCode: affiliateItem
     };
-
     memberAccessLog(obj);
   })();
 };

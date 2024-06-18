@@ -162,6 +162,7 @@ const https = (api) => {
   const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   const vnmHost = "vnm-affiliate.th80to83w1.com"
+  const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
@@ -191,9 +192,16 @@ const https = (api) => {
       apiUrl = isAff ? process.env.VUE_APP_VNM_RST_API : (isCr ? process.env.VUE_APP_VNM_CR_API : process.env.VUE_APP_VNM_BASE_API)
       break
 
+    case krwHost:
+      apiUrl = isAff ? process.env.VUE_APP_KRW_RST_API : (isCr ? process.env.VUE_APP_KRW_CR_API : process.env.VUE_APP_KRW_BASE_API)
+      break
+
     default:
       apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)
   }
+  // if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
+  //   apiUrl = isAff ? 'https://api-gayeway.mpg1cxp9.com/aff' : (isCr ? 'https://api-gayeway.mpg1cxp9.com/csr' : 'https://api-gayeway.mpg1cxp9.com/rst')
+  // }
   const config = {
     baseURL: apiUrl,
     headers: {

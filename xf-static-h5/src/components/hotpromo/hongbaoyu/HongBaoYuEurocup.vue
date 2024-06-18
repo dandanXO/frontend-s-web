@@ -64,7 +64,7 @@
 
           <div class="details-item">
             <div class="event-frame">活动对象</div>
-            <div class="event-txt">东赢全体会员</div>
+            <div class="event-txt">兴发全体会员</div>
           </div>
 
           <div class="details-item">
@@ -181,7 +181,7 @@ const promoParam = ref(props.promoParam);
 const getDateRange = (param) => {
   try {
     const promoObject = JSON.parse(param);
-    const dateTimeRange = promoObject[" datetime"].trim(); // Trim the property name
+    const dateTimeRange = promoObject["datetime"].trim(); // Trim the property name
     return dateTimeRange;
   } catch (error) {
     console.error("Error parsing promoParam:", error);

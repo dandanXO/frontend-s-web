@@ -48,6 +48,12 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/language",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/LanguagePage.vue") }],
+    meta: { requiresAuth: false }
+  },
+  {
     path: "/agency-policy",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/AgencyPolicyPage.vue") }]
@@ -242,6 +248,12 @@ const routes = [
     path: "/account/feedback",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/mail/OutboxView.vue") }],
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account/feedback-detail",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/account/FeedbackDetailView.vue") }],
     meta: { requiresAuth: true }
   },
   {

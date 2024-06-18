@@ -32,7 +32,7 @@ const { profilePhoto, nickName, balance } = storeToRefs(store);
 
     .user-profile-info__name {
       font-size: 20px;
-      font-weight: 800;
+      font-weight: 500;
       line-height: 20px;
       text-align: right;
       color: #ffffff;

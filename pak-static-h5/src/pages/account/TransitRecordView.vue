@@ -398,12 +398,13 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { defineComponent, onMounted, reactive, ref, watch, computed } from "vue";
 import { api } from "boot/axios"
 import { useQuasar } from "quasar"
 import { userStore } from "stores/index"
 import { updateDate, convertToGMT8, convertToGMT55 } from "src/boot/utils";
 import moment from "moment"
+import { t } from "src/boot/lang";
 const store = userStore();
 const recordActive = ref("deposit");
 const totalBetRecord = reactive({
@@ -779,34 +780,34 @@ export default defineComponent({
     }
     const getWithdrawStatus = (withdrawStatus) => {
       if (withdrawStatus === 'APPLY') {
-        return 'Applying' //Applying
+        return t("records.applying") //Applying
       } else if (withdrawStatus === 'FAIL') {
-        return 'Failed' // Failed
+        return t("records.failed") // Failed
       } else if (withdrawStatus === 'SUCCESS') {
-        return 'Success' // Success
+        return t("records.Success") // Success
       } else if (withdrawStatus === 'STEP_1') {
-        return 'Under review' //Under review
+        return t("records.underReview") //Under review
       } else if (withdrawStatus === 'STEP_2') {
-        return 'To be paid' // To be paid
+        return t("records.toBePaid") // To be paid
       }  else if (withdrawStatus === 'STEP_3') {
-        return 'Payment on going' // Payment on going
+        return t("records.paymentOnGoing") // Payment on going
       }  else if (withdrawStatus === 'STEP_4') {
-        return 'Automatic Payment' // Automatic Payment
+        return t("records.automaticPayment") // Automatic Payment
       }  else if (withdrawStatus === 'STEP_5') {
-        return 'Suspend' //Suspend
+        return t("records.suspend") // Suspend
       } else {
         return withdrawStatus
       }
     }
     const getDepositStatus = (depositStatus) => {
       if (depositStatus === 'PENDING') {
-        return 'Pending' // Pending
+        return t("records.pending") // Pending
       } else if (depositStatus === 'SUCCESS') {
-        return 'Success' // Success
+        return t("records.success") // Success
       } else if (depositStatus === 'SUPPLEMENT_SUCCESS') {
-        return 'Supplement Success' // Supplement Success
+        return t("records.supplementSuccess") // Supplement Success
       } else if (depositStatus === 'CLOSED') {
-        return 'Closed' // Closed
+        return t("records.closed") // Closed
       } else {
         return depositStatus
       }

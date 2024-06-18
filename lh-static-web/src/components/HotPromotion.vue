@@ -86,7 +86,10 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
+    <slotLucky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
+    <intelEsl2024 v-if="list.redirectUrl === 'lh1-intel-esl' && !isCommonPromo && store.token" />
+    
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
 
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
@@ -151,7 +154,9 @@ import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPre
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
+import slotLucky8 from "../components/hotpromo/slot-lucky8-2024/slot-lucky8-2024.vue"
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
+import intelEsl2024 from "../components/hotpromo/intel-esl-2024/intel-esl-2024.vue"
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue"
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue"
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
@@ -165,6 +170,8 @@ export default defineComponent({
   order: 1,
   // setup: (props, { emit }) => {},
   components: {
+    slotLucky8,
+    intelEsl2024,
     ClaimPromo,
     TigerCardPromo,
     EurocupVotePromo,
@@ -492,8 +499,9 @@ export default defineComponent({
       this.list.redirectUrl === "lh-eurocup-manual" ||
       this.list.redirectUrl === "lh-sport-zhongchao" ||
       this.list.redirectUrl === "lh-nba24-match" ||
+      this.list.redirectUrl === "lh1-slot-lucky8"||
       this.list.redirectUrl === "lh-lpl-summer24" ||
-      this.list.redirectUrl === "lh-nba24-match" ||
+      this.list.redirectUrl === "lh1-intel-esl" ||
       this.list.redirectUrl === "lh-duanwujie24"||
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh1-deposit-rebates"

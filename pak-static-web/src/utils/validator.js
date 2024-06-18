@@ -5,13 +5,23 @@ const t = i18n.global.t;
 export const validateLoginName = async (_, val) => {
   const regex = /^03/;
   if (!val) {
-    return Promise.reject(t("common.validator.loginName.required"));
+    return Promise.reject(t("common.form.loginName.error.required"));
   }
   if (val.length < 11) {
-    return Promise.reject(t("common.validator.loginName.len"));
+    return Promise.reject(t("common.form.loginName.error.len"));
   }
   if (!regex.test(val)) {
-    return Promise.reject(t("common.validator.loginName.pattern"));
+    return Promise.reject(t("common.form.loginName.error.pattern"));
+  }
+  return Promise.resolve();
+};
+
+export const validatePassword = async (_, val) => {
+  if (!val) {
+    return Promise.reject(t("common.form.password.error.required"));
+  }
+  if (val.length <= 6) {
+    return Promise.reject(t("common.form.password.error.min"));
   }
   return Promise.resolve();
 };

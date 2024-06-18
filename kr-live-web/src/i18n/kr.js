@@ -34,7 +34,22 @@ export default {
     menu_withdraw: "환전",
     menu_message: "문의",
     menu_customer_service: "고객센터",
+    menu_transaction_record: "내역기록",
+    menu_rebates: "리베이트",
     // menu end
+    // page modal start
+    page_modal_deposit: "송금신청",
+    page_modal_withdraw: "출금신청",
+    page_modal_message: "문의",
+    page_modal_customer_service: "고객센터",
+    page_modal_promo: "이벤트",
+    page_modal_personal_info: "개인정보",
+    page_modal_announcement: "공지사항",
+    page_modal_add_bank_card: "은행카드추가",
+    page_modal_bank_card_list: "은행 카드 목록",
+    page_modal_transaction_record: "내역기록",
+    page_modal_change_password: "비밀번호",
+    // page modal end
     // rolling text start
     roll_text_no_content: "아직 콘텐츠가 없습니다",
     // rolling text end
@@ -92,6 +107,17 @@ export default {
     withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     // withdraw end
+    // announcement start
+    announcement_no_selected: "선택하지 않음",
+    announcement_total: "총",
+    announcement_has_attachment: "첨부파일 있음",
+    // announcement end
+    // feedback start
+    feedback_loading_content: "콘텐츠 로드 중...",
+    feedback_unread: "읽히지 않는",
+    feedback_read: "읽었다",
+    feedback_read_at: "에서 읽다",
+    // feedback end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -626,6 +652,7 @@ export default {
       1307: "일일 인출 한도를 초과함",
       1308: "잔액이 부족함",
       1309: "카드 계정이 회원 이름과 일치하지 않음",
+      1317: "은행 카드 바인딩",
       1401: "OTP 전송 시간 초과됨",
       1402: "OTP 전송 일정 오류, OTP를 다시 전송하십시오",
       1403: "OTP 확인 오류",

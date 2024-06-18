@@ -163,9 +163,13 @@
 import { onMounted, ref } from "vue";
 import { getBetDetail, claimSummon } from "../../../api/promotion/euro-2024-bet.js";
 import { ElMessage } from "element-plus";
+import { userStore } from "@/store";
+import { useI18n } from "vue-i18n";
 const betMoney = ref(0);
 const clickBtn = ref(false);
 
+const {t} = useI18n();
+const store= userStore()
 const getBetDetailData = () => {
   getBetDetail("vnm-euro-2024-bet-reward").then((res) => {
     console.log(res);
@@ -177,6 +181,10 @@ const getBetDetailData = () => {
 };
 
 const postClaimSummon = () => {
+  if(!store.token){
+    ElMessage.error(t('status.login_to_continue'));
+    return;
+  }
   if (clickBtn.value) {
     claimSummon("vnm-euro-2024-bet-reward")
       .then((res) => {

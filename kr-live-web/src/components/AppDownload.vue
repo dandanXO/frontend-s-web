@@ -3,7 +3,7 @@
     <div class="left">
       <img class="headicon" width="60" src="../assets/logo.png" />
       <div class="name-and-rating">
-        <span class="name">Korea Web</span>
+        <span class="name">City8</span>
         <q-rating class="rating" v-model="ratingScore" size="1em" color="irange" readonly />
       </div>
     </div>

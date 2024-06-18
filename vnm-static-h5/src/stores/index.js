@@ -32,6 +32,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
+      h5Url: "",
       currency: { value: "VNDP", label: "VNDP" },
       personalAddress: "",
       unreadInboxMail: 0,
@@ -41,6 +42,8 @@ export const userStore = defineStore("userStore", {
       levelUpDeposit: "",
       registeredWithdrawPassword: false,
       visitorId: "",
+      googleadid: "",
+      aaid: "",
       hasUpdatedOneSignal: false,
       isAffiliateA: false
     };
@@ -207,6 +210,7 @@ export const userStore = defineStore("userStore", {
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
+            this.h5Url= exclusive.web;
           }
 
           if (!this.hasUpdatedOneSignal && isAndroid() && OneSignal !== undefined) {
@@ -252,6 +256,7 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
+      this.token= token;
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
       } else {

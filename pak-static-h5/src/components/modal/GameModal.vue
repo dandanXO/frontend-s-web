@@ -24,7 +24,7 @@
           </div>
 
           <div v-if="!drawerVisible" class="wallet-container" @click="goToDeposit()">
-            Add Cash &nbsp;
+            {{ $t("btn.addCash") }} &nbsp;
             <q-btn dense rounded class="wallet-btn">
               <img src="../../assets/images/account/personal-svg.svg" />
             </q-btn>
@@ -32,8 +32,8 @@
         </div>
 
         <div class="loader-container">
-          <div><q-spinner color="green" size="10em" :thickness="10" /></div>
-          <div>Loading... Please wait...</div>
+          <img class="loader-logo" src="../../assets/images/auth/auth-logo-text-only.png" alt="B9.GAME" />
+          <div>{{ $t("btn.loading_plsWait") }}</div>
         </div>
 
         <template v-if="isInnerHtmlSrc === false">
@@ -82,10 +82,10 @@
       <div class="popout-dialog">
         <q-btn dense rounded icon="close" class="popout-close" v-close-popup />
         <div class="popout-dialog-container">
-          <div class="txt-content q-mt-md text-center">Are you sure want to quit? Click Confirm to quit the game.</div>
+          <div class="txt-content q-mt-md text-center">{{ $t("notify.quitGameMessage") }}</div>
           <div class="q-mt-lg q-pl-lg q-pr-lg y-n-container">
-            <q-btn label="Cancel" no-caps class="btn-cancel" v-close-popup />
-            <q-btn label="Confirm" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
+            <q-btn :label="$t('btn.cancel')" no-caps class="btn-cancel" v-close-popup />
+            <q-btn :label="$t('btn.confirm')" no-caps class="btn-confirm" @click="closeDialog()" v-close-popup />
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
       <q-card class="full-deposit-card" id="fulldeposit">
         <div class="back-bar" @click="closeFullDepositDialog">
           <q-icon name="chevron_left" size="28px" />
-          Back
+          {{ $t("btn.back") }}
         </div>
 
         <q-card-section>
@@ -131,6 +131,7 @@ import { isAndroid } from "boot/utils";
 // import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import DepositView from "../../pages/account/DepositView.vue";
 import { useUI } from "stores/ui";
+import { t } from "src/boot/lang";
 
 const props = defineProps(["closeFullGameDialog"]);
 
@@ -384,7 +385,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
     } else {
       props.closeFullGameDialog();
       $q.notify({
-        message: "Please login to continue",
+        message: t("notify.plsLoginToContinue"),
         color: "negative",
         position: "top",
         icon: "report_problem",
@@ -856,7 +857,7 @@ defineExpose({
   }
 
   .btn-confirm {
-    background: linear-gradient(180deg, #1BAA99 0%, #8AC542 100%);
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     border: 1px solid #5d8956;
     font-weight: 700;
     color: #fff;
@@ -871,6 +872,11 @@ defineExpose({
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+
+  .loader-logo {
+    max-width: 130px;
+    animation: blink 1.5s infinite;
+  }
 }
 
 .full-deposit-card {
@@ -888,5 +894,19 @@ defineExpose({
   align-items: center;
   padding: 16px;
   margin: 0 -16px;
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+
+  50% {
+    filter: brightness(1.3) saturate(1) contrast(1);
+  }
+
+  100% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
 }
 </style>

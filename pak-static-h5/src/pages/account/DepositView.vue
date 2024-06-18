@@ -34,7 +34,7 @@
       <Node :key="nodeKey" :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
     </div>
 
-    <div class="lil-title q-mt-sm">Select Amount</div>
+    <div class="lil-title q-mt-sm">{{ $t("deposit.selectAmount") }}</div>
     <div class="deposit-item-container q-mt-sm">
       <template v-for="(item, index) in depositItems" :key="index">
         <div @click="handleDepositItemClick(index)" :class="'deposit-item'">
@@ -88,7 +88,7 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title">Amount</div>
+          <div class="lil-title flex-div">{{ $t("form.depositAmount") }}   <div class="tutorial-link" @click="openDepositPage" style="margin-left:25px;">{{ $t("deposit.depositTutorial") }}</div></div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -174,19 +174,39 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
+    <div class="q-mt-sm step-desc-div q-mb-lg">
+      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
+      <p>2. Fill in the correct wallet account number</p>
+      <p>3. Fill in the correct CNIC number</p>
+      <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
+    </div>
+
+    <div class="bottom-content" style="height: 110px"></div>
+
     <div class="bottom-btn">
-      <!-- <PrimaryButton :label="'Submit'" :loading="isLoadingInitPay || btnLoading" :onClick="confirmDeposit" /> -->
       <q-btn
         no-caps
         unelevated
-        class="btn-primary btn-primary__full"
+        class="btn-primary btn-primary__full bottom-fixed"
         :loading="isLoadingInitPay || btnLoading"
         @click="confirmDeposit"
       >
-        SUBMIT
+        {{ $t("btn.submit") }}
       </q-btn>
+      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="isDepositTutorial">
+    <q-card style="width: 90%; max-width: 500px; margin: 0 auto" class="text-white">
+      <q-card-section>
+        <div class="close-alert" v-close-popup>
+          <q-icon size="24px" name="close"></q-icon>
+        </div>
+        <img src="../../assets/images/account/tutorial-deposit.jpg" class="tutorial-img" width="100%" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 
   <q-dialog width="100%" v-model="isDeposited">
     <q-card style="width: 100%">
@@ -232,6 +252,7 @@ import KYCGuestForm from "../../components/KYCGuestForm.vue";
 import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
+import { t } from "src/boot/lang";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -306,8 +327,13 @@ const blurCode = () => {
 };
 
 const verifyDepositAmount = ref([
-  (val) => !!val || "Please enter the amount",
-  (val) => val > calculatedMinDeposit.value - 1 || "Deposit should be more than " + calculatedMinDeposit.value
+  (val) => !!val || t("form.depositAmount_placeholder"),
+  (val) =>
+    val > calculatedMinDeposit.value - 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value,
+  (val) =>
+    val < calculatedMaxDeposit.value + 1 ||
+    t("form.depositAmount_rules_01") + calculatedMinDeposit.value + "-" + calculatedMaxDeposit.value
   // (val) =>
   //   val < activeMethod.value.depositMax + 1 ||
   //   "Deposit should be between " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
@@ -322,6 +348,7 @@ const form = reactive({
 
 const $q = useQuasar();
 const calculatedMinDeposit = ref("");
+const calculatedMaxDeposit = ref("");
 
 const depositItems = reactive([
   { amount: 300, hotLabel: 15, isActive: false },
@@ -354,7 +381,7 @@ const isLoadingInitPay = ref(true);
 function initPay() {
   isLoadingInitPay.value = true;
   $q.loading.show({
-    message: "Loading data... Please wait..."
+    message: t("btn.loading_plsWait")
   });
 
   payMethods.value = [];
@@ -447,7 +474,8 @@ const onSelect = (value) => {
 
 function checkMinDepositAmt() {
   // api won't return min and max values from now on, currently min set to 100
-  calculatedMinDeposit.value = 100;
+  calculatedMinDeposit.value = 300;
+  calculatedMaxDeposit.value = 50000;
 }
 
 function checkPrivilege(v) {
@@ -709,6 +737,30 @@ const refreshNode = () => {
   // Update the key to force re-render
   nodeKey.value += 1;
 };
+
+const isDepositTutorial = ref(false);
+
+const openDepositPage = () => {
+  // alert(selectedPayType.value);
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    // isDepositTutorial.value= true;
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
+  }else {
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+  }
+}
+
+const openDepositVideo =() => {
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
+  }else {
+    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
+  }
+}
 
 onActivated(() => {
   checkNewUser();
@@ -982,6 +1034,12 @@ onMounted(() => {
   }
 }
 
+.flex-div{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .deposit-wrapper {
   // width: 95%;
   margin: auto;
@@ -993,5 +1051,34 @@ onMounted(() => {
 .bottom-btn {
   margin-top: auto;
   padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 32px);
+  max-width: 468px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0e1412;
+  // margin: 16px;
+}
+
+.tutorial-link {
+  color: #70bc62;
+  text-decoration: underline;
+}
+
+.step-desc-div{
+  color: #bacef1;
+
+  p{
+    margin: 5px 0px;
+  }
+}
+
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 1;
 }
 </style>

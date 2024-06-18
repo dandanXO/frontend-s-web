@@ -30,10 +30,16 @@
             outlined
           ></q-input>
         </div>
-        <el-button :loading="isLoadingJackpot" @click="onSubmitJackpot" class="jackpot-button">CHỌN SỐ</el-button>
+        <q-btn :loading="isLoadingJackpot" @click="onSubmitJackpot" class="jackpot-button">CHỌN SỐ</q-btn>
       </div>
-      <div class="jackpot-note">Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
+      <div class="jackpot-note">
+        <div class="note">
+        Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
+<!--        <div class="more" @click="openTableDialog">-->
+<!--          「Xem hồ sơ」-->
+<!--        </div>-->
     </div>
+  </div>
     <div class="luckydraw-details">
       <div class="luckydraw-title">Quy tắc hoạt động</div>
       <div class="luckydraw-info">
@@ -230,7 +236,8 @@
             <li>II: Ngày chọn số từ 01/07/2024 – 15/07/2024, ngày mở thưởng là 16/07/2024.</li>
           </ul>
           <p class="likeli"><span class="point">4</span>Thông qua việc hoàn thành yêu cầu nạp tiền mỗi ngày, Thành Viên đều có thể chọn 1 số may mắn, tối đa 15 số cho 1 đợt. </p>
-          <p class="likeli"><span class="point">5</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
+          <p class="likeli"><span class="point">5</span><span>Thành viên sẽ nhận được 3 lần chọn số may mắn khi đăng ký hợp lệ khuyến mãi TRAO MAY MẮN TỚI ĐỘI BÓNG YÊU THÍCH và sẽ nhận được thêm 1 lần chọn số sau khi đội bóng yêu thích mà thành viên đã chọn và đặt cược chiến thắng trận đấu đó <a href="https://docs.google.com/forms/d/e/1FAIpQLSeIgng8JZ2zoX4MMCNVksVD8v1MBjJ2aNUCa5r-qGJhq3F1HA/viewform" target="_blank" class="pill">TẠI ĐÂY</a></span></p>
+          <p class="likeli"><span class="point">6</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
         </div>
         <div class="section tnc">
           <div class="section-title">Điều khoản và điều kiện</div>
@@ -252,11 +259,86 @@
       </div>
     </div>
   </div>
+  <q-dialog
+    class="jackpot-modal"
+    width="100%"
+    v-model="isDialogShow"
+    no-backdrop-dismiss
+    no-esc-dismiss
+  >
+    <q-card class="q-pa-md">
+      <q-btn flat v-close-popup round dense style="z-index: 3;position: absolute;
+      right: 10px;
+      top: 10px;  ">
+        <img src="../../../assets/images/promo/hotpromo/eurocup-luckydraw/close.png">
+      </q-btn>
+      <q-card-section>
+        <q-tabs style="width: 80%" class="download-tab" v-model="tab" align="justify">
+          <q-tab name="voting" label="Hồ sơ bỏ phiếu" />
+          <q-tab name="winning" label="Kỷ lục chiến thắng" />
+        </q-tabs>
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="voting">
+            <q-table
+              :columns="votingColumns"
+              :rows="votingDataSource"
+              :no-data-label="$t('lang.record_no_data')"
+              :rows-per-page-options="[0]"
+              :hide-pagination="true"
+            >
+              <template v-slot:body-cell-winStatus="props">
+                <q-td :props="props">
+                  <div :class="{ win: props.value === 'WIN', loss: props.value === 'LOSS'}">
+                    {{ getWinStatus(props.value) }}
+                  </div>
+                </q-td>
+              </template>
+
+              <template v-slot:body-cell-winPrize="props">
+                  <q-td :props="props">
+                    <div>
+                      {{ getWinPrize(props.value) }}
+                    </div>
+                  </q-td>
+                </template>
+            </q-table>
+
+          </q-tab-panel>
+
+          <q-tab-panel name="winning">
+            <q-table
+              :columns="winningColumns"
+              :rows="winnerDataSource"
+              :no-data-label="$t('lang.record_no_data')"
+              :rows-per-page-options="[0]"
+              :hide-pagination="true"
+            >
+
+            <template v-slot:body-cell-winStatus="props">
+                <q-td :props="props">
+                  <div :class="{ win: props.value === 'WIN', loss: props.value === 'LOSS'}">
+                    {{ getWinStatus(props.value) }}
+                  </div>
+                </q-td>
+              </template>
+            </q-table>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, reactive, onMounted, nextTick } from "vue";
 import { selectNumber, getSelectedNumber, getWinners, getPrizeAmount } from "../../../api/index/promo";
+
+import { useI18n } from "vue-i18n";
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
+
+const $q= useQuasar()
+const { t } = useI18n();
 const inputs = [1, 2, 3]; // Three inputs
 const inputValues = ref(["", "", ""]); // Reactive array to store input values
 const inputRefs = ref([]);
@@ -294,8 +376,19 @@ const getJackpotAmt = () => {
   jackpotNumber.value = jackpotNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 var qs = require("qs");
+const tab = ref('voting');
+const store= userStore();
 const onSubmitJackpot = () => {
-  isLoadingJackpot.value = true;
+  if(!store.token){
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("lang.system_please_login"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   const number = parseInt(inputValues.value.join(""));
   selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
     if (res.code === 0) {
@@ -305,52 +398,154 @@ const onSubmitJackpot = () => {
         message: t("lang.success"),
         icon: "check_circle_outline"
       });
-      isLoadingJackpot.value = false;
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
-      isLoadingJackpot.value = false;
+      // debugger;
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: res.message,
+      //   icon: "report_problem"
+      // });
     }
   });
 };
+// tab 2
+const votingColumns = [
+  {
+    name: "loginName",
+    label: t("lang.record_username"),
+    field: "loginName",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "number",
+    label: t("lang.record_choose_lucky_number"),
+    field: "number",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "winStatus",
+    label: t("lang.record_win_status"),
+    field: "winStatus",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "recordTime",
+    label: t("lang.record_fill_up_record_time"),
+    field: "recordTime",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "winPrize",
+    label: t("lang.record_win_prize"),
+    field: "winPrize",
+    align: "center",
+    sortable: true
+  }
+];
+// tab 2
+const winningColumns = [
+  {
+    name: "loginName",
+    label: t("lang.record_username"),
+    field: "loginName",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "recordTime",
+    label: t("lang.record_fill_up_record_time"),
+    field: "recordTime",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "number",
+    label: t("lang.record_choose_lucky_number"),
+    field: "number",
+    align: "center",
+    sortable: true
+  },
+  {
+    name: "winStatus",
+    label: t("lang.record_win_status"),
+    field: "winStatus",
+    align: "center",
+    sortable: true
+  }
+];
+const votingDataSource = ref([]);
+const winnerDataSource = ref([]);
 const initSelectedNumber = () => {
+  votingDataSource.value = [];
   getSelectedNumber().then((res) => {
-    if (res.code === 0) {
-      console.log(res.data)
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
-    }
+     if (res.code === 0) {
+        res.data.forEach(element => {
+          votingDataSource.value.push(element);
+        });
+      }
   })
 
 }
 const initGetWinners = () => {
-
+  winnerDataSource.value = [];
   getWinners(promoCode.value).then((res) => {
-    if (res.code === 0) {
-      console.log(res.data)
-    } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
+
+        if (res.code === 0) {
+          res.data.forEach((element) => {
+            element.winners.forEach((win) => {
+              win.resultTime = element.resultTime;
+              winnerDataSource.value.push(win);
+            });
+          });
+        } else {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: res.message,
+            icon: "report_problem"
+          });
     }
   })
 }
-onMounted(() => {
-  getJackpotAmt();
+const getWinStatus = (status) => {
+  switch (status) {
+    case 'WIN':
+      return 'Thua';
+    case 'LOSS':
+      return 'Thắng';
+    case 'BET':
+      return 'Cược';
+    default:
+      return '';
+  }
+}
+const getWinPrize = (prize) => {
+  switch (prize) {
+    case 'FIRST_PRIZE':
+      return 'Giải nhất';
+    case 'GROUP_THREE':
+      return 'Nhóm ba';
+    case 'GROUP_SIX':
+      return 'Nhóm sáu';
+    case 'TWO_D':
+      return 'Hai chữ số';
+    default:
+      return '';
+  }
+}
+const isDialogShow = ref(false);
+const openTableDialog = () => {
+  isDialogShow.value = true;
   initSelectedNumber();
   initGetWinners();
+}
+onMounted(() => {
+  getJackpotAmt();
   nextTick(() => {
     if (inputRefs.value[0]) {
       inputRefs.value[0].focus();
@@ -359,6 +554,45 @@ onMounted(() => {
 });
 </script>
 <style lang="scss" scoped>
+
+:deep(.q-tabs) {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden
+}
+:deep(.q-tab-panel) {
+  padding: 0;
+}
+
+:deep(.q-tab) {
+  border: 1px solid #51ACFF;
+  color: #51ACFF;
+
+}
+:deep(.q-tab--active) {
+  background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+  color: #ffffff;
+}
+:deep(.q-tab--active .q-tab__indicator) {
+  display: none;
+}
+:deep(.q-table__container) {
+      border: 1px solid #51acff;
+    border-radius: 0 10px 10px 10px;
+}
+:deep(.q-table th.sortable) {
+  background: #F2F8FE;
+  color: #51ACFF;
+}
+:deep(.q-table td), :deep(.q-table__container > div:last-child) {
+  color: #7A8EB9;
+}
+:deep(.q-table .q-td .win) {
+  color: #51ACFF;
+}
+:deep(.q-table .q-td .loss) {
+  color: #FF5151;
+  ;
+}
 .container {
   font-family: Inter;
   text-align: center;
@@ -470,21 +704,33 @@ onMounted(() => {
       font-size: 16px;
       font-weight: 500;
       line-height: 19.36px;
-      text-align: left;
       width: 100%;
       margin-top: 5px;
       color: #000000;
+      display: flex;
+      justify-content: space-between;
+      gap:10px;
+      .note {
+        flex: 2;
+        text-align: left;
+      }
+      .more { flex: 1; text-align: right;
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 19.36px; color: #0080FF;
+        }
     }
   }
   .luckydraw-details {
     border: 1px solid #ACD4F6;
     width: 95%;
-    max-width: 1200px;
     margin: 20px auto;
     border-radius: 12px;
     padding: 30px;
     background: #F2F8FE;
     .luckydraw-title {
+      white-space: nowrap;
       width: 100%;
       display: flex;
       justify-content: center;
@@ -568,6 +814,17 @@ onMounted(() => {
           display: grid;
           grid-template-columns: 30px 1fr;
           gap: 10px;
+
+
+          .pill {
+              white-space: nowrap;
+              border-radius: 100px;
+              padding: 4px 8px;
+              color: #FFFFFF;
+              width: fit-content;
+              display: inline-block;
+              background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+          }
           .point {
             width: 100%;
             color: #ffffff;

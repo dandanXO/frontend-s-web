@@ -354,6 +354,77 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog
+      v-if="uiControl.dialogType !== 'SEARCH'"
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'FAIL'"
+        ref="toFailForm"
+        :model="failForm"
+        :rules="failFormRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item :label="t('fields.reasonType')" prop="reasonType">
+          <el-select
+            v-model="failForm.reasonType"
+            size="small"
+            :placeholder="t('fields.reasonType')"
+            class="filter-item"
+            style="width: 300px;"
+            default-first-option
+            @focus="loadReasonTypes"
+          >
+            <el-option
+              v-for="item in reasonTypeList.list"
+              :key="item.id"
+              :label="item.value"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.reasonTemplate')" prop="reasonTemplate">
+          <el-select
+            v-model="failForm.reasonTemplate"
+            size="small"
+            :placeholder="t('fields.reasonTemplate')"
+            class="filter-item"
+            style="width: 300px;"
+            default-first-option
+            @focus="loadReasonTemplates"
+            @change="populateFailReason($event)"
+          >
+            <el-option
+              v-for="item in reasonTemplateList.list"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item :label="t('fields.failReason')" prop="failReason">
+          <el-input
+            type="textarea"
+            v-model="failForm.failReason"
+            :rows="6"
+            style="width: 300px;"
+            maxlength="500"
+            show-word-limit
+          />
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button :disabled="clickedFail" type="primary" @click="fail">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -376,12 +447,16 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { getConfigList } from '../../../../api/config'
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const checkBtnRef = ref();
 const checkBtnsRef = ref();
 const store = useStore();
 const { t } = useI18n();
 const searchForm = ref(null)
+const toFailForm = ref(null)
+const clickedFail = ref(null)
 const vipList = reactive({
   list: [],
 })
@@ -394,6 +469,8 @@ const bankList = reactive({
 const withdrawPlatformList = reactive({
   list: [],
 })
+
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -431,7 +508,19 @@ const request = reactive({
   vipId: null,
   siteId: null,
 })
-
+const failForm = reactive({
+  id: null,
+  reasonType: [],
+  reasonTemplate: [],
+  failReason: null,
+  withdrawDate: ''
+})
+const reasonTypeList = reactive({
+  list: [],
+})
+const reasonTemplateList = reactive({
+  list: [],
+})
 function disabledDate(time) {
   return (
     time.getTime() <=
@@ -516,6 +605,22 @@ async function loadBanks() {
   }
 }
 
+async function loadReasonTypes() {
+  const { data: reasonType } = await getConfigList(
+    'cancel_type',
+    request.siteId ? request.siteId : null
+  )
+  reasonTypeList.list = reasonType
+}
+
+async function loadReasonTemplates() {
+  const { data: reasonTemplate } = await getConfigList(
+    'cancel_cause',
+    request.siteId ? request.siteId : null
+  )
+  reasonTemplateList.list = reasonTemplate
+}
+
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
@@ -526,9 +631,13 @@ async function loadRecord() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.withdrawDate !== null) {
     if (request.withdrawDate.length === 2) {
-      query.withdrawDate = request.withdrawDate.join(',')
+      query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+      query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], timeZone);
+      query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], timeZone);
+      query.withdrawDate = query.withdrawDate.join(',')
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";
@@ -573,17 +682,49 @@ async function toCheck(memberWithdrawRecord) {
 }
 
 async function toFail(memberWithdrawRecord) {
-  await autoWithdrawToFail(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-  await loadRecord()
-  ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+  if (request.siteId === 11) {
+    showDialog('FAIL', memberWithdrawRecord)
+  } else {
+    await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
+    await loadRecord()
+    ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+  }
 }
 
-async function showDialog(type) {
-  if (type === 'SEARCH') {
+async function showDialog(type, memberWithdrawRecord) {
+  if (type === 'FAIL') {
+    if (toFailForm.value) {
+      toFailForm.value.resetFields()
+    }
+    failForm.id = memberWithdrawRecord.id
+    failForm.withdrawDate = memberWithdrawRecord.withdrawDate
+    await loadReasonTypes()
+    failForm.reasonType = reasonTypeList.list[0].value
+    uiControl.dialogTitle = t('fields.failReason')
+  } else if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
+}
+
+async function fail() {
+  toFailForm.value.validate(async valid => {
+    if (valid) {
+      clickedFail.value = true
+      await autoWithdrawToFail(
+        failForm.id,
+        failForm.reasonType,
+        failForm.failReason,
+        failForm.withdrawDate,
+        request.siteId
+      )
+      uiControl.dialogVisible = false
+      clickedFail.value = false
+      await loadRecord()
+      ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
+    }
+  })
 }
 
 onMounted(async () => {

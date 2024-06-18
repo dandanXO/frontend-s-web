@@ -1,6 +1,6 @@
 {
   "name": "B9.GAME",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "B9.GAME",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
@@ -20,7 +20,6 @@
     "@capacitor/preferences": "^5.0.0",
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
-    "com.adjust.sdk": "4.23.0",
     "cordova-plugin-file": "^8.0.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-screen-orientation": "^3.0.3",

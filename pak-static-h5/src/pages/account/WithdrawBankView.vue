@@ -1,7 +1,7 @@
 <template>
   <q-dialog width="100%" v-model="isUnbindModalOpen" presistent>
     <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="text-black popout-close" v-close-popup />
+      <q-btn dense rounded icon="close" class="text-white popout-close" v-close-popup />
       <div class="popout-dialog-container">
         <div class="txt-title">{{ getTitleText() }}</div>
         <div class="pc-form">
@@ -14,7 +14,7 @@
                 v-model="unbindBankCardNo"
                 type="text"
                 :rules="[
-                  (val) => (val && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + ' not match'
+                  (val) => (val && val == selectedUnbindBankCard.cardNumber) || unbindCardLabel() + $t('form.notMatch')
                 ]"
               ></q-input>
             </template>
@@ -22,7 +22,9 @@
         </div>
 
         <div class="bottom-btn">
-          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="unbindBankCard()">Confirm</q-btn>
+          <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="unbindBankCard()">
+            {{ $t("btn.confirm") }}
+          </q-btn>
         </div>
       </div>
     </div>
@@ -68,7 +70,7 @@
         </div> -->
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
           <!-- <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" /> -->
-          <span>+ Add virtual Wallet</span>
+          <span>+ {{ $t("btn.addVirtualWallet") }}</span>
         </div>
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">
           <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
@@ -135,7 +137,7 @@
       </template>
 
       <div v-if="bankCardList[EWALLET].length" class="bank-detail-item q-my-sm" @click="onShowCardClick(EWALLET)">
-        <div class="bank-detail-type">Virtual Wallet</div>
+        <div class="bank-detail-type">{{ $t("bank.virtualWallet") }}</div>
         <div :class="`bank-detail-arrow ${isCardVisible[EWALLET] ? 'rotate' : ''}`">></div>
       </div>
       <template v-if="isCardVisible[EWALLET]">
@@ -150,7 +152,7 @@
               <div>{{ bankCard.bankName }}</div>
             </div>
             <div class="bank-number-wrapper">
-              <div>Virtual Account: &nbsp;</div>
+              <div>{{ $t("bank.virtualAccount") }}: &nbsp;</div>
               <div class="bank-number">{{ formatCardNumber(bankCard.cardNumber) }}</div>
               <!-- <img
                 class="copy-btn"
@@ -159,7 +161,7 @@
               /> -->
             </div>
           </div>
-          <div class="right-container" @click="onUnbindClick(bankCard)">Untie</div>
+          <div class="right-container" @click="onUnbindClick(bankCard)">{{ $t("btn.untie") }}</div>
         </div>
       </template>
 
@@ -203,6 +205,7 @@ import { useRouter } from "vue-router";
 import * as _ from "lodash";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
+import { t } from "src/boot/lang";
 
 // constants (the string synced w/ BE API bankType)
 const BANK_CARD = "BANK";
@@ -262,7 +265,7 @@ const getTitleText = () => {
   if (isAlipay(bankCode)) return "请输入解绑支付宝号";
   else if (bankType === BANK_CARD) return "请输入解绑银行卡号";
   else if (bankType === CRYPTO) return "请输入解绑虚拟币账户";
-  else if (bankType === EWALLET) return "Please enter untie virtual wallet";
+  else if (bankType === EWALLET) return t("form.virtualWallet_untie");
 };
 
 const unbindBankCard = () => {
@@ -293,7 +296,7 @@ const unbindCardLabel = () => {
   if (isAlipay(bankCode)) return "支付宝号";
   else if (bankType === BANK_CARD) return "银行卡号";
   else if (bankType === CRYPTO) return "钱包地址";
-  else if (bankType === EWALLET) return "Virtual Wallet";
+  else if (bankType === EWALLET) return t("form.virtualWallet");
 };
 
 let bankCardList = reactive({ BANK: [], CRYPTO: [], EWALLET: [], ALIPAY: [] });

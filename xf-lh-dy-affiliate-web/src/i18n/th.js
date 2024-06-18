@@ -258,6 +258,7 @@ export default {
     memberBetRecords: 'บันทึกการเดิมพันสมาชิก',
     memberCommission: 'คอมมิชชันสมาชิก',
     memberInfo: 'ข้อมูลสมาชิก',
+    memberType: 'ประเภทสมาชิก',
     minActiveMemberCount: 'จำนวนสมาชิกที่ใช้งานขั้นต่ำ',
     memberProfit: 'กำไรตัวแทน',
     memberProfitDownlineProfitUnsettleCommission:
@@ -413,6 +414,7 @@ export default {
     requiredCommission: 'โปรดป้อนคอมมิชชัน',
     requiredEmail: 'โปรดป้อนอีเมล',
     requiredLoginName: 'โปรดป้อนชื่อผู้ใช้',
+    requiredMemberType: 'โปรดเลือกประเภทสมาชิก',
     requiredOldPassword: 'โปรดป้อนรหัสผ่านปัจจุบัน',
     requiredPassword: 'โปรดป้อนรหัสผ่าน',
     requiredRealName: 'โปรดป้อนชื่อจริง',
@@ -455,6 +457,7 @@ export default {
     depositNotification1:
       'คุณจะถูกเปลี่ยนเส้นทางไปยังหน้าเว็บของธนาคารเพื่อทำธุรกรรมฝากเงิน',
     depositNotification2: 'หากฝากเงินสำเร็จคุณจะได้รับการแจ้งเตือนที่นี่',
+    depositShouldBetween: 'จำนวนเงินฝากควรอยู่ระหว่าง '
   },
   menu: {
     undefined: '',
@@ -499,6 +502,7 @@ export default {
     901: 'ไม่พบบันทึกตัวแทน',
     902: 'ผู้ใช้งานนี้ไม่ใช่ตัวแทน',
     903: 'บัญชีนี้เป็นตัวแทน',
+    904: 'บัญชีนี้เป็นสมาชิก',
     905: 'ชื่อจริงยังไม่ได้รับการกรอก',
     1000: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
     1001: 'การเข้าสู่ระบบล้มเหลว เนื่องจากบัญชีถูกระงับ',

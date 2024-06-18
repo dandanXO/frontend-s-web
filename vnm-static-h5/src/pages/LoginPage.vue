@@ -40,7 +40,7 @@
           <q-input
             rounded
             standout
-dense
+            dense
             clearable
             ref="loginNameRef"
             v-model="loginForm.loginName"
@@ -66,7 +66,7 @@ dense
             ref="passwordRef"
             rounded
             standout
-dense
+            dense
             clearable
             v-model="loginForm.password"
             :placeholder="$t('lang.password')"
@@ -97,7 +97,7 @@ dense
             ref="verificationRef"
             rounded
             standout
-dense
+            dense
             clearable
             type="text"
             maxlength="4"
@@ -136,7 +136,7 @@ dense
             rounded
             type="number"
             standout
-dense
+            dense
           >
             <template v-slot:prepend>
               <q-icon color="bright" name="phone" />
@@ -157,7 +157,7 @@ dense
             color="white"
             rounded
             standout
-dense
+            dense
           >
             <template v-slot:append>
               <q-btn
@@ -208,9 +208,15 @@ dense
           no-caps
           rounded
         />
-        <router-link to="/register">
-          <q-btn class="common-large-white-btn bottom-btn" :label="$t('lang.register_btn')" no-caps rounded />
-        </router-link>
+        <div>
+          <q-btn
+            @click="goToRegister"
+            class="common-large-white-btn bottom-btn"
+            :label="$t('lang.register_btn')"
+            no-caps
+            rounded
+          />
+        </div>
       </div>
       <div class="text-center q-pb-lg">
         <router-link class="cs-web-id" id="cs-web-id" to="/liveChat">
@@ -257,13 +263,14 @@ import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import LangOptions from "components/LangOptions";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
 import { App } from "@capacitor/app";
 import { i18nStore } from "src/router/language";
 import { storeToRefs } from "pinia";
+import { isAndroid } from "src/boot/utils";
+import { useUI } from "stores/ui";
 
 export default defineComponent({
   name: "LoginPage",
@@ -406,13 +413,7 @@ export default defineComponent({
       const sidParam = store.visitorId;
 
       (async () => {
-        // const fp = await fpPromise;
-        // const result = await fp.get();
-        // const excludes = { value: ["timezone", "timeZoneOffset"] };
-        // const allComponents = { ...result.components };
-        // excludes.value.forEach((element) => {
-        //   delete allComponents[element];
-        // });
+
         const appVer = appVersionNo.value;
 
         if (loginType.value === false) {
@@ -429,7 +430,7 @@ export default defineComponent({
               .memberLogin({
                 loginName: loginForm.loginName,
                 password: loginForm.password,
-                sid: sidParam,
+                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 captchaCode: loginForm.captchaCode,
                 codeId: loginForm.codeId,
                 ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
@@ -489,7 +490,7 @@ export default defineComponent({
             store
               .memberLoginviaPhone({
                 phoneNumber: phoneLoginForm.phoneNumber,
-                sid: sidParam,
+                sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam,
                 code: phoneLoginForm.code,
                 smsCodeId: phoneLoginForm.smsCodeId
               })
@@ -530,6 +531,21 @@ export default defineComponent({
         const info = await App.getInfo();
         appVersionNo.value = info.version + "." + info.build;
       }
+    };
+
+    const ui = useUI();
+
+    const trackRegisterClickEvent = () => {
+      if (ui.adjust_click_register_event && isAndroid()) {
+        console.log("Track Click Reg");
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    const goToRegister = () => {
+      trackRegisterClickEvent();
+      router.push("/register");
     };
 
     onMounted(() => {
@@ -575,7 +591,10 @@ export default defineComponent({
       LangOptions,
       appVersionNo,
       getVersionNo,
-      languageVal
+      languageVal,
+      trackRegisterClickEvent,
+      ui,
+      goToRegister
     };
   }
 });
@@ -792,7 +811,7 @@ export default defineComponent({
     // margin-left: 12px;
 
     // @media (max-width: 400px) {
-      // height: 40px;
+    // height: 40px;
     // }
 
     img {
@@ -800,7 +819,7 @@ export default defineComponent({
       // width: auto;
       width: 100%;
       max-width: 135px;
-    opacity: 0;
+      opacity: 0;
     }
   }
 

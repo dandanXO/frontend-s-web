@@ -7,6 +7,7 @@ import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 import { t } from "./lang";
+import { useRoute } from "vue-router";
 
 const rstArray = Object.values(process.env.RST_API);
 const evtArray = Object.values(process.env.EVT_API);
@@ -114,6 +115,7 @@ export default boot(({ app, router }) => {
   };
 
   // const route = useRoute();
+  // console.log(route)
   // const router = useRouter();
   const onResponse = (response) => {
     Loading.show();
@@ -140,12 +142,7 @@ export default boot(({ app, router }) => {
         location.reload();
       } else {
         if (
-          (window.location.pathname === "/promotion" ||
-            window.location.pathname === "/deposit" ||
-            window.location.pathname === "/invitefriend" ||
-            window.location.pathname === "/vip" ||
-            window.location.pathname === "/invitefriend" ||
-            window.location.pathname === "/privilege/invite") &&
+          (window.location.pathname === "/promoapp") &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
             res.code === ResponseCode.ERROR_TOKEN_LOGGED ||
@@ -156,16 +153,21 @@ export default boot(({ app, router }) => {
           document.location.href = "app://login";
         }
         if (res.code === ResponseCode.ERROR_TOKEN_MISSED) {
-          return Dialog.create({
-            class: "login-card",
-            title: t("lang.system_hint"),
-            message: t("lang.system_please_login"),
-            cancel: { color: "negative", label: t("lang.system_cancel") },
-            ok: { color: "brightbtn", label: t("lang.system_loginnow") },
-            padding: "20px"
-          }).onOk(() => {
-            router.push("/login");
-          });
+          if(window.location.pathname !== "/promo")
+          {
+            return Dialog.create({
+              class: "login-card",
+              title: t("lang.system_hint"),
+              message: t("lang.system_please_login"),
+              cancel: { color: "negative", label: t("lang.system_cancel") },
+              ok: { color: "brightbtn", label: t("lang.system_loginnow") },
+              padding: "20px"
+            }).onOk(() => {
+              router.push("/login");
+            });
+          }else{
+            return res;
+          }
         }
         if (
           res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||

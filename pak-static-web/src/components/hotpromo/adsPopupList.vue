@@ -242,7 +242,6 @@ defineExpose({
       &:hover,
       &.active {
         color: #2b2b82;
-        font-weight: 700;
         background: linear-gradient(270deg, rgba(7, 91, 232, 0.2) 0%, rgba(7, 91, 232, 0) 100%);
       }
 

@@ -26,6 +26,7 @@
           class="filter-item"
           style="width: 200px; margin-left: 5px"
           filterable
+          @change="selectRequestPlatform"
         >
           <el-option
             v-for="item in platforms.list"
@@ -191,7 +192,7 @@
             filterable
           >
             <el-option
-              v-for="item in gameName.list"
+              v-for="item in dialogGameName.list"
               :key="item"
               :label="item"
               :value="item"
@@ -606,6 +607,10 @@ const gameName = reactive({
   list: [],
 })
 
+const dialogGameName = reactive({
+  list: [],
+})
+
 let chooseCompetition = []
 
 const platformCode = ref('')
@@ -662,6 +667,16 @@ async function selectFormSite() {
   await loadPlatformsForForm(form.siteId)
 }
 
+async function selectRequestPlatform() {
+  loadGameList()
+}
+
+async function selectFormPlatform() {
+  form.gameName = null
+  const { data: ret } = await getCompetitionGameList(form.platformId)
+  dialogGameName.list = ret
+}
+
 async function loadSearchPlatforms(id) {
   const { data: ret } = await getPlatformsBySite(id)
   platforms.list = ret.filter(s => s.gameType === 'SPORT' || s.gameType === 'ESPORT')
@@ -678,7 +693,7 @@ async function loadSites() {
 }
 
 async function loadGameList() {
-  const { data: ret } = await getCompetitionGameList()
+  const { data: ret } = await getCompetitionGameList(request.platformId)
   gameName.list = ret
 }
 
@@ -718,6 +733,7 @@ function showDialog(type) {
     form.status = 'OPEN'
     form.platformName = null
     form.siteName = null
+    form.gameName = null
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editCompetition')
   }
@@ -806,6 +822,7 @@ function handleChangePlatform(value) {
   const selectedPlatform = dialogPlats.list.find(item => item.id === value)
   form.platformId = value
   platformCode.value = selectedPlatform.code
+  selectFormPlatform()
 }
 
 function selectImage(item) {

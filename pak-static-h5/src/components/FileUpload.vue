@@ -4,7 +4,7 @@
     v-model="file"
     label-color="brand"
     outlined
-    label="Upload image"
+    :label="$t('form.uploadImage')"
     color="green"
     bg-color="black"
     clearable

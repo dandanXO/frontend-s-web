@@ -19,7 +19,7 @@
               <el-row>
                 <el-col :lg="19" class="total-title">{{ t('fields.lastMonthTotal') }}</el-col>
                 <el-col :lg="5" class="total-text">
-                  $
+                  {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                   <span
                     v-formatter="{
                       data: totalCommission.lastMonthTotal,
@@ -31,7 +31,7 @@
               <el-row>
                 <el-col :lg="19" class="total-title">{{ t('fields.monthBeforeLastTotal') }}</el-col>
                 <el-col :lg="5" class="total-text">
-                  $
+                  {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                   <span
                     v-formatter="{
                       data: totalCommission.monthBeforeLastTotal,
@@ -56,7 +56,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.profit, type: 'money'}" />
               </el-col>
             </el-row>
@@ -75,7 +75,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.netProfit, type: 'money'}" />
               </el-col>
             </el-row>
@@ -95,7 +95,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.bonus, type: 'money'}" />
               </el-col>
             </el-row>
@@ -117,7 +117,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.commission, type: 'money'}" />
               </el-col>
             </el-row>
@@ -137,7 +137,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.platformFee, type: 'money'}" />
               </el-col>
             </el-row>
@@ -157,7 +157,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.paymentFee, type: 'money'}" />
               </el-col>
             </el-row>
@@ -177,7 +177,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.rebate, type: 'money'}" />
               </el-col>
             </el-row>
@@ -211,7 +211,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span
                   v-formatter="{data: item.estimatedCommission, type: 'money'}"
                 />
@@ -250,7 +250,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span
                   v-formatter="{
                     data: item.secondLevelCommission,
@@ -277,7 +277,7 @@
             >
               <el-col :lg="16" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :lg="8" class="total-text">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span
                   v-formatter="{data: item.thirdLevelCommission, type: 'money'}"
                 />
@@ -346,23 +346,23 @@
             >
               <el-col :span="4" class="total-title">{{ t('fields.' + item.time) }}</el-col>
               <el-col :span="4" align="center">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.profit, type: 'money'}" />
               </el-col>
               <el-col :span="4" align="center">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.bet, type: 'money'}" />
               </el-col>
               <el-col :span="4" align="center">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.ftdAmount, type: 'money'}" />
               </el-col>
               <el-col :span="4" align="center">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span v-formatter="{data: item.depositAmount, type: 'money'}" />
               </el-col>
               <el-col :span="4" align="center">
-                $
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
                 <span
                   v-formatter="{data: item.affiliateTransferAmount, type: 'money'}"
                 />

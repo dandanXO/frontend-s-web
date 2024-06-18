@@ -504,7 +504,6 @@ const vipTableData = ref([
       line-height: 18px;
 
       .vip-reward-ticket__title {
-        font-weight: 700;
       }
     }
 
@@ -520,7 +519,6 @@ const vipTableData = ref([
         border-radius: 10px;
         background: #ffffff1a;
         font-size: 14px;
-        font-weight: 700;
         line-height: 21px;
         text-align: center;
       }
@@ -540,7 +538,6 @@ const vipTableData = ref([
 
 .vip-upgrade-rule {
   font-size: 18px;
-  font-weight: 700;
   line-height: 30px;
   margin-bottom: 16px;
 }
@@ -558,7 +555,6 @@ const vipTableData = ref([
     td {
       padding: 8px 0;
       font-size: 16px;
-      font-weight: 700;
       line-height: 27.2px;
     }
   }

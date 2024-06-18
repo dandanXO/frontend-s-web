@@ -7,16 +7,16 @@
         {{ store.currency.value }} {{ convertToCommaAmount(votesData.award) }}
       </div>
     </div>
-    
-<!--    <div class="winner-bar">-->
-<!--      <div class="winner-bar__bg">-->
-<!--        <div class="winner-bar__inner">-->
-<!--          <div class="winner-bar__text">-->
-<!--            恭喜玩家SAFA赢得21314元-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+
+    <!--    <div class="winner-bar">-->
+    <!--      <div class="winner-bar__bg">-->
+    <!--        <div class="winner-bar__inner">-->
+    <!--          <div class="winner-bar__text">-->
+    <!--            恭喜玩家SAFA赢得21314元-->
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div class="countries-wrapper pattern-wrapper">
       <div class="pattern-wrapper-bottom"></div>
       <div class="point">点击您喜欢的战队LOGO进行竞猜，票数越高，竞猜成功之后，彩金越高哦！</div>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="c-note">举例：欧洲杯赛得出冠军后，则按票数瓜分累积奖池，例如会员A在活动期间，为西班牙总投票数为138票，若西班牙世界赛取得冠军后，则按票数瓜分奖池内奖金，以1,000,000元奖金和冠军队伍总票数5120票为例（100,0000÷5120=195元/票，会员A为西班牙总投票数为138票，138X195=26953元奖金）
-        </div>
+      </div>
     </div>
 
     <div class="table-details pattern-wrapper" style="display:none">
@@ -78,7 +78,7 @@
       </div>
 
       <div class="content-info">
-        <div class="content-info-item">活动时间：2024年06月15号00:00至07月14号23:59:59</div>
+        <div class="content-info-item">活动时间：2024年06月13号00:00至07月14号23:59:59</div>
         <div class="content-info-item" >
           活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
         </div>
@@ -161,12 +161,14 @@
     </el-dialog>
 
     <el-dialog align-center v-model="isVoteRecordModalVisible" width="700" style="background-color:#00192B;">
-      <div class="cast-vote-container">    
+      <div class="cast-vote-container">
         <div class=title>投票历史</div>
         <div class="vote-records">
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-            <div>2024/05/24 16:54</div>
+            <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
+            
+
           </div>
         </div>
         <div class="pagination-wrapper">
@@ -191,6 +193,7 @@ import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
 import { userStore } from "@/store/index"
 import { useLocalStorage } from "@vueuse/core";
+import moment from 'moment'
 
 
 export default defineComponent({
@@ -266,7 +269,14 @@ export default defineComponent({
               message: "投票成功"
             })
             isCastVoteModalVisible.value= false;
-            loadVoteTeam();
+
+            if(votesData.value.myVotes > 0){
+              votesData.value.myVotes--;
+            }
+            setTimeout(()=>{
+              loadVoteTeam();
+            },2000)
+
           } else {
             ElMessage.error(res.message)
           }
@@ -278,7 +288,7 @@ export default defineComponent({
 
     const votesRecordChangePage = (page) => {
       if(page < 1) {
-        votesData.value.votesRecord.current = 1;  
+        votesData.value.votesRecord.current = 1;
       } else if(page > (votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize)) {
         votesData.value.votesRecord.current = votesData.value.votesRecord.data.length / votesData.value.votesRecord.pageSize;
       } else {
@@ -288,16 +298,18 @@ export default defineComponent({
 
     const paginatedVoteRecords = computed(() => {
       const votesRecord = votesData.value.votesRecord;
-      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize); 
+      return  votesRecord.data.slice((votesRecord.current - 1) * votesRecord.pageSize, votesRecord.current * votesRecord.pageSize);
     })
 
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+          const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
             const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
-          });
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+
+            return extendedVoteRecords
+        });
 
           votesData.value = {
             ...res.data,
@@ -330,7 +342,8 @@ export default defineComponent({
       store,
       imgURL,
       paginatedVoteRecords,
-      votesRecordChangePage
+      votesRecordChangePage,
+      moment
     }
   }
 });
@@ -363,60 +376,60 @@ export default defineComponent({
     background-color: #00EAFE;
     border: 2px solid #00EAFE;
     font-weight: bold;
-  } 
+  }
 }
 </style>
 
 <style scoped lang="scss">
 .cast-vote-container {
   font-family: PingFang SC;
-  
+
   .title {
     font-size: 20px;
     text-align: center;
     color: #00E9FE;
+  }
+
+  .vote-records {
+    display: grid;
+    padding: 20px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    @media (max-width: 500px) {
+      grid-template-columns: 1fr;
     }
-    
-    .vote-records {
-      display: grid;
-      padding: 20px;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
 
-      @media (max-width: 500px) {
-        grid-template-columns: 1fr;
-      }
+    .vote-record-item {
+      background-color: #0A243E;
+      border: 2px solid #00EAFE4D;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      white-space: nowrap;
+      color: #fff;
+      padding: 15px;
+      gap: 40px;
 
-      .vote-record-item {
-        background-color: #0A243E;
-        border: 2px solid #00EAFE4D;
-        border-radius: 4px;
+      .vote-record-flag-wrapper {
         display: flex;
+        gap: 10px;
         align-items: center;
-        justify-content: space-between;
-        white-space: nowrap;
-        color: #fff;
-        padding: 15px 33px;
-        gap: 40px;
-  
-        .vote-record-flag-wrapper {
-          display: flex;
-          gap: 10px;
-          align-items: center;
 
-          .vote-record-item-flag {
-            width: 35px;
-            height: 25px;
-          }
+        .vote-record-item-flag {
+          width: 35px;
+          height: 25px;
         }
       }
     }
+  }
 
-    .pagination-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  .pagination-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 .center-numbers {
   margin: 0px auto;
@@ -451,7 +464,7 @@ export default defineComponent({
     border: 1px solid #000000;
     color: #ffffff;
     padding: 10px 20px;
-  border-radius: 15px;
+    border-radius: 15px;
   }
   &__text {
     background: linear-gradient(180deg, #03C3FF 0%, #B8EEFF 50%, #03C3FF 100%);
@@ -465,7 +478,7 @@ export default defineComponent({
     line-height: 33.6px;
 
   }
-  
+
 }
 .promo-title{
   text-align: center;
@@ -554,7 +567,7 @@ export default defineComponent({
 }
 
 .countries-wrapper .point {
-    color: #00E9FE;
+  color: #00E9FE;
 }
 
 //.pattern-wrapper:before,
@@ -688,7 +701,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex-direction: column;
-    width: 100%;
+  width: 100%;
 
 }
 .countries-wrapper .country-list .country-item .c-flag {
@@ -752,10 +765,10 @@ export default defineComponent({
 
 .countries-wrapper .c-note {
   font-family: PingFang SC;
-font-size: 20px;
-font-weight: 500;
-line-height: 40px;
-text-align: left;color: #58AEDE;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 40px;
+  text-align: left;color: #58AEDE;
 
 
 }
@@ -768,7 +781,7 @@ text-align: left;color: #58AEDE;
   font-weight: bold;
   padding: 5px;
   position: relative;
-  .table-title{ 
+  .table-title{
     font-family: PingFang SC;
     font-size: 24px;
     font-weight: 500;

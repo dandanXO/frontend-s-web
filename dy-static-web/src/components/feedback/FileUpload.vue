@@ -45,7 +45,6 @@ export default defineComponent({
                     formData.append('dir', dirPaymentLabel)
                 }
                 formData.append('overwrite', false)
-                formData.append('includeDir', true)
 
                 const data = await uploadImage(formData)
                 if (data.code === 0) {

@@ -1,6 +1,9 @@
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 export const uploadImage = (formData) => {
+
+  formData.append("includeDir", true);
+  
   const requestOptions = {
     method: 'POST',
     body: formData,

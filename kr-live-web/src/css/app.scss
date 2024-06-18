@@ -72,7 +72,7 @@ body {
 }
 
 .main-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 20px;
 }
@@ -616,6 +616,10 @@ svg {
   border-color: grey;
   border-style: solid;
   background: #2d3039;
+}
+
+.q-field--outlined.q-field--disabled .q-field__control:before {
+  border-color: grey;
 }
 
 .verification-input:hover :before {

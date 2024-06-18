@@ -13,7 +13,6 @@
           :end-placeholder="t('fields.endDate')"
           style="width: 250px"
           :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
           :editable="false"
           :clearable="false"
         />
@@ -450,14 +449,14 @@ function convertDate(date) {
   return moment(date).format('YYYY-MM-DD')
 }
 
-function disabledDate(time) {
-  return (
-    time.getTime() <=
-      moment(new Date())
-        .subtract(1, 'weeks')
-        .format('x') || time.getTime() > new Date().getTime()
-  )
-}
+// function disabledDate(time) {
+//   return (
+//     time.getTime() <=
+//       moment(new Date())
+//         .subtract(1, 'weeks')
+//         .format('x') || time.getTime() > new Date().getTime()
+//   )
+// }
 
 function resetQuery() {
   request.memberName = null

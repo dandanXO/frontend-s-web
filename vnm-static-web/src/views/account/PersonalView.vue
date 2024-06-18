@@ -1,7 +1,13 @@
 <template>
   <div class="account-box account-contents">
     <div class="menu-title-container">
-      <div class="menu-title">{{ $t('personal.personalInfo') }}</div>
+      <div class="menu-title" style="display: flex; gap: 20px">
+        {{ $t("personal.personalInfo") }}
+        <span style="font-size: 14px">
+          {{ $t("personal.url") }}:
+          <a :href="evipWeb" style="color: #468cff">{{ evipWeb }}</a>
+        </span>
+      </div>
     </div>
     <el-tabs v-model="selectedTab">
       <el-tab-pane :label="$t('personal.personalInfo')" name="personal">
@@ -24,11 +30,10 @@
           <div class="personal-wrapper">
             <div class="basic-info">
               <div class="basic-info-table">
-
                 <div class="info-tbl-row">
                   <div class="info-tbl-col">
                     <div class="tbl-row">
-                      <div class="basic-info-cell title">{{ $t('personal.realName') }}</div>
+                      <div class="basic-info-cell title">{{ $t("personal.realName") }}</div>
                       <div v-if="personalState.memberInfo.realName" class="basic-info-cell contentwtxt">
                         {{ personalState.memberInfo.realName }}
                       </div>
@@ -38,9 +43,7 @@
                           <el-form-item
                             name="realName"
                             prop="realName"
-                            :rules="[
-                            { required: true, message: $t('placeholder.realName') }
-                          ]"
+                            :rules="[{ required: true, message: $t('placeholder.realName') }]"
                           >
                             <el-input v-model="updateFormDetails.realName" :placeholder="$t('personal.realName')" />
                           </el-form-item>
@@ -53,7 +56,7 @@
                 <div class="info-tbl-row">
                   <div class="info-tbl-col">
                     <div class="tbl-row">
-                      <div class="basic-info-cell title">{{ $t('personal.birthday') }}</div>
+                      <div class="basic-info-cell title">{{ $t("personal.birthday") }}</div>
                       <div v-if="personalState.memberInfo.birthday" class="basic-info-cell contentwtxt">
                         {{ personalState.memberInfo.birthday }}
                       </div>
@@ -66,7 +69,7 @@
                             :rules="[{ required: true, message: $t('placeholder.birthday') }]"
                           >
                             <el-date-picker
-                              style="max-width: 650px; width: 100%;"
+                              style="max-width: 650px; width: 100%"
                               v-model="updateFormDetails.birthday"
                               value-format="YYYY-MM-DD"
                               :placeholder="$t('personal.birthday')"
@@ -74,14 +77,17 @@
                           </el-form-item>
                         </div>
 
-                        <div class="basic-info-cell contentwtxt" style="min-height: 40px;" v-else></div>
+                        <div class="basic-info-cell contentwtxt" style="min-height: 40px" v-else></div>
                       </div>
                     </div>
                   </div>
                   <div class="info-tbl-col">
                     <div class="tbl-row">
-                      <div class="basic-info-cell title">{{ $t('personal.mobileNo') }}</div>
-                      <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                      <div class="basic-info-cell title">{{ $t("personal.mobileNo") }}</div>
+                      <div
+                        class="basic-info-cell contentwtxt"
+                        style="display: flex; justify-content: space-between; align-items: center"
+                      >
                         {{ personalState.memberInfo.telephone }}
 
                         <button
@@ -90,7 +96,7 @@
                           type="button"
                           @click="updatePhoneModal"
                         >
-                          {{ $t('common.verify') }}
+                          {{ $t("common.verify") }}
                         </button>
                       </div>
 
@@ -148,8 +154,11 @@
                 </div> -->
 
                 <div class="tbl-row">
-                  <div class="basic-info-cell title">{{$t('personal.email')}}</div>
-                  <div class="basic-info-cell contentwtxt" style="display:flex;justify-content: space-between;align-items: center;">
+                  <div class="basic-info-cell title">{{ $t("personal.email") }}</div>
+                  <div
+                    class="basic-info-cell contentwtxt"
+                    style="display: flex; justify-content: space-between; align-items: center"
+                  >
                     {{ personalState.memberInfo.email }}
 
                     <button
@@ -158,7 +167,7 @@
                       type="button"
                       @click="updateSecurityModal"
                     >
-                      {{ $t('common.verify') }}
+                      {{ $t("common.verify") }}
                     </button>
                   </div>
                   <!--                <div v-else class="basic-info-cell contentwtxt">-->
@@ -181,25 +190,21 @@
                 </div>
 
                 <el-button
-                  style="margin-top: 10px; border-radius: 2em;"
+                  style="margin-top: 10px; border-radius: 2em"
                   :loading="loadingBtn"
                   class="standard-button btn-color-blue"
                   v-if="isEdit"
                   @click="updateState"
                 >
-                  {{ $t('common.submit')}}
+                  {{ $t("common.submit") }}
                 </el-button>
 
                 <button
                   class="standard-button btn-color-blue"
-                  v-if="
-                  !isEdit &&
-                  (
-                    !personalState.memberInfo.birthday)
-                "
+                  v-if="!isEdit && !personalState.memberInfo.birthday"
                   @click="isEdit = !isEdit"
                 >
-                  {{ $t('common.edit') }}
+                  {{ $t("common.edit") }}
                 </button>
               </div>
             </div>
@@ -212,26 +217,43 @@
       <el-tab-pane :label="$t('personal.bank')" name="Bank"><WithdrawBank /></el-tab-pane>
       <el-tab-pane :label="$t('personal.chgPwd')" name="chgPwd">
         <div class="update-pwd-container">
-
           <el-form ref="updatePwdFormRef" :hideRequiredMark="true" :model="updatePwdInfo" :rules="updatePwdRules">
             <el-form-item ref="refOldPassword" :label="$t('personal.oldPwd')" name="oldPassword" prop="oldPassword">
-              <el-input type="password" v-model="updatePwdInfo.oldPassword" :placeholder="$t('placeholder.oldPwd')" clearable show-password />
+              <el-input
+                type="password"
+                v-model="updatePwdInfo.oldPassword"
+                :placeholder="$t('placeholder.oldPwd')"
+                clearable
+                show-password
+              />
             </el-form-item>
 
             <el-form-item ref="refPassword" :label="$t('personal.newPwd')" name="password" prop="password">
-              <el-input type="password" v-model="updatePwdInfo.password" :placeholder="$t('placeholder.newPwd')" clearable show-password />
+              <el-input
+                type="password"
+                v-model="updatePwdInfo.password"
+                :placeholder="$t('placeholder.newPwd')"
+                clearable
+                show-password
+              />
             </el-form-item>
-            <el-form-item ref="refConfirmPassword" :label="$t('personal.confirmPwd')" name="confirmPassword" prop="confirmPassword">
-              <el-input type="password" v-model="updatePwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmPwd')" clearable show-password />
+            <el-form-item
+              ref="refConfirmPassword"
+              :label="$t('personal.confirmPwd')"
+              name="confirmPassword"
+              prop="confirmPassword"
+            >
+              <el-input
+                type="password"
+                v-model="updatePwdInfo.confirmPassword"
+                :placeholder="$t('placeholder.confirmPwd')"
+                clearable
+                show-password
+              />
             </el-form-item>
             <div class="txt-center btn-container">
-              <button
-                :loading="loadingPwBtn"
-                class="standard-button btn-color-white"
-                type="button"
-                @click="clearPwd"
-              >
-                {{ $t('personal.clear') }}
+              <button :loading="loadingPwBtn" class="standard-button btn-color-white" type="button" @click="clearPwd">
+                {{ $t("personal.clear") }}
               </button>
 
               <button
@@ -240,7 +262,7 @@
                 type="button"
                 @click="submitUpdatePwd"
               >
-                {{ $t('personal.submit') }}
+                {{ $t("personal.submit") }}
               </button>
             </div>
           </el-form>
@@ -248,20 +270,103 @@
       </el-tab-pane>
       <el-tab-pane :label="$t('personal.chgWithdrawPwd')" name="chgWithdrawPwd">
         <div class="update-pwd-container">
-          <el-form ref="updateWithdrawPwdFormRef" :hideRequiredMark="true" :model="updateWithdrawPwdInfo" :rules="updateWithdrawPwdRules">
-            <el-form-item v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode" ref="refWithdrawOldPassword" :label="$t('personal.oldWithdrawPwd')"  name="oldPassword" prop="oldPassword">
-              <el-input type="password" v-model="updateWithdrawPwdInfo.oldPassword" :placeholder="$t('placeholder.oldWithdrawPwd')" clearable show-password />
+          <el-form
+            ref="updateWithdrawPwdFormRef"
+            :hideRequiredMark="true"
+            :model="updateWithdrawPwdInfo"
+            :rules="updateWithdrawPwdRules"
+          >
+            <el-form-item
+              v-if="personalState.memberInfo.registeredWithdrawPassword && !receivedVerificationCode"
+              ref="refWithdrawOldPassword"
+              :label="$t('personal.oldWithdrawPwd')"
+              name="oldPassword"
+              prop="oldPassword"
+            >
+              <el-input
+                type="password"
+                v-model="updateWithdrawPwdInfo.oldPassword"
+                :placeholder="$t('placeholder.oldWithdrawPwd')"
+                clearable
+                show-password
+              />
             </el-form-item>
 
-            <el-form-item ref="refWithdrawPassword" :label="$t('personal.newWithdrawPwd')" name="password" prop="password">
-              <el-input type="password" v-model="updateWithdrawPwdInfo.password" :placeholder="$t('placeholder.newWithdrawPwd')" clearable show-password />
+            <!-- <template v-if="receivedVerificationCode"></template> -->
+
+            <el-form-item
+              v-if="receivedVerificationCode"
+              ref="refLoginPassword"
+              :label="$t('personal.loginPwd')"
+              name="loginPassword"
+              prop="loginPassword"
+            >
+              <el-input
+                type="password"
+                v-model="updateWithdrawPwdInfo.loginPassword"
+                :placeholder="$t('placeholder.loginPwd')"
+              />
             </el-form-item>
-            <el-form-item ref="refWithdrawConfirmPassword" :label="$t('personal.confirmWithdrawPwd')"  name="confirmPassword" prop="confirmPassword">
-              <el-input type="password" v-model="updateWithdrawPwdInfo.confirmPassword" :placeholder="$t('placeholder.confirmWithdrawPwd')" clearable show-password />
+
+            <el-form-item
+              v-if="receivedVerificationCode"
+              ref="refTelephone"
+              :label="$t('personal.mobileNo')"
+              name="telephone"
+              prop="telephone"
+            >
+              <el-input v-model="updateWithdrawPwdInfo.telephone" :placeholder="$t('placeholder.mobileNo')" />
             </el-form-item>
-            <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
+
+            <el-form-item
+              v-if="receivedVerificationCode"
+              ref="refWithdrawPassword"
+              :label="$t('personal.newWithdrawPwd')"
+              name="withdrawPassword"
+              prop="withdrawPassword"
+            >
+              <el-input
+                type="password"
+                v-model="updateWithdrawPwdInfo.withdrawPassword"
+                :placeholder="$t('placeholder.newWithdrawPwd')"
+                clearable
+                show-password
+              />
+            </el-form-item>
+
+            <el-form-item
+              v-if="!receivedVerificationCode"
+              ref="refNewWithdrawPassword"
+              :label="$t('personal.newWithdrawPwd')"
+              name="password"
+              prop="password"
+            >
+              <el-input
+                type="password"
+                v-model="updateWithdrawPwdInfo.password"
+                :placeholder="$t('placeholder.newWithdrawPwd')"
+                clearable
+                show-password
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="!receivedVerificationCode"
+              ref="refWithdrawConfirmPassword"
+              :label="$t('personal.confirmWithdrawPwd')"
+              name="confirmPassword"
+              prop="confirmPassword"
+            >
+              <el-input
+                type="password"
+                v-model="updateWithdrawPwdInfo.confirmPassword"
+                :placeholder="$t('placeholder.confirmWithdrawPwd')"
+                clearable
+                show-password
+              />
+            </el-form-item>
+            <!-- <el-form-item v-if="receivedVerificationCode" ref="refWithdrawVerificationCode" :label="$t('personal.verificationCode')"  name="code" prop="code">
               <el-input v-model="updateWithdrawPwdInfo.code" :placeholder="$t('placeholder.verificationCode')" />
-            </el-form-item>
+            </el-form-item> -->
 
             <div class="withdrawBottom">
               <div class="txt-center btn-container">
@@ -271,19 +376,21 @@
                   type="button"
                   @click="clearWithdrawPwd"
                 >
-                  {{ $t('personal.clear') }}
+                  {{ $t("personal.clear") }}
                 </button>
 
                 <button
                   :loading="loadingWdPwBtn"
                   class="standard-button btn-color-blue"
                   type="button"
-                  @click="receivedVerificationCode ? codeChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
+                  @click="receivedVerificationCode ? submitChangeWithdrawPwd() : submitUpdateWithdrawPwd()"
                 >
-                  {{ $t('personal.submit') }}
+                  {{ $t("personal.submit") }}
                 </button>
               </div>
-              <div v-if="!receivedVerificationCode" class="link" @click="sendOTPEmail">{{ $t('personal.forgetWithdrawPassword') }}</div>
+              <div v-if="!receivedVerificationCode" class="link" @click="forgetWithdrawPwd">
+                {{ $t("personal.forgetWithdrawPassword") }}
+              </div>
             </div>
           </el-form>
         </div>
@@ -322,14 +429,13 @@
               class="common-btn verification-btn"
               @click="openVerificationModal"
             >
-              <span v-if="disableSendVerificationButton">{{ countDown + '' + $t('personal.countDown') }}</span>
-              <span v-else>{{ $t('common.sendVerificationCode') }}</span>
+              <span v-if="disableSendVerificationButton">{{ countDown + "" + $t("personal.countDown") }}</span>
+              <span v-else>{{ $t("common.sendVerificationCode") }}</span>
             </el-button>
           </el-space>
         </el-form-item>
         <el-button :loading="loadingSecurityBtn" class="common-btn verification-btn" @click="submitUpdateSecurity">
-
-          {{ $t('common.submit') }}
+          {{ $t("common.submit") }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -345,7 +451,11 @@
       @keydown.enter.prevent
     >
       <el-form ref="captchaUpdateRef" :model="updateSecurityVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
+        <el-form-item
+          ref="captchaCode"
+          prop="captchaCode"
+          :rules="[{ required: true, message: $t('placeholder.captcha') }]"
+        >
           <el-space>
             <el-input
               @keyup.enter="verifyVerificationCode"
@@ -360,7 +470,9 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">{{ $t('common.verify') }}</el-button>
+      <el-button class="common-btn" @click="verifyVerificationCode" :loading="isEmailSending">
+        {{ $t("common.verify") }}
+      </el-button>
     </el-dialog>
 
     <el-dialog
@@ -391,13 +503,13 @@
               class="common-btn verification-btn"
               @click="openPhoneVerificationModal"
             >
-              <span v-if="disableSendPhoneButton">{{ countDown + '' + $t('personal.countDown') }}</span>
-              <span v-else>{{ $t('common.sendVerificationCode') }}</span>
+              <span v-if="disableSendPhoneButton">{{ countDown + "" + $t("personal.countDown") }}</span>
+              <span v-else>{{ $t("common.sendVerificationCode") }}</span>
             </el-button>
           </el-space>
         </el-form-item>
         <el-button :loading="loadingPhoneBtn" class="common-btn verification-btn" @click="submitUpdatePhone">
-          {{ $t('common.submit') }}
+          {{ $t("common.submit") }}
         </el-button>
       </el-form>
     </el-dialog>
@@ -412,7 +524,11 @@
       :close-on-press-escape="false"
     >
       <el-form ref="captchaUpdateRef" :model="updatePhoneVerified">
-        <el-form-item ref="captchaCode" prop="captchaCode" :rules="[{ required: true, message: $t('placeholder.captcha') }]">
+        <el-form-item
+          ref="captchaCode"
+          prop="captchaCode"
+          :rules="[{ required: true, message: $t('placeholder.captcha') }]"
+        >
           <el-space>
             <el-input
               @keypress.enter.prevent="verifyPhoneVerificationCode"
@@ -427,14 +543,15 @@
           </el-space>
         </el-form-item>
       </el-form>
-      <el-button class="standard-button btn-color-blue" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">{{$t('common.verify')}}</el-button>
+      <el-button class="standard-button btn-color-blue" @click="verifyPhoneVerificationCode" :loading="isPhoneSending">
+        {{ $t("common.verify") }}
+      </el-button>
     </el-dialog>
   </div>
-
 </template>
 
 <script setup lang="js">
-import { reactive, ref, onMounted, toRaw } from "vue";
+import { reactive, ref, onMounted, toRaw, computed } from "vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import { getDevice } from "@/utils/utils";
@@ -447,7 +564,7 @@ import {
   verifyEmail,
   sendSms,
   verifySms,
-  verifyOtpAndChangePassword, forgetWithdrawSendEmail
+  verifyOtpAndChangePassword, withdrawPasswordWithPassNTel, forgetWithdrawSendEmail
 } from "@/api/personal/personal";
 import { getVerificationCode } from "@/api/index/login";
 import moment from "moment";
@@ -951,19 +1068,27 @@ const updatePwdRules = {
 
 const updateWithdrawPwdFormRef = ref();
 const updateWithdrawPwdInfo = reactive({
-  oldPassword: "",
+  // oldPassword: "",
   password: "",
-  confirmPassword: ""
+  // confirmPassword: ""
+  telephone: "",
+  withdrawPassword: ""
 });
 
 const emailCodeId= ref();
 const refWithdrawOldPassword= ref();
 const refWithdrawPassword= ref();
+const refNewWithdrawPassword = ref();
+const refLoginPassword = ref();
+const refTelephone = ref();
 const clearWithdrawPwd = () =>{
   updateWithdrawPwdInfo.oldPassword = "";
   updateWithdrawPwdInfo.password= "";
   updateWithdrawPwdInfo.confirmPassword= "";
   updateWithdrawPwdInfo.code = "";
+  updateWithdrawPwdInfo.telephone = "";
+  updateWithdrawPwdInfo.withdrawPassword = "";
+  updateWithdrawPwdInfo.loginPassword = "";
 }
 
 const submitUpdateWithdrawPwd = () => {
@@ -993,6 +1118,41 @@ const submitUpdateWithdrawPwd = () => {
   });
   loadingWdPwBtn.value = false
 };
+
+// change withdraw password
+const submitChangeWithdrawPwd = () => {
+
+loadingWdPwBtn.value = true
+updateWithdrawPwdFormRef.value
+  .validate()
+  .then(() => {
+    const obj = {
+      password: updateWithdrawPwdInfo.loginPassword,
+      telephone: updateWithdrawPwdInfo.telephone,
+      withdrawPassword: updateWithdrawPwdInfo.withdrawPassword,
+    }
+    withdrawPasswordWithPassNTel(obj).then((response) => {
+      if (response.code === 0) {
+        // message.success("success");
+        ElMessage({
+          message: t('common.updateSuccess'),
+          type: 'success',
+        })
+        receivedVerificationCode.value = false;
+        clearWithdrawPwd();
+      } else {
+        ElMessage.error(t(`response.${response.code}`))
+      }
+    }).catch((error) => {
+      console.log(error.message);
+      // message.error(error.message, 4)
+    });
+  }).catch((error) => {
+  console.log("error", error);
+});
+loadingWdPwBtn.value = false
+}
+
 const codeChangeWithdrawPwd = () => {
 
   loadingWdPwBtn.value = true
@@ -1081,7 +1241,35 @@ const updateWithdrawPwdRules = {
       validator: validateWithdrawPwd,
       trigger: "blur"
     }
-  ]
+  ],
+
+  telephone: [
+    {
+      required: true,
+      message: t('placeholder.mobileNo'),
+      trigger: "blur"
+    }
+  ],
+  withdrawPassword: [
+    {
+      required: true,
+      message: t('placeholder.newWithdrawPwd'),
+      trigger: "blur"
+    },
+    {
+      min: 6,
+      max: 11,
+      message: t('placeholder.between612'),
+      trigger: "blur"
+    }
+  ],
+  loginPassword: [
+  {
+      required: true,
+      message: t('placeholder.loginPwd'),
+      trigger: "blur"
+    }
+  ],
 };
 
 
@@ -1118,6 +1306,11 @@ const receivedVerificationCode = ref(false);
 // Define a reactive variable to track the countdown timer
 const countdownValue = ref(0);
 let countdownInterval;
+
+// Forget withdraw password
+const forgetWithdrawPwd = () => {
+  receivedVerificationCode.value = true;
+}
 
 // Function to send OTP email
 const sendOTPEmail = () => {
@@ -1160,13 +1353,25 @@ const sendOTPEmail = () => {
     });
   }
 };
+
+const evipWeb = computed(() => {
+      const evipString = personalState.memberInfo.evip;
+      if (evipString) { // Check if evipString is defined
+        const evipObject = JSON.parse(evipString);
+        return 'https://' + evipObject.web;
+      }
+      return ''; // Return empty string if evipString is undefined
+    });
 </script>
 
 <style scoped lang="scss">
 .withdrawBottom {
-  display: flex; justify-content: space-between; align-items: center; max-width: 620px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 620px;
   .link {
-    color:#468cff;
+    color: #468cff;
     cursor: pointer;
   }
 }
@@ -1191,26 +1396,24 @@ const sendOTPEmail = () => {
         }
       }
       :deep(.el-input__wrapper) {
-
         color: #999999;
         font-weight: bold;
         width: 650px;
-        box-shadow: 0px 0px 8px 0px #A9C9EA inset;
-        background: #F7F8FB;
+        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        background: #f7f8fb;
         border-radius: 6px;
         margin: 5px 0 20px;
         padding: 10px 20px;
         min-height: 40px;
       }
     }
-
   }
   &.contentwtxt {
     color: #999999;
     font-weight: bold;
     width: 650px;
-    box-shadow: 0px 0px 8px 0px #A9C9EA inset;
-    background: #F7F8FB;
+    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    background: #f7f8fb;
     border-radius: 6px;
     margin: 5px 0 20px;
     padding: 10px 20px;
@@ -1327,11 +1530,8 @@ const sendOTPEmail = () => {
 }
 </style>
 <style lang="scss">
-
 .account-content-wrapper {
-
   .el-form-item {
-
     flex-direction: column;
     align-items: flex-start;
     width: 100%;

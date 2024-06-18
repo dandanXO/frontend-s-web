@@ -177,104 +177,104 @@ $node-color: #dd4645;
 }
 
 .node {
-    .node-content {
-      .node-item {
-        color: rgba(255, 255, 255, 0.3);
+  .node-content {
+    .node-item {
+      color: rgba(255, 255, 255, 0.3);
+    }
+    .payment-method-item {
+      background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+      background-size: cover;
+      filter: grayscale(1);
+      height: 30px;
+      width: 150px;
+      height: 80px;
+      color: #ffffff;
+      border-radius: 6px;
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 10px;
+      .node-text {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #ffffff;
+        height: 100%;
+        padding-top: 25px;
+        img {
+          width: 40px;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: #181818;
+        }
       }
-      .payment-method-item {
+      &.active {
+        // background: rgba(255,255,255,.3);
         background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
         background-size: cover;
-        filter: grayscale(1);
-        height: 30px;
-        width: 150px;
-        height: 80px;
+        // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+        //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+        border: 1px solid #b81212;
+        filter: none;
         color: #ffffff;
-        border-radius: 6px;
-        justify-content: flex-start;
-        align-items: flex-end;
-              padding: 10px;
-        .node-text {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
-          gap: 10px;
-          font-size: 14px;
-          color: #ffffff;
-          height: 100%;
-          padding-top: 25px;
-          img {
-            width: 40px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-    background: #181818;
-          }
-        }
-        &.active {
-          // background: rgba(255,255,255,.3);
-          background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
-          background-size: cover;
-          // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-          //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-          border: 1px solid #b81212;
-          filter: none;
-          color: #ffffff;
-          position: relative;
-          &:after {
-            content: "";
-            background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
-            background-size: contain;
-            width: 25px;
-            height: 25px;
-            position: absolute;
-            right: -1px;
-            bottom: -1px;
-          }
+        position: relative;
+        &:after {
+          content: "";
+          background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
+          background-size: contain;
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: -1px;
+          bottom: -1px;
         }
       }
     }
   }
+}
+.node {
   .node {
-    .node {
-      .node-content {
-        .node-item {
-          color: rgba(255, 255, 255, 0.3);
-          &.payment-method-item {
+    .node-content {
+      .node-item {
+        color: rgba(255, 255, 255, 0.3);
+        &.payment-method-item {
+          background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
+          background-size: cover;
+          filter: grayscale(1);
+          height: 30px;
+          width: 150px;
+          height: 80px;
+          color: #ffffff;
+          border-radius: 4px;
+          justify-content: flex-start;
+          align-items: flex-end;
+          &.active {
             background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
             background-size: cover;
-            filter: grayscale(1);
-            height: 30px;
-            width: 150px;
-            height: 80px;
+            // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
+            //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
+            border: 1px solid #b81212;
+            filter: none;
             color: #ffffff;
-            border-radius: 4px;
-            justify-content: flex-start;
-            align-items: flex-end;
-            &.active {
-              background: url(../../assets/images/finance/bankcard-green.png) no-repeat left center;
-              background-size: cover;
-              // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%),
-              //   linear-gradient(237.56deg, #5cffeb -21.06%, #9a5ca9 55.65%, #2cffd9 137.61%);
-              border: 1px solid #b81212;
-              filter: none;
-              color: #ffffff;
-              position: relative;
-              &:after {
-                content: "";
-                background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
-                background-size: contain;
-                width: 25px;
-                height: 25px;
-                position: absolute;
-                right: -1px;
-                bottom: -1px;
-              }
+            position: relative;
+            &:after {
+              content: "";
+              background: url(../../assets/images/finance/bankcard-green-check.png) no-repeat bottom right;
+              background-size: contain;
+              width: 25px;
+              height: 25px;
+              position: absolute;
+              right: -1px;
+              bottom: -1px;
             }
           }
         }
       }
     }
   }
+}
 .payment-method-wrapper {
   // display: grid;
   // grid-template-columns: repeat(auto-fill, 200px);
@@ -394,8 +394,7 @@ $node-color: #dd4645;
   //     justify-content: center;
   //     min-width: 6rem;
   //     // width: 140px;
-  //     font-weight: 700;
-  //     .payment-method-wrapper {
+  //       //     .payment-method-wrapper {
   //       display: none;
   //     }
   //   }

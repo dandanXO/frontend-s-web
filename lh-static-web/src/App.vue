@@ -9,6 +9,7 @@ import axios from "axios";
 import { userStore } from "@/store";
 import { getVisitorId } from "@/utils/utils";
 import { uiStore } from "@/store/ui";
+import { loadAffiliateByDomain } from "@/api/index/promo";
 
 export default defineComponent({
   setup() {
@@ -53,8 +54,24 @@ export default defineComponent({
       }
     };
 
+    const getAffiliateByDomain = async () => {
+      var host = window.location.host;
+      // host = "";
+      loadAffiliateByDomain(host).then((res) => {
+        console.log(res);
+        if (res.code === 0 && res.data !== "") {
+          // alert(res.data)
+          var agentCode = res.data;
+          sessionStorage.setItem("AFFILIATE_CODE", agentCode)
+        }
+      });
+
+    }
+
     onMounted(() => {
       checkSID();
+
+      getAffiliateByDomain();
 
       setTimeout(getOnlineStatApi, 2000);
       setInterval(getOnlineStatApi, 60000);

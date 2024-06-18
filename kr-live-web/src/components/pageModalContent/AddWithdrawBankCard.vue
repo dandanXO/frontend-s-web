@@ -1,6 +1,8 @@
 <template>
   <div class="form-wrapper">
     <q-card-section>
+      <div style="display: grid;grid-template-columns: 1fr 300px;gap:10px;">
+        <div>
         <q-form class="form-template">
           <div class="form-item">
             <q-label>
@@ -134,57 +136,12 @@
               clearable
             ></q-input>
           </div>
-
-          <!-- since onMount API forced update name & phone, hence no validation needed. -->
-<!--          <q-label>-->
-<!--            手机号-->
-<!--            <em>*</em>-->
-<!--          </q-label>-->
-<!--          <q-input-->
-<!--            standout-->
-<!--            v-model="bankCardInfo.telephone"-->
-<!--            class="q-pb-xs"-->
-<!--            hide-bottom-space-->
-<!--            label="请输入您绑定的手机号"-->
-<!--            lazy-rules-->
-<!--            clearable-->
-<!--            readonly-->
-<!--          >-->
-<!--            <template v-slot:append>-->
-<!--              <q-btn-->
-<!--                @click="openPhoneVeriDialog()"-->
-<!--                type="submit"-->
-<!--                class="common-sm-btn bottom-btn get-otp-btn"-->
-<!--                label="获取验证码"-->
-<!--                color="brightbtn"-->
-<!--                rounded-->
-<!--              />-->
-<!--            </template>-->
-<!--          </q-input>-->
-
-<!--          <template v-if="isOtpSent">-->
-<!--            <q-label>-->
-<!--              验证码-->
-<!--              <em>*</em>-->
-<!--            </q-label>-->
-<!--            <q-input-->
-<!--              ref="phoneVerificationRef"-->
-<!--              standout-->
-<!--              v-model="bankCardInfo.smsCode"-->
-<!--              class="q-pb-xs"-->
-<!--              hide-bottom-space-->
-<!--              label="请输入您的注册手机验证"-->
-<!--              lazy-rules-->
-<!--              clearable-->
-<!--              maxlength="6"-->
-<!--              :rules="[(val) => (val && val.length > 3) || '请输入您的注册手机验证']"-->
-<!--              @keydown.enter.prevent="handleEnterKey"-->
-<!--              @keydown.enter="submitBankCard()"-->
-<!--            ></q-input>-->
-<!--          </template>-->
         </q-form>
         <div class="note">{{ $t('lang.withdraw_bank_holder_cannot_amend') }}.</div>
         <div class="note">{{ $t('lang.withdraw_bank_holder_mismatch') }}！</div>
+      </div>
+        <WithdrawBankView ref="bankCardListRef" />  
+      </div>
     </q-card-section>
     <div class="action-buttons">
       <div class="primary-button blue" @click="submitBankCard()">
@@ -203,6 +160,7 @@ import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { storeToRefs } from "pinia";
+import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const qs = require("qs");
 const $q = useQuasar();
@@ -213,6 +171,7 @@ const imgURL = process.env.IMAGE_CDN;
 const bankCardRef = ref();
 const cardNumberRef = ref();
 const cardAddressRef = ref();
+const bankCardListRef = ref();
 const phoneVerificationRef = ref();
 const { realName } = storeToRefs(store);
 
@@ -392,7 +351,7 @@ const submitBankCard = () => {
             message: "은행 카드가 추가되었습니다",
             icon: "check_circle_outline"
           });
-          router.push("/?page=bankcardlist");
+          bankCardListRef.value.loadCards();
         }
       })
       .catch((error) => {

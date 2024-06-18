@@ -199,7 +199,6 @@ defineExpose({ loadFeedBackType });
 
   .feedback-modal-title {
     font-size: 18px;
-    font-weight: 700;
     line-height: 20.92px;
     text-align: center;
     color: #ffffff;
