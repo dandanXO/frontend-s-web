@@ -142,12 +142,7 @@ export default boot(({ app, router }) => {
         location.reload();
       } else {
         if (
-          (
-            window.location.pathname === "/deposit" ||
-            window.location.pathname === "/invitefriend" ||
-            window.location.pathname === "/vip" ||
-            window.location.pathname === "/invitefriend" ||
-            window.location.pathname === "/privilege/invite") &&
+          (window.location.pathname === "/promoapp") &&
           (res.code === ResponseCode.ERROR_TOKEN_MISSED ||
             res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
             res.code === ResponseCode.ERROR_TOKEN_LOGGED ||

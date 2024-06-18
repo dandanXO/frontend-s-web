@@ -142,6 +142,8 @@
             </div>
           </div>
           <div v-else class="selected-promo">
+            <div class="loader" v-if="isFetchingPromo" />
+
             <div class="selected-promo-wrapper">
               <div class="banner-container" v-if="selectedPromo && selectedPromo.mobileBannerUrl">
                 <img
@@ -309,21 +311,46 @@ export default defineComponent({
         store.token = extensionToken.value;
 
       } else {
-        // non extension
-        // if (!store.token) {
-        // isDisplayLogin.value = true;
-        // } else {
 
         if (promo.redirectUrl.includes("page-vip")) {
           router.push("/account/vip?from=promo");
         } else {
-          if (route.query.fromAccount) {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
-          } else {
-            router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+
+          if(isAndroid()){
+            // modalVisible.value= true;
+            var preUrl = 'https://' + store.h5Url + `/promoapp?name=${promo.redirectUrl}&token=${store.token}`;
+            // alert(preUrl);
+            console.log(preUrl)
+            // promoSrc.value= preUrl;
+            var ref = cordova.InAppBrowser.open(
+              preUrl,
+              "_blank",
+              "location=no,zoom=no,footer=no"
+            );
+
+            ref.addEventListener('loadstart', function(event) {
+              var url = event.url;
+              // alert("This" + url);
+              if (url.indexOf("vnmapp:") > -1) {
+                var message = url.split("vnmapp:")[1];
+                console.log("Message received from InAppBrowser: ", decodeURIComponent(message));
+                // alert(message);
+                ref.close();
+                router.push(message)
+              }
+            });
+
+          }else{
+            if (route.query.fromAccount) {
+              router.push({ path: "/promo", query: { name: promo.redirectUrl, fromAccount: true } });
+            } else {
+              router.push({ path: "/promo", query: { name: promo.redirectUrl } });
+            }
+            isPromoDetail.value = true;
+            selectedPromo.value = promo;
+
           }
-          isPromoDetail.value = true;
-          selectedPromo.value = promo;
+
         }
         // }
       }
@@ -341,9 +368,9 @@ export default defineComponent({
     };
 
     const loadAll = () => {
-      const platformApiUrl = (store.hasToken()) ? "/session/loggedInPromoPages" : "/promo/page";
+      const platformApiUrl = (store.hasToken() || (window.location.pathname === "/promoapp" && extensionState.value === true)) ? "/session/loggedInPromoPages" : "/promo/page";
 
-      // isFetchingPromo.value = window.location.pathname === "/promotion";
+      isFetchingPromo.value = window.location.pathname === "/promoapp";
 
       api.get(platformApiUrl).then((res) => {
         if (res.code === 0) {
@@ -458,7 +485,6 @@ export default defineComponent({
       extensionState,
       extensionToken,
       isFetchingPromo
-      // routeQuery
     };
   }
 });
