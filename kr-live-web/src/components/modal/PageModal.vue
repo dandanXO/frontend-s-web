@@ -1,7 +1,6 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <q-card style="background: transparent; box-shadow: none; max-width: 800px;"
-      :style="isMinimalMode ? '' : 'width: 100%;'">
+    <q-card style="max-width: none; background: transparent; box-shadow: none">
       <div style="text-align: right;">
         <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
       </div>
@@ -16,40 +15,43 @@
 
       <q-separator color="grey" />
 
-      <q-card-section style="max-height: 70vh; background-color: #212632;" class="page-dialog-main">
-        <div class="page-dialog-main-container">
-          <div class="page-dialog-links" v-if="!isMinimalMode">
-            <p class="header-info-description">{{ headerInfo.description }}</p>
-          </div>
-          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
-            <template v-if="!isMinimalMode">
-              <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
-                <template v-for="item in formattedPagesInfo" :key="item.page">
-                  <template v-if="item.page === 'customer/service'">
-                    <q-route-tab :href="item?.href" target="_blank" :label="item.info" class="page-dialog-tab"
-                      v-if="item.tabIndex === tabIndex">
-                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
-                        :alt="item.info" />
-                    </q-route-tab>
-                  </template>
-                  <template v-else>
-                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info" class="page-dialog-tab"
-                      v-if="item.tabIndex === tabIndex">
-                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
-                        :alt="item.info" />
-                    </q-tab>
-                  </template>
-                </template>
-              </q-tabs>
-            </template>
+      <q-card-section style="max-height: 70vh" class="scroll">
+        <div class="page-dialog-main">
 
-            <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;'">
-              <template v-for="item in formattedPagesInfo" :key="item.page">
-                <q-tab-panel :name="item.page">
-                  <component :is="item.component" @closeModal="closeDialog"></component>
-                </q-tab-panel>
+          <div class="page-dialog-main-container">
+            <div class="page-dialog-links" v-if="!isMinimalMode">
+              <p class="header-info-description">{{ headerInfo.description }}</p>
+            </div>
+            <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
+              <template v-if="!isMinimalMode">
+                <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
+                  <template v-for="item in formattedPagesInfo" :key="item.page">
+                    <template v-if="item.page === 'customer/service'">
+                      <q-route-tab :href="item?.href" target="_blank" :label="item.info" class="page-dialog-tab"
+                        v-if="item.tabIndex === tabIndex">
+                        <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                          :alt="item.info" />
+                      </q-route-tab>
+                    </template>
+                    <template v-else>
+                      <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info" class="page-dialog-tab"
+                        v-if="item.tabIndex === tabIndex">
+                        <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                          :alt="item.info" />
+                      </q-tab>
+                    </template>
+                  </template>
+                </q-tabs>
               </template>
-            </q-tab-panels>
+
+              <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;'">
+                <template v-for="item in formattedPagesInfo" :key="item.page">
+                  <q-tab-panel :name="item.page">
+                    <component :is="item.component" @closeModal="closeDialog"></component>
+                  </q-tab-panel>
+                </template>
+              </q-tab-panels>
+            </div>
           </div>
         </div>
       </q-card-section>
@@ -578,7 +580,7 @@ onMounted(() => {
     white-space: nowrap;
     color: #161822;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 }
 
