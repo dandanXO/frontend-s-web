@@ -1292,6 +1292,7 @@ export default {
     upload_fail_please_try: "Tải lên thất bại. Vui lòng thử lại sau.",
     upload_image: "Tải Ảnh Lên",
     esport: "E-sport",
+    hashgame: "Hash game",
     livecasino: "Live",
     sport: "Sport",
     slot: "Slot",

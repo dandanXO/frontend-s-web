@@ -1290,6 +1290,7 @@ export default {
     upload_fail_please_try: "Upload failed. Please try again later.",
     upload_image: "Upload Image",
     esport: "Esport",
+    hashgame: "Hash game",
     livecasino: "Live",
     sport: "Sport",
     slot: "Slot",
