@@ -109,7 +109,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-
+          <el-form-item
+            label=""
+          >
+            <div class="txt-center">
+              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
+            </div>
+          </el-form-item>
           <!-- <el-form-item
             v-if="isUSDT && activeMethod.currencyRate"
             class="helptxt"
@@ -133,9 +139,6 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
-          <div class="txt-center">
-            <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
-          </div>
         </el-form>
       </div>
       <el-dialog width="500px" v-model="isDeposited" :maskClosable="false" :closable="false" title="已存款">
@@ -693,7 +696,6 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
-  margin: 50px auto 20px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {

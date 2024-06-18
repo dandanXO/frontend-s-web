@@ -289,7 +289,7 @@ $node-color: #4873f1;
         display: block;
         // float: left;
         vertical-align: bottom;
-        margin-top: 25px;
+        margin-top: 0px;
         // min-width: 100px;
         text-align: left;
       }
