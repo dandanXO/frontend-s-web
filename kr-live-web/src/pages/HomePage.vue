@@ -34,10 +34,10 @@
               <div class="bookmarks">
                 <div class="plat-item" v-for="p in platforms" :class="{ active: p.id === selectedPlatId }" :key="p"
                   @click="switchPlat(p, 'slots')">
-                  <div class="platform-img" :style="{
+                  <div class="platform-img" :title="p.code" :style="{
                     backgroundImage: (() => {
                       try {
-                        return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                        return `url(${require(`../assets/home/games/logo/game-logo-${p.code.toLowerCase()}.png`)})`;
                       } catch (e) {
                         return `url(${comingSoonImg})`;
                       }
@@ -121,7 +121,7 @@
                 <div class="platform-img" :style="{
                   backgroundImage: (() => {
                     try {
-                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                      return `url(${require(`../assets/home/games/logo/game-logo-${p.code.toLowerCase()}.png`)})`;
                     } catch (e) {
                       return `url(${comingSoonImg})`;
                     }
@@ -1377,9 +1377,9 @@ export default defineComponent({
     .plat-item {
       display: flex;
       width: 100%;
-      height: 50px;
+      height: 40px;
       box-sizing: content-box;
-      padding: 10px 10px;
+      padding: 5px;
       justify-content: center;
       align-items: center;
       background: #4f4f4f36;
