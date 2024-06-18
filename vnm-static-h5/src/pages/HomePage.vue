@@ -685,15 +685,64 @@
     </div>
   </div>
 
-  <q-page-sticky position="bottom-right" :offset="fabPos" style="z-index: 999">
-    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
-      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
-    </div>
-<!--    <div class="rebates-absolute" :disable="draggingFab" v-touch-pan.prevent.mouse="moveFab" @click="getRebateAmt">-->
-<!--      {{ $t("lang.rebates") }}-->
-<!--    </div>-->
-  </q-page-sticky>
 
+
+  
+
+  <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideRocket()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="gamePromo.length > 1 ? true : false"
+        v-model="rocketSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(game, i) in gamePromo"
+          :key="i"
+          :name="i"
+          @click="playGame(game.platform, game.platform, game.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
+  <q-page-sticky v-if="showFloatPromo" position="bottom-right" :offset="promoPos" style="z-index: 999">
+    <div class="rebates-absolute" :disable="draggingPromoFab" v-touch-pan.prevent.mouse="movePromoFab">
+      <q-btn class="close-btn" icon="close" flat round dense @click="hideFloatPromo()"></q-btn>
+      <q-carousel
+        class="float"
+        :navigation="floatPromo.length > 1 ? true : false"
+        v-model="promoSlide"
+        swipeable
+        transition-next="slide-left"
+        transition-prev="slide-right"
+        animated
+        infinite
+        size="xs"
+      >
+        <q-carousel-slide
+          v-for="(promo, i) in floatPromo"
+          :key="i"
+          :name="i"
+          @click="gotoFloatPromo(promo.code)"
+        >
+          <div class="rocket-wrapper">
+            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+          </div>
+        </q-carousel-slide>
+      </q-carousel>
+    </div>
+  </q-page-sticky>
   <q-dialog
     width="100%"
     class="modal-update-div"
@@ -947,8 +996,6 @@ export default defineComponent({
   },
   setup() {
     const isWelcomeFlag = ref(true);
-    const fabPos = ref([18, 18]);
-    const draggingFab = ref(false);
     const isRebateModalVisible = ref(false);
     const rebateAmt = ref(0);
     const getRebateAmt = () => {
@@ -1169,6 +1216,7 @@ export default defineComponent({
     };
 
     const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
 
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
@@ -1619,6 +1667,9 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
+      if (store.token && store.memberType === 'TEST') {
+        initFloating();
+      }
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1652,7 +1703,6 @@ export default defineComponent({
       }, 2000);
     };
 
-    const imageLoading = ref(false);
 
     const isMenuFloat = ref(false);
 
@@ -1710,17 +1760,6 @@ export default defineComponent({
     };
 
     const isPlatformComingSoon = ref(false);
-
-    const moveFab = (ev) => {
-      const maxX = window.innerWidth - 135;
-      const maxY = window.innerHeight - 200;
-      draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
-      let newX = fabPos.value[0] - ev.delta.x;
-      let newY = fabPos.value[1] - ev.delta.y;
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
-      fabPos.value = [newX, newY];
-    };
 
     const hotMatches = ref([]);
 
@@ -1831,6 +1870,115 @@ export default defineComponent({
         }
       }
     );
+        const gotoFloatPromo = (code) => {
+
+      router.push(`/promo?name=${code}`)
+    }
+    const floatPromo = ([]);
+    const gamePromo = ([]);
+    const initFloating = () => {
+      floatPromo.value = [];
+      gamePromo.value = [];
+      api
+        .get("/redirect")
+        .then((res) => {
+          if (res.code === 0) {
+            res.data.forEach(element => {
+              if (element.type === 'PROMO') {
+                floatPromo.push(element);
+                showFloatPromo.value = true;
+              }
+              if (element.type === 'GAME') {
+                gamePromo.push(element)
+                showRocket.value = true;
+              }
+            });
+            checkShowRocket();
+            checkFloatPromo();
+            updatePromo(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updatePromo, 3000);
+            updateRocket(); // Initially update the displayed promo
+            // Update the displayed promo every 5 seconds
+            setInterval(updateRocket, 3000);
+          } else {
+            ElMessage.error(res.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    const currentPromo = ref(null)
+    const currentPromoIndex = ref(0);
+    const updatePromo = () => {
+      currentPromo.value = floatPromo[currentPromoIndex.value];
+      currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
+    };
+
+    const currentRocket = ref(null)
+    const currentRocketIndex = ref(0);
+    const updateRocket = () => {
+      currentRocket.value = gamePromo[currentRocketIndex.value];
+      currentRocketIndex.value = (currentRocketIndex.value + 1) % floatPromo.length;
+    };
+    const imageLoading = ref(false);
+    const selectedLiveTab = ref();
+
+    const showRocket = ref(false);
+    const checkShowRocket = () => {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        showRocket.value = true;
+      }
+    };
+
+    const hideRocket = () => {
+      showRocket.value = false;
+      promoPos.value = [18, 18]
+    };
+
+    const showFloatPromo = ref(false);
+    const checkFloatPromo = () => {
+      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+        showFloatPromo.value = true;
+      }
+      if (gamePromo.length === 0) {
+        promoPos.value = [18, 18]
+      }
+    };
+
+    const hideFloatPromo = () => {
+      showFloatPromo.value = false;
+    };
+    const fabPos = ref([18, 18]);
+    const promoPos = ref([18, 128]);
+    const draggingRocketFab = ref(false);
+    const draggingPromoFab = ref(false);
+
+    const currentElement = ref(null);
+    const moveRocketFab = (ev) => {
+      console.log(ev)
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = fabPos.value[0] - ev.delta.x;
+      let newY = fabPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      fabPos.value = [newX, newY];
+    };
+    const movePromoFab = (ev) => {
+      const maxX = window.innerWidth - 70;
+      const maxY = window.innerHeight - 70;
+      draggingPromoFab.value = ev.isFirst !== true && ev.isFinal !== true;
+      let newX = promoPos.value[0] - ev.delta.x;
+      let newY = promoPos.value[1] - ev.delta.y;
+      newX = Math.max(0, Math.min(newX, maxX));
+      newY = Math.max(0, Math.min(newY, maxY));
+      promoPos.value = [newX, newY];
+
+    }
 
     return {
       imageLoading,
@@ -1917,8 +2065,6 @@ export default defineComponent({
       rebateAmt,
       getRebateAmt,
       claimRebateAmt,
-      fabPos,
-      draggingFab,
       isLoginModal,
       newsDetails,
       getNewsDetails,
@@ -1930,7 +2076,6 @@ export default defineComponent({
       newsDetail_05,
       goToNewsPage,
       isPlatformComingSoon,
-      moveFab,
       loadHotMatches,
       hotMatches,
       hotMatchesImgURL,
@@ -1952,7 +2097,30 @@ export default defineComponent({
       ui,
       removeRouterWelcome,
       trackRegisterClickEvent,
-      goToRegister
+      goToRegister,
+      showRocket,
+      checkShowRocket,
+      fabPos,
+      draggingRocketFab,
+      draggingPromoFab,
+      moveRocketFab,
+      movePromoFab,
+      hideRocket,
+      promoPos,
+      hideFloatPromo,
+      showFloatPromo,
+      currentPromo,
+      currentPromoIndex,
+      gotoFloatPromo,
+      floatPromo,
+      gamePromo,
+      currentElement,
+      imgURLFloat,
+      updateRocket,
+      currentRocket,
+      currentRocketIndex,
+      rocketSlide: ref(0),
+      promoSlide: ref(0)
 
       // moveFab(ev) {
       //   draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -2092,6 +2260,21 @@ export default defineComponent({
   }
 }
 
+
+.rocket-wrapper {
+  transition: all 0.3s;
+  // cursor: pointer;
+
+  img {
+    width: 105px;
+    pointer-events: none;
+  }
+
+  &:hover {
+    filter: brightness(0.9  );
+  }
+}
+
 .q-page-container {
   min-height: 100vh;
 }
@@ -2166,6 +2349,17 @@ export default defineComponent({
   :deep(.q-carousel__navigation--bottom) {
     bottom: 0px;
   }
+}
+
+:deep(.q-carousel.float) {
+  height: unset;
+  background: transparent;
+}
+:deep(.q-carousel.float .q-carousel__navigation .q-btn) {
+  margin: 0;
+  padding: 0;
+  font-size: 4px !important;
+  color: #3382f4;
 }
 
 .home-header {
@@ -2801,15 +2995,30 @@ export default defineComponent({
   }
 }
 .rebates-absolute {
-  background: url(../assets/images/home/rebates-absolute.png) no-repeat center center;
-  background-size: contain;
-  height: 100px;
-  width: 135px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
+}
+
+
+.close-btn {
+  width: 14px;
+  min-width: 14px;
+  height: 14px;
+  min-height: 14px;
+  border-radius: 50%;
+  border: 1px solid #333333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  font-size: 6px;
   font-weight: bold;
+  margin-left: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 400;
 }
 
 .modal-home-popup {
