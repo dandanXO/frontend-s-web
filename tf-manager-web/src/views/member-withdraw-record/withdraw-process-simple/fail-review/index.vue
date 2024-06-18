@@ -447,7 +447,7 @@
       </el-form>
     </el-dialog>
     <el-dialog
-      v-if="uiControl.dialogType === 'SEARCH'"
+      v-if="uiControl.dialogType === 'FAIL'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
