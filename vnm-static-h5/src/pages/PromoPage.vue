@@ -418,12 +418,11 @@ export default defineComponent({
 
 
     const checkExtension = () => {
-      // if (currentPath.value === "/promotion") {
-      //   // const eToken = ref(route.query.name);
-      //   extensionToken.value = route.query.token;
-      //   extensionState.value = true;
-      // }
-
+      if (currentPath.value === "/promoapp") {
+        // const eToken = ref(route.query.name);
+        extensionToken.value = route.query.token;
+        extensionState.value = true;
+      }
     };
 
     const parsedParam = (paramData) => {
