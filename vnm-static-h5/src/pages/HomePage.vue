@@ -687,7 +687,7 @@
 
 
 
-  
+
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
@@ -710,7 +710,7 @@
           @click="playGame(game.platform, game.platform, game.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+            <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -737,7 +737,7 @@
           @click="gotoFloatPromo(promo.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -1951,8 +1951,8 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
-    const fabPos = ref([18, 18]);
-    const promoPos = ref([18, 128]);
+    const fabPos = ref([18, 0]);
+    const promoPos = ref([18, 108]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
