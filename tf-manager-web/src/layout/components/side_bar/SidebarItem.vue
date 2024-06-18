@@ -281,7 +281,7 @@ export default defineComponent({
     };
 
     onMounted(async () => {
-      await checkTips();
+      checkTips();
     })
 
     return {
