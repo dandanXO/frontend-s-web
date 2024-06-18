@@ -11,17 +11,29 @@ export default {
     login_forget_pwd: "비밀번호 분실",
     // login end
     // register start
-    reg_referrer: "추천인",
+    reg_withdraw_code: "4자리 비밀번호",
+    reg_withdraw_code_placeholder: "4자리 본인확인용 비밀번호",
+    reg_please_confirm_withdraw_code: "출금코드를 확인해 주세요",
+    reg_withdraw_code_4_digits: "출금 코드는 4자리여야 합니다.",
+    reg_nickname: "닉네임",
+    reg_referrer: "추천인코드",
+    reg_referrer_placeholder: "추천인코드입력",
     reg_userid: "아이디",
     reg_phone_num: "휴대폰번호",
     reg_phone_verification: "인증 코드",
     reg_phone_otp: "인증 코드",
+    reg_phone_placeholder: "숫자만 허용됨",
     reg_pass: "비밀번호",
+    reg_pass_placeholder: "비밀번호입력",
     reg_confirm_pass: "비밀번호확인",
+    reg_confirm_pass_placeholder: "비밀번호확인입력",
     reg_email: "이메일",
     reg_bank: "은행명",
+    reg_bank_placeholder: "은행선택",
     reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_num_placeholder: "'-'없이숫자만입력",
     reg_bank_acc_holder: "예금주",
+    reg_bank_acc_holder_placeholder: "2자이상한글,영문만가능(예금주는수정불가/고객센터문의)",
     reg_submit: "가입완료",
     reg_captcha_confirm: "확인하다",
     reg_captcha_verifying: "확인 중",
@@ -34,7 +46,7 @@ export default {
     menu_withdraw: "환전",
     menu_message: "문의",
     menu_customer_service: "고객센터",
-    menu_transaction_record: "내역기록",
+    menu_transaction_record: "내역",
     menu_rebates: "리베이트",
     // menu end
     // page modal start
@@ -47,7 +59,7 @@ export default {
     page_modal_announcement: "공지사항",
     page_modal_add_bank_card: "은행카드추가",
     page_modal_bank_card_list: "은행 카드 목록",
-    page_modal_transaction_record: "내역기록",
+    page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
     // page modal end
     // rolling text start

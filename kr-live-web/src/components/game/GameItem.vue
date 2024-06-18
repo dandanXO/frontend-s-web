@@ -5,43 +5,43 @@
     @click="() => props.onClickGameItem(game)">
     <div class="game-item-content">
       <img class="bg-overlay" :src="(() => {
-          try {
-            return `${require(`../../assets/home/games/${gameType}/game-bg-${game.name.toLowerCase()}.png`)}`;
-          } catch (e) {
-            return `${require(`../../assets/home/games/${gameType}/game-bg-empty.png`)}`;
-          }
-        })()
+        try {
+          return `${require(`../../assets/home/games/${gameType}/game-bg-${game.name.toLowerCase()}.png`)}`;
+        } catch (e) {
+          return `${require(`../../assets/home/games/${gameType}/game-bg-empty.png`)}`;
+        }
+      })()
         " />
       <img class="active-overlay" :src="require(`../../assets/home/games/game-bg--active.png`)" />
       <div class="game-info-wrapper">
         <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
         <div class="game-name">{{ game?.alias || game.name }}</div>
         <img class="game-logo" :src="(() => {
-            console.log('here', `../../assets/home/games/logo/game-logo-${game.name.toLowerCase()}.png`)
-            try {
-              return `${require(`../../assets/home/games/logo/game-logo-${game.name.toLowerCase()}.png`)}`;
-            } catch (e) {
-              return `${require(`../../assets/home/games/logo/game-logo-empty.png`)}`;
-            }
-          })()
+          try {
+            return `${require(`../../assets/home/games/logo/game-logo-${game.name.toLowerCase()}.png`)}`;
+          } catch (e) {
+            return `${require(`../../assets/home/games/logo/game-logo-empty.png`)}`;
+          }
+        })()
           " />
       </div>
       <div class="avatar-wrapper">
         <img class="avatar-bg" :src="(() => {
-            try {
-              return `${require(`../../assets/home/games/${gameType}/game-rounded-${game.name.toLowerCase()}.png`)}`;
-            } catch (e) {
-              return `${require(`../../assets/home/games/${gameType}/game-rounded-empty.png`)}`;
-            }
-          })()
+          try {
+            return `${require(`../../assets/home/games/${gameType}/game-rounded-${game.name.toLowerCase()}.png`)
+              }`;
+          } catch (e) {
+            return `${require(`../../assets/home/games/game-rounded.png`)} `;
+          }
+        })()
           " />
         <img class="avatar" :src="(() => {
-            try {
-              return `${require(`../../assets/home/games/${gameType}/game-${game.name.toLowerCase()}.png`)}`;
-            } catch (e) {
-              return `${require(`../../assets/home/games/${gameType}/game-empty.png`)}`;
-            }
-          })()
+          try {
+            return `${require(`../../assets/home/games/${gameType}/game-${game.name.toLowerCase()}.png`)}`;
+          } catch (e) {
+            return `${require(`../../assets/home/games/${gameType}/game-empty.png`)}`;
+          }
+        })()
           " />
       </div>
       <div class="game-entry-btn">

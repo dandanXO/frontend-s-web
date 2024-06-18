@@ -1,30 +1,23 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <q-card style="max-width: none; background: transparent; box-shadow: none">
-
+    <q-card style="background: transparent; box-shadow: none; max-width: 800px;"
+      :style="isMinimalMode ? '' : 'width: 100%;'">
       <div style="text-align: right;">
         <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
       </div>
 
-      <div class="page-dialog-main">
+      <q-card-section>
+        <div class="page-dialog-main-header">
+          <span class="header-info-description">{{ headerInfo.description }}</span>
+          <span class="header-title">{{ headerInfo.title }}</span>
+          <span></span>
+        </div>
+      </q-card-section>
 
+      <q-separator color="grey" />
+
+      <q-card-section style="max-height: 70vh; background-color: #212632;" class="page-dialog-main">
         <div class="page-dialog-main-container">
-          <q-toolbar class="page-dialog-main-header text-white">
-            <p class="header-info-description">{{ headerInfo.description }}</p>
-            <p class="header-title">
-              <span>{{ headerInfo.title }}</span>
-              <!-- <br /> -->
-              <!-- <span>{{ headerInfo.subTitle }}</span> -->
-            </p>
-            <p>
-              <!-- <img
-                class="header-close-btn"
-                src="../../assets/images/index/modal-close-btn.svg"
-                @click="closeDialog()"
-                style="padding-right:10px"
-              /> -->
-            </p>
-          </q-toolbar>
           <div class="page-dialog-links" v-if="!isMinimalMode">
             <p class="header-info-description">{{ headerInfo.description }}</p>
           </div>
@@ -59,7 +52,7 @@
             </q-tab-panels>
           </div>
         </div>
-      </div>
+      </q-card-section>
     </q-card>
   </q-dialog>
 </template>
@@ -558,7 +551,6 @@ onMounted(() => {
 }
 
 .page-dialog-main-header {
-  justify-content: space-between;
   height: 56px;
   width: 100%;
   padding: unset;
@@ -569,37 +561,24 @@ onMounted(() => {
   background-position: center;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+
+
+  .header-info-description {
+    color: #000;
+    text-align: left;
+    margin-left: 10px;
+  }
 
   .header-title {
     text-align: center;
     white-space: nowrap;
     color: #161822;
     font-weight: bold;
-  }
-
-  p {
-    flex: 1;
-    margin: auto;
-    color: #fff;
-
-    &.header-info-description {
-      color: #000;
-      text-align: left;
-      margin-left: 10px;
-    }
-
-    &:nth-child(2) {
-      text-align: center;
-
-      span:first-child {
-        font-weight: bold;
-        font-size: 1.2rem;
-      }
-    }
-
-    &:last-child {
-      text-align: right;
-    }
+    font-size: 1.5rem;
   }
 }
 
