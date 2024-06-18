@@ -49,7 +49,6 @@
       </div>
     </div>
     <div class="deposit-container" v-else>
-      <label class="label">存款金额</label>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <div class="flex-c-center" v-if="amountList.length === 0">
           <q-input
