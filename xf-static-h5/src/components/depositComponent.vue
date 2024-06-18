@@ -115,16 +115,16 @@
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate">
-          <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
+          <div class="q-my-xs" style="display: flex; justify-content: center; align-items: center">
             <span style="flex: 1">实时汇率：</span>
-            <span style="flex: 3" class="q-pa-sm bg-neontb text-neontb">
+            <span style="flex: 3" class="q-pa-xs bg-neontb text-neontb">
               1.00 USDT ≈ {{ activeMethod.currencyRate }}
               {{ store.currency.value }}
             </span>
           </div>
-          <div class="q-my-md" style="display: flex; justify-content: center; align-items: center">
+          <div class="q-my-xs" style="display: flex; justify-content: center; align-items: center">
             <span style="flex: 1">预计到帐：</span>
-            <span style="flex: 3" class="q-pa-sm bg-neontb text-neontb">
+            <span style="flex: 3" class="q-pa-xs bg-neontb text-neontb">
               {{
                 calculatedMinDeposit && form.localAmount < calculatedMinDeposit
                   ? "0.00"

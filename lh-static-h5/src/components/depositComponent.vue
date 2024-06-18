@@ -853,7 +853,7 @@ onMounted(() => {
     padding: 0px 8px 10px;
     background: rgba(0, 0, 0, 0.05);
     box-shadow: $shadow-bg;
-    margin-bottom: 18px;
+    margin-bottom: 4px;
     height: 56px;
   }
 
