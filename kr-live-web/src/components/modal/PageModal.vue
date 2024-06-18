@@ -1,6 +1,7 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <q-card style="max-width: none; background: transparent; box-shadow: none">
+    <q-card style="max-width: 860px; background: transparent; box-shadow: none;"
+      :style="isMinimalMode ? '' : 'width: 100%;'">
       <div style="text-align: right;">
         <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
       </div>
@@ -22,9 +23,9 @@
             <div class="page-dialog-links" v-if="!isMinimalMode">
               <p class="header-info-description">{{ headerInfo.description }}</p>
             </div>
-            <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
+            <div class="page-dialog-tabs">
               <template v-if="!isMinimalMode">
-                <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
+                <q-tabs v-model="page" align="justify" inline-label>
                   <template v-for="item in formattedPagesInfo" :key="item.page">
                     <template v-if="item.page === 'customer/service'">
                       <q-route-tab :href="item?.href" target="_blank" :label="item.info" class="page-dialog-tab"

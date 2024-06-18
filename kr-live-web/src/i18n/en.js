@@ -11,10 +11,10 @@ export default {
     login_forget_pwd: "Forget Password",
     // login end
     // register start
-    reg_withdraw_code: "Withdraw Code",
-    reg_withdraw_code_placeholder: "4 digit password for identity verification",
-    reg_please_confirm_withdraw_code: "Please confirm withdraw code",
-    reg_withdraw_code_4_digits: "Withdraw code should be 4 digits",
+    reg_withdraw_password: "Withdraw Password",
+    reg_withdraw_password_placeholder: "4 digit password for withdrawal",
+    reg_please_confirm_withdraw_password: "Please confirm withdraw password",
+    reg_withdraw_password_4_digits: "Withdraw password should be 4 digits",
     reg_nickname: "Nickname",
     reg_referrer: "Referrer",
     reg_referrer_placeholder: "Enter referral code",
