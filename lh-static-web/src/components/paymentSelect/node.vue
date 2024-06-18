@@ -343,7 +343,7 @@ $node-color: #4873f1;
       background-color: #f7f8fb;
       border-radius: 15px;
       box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-      margin-bottom: 30px;
+      margin-bottom: 22px;
       border: 2px solid;
       .payment-method-wrapper {
         display: none;

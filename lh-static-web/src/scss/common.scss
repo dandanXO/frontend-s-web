@@ -126,7 +126,7 @@ body {
       color: #000000;
     }
     &.is-error {
-      margin-bottom: 30px;
+      margin-bottom: 30px !important;
     }
     &__content {
       line-height: unset;

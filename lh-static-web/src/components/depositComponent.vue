@@ -621,8 +621,7 @@ onMounted(() => {
     font-weight: normal;
   }
 }
-</style>
-<style lang="scss">
+
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -674,16 +673,7 @@ onMounted(() => {
   margin-bottom: 18px;
 }
 
-// .deposit {
-//   margin-bottom: 0;
-//   min-height: 70vh;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   & > div {
-//     height: 180px;
-//   }
-// }
+
 .account-content {
   .wload {
     // display: flex;
@@ -794,12 +784,7 @@ onMounted(() => {
   color: #ffffff;
 }
 
-// .account-tip {
-//   color: #ffffff;
-//   &-text {
-//     color: #ffffff;
-//   }
-// }
+
 :deep(.ant-select) {
   height: 42px;
   width: 280px;
@@ -821,44 +806,11 @@ onMounted(() => {
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
+.deposit-container :deep(.el-form-item){
+  margin-bottom: 10px;
+}
 </style>
 <style scoped lang="scss">
-// @media (max-width: 768px) {
-//   .account-content .node-wrapper {
-//     padding: 0;
-//   }
-//   .account-content .deposit-container {
-//     padding: 20px 0;
-//   }
-//   .account-content.deposit {
-//     .node-wrapper {
-//       margin: 30px -10px;
-//       padding: 0 10px;
-//     }
-//   }
-//   .payment-method-wrapper {
-//     grid-template-columns: repeat(auto-fill, 80px);
-//     grid-gap: 10px;
-
-//     .payment-method-item {
-//       > img {
-//         width: 40px;
-//         height: 40px;
-//       }
-//     }
-//   }
-//   .payment-channel-wrapper {
-//     grid-template-columns: repeat(auto-fill, 160px);
-//     grid-column-gap: 10px;
-//   }
-//   .deposit-container {
-//     :deep(.helptxt .ant-form-item-control-input-content) {
-//       flex-direction: column;
-//       align-items: flex-start;
-//       gap: 5px;
-//     }
-//   }
-// }
 
 .dark {
   .deposit-container {
