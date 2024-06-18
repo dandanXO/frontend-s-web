@@ -390,7 +390,8 @@ export default defineComponent({
           border-radius: 10px;
           &.isDesktop {
             display: block;
-            height: 22vw;
+            min-height: 22vw;
+            aspect-ratio: 1560/490;
           }
           &.isMobile {
             display: none;
