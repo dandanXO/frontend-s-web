@@ -183,6 +183,13 @@
           <template #default="scope">
             <el-button
               size="mini"
+              type="primary"
+              @click="showDialog('LOG', scope.row)"
+            >
+              {{ t('fields.viewLog') }}
+            </el-button>
+            <el-button
+              size="mini"
               type="danger"
               @click="toFail(scope.row)" @keydown.enter.prevent
               v-permission="['sys:withdraw:simple:fail']"
@@ -220,12 +227,105 @@
       </div>
     </el-card>
     <el-dialog
-      v-if="uiControl.dialogType === 'SEARCH'"
+      v-if="uiControl.dialogType === 'SEARCH' || uiControl.dialogType === 'LOG'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
       width="900px"
     >
+      <el-table
+        v-if="uiControl.dialogType === 'LOG'"
+        height="400px"
+        size="small"
+        :resizable="true"
+        :data="logPage.records"
+        v-loading="logPage.loading"
+        :empty-text="t('fields.noData')"
+      >
+        <el-table-column
+          prop="operate"
+          :label="t('fields.operate')"
+          align="center"
+          min-width="200"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.operate === 'UPGRADE_TO_CHECK'">
+              UPGRADE_TO_UNDER_REVIEW
+            </span>
+            <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_APPLY'">
+              DOWNGRADE_TO_APPLYING
+            </span>
+            <span v-else-if="scope.row.operate === 'CHECK'">REVIEW</span>
+            <span v-else-if="scope.row.operate === 'CHECK_FAIL'">
+              REVIEW_FAIL
+            </span>
+            <span v-else-if="scope.row.operate === 'UPGRADE_TO_PAY'">
+              UPGRADE_TO_PAYMENT_ON_GOING
+            </span>
+            <span v-else-if="scope.row.operate === 'DOWNGRADE_TO_WAIT_PAY'">
+              WAIT_FPR_PAYMENT
+            </span>
+            <span v-else-if="scope.row.operate === 'AUTOPAY'">
+              AUTOMATIC_PAYMENT
+            </span>
+            <span v-else-if="scope.row.operate === 'PENDING'">SUSPEND</span>
+            <span v-else>{{ scope.row.operate }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="operator"
+          :label="t('fields.operator')"
+          align="center"
+          min-width="180"
+        />
+        <el-table-column
+          prop="operateTime"
+          :label="t('fields.operateTime')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.operateTime === null">-</span>
+            <span
+              v-if="scope.row.operateTime !== null"
+              v-formatter="{
+                data: scope.row.operateTime,
+                timeZone: timeZone,
+                type: 'date',
+              }"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="cancelType"
+          :label="t('fields.cancelType')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.cancelType === null">-</span>
+            <span v-if="scope.row.cancelType !== null">
+              {{ scope.row.cancelType }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column
+          prop="remark"
+          :label="t('fields.remark')"
+          align="center"
+          min-width="120"
+        >
+          <template #default="scope">
+            <span v-if="scope.row.remark === null">-</span>
+            <span v-if="scope.row.remark !== null">{{ scope.row.remark }}</span>
+          </template>
+        </el-table-column>
+        <div class="log-dialog-footer">
+          <el-button type="primary" @click="uiControl.dialogVisible = false">
+            {{ t('fields.close') }}
+          </el-button>
+        </div>
+      </el-table>
       <el-form
         v-if="uiControl.dialogType === 'SEARCH'"
         ref="searchForm"
@@ -347,7 +447,7 @@
       </el-form>
     </el-dialog>
     <el-dialog
-      v-if="uiControl.dialogType !== 'SEARCH'"
+      v-if="uiControl.dialogType === 'SEARCH'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
@@ -440,6 +540,7 @@ import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
 import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
+import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
 
 const store = useStore();
 const { t } = useI18n();
@@ -454,6 +555,11 @@ const financialList = reactive({
 })
 const bankList = reactive({
   list: [],
+})
+
+const logPage = reactive({
+  records: [],
+  loading: false,
 })
 
 let timeZone = null;
@@ -673,6 +779,12 @@ async function showDialog(type, memberWithdrawRecord) {
     await loadReasonTypes()
     failForm.reasonType = reasonTypeList.list[0].value
     uiControl.dialogTitle = t('fields.failReason')
+  } else if (type === 'LOG') {
+    uiControl.dialogTitle = t('fields.memberWithdrawLog')
+    logPage.loading = true
+    const { data: ret } = await getMemberWithdrawLog(memberWithdrawRecord.id, memberWithdrawRecord.withdrawDate)
+    logPage.records = ret
+    logPage.loading = false
   } else if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
   }

@@ -369,7 +369,7 @@
     </el-dialog>
 
     <el-dialog
-      v-if="uiControl.dialogType === 'LOG'"
+      v-if="uiControl.dialogType === 'LOG' || uiControl.dialogType === 'SEARCH'"
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
