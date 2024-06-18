@@ -484,7 +484,7 @@
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
 import {api} from "boot/axios"
 import {SessionStorage, useQuasar} from "quasar"
-import * as _ from "lodash"
+import each from "lodash/each"
 import {userStore} from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
@@ -1182,7 +1182,7 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys = SessionStorage.getAllKeys();
-      _.each(keys, function (key, item) {
+      each(keys, function (key, item) {
         // console.log(key);
         if (key.indexOf(prefix) > -1) {
           SessionStorage.remove(key);

@@ -11,7 +11,7 @@ import { api } from "boot/axios";
 import CsClient from "csweb-client";
 //test-update
 import { userStore } from "stores/index";
-import * as _ from "lodash";
+import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
@@ -80,7 +80,7 @@ export default defineComponent({
       //CsClient Event Listener.
       window.addEventListener("message", function (event) {
         // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
+        if (isString(event.data)) {
           if (event.data == "closenotice") {
             router.go(-1);
           }

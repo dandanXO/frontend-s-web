@@ -357,7 +357,9 @@ import GameItem from "components/game/GameItem";
 import GameCategory from "components/game/GameCategory";
 import DepositRecords from "components/home/DepositRecords.vue";
 import AnnouncementList from "components/home/AnnouncementList.vue";
-import * as _ from "lodash";
+import orderBy from "lodash/orderBy";
+import findIndex from "lodash/findIndex";
+import remove from "lodash/remove";
 import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
 import { Vue3Marquee } from "vue3-marquee";
@@ -711,7 +713,7 @@ export default defineComponent({
           // debugger;
           if (currentSelectedMenu.value === "casual" && selectedPlat.code !== 'CQ9') {
             miniGames.value = [];
-            let minis = _.orderBy(res, "sequence");
+            let minis = orderBy(res, "sequence");
             minis.forEach((mini) => {
               mini.lists = [];
             });
@@ -734,7 +736,7 @@ export default defineComponent({
             // console.log(miniGames);
 
             games.forEach((game) => {
-              let index = _.findIndex(miniGamesMore.value, function (o) {
+              let index = findIndex(miniGamesMore.value, function (o) {
                 return game.name.indexOf(o.name) > -1;
               });
               if (game.name.indexOf("(铜)") > -1) {
@@ -982,7 +984,7 @@ export default defineComponent({
             message: t("lang.fav_game_removed"),
             icon: "report_problem"
           });
-          _.remove(favGamesList.value, {
+          remove(favGamesList.value, {
             id: gameId
           });
         });

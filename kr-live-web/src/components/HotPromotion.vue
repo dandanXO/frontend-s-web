@@ -168,7 +168,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import * as _ from "lodash";
+import each from "lodash/each";
 import moment from "moment";
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import { useI18n } from "vue-i18n";
@@ -364,7 +364,7 @@ export default defineComponent({
         var data = res.data.data;
 
         for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
+          each(data[i].winners, function (winner, index) {
             winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
 
             winnerDataSource.value.push(winner);
@@ -384,7 +384,7 @@ export default defineComponent({
     //       var data = res.data.data;
 
     //       for (let i in data) {
-    //         _.each(data[i].winners, function (winner, index) {
+    //         each(data[i].winners, function (winner, index) {
 
     //           winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
     //           console.log(winner);
@@ -415,7 +415,7 @@ export default defineComponent({
         .then((res) => {
           loading.value = false;
           var data = res.data.data;
-          _.each(data, function (item, index) {
+          each(data, function (item, index) {
             item.date = moment(item.recordTime).format("DD/MM/YYYY");
             dataSource.value.push(item);
           });
