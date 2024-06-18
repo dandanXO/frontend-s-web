@@ -488,7 +488,6 @@ export default {
     please_enter_old_password: "Please enter your old password",
     password_must_between_6_12: "Password 's length must be between 6 to 12.",
     withdraw_process: "Withdraw Process",
-    withdraw_method: "Withdraw Method",
     verification_account: "Account Verification",
     withdraw_money: "Withdraw Money",
     select_bank_account: "Select Bank Account",

@@ -244,19 +244,19 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
-  {
-    tabIndex: "my",
-    page: "withdrawcard",
-    info: t('lang.page_modal_add_bank_card'),
-    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
-    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
-    component: AddWithdrawBankCard,
-    headerInfo: {
-      title: t('lang.page_modal_add_bank_card'),
-      subTitle: "ADD BANK CARD",
-      description: "출금 계좌에 새 은행 카드 추가"
-    }
-  },
+  // {
+  //   tabIndex: "my",
+  //   page: "withdrawcard",
+  //   info: t('lang.page_modal_add_bank_card'),
+  //   iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+  //   iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
+  //   component: AddWithdrawBankCard,
+  //   headerInfo: {
+  //     title: t('lang.page_modal_add_bank_card'),
+  //     subTitle: "ADD BANK CARD",
+  //     description: "출금 계좌에 새 은행 카드 추가"
+  //   }
+  // },
   // {
   //   tabIndex: "my",
   //   page: "bankcardlist",
