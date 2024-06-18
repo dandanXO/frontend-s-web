@@ -3,9 +3,9 @@
     <div class="slot-lacky8-container">
       <div class="slot-lacky8-game-money-info">
         <div class="title"></div>
-        <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+        <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
-        </div>
+        </div> -->
         <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
         <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
         <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
@@ -20,18 +20,21 @@
           </tr>
           <tr v-for="(item, index) in tableData" :key="index">
             <td>
-              {{ item.platformName }} <br>
-              <span class="inner-time">{{ item.time }}</span>
+              {{ item.platform }} <br>
+              <span class="inner-time">{{ item.betTime }}</span>
             </td>
-            <td>{{ item.acctNumber }}</td>
-            <td>{{ item.first }}</td>
-            <td>{{ item.second }}</td>
+            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
+            <td>{{ item.bet }}</td>
+            <td>{{ item.prizeAmount }}</td>
             <td>
-              <button @click="!item.claimed ? handleSubmitVote(item): null" :class="!item.claimed ? 'option-btn-active' : 'option-btn-disable'">
-                {{ item.claimed ? '已领取' : '领取彩金' }}
+              <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="!item.claimTime ? 'option-btn-active' : 'option-btn-disable'">
+                {{ item.claimTime ? '已领取' : '领取彩金' }}
               </button>
             </td>
-          </tr>\
+          </tr>
+          <tr v-if="tableData.length === 0">
+            <td colspan="5">暂无数据</td>
+          </tr>
         </table>
       </div>
       <div class="slot-lacky8-game-info">
@@ -232,10 +235,11 @@ const handleSubmitVote = (item) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "投票成功！",
+          message: "领取成功！",
           icon: "check_circle_outline"
         });
         getSlotLucky8Data();
+        store.getBalance();
       } else {
         $q.notify({
           color: "negative",
@@ -245,9 +249,6 @@ const handleSubmitVote = (item) => {
         });
       }
     })
-    .finally(() => {
-      confirmVoteDialog.value = false;
-    });
 };
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
@@ -284,26 +285,7 @@ const displayGuessResult = (record) => {
 const getSlotLucky8Data = async () => {
   
   const res = await getSlotLucky8(promoCode.value);
-  tableData.value = [
-    {
-        "id": 1,
-        "platformName": "平台名",
-        "time": "2024.4.2 23:32:32",
-        "acctNumber": "*******888",
-        "first": 388,
-        "second": 388,
-        "claimed": false
-    },
-    {
-      "id": 2,
-        "platformName": "平台名",
-        "time": "2024.4.2 23:32:32",
-        "acctNumber": "*******888",
-        "first": 388,
-        "second": 388,
-        "claimed": true
-    }
-]
+  tableData.value = res.data
 };
 
 onMounted(getSlotLucky8Data);
@@ -580,7 +562,9 @@ onMounted(getSlotLucky8Data);
   margin-top:12px;
   .inner-time{
     font-size: 8px;
+    line-height: 10px;
     width: 69px;
+    display:block;
   }
   th {
     height: 32px;
