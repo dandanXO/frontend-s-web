@@ -1,7 +1,7 @@
 <template>
   <div class="announcement-container">
     <div class="announcement-list-wrapper">
-      <span class="total">{{ $t('lang.announcement_total') }} {{ announcementList.length }}</span>
+      <span class="total">{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
 
       <q-list bordered separator class="announcement-list">
         <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
@@ -61,6 +61,8 @@ watch(() => announcementList.value, () => {
 onMounted(() => {
   if (announcementList.value) {
     selectFirstAnnouncement();
+  } else {
+    store.getAnnouncementList();
   }
 })
 

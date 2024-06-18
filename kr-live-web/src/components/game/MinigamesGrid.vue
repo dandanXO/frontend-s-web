@@ -1,42 +1,40 @@
 <template>
-    <div v-if="props.isLoading" class="loading-spinner">
-        <q-spinner-hourglass :color="'blue'" size="8em" />
+  <div v-if="props.isLoading" class="loading-spinner">
+    <q-spinner-hourglass :color="'blue'" size="8em" />
+  </div>
+  <div class="minigames-grid" v-else>
+    <div v-for="(game, index) in props.minigames" :key="index" class="minigames-grid-item"
+      @click="playGame(game.name, 'TFGaming', game.code)" :style="{
+        backgroundImage: (() => {
+          try {
+            return `url(${game.icon})`;
+          } catch (e) {
+            return `url(${require(`../../assets/home/slot/StayTuned.png`)})`;
+          }
+        })()
+      }">
     </div>
-    <div class="minigames-grid" v-else>
-        <div v-for="(game, index) in props.minigames" :key="index" class="minigames-grid-item" @click="playGame(game.name, 'TFGaming', game.code)" :style="{
-            backgroundImage: (() => {
-                try {
-                    return `url(${game.icon})`;
-                } catch (e) {
-                    return `url(${require(`../../assets/home/slot/StayTuned.png`)})`;
-                }
-            })()
-        }">
-        </div>
-        <div v-for="(game, index) in props.minigamesMore" :key="index" class="minigames-grid-item minigame-select-div" 
-            @click="props.showTypeH5(game.id)"
-            @mouseover="props.showTypeWeb(game.id)"
-            @mouseleave="props.showTypeWeb(0)">
-            
-            <img class="minigames-grid-item" :src="game.logo" />
+    <div v-for="(game, index) in props.minigamesMore" :key="index" class="minigames-grid-item minigame-select-div"
+      @click="props.showTypeH5(game.id)" @mouseover="props.showTypeWeb(game.id)" @mouseleave="props.showTypeWeb(0)">
 
-            <transition appear>
-                <div class="select-type-div" v-if="props.showMiniType == game.id">
-                    <div class="game-type btn-pointer" id="copper-type"
-                        @click="props.playGame(game.name, 'TFGaming', game.copper)">
-                        1,000 - 65K
-                    </div>
-                    <div class="game-type btn-pointer" id="silver-type"
-                        @click="props.playGame(game.id, 'TFGaming', game.silver)">
-                        100K - 130K
-                    </div>
-                    <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
-                        1,000 - 20K
-                    </div>
-                </div>
-            </transition>
+      <img class="minigames-grid-item" :src="game.logo" />
+
+      <transition appear>
+        <div class="select-type-div" v-if="props.showMiniType == game.id">
+          <div class="game-type btn-pointer" id="copper-type"
+            @click="props.playGame(game.name, 'TFGaming', game.copper)">
+            1,000 - 65K
+          </div>
+          <div class="game-type btn-pointer" id="silver-type" @click="props.playGame(game.id, 'TFGaming', game.silver)">
+            100K - 130K
+          </div>
+          <div class="game-type btn-pointer" id="gold-type" @click="playGame(game.id, 'TFGaming', game.gold)">
+            1,000 - 20K
+          </div>
         </div>
+      </transition>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -45,34 +43,36 @@ const props = defineProps(['minigames', 'minigamesMore', 'showTypeWeb', 'showTyp
 
 <style lang="scss" scoped>
 .loading-spinner {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
+
 .minigames-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr) );
-    grid-gap: 20px;
-    padding: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
 
-    .minigames-grid-item {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 672 / 828;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: top center;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: all 0.1s ease-in-out;
-        border-radius: 12px;
+  .minigames-grid-item {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 672 / 828;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: top center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.1s ease-in-out;
+    border-radius: 12px;
 
-        &:hover {
-            border: 2px solid #5dd8ff;
-            filter: brightness(1.1);
-        }
+    &:hover {
+      border: 2px solid #5dd8ff;
+      filter: brightness(1.1);
     }
+  }
 }
 
 .minigame-select-div {
@@ -84,8 +84,7 @@ const props = defineProps(['minigames', 'minigamesMore', 'showTypeWeb', 'showTyp
     aspect-ratio: 672 / 828;
   }
 
-  &:hover {
-  }
+  &:hover {}
 
   .select-type-div {
     position: absolute;
