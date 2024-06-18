@@ -175,11 +175,12 @@ const platforms = ref([
     display: flex;
     flex-direction: column;
     width: 350px;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     color: #7a80a1;
     position: relative;
-    padding: 25px;
+    padding: 25px;;
+    height: 100%;
 
     .slide-title {
       font-weight: 700;
