@@ -254,7 +254,7 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
