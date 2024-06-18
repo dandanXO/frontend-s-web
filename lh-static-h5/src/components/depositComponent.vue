@@ -152,6 +152,7 @@
           @successful="isDeposited = true"
         ></BankComponent>
         <q-select
+          style="width:100%;"
           ref="offerRef"
           class="deposit-selection q-mt-xs"
           label="选择优惠"

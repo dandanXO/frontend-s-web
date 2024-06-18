@@ -4,7 +4,6 @@
   <!--  <pre>store:{{ store }}</pre>-->
 
   <div class="q-pa-md deposit-section" style="overflow: auto; background: #fff; margin: 8px 8px">
-
     <label class="label">请选择</label>
     <div class="node-wrapper q-mt-xs">
       <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" />
@@ -53,50 +52,56 @@
       <label class="label">存款金额</label>
       <q-form ref="depositForm" class="q-gutter-y-xs">
         <div class="flex-c-center" v-if="amountList.length === 0">
-        <q-input
-          class="deposit-input"
-          hide-bottom-space
-          ref="depositAmtRef"
-          label="存款金额"
-          name="localAmount"
-          clearable
-          v-model="form.localAmount"
-          placeholder="输入金额"
-          color="blue"
-          :rules="verifyDepositAmount"
-          padding="none"
-        >
-          <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              <template v-if="isUSDT">USDT</template>
-              <template v-else>{{ store.currency.value }}</template>
-            </span>
-          </template>
-        </q-input>
-        <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
-      </div>
+          <q-input
+            class="deposit-input"
+            hide-bottom-space
+            ref="depositAmtRef"
+            label="存款金额"
+            name="localAmount"
+            clearable
+            v-model="form.localAmount"
+            placeholder="输入金额"
+            color="blue"
+            :rules="verifyDepositAmount"
+            padding="none"
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 26px" class="text-bright">
+                <template v-if="isUSDT">USDT</template>
+                <template v-else>{{ store.currency.value }}</template>
+              </span>
+            </template>
+          </q-input>
+          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+        </div>
+        <div class="flex-c-center" v-else>
+          <q-select
+            class="deposit-input"
+            ref="depositAmtRef"
+            label="选择金额"
+            name="localAmount"
+            filled
+            :options="amountList"
+            v-model="form.localAmount"
+            color=""
+            :rules="verifyDepositAmount"
+            padding="none"
+          >
+            <template v-slot:prepend>
+              <span style="font-size: 26px" class="text-bright">
+                {{ store.currency.value }}
+              </span>
+            </template>
+          </q-select>
+          <q-btn color="dygreen" :loading="btnLoading" class="deposit-btn" @click="confirmDeposit" label="确认" />
+        </div>
 
-        <q-select
-          v-else
-          ref="depositAmtRef"
-          label="选择金额"
-          name="localAmount"
-          filled
-          :options="amountList"
-          v-model="form.localAmount"
-          color=""
-          :rules="verifyDepositAmount"
-          padding="none"
-        >
-          <template v-slot:prepend>
-            <span style="font-size: 26px" class="text-bright">
-              {{ store.currency.value }}
-            </span>
-          </template>
-        </q-select>
-
-        <div class="q-mt-sm text-grey text-bold ">
-          单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0 }}  -   {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
+        <div class="q-mt-sm text-grey text-bold">
+          单笔存款：{{
+            calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value) : 0
+          }}
+          -
+          {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value) : " " }}
         </div>
 
         <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-md" label="兑换率">
@@ -754,18 +759,18 @@ onActivated(() => {
     }
   }
 }
-.flex-c-center{
-  display:flex;
+.flex-c-center {
+  display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  .deposit-input{
+  .deposit-input {
     width: 70%;
   }
-  .deposit-btn{
+  .deposit-btn {
     width: 25%;
     height: 56px;
     font-size: 20px;
-    white-space:nowrap;
+    white-space: nowrap;
   }
 }
 
