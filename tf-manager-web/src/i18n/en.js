@@ -1611,6 +1611,7 @@ export default {
     web: 'Web',
     webMessage: 'Web Message',
     win: 'Win',
+    winRate: 'Win Rate',
     winnerTeam: 'Winner',
     withdraw: 'Withdraw',
     withdrawableBalance: 'Withdrawable Balance',

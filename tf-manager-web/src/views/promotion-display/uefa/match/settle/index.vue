@@ -79,7 +79,20 @@
       :empty-text="t('fields.noData')"
     >
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="180" />
-      <el-table-column prop="title" :label="t('fields.title')" width="180" />
+      <el-table-column prop="winRate" :label="t('fields.winRate')" align="center" min-width="120">
+        <template #default="scope">
+          {{ (scope.row.winRate * 100).toFixed(2) }} %
+        </template>
+      </el-table-column>
+      <el-table-column prop="matchTime" :label="t('fields.matchTime')" align="center" min-width="150">
+        <template #default="scope">
+          <span v-if="scope.row.matchTime === null">-</span>
+          <span
+            v-if="scope.row.matchTime !== null"
+            v-formatter="{data: scope.row.matchTime, formatter: 'YYYY-MM-DD', type: 'date'}"
+          />
+        </template>
+      </el-table-column>
       <el-table-column prop="bonus" :label="t('fields.bonus')" align="center" min-width="180">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.bonus,type: 'money'}" />

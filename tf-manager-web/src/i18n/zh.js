@@ -1614,6 +1614,7 @@ export default {
     web: '电脑版',
     webMessage: '网页提示信息',
     win: '赢',
+    winRate: '胜率',
     winnerTeam: '获胜队伍',
     withdraw: '提款',
     withdrawableBalance: '可提余额',
