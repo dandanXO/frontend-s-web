@@ -1848,7 +1848,7 @@ body {
   width: 100%;
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99;
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
