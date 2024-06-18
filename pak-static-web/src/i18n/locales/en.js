@@ -500,7 +500,10 @@ export default {
       step3: "Complete deposit after registration",
       copyButton: "Copy link",
       copySuccess: "Link copied to clipboard",
-      copyFail: "Failed to copy link"
+      copyFail: "Failed to copy link",
+      shareText:
+        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      shareTitle: "B9GAME Share and Earn"
     },
     earnYesterday: {
       title: "Total amount sent as of yesterday",
@@ -524,6 +527,9 @@ export default {
           inviteBonus: "Invite Bonus"
         }
       }
+    },
+    shareModal: {
+      title: "Share and Earn"
     }
   },
   loginView: {
