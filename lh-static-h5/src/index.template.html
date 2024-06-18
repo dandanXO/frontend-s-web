@@ -79,6 +79,9 @@
           if(returnJson && returnJson.crDomain){
             window.localStorage.setItem("LH_H5_CRT_URL", returnJson.crDomain);
           }
+          if(returnJson && returnJson.upImg){
+            window.localStorage.setItem("IMAGE_CDN", returnJson.upImg);
+          }
         }
       });
     }
