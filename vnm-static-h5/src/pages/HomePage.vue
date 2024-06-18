@@ -3006,13 +3006,13 @@ export default defineComponent({
   min-width: 14px;
   height: 14px;
   min-height: 14px;
-  border-radius: 50%;
-  border: 1px solid #333333;
+  border-radius: 50%; 
+  color: #aaaaaa;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 1;
-  font-size: 6px;
+  font-size: 10px;
   font-weight: bold;
   margin-left: 24px;
   position: absolute;
