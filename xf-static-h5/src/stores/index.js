@@ -31,6 +31,7 @@ export const userStore = defineStore("userStore", {
       token: getStoreToken(),
       vip: "",
       evip: "",
+      h5Url: "",
       currency: {value: "￥", label: "RMB"},
       personalAddress: '',
       unreadInboxMail: 0,
@@ -192,6 +193,7 @@ export const userStore = defineStore("userStore", {
           if (response.data.evip) {
             var exclusive = JSON.parse(response.data.evip);
             this.evip = exclusive.wap;
+            this.h5Url= exclusive.web;
           }
 
           this.unreadInboxMail = 0;

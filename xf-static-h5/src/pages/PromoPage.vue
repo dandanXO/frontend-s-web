@@ -247,8 +247,9 @@ export default defineComponent({
 
             if(isAndroid()){
               // modalVisible.value= true;
-              var preUrl = 'https://' + store.evip + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
+              var preUrl = 'https://' + store.h5Url + `/promotion?name=${promo.redirectUrl}&token=${store.token}`;
               // alert(preUrl);
+              console.log(preUrl)
               // promoSrc.value= preUrl;
               var ref = cordova.InAppBrowser.open(
                 preUrl,
