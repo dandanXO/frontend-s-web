@@ -15,9 +15,9 @@
         </q-btn>
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
-        <router-link :to="prevPage ? '/' + prevPage : '/'" class="back-btn-top">
+        <a @click="goToPrevPage(prevPage)" class="back-btn-top">
           <img class="back-icon" src="../assets/images/common/left-back-icon.svg" />
-        </router-link>
+        </a>
         {{ pageName }}
         <q-btn
           v-if="hasDrawer"
@@ -126,6 +126,16 @@ export default defineComponent({
     const i18nStoreLanguage = i18nStore();
     const { languageVal } = storeToRefs(i18nStoreLanguage);
 
+    const goToPrevPage = (prePage) => {
+      if(prePage === "/"){
+        router.push("/")
+      }else if(window.location.pathname === "/promoapp"){
+        window.location.href = "vnmapp:/promo"
+      }else{
+        router.push('/' + prePage)
+      }
+    }
+
     const logout = () => {
       store.memberLogout().then(() => {
         // location.reload();
@@ -226,6 +236,10 @@ export default defineComponent({
           } else {
             prevPage.value = "/";
           }
+        }else if (route.path === "/promoapp") {
+          hasPage.value = true;
+          pageName.value = t("lang.page_promotions");
+          prevPage.value = "";
         } else if (route.path === "/finance/deposit") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -464,6 +478,7 @@ export default defineComponent({
       },
       logout,
       store,
+      goToPrevPage,
       scrollPageRef,
       pageName,
       hasPage,

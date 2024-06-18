@@ -42,12 +42,25 @@ export default route(function (/* { store, ssrContext } */) {
       to.path === "/invitefriend" ||
       to.path === "/vip" ||
       to.path === "/privilege/invite" ||
-      to.path === "/maintenance"
+      to.path === "/maintenance" || to.path==="/promoapp"
     ) {
       ui.hiddenFooter();
     } else {
       ui.showFooter();
     }
+
+    if (
+      to.path === "/promoapp"
+    ) {
+      if (isAndroid()) {
+        localStorage.setItem("TOKEN", to.query.token);
+      } else {
+        SessionStorage.set("TOKEN", to.query.token);
+      }
+
+      user.token = to.query.token;
+    }
+
 
     // if (to.name === "referCode") {
     //   sessionStorage.setItem("REFERRAL_CODE", to.params.referralCode);

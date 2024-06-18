@@ -35,6 +35,12 @@ const routes = [
     redirect: "/promo"
   },
   {
+    path: "/promoapp",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [{ path: "", component: () => import("pages/PromoPage.vue") }],
+    meta: { requiresAuth: true, isApp: true }
+  },
+  {
     path: "/liveChat",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
