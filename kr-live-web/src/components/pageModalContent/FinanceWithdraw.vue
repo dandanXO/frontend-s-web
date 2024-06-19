@@ -3,6 +3,8 @@
     <div class="modal-body-wrap">
       <q-card-section class="modal-body-content">
 
+        <ReminderText :reminderText="$t('lang.withdraw_reminder_text')" />
+
         <div class="withdrawalmethod">
           <div v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
             @click="selectMethod(method, i)" :class="{ active: i === activeItem }">
@@ -22,7 +24,7 @@
             <label>{{ chooseLabel() }}</label>
             <q-select dense v-show="isLoaded" hide-bottom-space outlined ref="cardRef" v-model="withdrawInfo.cardId"
               option-value="id" emit-value class="withdraw-selection" :options="withdrawState.bankCardList" map-options
-              :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]">
+              :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]" lazy-rules>
               <template v-slot:no-option>
                 <q-item>
                   <q-item-section class="text-grey text-bold">
@@ -133,13 +135,6 @@
             </div>
             <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
           </div>
-          <div v-else-if="isEWALLET">
-            <div class="q-mt-sm text-neontb">*특별히 언급합니다: 출금 지갑과 게임 계정의 이름은 반드시 일치해야 합니다</div>
-            <div class="q-mt-sm q-mb-sm text-center" v-if="selectedWithdrawalMethod.code !== 'SZPAY'">
-              <q-btn style="border: 1px solid #33bcd4; color: #33bcd4"
-                @click="openEWalletTutorial(selectedWithdrawalMethod.code)" :label="tutorialLabel()" />
-            </div>
-          </div>
 
           <div class="q-py-md">
             <div v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips" class="selected-tip"
@@ -167,6 +162,7 @@ import { api } from "boot/axios";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import ReminderText from 'components/finance/ReminderText';
 
 const $q = useQuasar();
 const { t } = useI18n();
@@ -329,28 +325,6 @@ const submitWithdraw = () => {
   }
 };
 
-const tutorialLabel = () => {
-  if (selectedWithdrawalMethod.value.code === 'KDPAY') {
-    return 'KDPAY 튜토리얼 비디오'
-  } else if (selectedWithdrawalMethod.value.code === 'EBPAY') {
-    return 'EBPAY 튜토리얼 비디오'
-  } else if (selectedWithdrawalMethod.value.code === 'OKPAY') {
-    return 'OKPAY 튜토리얼 비디오'
-  }
-}
-const openEWalletTutorial = (code) => {
-  const urlMap = {
-    'KDPAY': 'https://kdzfxz.kdzf2345.com/home/#/transactionFlow',
-    'EBPAY': 'https://www.ebpay.org/',
-    'OKPAY': 'https://me-qr.com/l/okpay'
-  };
-
-  const url = urlMap[code];
-  if (url) {
-    window.open(url);
-  }
-};
-
 const isValidUSDTAmt = (val) => {
   if (!isUSDT.value) {
     return true;
@@ -365,10 +339,6 @@ const getWithdrawalMethods = () => {
       const response = resp.data;
       if (response.code === 0) {
         withdrawalMethods.value = response.data;
-        //Remove this for real data
-        // withdrawalMethods.value = [
-        //   {"currencyId":6,"name":"withdraw_bank","code":"BANK","icon":"71e4dd61-dfc3-4b19-97d8-6fb311c45c79.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3},
-        //   {"currencyId":6,"name":"withdraw_gcash","code":"GCASH","icon":"c9d92237-4e44-4ee7-92c7-ceb5214f225f.png","withdrawMin":1000.00,"withdrawMax":10000.00,"withdrawMaxAmount":30000.00,"withdrawMaxTimes":3}]
 
         resolve(response.data);
       } else {
@@ -430,87 +400,19 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-.withdraw-form {
-
-  .q-field--filled.q-field--dark .q-field__control,
-  .q-field--filled.q-field--dark .q-field__control:before {
-    width: 100%;
-    font-size: 14px;
-    border-radius: 3px;
-    border: 1px solid #5C5C5C;
-    line-height: 40px;
-    color: #fff;
-  }
-}
-</style>
 <style lang="scss" scoped>
-.modal-body-content {
-  .form-button {
-    height: 70px;
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 18px;
-    padding-bottom: 5px;
-    margin: auto 10px;
+.select-amt-btn-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  align-items: center;
+  gap: 8px;
+}
 
-    &.blue {
-      background: url("../../assets/home/btn-blue.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-
-    &.yellow {
-      background: url("../../assets/home/btn-orange.svg") no-repeat center center;
-      background-size: 100% 100%;
-    }
-  }
-
-  .content-form {
-    p {
-      margin-top: 20px;
-
-    }
-
-    label {
-      margin-bottom: 10px;
-      display: block;
-      font-size: 14px;
-      color: #fff;
-
-    }
-
-    label,
-    input {
-      width: 100%;
-    }
-
-    input {
-      font-size: 14px;
-      border-radius: 3px;
-      border: 1px solid #5C5C5C;
-      line-height: 40px;
-      color: #fff;
-      background: #212121;
-      padding: 5px 15px;
-    }
-  }
-
-  .select-amt-btn-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    align-items: center;
-    gap: 8px;
-  }
-
-  .select-amt-btn {
-    background: #18324A;
-    color: #fff;
-    white-space: nowrap;
-    font-family: 'Nanum';
-  }
+.select-amt-btn {
+  background: #18324A;
+  color: #fff;
+  white-space: nowrap;
+  font-family: 'Nanum';
 }
 
 .withdraw-section {
@@ -589,20 +491,10 @@ onMounted(() => {
       background: $linear-bg-2;
       border-radius: 6px;
 
-      // img {
-      //   border: 3px solid #33bcd4;
-      //   border-radius: 10px;
-      // }
-
       .promo-img {
         border: none;
         border-radius: 0px;
       }
-
-      .type-name {
-        // font-weight: bold;
-      }
-
     }
 
     .type-name {
@@ -650,22 +542,6 @@ onMounted(() => {
 
 .selected-tip {
   color: #ffa031;
-}
-
-.withdraw-field {
-  :deep(.q-field__control) {
-    background: #252E43;
-  }
-
-  :deep(.q-field__prepend) {
-    padding-left: 10px;
-  }
-}
-
-.withdraw-selection {
-  :deep(.q-field__control) {
-    background: #252E43;
-  }
 }
 
 .update-withdraw-btn {
@@ -716,11 +592,5 @@ onMounted(() => {
       }
     }
   }
-}
-
-.flex-box-c-c {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>
