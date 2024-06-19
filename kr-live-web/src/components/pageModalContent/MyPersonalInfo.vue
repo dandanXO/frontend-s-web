@@ -7,13 +7,13 @@
           ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
       </div>
       <div class="form-item">
-        <label>실제 이름</label>
+        <label>{{ $t('lang.personal_real_name') }}</label>
         <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
           :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
           @update:model-value="updateTouch" />
       </div>
       <div class="form-item">
-        <label>사용자 이름</label>
+        <label>{{ $t('lang.personal_id') }}</label>
         <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
           @update:model-value="updateTouch" />
       </div>

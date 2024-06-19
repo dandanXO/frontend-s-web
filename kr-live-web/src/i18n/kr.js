@@ -10,11 +10,12 @@ export default {
     login_success_msg: "로그인이 되었습니다",
     login_forget_pwd: "비밀번호 분실",
     // login end
+    logout: "로그아웃",
     // register start
-    reg_withdraw_password: "비밀번호 철회",
+    reg_withdraw_password: "출금 비밀번호",
     reg_withdraw_password_placeholder: "출금 비밀번호 4자리",
     reg_please_confirm_withdraw_password: "출금 비밀번호를 확인해 주세요",
-    reg_withdraw_code_4_digits: "출금 비밀번호는 4자리여야 합니다.",
+    reg_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
     reg_nickname: "닉네임",
     reg_referrer: "추천인코드",
     reg_referrer_placeholder: "추천인코드입력",
@@ -130,6 +131,13 @@ export default {
     feedback_read: "읽었다",
     feedback_read_at: "에서 읽다",
     // feedback end
+    // deposit start
+    deposit_payment_channel: "결제 채널",
+    // deposit end
+    // personal start
+    personal_real_name: "실명",
+    personal_id: "아이디",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

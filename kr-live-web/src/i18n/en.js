@@ -10,6 +10,7 @@ export default {
     login_success_msg: "Login successfully",
     login_forget_pwd: "Forget Password",
     // login end
+    logout: "Log out",
     // register start
     reg_withdraw_password: "Withdraw Password",
     reg_withdraw_password_placeholder: "4 digit password for withdrawal",
@@ -129,7 +130,13 @@ export default {
     feedback_read: "Read",
     feedback_read_at: "Read at",
     // feedback end
-    
+    // deposit start
+    deposit_payment_channel: "Payment Channel",
+    // deposit end
+    // personal start
+    personal_real_name: "Real Name",
+    personal_id: "ID",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

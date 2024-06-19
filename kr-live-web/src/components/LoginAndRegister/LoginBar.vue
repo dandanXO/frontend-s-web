@@ -62,7 +62,7 @@
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
             <div class="primary-button red" @click.stop="logout">
-              로그아웃
+              {{ $t('lang.logout') }}
             </div>
           </div>
         </div>

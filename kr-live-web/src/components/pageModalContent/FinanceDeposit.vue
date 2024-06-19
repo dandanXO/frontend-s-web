@@ -2,7 +2,7 @@
   <div class="form-wrapper">
     <div class="modal-body-wrap" v-if="!isDisplay">
       <div class="deposit-options">
-        <div class="lil-title">결제 채널</div>
+        <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
         <div class="deposit-option-container">
           <div class="node-wrapper">
             <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />

@@ -21,7 +21,7 @@
       </div>
       <div class="right-group">
         <div class="primary-button yellow" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
         </div>
         <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
       <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
