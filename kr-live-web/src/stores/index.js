@@ -31,7 +31,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       appDownloadUrl: "",
       visitorId: "",
-      announcementList: undefined
+      announcementList: undefined,
+      financeRecords: undefined,
     };
   },
   actions: {
@@ -99,6 +100,32 @@ export const userStore = defineStore("userStore", {
               }));
               this.announcementList = announcementsFormattedData;
               resolve(this.announcementList);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
+    getFinanceRecords() {
+      return new Promise((resolve, reject) => {
+        if(this.financeRecords === null) {
+          return;
+        } else if(Array.isArray(this.financeRecords)) {
+          return resolve(this.financeRecords);
+        } else {
+          if(this.financeRecords == undefined) {
+            this.financeRecords = null;
+          }
+
+          api.get("/member/withdraw-deposit-record").then((res) => {
+            const { data: { code, data } } = res;
+            
+            if (code === 0) {
+              this.financeRecords = data;
+              resolve(this.financeRecords);
             }
           })
           .catch((err) => {

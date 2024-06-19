@@ -62,7 +62,7 @@
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
-import { ref, defineExpose, reactive, computed, watch, nextTick, onMounted } from "vue";
+import { ref, reactive, computed, watch, nextTick, onMounted } from "vue";
 import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
@@ -71,21 +71,15 @@ import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
-import MyMessages from "components/pageModalContent/MyMessages.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
-import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
-import DepositRecord from "components/pageModalContent/DepositRecord.vue";
 import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
-import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
-import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 const visible = ref(false);
-const store = userStore();
 const page = ref("");
 const tabIndex = ref("log");
 
@@ -136,20 +130,6 @@ const tabClick = (targetPage) => {
 const headerInfo = computed(() => {
   return formattedPagesInfo.value.find((item) => item.page === page.value)?.headerInfo || {};
 });
-
-const isLinkActive = (key) => {
-  switch (key) {
-    case "log":
-      return ["finance/deposit", "finance/withdraw", "notify", "customer/service"].includes(route.query.page);
-    case "my":
-      return ["test"].includes(route.query.page);
-    case "finance":
-      // TODO
-      return false;
-    default:
-      return false;
-  }
-};
 
 const pagesInfo = reactive([
   {
