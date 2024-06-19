@@ -59,12 +59,12 @@
         <td>任意金额</td>
         <td>200</td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td>JDPAY</td>
         <td>1.0%</td>
         <td>任意金额</td>
         <td>200</td>
-      </tr>
+      </tr> -->
       <tr>
         <td>K豆</td>
         <td>1.0%</td>
@@ -137,12 +137,12 @@ const depositCards = ref([
     "content": "充值即送1.0%彩金 K豆完全可以满足您不同需求和使用场景。活动期间，每位玩家每笔使用K豆单笔充值成功享受存款金额的1.0%加码彩金，单日优惠最高上限200元 ",
     "lesson": "https://kdxz1848.com/"
   },
-  {
-    "code": "jdpay",
-    "title": "JDpay",
-    "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
-    "lesson": "https://www.jdpay01.com/#/transactionFlow"
-  },
+  // {
+  //   "code": "jdpay",
+  //   "title": "JDpay",
+  //   "content": "充值即送1.0%彩金 JDpay充值火热上线，速度快，够安全。活动期间，每日用户任何时间在雷火使用“JDpay充值\"方式成功存款，即可获得JDpay存款金额的1.0%的彩金返还，单日优惠最高上限200元。",
+  //   "lesson": "https://www.jdpay01.com/#/transactionFlow"
+  // },
   {
     "code": "szrmb",
     "title": "数字人民币",
