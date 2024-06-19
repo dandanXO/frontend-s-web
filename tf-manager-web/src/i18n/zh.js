@@ -1807,6 +1807,7 @@ export default {
     upper: '上限',
     addMemberLotteryRecord: '新增会员彩票记录',
     addFakeLotteryRecord: '新增假彩票记录',
+    approveSummonRecord: '批准唤醒记录',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2226,6 +2227,7 @@ export default {
     timeExist: '时间已存在',
     wrongPopupTime: '弹窗时间错误。',
     selectPopupTime: '请选择弹窗时间.',
+    summonSuccess: '唤醒成功',
   },
   menu: {
     undefined: '',
@@ -2789,5 +2791,7 @@ export default {
     27000: '钥匙数量不足',
     31000: '所选日期还有赛事未结束，请待所有赛事结束了再结算',
     31001: '所选日期无赛事',
+    40002: '唤醒记录不存在',
+    40003: '会员已被唤醒',
   },
 }
