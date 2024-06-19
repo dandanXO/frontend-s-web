@@ -67,7 +67,7 @@ body {
   // background-position: top center;
   // background-repeat: no-repeat;
   // background-size: cover;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 66px);
 }
 
 .q-scrollarea__content {
@@ -137,7 +137,7 @@ body.platform-ios .q-dialog__inner--minimized > div {
   font-size: 20px;
   text-align: center;
   font-family: Wave;
-  padding: 10px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -384,6 +384,9 @@ svg {
   color: #fff;
   font-family: Wave;
   min-height: 40px;
+  position: absolute;
+  bottom: 5px;
+  z-index:99;
 
   .page {
     display: flex;

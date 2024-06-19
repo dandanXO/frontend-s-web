@@ -3,7 +3,25 @@
     <q-header elevated>
       <AppDownload />
 
-      <q-card-section v-if="!store.hasToken()" class="top-section justify-between items-center" horizontal>
+      <q-card-section
+        class="top-section justify-between items-center page-title"
+        horizontal
+        v-if="!store.hasToken() && isLoginRegPage"
+      >
+        <router-link :to="prevPage || '/'">
+          <q-icon class="header-icon" name="arrow_back_ios"></q-icon>
+        </router-link>
+        <div class="page-title-wrapper">
+          <div class="title-container">
+            <span class="title">{{ pageName }}</span>
+          </div>
+        </div>
+      </q-card-section>
+      <q-card-section
+        v-if="!store.hasToken() && !isLoginRegPage"
+        class="top-section justify-between items-center"
+        horizontal
+      >
         <q-card-actions v-if="$q.screen.gt.md">
           <div class="btn-deco-wrapper">
             <q-btn size="md" class="register-btn" to="/register">{{ $t("lang.register") }}</q-btn>
@@ -54,10 +72,10 @@
     <q-page-container>
       <div class="page-header" v-if="hasPage">
         <div class="page-header-inner">
-          <div class="page">
-            <img v-if="headerIcon" :src="headerIcon" />
-            <span>{{ pageName }}</span>
-          </div>
+          <!--          <div class="page">-->
+          <!--            <img v-if="headerIcon" :src="headerIcon" />-->
+          <!--            <span>{{ pageName }}</span>-->
+          <!--          </div>-->
 
           <div class="lang-select-board" v-if="hasLang">
             <q-select
@@ -81,9 +99,9 @@
               </div>
             </div>
 
-            <div class="close-back-btn btn-pointer" @click="closeWindowOrBack()">
-              <RiCloseLine />
-            </div>
+            <!--            <div class="close-back-btn btn-pointer" @click="closeWindowOrBack()">-->
+            <!--              <RiCloseLine />-->
+            <!--            </div>-->
           </div>
         </div>
       </div>
@@ -97,12 +115,12 @@
     </q-page-container>
     <q-footer v-if="ui.footer" elevated>
       <q-tabs v-model="tab" no-caps class="footer-nav" :breakpoint="0" align="justify">
-        <q-route-tab to="/" name="home" exact>
+        <q-route-tab class="small-footer-icon" to="/" name="home" exact>
           <img class="footer-icon" :src="tab === 'home' ? footers['home']['active'] : footers['home']['icon']" />
           <span class="footer-label">{{ $t("lang.home_page") }}</span>
         </q-route-tab>
 
-        <q-route-tab to="/finance/withdraw" name="withdraw">
+        <q-route-tab class="small-footer-icon" to="/finance/withdraw" name="withdraw">
           <img
             class="footer-icon"
             :src="tab === 'withdraw' ? footers['withdraw']['active'] : footers['withdraw']['icon']"
@@ -138,11 +156,17 @@
                :src="(tab === 'notice') ? footers['notice']['active']  :  footers['notice']['icon'] "/>
           <span>{{ $t('lang.notice_footer') }}</span>
         </q-route-tab> -->
-        <q-route-tab to="/getapp" name="app">
+        <q-route-tab class="small-footer-icon" to="/getapp" name="app">
           <img class="footer-icon" :src="tab === 'app' ? footers['app']['active'] : footers['app']['icon']" />
           <span class="footer-label">APP</span>
         </q-route-tab>
-        <q-route-tab to="/liveChat" id="cs-web-id" class="cs-web-id" name="cs" @click="openLiveChat($event, router)">
+        <q-route-tab
+          to="/liveChat"
+          id="cs-web-id"
+          class="cs-web-id small-footer-icon"
+          name="cs"
+          @click="openLiveChat($event, router)"
+        >
           <img
             class="footer-icon"
             :class="tab != 'cs' ? 'breathing-icon' : ''"
@@ -186,6 +210,8 @@ export default defineComponent({
     const ui = useUI();
     // console.log(ui.footer)
     const scrollPageRef = ref(null);
+
+    const isLoginRegPage = ref(false);
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -240,6 +266,7 @@ export default defineComponent({
         hasPage.value = false;
         hasLang.value = false;
         pageName.value = "";
+        isLoginRegPage.value = false;
         headerIcon.value = "";
         if (route.path === "/slot") {
           hasPage.value = true;
@@ -320,16 +347,19 @@ export default defineComponent({
         } else if (route.path === "/login") {
           prevPage.value = "/";
           hasPage.value = true;
+          isLoginRegPage.value = true;
           pageName.value = t("lang.login");
           hasLang.value = true;
         } else if (route.path === "/register") {
           prevPage.value = "/";
           hasPage.value = true;
+          isLoginRegPage.value = true;
           pageName.value = t("lang.register");
           hasLang.value = true;
         } else if (route.path === "/forgot-password") {
-          prevPage.value = "/";
+          prevPage.value = "/login";
           hasPage.value = true;
+          isLoginRegPage.value = true;
           pageName.value = t("lang.forgot_password");
           hasLang.value = true;
         } else if (route.path === "/share") {
@@ -433,7 +463,8 @@ export default defineComponent({
       mainWalletValue,
       openAffiliatePage,
       openLiveChat,
-      router
+      router,
+      isLoginRegPage
     };
   }
 });
@@ -487,6 +518,12 @@ svg path {
   }
   :deep(.q-tabs__content) {
     margin-top: -30px;
+    pointer-events: none;
+    align-self: flex-start;
+
+    > * {
+      pointer-events: auto;
+    }
   }
 
   :deep(.q-hoverable:hover > .q-focus-helper) {
@@ -630,6 +667,19 @@ svg path {
   border-radius: 25px;
   font-size: $normal-size;
   line-height: 1rem;
+}
+
+.page-title {
+  .header-icon {
+    color: $white;
+    padding-left: 12px;
+  }
+}
+.title-container {
+  .title {
+    color: $white;
+    -webkit-text-fill-color: $white;
+  }
 }
 
 .btn-deco-wrapper {

@@ -1,12 +1,13 @@
 <template>
   <div class="main-section">
-    <q-form class="login-form q-gutter-y-md rounded-borders q-pa-md" style="margin: 0px auto">
+    <q-form class="login-form q-gutter-y-xs rounded-borders q-pa-md q-ma-md" style="margin: 0px auto">
       <q-input
         class="login-input text-main"
         ref="loginNameRef"
-        filled
+        outlined
+        hide-bottom-space
         v-model="loginForm.loginName"
-        :label="$t('lang.input_username')"
+        :placeholder="$t('lang.input_username')"
         :rules="[
           (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
           (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
@@ -15,13 +16,18 @@
         color="white"
         autocomplete="username"
         clearable
-      ></q-input>
+      >
+        <template v-slot:prepend>
+          <q-icon name="person_outline" />
+        </template>
+      </q-input>
       <q-input
         class="login-input text-main"
         ref="passwordRef"
-        filled
+        outlined
+        hide-bottom-space
         v-model="loginForm.password"
-        :label="$t('lang.password')"
+        :placeholder="$t('lang.password')"
         :type="isPwd ? 'password' : 'text'"
         :rules="[(val) => (val && val.length > 0) || $t('lang.input_password_empty')]"
         color="white"
@@ -31,73 +37,82 @@
         <template v-slot:append>
           <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
         </template>
+        <template v-slot:prepend>
+          <q-icon name="lock_open" />
+        </template>
       </q-input>
 
-      <q-input
-        ref="verificationRef"
-        class="verification-input"
-        filled
-        type="text"
-        v-model="loginForm.captchaCode"
-        :label="$t('lang.verification_code')"
-        :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"
-        color="white"
-        @keyup.enter="onSubmit"
-      >
-        <template v-slot:append>
-          <img :src="verificationImg" @click="getCode()" />
-        </template>
-        <template v-slot:prepend>
-          <q-icon name="security" />
-        </template>
-      </q-input>
+      <!--      <q-input-->
+      <!--        ref="verificationRef"-->
+      <!--        class="verification-input"-->
+      <!--        filled-->
+      <!--        type="text"-->
+      <!--        v-model="loginForm.captchaCode"-->
+      <!--        :label="$t('lang.verification_code')"-->
+      <!--        :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"-->
+      <!--        color="white"-->
+      <!--        @keyup.enter="onSubmit"-->
+      <!--      >-->
+      <!--        <template v-slot:append>-->
+      <!--          <img :src="verificationImg" @click="getCode()" />-->
+      <!--        </template>-->
+      <!--        <template v-slot:prepend>-->
+      <!--          <q-icon name="security" />-->
+      <!--        </template>-->
+      <!--      </q-input>-->
 
       <!-- label="Remember password" -->
-      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">
-        <q-checkbox
-          rounded
-          v-model="isCheckRmb"
-          :label="$t('lang.remember_me')"
-          size="md"
-          style="font-size: 14px"
-          checked-icon="task_alt"
-          unchecked-icon="highlight_off"
-          color="amber-9"
-        />
-      </div>
+      <!--      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">-->
+      <!--        <q-checkbox-->
+      <!--          rounded-->
+      <!--          v-model="isCheckRmb"-->
+      <!--          :label="$t('lang.remember_me')"-->
+      <!--          size="md"-->
+      <!--          style="font-size: 14px"-->
+      <!--          checked-icon="task_alt"-->
+      <!--          unchecked-icon="highlight_off"-->
+      <!--          color="amber-9"-->
+      <!--        />-->
+      <!--      </div>-->
 
-      <div class="row justify-between items-center">
+      <div class="row items-center justify-end">
         <router-link class="forget-pwd-tip" to="/forgot-password">{{ $t("lang.forgot_password") }}?</router-link>
 
-        <router-link class="forget-pwd-tip" to="/register">
-          {{ $t("lang.signup_now") }}
-        </router-link>
+        <!--        <router-link class="forget-pwd-tip" to="/register">-->
+        <!--          {{ $t("lang.signup_now") }}-->
+        <!--        </router-link>-->
+      </div>
+      <div class="login-btn-list">
+        <q-btn
+          class="common-large-btn login-btn"
+          @click.prevent="onSubmit"
+          :label="$t('lang.log_in')"
+          type="submit"
+          color="brand"
+          rounded
+          size="md"
+        />
+
+        <q-btn
+          v-if="!isIOS()"
+          class="common-large-btn line-login-btn"
+          @click="loginViaLine"
+          type="submit"
+          color="brand"
+          rounded
+          size="md"
+        >
+          <img src="../assets/images/common/line-official.svg" />
+          <span>LINE Login</span>
+        </q-btn>
+      </div>
+
+      <hr class="end-of-form-separator" />
+
+      <div class="create-account row justify-center">
+        <router-link class="forget-pwd-tip" to="/register">{{ $t("lang.signup_now") }}</router-link>
       </div>
     </q-form>
-    <div class="login-btn-list">
-      <q-btn
-        class="common-large-btn"
-        @click.prevent="onSubmit"
-        :label="$t('lang.log_in')"
-        type="submit"
-        color="brand"
-        rounded
-        size="md"
-      />
-
-      <q-btn
-        v-if="!isIOS()"
-        class="common-large-btn line-login-btn"
-        @click="loginViaLine"
-        type="submit"
-        color="brand"
-        rounded
-        size="md"
-      >
-        <img src="../assets/images/common/line-official.svg" />
-        <span>LINE Login</span>
-      </q-btn>
-    </div>
   </div>
 </template>
 
@@ -127,7 +142,7 @@ export default defineComponent({
     const loginForm = reactive({
       loginName: "",
       password: "",
-      captchaCode: "",
+      captchaCode: "0000",
       codeId: ""
     });
     const $q = useQuasar();
@@ -149,26 +164,26 @@ export default defineComponent({
     const checkIp = ref("");
 
     const getCode = () => {
-      api
-        .get("/member/verificationEasyCode")
-        .then((res) => {
-          const response = res.data;
-          if (response.code === 0) {
-            verificationImg.value = "data:image/png;base64," + response.data.img;
-            loginForm.codeId = response.data.id;
-          }
-        })
-        .catch((e) => {
-          // $q.notify({
-          //   color: "negative",
-          //   position: "top",
-          //   message: res.data.message,
-          //   icon: "report_problem"
-          //     });
-        });
+      // api
+      //   .get("/member/verificationEasyCode")
+      //   .then((res) => {
+      //     const response = res.data;
+      //     if (response.code === 0) {
+      //       verificationImg.value = "data:image/png;base64," + response.data.img;
+      //       loginForm.codeId = response.data.id;
+      //     }
+      //   })
+      //   .catch((e) => {
+      //     // $q.notify({
+      //     //   color: "negative",
+      //     //   position: "top",
+      //     //   message: res.data.message,
+      //     //   icon: "report_problem"
+      //     //     });
+      //   });
     };
 
-    const isCheckRmb = ref(false);
+    const isCheckRmb = ref(true);
 
     const checkRememberPwd = () => {
       const d = localStorage.getItem("userpass");
@@ -360,6 +375,8 @@ export default defineComponent({
 
   .line-login-btn {
     background: $line-app;
+    width: 100%;
+    height: 50px;
 
     img {
       width: 28px;
@@ -392,6 +409,7 @@ export default defineComponent({
   width: calc(100% - 12px);
   max-width: 600px;
   margin: 0 auto;
+  height: calc(100vh - 130px);
 }
 
 .mui-row {
@@ -414,5 +432,21 @@ export default defineComponent({
 
 .q-field--dark:not(.q-field--highlighted) .q-field__label {
   color: #979797;
+}
+
+.login-btn {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+}
+
+.end-of-form-separator {
+  margin: 15px 0px 0px;
+  border-color: #ffffff26;
+}
+
+.create-account {
+  margin: 20px 0px;
+  text-align: center;
 }
 </style>
