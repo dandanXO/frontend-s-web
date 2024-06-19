@@ -1,38 +1,40 @@
 <template>
-    <div class="jackpot">
-      <div class="jackpot-txt">
-        <q-spinner-gears  v-if="isLoading" color="purple" size="1em"/>
-        <span v-else>{{ (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) || '' }}</span>
-      </div>
+  <div class="jackpot">
+    <div class="jackpot-txt">
+      <q-spinner-gears v-if="isLoading" color="purple" size="1em" />
+      <span v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { watch, onUnmounted, ref, onMounted } from 'vue';
 import { api } from 'boot/axios';
+import { useRoute } from 'vue-router'
 
 const jackpotPrizeAmt = ref();
-const isLoading = ref(false);
+const isLoading = ref();
 const refetchJackpotInterval = ref();
 const jackpotTickerInterval = ref();
+const route = useRoute();
 
-const fetchJackpot = (isInit) => {
-  if(isInit) {
+const fetchJackpot = () => {
+  if (isLoading.value === undefined) {
     isLoading.value = true;
   }
 
   api.get("/member/jackpot-amount").then((res) => {
-      const response = res.data
-      jackpotPrizeAmt.value = Math.round(response.data);
-      isLoading.value = false;
+    const response = res.data
+    jackpotPrizeAmt.value = Math.round(response.data);
+    isLoading.value = false;
   })
-  .catch((e) => {
+    .catch((e) => {
       console.log(e);
       isLoading.value = false;
-  });
+    });
 }
 
-onMounted(() => {
+const startJackpotInterval = () => {
   fetchJackpot(true);
 
   jackpotTickerInterval.value = setInterval(() => {
@@ -42,12 +44,30 @@ onMounted(() => {
   refetchJackpotInterval.value = setInterval(() => {
     fetchJackpot();
   }, 30000)
+}
+
+const clearJackpotInterval = () => {
+  clearInterval(jackpotTickerInterval.value);
+  clearInterval(refetchJackpotInterval.value);
+}
+
+watch(() => route.query.page, () => {
+  if (route.query.page) {
+    clearJackpotInterval();
+  } else {
+    startJackpotInterval();
+  }
+})
+
+onMounted(() => {
+  if (route.query.page) {
+  } else {
+    startJackpotInterval();
+  }
 })
 
 onUnmounted(() => {
-  clearInterval(jackpotTickerInterval.value);
-
-  clearInterval(refetchJackpotInterval);
+  clearJackpotInterval();
 })
 </script>
 
