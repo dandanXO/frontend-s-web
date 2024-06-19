@@ -7,6 +7,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import { useRouter } from "vue-router";
 import i18n from "../i18n/index";
 
+/* eslint-disable */
 const toRawType = (value) => {
   return Object.prototype.toString.call(value).slice(8, -1)
 }
@@ -156,51 +157,25 @@ const https = (api) => {
   const store = useStore()
   const token = store.state.user.token;
   const currentHost = window.location.host
-  const thaiHost = "affiliate-web.monemental.com"
-  const indHost = "ind-nfaet6t.exerpsison.com"
-  const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
-  const lhHost = "lh1-affiliate.phoicynxeey.com"
-  const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
-  const vnmHost = "vnm-affiliate.th80to83w1.com"
-  const krwHost = "krw-affiliate.hiemloelebc.com";
+  // const thaiHost = "affiliate-web.monemental.com"
+  // const indHost = "ind-nfaet6t.exerpsison.com"
+  // const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
+  // const lhHost = "lh1-affiliate.phoicynxeey.com"
+  // const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
+  // const vnmHost = "vnm-affiliate.th80to83w1.com"
+  // const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
   const isAff = api === 'affiliate'
   const isCr = api === 'cashier'
   let apiUrl = process.env.VUE_APP_RST_API;
-  switch (currentHost) {
-    case thaiHost:
-      apiUrl = isAff ? process.env.VUE_APP_TH_RST_API : (isCr ? process.env.VUE_APP_TH_CR_API : process.env.VUE_APP_TH_BASE_API)
-      break
 
-    case indHost:
-      apiUrl = isAff ? process.env.VUE_APP_IND_RST_API : (isCr ? process.env.VUE_APP_IND_CR_API : process.env.VUE_APP_IND_BASE_API)
-      break
-
-    case ind2Host:
-      apiUrl = isAff ? process.env.VUE_APP_IND2_BASE_API : (isCr ? process.env.VUE_APP_IND2_CR_API : process.env.VUE_APP_IND2_BASE_API)
-      break
-
-    case lhHost:
-      apiUrl = isAff ? process.env.VUE_APP_LH_RST_API : (isCr ? process.env.VUE_APP_LH_CR_API : process.env.VUE_APP_LH_BASE_API)
-      break
-
-    case lh2Host:
-      apiUrl = isAff ? process.env.VUE_APP_LH2_RST_API : (isCr ? process.env.VUE_APP_LH2_CR_API : process.env.VUE_APP_LH2_BASE_API)
-      break
-
-    case vnmHost:
-      apiUrl = isAff ? process.env.VUE_APP_VNM_RST_API : (isCr ? process.env.VUE_APP_VNM_CR_API : process.env.VUE_APP_VNM_BASE_API)
-      break
-
-    case krwHost:
-      apiUrl = isAff ? process.env.VUE_APP_KRW_RST_API : (isCr ? process.env.VUE_APP_KRW_CR_API : process.env.VUE_APP_KRW_BASE_API)
-      break
-
-    default:
-      apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)
-  }
-  if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
-    apiUrl = isAff ? 'https://api-gayeway.mpg1cxp9.com/aff' : (isCr ? 'https://api-gayeway.mpg1cxp9.com/csr' : 'https://api-gayeway.mpg1cxp9.com/rst')
+  console.log(currentHost)
+  const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
+  // TODO:: change this one to condition global or China.
+  if (currentHost.indexOf("dy") > -1 || currentHost.indexOf("xf") > -1 || currentHost.indexOf("lh") > -1 || isLocalhost) {
+    apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
+  } else {
+    apiUrl = isAff ? process.env.VUE_GLOBAL_RST_API : (isCr ? process.env.VUE_GLOBAL_CR_API : process.env.VUE_GLOBAL_AFF_API)
   }
 
   const config = {
