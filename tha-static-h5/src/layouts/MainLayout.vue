@@ -190,7 +190,7 @@ import AccountPage from "pages/AccountPage.vue";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
-import { openLiveChat } from "src/boot/utils";
+import { openLiveChat, isAndroid } from "src/boot/utils";
 import AppDownload from "../components/AppDownload.vue";
 
 export default defineComponent({
