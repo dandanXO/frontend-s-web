@@ -14,7 +14,7 @@
           <div class="node-icon"><q-img :src="imgURL + item.nodeIcon" style="height: 26px; width: 26px;"
               :fit="'scale-down'">
               <template v-slot:loading>
-                <q-spinner-gears size="0.5em" />
+                <q-spinner-orbit size="0.5em" />
               </template>
             </q-img></div>
           <div class="">{{ item.nodeName }}</div>
@@ -273,7 +273,6 @@ $node-color: #dd4645;
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: 2px solid #4b4b4b;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
@@ -338,15 +337,11 @@ $node-color: #dd4645;
       padding: 10px 8px;
       cursor: pointer;
       background: #252e43;
-      box-shadow: 6px 6px #161b23;
-
-      &:hover {}
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
       &.active {
         background-color: #1c1c32;
         border-radius: 6px;
-        border: solid 1px #1c1c32;
-        box-shadow: none;
         filter: drop-shadow(0px 0px 3px #ffffff);
       }
     }

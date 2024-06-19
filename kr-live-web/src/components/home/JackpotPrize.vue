@@ -4,7 +4,7 @@
   }" />
   <div class="jackpot">
     <div class="jackpot-txt">
-      <q-spinner-gears v-if="isLoading" color="purple" size="1em" />
+      <q-spinner-orbit v-if="isLoading" color="purple" size="1em" />
       <span v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
     </div>
   </div>

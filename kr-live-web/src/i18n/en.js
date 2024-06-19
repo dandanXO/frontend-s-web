@@ -132,10 +132,15 @@ export default {
     // feedback end
     // deposit start
     deposit_payment_channel: "Payment Channel",
+    deposit_confirm_deposit: "Deposit",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
     // deposit end
     // personal start
+    personal_nickname: "Nickname",
     personal_real_name: "Real Name",
     personal_id: "ID",
+    personal_phone: "Phone",
     // personal end
     langVal: "en",
     register: "Register",

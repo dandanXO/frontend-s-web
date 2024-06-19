@@ -64,7 +64,7 @@
           <span class="date-time">{{ formatDate(selected.createTime) }}</span>
           <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
           <div class="content-loading" v-if="isFetchingContent">
-            <q-spinner-gears size="50px" /><span>{{ $t('lang.feedback_loading_content') }}</span>
+            <q-spinner-orbit size="50px" /><span>{{ $t('lang.feedback_loading_content') }}</span>
           </div>
           <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
         </div>

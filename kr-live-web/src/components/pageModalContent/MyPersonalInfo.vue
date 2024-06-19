@@ -2,7 +2,7 @@
   <div class="form-wrapper">
     <form class="personal-info-form form-template">
       <div class="form-item">
-        <label>닉네임</label>
+        <label>{{ $t('lang.personal_nickname') }}</label>
         <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
           ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
       </div>
@@ -22,7 +22,7 @@
         <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
       </div> -->
       <div class="form-item">
-        <label>전화</label>
+        <label>{{ $t('lang.personal_phone') }}</label>
         <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
           @update:model-value="updateTouch" />
       </div>

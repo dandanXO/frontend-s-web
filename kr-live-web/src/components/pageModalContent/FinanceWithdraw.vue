@@ -10,7 +10,7 @@
             <div class="withdraw-img">
               <q-img :src="imgURL + '/withdraw/' + method.icon" style="height: 26px; width: 26px;" :fit="'scale-down'">
                 <template v-slot:loading>
-                  <q-spinner-gears size="0.5em" />
+                  <q-spinner-orbit size="0.5em" />
                 </template></q-img>
             </div>
             <div class="type-name">{{ method.name }}</div>
