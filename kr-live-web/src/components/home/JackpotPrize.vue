@@ -1,10 +1,12 @@
 <template>
-  <div class="jackpot">
+  <q-intersection @visibility="(isElemVisible) => {
+    isVisible = isElemVisible
+  }" class="jackpot">
     <div class="jackpot-txt">
       <q-spinner-gears v-if="isLoading" color="purple" size="1em" />
       <span v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
     </div>
-  </div>
+  </q-intersection>
 </template>
 
 <script setup>
@@ -17,6 +19,7 @@ const isLoading = ref();
 const refetchJackpotInterval = ref();
 const jackpotTickerInterval = ref();
 const route = useRoute();
+const isVisible = ref(false);
 
 const fetchJackpot = () => {
   if (isLoading.value === undefined) {
@@ -35,24 +38,28 @@ const fetchJackpot = () => {
 }
 
 const startJackpotInterval = () => {
-  fetchJackpot(true);
+  if (!jackpotTickerInterval.value && !refetchJackpotInterval.value) {
+    fetchJackpot(true);
 
-  jackpotTickerInterval.value = setInterval(() => {
-    jackpotPrizeAmt.value++;
-  }, 200);
+    jackpotTickerInterval.value = setInterval(() => {
+      jackpotPrizeAmt.value++;
+    }, 200);
 
-  refetchJackpotInterval.value = setInterval(() => {
-    fetchJackpot();
-  }, 30000)
+    refetchJackpotInterval.value = setInterval(() => {
+      fetchJackpot();
+    }, 30000)
+  }
 }
 
 const clearJackpotInterval = () => {
   clearInterval(jackpotTickerInterval.value);
   clearInterval(refetchJackpotInterval.value);
+  jackpotTickerInterval.value = undefined;
+  refetchJackpotInterval.value = undefined;
 }
 
-watch(() => route.query.page, () => {
-  if (route.query.page) {
+watch(() => route.query.page || isVisible.value, () => {
+  if (route.query.page || !isVisible.value) {
     clearJackpotInterval();
   } else {
     startJackpotInterval();
