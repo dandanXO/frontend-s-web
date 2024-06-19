@@ -6,7 +6,11 @@
         <ReminderText :reminderText="$t('lang.withdraw_reminder_text')" />
 
         <div class="withdrawalmethod">
-          <div v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
+          <template v-if="!isLoaded">
+            <q-skeleton v-for="rectSkeleton in [1, 2, 3]" type="rect" class="withdraw-type-item"
+              style="width:250px; height:45px;" :key="rectSkeleton" />
+          </template>
+          <div v-else v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
             @click="selectMethod(method, i)" :class="{ active: i === activeItem }">
             <div class="withdraw-img">
               <q-img :src="imgURL + '/withdraw/' + method.icon" style="height: 26px; width: 26px;" :fit="'scale-down'">
@@ -22,7 +26,8 @@
         <q-form ref="withdrawFormRef" class="form-template">
           <div class="form-item">
             <label>{{ chooseLabel() }}</label>
-            <q-select dense v-show="isLoaded" hide-bottom-space outlined ref="cardRef" v-model="withdrawInfo.cardId"
+            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-select v-else dense hide-bottom-space outlined ref="cardRef" v-model="withdrawInfo.cardId"
               option-value="id" emit-value class="withdraw-selection" :options="withdrawState.bankCardList" map-options
               :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]" lazy-rules>
               <template v-slot:no-option>
@@ -66,8 +71,9 @@
 
           <div class="form-item">
             <label>{{ $t('lang.withdraw_withdraw_amount') }}</label>
-            <q-input type="number" dense outlined ref="amountRef" v-model="withdrawInfo.amount" class="withdraw-field"
-              :rules="[
+            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-input v-else type="number" dense outlined ref="amountRef" v-model="withdrawInfo.amount"
+              class="withdraw-field" :rules="[
                 (val) => !!val || '출금 금액을 입력해주세요',
                 (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                 (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
@@ -83,14 +89,18 @@
             </q-input>
 
             <div class="select-amt-btn-wrapper">
-              <q-btn class="select-amt-btn" v-for="(item, index) in countOptions" :key="index" size="md"
-                :label="isUSDT ? `${item} USDT` : item + '만원'" @click="updateWithdrawItem(item)" />
+              <template v-for="(item, index) in countOptions" :key="index">
+                <q-skeleton v-if="!isLoaded" type="QBtn" />
+                <q-btn v-else class="select-amt-btn" size="md" :label="isUSDT ? `${item} USDT` : item + '만원'"
+                  @click="updateWithdrawItem(item)" />
+              </template>
             </div>
           </div>
 
           <div class="form-item q-pt-xs">
             <label>{{ $t('lang.withdraw_withdraw_password') }}</label>
-            <q-input :type="isPwd ? 'password' : 'text'" dense outlined ref="withdrawPassRef"
+            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-input v-else :type="isPwd ? 'password' : 'text'" dense outlined ref="withdrawPassRef"
               v-model="withdrawInfo.withdrawPassword" class="withdraw-field" :rules="[
                 (val) => !!val || '출금 비밀번호를 입력하세요',
                 (val) => val && val.length === 4 || $t('lang.withdraw_withdraw_code_4_digits'),
@@ -102,7 +112,8 @@
             </q-input>
           </div>
 
-          <div class="text-grey" v-show="selectedWithdrawalMethod">
+          <q-skeleton v-if="!isLoaded" type="text" />
+          <div v-else-if="selectedWithdrawalMethod" class="text-grey">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "출금금액/건: " +
@@ -204,7 +215,7 @@ const loadCards = () => {
   return new Promise((resolve) => {
     api.get("/session/bankCard").then((resp) => {
       const response = resp.data;
-      isLoaded.value = true;
+
       withdrawState.bankCardList = [];
       if (response.code === 0) {
         response.data.forEach(element => {
@@ -392,6 +403,12 @@ const initWithdraw = () => {
     }
 
     store.getBalance();
+
+    isLoaded.value = true;
+  }).catch(() => {
+    isLoaded.value = true;
+  }).finally(() => {
+    isLoaded.value = true;
   })
 }
 
