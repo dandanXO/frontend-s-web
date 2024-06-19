@@ -21,7 +21,7 @@
       </div>
       <div class="right-group">
         <div class="primary-button yellow" style="width:100px;height:30px;font-size:14px;" @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
     </div>
@@ -41,17 +41,17 @@
         </div>
         <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           @click="onLogoutSubmit">
-          로그 아웃
+          {{ $t('lang.logout') }}
         </div>
       </div>
       <div class="actions-bottombar-controls" v-if="!props.isH5TopBar">
         <router-link class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;"
           to="/?page=finance/deposit">
-          송금신청
+          {{ $t('lang.menu_deposit') }}
         </router-link>
         <router-link class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           to="/?page=finance/withdraw">
-          출금신청
+          {{ $t('lang.menu_withdraw') }}
         </router-link>
       </div>
     </div>

@@ -7,15 +7,14 @@
   width: calc(33% - 20px);
   padding: 0.2rem 0.35rem !important;
   justify-content: flex-start !important;
-  box-shadow: none !important;
 
   filter: none !important;
 
   &.active {
     background: $linear-bg-2 !important;
-    border: 3px solid $primary !important;
     background: $linear-bg-2;
-    box-shadow: 0px -26px 20px 0px rgba($purple-color, 0.76) inset, 0px 8px 8px 0px rgba(221, 178, 255, 0.26) inset;
+    // box-shadow: rgba(93, 217, 255, 0.3882352941) 0px 7px 29px 0px !important;
+    // box-shadow: 0px -26px 20px 0px rgba($purple-color, 0.76) inset, 0px 8px 8px 0px rgba(221, 178, 255, 0.26) inset;
   }
 
   .node-icon {

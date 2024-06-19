@@ -48,7 +48,7 @@
             </q-scroll-area>
 
             <div class="loading-div" v-if="isLoading">
-              <q-spinner-gears :color="'primary'" size="8em" />
+              <q-spinner-orbit :color="'primary'" size="8em" />
             </div>
 
             <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px"
@@ -133,7 +133,7 @@
           </q-scroll-area>
 
           <div class="loading-div" v-if="isLoading">
-            <q-spinner-gears :color="'primary'" size="8em" />
+            <q-spinner-orbit :color="'primary'" size="8em" />
           </div>
 
           <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px"

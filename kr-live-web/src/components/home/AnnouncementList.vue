@@ -7,7 +7,7 @@
                     더보기</router-link>
             </div>
             <div class="news-item-box" v-if="isLoading" style="display:flex;justify-content:center;">
-                <q-spinner-gears size="2em" />
+                <q-spinner-orbit size="2em" />
             </div>
             <template v-else-if="announcementList.length > 0">
                 <div v-for="(item, index) in announcementList" :key="index" class="news-item-box">

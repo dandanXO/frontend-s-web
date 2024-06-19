@@ -10,6 +10,7 @@ export default {
     login_success_msg: "Login successfully",
     login_forget_pwd: "Forget Password",
     // login end
+    logout: "Log out",
     // register start
     reg_withdraw_password: "Withdraw Password",
     reg_withdraw_password_placeholder: "4 digit password for withdrawal",
@@ -129,7 +130,24 @@ export default {
     feedback_read: "Read",
     feedback_read_at: "Read at",
     // feedback end
-    
+    // deposit start
+    deposit_payment_channel: "Payment Channel",
+    deposit_confirm_deposit: "Deposit",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    // deposit end
+    // withdraw start
+    withdraw__bank_card: "Withdraw Bank Card",
+    withdraw_withdraw_amount: "Withdraw Amount",
+    withdraw_withdraw_password: "Withdraw Password",
+    withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
+    // withdraw end
+    // personal start
+    personal_nickname: "Nickname",
+    personal_real_name: "Real Name",
+    personal_id: "ID",
+    personal_phone: "Phone",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -340,7 +358,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",

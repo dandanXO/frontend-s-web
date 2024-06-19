@@ -1,8 +1,21 @@
 <template>
   <div class="form-wrapper">
-    <div class="modal-body-wrap" v-if="!isDisplay">
+    <div v-if="!isDisplay">
+
+      <div class="deposit-reminder">
+        <div class="content">
+          <div class="header">
+            <q-icon name="warning" color="orange" size="1.5em" />
+            <div>{{ $t('lang.deposit_reminder') }}</div>
+            <div class=caption>{{ $t('lang.deposit_reminder_caption') }}</div>
+          </div>
+          <div class="deposit-reminder-text">{{ $t('lang.deposit_reminder_text') }}</div>
+          <div class="action"></div>
+        </div>
+      </div>
+
       <div class="deposit-options">
-        <div class="lil-title">결제 채널</div>
+        <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
         <div class="deposit-option-container">
           <div class="node-wrapper">
             <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
@@ -146,7 +159,7 @@
 
     <div class="action-buttons">
       <q-btn v-if="isDisplay" class="primary-button blue" :label="'신청완료'" v-close-popup />
-      <q-btn v-else class="primary-button blue" @click="confirmDeposit" :label="'입금하기'" />
+      <q-btn v-else class="primary-button blue" @click="confirmDeposit" :label="$t('lang.deposit_confirm_deposit')" />
     </div>
   </div>
 </template>
@@ -628,31 +641,49 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.modal-body-wrap {}
+.deposit-reminder {
+  display: flex;
+  border-left: 3px solid #ff9100;
+  background-color: #fbfbfb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 10px 0;
 
-.modal-body-buttons {
-  width: 100%;
-
-  .form-button {
-    height: 70px;
-    width: 200px;
-    background-size: contain;
+  .content {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 18px;
-    padding-bottom: 5px;
+    flex-direction: column;
+    flex: 1;
 
-    &.blue {
-      background: url("../../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
+    .header {
+      background-color: #fff4e5;
+      color: #242321;
+      padding: 5px 10px;
+      width: 100%;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid #ededed;
+
+      .caption {
+        color: grey;
+        font-size: x-small;
+      }
     }
 
-    &.yellow {
-      background: url("../../assets/images/pages-modal/btn2-yellow.svg") no-repeat center center;
+    .deposit-reminder-text {
+      font-size: x-small;
+      white-space: pre-line;
+      background-color: transparent;
+      line-height: 1rem;
+      color: #242321;
+      padding: 5px 10px;
+      max-height: 80px;
+      overflow: auto;
     }
   }
 }
+
 
 .submit-message {
   // width: calc(100% - 40px);
