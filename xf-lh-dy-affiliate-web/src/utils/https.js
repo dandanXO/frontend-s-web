@@ -199,9 +199,10 @@ const https = (api) => {
     default:
       apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_BASE_API)
   }
-  // if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
-  //   apiUrl = isAff ? 'https://api-gayeway.mpg1cxp9.com/aff' : (isCr ? 'https://api-gayeway.mpg1cxp9.com/csr' : 'https://api-gayeway.mpg1cxp9.com/rst')
-  // }
+  if (window.location.pathname.indexOf("dy") > -1 || window.location.pathname.indexOf("xf") > -1 || window.location.pathname.indexOf("lh") > -1) {
+    apiUrl = isAff ? 'https://api-gayeway.mpg1cxp9.com/aff' : (isCr ? 'https://api-gayeway.mpg1cxp9.com/csr' : 'https://api-gayeway.mpg1cxp9.com/rst')
+  }
+
   const config = {
     baseURL: apiUrl,
     headers: {
