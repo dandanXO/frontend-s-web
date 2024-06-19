@@ -529,10 +529,8 @@ export default defineComponent({
       ) {
         $q.loading.hide();
       } else {
-        const sidParam = store.visitorId;
-
         (async () => {
-          regForm.sid = sidParam;
+          regForm.sid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId;
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -576,6 +574,14 @@ export default defineComponent({
                     }
                   );
                 }
+
+                localStorage.setItem(
+                  "userpass",
+                  JSON.stringify({
+                    loginName: regForm.loginName.trim(),
+                    password: regForm.password
+                  })
+                );
 
                 $q.notify({
                   color: "positive",

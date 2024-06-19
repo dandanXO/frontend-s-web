@@ -14,6 +14,7 @@ import * as _ from "lodash";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
+import axios from "axios";
 
 export default defineComponent({
   name: "App",
@@ -215,7 +216,8 @@ export default defineComponent({
       var affiliateCode = "4DF2C4";
 
       // sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((ret) => {
+        const res = ret.data;
         if (res.code === 0) {
           sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
           // sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
@@ -259,7 +261,8 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
-                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
+                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((ret) => {
+                      const res = ret.data;
                       if (res.code === 0) {
                         // debugger;
                         sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
@@ -296,6 +299,23 @@ export default defineComponent({
       );
     };
 
+    const getOnlineStatApi = async () => {
+      // console.log("Ok Online.");
+      const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
+      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId;
+      console.log(theSid);
+
+      if (theSid) {
+        const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
+          params: {
+            way: way,
+            sid: theSid,
+            siteCode: "th1"
+          }
+        });
+      }
+    };
+
     onMounted(() => {
       checkSID();
       initCsWeb();
@@ -315,6 +335,9 @@ export default defineComponent({
       } else {
         trackH5Affiliate();
       }
+
+      setTimeout(getOnlineStatApi, 2000);
+      setInterval(getOnlineStatApi, 60000);
     });
   }
 });

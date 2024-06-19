@@ -198,7 +198,6 @@ export default defineComponent({
 
     const onSubmit = () => {
       const appVer = appVersionNo.value;
-      const sidParam = store.visitorId;
       (async () => {
         loginNameRef.value.validate();
         passwordRef.value.validate();
@@ -212,7 +211,7 @@ export default defineComponent({
             .memberLogin({
               loginName: loginForm.loginName.trim(),
               password: loginForm.password,
-              sid: sidParam,
+              sid: store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId,
               captchaCode: loginForm.captchaCode,
               codeId: loginForm.codeId,
               ...(Platform.is.android && Platform.is.capacitor ? { appVersion: appVer } : {})
@@ -276,7 +275,7 @@ export default defineComponent({
             if (res.data && res.data.access_token) {
               const siteId = process.env.SITEID;
               const accessToken = res.data.access_token;
-              const sidParam = store.visitorId;
+              const sidParam = store.googleadid ? store.googleadid : store.aaid ? store.aaid : store.visitorId;
 
               (async () => {
                 var regDevice = Platform.is.mobile ? "H5" : "WEB";

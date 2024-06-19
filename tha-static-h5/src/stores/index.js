@@ -38,7 +38,9 @@ export const userStore = defineStore("userStore", {
       phoneVerified: false,
       emailVerified: false,
       appDownloadUrl: "",
-      visitorId: ""
+      visitorId: "",
+      aaid: "",
+      googleadid: ""
     };
   },
   actions: {
