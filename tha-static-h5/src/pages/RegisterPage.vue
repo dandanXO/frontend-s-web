@@ -253,6 +253,12 @@
           />
         </div>
       </div>
+
+      <div class="text-center q-mb-md q-mt-md">
+        <router-link class="forget-pwd-tip" to="/login">
+          {{ $t("lang.already_a_member_signin_now") }}
+        </router-link>
+      </div>
       <!--        </q-step>-->
       <!--      </q-stepper>-->
     </q-form>
@@ -294,12 +300,6 @@
         </q-form>
       </q-card>
     </q-dialog>
-
-    <div class="text-center q-mb-md">
-      <router-link class="forget-pwd-tip" to="/login">
-        {{ $t("lang.already_a_member_signin_now") }}
-      </router-link>
-    </div>
   </div>
 </template>
 
