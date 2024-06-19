@@ -34,7 +34,9 @@
           lazy-rules
           :rules="[
             (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12'),
+            (val) =>
+              (val && (pwdStrength == 'normal' || pwdStrength == 'strong')) || $t('lang.password_must_at_least_good')
           ]"
           color="white"
           clearable
@@ -46,26 +48,26 @@
             <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
           </template>
         </q-input>
-        <!--        <div v-if="regForm.password" class="password-str-div">-->
-        <!--          <span-->
-        <!--            :class="{-->
-        <!--              'weak-pwd': pwdStrength == 'weak',-->
-        <!--              'normal-pwd': pwdStrength == 'normal',-->
-        <!--              'strong-pwd': pwdStrength == 'strong'-->
-        <!--            }"-->
-        <!--          >-->
-        <!--            {{ $t("lang.weak_level") }}-->
-        <!--          </span>-->
-        <!--          <span-->
-        <!--            :class="{-->
-        <!--              'normal-pwd': pwdStrength == 'normal',-->
-        <!--              'strong-pwd': pwdStrength == 'strong'-->
-        <!--            }"-->
-        <!--          >-->
-        <!--            {{ $t("lang.medium_level") }}-->
-        <!--          </span>-->
-        <!--          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>-->
-        <!--        </div>-->
+        <div v-if="regForm.password" class="password-str-div">
+          <span
+            :class="{
+              'weak-pwd': pwdStrength == 'weak',
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
+            {{ $t("lang.weak_level") }}
+          </span>
+          <span
+            :class="{
+              'normal-pwd': pwdStrength == 'normal',
+              'strong-pwd': pwdStrength == 'strong'
+            }"
+          >
+            {{ $t("lang.medium_level") }}
+          </span>
+          <span :class="{ 'strong-pwd': pwdStrength == 'strong' }">{{ $t("lang.strong_level") }}</span>
+        </div>
 
         <!--        <q-input-->
         <!--          ref="confirmPwdRef"-->
@@ -94,24 +96,25 @@
         <!--          </template>-->
         <!--        </q-input>-->
 
-        <!--        <q-input-->
-        <!--          ref="telRef"-->
-        <!--          filled-->
-        <!--          v-model="regForm.telephone"-->
-        <!--          :label="$t('lang.phone_number')"-->
-        <!--          lazy-rules-->
-        <!--          :rules="[-->
-        <!--            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),-->
-        <!--            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone'),-->
-        <!--            isValidPhone-->
-        <!--          ]"-->
-        <!--          color="white"-->
-        <!--          clearable-->
-        <!--        >-->
-        <!--          <template v-slot:prepend>-->
-        <!--            <q-icon name="smartphone" />-->
-        <!--          </template>-->
-        <!--        </q-input>-->
+        <q-input
+          ref="telRef"
+          outlined
+          hide-bottom-space
+          v-model="regForm.telephone"
+          :placeholder="$t('lang.phone_number')"
+          lazy-rules
+          :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone'),
+            isValidPhone
+          ]"
+          color="white"
+          clearable
+        >
+          <template v-slot:prepend>
+            <q-icon name="smartphone" />
+          </template>
+        </q-input>
 
         <!--        <div class="telephone-otp-row">-->
         <!--          <q-input-->
@@ -191,13 +194,14 @@
           </template>
         </q-input> -->
 
-        <!--        <q-input
+        <q-input
           ref="verificationRef"
-          filled
+          outlined
+          hide-bottom-space
           class="verification-input"
           type="text"
           v-model="regForm.captchaCode"
-          :label="$t('lang.captcha_code')"
+          :placeholder="$t('lang.captcha_code')"
           lazy-rules
           color="white"
           :rules="[(val) => (val && val.length > 3) || $t('lang.enter_captcha_code')]"
@@ -208,14 +212,14 @@
           <template v-slot:prepend>
             <q-icon name="security" />
           </template>
-        </q-input>-->
+        </q-input>
 
         <q-input
-          style="display: none"
           ref="codeAffiliate"
-          filled
+          outlined
+          hide-bottom-space
           v-model="regForm.codeAffiliate"
-          :label="$t('lang.affiliate_code')"
+          :placeholder="$t('lang.affiliate_code')"
           color="white"
           :disable="hasAffiliate"
           clearable
@@ -305,7 +309,6 @@ import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
@@ -322,7 +325,7 @@ export default defineComponent({
     const isAgreeReg = ref(true);
 
     onMounted(() => {
-      //getCode();
+      getCode();
       getAffiliateCode();
       getReferralCode();
       // api
@@ -347,7 +350,7 @@ export default defineComponent({
       loginName: "",
       password: "",
       // confirmPwd: "",
-      // telephone: "",
+      telephone: "",
       // smsCode: "",
       // smsCodeId: "",
       // email: "",
@@ -356,7 +359,7 @@ export default defineComponent({
       // cardAccountSurname: "",
       regHost: location.hostname,
       codeId: "",
-      captchaCode: "0000"
+      captchaCode: ""
       // birthday: ""
     });
 
@@ -366,7 +369,7 @@ export default defineComponent({
       telephoneVerificationCaptchaCodeId: ""
     });
 
-    /*const getCode = () => {
+    const getCode = () => {
       api
         .get("/member/verificationCode")
         .then((res) => {
@@ -386,7 +389,7 @@ export default defineComponent({
           //   icon: "report_problem"
           // });
         });
-    };*/
+    };
     const telephoneVerificationCaptchaImg = ref("");
     const isOtpSending = ref(false);
 
@@ -410,7 +413,7 @@ export default defineComponent({
           if (response.code === 0) {
             telephoneVerificationCaptchaImg.value = "data:image/png;base64," + response.data.img;
             verifyTelephoneForm.telephoneVerificationCaptchaCodeId = response.data.id;
-            //verificationRef.value.resetValidation();
+            verificationRef.value.resetValidation();
           }
         })
         .catch((e) => {
@@ -467,7 +470,7 @@ export default defineComponent({
     const telOtpCodeRef = ref();
     const telephoneVerifyCaptchaCodeRef = ref();
     const emailRef = ref();
-    //const verificationRef = ref();
+    const verificationRef = ref();
     const cardAccountNameRef = ref();
     const cardAccountSurnameRef = ref();
     // const birthdayRef = ref();
@@ -506,10 +509,10 @@ export default defineComponent({
       loginNameRef.value.validate();
       pwdRef.value.validate();
       // confirmPwdRef.value.validate();
-      // telRef.value.validate();
+      telRef.value.validate();
       // telOtpCodeRef.value.validate();
       // emailRef.value.validate();
-      //verificationRef.value.validate();
+      verificationRef.value.validate();
       $q.loading.show({
         message: t("lang.loading")
       });
@@ -517,12 +520,12 @@ export default defineComponent({
       if (
         loginNameRef.value.hasError ||
         pwdRef.value.hasError ||
-        isAgreeReg.value === false
+        isAgreeReg.value === false ||
         // confirmPwdRef.value.hasError ||
-        // telRef.value.hasError ||
+        telRef.value.hasError ||
         // telOtpCodeRef.value.hasError
         // emailRef.value.hasError ||
-        //verificationRef.value.hasError
+        verificationRef.value.hasError
       ) {
         $q.loading.hide();
       } else {
@@ -591,48 +594,48 @@ export default defineComponent({
             .catch((error) => {
               $q.loading.hide();
             });
-          //getCode();
+          getCode();
         })();
       }
     };
 
-    // watch(
-    //   () => regForm.password,
-    //   () => {
-    //     pwdStrength.value = "";
-    //     var pwd = regForm.password;
-    //     var result = 0;
-    //     if (pwd) {
-    //       for (var i = 0, len = pwd.length; i < len; ++i) {
-    //         result |= charType(pwd.charCodeAt(i));
-    //       }
-    //     }
-    //
-    //     var level = 0;
-    //     for (var i = 0; i <= 4; i++) {
-    //       if (result & 1) {
-    //         level++;
-    //       }
-    //       result = result >>> 1;
-    //     }
-    //     if (pwd && pwd.length >= 6) {
-    //       switch (level) {
-    //         case 1:
-    //           pwdStrength.value = "weak";
-    //           break;
-    //         case 2:
-    //           pwdStrength.value = "normal";
-    //           break;
-    //         case 3:
-    //         case 4:
-    //           pwdStrength.value = "strong";
-    //           break;
-    //       }
-    //     } else {
-    //       pwdStrength.value = "weak";
-    //     }
-    //   }
-    // );
+    watch(
+      () => regForm.password,
+      () => {
+        pwdStrength.value = "";
+        var pwd = regForm.password;
+        var result = 0;
+        if (pwd) {
+          for (var i = 0, len = pwd.length; i < len; ++i) {
+            result |= charType(pwd.charCodeAt(i));
+          }
+        }
+
+        var level = 0;
+        for (var i = 0; i <= 4; i++) {
+          if (result & 1) {
+            level++;
+          }
+          result = result >>> 1;
+        }
+        if (pwd && pwd.length >= 6) {
+          switch (level) {
+            case 1:
+              pwdStrength.value = "weak";
+              break;
+            case 2:
+              pwdStrength.value = "normal";
+              break;
+            case 3:
+            case 4:
+              pwdStrength.value = "strong";
+              break;
+          }
+        } else {
+          pwdStrength.value = "weak";
+        }
+      }
+    );
 
     const bankCardModalState = reactive({
       visible: false,
@@ -691,7 +694,7 @@ export default defineComponent({
       telOtpCodeRef,
       telephoneVerifyCaptchaCodeRef,
       emailRef,
-      //verificationRef,
+      verificationRef,
       cardNumberRef,
       cardAccountNameRef,
       cardAccountSurnameRef,
@@ -701,7 +704,7 @@ export default defineComponent({
       isValidPhone,
       isPwd: ref(true),
       isCfmPwd: ref(true),
-      //getCode,
+      getCode,
       pwdStrength,
       selectBankType,
       selectedBankType,

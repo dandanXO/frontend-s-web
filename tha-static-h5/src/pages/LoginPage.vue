@@ -42,24 +42,25 @@
         </template>
       </q-input>
 
-      <!--      <q-input-->
-      <!--        ref="verificationRef"-->
-      <!--        class="verification-input"-->
-      <!--        filled-->
-      <!--        type="text"-->
-      <!--        v-model="loginForm.captchaCode"-->
-      <!--        :label="$t('lang.verification_code')"-->
-      <!--        :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"-->
-      <!--        color="white"-->
-      <!--        @keyup.enter="onSubmit"-->
-      <!--      >-->
-      <!--        <template v-slot:append>-->
-      <!--          <img :src="verificationImg" @click="getCode()" />-->
-      <!--        </template>-->
-      <!--        <template v-slot:prepend>-->
-      <!--          <q-icon name="security" />-->
-      <!--        </template>-->
-      <!--      </q-input>-->
+      <q-input
+        ref="verificationRef"
+        class="verification-input"
+        outlined
+        hide-bottom-space
+        type="text"
+        v-model="loginForm.captchaCode"
+        :placeholder="$t('lang.verification_code')"
+        :rules="[(val) => (val && val.length > 3) || $t('lang.input_code_empty')]"
+        color="white"
+        @keyup.enter="onSubmit"
+      >
+        <template v-slot:append>
+          <img :src="verificationImg" @click="getCode()" />
+        </template>
+        <template v-slot:prepend>
+          <q-icon name="security" />
+        </template>
+      </q-input>
 
       <!-- label="Remember password" -->
       <!--      <div class="mui-row" :class="isCheckRmb ? 'checked' : ''">-->
@@ -142,7 +143,7 @@ export default defineComponent({
     const loginForm = reactive({
       loginName: "",
       password: "",
-      captchaCode: "0000",
+      captchaCode: "",
       codeId: ""
     });
     const $q = useQuasar();
@@ -164,23 +165,23 @@ export default defineComponent({
     const checkIp = ref("");
 
     const getCode = () => {
-      // api
-      //   .get("/member/verificationEasyCode")
-      //   .then((res) => {
-      //     const response = res.data;
-      //     if (response.code === 0) {
-      //       verificationImg.value = "data:image/png;base64," + response.data.img;
-      //       loginForm.codeId = response.data.id;
-      //     }
-      //   })
-      //   .catch((e) => {
-      //     // $q.notify({
-      //     //   color: "negative",
-      //     //   position: "top",
-      //     //   message: res.data.message,
-      //     //   icon: "report_problem"
-      //     //     });
-      //   });
+      api
+        .get("/member/verificationEasyCode")
+        .then((res) => {
+          const response = res.data;
+          if (response.code === 0) {
+            verificationImg.value = "data:image/png;base64," + response.data.img;
+            loginForm.codeId = response.data.id;
+          }
+        })
+        .catch((e) => {
+          // $q.notify({
+          //   color: "negative",
+          //   position: "top",
+          //   message: res.data.message,
+          //   icon: "report_problem"
+          //     });
+        });
     };
 
     const isCheckRmb = ref(true);
@@ -201,7 +202,6 @@ export default defineComponent({
       (async () => {
         loginNameRef.value.validate();
         passwordRef.value.validate();
-        // verificationRef.value.validate();
         $q.loading.show({
           message: t("lang.loading")
         });
