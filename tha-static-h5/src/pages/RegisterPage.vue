@@ -553,6 +553,9 @@ export default defineComponent({
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
+                //ADJUST TRACKEVENT.
+                trackRegisterSuccessEvent();
+
                 //Submit FB register Event.
                 if (ui.isAffiliateA || ui.isAffiliateB) {
                   // console.log("Submit Event");
@@ -592,6 +595,7 @@ export default defineComponent({
               $q.loading.hide();
             })
             .catch((error) => {
+              trackRegisterFailedEvent();
               $q.loading.hide();
             });
           getCode();

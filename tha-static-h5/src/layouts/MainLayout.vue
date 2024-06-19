@@ -35,7 +35,7 @@
             <q-btn size="md" class="login-btn" to="/login">{{ $t("lang.login") }}</q-btn>
           </div>
           <div v-if="!$q.screen.gt.md" class="btn-deco-wrapper">
-            <q-btn size="md" class="register-btn" to="/register">
+            <q-btn size="md" class="register-btn" @click="goToRegister">
               {{ $t("lang.register") }}
             </q-btn>
           </div>
@@ -436,6 +436,19 @@ export default defineComponent({
       return balanceWithTwoDecimalPlaces;
     });
 
+    const goToRegister = () => {
+      trackRegisterClickEvent();
+      router.push("/register");
+    };
+
+    const trackRegisterClickEvent = () => {
+      if (ui.adjust_click_register_event && isAndroid()) {
+        console.log("Track Click Reg");
+        var adjustEvent = new AdjustEvent(ui.adjust_click_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
     onMounted(() => {
       checkRoute();
       store.getBalance();
@@ -464,7 +477,8 @@ export default defineComponent({
       openAffiliatePage,
       openLiveChat,
       router,
-      isLoginRegPage
+      isLoginRegPage,
+      goToRegister
     };
   }
 });
