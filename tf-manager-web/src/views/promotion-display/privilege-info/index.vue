@@ -218,7 +218,20 @@
         <el-row>
           <el-form-item :label="t('fields.gameTypeRollover')" prop="gameTypeRollover">
             <div v-for="(item, index) in rollover" :key="index">
-              <el-input style="width: 170px; margin-top: 5px;" v-model="item.key" /> : <el-input style="width: 170px " v-model="item.value" />
+              <el-select
+                v-model="item.key"
+                size="small"
+                :placeholder="t('fields.gameType')"
+                class="filter-item"
+                style="width: 170px; margin-top: 5px"
+              >
+                <el-option
+                  v-for="gameType in uiControl.gameTypeRollover"
+                  :key="gameType.key"
+                  :label="t(`gameType.${gameType.displayName}`)"
+                  :value="gameType.value"
+                />
+              </el-select> : <el-input style="width: 170px " v-model="item.value" />
               <el-button v-if="index === rollover.length - 1" icon="el-icon-plus" size="mini" type="primary" style="margin-left: 20px"
                          @click="addRollover()" plain
               >{{ t('fields.add') }}
@@ -521,6 +534,15 @@ const uiControl = reactive({
     { key: 5, displayName: t('week.friday'), value: 5 },
     { key: 6, displayName: t('week.saturday'), value: 6 },
     { key: 7, displayName: t('week.sunday'), value: 7 },
+  ],
+  gameTypeRollover: [
+    { key: 1, displayName: 'SLOT', value: 'slot' },
+    { key: 2, displayName: 'LIVE', value: 'live' },
+    { key: 3, displayName: 'FISH', value: 'fish' },
+    { key: 4, displayName: 'SPORT', value: 'sport' },
+    { key: 5, displayName: 'ESPORT', value: 'esport' },
+    { key: 6, displayName: 'POKER', value: 'poker' },
+    { key: 7, displayName: 'LOTTERY', value: 'lottery' }
   ],
   bonusAmountRatioMax: 15,
   pgroup: false,
