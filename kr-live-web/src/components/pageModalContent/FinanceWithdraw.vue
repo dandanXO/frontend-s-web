@@ -7,7 +7,7 @@
 
         <div class="withdrawalmethod">
           <template v-if="!isLoaded">
-            <q-skeleton v-for="rectSkeleton in [1, 2, 3]" type="rect" class="withdraw-type-item"
+            <q-skeleton v-for="rectSkeleton in 3" type="rect" class="withdraw-type-item"
               style="width:250px; height:45px;" :key="rectSkeleton" />
           </template>
           <div v-else v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"

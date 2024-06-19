@@ -1,7 +1,7 @@
 <template>
   <div v-if="isFetchingApi" class="node-content payment-method-wrapper">
-    <q-skeleton v-for="rectSkeleton in [1, 2, 3, 4]" type="rect" class="withdraw-type-item"
-      style="width:250px; height:45px;" :key="rectSkeleton" />
+    <q-skeleton v-for="rectSkeleton in 4" type="rect" class="withdraw-type-item" style="width:250px; height:45px;"
+      :key="rectSkeleton" />
   </div>
   <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
