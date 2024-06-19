@@ -136,6 +136,12 @@ export default {
     deposit_reminder: "Reminder",
     deposit_reminder_caption: "Please read before deposit",
     // deposit end
+    // withdraw start
+    withdraw__bank_card: "Withdraw Bank Card",
+    withdraw_withdraw_amount: "Withdraw Amount",
+    withdraw_withdraw_password: "Withdraw Password",
+    withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
+    // withdraw end
     // personal start
     personal_nickname: "Nickname",
     personal_real_name: "Real Name",
@@ -352,7 +358,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",

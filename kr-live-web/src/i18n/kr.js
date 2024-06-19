@@ -148,6 +148,12 @@ export default {
     ※가상계좌 점검시간 안내
     23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     // deposit end
+    // withdraw start
+    withdraw__bank_card: "환전 은행카드 선택",
+    withdraw_withdraw_amount: "출금금액",
+    withdraw_withdraw_password: "출금 비밀번호",
+    withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
+    // withdraw end
     // personal start
     personal_nickname: "닉네임",
     personal_real_name: "실명",
@@ -364,7 +370,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",
