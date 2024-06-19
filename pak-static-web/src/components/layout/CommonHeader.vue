@@ -398,8 +398,9 @@ const nickName = computed(() => {
 
 const onLogout = () => {
   store.memberLogout().then(() => {
-    router.push("/");
-    // location.reload();
+    if (route.meta.requiresAuth) {
+      router.push("/home");
+    }
   });
 };
 const trigger = () => {
