@@ -347,7 +347,8 @@ export default {
     enterDigits: "Please enter digits",
     lengthShouldBe: "The length should be",
     smsCodeRequired: "Please enter the SMS verification code",
-    bankBranchAddress: "Bank branch address"
+    bankBranchAddress: "Bank branch address",
+    settleWithdrawPwd: "Please settle withdraw password"
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
