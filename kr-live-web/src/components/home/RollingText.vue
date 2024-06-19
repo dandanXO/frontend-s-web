@@ -7,14 +7,15 @@
                     <div class="text">출금현황</div>
                 </div>
             </div>
-            <div  style="width:100%;text-align:center;"  v-if="isLoadingDepositRecordList">
-                <q-spinner-pie color="purple" size="20"/>
+            <div style="width:100%;text-align:center;" v-if="isLoading">
+                <q-skeleton type="text" style="width:100%;" />
             </div>
-            <marquee-text :repeat="props.depositRecordList.length" :duration="props.depositRecordList.length * 20"
-                v-else-if="props.depositRecordList && props.depositRecordList.length > 0">
+            <marquee-text :repeat="financeRecords.length" :duration="financeRecords.length * 20"
+                v-else-if="financeRecords.length > 0">
                 <div>
-                    <span style="color: #fff;" v-for="(a, i) in props.depositRecordList" :key="i">
-                       {{ formatTransactionType(a.transactionType) }} {{ a.loginName }} 환전 {{ `${a.amount}원` }}  {{ moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
+                    <span style="color: #fff;" v-for="(a, i) in financeRecords" :key="i">
+                        {{ formatTransactionType(a.transactionType) }} {{ a.loginName }} 환전 {{ `${a.amount}원` }} {{
+                            moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
                     </span>
                 </div>
             </marquee-text>
@@ -28,19 +29,51 @@
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from 'vue';
 import MarqueeText from "vue-marquee-text-component";
 import moment from 'moment';
 import { useI18n } from "vue-i18n";
+import { userStore } from "stores/index";
+import { useRoute } from 'vue-router';
 
-const props = defineProps(['depositRecordList', 'isLoadingDepositRecordList']);
 const { t } = useI18n();
+const isLoading = ref(false);
+const financeRecords = ref([]);
+const store = userStore();
+const route = useRoute();
+
+const loadFinanceRecords = () => {
+    isLoading.value = true;
+
+    store.getFinanceRecords().then((records) => {
+        financeRecords.value = records;
+        isLoading.value = false;
+    }).catch((err) => {
+        console.log(err)
+        isLoading.value = false;
+    });
+};
+
+watch(() => route.query.page, () => {
+    if (route.query.page) {
+    } else {
+        loadFinanceRecords();
+    }
+})
+
+onMounted(() => {
+    if (route.query.page) {
+    } else {
+        loadFinanceRecords();
+    }
+})
 
 const formatTransactionType = (transactionType) => {
-    if(transactionType === 'DEPOSIT') {
+    if (transactionType === 'DEPOSIT') {
         return `[${t('lang.menu_deposit')}]`;
     }
 
-    if(transactionType === 'WITHDRAW') {
+    if (transactionType === 'WITHDRAW') {
         return `[${t('lang.menu_withdraw')}]`;
     }
 
@@ -80,7 +113,7 @@ const formatTransactionType = (transactionType) => {
             height: 24px;
             display: flex;
             align-items: center;
-            min-width: 100px;
+            gap: 5px;
 
             @media (min-width: 769px) {
                 height: 32px;

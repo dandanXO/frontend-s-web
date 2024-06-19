@@ -146,7 +146,7 @@
                 USDT
               </span>
             </div>
-            <div class="q-mt-sm text-neontb">*特别说明：三方自动收取提币 1.00 USDT 手续费！</div>
+            <div class="q-mt-sm text-neontb">*提币手续费：1.00 USDT</div>
           </div>
           <!--          <div v-else-if="!isEWALLET && !isUSDT">-->
           <!--            <div class="q-mt-md text-neontb">*24小时内请勿提交相同提款金额，避免确认到账错误，需个人承担亏损！</div>-->
@@ -463,7 +463,8 @@ export default defineComponent({
 
     const chooseLabel = () => {
       if (isUSDT.value) {
-        return '虚拟币'
+        return '钱包地址'
+        // return '虚拟币'
       } else if (isEWALLET.value) {
         return '电子钱包'
       } else {

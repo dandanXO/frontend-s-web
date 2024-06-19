@@ -186,7 +186,8 @@ export default {
     feedback: "Feedback",
     telegram: "Telegram",
     whatsapp: "WhatsApp",
-    language: "Language"
+    language: "Language",
+    downloadApp: "Download APP"
   },
   home: {
     menu_lobby: "Lobby",
@@ -276,7 +277,10 @@ export default {
     totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
     player: "Player",
     money: "Money",
-    eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300."
+    eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300.",
+    shareTitle: "B9GAME Share and Earn",
+    shareText:
+      "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
   },
   records: {
     gamePlatform: "Game Platform",

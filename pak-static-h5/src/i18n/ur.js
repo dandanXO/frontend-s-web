@@ -186,7 +186,8 @@ export default {
     feedback: "رائے",
     telegram: "ٹیلیگرام",
     whatsapp: "واٹس ایپ",
-    language: "زبان"
+    language: "زبان",
+    downloadApp: "ایپ ڈاؤن لوڈ کریں"
   },
   home: {
     menu_lobby: "لابی",
@@ -277,7 +278,10 @@ export default {
     totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
     player: "پلیئر",
     money: "پیسہ",
-    eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔"
+    eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔",
+    shareTitle: "B9GAME شیئر کریں اور کمائیں",
+    shareText:
+      "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
   },
   records: {
     gamePlatform: "گیم پلیٹ فارم",

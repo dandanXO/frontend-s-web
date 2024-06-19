@@ -10,18 +10,31 @@ export default {
     login_success_msg: "Login successfully",
     login_forget_pwd: "Forget Password",
     // login end
+    logout: "Log out",
     // register start
+    reg_withdraw_password: "Withdraw Password",
+    reg_withdraw_password_placeholder: "4 digit password for withdrawal",
+    reg_please_confirm_withdraw_password: "Please confirm withdraw password",
+    reg_withdraw_password_4_digits: "Withdraw password should be 4 digits",
+    reg_nickname: "Nickname",
     reg_referrer: "Referrer",
+    reg_referrer_placeholder: "Enter referral code",
     reg_userid: "User ID",
     reg_phone_num: "Phone Number",
     reg_phone_verification: "Verify",
     reg_phone_otp: "OTP",
+    reg_phone_placeholder: "Only numbers allowed",
     reg_pass: "Password",
+    reg_pass_placeholder: "Enter password",
     reg_confirm_pass: "Confirm Password",
+    reg_confirm_pass_placeholder: "Enter confirm password",
     reg_email: "Email",
     reg_bank: "Bank",
+    reg_bank_placeholder: "Select bank",
     reg_bank_acc_num: "Bank Account",
+    reg_bank_acc_num_placeholder: "Enter only numbers without '-'",
     reg_bank_acc_holder: "Bank Account Holder",
+    reg_bank_acc_holder_placeholder: "2 characters or more, Korean and English only (cannot be modified/contact customer service center)",
     reg_submit: "Register",
     reg_captcha_confirm: "Confirm",
     reg_captcha_verifying: "Verifying",
@@ -35,6 +48,7 @@ export default {
     menu_message: "Message",
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
+    menu_rebates: "Rebates",
     // menu end
     // page modal start
     page_modal_deposit: "Deposit",
@@ -105,6 +119,35 @@ export default {
     withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
     withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
     // withdraw end
+    // announcement start
+    announcement_no_selected: "No selected",
+    announcement_total: "Total",
+    announcement_has_attachment: "Has attachment",
+    // announcement end
+    // feedback start
+    feedback_loading_content: "Loading content...",
+    feedback_unread: "Unread",
+    feedback_read: "Read",
+    feedback_read_at: "Read at",
+    // feedback end
+    // deposit start
+    deposit_payment_channel: "Payment Channel",
+    deposit_confirm_deposit: "Deposit",
+    deposit_reminder: "Reminder",
+    deposit_reminder_caption: "Please read before deposit",
+    // deposit end
+    // withdraw start
+    withdraw__bank_card: "Withdraw Bank Card",
+    withdraw_withdraw_amount: "Withdraw Amount",
+    withdraw_withdraw_password: "Withdraw Password",
+    withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
+    // withdraw end
+    // personal start
+    personal_nickname: "Nickname",
+    personal_real_name: "Real Name",
+    personal_id: "ID",
+    personal_phone: "Phone",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -315,7 +358,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",
@@ -361,7 +403,7 @@ export default {
     turnover: "Profit",
     withdraw: "Withdraw",
     transfer: "Transfer",
-    rebates: "Rebate",
+    rebates: "Rebates",
     gameBetRecord: "Bet Record",
     reminderRecord: "Reminder Record",
     search: "Search",
@@ -639,6 +681,7 @@ export default {
     1307: "Exceeded daily withdrawal limit",
     1308: "Insufficient balance",
     1309: "Card account does not match member name",
+    1317: "Have binded card",
     1401: "OTP sending time exceeded",
     1402: "OTP sending schedule error, please resend OTP",
     1403: "OTP verification error",

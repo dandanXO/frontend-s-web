@@ -6,10 +6,10 @@
     <PennyBank v-if="list.redirectUrl === 'vi-penny-bank' && !isCommonPromo" />
     <SlotNetloss v-if="list.redirectUrl === 'vi-slot-netloss' && !isCommonPromo" />
     <PokerCashback v-if="list.redirectUrl === 'vi-poker-cashback' && !isCommonPromo" />
-    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
-    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
-    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
-    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo && store.token" :promo-code="list.promoCode" />
+    <LotteryPromo v-if="list.redirectUrl === 'vnm-iphone' && !isCommonPromo " :promo-code="list.promoCode" />
+    <Eurocup2024 v-if="list.redirectUrl === 'vnm-eurocup24' && !isCommonPromo" :promo-code="list.promoCode" />
+    <Eurocup2024bet v-if="list.redirectUrl === 'vnm-euro-2024-bet-reward' && !isCommonPromo " :promo-code="list.promoCode" />
+    <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo " :promo-code="list.promoCode" />
 
     <HongBaoYu2024
       v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"

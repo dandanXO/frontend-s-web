@@ -131,9 +131,9 @@
           <el-input
             type="textarea"
             v-model="form.content"
-            :rows="6"
+            :rows="10"
             style="width: 350px;"
-            maxlength="2000"
+            maxlength="5000"
             show-word-limit
           />
         </el-form-item>
@@ -557,7 +557,7 @@ const form = reactive({
   dueDate: null,
   content: null,
   sequence: null,
-  attachment: null
+  attachment: null,
 })
 
 const imageForm = reactive({
@@ -568,7 +568,7 @@ const imageForm = reactive({
   category: null,
   siteId: null,
   remark: null,
-  imageDimension: null
+  imageDimension: null,
 })
 
 const formRules = reactive({
@@ -583,7 +583,7 @@ const imageFormRules = reactive({
   path: [required(t('message.validateImageRequired'))],
   name: [required(t('message.validateImageNameRequired'))],
   category: [required(t('message.validateCategoryRequired'))],
-  siteId: [required(t('message.validateSiteRequired'))]
+  siteId: [required(t('message.validateSiteRequired'))],
 })
 
 let chooseAnnouncement = []
@@ -829,7 +829,7 @@ async function browseImage() {
   uiControl.imageSelectionVisible = true
 }
 
-onMounted(async() => {
+onMounted(async () => {
   await loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     site.value = siteList.list.find(

@@ -10,18 +10,31 @@ export default {
     login_success_msg: "로그인이 되었습니다",
     login_forget_pwd: "비밀번호 분실",
     // login end
+    logout: "로그아웃",
     // register start
-    reg_referrer: "추천인",
+    reg_withdraw_password: "출금 비밀번호",
+    reg_withdraw_password_placeholder: "출금 비밀번호 4자리",
+    reg_please_confirm_withdraw_password: "출금 비밀번호를 확인해 주세요",
+    reg_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
+    reg_nickname: "닉네임",
+    reg_referrer: "추천인코드",
+    reg_referrer_placeholder: "추천인코드입력",
     reg_userid: "아이디",
     reg_phone_num: "휴대폰번호",
     reg_phone_verification: "인증 코드",
     reg_phone_otp: "인증 코드",
+    reg_phone_placeholder: "숫자만 허용됨",
     reg_pass: "비밀번호",
+    reg_pass_placeholder: "비밀번호입력",
     reg_confirm_pass: "비밀번호확인",
+    reg_confirm_pass_placeholder: "비밀번호확인입력",
     reg_email: "이메일",
     reg_bank: "은행명",
+    reg_bank_placeholder: "은행선택",
     reg_bank_acc_num: "계좌번호",
+    reg_bank_acc_num_placeholder: "'-'없이숫자만입력",
     reg_bank_acc_holder: "예금주",
+    reg_bank_acc_holder_placeholder: "2자이상한글,영문만가능(예금주는수정불가/고객센터문의)",
     reg_submit: "가입완료",
     reg_captcha_confirm: "확인하다",
     reg_captcha_verifying: "확인 중",
@@ -34,10 +47,11 @@ export default {
     menu_withdraw: "환전",
     menu_message: "문의",
     menu_customer_service: "고객센터",
-    menu_transaction_record: "입출금기록",
+    menu_transaction_record: "내역",
+    menu_rebates: "리베이트",
     // menu end
     // page modal start
-    page_modal_deposit: "송금신청",
+    page_modal_deposit: "입금신청",
     page_modal_withdraw: "출금신청",
     page_modal_message: "문의",
     page_modal_customer_service: "고객센터",
@@ -46,7 +60,7 @@ export default {
     page_modal_announcement: "공지사항",
     page_modal_add_bank_card: "은행카드추가",
     page_modal_bank_card_list: "은행 카드 목록",
-    page_modal_transaction_record: "입출금기록",
+    page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
     // page modal end
     // rolling text start
@@ -106,6 +120,49 @@ export default {
     withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
     // withdraw end
+    // announcement start
+    announcement_no_selected: "선택하지 않음",
+    announcement_total: "총",
+    announcement_has_attachment: "첨부파일 있음",
+    // announcement end
+    // feedback start
+    feedback_loading_content: "콘텐츠 로드 중...",
+    feedback_unread: "읽히지 않는",
+    feedback_read: "읽었다",
+    feedback_read_at: "에서 읽다",
+    // feedback end
+    // deposit start
+    deposit_payment_channel: "결제 채널",
+    deposit_confirm_deposit: "계좌요청",
+    deposit_reminder: "알림",
+    deposit_reminder_caption: "입금 전 꼭 읽어주세요",
+    deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+    본인명의 이외 타명의 입금은 처리가 불가합니다
+    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+    입금 최소 금액은 ?0,000원 이상 만원 단위로만 가능합니다.
+
+    ※주의사항
+    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+
+    ※가상계좌 점검시간 안내
+    23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+    // deposit end
+    // withdraw start
+    withdraw__bank_card: "환전 은행카드 선택",
+    withdraw_withdraw_amount: "출금금액",
+    withdraw_withdraw_password: "출금 비밀번호",
+    withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
+    // withdraw end
+    // personal start
+    personal_nickname: "닉네임",
+    personal_real_name: "실명",
+    personal_id: "아이디",
+    personal_phone: "전화",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -316,7 +373,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",
@@ -464,7 +520,6 @@ export default {
     please_enter_old_password: "Please enter your old password",
     password_must_between_6_12: "Password 's length must be between 6 to 12.",
     withdraw_process: "Withdraw Process",
-    withdraw_method: "Withdraw Method",
     verification_account: "Account Verification",
     withdraw_money: "Withdraw Money",
     select_bank_account: "Select Bank Account",
@@ -640,6 +695,7 @@ export default {
       1307: "일일 인출 한도를 초과함",
       1308: "잔액이 부족함",
       1309: "카드 계정이 회원 이름과 일치하지 않음",
+      1317: "은행 카드 바인딩",
       1401: "OTP 전송 시간 초과됨",
       1402: "OTP 전송 일정 오류, OTP를 다시 전송하십시오",
       1403: "OTP 확인 오류",
@@ -653,6 +709,7 @@ export default {
       10008: "오류",
       11000: "은행 카드 없음",
       11003: "입금 실패",
+      12100: "출금 비밀번호가 일치하지 않습니다",
       13000: "도메인 이름을 찾을 수 없음",
       13001: "3개월 이전의 정보를 조회할 수 없음",
       13002: "7일 이내여야 함",

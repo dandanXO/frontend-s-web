@@ -3,6 +3,8 @@ import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
 import liff from "@line/liff";
 import { useUI } from "stores/ui";
+import moment from 'moment';
+
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
@@ -29,7 +31,8 @@ export const userStore = defineStore("userStore", {
       emailVerified: false,
       appDownloadUrl: "",
       visitorId: "",
-      announcementList: []
+      announcementList: undefined,
+      financeRecords: undefined,
     };
   },
   actions: {
@@ -79,6 +82,59 @@ export const userStore = defineStore("userStore", {
           });
         }
       });
+    },
+    getAnnouncementList() {
+      return new Promise((resolve, reject) => {
+        if(Array.isArray(this.announcementList)) {
+          return resolve(this.announcementList);
+        } else {
+          api.get("/announcement").then((res) => {
+            const { data: { code, data: { announcements } } } = res;
+            
+            const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
+            
+            if (code === 0) {
+              const announcementsFormattedData = announcements.map((item) => ({
+                ...item,
+                createTime: formatDate(item.createTime)
+              }));
+              this.announcementList = announcementsFormattedData;
+              resolve(this.announcementList);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
+    },
+    getFinanceRecords() {
+      return new Promise((resolve, reject) => {
+        if(this.financeRecords === null) {
+          return;
+        } else if(Array.isArray(this.financeRecords)) {
+          return resolve(this.financeRecords);
+        } else {
+          if(this.financeRecords == undefined) {
+            this.financeRecords = null;
+          }
+
+          api.get("/member/withdraw-deposit-record").then((res) => {
+            const { data: { code, data } } = res;
+            
+            if (code === 0) {
+              const displayTypes = ['WITHDRAW']; 
+              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
+              resolve(this.financeRecords);
+            }
+          })
+          .catch((err) => {
+              console.log(err);
+              reject();
+          });
+        }
+      })
     },
     getMemberInfo() {
       const ui = useUI();
@@ -141,7 +197,7 @@ export const userStore = defineStore("userStore", {
           .then((ret) => {
             const res = ret.data;
             if (res.code === 0) {
-              this.balance = res.data;
+              this.balance = Math.floor(res.data);
             } else {
               this.balance = 0;
             }

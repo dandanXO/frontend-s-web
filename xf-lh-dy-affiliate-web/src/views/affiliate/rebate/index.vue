@@ -14,11 +14,10 @@
               size="normal"
               v-model="request.gameType"
             >
-              <el-option key="1" value="ESPORT" :label="t('gameType.ESPORT')" />
-              <el-option key="2" value="FISH" :label="t('gameType.FISH')" />
-              <el-option key="3" value="LIVE" :label="t('gameType.LIVE')" />
-              <el-option key="4" value="SLOT" :label="t('gameType.SLOT')" />
-              <el-option key="5" value="SPORT" :label="t('gameType.SPORT')" />
+              <el-option key="1" value="LIVE" :label="t('gameType.LIVE')" />
+              <el-option key="2" value="SPORT" :label="t('gameType.SPORT')" />
+              <el-option key="3" value="SLOT" :label="t('gameType.SLOT')" />
+              <el-option key="4" value="FISH" :label="t('gameType.MINIGAME')" />
             </el-select>
           </el-form-item>
           <el-form-item :label="t('fields.recordTime') + ' :'">
@@ -87,13 +86,15 @@
             <td>
               <span v-if="record.betAmount === null">-</span>
               <span v-if="record.betAmount !== null">
-                $ {{ record.betAmount }}
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ record.betAmount }}
               </span>
             </td>
             <td>
               <span v-if="record.rebateAmount === null">-</span>
               <span v-if="record.rebateAmount !== null">
-                $ {{ record.rebateAmount }}
+                {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
+                {{ record.rebateAmount }}
               </span>
             </td>
             <td>

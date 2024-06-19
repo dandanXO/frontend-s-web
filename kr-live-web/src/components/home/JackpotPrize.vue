@@ -1,55 +1,82 @@
 <template>
-    <div class="jackpot">
-      <div class="jackpot-txt">
-        <q-spinner-pie  v-if="isLoading" color="purple" size="20"/>
-        <span v-else>{{ (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) || '' }}</span>
-      </div>
+  <q-intersection @visibility="(isElemVisible) => {
+    isVisible = isElemVisible
+  }" />
+  <div class="jackpot">
+    <div class="jackpot-txt">
+      <q-skeleton v-if="isLoading" type="text" style="width:100%;" />
+      <span style="margin:0 auto" v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new
+        Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
     </div>
+  </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { watch, onUnmounted, ref, onMounted } from 'vue';
 import { api } from 'boot/axios';
+import { useRoute } from 'vue-router'
 
 const jackpotPrizeAmt = ref();
-const isLoading = ref(false);
+const isLoading = ref();
 const refetchJackpotInterval = ref();
 const jackpotTickerInterval = ref();
+const route = useRoute();
+const isVisible = ref(false);
 
-const fetchJackpot = (isInit) => {
-  if(isInit) {
+const fetchJackpot = () => {
+  if (isLoading.value === undefined) {
     isLoading.value = true;
   }
 
   api.get("/member/jackpot-amount").then((res) => {
-      const response = res.data
-      jackpotPrizeAmt.value = Math.round(response.data);
-      isLoading.value = false;
+    const response = res.data
+    jackpotPrizeAmt.value = Math.round(response.data);
+    isLoading.value = false;
   })
-  .catch((e) => {
+    .catch((e) => {
       console.log(e);
       isLoading.value = false;
-  }).finally(() => {
-    isLoading.value = false;
-  });
+    });
 }
 
+const startJackpotInterval = () => {
+  if (!jackpotTickerInterval.value && !refetchJackpotInterval.value) {
+    fetchJackpot(true);
+
+    jackpotTickerInterval.value = setInterval(() => {
+      jackpotPrizeAmt.value++;
+    }, 200);
+
+    refetchJackpotInterval.value = setInterval(() => {
+      fetchJackpot();
+    }, 30000)
+  }
+}
+
+const clearJackpotInterval = () => {
+  clearInterval(jackpotTickerInterval.value);
+  clearInterval(refetchJackpotInterval.value);
+  jackpotTickerInterval.value = undefined;
+  refetchJackpotInterval.value = undefined;
+}
+
+watch(() => route.query.page || isVisible.value, () => {
+  if (route.query.page || !isVisible.value) {
+    clearJackpotInterval();
+  } else {
+    startJackpotInterval();
+  }
+})
+
 onMounted(() => {
-  fetchJackpot(true);
-
-  jackpotTickerInterval.value = setInterval(() => {
-    jackpotPrizeAmt.value++;
-  }, 200);
-
-  refetchJackpotInterval.value = setInterval(() => {
-    fetchJackpot();
-  }, 30000)
+  if (route.query.page) {
+  } else {
+    startJackpotInterval();
+  }
 })
 
 onUnmounted(() => {
-  clearInterval(jackpotTickerInterval.value);
-
-  clearInterval(refetchJackpotInterval);
+  clearJackpotInterval();
 })
 </script>
 
@@ -73,6 +100,8 @@ onUnmounted(() => {
   }
 
   .jackpot-txt {
+    width: 100%;
+    max-width: 80%;
     display: flex;
     position: absolute;
     top: 70%;

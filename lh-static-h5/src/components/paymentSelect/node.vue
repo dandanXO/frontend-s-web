@@ -297,7 +297,7 @@ $node-color: #468cff;
       }
       .node-text {
         display: flex;
-        gap: 5px;
+        gap: 3px;
         justify-content: center;
         align-items: center;
         & > div {
@@ -310,7 +310,7 @@ $node-color: #468cff;
           //background-color: #2a313e;
           // max-width: 1.5rem;
           padding: 0px;
-          margin-bottom: 0;
+          margin-bottom: -3px;
         }
       }
     }
@@ -318,7 +318,7 @@ $node-color: #468cff;
 
   .node-content {
     column-gap: 10px;
-    row-gap: 16px;
+    row-gap: 10px;
 
     .payment-method-item {
       text-align: center;

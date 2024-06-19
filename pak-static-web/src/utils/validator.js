@@ -20,7 +20,7 @@ export const validatePassword = async (_, val) => {
   if (!val) {
     return Promise.reject(t("common.form.password.error.required"));
   }
-  if (val.length < 6) {
+  if (val.length <= 6) {
     return Promise.reject(t("common.form.password.error.min"));
   }
   return Promise.resolve();

@@ -525,7 +525,7 @@ async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        new Error("存入金额介于 " +
+        new Error(t('message.depositShouldBetween') +
           calculatedMinDeposit.value +
           " - " +
           activeMethod.value.depositMax

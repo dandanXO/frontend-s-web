@@ -54,12 +54,12 @@
             </div>
             <div class="desc">₨:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawAmount) }}</div>
           </div>
-          <div class="info">
+          <!-- <div class="info">
             <div class="desc-wrapper">
               <div class="desc">{{ store.vip }} {{ $t("personalView.finance.withdraw.form.label.dailyLimit") }}</div>
             </div>
             <div class="desc">₨:{{ convertToCommaAmount(selectedWithdrawalMethod.withdrawMaxAmount) }}</div>
-          </div>
+          </div> -->
           <div class="info">
             <div class="desc-wrapper">
               <div class="desc">{{ $t("personalView.finance.withdraw.form.label.remain") }}</div>
@@ -157,7 +157,7 @@
 </template>
 
 <script setup>
-import { defineComponent, reactive, ref, onMounted, computed } from "vue";
+import { reactive, ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import { loadBankCards, confirmWithdraw, withdrawEntrance } from "@/api/personal/personal";
 import { message } from "ant-design-vue";

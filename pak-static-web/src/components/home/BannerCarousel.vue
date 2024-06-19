@@ -1,10 +1,10 @@
 <template>
   <div class="banner-carousel-wrapper">
-    <swiper-container ref="mainSwiperRef" class="main-swiper" navigation="true" autoplay-delay="2500">
+    <swiper-container ref="mainSwiperRef" class="main-swiper" navigation="true" autoplay-delay="2500" loop="true">
       <swiper-slide v-for="(banner, index) in banners" :key="`main-${index}`" class="main-swiper-slide">
-        <router-link :to="`/promotion${banner.redirectUrl}`">
+        <a @click="gotoPromo(banner)">
           <div class="promo-bg isDesktop" :style="'background-image: url(' + imgURL + banner.desktopImageUrl + ')'" />
-        </router-link>
+        </a>
       </swiper-slide>
     </swiper-container>
     <!-- TODO: click action ? -->
@@ -25,7 +25,8 @@
   </div>
 </template>
 <script setup>
-import { nextTick, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const imgURL = process.env.VUE_APP_IMAGE_CDN + "/promo/";
 
@@ -36,6 +37,10 @@ defineProps({
   }
 });
 
+const emit = defineEmits(["playGame"]);
+
+const router = useRouter();
+
 const mainSwiperRef = ref();
 const paginationSwiperRef = ref();
 const displayPaginationSwiper = ref(false);
@@ -43,6 +48,36 @@ const displayPaginationSwiper = ref(false);
 const handlePaginationClick = (index) => {
   mainSwiperRef.value.swiper.slideTo(index);
   mainSwiperRef.value.swiper.slideTo(index);
+};
+
+const gotoPromo = (banner) => {
+  const urlSplit = banner.redirectUrl.split("|");
+  const gameSplit = urlSplit.map((part) => part.split("/"));
+
+  if (urlSplit.length >= 2) {
+    const type = urlSplit[0];
+    if (type === "open") {
+      emit(
+        "playGame",
+        gameSplit[1][0],
+        gameSplit[1][1],
+        gameSplit[1][2],
+        gameSplit[1][3],
+        gameSplit[1][4],
+        gameSplit[1][5]
+      );
+    } else if (type === "page") {
+      router.push(`/${urlSplit[1]}`);
+    } else {
+      router.push(`/promotion?code=${banner.redirectUrl}`);
+    }
+  } else {
+    if (banner.redirectUrl.includes("https://")) {
+      window.open(banner.redirectUrl, "_blank");
+    } else {
+      router.push(`/promotion?code=${banner.redirectUrl}`);
+    }
+  }
 };
 
 // avoid loading 2 swiper at same time

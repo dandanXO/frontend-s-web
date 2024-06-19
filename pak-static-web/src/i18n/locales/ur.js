@@ -217,6 +217,7 @@ export default {
           record: "ریکارڈ",
           discount: "رعایت",
           bank: "بنک",
+          order: "اورڈر",
           message: "پیغام",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "ریکارڈ",
+      recordEndTitle: "آپ صفحے کے آخر تک پہنچ چکے ہیں۔",
+      betTitle: "شرط",
+      platformTitle: "گیم پلیٹ فارم"
+    },
+    order: {
       title: "لین دین کا ریکارڈ",
       tab: {
         deposit: {
@@ -397,6 +404,8 @@ export default {
             }
           }
         },
+        remind:
+          "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
         confirmButton: "تصدیق کریں"
       },
       removeModal: {
@@ -490,7 +499,10 @@ export default {
       step3: "رجسٹریشن کے بعد جمع کروائیں۔",
       copyButton: "لنک کاپی کریں",
       copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
-      copyFail: "لنک کاپی کرنے میں ناکامی"
+      copyFail: "لنک کاپی کرنے میں ناکامی",
+      shareTitle: "B9GAME شیئر کریں اور کمائیں",
+      shareText:
+        "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
     },
     earnYesterday: {
       title: "کل کی موجودہ میزان",
@@ -514,6 +526,9 @@ export default {
           inviteBonus: "دعوتی بونس"
         }
       }
+    },
+    shareModal: {
+      title: "شیئر کریں اور کمائیں"
     }
   },
   loginView: {
@@ -643,6 +658,20 @@ export default {
           required: "براہ کرم پاس ورڈ درج کریں",
           min: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "سیٹل",
+        settled: "سیٹلڈ",
+        betAndSettle: "شرط اور سیٹل",
+        cancel: "منسوخ کریں",
+        rollback: "رول بیک",
+        bet: "شرط",
+        patch: "پیچ",
+        unsettled: "غیر سیٹلڈ",
+        jackpot: "جیک پاٹ",
+        bonus: "بونس"
       }
     }
   },

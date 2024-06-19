@@ -93,24 +93,27 @@
         </div>
 
         <div class="invite-share-social">
-          <a class="social-item" :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+          <a
+            class="social-item"
+            :href="`https://wa.me/?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
+            target="_blank"
+          >
             <img src="../assets/images/earn-money/social-whatsapp.png" />
           </a>
           <a
             class="social-item"
-            :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`"
+            :href="`instagram://sharesheet?text=${encodeURIComponent($t('earnMoney.shareText', { url: selfTgurl }))}`"
             target="_blank"
           >
             <img src="../assets/images/earn-money/social-instagram.png" />
           </a>
-          <a
-            class="social-item"
-            :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`"
-            target="_blank"
-          >
+          <a class="social-item" @click="handleShareToTikTok(selfTgurl)">
             <img src="../assets/images/earn-money/social-tiktok.png" />
           </a>
-          <a class="social-item"><img src="../assets/images/earn-money/social-more.png" /></a>
+          <a ref="tiktokRef" href="tiktok://" target="_blank" :style="{ display: 'none' }" />
+          <a class="social-item" @click="modalSocialShare = true">
+            <img src="../assets/images/earn-money/social-more.png" />
+          </a>
         </div>
       </div>
 
@@ -203,17 +206,44 @@
       </div>
     </div>
   </div>
+
+  <q-dialog width="100%" v-model="modalSocialShare" presistent>
+    <div class="popout-dialog">
+      <q-btn dense rounded icon="close" class="bg-grey-1 text-black popout-close" v-close-popup />
+
+      <div class="popout-dialog-container">
+        <div class="txt-title">Share and Earn</div>
+        <!-- <div class="txt-content q-mt-md text-center">Share and Earn</div> -->
+        <div class="modal-invite-share-social">
+          <a class="social-item" @click="handleShareToYoutube(selfTgurl)">
+            <img src="../assets/images/earn-money/social-youtube.png" />
+          </a>
+          <a class="social-item" @click="handleShareToFacebookPost(selfTgurl)">
+            <img src="../assets/images/earn-money/social-facebook.png" />
+          </a>
+          <a class="social-item" @click="handleShareToSMS(selfTgurl)">
+            <img src="../assets/images/earn-money/social-sms.png" />
+          </a>
+          <a class="social-item" @click="handleShareToEmail(selfTgurl)">
+            <img src="../assets/images/earn-money/social-email.png" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </q-dialog>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import ProfileSummary from "components/ProfileSummary.vue";
-import { useQuasar } from "quasar";
+import { copyToClipboard, useQuasar } from "quasar";
 import { api } from "boot/axios";
 import { userStore } from "stores/index";
+import { useI18n } from "vue-i18n";
 
 const $q = useQuasar();
 const store = userStore();
+const { t } = useI18n();
 
 const copyHrefLink = () => {
   navigator.clipboard
@@ -294,6 +324,8 @@ const getLatestInvitees = () => {
 
 const selfTgurl = ref("");
 const waUrl = ref("");
+const tiktokRef = ref();
+const youtubeRef = ref();
 
 const getRewardAmount = (type) => {
   const rewards = memberDetail.value.rewardAmountByType;
@@ -359,9 +391,50 @@ const getRandomImage = (index) => {
   return require(`../assets/images/earn-money/profile-img-${randomNumber}.png`);
 };
 
+const handleShareToTikTok = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  copyToClipboard(shareText);
+  tiktokRef.value.click();
+};
+
+const handleShareToYoutube = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const youtubeShareUrl = `https://www.youtube.com/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(
+    shareText
+  )}`;
+  window.open(youtubeShareUrl, "_self");
+};
+
+const handleShareToFacebookPost = (url) => {
+  const shareText = t("earnMoney.shareText");
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    url
+  )}&quote=${encodeURIComponent(shareText)}`;
+  copyToClipboard(shareText);
+  window.open(facebookShareUrl, "_blank");
+};
+
+const handleShareToSMS = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const smsBody = `${shareText}`;
+  const smsShareUrl = `sms:?body=${encodeURIComponent(smsBody)}`;
+  window.location.href = smsShareUrl;
+};
+
+const handleShareToEmail = (url) => {
+  const shareText = t("earnMoney.shareText", { url });
+  const shareTitle = t("earnMoney.shareTitle");
+  const emailSubject = encodeURIComponent(`${shareTitle}`);
+  const emailBody = encodeURIComponent(`${shareText}`);
+  const emailShareUrl = `mailto:?subject=${emailSubject}&body=${emailBody}`;
+  window.open(emailShareUrl, "_self");
+};
+
 // const profileImagePath = computed(() => {
 //   return require(`../assets/images/account/${randomProfileImg.value}.png`);
 // });
+
+const modalSocialShare = ref(false);
 
 onMounted(() => {
   getOneTimeBonusSetting();
@@ -700,6 +773,22 @@ watch(activeSetting, checkIsShowDetail);
           border-radius: 8px;
         }
       }
+    }
+  }
+}
+
+.modal-invite-share-social {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 12px;
+  margin-top: 16px;
+  // display: none !important;
+  .social-item {
+    img {
+      display: block;
+      width: 100%;
+      max-width: 50px;
+      margin: auto;
     }
   }
 }

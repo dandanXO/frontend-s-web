@@ -40,26 +40,25 @@
             </div>
           </div>
           <div class="invitation-link__link-wrapper">
-            <!-- <a-input class="invitation-link__link" readonly /> -->
             <div class="invitation-link__link-inner">
               <div class="invitation-link__link">
                 {{ selfTgurl }}
               </div>
-              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink">
+              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink(selfTgurl)">
                 {{ $t("shareView.inviteLink.copyButton") }}
               </button>
             </div>
             <div class="invitation-link__action-wrapper">
-              <a :href="`https://wa.me/?text=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('whatsapp')">
                 <img src="@/assets/images/account/share/logo_whatsapp.png" alt="Whatsapp" />
               </a>
-              <a :href="`https://www.tiktok.com/upload?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('tiktok')">
                 <img src="@/assets/images/account/share/logo_tik-tok.png" alt="TikTok" />
               </a>
-              <a :href="`https://www.instagram.com/?url=${encodeURIComponent(selfTgurl)}`" target="_blank">
+              <a @click="handleShareClick('instagram')">
                 <img src="@/assets/images/account/share/logo_ins.png" alt="Instagram" />
               </a>
-              <button class="invitation-link__action-more">
+              <button class="invitation-link__action-more" @click="handleMoreSocialMediaClick">
                 <RiMoreFill />
               </button>
             </div>
@@ -73,28 +72,26 @@
             <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
           </div>
           <div class="earned-amount__divider" />
+
           <div class="earned-amount__invited-friend-wrapper">
-            <div class="earned-amount__invited-friend-info-wrapper">
-              <span class="earned-amount__invited-friend-header">
-                {{ $t("shareView.earnYesterday.table.header.player") }}
-              </span>
-              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-info">
-                <img
-                  v-if="friend.profilePhoto"
-                  :src="friend.profilePhoto"
-                  class="earned-amount__invited-friend-record-pseudo-photo"
-                />
-                <div v-else class="earned-amount__invited-friend-record-pseudo-photo" />
-                <span>{{ friend.loginName }}</span>
-              </div>
+            <div class="earned-amount__invited-friend-header">
+              <span>{{ $t("shareView.earnYesterday.table.header.player") }}</span>
+              <span>{{ $t("shareView.earnYesterday.table.header.money") }}</span>
             </div>
 
-            <div class="earned-amount__invited-friend-info-wrapper">
-              <span class="earned-amount__invited-friend-header">
-                {{ $t("shareView.earnYesterday.table.header.money") }}
-              </span>
-              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-amount">
-                {{ store.currency.value }} {{ friend.finalAmount }}
+            <div
+              class="earned-amount__invited-friend-info-wrapper"
+              ref="invitedFriendRef"
+              :style="{ height: `${INVITED_FRIEND_PER_VIEW * INVITED_FRIEND_ROW_HEIGHT}px` }"
+            >
+              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-item">
+                <div class="earned-amount__invited-friend-info">
+                  <img :src="getRandomAvatar(index)" class="earned-amount__invited-friend-record-pseudo-photo" />
+                  <span>{{ friend.loginName }}</span>
+                </div>
+                <div class="earned-amount__invited-friend-amount">
+                  {{ store.currency.value }} {{ friend.finalAmount }}
+                </div>
               </div>
             </div>
           </div>
@@ -167,82 +164,12 @@
         </table>
       </div>
     </div>
-
-    <!-- <div class="share-wrapper">
-      <div class="sharing-container">
-        <div class="qr-container">
-          <VueQRCodeComponent :size="100" :text="referralLink" />
-          <qr-code :text="referralLink" error-level="L"></qr-code>
-          <img src="../../assets/images/account/share/qr_code.png" />
-        </div>
-        <div class="right-container">
-          <div class="share-content">
-            Share the QR code or link with your friends. Once they register or download the APP. you will get bonus
-            amount every day. this bonus works for the lifetime
-          </div>
-        </div>
-      </div>
-      <div class="share-link-wrapper">
-        <input ref="copyinput" v-model="referralLink" @blur="blurCode" />
-        <button class="common-btn copy-btn" @blur="blurCode" @click="copyCode">
-          {{ copybtntxt }}
-        </button>
-      </div>
-      <div class="otherlinks">
-        <span class="note">Note: Your referral bonus will not be shared</span>
-
-        <div class="links">
-          <RiFacebookCircleLine />
-          <RiWhatsappLine />
-          <RiTelegramLine />
-          <RiTwitterLine />
-          <RiInstagramLine />
-        </div>
-      </div>
-
-      <div class="friendlist-container">
-        <div class="title">Friend List</div>
-
-        <table class="friendlist-table" style="border-collapse: collapse" border="1">
-          <tr>
-            <td>Login Name</td>
-            <td>Registered At</td>
-            <td>Deposit Amount</td>
-          </tr>
-          <tr v-for="(friend, friendIndex) in friendList" :key="`friend-${friendIndex}`">
-            <td>{{ friend.loginName }}</td>
-            <td>{{ friend.regTime }}</td>
-            <td>{{ friend.depositAmount ?? "-" }}</td>
-          </tr>
-        </table>
-      </div>
-    </div> -->
-    <!-- <div> -->
-    <!-- <div class="account-title-container">
-        <span class="account-title">ข้อมูลอ้างอิง</span>
-      </div>
-      <div class="account-content last">
-        <div class="preferred">
-          <div class="account-tip-text query-tip">
-            <RiSpamLine /> คำถามประจำเดือน
-          </div>
-          <div class="txt-center">
-            <a-date-picker
-              v-model:value="searchForm.date"
-              :inputReadOnly="true"
-            />
-          </div>
-        </div>
-        <div class="share-tab-wrapper">
-          <a-table :columns="columns" />
-        </div>
-      </div> -->
-    <!-- </div> -->
+    <SocialMediaModal v-model="isSocialMediaModalVisible" @share-click="handleShareClick" />
   </div>
 </template>
 
 <script setup>
-import { defineComponent, reactive, ref, onMounted } from "vue";
+import { defineComponent, reactive, ref, onMounted, onUnmounted, nextTick } from "vue";
 import {
   getReferralLink,
   getFriendList,
@@ -266,12 +193,17 @@ import { convertToCommaAmount } from "@/utils/utils";
 import { server } from "@/utils/request";
 import { useI18n } from "vue-i18n";
 
+import SocialMediaModal from "@/components/share/SocialMediaModal.vue";
+
+const INVITED_FRIEND_PER_VIEW = 3;
+const INVITED_FRIEND_ROW_HEIGHT = 44;
+
 const { t } = useI18n();
 
 const store = userStore();
-const copyHrefLink = () => {
+const copyHrefLink = (url) => {
   navigator.clipboard
-    .writeText(selfTgurl.value)
+    .writeText(url)
     .then(() => {
       ElMessage.success(t("shareView.inviteLink.copySuccess"));
     })
@@ -287,6 +219,7 @@ const selfTgurl = ref("");
 const waUrl = ref("");
 const copybtntxt = ref("Copy");
 const copyinput = ref(null);
+const invitedFriendRef = ref();
 const copyCode = () => {
   const copyText = copyinput.value;
   copyText.select();
@@ -301,8 +234,8 @@ const oneTimeBonusSetting = ref([]);
 const memberDetail = ref([]);
 const latestInvitees = ref([]);
 const inviteesRecords = ref([]);
-let currentIndex = 0;
-let intervalId = null;
+const timer = ref();
+const isSocialMediaModalVisible = ref(false);
 
 const getOneTimeBonusSetting = () => {
   getOneTimeBonus()
@@ -333,8 +266,8 @@ const getLatestInvitees = () => {
     .then((response) => {
       if (response.code === 0) {
         latestInvitees.value = response.data;
-        inviteesRecords.value = response.data.records;
-        // startDisplayingRows();
+        inviteesRecords.value = response.data.records.concat(response.data.records.slice(0, INVITED_FRIEND_PER_VIEW));
+        startDisplayingRows();
       }
     })
     .catch((e) => {
@@ -342,62 +275,6 @@ const getLatestInvitees = () => {
     });
 };
 
-// const fakeFriendList = [
-//   { profilePhoto: null, loginName: "2312342313", depositAmount: 120 },
-//   { profilePhoto: null, loginName: "1512352213", depositAmount: 120 },
-//   { profilePhoto: null, loginName: "7334234713", depositAmount: 120 }
-// ];
-
-// const bonusRankingList = [
-//   { friendCount: "1", bonusAmount: 120 },
-//   { friendCount: "2~4", bonusAmount: 120 },
-//   { friendCount: "5~10", bonusAmount: 120 },
-//   { friendCount: "11~30", bonusAmount: 120 },
-//   { friendCount: "31~50", bonusAmount: 120 },
-//   { friendCount: "51~500", bonusAmount: 120 },
-//   { friendCount: "501~999", bonusAmount: 120 },
-//   { friendCount: "1000~3000", bonusAmount: 120 },
-//   { friendCount: "3001~9999", bonusAmount: 120 },
-//   { friendCount: "10000~99999", bonusAmount: 120 }
-// ];
-// const columns = [
-//   {
-//     title: "ชื่อ",
-//     dataIndex: "name",
-//     key: "name",
-//   },
-//   {
-//     title: "ฝาก",
-//     dataIndex: "deposit",
-//     key: "deposit",
-//   },
-// ];
-// const getReferral = () => {
-//   getReferralLink()
-//     .then((res) => {
-//       if (res.code === 0) {
-//         referralLink.value = `${location.origin}/refer/${res.data}`;
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-// const initFriendList = () => {
-//   getFriendList()
-//     .then((res) => {
-//       if (res.code === 0) {
-//         friendList.value = res.data.records;
-//       }
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-// onMounted(() => {
-//   getReferral();
-//   initFriendList();
-// });
 const getRewardAmount = (type) => {
   const rewards = memberDetail.value.rewardAmountByType;
   if (rewards && Array.isArray(rewards)) {
@@ -407,23 +284,65 @@ const getRewardAmount = (type) => {
   return 0;
 };
 
-const startDisplayingRows = () => {
-  // Display the first item initially
-  if (currentIndex === 0) {
-    currentIndex++;
+const getRandomAvatar = (index) => {
+  const num = (index % 14) + 1;
+  return require(`@/assets/images/account/share/avatar/avatar-${num}.png`);
+};
+
+const startDisplayingRows = async () => {
+  if (!invitedFriendRef.value) return;
+  await nextTick();
+
+  const maxScrollTop = invitedFriendRef.value.scrollHeight - INVITED_FRIEND_ROW_HEIGHT * INVITED_FRIEND_PER_VIEW;
+  let currentScrollTop = 0;
+
+  timer.value = setInterval(() => {
+    currentScrollTop += INVITED_FRIEND_ROW_HEIGHT;
+    if (currentScrollTop >= maxScrollTop) {
+      invitedFriendRef.value.scrollTo({ top: 0 });
+      currentScrollTop = INVITED_FRIEND_ROW_HEIGHT;
+    }
+    invitedFriendRef.value.scrollTo({ top: currentScrollTop, behavior: "smooth" });
+  }, 2000);
+};
+
+const handleMoreSocialMediaClick = () => (isSocialMediaModalVisible.value = true);
+
+const handleShareClick = (media) => {
+  const content = t("shareView.inviteLink.shareText", { url: selfTgurl.value });
+  let openUrl = "";
+
+  switch (media) {
+    case "whatsapp":
+      openUrl = `whatsapp://send?text=${encodeURIComponent(content)}`;
+      break;
+    case "tiktok":
+      copyHrefLink(content);
+      openUrl = "https://www.tiktok.com/messages";
+      break;
+    case "instagram":
+      copyHrefLink(content);
+      openUrl = "https://www.instagram.com/direct/";
+      break;
+    case "youtube":
+      copyHrefLink(content);
+      openUrl = "https://www.youtube.com/";
+      break;
+    case "facebook":
+      copyHrefLink(content);
+      // openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(selfTgurl.value)}`;
+      openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://www.google.com")}`;
+      break;
+    case "email":
+      const title = encodeURIComponent(t("shareView.inviteLink.shareTitle"));
+      const body = encodeURIComponent(content);
+      openUrl = `mailto:?subject=${title}&body=${body}`;
+      break;
   }
 
-  intervalId = setInterval(() => {
-    if (currentIndex < inviteesRecords.value.length) {
-      inviteesRecords.value.unshift(inviteesRecords.value[10]);
-      currentIndex++;
-    } else {
-      clearInterval(intervalId);
-      currentIndex = 0;
-      startDisplayingRows(); // Restart the loop
-    }
-  }, 1000);
+  openUrl && window.open(openUrl, "_blank");
 };
+
 onMounted(() => {
   getOneTimeBonusSetting();
   getMemberDetail();
@@ -437,6 +356,8 @@ onMounted(() => {
     }
   });
 });
+
+onUnmounted(() => timer.value && clearInterval(timer.value));
 </script>
 <style scoped lang="scss">
 .share-view-container {
@@ -446,7 +367,6 @@ onMounted(() => {
 
 .menu-title-container {
   font-size: 24px;
-  font-weight: 700;
   line-height: 24px;
   margin-bottom: 20px;
 }
@@ -496,7 +416,6 @@ onMounted(() => {
 
           .share-summary-item__title {
             font-size: 32px;
-            font-weight: 700;
             line-height: 32px;
             color: #ffffff;
           }
@@ -528,7 +447,6 @@ onMounted(() => {
 
       .invitation-link-title {
         font-size: 32px;
-        font-weight: 700;
         line-height: 32px;
         color: #ffffff;
         margin-bottom: 28px;
@@ -614,7 +532,6 @@ onMounted(() => {
             height: 100%;
             width: 155px;
             font-size: 20px;
-            font-weight: 700;
             line-height: 20px;
             color: #131313;
           }
@@ -696,48 +613,58 @@ onMounted(() => {
 
       .earned-amount__invited-friend-wrapper {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
         flex: 1;
-        height: 140px;
-        overflow: scroll;
         padding-right: 20px;
-        .earned-amount__invited-friend-info-wrapper {
+
+        .earned-amount__invited-friend-header {
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 12px;
+          margin-bottom: 4px;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 16px;
+          color: #8c968f;
 
-          .earned-amount__invited-friend-header {
-            margin-bottom: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 16px;
-            color: #8c968f;
+          span {
+            width: 50%;
+            text-align: center;
           }
+        }
 
-          .earned-amount__invited-friend-info {
-            display: flex;
-            align-items: center;
-            align-self: start;
-            gap: 8px;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 16px;
+        .earned-amount__invited-friend-info-wrapper {
+          width: 100%;
+          overflow: hidden;
 
-            .earned-amount__invited-friend-record-pseudo-photo {
-              width: 32px;
-              height: 32px;
-              border-radius: 50%;
-              overflow: hidden;
-              background-color: #ffffff0d;
+          .earned-amount__invited-friend-item {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            padding: 6px 0;
+
+            .earned-amount__invited-friend-info {
+              display: flex;
+              align-items: center;
+              align-self: start;
+              gap: 8px;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 16px;
+
+              .earned-amount__invited-friend-record-pseudo-photo {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: #ffffff0d;
+              }
             }
-          }
 
-          .earned-amount__invited-friend-amount {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 32px;
-            color: #70bc62;
+            .earned-amount__invited-friend-amount {
+              text-align: center;
+              font-size: 16px;
+              font-weight: 500;
+              line-height: 32px;
+              color: #70bc62;
+            }
           }
         }
       }
@@ -787,7 +714,6 @@ onMounted(() => {
 
             .share-info-item__info-num {
               font-size: 30.93px;
-              font-weight: 700;
               line-height: 46.39px;
               color: #70bc62;
             }

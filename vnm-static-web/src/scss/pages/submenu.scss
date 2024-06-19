@@ -20,6 +20,18 @@
       }
     }
   }
+
+  // fishing game hover effect
+  .platform-menu-item .platform-menu .platform-menu-item {
+    &:hover {
+      background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
+      .platform-menu-btn a {
+        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        color: $color-white;
+      }
+    }
+  }
+
   .platform-menu-extra {
     display: flex;
     justify-content: center;

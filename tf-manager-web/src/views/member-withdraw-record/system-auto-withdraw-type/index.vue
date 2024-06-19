@@ -241,7 +241,7 @@
                     size="mini"
                     type="success"
                     @click="saveOrder(scope.row)"
-                  >save</el-button>
+                  >{{ t('fields.save') }}</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -278,7 +278,7 @@
                     size="mini"
                     type="success"
                     @click="saveOrder(scope.row)"
-                  >save</el-button>
+                  >{{ t('fields.save') }}</el-button>
                 </template>
               </el-table-column>
             </el-table>

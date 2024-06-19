@@ -862,7 +862,11 @@ const onSubmit = () => {
   formRef.value
     .validate()
     .then(() => {
-      register(regForm)
+      const params = {
+        ...regForm,
+        sid: store.visitorId
+      };
+      register(params)
         .then((response) => {
           const regResult = response.code;
           if (regResult === 0) {

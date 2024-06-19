@@ -10,7 +10,11 @@ export const useUI = defineStore("ui-store", {
       themeColor: "primary",
       pageName: "优惠详细信息",
       slotLists: [],
-      downloadUrl: ""
+      downloadUrl: "",
+      adjust_click_register_event: "",
+      adjust_open_app_event: "",
+      adjust_register_fail_event: "",
+      adjust_register_event: ""
     };
   },
   actions: {

@@ -241,11 +241,8 @@ import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "v
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
-import { Adjust, AdjustEvent } from "@awesome-cordova-plugins/adjust";
-import AdjustWeb from "@adjustcom/adjust-web-sdk";
 // import PrimaryButton from "../components/auth/PrimaryButton.vue";
 import InputField from "../components/auth/InputField.vue";
 import InputRowGrid from "../components/auth/InputRowGrid.vue";
@@ -415,25 +412,10 @@ export default defineComponent({
         isLoading.value = false;
       } else {
         var qs = require("qs");
-        const fpPromise = FingerprintJS.load();
+        const sidParam = store.visitorId;
+
         (async () => {
-          const fp = await fpPromise;
-          const result = await fp.get();
-          const excludes = { value: ["timezone", "timeZoneOffset"] };
-          const allComponents = { ...result.components };
-          excludes.value.forEach((element) => {
-            delete allComponents[element];
-          });
-          const sidParam = FingerprintJS.hashComponents(allComponents);
-          // regForm.sid = store.googleadid ? store.googleadid : store.aaid;
-          if (store.googleadid) {
-            regForm.sid = store.googleadid;
-          } else if (store.aaid) {
-            regForm.sid = store.aaid;
-          } else {
-            regForm.sid = "fp-" + sidParam;
-            regForm.isfinger = "1";
-          }
+          regForm.sid = sidParam;
 
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -447,9 +429,6 @@ export default defineComponent({
             }
           }
 
-          if (regForm.regDevice !== "ANDROID" || !affCode.value) {
-            regForm.sid = sidParam;
-          }
 
           if (regForm.regHost.indexOf("http://localhost") > -1) {
             regForm.regHost = "app://";

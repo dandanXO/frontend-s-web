@@ -217,6 +217,7 @@ export default {
           record: "Record",
           discount: "Discount",
           bank: "Bank",
+          order: "Order",
           message: "Message",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "Record",
+      recordEndTitle: "You have reached the end of the page.",
+      betTitle: "Bet",
+      platformTitle: "Game Platform"
+    },
+    order: {
       title: "Transaction Record",
       tab: {
         deposit: {
@@ -398,6 +405,8 @@ export default {
             }
           }
         },
+        remind:
+          "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
         confirmButton: "CONFIRM"
       },
       removeModal: {
@@ -491,7 +500,10 @@ export default {
       step3: "Complete deposit after registration",
       copyButton: "Copy link",
       copySuccess: "Link copied to clipboard",
-      copyFail: "Failed to copy link"
+      copyFail: "Failed to copy link",
+      shareText:
+        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+      shareTitle: "B9GAME Share and Earn"
     },
     earnYesterday: {
       title: "Total amount sent as of yesterday",
@@ -515,6 +527,9 @@ export default {
           inviteBonus: "Invite Bonus"
         }
       }
+    },
+    shareModal: {
+      title: "Share and Earn"
     }
   },
   loginView: {
@@ -644,6 +659,20 @@ export default {
           required: "Please insert password",
           min: "The characters of password must be above 6"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "Settle",
+        settled: "Settled",
+        betAndSettle: "Bet and Settle",
+        cancel: "Cancel",
+        rollback: "Rollback",
+        patch: "Patch",
+        bet: "Bet",
+        unsettled: "Unsettled",
+        jackpot: "Jackpot",
+        bonus: "Bonus"
       }
     }
   },

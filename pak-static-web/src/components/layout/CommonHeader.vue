@@ -212,8 +212,11 @@
             <button class="common-btn login-btn" @click="openAccountModal">
               {{ $t("layout.header.notLogin.loginButton") }}
             </button>
-            <button class="common-btn reg-btn" @click="openAccountModal('register')" style="margin-right: 30px">
+            <button class="common-btn reg-btn" @click="openAccountModal('register')">
               {{ $t("layout.header.notLogin.registerButton") }}
+            </button>
+            <button class="language-btn" @click="handleLanguageClick">
+              <RiGlobalLine />
             </button>
           </template>
         </div>
@@ -249,7 +252,8 @@ import {
   RiLogoutCircleLine,
   RiShareBoxLine,
   RiListSettingsLine,
-  RiLoginBoxLine
+  RiLoginBoxLine,
+  RiGlobalLine
 } from "vue-remix-icons";
 import { useRoute } from "vue-router";
 import { kycAPI, loadPromo } from "@/api/index/promo";
@@ -394,8 +398,9 @@ const nickName = computed(() => {
 
 const onLogout = () => {
   store.memberLogout().then(() => {
-    router.push("/");
-    // location.reload();
+    if (route.meta.requiresAuth) {
+      router.push("/home");
+    }
   });
 };
 const trigger = () => {
@@ -581,7 +586,6 @@ $link-color: #ffffff;
       border-radius: 6px;
       gap: 10.53px;
       font-size: 12px;
-      font-weight: 700;
       line-height: 16.8px;
       letter-spacing: -0.0008em;
       color: #000a01;
@@ -597,7 +601,6 @@ $link-color: #ffffff;
       position: relative;
       position: relative;
       font-size: 12px;
-      font-weight: 700;
       line-height: 16.8px;
       color: #ffffff;
 
@@ -624,9 +627,19 @@ $link-color: #ffffff;
       position: relative;
       border: 1px solid #cbe3ad;
       font-size: 16px;
-      font-weight: 700;
       line-height: 20px;
       color: #ffffff;
+    }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      background: none;
+      svg {
+        width: 30px;
+        fill: #9f9f9f;
+        animation: fillChange 2s infinite;
+      }
     }
   }
 }
@@ -748,7 +761,7 @@ $link-color: #ffffff;
   }
 
   img {
-    width: 20px;
+    width: 25px;
   }
 }
 
@@ -866,7 +879,6 @@ $link-color: #ffffff;
         top: 20px;
         max-width: 130px;
         font-size: 18px;
-        font-weight: 700;
         line-height: 22px;
         text-align: left;
 
@@ -889,7 +901,6 @@ $link-color: #ffffff;
         left: 20px;
         max-width: 140px;
         font-size: 20px;
-        font-weight: 700;
         line-height: 25px;
         color: #fff;
 
@@ -1552,7 +1563,6 @@ $link-color: #ffffff;
       background: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
       background-clip: text;
       font-size: 16px;
-      font-weight: 700;
       line-height: 20px;
       color: transparent;
 
@@ -1569,6 +1579,18 @@ $link-color: #ffffff;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fillChange {
+  0% {
+    fill: #9f9f9f;
+  }
+  50% {
+    fill: #33bd46;
+  }
+  100% {
+    fill: #9f9f9f;
   }
 }
 </style>

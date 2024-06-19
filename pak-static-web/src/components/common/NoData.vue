@@ -1,12 +1,17 @@
 <template>
   <div class="no-data-wrapper">
     <RiFileInfoFill />
-    <h3>{{ $t("common.noData.title") }}</h3>
-    <span>{{ $t("common.noData.description") }}</span>
+    <h3>{{ typeof title === "string" ? title : $t("common.noData.title") }}</h3>
+    <span>{{ typeof description === "string" ? description : $t("common.noData.description") }}</span>
   </div>
 </template>
 <script setup>
 import { RiFileInfoFill } from "vue-remix-icons";
+
+defineProps({
+  title: String,
+  description: String
+});
 </script>
 <style scoped lang="scss">
 .no-data-wrapper {
@@ -23,7 +28,6 @@ import { RiFileInfoFill } from "vue-remix-icons";
   h3 {
     margin-bottom: 0;
     font-size: 24px;
-    font-weight: 700;
     line-height: 24px;
     color: #8c968f;
   }

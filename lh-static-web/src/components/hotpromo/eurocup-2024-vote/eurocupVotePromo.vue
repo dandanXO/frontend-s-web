@@ -78,7 +78,7 @@
       </div>
 
       <div class="content-info">
-        <div class="content-info-item">活动时间：2024年06月15号00:00至07月14号23:59:59</div>
+        <div class="content-info-item">活动时间：2024年06月13号00:00至07月14号23:59:59</div>
         <div class="content-info-item" >
           活动内容：会员每日累计存款金额达到指定额度或以上，即可参与一次投票。
         </div>
@@ -166,7 +166,9 @@
         <div class="vote-records">
           <div class="vote-record-item" v-for="voteRecord in paginatedVoteRecords">
             <div class="vote-record-flag-wrapper"><img class="vote-record-item-flag" :src="imgURL + voteRecord.countryImgUrl" />{{ voteRecord.teamNameLocal }}</div>
-            <div>{{ voteRecord.voteTime }}</div>
+            <div>{{ moment(voteRecord.voteTime, 'M/D/YY, h:mm A').format('YYYY年M月D日HH:mm') }}</div>
+            
+
           </div>
         </div>
         <div class="pagination-wrapper">
@@ -191,6 +193,7 @@ import { ElMessage } from "element-plus";
 import { convertToCommaAmount } from "@/utils/utils"
 import { userStore } from "@/store/index"
 import { useLocalStorage } from "@vueuse/core";
+import moment from 'moment'
 
 
 export default defineComponent({
@@ -301,10 +304,12 @@ export default defineComponent({
     const loadVoteTeam = () => {
       poolPrizeVoteInit().then((res) => {
         if(res.code===0){
-          const votesRecord = res.data.votesRecord.map((voteRecordItem) => {
+          const votesRecord = res.data.votesRecord.flatMap((voteRecordItem) => {
             const { countryImgUrl, teamNameLocal } = res.data.votesList.find(({ id }) => voteRecordItem.teamVotesId === id);
-            return { ...voteRecordItem, countryImgUrl, teamNameLocal };
-          });
+            const extendedVoteRecords = Array(voteRecordItem.votes).fill({ ...voteRecordItem, countryImgUrl, teamNameLocal });
+
+            return extendedVoteRecords
+        });
 
           votesData.value = {
             ...res.data,
@@ -337,7 +342,8 @@ export default defineComponent({
       store,
       imgURL,
       paginatedVoteRecords,
-      votesRecordChangePage
+      votesRecordChangePage,
+      moment
     }
   }
 });
@@ -403,7 +409,7 @@ export default defineComponent({
       justify-content: space-between;
       white-space: nowrap;
       color: #fff;
-      padding: 15px 33px;
+      padding: 15px;
       gap: 40px;
 
       .vote-record-flag-wrapper {

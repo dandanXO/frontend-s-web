@@ -72,7 +72,7 @@ body {
 }
 
 .main-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 20px;
 }
@@ -724,7 +724,7 @@ input:internal-autofill-selected {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 500px;
+  min-height: 60vh;
 
   .form-template {
     display: grid;

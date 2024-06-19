@@ -473,7 +473,7 @@ export default defineComponent({
     };
 
     const getImageLink = (linkId) => {
-      reminderForm.photos = process.env.IMAGE_CDN + `/order/${ui.siteId}/${linkId}`;
+      reminderForm.photos = `/${linkId}`;
     };
 
     const submitReminder = () => {

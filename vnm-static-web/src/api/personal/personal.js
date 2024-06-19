@@ -103,6 +103,9 @@ export function verifyOtpAndChangePassword(withdrawPwdInfo) {
   return server.REST.post("/session/verifyOtpAndChangePassword", withdrawPwdInfo);
 }
 
+export function withdrawPasswordWithPassNTel(withdrawPwdInfo) {
+  return server.REST.post("/session/withdrawPasswordWithPassNTel", withdrawPwdInfo);
+}
 
 export function saveFinanceFeedback(reminderInfo) {
   return server.REST.post("/session/saveFinanceFeedback", reminderInfo);

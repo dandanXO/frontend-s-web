@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>TF88</title>
+
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+
+  <script type="text/javascript" src="js/jquery-3.6.1.min.js"></script>
+</head>
+<body>
+<div class="main-wrapper">
+  <div class="full-container">
+    <div class="top-wrapper">
+      <a href="https://eurotf88.com/register" target="_blank"> <img src="img/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" /></a>
+    </div>
+
+    <div id="image-container" class="banner-wrapper">
+      <img id="banner-img" src="img/banner-img.png" alt="2024 Eurocup" title="2024 Eurocup" />
+    </div>
+
+    <div id="announcement-marquee">
+      <marquee>Tặng thưởng 100% và nhiều khuyến mãi...</marquee>
+    </div>
+
+    <div class="action-wrapper">
+      <a href="https://eurotf88.com/register" target="_blank" class="action-a action-btn register" >
+        <!-- <img src="img/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
+        <div class="action-btn__text-wrapper">
+          <span class="action-btn__title">Đăng Ký Ngay</span>
+          <span class="action-btn__description">TẶNG <span class="highlight">18-88K <img class="hot-pill-img" src="img/hot-pill.png" /></span></span>
+        </div> -->
+      </a>
+
+      <a href="https://files.fbok59j8xi.com/app/8/affiliate/1798286660569628674/android/apk/1.0.8_20240614191523.apk" target="_self" class="action-a action-btn download" >
+        <!-- <img src="img/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
+        <div class="action-btn__text-wrapper">
+          <span class="action-btn__title">Tải APP</span>
+          <span class="action-btn__description">MƯA LÌ XÌ MỖI TUẦN LÊN ĐẾN <span class="highlight">8,888K</span></span>
+        </div> -->
+      </a>
+    </div>
+
+    <div class="text-a">
+      <p>Lì xì đăng ký từ <span class="highlight">18 - 88K</span>. Số lượng có hạn ưu tiên người đến trước.</p>
+    </div>
+
+    <!--        <a href="https://www.tf688ui.com/cupeuro2024" target="_blank">-->
+    <!--          <div class="announcement-wrapper">-->
+    <!--            <div class="announcement-btn">-->
+    <!--              <img class="announcement-btn__icon" src="img/speaker-icon.png" alt="Thông báo" title="Thông báo" />-->
+    <!--              <span class="announcement-btn__title">Thông báo</span>-->
+    <!--              <span class="announcement-btn__description">Tặng thưởng 100% và nhiều khuyến mãi...</span>-->
+    <!--            </div>-->
+    <!--          </div>-->
+    <!--        </a>-->
+
+    <div class="new-user-wrapper">
+      <img class="section-title" src="img/new-user-title.png" alt="Khuyến Mãi" title="Khuyến Mãi" />
+      <a href="https://eurotf88.com/register" target="_blank" >
+        <div class="new-user-discount-wrapper">
+          <img src="img/discount-1.png" alt="Thưởng 3 tỷ 8 mùa Euro 2024" title="Thưởng 3 tỷ 8 mùa Euro 2024" />
+          <img src="img/discount-2.png" alt="Đăng ký nhận ngay 21k miễn phí. " title="Đăng ký nhận ngay 21k miễn phí. " />
+          <img src="img/discount-3.png" alt="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " title="Mưa lì xì 8 triệu 8 vào 3 ngày cuối tuần. " />
+          <img src="img/discount-4.png" alt="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " title="Gửi tiền lần đầu nhận 100% lên đến 2 triệu. " />
+          <img src="img/discount-5.png" alt="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " title="Bảo hiểm đơn cược thể thao đầu , hoàn 100% tiền cược. " />
+        </div>
+      </a>
+    </div>
+
+    <div class="game-wrapper">
+      <img class="section-title" src="img/game-title.png" alt="Trò Chơi Nổi Bật" title="Trò Chơi Nổi Bật" />
+      <a href="https://eurotf88.com/register" target="_blank" class="game-inner-wrapper">
+        <img src="img/game-sport.png" alt="" title="" />
+        <img src="img/game-casino.png" alt="" title="" />
+        <img src="img/game-esport.png" alt="" title="" />
+        <img src="img/game-lottery.png" alt="" title="" />
+        <img src="img/game-slot.png" alt="" title="" />
+        <img src="img/game-fishing.png" alt="" title="" />
+      </a>
+    </div>
+  </div>
+
+  <div class="main-sticky-wrapper" id="scrolldown-tbn">
+
+    <a href="https://eurotf88.com/register" target="_blank">
+      <div class="btm-image-container">
+        <img src="img/btm-img.jpg" />
+      </div>
+    </a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.querySelector(".overlay");
+    const closeOverlay = document.querySelector(".close-overlay");
+    const popButtons = document.querySelectorAll(".pop-btn");
+    const overlayContents = document.querySelectorAll(".overlay-content > div");
+
+    const scrolLDown = document.getElementById("scrolldown-tbn");
+
+    scrolLDown.addEventListener("click", function (e) {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth" // This makes the scroll smooth
+      });
+    });
+
+    popButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const attr = button.getAttribute("attr");
+        overlayContents.forEach((content) => {
+          if (content.classList.contains(`pop-overlay-${attr.slice(-1)}`)) {
+            content.classList.remove("hidden");
+          } else {
+            content.classList.add("hidden");
+          }
+        });
+        overlay.style.display = "block";
+      });
+    });
+
+    // closeOverlay.addEventListener("click", function () {
+    //   overlay.style.display = "none";
+    // });
+
+    // overlay.addEventListener("click", function (event) {
+    //   if (event.target === overlay) {
+    //     overlay.style.display = "none";
+    //   }
+    // });
+
+
+    const images = ["img/banner.jpg"];
+    let currentIndex = 0;
+    const imgElement = document.getElementById('banner-img');
+
+    function changeImage() {
+      imgElement.classList.add('fade-out');
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        imgElement.src = images[currentIndex];
+        imgElement.classList.remove('fade-out');
+      }, 1000); // 1 second duration for fade out
+    }
+
+    // setInterval(changeImage, 3000);
+  });
+</script>
+
+</body>
+
+</html>

@@ -81,10 +81,10 @@
         {{ $t("sideNav.livesupport") }}
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
+      <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
         {{ $t("sideNav.feedback") }}
-      </div>
+      </div> -->
 
       <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
         <div class="item-icon">
@@ -102,11 +102,7 @@
         {{ $t("sideNav.whatsapp") }}
       </a>
 
-      <div
-        class="side-menu-item side-menu-item__transparent"
-        @click="handleMenuRouteClick('/language')"
-        v-if="sideLang"
-      >
+      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
         <div class="item-icon">
           <img :src="require(`../assets/images/auth/country-flag-${$t('lang.langVal')}.png`)" class="flag" />
         </div>
@@ -117,7 +113,7 @@
         <div class="item-icon">
           <img src="../assets/images/auth/download-icon.png" />
         </div>
-        Download App
+        {{ $t("sideNav.downloadApp") }}
       </a>
 
       <!-- <div class="side-menu-item side-menu-item__transparent"> -->
@@ -253,6 +249,7 @@
         <q-btn no-caps unelevated class="btn-secondary" @click="router.push('/register')">
           {{ $t("header.register") }}
         </q-btn>
+        <div class="btn-lang" @click="router.push('/language')"><img src="../assets/images/auth/icon-globe.png" /></div>
       </div>
     </div>
   </div>
@@ -395,7 +392,7 @@ const checkTopDownloadAppear = () => {
   const omitSites = ["bw3.genoortisy.com"];
 
   if (route.path === "/home") {
-    console.log("Platform", Platform);
+    // console.log("Platform", Platform);
     if (
       ("standalone" in window.navigator && window.navigator.standalone) ||
       (Platform.is.capacitor && Platform.is.android) ||
@@ -585,7 +582,7 @@ onMounted(() => {
     padding-top: 72px;
     background-color: #131313;
     width: 202px;
-    height: calc(100vh - 72px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 16px;
@@ -712,7 +709,7 @@ onMounted(() => {
   background-image: url("../assets/images/auth/auth-bg.png");
   background-size: 100% 100%;
   box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
+  overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
@@ -766,6 +763,16 @@ onMounted(() => {
     margin-bottom: 4px;
     width: 100%;
     position: relative;
+
+    .btn-lang {
+      img {
+        display: block;
+        width: 24px;
+        filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+        // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
+        animation: hueBlink 1s infinite;
+      }
+    }
 
     .unread-total {
       position: absolute;
@@ -959,6 +966,7 @@ onMounted(() => {
   // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
+  animation: blink 1.5s infinite;
 }
 
 .menu-line {
@@ -1031,5 +1039,28 @@ onMounted(() => {
 
 .dropdown-list {
   // box-shadow: 14px 14px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+@keyframes hueBlink {
+  0% {
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(0%) contrast(0%);
+  }
+  100% {
+    filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+  }
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+
+  50% {
+    filter: brightness(1.3) saturate(1) contrast(1);
+  }
+
+  100% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
 }
 </style>
