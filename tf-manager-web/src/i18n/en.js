@@ -1805,6 +1805,7 @@ export default {
     upper: 'Upper',
     addMemberLotteryRecord: 'Add Member Lottery Record',
     addFakeLotteryRecord: 'Add Fake Lottery Record',
+    approveSummonRecord: 'Approve Summon Record',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2267,6 +2268,7 @@ export default {
     timeExist: 'Time already exists',
     wrongPopupTime: 'Selected popup time is invalid',
     selectPopupTime: 'Please select Popup Time.',
+    summonSuccess: 'Summon Success',
   },
   menu: {
     undefined: '',
