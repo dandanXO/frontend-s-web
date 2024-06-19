@@ -27,6 +27,8 @@ export default {
     logout: "Logout"
   },
   account: {
+    no_card_avail: "No cards available, proceed to ",
+    add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
     reminder: "Require",
@@ -288,7 +290,7 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Congratulations",
     claim: "Claim",
-    
+
     record_win_status: "Win status",
     record_win_prize: "Winner Prize",
   },

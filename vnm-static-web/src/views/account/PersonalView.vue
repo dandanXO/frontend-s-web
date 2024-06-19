@@ -1086,7 +1086,6 @@ const clearWithdrawPwd = () =>{
 }
 
 const submitUpdateWithdrawPwd = () => {
-  // debugger;
   loadingWdPwBtn.value = true
   updateWithdrawPwdFormRef.value
     .validate()

@@ -27,6 +27,8 @@ export default {
     rebate: "Hoàn Trả"
   },
   account: {
+    no_card_avail: "Không có thẻ sẵn có, tiến hành ",
+    add_a_bank_card: "Thêm thẻ ngân hàng",
     welcome: "Chào mừng",
     mainWallet: "Số dư",
     reminder: "Hỗ trợ",
