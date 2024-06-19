@@ -177,7 +177,7 @@
         </q-select>
 
         <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">
-          <p v-if="selectedPrivilege.gameTypeRollover">
+          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">
             {{getRollOverText(selectedPrivilege.gameTypeRollover) }}
           </p>
           <p v-else>

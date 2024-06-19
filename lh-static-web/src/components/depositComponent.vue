@@ -122,7 +122,7 @@
           </el-form-item>
 
           <div class="btn-confirm rollover-info" v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)">
-            <p v-if="selectedPromo.gameTypeRollover">
+            <p v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
               {{getRollOverText(selectedPromo.gameTypeRollover) }}
             </p>
             <p v-else>
