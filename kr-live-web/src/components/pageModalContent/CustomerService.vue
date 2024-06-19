@@ -64,18 +64,28 @@
         </q-list>
       </div>
       <q-scroll-area class="feedback-content-wrapper">
-        <div v-if="selected" class="feedback-content">
-          <div>
-            <div class="title">{{ selected.title }}</div>
+        <template v-if="isLoading">
+          <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
+            <q-skeleton type="text" style="width:100%;" />
+          </q-item>
+        </template>
+        <template v-else>
+          <div v-if="selected" class="feedback-content">
+            <div>
+              <div class="title">{{ selected.title }}</div>
+            </div>
+            <span class="date-time">{{ formatDate(selected.createTime) }}</span>
+            <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
+            <div class="content-loading" v-if="isFetchingContent">
+              <!-- <span>{{ $t('lang.feedback_loading_content') }}</span> -->
+              <template v-for="rectSkeleton in 5" :key="rectSkeleton">
+                <q-skeleton type="text" style="width:100%;" />
+              </template>
+            </div>
+            <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
           </div>
-          <span class="date-time">{{ formatDate(selected.createTime) }}</span>
-          <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
-          <div class="content-loading" v-if="isFetchingContent">
-            <q-spinner-orbit size="50px" /><span>{{ $t('lang.feedback_loading_content') }}</span>
-          </div>
-          <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
-        </div>
-        <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+          <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+        </template>
       </q-scroll-area>
     </div>
   </div>
@@ -200,8 +210,11 @@ const readFeedback = (id) => {
         });
       }
 
+      if (!currentMail.readTime) {
+        currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+      }
+
       currentMail.content = data.content;
-      currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
       isFetchingContent.value = false;
     })
@@ -298,7 +311,9 @@ onMounted(() => {
       }
 
       .content-loading {
+        width: 100%;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         margin: auto;
