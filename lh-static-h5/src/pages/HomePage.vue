@@ -421,11 +421,11 @@
         </template>
       </div>
 
-      <div class="game-lists " id="casual-lists">
+      <div class="game-lists" id="casual-lists">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
-            @click="playGame(item.gameName, item.code,0,  item.gameCode)"
+            @click="playGame(item.gameName, item.code, 0, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
@@ -562,12 +562,7 @@
         infinite
         size="xs"
       >
-        <q-carousel-slide
-          v-for="(promo, i) in floatPromo"
-          :key="i"
-          :name="i"
-          @click="gotoFloatPromo(promo.code)"
-        >
+        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
@@ -670,7 +665,7 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import {useLocalStorage} from "@vueuse/core"
+import { useLocalStorage } from "@vueuse/core";
 import { App } from "@capacitor/app";
 
 import { useUI } from "stores/ui";
@@ -1011,8 +1006,8 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -1082,13 +1077,13 @@ export default defineComponent({
       if(regexUrl.test(urlString)){
         // 跳轉
         location.href = urlString;
-        return
+        return;
       }
-      let regexName = new RegExp(/^(name|\?name)/g)
-      if(regexName.test(urlString)){
+      let regexName = new RegExp(/^(name|\?name)/g);
+      if (regexName.test(urlString)) {
         //去優惠
         router.push(`/promo${urlString}`);
-        return
+        return;
       }
 
       router.push(`/promo?name=${urlString}`);
@@ -1125,7 +1120,8 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value =
+                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupPath.value = res.data["path"];
@@ -1360,7 +1356,7 @@ export default defineComponent({
             title: "小游戏",
             icon: "casual",
             subtitle: "小游戏"
-          }
+          };
           casuals.value.push(casualObj);
           // }
         })
@@ -1449,7 +1445,7 @@ export default defineComponent({
         return;
       } else if(banner.redirectUrl=="app://deposit"){
         router.push("/finance/deposit");
-      }else{
+      } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
       }
@@ -1511,15 +1507,15 @@ export default defineComponent({
           downloadUrl.value = res.data.downloadPageUrl;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     };
 
     const openDownloadAppLink = () => {
-      const affiliate= sessionStorage.getItem("AFFILIATE_CODE");
+      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
       const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
       window.open(theurl, "_blank");
-    }
+    };
 
     // const getImgPlatformLogo = (platform, code) => {
     //   try {
@@ -1604,11 +1600,10 @@ export default defineComponent({
       }
     };
     const gotoFloatPromo = (code) => {
-
-      router.push(`/promo?name=${code}`)
-    }
-    const floatPromo = ([]);
-    const gamePromo = ([]);
+      router.push(`/promo?name=${code}`);
+    };
+    const floatPromo = [];
+    const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
@@ -1616,13 +1611,13 @@ export default defineComponent({
         .get("/redirect")
         .then((res) => {
           if (res.code === 0) {
-            res.data.forEach(element => {
-              if (element.type === 'PROMO') {
+            res.data.forEach((element) => {
+              if (element.type === "PROMO") {
                 floatPromo.push(element);
                 showFloatPromo.value = true;
               }
-              if (element.type === 'GAME') {
-                gamePromo.push(element)
+              if (element.type === "GAME") {
+                gamePromo.push(element);
                 showRocket.value = true;
               }
             });
@@ -1641,16 +1636,16 @@ export default defineComponent({
         .catch((err) => {
           console.log(err);
         });
-    }
+    };
 
-    const currentPromo = ref(null)
+    const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
 
-    const currentRocket = ref(null)
+    const currentRocket = ref(null);
     const currentRocketIndex = ref(0);
     const updateRocket = () => {
       currentRocket.value = gamePromo[currentRocketIndex.value];
@@ -1668,7 +1663,7 @@ export default defineComponent({
 
     const hideRocket = () => {
       showRocket.value = false;
-      promoPos.value = [18, 18]
+      promoPos.value = [18, 18];
     };
 
     const showFloatPromo = ref(false);
@@ -1677,7 +1672,7 @@ export default defineComponent({
       //   showFloatPromo.value = true;
       // }
       if (gamePromo.length === 0) {
-        promoPos.value = [18, 18]
+        promoPos.value = [18, 18];
       }
     };
 
@@ -1691,7 +1686,7 @@ export default defineComponent({
 
     const currentElement = ref(null);
     const moveRocketFab = (ev) => {
-      console.log(ev)
+      // console.log(ev);
       const maxX = window.innerWidth - 70;
       const maxY = window.innerHeight - 70;
       draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1710,8 +1705,7 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       promoPos.value = [newX, newY];
-
-    }
+    };
 
     onActivated(() => {
       getPlatList();
@@ -1725,11 +1719,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      if ((store.token)) {
+      if (store.token) {
         initFloating();
         checkShowImgTop();
       }
-    })
+    });
     // Clear interval on unmounted
     onUnmounted(() => {
       // clearInterval(intervalId);
@@ -1973,7 +1967,6 @@ export default defineComponent({
 :deep(.q-carousel.float) {
   height: unset;
   background: transparent;
-
 }
 :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
   margin: 0;
@@ -2285,6 +2278,7 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
+      margin-bottom: 8px;
     }
 
     > div {
