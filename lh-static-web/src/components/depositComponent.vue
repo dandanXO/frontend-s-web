@@ -126,7 +126,7 @@
               {{getRollOverText(selectedPromo.gameTypeRollover) }}
             </p>
             <p v-else>
-              流水倍数要求：{{selectedPromo.rollover}}倍
+              流水倍数要求（本金+彩金）：{{selectedPromo.rollover}}倍
             </p>
           </div>
 
@@ -278,7 +278,7 @@ const rules = {
 const getRollOverText = (rolltext) => {
   const thetext= JSON.parse(rolltext);
 
-  var fulltext= '流水倍数要求：';
+  var fulltext= '流水倍数要求（本金+彩金）：';
   var rolloverlists= [];
   if(thetext.sport){
     rolloverlists.push("体育"+thetext.sport+"倍");
