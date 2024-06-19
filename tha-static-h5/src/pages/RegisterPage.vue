@@ -577,13 +577,18 @@ export default defineComponent({
                   );
                 }
 
-                router.push("/login");
                 $q.notify({
                   color: "positive",
                   position: "top",
                   message: t("lang.register_successful"),
                   icon: "check_circle_outline"
                 });
+
+                store.autoLogin(res.data);
+                sessionStorage.removeItem("REFERRAL_CODE");
+                if (store.hasToken()) {
+                  router.push({ path: "/" });
+                }
               } else {
                 $q.notify({
                   color: "negative",
