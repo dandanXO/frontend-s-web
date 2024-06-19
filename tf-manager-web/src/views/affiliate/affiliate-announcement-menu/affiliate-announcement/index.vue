@@ -140,9 +140,9 @@
           <el-input
             type="textarea"
             v-model="form.content"
-            :rows="6"
+            :rows="10"
             style="width: 350px;"
-            maxlength="500"
+            maxlength="5000"
             show-word-limit
           />
         </el-form-item>
