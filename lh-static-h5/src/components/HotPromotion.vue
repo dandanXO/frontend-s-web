@@ -23,7 +23,7 @@
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
-    <HongBaoPreEurocup v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'" :promo-code="list.promoCode" />
+    <HongBaoPreEurocup v-if="!isCommonPromo && list.redirectUrl === 'lh1-jiajianghongbaoyu'" :promo-code="list.promoCode" />
 
     <UpcomingMatchPromo
       v-if="
@@ -300,6 +300,7 @@ export default defineComponent({
       this.list.redirectUrl === "hongbaoyu" ||
       this.list.redirectUrl === "invitefriend" ||
       this.list.redirectUrl === "welcomenewuser" ||
+      this.list.redirectUrl === "lh1-jiajianghongbaoyu" ||
       this.list.redirectUrl === "lh1-lottery" ||
       this.list.redirectUrl === "lh1-quiz" ||
       this.list.redirectUrl === "lh1-nba-safety" ||

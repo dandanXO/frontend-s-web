@@ -35,7 +35,7 @@
     />
 
     <HongBaoPreEurocup
-      v-if="list.redirectUrl === 'tiqianhongbao' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'lh1-jiajianghongbaoyu' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -473,6 +473,7 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-monthly-sign" ||
       this.list.redirectUrl === "lh1-nba-safety" ||
       this.list.redirectUrl === "lh1-quiz" ||
+      this.list.redirectUrl === "lh1-jiajianghongbaoyu" ||
       this.list.redirectUrl === "lh1-gift" ||
       this.list.redirectUrl === "lh1-gift8" ||
       this.list.redirectUrl === "lh1-promo-application-A" ||
