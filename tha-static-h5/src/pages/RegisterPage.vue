@@ -309,6 +309,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useI18n } from "vue-i18n";
 import { useUI } from "stores/ui";
 import vueI18n from "src/i18n";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -482,6 +483,20 @@ export default defineComponent({
       return emailPattern.test(regForm.email) || t("lang.invalid_email");
     };
 
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
+    const trackRegisterFailedEvent = () => {
+      if (ui.adjust_register_fail_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    };
+
     const isValidPhone = () => {
       const phonePattern = /^0[1-9][0-9]*$/;
       return phonePattern.test(regForm.telephone) || t("lang.invalid_phone_num");
@@ -531,7 +546,7 @@ export default defineComponent({
             regForm.regHost = "app://";
           }
           api
-            .post("/member/indRegister", qs.stringify(regForm))
+            .post("/member/fbRegister", qs.stringify(regForm))
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
