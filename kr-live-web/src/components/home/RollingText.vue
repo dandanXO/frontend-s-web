@@ -8,7 +8,7 @@
                 </div>
             </div>
             <div style="width:100%;text-align:center;" v-if="isLoading">
-                <q-spinner-orbit color="purple" size="2em" />
+                <q-skeleton type="text" style="width:100%;" />
             </div>
             <marquee-text :repeat="financeRecords.length" :duration="financeRecords.length * 20"
                 v-else-if="financeRecords.length > 0">

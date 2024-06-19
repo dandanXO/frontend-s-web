@@ -4,8 +4,9 @@
   }" />
   <div class="jackpot">
     <div class="jackpot-txt">
-      <q-spinner-orbit v-if="isLoading" color="purple" size="1em" />
-      <span v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
+      <q-skeleton v-if="isLoading" type="text" style="width:100%;" />
+      <span style="margin:0 auto" v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new
+        Intl.NumberFormat('en-US')).format(jackpotPrizeAmt) }}</span>
     </div>
   </div>
 </template>
@@ -99,6 +100,8 @@ onUnmounted(() => {
   }
 
   .jackpot-txt {
+    width: 100%;
+    max-width: 80%;
     display: flex;
     position: absolute;
     top: 70%;
