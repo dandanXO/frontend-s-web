@@ -4,8 +4,8 @@ import { useStore } from "@/store";
 import { ResponseCode } from "../api/response";
 import { UserActionTypes } from "@/store/modules/user/action-types";
 import _cloneDeep from 'lodash/cloneDeep';
-import { useRouter } from "vue-router";
 import i18n from "../i18n/index";
+import router from "../router";
 
 /* eslint-disable */
 const toRawType = (value) => {
@@ -50,8 +50,11 @@ const onResponse = (response) => {
   }
   if (res.code !== ResponseCode.SUCCESS) {
     const store = useStore()
-    const router = useRouter()
     const siteId = store.state.user.siteId
+    if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
+      router.push('/403');
+      return;
+    }
     if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
       ElMessage({
         message: "Duplicated login.",
@@ -172,7 +175,7 @@ const https = (api) => {
   console.log(currentHost)
   const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
   // TODO:: change this one to condition global or China.
-  if (currentHost.indexOf("dy") > -1 || currentHost.indexOf("xf") > -1 || currentHost.indexOf("lh") > -1 || isLocalhost) {
+  if (currentHost.indexOf("dy") > -1 || currentHost.indexOf("xf1-os") > -1 || currentHost.indexOf("lh1-cn") > -1 || isLocalhost) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
   } else {
     apiUrl = isAff ? process.env.VUE_GLOBAL_RST_API : (isCr ? process.env.VUE_GLOBAL_CR_API : process.env.VUE_GLOBAL_AFF_API)
