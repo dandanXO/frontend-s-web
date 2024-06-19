@@ -1,5 +1,9 @@
 <template>
-  <div class="node" v-if="list && list.length !== 0">
+  <div v-if="isFetchingApi" class="node-content payment-method-wrapper">
+    <q-skeleton v-for="rectSkeleton in 4" type="rect" class="withdraw-type-item" style="width:250px; height:45px;"
+      :key="rectSkeleton" />
+  </div>
+  <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div v-else>
@@ -120,6 +124,10 @@ export default defineComponent({
     },
   },
   props: {
+    isFetchingApi: {
+      type: Boolean,
+      default: false,
+    },
     list: {
       type: Array,
       default: function () {

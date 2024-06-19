@@ -8,7 +8,8 @@
         <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
         <div class="deposit-option-container">
           <div class="node-wrapper">
-            <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect" />
+            <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect"
+              :isFetchingApi="isFetchingApi" />
           </div>
         </div>
       </div>
@@ -73,26 +74,31 @@
       <q-form ref="depositForm" class="content-form form-template">
         <div class="form-item">
           <label>입금금액</label>
-          <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
-            :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
-            v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
-            <template v-slot:prepend>
-              <span style="z-index:1;font-size:16px;" class="text-bright">
-                <template v-if="isUSDT">USDT</template>
-                <template v-else>{{ store.currency.value }}</template>
-              </span>
-            </template>
-          </q-input>
-          <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
-            color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount" padding="none">
-            <template v-slot:prepend>
-              <span style="font-size: 26px" class="text-bright">
-                {{ store.currency.value }}
-              </span>
-            </template>
-          </q-select>
+          <q-skeleton v-if="isFetchingApi" type="QInput" />
+          <template v-else>
+            <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
+              :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
+              v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
+              <template v-slot:prepend>
+                <span style="z-index:1;font-size:16px;" class="text-bright">
+                  <template v-if="isUSDT">USDT</template>
+                  <template v-else>{{ store.currency.value }}</template>
+                </span>
+              </template>
+            </q-input>
+            <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
+              color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount"
+              padding="none">
+              <template v-slot:prepend>
+                <span style="font-size: 26px" class="text-bright">
+                  {{ store.currency.value }}
+                </span>
+              </template>
+            </q-select>
+          </template>
 
-          <div class="text-grey text-bold">
+          <q-skeleton type="text" v-if="isFetchingApi" />
+          <div v-else class="text-grey text-bold text-caption">
             입금단위：{{
               calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" :
                 store.currency.value) : 0
@@ -111,9 +117,13 @@
           </div>
 
           <div class="select-amt-btn-wrapper">
-            <q-btn class="select-amt-btn" v-for="(item, index) in countOptions" :key="index"
-              :label="isUSDT ? `${item} USDT` : item + '만원'" @click="selectAmt(item)"></q-btn>
-            <q-btn class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+            <template v-for="(item, index) in countOptions" :key="index">
+              <q-skeleton v-if="isFetchingApi" type="QBtn" />
+              <q-btn v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
+                @click="selectAmt(item)"></q-btn>
+            </template>
+            <q-skeleton v-if="isFetchingApi" type="QBtn" />
+            <q-btn v-else class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
           </div>
         </div>
 
@@ -140,7 +150,8 @@
 
         <div class="form-item">
           <label>입금자명</label>
-          <q-input dense v-model="depositAccName" class="account-name-field" outlined readonly />
+          <q-skeleton v-if="isFetchingApi" type="QInput" />
+          <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
         </div>
 
         <div class="q-mt-sm" v-html="activeMethod.msg"></div>
@@ -463,11 +474,11 @@ const isLoadingInitPay = ref(true);
 const initPay = () => {
   isDisplay.value = false;
   // debugger;
-  $q.loading.show({
-    message: "로딩 중... 잠시만 기다려 주세요..."
-  });
+  // $q.loading.show({
+  //   message: "로딩 중... 잠시만 기다려 주세요..."
+  // });
 
-  isFetchingApi.value = window.location.pathname === "/deposit";
+  isFetchingApi.value = true;
 
   payMethods.value = [];
   cashier
@@ -735,8 +746,8 @@ onMounted(() => {
 }
 
 .select-amt-btn {
-  background: #38f3ff;
-  color: #000;
+  background: linear-gradient(to right, #38F3FF 0%, #00B7ED 100%);
+  color: #1a1a1a;
   white-space: nowrap;
 }
 </style>

@@ -7,7 +7,7 @@
 
         <div class="withdrawalmethod">
           <template v-if="!isLoaded">
-            <q-skeleton v-for="rectSkeleton in [1, 2, 3]" type="rect" class="withdraw-type-item"
+            <q-skeleton v-for="rectSkeleton in 3" type="rect" class="withdraw-type-item"
               style="width:250px; height:45px;" :key="rectSkeleton" />
           </template>
           <div v-else v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
@@ -113,7 +113,7 @@
           </div>
 
           <q-skeleton v-if="!isLoaded" type="text" />
-          <div v-else-if="selectedWithdrawalMethod" class="text-grey">
+          <div v-else-if="selectedWithdrawalMethod" class="text-grey text-caption">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "출금금액/건: " +
@@ -426,8 +426,8 @@ onMounted(() => {
 }
 
 .select-amt-btn {
-  background: #18324A;
-  color: #fff;
+  background: linear-gradient(to right, #18324A 0%, #11293d 100%);
+  color: #e7e7e7;
   white-space: nowrap;
   font-family: 'Nanum';
 }

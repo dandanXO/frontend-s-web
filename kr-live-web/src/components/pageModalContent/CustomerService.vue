@@ -11,8 +11,8 @@
       </div>
       <div class="form-item">
         <label>제목</label>
-        <q-input dense outlined ref="titleRef" placeholder="제목 입력해주세요." v-model="serviceForm.title" clearable
-          lazy-rules :rules="[
+        <q-input dense outlined ref="titleRef" placeholder="제목 입력해주세요." v-model="serviceForm.title" clearable lazy-rules
+          :rules="[
             (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
           ]" />
       </div>
@@ -41,19 +41,26 @@
         </div>
 
         <q-list bordered separator class="feedback-list">
-          <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
-            :active="item === selected" active-class="active-announcement">
-            <q-item-section>
-              <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-              <!-- <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label> -->
-            </q-item-section>
+          <template v-if="isLoading">
+            <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
+              <q-skeleton type="QToolbar" style="width:100%;" />
+            </q-item>
+          </template>
+          <template v-else>
+            <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
+              :active="item === selected" active-class="active-announcement">
+              <q-item-section>
+                <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
+                <!-- <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label> -->
+              </q-item-section>
 
-            <q-item-section side top class="info-wrapper">
-              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
-              <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
-              <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
-            </q-item-section>
-          </q-item>
+              <q-item-section side top class="info-wrapper">
+                <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+                <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
+                <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
+              </q-item-section>
+            </q-item>
+          </template>
         </q-list>
       </div>
       <q-scroll-area class="feedback-content-wrapper">
@@ -86,6 +93,7 @@ const isCreateMode = ref(false);
 const titleRef = ref();
 const contentRef = ref();
 const selected = ref();
+const isLoading = ref(false);
 
 const serviceForm = reactive({
   title: "",
@@ -150,17 +158,26 @@ const sendMessage = () => {
 };
 
 const initOutbox = () => {
-  api.get('/session/feedback/replies').then((res) => {
-    const { code, data } = res.data
+  isLoading.value = true;
 
-    if (code === 0) {
-      feedbackReplies.value = data.records;
+  Promise.all([api.get('/session/feedback/replies'), api.get("/session/feedback/types")]).then(([repliesRes, typesRes]) => {
+    const { code: repliesResCode, data: repliesResData } = repliesRes.data
+
+    if (repliesResCode === 0) {
+      feedbackReplies.value = repliesResData.records;
     }
-  })
 
-  api.get("/session/feedback/types").then((res) => {
-    const { code, data } = res.data
-    feedbackTypes.value = data;
+    const { code: typesResCode, data: typesResData } = typesRes.data
+
+    if (typesResCode === 0) {
+      feedbackTypes.value = typesResData;
+    }
+
+    isLoading.value = false;
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   })
 }
 
