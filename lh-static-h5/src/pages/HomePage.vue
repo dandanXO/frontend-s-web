@@ -1497,7 +1497,7 @@ export default defineComponent({
           downloadUrl.value = res.data.downloadPageUrl;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     };
 
@@ -1676,7 +1676,7 @@ export default defineComponent({
 
     const currentElement = ref(null);
     const moveRocketFab = (ev) => {
-      console.log(ev);
+      // console.log(ev);
       const maxX = window.innerWidth - 70;
       const maxY = window.innerHeight - 70;
       draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
