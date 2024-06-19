@@ -403,6 +403,7 @@ export default defineComponent({
 
 .forget-pwd-tip {
   color: $info;
+  margin: 5px 0px;
 }
 
 .login-form {
