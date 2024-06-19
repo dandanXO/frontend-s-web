@@ -164,7 +164,7 @@ const https = (api) => {
   // const indHost = "ind-nfaet6t.exerpsison.com"
   // const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
   // const lhHost = "lh1-affiliate.phoicynxeey.com"
-  // const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
+  const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
   // const vnmHost = "vnm-affiliate.th80to83w1.com"
   // const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
@@ -174,11 +174,11 @@ const https = (api) => {
 
   console.log(currentHost)
   const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
-  // TODO:: change this one to condition global or China.
-  if (currentHost.indexOf("dy") > -1 || currentHost.indexOf("xf1-os") > -1 || currentHost.indexOf("lh1-cn") > -1 || isLocalhost) {
+  //Only Global or China.
+  if (currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf("-cn") > -1 ) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
   } else {
-    apiUrl = isAff ? process.env.VUE_GLOBAL_RST_API : (isCr ? process.env.VUE_GLOBAL_CR_API : process.env.VUE_GLOBAL_AFF_API)
+    apiUrl = isAff ? process.env.VUE_APP_GLOBAL_RST_API : (isCr ? process.env.VUE_APP_GLOBAL_CR_API : process.env.VUE_APP_GLOBAL_AFF_API)
   }
 
   const config = {
