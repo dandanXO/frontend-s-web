@@ -6,9 +6,9 @@
                 <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+
                     더보기</router-link>
             </div>
-            <div class="news-item-box" v-if="isLoading" style="display:flex;justify-content:center;">
-                <q-spinner-orbit size="2em" />
-            </div>
+            <template v-if="isLoading">
+                <q-skeleton class="news-item-box" v-for="(_item, index) in 5" :key="index" style="width:100%;" />
+            </template>
             <template v-else-if="announcementList.length > 0">
                 <div v-for="(item, index) in announcementList" :key="index" class="news-item-box">
                     <div class="news-item-left">
