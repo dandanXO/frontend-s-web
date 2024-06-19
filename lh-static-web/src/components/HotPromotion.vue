@@ -95,6 +95,7 @@
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
     <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
     <DepositRebates v-if="!isCommonPromo && list.redirectUrl === 'lh1-deposit-rebates'" />
+    <WinLossPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-eurocup-guess'" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -161,6 +162,7 @@ import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue"
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu2024/HongBaoPreEurocup.vue"
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue"
+import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue"
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -216,7 +218,8 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
-    HongBaoPreEurocup
+    HongBaoPreEurocup,
+    WinLossPromo
     // DailyBonus
   },
   props: {
@@ -505,7 +508,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-intel-esl" ||
       this.list.redirectUrl === "lh-duanwujie24"||
       this.list.redirectUrl === "lh-fish-hongbao" ||
-      this.list.redirectUrl === "lh1-deposit-rebates"
+      this.list.redirectUrl === "lh1-deposit-rebates" ||
+      this.list.redirectUrl === "lh1-eurocup-guess"
     ) {
       this.isCommonPromo = false;
     } else {
