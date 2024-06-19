@@ -2,7 +2,7 @@
   <div class="main-section">
     <LangToggle />
 
-    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="isLoadingDepositRecordList" />
+    <RollingText />
 
     <JackpotPrize />
 
@@ -12,15 +12,15 @@
     <q-carousel v-model="currentSelectedMenu" transition-prev="slide-right" transition-next="slide-left" animated
       control-color="primary" class="rounded-borders" style="background: transparent; height: 100%;">
       <q-carousel-slide name="live" class="column no-wrap flex-center">
-        <div class="game-list-wrapper" style="min-height:300px;">
-          <div class="game-list">
+        <div class="game-list-wrapper">
+          <div class=" game-list">
             <GameItem :games="liveCasinoGames" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
               :onClickGameItem="openGame" />
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="slots" class="column no-wrap flex-center">
-        <div class="game-list-wrapper" style="min-height:300px;">
+        <div class="game-list-wrapper">
           <!-- slot start -->
           <div class="game-list" v-if="!isShow">
             <GameItem :games="platforms" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
@@ -96,7 +96,7 @@
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="sport" class="column no-wrap flex-center">
-        <div class="game-list-wrapper" style="min-height:300px;">
+        <div class="game-list-wrapper">
           <div class="game-list">
             <GameItem :games="esportPlatform" :gameType="'esport'" :gameItemLoad="gameItemLoad"
               :onClickGameItem="openGame" />
@@ -189,7 +189,7 @@
 
   <AnnouncementList />
 
-  <DepositRecords :depositRecordList="depositRecordList" />
+  <DepositRecords />
 
   <GameModal ref="gameModalRef"></GameModal>
 
@@ -395,9 +395,6 @@ export default defineComponent({
     }
 
     const platforms = ref([]);
-
-    const isLoadingDepositRecordList = ref(false);
-    const depositRecordList = ref([]);
 
     const selectedPlatId = ref();
     const selectedPlat = reactive({
@@ -695,34 +692,6 @@ export default defineComponent({
     // const announcementList = ref([]);
     const announcementTypes = ref([]);
 
-    const loadDepositRecordList = () => {
-      isLoadingDepositRecordList.value = true;
-      api
-        .get("/member/withdraw-deposit-record")
-        .then((res) => {
-          const response = res.data;
-
-          if (response.code === 0) {
-            depositRecordList.value = response.data;
-          } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: "資料讀取失敗",
-              icon: "report_problem"
-            });
-          }
-
-          isLoadingDepositRecordList.value = false;
-        })
-        .catch((err) => {
-          console.log(err);
-          isLoadingDepositRecordList.value = false;
-        }).finally(() => {
-          isLoadingDepositRecordList.value = false;
-        });
-    };
-
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
     const isStationNotice = ref(false);
@@ -930,7 +899,6 @@ export default defineComponent({
       loadHomeData();
       getVersionNo();
       checkSticky();
-      loadDepositRecordList();
     });
 
     const popupInterval = ref(null);
@@ -1020,7 +988,6 @@ export default defineComponent({
     };
 
     return {
-      isLoadingDepositRecordList,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
@@ -1105,8 +1072,7 @@ export default defineComponent({
       specialInviteBonusPopupVisible,
       redeemSpecialInviteBonus,
       toggleSpecialInviteBonusPopup,
-      gameItemLoad,
-      depositRecordList
+      gameItemLoad
     };
   }
 });
@@ -2177,6 +2143,7 @@ export default defineComponent({
 .game-list-wrapper {
   display: flex;
   width: 100%;
+  min-height: 500px;
 }
 
 .game-list {

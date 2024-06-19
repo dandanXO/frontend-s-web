@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <q-intersection once @visibility="isVisible = true">
         <div class="news-section">
             <div class="news-title news-title__sub">
                 <div class="title-text">출금현황</div>
             </div>
 
-            <div class="news-item-box" v-for="d, index in props.depositRecordList" :key="index">
+            <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
                 <div class="news-item-left">
                     <div class="news-item-title">
                         {{ formatTransactionType(d.transactionType) }}
@@ -18,15 +18,41 @@
                 </div>
             </div>
         </div>
-    </div>
+    </q-intersection>
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from 'vue';
 import moment from 'moment';
 import { useI18n } from 'vue-i18n';
+import { userStore } from "stores/index";
+import { useRoute } from 'vue-router';
 
 const { t } = useI18n();
-const props = defineProps(['depositRecordList']);
+const isLoading = ref(false);
+const financeRecords = ref([]);
+const store = userStore();
+const route = useRoute();
+const isVisible = ref(false);
+
+const loadFinanceRecords = () => {
+    isLoading.value = true;
+
+    store.getFinanceRecords().then((records) => {
+        financeRecords.value = records;
+        isLoading.value = false;
+    }).catch((err) => {
+        console.log(err)
+        isLoading.value = false;
+    });
+};
+
+watch(() => route.query.page || isVisible.value, () => {
+    if (route.query.page && !isVisible.value) {
+    } else {
+        loadFinanceRecords();
+    }
+})
 
 const formatTransactionType = (transactionType) => {
     if (transactionType === 'DEPOSIT') {
