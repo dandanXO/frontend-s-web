@@ -113,7 +113,7 @@
           </div>
 
           <q-skeleton v-if="!isLoaded" type="text" />
-          <div v-else-if="selectedWithdrawalMethod" class="text-grey">
+          <div v-else-if="selectedWithdrawalMethod" class="text-grey text-caption">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               {{
                 "출금금액/건: " +
