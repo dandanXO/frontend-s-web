@@ -153,6 +153,9 @@ export default {
     withdraw_withdraw_amount: "출금금액",
     withdraw_withdraw_password: "출금 비밀번호",
     withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
