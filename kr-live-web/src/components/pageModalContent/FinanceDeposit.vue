@@ -746,8 +746,8 @@ onMounted(() => {
 }
 
 .select-amt-btn {
-  background: #38f3ff;
-  color: #000;
+  background: linear-gradient(to right, #38F3FF 0%, #00B7ED 100%);
+  color: #1a1a1a;
   white-space: nowrap;
 }
 </style>

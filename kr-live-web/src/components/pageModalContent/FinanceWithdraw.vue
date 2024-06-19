@@ -426,8 +426,8 @@ onMounted(() => {
 }
 
 .select-amt-btn {
-  background: #18324A;
-  color: #fff;
+  background: linear-gradient(to right, #18324A 0%, #11293d 100%);
+  color: #e7e7e7;
   white-space: nowrap;
   font-family: 'Nanum';
 }
