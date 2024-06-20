@@ -5,7 +5,7 @@
                 {{ formattedDate }}
             </div>
             <div class="match-details">
-                小组赛 比赛第1轮（共3轮）
+                免费参与竞猜，小组赛第二轮（共3轮）
             </div>
             <div class="winloss-matches">
                 <div class="match" v-for="(match, i) in ongoingMatches" :key="i">
@@ -60,7 +60,7 @@
                 <img src="./images/activity.png">
             </div>
             <div class="sub-desc">
-                活动内容：每日竞猜指定欧洲杯比赛胜率≥50%且欧洲杯”滚球盘”有效投注≥50%即可获得最高2,888元彩金。
+                活动内容：每日竞猜指定欧洲杯比赛胜率≥25%且欧洲杯”滚球盘”有效投注≥500即可获得最高2,888元彩金。
             </div>
             <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
