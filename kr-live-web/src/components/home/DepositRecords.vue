@@ -82,8 +82,8 @@ const formatTransactionType = (transactionType) => {
 
 <style lang="scss" scoped>
 .news-section {
-    margin-top: 20px;
-    padding: 0 16px;
+    max-width: 1400px;
+    margin: 20px auto;
 }
 
 .news-split {
