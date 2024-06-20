@@ -2,6 +2,9 @@
   <div class="main-section">
     <LangToggle />
 
+    <q-page-sticky position="bottom-right" :offset="[50, 150]" style="z-index:999999">
+      <q-btn padding="none" round  color="primary" style="display: flex; justify-content: center; align-items: center;"><a href="https://t.me/city88888" target="_blank"><img style="display:block; width: 60px;" src="../assets/images/index/telegram.svg"></a></q-btn>
+    </q-page-sticky>
     <RollingText />
 
     <JackpotPrize />

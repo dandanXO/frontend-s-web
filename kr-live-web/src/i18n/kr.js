@@ -181,7 +181,7 @@ export default {
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
     deposit_reminder: "알림",
-    deposit_reminder_caption: "입금 전 꼭 읽어주세요",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
