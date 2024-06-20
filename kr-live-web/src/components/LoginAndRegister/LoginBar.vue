@@ -159,7 +159,8 @@ const iconInfo = reactive([
   },
   {
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
