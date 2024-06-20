@@ -367,21 +367,6 @@ svg {
   color: $header-color;
 }
 
-.bg-brand {
-  // background-image: $linear-bg-1;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-}
-
 .menu-title {
   color: $main-color;
   background-image: $linear-bg-1;
@@ -570,21 +555,6 @@ svg {
   min-width: 180px;
   padding: 4px 16px;
   border-radius: 10px;
-}
-
-.third-btn {
-  // background: $linear-bg-4;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 12px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn1-gray.svg") no-repeat center center;
 }
 
 .close-btn {
