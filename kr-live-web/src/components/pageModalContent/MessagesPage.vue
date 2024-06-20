@@ -1,7 +1,17 @@
 <template>
-    <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
-        <q-tab :name="category.type" :label="category.type" v-for="category in inboxCategories" :key="category" />
-    </q-tabs>
+    <q-toolbar class="bg-transparent">
+        <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
+            {{ $t('lang.message_compose') }}
+        </div>
+
+        <q-space />
+
+        <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
+            <q-tab :name="category.type" :label="category.type" v-for="category in inboxCategories" :key="category" />
+        </q-tabs>
+    </q-toolbar>
+
+
 
     <div class="form-wrapper" v-if="isCreateMode">
         <form class="content-form form-template">
@@ -32,11 +42,11 @@
     <div class="message-compose-form" v-else>
         <div class="message-container">
             <div class="message-list-wrapper">
-                <div class="header">
+                <!-- <div class="header">
                     <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
                         {{ $t('lang.message_compose') }}
                     </div>
-                </div>
+                </div> -->
 
                 <div class="header">
                     <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
@@ -88,7 +98,7 @@
                             }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                        }}</span>
+                            }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
