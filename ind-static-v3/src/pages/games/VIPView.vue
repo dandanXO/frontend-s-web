@@ -26,6 +26,10 @@
       <Slide v-for="(vip, vipIndex) in vipItems" :key="vipIndex">
         <div class="carousel__item">
           <div :class="`vipitem vipitem${vip.vipLevel}`">
+            <div class="vip-current-level" v-if="vip.vipLevel === vipLevel">Current level</div>
+            <div class="vip-level-icon">
+              <img :src="require(`../../assets/images/vip/badge/vipicon-${vip.vipLevel}.png`)" />
+            </div>
             <div class="vip-level-header">Lv{{ vip.vipLevel }}</div>
 
             <div class="vip-contents" :style="vip.upgrade === 'Successful deposit' ? 'padding-top: 120px;' : ''">
@@ -870,15 +874,14 @@ const swipeRight = () => {
     max-width: 200px;
     background: #141812;
 
-    :deep(.q-tab__label) {
-      font-weight: 400;
+    :deep(.q-tab) {
+      color: #b7c2ba;
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-      // background-size: 100% 100%;
-      background-color: #20241e;
+      color: #284426;
+      background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
+      font-weight: 700;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -899,118 +902,190 @@ const swipeRight = () => {
   width: 100%;
   justify-content: flex-end;
   font-size: 12px;
+  color: #717986;
+  .progress-bar-inner-bar {
+    background: #717986;
+  }
+  .vip-current-level {
+    background: #717986;
+  }
 
   &1 {
     background-image: url("../../assets/images/vip/badge/banner01.png");
+    color: #ab3c18;
+    .progress-bar-inner-bar {
+      background: #ab3c18;
+    }
+    .vip-current-level {
+      background: #ab3c18;
+    }
   }
 
   &2 {
     background-image: url("../../assets/images/vip/badge/banner02.png");
+    color: #504778;
+    .progress-bar-inner-bar {
+      background: #504778;
+    }
+    .vip-current-level {
+      background: #504778;
+    }
   }
 
   &3 {
     background-image: url("../../assets/images/vip/badge/banner03.png");
+    color: #ff5144;
+    .progress-bar-inner-bar {
+      background: #ff5144;
+    }
+    .vip-current-level {
+      background: #ff5144;
+    }
   }
 
-  &4{
+  &4 {
     background-image: url("../../assets/images/vip/badge/banner04.png");
+    color: #4aa619;
+    .progress-bar-inner-bar {
+      background: #4aa619;
+    }
+    .vip-current-level {
+      background: #4aa619;
+    }
   }
 
-  &5{
+  &5 {
     background-image: url("../../assets/images/vip/badge/banner05.png");
+    color: #6a7ede;
+    .progress-bar-inner-bar {
+      background: #6a7ede;
+    }
+    .vip-current-level {
+      background: #6a7ede;
+    }
   }
 
-  &6{
+  &6 {
     background-image: url("../../assets/images/vip/badge/banner06.png");
+    color: #25b0f4;
+    .progress-bar-inner-bar {
+      background: #25b0f4;
+    }
+    .vip-current-level {
+      background: #25b0f4;
+    }
   }
 
-  &7{
+  &7 {
     background-image: url("../../assets/images/vip/badge/banner07.png");
+    color: #f152a2;
+    .progress-bar-inner-bar {
+      background: #f152a2;
+    }
+    .vip-current-level {
+      background: #f152a2;
+    }
   }
 
-  &8{
+  &8 {
     background-image: url("../../assets/images/vip/badge/banner08.png");
+    color: #ff7839;
+    .progress-bar-inner-bar {
+      background: #ff7839;
+    }
+    .vip-current-level {
+      background: #ff7839;
+    }
   }
 
-  &9{
+  &9 {
     background-image: url("../../assets/images/vip/badge/banner09.png");
+    color: #06a79d;
+    .progress-bar-inner-bar {
+      background: #06a79d;
+    }
+    .vip-current-level {
+      background: #06a79d;
+    }
   }
 
-  &10{
+  &10 {
     background-image: url("../../assets/images/vip/badge/banner10.png");
+    color: #e95761;
+    .progress-bar-inner-bar {
+      background: #e95761;
+    }
+    .vip-current-level {
+      background: #e95761;
+    }
   }
 
-  &11{
+  &11 {
     background-image: url("../../assets/images/vip/badge/banner11.png");
+    color: #de346a;
+    .progress-bar-inner-bar {
+      background: #de346a;
+    }
+    .vip-current-level {
+      background: #de346a;
+    }
   }
 
-  &12{
+  &12 {
     background-image: url("../../assets/images/vip/badge/banner12.png");
+    color: #4f79ff;
+    .progress-bar-inner-bar {
+      background: #4f79ff;
+    }
+    .vip-current-level {
+      background: #4f79ff;
+    }
   }
 
-  // &3,
-  // &4 {
-  //   background: url("../../assets/images/vip/badge/banner00.png") no-repeat bottom center;
-  // }
+  .vip-current-level {
+    display: flex;
+    padding: 4px 6px 4px 8px;
+    // background: salmon;
+    border-radius: 12px;
+    font-size: 10px;
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    align-items: center;
 
-  // &5,
-  // &6 {
-  //   background: url("../../assets/images/vip/badge/banner00.png") no-repeat bottom center;
-  // }
+    &:before {
+      content: "";
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      background: #ffffff;
+      margin-right: 6px;
+    }
+  }
 
-  // &7,
-  // &8 {
-  //   background: url("../../assets/images/vip/badge/banner00.png") no-repeat bottom center;
-  // }
-
-  // &9 {
-  //   background: url("../../assets/images/vip/badge/banner00.png") no-repeat bottom center;
-  // }
-
-  // &10 {
-  //   background: url("../../assets/images/vip/badge/banner10.png") no-repeat bottom center;
-  // }
-
-  // &11 {
-  //   background: url("../../assets/images/vip/badge/banner11.png") no-repeat bottom center;
-  // }
-
-  // &12 {
-  //   background: url("../../assets/images/vip/badge/banner12.png") no-repeat bottom center;
-  // }
+  .vip-level-icon {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    img {
+      display: block;
+      width: 100px;
+    }
+  }
 
   .vip-level-header {
     font-family: "Poppins";
     font-size: 3.2em;
     font-weight: 800;
-    top: 25%;
+    top: 15%;
     left: 6%;
     z-index: 1;
     position: absolute;
-    color: #fff;
-
-    // svg {
-    //   font-family: Arial;
-    //   font-size: 10rem;
-    //   font-weight: bold;
-    //   position: absolute;
-    //   width: 125px;
-    //   height: 70px;
-    //   right: 0px;
-    //   top: 0px;
-    // }
-
-    // .svgText {
-    //   stroke: white;
-    //   stroke-width: 10px;
-    //   stroke-linejoin: round;
-    //   paint-order: stroke;
-    // }
   }
 
   .vip-contents {
-    padding-top: 60px;
-    color: #ffffff;
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -1030,12 +1105,7 @@ const swipeRight = () => {
       left: 6%;
       right: 6%;
 
-      .progress-bar-endpoint-label {
-        color: #fff;
-      }
-
       .progress-bar-outer-bar {
-        // border: 1px solid #fff;
         border-radius: 16px;
         background: #ffffff4d;
         width: 100%;
@@ -1055,10 +1125,8 @@ const swipeRight = () => {
       }
 
       .progress-bar-inner-bar {
-        color: #fff;
         border-radius: 16px;
-        // background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
-        background: #fff;
+        // background: #fff;
         height: 12px;
       }
     }
@@ -1067,17 +1135,13 @@ const swipeRight = () => {
       position: absolute;
       margin: 10px 0px;
       display: flex;
-      justify-content: flex-start;
+      justify-content: center;
       gap: 10px;
       font-size: 1.2em;
-      left: 25px;
-      top: 55%;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 700;
-
-      span {
-        color: rgba(255, 255, 255, 0.7);
-      }
+      left: 50%;
+      transform: translateX(-50%);
+      top: 50%;
+      width: 100%;
     }
   }
 }
@@ -1121,7 +1185,8 @@ const swipeRight = () => {
 
   .top-header {
     color: #f1f1f1;
-    background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+    // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+    background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
   }
 
   .q-table__card {

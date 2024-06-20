@@ -70,24 +70,13 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
+              <q-btn dense rounded icon="reply" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
-                <!-- <div
-                    class="promo-bg"
-                    :style="
-                    'background-image: url(' +
-                    imgURL +
-                    (selectedPromo.mobileBannerUrl ? selectedPromo.mobileBannerUrl : selectedPromo.mobileImgUrl) +
-                    ')'
-                  "
-                ></div> -->
-                <!-- <div class="promo-bg"> -->
                 <img
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
                 />
-                <!-- </div> -->
               </div>
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
@@ -112,7 +101,7 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
@@ -121,7 +110,7 @@
                       </div>
                     </div>
                     <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div>
+                  </div> -->
 
                   <!-- <div class="join-container">
                     <div class="promo-date">
@@ -539,15 +528,14 @@ export default defineComponent({
     max-width: 200px;
     background: #141812;
 
-    :deep(.q-tab__label) {
-      font-weight: 400;
+    :deep(.q-tab) {
+      color: #b7c2ba;
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      // background: url(../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-      // background-size: 100% 100%;
-      background-color: #20241e;
+      color: #284426;
+      background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
+      font-weight: 700;
     }
 
     :deep(.q-tab--active .q-tab__label) {
@@ -606,9 +594,12 @@ export default defineComponent({
 }
 
 .back-btn {
-  background: rgb(255, 255, 255, 0.4);
+  background: linear-gradient(180deg, #454a3f 0%, #21231f 100%);
+
+  width: 36px;
+  height: 36px;
   margin: 12px;
-  position: absolute;
+  // position: absolute;
   right: 0;
   top: 0;
   z-index: 9;
@@ -727,7 +718,7 @@ export default defineComponent({
           overflow: hidden;
           // padding-top: 40px;
           border-radius: 17px;
-          background: radial-gradient(68.92% 68.92% at 50% 50%, #1d341d 0%, #466a45 100%);
+          background: #a8ef9c;
           box-shadow: 0px 7.5px 20px 0px #1411321a;
 
           img {
@@ -1058,10 +1049,11 @@ export default defineComponent({
 // promo content-inner
 .promo-content-inner {
   .content-title {
-    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    // background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    // -webkit-background-clip: text;
+    // background-clip: text;
+    // color: transparent;
+    color: #ffffff;
     display: inline-block;
     font-size: 24px;
     font-weight: 700;
@@ -1073,6 +1065,7 @@ export default defineComponent({
   position: absolute;
   top: 16px;
   left: 16px;
+  display: none;
 
   .top-subtitle {
     color: rgba(255, 255, 255, 0.7);

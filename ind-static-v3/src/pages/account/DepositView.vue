@@ -829,7 +829,7 @@ onMounted(() => {
       }
 
       .currency {
-        color: #698fd0;
+        color: #ffffff;
         font-weight: 400;
       }
     }
@@ -858,7 +858,7 @@ onMounted(() => {
     // aspect-ratio: 77/38;
 
     &.active {
-      background: #00ae00;
+      background: #ffd600;
       box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     }
 
@@ -886,7 +886,7 @@ onMounted(() => {
     display: none;
 
     svg {
-      background: #00ae00;
+      background: #ffd600;
       border-radius: 3px;
     }
 

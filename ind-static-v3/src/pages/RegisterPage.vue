@@ -169,6 +169,10 @@
           <PrimaryButton :onClick="onSubmit" :label="'Register'" :disabled="!isAgreeReg" :loading="isLoading" />
         </div>
 
+        <div style="margin-top: 10px">
+          <router-link to="/login" class="login-link">Log in</router-link>
+        </div>
+
         <!--
           <div class="tip-container">
           <router-link class="landing-tip" to="/login">Already A Member? Sign In Now</router-link>
@@ -619,7 +623,7 @@ function charType(num) {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: url("../assets/images/index/auth-bg.png");
+  // background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -732,5 +736,13 @@ function charType(num) {
   color: #fae576;
   text-decoration: none;
   font-weight: 700;
+}
+
+.login-link {
+  color: #a8ef9c;
+  text-decoration: underline;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 </style>

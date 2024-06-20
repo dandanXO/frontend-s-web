@@ -135,11 +135,12 @@
         </div>
       </template>
 
-
       <InputRowGrid>
         <template #fields>
-          <InputField :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
-          ${ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) } RS)`">
+          <InputField
+            :label="`Withdrawal Amount (${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMin)} -
+          ${convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax)} RS)`"
+          >
             <template #input>
               <q-input
                 type="number"
@@ -151,7 +152,8 @@
                 :rules="[
                   (val) => !!val || 'Please Enter Withdraw Amount',
                   (val) => val > 0 || 'Withdraw Amount Must Be Greater Than 0',
-                  (val) => val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
+                  (val) =>
+                    val < withdrawalMethods[withdrawalDialogTab].withdrawableBalance || `Withdraw Amount Insufficient`,
                   (val) =>
                     (val >= withdrawalMethods[withdrawalDialogTab].withdrawMin &&
                       val <= withdrawalMethods[withdrawalDialogTab].withdrawMax) ||
@@ -202,25 +204,35 @@
           <div class="desc-wrapper">
             <div class="desc">Withdrew Amount</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}</div>
+          <div class="desc desc__amount">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawAmount) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">{{ store.vip }} Daily Limit</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}</div>
+          <div class="desc desc__amount">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].withdrawMax) }}
+          </div>
         </div>
         <div class="info">
           <div class="desc-wrapper">
             <div class="desc">Remain Wagers</div>
           </div>
-          <div class="desc">RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}</div>
+          <div class="desc desc__amount">
+            RS:{{ convertToCommaAmount(withdrawalMethods[withdrawalDialogTab].remainWagers) }}
+          </div>
         </div>
       </div>
     </div>
 
     <template v-if="bankCardList.length > 0">
-      <PrimaryButton :label="'Submit'" :onClick="submitWithdraw" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
+      <PrimaryButton
+        :label="'Submit'"
+        :onClick="submitWithdraw"
+        :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+      />
       <!-- <div :class="`btn-submit`" @click="submitWithdraw">
         <q-spinner
           v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
@@ -232,7 +244,11 @@
       </div> -->
     </template>
     <template v-else>
-      <PrimaryButton :label="'Submit'" :onClick="submitWithdrawBank" :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable" />
+      <PrimaryButton
+        :label="'Submit'"
+        :onClick="submitWithdrawBank"
+        :loading="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
+      />
       <!-- <div :class="`btn-submit`" @click="submitWithdrawBank">
         <q-spinner
           v-if="isLoadingBankCard || isLoadingWithdrawalMethod || isSubmitDisable"
@@ -265,7 +281,7 @@ import { useQuasar } from "quasar";
 import { useRoute, useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { convertToCommaAmount } from "src/boot/utils";
-import PrimaryButton from '../../components/auth/PrimaryButton.vue';
+import PrimaryButton from "../../components/auth/PrimaryButton.vue";
 import InputRowGrid from "src/components/auth/InputRowGrid.vue";
 import InputField from "src/components/auth/InputField.vue";
 
@@ -601,7 +617,7 @@ const isValidCardAddress = () => {
     align-items: center;
     justify-content: space-around;
     border-radius: 0.625rem;
-    background: #2E303466;
+    background: #2e303466;
 
     text-align: center;
     font-family: "Manrope", sans-serif;
@@ -636,6 +652,7 @@ const isValidCardAddress = () => {
   .bank-account-container {
     border-radius: 0.5rem;
     background: rgba(21, 0, 37, 0.2);
+    // background: rgba(255, 255, 255, 0.1);
     padding: 1rem;
     margin-top: 0;
 
@@ -670,14 +687,16 @@ const isValidCardAddress = () => {
       .bank-card-item {
         padding: 3px;
         border-radius: 1.25rem;
-        background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+        // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+        background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
         position: relative;
         transition: 0.3s all;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: #284426;
+        font-weight: 700;
 
         .card-label {
           font-size: 1rem;
@@ -734,10 +753,13 @@ const isValidCardAddress = () => {
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        color: white;
+        // color: white;
+        color: #192918;
+        font-weight: 700;
         border-radius: 3.125rem;
-        opacity: 0.8;
-        background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
+        // opacity: 0.8;
+        background: linear-gradient(90deg, rgba(168, 239, 156, 0.6) -1.25%, rgba(19, 19, 19, 0.6) 104.06%);
+        // background: linear-gradient(90deg, #157f42 -1.25%, rgba(44, 97, 67, 0) 104.06%);
         padding: 5px 10px;
 
         .desc-wrapper {
@@ -749,7 +771,11 @@ const isValidCardAddress = () => {
 
         .desc {
           font-size: 0.825rem;
-          font-weight: 400;
+
+          &__amount {
+            color: #ffffff;
+            font-weight: 400;
+          }
         }
       }
     }

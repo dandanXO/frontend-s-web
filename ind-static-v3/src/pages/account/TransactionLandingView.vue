@@ -44,43 +44,27 @@ watch(
 .transaction-landing {
   // background: #101114;
   .deposit-tabs {
-    font-family: "Manrope", sans-serif;
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 0.5rem;
-    margin: 20px auto 0px;
-    // background: #1b2232;
-
-    background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-    background-size: 100% 100%;
-
-    .right {
-      color: white;
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
-      background-size: 0;
-    }
-
-    .left {
-      color: white;
-      background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-      background-size: 0;
-    }
+    border-radius: 8px;
+    margin-bottom: 4px;
+    margin-top: 15px;
+    margin-left: 20px;
+    padding: 1px;
+    width: 100%;
+    max-width: 200px;
+    background: #141812;
 
     :deep(.q-tab) {
-      color: #5c6c86;
-      // background: #101114;
-      border-radius: 0.375rem;
-      // margin: 2.5px;
+      color: #b7c2ba;
     }
 
     :deep(.q-tab--active) {
-      color: white;
-      background-size: 100% 100%;
-      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+      color: #284426;
+      background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
+      font-weight: 700;
+    }
 
-      .q-tab__label {
-        font-weight: bold;
-      }
+    :deep(.q-tab--active .q-tab__label) {
+      font-weight: 700 !important;
     }
   }
 

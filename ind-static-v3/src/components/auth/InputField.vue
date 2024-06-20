@@ -23,7 +23,7 @@
   }
   :deep(.q-field__control):before {
     border-color: #2C323B;
-    background-color: #1a1e289e;
+    background-color: #141812;
     border-width: 2px;
     border-radius: 10px;
   }

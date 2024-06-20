@@ -10,6 +10,10 @@
       <img src="../assets/images/auth/auth-logo.png" />
     </div> -->
 
+    <div style="display: flex; justify-content: center; padding: 30px">
+      <img src="../assets/images/index/logo-test.png" width="90" />
+    </div>
+
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
@@ -538,7 +542,8 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   background: url("../assets/images/index/auth-bg.png");
-  height: calc(100dvh - 60px);
+  // height: calc(100dvh - 60px);
+  height: 100dvh;
   background-size: cover;
   background-repeat: no-repeat;
 }

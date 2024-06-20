@@ -520,7 +520,7 @@ const rows3 = [
     gap: 15px;
     margin: 0 0 25px 0;
     letter-spacing: 0.5px;
-    background: #FFFFFF0D;
+    background: #ffffff0d;
     position: relative;
     width: 100%;
     border-radius: 10px;
@@ -536,8 +536,9 @@ const rows3 = [
   }
 
   .agency-policy-main-img {
-    margin-left: -16px;
-    margin-right: -16px;
+    margin-top: 16px;
+    // margin-left: -16px;
+    // margin-right: -16px;
 
     // &:after {
     //   content: "";
@@ -556,17 +557,13 @@ const rows3 = [
   }
 
   .agency-policy-title {
-    // background: radial-gradient(50% 75% at 50% 50%, rgba(92, 70, 231, 0) 0%, #5c46e7 0.01%, rgba(92, 70, 231, 0) 100%);
-    // background-image: url("../../assets/images/earn-money/agency-policy-label.png");
-    // background-repeat: no-repeat;
-    // background-position: center center;
-    // background-size: 100% auto;
-    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
-    font-size: 18px;
+    // background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
+    background: radial-gradient(46.11% 803.69% at 53.89% 50%, #31c718 0%, rgba(49, 199, 24, 0) 100%);
+    font-size: 1.35rem;
     font-weight: 500;
     text-align: center;
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
     margin: 1px -16px;
   }
 
@@ -608,7 +605,8 @@ const rows3 = [
   }
   .table-container {
     :deep(thead) {
-      background: linear-gradient(356.25deg, #00430B -0.21%, #00AE00 93.65%);
+      // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
+      background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
     }
 
     :deep(tbody) {

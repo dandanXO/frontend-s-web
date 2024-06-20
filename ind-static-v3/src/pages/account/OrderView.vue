@@ -263,34 +263,28 @@ onActivated(() => {
 
 <style lang="scss" scoped>
 .order-option-tab {
-  background: url(../../assets/images/account/deposit-withdraw-tab-bg.png) no-repeat center center;
-  background-size: 100% 100%;
-
   border-radius: 8px;
-  width: calc(100% - 20px);
-  //margin-bottom: 10px;
-  margin: 10px auto;
-  aspect-ratio: 335/32;
+  margin-bottom: 4px;
+  margin-top: 15px;
+  padding: 1px;
+  width: 100%;
+  max-width: 240px;
+  background: #141812;
+  margin-left: 12px;
+  margin-bottom: 12px;
 
-  .right {
-    color: white;
-    background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-right.png) no-repeat center center;
-    background-size: 0;
-  }
-
-  .left {
-    color: white;
-    background: url(../../assets/images/account/deposit-withdraw-tab-active-bg-left.png) no-repeat center center;
-    background-size: 0;
-  }
-
-  :deep(.q-tab__label) {
-    font-weight: 700;
+  :deep(.q-tab) {
+    color: #b7c2ba;
   }
 
   :deep(.q-tab--active) {
-    color: #fff;
-    background-size: 100% 100%;
+    color: #284426;
+    background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
+    font-weight: 700;
+  }
+
+  :deep(.q-tab--active .q-tab__label) {
+    font-weight: 700 !important;
   }
 }
 

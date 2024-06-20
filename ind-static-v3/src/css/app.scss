@@ -13,7 +13,7 @@ body {
   letter-spacing: 1px;
 }
 #q-app {
-  background: #11131f;
+  background-color: #11131f;
   background-image: url("../assets/images/index/home-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -106,7 +106,7 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
 .page-title {
   width: 100%;
   min-height: 40px;
-  background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
+  // background: linear-gradient(#83838336, #83838336), url("../assets/images/index/auth-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
@@ -136,6 +136,11 @@ body.platform-ios .q-dialog__inner--minimized > div:not(.popout-dialog) {
   .header-icon {
     color: #fff;
     font-size: 22px;
+    background: linear-gradient(180deg, #454a3f 0%, #21231f 100%);
+
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
   }
 
   .header-back {
@@ -597,7 +602,7 @@ body.body--dark .q-footer {
   }
 
   .popout-dialog-container {
-    background: #0B0E09;
+    background: #0b0e09;
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;

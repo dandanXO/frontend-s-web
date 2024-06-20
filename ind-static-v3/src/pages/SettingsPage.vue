@@ -260,12 +260,11 @@ const logout = () => {
     // width: calc(330px + 100px);
     text-transform: uppercase;
 
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-size: 20px;
     font-weight: 700;
     line-height: 16px;
     letter-spacing: -0.0008em;
-
   }
 }
 
@@ -393,21 +392,22 @@ const logout = () => {
 }
 
 .btn-cancel {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+  // background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
+  background: transparent;
   font-weight: 700;
   color: #fff;
-  border: 1px solid #5D8956;
+  border: 1px solid #00ae00;
   border-radius: 8px;
   width: 140px;
   height: 42px;
 }
 .btn-confirm {
-  background: radial-gradient(68.92% 68.92% at 50% 50%, #00550E 0%, #57CD69 100%);
-  border: 1px solid #5D8956;
+  background: linear-gradient(189.71deg, #a8ef9c 7.08%, #2f961e 92.75%);
+  border: 1px solid #5d8956;
   font-weight: 700;
   width: 140px;
   height: 42px;
-  color: #fff;
+  color: #284426;
   border-radius: 8px;
 }
 </style>

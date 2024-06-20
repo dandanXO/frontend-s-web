@@ -352,7 +352,7 @@ defineExpose({
   .q-card {
     padding: 1.5rem;
     border-radius: 8px;
-    background: #19202D;
+    background: #0B0E09;
     width: calc(100% - 16px);
   }
 

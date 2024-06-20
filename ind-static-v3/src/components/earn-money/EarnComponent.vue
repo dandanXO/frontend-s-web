@@ -32,13 +32,7 @@
       <template #fields>
         <InputField :label="'Recommended Link'">
           <template #input>
-            <q-input
-              hide-bottom-space
-              v-model="selfTgurl"
-              label-color="brand"
-              outlined
-              color="white"
-            >
+            <q-input hide-bottom-space v-model="selfTgurl" label-color="brand" outlined color="white">
               <template v-slot:append>
                 <q-icon class="copy-btn" name="content_copy" @click="copyShareLink(selfTgurl)" />
               </template>
@@ -182,11 +176,11 @@ onMounted(() => {
       line-height: 30px;
       text-align: center;
       border-radius: 6.25rem;
-      background: #00AE0033;
+      background: #00ae0033;
     }
 
     .desc-title {
-      color: #00AE00;
+      color: #A8EF9C;
       font-weight: 700;
     }
   }
@@ -202,12 +196,12 @@ onMounted(() => {
 
   .earn-title {
     background: radial-gradient(46.11% 803.69% at 53.89% 50%, #019303 0%, rgba(1, 146, 4, 0) 100%);
-    font-size: 2rem;
+    font-size: 1.35rem;
     font-weight: 700;
     text-align: center;
-    height: 50px;
-    line-height: 50px;
-    margin: 1px 0;
+    height: 40px;
+    line-height: 40px;
+    margin: 1px 0 20px;
   }
 
   :deep(.q-item) {
@@ -321,8 +315,8 @@ onMounted(() => {
 }
 
 .agency-policy-main-img {
-  margin-left: -16px;
-  margin-right: -16px;
+  // margin-left: -16px;
+  // margin-right: -16px;
 
   &:after {
     // content: "";

@@ -119,7 +119,7 @@ onActivated(() => {
 
   &:has(.new-message-ribbon) {
     //background: #2e30344f;
-    border: 1px solid #00AE00
+    border: 1px solid #00ae00;
   }
 
   .new-message-ribbon {
@@ -179,8 +179,10 @@ onActivated(() => {
 
     .detail-btn {
       border-radius: 10px;
-      background: radial-gradient(68.92% 68.92% at 50% 50%, #1D341D 0%, #466A45 100%);
-      border: 1px solid #5D8956;
+      background: #a8ef9c;
+      color: #284426;
+      font-weight: 700;
+      border: 1px solid #5d8956;
       font-size: 1rem;
       // font-weight: 700;
       padding: 0.2rem 1rem;
