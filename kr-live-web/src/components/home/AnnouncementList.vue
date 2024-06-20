@@ -60,6 +60,7 @@ const loadAnnouncement = () => {
 <style lang="scss" scoped>
 .news-section {    
     max-width: 1400px;
+    width: 95%;
     margin: 20px auto;
 }
 
