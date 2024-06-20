@@ -72,7 +72,7 @@ body {
 }
 
 .main-content {
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
   padding-bottom: 20px;
 }
@@ -765,5 +765,9 @@ input:internal-autofill-selected {
     width: 100% !important;
     height: auto !important;
     aspect-ratio: 405 / 283 !important;
+  }
+
+  @media (max-width: 600px) {
+    width: 80px !important;
   }
 }

@@ -188,21 +188,19 @@ export const userStore = defineStore("userStore", {
       });
     },
     getBalance() {
-      if (this.token) {
-        api
-          .get("/session/balance?v=123", {
-            params: {
-              platform: "MAIN"
-            }
-          })
-          .then((ret) => {
-            const res = ret.data;
-            if (res.code === 0) {
-              this.balance = Math.floor(res.data);
-            } else {
-              this.balance = 0;
-            }
-          });
+      if (this.token && !this.isOffline) {
+        api.get("/session/balance?v=123", {
+          params: {
+            platform: "MAIN"
+          }
+        }).then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.balance = Math.floor(res.data);
+          } else {
+            this.balance = 0;
+          }
+        });
       }
     },
     getDeviceType() {

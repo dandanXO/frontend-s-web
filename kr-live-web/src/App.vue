@@ -67,7 +67,7 @@ export default defineComponent({
 
       csclient.set("design", {
         bottom: "40px",
-        right: "40px",
+        right: "20px",
         icon: require("assets/images/index/cs-icon.png")
       });
 
@@ -185,21 +185,6 @@ export default defineComponent({
       checkAgentFrom();
       // initListenApp();
       // getCSA();
-
-      setInterval(function () {
-        // console.log("Get Balance")
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-
-      window.addEventListener('offline', () => {
-        store.isOffline = true;
-      });
-
-      window.addEventListener('online', () => {
-        store.isOffline = false;
-      });
 
       document.addEventListener(
         "deviceready",

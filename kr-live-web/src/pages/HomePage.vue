@@ -2151,7 +2151,7 @@ export default defineComponent({
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  padding: 20px;
+  // padding: 20px;
   width: 100%;
 
   @media (max-width: 769px) {
