@@ -169,6 +169,11 @@ export default {
     message_content: "Content",
     message_compose_confirm: "Confirm",
     message_previous_page: "Previous page",
+    message_type_announcement: "Announcement",
+    message_type_notification: "Notification",
+    message_type_activity: "Activity",
+    message_type_payment: "Payment",
+    message_type_all: "All",
     // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",
