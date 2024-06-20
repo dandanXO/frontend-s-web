@@ -21,6 +21,7 @@
     "build:test": "dotenv -e .test.env quasar build"
   },
   "dependencies": {
+    "@adjustcom/adjust-web-sdk": "^5.6.0",
     "@capacitor/app": "^4.0.1",
     "@capacitor/browser": "^4.0.1",
     "@fingerprintjs/fingerprintjs": "^3.4.0",
@@ -32,7 +33,9 @@
     "@vueuse/core": "^9.2.0",
     "aos": "^2.3.4",
     "axios": "^0.27.2",
+    "com.adjust.sdk": "^4.38.1",
     "cordova-plugin-file": "^8.0.0",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "csweb-client": "^1.4.1",

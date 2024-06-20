@@ -532,8 +532,6 @@ export default defineComponent({
                 if (store.hasToken()) {
                   router.push({path:"/", query:{ name:"welcome"}});
                 }
-
-                sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({
                   color: "negative",
