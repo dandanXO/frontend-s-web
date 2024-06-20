@@ -1,16 +1,16 @@
 <template>
   <a-modal v-model:visible="visible" centered :footer="null" :width="400" :style="{ padding: '13px 17px' }">
     <div class="social-media-content-wrapper">
-      <span class="social-media-title">{{ $t("shareView.shareModal.title") }}</span>
+      <span class="social-media-title">{{ $t("rewardView.reward.shareModal.title") }}</span>
       <div class="social-media-list">
         <a class="social-media-item" @click="$emit('shareClick', 'youtube')">
-          <img src="@/assets/images/account/share/logo-youtube.png" />
+          <img src="@/assets/images/reward/logo-youtube.png" />
         </a>
         <a class="social-media-item" @click="$emit('shareClick', 'facebook')">
-          <img src="@/assets/images/account/share/logo-facebook.png" />
+          <img src="@/assets/images/reward/logo-facebook.png" />
         </a>
         <a class="social-media-item" @click="$emit('shareClick', 'email')">
-          <img src="@/assets/images/account/share/logo-email.png" />
+          <img src="@/assets/images/reward/logo-email.png" />
         </a>
       </div>
     </div>

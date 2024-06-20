@@ -26,12 +26,7 @@
               <div class="fake-input">
                 {{ personalState.memberInfo.email }}
               </div>
-              <a-button
-                class="common-btn"
-                v-if="!personalState.memberInfo.emailVerified"
-                type="button"
-                @click="updateSecurityModal"
-              >
+              <a-button class="common-btn" v-if="!personalState.memberInfo.emailVerified" @click="updateSecurityModal">
                 {{ $t("personalView.personal.form.email.verifyButton") }}
               </a-button>
               <RiMailCheckLine v-if="personalState.memberInfo.emailVerified" style="width: 20px; fill: #ffffff" />
