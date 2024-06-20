@@ -560,10 +560,23 @@ const vipTableData = ref([
   }
 
   tbody {
-    background: #70bc621a;
-    td {
-      border: 1px solid #ffffff1a;
-      padding: 6px 0;
+    > :nth-child(odd) {
+      background: #70bc621a;
+    }
+
+    tr {
+      td {
+        border: 1px solid #ffffff1a;
+        padding: 6px 0;
+      }
+
+      > :first-child {
+        border-left: none;
+      }
+
+      > :last-child {
+        border-right: none;
+      }
     }
   }
 }

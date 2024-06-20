@@ -1,199 +1,177 @@
 <template>
-  <div class="share-view-container">
-    <div class="menu-title-container">
-      <span class="menu-title">{{ $t("shareView.title") }}</span>
+  <div class="content-wrapper">
+    <div class="left-side">
+      <div class="share-summary-wrapper">
+        <div class="share-summary-item income">
+          <div class="share-summary-item__info-wrapper">
+            <h3 class="share-summary-item__title">
+              ₨ {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
+            </h3>
+            <span class="share-summary-item__description">{{ $t("rewardView.reward.summary.income") }}</span>
+          </div>
+          <img class="share-summary-item__pic" src="@/assets/images/reward/income-pic.png" />
+        </div>
+        <div class="share-summary-item invitees">
+          <div class="share-summary-item__info-wrapper">
+            <h3 class="share-summary-item__title">{{ memberDetail.totalRefer }}</h3>
+            <span class="share-summary-item__description">{{ $t("rewardView.reward.summary.invitees") }}</span>
+          </div>
+          <img class="share-summary-item__pic" src="@/assets/images/reward/invitees-pic.png" />
+        </div>
+      </div>
+
+      <div class="invitation-link-wrapper">
+        <h2 class="invitation-link-title">{{ $t("rewardView.reward.inviteLink.title") }}</h2>
+        <p class="invitation-link-description">{{ $t("rewardView.reward.inviteLink.description") }}</p>
+        <div class="invitation-link__invitation-step-wrapper">
+          <div class="invitation-link__invitation-step">
+            <span>{{ $t("rewardView.reward.inviteLink.step1") }}</span>
+          </div>
+          <div class="invitation-link__invitation-step">
+            <span>{{ $t("rewardView.reward.inviteLink.step2") }}</span>
+          </div>
+          <div class="invitation-link__invitation-step">
+            <span>{{ $t("rewardView.reward.inviteLink.step3") }}</span>
+          </div>
+        </div>
+        <div class="invitation-link__link-wrapper">
+          <div class="invitation-link__link-inner">
+            <div class="invitation-link__link">
+              {{ selfTgurl }}
+            </div>
+            <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink(selfTgurl)">
+              {{ $t("rewardView.reward.inviteLink.copyButton") }}
+            </button>
+          </div>
+          <div class="invitation-link__action-wrapper">
+            <a @click="handleShareClick('whatsapp')">
+              <img src="@/assets/images/reward/logo_whatsapp.png" alt="Whatsapp" />
+            </a>
+            <a @click="handleShareClick('tiktok')">
+              <img src="@/assets/images/reward/logo_tik-tok.png" alt="TikTok" />
+            </a>
+            <a @click="handleShareClick('instagram')">
+              <img src="@/assets/images/reward/logo_ins.png" alt="Instagram" />
+            </a>
+            <button class="invitation-link__action-more" @click="handleMoreSocialMediaClick">
+              <RiMoreFill />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="earned-amount-wrapper">
+        <img class="earned-amount__pic" src="@/assets/images/reward/earn-money-pic.png" />
+        <div class="earned-amount__total-wrapper">
+          <h2 class="earned-amount__total-title">{{ $t("rewardView.reward.earnYesterday.title") }}</h2>
+          <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
+        </div>
+        <div class="earned-amount__divider" />
+
+        <div class="earned-amount__invited-friend-wrapper">
+          <div class="earned-amount__invited-friend-header">
+            <span>{{ $t("rewardView.reward.earnYesterday.table.header.player") }}</span>
+            <span>{{ $t("rewardView.reward.earnYesterday.table.header.money") }}</span>
+          </div>
+
+          <div
+            class="earned-amount__invited-friend-info-wrapper"
+            ref="invitedFriendRef"
+            :style="{ height: `${INVITED_FRIEND_PER_VIEW * INVITED_FRIEND_ROW_HEIGHT}px` }"
+          >
+            <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-item">
+              <div class="earned-amount__invited-friend-info">
+                <img :src="getRandomAvatar(index)" class="earned-amount__invited-friend-record-pseudo-photo" />
+                <span>{{ friend.loginName }}</span>
+              </div>
+              <div class="earned-amount__invited-friend-amount">
+                {{ store.currency.value }} {{ friend.finalAmount }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="content-wrapper">
-      <div class="left-side">
-        <div class="share-summary-wrapper">
-          <div class="share-summary-item income">
-            <div class="share-summary-item__info-wrapper">
-              <h3 class="share-summary-item__title">
-                ₨ {{ getRewardAmount("ONE_TIME") + getRewardAmount("DEPOSIT") + getRewardAmount("BET") }}
-              </h3>
-              <span class="share-summary-item__description">{{ $t("shareView.summary.income") }}</span>
-            </div>
-            <img class="share-summary-item__pic" src="@/assets/images/account/share/income-pic.png" />
+    <div class="right-side">
+      <div class="share-info-wrapper">
+        <div class="share-info-item">
+          <div class="share-info-item__icon-wrapper">
+            <img src="@/assets/images/reward/bet-icon.svg" />
           </div>
-          <div class="share-summary-item invitees">
-            <div class="share-summary-item__info-wrapper">
-              <h3 class="share-summary-item__title">{{ memberDetail.totalRefer }}</h3>
-              <span class="share-summary-item__description">{{ $t("shareView.summary.invitees") }}</span>
-            </div>
-            <img class="share-summary-item__pic" src="@/assets/images/account/share/invitees-pic.png" />
+          <div class="share-info-item__info-wrapper">
+            <span class="share-info-item__info">
+              ₨
+              <span class="share-info-item__info-num">{{ getRewardAmount("BET") }}</span>
+            </span>
+            <span class="share-info-item__description">{{ $t("rewardView.reward.info.bet") }}</span>
           </div>
         </div>
-
-        <div class="invitation-link-wrapper">
-          <h2 class="invitation-link-title">{{ $t("shareView.inviteLink.title") }}</h2>
-          <p class="invitation-link-description">{{ $t("shareView.inviteLink.description") }}</p>
-          <div class="invitation-link__invitation-step-wrapper">
-            <div class="invitation-link__invitation-step">
-              <span>{{ $t("shareView.inviteLink.step1") }}</span>
-            </div>
-            <div class="invitation-link__invitation-step">
-              <span>{{ $t("shareView.inviteLink.step2") }}</span>
-            </div>
-            <div class="invitation-link__invitation-step">
-              <span>{{ $t("shareView.inviteLink.step3") }}</span>
-            </div>
+        <div class="share-info-item">
+          <div class="share-info-item__icon-wrapper">
+            <img src="@/assets/images/reward/achievement-icon.svg" />
           </div>
-          <div class="invitation-link__link-wrapper">
-            <div class="invitation-link__link-inner">
-              <div class="invitation-link__link">
-                {{ selfTgurl }}
-              </div>
-              <button class="common-btn invitation-link__copt-btn" @click="copyHrefLink(selfTgurl)">
-                {{ $t("shareView.inviteLink.copyButton") }}
-              </button>
-            </div>
-            <div class="invitation-link__action-wrapper">
-              <a @click="handleShareClick('whatsapp')">
-                <img src="@/assets/images/account/share/logo_whatsapp.png" alt="Whatsapp" />
-              </a>
-              <a @click="handleShareClick('tiktok')">
-                <img src="@/assets/images/account/share/logo_tik-tok.png" alt="TikTok" />
-              </a>
-              <a @click="handleShareClick('instagram')">
-                <img src="@/assets/images/account/share/logo_ins.png" alt="Instagram" />
-              </a>
-              <button class="invitation-link__action-more" @click="handleMoreSocialMediaClick">
-                <RiMoreFill />
-              </button>
-            </div>
+          <div class="share-info-item__info-wrapper">
+            <span class="share-info-item__info">
+              ₨
+              <span class="share-info-item__info-num">
+                {{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}
+              </span>
+            </span>
+            <span class="share-info-item__description">{{ $t("rewardView.reward.info.eligibleRefer") }}</span>
           </div>
         </div>
-
-        <div class="earned-amount-wrapper">
-          <img class="earned-amount__pic" src="@/assets/images/account/share/earn-money-pic.png" />
-          <div class="earned-amount__total-wrapper">
-            <h2 class="earned-amount__total-title">{{ $t("shareView.earnYesterday.title") }}</h2>
-            <span class="earned-amount__total-amount">{{ convertToCommaAmount(oneTimeBonusSetting.totalAmount) }}</span>
+        <div class="share-info-item">
+          <div class="share-info-item__icon-wrapper">
+            <img src="@/assets/images/reward/invite-icon.svg" />
           </div>
-          <div class="earned-amount__divider" />
-
-          <div class="earned-amount__invited-friend-wrapper">
-            <div class="earned-amount__invited-friend-header">
-              <span>{{ $t("shareView.earnYesterday.table.header.player") }}</span>
-              <span>{{ $t("shareView.earnYesterday.table.header.money") }}</span>
-            </div>
-
-            <div
-              class="earned-amount__invited-friend-info-wrapper"
-              ref="invitedFriendRef"
-              :style="{ height: `${INVITED_FRIEND_PER_VIEW * INVITED_FRIEND_ROW_HEIGHT}px` }"
-            >
-              <div v-for="(friend, index) in inviteesRecords" :key="index" class="earned-amount__invited-friend-item">
-                <div class="earned-amount__invited-friend-info">
-                  <img :src="getRandomAvatar(index)" class="earned-amount__invited-friend-record-pseudo-photo" />
-                  <span>{{ friend.loginName }}</span>
-                </div>
-                <div class="earned-amount__invited-friend-amount">
-                  {{ store.currency.value }} {{ friend.finalAmount }}
-                </div>
-              </div>
-            </div>
+          <div class="share-info-item__info-wrapper">
+            <span class="share-info-item__info">
+              ₨
+              <span class="share-info-item__info-num">{{ getRewardAmount("ONE_TIME") }}</span>
+            </span>
+            <span class="share-info-item__description">{{ $t("rewardView.reward.info.invite") }}</span>
+          </div>
+        </div>
+        <div class="share-info-item">
+          <div class="share-info-item__icon-wrapper">
+            <img src="@/assets/images/reward/top-up-icon.svg" />
+          </div>
+          <div class="share-info-item__info-wrapper">
+            <span class="share-info-item__info">
+              ₨
+              <span class="share-info-item__info-num">{{ getRewardAmount("DEPOSIT") }}</span>
+            </span>
+            <span class="share-info-item__description">{{ $t("rewardView.reward.info.topUp") }}</span>
           </div>
         </div>
       </div>
 
-      <div class="right-side">
-        <div class="share-info-wrapper">
-          <div class="share-info-item">
-            <div class="share-info-item__icon-wrapper">
-              <img src="@/assets/images/account/share/bet-icon.svg" />
-            </div>
-            <div class="share-info-item__info-wrapper">
-              <span class="share-info-item__info">
-                ₨
-                <span class="share-info-item__info-num">{{ getRewardAmount("BET") }}</span>
-              </span>
-              <span class="share-info-item__description">{{ $t("shareView.info.bet") }}</span>
-            </div>
-          </div>
-          <div class="share-info-item">
-            <div class="share-info-item__icon-wrapper">
-              <img src="@/assets/images/account/share/achievement-icon.svg" />
-            </div>
-            <div class="share-info-item__info-wrapper">
-              <span class="share-info-item__info">
-                ₨
-                <span class="share-info-item__info-num">
-                  {{ memberDetail.eligibleRefer ? memberDetail.eligibleRefer : "0" }}
-                </span>
-              </span>
-              <span class="share-info-item__description">{{ $t("shareView.info.eligibleRefer") }}</span>
-            </div>
-          </div>
-          <div class="share-info-item">
-            <div class="share-info-item__icon-wrapper">
-              <img src="@/assets/images/account/share/invite-icon.svg" />
-            </div>
-            <div class="share-info-item__info-wrapper">
-              <span class="share-info-item__info">
-                ₨
-                <span class="share-info-item__info-num">{{ getRewardAmount("ONE_TIME") }}</span>
-              </span>
-              <span class="share-info-item__description">{{ $t("shareView.info.invite") }}</span>
-            </div>
-          </div>
-          <div class="share-info-item">
-            <div class="share-info-item__icon-wrapper">
-              <img src="@/assets/images/account/share/top-up-icon.svg" />
-            </div>
-            <div class="share-info-item__info-wrapper">
-              <span class="share-info-item__info">
-                ₨
-                <span class="share-info-item__info-num">{{ getRewardAmount("DEPOSIT") }}</span>
-              </span>
-              <span class="share-info-item__description">{{ $t("shareView.info.topUp") }}</span>
-            </div>
-          </div>
-        </div>
-
-        <table class="share-bonus-ranking-wrapper">
-          <tr class="share-bonus-ranking-header">
-            <td>{{ $t("shareView.bonus.table.header.friendCount") }}</td>
-            <td>{{ $t("shareView.bonus.table.header.inviteBonus") }}</td>
-          </tr>
-          <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
-            <td class="share-bonus-ranking-label">{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
-            <td class="share-bonus-ranking-amount">{{ store.currency.value }} {{ item.bonusAmount }}</td>
-          </tr>
-        </table>
-      </div>
+      <table class="share-bonus-ranking-wrapper">
+        <tr class="share-bonus-ranking-header">
+          <td>{{ $t("rewardView.reward.bonus.table.header.friendCount") }}</td>
+          <td>{{ $t("rewardView.reward.bonus.table.header.inviteBonus") }}</td>
+        </tr>
+        <tr v-for="(item, index) in oneTimeBonusSetting.settingList" :key="index">
+          <td class="share-bonus-ranking-label">{{ item.minReferCount }} ~ {{ item.maxReferCount }}</td>
+          <td class="share-bonus-ranking-amount">{{ store.currency.value }} {{ item.bonusAmount }}</td>
+        </tr>
+      </table>
     </div>
     <SocialMediaModal v-model="isSocialMediaModalVisible" @share-click="handleShareClick" />
   </div>
 </template>
 
 <script setup>
-import { defineComponent, reactive, ref, onMounted, onUnmounted, nextTick } from "vue";
-import {
-  getReferralLink,
-  getFriendList,
-  getOneTimeBonus,
-  getMemberDetailAPI,
-  getLatestInviteesAPI
-} from "@/api/personal/share";
+import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { getReferralLink, getOneTimeBonus, getMemberDetailAPI, getLatestInviteesAPI } from "@/api/personal/reward";
 import { ElMessage } from "element-plus";
-import {
-  RiFacebookCircleLine,
-  RiWhatsappLine,
-  RiTelegramLine,
-  RiTwitterLine,
-  RiInstagramLine,
-  RiMoreFill
-} from "vue-remix-icons";
-import moment from "moment";
-import VueQRCodeComponent from "vue-qrcode-component";
+import { RiMoreFill } from "vue-remix-icons";
 import { userStore } from "@/store/index";
 import { convertToCommaAmount } from "@/utils/utils";
-import { server } from "@/utils/request";
 import { useI18n } from "vue-i18n";
 
-import SocialMediaModal from "@/components/share/SocialMediaModal.vue";
+import SocialMediaModal from "@/components/reward/SocialMediaModal.vue";
 
 const INVITED_FRIEND_PER_VIEW = 3;
 const INVITED_FRIEND_ROW_HEIGHT = 44;
@@ -205,30 +183,15 @@ const copyHrefLink = (url) => {
   navigator.clipboard
     .writeText(url)
     .then(() => {
-      ElMessage.success(t("shareView.inviteLink.copySuccess"));
+      ElMessage.success(t("rewardView.reward.inviteLink.copySuccess"));
     })
     .catch(() => {
-      ElMessage.error(t("shareView.inviteLink.copyFail"));
+      ElMessage.error(t("rewardView.reward.inviteLink.copyFail"));
     });
 };
-const searchForm = reactive({
-  date: moment("2022-03-03", "YYYY-MM-DD")
-});
-const friendList = ref([]);
+
 const selfTgurl = ref("");
-const waUrl = ref("");
-const copybtntxt = ref("Copy");
-const copyinput = ref(null);
 const invitedFriendRef = ref();
-const copyCode = () => {
-  const copyText = copyinput.value;
-  copyText.select();
-  document.execCommand("copy");
-  copybtntxt.value = "Copied!";
-};
-const blurCode = () => {
-  copybtntxt.value = "Copy";
-};
 
 const oneTimeBonusSetting = ref([]);
 const memberDetail = ref([]);
@@ -286,7 +249,7 @@ const getRewardAmount = (type) => {
 
 const getRandomAvatar = (index) => {
   const num = (index % 14) + 1;
-  return require(`@/assets/images/account/share/avatar/avatar-${num}.png`);
+  return require(`@/assets/images/reward/avatar/avatar-${num}.png`);
 };
 
 const startDisplayingRows = async () => {
@@ -309,7 +272,7 @@ const startDisplayingRows = async () => {
 const handleMoreSocialMediaClick = () => (isSocialMediaModalVisible.value = true);
 
 const handleShareClick = (media) => {
-  const content = t("shareView.inviteLink.shareText", { url: selfTgurl.value });
+  const content = t("rewardView.reward.inviteLink.shareText", { url: selfTgurl.value });
   let openUrl = "";
 
   switch (media) {
@@ -330,11 +293,10 @@ const handleShareClick = (media) => {
       break;
     case "facebook":
       copyHrefLink(content);
-      // openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(selfTgurl.value)}`;
-      openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://www.google.com")}`;
+      openUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(selfTgurl.value)}`;
       break;
     case "email":
-      const title = encodeURIComponent(t("shareView.inviteLink.shareTitle"));
+      const title = encodeURIComponent(t("rewardView.reward.inviteLink.shareTitle"));
       const body = encodeURIComponent(content);
       openUrl = `mailto:?subject=${title}&body=${body}`;
       break;
@@ -360,17 +322,6 @@ onMounted(() => {
 onUnmounted(() => timer.value && clearInterval(timer.value));
 </script>
 <style scoped lang="scss">
-.share-view-container {
-  margin: 29px 40px;
-  margin-left: calc($menu-width + 40px);
-}
-
-.menu-title-container {
-  font-size: 24px;
-  line-height: 24px;
-  margin-bottom: 20px;
-}
-
 .content-wrapper {
   display: flex;
   gap: 18px;
@@ -394,7 +345,7 @@ onUnmounted(() => timer.value && clearInterval(timer.value));
         border-radius: 10px;
 
         &.income {
-          background: url(@/assets/images/account/share/background-mask.png) left center no-repeat,
+          background: url(@/assets/images/reward/background-mask.png) left center no-repeat,
             linear-gradient(90deg, #ff3d00 0%, #ffb800 100%);
           .share-summary-item__pic {
             top: -48px;
@@ -402,7 +353,7 @@ onUnmounted(() => timer.value && clearInterval(timer.value));
         }
 
         &.invitees {
-          background: url(@/assets/images/account/share/background-mask.png) left center no-repeat,
+          background: url(@/assets/images/reward/background-mask.png) left center no-repeat,
             linear-gradient(90deg, #057903 0%, #0047ff 100%);
           .share-summary-item__pic {
             top: -40px;
@@ -495,7 +446,7 @@ onUnmounted(() => timer.value && clearInterval(timer.value));
 
           &:not(:last-child) {
             &::after {
-              content: url(@/assets/images/account/share/step-icon.svg);
+              content: url(@/assets/images/reward/step-icon.svg);
             }
           }
         }

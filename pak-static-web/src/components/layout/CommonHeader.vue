@@ -23,7 +23,7 @@
               <span class="highlight">{{ $t("layout.header.downloadApp.highlight") }}</span>
             </span>
           </button>
-          <router-link class="invite-to-earn" to="/share">
+          <router-link class="invite-to-earn" to="/reward">
             <span class="invite-to-earn__content">
               {{ $t("layout.header.inviteToEarn.content") }}
               <span class="highlight">
