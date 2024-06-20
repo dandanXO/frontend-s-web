@@ -195,7 +195,7 @@ import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.
 import IntelEls24 from "../components/hotpromo/intel-els-24/intel-els-24.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
-import WinLossPromo from "../components/hotpromo/winloss/winLoss.vue";
+import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 
 export default defineComponent({
   name: "HotPromo",
