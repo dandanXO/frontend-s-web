@@ -238,9 +238,9 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 1400px;
+    width: 100%;
     flex-direction: row;
-    height: 80px;
+    height: 60px;
     display: flex;
   }
 }
@@ -251,7 +251,7 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px 10px;
+    padding: 20px 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;

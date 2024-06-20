@@ -99,6 +99,7 @@ const formatTransactionType = (transactionType) => {
     }
 
     .rolling-text-wrapper {
+        max-width: 1400px;
         display: flex;
         border-radius: 8px;
         background-color: #151324;

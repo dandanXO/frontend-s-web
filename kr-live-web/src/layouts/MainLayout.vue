@@ -581,7 +581,7 @@ svg path {
   @media (min-width: 1200px) {
     background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
     background-size: cover;
-    height: 480px;
+    height: 400px;
   }
 
 
