@@ -588,6 +588,7 @@ onMounted(() => {
   padding: 0;
   margin:10px 0;
   text-align: left;
+  color: #fcc939;
 }
 </style>
 
