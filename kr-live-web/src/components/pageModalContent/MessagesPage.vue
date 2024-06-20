@@ -7,7 +7,8 @@
         <q-space />
 
         <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
-            <q-tab :name="category.type" :label="category.type" v-for="category in inboxCategories" :key="category" />
+            <q-tab :name="category.type" :label="$t(category.label)" v-for="category in inboxCategories"
+                :key="category" />
         </q-tabs>
     </q-toolbar>
 
@@ -98,7 +99,7 @@
                             }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                            }}</span>
+                        }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -129,7 +130,7 @@ const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
 
-const inboxCategories = [{ type: 'ALL' }, { type: 'ANNOUNCEMENT' }, { type: 'NOTIFICATION' }, { type: 'ACTIVITY' }, { type: 'PAYMENT' }]
+const inboxCategories = [{ type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }]
 
 const composeForm = reactive({
     title: "",
