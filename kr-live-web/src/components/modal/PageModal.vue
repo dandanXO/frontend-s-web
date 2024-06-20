@@ -28,7 +28,7 @@
                 <q-tabs v-model="page" align="justify" inline-label>
                   <template v-for="item in formattedPagesInfo" :key="item.page">
                     <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
-                      class="page-dialog-tab" v-if="item.tabIndex === tabIndex">
+                      class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
                       <img style="padding-right: 5px" :src="item.iconActiveUrl" :alt="item.info"
                         :style="page === item.page ? '' : 'filter:contrast(0)'" />
                     </q-tab>
@@ -57,7 +57,9 @@ import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
+import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
 import FeedbackPage from "components/pageModalContent/FeedbackPage";
+import MessagesPage from "components/pageModalContent/MessagesPage";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
@@ -143,12 +145,23 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
+  // {
+  //   tabIndex: "log",
+  //   page: "personal/messages",
+  //   info: 'lang.page_modal_message',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+  //   component: FeedbackPage,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_message',
+  //     description: "입금시 꼭 계좌문의를 하세요!"
+  //   }
+  // },
   {
     tabIndex: "log",
     page: "personal/messages",
     info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: FeedbackPage,
+    component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
       description: "입금시 꼭 계좌문의를 하세요!"
@@ -199,6 +212,19 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
+  {
+    tabIndex: "my",
+    page: "bankcardlist",
+    info: 'lang.page_modal_bank_card_list',
+    iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
+    component: AddWithdrawBankCard,
+    headerInfo: {
+      title: 'lang.page_modal_bank_card_list',
+      subTitle: "BANK CARD LIST",
+      description: ""
+    }
+  },
+
   {
     tabIndex: "my",
     page: "transaction/records",
