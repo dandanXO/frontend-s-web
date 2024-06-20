@@ -25,6 +25,9 @@ export function submitCopaForm() {
 }
 
 
+export function submitESportInsurance() {
+  return server.EVENT.post("/game-match/submit/ESPORT");
+}
 export function getESportInsuranceRecords(params) {
   return server.EVENT.get(`/game-match/records/${params.gameType}?size=${params.size}&current=${params.current}`);
 }
