@@ -28,9 +28,10 @@
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1-esport-safety') ||
-        (!isCommonPromo && list.redirectUrl === 'lh1-sport-safety')
+        (!isCommonPromo && list.redirectUrl === 'lh1-sport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'lh1meizhoubei')
       "
-      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : 'SPORT'"
+      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : (list.redirectUrl === 'lh1meizhoubei' ? 'COPA' : 'SPORT')"
     />
 
     <InsuranceSubmitPromo
@@ -356,7 +357,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-duanwujie24" ||
       this.list.redirectUrl === "tiqianhongbao" ||
       this.list.redirectUrl === "lh1-deposit-rebates" ||
-      this.list.redirectUrl === "lh1-eurocup-guess"
+      this.list.redirectUrl === "lh1-eurocup-guess" ||
+      this.list.redirectUrl === "lh1meizhoubei"
     ) {
       this.isCommonPromo = false;
     } else {
