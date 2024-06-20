@@ -314,7 +314,8 @@ onMounted(() => {
   width: 100%;
   height: 55px; /* adjust the height as needed */
   padding: 12px 16px 28px;
-  background: linear-gradient(rgba(131, 131, 131, 0.2117647059), rgba(131, 131, 131, 0.2117647059));
+  background: linear-gradient(rgba(131, 131, 131, 0.2), rgba(131, 131, 131, 0.2));
+  backdrop-filter: blur(14px);
   z-index: 98;
 
   .download-container {
@@ -509,7 +510,7 @@ onMounted(() => {
     .profile-balance {
       position: relative;
       // background: rgba(255, 255, 255, 0.24);
-      background: #1A201A;
+      background: #1a201a;
       border-radius: 10px;
       display: flex;
       align-items: center;
