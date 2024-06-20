@@ -259,7 +259,7 @@ export default {
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
   },
   earnMoney: {
-    title: "Reward amount",
+    title: "Bonus Pot Arrived",
     tabs: {
       reward: "Reward",
       teamManagement: "Team management",

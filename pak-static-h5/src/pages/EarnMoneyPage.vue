@@ -4,9 +4,9 @@
     <div class="earn-money-container">
       <div class="earn-money-title">{{ $t("earnMoney.title") }}</div>
     </div>
-    <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
+    <!-- <q-tabs v-model="currentTab" no-caps class="children-tab" indicator-color="transparent" align="justify">
       <q-tab v-for="(tab, index) in childrenTabs" :key="index" :name="tab.name" :label="tab.label" />
-    </q-tabs>
+    </q-tabs> -->
     <q-tab-panels
       v-model="currentTab"
       class="children-tab-panel"
@@ -96,7 +96,12 @@ const childrenTabs = computed(() => [
   }
 
   .children-tab-panel {
+    padding: 0;
     background-color: transparent;
+
+    :deep(.q-tab-panel) {
+      padding: 0;
+    }
   }
 }
 </style>
