@@ -4,9 +4,11 @@
       <h1>403</h1>
       <h2>Forbidden</h2>
       <p>Sorry, but you don't have permission to access this page.</p>
+      <p>对不起，此页面无法访问。</p>
 
       <div class="back-text" @click="backtoMain">
-        Back to Main Page.
+        Back to Main Page.<br>
+        返回主页面。
       </div>
     </div>
 
@@ -37,8 +39,13 @@ const backtoMain = () => {
 }
 
 .back-text{
-  font-size: 20px;
+  background: lightblue;
+  font-size: 24px;
   cursor: pointer;
+  color: #000;
+  border-radius: 12px;
+  font-weight: bold;
+  padding: 8px 0px;
 
   &:hover{
     opacity: 0.9;
@@ -61,7 +68,7 @@ const backtoMain = () => {
 
 .content h2 {
   font-size: 2em;
-  margin: 10px 0;
+  margin: 0px 0;
 }
 
 .content p {
