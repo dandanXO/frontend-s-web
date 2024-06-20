@@ -33,6 +33,7 @@ export const userStore = defineStore("userStore", {
       visitorId: "",
       announcementList: undefined,
       financeRecords: undefined,
+      isOffline: false,
     };
   },
   actions: {

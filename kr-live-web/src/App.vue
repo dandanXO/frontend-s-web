@@ -194,6 +194,14 @@ export default defineComponent({
         }
       }, 20000);
 
+      window.addEventListener('offline', () => {
+        store.isOffline = true;
+      });
+
+      window.addEventListener('online', () => {
+        store.isOffline = false;
+      });
+
       document.addEventListener(
         "deviceready",
         () => {
