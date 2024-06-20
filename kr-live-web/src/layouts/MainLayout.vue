@@ -44,6 +44,7 @@ import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
 import AppDownload from "../components/AppDownload.vue";
 import LoginBar from "../components/LoginAndRegister/LoginBar";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -84,6 +85,7 @@ export default defineComponent({
     const store = userStore();
     const prevPage = ref(null);
     const ui = useUI();
+    const $q = useQuasar();
     // console.log(ui.footer)
     const scrollPageRef = ref(null);
 
@@ -106,6 +108,14 @@ export default defineComponent({
         checkRoute();
       }
     );
+
+    watch(() => $q.appVisible, val => {
+      if (val) {
+        store.isOffline = false;
+      } else {
+        store.isOffline = true;
+      }
+    })
 
     const { t } = useI18n();
     const { languageVal } = storeToRefs(i18nStore());
@@ -279,7 +289,24 @@ export default defineComponent({
 
     onMounted(() => {
       checkRoute();
-      store.getBalance();
+
+      if (store.hasToken()) {
+        store.getBalance();
+      }
+
+      setInterval(function () {
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
+
+      window.addEventListener('offline', () => {
+        store.isOffline = true;
+      });
+
+      window.addEventListener('online', () => {
+        store.isOffline = false;
+      });
     });
 
     return {

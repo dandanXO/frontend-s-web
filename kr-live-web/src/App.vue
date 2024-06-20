@@ -186,21 +186,6 @@ export default defineComponent({
       // initListenApp();
       // getCSA();
 
-      setInterval(function () {
-        // console.log("Get Balance")
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-
-      window.addEventListener('offline', () => {
-        store.isOffline = true;
-      });
-
-      window.addEventListener('online', () => {
-        store.isOffline = false;
-      });
-
       document.addEventListener(
         "deviceready",
         () => {
