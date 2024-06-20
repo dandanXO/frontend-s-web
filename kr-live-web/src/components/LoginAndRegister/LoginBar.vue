@@ -17,27 +17,27 @@
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
               <span v-if="store.token">{{ store.nickName }}<br />님 환영합니다 </span>
-              <span v-else>로그인</span>
+              <span v-else>{{ $t('lang.login') }}</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
                 <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
               </div>
             </div>
             <div class="sidebar-section top">
-              <router-link class="sidebar-section-item" to="/?page=personal/info">
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=personal/info`)">
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
                 <div class="info-text">마이페이지</div>
-              </router-link>
+              </div>
             </div>
             <div class="sidebar-section middle">
-              <router-link class="sidebar-section-item" to="/?page=finance/deposit">
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/deposit`)">
                 <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
-                <div class="info-text">입금</div>
-              </router-link>
-              <router-link class="sidebar-section-item" to="/?page=finance/withdraw">
+                <div class="info-text">{{ $t('lang.menu_deposit') }}</div>
+              </div>
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/withdraw`)">
                 <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
-                <div class="info-text">출금</div>
-              </router-link>
+                <div class="info-text">{{ $t('lang.menu_withdraw') }}</div>
+              </div>
             </div>
             <div class="separator" />
             <div class="icon-section-label">메뉴</div>
@@ -93,6 +93,15 @@ const showNotify = () => {
 
   router.push('/?page=login')
 };
+
+const goPageOrLogin = (page) => {
+  if (store.token) {
+    router.push(page);
+    return;
+  }
+
+  showNotify();
+}
 
 const logout = () => {
   store.memberLogout();

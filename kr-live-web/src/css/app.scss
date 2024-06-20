@@ -697,7 +697,8 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 124px;
+  min-width: 124px;
+  width: fit-content;
   height: 36px;
   display: flex;
   justify-content: center;
