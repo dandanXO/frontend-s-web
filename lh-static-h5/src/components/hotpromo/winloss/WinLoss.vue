@@ -20,7 +20,7 @@
                         </div>
                         <div class="match-btn" @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
                         v-if="match.selectedTeamId === null">胜</div>
-                        
+
                             <button v-else-if="match.selectedTeamId === match.teamOneId" class="match-btn active">
                             已选
                             </button>
@@ -30,7 +30,7 @@
                         <div class="toprow row-details">
                         {{ match.matchTime }}
                         </div>
-                        
+
                         <div class="match-btn" @click="matchSubmit(match, 0, '平局')"
                         v-if="match.selectedTeamId === null">平</div>
                         <button v-else-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
@@ -52,7 +52,7 @@
                             </button>
                             <div v-else class="match-btn pseudo" />
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
         <div class="section-activity">
@@ -176,7 +176,7 @@ const getMatches = () => {
   eventapi.get("/uefa/match/ongoing").then((res) => {
     if (res.code === 0) {
       ongoingMatches.value = res.data;
-      
+
       if (ongoingMatches.value.length > 0) {
         formattedDate.value = getFormattedDateComponents(ongoingMatches.value[0].matchTime);
       }
@@ -303,6 +303,11 @@ onMounted(() => {
         border-radius: 10px;
         width: 90px;
         text-align: center;
+
+        &:active{
+          filter:brightness(0.85);
+          transform: translate(0px,1px);
+        }
       }
     }
   }
