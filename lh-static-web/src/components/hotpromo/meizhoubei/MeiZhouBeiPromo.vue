@@ -53,7 +53,7 @@
 
     <el-dialog
       v-model="isESportInsuranceModalVisible"
-      title="电竞保险"
+      title="美洲杯"
       width="100%"
       align-center
       class="dialog-insurance-box"
@@ -87,8 +87,8 @@
             </el-select>
           </el-form-item> -->
 
-          <el-form-item prop="gameMatchId" name="gameMatchId" label="游戏比赛: ">
-            <el-select v-model="eSportInsuranceFormData.gameMatchId" placeholder="游戏比赛" clearable>
+          <el-form-item prop="gameMatchId" name="gameMatchId" label="比赛列表">
+            <el-select v-model="eSportInsuranceFormData.gameMatchId" placeholder="比赛列表" clearable>
               <el-option
                 v-for="item in matchDetails"
                 :key="item.value"
@@ -128,7 +128,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog v-model="insuranceRecordsModalVisible" title="电竞场馆申请记录" width="800px" center align-center>
+    <el-dialog v-model="insuranceRecordsModalVisible" title="美洲杯申请记录" width="800px" center align-center>
       <el-table :data="insuranceRecords" stripe style="width: 100%">
         <el-table-column prop="loginName" label="账号" />
         <el-table-column prop="transactionId" label="注单号" />
@@ -195,7 +195,7 @@ const eSportInsuranceFormValidationRules = {
   gameMatchId: [
     {
       required: true,
-      message: "游戏比赛不能为空",
+      message: "比赛场馆不能为空",
       trigger: "blur"
     }
   ],
@@ -243,8 +243,23 @@ const loadESportPlatformOptions = () => {
   });
 };
 
-const applyESportInsurance = () => {
-  toggleESportInsuranceModal(true);
+const applyESportInsurance = async () => {
+  const res = await submitCopaForm();
+
+  if (res.code === 0) {
+    ElMessage.success({
+      type: "success",
+      message: "提交成功"
+    });
+    isSubmitting.value = false;
+  } else {
+    ElMessage.error({
+      type: "error",
+      message: res.message
+    });
+    isSubmitting.value = false;
+  }
+  // toggleESportInsuranceModal(true);
 };
 
 const toggleESportInsuranceModal = (status) => {

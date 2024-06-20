@@ -20,8 +20,8 @@ export function getCopaPlatformOptions() {
   return server.EVENT.get("/game-match/platform/COPA");
 }
 
-export function submitCopaForm(params) {
-  return server.EVENT.post("/game-match/submit", params);
+export function submitCopaForm() {
+  return server.EVENT.post("/game-match/submit/COPA", {});
 }
 
 

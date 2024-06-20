@@ -28,10 +28,15 @@
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1-esport-safety') ||
-        (!isCommonPromo && list.redirectUrl === 'lh1-sport-safety') ||
+        (!isCommonPromo && list.redirectUrl === 'lh1-sport-safety')
+      "
+      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : ('SPORT')"
+    />
+    <MeiZhouBeiPromo
+      v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1meizhoubei')
       "
-      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : (list.redirectUrl === 'lh1meizhoubei' ? 'COPA' : 'SPORT')"
+      platformType="COPA"
     />
 
     <InsuranceSubmitPromo
@@ -159,6 +164,7 @@ import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue"
 import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
 import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
 import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
+import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import FeedbackAwardPromo from "../components/hotpromo/feedbackaward/feedbackAwardPromo.vue";
 import PrivilegeInvitePromo from "../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue";
@@ -212,6 +218,7 @@ export default defineComponent({
     GoldenEggPromo,
     HongBaoYu2024,
     UpcomingMatchPromo,
+    MeiZhouBeiPromo,
     InsuranceSubmitPromo,
     FeedbackAwardPromo,
     PrivilegeInvitePromo,
