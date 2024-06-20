@@ -4,13 +4,21 @@
       <h1>403</h1>
       <h2>Forbidden</h2>
       <p>Sorry, but you don't have permission to access this page.</p>
+
+      <div class="back-text" @click="backtoMain">
+        Back to Main Page.
+      </div>
     </div>
+
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Forbidden',
+<script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter();
+const backtoMain = () => {
+  router.push("/")
 }
 </script>
 
@@ -26,6 +34,15 @@ export default {
   color: #fff;
   text-align: center;
   overflow: hidden;
+}
+
+.back-text{
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover{
+    opacity: 0.9;
+  }
 }
 
 .content {
