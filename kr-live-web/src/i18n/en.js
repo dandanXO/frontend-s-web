@@ -49,6 +49,8 @@ export default {
     menu_customer_service: "Customer Service",
     menu_transaction_record: "Transaction Record",
     menu_rebates: "Rebates",
+    menu_my_page: "My Page",
+    menu_won: "Won",
     // menu end
     // page modal start
     page_modal_deposit: "Deposit",
@@ -63,8 +65,18 @@ export default {
     page_modal_transaction_record: "Transaction Record",
     page_modal_change_password: "Change Password",
     // page modal end
+    // game category start
+    game_category_live: `Live Casino`,
+    game_category_slot: 'Slot Game',
+    game_category_sport: 'Sports',
+    game_category_minigame: 'Mini Game',
+    // game category end
+    // game item start
+    game_item_entry: "Game Entry",
+    // game item end
     // rolling text start
     roll_text_no_content: "No content yet",
+    roll_text_withdrawal_status: "Withdrawal status",
     // rolling text end
     // transaction record start
     date_picker_sunday: "Sunday",

@@ -16,7 +16,7 @@
     <div class="btn-group">
       <div class="left-group">
         <div class="primary-button blue" style="width:100px;height:30px;font-size:14px;" @click="goToPersonalInfo">
-          마이페이지
+          {{ $t('lang.menu_my_page') }}
         </div>
       </div>
       <div class="right-group">
@@ -37,7 +37,7 @@
       <div class="actions-topbar-controls">
         <div class="primary-button blue-square" style="width:100px;height:30px;font-size:14px;"
           @click="goToPersonalInfo">
-          마이페이지
+          {{ $t('lang.menu_my_page') }}
         </div>
         <div class="primary-button yellow-square" style="width:100px;height:30px;font-size:14px;"
           @click="onLogoutSubmit">
