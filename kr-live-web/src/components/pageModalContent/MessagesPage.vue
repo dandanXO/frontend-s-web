@@ -169,7 +169,7 @@ const sendMessage = () => {
 
     if (titleRef.value.hasError || contentRef.value.hasError) {
     } else {
-        api.post("/session/message", qs.stringify(composeForm)).then((res) => {
+        api.post("/session/writeOutbox", qs.stringify(composeForm)).then((res) => {
             const resCode = res.data.code;
             const resMessage = res.data.message
             if (resCode === 0) {
@@ -330,8 +330,8 @@ onMounted(() => {
             padding-right: 10px;
 
             .title {
-                font-size: 3rem;
-                line-height: 4rem;
+                font-size: 2.4rem;
+                line-height: 3rem;
                 font-weight: bold;
             }
 
