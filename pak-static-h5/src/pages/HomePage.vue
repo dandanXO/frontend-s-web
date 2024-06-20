@@ -1650,344 +1650,7 @@ const openHotGame = (hotGameList) => {
   hotGameOn.value = true;
 };
 
-const hotGameList = ref([
-  {
-    id: 30338,
-    name: "Aviator",
-    code: "aviator",
-    status: "OPEN",
-    icon: "5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png",
-    sequence: 0,
-    siteName: null,
-    platformId: 93,
-    platformName: null,
-    platformCode: "Spribe",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "Spribe",
-    type: "game"
-  },
-  {
-    id: 30372,
-    name: "Mines",
-    code: "229",
-    status: "OPEN",
-    icon: "11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg",
-    sequence: 0,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 24846,
-    name: "Aero",
-    code: "aero",
-    status: "OPEN",
-    icon: "11/Turbo/5d20aba4-3a05-4748-8ed4-6d765fa4c319.png",
-    sequence: 1,
-    siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "Turbo",
-    type: "game"
-  },
-  {
-    id: 24847,
-    name: "Crash X",
-    code: "crash",
-    status: "OPEN",
-    icon: "11/Turbo/071fb0be-9ee0-46e5-9915-5ef44a5bf57d.jpg",
-    sequence: 2,
-    siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "Turbo",
-    type: "game"
-  },
-  {
-    id: 24855,
-    name: "Limbo Rider",
-    code: "limbo",
-    status: "OPEN",
-    icon: "11/Turbo/8fcab37e-10a6-4629-a684-a998298c260a.jpg",
-    sequence: 10,
-    siteName: null,
-    platformId: 124,
-    platformName: null,
-    platformCode: "Turbo",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "Turbo",
-    type: "game"
-  },
-  {
-    code: "WCEvo",
-    platform: "WCEvo",
-    type: "platform",
-    id: 123,
-    name: "Evo",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Evolution",
-    sequence: 1
-  },
-  {
-    code: "WCOT",
-    platform: "WCOT",
-    type: "platform",
-    id: 100,
-    name: "WCOT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "LIVE",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "One Touch",
-    sequence: 999
-  },
-  {
-    id: 25340,
-    name: "Money Coming",
-    code: "51",
-    status: "OPEN",
-    icon: "11/JILI/51.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25375,
-    name: "Fortune Gems 2",
-    code: "223",
-    status: "OPEN",
-    icon: "11/JILI/109.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25378,
-    name: "Cricket King 18",
-    code: "225",
-    status: "OPEN",
-    icon: "11/JILI/225.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25379,
-    name: "Teen Patti",
-    code: "72",
-    status: "OPEN",
-    icon: "11/JILI/097df233-0329-427c-a596-9af968062624.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25380,
-    name: "Teen Patti Joker",
-    code: "159",
-    status: "OPEN",
-    icon: "11/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25382,
-    name: "Ludo Quick",
-    code: "163",
-    status: "OPEN",
-    icon: "11/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25383,
-    name: "Andar Bahar",
-    code: "79",
-    status: "OPEN",
-    icon: "11/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25384,
-    name: "TeenPatti 20-20",
-    code: "161",
-    status: "OPEN",
-    icon: "11/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25385,
-    name: "Dragon & Tiger",
-    code: "123",
-    status: "OPEN",
-    icon: "11/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25386,
-    name: "7up7down",
-    code: "124",
-    status: "OPEN",
-    icon: "11/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "SLOT",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  },
-  {
-    id: 25387,
-    name: "Baccarat",
-    code: "152",
-    status: "OPEN",
-    icon: "11/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png",
-    sequence: 1000,
-    siteName: null,
-    platformId: 8,
-    platformName: null,
-    platformCode: "JILI",
-    gameType: "POKER",
-    device: null,
-    gameLabel: "HOT",
-    updateBy: null,
-    updateTime: null,
-    platform: "JILI",
-    type: "game"
-  }
-]);
+const hotGameList = ref([{"id":30338,"name":"Aviator","code":"aviator","status":"OPEN","icon":"5/Spribe/4457f1e2-d1ea-4b53-a111-95a225bef685.png","sequence":0,"siteName":null,"platformId":93,"platformName":null,"platformCode":"Spribe","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"Spribe","type":"game"},{"id":30372,"name":"Mines","code":"229","status":"OPEN","icon":"11/JILI/c77236e7-a298-488a-975d-c1fd7f8e30f2.jpg","sequence":1,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"code":"WCEvo","platform":"WCEvo","type":"platform","id":123,"name":"Evo","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Evolution","sequence":1},{"code":"WCOT","platform":"WCOT","type":"platform","id":100,"name":"WCOT","status":"OPEN","walletType":"SEAMLESS","gameType":"LIVE","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"One Touch","sequence":999},{"id":25340,"name":"Money Coming","code":"51","status":"OPEN","icon":"11/JILI/51.png","sequence":4,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25375,"name":"Fortune Gems 2","code":"223","status":"OPEN","icon":"11/JILI/109.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25378,"name":"Cricket King 18","code":"225","status":"OPEN","icon":"11/JILI/225.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25379,"name":"Teen Patti","code":"72","status":"OPEN","icon":"11/JILI/097df233-0329-427c-a596-9af968062624.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25380,"name":"Teen Patti Joker","code":"159","status":"OPEN","icon":"11/JILI/cbde9c3f-325f-4b11-9cda-7e8a8a3d147d.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25382,"name":"Ludo Quick","code":"163","status":"OPEN","icon":"11/JILI/acd9b0fd-625d-4fb2-ae19-5e69b34e6700.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25383,"name":"Andar Bahar","code":"79","status":"OPEN","icon":"11/JILI/5d214dcd-08fb-4c54-b808-12c55ac19473.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25384,"name":"TeenPatti 20-20","code":"161","status":"OPEN","icon":"11/JILI/c3a5ab4f-19f8-4299-b046-1fc4ea38ef4c.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25385,"name":"Dragon & Tiger","code":"123","status":"OPEN","icon":"11/JILI/d3ec422a-bb04-4d7a-b9a9-e54fbdcae042.png","sequence":2,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25386,"name":"7up7down","code":"124","status":"OPEN","icon":"11/JILI/9d163d59-27cc-4df7-8709-d2a2ecc0e65e.png","sequence":3,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25387,"name":"Baccarat","code":"152","status":"OPEN","icon":"11/JILI/ba81c2f8-dcaa-4de0-982c-7e198fa3c8fe.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"POKER","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25310,"name":"Dinosaur Tycoon","code":"42","status":"OPEN","icon":"11/JILI/42.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25315,"name":"Happy Fishing","code":"82","status":"OPEN","icon":"11/JILI/82.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"FISH","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"},{"id":25318,"name":"Hot Chilli","code":"5","status":"OPEN","icon":"11/JILI/5.png","sequence":1000,"siteName":null,"platformId":8,"platformName":null,"platformCode":"JILI","gameType":"SLOT","device":null,"gameLabel":"HOT","updateBy":null,"updateTime":null,"platform":"JILI","type":"game"}]);
 
 const filteredHotGameList = computed(() => {
   if (searchText.value) {
@@ -2064,8 +1727,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          // console.log("End");
-          // console.log(hotGameList.value);
+          console.log("End");
+          console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
@@ -2678,8 +2341,8 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
-      console.log("After");
-      console.log(JSON.stringify(slot.value));
+      // console.log("After");
+      // console.log(JSON.stringify(slot.value));
       loadHotGameList();
     })
     .catch((err) => {});
@@ -3256,11 +2919,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 2.05%,
-      rgba(255, 255, 255, 0.05) 44.93%,
-      rgba(255, 255, 255, 0.05) 53.13%,
-      rgba(255, 255, 255, 0) 98.21%
+        90deg,
+        rgba(255, 255, 255, 0) 2.05%,
+        rgba(255, 255, 255, 0.05) 44.93%,
+        rgba(255, 255, 255, 0.05) 53.13%,
+        rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -4343,10 +4006,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-      180deg,
-      rgba(115, 115, 115, 0) 0%,
-      rgba(153, 153, 153, 0.4) 48.5%,
-      rgba(115, 115, 115, 0) 100%
+        180deg,
+        rgba(115, 115, 115, 0) 0%,
+        rgba(153, 153, 153, 0.4) 48.5%,
+        rgba(115, 115, 115, 0) 100%
     );
   }
 
