@@ -367,21 +367,6 @@ svg {
   color: $header-color;
 }
 
-.bg-brand {
-  // background-image: $linear-bg-1;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
-}
-
 .menu-title {
   color: $main-color;
   background-image: $linear-bg-1;
@@ -572,21 +557,6 @@ svg {
   border-radius: 10px;
 }
 
-.third-btn {
-  // background: $linear-bg-4;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 12px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn1-gray.svg") no-repeat center center;
-}
-
 .close-btn {
   background: $linear-bg-gray;
 }
@@ -644,21 +614,6 @@ input:internal-autofill-selected {
   box-shadow: 0px 0px 0.3409rem 0.06818rem rgba(251, 89, 114, 0.54),
     0px 0.1818rem 0.1818rem 0px rgba(255, 178, 189, 0.26) inset,
     0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
-}
-
-.btn-w-blue {
-  background-image: url("../assets/home/btn-blue.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  width: 104px;
-  height: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  padding-bottom: 6px;
 }
 
 .btn-lg {
@@ -742,7 +697,8 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 124px;
+  min-width: 124px;
+  width: fit-content;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -796,5 +752,18 @@ input:internal-autofill-selected {
   &.red {
     background: url("../assets/home/btn-red.svg") no-repeat center center;
     background-size: cover;
+  }
+}
+
+.cs-web-id.csweb-btn {
+  background: transparent !important;
+  border: none !important;
+  width: 120px !important;
+  height: auto !important;
+
+  img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 405 / 283 !important;
   }
 }

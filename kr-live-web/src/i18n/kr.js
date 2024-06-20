@@ -49,6 +49,8 @@ export default {
     menu_customer_service: "고객센터",
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",
+    menu_my_page: "마이페이지",
+    menu_won: "원",
     // menu end
     // page modal start
     page_modal_deposit: "입금신청",
@@ -63,9 +65,24 @@ export default {
     page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
     // page modal end
+    // game category start
+    game_category_live: `라이브
+    카지노`,
+    game_category_slot: '슬롯게임',
+    game_category_sport: '스포츠',
+    game_category_minigame: '미니게임',
+    // game category end
+    // game item start
+    game_item_entry: "게임입장",
+    // game item end
     // rolling text start
     roll_text_no_content: "아직 콘텐츠가 없습니다",
+    roll_text_withdrawal_status: "출금현황",
     // rolling text end
+    // withdraw records start
+    withdraw_record_withdrawal_status: "출금현황",
+    withdraw_record_no_content: "아직 콘텐츠가 없습니다",
+    // withdraw records end
     // transaction record start
     date_picker_sunday: "일요일",
     date_picker_sun: "일",
@@ -124,12 +141,23 @@ export default {
     announcement_no_selected: "선택하지 않음",
     announcement_total: "총",
     announcement_has_attachment: "첨부파일 있음",
+    announcement_no_content: "아직 콘텐츠가 없습니다",
+    announcement_see_more: "더보기",
     // announcement end
     // feedback start
     feedback_loading_content: "콘텐츠 로드 중...",
     feedback_unread: "읽히지 않는",
     feedback_read: "읽었다",
     feedback_read_at: "에서 읽다",
+    feedback_compose: "글쓰기",
+    feedback_category: "유형",
+    feedback_category_select: "선택해주세요",
+    feedback_title: "제목",
+    feedback_title_placeholder: "제목 입력해주세요",
+    feedback_cannot_be_empty: "비워둘 수 없습니다",
+    feedback_content: "내용",
+    feedback_compose_confirm: "확인",
+    feedback_previous_page: "전 페이지로 이동",
     // feedback end
     // deposit start
     deposit_payment_channel: "결제 채널",
@@ -149,7 +177,7 @@ export default {
     23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
-    withdraw__bank_card: "환전 은행카드 선택",
+    withdraw_bank_card: "환전 은행카드 선택",
     withdraw_withdraw_amount: "출금금액",
     withdraw_withdraw_password: "출금 비밀번호",
     withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
@@ -163,6 +191,14 @@ export default {
     personal_id: "아이디",
     personal_phone: "전화",
     // personal end
+    // password start
+    password_existing_password: "기존 비밀번호",
+    password_at_least_6_character: "는 6자 이상이어야 합니다",
+    password_new_password: "변경할 비밀번호",
+    password_confirm_new_password: "비밀번호 확인",
+    password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
+    password_change_password: "변경완료",
+    // password end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

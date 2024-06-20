@@ -1,6 +1,8 @@
 import { Platform, Notify } from "quasar";
 import { useVisitorData } from "@fingerprintjs/fingerprintjs-pro-vue-v3";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { i18nStore } from "src/router/language";
+import moment from 'moment';
 
 export const MAIN = "MAIN";
 
@@ -157,4 +159,18 @@ export const successNotify = (message) => {
     message: message,
     icon: "check_circle_outline"
   });
+}
+
+export const getLocaleDateTime = (dateTimeStr, isIncludeTime = false) => {
+  const { languageVal } = i18nStore();
+
+  if(languageVal === 'kr') {
+    return moment(dateTimeStr).locale('ko').format(isIncludeTime ? "LLL" : "LL");
+  }
+
+  if(languageVal === 'en') {
+    return isIncludeTime ? moment(dateTimeStr).format('YYYY-MM-DD hh:mm A') : moment(dateTimeStr).format('YYYY-MM-DD');
+  }
+
+  return moment(dateTimeStr).locale('ko').format(isIncludeTime ? "LLL" : "LL");
 }

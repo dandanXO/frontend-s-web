@@ -15,13 +15,17 @@
 import { watch, onUnmounted, ref, onMounted } from 'vue';
 import { api } from 'boot/axios';
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia';
+import { userStore } from 'src/stores';
 
+const store = userStore();
 const jackpotPrizeAmt = ref();
 const isLoading = ref();
 const refetchJackpotInterval = ref();
 const jackpotTickerInterval = ref();
 const route = useRoute();
 const isVisible = ref(false);
+const { isOffline } = storeToRefs(store);
 
 const fetchJackpot = () => {
   if (isLoading.value === undefined) {
@@ -60,8 +64,8 @@ const clearJackpotInterval = () => {
   refetchJackpotInterval.value = undefined;
 }
 
-watch(() => route.query.page || isVisible.value, () => {
-  if (route.query.page || !isVisible.value) {
+watch(() => [route.query.page, isVisible.value, isOffline.value], ([page, isVisible, isOfflineStatus]) => {
+  if (page || !isVisible || isOfflineStatus) {
     clearJackpotInterval();
   } else {
     startJackpotInterval();

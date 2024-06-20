@@ -1267,17 +1267,10 @@ export default defineComponent({
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-          // debugger;
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            localStorage.removeItem(key);
-            // isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 

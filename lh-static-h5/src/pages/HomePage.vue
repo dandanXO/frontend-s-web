@@ -1046,17 +1046,10 @@ export default defineComponent({
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
@@ -1714,14 +1707,19 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      getUnreadTotal();
+      setTimeout(() => {
+        getUnreadTotal();
+      },750)
+
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
 
     onMounted(() => {
-      if (store.token) {
-        initFloating();
+      if ((store.token)) {
         checkShowImgTop();
+        setTimeout(() => {
+         initFloating();
+        },750)
       }
     });
     // Clear interval on unmounted
@@ -2257,7 +2255,7 @@ export default defineComponent({
     // position: sticky;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 390px);
+    height: calc(100vh - 380px);
     margin-top: 0px;
     top: 0;
     flex: 2;
@@ -2296,7 +2294,7 @@ export default defineComponent({
     overflow-x: hidden;
     // padding-right: 2px;
     // margin-right: -4px;
-    height: calc(100vh - 390px);
+    height: calc(100vh - 380px);
     margin-top: 0px;
     flex: 11;
     display: flex;

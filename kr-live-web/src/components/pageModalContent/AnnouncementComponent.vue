@@ -1,7 +1,8 @@
 <template>
   <div class="announcement-container">
     <div class="announcement-list-wrapper">
-      <span class="total">{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
+      <q-skeleton class="total" v-if="isLoading" type="QChip" />
+      <span class="total" v-else>{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
 
       <q-list bordered separator class="announcement-list">
         <template v-if="isLoading">
@@ -56,11 +57,12 @@
 import { onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import moment from "moment";
+import { getLocaleDateTime } from "src/boot/utils";
 
 const store = userStore();
 const announcementList = ref();
 const selected = ref();
-const formatDate = (timestamp) => moment(timestamp).locale('ko').format("LL");
+const formatDate = (timestamp) => getLocaleDateTime(timestamp);
 const getAttachmentImgSrc = (attachmentPath) => process.env.IMAGE_CDN + '/announcement/' + attachmentPath;
 const isLoading = ref(false);
 

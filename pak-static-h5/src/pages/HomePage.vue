@@ -210,13 +210,7 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
                   >
-                    <div
-                      data-aos="zoom-in"
-                      data-aos-delay="100"
-                      data-aos-duration="1200"
-                      data-aos-once="true"
-                      data-aos-anchor="#home"
-                    >
+                    <div>
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -2024,6 +2018,7 @@ const loadHotGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
+      hotGameList.value= [];
       hotlists = res;
 
       // cached
@@ -2064,8 +2059,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          // console.log("End");
-          // console.log(hotGameList.value);
+          console.log("End");
+          console.log(JSON.stringify(hotGameList.value));
           // console.log(livecasino.value);
         });
     });
@@ -2678,8 +2673,8 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
-      console.log("After");
-      console.log(JSON.stringify(slot.value));
+      // console.log("After");
+      // console.log(JSON.stringify(slot.value));
       loadHotGameList();
     })
     .catch((err) => {});
@@ -3256,11 +3251,11 @@ watch(
     display: flex;
     // background: #2e3037;
     background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 2.05%,
-      rgba(255, 255, 255, 0.05) 44.93%,
-      rgba(255, 255, 255, 0.05) 53.13%,
-      rgba(255, 255, 255, 0) 98.21%
+        90deg,
+        rgba(255, 255, 255, 0) 2.05%,
+        rgba(255, 255, 255, 0.05) 44.93%,
+        rgba(255, 255, 255, 0.05) 53.13%,
+        rgba(255, 255, 255, 0) 98.21%
     );
 
     gap: 10px;
@@ -4343,10 +4338,10 @@ watch(
     width: 2px;
     // background: salmon;
     background: linear-gradient(
-      180deg,
-      rgba(115, 115, 115, 0) 0%,
-      rgba(153, 153, 153, 0.4) 48.5%,
-      rgba(115, 115, 115, 0) 100%
+        180deg,
+        rgba(115, 115, 115, 0) 0%,
+        rgba(153, 153, 153, 0.4) 48.5%,
+        rgba(115, 115, 115, 0) 100%
     );
   }
 

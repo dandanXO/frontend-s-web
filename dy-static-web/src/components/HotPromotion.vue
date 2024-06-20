@@ -65,7 +65,7 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu' && store.token"
     />
 
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
@@ -334,7 +334,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao" ||
+      this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
       this.list.redirectUrl === "fankuijianyi"
     ) {
       this.isCommonPromo = false;

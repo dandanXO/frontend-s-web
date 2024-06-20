@@ -1052,7 +1052,7 @@ export default defineComponent({
 
 .promo-cat-tab {
   position: sticky;
-  top: 61px;
+  top:51px;
   z-index: 3;
 
   &.extension-tab {
