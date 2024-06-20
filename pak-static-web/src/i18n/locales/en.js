@@ -558,8 +558,7 @@ export default {
         registrationDate: "Registration Date",
         balance: "Balance",
         lastLogin: "Last Login Time",
-        lastDeposit: "Last Deposit Time",
-        action: "Action"
+        lastDeposit: "Last Deposit Time"
       }
     },
     teamBetting: {

@@ -120,6 +120,13 @@
         td {
           padding: 8px 0;
           color: #9f9f9f;
+
+          .win {
+            color: #70bc62;
+          }
+          .loss {
+            color: #dc1a00;
+          }
         }
       }
     }

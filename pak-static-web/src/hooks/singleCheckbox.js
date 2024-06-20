@@ -6,7 +6,7 @@ export const useSingleCheckbox = (initialValue, callback) => {
   const handleCheckedChange = (value) => {
     if (value.length <= 1) return;
     selectedValue.value = value.slice(-1);
-    callback(selectedValue.value[0]);
+    callback && callback(selectedValue.value[0]);
   };
 
   return {
