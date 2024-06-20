@@ -88,7 +88,7 @@
                             }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                            }}</span>
+                        }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -135,7 +135,11 @@ const selectFirstMessage = () => {
     if (inboxMessages.value.records) {
         // if don't have timeout, ellipsis for title won't show
         setTimeout(() => {
-            selected.value = inboxMessages.value.records[0];
+            const message = inboxMessages.value.records[0];
+            selected.value = message;
+            if (!message.readTime) {
+                readMessage(message.id, false)
+            }
         }, 100)
     }
 }
@@ -203,7 +207,7 @@ const initOutbox = (page = 1) => {
     })
 }
 
-const readMessage = (id) => {
+const readMessage = (id, showReadNotify = true) => {
     const currentMail = inboxMessages.value.records.find((data) => data.id === id);
     selected.value = currentMail;
 
@@ -217,7 +221,7 @@ const readMessage = (id) => {
         ).then((res) => {
             const { code, data } = res.data
 
-            if (code === 0 && !currentMail.readTime) {
+            if (code === 0 && !currentMail.readTime && showReadNotify) {
                 $q.notify({
                     message: "메시지 읽기",
                     type: "positive",
