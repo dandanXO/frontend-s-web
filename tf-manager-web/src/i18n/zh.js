@@ -297,6 +297,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '斗鸡',
     MSI: 'MSI季中冠军赛',
+    COPA: '美洲杯'
   },
   homeBannerType: {
     HOME: '首页',
