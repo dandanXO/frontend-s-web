@@ -32,7 +32,7 @@
               :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]" lazy-rules>
               <template v-slot:no-option>
                 <q-item>
-                  <q-item-section class="text-grey text-bold">
+                  <q-item-section class="text-grey text-bold text-caption">
                     {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
                     <router-link class="text-bright" to="/?page=withdrawcard">
                       {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}

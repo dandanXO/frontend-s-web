@@ -1,14 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-drawer v-model="ui.leftDrawerOpen" bordered overlay :width="350" :breakpoint="1280" class="drawer-left">
-      <div v-if="store.hasToken()" class="drawer-container">
-        <AccountPage />
-      </div>
-    </q-drawer>
-
     <q-page-container>
       <div class="home-banner-wrapper">
-        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.png" />
+        <img class="top-logo" alt="logo" src="../assets/images/index/kr-logo.png" />
 
         <LoginBar />
       </div>
@@ -44,7 +38,6 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
 import { RiCloseLine } from "vue-remix-icons";
-import AccountPage from "pages/AccountPage.vue";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
 import { useI18n } from "vue-i18n";
@@ -55,7 +48,6 @@ import LoginBar from "../components/LoginAndRegister/LoginBar";
 export default defineComponent({
   name: "MainLayout",
   components: {
-    AccountPage,
     // RiArrowDropLeftLine,
     RiCloseLine,
     AppDownload,
@@ -361,9 +353,11 @@ svg path {
 
 .footer-nav {
   margin-top: -30px;
+
   :deep(.q-tab__content) {
     margin-top: auto;
   }
+
   :deep(.q-tabs__content) {
     margin-top: -30px;
   }
@@ -520,14 +514,14 @@ svg path {
 
   @media (max-width: 768px) {
     width: 200px;
-    margin-top:0px;
+    margin-top: 0px;
     top: calc(50% + 30px);
     display: none; // temp
   }
 
   @media (max-width: 500px) {
     width: 200px;
-    margin-top:0px;
+    margin-top: 0px;
     display: none; // temp
   }
 }
@@ -563,7 +557,7 @@ svg path {
     height: 480px;
   }
 
-  
+
 }
 
 footer {
@@ -574,6 +568,7 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
   @media (min-width: 1200px) {
     height: 300px;
   }
@@ -587,9 +582,11 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
   @media (min-width: 1200px) {
     margin-top: 36px;
   }
+
   .box {
     width: 75px;
     height: 32px;
@@ -601,10 +598,12 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+
     img {
       max-width: 100%;
       max-height: 100%;
     }
+
     @media (min-width: 1200px) {
       width: 140px;
       height: 60px;
@@ -616,6 +615,7 @@ footer {
   font-size: 12px;
   line-height: 16.8px;
   padding-bottom: 20px;
+
   @media (min-width: 1200px) {
     font-size: 17px;
     line-height: 28px;
@@ -627,6 +627,7 @@ footer {
   .login-btn {
     width: 120px;
   }
+
   .register-btn {
     width: 120px;
   }
@@ -652,6 +653,7 @@ footer {
     margin-left: auto;
     margin-right: auto;
   }
+
   .header-vip-btn {
     margin-left: 130px;
   }

@@ -130,41 +130,6 @@ const onLogoutSubmit = () => {
   }
 }
 
-.my-page {
-  width: 80px;
-  height: 36px;
-  background-image: url("../../assets/home/btn-blue.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-
-  &:hover {
-    filter: brightness(1.1);
-  }
-
-  &:active {
-    transform: translateY(2px);
-  }
-
-  @media (min-width: 1200px) {
-    width: 100px;
-  }
-
-  .register-text {
-    font-size: 12px;
-    line-height: 16.8px;
-    color: #fff;
-
-    @media (min-width: 1200px) {
-      font-size: 14px;
-      line-height: 1;
-    }
-  }
-}
-
 .actions-topbar {
   display: none;
   flex-wrap: wrap;

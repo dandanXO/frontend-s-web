@@ -9,16 +9,19 @@
                 <q-skeleton class="news-item-box" v-for="(_item, index) in 5" :key="index" style="width:100%;" />
             </template>
             <template v-else-if="financeRecords.length > 0">
-                <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
-                    <div class="news-item-left">
-                        <div class="news-item-title">
-                            {{ formatTransactionType(d.transactionType) }}
-                            {{ d.loginName }}
-                            <span style="color: #01e1ff">{{ d.amount }}원</span>
+                <div style="max-height:500px;overflow:auto;">
+                    <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
+                        <div class="news-item-left">
+                            <div class="news-item-title">
+                                {{ formatTransactionType(d.transactionType) }}
+                                {{ d.loginName }}
+                                <span style="color: #01e1ff">{{ d.amount }}원</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="news-item-right">
-                        <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
+                        <div class="news-item-right">
+                            <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>

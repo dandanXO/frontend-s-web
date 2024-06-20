@@ -40,7 +40,7 @@ export default defineComponent({
         console.log(visitorId);
 
         const obj = {
-          identifier:  store.visitorId,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -56,13 +56,20 @@ export default defineComponent({
 
     let csclient;
     const initCsWeb = () => {
-      csclient = new CsClient("5", regDevice, "kr", "2", "prod");
+      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
       csclient.set("notification-type", {
         type: "breathing",
         color: "#FB4BFF"
+      });
+
+      csclient.set("design", {
+        bottom: "40px",
+        right: "80px",
+        icon: require("assets/icon/pageModal/paper-plane-icon.svg"),
+        size: "48px"
       });
 
       if (store.token) {
@@ -179,6 +186,13 @@ export default defineComponent({
       checkAgentFrom();
       // initListenApp();
       // getCSA();
+
+      setInterval(function () {
+        // console.log("Get Balance")
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
 
       document.addEventListener(
         "deviceready",
