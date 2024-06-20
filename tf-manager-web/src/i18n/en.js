@@ -291,6 +291,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: 'COCKFIGHT',
     MSI: 'MSI',
+    COPA: 'COPA AMERICA'
   },
   homeBannerType: {
     HOME: 'Home',
