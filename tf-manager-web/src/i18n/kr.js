@@ -1199,6 +1199,7 @@ export default {
     rule: '규칙',
     maxRebate: '최대 리베이트',
     maxBalance: '최대 잔액',
+    nickName: '별명',
     rebateAmount: '리베이트 금액',
     receiveTime: '수신 시간',
     receiveType: '수신 유형',

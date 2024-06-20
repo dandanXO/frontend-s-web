@@ -297,7 +297,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '斗鸡',
     MSI: 'MSI季中冠军赛',
-    COPA: '美洲杯'
+    COPA: '美洲杯',
   },
   homeBannerType: {
     HOME: '首页',
@@ -1272,6 +1272,7 @@ export default {
     rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
+    nickName: '昵称',
     rebateAmount: '返水金额',
     receiveTime: '领取时间',
     receiveType: '领取模式',

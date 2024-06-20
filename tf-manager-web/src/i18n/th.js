@@ -763,6 +763,7 @@ export default {
     nextGetBetStartTime: 'รับเวลาเริ่มเดิมพันถัดไป',
     nextLevel: 'ระดับถัดไป',
     nextLevelPoint: 'จุดระดับถัดไป',
+    nickName: 'ชื่อเล่น',
     noData: 'ไม่มีข้อมูล',
     noDeposit: 'ไม่มีเงินฝาก',
     noOfDeduction: 'จำนวนการหักเงิน',
