@@ -67,7 +67,7 @@ export default defineComponent({
 
       csclient.set("design", {
         bottom: "40px",
-        right: "40px",
+        right: "20px",
         icon: require("assets/images/index/cs-icon.png")
       });
 

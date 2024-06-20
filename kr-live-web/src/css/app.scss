@@ -766,4 +766,8 @@ input:internal-autofill-selected {
     height: auto !important;
     aspect-ratio: 405 / 283 !important;
   }
+
+  @media (max-width: 600px) {
+    width: 80px !important;
+  }
 }
