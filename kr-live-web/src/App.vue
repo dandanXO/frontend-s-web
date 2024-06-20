@@ -68,7 +68,7 @@ export default defineComponent({
       csclient.set("design", {
         bottom: "40px",
         right: "80px",
-        icon: require("assets/icon/messages-active.svg"),
+        icon: require("assets/icon/pageModal/paper-plane-icon.svg"),
         size: "48px"
       });
 

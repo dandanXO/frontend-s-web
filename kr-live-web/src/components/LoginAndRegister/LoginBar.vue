@@ -38,18 +38,6 @@
                 <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
                 <div class="info-text">출금</div>
               </router-link>
-              <!-- <div
-                class="sidebar-section-item"
-              >
-                <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
-                <div class="info-text">포인트전환</div>
-              </div>
-              <div
-                class="sidebar-section-item"
-              >
-                <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
-                <div class="info-text">알전환</div>
-              </div> -->
             </div>
             <div class="separator" />
             <div class="icon-section-label">메뉴</div>
