@@ -74,9 +74,10 @@
             <div>
               <div class="title">{{ selected.title }}</div>
             </div>
-            <span class="date-time">{{ getLocaleDateTime(selected.createTime) }}</span>
-            <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ getLocaleDateTime(selected.readTime, true)
-              }}</span>
+            <span class="date-time" v-if="selected.createTime">{{ getLocaleDateTime(selected.createTime) }}</span>
+            <span class="date-time" v-if="selected.readTime">{{ $t('lang.feedback_read_at') }} {{
+              getLocaleDateTime(selected.readTime, true)
+            }}</span>
             <div class="content-loading" v-if="isFetchingContent">
               <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                 <q-skeleton type="text" style="width:100%;" />

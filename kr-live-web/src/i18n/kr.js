@@ -159,6 +159,19 @@ export default {
     feedback_compose_confirm: "확인",
     feedback_previous_page: "전 페이지로 이동",
     // feedback end
+    // message start
+    message_loading_content: "콘텐츠 로드 중...",
+    message_unread: "읽히지 않는",
+    message_read: "읽었다",
+    message_read_at: "에서 읽다",
+    message_compose: "글쓰기",
+    message_title: "제목",
+    message_title_placeholder: "제목 입력해주세요",
+    message_cannot_be_empty: "비워둘 수 없습니다",
+    message_content: "내용",
+    message_compose_confirm: "확인",
+    message_previous_page: "전 페이지로 이동",
+    // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",

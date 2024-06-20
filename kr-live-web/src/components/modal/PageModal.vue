@@ -59,6 +59,7 @@ import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
 import FeedbackPage from "components/pageModalContent/FeedbackPage";
+import MessagesPage from "components/pageModalContent/MessagesPage";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
@@ -144,12 +145,23 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
+  // {
+  //   tabIndex: "log",
+  //   page: "personal/messages",
+  //   info: 'lang.page_modal_message',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+  //   component: FeedbackPage,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_message',
+  //     description: "입금시 꼭 계좌문의를 하세요!"
+  //   }
+  // },
   {
     tabIndex: "log",
     page: "personal/messages",
     info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: FeedbackPage,
+    component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
       description: "입금시 꼭 계좌문의를 하세요!"
