@@ -124,7 +124,8 @@ export const userStore = defineStore("userStore", {
             const { data: { code, data } } = res;
             
             if (code === 0) {
-              this.financeRecords = data;
+              const displayTypes = ['WITHDRAW']; 
+              this.financeRecords = data.filter(({ transactionType }) => displayTypes.includes(transactionType));
               resolve(this.financeRecords);
             }
           })

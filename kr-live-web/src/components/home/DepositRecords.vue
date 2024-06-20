@@ -5,17 +5,28 @@
                 <div class="title-text">출금현황</div>
             </div>
 
-            <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
-                <div class="news-item-left">
-                    <div class="news-item-title">
-                        {{ formatTransactionType(d.transactionType) }}
-                        {{ d.loginName }}
-                        <span style="color: #01e1ff">{{ d.amount }}원</span>
+            <template v-if="isLoading">
+                <q-skeleton class="news-item-box" v-for="(_item, index) in 5" :key="index" style="width:100%;" />
+            </template>
+            <template v-else-if="financeRecords.length > 0">
+                <div style="max-height:500px;overflow:auto;">
+                    <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
+                        <div class="news-item-left">
+                            <div class="news-item-title">
+                                {{ formatTransactionType(d.transactionType) }}
+                                {{ d.loginName }}
+                                <span style="color: #01e1ff">{{ d.amount }}원</span>
+                            </div>
+                        </div>
+                        <div class="news-item-right">
+                            <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="news-item-right">
-                    <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
-                </div>
+            </template>
+            <div v-else class="news-item-box" style="justify-content: center;">
+                아직 콘텐츠가 없습니다
             </div>
         </div>
     </q-intersection>

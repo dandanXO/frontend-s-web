@@ -77,17 +77,6 @@ const routes = [
         ],
         meta: {requiresAuth: true}
     },
-    {
-        path: "/insert-bankinfo",
-        component: () => import("layouts/MainLayout.vue"),
-        children: [
-            {
-                path: "",
-                component: () => import("components/insertBankInfo.vue")
-            }
-        ],
-        meta: {requiresAuth: true}
-    },
     // Always leave this as last one,
     // but you can also remove it
     {

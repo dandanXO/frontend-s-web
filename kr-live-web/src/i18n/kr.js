@@ -10,11 +10,12 @@ export default {
     login_success_msg: "로그인이 되었습니다",
     login_forget_pwd: "비밀번호 분실",
     // login end
+    logout: "로그아웃",
     // register start
-    reg_withdraw_password: "비밀번호 철회",
+    reg_withdraw_password: "출금 비밀번호",
     reg_withdraw_password_placeholder: "출금 비밀번호 4자리",
     reg_please_confirm_withdraw_password: "출금 비밀번호를 확인해 주세요",
-    reg_withdraw_code_4_digits: "출금 비밀번호는 4자리여야 합니다.",
+    reg_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
     reg_nickname: "닉네임",
     reg_referrer: "추천인코드",
     reg_referrer_placeholder: "추천인코드입력",
@@ -48,9 +49,11 @@ export default {
     menu_customer_service: "고객센터",
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",
+    menu_my_page: "마이페이지",
+    menu_won: "원",
     // menu end
     // page modal start
-    page_modal_deposit: "송금신청",
+    page_modal_deposit: "입금신청",
     page_modal_withdraw: "출금신청",
     page_modal_message: "문의",
     page_modal_customer_service: "고객센터",
@@ -62,8 +65,19 @@ export default {
     page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
     // page modal end
+    // game category start
+    game_category_live: `라이브
+    카지노`,
+    game_category_slot: '슬롯게임',
+    game_category_sport: '스포츠',
+    game_category_minigame: '미니게임',
+    // game category end
+    // game item start
+    game_item_entry: "게임입장",
+    // game item end
     // rolling text start
     roll_text_no_content: "아직 콘텐츠가 없습니다",
+    roll_text_withdrawal_status: "출금현황",
     // rolling text end
     // transaction record start
     date_picker_sunday: "일요일",
@@ -130,6 +144,38 @@ export default {
     feedback_read: "읽었다",
     feedback_read_at: "에서 읽다",
     // feedback end
+    // deposit start
+    deposit_payment_channel: "결제 채널",
+    deposit_confirm_deposit: "계좌요청",
+    deposit_reminder: "알림",
+    deposit_reminder_caption: "입금 전 꼭 읽어주세요",
+    deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
+    본인명의 이외 타명의 입금은 처리가 불가합니다
+    계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
+    입금 최소 금액은 ?0,000원 이상 만원 단위로만 가능합니다.
+
+    ※주의사항
+    충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
+    금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
+
+    ※가상계좌 점검시간 안내
+    23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+    // deposit end
+    // withdraw start
+    withdraw__bank_card: "환전 은행카드 선택",
+    withdraw_withdraw_amount: "출금금액",
+    withdraw_withdraw_password: "출금 비밀번호",
+    withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
+    withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
+    출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
+    회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
+    // withdraw end
+    // personal start
+    personal_nickname: "닉네임",
+    personal_real_name: "실명",
+    personal_id: "아이디",
+    personal_phone: "전화",
+    // personal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -340,7 +386,6 @@ export default {
     affiliate_page: "Apply for Partnership",
     app: "APP",
     share_page: "Share",
-    logout: "Log Out",
     inbox: "Inbox",
     outbox: "Outbox",
     write: "Write",

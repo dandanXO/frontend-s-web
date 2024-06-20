@@ -11,8 +11,8 @@
       </div>
       <div class="form-item">
         <label>제목</label>
-        <q-input dense outlined ref="titleRef" placeholder="제목 입력해주세요." v-model="serviceForm.title" clearable
-          lazy-rules :rules="[
+        <q-input dense outlined ref="titleRef" placeholder="제목 입력해주세요." v-model="serviceForm.title" clearable lazy-rules
+          :rules="[
             (val) => (val && val.length > 0) || '비워둘 수 없습니다.',
           ]" />
       </div>
@@ -41,34 +41,51 @@
         </div>
 
         <q-list bordered separator class="feedback-list">
-          <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
-            :active="item === selected" active-class="active-announcement">
-            <q-item-section>
-              <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-              <!-- <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label> -->
-            </q-item-section>
+          <template v-if="isLoading">
+            <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
+              <q-skeleton type="QToolbar" style="width:100%;" />
+            </q-item>
+          </template>
+          <template v-else>
+            <q-item clickable v-ripple v-for="item in feedbackReplies" :key="item.page" @click="readFeedback(item.id)"
+              :active="item === selected" active-class="active-announcement">
+              <q-item-section>
+                <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
+                <!-- <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label> -->
+              </q-item-section>
 
-            <q-item-section side top class="info-wrapper">
-              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
-              <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
-              <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
-            </q-item-section>
-          </q-item>
+              <q-item-section side top class="info-wrapper">
+                <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+                <q-icon name="mark_email_read" v-if="item.readTime" :title="$t('lang.feedback_read')" />
+                <q-icon name="mark_email_unread" v-else :title="$t('lang.feedback_unread')" />
+              </q-item-section>
+            </q-item>
+          </template>
         </q-list>
       </div>
       <q-scroll-area class="feedback-content-wrapper">
-        <div v-if="selected" class="feedback-content">
-          <div>
-            <div class="title">{{ selected.title }}</div>
+        <template v-if="isLoading">
+          <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
+            <q-skeleton type="text" style="width:100%;" />
+          </q-item>
+        </template>
+        <template v-else>
+          <div v-if="selected" class="feedback-content">
+            <div>
+              <div class="title">{{ selected.title }}</div>
+            </div>
+            <span class="date-time">{{ formatDate(selected.createTime) }}</span>
+            <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
+            <div class="content-loading" v-if="isFetchingContent">
+              <!-- <span>{{ $t('lang.feedback_loading_content') }}</span> -->
+              <template v-for="rectSkeleton in 5" :key="rectSkeleton">
+                <q-skeleton type="text" style="width:100%;" />
+              </template>
+            </div>
+            <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
           </div>
-          <span class="date-time">{{ formatDate(selected.createTime) }}</span>
-          <span class="date-time">{{ $t('lang.feedback_read_at') }} {{ formatDate(selected.readTime, 'LLL') }}</span>
-          <div class="content-loading" v-if="isFetchingContent">
-            <q-spinner-gears size="50px" /><span>{{ $t('lang.feedback_loading_content') }}</span>
-          </div>
-          <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
-        </div>
-        <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+          <div class="feedback-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+        </template>
       </q-scroll-area>
     </div>
   </div>
@@ -86,6 +103,7 @@ const isCreateMode = ref(false);
 const titleRef = ref();
 const contentRef = ref();
 const selected = ref();
+const isLoading = ref(false);
 
 const serviceForm = reactive({
   title: "",
@@ -150,17 +168,26 @@ const sendMessage = () => {
 };
 
 const initOutbox = () => {
-  api.get('/session/feedback/replies').then((res) => {
-    const { code, data } = res.data
+  isLoading.value = true;
 
-    if (code === 0) {
-      feedbackReplies.value = data.records;
+  Promise.all([api.get('/session/feedback/replies'), api.get("/session/feedback/types")]).then(([repliesRes, typesRes]) => {
+    const { code: repliesResCode, data: repliesResData } = repliesRes.data
+
+    if (repliesResCode === 0) {
+      feedbackReplies.value = repliesResData.records;
     }
-  })
 
-  api.get("/session/feedback/types").then((res) => {
-    const { code, data } = res.data
-    feedbackTypes.value = data;
+    const { code: typesResCode, data: typesResData } = typesRes.data
+
+    if (typesResCode === 0) {
+      feedbackTypes.value = typesResData;
+    }
+
+    isLoading.value = false;
+  }).catch(() => {
+    isLoading.value = false;
+  }).finally(() => {
+    isLoading.value = false;
   })
 }
 
@@ -183,8 +210,11 @@ const readFeedback = (id) => {
         });
       }
 
+      if (!currentMail.readTime) {
+        currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
+      }
+
       currentMail.content = data.content;
-      currentMail.readTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
       isFetchingContent.value = false;
     })
@@ -281,7 +311,9 @@ onMounted(() => {
       }
 
       .content-loading {
+        width: 100%;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         margin: auto;

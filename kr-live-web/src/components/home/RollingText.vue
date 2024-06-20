@@ -4,11 +4,11 @@
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
                 <div class="box">
-                    <div class="text">출금현황</div>
+                    <div class="text">{{ $t('lang.roll_text_withdrawal_status') }}</div>
                 </div>
             </div>
             <div style="width:100%;text-align:center;" v-if="isLoading">
-                <q-spinner-gears color="purple" size="2em" />
+                <q-skeleton type="text" style="width:100%;" />
             </div>
             <marquee-text :repeat="financeRecords.length" :duration="financeRecords.length * 20"
                 v-else-if="financeRecords.length > 0">
@@ -128,10 +128,6 @@ const formatTransactionType = (transactionType) => {
                 display: flex;
                 justify-content: center;
                 white-space: nowrap;
-
-                @media (min-width: 769px) {
-                    width: 60px;
-                }
             }
         }
 

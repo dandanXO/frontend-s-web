@@ -31,7 +31,7 @@
             class="captcha-code-input" v-model="loginForm.captchaCode" lazy-rules
             :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
           <div class="captcha-img-wrapper">
-            <q-spinner-gears size="30px" v-if="captchaLoading" />
+            <q-spinner-orbit size="30px" v-if="captchaLoading" />
             <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
           </div>
         </div>
@@ -48,7 +48,7 @@
     </q-form>
 
     <q-inner-loading :showing="isLoading" style="background:#1414144d;">
-      <q-spinner-gears style="width:50px;height:50px;" />
+      <q-spinner-orbit style="width:50px;height:50px;" />
     </q-inner-loading>
   </div>
 </template>

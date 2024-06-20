@@ -30,7 +30,7 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promo-param="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu'"
     />
 
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
@@ -279,7 +279,7 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao"
+      this.list.redirectUrl === "dy-jiajianghongbaoyu"
     ) {
       this.isCommonPromo = false;
     } else {
