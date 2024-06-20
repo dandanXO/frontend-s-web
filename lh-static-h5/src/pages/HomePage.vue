@@ -1051,17 +1051,10 @@ export default defineComponent({
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
@@ -1720,14 +1713,19 @@ export default defineComponent({
       checkPlatform();
       getVersionNo();
       getAppDownloadUrl();
-      getUnreadTotal();
+      setTimeout(() => {
+        getUnreadTotal();
+      },750)
+
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
 
     onMounted(() => {
       if ((store.token)) {
-        initFloating();
         checkShowImgTop();
+        setTimeout(() => {
+         initFloating();
+        },750)
       }
     })
     // Clear interval on unmounted

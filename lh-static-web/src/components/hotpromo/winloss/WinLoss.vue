@@ -1,5 +1,9 @@
 <template>
     <div class="whole-section">
+      <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+        还没完成，不要测试先。
+      </div>
+
         <div class="section-guess">
             <div class="date">
                 6月17日 星期一
@@ -126,7 +130,9 @@
 
 import { onMounted, ref } from "vue";
 import { useDark, useLocalStorage } from "@vueuse/core";
+import { userStore } from "@/store";
 
+const store= userStore();
 const matches = ref([]);
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
 const initMatches = () => {
