@@ -170,7 +170,7 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm,
+  submitESportInsurance,
   getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
@@ -244,7 +244,7 @@ const loadESportPlatformOptions = () => {
 };
 
 const applyESportInsurance = () => {
-  toggleESportInsuranceModal(true);
+  // toggleESportInsuranceModal(true);
 };
 
 const toggleESportInsuranceModal = (status) => {
@@ -288,17 +288,13 @@ const init = () => {
 };
 
 const submitForm = async (elForm) => {
-  if (!elForm) return;
-
-  await elForm.validate(async (valid) => {
-    if (valid) {
-      isSubmitting.value = true;
+  isSubmitting.value = true;
       const params = {
         gameMatchId: eSportInsuranceFormData.gameMatchId,
         transactionId: eSportInsuranceFormData.transactionId,
         platform: eSportInsuranceFormData.platform
       };
-      const res = await submitESportInsuranceForm(params);
+      const res = await submitESportInsurance();
 
       if (res.code === 0) {
         ElMessage.success({
@@ -315,9 +311,7 @@ const submitForm = async (elForm) => {
         });
         isSubmitting.value = false;
       }
-    }
-  });
-};
+  }
 
 const $swiper = ref(null);
 

@@ -45,7 +45,7 @@
       <div class="swiper-button-next" @click="nextSlide"></div>
       <button
         class="common-btn apply-btn"
-        @click="applySportInsurance()"
+        @click="submitForm()"
         :disabled="isNaN(sportInsuranceFormData.gameMatchId)"
       >
         点击申请
@@ -171,7 +171,7 @@ import { userStore } from "@/store";
 import {
   getUpcomingSportMatches,
   getSportInsurancePlatformOptions,
-  submitSportInsuranceForm,
+  submitSportInsurance,
   getSportInsuranceRecords
 } from "@/api/promotion/sportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
@@ -285,32 +285,22 @@ const init = () => {
 };
 
 const submitForm = async (elForm) => {
-  if (!elForm) return;
+  
+  isSubmitting.value = true;
+  const res = await submitSportInsurance();
 
-  await elForm.validate(async (valid) => {
-    if (valid) {
-      isSubmitting.value = true;
-      const params = {
-        gameMatchId: sportInsuranceFormData.gameMatchId,
-        transactionId: sportInsuranceFormData.transactionId,
-        platform: sportInsuranceFormData.platform
-      };
-      const res = await submitSportInsuranceForm(params);
-
-      if (res.code === 0) {
-        ElMessage.success({
-          type: "success",
-          message: "提交成功"
-        });
-        sportInsuranceFormRef.value.resetFields();
-        isSportInsuranceModalVisible.value = false;
-        isSubmitting.value = false;
-      } else {
-        ElMessage.error(res.message);
-        isSubmitting.value = false;
-      }
-    }
-  });
+  if (res.code === 0) {
+    ElMessage.success({
+      type: "success",
+      message: "提交成功"
+    });
+    sportInsuranceFormRef.value.resetFields();
+    isSportInsuranceModalVisible.value = false;
+    isSubmitting.value = false;
+  } else {
+    ElMessage.error(res.message);
+    isSubmitting.value = false;
+  }
 };
 
 const $swiper = ref(null);
