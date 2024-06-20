@@ -78,6 +78,10 @@ export default {
     roll_text_no_content: "No content yet",
     roll_text_withdrawal_status: "Withdrawal status",
     // rolling text end
+    // withdraw records start
+    withdraw_record_withdrawal_status: "Withdrawal Status",
+    withdraw_record_no_content: "No content yet",
+    // withdraw records end
     // transaction record start
     date_picker_sunday: "Sunday",
     date_picker_sun: "Sun",
@@ -135,12 +139,23 @@ export default {
     announcement_no_selected: "No selected",
     announcement_total: "Total",
     announcement_has_attachment: "Has attachment",
+    announcement_no_content: "No content yet",
+    announcement_see_more: "See more",
     // announcement end
     // feedback start
     feedback_loading_content: "Loading content...",
     feedback_unread: "Unread",
     feedback_read: "Read",
     feedback_read_at: "Read at",
+    feedback_compose: "Compose",
+    feedback_category: "Category",
+    feedback_category_select: "Please select",
+    feedback_title: "Title",
+    feedback_title_placeholder: "Please enter title",
+    feedback_cannot_be_empty: "Cannot be empty",
+    feedback_content: "Content",
+    feedback_compose_confirm: "Confirm",
+    feedback_previous_page: "Previous page",
     // feedback end
     // deposit start
     deposit_payment_channel: "Payment Channel",
@@ -149,7 +164,7 @@ export default {
     deposit_reminder_caption: "Please read before deposit",
     // deposit end
     // withdraw start
-    withdraw__bank_card: "Withdraw Bank Card",
+    withdraw_bank_card: "Withdraw Bank Card",
     withdraw_withdraw_amount: "Withdraw Amount",
     withdraw_withdraw_password: "Withdraw Password",
     withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
@@ -160,6 +175,14 @@ export default {
     personal_id: "ID",
     personal_phone: "Phone",
     // personal end
+    // password start
+    password_existing_password: "Existing Password",
+    password_at_least_6_character: "Must be at least 6 characters",
+    password_new_password: "New Password",
+    password_confirm_new_password: "Confirm New Password",
+    password_password_mismatch: "Confirm Password must be the same as New Password",
+    password_change_password: "Change password",
+    // password end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

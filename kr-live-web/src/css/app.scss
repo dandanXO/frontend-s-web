@@ -697,7 +697,8 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 124px;
+  min-width: 124px;
+  width: fit-content;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -755,6 +756,14 @@ input:internal-autofill-selected {
 }
 
 .cs-web-id.csweb-btn {
-  background: linear-gradient(312deg, #0286FF 0%, #00FF85 100%) !important;
+  background: transparent !important;
   border: none !important;
+  width: 120px !important;
+  height: auto !important;
+
+  img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 405 / 283 !important;
+  }
 }

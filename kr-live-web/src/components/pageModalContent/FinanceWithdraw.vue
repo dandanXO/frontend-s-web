@@ -370,7 +370,7 @@ const chooseLabel = () => {
   } else if (isEWALLET.value) {
     return '선택 전자 지갑'
   } else {
-    return t('lang.withdraw__bank_card')
+    return t('lang.withdraw_bank_card')
   }
 }
 

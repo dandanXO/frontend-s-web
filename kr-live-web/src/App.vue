@@ -67,9 +67,8 @@ export default defineComponent({
 
       csclient.set("design", {
         bottom: "40px",
-        right: "80px",
-        icon: require("assets/icon/pageModal/paper-plane-icon.svg"),
-        size: "48px"
+        right: "40px",
+        icon: require("assets/images/index/cs-icon.png")
       });
 
       if (store.token) {
@@ -193,6 +192,14 @@ export default defineComponent({
           store.getBalance();
         }
       }, 20000);
+
+      window.addEventListener('offline', () => {
+        store.isOffline = true;
+      });
+
+      window.addEventListener('online', () => {
+        store.isOffline = false;
+      });
 
       document.addEventListener(
         "deviceready",

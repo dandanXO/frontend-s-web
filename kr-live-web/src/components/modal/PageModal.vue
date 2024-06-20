@@ -9,7 +9,7 @@
       <q-card-section>
         <div class="page-dialog-main-header">
           <span class="header-info-description">{{ headerInfo.description }}</span>
-          <span class="header-title">{{ headerInfo.title }}</span>
+          <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
       </q-card-section>
@@ -27,10 +27,10 @@
               <template v-if="!isMinimalMode">
                 <q-tabs v-model="page" align="justify" inline-label>
                   <template v-for="item in formattedPagesInfo" :key="item.page">
-                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info" class="page-dialog-tab"
-                      v-if="item.tabIndex === tabIndex">
-                      <img style="padding-right: 5px" :src="item.iconActiveUrl"
-                        :alt="item.info" :style="page === item.page ? '' : 'filter:contrast(0)'" />
+                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
+                      class="page-dialog-tab" v-if="item.tabIndex === tabIndex">
+                      <img style="padding-right: 5px" :src="item.iconActiveUrl" :alt="item.info"
+                        :style="page === item.page ? '' : 'filter:contrast(0)'" />
                     </q-tab>
                   </template>
                 </q-tabs>
@@ -57,7 +57,7 @@ import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
-import CustomerService from "components/pageModalContent/CustomerService";
+import FeedbackPage from "components/pageModalContent/FeedbackPage";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
@@ -124,48 +124,44 @@ const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "finance/deposit",
-    info: t('lang.page_modal_deposit'),
+    info: 'lang.page_modal_deposit',
     iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     component: FinanceDeposit,
     headerInfo: {
-      title: t('lang.page_modal_deposit'),
-      subTitle: "DEPOSIT",
+      title: 'lang.page_modal_deposit',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "finance/withdraw",
-    info: t('lang.page_modal_withdraw'),
+    info: 'lang.page_modal_withdraw',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: FinanceWithdraw,
     headerInfo: {
-      title: t('lang.page_modal_withdraw'),
-      subTitle: "WITHDRAW",
+      title: 'lang.page_modal_withdraw',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "personal/messages",
-    info: t('lang.page_modal_message'),
+    info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: CustomerService,
+    component: FeedbackPage,
     headerInfo: {
-      title: t('lang.page_modal_message'),
-      subTitle: "MESSAGES",
+      title: 'lang.page_modal_message',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "promo/all",
-    info: t('lang.page_modal_promo'),
+    info: 'lang.page_modal_promo',
     iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
     component: PromoComponent,
     headerInfo: {
-      title: t('lang.page_modal_promo'),
-      subTitle: "EVENT",
+      title: 'lang.page_modal_promo',
       description: ""
     }
   },
@@ -173,60 +169,55 @@ const pagesInfo = reactive([
     tabIndex: "log",
     href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
     page: "customer/service",
-    info: t('lang.page_modal_customer_service'),
+    info: 'lang.page_modal_customer_service',
     iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    component: CustomerService,
+    component: FeedbackPage,
     headerInfo: {
-      title: t('lang.page_modal_customer_service'),
-      subTitle: "Q&A",
+      title: 'lang.page_modal_customer_service',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "personal/info",
-    info: t('lang.page_modal_personal_info'),
+    info: 'lang.page_modal_personal_info',
     iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
-      subTitle: "PERSONAL INFO",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "announcement",
-    info: t('lang.page_modal_announcement'),
+    info: 'lang.page_modal_announcement',
     iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     component: AnnouncementComponent,
     headerInfo: {
-      title: t('lang.page_modal_announcement'),
-      subTitle: "NOTICE",
+      title: 'lang.page_modal_announcement',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "transaction/records",
-    info: t('lang.page_modal_transaction_record'),
+    info: 'lang.page_modal_transaction_record',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
     component: TransitRecord,
     headerInfo: {
-      title: t('lang.page_modal_transaction_record'),
-      subTitle: "TRANSACTIONS",
+      title: 'lang.page_modal_transaction_record',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "personal/updatePwd",
-    info: t('lang.page_modal_change_password'),
+    info: 'lang.page_modal_change_password',
     iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
     component: MyPasswordChange,
     headerInfo: {
-      title: t('lang.page_modal_change_password'),
-      subTitle: "PASSWORD CHANGE",
+      title: 'lang.page_modal_change_password',
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
@@ -235,23 +226,21 @@ const pagesInfo = reactive([
 const minimalModePagesInfo = reactive([
   {
     page: "register",
-    info: "회원가입",
+    info: "lang.login_register",
     iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: RegisterComponent,
     headerInfo: {
-      title: "회원가입",
-      subTitle: "REGISTER",
+      title: "lang.login_register",
       description: ""
     }
   },
   {
     page: "login",
-    info: "로그인",
+    info: "lang.login",
     iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: LoginComponent,
     headerInfo: {
-      title: "로그인",
-      subTitle: "LOGIN",
+      title: "lang.login",
       description: ""
     }
   }

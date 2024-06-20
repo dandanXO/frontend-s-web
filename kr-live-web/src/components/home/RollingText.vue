@@ -14,8 +14,12 @@
                 v-else-if="financeRecords.length > 0">
                 <div>
                     <span style="color: #fff;" v-for="(a, i) in financeRecords" :key="i">
-                        {{ formatTransactionType(a.transactionType) }} {{ a.loginName }} 환전 {{ `${a.amount}원` }} {{
-                            moment(a.transactionTime).format('YYYY-MM-DD hh:mm A') }}
+                        <span style="color:#03fff2;">{{ formatTransactionType(a.transactionType) }}</span> {{
+                            a.loginName
+                        }}
+                        환전
+                        <span style="font-family: 'Nanum';">{{ `${a.amount} 원` }}</span>
+                        <span class="text-caption text-grey">{{ getLocaleDateTime(a.transactionTime, true) }}</span>
                     </span>
                 </div>
             </marquee-text>
@@ -35,6 +39,7 @@ import moment from 'moment';
 import { useI18n } from "vue-i18n";
 import { userStore } from "stores/index";
 import { useRoute } from 'vue-router';
+import { getLocaleDateTime } from '../../boot/utils';
 
 const { t } = useI18n();
 const isLoading = ref(false);
