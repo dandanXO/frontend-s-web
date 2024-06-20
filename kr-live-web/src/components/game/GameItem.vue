@@ -46,7 +46,7 @@
       </div>
       <div class="game-entry-btn">
         <div class="primary-button blue"><img class="star"
-            src="../../assets/home/games/game-entry-button-star.svg" />게임입장<img class="star"
+            src="../../assets/home/games/game-entry-button-star.svg" />{{ $t('lang.game_item_entry') }}<img class="star"
             src="../../assets/home/games/game-entry-button-star.svg" /></div>
       </div>
     </div>
@@ -60,7 +60,6 @@ const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .game-item {
-  aspect-ratio: 290 / 530;
   background: url('../../assets/home/games/background-placeholder.png') no-repeat center center;
   background-size: 100% 100%;
   position: relative;
@@ -69,6 +68,8 @@ const gameType = ref(props.gameType);
   padding: 20px;
   max-width: 200px;
   width: 100%;
+  aspect-ratio: 200 / 365;
+  height: fit-content;
 
   @media (max-width: 769px) {
     max-width: 130px;

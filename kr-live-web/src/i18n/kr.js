@@ -49,6 +49,8 @@ export default {
     menu_customer_service: "고객센터",
     menu_transaction_record: "내역",
     menu_rebates: "리베이트",
+    menu_my_page: "마이페이지",
+    menu_won: "원",
     // menu end
     // page modal start
     page_modal_deposit: "입금신청",
@@ -63,8 +65,19 @@ export default {
     page_modal_transaction_record: "내역",
     page_modal_change_password: "비밀번호",
     // page modal end
+    // game category start
+    game_category_live: `라이브
+    카지노`,
+    game_category_slot: '슬롯게임',
+    game_category_sport: '스포츠',
+    game_category_minigame: '미니게임',
+    // game category end
+    // game item start
+    game_item_entry: "게임입장",
+    // game item end
     // rolling text start
     roll_text_no_content: "아직 콘텐츠가 없습니다",
+    roll_text_withdrawal_status: "출금현황",
     // rolling text end
     // transaction record start
     date_picker_sunday: "일요일",

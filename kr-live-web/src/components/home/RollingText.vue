@@ -4,7 +4,7 @@
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
                 <div class="box">
-                    <div class="text">출금현황</div>
+                    <div class="text">{{ $t('lang.roll_text_withdrawal_status') }}</div>
                 </div>
             </div>
             <div style="width:100%;text-align:center;" v-if="isLoading">
@@ -128,10 +128,6 @@ const formatTransactionType = (transactionType) => {
                 display: flex;
                 justify-content: center;
                 white-space: nowrap;
-
-                @media (min-width: 769px) {
-                    width: 60px;
-                }
             }
         }
 
