@@ -291,7 +291,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: 'COCKFIGHT',
     MSI: 'MSI',
-    COPA: 'COPA AMERICA'
+    COPA: 'COPA AMERICA',
   },
   homeBannerType: {
     HOME: 'Home',
@@ -1269,6 +1269,7 @@ export default {
     rule: 'Rule',
     maxRebate: 'Max Rebate',
     maxBalance: 'Maximun Balance',
+    nickName: 'Nickname',
     rebateAmount: 'Rebate Amount',
     receiveTime: 'Receive Time',
     receiveType: 'Receive Type',
