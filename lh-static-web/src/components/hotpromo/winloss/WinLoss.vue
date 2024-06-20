@@ -6,13 +6,14 @@
 
         <div class="section-guess">
             <div class="date">
-                6月17日 星期一
+                <!-- 6月17日 星期一 -->
+                {{ formattedDate }}
             </div>
             <div class="match-details">
                 小组赛 比赛第1轮（共3轮）
             </div>
             <div class="winloss-matches">
-                <div class="match" v-for="(match, i) in matches" :key="i">
+                <div class="match" v-for="(match, i) in ongoingMatches" :key="i">
                     <div class="team teamA">
                         <div class="toprow team-details">
                             <div class="teamicon">
@@ -22,14 +23,23 @@
                             {{ match.teamOneName }}
                             </div>
                         </div>
-                        <div class="match-btn" @click="makeBet(match.teamOneId)">胜</div>
+                        <div class="match-btn" @click="matchSubmit(match, match.teamOneId, match.teamOneName)"
+                        v-if="match.selectedTeamId === null">胜</div>
+                        <button v-else-if="match.selectedTeamId === match.teamOneId" class="match-btn active">
+                        已选
+                        </button>
+                        <div v-else class="match-btn pseudo" />
                     </div>
                     <div class="date-time">
                         <div class="toprow row-details">
                         {{ match.matchTime }}
                         </div>
                         
-                        <div class="match-btn" @click="makeBet('draw')">平</div>
+                        <div class="match-btn"@click="matchSubmit(match, 0, '平局')"
+                        v-if="match.selectedTeamId === null">平</div>
+                        
+                        <button v-else-if="match.selectedTeamId === 0" class="match-btn active">已选</button>
+                        <div v-else class="match-btn pseudo" />
                     </div>
                     <div class="team teamB">
                         <div class="toprow team-details">
@@ -40,7 +50,12 @@
                             {{ match.teamTwoName }}
                             </div>
                         </div>
-                        <div class="match-btn" @click="makeBet(match.teamTwoId)">胜</div>
+                        <div class="match-btn" @click="matchSubmit(match, match.teamTwoId, match.teamTwoName)"
+                        v-if="match.selectedTeamId === null">胜</div>
+                        <button v-else-if="match.selectedTeamId === match.teamTwoId" class="match-btn active">
+                        已选
+                        </button>
+                        <div v-else class="match-btn pseudo" />
                     </div>
                 </div> 
             </div>
@@ -124,94 +139,75 @@
                 <li>为避免文字理解差异，本站保留本活动最终解释权。</li>
             </ol>
         </div>
+  <el-dialog width="500" :title="selectedMatch.title" v-model="confirmDialog">
+    <div class="dialog-header" style="margin: 5px auto 20px;">
+      <span>
+        您确定要选择
+        <span style="font-weight: bold; color: #0051b3">{{ selectedItem.name }}</span>
+        吗？请注意，一旦选择后将无法更改。
+      </span>
+    </div>
+    <div class="dialog-footer">
+      <el-button color="grey" @click="confirmDialog = false">取消</el-button>
+      <el-button type="primary" @click="confirmMatchSelect(selectedMatch.id, selectedItem.id)">确定</el-button>
+    </div>
+  </el-dialog>
     </div>
 </template>
 <script setup>
 
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
+import { getFormattedDateComponents } from '@/utils/utils';
 import { useDark, useLocalStorage } from "@vueuse/core";
+import {
+  euroMatchOngoing,
+  euroMatchSubmit,
+} from "@/api/promotion/eurocup";
 import { userStore } from "@/store";
-
-const store= userStore();
-const matches = ref([]);
+import { ElMessage } from "element-plus";
+const store = userStore();
+const ongoingMatches = ref([]);
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + "/promo/";
-const initMatches = () => {
-    const res = {
-    "code": 0,
-    "data": [
-        {
-            "id": 80,
-            "siteId": 7,
-            "title": "小组赛",
-            "platformMatchId": "UEFA-1999434",
-            "teamGroup": "A",
-            "teamOneId": 1,
-            "teamOneName": "德国",
-            "teamOneIcon": "7/547a319c-b90a-405a-b2f2-cad5a12ac6d7.jpg",
-            "teamTwoId": 3,
-            "teamTwoName": "匈牙利",
-            "teamTwoIcon": "7/fb960014-a08e-494c-b986-b5ce9b705803.jpg",
-            "sequence": 14,
-            "status": "ONGOING",
-            "matchTime": "2024-06-20 00:00:00",
-            "selectedTeamId": null,
-            "selectedTeamName": null,
-            "selectedTeamIcon": null
-        },
-        {
-            "id": 81,
-            "siteId": 7,
-            "title": "小组赛",
-            "platformMatchId": "UEFA-2001730",
-            "teamGroup": "A",
-            "teamOneId": 2,
-            "teamOneName": "苏格兰",
-            "teamOneIcon": "7/a094457a-b10a-4ddd-8237-4c831d2cccd6.jpg",
-            "teamTwoId": 4,
-            "teamTwoName": "瑞士",
-            "teamTwoIcon": "7/43a71e76-ef27-4f95-9976-3a3806cbe906.jpg",
-            "sequence": 15,
-            "status": "ONGOING",
-            "matchTime": "2024-06-20 03:00:00",
-            "selectedTeamId": null,
-            "selectedTeamName": null,
-            "selectedTeamIcon": null
-        },
-        {
-            "id": 82,
-            "siteId": 7,
-            "title": "小组赛",
-            "platformMatchId": "UEFA-1999745",
-            "teamGroup": "C",
-            "teamOneId": 9,
-            "teamOneName": "斯洛文尼亚",
-            "teamOneIcon": "7/4d58c35d-5c71-41e2-b7dd-aa93b9abfee8.jpg",
-            "teamTwoId": 11,
-            "teamTwoName": "塞尔维亚",
-            "teamTwoIcon": "7/f4de5beb-3e2a-477a-953b-fa4d43f9821a.jpg",
-            "sequence": 16,
-            "status": "PENDING",
-            "matchTime": "2024-06-20 21:00:00",
-            "selectedTeamId": null,
-            "selectedTeamName": null,
-            "selectedTeamIcon": null
-        }
-    ]
-}   
-    if (res.code === 0) {
-        matches.value = res.data
-    }
-}
-const makeBet = (choice) => {
-    if (choice === 'draw') {
-        console.log('draw')
-    } else {
-        console.log(choice);
-    }
-}
 
+const confirmDialog = ref(false);
+const selectedMatch = ref("");
+const selectedItem = ref({
+  id: null,
+  name: null
+});
+const formattedDate = ref(null);
+const getMatches = () => {
+  euroMatchOngoing().then((res) => {
+    if (res.code === 0) {
+      ongoingMatches.value = res.data;
+      
+      if (ongoingMatches.value.length > 0) {
+        formattedDate.value = getFormattedDateComponents(ongoingMatches.value[0].matchTime);
+      }
+    }
+  });
+};
+const matchSubmit = (match, id, name) => {
+  confirmDialog.value = true;
+  selectedMatch.value = match;
+  selectedItem.value = {
+    id: id,
+    name: name
+  };
+};
+const confirmMatchSelect = () => {
+  euroMatchSubmit(selectedMatch.value.id, selectedItem.value.id).then((res) => {
+    if (res.code === 0) {
+      ElMessage.success("投票成功");
+      confirmDialog.value = false;
+      getMatches();
+    } else {
+      ElMessage.error(res.message)
+    }
+  });
+};
 onMounted(() => {
-    initMatches();
+    getMatches();
 })
 </script>
 <style lang="scss">
@@ -266,6 +262,7 @@ onMounted(() => {
                     justify-content: center;
                     align-items: center;
                     text-align: center;
+                    flex-direction: column;
                 }
                 .date-time {
                     color: #FFF849;
@@ -283,7 +280,8 @@ onMounted(() => {
                     justify-content: center;
                     align-items: center;
                     .team-details {
-                        font-size: 1.1rem;
+                        // font-size: 1.1rem;
+    font-size: .9rem;
                         .teamicon {
                             width: 30px;
                             border: 1px solid #ffffff;
@@ -305,6 +303,7 @@ onMounted(() => {
                     border-radius: 15px;
                     width: 90px;
                     text-align: center;
+                    cursor: pointer;
                 }
             }
         }
