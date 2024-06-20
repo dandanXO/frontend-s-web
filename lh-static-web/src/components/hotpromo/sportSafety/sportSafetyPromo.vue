@@ -294,8 +294,8 @@ const submitForm = async (elForm) => {
       type: "success",
       message: "提交成功"
     });
-    sportInsuranceFormRef.value.resetFields();
-    isSportInsuranceModalVisible.value = false;
+    // sportInsuranceFormRef.value.resetFields();
+    // isSportInsuranceModalVisible.value = false;
     isSubmitting.value = false;
   } else {
     ElMessage.error(res.message);
