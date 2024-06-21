@@ -276,15 +276,7 @@ export default defineComponent({
       regForm.bankId = "";
       banksList.value = [];
       bankCardModalState.banks.forEach((element) => {
-        if (selectedBankType.value === "Bank" && element.bankType === "BANK") {
-          banksList.value.push(element);
-        }
-        if (selectedBankType.value === "Crypto" && element.bankType === "CRYPTO") {
-          banksList.value.push(element);
-        }
-        if (selectedBankType.value === "e-Wallet" && element.bankType === "EWALLET") {
-          banksList.value.push(element);
-        }
+        banksList.value.push(element);
       });
     };
 
