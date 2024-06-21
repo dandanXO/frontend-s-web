@@ -16,10 +16,11 @@ export default {
       SIMPLE: '단순',
     },
     level: {
-      AFFILIATE: '제휴사',
-      SUPER_AFFILIATE: '슈퍼 제휴사',
-      MASTER_AFFILIATE: '마스터 제휴사',
-      CHIEF_AFFILIATE: '최고 제휴사',
+      JUNIOR_AFFILIATE: '플레이어',
+      SUB_AFFILIATE: '매장',
+      AFFILIATE: '부본사',
+      SUPER_AFFILIATE: '본사',
+      MASTER_AFFILIATE: '총판',
     },
     timeType: {
       MONTHLY: '월간',
@@ -1690,6 +1691,7 @@ export default {
     countryCode: '국가 코드',
     lower: '하한',
     upper: '상한',
+    updateAffiliateLevel: '제휴사 레벨 변경',
   },
   message: {
     startenddatemore3months: '시작 및 종료 날짜는 3개월 이상일 수 없습니다',
@@ -2138,6 +2140,7 @@ export default {
     timeExist: '시간이 이미 존재합니다',
     wrongPopupTime: '선택한 팝업 시간이 유효하지 않습니다',
     selectPopupTime: '팝업 시간을 선택하세요.',
+    updateAffiliateLevelSuccess: '가맹점 레벨 변경 성공',
   },
   menu: {
     undefined: '',

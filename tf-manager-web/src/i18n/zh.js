@@ -17,10 +17,11 @@ export default {
       DETAILS: '详细',
     },
     level: {
-      AFFILIATE: 'Affiliate',
-      SUPER_AFFILIATE: 'Super Affiliate',
-      MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate',
+      JUNIOR_AFFILIATE: '五级代理',
+      SUB_AFFILIATE: '四级代理',
+      AFFILIATE: '三级代理',
+      SUPER_AFFILIATE: '二级代理',
+      MASTER_AFFILIATE: '一级代理',
     },
     timeType: {
       MONTHLY: '每月',
@@ -1810,6 +1811,7 @@ export default {
     addMemberLotteryRecord: '新增会员彩票记录',
     addFakeLotteryRecord: '新增假彩票记录',
     approveSummonRecord: '批准唤醒记录',
+    updateAffiliateLevel: '编辑代理等级',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2230,6 +2232,7 @@ export default {
     wrongPopupTime: '弹窗时间错误。',
     selectPopupTime: '请选择弹窗时间.',
     summonSuccess: '唤醒成功',
+    updateAffiliateLevelSuccess: '成功编辑代理等级',
   },
   menu: {
     undefined: '',
