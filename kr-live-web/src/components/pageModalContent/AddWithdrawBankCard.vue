@@ -132,8 +132,6 @@ const bankCardInfo = reactive({
 });
 
 const validateBankLength = (val) => {
-  if (!/^\d+$/.test(val)) return "숫자를 입력하세요";
-
   if (selectedBankType.value === "BANK") {
     return ((val.length > 10 && val.length < 21) || "길이는 10에서 20자 여야 합니다");
   } else if (selectedBankType.value.includes("USDT")) {
