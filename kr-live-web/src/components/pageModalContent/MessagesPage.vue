@@ -55,7 +55,7 @@
                     <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
                         :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
                             initOutbox(currentPage)
-                        }" boundary-links input color="white" input-class="text-white-10" />
+                        }" boundary-links input color="white" input-class="text-white-10" dense />
                     <span>{{ $t('lang.announcement_total')
                         }} {{ inboxMessages.total }}</span>
                 </div>
@@ -417,13 +417,26 @@ onMounted(() => {
 
     @media (max-width: 768px) {
         display: grid;
-        grid-template-columns: minmax(150px, 30%) 70%;
+        grid-template-columns: minmax(180px, 30%) auto;
+
+        .message-list-wrapper {
+            .header {
+                flex-direction: column;
+            }
+
+            .message-list {
+                .message {
+                    padding: 0;
+                }
+            }
+        }
 
         .q-item {
             display: flex;
             flex-direction: column;
             padding: 0;
-            font-size: 0.7rem;
+            font-size: 12px;
+
 
             .title {
                 font-size: 15px;
@@ -431,7 +444,7 @@ onMounted(() => {
             }
 
             .text-caption {
-                font-size: 12px;
+                font-size: 10px;
                 line-height: 20px;
             }
 
@@ -458,7 +471,7 @@ onMounted(() => {
                 font-size: 12px;
 
                 .title {
-                    font-size: 24px;
+                    font-size: 20px;
                     line-height: 28px;
                 }
 
