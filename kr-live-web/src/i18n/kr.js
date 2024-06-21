@@ -437,7 +437,7 @@ export default {
     no_message_selected: "There are no messages selected.",
     enter_information: "Please Enter Message",
     max_length_500: "Maximum Length 500",
-    message_cannot_be_empty: "Message cannot be empty.",
+    // message_cannot_be_empty: "Message cannot be empty.",
     no_message_at_moment: "No Message.",
     success: "성공",
     home_page: "Home",
