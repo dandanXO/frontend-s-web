@@ -685,6 +685,7 @@ export default {
     confirmStatus: '상태 확인',
     confirmBy: '확인자',
     content: '콘텐츠',
+    contentList: '글머리 기호 목록',
     convertRate: '환율',
     copy: '복사',
     copyPayment: '지불 복사',

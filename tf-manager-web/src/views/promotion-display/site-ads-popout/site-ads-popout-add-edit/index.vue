@@ -144,6 +144,49 @@
         <Editor v-model:value="form.content" @input="getInput"></Editor>
       </el-form-item>
     </el-row>
+    <el-row></el-row>
+    <el-row>
+      <el-form-item
+        :label="t('fields.contentList')"
+        v-if="form.type === 'TEXT'"
+      >
+        <div>
+          <el-tag
+            v-for="bullet in uiControl.contentList"
+            :key="bullet"
+            closable
+            :disable-transitions="false"
+            @close="removeContent(bullet)"
+            style="margin-right: 5px; padding-top: 5px;"
+            :title="bullet"
+          >
+            {{ bullet.length > 50 ? bullet.substring(0, 50) + '..' : bullet }}
+          </el-tag>
+        </div>
+        <div style="padding-top: 5px;">
+          <Editor
+            v-if="uiControl.inputVisible"
+            ref="InputRef"
+            v-model="inputValue"
+            @input="getContentInput"
+          ></Editor>
+        </div>
+        <div style="float: right; padding-top: 5px;">
+          <el-button
+            v-if="uiControl.inputButtonVisible"
+            type="primary"
+            @click="handleInputConfirm"
+          >
+            {{ t('fields.add') }}
+          </el-button>
+        </div>
+        <div style="float: left; padding-top: 5px;">
+          <el-button class="button-new-tag" size="small" @click="showInput">
+            + {{ t('fields.AddList') }}
+          </el-button>
+        </div>
+      </el-form-item>
+    </el-row>
     <div class="form-footer">
       <el-button type="primary" @click="submit">
         {{ t('fields.confirm') }}
@@ -285,6 +328,7 @@ const promoDir = process.env.VUE_APP_IMAGE + '/promo/'
 
 const adsPopoutForm = ref(null)
 
+const inputValue = ref('')
 const form = reactive({
   id: null,
   title: null,
@@ -296,6 +340,7 @@ const form = reactive({
   siteId: null,
   type: null,
   content: null,
+  contentList: null,
   status: false,
 })
 
@@ -306,7 +351,7 @@ const uiControl = reactive({
     { key: 2, displayName: '关', value: false },
   ],
   type: [
-    // { key: 1, displayName: '文字', value: 'TEXT' },
+    { key: 1, displayName: '文字', value: 'TEXT' },
     { key: 2, displayName: '图片', value: 'IMG' },
   ],
   frequency: [
@@ -317,6 +362,9 @@ const uiControl = reactive({
   imageSelectionTitle: '',
   imageSelectionType: '',
   imageSelectionVisible: false,
+  contentList: [],
+  inputVisible: false,
+  inputButtonVisible: false,
 })
 
 const formRules = reactive({
@@ -351,6 +399,24 @@ const imageRequest = reactive({
   siteId: null,
   category: 'PROMO',
 })
+
+const showInput = () => {
+  uiControl.inputVisible = true
+  uiControl.inputButtonVisible = true
+}
+
+const removeContent = content => {
+  uiControl.contentList.splice(uiControl.contentList.indexOf(content), 1)
+}
+
+const handleInputConfirm = () => {
+  if (inputValue.value) {
+    uiControl.contentList.push(inputValue.value)
+  }
+  uiControl.inputVisible = false
+  uiControl.inputButtonVisible = false
+  inputValue.value = ''
+}
 
 function resetImageQuery() {
   imageRequest.name = null
@@ -388,7 +454,13 @@ function getInput(value) {
   form.content = value
 }
 
+function getContentInput(value) {
+  inputValue.value = value
+}
+
 function create() {
+  form.contentList = uiControl.contentList.join('|')
+
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
       await createAdsPopout(form)
@@ -400,6 +472,8 @@ function create() {
 }
 
 function edit() {
+  form.contentList = uiControl.contentList.join('|')
+
   adsPopoutForm.value.validate(async valid => {
     if (valid) {
       await updateAdsPopout(form)
@@ -433,6 +507,7 @@ async function loadForm(id, siteId) {
 
   nextTick(() => {
     for (const key in adspopout) {
+      uiControl.contentList = adspopout.contentList.split('|')
       if (Object.keys(form).find(k => k === key)) {
         form[key] = adspopout[key]
       }
