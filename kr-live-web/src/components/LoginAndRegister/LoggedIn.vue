@@ -86,6 +86,7 @@ const onLogoutSubmit = () => {
   width: 100%;
   justify-content: flex-end;
   align-items: center;
+  gap: 20px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -114,7 +115,7 @@ const onLogoutSubmit = () => {
 .item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 
   span {
     color: #03fff2;

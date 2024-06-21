@@ -1,7 +1,10 @@
 <template>
-    <q-toolbar class="bg-transparent">
-        <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
+    <q-toolbar class="bg-transparent" style="padding:0">
+        <div v-if="!isCreateMode" class="primary-button blue-square compose-btn" @click="isCreateMode = true">
             {{ $t('lang.message_compose') }}
+        </div>
+        <div v-else class="primary-button blue-square back-btn" @click="isCreateMode = false">
+            {{ $t('lang.message_previous_page') }}
         </div>
 
         <q-space />
@@ -12,13 +15,8 @@
         </q-tabs>
     </q-toolbar>
 
-
-
     <div class="form-wrapper" v-if="isCreateMode">
         <form class="content-form form-template">
-            <div class="primary-button blue-square back-btn" @click="isCreateMode = false">
-                {{ $t('lang.message_previous_page') }}
-            </div>
             <div class="form-item">
                 <label>{{ $t('lang.message_title') }}</label>
                 <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
@@ -137,7 +135,6 @@ const inboxCategories = [{ type: 'ALL', label: 'lang.message_type_all' }, { type
 const composeForm = reactive({
     title: "",
     content: "",
-    feedbackType: ""
 });
 
 const isFetchingContent = ref(false);
