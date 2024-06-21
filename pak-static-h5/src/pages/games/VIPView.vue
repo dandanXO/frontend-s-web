@@ -184,11 +184,11 @@
               <br />
               {{ $t("vip.rewards") }}
             </q-td>
-            <q-td>
+            <!-- <q-td>
               {{ $t("vip.monthly") }}
               <br />
               {{ $t("vip.rewards") }}
-            </q-td>
+            </q-td> -->
           </q-tr>
         </template>
 
@@ -430,7 +430,7 @@ const columns = [
   },
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
   { name: "reward", field: "reward", align: "center" },
-  { name: "flow", field: "flow", align: "center" }
+  // { name: "flow", field: "flow", align: "center" }
 ];
 
 // 1	5000	20	38

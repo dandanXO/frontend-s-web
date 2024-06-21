@@ -49,7 +49,7 @@
           <td><img src="@/assets/images/vip/vip-table-icon.png" /></td>
           <td>{{ $t("personalView.vip.table.header.experience") }}</td>
           <td>{{ $t("personalView.vip.table.header.oneOffReward") }}</td>
-          <td>{{ $t("personalView.vip.table.header.monthlyReward") }}</td>
+          <!-- <td>{{ $t("personalView.vip.table.header.monthlyReward") }}</td> -->
         </tr>
       </thead>
       <tbody>
@@ -63,10 +63,10 @@
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
             {{ addThousandsComma(data.oneOff) }}
           </td>
-          <td>
+          <!-- <td>
             <img src="@/assets/images/vip/vip-table-coin-icon.png" />
             {{ addThousandsComma(data.monthly) }}
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
