@@ -151,17 +151,31 @@
         v-if="form.type === 'TEXT'"
       >
         <div>
-          <el-tag
-            v-for="bullet in uiControl.contentList"
-            :key="bullet"
-            closable
-            :disable-transitions="false"
-            @close="removeContent(bullet)"
-            style="margin-right: 5px; padding-top: 5px;"
-            :title="bullet"
+          <draggable
+            v-model="uiControl.contentList"
+            handle=".drag-handle"
+            @end="onDragEnd"
           >
-            {{ bullet.length > 50 ? bullet.substring(0, 50) + '..' : bullet }}
-          </el-tag>
+            <template #item="{ element }">
+              <div
+                style="display: flex; align-items: center; margin-bottom: 5px;"
+              >
+                <i
+                  class="drag-handle el-icon-rank"
+                  style="cursor: grab; margin-right: 5px;"
+                ></i>
+                <el-tag
+                  closable
+                  :disable-transitions="false"
+                  @close="removeContent(element)"
+                  style="margin-right: 5px; padding-top: 5px;"
+                  :title="element"
+                >
+                  {{ stripHtmlTags(element) }}
+                </el-tag>
+              </div>
+            </template>
+          </draggable>
         </div>
         <div style="padding-top: 5px;">
           <Editor
@@ -318,6 +332,7 @@ import { getSiteListSimple } from '../../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { useStore } from '../../../../store'
 import { TENANT } from '../../../../store/modules/user/action-types'
+import draggable from 'vuedraggable'
 
 const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
@@ -418,6 +433,16 @@ const handleInputConfirm = () => {
   inputValue.value = ''
 }
 
+const onDragEnd = () => {
+  if (inputValue.value) {
+    inputValue.value = uiControl.contentList
+  }
+}
+
+const stripHtmlTags = htmlString => {
+  return htmlString.replace(/(&nbsp;|<([^>]+)>)/g, '')
+}
+
 function resetImageQuery() {
   imageRequest.name = null
   imageRequest.siteId = site.value ? site.value.id : null
@@ -507,7 +532,10 @@ async function loadForm(id, siteId) {
 
   nextTick(() => {
     for (const key in adspopout) {
-      uiControl.contentList = adspopout.contentList.split('|')
+      if (adspopout.contentList !== null) {
+        uiControl.contentList = adspopout.contentList.split('|')
+      }
+
       if (Object.keys(form).find(k => k === key)) {
         form[key] = adspopout[key]
       }
