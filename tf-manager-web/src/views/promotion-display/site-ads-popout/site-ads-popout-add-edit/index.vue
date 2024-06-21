@@ -532,7 +532,10 @@ async function loadForm(id, siteId) {
 
   nextTick(() => {
     for (const key in adspopout) {
-      uiControl.contentList = adspopout.contentList.split('|')
+      if (adspopout.contentList !== null) {
+        uiControl.contentList = adspopout.contentList.split('|')
+      }
+
       if (Object.keys(form).find(k => k === key)) {
         form[key] = adspopout[key]
       }
