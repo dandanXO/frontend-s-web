@@ -178,18 +178,18 @@ const pagesInfo = reactive([
       description: ""
     }
   },
-  {
-    tabIndex: "log",
-    href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
-    page: "customer/service",
-    info: 'lang.page_modal_customer_service',
-    iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    component: FeedbackPage,
-    headerInfo: {
-      title: 'lang.page_modal_customer_service',
-      description: "입금시 꼭 계좌문의를 하세요!"
-    }
-  },
+  // {
+  //   tabIndex: "log",
+  //   href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
+  //   page: "customer/service",
+  //   info: 'lang.page_modal_customer_service',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+  //   component: FeedbackPage,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_customer_service',
+  //     description: "입금시 꼭 계좌문의를 하세요!"
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "personal/info",

@@ -5,7 +5,6 @@
         <q-btn v-else flat dense icon="arrow_back" :label="$t('lang.message_previous_page')"
             @click="isCreateMode = false" no-caps />
 
-
         <q-btn-dropdown v-if="!isCreateMode" flat :label="$t(inboxCategoryLabel)" dense>
             <q-list>
                 <q-item clickable v-close-popup @click="inboxCategory = category.type"
@@ -69,14 +68,15 @@
                     </template>
                     <template v-else>
                         <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
-                            @click="readMessage(item.id)" :active="item === selected"
-                            active-class="active-announcement">
+                            @click="readMessage(item.id)" :active="item === selected" active-class="active-message"
+                            :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }" class="message">
                             <q-badge v-if="item.hasOwnProperty('readTime') && !item.readTime" rounded
-                                style="background:#DF3D31;margin:auto;margin-right:10px;min-height:9px;padding:2px 4.5px;"
+                                style="background:#DF3D31;margin:auto;margin-right:5px;min-height:9px;padding:2px 4.5px;"
                                 :title="$t('lang.message_unread')" />
                             <q-item-section>
                                 <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-                                <q-item-label caption lines="2">{{ item.content }}</q-item-label>
+                                <q-item-label caption lines="2"><span class="caption">{{ item.content
+                                        }}</span></q-item-label>
                             </q-item-section>
 
                             <q-item-section side top class="info-wrapper">
@@ -106,7 +106,7 @@
                         }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                            }}</span>
+                        }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -136,6 +136,7 @@ const titleRef = ref();
 const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
+const isShowUnreadOnly = ref(false);
 const inboxCategory = ref('ALL');
 const inboxCategoryLabel = computed(() => {
     const category = inboxCategories.find(({ type }) => type === inboxCategory.value);
@@ -337,10 +338,20 @@ onMounted(() => {
             max-height: 550px;
             height: 100%;
 
-            .active-announcement {
-                background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+            .message {
+                padding: 8px 10px;
+            }
 
-                .title {
+            .active-message {
+                background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+            }
+
+            .active-message,
+            .unread {
+
+                .title,
+                .caption,
+                .date-time {
                     color: #fff;
                     font-weight: bold;
                 }
