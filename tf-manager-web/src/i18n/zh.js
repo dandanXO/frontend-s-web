@@ -740,6 +740,7 @@ export default {
     confirmStatus: '确认状态',
     confirmBy: '确认人',
     content: '内容',
+    contentList: '符号列表',
     convertRate: '转化率',
     copy: '复制',
     copyPayment: '正在复制',

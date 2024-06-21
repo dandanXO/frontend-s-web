@@ -451,6 +451,7 @@ export default {
     confirmStatus: 'ยืนยันสถานะ',
     confirmBy: 'ยืนยันโดย',
     content: 'เนื้อหา',
+    contentList: 'รายการหัวข้อย่อย',
     convertRate: 'อัตราการแปลง',
     copy: 'สำเนา',
     copyPayment: 'กำลังคัดลอกการชำระเงิน',

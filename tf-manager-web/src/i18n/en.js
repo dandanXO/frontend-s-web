@@ -736,6 +736,7 @@ export default {
     confirmStatus: 'Confirm Status',
     confirmBy: 'Confirm By',
     content: 'Content',
+    contentList: 'Bullet List',
     convertRate: 'Convert Rate',
     copy: 'Copy',
     copyPayment: 'Copying payment',
