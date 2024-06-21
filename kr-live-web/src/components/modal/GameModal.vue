@@ -11,45 +11,31 @@
           </div>
 
           <template v-if="transferInfo.platform === 'PG'">
-            <iframe
-              @load="loadGame()"
-              v-show="!logoShow"
-              v-bind:srcdoc="src"
-              id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'"
-              frameborder="0"
-              class="game-iframe"
-            ></iframe>
+            <iframe @load="loadGame()" v-show="!logoShow" v-bind:srcdoc="src" id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
           </template>
           <template v-else>
-            <iframe
-              @load="loadGame()"
-              v-show="!logoShow"
-              :src="src"
-              id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'"
-              frameborder="0"
-              class="game-iframe"
-            ></iframe>
+            <iframe @load="loadGame()" v-show="!logoShow" :src="src" id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
           </template>
 
-<!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
-<!--            <div class="q-pa-sm q-pt-sm">-->
-<!--              <div>-->
-<!--                <template v-if="!quickTransferTab">-->
-<!--                  <div>-->
-<!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
-<!--                  </div>-->
-<!--                  <DepositComponent />-->
-<!--                </template>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </q-drawer>-->
+          <!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
+          <!--            <div class="q-pa-sm q-pt-sm">-->
+          <!--              <div>-->
+          <!--                <template v-if="!quickTransferTab">-->
+          <!--                  <div>-->
+          <!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
+          <!--                  </div>-->
+          <!--                  <DepositComponent />-->
+          <!--                </template>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </q-drawer>-->
         </div>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
+      <!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -59,7 +45,6 @@ import { userStore } from "stores/index";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
-import DepositComponent from "components/depositComponent.vue";
 
 // import { transfer } from "api/personal/transfer";
 // import { message } from "ant-design-vue";
@@ -242,7 +227,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           let srcDoc = ret.data.data;
 
 
-          if(platformCode === "PG") {
+          if (platformCode === "PG") {
             var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
             if (firstFourChars === "http") {
               src.value = srcDoc;
@@ -251,19 +236,19 @@ const open = (gameName, platformCode, gameCode, gameType) => {
 
               const scriptEndTag = "</" + "script>";
               srcDoc = srcDoc
-              .replace(/<\/script>/g, scriptEndTag)
-              .replace(/\\\"/g, '"')
-              .replace(/\n/g, "");
+                .replace(/<\/script>/g, scriptEndTag)
+                .replace(/\\\"/g, '"')
+                .replace(/\n/g, "");
 
               src.value = srcDoc;
             }
 
             visible.value = true;
-          } else if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
+          } else if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
             //
             const newWin = window.open(`/`, "_self");
 
-            if(newWin){
+            if (newWin) {
               newWin.location.href = srcDoc;
             } else {
               $q.notify({
@@ -361,11 +346,9 @@ defineExpose({
   color: #ffffff;
 }
 
-:deep(
-    .ant-form-vertical .ant-form-item-label > label,
-    .ant-col-24.ant-form-item-label > label,
-    .ant-col-xl-24.ant-form-item-label > label
-  ) {
+:deep(.ant-form-vertical .ant-form-item-label > label,
+  .ant-col-24.ant-form-item-label > label,
+  .ant-col-xl-24.ant-form-item-label > label) {
   color: #ffffff;
 }
 
@@ -425,6 +408,7 @@ defineExpose({
     max-width: 100%;
     width: 100%;
   }
+
   // .desktopview {
   //   display: none;
   // }
@@ -452,9 +436,11 @@ defineExpose({
       }
     }
   }
+
   :deep(.ant-drawer-body) {
     padding: 10px;
   }
+
   .button-group {
     display: flex;
     justify-content: center;
@@ -482,6 +468,7 @@ defineExpose({
       }
     }
   }
+
   .drawer-btn {
     cursor: pointer;
     right: 40px;
@@ -515,10 +502,12 @@ defineExpose({
       display: none;
     }
   }
+
   .additional-buttons {
     display: none;
     right: 0;
   }
+
   .additional-buttons.active {
     display: flex;
     right: 0px;
@@ -555,5 +544,4 @@ defineExpose({
 //       height: calc(100vh - env(safe-area-inset-left, 0) - env(safe-area-inset-right, 0) );
 //       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
 //   }
-// }
-</style>
+// }</style>

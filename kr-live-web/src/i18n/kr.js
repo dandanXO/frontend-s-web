@@ -209,6 +209,8 @@ export default {
     personal_real_name: "실명",
     personal_id: "아이디",
     personal_phone: "전화",
+    personal_close_btn: "닫기",
+    personal_update_btn: "확인",
     // personal end
     // password start
     password_existing_password: "기존 비밀번호",

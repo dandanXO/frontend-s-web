@@ -26,6 +26,9 @@
           <img :src="items.imgUrl" alt="" />
         </div>
       </div>
+
+      <q-separator style="width:60%;background:#3F3F3F;" />
+
       <div class="copyright-text">ⓒ 2024 City 8 All right reserved</div>
     </footer>
   </q-layout>
@@ -483,15 +486,15 @@ footer {
   align-items: center;
 
   @media (min-width: 1200px) {
-    margin-top: 36px;
+    margin-top: 20px;
   }
 
   .box {
     width: 75px;
     height: 32px;
-    background-color: #272a30;
+    // background-color: #272a30;
 
-    background: linear-gradient(275deg, hsl(0deg 0% 11.17%) 0%, hsl(223deg 12.03% 13.49%) 100%);
+    // background: linear-gradient(275deg, hsl(0deg 0% 11.17%) 0%, hsl(223deg 12.03% 13.49%) 100%);
 
 
     display: flex;
@@ -513,12 +516,11 @@ footer {
 .copyright-text {
   font-size: 12px;
   line-height: 16.8px;
-  padding-bottom: 20px;
+  padding: 20px;
 
   @media (min-width: 1200px) {
     font-size: 17px;
     line-height: 28px;
-    padding-bottom: 20px;
   }
 }
 

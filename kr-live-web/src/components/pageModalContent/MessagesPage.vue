@@ -100,13 +100,17 @@
                         <div>
                             <div class="title">{{ selected.title }}</div>
                         </div>
-                        <span class="date-time" v-if="selected.sendTime || selected.createTime">{{
-                            getLocaleDateTime(selected.sendTime ||
-                                selected.createTime, true)
-                        }}</span>
-                        <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
-                            getLocaleDateTime(selected.readTime, true)
-                        }}</span>
+                        <div class="date-time-wrapper">
+                            <span class="date-time text-caption" v-if="selected.sendTime || selected.createTime">
+                                {{ getLocaleDateTime(selected.sendTime || selected.createTime, true) }}
+                            </span>
+                            <!-- <span class="date-time text-caption text-grey" v-if="selected.readTime">
+                                {{ $t('lang.message_read_at') }}
+                                {{
+                                    getLocaleDateTime(selected.readTime, true)
+                                }}
+                            </span> -->
+                        </div>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -136,7 +140,6 @@ const titleRef = ref();
 const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
-const isShowUnreadOnly = ref(false);
 const inboxCategory = ref('ALL');
 const inboxCategoryLabel = computed(() => {
     const category = inboxCategories.find(({ type }) => type === inboxCategory.value);
@@ -361,6 +364,11 @@ onMounted(() => {
 
     .message-content-wrapper {
         height: 100%;
+
+        .date-time-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
 
         .message-content {
             display: flex;
