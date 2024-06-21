@@ -1,16 +1,12 @@
 <template>
-    <q-toolbar class="bg-transparent" style="padding:0">
-        <div v-if="!isCreateMode" class="primary-button blue-square compose-btn" @click="isCreateMode = true">
-            {{ $t('lang.message_compose') }}
-        </div>
-        <div v-else class="primary-button blue-square back-btn" @click="isCreateMode = false">
-            {{ $t('lang.message_previous_page') }}
-        </div>
+    <div style="display:flex;justify-content:space-between;">
+        <q-btn v-if="!isCreateMode" flat dense icon="edit" :label="$t('lang.message_compose')"
+            @click="isCreateMode = true" no-caps />
+        <q-btn v-else flat dense icon="arrow_back" :label="$t('lang.message_previous_page')"
+            @click="isCreateMode = false" no-caps />
 
-        <q-space />
 
-        <q-btn-dropdown v-if="!isCreateMode" class="inbox-categories-dropdown" :label="$t(inboxCategoryLabel)" split
-            dense>
+        <q-btn-dropdown v-if="!isCreateMode" flat :label="$t(inboxCategoryLabel)" dense>
             <q-list>
                 <q-item clickable v-close-popup @click="inboxCategory = category.type"
                     v-for="category in inboxCategories" :key="category.type">
@@ -27,7 +23,7 @@
             <q-tab :name="category.type" :label="$t(category.label)" v-for="category in inboxCategories"
                 :key="category.type" />
         </q-tabs> -->
-    </q-toolbar>
+    </div>
 
 
     <div class="form-wrapper" v-if="isCreateMode">
@@ -110,7 +106,7 @@
                         }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                        }}</span>
+                            }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -290,8 +286,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.inbox-categories-dropdown {
-    background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+.content-form {
+    padding: 10px 0;
 }
 
 .message-compose-form {
