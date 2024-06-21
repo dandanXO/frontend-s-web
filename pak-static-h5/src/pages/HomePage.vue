@@ -75,6 +75,12 @@
       </div>
     </q-page-sticky>
 
+    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
+      <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
+        <div class="live-icon-wrapper"></div>
+      </div>
+    </q-page-sticky>
+
     <PushNotification
       :pushNotificationData="pushNotificationData"
       v-if="Platform.is.android && Platform.is.capacitor"
@@ -1325,6 +1331,9 @@ const categoriesList = ref([
 const isCsTabVisible = ref(false);
 const csTabRef = ref();
 
+const isLiveTabVisible = ref(false);
+const liveTabRef = ref();
+
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
     ...category,
@@ -1374,6 +1383,10 @@ const checkHash = () => {
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
+
+const liveDragPos = ref([16, 0]);
+const isDraggingLiveIcon = ref(false);
+const isLiveUrlShow = ref(false);
 
 const slide = ref(0);
 
@@ -3113,6 +3126,17 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
+const moveLiveIcon = (ev) => {
+  isDraggingLiveIcon.value = ev.isFirst !== true && ev.isFinal !== true;
+
+  liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
+};
+
+const openLiveInNewTab = (url) => {
+  const absoluteUrl = url;
+  window.open(absoluteUrl, "_blank");
+};
+
 const pushNotificationData = ref();
 
 const populatePushNotificationData = (data) => {
@@ -3151,6 +3175,14 @@ const loadCustomerAddress = () => {
       console.log(data);
       var url = data.liveUrl1;
       ui.CSAUrl = url;
+
+      if (data.studioUrl) {
+        var lvUrl = data.studioUrl;
+        ui.LiveUrl = lvUrl;
+        isLiveUrlShow.value = true;
+
+        csDragPos.value = [10, 70];
+      }
     });
 };
 
@@ -4065,6 +4097,14 @@ watch(
 .home-wrapper {
   width: calc(100% - 16px);
   margin: auto;
+}
+
+.live-icon-wrapper {
+  width: 63px;
+  height: 70px;
+  background: url("../assets/images/index/icon-live.png") no-repeat center center;
+  background-size: contain;
+  position: relative;
 }
 
 .cs-icon-wrapper {
