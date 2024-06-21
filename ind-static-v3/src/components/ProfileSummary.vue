@@ -24,7 +24,7 @@
           <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
@@ -151,7 +151,7 @@
 </template>
 
 <script setup>
-import { ref, onActivated, computed } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -290,7 +290,7 @@ const getTopDownloadUrl = () => {
   });
 };
 
-onActivated(() => {
+onMounted(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
     const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
