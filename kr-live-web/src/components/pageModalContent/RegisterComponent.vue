@@ -62,10 +62,32 @@
 
     <div class="form-item">
       <label>{{ $t('lang.reg_bank') }}</label>
-      <q-select dense outlined :label="$t('lang.reg_bank_placeholder')" ref="bankCardRef" v-model="regForm.bankId"
+      <q-select dense outlined :placeholder="$t('lang.reg_bank_placeholder')" ref="bankCardRef" v-model="regForm.bankId"
         :options="banksList" option-value="id" option-label="name" emit-value map-options lazy-rules
         :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" transition-show="jump-up"
-        transition-hide="jump-up" />
+        transition-hide="jump-up" clearable>
+        <template v-slot:no-option></template>
+        <template v-slot:option="scope">
+          <div v-bind="scope.itemProps" dense class="bank-list-item" style="padding:0 5px;">
+            <div avatar v-if="scope.opt.bankIcon">
+              <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+            </div>
+            <div>
+              {{ scope.opt.name }}
+            </div>
+          </div>
+        </template>
+        <template v-slot:selected-item="scope">
+          <div v-bind="scope.itemProps" dense class="bank-list-item">
+            <div avatar v-if="scope.opt.bankIcon">
+              <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+            </div>
+            <div>
+              {{ scope.opt.name }}
+            </div>
+          </div>
+        </template>
+      </q-select>
     </div>
 
     <div class="form-item">
@@ -131,7 +153,7 @@ export default defineComponent({
           console.log("error", e);
         });
     });
-    const imgURL = process.env.IMAGE_CDN + "/payment/";
+    const imgURL = process.env.IMAGE_CDN;
 
     const $q = useQuasar();
     const regForm = reactive({
@@ -349,5 +371,12 @@ export default defineComponent({
     width: 145px;
     height: 36px;
   }
+}
+
+.bank-list-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
 }
 </style>
