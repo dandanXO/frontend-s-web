@@ -78,12 +78,11 @@
                 (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                 (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
                 (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
-                isValidUSDTAmt
+                // isValidUSDTAmt
               ]" clearable>
               <template v-slot:prepend>
                 <span style="z-index:1;font-size:16px;">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
+                  {{ store.currency.value }}
                 </span>
               </template>
             </q-input>
@@ -91,8 +90,7 @@
             <div class="select-amt-btn-wrapper">
               <template v-for="(item, index) in countOptions" :key="index">
                 <q-skeleton v-if="!isLoaded" type="QBtn" />
-                <q-btn v-else class="select-amt-btn" size="md" :label="isUSDT ? `${item} USDT` : item + '만원'"
-                  @click="updateWithdrawItem(item)" />
+                <q-btn v-else class="select-amt-btn" size="md" :label="item + '만원'" @click="updateWithdrawItem(item)" />
               </template>
             </div>
           </div>
@@ -254,7 +252,7 @@ const loadCards = () => {
 
 const updateWithdrawItem = (amt) => {
   // debugger;
-  const multiple = isUSDT.value ? 1 : 10000;
+  const multiple = 10000;
   // 1원 = 10000;
 
   withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);

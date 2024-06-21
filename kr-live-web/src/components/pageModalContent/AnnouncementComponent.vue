@@ -12,7 +12,7 @@
         </template>
         <template v-else>
           <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
-            :active="item === selected" active-class="active-announcement">
+            :active="item === selected" active-class="active-announcement" class="announcement">
             <q-item-section>
               <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
               <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
@@ -166,13 +166,25 @@ onMounted(() => {
 
   @media (max-width: 768px) {
     display: grid;
-    grid-template-columns: minmax(150px, 30%) 70%;
+    grid-template-columns: minmax(150px, 30%) auto;
+
+    .announcement-list-wrapper {
+      .header {
+        flex-direction: column;
+      }
+
+      .announcement-list {
+        .announcement {
+          padding: 0;
+        }
+      }
+    }
 
     .q-item {
       display: flex;
       flex-direction: column;
       padding: 0;
-      font-size: 0.7rem;
+      font-size: 12px;
 
       .title {
         font-size: 15px;
@@ -180,7 +192,7 @@ onMounted(() => {
       }
 
       .text-caption {
-        font-size: 12px;
+        font-size: 10px;
         line-height: 20px;
       }
 
@@ -207,7 +219,7 @@ onMounted(() => {
         font-size: 12px;
 
         .title {
-          font-size: 24px;
+          font-size: 20px;
           line-height: 28px;
         }
 
