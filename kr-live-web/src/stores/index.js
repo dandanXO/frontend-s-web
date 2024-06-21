@@ -74,6 +74,7 @@ export const userStore = defineStore("userStore", {
           this.token = ret.data.data;
           this.getMemberInfo();
           this.getBalance();
+          this.getUnreadTotal();
         } else {
           Notify.create({
             color: "negative",

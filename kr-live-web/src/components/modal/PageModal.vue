@@ -16,7 +16,7 @@
 
       <q-separator color="grey" />
 
-      <q-card-section style="max-height: 70vh" class="scroll">
+      <q-card-section>
         <div class="page-dialog-main">
 
           <div class="page-dialog-main-container">
@@ -25,7 +25,7 @@
             </div>
             <div class="page-dialog-tabs">
               <template v-if="!isMinimalMode">
-                <q-tabs v-model="page" align="justify" inline-label>
+                <q-tabs v-model="page" align="justify" inline-label dense>
                   <template v-for="item in formattedPagesInfo" :key="item.page">
                     <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
                       class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
@@ -36,7 +36,7 @@
                 </q-tabs>
               </template>
 
-              <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;'">
+              <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;max-height:70vh'">
                 <template v-for="item in formattedPagesInfo" :key="item.page">
                   <q-tab-panel :name="item.page">
                     <component :is="item.component" @closeModal="closeDialog"></component>
@@ -178,18 +178,18 @@ const pagesInfo = reactive([
       description: ""
     }
   },
-  {
-    tabIndex: "log",
-    href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
-    page: "customer/service",
-    info: 'lang.page_modal_customer_service',
-    iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    component: FeedbackPage,
-    headerInfo: {
-      title: 'lang.page_modal_customer_service',
-      description: "입금시 꼭 계좌문의를 하세요!"
-    }
-  },
+  // {
+  //   tabIndex: "log",
+  //   href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
+  //   page: "customer/service",
+  //   info: 'lang.page_modal_customer_service',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+  //   component: FeedbackPage,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_customer_service',
+  //     description: "입금시 꼭 계좌문의를 하세요!"
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "personal/info",

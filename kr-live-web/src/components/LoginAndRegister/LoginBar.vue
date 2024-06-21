@@ -2,7 +2,12 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
-        <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        <div class="icon-wrapper">
+          <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount" rounded
+            style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+            :title="$t('lang.message_unread')" />
+          <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
       </div>
       <div class="right-content-sidebar">
@@ -171,14 +176,14 @@ const iconInfo = reactive([
       router.push(`/?page=personal/messages`);
     }
   },
-  {
-    info: "lang.menu_customer_service",
-    iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    goPage: () => {
-      window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-    },
-    requireLogin: false
-  },
+  // {
+  //   info: "lang.menu_customer_service",
+  //   iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+  //   goPage: () => {
+  //     window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
+  //   },
+  //   requireLogin: false
+  // },
 ]);
 </script>
 
@@ -245,7 +250,7 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 100%;
+    width: 90%;
     flex-direction: row;
     height: 60px;
     display: flex;
@@ -452,17 +457,6 @@ const iconInfo = reactive([
     font-weight: bold;
   }
 
-  .icon-wrapper {
-    display: flex;
-    position: relative;
-
-    .red-dot {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-    }
-  }
-
   img {
     width: 20px;
   }
@@ -474,6 +468,17 @@ const iconInfo = reactive([
     img {
       width: 22px;
     }
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  position: relative;
+
+  .red-dot {
+    position: absolute;
+    top: -10px;
+    right: -10px;
   }
 }
 </style>
