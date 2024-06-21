@@ -10,7 +10,7 @@
         <br>
         <div>
           <span class="ip">
-            您的IP V6地址为:
+            您的IP地址为:
             <span id="data">{{ ipAddress }}</span>
             <span class="ipLock">
               <img
