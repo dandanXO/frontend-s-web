@@ -36,15 +36,19 @@
           <br>
           <span class="highlight">
             Date:
-            <span id="date">2024-6-21</span>
+            <span id="date">{{ formattedDate }}</span>
           </span>
           <br>
           <span class="highlight">
             Time:
-            <span id="time">15:10:8</span>
+            <span id="time">{{ formattedTime }}</span>
           </span>
         </div>
 
+        <div class="back-text" @click="backtoMain">
+          Back to Main Page.<br>
+          返回主页面。
+        </div>
         <div class="decs cn">
           <p>
             <b>
@@ -93,10 +97,6 @@
             </p>
           </div>
         </b>
-        <div class="back-text" @click="backtoMain">
-          Back to Main Page.<br>
-          返回主页面。
-        </div>
       </div>
     </div>
   </div>
@@ -109,6 +109,20 @@ const ipAddress = sessionStorage.getItem('myIPAddress');
 const backtoMain = () => {
   router.push('/')
 }
+// Get the current date
+const currentDateTime = new Date();
+
+const month = currentDateTime.getMonth() + 1; // Months are zero-indexed
+const day = currentDateTime.getDate();
+const year = currentDateTime.getFullYear();
+
+const hours = currentDateTime.getHours();
+const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
+const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+
+const formattedDate = `${month}/${day}/${year}`;
+const formattedTime = `${hours}:${minutes}:${seconds}`;
+
 </script>
 
 <style scoped>
@@ -127,7 +141,7 @@ const backtoMain = () => {
   background: #ff0000;
     display: inline-block;
     padding: 10px;
-    margin-top: 21px;
+    margin-top: 10px;
     border-radius: 20px;
 }
 
@@ -151,6 +165,8 @@ p {
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+    width: 95%;
+    text-align: center;
 }
 
 .decs {
@@ -186,8 +202,8 @@ p {
   color: #fff;
   margin: auto;
   position: relative;
-  padding: 10px 36px;
   border-radius: 6px 0 0 6px;
+  padding: 10px 55px 10px 15px;
 }
 
 .ipLock {
@@ -359,6 +375,7 @@ p {
 
   .ip {
     padding: 10px 18px;
+    margin-left: -45px;
   }
 }
 
