@@ -41,7 +41,7 @@
       ></q-input> -->
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone Number'">
+            <InputField>
               <template #input>
                 <q-input
                   type="tel"
@@ -50,7 +50,6 @@
                   ref="phoneRef"
                   hide-bottom-space
                   v-model="passwordForm.phone"
-                  lazy-rules
                   :rules="[
                     (val) => (val && val.length > 0) || 'Please insert Phone number',
                     (val) => (val && val.length === 10) || 'The phone number must have 10 digits'
@@ -58,22 +57,23 @@
                   outlined
                   label-color="brand"
                   color="white"
+                  label="Phone number"
                 ></q-input>
               </template>
             </InputField>
 
-            <InputField :label="'Verification Code'">
+            <InputField>
               <template #input>
                 <q-input
                   ref="ftCaptchaRef"
                   hide-bottom-space
                   type="text"
                   v-model="passwordForm.captchaCode"
-                  lazy-rules
-                  :rules="[(val) => (val && val.length > 3) || 'Please Enter Verification Code']"
+                  :rules="[(val) => (val && val.length > 3) || 'Please enter verification code']"
                   outlined
                   label-color="brand"
                   color="white"
+                  label="Verification code"
                 >
                   <template v-slot:append>
                     <img :src="verificationImg" @click="getCode()" />
@@ -510,7 +510,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: url("../assets/images/index/auth-bg.png");
+  // background: url("../assets/images/index/auth-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

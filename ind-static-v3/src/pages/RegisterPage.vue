@@ -10,7 +10,7 @@
       <q-form class="q-gutter-y-md rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone Number'">
+            <InputField>
               <template #input>
                 <q-input
                   type="tel"
@@ -30,13 +30,14 @@
                   label-color="brand"
                 >
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/phone.svg" />
+                    <!-- <img src="../assets/images/auth/phone.svg" /> -->
+                    <q-icon name="phone_android" size="sm" />
                   </template>
                 </q-input>
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField>
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -62,7 +63,8 @@
                   </template>
 
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/pass.svg" />
+                    <q-icon name="lock" size="sm" />
+                    <!-- <img src="../assets/images/auth/pass.svg" /> -->
                   </template>
                 </q-input>
                 <!-- <div v-if="regForm.password" class="password-str-div">
