@@ -151,7 +151,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onActivated, computed } from "vue";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import { useRoute, useRouter } from "vue-router";
@@ -290,7 +290,7 @@ const getTopDownloadUrl = () => {
   });
 };
 
-onMounted(() => {
+onActivated(() => {
   if (!sessionStorage.getItem("PROFILE_IMG")) {
     const randomProfile = profileImg[0];
     const randomIndex = Math.floor(Math.random() * randomProfile.imgPath.length);
