@@ -172,8 +172,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `IndWin7`,
-        short_name: `IndWin7`,
+        name: `Ind3`,
+        short_name: `Ind3`,
         description: `APP`,
         display: "standalone",
         orientation: "portrait",
@@ -218,7 +218,7 @@ module.exports = configure(function (ctx) {
     capacitor: {
       hideSplashscreen: true,
       // (Optional) If not present, will look for package.json > name
-      appName: "IndWin7", // string
+      appName: "Ind3", // string
       backButtonExit: "*"
     },
 
