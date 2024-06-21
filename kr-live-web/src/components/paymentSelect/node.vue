@@ -551,4 +551,38 @@ $node-color: #dd4645;
     width: 2rem;
   }
 }
+
+.payment-method-item {
+  width: calc(33% - 20px);
+  padding: 0.2rem 0.35rem !important;
+  justify-content: flex-start !important;
+
+  filter: none !important;
+
+  &.active {
+    background: $linear-bg-2 !important;
+    background: $linear-bg-2;
+  }
+
+  .node-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: #128787;
+    padding: 5px;
+    border-radius: 4px;
+  }
+
+  img {
+    width: 1.6rem;
+  }
+
+  .overflow {
+    flex: 1 1 auto;
+    line-height: 1.2;
+    text-align: left;
+    font-size: 0.85rem !important;
+    margin-top: 0.15em;
+  }
+}
 </style>

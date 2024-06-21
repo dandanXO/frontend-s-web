@@ -193,6 +193,8 @@ export default {
     personal_real_name: "Real Name",
     personal_id: "ID",
     personal_phone: "Phone",
+    personal_close_btn: "Close",
+    personal_update_btn: "Update",
     // personal end
     // password start
     password_existing_password: "Existing Password",

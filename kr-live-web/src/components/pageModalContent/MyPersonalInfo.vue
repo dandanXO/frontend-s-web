@@ -17,10 +17,6 @@
         <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
           @update:model-value="updateTouch" />
       </div>
-      <!-- <div class="form-item">
-        <label>이메일</label>
-        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
-      </div> -->
       <div class="form-item">
         <label>{{ $t('lang.personal_phone') }}</label>
         <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
@@ -29,10 +25,10 @@
     </form>
     <div class="action-buttons">
       <div @click="closetheModal" class="primary-button blue">
-        닫기
+        {{ $t('lang.personal_close_btn') }}
       </div>
       <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
-        확인
+        {{ $t('lang.personal_update_btn') }}
       </div>
     </div>
   </div>
@@ -62,11 +58,9 @@ const updateTouch = () => {
 }
 
 const loadInfo = () => {
-  personalState.memberInfo = userStore();
   formDetail.realName = personalState.memberInfo.realName;
   formDetail.name2 = personalState.memberInfo.name2;
   formDetail.loginName = personalState.memberInfo.nickName;
-  formDetail.email = personalState.memberInfo.email || '';
   formDetail.telephone = personalState.memberInfo.telephone || ''
 }
 
