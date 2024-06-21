@@ -9,11 +9,26 @@
 
         <q-space />
 
-        <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
+        <q-btn-dropdown v-if="!isCreateMode" class="inbox-categories-dropdown" :label="$t(inboxCategoryLabel)" split
+            dense>
+            <q-list>
+                <q-item clickable v-close-popup @click="inboxCategory = category.type"
+                    v-for="category in inboxCategories" :key="category.type">
+                    <q-item-section>
+                        <q-item-label>{{ $t(category.label) }}</q-item-label>
+                    </q-item-section>
+                </q-item>
+
+            </q-list>
+        </q-btn-dropdown>
+
+
+        <!-- <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
             <q-tab :name="category.type" :label="$t(category.label)" v-for="category in inboxCategories"
-                :key="category" />
-        </q-tabs>
+                :key="category.type" />
+        </q-tabs> -->
     </q-toolbar>
+
 
     <div class="form-wrapper" v-if="isCreateMode">
         <form class="content-form form-template">
@@ -41,12 +56,6 @@
     <div class="message-compose-form" v-else>
         <div class="message-container">
             <div class="message-list-wrapper">
-                <!-- <div class="header">
-                    <div class="primary-button blue-square compose-btn" @click="isCreateMode = true">
-                        {{ $t('lang.message_compose') }}
-                    </div>
-                </div> -->
-
                 <div class="header">
                     <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
                         :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
@@ -66,7 +75,7 @@
                         <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
                             @click="readMessage(item.id)" :active="item === selected"
                             active-class="active-announcement">
-                            <q-badge v-if="!item.readTime" rounded
+                            <q-badge v-if="item.hasOwnProperty('readTime') && !item.readTime" rounded
                                 style="background:#DF3D31;margin:auto;margin-right:10px;min-height:9px;padding:2px 4.5px;"
                                 :title="$t('lang.message_unread')" />
                             <q-item-section>
@@ -75,8 +84,10 @@
                             </q-item-section>
 
                             <q-item-section side top class="info-wrapper">
-                                <q-item-label caption><span class="date-time">{{ getLocaleDateTime(item.sendTime)
-                                        }}</span></q-item-label>
+                                <q-item-label caption>
+                                    <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
+                                        }}</span>
+                                </q-item-label>
                             </q-item-section>
                         </q-item>
                     </template>
@@ -93,11 +104,13 @@
                         <div>
                             <div class="title">{{ selected.title }}</div>
                         </div>
-                        <span class="date-time" v-if="selected.sendTime">{{ getLocaleDateTime(selected.sendTime, true)
-                            }}</span>
+                        <span class="date-time" v-if="selected.sendTime || selected.createTime">{{
+                            getLocaleDateTime(selected.sendTime ||
+                                selected.createTime, true)
+                        }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                            }}</span>
+                        }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -113,7 +126,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref, onMounted, watch } from "vue";
+import { reactive, ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
@@ -128,9 +141,18 @@ const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
+const inboxCategoryLabel = computed(() => {
+    const category = inboxCategories.find(({ type }) => type === inboxCategory.value);
+
+    if (category) {
+        return category.label;
+    }
+
+    return '';
+})
 const store = userStore();
 
-const inboxCategories = [{ type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }]
+const inboxCategories = [{ type: 'Outbox', label: 'lang.message_type_outbox' }, { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }]
 
 const composeForm = reactive({
     title: "",
@@ -195,7 +217,15 @@ const sendMessage = () => {
 const initOutbox = (page = 1) => {
     isLoading.value = true;
 
-    Promise.all([api.get('/session/inbox', {
+    const url = (() => {
+        if (inboxCategory.value === 'Outbox') {
+            return '/session/outbox';
+        }
+
+        return '/session/inbox';
+    })();
+
+    Promise.all([api.get(url, {
         params: {
             messageType: inboxCategory.value === 'ALL' ? undefined : inboxCategory.value,
             current: page,
@@ -221,7 +251,7 @@ const readMessage = (id, showReadNotify = true) => {
     const currentMail = inboxMessages.value.records.find((data) => data.id === id);
     selected.value = currentMail;
 
-    if (!currentMail?.readTime) {
+    if (!currentMail?.readTime && inboxCategory.value !== 'Outbox') {
         isFetchingContent.value = true;
 
         api.post("/session/inbox/read",
@@ -260,6 +290,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.inbox-categories-dropdown {
+    background: linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%);
+}
+
 .message-compose-form {
     display: flex;
     flex-direction: column;
