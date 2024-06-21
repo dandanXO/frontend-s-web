@@ -25,6 +25,7 @@ export default {
         liveSupport: "زندہ حمایت",
         feedback: "تاثرات",
         telegram: "Telegram",
+        tikTok: "Tik Tok",
         whatsapp: "Whatsapp",
         language: "زبان"
       },

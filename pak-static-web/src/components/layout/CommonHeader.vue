@@ -149,8 +149,8 @@
                 {{ $t("layout.header.menu.liveSupport") }}
               </a>
               <a class="header-nav feedback" @click="openFeedback">{{ $t("layout.header.menu.feedback") }}</a>
-              <a class="header-nav telegram" href="https://t.me/B9game" target="_blank">
-                {{ $t("layout.header.menu.telegram") }}
+              <a class="header-nav tiktok" href="https://www.tiktok.com/@b9game" target="_blank">
+                {{ $t("layout.header.menu.tikTok") }}
               </a>
               <a
                 class="header-nav whatsapp"
@@ -1118,6 +1118,13 @@ $link-color: #ffffff;
         &.telegram {
           &:before {
             background: url(../../assets/images/common/submenu/menu-icons/telegram-icon.svg) no-repeat center center;
+            background-size: contain;
+          }
+        }
+
+        &.tiktok {
+          &:before {
+            background: url(../../assets/images/common/submenu/menu-icons/tiktok-icon.svg) no-repeat center center;
             background-size: contain;
           }
         }

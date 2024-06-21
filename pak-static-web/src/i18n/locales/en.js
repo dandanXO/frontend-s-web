@@ -25,6 +25,7 @@ export default {
         liveSupport: "Live SUpport",
         feedback: "Feedback",
         telegram: "Telegram",
+        tikTok: "Tik Tok",
         whatsapp: "Whatsapp",
         language: "Language"
       },
