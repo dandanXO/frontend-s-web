@@ -22,8 +22,8 @@
         <br>
         <div>
           <span class="ip">
-            您的IP V4地址为:
-            <span id="data1">{{ ipAddress }}</span>
+            您的URL域名为:
+            <span id="data1">{{ hostName }}</span>
             <span class="ipLock">
               <img
                 src="../assets/403-images/lock_icon.png"
@@ -109,6 +109,7 @@ const ipAddress = sessionStorage.getItem('myIPAddress');
 const backtoMain = () => {
   router.push('/')
 }
+const hostName = window.location.hostname;
 // Get the current date
 const currentDateTime = new Date();
 
