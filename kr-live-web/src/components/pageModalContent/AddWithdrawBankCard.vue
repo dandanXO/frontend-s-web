@@ -1,7 +1,7 @@
 <template>
   <div class="form-wrapper">
     <q-card-section>
-      <div style="display: grid;grid-template-columns: 1fr 300px;gap:10px;">
+      <div class="add-bank-card-wrapper">
         <div>
           <q-form class="form-template">
             <div class="form-item">
@@ -336,6 +336,17 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.add-bank-card-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
 .modal-body-content {
 
   :deep(.q-field__control) {

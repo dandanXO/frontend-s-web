@@ -72,15 +72,16 @@ const updateState = () => {
 
   const updateInfo = {};
 
-  if (personalState.memberInfo.name2 !== formDetail.name2) {
-    name2Ref.value.validate();
-    if (name2Ref.value.hasError) {
-      return;
-    }
+  name2Ref.value.validate();
+  realNameRef.value.validate();
 
-    updateInfo.name2 = formDetail.name2;
+  if (name2Ref.value.hasError || realNameRef.value.hasError) {
+    // validation error, do nothing
+  } else {
+    updateInfo.name2 = personalState.memberInfo.name2 !== formDetail.name2 ? formDetail.name2 : undefined;
+    updateInfo.realName = personalState.memberInfo.realName !== formDetail.realName ? formDetail.realName : undefined;
 
-    api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
+    api.post("/session/account1", qs.stringify(updateInfo)).then(({ data }) => {
       const res = data
       if (res.code === 0) {
         $q.notify({
@@ -101,13 +102,6 @@ const updateState = () => {
           icon: "report_problem"
         });
       }
-    });
-  } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: '변경 사항 없음',
-      icon: "report_problem"
     });
   }
 };
