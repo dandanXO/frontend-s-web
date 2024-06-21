@@ -18,7 +18,7 @@
       <q-form ref="loginFormRef" @submit="onSubmit">
         <InputRowGrid v-if="!loginType">
           <template #fields>
-            <InputField :label="'Phone Number'">
+            <InputField>
               <template #input>
                 <q-input
                   type="tel"
@@ -38,13 +38,14 @@
                   color="white"
                 >
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/phone.svg" />
+                    <!-- <img src="../assets/images/auth/phone.svg" /> -->
+                    <q-icon name="phone_android" size="sm" />
                   </template>
                 </q-input>
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField>
               <template #input>
                 <q-input
                   ref="passwordRef"
@@ -67,7 +68,8 @@
                   </template>
 
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/pass.svg" />
+                    <!-- <img src="../assets/images/auth/pass.svg" /> -->
+                    <q-icon name="lock" size="sm" />
                   </template>
                 </q-input>
               </template>

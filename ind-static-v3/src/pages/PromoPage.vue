@@ -70,7 +70,7 @@
           </div>
           <div v-else class="selected-promo">
             <div class="selected-promo-wrapper">
-              <q-btn dense rounded icon="reply" class="back-btn text-white" size="16px" @click="backToPromoList()" />
+              <q-btn dense rounded icon="close" class="back-btn text-white" size="16px" @click="backToPromoList()" />
               <div class="banner-container">
                 <img
                   class="promo-content"
@@ -101,7 +101,7 @@
                     <div class="content-title">{{ selectedPromo.title }}</div>
                   </div>
                   <div v-html="selectedPromo.pageContent"></div>
-                  <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
+                  <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
                       <div class="date-txt">Promotion Ends</div>
                       <div class="date-timer">
@@ -110,7 +110,7 @@
                       </div>
                     </div>
                     <q-btn class="btn-join-now" no-caps label="Join Now" @click="goToJoinNow()" />
-                  </div> -->
+                  </div>
 
                   <!-- <div class="join-container">
                     <div class="promo-date">
@@ -599,7 +599,7 @@ export default defineComponent({
   width: 36px;
   height: 36px;
   margin: 12px;
-  // position: absolute;
+  position: absolute;
   right: 0;
   top: 0;
   z-index: 9;
@@ -1049,11 +1049,11 @@ export default defineComponent({
 // promo content-inner
 .promo-content-inner {
   .content-title {
-    // background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    // -webkit-background-clip: text;
-    // background-clip: text;
-    // color: transparent;
-    color: #ffffff;
+    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    // color: #ffffff;
     display: inline-block;
     font-size: 24px;
     font-weight: 700;
@@ -1065,7 +1065,7 @@ export default defineComponent({
   position: absolute;
   top: 16px;
   left: 16px;
-  display: none;
+  // display: none;
 
   .top-subtitle {
     color: rgba(255, 255, 255, 0.7);
