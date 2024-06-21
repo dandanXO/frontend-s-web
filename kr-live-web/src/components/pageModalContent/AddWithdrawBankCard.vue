@@ -63,8 +63,8 @@
                 {{ $t('lang.withdraw_bank_num') }}
                 <em>*</em>
               </q-label>
-              <q-input dense ref="cardNumberRef" type="number" outlined v-model="bankCardInfo.cardNumber"
-                class="q-pb-xs" lazy-rules clearable
+              <q-input dense ref="cardNumberRef" :type="selectedBankType.includes('USDT') ? 'text' : 'number'" outlined
+                v-model="bankCardInfo.cardNumber" class="q-pb-xs" lazy-rules clearable
                 :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_bank_num_choose'), validateBankLength]"></q-input>
             </div>
 
