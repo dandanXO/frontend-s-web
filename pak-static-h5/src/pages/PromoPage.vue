@@ -30,7 +30,7 @@
   <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -506,14 +506,14 @@ export default defineComponent({
 
     const tab = ref("all");
     const tabItems = [
-      { name: "all", label: "All" },
-      { name: "earn", label: "Earn" },
-      { name: "hot", label: "Hot" },
-      { name: "new user", label: "New User" },
-      { name: "sports", label: 'Sports'},
-      { name: "live", label: "Live" },
-      { name: "slot", label: "Slot" },
-      { name: "vip", label: "VIP" },
+      { name: "all", label: 'promo.all' },
+      { name: "earn", label: 'promo.earn' },
+      { name: "hot", label: 'promo.hot' },
+      { name: "new user", label: 'promo.new_user' },
+      { name: "sports", label: 'promo.sports' },
+      { name: "live", label: "promo.live" },
+      { name: "slot", label: "promo.slot" },
+      { name: "vip", label: "promo.vip" },
     ];
 
     return {
