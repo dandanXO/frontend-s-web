@@ -687,6 +687,11 @@ export default defineComponent({
     display: flex;
     justify-content: center;
 
+    @media (max-width: 768px) {
+      max-width: 300px;
+      margin: auto;
+    }
+
     cursor: pointer;
     transition: all 0.3s ease-in;
     background-repeat: no-repeat;
