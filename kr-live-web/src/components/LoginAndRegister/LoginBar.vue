@@ -45,7 +45,12 @@
           <div v-for="(item, index) in iconInfo" :key="index"
             @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
             class="credit-info cursor-pointer">
-            <img :src="item.iconUrl" alt="" />
+            <div class="icon-wrapper">
+              <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount && item.type === 'message'"
+                rounded style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+                :title="$t('lang.message_unread')" />
+              <img :src="item.iconUrl" alt="" />
+            </div>
             <div class="info-text">{{ $t(item.info) }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
@@ -158,6 +163,7 @@ const iconInfo = reactive([
     }
   },
   {
+    type: 'message',
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
@@ -406,6 +412,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
+  padding: 0 30px;
+
+
   .actions-topbar-controls {
     display: none;
   }
@@ -441,6 +450,17 @@ const iconInfo = reactive([
   &:hover .info-text {
     color: #00FFFF;
     font-weight: bold;
+  }
+
+  .icon-wrapper {
+    display: flex;
+    position: relative;
+
+    .red-dot {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
   }
 
   img {

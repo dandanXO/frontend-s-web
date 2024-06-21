@@ -99,7 +99,7 @@
                             }}</span>
                         <span class="date-time" v-if="selected.readTime">{{ $t('lang.message_read_at') }} {{
                             getLocaleDateTime(selected.readTime, true)
-                        }}</span>
+                            }}</span>
                         <div class="content-loading" v-if="isFetchingContent">
                             <template v-for="rectSkeleton in 5" :key="rectSkeleton">
                                 <q-skeleton type="text" style="width:100%;" />
@@ -120,6 +120,7 @@ import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
 import { getLocaleDateTime } from "src/boot/utils";
+import { userStore } from "src/stores";
 var qs = require("qs");
 
 const $q = useQuasar();
@@ -129,6 +130,7 @@ const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
+const store = userStore();
 
 const inboxCategories = [{ type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }]
 
@@ -239,6 +241,7 @@ const readMessage = (id, showReadNotify = true) => {
                     position: "top",
                     icon: "check_circle_outline"
                 });
+                store.unreadCount--;
             }
 
             if (!currentMail.readTime) {

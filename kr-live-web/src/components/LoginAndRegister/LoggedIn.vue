@@ -84,7 +84,7 @@ const onLogoutSubmit = () => {
   display: flex;
   flex-direction: row;
   width: 100%;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -97,7 +97,7 @@ const onLogoutSubmit = () => {
   white-space: nowrap;
   row-gap: 8px;
   column-gap: 24px;
-  width: 60%;
+  // width: 60%;
   font-size: 16px;
   justify-content: center;
   align-items: center;
