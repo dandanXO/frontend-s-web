@@ -1,8 +1,8 @@
 {
-  "name": "iw2-project",
-  "version": "1.0.22",
-  "description": "IndWin7.com",
-  "productName": "IndWin7",
+  "name": "inr-project",
+  "version": "1.0.1",
+  "description": "Ind3.com",
+  "productName": "Ind3",
   "author": "KengHong <kenghongho@eagrp.net>",
   "private": true,
   "scripts": {
