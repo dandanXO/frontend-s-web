@@ -405,6 +405,16 @@ export default {
     cancel: "Cancel",
     updateNow: "Update now"
   },
+  promo: {
+    all: 'ALL',
+    earn: 'EARN',
+    hot: 'HOT',
+    new_user: 'NEW USER',
+    sports: 'SPORTS',
+    live: 'LIVE',
+    slot: 'SLOT',
+    vip: 'VIP'
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
