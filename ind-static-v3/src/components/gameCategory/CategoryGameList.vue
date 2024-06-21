@@ -117,6 +117,7 @@ const getGamePlatformImage = (categoryType, gamePlatform, gameCode) => {
   height: 100%;
   background-size: 100% auto;
   background-position: center center;
+  background-repeat: no-repeat;
   position: absolute;
   border-radius: 8px;
   top: 0;
@@ -129,7 +130,8 @@ const getGamePlatformImage = (categoryType, gamePlatform, gameCode) => {
     top: 0;
     left: 0;
     background-size: 100% auto;
-    background-position: center center;
+    background-position: top center;
+    background-repeat: no-repeat;
   }
 }
 
