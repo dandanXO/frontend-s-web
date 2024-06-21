@@ -452,7 +452,7 @@ export default {
     10007: "Error entering game room",
     10008: "Error",
     11003: "Deposit failed",
-    11005: "Please try again",
+    11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     13000: "Domain name not found",
