@@ -17,6 +17,8 @@ export default {
       DETAILS: 'Details',
     },
     level: {
+      JUNIOR_AFFILIATE: 'Junior Affiliate',
+      SUB_AFFILIATE: 'Sub Affiliate',
       AFFILIATE: 'Affiliate',
       SUPER_AFFILIATE: 'Super Affiliate',
       MASTER_AFFILIATE: 'Master Affiliate',
@@ -1809,6 +1811,7 @@ export default {
     addMemberLotteryRecord: 'Add Member Lottery Record',
     addFakeLotteryRecord: 'Add Fake Lottery Record',
     approveSummonRecord: 'Approve Summon Record',
+    updateAffiliateLevel: 'Update Affiliate Level',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -2272,6 +2275,7 @@ export default {
     wrongPopupTime: 'Selected popup time is invalid',
     selectPopupTime: 'Please select Popup Time.',
     summonSuccess: 'Summon Success',
+    updateAffiliateLevelSuccess: 'Update Affiliate Level Success',
   },
   menu: {
     undefined: '',

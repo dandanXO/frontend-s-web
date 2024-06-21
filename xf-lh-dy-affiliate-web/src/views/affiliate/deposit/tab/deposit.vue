@@ -556,6 +556,8 @@ const returnCurrency = () => {
     return "THB"
   } else if (siteId === 8 || siteId === '8') {
     return "VNDP"
+  } else if (siteId === 10 || siteId === '10') {
+    return "₩"
   } else {
     return "RMB"
   }
