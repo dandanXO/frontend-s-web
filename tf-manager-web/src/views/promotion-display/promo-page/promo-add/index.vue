@@ -773,6 +773,9 @@ const labelType = reactive({
 const promoTypes = ref([]);
 
 function loadPromoTypes() {
+  console.log("Load")
+  console.log(LOGIN_SITE_ID);
+  console.log(form.siteId)
   if (LOGIN_SITE_ID === 11 || form.siteId === 11) {
     promoTypes.value = [
       { typeName: 'EARN', value: 12, displayName: "EARN" },
@@ -1151,7 +1154,7 @@ function submitImageUpload() {
 }
 
 onMounted(() => {
-  console.log('new page ')
+  console.log('promoPage')
   loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
