@@ -159,11 +159,30 @@ export default {
     feedback_compose_confirm: "확인",
     feedback_previous_page: "전 페이지로 이동",
     // feedback end
+    // message start
+    message_loading_content: "콘텐츠 로드 중...",
+    message_unread: "읽히지 않는",
+    message_read: "읽었다",
+    message_read_at: "에서 읽다",
+    message_compose: "글쓰기",
+    message_title: "제목",
+    message_title_placeholder: "제목 입력해주세요",
+    message_cannot_be_empty: "비워둘 수 없습니다",
+    message_content: "내용",
+    message_compose_confirm: "확인",
+    message_previous_page: "전 페이지로 이동",
+    message_type_announcement: "발표",
+    message_type_notification: "공고",
+    message_type_activity: "활동",
+    message_type_payment: "지불",
+    message_type_all: "모두",
+    message_type_outbox: "보낼 편지함",
+    // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
     deposit_reminder: "알림",
-    deposit_reminder_caption: "입금 전 꼭 읽어주세요",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
@@ -419,7 +438,6 @@ export default {
     no_message_selected: "There are no messages selected.",
     enter_information: "Please Enter Message",
     max_length_500: "Maximum Length 500",
-    message_cannot_be_empty: "Message cannot be empty.",
     no_message_at_moment: "No Message.",
     success: "성공",
     home_page: "Home",

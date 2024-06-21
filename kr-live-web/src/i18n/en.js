@@ -157,6 +157,25 @@ export default {
     feedback_compose_confirm: "Confirm",
     feedback_previous_page: "Previous page",
     // feedback end
+    // message start
+    message_loading_content: "Loading content...",
+    message_unread: "Unread",
+    message_read: "Read",
+    message_read_at: "Read at",
+    message_compose: "Compose",
+    message_title: "Title",
+    message_title_placeholder: "Please enter title",
+    message_cannot_be_empty: "Cannot be empty",
+    message_content: "Content",
+    message_compose_confirm: "Confirm",
+    message_previous_page: "Previous page",
+    message_type_announcement: "Announcement",
+    message_type_notification: "Notification",
+    message_type_activity: "Activity",
+    message_type_payment: "Payment",
+    message_type_all: "All",
+    message_type_outbox: "Outbox",
+    // message end
     // deposit start
     deposit_payment_channel: "Payment Channel",
     deposit_confirm_deposit: "Deposit",

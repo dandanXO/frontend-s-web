@@ -1,5 +1,5 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="[50, 150]" style="z-index:999999">
+  <q-page-sticky position="bottom-right" :offset="[50, 250]" style="z-index:999999">
     <q-btn fab v-if="showLangToggle" color="primary" @click="toggleLang">{{ lang }}</q-btn>
   </q-page-sticky>
 </template>

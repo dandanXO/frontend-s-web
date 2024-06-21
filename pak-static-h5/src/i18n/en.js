@@ -259,28 +259,113 @@ export default {
       "Once the deposit meets the upgrade requirements, your VIP level will be immediately elevated, and the corresponding upgrade rewards will be issued."
   },
   earnMoney: {
-    bonusPotArrived: "Bonus Pot Arrived",
-    myTotalIncome: "My Total Income",
-    myTotalNumberOfInvites: "My Total Number Of Invites",
-    invite: "Invite",
-    topUp: "Top Up",
-    bet: "Bet",
-    eligibleRefer: "Eligible Refer",
-    inviteFriendsViaLink: "Invite friends via link",
-    howToGetInvitationBonus: "How to get invitation bonus",
-    inviteList_01: "Invite friends via invitation link",
-    inviteList_02: "Register via link",
-    inviteList_03: "Complete deposit after registration",
-    copyLink: "Copy Link",
-    friendCount: "Friend Count",
-    inviteBonus: "Invite Bonus",
-    totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
-    player: "Player",
-    money: "Money",
-    eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300.",
-    shareTitle: "B9GAME Share and Earn",
-    shareText:
-      "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+    title: "Bonus Pot Arrived",
+    tabs: {
+      reward: "Reward",
+      teamManagement: "Team management",
+      teamBetting: "Team betting",
+      profitAndLoss: "User profit and loss"
+    },
+    reward: {
+      myTotalIncome: "My Total Income",
+      myTotalNumberOfInvites: "My Total Number Of Invites",
+      invite: "Invite",
+      topUp: "Top Up",
+      bet: "Bet",
+      eligibleRefer: "Eligible Refer",
+      inviteFriendsViaLink: "Invite friends via link",
+      howToGetInvitationBonus: "How to get invitation bonus",
+      inviteList_01: "Invite friends via invitation link",
+      inviteList_02: "Register via link",
+      inviteList_03: "Complete deposit after registration",
+      copyLink: "Copy Link",
+      friendCount: "Friend Count",
+      inviteBonus: "Invite Bonus",
+      totalAmountSentAsOfYesterday: "Total amount sent as of yesterday",
+      player: "Player",
+      money: "Money",
+      eligibility_tips: "Eligibility: Invitee's deposit must be ≥ 300.",
+      shareTitle: "B9GAME Share and Earn",
+      shareText:
+        "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}"
+    },
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "All Down Lines",
+          direct: "Direct Down Lines"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "SEARCH"
+      },
+      table: {
+        type: "Types",
+        username: "Username",
+        emark: "Emarks",
+        upLine: "Upline Agent",
+        registrationDate: "Registration Date",
+        balance: "Balance",
+        lastLogin: "Last Login Time",
+        lastDeposit: "Last Deposit Time",
+        action: "Action"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday"
+        },
+        gameType: {
+          label: "Game Type",
+          options: {
+            slot: "Slot",
+            live: "Live Casino",
+            sport: "Sports",
+            fish: "Fish",
+            poker: "Poker"
+          }
+        },
+        searchButton: "Search"
+      },
+      table: {
+        vendor: "Vendor",
+        gameType: "Game Type",
+        betAmount: "Bet Amount",
+        winning: "Winning",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rounds: "Rounds",
+        player: "Player"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday",
+          "7day": "7-Days"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "Search"
+      },
+      table: {
+        username: "Username",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
+        bonus: "Bonus",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rebate: "Player Rebate",
+        referral: "Referral",
+        profitAndLoss: "Profit And Loss",
+        depositFee: "Deposit Fee"
+      }
+    }
   },
   records: {
     gamePlatform: "Game Platform",
@@ -367,6 +452,7 @@ export default {
     10007: "Error entering game room",
     10008: "Error",
     11003: "Deposit failed",
+    11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     13000: "Domain name not found",

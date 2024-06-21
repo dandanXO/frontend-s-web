@@ -167,7 +167,8 @@
                   lhcs2: selectedPromo.promoCode === 'lh-cs2-copenhagen-major-2024',
                   lhftd: selectedPromo.promoCode === 'lh1-ftd-promo' || selectedPromo.promoCode === 'lh1-intel-esl',
                   lhduanwu: selectedPromo.promoCode === 'lh-duanwujie24'  || selectedPromo.promoCode === 'lh1-deposit-rebates' ,
-                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual'
+                  lheuromanual:  selectedPromo.promoCode === 'lh-eurocup-manual' ,
+                  meizhoubei:  selectedPromo.promoCode === 'lh1meizhoubei'
                 }"
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' ||
@@ -826,6 +827,10 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.meizhoubei{
+          margin:5px auto;
+        }
 
         &.lheuromanual{
           margin:0px;

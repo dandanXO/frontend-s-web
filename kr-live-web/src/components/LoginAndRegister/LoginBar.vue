@@ -2,7 +2,12 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
-        <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        <div class="icon-wrapper">
+          <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount" rounded
+            style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+            :title="$t('lang.message_unread')" />
+          <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
       </div>
       <div class="right-content-sidebar">
@@ -45,7 +50,12 @@
           <div v-for="(item, index) in iconInfo" :key="index"
             @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
             class="credit-info cursor-pointer">
-            <img :src="item.iconUrl" alt="" />
+            <div class="icon-wrapper">
+              <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount && item.type === 'message'"
+                rounded style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+                :title="$t('lang.message_unread')" />
+              <img :src="item.iconUrl" alt="" />
+            </div>
             <div class="info-text">{{ $t(item.info) }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
@@ -158,20 +168,22 @@ const iconInfo = reactive([
     }
   },
   {
+    type: 'message',
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
   },
-  {
-    info: "lang.menu_customer_service",
-    iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    goPage: () => {
-      window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-    },
-    requireLogin: false
-  },
+  // {
+  //   info: "lang.menu_customer_service",
+  //   iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+  //   goPage: () => {
+  //     window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
+  //   },
+  //   requireLogin: false
+  // },
 ]);
 </script>
 
@@ -238,9 +250,9 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 1400px;
+    width: 90%;
     flex-direction: row;
-    height: 80px;
+    height: 60px;
     display: flex;
   }
 }
@@ -251,7 +263,7 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px 10px;
+    padding: 20px 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -405,6 +417,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
+  padding: 0 30px;
+
+
   .actions-topbar-controls {
     display: none;
   }
@@ -453,6 +468,17 @@ const iconInfo = reactive([
     img {
       width: 22px;
     }
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  position: relative;
+
+  .red-dot {
+    position: absolute;
+    top: -10px;
+    right: -10px;
   }
 }
 </style>

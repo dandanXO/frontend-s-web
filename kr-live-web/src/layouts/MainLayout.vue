@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
@@ -44,6 +44,7 @@ import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
 import AppDownload from "../components/AppDownload.vue";
 import LoginBar from "../components/LoginAndRegister/LoginBar";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
@@ -84,8 +85,11 @@ export default defineComponent({
     const store = userStore();
     const prevPage = ref(null);
     const ui = useUI();
+    const $q = useQuasar();
     // console.log(ui.footer)
     const scrollPageRef = ref(null);
+    const checkBalanceInterval = ref();
+    const checkUnreadMessagesInterval = ref();
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -93,38 +97,18 @@ export default defineComponent({
         router.push("/");
       });
     };
-    watch(
-      () => route.path,
-      async () => {
-        checkRoute();
-      }
-    );
 
-    watch(
-      () => route.query,
-      async () => {
-        checkRoute();
+    watch(() => $q.appVisible, val => {
+      if (val) {
+        store.isOffline = false;
+      } else {
+        store.isOffline = true;
       }
-    );
+    })
 
     const { t } = useI18n();
     const { languageVal } = storeToRefs(i18nStore());
     const { setLanguage } = i18nStore();
-    watch(languageVal, (newVal) => {
-      setLanguage(languageVal.value);
-
-      checkRoute();
-    });
-    const langOptions = [
-      {
-        label: "ไทย",
-        value: "th"
-      },
-      {
-        label: "English",
-        value: "en"
-      }
-    ];
 
     const isHomePage = computed(() => {
       if (route.path === "/" || route.path === "/home") {
@@ -132,117 +116,6 @@ export default defineComponent({
       }
       return false;
     });
-
-    const checkRoute = () => {
-      if (route) {
-        prevPage.value = "";
-        hasHeader.value = false;
-        hasPage.value = false;
-        hasLang.value = false;
-        pageName.value = "";
-        headerIcon.value = "";
-        if (route.path === "/slot") {
-          hasPage.value = true;
-          pageName.value = t("lang.slot_header");
-        } else if (route.path === "/live-casino") {
-          hasPage.value = true;
-          pageName.value = t("lang.live_header");
-        } else if (route.path === "/poker") {
-          hasPage.value = true;
-          pageName.value = "Poker";
-        } else if (route.path === "/e-sport") {
-          hasPage.value = true;
-          pageName.value = "Esports";
-        } else if (route.path === "/sport") {
-          hasPage.value = true;
-          pageName.value = t("lang.sport_header");
-        } else if (route.path === "/aviator") {
-          hasPage.value = true;
-          pageName.value = t("lang.fish_header");
-        } else if (route.path === "/finance/deposit") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.deposit_header");
-          // headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
-        } else if (route.path === "/finance/withdraw") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.withdraw_header");
-          // headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
-        } else if (route.path === "/account/transit") {
-          prevPage.value = "account";
-          hasPage.value = true;
-          pageName.value = t("lang.transit_header");
-        } else if (route.path === "/account") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.account_header");
-          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
-          hasLang.value = true;
-        } else if (route.path === "/display") {
-          prevPage.value = "finance/deposit";
-          hasPage.value = true;
-          pageName.value = t("lang.display_header");
-          outOfApp.value = true;
-        } else if (route.path === "/account/personal") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.personal_header");
-          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
-          hasLang.value = true;
-        } else if (route.path === "/account/withdraw") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.withdraw_header2");
-        } else if (route.path === "/account/mail") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.mail_header");
-        } else if (route.path === "/affiliate") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.affiliate_header");
-        } else if (route.path === "/vip") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = "VIP";
-        } else if (route.path === "/promo" && !route.query.id) {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.promo_header");
-        } else if (route.path === "/promo" && route.query.id) {
-          prevPage.value = "/promo";
-          hasPage.value = true;
-          pageName.value = t("lang.promo_header");
-        } else if (route.path === "/insert-bankinfo") {
-          hasPage.value = true;
-          pageName.value = t("lang.bankinfo_header");
-        } else if (route.path === "/login") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.login");
-          hasLang.value = true;
-        } else if (route.path === "/register") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.register");
-          hasLang.value = true;
-        } else if (route.path === "/forgot-password") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.forgot_password");
-          hasLang.value = true;
-        } else if (route.path === "/share") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.share_page");
-        } else if (route.path === "/getapp") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = "App";
-        }
-      }
-    };
 
 
     const closeWindowOrBack = () => {
@@ -277,9 +150,36 @@ export default defineComponent({
       return balanceWithTwoDecimalPlaces;
     });
 
+    onUnmounted(() => {
+      clearInterval(checkBalanceInterval);
+      clearInterval(checkUnreadMessagesInterval);
+    })
+
     onMounted(() => {
-      checkRoute();
-      store.getBalance();
+      if (store.hasToken()) {
+        store.getBalance();
+        store.getUnreadTotal();
+      }
+
+      checkBalanceInterval.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
+
+      checkUnreadMessagesInterval.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getUnreadTotal();
+        }
+      }, 30000);
+
+      window.addEventListener('offline', () => {
+        store.isOffline = true;
+      });
+
+      window.addEventListener('online', () => {
+        store.isOffline = false;
+      });
     });
 
     return {
@@ -298,7 +198,6 @@ export default defineComponent({
       hasHeader,
       headerIcon,
       languageVal,
-      langOptions,
       hasLang,
       mainWalletValue,
       openAffiliatePage,
@@ -554,7 +453,7 @@ svg path {
   @media (min-width: 1200px) {
     background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
     background-size: cover;
-    height: 480px;
+    height: 400px;
   }
 
 

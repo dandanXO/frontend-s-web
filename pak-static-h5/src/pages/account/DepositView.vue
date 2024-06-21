@@ -682,12 +682,12 @@ async function pDepo(deposit) {
       }
     })
     .catch((error) => {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: error.message,
-        icon: "report_problem"
-      });
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: error.message,
+      //   icon: "report_problem"
+      // });
     })
     .then(() => {
       btnLoading.value = false;
