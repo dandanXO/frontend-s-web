@@ -81,7 +81,7 @@ const updateState = () => {
     updateInfo.name2 = personalState.memberInfo.name2 !== formDetail.name2 ? formDetail.name2 : undefined;
     updateInfo.realName = personalState.memberInfo.realName !== formDetail.realName ? formDetail.realName : undefined;
 
-    api.post("/session/account1", qs.stringify(updateInfo)).then(({ data }) => {
+    api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
       const res = data
       if (res.code === 0) {
         $q.notify({
