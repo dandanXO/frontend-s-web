@@ -1,5 +1,6 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="[40, 230]" style="z-index:999999" v-if="memberType === 'TEST'">
+  <q-page-sticky position="bottom-right" :offset="[40, 230]" style="z-index:999999"
+    v-if="memberType === 'TEST' || isDevENV">
     <q-btn class="floating" fab color="primary" @click="toggleLang">{{ lang }}</q-btn>
   </q-page-sticky>
 </template>
@@ -11,6 +12,7 @@ import { userStore } from "src/stores";
 import { storeToRefs } from "pinia";
 
 const store = userStore();
+const isDevENV = ref(process.env.NODE_ENV === "development");
 const { memberType } = storeToRefs(store);
 const { setLanguage, languageVal } = i18nStore();
 
