@@ -141,17 +141,17 @@ export default defineComponent({
       })
     }
     const showPromoDetails = (promo) => {
-      if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO' || promo.promoCode === 'P4W-VIP-DAILY-CHECKIN-BONUS' || promo.promoCode === 'P4W-TOP-BET') {
-        isSpecialPromo.value = true
-        isSpecialPromoBanner.value = true
-        if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO') {
-          isSpecialPromoBanner.value = false
-        }
-      } else {
-        isSpecialPromo.value = false
-        isSpecialPromoBanner.value = false
-      }
-      router.push({name: 'promotion', query: {code: promo.promoCode}})
+      // if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO' || promo.promoCode === 'P4W-VIP-DAILY-CHECKIN-BONUS' || promo.promoCode === 'P4W-TOP-BET') {
+      //   isSpecialPromo.value = true
+      //   isSpecialPromoBanner.value = true
+      //   if (promo.promoCode === 'P4W-DOWNLOAD-BONUS' || promo.promoCode === 'P4W-ROULETTE-TOTO') {
+      //     isSpecialPromoBanner.value = false
+      //   }
+      // } else {
+      //   isSpecialPromo.value = false
+      //   isSpecialPromoBanner.value = false
+      // }
+      router.push({name: 'promotion', query: {code: promo.redirectUrl}})
       isPromoDetail.value = true
       selectedPromo.value = promo
     }
@@ -181,7 +181,7 @@ export default defineComponent({
 
         promoState.promoList.push(...res.data);
         promoState.promoList.forEach(element => {
-          if (element.promoCode.toString() === route.query.code) {
+          if (element.redirectUrl.toString() === route.query.code) {
             showPromoDetails(element)
           }
         });
@@ -390,7 +390,8 @@ export default defineComponent({
           border-radius: 10px;
           &.isDesktop {
             display: block;
-            height: 22vw;
+            min-height: 22vw;
+            aspect-ratio: 1560/490;
           }
           &.isMobile {
             display: none;

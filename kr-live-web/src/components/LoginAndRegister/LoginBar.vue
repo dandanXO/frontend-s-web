@@ -2,7 +2,12 @@
   <div class="container">
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
-        <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        <div class="icon-wrapper">
+          <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount" rounded
+            style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+            :title="$t('lang.message_unread')" />
+          <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
+        </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
       </div>
       <div class="right-content-sidebar">
@@ -17,39 +22,27 @@
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
               <span v-if="store.token">{{ store.nickName }}<br />님 환영합니다 </span>
-              <span v-else>로그인</span>
+              <span v-else>{{ $t('lang.login') }}</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
                 <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
               </div>
             </div>
             <div class="sidebar-section top">
-              <router-link class="sidebar-section-item" to="/?page=personal/info">
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=personal/info`)">
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
                 <div class="info-text">마이페이지</div>
-              </router-link>
+              </div>
             </div>
             <div class="sidebar-section middle">
-              <router-link class="sidebar-section-item" to="/?page=finance/deposit">
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/deposit`)">
                 <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
-                <div class="info-text">입금</div>
-              </router-link>
-              <router-link class="sidebar-section-item" to="/?page=finance/withdraw">
-                <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
-                <div class="info-text">출금</div>
-              </router-link>
-              <!-- <div
-                class="sidebar-section-item"
-              >
-                <img :src="require('../../assets/icon/sidebar-icon-1.svg')" alt="" />
-                <div class="info-text">포인트전환</div>
+                <div class="info-text">{{ $t('lang.menu_deposit') }}</div>
               </div>
-              <div
-                class="sidebar-section-item"
-              >
-                <img :src="require('../../assets/icon/sidebar-icon-2.svg')" alt="" />
-                <div class="info-text">알전환</div>
-              </div> -->
+              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/withdraw`)">
+                <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
+                <div class="info-text">{{ $t('lang.menu_withdraw') }}</div>
+              </div>
             </div>
             <div class="separator" />
             <div class="icon-section-label">메뉴</div>
@@ -57,12 +50,17 @@
           <div v-for="(item, index) in iconInfo" :key="index"
             @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
             class="credit-info cursor-pointer">
-            <img :src="item.iconUrl" alt="" />
+            <div class="icon-wrapper">
+              <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount && item.type === 'message'"
+                rounded style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
+                :title="$t('lang.message_unread')" />
+              <img :src="item.iconUrl" alt="" />
+            </div>
             <div class="info-text">{{ $t(item.info) }}</div>
           </div>
           <div class="sidebar-logout-button" v-if="store.token">
             <div class="primary-button red" @click.stop="logout">
-              로그아웃
+              {{ $t('lang.logout') }}
             </div>
           </div>
         </div>
@@ -102,7 +100,18 @@ const showNotify = () => {
     message: "로그인 해주세요",
     icon: "report_problem"
   });
+
+  router.push('/?page=login')
 };
+
+const goPageOrLogin = (page) => {
+  if (store.token) {
+    router.push(page);
+    return;
+  }
+
+  showNotify();
+}
 
 const logout = () => {
   store.memberLogout();
@@ -152,20 +161,29 @@ const iconInfo = reactive([
     }
   },
   {
+    info: "lang.menu_rebates",
+    iconUrl: require("../../assets/icon/icon-betting.svg"),
+    goPage: () => {
+      router.push(`/?page=transaction/records&tab=rebates`);
+    }
+  },
+  {
+    type: 'message',
     info: "lang.menu_message",
-    iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
+    iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
+    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
     goPage: () => {
       router.push(`/?page=personal/messages`);
     }
   },
-  {
-    info: "lang.menu_customer_service",
-    iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-    goPage: () => {
-      window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-    },
-    requireLogin: false
-  },
+  // {
+  //   info: "lang.menu_customer_service",
+  //   iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+  //   goPage: () => {
+  //     window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
+  //   },
+  //   requireLogin: false
+  // },
 ]);
 </script>
 
@@ -232,9 +250,9 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 1400px;
+    width: 90%;
     flex-direction: row;
-    height: 80px;
+    height: 60px;
     display: flex;
   }
 }
@@ -245,7 +263,7 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px;
+    padding: 20px 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -399,6 +417,9 @@ const iconInfo = reactive([
 }
 
 .right-content {
+  padding: 0 30px;
+
+
   .actions-topbar-controls {
     display: none;
   }
@@ -447,6 +468,17 @@ const iconInfo = reactive([
     img {
       width: 22px;
     }
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  position: relative;
+
+  .red-dot {
+    position: absolute;
+    top: -10px;
+    right: -10px;
   }
 }
 </style>

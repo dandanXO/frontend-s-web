@@ -1,6 +1,6 @@
 <template>
   <div class="common-promo">
-    <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
+    <!-- <img :src="require(`../../assets/images/promotion/hotpromo/${promoId}/icon.png`)" />
     <div class="contents">
       <div v-if="promoId===75">{{ $t('lang.register_bonus_will_be_added_once') }}</div>
       <div v-else-if="promoId===80">{{ $t('lang.refer_bonus_will_be_added_once') }}</div>
@@ -23,7 +23,7 @@
     <div v-if="promoId === 27" class="extra-img">
       <img src="../../assets/images/promotion/hotpromo/common/extra.png" />
     </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -53,23 +53,23 @@ export default defineComponent({
 })
 </script>
 <style scoped lang="scss">
-.common-promo {
-  background: url('../../assets/images/promotion/hotpromo/common/bg.png')no-repeat center center;
-    .contents {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      padding: 20px;
-      .orange {
-        color: #db7e42;
-      }
-      .claim-btn {
-        color: #ffffff;
-        background: $linear-bg-1;
-        border: 0;
-      }
-    }
-}
+// .common-promo {
+//   background: url('../../assets/images/promotion/hotpromo/common/bg.png')no-repeat center center;
+//     .contents {
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: center;
+//       align-items: center;
+//       gap: 20px;
+//       padding: 20px;
+//       .orange {
+//         color: #db7e42;
+//       }
+//       .claim-btn {
+//         color: #ffffff;
+//         background: $linear-bg-1;
+//         border: 0;
+//       }
+//     }
+// }
 </style>

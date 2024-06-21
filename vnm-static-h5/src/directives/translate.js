@@ -175,6 +175,8 @@ export const translateRecord = (rec, type = "") => {
     return "DB " + i18n.global.t('lang.livecasino');
   }else if (rec === "TFGaming") {
     return "TFGaming " + i18n.global.t('lang.esport');
+  } else if (rec === "TFGamingminigame") {
+    return "TFGaming " + i18n.global.t('lang.hashgame');
   } else if (rec === "WS") {
     return "WS168 " + i18n.global.t('lang.cockfight');
   }else if (rec === "SP") {

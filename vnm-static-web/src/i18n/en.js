@@ -27,6 +27,8 @@ export default {
     logout: "Logout"
   },
   account: {
+    no_card_avail: "No cards available, proceed to ",
+    add_a_bank_card: "Add a bank card",
     welcome: "Welcome",
     mainWallet: "Balance",
     reminder: "Require",
@@ -170,6 +172,7 @@ export default {
     chgPwd: "Change Password",
     chgWithdrawPwd: "Change withdrawal password",
     confirmWithdrawPwd: "Confirm withdrawal password",
+    loginPwd: "Login password",
     realName: "Real Name",
     birthday: "Birthday",
     zalo: "Zalo",
@@ -208,6 +211,7 @@ export default {
     oldWithdrawPwd: "Please enter Old Withdraw Password",
     newWithdrawPwd: "Please enter New Withdraw Password",
     confirmWithdrawPwd: "Please enter Confirm Withdraw Password",
+    loginPwd: "Please enter Login Password",
     title: "Please enter title",
     content: "Please enter content",
     usernamereq: "Please enter username",
@@ -286,7 +290,7 @@ export default {
     // vi-mualixi-redpacket
     congrats: "Congratulations",
     claim: "Claim",
-    
+
     record_win_status: "Win status",
     record_win_prize: "Winner Prize",
   },
@@ -345,7 +349,8 @@ export default {
     enterDigits: "Please enter digits",
     lengthShouldBe: "The length should be",
     smsCodeRequired: "Please enter the SMS verification code",
-    bankBranchAddress: "Bank branch address"
+    bankBranchAddress: "Bank branch address",
+    settleWithdrawPwd: "Please settle withdraw password"
   },
   referTerms: {
     promotionStart: "Promotion starts from 00:00:00 on 01/06/2022 (GMT+8)",
@@ -857,7 +862,8 @@ export default {
     otp_success_send_email: "OTP Code has been sent to your email",
     otp_success_send_phone: "OTP Code has been sent to your mobile number",
     claimed: "Claimed",
-    pending: "Pending"
+    pending: "Pending",
+    login_to_continue: "Please login to continue"
   },
   response: {
     101: "Platform not found",
@@ -922,8 +928,11 @@ export default {
     14001: "This phone number has already been registered",
     14002: "This email has already been registered",
     14003: "Affiliate code not found",
+    14010: "Network IP or SID duplicate",
     15202: "The new password cannot be the same as the old password.",
     15201: "Old password is incorrect.",
+    15204: "Phone number is incorrect.",
+    15205: "Login Password is incorrect",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

@@ -217,6 +217,7 @@ export default {
           record: "ریکارڈ",
           discount: "رعایت",
           bank: "بنک",
+          order: "اورڈر",
           message: "پیغام",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "ریکارڈ",
+      recordEndTitle: "آپ صفحے کے آخر تک پہنچ چکے ہیں۔",
+      betTitle: "شرط",
+      platformTitle: "گیم پلیٹ فارم"
+    },
+    order: {
       title: "لین دین کا ریکارڈ",
       tab: {
         deposit: {
@@ -397,6 +404,8 @@ export default {
             }
           }
         },
+        remind:
+          "گرم یاد دہانی: اگر کارڈ ہولڈر کا نام میچ نہیں ہوتا، تو آپ آن لائن کسٹمر سروس سے رابطہ کر کے معلومات درست کرا سکتے ہیں۔ آپ کے حمایت اور سمجھنے کا شکریہ!",
         confirmButton: "تصدیق کریں"
       },
       removeModal: {
@@ -476,43 +485,133 @@ export default {
       newUserError: "براہ کرم اپنی ذاتی تفصیلات بھریں"
     }
   },
-  shareView: {
+  rewardView: {
     title: "اِنعام کی رقم",
-    summary: {
-      income: "میری کل آمدنی",
-      invitees: "میرے کل دعوتیوں کی تعداد"
+    tabs: {
+      reward: "انعام",
+      teamManagement: "ٹیم کا انتظام",
+      teamBetting: "ٹیم بیٹنگ",
+      profitAndLoss: "صارف کا منافع اور نقصان"
     },
-    inviteLink: {
-      title: "دوستوں کو لنک کے ذریعے دعوت دیں",
-      description: "دعوتی بونس کیسے حاصل کریں۔",
-      step1: "دوستوں کو دعوتی لنک کے ذریعے مدعو کریں۔",
-      step2: "رجسٹریشن کے لئے لنک استعمال کریں۔",
-      step3: "رجسٹریشن کے بعد جمع کروائیں۔",
-      copyButton: "لنک کاپی کریں",
-      copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
-      copyFail: "لنک کاپی کرنے میں ناکامی"
-    },
-    earnYesterday: {
-      title: "کل کی موجودہ میزان",
-      table: {
-        header: {
-          player: "کھلاڑی",
-          money: "پیسے "
+    reward: {
+      summary: {
+        income: "میری کل آمدنی",
+        invitees: "میرے کل دعوتیوں کی تعداد"
+      },
+      inviteLink: {
+        title: "دوستوں کو لنک کے ذریعے دعوت دیں",
+        description: "دعوتی بونس کیسے حاصل کریں۔",
+        step1: "دوستوں کو دعوتی لنک کے ذریعے مدعو کریں۔",
+        step2: "رجسٹریشن کے لئے لنک استعمال کریں۔",
+        step3: "رجسٹریشن کے بعد جمع کروائیں۔",
+        copyButton: "لنک کاپی کریں",
+        copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
+        copyFail: "لنک کاپی کرنے میں ناکامی",
+        shareTitle: "B9GAME شیئر کریں اور کمائیں",
+        shareText:
+          "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
+      },
+      earnYesterday: {
+        title: "کل کی موجودہ میزان",
+        table: {
+          header: {
+            player: "کھلاڑی",
+            money: "پیسے "
+          }
         }
+      },
+      info: {
+        bet: "شرط لگانا",
+        eligibleRefer: "اہل ریفر",
+        invite: "دعوت دینا",
+        topUp: "تاپ اپ"
+      },
+      bonus: {
+        table: {
+          header: {
+            friendCount: "دوستوں کی تعداد",
+            inviteBonus: "دعوتی بونس"
+          }
+        }
+      },
+      shareModal: {
+        title: "شیئر کریں اور کمائیں"
       }
     },
-    info: {
-      bet: "شرط لگانا",
-      eligibleRefer: "اہل ریفر",
-      invite: "دعوت دینا",
-      topUp: "تاپ اپ"
-    },
-    bonus: {
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "سبھی ڈاؤن لائنز",
+          direct: "سیدھے ڈاؤن لائنز"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
       table: {
-        header: {
-          friendCount: "دوستوں کی تعداد",
-          inviteBonus: "دعوتی بونس"
-        }
+        type: "انواع",
+        username: "صارف کا نام",
+        emark: "اي ماركس",
+        upLine: "اَپ لائن ایجنٹ",
+        registrationDate: "رجسٹریشن تاریخ",
+        balance: "بیلنس",
+        lastLogin: "آخری لاگ ان وقت",
+        lastDeposit: "آخری جمع وقت"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل"
+        },
+        gameType: {
+          label: "کھیل کی قسم",
+          options: {
+            slot: "اسلام و علیکم",
+            live: "زندہ کیسینو",
+            sport: "کھیل",
+            fish: "مچھلی",
+            poker: "پوکر"
+          }
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        vendor: "فروخت کار",
+        gameType: "کھیل کی قسم",
+        betAmount: "شرط رقم",
+        winning: "فتح",
+        validBet: "درست شرط",
+        balance: "فتح/نقصان",
+        rounds: "راؤنڈ",
+        player: "کھلاڑی"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل",
+          "7day": "7 دن"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        username: "صارف کا نام",
+        deposit: "جمع",
+        withdraw: "واپسی",
+        bonus: "انعام",
+        validBet: "معتبر شرط",
+        balance: "فتح/نقصان",
+        rebate: "کھلاڑی کی ریبیٹ",
+        referral: "رجحان",
+        profitAndLoss: "منافع اور نقصان",
+        depositFee: "جمع کرانے کی فیس"
       }
     }
   },
@@ -643,6 +742,20 @@ export default {
           required: "براہ کرم پاس ورڈ درج کریں",
           min: "پاس ورڈ کے حروف 6 سے زیادہ ہونے چاہئیں"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "سیٹل",
+        settled: "سیٹلڈ",
+        betAndSettle: "شرط اور سیٹل",
+        cancel: "منسوخ کریں",
+        rollback: "رول بیک",
+        bet: "شرط",
+        patch: "پیچ",
+        unsettled: "غیر سیٹلڈ",
+        jackpot: "جیک پاٹ",
+        bonus: "بونس"
       }
     }
   },

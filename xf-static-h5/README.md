@@ -15,17 +15,27 @@ quasar dev
 ```
 
 
-### Lint the files
-```bash
-yarn lint
-# or
-npm run lint
-```
-
-
 ### Build the app for H5 production
 ```bash
 quasar build
+```
+
+### Run LiveReload on Device
+```bash
+1. Run CMD
+quasar dev
+
+2. Plug your Device, Open 2nd CMD and run:
+cd src-capacitor
+npx cap run android -l
+
+3. Select Your Device and click Enter.
+
+4. So it will build and run App on your device, and you can do a LiveReload on it.
+
+5. If you want to change port/host, can try RUN: (You need to change IP to your own IP.)
+npx cap run android -l --host=192.168.79.69 --port=9090
+
 ```
 
 ### Build The App in Android.

@@ -7,7 +7,6 @@
     />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        v-if="isMounted"
         :collapse="isCollapse"
         :unique-opened="false"
         :default-active="activeMenu"

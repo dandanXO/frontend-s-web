@@ -1,40 +1,34 @@
 <template>
-  <div class="node" v-if="list && list.length !== 0">
+  <div v-if="isFetchingApi" class="node-content payment-method-wrapper">
+    <q-skeleton v-for="rectSkeleton in 4" type="rect" class="withdraw-type-item" style="width:250px; height:45px;"
+      :key="rectSkeleton" />
+  </div>
+  <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
     <!-- <div class="title" v-else>{{ name }}</div> -->
     <div v-else>
       <span class="account-title">{{ name }}</span>
     </div>
     <div class="node-content payment-method-wrapper">
-      <div
-        class="node-item payment-method-item"
-        :id="level + '_' + i"
-        @click="clickItem(item)"
-        :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
-        :key="i"
-        v-for="(item, i) in list"
-      >
+      <div class="node-item payment-method-item" :id="level + '_' + i" @click="clickItem(item)" :class="[
+        item.children ? 'node-group' : '',
+        selectItem === item ? 'active' : '',
+      ]" :key="i" v-for="(item, i) in list">
         <div class="node-text">
-          <div class="node-icon"><img :src="imgURL + item.nodeIcon" /></div>
+          <div class="node-icon"><q-img :src="imgURL + item.nodeIcon" style="height: 26px; width: 26px;"
+              :fit="'scale-down'">
+              <template v-slot:loading>
+                <q-spinner-orbit size="0.5em" />
+              </template>
+            </q-img></div>
           <div class="">{{ item.nodeName }}</div>
-          <div
-            class="promo"
-            :style="
-              item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
-            "
-          >
+          <div class="promo" :style="item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
+            ">
             <span class="val">{{ item.promoValue }}</span>
           </div>
           <div class="payment-method-wrapper">
-            <div
-              class="payment-method-item"
-              v-for="pm in payMethods"
-              :key="pm.id"
-              :class="{ active: pm.nodeName === activeMethod }"
-            >
+            <div class="payment-method-item" v-for="pm in payMethods" :key="pm.id"
+              :class="{ active: pm.nodeName === activeMethod }">
               <img :src="imgURL + pm.nodeIcon" />
               <div>{{ pm.nodeName }}</div>
             </div>
@@ -54,36 +48,28 @@
       <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
 
-<!--    <div class="sublist-container">-->
-<!--      <span class="account-title">{{ subtitle }}: </span>-->
-<!--      <q-radio-->
-<!--          v-for="item in sublist"-->
-<!--          v-model="selectedSubItem"-->
-<!--          :key="`${item.key}`"-->
-<!--          :val="item"-->
-<!--      >-->
-<!--        <slot>-->
-<!--          <div class="sublist-item">-->
-<!--            <img :src="imgURL + item.nodeIcon" />-->
-<!--            {{ item.nodeName }}-->
-<!--          </div>-->
-<!--        </slot>-->
-<!--      </q-radio>-->
-<!--    </div>-->
+    <!--    <div class="sublist-container">-->
+    <!--      <span class="account-title">{{ subtitle }}: </span>-->
+    <!--      <q-radio-->
+    <!--          v-for="item in sublist"-->
+    <!--          v-model="selectedSubItem"-->
+    <!--          :key="`${item.key}`"-->
+    <!--          :val="item"-->
+    <!--      >-->
+    <!--        <slot>-->
+    <!--          <div class="sublist-item">-->
+    <!--            <img :src="imgURL + item.nodeIcon" />-->
+    <!--            {{ item.nodeName }}-->
+    <!--          </div>-->
+    <!--        </slot>-->
+    <!--      </q-radio>-->
+    <!--    </div>-->
 
     <div :key="i + nodeKey" v-for="(item, i) in list">
-      <node
-          @click="clickChildItem(item)"
-          :name="item.nodeName"
-          :class="[
-          item.children ? 'node-group' : '',
-          selectItem === item ? 'active' : '',
-        ]"
-          v-if="selectItem === item"
-          :level="parseInt(level) + 1"
-          :list="item.children"
-          v-bind="$attrs"
-      />
+      <node @click="clickChildItem(item)" :name="item.nodeName" :class="[
+        item.children ? 'node-group' : '',
+        selectItem === item ? 'active' : '',
+      ]" v-if="selectItem === item" :level="parseInt(level) + 1" :list="item.children" v-bind="$attrs" />
     </div>
   </div>
 </template>
@@ -138,6 +124,10 @@ export default defineComponent({
     },
   },
   props: {
+    isFetchingApi: {
+      type: Boolean,
+      default: false,
+    },
     list: {
       type: Array,
       default: function () {
@@ -239,6 +229,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 $node-color: #dd4645;
+
 .title {
   color: $group-color;
   margin: 10px auto;
@@ -246,6 +237,7 @@ $node-color: #dd4645;
   margin-left: 18px;
   margin-bottom: 10px;
 }
+
 .title::before,
 .title::after {
   content: "";
@@ -256,14 +248,17 @@ $node-color: #dd4645;
   background-image: linear-gradient(0deg, #04a509 0%, $group-color 100%),
     linear-gradient(#ffffff, #ffffff);
 }
+
 .title::before {
   top: 8px;
   left: -16px;
 }
+
 .title::after {
   top: 15px;
   left: -10px;
 }
+
 .payment-method-wrapper {
   // display: grid;
   // grid-template-columns: repeat(auto-fill, 200px);
@@ -286,13 +281,14 @@ $node-color: #dd4645;
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: 2px solid #4b4b4b;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
+
     &:hover {
       // border-bottom: 3px solid rgba(255, 255, 255, .4);
     }
+
     &.active {
       // background: rgba(255,255,255, .2);
       border-color: $node-color;
@@ -311,15 +307,19 @@ $node-color: #dd4645;
     }
   }
 }
+
 .container {
   margin: -20px;
 }
-.container > .node:first-of-type {
+
+.container>.node:first-of-type {
   margin-top: 0;
 }
-.container > .node:first-of-type {
+
+.container>.node:first-of-type {
   padding: 500px;
 }
+
 .node:not(.node) {
   border-bottom: 1px solid #484460;
   // .node  {
@@ -327,6 +327,7 @@ $node-color: #dd4645;
   //   padding: 0 25px;
   //   margin: 0 -25px;
 }
+
 .node {
   .node {
     .account-title-container {
@@ -337,24 +338,22 @@ $node-color: #dd4645;
       font-weight: bold;
     }
   }
+
   .node-content {
     .payment-method-item {
       text-align: center;
       padding: 10px 8px;
       cursor: pointer;
       background: #252e43;
-      box-shadow: 6px 6px #161b23;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
-      &:hover {
-      }
       &.active {
         background-color: #1c1c32;
         border-radius: 6px;
-        border: solid 1px #1c1c32;
-        box-shadow: none;
         filter: drop-shadow(0px 0px 3px #ffffff);
       }
     }
+
     .node-item {
       display: flex;
       justify-content: center;
@@ -364,6 +363,7 @@ $node-color: #dd4645;
         display: none;
       }
     }
+
     .node-text {
       display: flex;
       justify-content: center;
@@ -372,17 +372,20 @@ $node-color: #dd4645;
       // overflow: hidden;
       // width: 140px;
       justify-content: flex-start;
+
       .overflow {
         text-overflow: ellipsis;
         width: 104px;
         overflow: hidden;
       }
+
       img {
         max-width: 2.3rem;
         margin-bottom: 0;
       }
     }
   }
+
   // .node-content {
   //   display: flex;
   //   align-items: stretch;
@@ -435,18 +438,23 @@ $node-color: #dd4645;
     display: flex;
     justify-content: flex-end;
   }
+
   .el-icon-edit,
   .el-icon-remove {
     padding: 5px;
   }
+
   .el-icon-edit {
     color: $node-color;
   }
+
   .el-icon-remove {
     color: $node-color;
   }
+
   .node-item {
     position: relative;
+
     .promo {
       position: absolute;
       right: 0;
@@ -454,6 +462,7 @@ $node-color: #dd4645;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;
+
       // top: -5px;
       // right: 0;
       // background: #dd4645;
@@ -472,6 +481,7 @@ $node-color: #dd4645;
       ::after {
         position: relative;
       }
+
       // .val{
       //   position: absolute;
       //   z-index: 999999;
@@ -484,6 +494,7 @@ $node-color: #dd4645;
       // }
     }
   }
+
   // .node-item {
   //   &.selected{
   //     border-bottom: 5px solid $node-color;
@@ -502,6 +513,7 @@ $node-color: #dd4645;
   //   }
   // }
 }
+
 @media (max-width: 768px) {
   .node {
     .node {
@@ -523,6 +535,7 @@ $node-color: #dd4645;
     .q-radio__inner {
       margin-left: -0.25em;
     }
+
     .q-radio__inner--truthy {
       color: #fff !important;
     }

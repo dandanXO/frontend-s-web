@@ -205,7 +205,7 @@
               </span>
             </div>
             <div class="q-mt-md text-neontb">
-              *特别说明：三方自动收取提币 1.00 USDT 手续费！
+              *提币手续费：1.00 USDT
             </div>
           </div>
           <div v-else-if="isEWALLET">
@@ -490,7 +490,7 @@ export default defineComponent({
 
     const chooseLabel = () => {
       if (isUSDT.value) {
-        return '虚拟币'
+        return '钱包地址'
       } else if (isEWALLET.value) {
         return '电子钱包'
       } else {

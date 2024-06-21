@@ -217,6 +217,7 @@ export default {
           record: "Record",
           discount: "Discount",
           bank: "Bank",
+          order: "Order",
           message: "Message",
           vip: "VIP"
         }
@@ -266,6 +267,12 @@ export default {
       }
     },
     record: {
+      title: "Record",
+      recordEndTitle: "You have reached the end of the page.",
+      betTitle: "Bet",
+      platformTitle: "Game Platform"
+    },
+    order: {
       title: "Transaction Record",
       tab: {
         deposit: {
@@ -398,6 +405,8 @@ export default {
             }
           }
         },
+        remind:
+          "Warm reminder: If the cardholder’s name does not match, you can contact online customer service to correct the information. Thank you for your support and understanding!",
         confirmButton: "CONFIRM"
       },
       removeModal: {
@@ -477,43 +486,133 @@ export default {
       newUserError: "Please fill in your personal details"
     }
   },
-  shareView: {
+  rewardView: {
     title: "Reward amount",
-    summary: {
-      income: "My Total Income",
-      invitees: "My Total Number Of Invitees"
+    tabs: {
+      reward: "Reward",
+      teamManagement: "Team management",
+      teamBetting: "Team betting",
+      profitAndLoss: "User profit and loss"
     },
-    inviteLink: {
-      title: "Invite friends via link",
-      description: "How to get invitation bonus",
-      step1: "Invite friends via invitation link",
-      step2: "Register via link",
-      step3: "Complete deposit after registration",
-      copyButton: "Copy link",
-      copySuccess: "Link copied to clipboard",
-      copyFail: "Failed to copy link"
-    },
-    earnYesterday: {
-      title: "Total amount sent as of yesterday",
-      table: {
-        header: {
-          player: "player",
-          money: "money"
+    reward: {
+      summary: {
+        income: "My Total Income",
+        invitees: "My Total Number Of Invitees"
+      },
+      inviteLink: {
+        title: "Invite friends via link",
+        description: "How to get invitation bonus",
+        step1: "Invite friends via invitation link",
+        step2: "Register via link",
+        step3: "Complete deposit after registration",
+        copyButton: "Copy link",
+        copySuccess: "Link copied to clipboard",
+        copyFail: "Failed to copy link",
+        shareText:
+          "B9GAME Share and Earn:\n\tEarn up to 500 Rs per friend.\n\tGet a 5% rebate on your first deposit.\n\tEnjoy a long-term 0.6% rebate on all bets.\nDownload the app now and receive a mystery cash reward!\n{url}",
+        shareTitle: "B9GAME Share and Earn"
+      },
+      earnYesterday: {
+        title: "Total amount sent as of yesterday",
+        table: {
+          header: {
+            player: "player",
+            money: "money"
+          }
         }
+      },
+      info: {
+        bet: "Bet",
+        eligibleRefer: "Eligible Refer",
+        invite: "Invite",
+        topUp: "Top Up"
+      },
+      bonus: {
+        table: {
+          header: {
+            friendCount: "Friend Count",
+            inviteBonus: "Invite Bonus"
+          }
+        }
+      },
+      shareModal: {
+        title: "Share and Earn"
       }
     },
-    info: {
-      bet: "Bet",
-      eligibleRefer: "Eligible Refer",
-      invite: "Invite",
-      topUp: "Top Up"
-    },
-    bonus: {
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "All Down Lines",
+          direct: "Direct Down Lines"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "Search"
+      },
       table: {
-        header: {
-          friendCount: "Friend Count",
-          inviteBonus: "Invite Bonus"
-        }
+        type: "Types",
+        username: "Username",
+        emark: "Emarks",
+        upLine: "Upline Agent",
+        registrationDate: "Registration Date",
+        balance: "Balance",
+        lastLogin: "Last Login Time",
+        lastDeposit: "Last Deposit Time"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday"
+        },
+        gameType: {
+          label: "Game Type",
+          options: {
+            slot: "Slot",
+            live: "Live Casino",
+            sport: "Sports",
+            fish: "Fish",
+            poker: "Poker"
+          }
+        },
+        searchButton: "Search"
+      },
+      table: {
+        vendor: "Vendor",
+        gameType: "Game Type",
+        betAmount: "Bet Amount",
+        winning: "Winning",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rounds: "Rounds",
+        player: "Player"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "Today",
+          yesterday: "Yesterday",
+          "7day": "7-Days"
+        },
+        username: {
+          placeholder: "User name"
+        },
+        searchButton: "Search"
+      },
+      table: {
+        username: "Username",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
+        bonus: "Bonus",
+        validBet: "Valid Bet",
+        balance: "Win/Loss",
+        rebate: "Player Rebate",
+        referral: "Referral",
+        profitAndLoss: "Profit And Loss",
+        depositFee: "Deposit Fee"
       }
     }
   },
@@ -644,6 +743,20 @@ export default {
           required: "Please insert password",
           min: "The characters of password must be above 6"
         }
+      }
+    },
+    status: {
+      bet: {
+        settle: "Settle",
+        settled: "Settled",
+        betAndSettle: "Bet and Settle",
+        cancel: "Cancel",
+        rollback: "Rollback",
+        patch: "Patch",
+        bet: "Bet",
+        unsettled: "Unsettled",
+        jackpot: "Jackpot",
+        bonus: "Bonus"
       }
     }
   },

@@ -162,16 +162,13 @@
               {{ t('gameType.LIVE') }}
             </th>
             <th>
-              {{ t('gameType.SLOT') }}
-            </th>
-            <th>
               {{ t('gameType.SPORT') }}
             </th>
             <th>
-              {{ t('gameType.ESPORT') }}
+              {{ t('gameType.SLOT') }}
             </th>
             <th>
-              {{ t('gameType.FISH') }}
+              {{ t('gameType.MINIGAME') }}
             </th>
           </tr>
           <tr>
@@ -182,13 +179,10 @@
               {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet }}
             </td>
             <td>
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet)).toFixed(0) }}
+            </td>
+            <td>
               {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet }}
-            </td>
-            <td>
-              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet }}
             </td>
             <td>
               {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet }}
@@ -202,13 +196,10 @@
               {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalPayout }}
             </td>
             <td>
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+            </td>
+            <td>
               {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalPayout }}
             </td>
             <td>
               {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalPayout }}
@@ -222,13 +213,10 @@
               {{ gameTypeFilter("LIVE") === null ? 0 : gameTypeFilter("LIVE")[0].totalBet - gameTypeFilter("LIVE")[0].totalPayout }}
             </td>
             <td>
+              {{ ((gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout) + (gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout)).toFixed(0) }}
+            </td>
+            <td>
               {{ gameTypeFilter("SLOT") === null ? 0 : gameTypeFilter("SLOT")[0].totalBet - gameTypeFilter("SLOT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("SPORT") === null ? 0 : gameTypeFilter("SPORT")[0].totalBet - gameTypeFilter("SPORT")[0].totalPayout }}
-            </td>
-            <td>
-              {{ gameTypeFilter("ESPORT") === null ? 0 : gameTypeFilter("ESPORT")[0].totalBet - gameTypeFilter("ESPORT")[0].totalPayout }}
             </td>
             <td>
               {{ gameTypeFilter("FISH") === null ? 0 : gameTypeFilter("FISH")[0].totalBet - gameTypeFilter("FISH")[0].totalPayout }}
@@ -276,7 +264,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span
               v-formatter="{data: scope.row.depositAmount, type: 'money'}"
             />
@@ -289,7 +277,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span
               v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
             />
@@ -302,7 +290,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
@@ -313,7 +301,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.rebate, type: 'money'}" />
           </template>
         </el-table-column>
@@ -324,7 +312,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.bet, type: 'money'}" />
           </template>
         </el-table-column>
@@ -335,7 +323,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
           </template>
         </el-table-column>
@@ -346,7 +334,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
@@ -357,7 +345,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span
               v-formatter="{data: scope.row.platformFee, type: 'money'}"
             />
@@ -370,13 +358,13 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.paymentFee, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column prop="ngr" label="NGR" align="center" width="120">
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.ngr, type: 'money'}" />
           </template>
         </el-table-column>
@@ -559,7 +547,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span
               v-formatter="{data: scope.row.depositAmount, type: 'money'}"
             />
@@ -572,7 +560,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span
               v-formatter="{data: scope.row.withdrawAmount, type: 'money'}"
             />
@@ -585,7 +573,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.bonus, type: 'money'}" />
           </template>
         </el-table-column>
@@ -596,7 +584,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.bet, type: 'money'}" />
           </template>
         </el-table-column>
@@ -607,7 +595,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.adjustment, type: 'money'}" />
           </template>
         </el-table-column>
@@ -618,7 +606,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.payout, type: 'money'}" />
           </template>
         </el-table-column>
@@ -629,7 +617,7 @@
           width="120"
         >
           <template #default="scope">
-            $
+            {{ parseInt(store.state.user.siteId) === 10 ? '₩' : '$' }}
             <span v-formatter="{data: scope.row.profit, type: 'money'}" />
           </template>
         </el-table-column>

@@ -197,7 +197,7 @@ $node-color: #33bcd4;
   // display: flex;
   grid-gap: 15px;
   display: grid;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
   align-items: flex-start;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account-content transit">
-      <q-tabs v-model="recordActive" class="form-wrapped">
+      <q-tabs v-model="recordActive" class="form-wrapped" dense>
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />
         <q-tab name="turnover" :label="$t('lang.turnover')" />
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
@@ -149,10 +149,8 @@
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td>
-                <div>
+              <q-td class="text-center">
                   {{ getTurnoverType(props?.props?.value) }}
-                </div>
               </q-td>
             </template>
         </DataTable>
@@ -484,13 +482,14 @@
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
 import {api} from "boot/axios"
 import {SessionStorage, useQuasar} from "quasar"
-import * as _ from "lodash"
+import each from "lodash/each"
 import {userStore} from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
 import {useI18n} from "vue-i18n";
 import DateFilter from 'components/transaction/DateFilter';
 import DataTable from 'components/transaction/DataTable';
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "TransitRecordView",
@@ -504,8 +503,9 @@ export default defineComponent({
     var qs = require("qs");
     const store = userStore();
     const {t} = useI18n();
+    const route = useRoute();
     const uploadFileRef = ref();
-    const recordActive = ref("gameBetRecord");
+    const recordActive = ref(route.query.tab || "gameBetRecord");
     const isConfirmWithdraw = ref(false);
     const passDet = ref(null);
     const reminderForm = reactive({});
@@ -513,6 +513,7 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
+    
     const $q = useQuasar();
     const dateLocale = {
         days: [
@@ -632,7 +633,8 @@ export default defineComponent({
     const commonColumns = [
       {
         label: t('lang.order_number'),
-        field: "serialNumber"
+        field: "serialNumber",
+        align: 'left'
       }
     ];
     const tableColumns = {
@@ -646,12 +648,14 @@ export default defineComponent({
         {
           label: t('lang.status'),
           field: "status",
-          name: "status"
+          name: "status",
+          align: 'center'
         },
         {
           label: t('lang.deposit_date'),
           field: "depositDate",
-          name: "depositDate"
+          name: "depositDate",
+          align: 'center'
           // slots: { customRender: "depositDate" }
         },
         {
@@ -669,7 +673,8 @@ export default defineComponent({
         {
           label: t('lang.status'),
           field: "status",
-          name: "status"
+          name: "status",
+          align: 'center'
         },
         // {
         //   label: 'Confirm Status',
@@ -680,6 +685,7 @@ export default defineComponent({
         {
           label: t('lang.withdraw_date'),
           field: "withdrawDate",
+          align: 'center'
           // slots: { customRender: "withdrawDate" }
         },
         {
@@ -735,7 +741,8 @@ export default defineComponent({
         {
           label: t('lang.type'),
           field: "type",
-          name: "type"
+          name: "type",
+          align: 'center'
         },
         {
           label: t('lang.amount'),
@@ -748,6 +755,7 @@ export default defineComponent({
         {
           label: t('lang.record_time'),
           field: "recordTime",
+          align: 'center'
           // slots: { customRender: "recordTime" }
         }
       ],
@@ -1179,7 +1187,7 @@ export default defineComponent({
 
     const removeSessionKeys = (prefix) => {
       var keys = SessionStorage.getAllKeys();
-      _.each(keys, function (key, item) {
+      each(keys, function (key, item) {
         // console.log(key);
         if (key.indexOf(prefix) > -1) {
           SessionStorage.remove(key);

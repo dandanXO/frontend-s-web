@@ -88,7 +88,7 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title">{{ $t("form.depositAmount") }}</div>
+          <div class="lil-title flex-div">{{ $t("form.depositAmount") }}   <div class="tutorial-link" @click="openDepositPage" style="margin-left:25px;">{{ $t("deposit.depositTutorial") }}</div></div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -174,6 +174,13 @@
       <div class="q-mt-sm">Eg. Deposit 100 Rs, require 1,000 Rs wager</div>
     </div>
 
+    <div class="q-mt-sm step-desc-div q-mb-lg">
+      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
+      <p>2. Fill in the correct wallet account number</p>
+      <p>3. Fill in the correct CNIC number</p>
+      <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
+    </div>
+
     <div class="bottom-content" style="height: 110px"></div>
 
     <div class="bottom-btn">
@@ -186,7 +193,7 @@
       >
         {{ $t("btn.submit") }}
       </q-btn>
-      <div class="tutorial-link q-mt-sm" @click="isDepositTutorial = true">{{ $t("deposit.depositTutorial") }}</div>
+      <!--      <div class="tutorial-link q-mt-sm" @click="openDepositPage">{{ $t("deposit.depositTutorial") }}</div>-->
     </div>
   </div>
 
@@ -733,6 +740,28 @@ const refreshNode = () => {
 
 const isDepositTutorial = ref(false);
 
+const openDepositPage = () => {
+  // alert(selectedPayType.value);
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    // isDepositTutorial.value= true;
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
+  }else {
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+  }
+}
+
+const openDepositVideo =() => {
+  if(selectedPayType.value === "EASYPAISA"){
+    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
+  }else if(selectedPayType.value === "JAZZCASH"){
+    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
+  }else {
+    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
+  }
+}
+
 onActivated(() => {
   checkNewUser();
   loadInfo();
@@ -1005,6 +1034,12 @@ onMounted(() => {
   }
 }
 
+.flex-div{
+  display:flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .deposit-wrapper {
   // width: 95%;
   margin: auto;
@@ -1029,6 +1064,14 @@ onMounted(() => {
 .tutorial-link {
   color: #70bc62;
   text-decoration: underline;
+}
+
+.step-desc-div{
+  color: #bacef1;
+
+  p{
+    margin: 5px 0px;
+  }
 }
 
 .close-alert {

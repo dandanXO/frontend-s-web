@@ -150,7 +150,7 @@
               v-for="game in gamePage.gameList"
               :key="game.id"
             >
-              <a @click="openGame(game, selectedPlat, game.code)">
+              <a @click="openGame(game)">
                 <div class="slot-img">
                   <el-image :src="game.icon" lazy>
                     <template #placeholder>
@@ -216,7 +216,7 @@
               v-for="platform in filteredPlatforms"
               :key="platform.id"
             >
-              <a @click="openGame(platform, platform.code, platform.gameCode)">
+              <a @click="openGame(platform)">
                 <div class="slot-img">
                   <el-image
                     :src="loadGameIcon(`${platform.gameType.toLowerCase()}/${platform.code.toLowerCase()}.png`)"
@@ -353,9 +353,19 @@ const clickPlat = (plat) => {
   selectedPlat.value = plat.code;
 };
 
-const openGame = (item, platformCode, gameCode) => {
-  const platName = item.alias ?? item.cnname ?? item.name;
-  platformGame.value.open(platName, platformCode, gameCode);
+const openGame = (game) => {
+  console.log(game);
+  switch (props.platformType) {
+    case "slot":
+    case "fishing":
+    case "poker":
+    case "sports":
+      platformGame.value.open(game.name, route.query.plat, game.code, props.platformGameType);
+      break;
+    case "live":
+      platformGame.value.open(game.name, game.code, "", props.platformGameType);
+      break;
+  }
 };
 
 const activePlat = ref("");
@@ -363,7 +373,7 @@ const activePlat = ref("");
 const gamePage = reactive({
   gameList: [],
   currentPage: 1,
-  pageSize: 15,
+  pageSize: 20,
   searchType: "",
   searchKey: "",
   total: 0

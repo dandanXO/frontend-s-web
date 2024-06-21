@@ -3,10 +3,10 @@
     <div class="language-content-wrapper">
       <span class="language-title">{{ $t("layout.header.languageModal.title") }}</span>
       <a-checkbox-group
-        v-model:value="selectedLanguage"
+        v-model:value="selectedValue"
         class="language-list"
         name="language"
-        @change="handleLanguageChange"
+        @change="handleCheckedChange"
       >
         <label v-for="(language, index) in languages" :key="index" :for="language.value" class="language-item">
           <div class="language-item__label">
@@ -19,7 +19,7 @@
           <a-checkbox :value="language.value" :id="language.value" />
         </label>
       </a-checkbox-group>
-      <button class="common-btn" :disabled="!selectedLanguage.length" @click="handleSubmit">
+      <button class="common-btn" :disabled="!selectedValue.length" @click="handleSubmit">
         {{ $t("layout.header.languageModal.confirmButton") }}
       </button>
     </div>
@@ -27,6 +27,7 @@
 </template>
 <script setup>
 import { LANGUAGE_DEFAULT_VALUE, LANGUAGE_KEY } from "@/constant/localStorage";
+import { useSingleCheckbox } from "@/hooks/singleCheckbox";
 import { useLocalStorage } from "@vueuse/core";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -35,26 +36,20 @@ const visible = defineModel();
 
 const { locale } = useI18n();
 const currentLanguage = useLocalStorage(LANGUAGE_KEY, LANGUAGE_DEFAULT_VALUE);
+const { selectedValue, handleCheckedChange } = useSingleCheckbox();
 
 const languages = ref([
   { flag: "🇺🇸", name: "US", value: "en" },
   { flag: "🇵🇰", name: "پاکستان", value: "ur" }
 ]);
 
-const selectedLanguage = ref([]);
-
-const handleLanguageChange = (value) => {
-  if (value.length <= 1) return;
-  selectedLanguage.value = value.slice(-1);
-};
-
 const handleSubmit = () => {
-  locale.value = selectedLanguage.value[0];
-  currentLanguage.value = selectedLanguage.value[0];
+  locale.value = selectedValue.value[0];
+  currentLanguage.value = selectedValue.value[0];
   visible.value = false;
 };
 
-const resetSelectedLanguage = () => (selectedLanguage.value = [locale.value]);
+const resetSelectedLanguage = () => (selectedValue.value = [locale.value]);
 
 onMounted(resetSelectedLanguage);
 
@@ -71,7 +66,6 @@ watch(visible, resetSelectedLanguage);
   .language-title {
     margin-bottom: 45px;
     font-size: 18px;
-    font-weight: 700;
     line-height: 20.92px;
     text-align: center;
     color: #fff;

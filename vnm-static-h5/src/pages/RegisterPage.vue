@@ -137,7 +137,7 @@
         </template>
         </q-input>
 
-<!-- 
+<!--
         <q-label>
           {{ $t("lang.mobile_number") }}
           <em>*</em>
@@ -153,7 +153,7 @@ dense
           clearable
           type="number"
           :rules="[
-            val => !!val || $t('lang.mobile_number_required'), 
+            val => !!val || $t('lang.mobile_number_required'),
             val => val.length === 10 || $t('lang.mobile_number_length'),
             val => /^0\d{9}$/.test(val) || $t('lang.mobile_number_starts_with_0'),
             val => (val && val.length > 7) || $t('lang.mobile_number_valid')
@@ -301,10 +301,11 @@ import { defineComponent, ref, reactive, onMounted, watch, onActivated } from "v
 import { api } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
 import { useRoute, useRouter } from "vue-router";
-// import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { userStore } from "stores/index";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
+import { useUI } from "stores/ui";
+import { isAndroid } from "boot/utils";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -432,6 +433,22 @@ export default defineComponent({
     };
 
     const router = useRouter();
+    const ui = useUI();
+
+    const trackRegisterSuccessEvent = () => {
+      if (ui.adjust_register_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
+    const trackRegisterFailedEvent = () => {
+      if(ui.adjust_register_fail_event && isAndroid()) {
+        var adjustEvent = new AdjustEvent(ui.adjust_register_fail_event);
+        Adjust.trackEvent(adjustEvent);
+      }
+    }
+
     const onSubmit = () => {
       loginNameRef.value.validate();
       pwdRef.value.validate();
@@ -460,7 +477,14 @@ export default defineComponent({
         const sidParam = store.visitorId;
 
         (async () => {
-          regForm.sid = sidParam;
+          if (store.googleadid) {
+            regForm.sid = store.googleadid;
+          } else if (store.aaid) {
+            regForm.sid = store.aaid;
+          } else {
+            regForm.sid = "fp-" + sidParam;
+            regForm.isfinger= "1";
+          }
           regForm.regDevice = $q.platform.is.mobile ? "H5" : "WEB";
           if ("standalone" in window.navigator && window.navigator.standalone) {
             regForm.regDevice = "IOS";
@@ -484,6 +508,7 @@ export default defineComponent({
               // console.log("RET");
               // console.log(ret);
               if (res.code === 0) {
+
                 // $q.notify({
                 //   color: "positive",
                 //   position: "top",
@@ -491,11 +516,14 @@ export default defineComponent({
                 //   icon: "check_circle_outline"
                 // });
 
+                //ADJUST TRACKEVENT.
+                trackRegisterSuccessEvent();
+
                 // FB tracking :: signup-success
                 if (store.isAffiliateA) {
                   fbq("track", "signup-success");
                 }
-                if(window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1){
+                if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
                   otag("event", "registration");
                 }
 
@@ -504,8 +532,6 @@ export default defineComponent({
                 if (store.hasToken()) {
                   router.push({path:"/", query:{ name:"welcome"}});
                 }
-
-                sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({
                   color: "negative",
@@ -517,6 +543,7 @@ export default defineComponent({
               $q.loading.hide();
             })
             .catch((error) => {
+              trackRegisterFailedEvent();
               $q.loading.hide();
             });
           getCode();
@@ -642,7 +669,10 @@ export default defineComponent({
       openPhoneVeriDialog,
       phoneVerificationRef,
       isValidCnPhone,
-      hasAffiliate
+      hasAffiliate,
+      trackRegisterSuccessEvent,
+      trackRegisterFailedEvent,
+      ui
     };
   }
 });

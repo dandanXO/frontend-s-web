@@ -6,9 +6,9 @@
     <el-tab-pane :label="t('fields.uefaMatchRecord')" name="uefa-match-record" v-if="hasPermission(['sys:uefa-match-record:list'])">
       <RecordTab />
     </el-tab-pane>
-    <!-- <el-tab-pane :label="t('fields.uefaSettlement')" name="uefa-settlement" v-if="hasPermission(['sys:uefa-settlement:list'])">
+    <el-tab-pane :label="t('fields.uefaSettlement')" name="uefa-settlement" v-if="hasPermission(['sys:uefa-settlement:list'])">
       <SettlementTab />
-    </el-tab-pane> -->
+    </el-tab-pane>
   </el-tabs>
 </template>
 
@@ -17,7 +17,7 @@ import { defineComponent, computed } from "vue";
 import { useRouter } from "vue-router";
 import SettingTab from "./setting/index.vue";
 import RecordTab from "./record/index.vue";
-// import SettlementTab from "./settle/index.vue";
+import SettlementTab from "./settle/index.vue";
 import { useI18n } from "vue-i18n";
 import { hasPermission } from "../../../../utils/util";
 
@@ -25,7 +25,7 @@ export default defineComponent({
   components: {
     SettingTab,
     RecordTab,
-    // SettlementTab
+    SettlementTab
   },
   setup() {
     const { t } = useI18n()

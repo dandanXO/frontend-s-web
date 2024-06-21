@@ -11,7 +11,7 @@ import { api } from "boot/axios";
 import CsClient from "csweb-client";
 //test-update
 import { userStore } from "stores/index";
-import * as _ from "lodash";
+import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
@@ -40,7 +40,7 @@ export default defineComponent({
         console.log(visitorId);
 
         const obj = {
-          identifier:  store.visitorId,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -56,13 +56,19 @@ export default defineComponent({
 
     let csclient;
     const initCsWeb = () => {
-      csclient = new CsClient("5", regDevice, "kr", "2", "prod");
+      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
 
       csclient.set("pageurl", "/liveChat");
       csclient.set("btnid", "cs-web-id");
       csclient.set("notification-type", {
         type: "breathing",
         color: "#FB4BFF"
+      });
+
+      csclient.set("design", {
+        bottom: "40px",
+        right: "20px",
+        icon: require("assets/images/index/cs-icon.png")
       });
 
       if (store.token) {
@@ -80,7 +86,7 @@ export default defineComponent({
       //CsClient Event Listener.
       window.addEventListener("message", function (event) {
         // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (_.isString(event.data)) {
+        if (isString(event.data)) {
           if (event.data == "closenotice") {
             router.go(-1);
           }

@@ -260,25 +260,112 @@ export default {
       "ایک بار جمع شدہ رقم اپ گریڈ کی ضروریات پوری کرتی ہے، آپ کا VIP سطح فوراً بلند کیا جائے گا، اور متعلقہ اپ گریڈ انعامات جاری کیے جائیں گے۔"
   },
   earnMoney: {
-    bonusPotArrived: "بونس پوٹ آ گیا",
-    myTotalIncome: "میری کل آمدنی",
-    myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
-    invite: "دعوت دیں",
-    topUp: "اپ ڈاؤن",
-    bet: "شرط لگائیں",
-    eligibleRefer: "اہل ریفر",
-    inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
-    howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
-    inviteList_01: "دوستوں کو دعوتی لنک کے ذریعے دعوت دیں",
-    inviteList_02: "لنک کے ذریعے رجسٹر کریں",
-    inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
-    copyLink: "لنک کاپی کریں",
-    friendCount: "دوست کی تعداد",
-    inviteBonus: "دعوت کی مکافات",
-    totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
-    player: "پلیئر",
-    money: "پیسہ",
-    eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔"
+    title: "بونس پوٹ آ گیا",
+    tabs: {
+      reward: "انعام",
+      teamManagement: "ٹیم کا انتظام",
+      teamBetting: "ٹیم بیٹنگ",
+      profitAndLoss: "صارف کا منافع اور نقصان"
+    },
+    reward: {
+      myTotalIncome: "میری کل آمدنی",
+      myTotalNumberOfInvites: "میرے کل دعوتوں کی تعداد",
+      invite: "دعوت دیں",
+      topUp: "اپ ڈاؤن",
+      bet: "شرط لگائیں",
+      eligibleRefer: "اہل ریفر",
+      inviteFriendsViaLink: "دوستوں کو لنک کے ذریعے دعوت دیں",
+      howToGetInvitationBonus: "دعوت کی مکافات کیسے حاصل کریں",
+      inviteList_01: "دوستوں کو دعوتی لنک کے ذریعے دعوت دیں",
+      inviteList_02: "لنک کے ذریعے رجسٹر کریں",
+      inviteList_03: "رجسٹریشن کے بعد جمع کرائیں مکمل کریں",
+      copyLink: "لنک کاپی کریں",
+      friendCount: "دوست کی تعداد",
+      inviteBonus: "دعوت کی مکافات",
+      totalAmountSentAsOfYesterday: "کل رقم جو کل تک بھیجی گئی ہے",
+      player: "پلیئر",
+      money: "پیسہ",
+      eligibility_tips: "اہلیت: مدعو کا جمع ≥ 300 ہونا ضروری ہے۔",
+      shareTitle: "B9GAME شیئر کریں اور کمائیں",
+      shareText:
+        "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
+    },
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "سبھی ڈاؤن لائنز",
+          direct: "سیدھے ڈاؤن لائنز"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        type: "انواع",
+        username: "صارف کا نام",
+        emark: "اي ماركس",
+        upLine: "اَپ لائن ایجنٹ",
+        registrationDate: "رجسٹریشن تاریخ",
+        balance: "بیلنس",
+        lastLogin: "آخری لاگ ان وقت",
+        lastDeposit: "آخری جمع وقت"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل"
+        },
+        gameType: {
+          label: "کھیل کی قسم",
+          options: {
+            slot: "اسلام و علیکم",
+            live: "زندہ کیسینو",
+            sport: "کھیل",
+            fish: "مچھلی",
+            poker: "پوکر"
+          }
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        vendor: "فروخت کار",
+        gameType: "کھیل کی قسم",
+        betAmount: "شرط رقم",
+        winning: "فتح",
+        validBet: "درست شرط",
+        balance: "فتح/نقصان",
+        rounds: "راؤنڈ",
+        player: "کھلاڑی"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل",
+          "7day": "7 دن"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        username: "صارف کا نام",
+        deposit: "جمع",
+        withdraw: "واپسی",
+        bonus: "انعام",
+        validBet: "معتبر شرط",
+        balance: "فتح/نقصان",
+        rebate: "کھلاڑی کی ریبیٹ",
+        referral: "رجحان",
+        profitAndLoss: "منافع اور نقصان",
+        depositFee: "جمع کرانے کی فیس"
+      }
+    }
   },
   records: {
     gamePlatform: "گیم پلیٹ فارم",
@@ -365,6 +452,7 @@ export default {
     10007: "گیم روم میں داخل ہونے میں غلطی",
     10008: "غلطی",
     11003: "جمع کرنے میں ناکامی",
+    11005: "براہ کرم دوبارہ کوشش کریں",
     12100: "نکال پاس ورڈ میل نہیں کھاتا",
     12101: "نیا نکال پاس ورڈ پرانا نکال پاس ورڈ کی طرح نہیں ہوسکتا",
     13000: "ڈومین نام نہیں ملا",

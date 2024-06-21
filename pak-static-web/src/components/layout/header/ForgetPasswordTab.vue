@@ -447,7 +447,6 @@ function charType(num) {
       .title {
         color: #ffffff;
         font-size: 20px;
-        font-weight: 700;
         line-height: 24px;
       }
       .submessage {

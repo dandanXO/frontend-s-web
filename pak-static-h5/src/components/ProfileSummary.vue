@@ -81,10 +81,10 @@
         {{ $t("sideNav.livesupport") }}
       </div>
 
-      <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
+      <!-- <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/account/feedback')">
         <div class="item-icon"><img src="../assets/images/auth/menu-feedback.png" /></div>
         {{ $t("sideNav.feedback") }}
-      </div>
+      </div> -->
 
       <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
         <div class="item-icon">
@@ -582,7 +582,7 @@ onMounted(() => {
     padding-top: 72px;
     background-color: #131313;
     width: 202px;
-    height: calc(100vh - 72px);
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding-left: 16px;
@@ -770,7 +770,7 @@ onMounted(() => {
         width: 24px;
         filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
         // filter: brightness(1) sepia(0) hue-rotate(0deg) saturate(1);
-        animation: hueBlink 1s infinite ;
+        animation: hueBlink 1s infinite;
       }
     }
 
@@ -966,6 +966,7 @@ onMounted(() => {
   // background: linear-gradient(356.25deg, #00430b -0.21%, #00ae00 93.65%);
   background: linear-gradient(251.03deg, #89c543 7.46%, #2aae8b 91.87%);
   border-radius: 5px;
+  animation: blink 1.5s infinite;
 }
 
 .menu-line {
@@ -1046,6 +1047,20 @@ onMounted(() => {
   }
   100% {
     filter: brightness(0) invert(50%) sepia(11%) saturate(3258%) hue-rotate(77deg) brightness(122%) contrast(75%);
+  }
+}
+
+@keyframes blink {
+  0% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
+  }
+
+  50% {
+    filter: brightness(1.3) saturate(1) contrast(1);
+  }
+
+  100% {
+    filter: brightness(0.8) saturate(0.8) contrast(0.8);
   }
 }
 </style>
