@@ -58,6 +58,7 @@ const updateTouch = () => {
 }
 
 const loadInfo = () => {
+  personalState.memberInfo = userStore();
   formDetail.realName = personalState.memberInfo.realName;
   formDetail.name2 = personalState.memberInfo.name2;
   formDetail.loginName = personalState.memberInfo.nickName;
