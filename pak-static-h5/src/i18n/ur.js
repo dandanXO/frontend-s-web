@@ -397,6 +397,14 @@ export default {
     noRecord: "کوئی ریکارڈ نہیں",
     noMoreRecord: "مزید ریکارڈ نہیں"
   },
+  appUpdate: {
+    updateHeader: "اعلانِ اپ ڈیٹ",
+    isOutdatedAppContent_01: "آپ کا ایپ ورژن پرانا ہے،",
+    isOutdatedAppContent_02: "براہ کرم ایپ کو ابھی اپ ڈیٹ کریں",
+    newAppVersionContent_01: "نیا ورژن مل گیا، کیا آپ اپ ڈیٹ کرنا چاہتے ہیں؟",
+    cancel: "منسوخ کریں",
+    updateNow: "ابھی اپ ڈیٹ کریں"
+  },
   error: {
     101: "پلیٹ فارم نہیں مل سکی",
     102: "پلیٹ فارم بند ہے",

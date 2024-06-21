@@ -397,6 +397,14 @@ export default {
     noRecord: "No record",
     noMoreRecord: "No more record"
   },
+  appUpdate: {
+    updateHeader: "Update Announcement",
+    isOutdatedAppContent_01: "Your App Version Is Outdated,",
+    isOutdatedAppContent_02: "Please Update The App Now",
+    newAppVersionContent_01: "New Version Detected, Do You Want To Update?",
+    cancel: "Cancel",
+    updateNow: "Update now"
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
