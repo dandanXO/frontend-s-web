@@ -52,6 +52,7 @@ const onResponse = (response) => {
     const store = useStore()
     const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
+      sessionStorage.setItem('myIPAddress', res.data)
       router.push('/403');
       return;
     }
