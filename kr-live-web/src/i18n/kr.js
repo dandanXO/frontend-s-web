@@ -525,8 +525,8 @@ export default {
     payment_on_going: "이체 진행 중",
     automatic_payment: "자동 지급",
     suspend: "일시 중단",
-    pending: "보류 중",
-    supplement_success: "보충 성공",
+    pending: "대기중",
+    supplement_success: "승인완료",
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
@@ -710,6 +710,25 @@ export default {
       "After successful installation, you can click to join and have fun with us immediately.",
     participate: "Participate",
     sent_success: "Sent Successfully"
+  },
+  status: {
+    pending: "대기중",
+    closed: "승인거절",
+    supplement_success: "승인완료",
+    success: "승인완료",
+    applying: "승인대기",
+    reject: "승인거절",
+    under_review: "검토중",
+    to_be_paid: "승인예정",
+    payment_on_going: "지불대기",
+    paying: "지불대기",
+    automatic_payment: "지불대기",
+    sending: "지불대기",
+    waiting_callback: "지불대기",
+    success: "승인완료",
+    fail: "승인거절",
+    suspend: "승인대기",
+    waiting_auto_payment: "자동지불대기",
   },
   error: {
       101: "플랫폼을 찾을 수 없음",
