@@ -208,7 +208,7 @@ onMounted(() => {
 </script>
 <style lang="scss">
 .whole-section {
-  max-width: 1200px;
+    max-width: 1400px;
   width: 95%;
   margin: 30px auto;
 }
@@ -239,7 +239,7 @@ onMounted(() => {
   .winloss-matches {
     display: flex;
     gap: 25px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     width: 100%;
     .match {
@@ -247,7 +247,7 @@ onMounted(() => {
       background: #3EA2FF;
       display: flex;
       gap: 10px;
-      justify-content: space-between;
+      justify-content: center;
       align-items: flex-start;
       padding: 10px;
 
