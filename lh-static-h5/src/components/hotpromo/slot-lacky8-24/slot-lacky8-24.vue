@@ -6,10 +6,6 @@
         <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
         </div> -->
-        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
-        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
-        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
-        <div class="little2-content">会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。</div>
         <table class="slot-lacky8-game-info-table">
           <tr>
             <th>电游平台<br>游戏时间</th>
@@ -36,6 +32,8 @@
             <td colspan="5">暂无数据</td>
           </tr>
         </table>
+        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
+        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
       </div>
       <div class="slot-lacky8-game-info">
         <div class="title"></div>
@@ -80,6 +78,12 @@
             <td>2,888 元</td>
           </tr>
         </table>
+        <div class="little-title" style="flex-direction: column;align-items:unset;">
+          <div class="left">申请方式</div>
+          <div class="right" style="margin-top: 4px;">
+            会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+          </div>
+        </div>
       </div>
       <div class="slot-lacky8-game-bottom-rule">
         <div class="title"></div>
@@ -283,7 +287,7 @@ const displayGuessResult = (record) => {
 };
 
 const getSlotLucky8Data = async () => {
-  
+
   const res = await getSlotLucky8(promoCode.value);
   tableData.value = res.data
 };
@@ -614,6 +618,7 @@ onMounted(getSlotLucky8Data);
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
+  margin-bottom: 12px;
   .inner-time{
     font-size: 8px;
     width: 69px;

@@ -6,10 +6,6 @@
         <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
         </div> -->
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
-        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
-        <div class="little2-content">会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。</div>
         <table class="luck8-game-info-table">
           <tr>
             <th>电游平台</th>
@@ -19,7 +15,7 @@
             <th>活动彩金</th>
             <th>操作</th>
           </tr>
-          
+
           <tr v-for="(item, index) in tableData" :key="index">
             <td>
               {{ item.platform }}
@@ -39,6 +35,8 @@
             <td colspan="6">暂无数据</td>
           </tr>
         </table>
+        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
+        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
@@ -83,6 +81,12 @@
             <td>2,888 元</td>
           </tr>
         </table>
+        <div class="little-title">
+          <div class="left">申请方式</div>
+          <div class="right">
+            会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+          </div>
+        </div>
       </div>
       <div class="luck8-game-bottom-rule">
         <div class="title"></div>
@@ -101,7 +105,6 @@
           <div class="item">
             5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；
           </div>
-          
         </div>
       </div>
 
@@ -500,7 +503,7 @@ onMounted(getSlotLucky8Data);
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  margin-top: 12px;
+  margin: 12px 0;
   th {
     height: 56px;
     font-size: 20px;
@@ -593,7 +596,7 @@ onMounted(getSlotLucky8Data);
   border-radius: 100px;
   color: rgba(255, 255, 255, 1);
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-  
+
 
 }
 .option-btn-disable{
