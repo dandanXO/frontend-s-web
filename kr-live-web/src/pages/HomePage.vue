@@ -752,7 +752,6 @@ export default defineComponent({
       loadHomePromoPopup();
       loadHomeData();
       getVersionNo();
-      ajaxBarRef.value.start();
     });
 
     const popupInterval = ref(null);
