@@ -1,744 +1,202 @@
 <template>
   <div class="main-section">
+
+    <q-ajax-bar ref="ajaxBarRef" position="top" size="5px" skip-hijack
+      style="background:linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%)" />
+
     <LangToggle />
 
-    <RollingText :depositRecordList="depositRecordList" :isLoadingDepositRecordList="isLoadingDepositRecordList"/>
+    <q-page-sticky position="bottom-right" :offset="[40, 130]" style="z-index:999999" class="telegram-sticky floating">
+      <a href="https://t.me/city88888" target="_blank">
+        <img src="../assets/images/index/telegram-icon.png" class="telegram-sticky-img"></a>
+    </q-page-sticky>
+    <RollingText />
 
     <JackpotPrize />
 
-    <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)" :selectedCategory="currentSelectedMenu" />
+    <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)"
+      :selectedCategory="currentSelectedMenu" />
 
-    <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'live'"
-        :games="liveCasinoGames"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
-    </Transition>
+    <q-carousel v-model="currentSelectedMenu" transition-prev="slide-right" transition-next="slide-left" animated
+      control-color="primary" class="rounded-borders" style="background: transparent; height: 100%;">
+      <q-carousel-slide name="live" class="column no-wrap flex-center">
+        <div class="game-list-wrapper">
+          <div class=" game-list">
+            <GameItem :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="slots" class="column no-wrap flex-center">
+        <div class="game-list-wrapper">
+          <!-- slot start -->
+          <div class="game-list" v-if="!isShow">
+            <GameItem :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat" />
+          </div>
 
-    <!-- slot start -->
-    <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'slots' && !isShow"
-        :games="platforms"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="selectSlotPlat"
-      />
-    </Transition>
+          <div class="game-scroll-lists" id="id-slot-board" v-if="isShow" :gameType="currentSelectedMenu">
+            <q-scroll-area style="height: 500px"
+              :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'">
+              <div class="bookmarks">
+                <div class="plat-item" v-for="p in platforms" :class="{ active: p.id === selectedPlatId }" :key="p"
+                  @click="switchPlat(p, 'slots')">
+                  <div class="platform-img" :title="p.code" :style="{
+                    backgroundImage: (() => {
+                      try {
+                        return `url(${require(`../assets/home/games/logo/game-logo-${p.code.toLowerCase()}.png`)})`;
+                      } catch (e) {
+                        return `url(${comingSoonImg})`;
+                      }
+                    })()
+                  }"></div>
+                </div>
+              </div>
+            </q-scroll-area>
 
-    <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-slot-board"
-        v-if="currentSelectedMenu === 'slots' && isShow"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <q-scroll-area
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
-        >
-          <div class="bookmarks">
-            <div
-              class="plat-item"
-              v-for="p in platforms"
-              :class="{ active: p.id === selectedPlatId }"
-              :key="p"
-              @click="switchPlat(p, 'slots')"
-            >
-              <div
-                class="platform-img"
-                :style="{
+            <div class="loading-div" v-if="isLoading">
+              <q-spinner-orbit :color="'primary'" size="8em" />
+            </div>
+
+            <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px"
+              :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'">
+              <div class="search-list">
+                <q-form @submit="searchList">
+                  <q-input dense outlined class="search-input" v-model="gamePage.searchKey"
+                    :label="$t('lang.keyin_keyword')">
+                    <template v-slot:append>
+                      <q-icon style="margin-right: 5px" @click="clearSearchInput" class="clear-input-icon btn-pointer"
+                        name="close"></q-icon>
+
+                      <q-icon color="brightbtn" name="search" style="" @click="searchList"
+                        class="clear-input-icon btn-pointer"></q-icon>
+                    </template>
+                  </q-input>
+                </q-form>
+              </div>
+              <div class="slot-grid" style="padding-bottom: 20px">
+                <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
+                  v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+                  <transition name="in-view">
+                    <q-list class="btn-slot-game q-col-gutter-none"
+                      @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
+                      <div>
+                        <q-img loading="lazy" :src="game.icon" :placeholder-src="game.default" fit="fill" height="auto"
+                          spinner-color="white" position="50% 20%" style="border-radius: 20px; overflow: hidden"
+                          :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''">
+                          <template v-slot:loading>
+                            <img :src="game.default"
+                              style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden" />
+                          </template>
+                        </q-img>
+                        <div class="slot-name">{{ game.name }}</div>
+                      </div>
+                    </q-list>
+                  </transition>
+                </div>
+              </div>
+              <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+              <q-scroll-observer @scroll="scrolling" />
+            </q-scroll-area>
+          </div>
+          <!-- slot end -->
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="sport" class="column no-wrap flex-center">
+        <div class="game-list-wrapper">
+          <div class="game-list">
+            <GameItem :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame" />
+            <GameItem :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="casual" class="column no-wrap flex-center">
+        <div class="game-list" v-if="!isShow">
+          <GameItem :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat" />
+        </div>
+        <!-- cq9 start -->
+        <div class="game-scroll-lists" id="id-slot-board" v-if="isShow && selectedPlat.code === 'CQ9'"
+          :gameType="currentSelectedMenu">
+          <q-scroll-area style="height: 500px"
+            :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'">
+            <div class="bookmarks">
+              <div class="plat-item" v-for="p in fishPlatforms" :class="{ active: p.id === selectedPlatId }" :key="p"
+                @click="switchPlat(p, 'slots')">
+                <div class="platform-img" :style="{
                   backgroundImage: (() => {
                     try {
-                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
+                      return `url(${require(`../assets/home/games/logo/game-logo-${p.code.toLowerCase()}.png`)})`;
                     } catch (e) {
                       return `url(${comingSoonImg})`;
                     }
                   })()
-                }"
-              ></div>
+                }"></div>
+              </div>
             </div>
+            <q-scroll-observer axis="vertical" />
+          </q-scroll-area>
+
+          <div class="loading-div" v-if="isLoading">
+            <q-spinner-orbit :color="'primary'" size="8em" />
           </div>
-          <q-scroll-observer axis="vertical" />
-        </q-scroll-area>
 
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
-        </div>
+          <q-scroll-area v-if="!isLoading && selectedPlatId !== -99" ref="scrollSlotRef" style="height: 500px"
+            :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'">
+            <div class="search-list">
+              <q-form @submit="searchList">
+                <q-input color="white" filled class="search-input" v-model="gamePage.searchKey"
+                  :label="$t('lang.keyin_keyword')">
+                  <template v-slot:append>
+                    <q-icon style="margin-right: 5px" @click="clearSearchInput" class="clear-input-icon btn-pointer"
+                      name="close"></q-icon>
 
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">
-                      {{ game.name }}
+                    <q-icon color="brightbtn" name="search" style="" @click="searchList"
+                      class="clear-input-icon btn-pointer"></q-icon>
+                  </template>
+                </q-input>
+              </q-form>
+            </div>
+            <div class="slot-grid" style="padding-bottom: 20px">
+              <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
+                v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+                <transition name="in-view">
+                  <q-list class="btn-slot-game q-col-gutter-none"
+                    @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
+                    <div>
+                      <q-img loading="lazy" :src="game.icon" :placeholder-src="game.default" fit="fill" height="auto"
+                        spinner-color="white" position="50% 20%" style="border-radius: 20px; overflow: hidden"
+                        :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''">
+                        <template v-slot:loading>
+                          <img :src="game.default"
+                            style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden" />
+                        </template>
+                      </q-img>
+                      <div class="slot-name">{{ game.name }}</div>
                     </div>
-                  </div>
-                </q-list>
-              </transition>
+                  </q-list>
+                </transition>
+              </div>
             </div>
-          </div>
-
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId !== -99"
-          ref="scrollSlotRef"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="search-list">
-            <q-form @submit="searchList">
-              <q-input
-                dense
-                outlined
-                class="search-input"
-                v-model="gamePage.searchKey"
-                :label="$t('lang.keyin_keyword')"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    style="margin-right: 5px"
-                    @click="clearSearchInput"
-                    class="clear-input-icon btn-pointer"
-                    name="close"
-                  ></q-icon>
-
-                  <q-icon
-                    color="brightbtn"
-                    name="search"
-                    style=""
-                    @click="searchList"
-                    class="clear-input-icon btn-pointer"
-                  ></q-icon>
-                </template>
-              </q-input>
-            </q-form>
-          </div>
-          <div class="slot-grid" style="padding-bottom: 20px">
-            <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">{{ game.name }}</div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-          <q-scroll-observer @scroll="scrolling" />
-        </q-scroll-area>
-      </div>
-    </Transition>
-    <!-- slot end -->
-
-    <Transition>
-      <div
-        class="game-grid-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && !isShow"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <template v-for="p in fishPlatforms" :key="p">
-          <div class="game-item btn-pointer btn-slot-game" @click="selectFishPlat(p)">
-            <div
-              class="platform-img"
-              :style="{
-                backgroundImage: (() => {
-                  try {
-                    return `url(${require(`../assets/images/people/people-${p.name.toLowerCase()}.png`)})`;
-                  } catch (e) {
-                    return `url(${comingSoonImg})`;
-                  }
-                })()
-              }"
-            ></div>
-            <div class="plat-form-box">
-              <div class="plat-form-text">{{ p.alias ? p.alias : p.name }}</div>
-            </div>
-            <div class="platform-company-box">
-              <div
-                class="company-image"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/images/footer/logo-${p.name.toLowerCase()}.png`)})`;
-                    } catch (e) {
-                      return '';
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-        </template>
-      </div>
-    </Transition>
-
-    <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-fish-board"
-        v-if="currentSelectedMenu === 'fish' && isShow"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <q-scroll-area
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
-        >
-          <div class="bookmarks">
-            <div
-              class="plat-item"
-              v-for="p in fishPlatforms"
-              :class="{ active: p.id === selectedPlatId }"
-              :key="p"
-              @click="switchPlat(p, 'fish')"
-            >
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-          <q-scroll-observer axis="vertical" />
-        </q-scroll-area>
-
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
+            <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
+            <q-scroll-observer @scroll="scrolling" />
+          </q-scroll-area>
         </div>
+        <!-- cq9 end -->
 
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="fish-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-fish-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-fish-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="fish-name">
-                      {{ game.name }}
-                    </div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
 
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId !== -99"
-          ref="scrollFishRef"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="search-list">
-            <q-form @submit="searchList">
-              <q-input
-                color="white"
-                filled
-                class="search-input"
-                v-model="gamePage.searchKey"
-                :label="$t('lang.keyin_keyword')"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    style="margin-right: 5px"
-                    @click="clearSearchInput"
-                    class="clear-input-icon btn-pointer"
-                    name="close"
-                  ></q-icon>
-
-                  <q-icon
-                    color="brightbtn"
-                    name="search"
-                    style=""
-                    @click="searchList"
-                    class="clear-input-icon btn-pointer"
-                  ></q-icon>
-                </template>
-              </q-input>
-            </q-form>
-          </div>
-          <div class="fish-grid" style="padding-bottom: 20px">
-            <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-fish-game q-col-gutter-none"
-                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="fish-name">{{ game.name }}</div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-          <q-scroll-observer @scroll="scrolling" />
-        </q-scroll-area>
-      </div>
-    </Transition>
-
-    <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'esport'"
-        :games="esportPlatform"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
-    </Transition>
-
-    <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'casual' && !isShow"
-        :games="platformMinigame"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="selectCasualPlat"
-      />
-    </Transition>
-    <!-- cq9 start -->
-    <Transition>
-      <div
-        class="game-scroll-lists"
-        id="id-slot-board"
-        v-if="currentSelectedMenu === 'casual' && isShow && selectedPlat.code === 'CQ9'"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-      >
-        <q-scroll-area
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'"
-        >
-          <div class="bookmarks">
-            <div
-              class="plat-item"
-              v-for="p in fishPlatforms"
-              :class="{ active: p.id === selectedPlatId }"
-              :key="p"
-              @click="switchPlat(p, 'slots')"
-            >
-              <div
-                class="platform-img"
-                :style="{
-                  backgroundImage: (() => {
-                    try {
-                      return `url(${require(`../assets/logo/${p.code}.png`)})`;
-                    } catch (e) {
-                      return `url(${comingSoonImg})`;
-                    }
-                  })()
-                }"
-              ></div>
-            </div>
-          </div>
-          <q-scroll-observer axis="vertical" />
-        </q-scroll-area>
-
-        <div class="loading-div" v-if="isLoading">
-          <q-spinner-hourglass :color="'blue'" size="8em" />
-        </div>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId === -99"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="slot-grid" style="padding-bottom: 20px" v-if="sortedFavGamesList.length > 0">
-            <div
-              v-for="(game, index) in sortedFavGamesList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openFavGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">
-                      {{ game.name }}
-                    </div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-
-          <div class="coming-soon-div" v-else>
-            <img src="../assets/home/coming-soon-img.png" />
-            <span>{{ $t("lang.no_fav_game_yet") }}</span>
-          </div>
-        </q-scroll-area>
-
-        <q-scroll-area
-          v-if="!isLoading && selectedPlatId !== -99"
-          ref="scrollSlotRef"
-          style="height: 500px"
-          :style="!$q.screen.gt.sm ? 'width: calc(100% - 80px)' : 'width: calc(100% - 120px)'"
-        >
-          <div class="search-list">
-            <q-form @submit="searchList">
-              <q-input
-                color="white"
-                filled
-                class="search-input"
-                v-model="gamePage.searchKey"
-                :label="$t('lang.keyin_keyword')"
-              >
-                <template v-slot:append>
-                  <q-icon
-                    style="margin-right: 5px"
-                    @click="clearSearchInput"
-                    class="clear-input-icon btn-pointer"
-                    name="close"
-                  ></q-icon>
-
-                  <q-icon
-                    color="brightbtn"
-                    name="search"
-                    style=""
-                    @click="searchList"
-                    class="clear-input-icon btn-pointer"
-                  ></q-icon>
-                </template>
-              </q-input>
-            </q-form>
-          </div>
-          <div class="slot-grid" style="padding-bottom: 20px">
-            <div
-              v-for="(game, index) in gamePage.gameList"
-              :key="index"
-              :data-id="index"
-              v-intersection="onIntersection"
-              style="height: auto"
-              class="btn-pointer inner-slot-game"
-            >
-              <transition name="in-view">
-                <q-list
-                  class="btn-slot-game q-col-gutter-none"
-                  @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
-                >
-                  <div>
-                    <q-img
-                      loading="lazy"
-                      :src="game.icon"
-                      :placeholder-src="game.default"
-                      fit="fill"
-                      height="auto"
-                      spinner-color="white"
-                      position="50% 20%"
-                      style="border-radius: 20px; overflow: hidden"
-                      :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''"
-                    >
-                      <template v-slot:loading>
-                        <img
-                          :src="game.default"
-                          style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden"
-                        />
-                      </template>
-                    </q-img>
-                    <div class="slot-name">{{ game.name }}</div>
-                  </div>
-                </q-list>
-              </transition>
-            </div>
-          </div>
-          <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-          <q-scroll-observer @scroll="scrolling" />
-        </q-scroll-area>
-      </div>
-    </Transition>
-    <!-- cq9 end -->
-    
-
-    <Transition>
-      <MinigamesGrid v-if="currentSelectedMenu === 'casual' && selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames" :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5" :showMiniType="showMiniType" :isLoading="isLoading" />
-    </Transition>
-
-    <Transition>
-      <GameItem
-        v-if="currentSelectedMenu === 'sport'"
-        :games="sportPlatform"
-        :gameType="currentSelectedMenu"
-        :gameItemLoad="gameItemLoad"
-        :onClickGameItem="openGame"
-      />
-    </Transition>
+        <MinigamesGrid v-if="selectedPlat.code === 'TFGaming' && isShow" :minigames="miniGames"
+          :minigamesMore="miniGamesMore" :playGame="playGame" :showTypeWeb="showTypeWeb" :showTypeH5="showTypeH5"
+          :showMiniType="showMiniType" :isLoading="isLoading" />
+      </q-carousel-slide>
+    </q-carousel>
   </div>
 
-  <div class="news-section">
-    <div class="news-title">
-      <div class="title-text">공지사항</div>
-      <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link>
-    </div>
-    <template v-if="newsList.length > 0">
-      <div v-for="(item, index) in newsList" :key="index" class="news-item-box">
-        <div class="news-item-left">
-          <div class="news-item-title" :title="item.title">
-            [
-            {{ item.title }}
-            ] ※
-            {{ item.content }}
-            ※
-          </div>
-        </div>
-        <div class="news-item-right">
-          <div class="news-item-date">{{ item.createTime }}</div>
-        </div>
-      </div>
-    </template>
-    <div v-else class="news-item-box" style="justify-content: center;">
-      아직 콘텐츠가 없습니다
-    </div>
-  </div>
+  <AnnouncementList />
 
-  <div class="">
-    <div class="news-section">
-      <div class="news-title news-title__sub">
-        <div class="title-text">출금현황</div>
-        <!-- <router-link class="more-text" :to="store.hasToken() ? '/?page=notify' : '/?page=login'">+ 더보기</router-link> -->
-      </div>
-      
-      <div class="news-item-box" v-for="d, index in depositRecordList" :key="index">
-        <div class="news-item-left">
-          <div class="news-item-title">
-            {{ formatTransactionType(d.transactionType) }}
-            {{ d.loginName }}
-            <span style="color: #01e1ff">{{ d.amount }}원</span>
-          </div>
-        </div>
-        <div class="news-item-right">
-          <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <DepositRecords />
 
   <GameModal ref="gameModalRef"></GameModal>
 
-  <!--  <q-dialog width="100%" v-model="isStationNotice">-->
-  <!--    <q-card style="width: 100%" class="bg-primary text-white">-->
-  <!--      <q-card-section class="q-mb-md">-->
-  <!--        <div class="menu-title flex justify-between items-center">-->
-  <!--          <div style="margin-right: auto">&nbsp;</div>-->
-  <!--          <div>{{ $t("lang.announcement") }}</div>-->
-  <!--          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />-->
-  <!--        </div>-->
-
-  <!--        <q-tabs-->
-  <!--          v-model="activeKey"-->
-  <!--          dense-->
-  <!--          class="text-grey"-->
-  <!--          active-color="brand"-->
-  <!--          indicator-color="black"-->
-  <!--          align="justify"-->
-  <!--          narrow-indicator-->
-  <!--        >-->
-  <!--          <q-tab v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id" :label="tab.name" />-->
-  <!--        </q-tabs>-->
-
-  <!--        <q-separator />-->
-
-  <!--        <q-tab-panels v-model="activeKey" animated>-->
-  <!--          <q-tab-panel v-for="(tab, i) in announcementTypes" :key="i" :name="tab.id">-->
-  <!--            <q-list style="min-height: 65vh">-->
-  <!--              <div v-for="(ann, idx) in announcementList" :key="idx">-->
-  <!--                <span v-if="ann.typeId === tab.id">-->
-  <!--                  <q-expansion-item-->
-  <!--                    style="max-height: 65vh; overflow: auto"-->
-  <!--                    group="somegroup"-->
-  <!--                    icon="volume_up"-->
-  <!--                    :label="ann.title"-->
-  <!--                  >-->
-  <!--                    <q-card>-->
-  <!--                      <q-card-section>-->
-  <!--                        {{ ann.content }}-->
-  <!--                      </q-card-section>-->
-  <!--                    </q-card>-->
-  <!--                  </q-expansion-item>-->
-
-  <!--                  <q-separator></q-separator>-->
-  <!--                </span>-->
-  <!--              </div>-->
-  <!--            </q-list>-->
-  <!--          </q-tab-panel>-->
-  <!--        </q-tab-panels>-->
-  <!--      </q-card-section>-->
-  <!--    </q-card>-->
-  <!--  </q-dialog>-->
-
-  <q-dialog
-    width="100%"
-    class="modal-update-div"
-    v-model="isAppUpdateModal"
-    show-cancel-button
-    :showCancelButton="false"
-    :showConfirmButton="false"
-  >
+  <q-dialog width="100%" class="modal-update-div" v-model="isAppUpdateModal" show-cancel-button
+    :showCancelButton="false" :showConfirmButton="false">
     <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
@@ -758,195 +216,32 @@
       </div>
     </q-card>
   </q-dialog>
-
-  <!-- <q-page-sticky
-    v-if="showSticky || specialInviteBonusEligible"
-    class="home-sticky-div"
-    position="right"
-    :offset="[0, 0]"
-  >
-    <div v-if="showSticky" class="home-sticky"> -->
-  <!-- <img class="sticky-bear" src="../assets/home/line-bear.png" /> -->
-  <!-- <q-btn name="close" height="20" width="20" size="xs" @click="closeLineSticky" class="sticky-close-btn">
-        <q-icon name="close"></q-icon>
-      </q-btn>
-      <div class="sticky-container">
-        <div class="line-title">LINE</div>
-        <img src="../assets/home/line-bg-thai-theme.png" class="line-img" />
-        <div class="line-bottom">line ID:@jolly88</div>
-      </div>
-    </div>
-
-    <div v-if="specialInviteBonusEligible" class="bonus-sticky-box">
-      <div class="special-invite-bonus-sticky" @click="redeemSpecialInviteBonus" />
-    </div>
-  </q-page-sticky> -->
-
-  <!--  <q-dialog class="special-invite-bonus-popup" width="100%" v-model="specialInviteBonusPopupVisible">-->
-  <!--    <div class="special-invite-bonus-container">-->
-  <!--      <div class="header-decoration-wrapper">-->
-  <!--        <div class="header-decoration">-->
-  <!--          <img-->
-  <!--            class="confetti"-->
-  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confetti.png"-->
-  <!--            width="250"-->
-  <!--          />-->
-  <!--          <img-->
-  <!--            class="money-bags"-->
-  <!--            src="./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-money-bags.png"-->
-  <!--            width="150"-->
-  <!--          />-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--      <div class="special-invite-bonus-content">-->
-  <!--        <div class="title-wrapper">-->
-  <!--          <div class="title">โบนัสพิเศษสำหรับสมาชิกที่ได้รับเชิญ</div>-->
-  <!--          <div class="reward-amt">200</div>-->
-  <!--        </div>-->
-  <!--        <div class="desc-wrapper">-->
-  <!--          <div class="desc-title">ข้อกำหนดและเงื่อนไข</div>-->
-  <!--          <div class="desc-content">-->
-  <!--            - โบนัสนี้สามารถ ถอนได้ที่ 2000 บาทเท่านั้น-->
-  <!--            <br />-->
-  <!--            - สามารถแจ้งถอนได้เมื่อยอดเครดิตถึง 2000 บาท-->
-  <!--            <br />-->
-  <!--            - ยอดเงินที่เหลือตจะถูกหักออกทันทีหลังการถอนสำเร็จ-->
-  <!--            <br />-->
-  <!--            - โบนัสนี้ไม่สามารถใช้ซื้อฟรีสปินได้-->
-  <!--            <br />-->
-  <!--            - บัญชีที่มี IP เดียวกันหรือข้อมูลที่คล้ายกันจะถูกตัดสิทธิ์จากการรับโปรโมชั่นนี้-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--        <div class="special-invite-bonus-popup-confirm-btn" @click="toggleSpecialInviteBonusPopup(false)">-->
-  <!--          {{ $t("lang.confirm") }}-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </q-dialog>-->
-
-  <!-- <q-dialog class="home-popup-banner" width="100%" v-model="isHomePromoModal">
-    <div class="promo-popup-div">
-      <q-btn
-        round
-        dense
-        icon="close"
-        class="btn-pointer popup-btn"
-        color="white"
-        text-color="dark"
-        @click="closePopupModal"
-        v-close-popup
-      />
-
-      <img src="../assets/images/common/home-popup-img-thai-theme.png" />
-
-      <div class="popup-list">
-        <router-link to="/promo?id=81">
-          <div class="popup-item">
-            <span>
-              หมุนวงล้อ รับโบนัส
-              <em>8,880</em>
-              รางวัลสูงสุด
-              <em>IPHONE</em>
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=217">
-          <div class="popup-item">
-            <span>
-              รับโบนัสรายวัน เทิร์นโอเวอร์
-              <em>3</em>
-              เท่า
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=80">
-          <div class="popup-item">
-            <span>
-              แนะนำเพื่อนรับเงินคืนสูงสุด
-              <em>20,000</em>
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=216">
-          <div class="popup-item">
-            <span>
-              ฝาก
-              <em>200%</em>
-              รับ
-              <em>300</em>
-              ทุกวันศุกร์
-            </span>
-          </div>
-        </router-link>
-
-        <router-link to="/promo?id=77">
-          <div class="popup-item">
-            <span>
-              ยอดฝากรายวันรับ
-              <em>30%</em>
-              สูงสุด
-              <em>2,000</em>
-            </span>
-          </div>
-        </router-link>
-        <router-link to="/promo?id=168">
-          <div class="popup-item">
-            <span>
-              สะสมยอดฝาก
-              <em>300</em>
-              รับทันทีฟรีสปรินสล็อต
-            </span>
-          </div>
-        </router-link>
-      </div>
-    </div>
-  </q-dialog> -->
-
-  <q-dialog width="100%" v-model="isSpinWheelPromo" class="modal-update-div">
-    <q-card style="width: 100%; padding: 0px 20px 20px" class="bg-primary text-white text-center">
-      <q-card-section class="q-mb-md">
-        <div class="menu-title flex justify-between items-center">
-          <div style="margin-right: auto">&nbsp;</div>
-          <div>{{ $t("lang.announcement") }}</div>
-          <q-btn style="margin-left: auto" icon="close" flat round dense v-close-popup />
-        </div>
-
-        <div class="">
-          {{ $t("lang.you_got_new_spin_wheel_spin") }}
-          <br />
-        </div>
-      </q-card-section>
-      <q-btn @click="gotoPromoSpinWheel" :label="$t('lang.close_btn')" color="brand" />
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
 /* eslint-disable */
+import { debounce } from 'quasar'
 import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api, eventapi } from "boot/axios";
+import { useRouter } from "vue-router";
+import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import GameItem from "components/game/GameItem";
 import GameCategory from "components/game/GameCategory";
-import * as _ from "lodash";
-import MarqueeText from "vue-marquee-text-component";
+import DepositRecords from "components/home/DepositRecords.vue";
+import AnnouncementList from "components/home/AnnouncementList.vue";
+import orderBy from "lodash/orderBy";
+import findIndex from "lodash/findIndex";
+import remove from "lodash/remove";
 import BacktoTop from "components/backtotop.vue";
-import { Vue3Marquee } from "vue3-marquee";
-import { RiStarLine, RiStarFill } from "vue-remix-icons";
 
 import { useUI } from "stores/ui";
 import { isMobile } from "boot/utils";
 import { App } from "@capacitor/app";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
-import moment from "moment";
 import MinigamesGrid from 'components/game/MinigamesGrid';
 import LangToggle from "src/components/LangToggle.vue";
 import RollingText from "src/components/home/RollingText.vue";
@@ -956,51 +251,28 @@ export default defineComponent({
   name: "IndexPage",
   components: {
     GameModal,
-    MarqueeText,
     BacktoTop,
-    Vue3Marquee,
-    RiStarLine,
-    RiStarFill,
     GameItem,
     GameCategory,
     MinigamesGrid,
     LangToggle,
     RollingText,
-    JackpotPrize
+    JackpotPrize,
+    DepositRecords,
+    AnnouncementList
   },
   setup() {
+    const ajaxBarRef = ref(null)
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
-    const specialInviteBonusEligible = ref(false);
-    const specialInviteBonusAmt = ref(0);
-    const specialInviteBonusPopupVisible = ref(false);
-    const banners = ref([]);
 
     const gameBoardRef = ref();
     const gameBoardItemRef = ref();
 
     const router = useRouter();
     const store = userStore();
-
-    const getBackgroundImageStyle = (name) => {
-      return {
-        backgroundImage: `url(${require(`../assets/home/menu/menu-${name}.png`)})`
-      };
-    };
-
-    const showSticky = ref(true);
-    const checkSticky = () => {
-      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
-      if (stickyOff === "true") {
-        showSticky.value = false;
-      }
-    };
-    const closeLineSticky = () => {
-      showSticky.value = false;
-      localStorage.setItem("LINE_STICKY_OFF", "true");
-    };
 
     const mainWallet = computed(() => {
       return store.balance;
@@ -1009,7 +281,8 @@ export default defineComponent({
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
-    const openGame = (p) => {
+    const openGame = debounce((p) => {
+      ajaxBarRef.value.start();
       // debugger;
       console.log(p);
       const gameType = p.gameType;
@@ -1025,8 +298,13 @@ export default defineComponent({
         gameCode = 101;
       }
 
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
-    };
+
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
+    }, 500);
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
@@ -1053,7 +331,7 @@ export default defineComponent({
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
     const pokerGames = [
-      
+
     ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
@@ -1085,27 +363,7 @@ export default defineComponent({
       }
     ]);
 
-    function loadData() {
-      api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
-          if (res.data.code === 0) {
-            //
-            if (res.data.data.length > 0) {
-              banners.value = res.data.data;
-            } else {
-            }
-          } else {
-          }
-        })
-        .catch(() => {
-        });
-    }
-
     const platforms = ref([]);
-    const newsList = ref([]);
-    const isLoadingDepositRecordList = ref(false);
-    const depositRecordList = ref([]);
 
     const selectedPlatId = ref();
     const selectedPlat = reactive({
@@ -1120,7 +378,7 @@ export default defineComponent({
       searchKey: "",
       total: 0
     });
-    
+
     const gameListData = ref([]);
     const fishPlatforms = ref([]);
     const esportPlatform = ref([]);
@@ -1143,50 +401,9 @@ export default defineComponent({
       // { name: "fish", label: "낚시 게임" }
     ];
 
-    const gameItemLoad = ref(false);
-
     const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
-      gameItemLoad.value = true;
-
-      setTimeout(() => {
-        gameItemLoad.value = false;
-      }, 2500);
-
       currentSelectedMenu.value = menu;
-      isShow.value = false;
-
-      // platforms.value = platforms.value.reverse();
-
-      const containerWidth = gameBoardRef.value.clientWidth;
-
-      const item = gameBoardItemRef.value[index];
-      const itemLeft = item.offsetLeft;
-      const itemWidth = item.clientWidth;
-
-      const scrollPosition = gameBoardRef.value.scrollLeft;
-
-      /**
-       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
-       * no complex calculation for left is normal
-       */
-      let toLeft = 0;
-      let isEdgeItem = false;
-
-      const moveAmount = containerWidth / 2;
-      const leftOffset = 30;
-
-      const rightCal = itemLeft - scrollPosition;
-      const rightEdge = containerWidth - itemWidth;
-      if (rightCal >= rightEdge) {
-        isEdgeItem = true;
-        toLeft = scrollPosition + moveAmount;
-      } else if (itemLeft <= scrollPosition + leftOffset) {
-        isEdgeItem = true;
-        toLeft = scrollPosition - moveAmount;
-      }
-
-      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1293,7 +510,7 @@ export default defineComponent({
           // debugger;
           if (currentSelectedMenu.value === "casual" && selectedPlat.code !== 'CQ9') {
             miniGames.value = [];
-            let minis = _.orderBy(res, "sequence");
+            let minis = orderBy(res, "sequence");
             minis.forEach((mini) => {
               mini.lists = [];
             });
@@ -1302,9 +519,8 @@ export default defineComponent({
               if (mini.icon.startsWith("10/")) {
                 mini.icon = `${process.env.IMAGE_CDN}/game/${mini.icon}`;
               } else {
-                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${
-                  mini.code
-                }.png`;
+                mini.icon = `${process.env.IMAGE_CDN}/game/${siteId}/${selectedPlat.code.toLowerCase()}/${mini.code
+                  }.png`;
               }
               if (mini.name.indexOf("(铜)") > -1 || mini.name.indexOf("(银)") > -1 || mini.name.indexOf("(金)") > -1) {
                 games.push(mini);
@@ -1316,7 +532,7 @@ export default defineComponent({
             // console.log(miniGames);
 
             games.forEach((game) => {
-              let index = _.findIndex(miniGamesMore.value, function (o) {
+              let index = findIndex(miniGamesMore.value, function (o) {
                 return game.name.indexOf(o.name) > -1;
               });
               if (game.name.indexOf("(铜)") > -1) {
@@ -1356,6 +572,7 @@ export default defineComponent({
       // const result = await res.json();
 
       // const resData = result.data;
+
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -1374,7 +591,7 @@ export default defineComponent({
 
           //TODO:: HArdcoded.
           console.log(liveCasinoGames.value);
-          liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
+          // liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
 
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
 
@@ -1397,91 +614,15 @@ export default defineComponent({
           //     switchPlat(fishPlatforms.value[0], "fish");
           //   }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     };
 
-    const getLength = (tab, ann) => {
-      var categoryLength = store.announcementList.value.filter((item) => item.id == ann.typeId);
-      return categoryLength.length;
-    };
-    // const announcementList = ref([]);
     const announcementTypes = ref([]);
-    const formatDate = (timestamp) => moment(timestamp).format("YYYY/MM/DD");
-    const loadAnnouncement = () => {
-      api
-        .get("/announcement")
-        .then((res) => {
-          const {
-            data: {
-              code,
-              data: { announcements }
-            }
-          } = res;
-
-          if (code === 0) {
-            console.log(announcements);
-            const announcementsFormattedData = announcements.map((item) => ({
-              ...item,
-              createTime: formatDate(item.createTime)
-            }));
-            newsList.value = announcementsFormattedData;
-            store.announcementList = announcements;
-          } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: "資料讀取失敗",
-              icon: "report_problem"
-            });
-          }
-
-          // newsList.value = announcements;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const loadDepositRecordList = () => {
-      isLoadingDepositRecordList.value = true;
-      api
-        .get("/member/withdraw-deposit-record")
-        .then((res) => {
-          const response = res.data;
-
-          if (response.code === 0) {
-            depositRecordList.value = response.data;
-          } else {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: "資料讀取失敗",
-              icon: "report_problem"
-            });
-          }
-
-          isLoadingDepositRecordList.value = false;
-        })
-        .catch((err) => {
-          console.log(err);
-          isLoadingDepositRecordList.value = false;
-        }).finally(() => {
-          isLoadingDepositRecordList.value = false;
-        });
-    };
 
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
-    const isStationNotice = ref(false);
     const noticeTitle = ref("");
     const activeKey = ref(null);
-    const openPopup = (noticeType) => {
-      // router.push("/?page=personal/messages");
-      // if (noticeType) {
-      //   noticeTitle.value = "Announcement";
-      //   isStationNotice.value = true;
-      // }
-    };
 
     const isShowBtt = ref(false);
     const scrollPosition = ref(0);
@@ -1490,29 +631,6 @@ export default defineComponent({
       if (e.position.top > 400) {
         isShowBtt.value = true;
       }
-    };
-    const gotoPromo = (banner) => {
-      if (banner === 0) {
-        router.push(`/promo`);
-        return;
-      } else if (banner.promoPageId) {
-        router.push({ path: "/promo", query: { id: banner.promoPageId } });
-      } else if (banner.redirectUrl) {
-        if (banner.redirectUrl.startsWith("promo/")) {
-          const promoId = banner.redirectUrl.substring(6);
-          router.push({ path: "/promo", query: { id: promoId } });
-        } else if (banner.redirectUrl.startsWith("open/")) {
-          const parts = banner.redirectUrl.split("/");
-          if (parts.length === 5) {
-            const gameName = parts[1];
-            const platformCode = parts[2];
-            const gameCode = parts[3];
-            const status = parts[4];
-            gameModalRef.value.open(gameName, platformCode, gameCode, status);
-          }
-        }
-      }
-      // router.push(`/promo`);
     };
 
     // isH5 -- platform checker
@@ -1602,7 +720,7 @@ export default defineComponent({
             message: t("lang.fav_game_removed"),
             icon: "report_problem"
           });
-          _.remove(favGamesList.value, {
+          remove(favGamesList.value, {
             id: gameId
           });
         });
@@ -1627,78 +745,15 @@ export default defineComponent({
       // console.log(target)
     };
 
-    const formatTransactionType = (transactionType) => {
-        if(transactionType === 'DEPOSIT') {
-            return `[${t('lang.menu_deposit')}]`;
-        }
-
-        if(transactionType === 'WITHDRAW') {
-            return `[${t('lang.menu_withdraw')}]`;
-        }
-
-        return '';
-    }
-
-    // const checkRedeemSpecialInviteBonusEligiblity = () => {
-    //   if (store.hasToken()) {
-    //     eventapi
-    //       .get("/privi/telephone/canRedeem", {
-    //         params: {
-    //           promoCode: "special-invitation-bonus"
-    //         }
-    //       })
-    //       .then((res) => {
-    //         if (res.data.data === true) {
-    //           specialInviteBonusEligible.value = true;
-    //         }
-    //       });
-    //   }
-    // };
-
-    const redeemSpecialInviteBonus = () => {
-      eventapi
-        .get("/privi/telephone/redeem", {
-          params: {
-            promoCode: "special-invitation-bonus"
-          }
-        })
-        .then((res) => {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.success"),
-            icon: "check_circle_outline"
-          });
-
-          specialInviteBonusAmt.value = res.data.data;
-          toggleSpecialInviteBonusPopup(true);
-        });
-    };
-
-    const toggleSpecialInviteBonusPopup = (status) => {
-      if (status === false) {
-        specialInviteBonusEligible.value = false;
-      }
-
-      specialInviteBonusPopupVisible.value = status;
-    };
-
     onMounted(() => {
       checkPlatform();
       loadHomePromoPopup();
       loadHomeData();
       getVersionNo();
-      checkSticky();
-      loadDepositRecordList();
     });
 
     const popupInterval = ref(null);
-    const isSpinWheelPromo = ref(false);
 
-    const gotoPromoSpinWheel = () => {
-      isSpinWheelPromo.value = false;
-      // router.push(`/promo?id=81`);
-    };
 
     onUnmounted(() => {
       clearInterval(popupInterval.value);
@@ -1709,10 +764,9 @@ export default defineComponent({
         await store.getMemberInfo();
 
         // getFavGameList();
-        store.getUnreadTotal();
+        // store.getUnreadTotal();
       }
       // loadData();
-      loadAnnouncement();
       getPlatList();
     };
     const imageLoading = ref(false);
@@ -1750,7 +804,7 @@ export default defineComponent({
       console.log(plat);
       if (plat.code === "Spribe") {
         playGame(plat.name, plat.code, "aviator");
-      } else if(plat.code === "CQ9") {
+      } else if (plat.code === "CQ9") {
         selectedPlatId.value = plat.id;
         isShow.value = true;
         switchPlat(plat, "fish");
@@ -1785,12 +839,11 @@ export default defineComponent({
     };
 
     return {
-      isLoadingDepositRecordList,
+      ajaxBarRef,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       gameImgURL: process.env.IMAGE_CDN + "/game/",
-      banners,
       gameBoardRef,
       gameBoardItemRef,
       gameBoardItemData,
@@ -1850,59 +903,22 @@ export default defineComponent({
       openSlotGame,
       openFavGame,
       scrollPageRef,
-      // announcementList,
-      isStationNotice,
-      closeLineSticky,
-      showSticky,
       isHomePromoModal,
-      openPopup,
       noticeTitle,
       announcementTypes,
       activeKey,
-      getLength,
-      isSpinWheelPromo,
-      gotoPromo,
-      gotoPromoSpinWheel,
       router,
       isAppUpdateModal,
       isH5,
       openDownloadPage,
       cancelUpdate,
       favGamesList,
-      sortedFavGamesList,
-      // updateSortedFavGamesList,
-      // getFavGameList,
-      specialInviteBonusEligible,
-      specialInviteBonusPopupVisible,
-      redeemSpecialInviteBonus,
-      toggleSpecialInviteBonusPopup,
-      newsList,
-      getBackgroundImageStyle,
-      gameItemLoad,
-      depositRecordList,
-      moment,
-      formatTransactionType 
+      sortedFavGamesList
     };
   }
 });
 </script>
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
-
-.home-decor-flower,
-.home-decor-bike,
-.home-decor-bike-2,
-.home-decor-tree {
-  display: none;
-}
-
-.home-banner-wrapper {
-  position: relative;
-  width: 100%;
-  height: 440px;
-  background: url("../assets/images/headerBanner/banner.svg") no-repeat center center;
-}
-
 .slot-grid,
 .fish-grid {
   display: grid;
@@ -2008,6 +1024,7 @@ export default defineComponent({
         position: relative;
       }
     }
+
     .platform-company-box {
       position: absolute;
       left: 3px;
@@ -2016,12 +1033,14 @@ export default defineComponent({
       backdrop-filter: blur(5px);
       width: 98%;
       height: 41px;
+
       .company-image {
         width: 100%;
         height: 100%;
         background-repeat: no-repeat;
         background-position: center center;
       }
+
       @media (min-width: 760px) {
         height: 56px;
       }
@@ -2069,6 +1088,7 @@ export default defineComponent({
     from {
       transform: translateX(0);
     }
+
     to {
       transform: translateX(-1500px);
     }
@@ -2155,9 +1175,9 @@ export default defineComponent({
     .plat-item {
       display: flex;
       width: 100%;
-      height: 50px;
+      height: 40px;
       box-sizing: content-box;
-      padding: 10px 10px;
+      padding: 5px;
       justify-content: center;
       align-items: center;
       background: #4f4f4f36;
@@ -2262,8 +1282,7 @@ export default defineComponent({
     aspect-ratio: 672 / 828;
   }
 
-  &:hover {
-  }
+  &:hover {}
 
   .select-type-div {
     position: absolute;
@@ -2394,141 +1413,7 @@ export default defineComponent({
   }
 }
 
-.news-section {
-  margin-top: 20px;
-  padding: 0 16px;
-}
-
-.news-split {
-  display: flex;
-  flex-wrap: wrap;
-
-  @media (min-width: 769px) {
-    gap: 10px;
-  }
-
-  .news-section {
-    width: 100%;
-    @media (min-width: 769px) {
-      width: calc(50% - 5px);
-    }
-  }
-
-  .news-item-left {
-    width: 100% !important;
-  }
-}
-
-.news-title {
-  // background: linear-gradient(#3f4146, #202226);
-  background: linear-gradient(180deg, #384a70 0%, #121c31 100%);
-
-  height: 61px;
-  border: 1px #454545 solid;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0px 15px;
-
-  &__sub {
-    background: linear-gradient(180deg, #385f70 0%, #122931 100%);
-  }
-
-  @media (min-width: 769px) {
-    padding: 0px 40x;
-  }
-  .title-text {
-    font-size: 14px;
-    line-height: 19.6px;
-    @media (min-width: 769px) {
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-  .more-text {
-    font-size: 14px;
-    line-height: 19.6px;
-    color: #ff3c3c;
-    cursor: pointer;
-    @media (min-width: 769px) {
-      font-size: 20px;
-      line-height: 28px;
-    }
-  }
-}
-
-.news-item-box {
-  width: 100%;
-  height: 60px;
-  background-color: #192235;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0px 25px;
-  font-size: 12px;
-  line-height: 16.8px;
-  border-bottom: 1px solid #3f3f3f;
-
-  display: grid;
-  grid-template-columns: minmax(calc(90% - 100px), 90%) minmax(120px, 10%);
-
-  @media (min-width: 769px) {
-    grid-template-columns: minmax(calc(80% - 100px), 90%) minmax(200px, 20%);
-  }
-
-  &:hover {
-    .news-item-title,
-    .news-item-date {
-      transform: scale(1.02);
-      color: #01e1ff !important;
-    }
-  }
-
-  @media (min-width: 769px) {
-    padding: 0px 40x;
-    font-size: 16px;
-    line-height: 22px;
-  }
-  .news-item-left {
-    width: 100%;
-    @media (min-width: 769px) {
-      width: 60%;
-    }
-
-    .news-item-sort {
-      padding-right: 8px;
-    }
-    .news-item-title {
-      transition: 0.3s all;
-      padding-right: 8px;
-      padding-left: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      @media (max-width: 769px) {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-  }
-
-  .news-item-box {
-    @media (min-width: 769px) {
-      width: 100%;
-    }
-  }
-  .news-item-right {
-    .news-item-date {
-      transition: 0.3s all;
-      color: #92959f;
-      text-align: right;
-    }
-  }
-}
-
-@media (min-width: 600px) {
-}
+@media (min-width: 600px) {}
 
 @media (min-width: 769px) {
   .grid {
@@ -2585,34 +1470,6 @@ export default defineComponent({
 
   .main-section {
     background-repeat: repeat-x;
-
-    .home-decor-flower,
-    .home-decor-bike,
-    .home-decor-bike-2,
-    .home-decor-tree {
-      display: block;
-      position: absolute;
-    }
-    .home-decor-flower {
-      left: 0px;
-      top: 15%;
-      width: 100px;
-    }
-    .home-decor-bike {
-      left: 0px;
-      bottom: 92px;
-      width: 80px;
-    }
-    .home-decor-tree {
-      right: 0px;
-      bottom: 65px;
-      width: 80px;
-    }
-    .home-decor-bike-2 {
-      right: 80px;
-      bottom: 85px;
-      width: 80px;
-    }
   }
 
   .game-grid-lists {
@@ -2622,11 +1479,6 @@ export default defineComponent({
   .slot-grid,
   .fish-grid {
     grid-template-columns: repeat(6, 1fr);
-  }
-
-  .grid {
-    // grid-template-columns: repeat(6, 1fr);
-    // grid-template-rows: repeat(1, 1fr);
   }
 
   .game-grid-lists {
@@ -2641,6 +1493,7 @@ export default defineComponent({
       backdrop-filter: blur(5px);
       width: 98%;
       height: 56px;
+
       .company-image {
         width: 100%;
         height: 100%;
@@ -2649,10 +1502,6 @@ export default defineComponent({
       }
     }
   }
-
-  //#id-live-board {
-  //  grid-template-columns: repeat(4, 1fr);
-  //}
 
   #id-casual-board {
     grid-template-columns: repeat(4, 1fr);
@@ -2669,7 +1518,7 @@ export default defineComponent({
 
 .modal-update-div {
   .menu-title {
-    > div:first-child {
+    >div:first-child {
       width: 32px;
     }
   }
@@ -2796,30 +1645,39 @@ export default defineComponent({
   0% {
     transform: rotate(0deg);
   }
+
   3% {
     transform: rotate(6deg);
   }
+
   6% {
     transform: rotate(0deg);
   }
+
   9% {
     transform: rotate(-6deg);
   }
+
   12% {
     transform: rotate(0deg);
   }
+
   15% {
     transform: rotate(6deg);
   }
+
   18% {
     transform: rotate(0deg);
   }
+
   21% {
     transform: rotate(-6deg);
   }
+
   24% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(0deg);
   }
@@ -3070,6 +1928,32 @@ export default defineComponent({
   @media (min-width: 1280px) {
     font-size: 2.5rem;
     max-width: 20rem;
+  }
+}
+
+.game-list-wrapper {
+  display: flex;
+  width: 100%;
+  min-height: 500px;
+}
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  // padding: 20px;
+  width: 100%;
+
+  @media (max-width: 769px) {
+    padding: 0px 10px;
+    gap: 5px;
+  }
+
+  @media (min-width: 769px) {
+    .game-item {
+      max-width: 220px;
+    }
   }
 }
 </style>

@@ -646,7 +646,10 @@ async function settleMatch() {
     type: 'warning',
   }).then(async () => {
     const matchTime = convertDate(moment(new Date()).subtract(1, 'days'))
-    await settleSportMatch(matchTime)
+    const query = {};
+    query.matchTime = matchTime;
+    query.siteId = request.siteId;
+    await settleSportMatch(query)
     await loadSportMatch()
     ElMessage({ message: t('message.settled'), type: 'success' })
   })

@@ -1,14 +1,8 @@
 <template>
   <q-layout view="hHh Lpr lFf">
-    <q-drawer v-model="ui.leftDrawerOpen" bordered overlay :width="350" :breakpoint="1280" class="drawer-left">
-      <div v-if="store.hasToken()" class="drawer-container">
-        <AccountPage />
-      </div>
-    </q-drawer>
-
     <q-page-container>
       <div class="home-banner-wrapper">
-        <img class="top-logo" alt="logo"  src="../assets/images/index/kr-logo.png" />
+        <img class="top-logo" alt="logo" src="../assets/images/index/kr-logo.png" />
 
         <LoginBar />
       </div>
@@ -23,42 +17,36 @@
         </div>
       </div>
     </q-page-container>
-    <!-- <q-footer v-if="ui.footer" elevated>
 
-    </q-footer> -->
     <footer>
       <div class="footer-box">
         <div class="box" v-for="(items, index) in footerBoxImgUrl" :key="index">
           <img :src="items.imgUrl" alt="" />
         </div>
       </div>
+
+      <q-separator style="width:60%;background:#3F3F3F;" />
+
       <div class="copyright-text">ⓒ 2024 City 8 All right reserved</div>
     </footer>
   </q-layout>
 </template>
 
 <script>
-import { computed, defineComponent, onMounted, reactive, ref, watch } from "vue";
+import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
-import { RiCloseLine } from "vue-remix-icons";
-import AccountPage from "pages/AccountPage.vue";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
-import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
-import AppDownload from "../components/AppDownload.vue";
 import LoginBar from "../components/LoginAndRegister/LoginBar";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
   components: {
-    AccountPage,
-    // RiArrowDropLeftLine,
-    RiCloseLine,
-    AppDownload,
     LoginBar
   },
 
@@ -68,14 +56,14 @@ export default defineComponent({
       { imgUrl: require("assets/images/footer/logo-cq9.png") },
       { imgUrl: require("assets/images/footer/logo-habanero.png") },
       { imgUrl: require("assets/images/footer/logo-ag.png") },
-      { imgUrl: require("../assets/images/footer/company5.png") },
-      { imgUrl: require("../assets/images/footer/company6.png") },
-      { imgUrl: require("../assets/images/footer/company7.png") },
-      { imgUrl: require("../assets/images/footer/company8.png") },
-      { imgUrl: require("../assets/images/footer/company9.png") },
+      { imgUrl: require("../assets/images/footer/logo-bcongo.png") },
+      { imgUrl: require("../assets/images/footer/logo-stargames.png") },
+      { imgUrl: require("../assets/images/footer/logo-rtg-slots.png") },
+      { imgUrl: require("../assets/images/footer/logo-dreamtech.png") },
+      { imgUrl: require("../assets/images/footer/logo-playngo.png") },
       { imgUrl: require("assets/images/footer/logo-dg.png") },
       { imgUrl: require("assets/images/footer/logo-ps.png") },
-      { imgUrl: require("../assets/images/footer/company12.png") },
+      { imgUrl: require("../assets/images/footer/logo-gameart.png") },
       { imgUrl: require("../assets/images/footer/logo-evo.png") },
       { imgUrl: require("../assets/images/footer/logo-ae.png") },
       { imgUrl: require("../assets/images/footer/logo-tfgaming.png") },
@@ -92,8 +80,11 @@ export default defineComponent({
     const store = userStore();
     const prevPage = ref(null);
     const ui = useUI();
+    const $q = useQuasar();
     // console.log(ui.footer)
     const scrollPageRef = ref(null);
+    const checkBalanceInterval = ref();
+    const checkUnreadMessagesInterval = ref();
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -101,38 +92,16 @@ export default defineComponent({
         router.push("/");
       });
     };
-    watch(
-      () => route.path,
-      async () => {
-        checkRoute();
-      }
-    );
 
-    watch(
-      () => route.query,
-      async () => {
-        checkRoute();
+    watch(() => $q.appVisible, val => {
+      if (val) {
+        store.isOffline = false;
+      } else {
+        store.isOffline = true;
       }
-    );
+    })
 
-    const { t } = useI18n();
     const { languageVal } = storeToRefs(i18nStore());
-    const { setLanguage } = i18nStore();
-    watch(languageVal, (newVal) => {
-      setLanguage(languageVal.value);
-
-      checkRoute();
-    });
-    const langOptions = [
-      {
-        label: "ไทย",
-        value: "th"
-      },
-      {
-        label: "English",
-        value: "en"
-      }
-    ];
 
     const isHomePage = computed(() => {
       if (route.path === "/" || route.path === "/home") {
@@ -141,158 +110,61 @@ export default defineComponent({
       return false;
     });
 
-    const checkRoute = () => {
-      if (route) {
-        prevPage.value = "";
-        hasHeader.value = false;
-        hasPage.value = false;
-        hasLang.value = false;
-        pageName.value = "";
-        headerIcon.value = "";
-        if (route.path === "/slot") {
-          hasPage.value = true;
-          pageName.value = t("lang.slot_header");
-        } else if (route.path === "/live-casino") {
-          hasPage.value = true;
-          pageName.value = t("lang.live_header");
-        } else if (route.path === "/poker") {
-          hasPage.value = true;
-          pageName.value = "Poker";
-        } else if (route.path === "/e-sport") {
-          hasPage.value = true;
-          pageName.value = "Esports";
-        } else if (route.path === "/sport") {
-          hasPage.value = true;
-          pageName.value = t("lang.sport_header");
-        } else if (route.path === "/aviator") {
-          hasPage.value = true;
-          pageName.value = t("lang.fish_header");
-        } else if (route.path === "/finance/deposit") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.deposit_header");
-          // headerIcon.value = require("../assets/images/menu/header-topup-icon.png");
-        } else if (route.path === "/finance/withdraw") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.withdraw_header");
-          // headerIcon.value = require("../assets/images/menu/header-withdraw-icon.png");
-        } else if (route.path === "/account/transit") {
-          prevPage.value = "account";
-          hasPage.value = true;
-          pageName.value = t("lang.transit_header");
-        } else if (route.path === "/account") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.account_header");
-          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
-          hasLang.value = true;
-        } else if (route.path === "/display") {
-          prevPage.value = "finance/deposit";
-          hasPage.value = true;
-          pageName.value = t("lang.display_header");
-          outOfApp.value = true;
-        } else if (route.path === "/account/personal") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.personal_header");
-          // headerIcon.value = require("../assets/images/menu/personal-header-icon.png");
-          hasLang.value = true;
-        } else if (route.path === "/account/withdraw") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.withdraw_header2");
-        } else if (route.path === "/account/mail") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.mail_header");
-        } else if (route.path === "/affiliate") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.affiliate_header");
-        } else if (route.path === "/vip") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = "VIP";
-        } else if (route.path === "/promo" && !route.query.id) {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.promo_header");
-        } else if (route.path === "/promo" && route.query.id) {
-          prevPage.value = "/promo";
-          hasPage.value = true;
-          pageName.value = t("lang.promo_header");
-        } else if (route.path === "/insert-bankinfo") {
-          hasPage.value = true;
-          pageName.value = t("lang.bankinfo_header");
-        } else if (route.path === "/login") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.login");
-          hasLang.value = true;
-        } else if (route.path === "/register") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.register");
-          hasLang.value = true;
-        } else if (route.path === "/forgot-password") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.forgot_password");
-          hasLang.value = true;
-        } else if (route.path === "/share") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = t("lang.share_page");
-        } else if (route.path === "/getapp") {
-          prevPage.value = "/";
-          hasPage.value = true;
-          pageName.value = "App";
-        }
-      }
-    };
-
-
-    const closeWindowOrBack = () => {
-      if (prevPage.value) {
-        router.replace(prevPage.value);
-      } else {
-        router.go(-1);
-      }
-
-      // if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
-      //   window.close();
-      // } else {
-      //   router.go(-1);
-      // }
-    };
     const pageName = ref("");
     const hasPage = ref(false);
     const hasLang = ref(false);
     const hasHeader = ref(false);
     const outOfApp = ref(false);
     const headerIcon = ref("");
-    const toggleLeftDrawer = () => {
-      ui.leftDrawerOpen = !ui.leftDrawerOpen;
-    };
 
     const openAffiliatePage = () => {
       router.push("/affiliate");
     };
 
-    const mainWalletValue = computed(() => {
-      const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
-      return balanceWithTwoDecimalPlaces;
-    });
+    const startAllIntervals = () => {
+      checkBalanceInterval.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getBalance();
+        }
+      }, 20000);
+
+      checkUnreadMessagesInterval.value = setInterval(function () {
+        if (store.hasToken()) {
+          store.getUnreadTotal();
+        }
+      }, 30000);
+    }
+
+    const clearAllIntervals = () => {
+      clearInterval(checkBalanceInterval);
+      clearInterval(checkUnreadMessagesInterval);
+    }
+
+    onUnmounted(() => {
+      clearAllIntervals();
+    })
 
     onMounted(() => {
-      checkRoute();
-      store.getBalance();
+      if (store.hasToken()) {
+        store.getBalance();
+        store.getUnreadTotal();
+
+        startAllIntervals();
+      }
+
+      window.addEventListener('offline', () => {
+        store.isOffline = true;
+        clearAllIntervals();
+      });
+
+      window.addEventListener('online', () => {
+        store.isOffline = false;
+        startAllIntervals();
+      });
     });
 
     return {
       tab: ref("home"),
-      toggleLeftDrawer,
       logout,
       store,
       isHomePage,
@@ -301,14 +173,11 @@ export default defineComponent({
       hasPage,
       ui,
       prevPage,
-      closeWindowOrBack,
       outOfApp,
       hasHeader,
       headerIcon,
       languageVal,
-      langOptions,
       hasLang,
-      mainWalletValue,
       openAffiliatePage,
       openLiveChat,
       router,
@@ -327,126 +196,6 @@ export default defineComponent({
 }
 </style>
 <style scoped lang="scss">
-.footer-nav {
-  .footer-label {
-    font-weight: normal;
-  }
-
-  .footer-label {
-    color: #c9c9c9;
-  }
-
-  .q-tab--active {
-    .footer-label {
-      color: #ffffff;
-      -webkit-text-fill-color: #ffffff;
-    }
-  }
-}
-
-path {
-  stroke-width: 0.5;
-  stroke-dasharray: 3212;
-  stroke-dashoffset: 3212;
-  fill: transparent;
-}
-
-svg path {
-  fill: none;
-  stroke: #ffffff;
-  stroke-width: 2;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 0;
-}
-
-.footer-nav {
-  margin-top: -30px;
-  :deep(.q-tab__content) {
-    margin-top: auto;
-  }
-  :deep(.q-tabs__content) {
-    margin-top: -30px;
-  }
-
-  :deep(.q-hoverable:hover > .q-focus-helper) {
-    opacity: 0;
-  }
-
-  :deep(.q-hoverable:hover) {
-    filter: brightness(1.3);
-  }
-}
-
-.footer-icon {
-  //width: 22px;
-  width: 30px;
-  // filter: brightness(1.4);
-  margin-bottom: 4px;
-}
-
-.middle-menu {
-  // background: salmon;
-
-  // .footer-icon{
-  //   background: salmon;
-  // }
-  // position: absolute;
-  // margin-top: -30px;
-  z-index: 9;
-  opacity: 1;
-
-  .footer-icon {
-    // margin-bottom: -10px;
-    width: 58px;
-    height: 58px;
-    aspect-ratio: 58 / 58;
-  }
-
-}
-
-// .q-footer .q-tabs {
-//     margin-top: -30px;
-// }
-
-.logo {
-  width: 130px;
-  margin-left: 10px;
-
-  img {
-    width: 100%;
-  }
-}
-
-.vip-btn {
-  width: 24px;
-  order: -1;
-}
-
-.point-rebate-div {
-  position: relative;
-  min-width: 130px;
-  height: 30px;
-  background: $third-color;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 15px;
-  margin-left: 8px;
-  margin-right: auto;
-  z-index: 2;
-
-  span {
-    color: $white;
-    padding: 2px 5px;
-  }
-
-  img {
-    height: 28px;
-    width: 28px;
-    padding: 1px;
-  }
-}
-
 .login-btn {
   width: 5rem;
   height: 1rem;
@@ -464,26 +213,6 @@ svg path {
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-}
-
-.affiliate-btn {
-  background: #793737;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  justify-content: center;
-  padding: 1px 16px;
-  height: 30px;
-  color: #fff;
-  font-size: 16px;
-  line-height: 30px;
-
-  img {
-    height: 18px;
-    filter: brightness(0) invert(1);
-    width: auto;
-  }
 }
 
 .register-btn {
@@ -520,14 +249,14 @@ svg path {
 
   @media (max-width: 768px) {
     width: 200px;
-    margin-top:0px;
+    margin-top: 0px;
     top: calc(50% + 30px);
     display: none; // temp
   }
 
   @media (max-width: 500px) {
     width: 200px;
-    margin-top:0px;
+    margin-top: 0px;
     display: none; // temp
   }
 }
@@ -560,10 +289,10 @@ svg path {
   @media (min-width: 1200px) {
     background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
     background-size: cover;
-    height: 480px;
+    height: 400px;
   }
 
-  
+
 }
 
 footer {
@@ -574,6 +303,7 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
   @media (min-width: 1200px) {
     height: 300px;
   }
@@ -581,27 +311,29 @@ footer {
 
 .footer-box {
   margin: 15px 0px;
-  max-width: 1280px;
-  column-gap: 5px;
-  row-gap: 5px;
+  max-width: 1400px;
+  gap: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
   @media (min-width: 1200px) {
-    margin-top: 36px;
+    margin-top: 20px;
   }
+
   .box {
     width: 75px;
     height: 32px;
-    background-color: #272a30;
     display: flex;
     justify-content: center;
     align-items: center;
+
     img {
       max-width: 100%;
       max-height: 100%;
     }
+
     @media (min-width: 1200px) {
       width: 140px;
       height: 60px;
@@ -612,11 +344,11 @@ footer {
 .copyright-text {
   font-size: 12px;
   line-height: 16.8px;
-  padding-bottom: 20px;
+  padding: 20px;
+
   @media (min-width: 1200px) {
-    font-size: 20px;
+    font-size: 17px;
     line-height: 28px;
-    padding-bottom: 20px;
   }
 }
 
@@ -624,33 +356,9 @@ footer {
   .login-btn {
     width: 120px;
   }
+
   .register-btn {
     width: 120px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .home-sticky {
-    display: block;
-  }
-}
-
-@media (min-width: 991px) {
-  .main-section {
-    background-repeat: repeat-x;
-    background-size: contain;
-  }
-
-  .point-rebate-div {
-    margin-right: 10px;
-  }
-
-  .logo {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .header-vip-btn {
-    margin-left: 130px;
   }
 }
 </style>

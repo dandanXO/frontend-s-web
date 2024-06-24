@@ -1,76 +1,76 @@
 <template>
   <div>
     <div v-if="siteId !== 8 && siteId !== '8'">
-      <h2>佣金比例说明</h2>
+      <h2> {{ t('commissionInfo.commissionRateInfo') }} </h2>
       <p>
-        代理的佣金比例由本月总输赢和活跃人数两项条件决定，同时满足时获取对应等级的佣金比例。
+        {{ t('commissionInfo.commissionRateDescription') }}
       </p>
       <p>
-        活跃人数：当月存款>=100或有效投注>=500；
+        {{ t('commissionInfo.activeMemberRequirement') }}
       </p>
       <table class="custom-table">
         <thead>
-          <th scope="col">级别</th>
-          <th scope="col">公司本月总输赢</th>
-          <th scope="col">新增/ 活跃数量最低要求</th>
-          <th scope="col">佣金比例</th>
+          <th scope="col">{{ t('commissionInfo.level') }}</th>
+          <th scope="col">{{ t('commissionInfo.companyMonthlyProfit') }}</th>
+          <th scope="col">{{ t('commissionInfo.activeNumberRequirement') }}</th>
+          <th scope="col">{{ t('commissionInfo.commissionRate') }}</th>
         </thead>
         <tbody>
           <tr>
-            <td data-label="级别">1</td>
-            <td data-label="公司本月总输赢">1 - 40000</td>
-            <td data-label="活跃数最低要求">5</td>
-            <td data-label="佣金比例">30%</td>
+            <td :data-label="t('commissionInfo.level')">1</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">1 - 40000</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">5</td>
+            <td :data-label="t('commissionInfo.commissionRate')">30%</td>
           </tr>
           <tr>
-            <td data-label="级别">2</td>
-            <td data-label="公司本月总输赢">40001 - 150000</td>
-            <td data-label="活跃数最低要求">10</td>
-            <td data-label="佣金比例">35%</td>
+            <td :data-label="t('commissionInfo.level')">2</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">40001 - 150000</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">10</td>
+            <td :data-label="t('commissionInfo.commissionRate')">35%</td>
           </tr>
           <tr>
-            <td data-label="级别">3</td>
-            <td data-label="公司本月总输赢">150001 - 300000</td>
-            <td data-label="活跃数最低要求">15</td>
-            <td data-label="佣金比例">40%</td>
+            <td :data-label="t('commissionInfo.level')">3</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">150001 - 300000</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">15</td>
+            <td :data-label="t('commissionInfo.commissionRate')">40%</td>
           </tr>
           <tr>
-            <td data-label="级别">4</td>
-            <td data-label="公司本月总输赢">300001 - 500000</td>
-            <td data-label="活跃数最低要求">25</td>
-            <td data-label="佣金比例">45%</td>
+            <td :data-label="t('commissionInfo.level')">4</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">300001 - 500000</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">25</td>
+            <td :data-label="t('commissionInfo.commissionRate')">45%</td>
           </tr>
           <tr>
-            <td data-label="级别">5</td>
-            <td data-label="公司本月总输赢">500001 - 1000000</td>
-            <td data-label="活跃数最低要求">35</td>
-            <td data-label="佣金比例">50%</td>
+            <td :data-label="t('commissionInfo.level')">5</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">500001 - 1000000</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">35</td>
+            <td :data-label="t('commissionInfo.commissionRate')">50%</td>
           </tr>
           <tr>
-            <td data-label="级别">6</td>
-            <td data-label="公司本月总输赢">≥1000001</td>
-            <td data-label="活跃数最低要求">50</td>
-            <td data-label="佣金比例">55%</td>
+            <td :data-label="t('commissionInfo.level')">6</td>
+            <td :data-label="t('commissionInfo.companyMonthlyProfit')">≥1000001</td>
+            <td :data-label="t('commissionInfo.activeNumberRequirement')">50</td>
+            <td :data-label="t('commissionInfo.commissionRate')">55%</td>
           </tr>
         </tbody>
       </table>
-      <h2>佣金计算方式</h2>
+      <h2>{{ t('commissionInfo.commissionCalculateFormula') }}</h2>
       <p>
         <ul>
-          <li>佣金 = 冲正后净输赢 * 佣金比例 + 佣金调整 + 佣金补调；</li>
-          <li>冲正后净输赢 = 当月净输赢 + 上月结余；</li>
-          <li>当月净输赢 = 当月总输赢 - 红利 - 返水 - 场馆费 - 账户调整 + 补单输赢 - 存提手续费；</li>
-          <li>红利 = 代理下线会员当月领取的平台发放红利的总和；</li>
-          <li>返水 = 代理下线会员当月领取平台返水的总和；</li>
-          <li>场馆费 = 各游戏场馆总输赢 * 平台费率，但只有当月产生盈利，平台才会收取场馆费；</li>
-          <li>账户调整 = 当会员流水异常时，站点管理员对会员进行账户调整；</li>
-          <li>补单输赢 = 上月实时数据净输赢 - 上月发放佣金净输赢；</li>
-          <li>存款手续费 = 下级会员存款金额 * 存款费率 + 代理额度充值金额 * 存款费率；</li>
-          <li>提款手续费 = 下级会员的取款金额 * 取款费率；</li>
-          <li>佣金补调：当月佣金发放后，根据代理参与的相关活动，或其它原因核实后进行补调。</li>
+          <li>{{ t('commissionInfo.commissionFormula') }}</li>
+          <li>{{ t('commissionInfo.correctionNetProfitFormula') }}</li>
+          <li>{{ t('commissionInfo.monthlyNetProfitFormula') }}</li>
+          <li>{{ t('commissionInfo.bonusFormula') }}</li>
+          <li>{{ t('commissionInfo.rebateFormula') }}</li>
+          <li>{{ t('commissionInfo.platformFeeFormula') }}</li>
+          <li>{{ t('commissionInfo.adjustmentFormula') }}</li>
+          <li>{{ t('commissionInfo.supplementWinLossFormula') }}</li>
+          <li>{{ t('commissionInfo.depositFeeFormula') }}</li>
+          <li>{{ t('commissionInfo.withdrawalFeeFormula') }}</li>
+          <li>{{ t('commissionInfo.commissionAdjustmentNote') }}</li>
         </ul>
       </p>
-      <p class="note">注：请谨记任何使用无诚信的方法以骗取佣金将会被永久冻结账号，并终止合作关系，所有佣金一概不予发放。</p>
+      <p class="note">{{ t('commissionInfo.commissionNote') }}</p>
     </div>
   </div>
   <div v-if="siteId === 8 || siteId === '8'">
@@ -141,8 +141,10 @@
 </template>
 <script setup>
 import { useStore } from '@/store';
+import { useI18n } from 'vue-i18n'
 const store = useStore();
 const siteId = store.state.user.siteId;
+const { t } = useI18n()
 </script>
 <style rel="stylesheet/scss" lang="scss" scoped>
 .el-tab-pane p {

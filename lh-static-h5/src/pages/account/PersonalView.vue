@@ -134,7 +134,7 @@
         </template>
       </div>
 
-      <div class="text-center q-mt-lg" v-if="isEditBirthday">
+      <div class="text-center q-mt-lg" v-if="isEditBirthday || isEditRealName">
         <q-btn class="common-large-btn full-width" color="brightbtn" @click="updateState" label="提交" />
       </div>
     </q-form>
@@ -224,6 +224,7 @@ export default defineComponent({
       formDetail.phoneVerified = personalState.memberInfo.phoneVerified;
       formDetail.emailVerified = personalState.memberInfo.emailVerified;
 
+      isEditRealName.value= (formDetail.realName === '' || formDetail.realName === null) ? true : false;
       isEditEmail.value = (formDetail.emailVerified === false) ? true : false;
       isEditBirthday.value = (!personalState.memberInfo.birthday) ? true : false;
       isEditPhone.value = (formDetail.phoneVerified === false) ? true : false;
@@ -367,12 +368,12 @@ export default defineComponent({
 
     const updateState = () => {
       const updateInfo = {};
-      if (!personalState.memberInfo.birthday) {
-        birthdayRef.value.validate();
-        if (birthdayRef.value.hasError) {
-          return;
-        }
-      }
+      // if (!personalState.memberInfo.birthday) {
+      //   birthdayRef.value.validate();
+      //   if (birthdayRef.value.hasError) {
+      //     return;
+      //   }
+      // }
       if (!personalState.memberInfo.realName) {
         realNameRef.value.validate();
         if (realNameRef.value.hasError) {
@@ -380,8 +381,13 @@ export default defineComponent({
         }
       }
       // console.log(updateInfo);
-      updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
-      updateInfo.realName = formDetail.realName;
+      if(formDetail.birthday) {
+        updateInfo.birthday = moment(formDetail.birthday, "YYYY/MM/DD").format("YYYY-MM-DD");
+      }
+      if(formDetail.realName){
+        updateInfo.realName = formDetail.realName;
+      }
+
 
       api.post("/session/account", qs.stringify(updateInfo)).then((r) => {
         if (r.code === 0) {
@@ -514,7 +520,8 @@ export default defineComponent({
   }
 
   .q-field__control {
-    margin-bottom: 14px;
+    margin-bottom: 6px;
+    padding-bottom: 20px;
     background: $white;
     box-shadow: $shadow-bg;
     border-radius: 10px;
@@ -524,6 +531,10 @@ export default defineComponent({
       color: $font-1;
       margin-right: 6px;
     }
+  }
+
+  .q-field__bottom{
+    padding: 0px 8px 10px;
   }
 
   .web {

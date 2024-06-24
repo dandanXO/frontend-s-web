@@ -12,23 +12,13 @@ const evtArray = Object.values(process.env.EVT_API);
 const crtArray = Object.values(process.env.CR_API);
 
 console.log(window.location.hostname);
-const globalLinks= ["lh318","lh165","lh765","lh730","lh971","lh835", "lh869", "lh866", "lh068", "lh988"];
+const globalLinks= ["lh050","lh068","lh131","lh165","lh318","lh338","lh360","lh537","lh556","lh730","lh739","lh765","lh768","lh835","lh866","lh869","lh887","lh970","lh971","lh988"];
 const isGlobalLH = globalLinks.some(link => window.location.hostname.includes(link));
 
-const specialLinks= ["lh93371", "lh76390" ,"lh30553", "lh13179", "lh36909", "lh97969", "lh09903", "lh97100"];
+const specialLinks= ["lh75561","lh77331","lh79669", "lh93371", "lh76390", "lh30553", "lh13179","lh36791", "lh36909", "lh97969", "lh09903", "lh97100", "lh89737", "lh36987", "lh59376", "lh60108", "lh63133", "lh67319", "lh69166"];
 const isSpecialLH = specialLinks.some((link) => window.location.hostname.includes(link));
 
-
-if (isGlobalLH) {
-  var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
-  var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
-  var crtApi = "https://cad5kegdgl.grsib6dfily.com";
-
-  localStorage.setItem("LH_H5_RST_URL", rstApi);
-  localStorage.setItem("LH_H5_EVT_URL",evtApi);
-  localStorage.setItem("LH_H5_CRT_URL",crtApi);
-
-}else if (isSpecialLH){
+if (isSpecialLH){
   var rstSpecialArray = ["https://apodnbo0tl.anipoius54d.com", "https://ap2gh538tl.se17xiasedy.com"];
   var evtSpecialArray = ["https://prk46vfitl.111z35h0mt.com", "https://prkuo09ctl.1rqrhcll8p.com"];
   var crtSpecialArray =["https://cauomdoptl.baw7xptuqr1.com", "https://caaukstntl.ectuu384q0h.com"];
@@ -41,6 +31,15 @@ if (isGlobalLH) {
 
   var cdnApi = cdnSpecialArray[getRndInteger(0, cdnSpecialArray.length)];
   localStorage.setItem("IMAGE_CDN", cdnApi);
+
+}else if (isGlobalLH) {
+  var rstApi = "https://apc2ttgdgl.grsib6dfily.com";
+  var evtApi = "https://pr5z5egdgl.grsib6dfily.com";
+  var crtApi = "https://cad5kegdgl.grsib6dfily.com";
+
+  localStorage.setItem("LH_H5_RST_URL", rstApi);
+  localStorage.setItem("LH_H5_EVT_URL",evtApi);
+  localStorage.setItem("LH_H5_CRT_URL",crtApi);
 
 } else if(window.location.hostname.includes("leihuo")){
   var rstGlobalArray = Object.values(process.env.GLOBAL_RST_API);
@@ -64,7 +63,7 @@ const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
-  if (successRstUrl) {
+  if (successRstUrl && !isInApp()) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -85,6 +84,11 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
+
+    if(isInApp()){
+      localStorage.setItem(urlLsName, initApi);
+      return initApi;
     }
 
     axios.get(initApi + "/ping").then((res) => {

@@ -768,7 +768,7 @@ export default defineComponent({
         span {
           font-size: 1rem;
           line-height: 1rem;
-          width: 32px;
+          width: 55px;
         }
 
         img {

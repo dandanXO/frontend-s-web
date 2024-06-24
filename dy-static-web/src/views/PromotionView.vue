@@ -57,14 +57,15 @@
           v-if="
             selectedPromo.promoCode !== 'dy2-cny-step-game' &&
             selectedPromo.promoCode !== 'dy2-game-steps' &&
-            selectedPromo.promoCode !== 'dy2-msi-promo' &&
-            selectedPromo.promoCode !== 'dy2-eurocup-hongbao'
+            selectedPromo.promoCode !== 'dy2-msi-promo'
           "
           :class="{
             isCSBanner:
               selectedPromo.promoCode === 'dy2-cs2-copenhagen-major-2024' ||
               selectedPromo.promoCode === 'dy2-cs2-blast-2024',
-            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual'
+            isEurocupManualBanner: selectedPromo.promoCode === 'dy2-eurocup-manual',
+            isDuanwuBanner: selectedPromo.promoCode === 'dy-duanwujie24',
+            iseurocupBanner: selectedPromo.promoCode === 'dy2-eurocup-hongbao'
           }"
         >
           <div
@@ -99,9 +100,9 @@
               selectedPromo.promoCode === 'dy2-game-steps' ||
               selectedPromo.promoCode === 'dy2-eurocup-hongbao' ||
               selectedPromo.promoCode === 'dy2-lpl-summer24' ||
-              selectedPromo.promoCode === 'dy-duanwujie24' ||
               selectedPromo.promoCode === 'dy2-eurocup-manual' ||
-              selectedPromo.promoCode === 'dy2-cs2-blast-2024'
+              selectedPromo.promoCode === 'dy2-cs2-blast-2024',
+            duanwujie: selectedPromo.promoCode === 'dy-duanwujie24'
           }"
           :style="{
             backgroundImage: selectedPromo?.desktopImgBackgroundUrl
@@ -204,8 +205,6 @@ export default defineComponent({
           router.push("/vip");
         } else if (promo.redirectUrl.includes("Dongying-refer")) {
           router.push("/privilege/invite");
-        } else if (promo.redirectUrl.includes("hongbaoyu")) {
-          router.push("/privilege/hongbaoyu");
         }else {
           console.log(promo)
           if (promo.redirectUrl === 'dy2-cs2-copenhagen-major-2024' || promo.redirectUrl === 'dy2-msi-promo') {
@@ -647,6 +646,26 @@ export default defineComponent({
           }
         }
 
+        &.isDuanwuBanner {
+          height: 376px !important;
+          min-height: 376px;
+
+          .promo-bg {
+            height: 376px !important;
+            min-height: 376px;
+          }
+        }
+
+        &.iseurocupBanner {
+          max-width: none;
+          aspect-ratio: 1920/500;
+
+          .promo-bg {
+            height: auto !important;
+            aspect-ratio: 1920/500;
+          }
+        }
+
         .promo-bg {
           background-size: cover;
           background-repeat: no-repeat;
@@ -702,6 +721,20 @@ export default defineComponent({
           width: 100%;
           max-width: 100%;
           margin: 0;
+
+          .promo-view-container {
+            display: none;
+          }
+
+          .hot-promo {
+            border-radius: 0px;
+          }
+        }
+        &.duanwujie {
+          width: 100%;
+          max-width: 1920px;
+          margin: 0 auto;
+          background-image: url(../assets/images/promotion/web-bg.jpg) !important;
 
           .promo-view-container {
             display: none;

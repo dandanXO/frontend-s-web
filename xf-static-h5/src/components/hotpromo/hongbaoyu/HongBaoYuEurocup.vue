@@ -64,7 +64,7 @@
 
           <div class="details-item">
             <div class="event-frame">活动对象</div>
-            <div class="event-txt">东赢全体会员</div>
+            <div class="event-txt">兴发全体会员</div>
           </div>
 
           <div class="details-item">
@@ -106,6 +106,7 @@
               </tr>
             </tbody>
           </table>
+          <div class="table-note">注：相同时间段比赛则以两场比赛总进球粒数派发红包雨</div>
         </div>
       </div>
     </div>
@@ -181,7 +182,7 @@ const promoParam = ref(props.promoParam);
 const getDateRange = (param) => {
   try {
     const promoObject = JSON.parse(param);
-    const dateTimeRange = promoObject[" datetime"].trim(); // Trim the property name
+    const dateTimeRange = promoObject["datetime"].trim(); // Trim the property name
     return dateTimeRange;
   } catch (error) {
     console.error("Error parsing promoParam:", error);
@@ -601,6 +602,13 @@ onMounted(() => {
   &:hover {
     filter: brightness(0.9);
   }
+}
+
+.table-note {
+  padding: 0;
+  margin:10px 0;
+  text-align: left;
+  color: #fcc939;
 }
 </style>
 

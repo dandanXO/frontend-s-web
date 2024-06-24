@@ -1,6 +1,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
   <item>
-    <color android:color="@color/colorPrimary" />
+    <color android:color="@color/newSplashBackgroundColor" />
   </item>
   <item>
     <bitmap

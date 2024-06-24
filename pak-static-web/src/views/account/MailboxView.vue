@@ -253,7 +253,6 @@ onMounted(() => {
     .mailbox-mail-item__title {
       margin-bottom: 8px;
       font-size: 16px;
-      font-weight: 700;
       line-height: 19.2px;
       color: #ffffff;
     }
@@ -319,7 +318,6 @@ onMounted(() => {
       transform: rotate(45deg);
       top: -22px;
       right: -22px;
-      font-weight: 700;
       font-size: 12px;
       line-height: 16px;
     }
@@ -342,7 +340,6 @@ onMounted(() => {
 
     .mailbox-mail-detail__title {
       font-size: 20px;
-      font-weight: 700;
       line-height: 24px;
       color: #ffffff;
     }

@@ -67,7 +67,6 @@ onMounted(() => {
     .discount-record-item__title {
       margin-bottom: 8px;
       font-size: 16px;
-      font-weight: 700;
       line-height: 19.2px;
       color: #ffffff;
     }
@@ -77,7 +76,6 @@ onMounted(() => {
       align-items: center;
       justify-content: end;
       font-size: 18px;
-      font-weight: 700;
       line-height: 30px;
       color: #ffffff80;
 

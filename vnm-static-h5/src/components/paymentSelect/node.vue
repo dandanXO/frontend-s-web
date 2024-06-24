@@ -198,7 +198,7 @@ $node-color: #468cff;
   // display: flex;
   grid-gap: 20px;
   display: grid;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   width: 100%;
   grid-template-columns: repeat(5, 1fr);
 
@@ -281,7 +281,7 @@ $node-color: #468cff;
       justify-content: flex-start;
       align-items: flex-start;
       gap: 0px;
-      margin: 10px 0px 8px;
+      margin: 7px 0px 5px;
       padding: 0 0px;
       flex-direction: column;
       .account-title-container {
@@ -295,7 +295,7 @@ $node-color: #468cff;
       }
       .node-text {
         display: flex;
-        gap: 5px;
+        gap: 3px;
         justify-content: flex-start;
         align-items: center;
         & > div {
@@ -363,7 +363,7 @@ $node-color: #468cff;
         box-shadow: inset 0 0 8px 0 #a9c9ea;
         width: 60px;
         height: 60px;
-        margin-bottom: 5px;
+        margin-bottom: 3px;
         border: 2px solid $secondary;
         border-radius: 10px;
 

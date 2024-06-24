@@ -39,7 +39,6 @@ const handleCancel = () => {
   .confirm-modal-title {
     margin-bottom: 42px;
     font-size: 18px;
-    font-weight: 700;
     line-height: 20.92px;
     text-align: center;
     color: #ffffff;
@@ -67,7 +66,6 @@ const handleCancel = () => {
       background: transparent;
       flex: 1;
       font-size: 16px;
-      font-weight: 700;
       line-height: 20.92px;
       text-align: center;
 

@@ -26,7 +26,6 @@ defineProps({
     align-items: center;
     justify-content: space-between;
     font-size: 20px;
-    font-weight: 700;
     line-height: 24.2px;
 
     .section-header__title {

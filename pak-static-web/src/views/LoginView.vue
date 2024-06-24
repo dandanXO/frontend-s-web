@@ -14,12 +14,16 @@
         <a-form-item ref="password" name="password">
           <a-input
             v-model:value="loginForm.password"
-            type="password"
+            :type="isPasswordVisible ? 'text' : 'password'"
             :placeholder="$t('common.form.password.placeholder')"
             @keypress.enter="onSubmit"
           >
             <template #prefix>
               <RiLock2Fill />
+            </template>
+            <template #suffix>
+              <RiEyeOffFill v-if="!isPasswordVisible" @click="handlePasswordVisibleClick" />
+              <RiEyeFill v-else @click="handlePasswordVisibleClick" />
             </template>
           </a-input>
         </a-form-item>
@@ -65,7 +69,7 @@ import { useRoute, useRouter } from "vue-router";
 import { userStore } from "@/store/index";
 import { getVerificationCode } from "@/api/index/login";
 // import { message } from "ant-design-vue";
-import { RiUserFill, RiLock2Fill, RiShieldCheckFill } from "vue-remix-icons";
+import { RiUserFill, RiLock2Fill, RiEyeFill, RiEyeOffFill } from "vue-remix-icons";
 
 import "@/assets/css/login.scss";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -75,6 +79,7 @@ import { validateLoginName, validatePassword } from "@/utils/validator";
 const { t } = useI18n();
 
 const isSpinWheel = ref(true);
+const isPasswordVisible = ref(false);
 const store = userStore();
 const router = useRouter();
 const route = useRoute();
@@ -108,43 +113,32 @@ const rules = computed(() => ({
 }));
 const loadingLogin = ref(false);
 const onSubmit = () => {
-  const fpPromise = FingerprintJS.load();
-  (async () => {
-    const fp = await fpPromise;
-    const result = await fp.get();
-    const excludes = { value: ["timezone", "timeZoneOffset"] };
-    const allComponents = { ...result.components };
-    excludes.value.forEach((element) => {
-      delete allComponents[element];
-    });
-    const sidParam = FingerprintJS.hashComponents(allComponents);
-
-    formRef.value.validate().then(() => {
-      loadingLogin.value = true;
-      store
-        .memberLogin({
-          loginName: loginForm.loginName,
-          password: loginForm.password,
-          sid: sidParam
-          // captchaCode: loginForm.captchaCode,
-          // codeId: loginForm.codeId
-        })
-        .then(() => {
-          const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
-          router.push(jumpUrl);
-          loadingLogin.value = false;
-        })
-        .catch((error) => {
-          console.log(error.message);
-          loadingLogin.value = false;
-          // getCode();
-        });
-    });
-  })();
+  formRef.value.validate().then(() => {
+    loadingLogin.value = true;
+    store
+      .memberLogin({
+        loginName: loginForm.loginName,
+        password: loginForm.password,
+        sid: store.visitorId
+        // captchaCode: loginForm.captchaCode,
+        // codeId: loginForm.codeId
+      })
+      .then(() => {
+        const jumpUrl = route.query.redirect ? route.query.redirect.toString() : "/home";
+        router.push(jumpUrl);
+        loadingLogin.value = false;
+      })
+      .catch((error) => {
+        console.log(error.message);
+        loadingLogin.value = false;
+        // getCode();
+      });
+  });
 };
 const resetForm = () => {
   formRef.value.resetFields();
 };
+const handlePasswordVisibleClick = () => (isPasswordVisible.value = !isPasswordVisible.value);
 </script>
 <style scoped lang="scss">
 .login-container {

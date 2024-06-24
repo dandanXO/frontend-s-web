@@ -282,77 +282,77 @@ const vipClaimItems = [
   { benefit: "网站首存优惠", turnover: "无", availableBtn: false, claimedBtn: false, depositPromoBtn: false },
   {
     benefit: "存款最少20元可申请一次晋级奖金88元",
-    turnover: "电竞/体育10倍 老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍 老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少100元可申请一次再存20% 最高奖金1888元",
-    turnover: "电竞/体育15倍 老虎机12倍 真人18倍",
+    turnover: "电竞/体育15倍 老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金188元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金388元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人15倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少200元可申请一次再存30%最高奖金888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金888元",
-    turnover: "电竞/体育 5倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 5倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少500元可申请每月一次再存35% 最高奖金2888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金1888元",
-    turnover: "电竞/体育 8倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 8倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少500元可申请一次再存40%最高奖金5888元",
-    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育 15倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金8888元",
-    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false
   },
   {
     benefit: "存款最少20元可申请一次晋级奖金18888元",
-    turnover: "电竞/体育10倍  老虎机12倍 真人18倍",
+    turnover: "电竞/体育10倍  老虎机12倍 真人18倍 棋牌20倍",
     availableBtn: false,
     claimedBtn: false,
     depositPromoBtn: false

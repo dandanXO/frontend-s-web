@@ -46,6 +46,7 @@ export default defineComponent({
       if (uploadedItem) {
         const formData = new FormData();
         formData.append("files", file.value);
+        formData.append("includeDir", true);
         try {
           const response = await fetch(
               `${rstApi}/session/image/uploadOrder`,

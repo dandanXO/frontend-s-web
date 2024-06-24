@@ -661,6 +661,7 @@ export default {
     channelPackUrlCopied: 'Url gói kênh đã được sao chép vào bảng ghi tạm.',
     validateAppNameRequired: 'Tên ứng dụng là bắt buộc',
     validateAppIconRequired: 'Biểu tượng ứng dụng là bắt buộc',
+    depositShouldBetween: 'Số tiền gửi phải nằm trong khoảng '
   },
   menu: {
     undefined: '',

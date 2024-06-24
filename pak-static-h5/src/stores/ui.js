@@ -11,6 +11,7 @@ export const useUI = defineStore("ui-store", {
       slotLists: [],
       bottomInsetHeight: 0,
       CSAUrl: "",
+      LiveUrl: null,
       downloadAppUrl: ""
     };
   },

@@ -5,18 +5,16 @@
 <script>
 import { defineComponent, onMounted, ref, nextTick } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import { Device } from "@capacitor/device";
 import { userStore } from "src/stores";
-import { Adjust, AdjustConfig, AdjustEnvironment, AdjustLogLevel } from "@awesome-cordova-plugins/adjust";
 import { isAndroid } from "boot/utils";
 import { AddressbarColor } from "quasar";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { SafeArea } from "@aashu-dubey/capacitor-statusbar-safe-area";
 import { useUI } from "src/stores/ui";
 import axios from "axios";
-import { getAttribution } from "@adjustcom/adjust-web-sdk";
+import { getVisitorId } from "boot/utils";
 
 export default defineComponent({
   name: "App",
@@ -29,18 +27,15 @@ export default defineComponent({
     $q.dark.set(true);
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
-      const fpPromise = FingerprintJS.load();
       (async () => {
-        const fp = await fpPromise;
-        const result = await fp.get();
-        const excludes = { value: ["timezone", "timeZoneOffset"] };
-        const allComponents = { ...result.components };
-        excludes.value.forEach((element) => {
-          delete allComponents[element];
-        });
-        const sidParam = FingerprintJS.hashComponents(allComponents);
+        const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+        store.visitorId = visitorId;
+
+        console.log("SID");
+        console.log(visitorId);
+
         const obj = {
-          identifier: sidParam,
+          identifier: store.visitorId,
           affiliateCode: affiliateItem
         };
         api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
@@ -66,69 +61,69 @@ export default defineComponent({
     const channelValue = ref("");
     const affAppToken = ref("");
 
-    const initAdjustEventTrack = () => {
-      if (isAndroid()) {
-        //Android App.
-        console.log("Init Adjust Sdk");
-        console.log(affAppToken.value);
-        var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
-        adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
-        adjustConfig.setAttributionCallbackListener(function (e) {
-          console.log("setAttributionCallbackListener");
-          console.log(e);
-        });
-
-        Adjust.create(adjustConfig);
-        setTimeout(() => {
-
-          // Adjust.getAdid().then((aaid) => {
-          //   console.log("aaid");
-          //   console.log(aaid);
-          //   if(store.aaid===""){
-          //     store.aaid = aaid;
-          //   }
-          // });
-
-          Adjust.getGoogleAdId().then((googleid) => {
-            console.log("Google AdID");
-            console.log(googleid);
-            if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
-              (async () => {
-                Adjust.getAttribution().then((attribution) => {
-                  console.log("Attribution 2");
-                  console.log(attribution);
-                  store.aaid = attribution.adid;
-                });
-              })();
-            }else{
-              store.googleadid = googleid;
-            }
-          });
-        }, 0);
-      } else {
-        //Normal WEb / H5 / iOS WEbclip.
-        console.log("Init Web Adjust");
-        console.log(affAppToken.value);
-        const AdjustWeb = require("@adjustcom/adjust-web-sdk");
-        AdjustWeb.initSdk({
-          appToken: affAppToken.value,
-          environment: "production",
-          attributionCallback: function (e, attribution) {
-            // e: internal event name, can be ignored
-            // attribution: details about the changed attribution
-            console.log("CALLBACK");
-            console.log(attribution);
-            store.aaid = attribution && attribution.adid ? attribution.adid : "";
-          }
-        });
-        setTimeout(() => {
-          const attribution = AdjustWeb.getAttribution();
-          console.log("Web Adid");
-          console.log(attribution);
-          store.aaid = attribution ? attribution.adid : "";
-        }, 1500);
-      }
-    };
+    // const initAdjustEventTrack = () => {
+    //   if (isAndroid()) {
+    //     //Android App.
+    //     console.log("Init Adjust Sdk");
+    //     console.log(affAppToken.value);
+    //     var adjustConfig = new AdjustConfig(affAppToken.value, AdjustEnvironment.Production);
+    //     adjustConfig.setLogLevel(AdjustLogLevel.Verbose);
+    //     adjustConfig.setAttributionCallbackListener(function (e) {
+    //       console.log("setAttributionCallbackListener");
+    //       console.log(e);
+    //     });
+    //
+    //     Adjust.create(adjustConfig);
+    //     setTimeout(() => {
+    //
+    //       // Adjust.getAdid().then((aaid) => {
+    //       //   console.log("aaid");
+    //       //   console.log(aaid);
+    //       //   if(store.aaid===""){
+    //       //     store.aaid = aaid;
+    //       //   }
+    //       // });
+    //
+    //       Adjust.getGoogleAdId().then((googleid) => {
+    //         console.log("Google AdID");
+    //         console.log(googleid);
+    //         if(!googleid || googleid==='00000000-0000-0000-0000-000000000000'){
+    //           (async () => {
+    //             Adjust.getAttribution().then((attribution) => {
+    //               console.log("Attribution 2");
+    //               console.log(attribution);
+    //               store.aaid = attribution.adid;
+    //             });
+    //           })();
+    //         }else{
+    //           store.googleadid = googleid;
+    //         }
+    //       });
+    //     }, 0);
+    //   } else {
+    //     //Normal WEb / H5 / iOS WEbclip.
+    //     console.log("Init Web Adjust");
+    //     console.log(affAppToken.value);
+    //     const AdjustWeb = require("@adjustcom/adjust-web-sdk");
+    //     AdjustWeb.initSdk({
+    //       appToken: affAppToken.value,
+    //       environment: "production",
+    //       attributionCallback: function (e, attribution) {
+    //         // e: internal event name, can be ignored
+    //         // attribution: details about the changed attribution
+    //         console.log("CALLBACK");
+    //         console.log(attribution);
+    //         store.aaid = attribution && attribution.adid ? attribution.adid : "";
+    //       }
+    //     });
+    //     setTimeout(() => {
+    //       const attribution = AdjustWeb.getAttribution();
+    //       console.log("Web Adid");
+    //       console.log(attribution);
+    //       store.aaid = attribution ? attribution.adid : "";
+    //     }, 1500);
+    //   }
+    // };
 
     const trackH5Affiliate = () => {
       const omitSites = ["bw3.genoortisy.com"];
@@ -142,16 +137,16 @@ export default defineComponent({
       }
 
       sessionStorage.setItem("AFFILIATE_CODE", affiliateCode);
-      api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
-        if (res.code === 0) {
-          sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-          sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-          sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-          affAppToken.value = res.data.adjust_app_token;
-          // initAdjustEventTrack();
-          // alert(affAppToken.value);
-        }
-      });
+      // api.get(`/app/adjust/params?affiliateCode=${affiliateCode}`).then((res) => {
+      //   if (res.code === 0) {
+      //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+      //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+      //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+      //     affAppToken.value = res.data.adjust_app_token;
+      //     // initAdjustEventTrack();
+      //     // alert(affAppToken.value);
+      //   }
+      // });
     };
 
     const onDeviceReady = () => {
@@ -174,16 +169,16 @@ export default defineComponent({
                   if (json && json.channel) {
                     sessionStorage.setItem("AFFILIATE_CODE", json.channel);
                     channelValue.value = sessionStorage.getItem("AFFILIATE_CODE");
-                    api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
-                      if (res.code === 0) {
-                        sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
-                        sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
-                        sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
-                        affAppToken.value = res.data.adjust_app_token;
-                        // initAdjustEventTrack();
-                        // alert(affAppToken.value);
-                      }
-                    });
+                    // api.get(`/app/adjust/params?affiliateCode=${channelValue.value}`).then((res) => {
+                    //   if (res.code === 0) {
+                    //     sessionStorage.setItem("AFFILIATE_APP_TOKEN", res.data.adjust_app_token);
+                    //     sessionStorage.setItem("AFFILIATE_QUICK_REGISTER_EVENT", res.data.adjust_quick_register_event);
+                    //     sessionStorage.setItem("AFFILIATE_REGISTER_EVENT", res.data.adjust_register_event);
+                    //     affAppToken.value = res.data.adjust_app_token;
+                    //     // initAdjustEventTrack();
+                    //     // alert(affAppToken.value);
+                    //   }
+                    // });
                   }
                 };
 
@@ -241,25 +236,15 @@ export default defineComponent({
 
     const getOnlineStatApi = async () => {
       // console.log("Ok Online.");
-      const fpPromise = FingerprintJS.load();
-
-      const fp = await fpPromise;
-      const result = await fp.get();
-      const excludes = { value: ["timezone", "timeZoneOffset"] };
-      const allComponents = { ...result.components };
-      excludes.value.forEach((element) => {
-        delete allComponents[element];
-      });
-      const sidParam = FingerprintJS.hashComponents(allComponents);
+      const sidParam = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
+      store.visitorId = sidParam;
       const way = Platform.is.capacitor && Platform.is.android ? "ANDROID" : "H5";
-      const theSid = store.googleadid ? store.googleadid : store.aaid ? store.aaid : sidParam;
-      console.log(theSid);
 
-      if (theSid) {
+      if (sidParam) {
         const res = await axios.get("https://memsta.thilhe946li.com/memberStatistics/submit", {
           params: {
             way: way,
-            sid: theSid,
+            sid: store.visitorId,
             siteCode: "pak"
           }
         });

@@ -127,6 +127,7 @@ deploy-xf-landing-v6:
     PROJECT: xf-landing-v6
 
 #===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -138,6 +139,13 @@ deploy-tha-download-new:
   extends: .s3-deploy
   variables:
     PROJECT: tha-download-new
+
+#===============================================================================================
+
+deploy-tha2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: tha2-download
 
 #===============================================================================================
 
@@ -218,6 +226,13 @@ deploy-vnm-download:
 
 #===============================================================================================
 
+deploy-vnm-download-v2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-download-v2
+
+#===============================================================================================
+
 deploy-vnm-landing:
   extends: .s3-deploy
   variables:
@@ -229,6 +244,34 @@ deploy-vnm-landing-v2:
   extends: .s3-deploy
   variables:
     PROJECT: vnm-landing-v2
+
+#===============================================================================================
+
+deploy-vnm-landing-v3:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v3
+
+#===============================================================================================
+
+deploy-vnm-landing-v4:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v4
+
+#===============================================================================================
+
+deploy-vnm-landing-v5:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v5
+
+#===============================================================================================
+
+deploy-vnm-landing-v5-2:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v5-2
 
 #===============================================================================================
 
@@ -307,6 +350,20 @@ build-image-ind-static-v2:
     PROJECT: ind-static-v2
   needs:
     - build-ind-static-v2
+
+#===============================================================================================
+
+build-ind-static-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: ind-static-v3
+
+build-image-ind-static-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: ind-static-v3
+  needs:
+    - build-ind-static-v3
 
 #===============================================================================================
 

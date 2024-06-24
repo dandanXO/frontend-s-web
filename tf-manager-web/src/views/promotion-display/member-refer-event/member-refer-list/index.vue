@@ -129,7 +129,7 @@
         :label="t('fields.failReason')"
       >
         <template #default="scope">
-          <div v-if="scope.row.failReasonList[0]!==null">
+          <div v-if="scope.row.failReasonList[0]!==null && scope.row.eligibleStatus !== 'SUCCESS' ">
             <span v-for="(item, index) in scope.row.failReasonList" :key="item">
               {{ t(`memberReferFailReason.${item}`) }}{{ index+1 === scope.row.failReasonList.length ? "" : "; " }}
             </span>

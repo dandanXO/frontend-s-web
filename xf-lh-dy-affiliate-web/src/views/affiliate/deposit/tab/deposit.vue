@@ -94,12 +94,12 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? formatMoney(calculatedMinDeposit) : 0 }}
               {{ isUSDT ? "USDT" : returnCurrency() }}
               <br>
               {{ $t('message.maxDepositeAmount') }}:
               {{
-                activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
+                activeMethod.depositMax ? formatMoney(activeMethod.depositMax) : "No Limit"
               }}
               {{ isUSDT ? "USDT" : returnCurrency() }}
             </div>
@@ -208,6 +208,7 @@ import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useStore } from "@/store";
 import { useI18n } from "vue-i18n";
+import { formatMoney } from "@/utils/format-money";
 const { t } = useI18n();
 const router = useRouter();
 const loadingBtn = ref(false);
@@ -525,7 +526,7 @@ async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
       return Promise.reject(
-        new Error("存入金额介于 " +
+        new Error(t('message.depositShouldBetween') +
           calculatedMinDeposit.value +
           " - " +
           activeMethod.value.depositMax
@@ -556,6 +557,8 @@ const returnCurrency = () => {
     return "THB"
   } else if (siteId === 8 || siteId === '8') {
     return "VNDP"
+  } else if (siteId === 10 || siteId === '10') {
+    return "₩"
   } else {
     return "RMB"
   }

@@ -54,13 +54,13 @@
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  <template v-if="vip.vipLevel !== 0">
-                    {{ `VIP${+vip.vipLevel - 1}` }}
-                  </template>
+                  {{ `VIP${+vip.vipLevel}` }}
                 </div>
 
                 <div class="progress-bar-endpoint-label">
-                  {{ `VIP${vip.vipLevel}` }}
+                  <template v-if="vipItems.length - 1 !== vip.vipLevel">
+                    {{ `VIP${vip.vipLevel + 1}` }}
+                  </template>
                 </div>
               </div>
             </div>
@@ -184,11 +184,11 @@
               <br />
               {{ $t("vip.rewards") }}
             </q-td>
-            <q-td>
+            <!-- <q-td>
               {{ $t("vip.monthly") }}
               <br />
               {{ $t("vip.rewards") }}
-            </q-td>
+            </q-td> -->
           </q-tr>
         </template>
 
@@ -430,7 +430,7 @@ const columns = [
   },
   { name: "ugprade", label: "Monthly Cumulative Deposit An Upgrade Vip Level", field: "ugprade", align: "right" },
   { name: "reward", field: "reward", align: "center" },
-  { name: "flow", field: "flow", align: "center" }
+  // { name: "flow", field: "flow", align: "center" }
 ];
 
 // 1	5000	20	38

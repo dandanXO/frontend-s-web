@@ -488,6 +488,7 @@ import { hasPermission } from '../../../../utils/util'
 import { useStore } from '../../../../store';
 import { useI18n } from "vue-i18n";
 import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/datetime";
+import { formatInputTimeZone } from "@/utils/format-timeZone"
 
 const store = useStore();
 const { t } = useI18n();
@@ -513,6 +514,8 @@ const reasonTemplateList = reactive({
 const siteList = reactive({
   list: [],
 })
+
+let timeZone = null;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -650,9 +653,13 @@ async function loadRecord() {
       query[key] = value
     }
   })
+  timeZone = siteList.list.find(e => e.id === request.siteId).timeZone;
   if (request.withdrawDate !== null) {
     if (request.withdrawDate.length === 2) {
-      query.withdrawDate = request.withdrawDate.join(',')
+      query.withdrawDate = JSON.parse(JSON.stringify(request.withdrawDate));
+      query.withdrawDate[0] = formatInputTimeZone(query.withdrawDate[0], timeZone);
+      query.withdrawDate[1] = formatInputTimeZone(query.withdrawDate[1], timeZone);
+      query.withdrawDate = query.withdrawDate.join(',')
     }
   }
   query.memberType = "NORMAL,TEST,OUTSIDE";

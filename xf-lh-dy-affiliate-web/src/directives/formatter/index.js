@@ -1,6 +1,8 @@
 import moment from "moment";
 import { formatMoney } from "@/utils/format-money";
+import { useStore } from '@/store'
 
+const store = useStore()
 export const formatter = {
   beforeMount(el, binding) {
     if (binding.value.type === "date") {
@@ -10,7 +12,11 @@ export const formatter = {
         el.innerHTML = "";
       }
     } else if (binding.value.type === "money") {
-      el.innerHTML = formatMoney(binding.value.data, 2);
+      if (parseInt(store.state.user.siteId) === 10) {
+        el.innerHTML = formatMoney(binding.value.data, 0);
+      } else {
+        el.innerHTML = formatMoney(binding.value.data, 2);
+      }
     }
   },
   updated(el, binding) {
@@ -21,7 +27,11 @@ export const formatter = {
         el.innerHTML = "";
       }
     } else if (binding.value.type === "money") {
-      el.innerHTML = formatMoney(binding.value.data, 2);
+      if (parseInt(store.state.user.siteId) === 10) {
+        el.innerHTML = formatMoney(binding.value.data, 0);
+      } else {
+        el.innerHTML = formatMoney(binding.value.data, 2);
+      }
     }
   }
 };

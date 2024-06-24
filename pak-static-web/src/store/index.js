@@ -34,7 +34,8 @@ export const userStore = defineStore("userStore", {
       profilePhoto: "",
       accountModalVisible: false,
       accountModalRegVisible: false,
-      unreadInboxMail: 0
+      unreadInboxMail: 0,
+      visitorId: ""
     };
   },
   actions: {

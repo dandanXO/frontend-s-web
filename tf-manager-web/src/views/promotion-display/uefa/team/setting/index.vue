@@ -164,11 +164,11 @@
         <el-form-item :label="t('fields.win')" prop="win">
           <el-input v-model="scoreForm.win" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
         </el-form-item>
-        <el-form-item :label="t('fields.loss')" prop="loss">
-          <el-input v-model="scoreForm.loss" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
-        </el-form-item>
         <el-form-item :label="t('fields.draw')" prop="draw">
           <el-input v-model="scoreForm.draw" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
+        </el-form-item>
+        <el-form-item :label="t('fields.loss')" prop="loss">
+          <el-input v-model="scoreForm.loss" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />
         </el-form-item>
         <el-form-item :label="t('fields.goalScored')" prop="goalScored">
           <el-input v-model="scoreForm.goalScored" style="width: 350px" maxlength="5" @keypress="restrictInput($event)" />

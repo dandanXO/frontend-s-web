@@ -43,7 +43,6 @@ const handleClick = (tab) => {
     background: unset;
     border: none;
     font-size: 16px;
-    font-weight: 700;
     line-height: 20px;
     text-align: center;
     color: #ffffff;

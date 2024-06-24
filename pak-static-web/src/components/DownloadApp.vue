@@ -124,7 +124,6 @@ onMounted(() => {
     font-size: 1.2rem;
     line-height: 1.5569;
     color: #83a3ca;
-    font-weight: 700;
     &.text-low-piority {
       font-size: 0.9rem;
       line-height: 155.69%;

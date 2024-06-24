@@ -35,9 +35,9 @@
       <div class="jackpot-note">
         <div class="note">
         Lưu ý: Vui lòng xác định số của bạn và không thể thay đổi sau khi gửi</div>
-        <div class="more" @click="openTableDialog">
-          「Xem hồ sơ」
-        </div>
+<!--        <div class="more" @click="openTableDialog">-->
+<!--          「Xem hồ sơ」-->
+<!--        </div>-->
     </div>
   </div>
     <div class="luckydraw-details">
@@ -236,7 +236,8 @@
             <li>II: Ngày chọn số từ 01/07/2024 – 15/07/2024, ngày mở thưởng là 16/07/2024.</li>
           </ul>
           <p class="likeli"><span class="point">4</span>Thông qua việc hoàn thành yêu cầu nạp tiền mỗi ngày, Thành Viên đều có thể chọn 1 số may mắn, tối đa 15 số cho 1 đợt. </p>
-          <p class="likeli"><span class="point">5</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
+          <p class="likeli"><span class="point">5</span><span>Thành viên sẽ nhận được 3 lần chọn số may mắn khi đăng ký hợp lệ khuyến mãi TRAO MAY MẮN TỚI ĐỘI BÓNG YÊU THÍCH và sẽ nhận được thêm 1 lần chọn số sau khi đội bóng yêu thích mà thành viên đã chọn và đặt cược chiến thắng trận đấu đó <a href="https://docs.google.com/forms/d/e/1FAIpQLSeIgng8JZ2zoX4MMCNVksVD8v1MBjJ2aNUCa5r-qGJhq3F1HA/viewform" target="_blank" class="pill">TẠI ĐÂY</a></span></p>
+          <p class="likeli"><span class="point">6</span>Sau khi có kết quả trúng thưởng, tiền thưởng sẽ được cộng trực tiếp vào tài khoản của người chơi.</p>
         </div>
         <div class="section tnc">
           <div class="section-title">Điều khoản và điều kiện</div>
@@ -292,7 +293,7 @@
                   </div>
                 </q-td>
               </template>
-              
+
               <template v-slot:body-cell-winPrize="props">
                   <q-td :props="props">
                     <div>
@@ -312,7 +313,7 @@
               :rows-per-page-options="[0]"
               :hide-pagination="true"
             >
-            
+
             <template v-slot:body-cell-winStatus="props">
                 <q-td :props="props">
                   <div :class="{ win: props.value === 'WIN', loss: props.value === 'LOSS'}">
@@ -333,7 +334,10 @@ import { ref, reactive, onMounted, nextTick } from "vue";
 import { selectNumber, getSelectedNumber, getWinners, getPrizeAmount } from "../../../api/index/promo";
 
 import { useI18n } from "vue-i18n";
+import { useQuasar } from "quasar";
+import { userStore } from "src/stores";
 
+const $q= useQuasar()
 const { t } = useI18n();
 const inputs = [1, 2, 3]; // Three inputs
 const inputValues = ref(["", "", ""]); // Reactive array to store input values
@@ -372,8 +376,19 @@ const getJackpotAmt = () => {
   jackpotNumber.value = jackpotNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 var qs = require("qs");
-const tab = ref('voting')
+const tab = ref('voting');
+const store= userStore();
 const onSubmitJackpot = () => {
+  if(!store.token){
+    $q.notify({
+      type: "negative",
+      position: "top",
+      message: t("lang.system_please_login"),
+      icon: "report_problem"
+    });
+    return;
+  }
+
   const number = parseInt(inputValues.value.join(""));
   selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
     if (res.code === 0) {
@@ -384,12 +399,13 @@ const onSubmitJackpot = () => {
         icon: "check_circle_outline"
       });
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: res.message,
-        icon: "report_problem"
-      });
+      // debugger;
+      // $q.notify({
+      //   color: "negative",
+      //   position: "top",
+      //   message: res.message,
+      //   icon: "report_problem"
+      // });
     }
   });
 };
@@ -446,7 +462,7 @@ const winningColumns = [
     field: "recordTime",
     align: "center",
     sortable: true
-  },  
+  },
   {
     name: "number",
     label: t("lang.record_choose_lucky_number"),
@@ -478,7 +494,7 @@ const initSelectedNumber = () => {
 const initGetWinners = () => {
   winnerDataSource.value = [];
   getWinners(promoCode.value).then((res) => {
-        
+
         if (res.code === 0) {
           res.data.forEach((element) => {
             element.winners.forEach((win) => {
@@ -525,10 +541,10 @@ const getWinPrize = (prize) => {
 const isDialogShow = ref(false);
 const openTableDialog = () => {
   isDialogShow.value = true;
-}
-onMounted(() => {
   initSelectedNumber();
   initGetWinners();
+}
+onMounted(() => {
   getJackpotAmt();
   nextTick(() => {
     if (inputRefs.value[0]) {
@@ -691,7 +707,7 @@ onMounted(() => {
       width: 100%;
       margin-top: 5px;
       color: #000000;
-      display: flex; 
+      display: flex;
       justify-content: space-between;
       gap:10px;
       .note {
@@ -798,6 +814,17 @@ onMounted(() => {
           display: grid;
           grid-template-columns: 30px 1fr;
           gap: 10px;
+
+
+          .pill {
+              white-space: nowrap;
+              border-radius: 100px;
+              padding: 4px 8px;
+              color: #FFFFFF;
+              width: fit-content;
+              display: inline-block;
+              background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
+          }
           .point {
             width: 100%;
             color: #ffffff;

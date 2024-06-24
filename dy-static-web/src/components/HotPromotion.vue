@@ -12,6 +12,7 @@
     <ESportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2-esport-safety'" />
     <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'sport-safety'" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" />
+    <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'dy2meizhoubei'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg' && store.token" />
     <HongBaoYuPromo
       v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao1' && store.token"
@@ -65,7 +66,7 @@
       :promo-code="list.promoCode"
       :pageContent="list.pageContent"
       :promoParam="list.param"
-      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao' && store.token"
+      v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu' && store.token"
     />
 
     <LPLSummer24 v-if="list.redirectUrl === 'dy2-lpl-summer24' && !isCommonPromo && store.token" />
@@ -77,6 +78,12 @@
     />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
+    <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
+      <img
+        style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
+        src="../assets/images/promotion/webfeedback.png"
+      />
+    </div>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -100,6 +107,7 @@ import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue"
 import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import ESportSafetyPromo from "../components/hotpromo/eSportSafety/eSportSafetyPromo.vue";
 import SportSafetyPromo from "../components/hotpromo/sportSafety/sportSafetyPromo.vue";
+import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
 import NbaGamePromo from "../components/hotpromo/nbagame/nbaGamePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
 import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
@@ -144,6 +152,7 @@ export default defineComponent({
     Nba24Match,
     ClaimPromo,
     TigerCardPromo,
+    MeiZhouBeiPromo,
     PrizePoolVotePromo,
     ESportSafetyPromo,
     SportSafetyPromo,
@@ -328,7 +337,9 @@ export default defineComponent({
       this.list.redirectUrl === "dy2-cs2-blast-2024" ||
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
-      this.list.redirectUrl === "tiqianhongbao"
+      this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
+      this.list.redirectUrl === "fankuijianyi" ||
+      this.list.redirectUrl === "dy2meizhoubei"
     ) {
       this.isCommonPromo = false;
     } else {

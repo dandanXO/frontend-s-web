@@ -17,10 +17,11 @@ export default {
       DETAILS: '详细',
     },
     level: {
-      AFFILIATE: 'Affiliate',
-      SUPER_AFFILIATE: 'Super Affiliate',
-      MASTER_AFFILIATE: 'Master Affiliate',
-      CHIEF_AFFILIATE: 'Chief Affiliate',
+      JUNIOR_AFFILIATE: '五级代理',
+      SUB_AFFILIATE: '四级代理',
+      AFFILIATE: '三级代理',
+      SUPER_AFFILIATE: '二级代理',
+      MASTER_AFFILIATE: '一级代理',
     },
     timeType: {
       MONTHLY: '每月',
@@ -95,6 +96,8 @@ export default {
     WAITING_CALLBACK: '自动支付中',
     PAYING: '支付',
     WAITING_AUTO_PAY: '待自动支付',
+    FAIL_REVIEW: '失败审核',
+    WAITING_RETRY: '等待重试',
   },
   withdrawConfirmStatus: {
     0: '未确认',
@@ -222,8 +225,8 @@ export default {
     sportMatch: {
       ACTIVE: '进行中',
       ENDED: '已结束',
-      SETTLED: '已结算'
-    }
+      SETTLED: '已结算',
+    },
   },
   betStatus: {
     BET: '下注',
@@ -295,6 +298,7 @@ export default {
     NBA: 'NBA',
     COCKFIGHT: '斗鸡',
     MSI: 'MSI季中冠军赛',
+    COPA: '美洲杯',
   },
   homeBannerType: {
     HOME: '首页',
@@ -446,7 +450,7 @@ export default {
       GROUP_THREE: '组三',
       GROUP_SIX: '组六',
       TWO_D: '2D',
-    }
+    },
   },
   memberReferStatus: {
     PENDING: '核实中',
@@ -462,11 +466,13 @@ export default {
     ERROR_REGISTER_DUPLICATE_IP_OR_SID: '侦测到相同IP或设备',
     ERROR_DEPOSIT_AMT_MIN_NOT_MEET: '最低存款要求未达成',
     ERROR_BET_AMT_MIN_NOT_MEET: '最低下注要求未达成',
+    ERROR_SIMILAR_IP_DETECTED: '侦测到相同IP',
+    ERROR_SIMILAR_SID_DETECTED: '侦测到相同设备',
   },
   rewardType: {
-    BET: "投注",
-    DEPOSIT: "存款",
-    ONE_TIME: "一次",
+    BET: '投注',
+    DEPOSIT: '存款',
+    ONE_TIME: '一次',
   },
   fields: {
     account: '账号',
@@ -735,6 +741,7 @@ export default {
     confirmStatus: '确认状态',
     confirmBy: '确认人',
     content: '内容',
+    contentList: '符号列表',
     convertRate: '转化率',
     copy: '复制',
     copyPayment: '正在复制',
@@ -1267,6 +1274,7 @@ export default {
     rule: '规则',
     maxRebate: '最大返水额',
     maxBalance: '最高余额',
+    nickName: '昵称',
     rebateAmount: '返水金额',
     receiveTime: '领取时间',
     receiveType: '领取模式',
@@ -1610,6 +1618,7 @@ export default {
     web: '电脑版',
     webMessage: '网页提示信息',
     win: '赢',
+    winRate: '胜率',
     winnerTeam: '获胜队伍',
     withdraw: '提款',
     withdrawableBalance: '可提余额',
@@ -1788,6 +1797,8 @@ export default {
     virtualMultiplier: '虚拟奖金倍数',
     batchDistributeRebate: '批量发送返水',
     distribute: '发送',
+    totalAmountDistribute: '派发奖金总数',
+    noOfBonusRecord: '奖金记录总数',
     whitelist: '白名单',
     blacklist: '黑名单',
     accessType: '访问类型',
@@ -1797,7 +1808,11 @@ export default {
     ipRange: 'IP范围',
     countryCode: '国家代码',
     lower: '下限',
-    Upper: '上限',
+    upper: '上限',
+    addMemberLotteryRecord: '新增会员彩票记录',
+    addFakeLotteryRecord: '新增假彩票记录',
+    approveSummonRecord: '批准唤醒记录',
+    updateAffiliateLevel: '编辑代理等级',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2217,6 +2232,8 @@ export default {
     timeExist: '时间已存在',
     wrongPopupTime: '弹窗时间错误。',
     selectPopupTime: '请选择弹窗时间.',
+    summonSuccess: '唤醒成功',
+    updateAffiliateLevelSuccess: '成功编辑代理等级',
   },
   menu: {
     undefined: '',
@@ -2300,6 +2317,7 @@ export default {
     'Waiting Auto Pay': '等待自动支付',
     'AutoWithdraw Under review': '提款审核',
     'AutoWithdraw Withdrawal Record': '提交记录',
+    'Fail Review': '失败审核',
     Suspend: '暂不处理',
     Promotion: '优惠',
     'Privilege Info': '优惠列表',
@@ -2602,6 +2620,7 @@ export default {
     LANDING: '落地页',
     DOWNLOAD: '下载页',
     AFFILIATE: '代理',
+    HOME: '首页',
   },
   error: {
     400: '请求无效',
@@ -2627,7 +2646,7 @@ export default {
     801: '验证码已失效',
     900: '无法找到会员信息',
     901: '无法找到此代理信息',
-    912: "用户名不存在",
+    912: '用户名不存在',
     922: '你的账号还未连接到VCall',
     1000: '登录名或密码错误',
     1001: '登录失败, 账号已被禁用',
@@ -2777,6 +2796,8 @@ export default {
     24003: '结果已结算',
     27000: '钥匙数量不足',
     31000: '所选日期还有赛事未结束，请待所有赛事结束了再结算',
-    31001: '所选日期无赛事'
+    31001: '所选日期无赛事',
+    40002: '唤醒记录不存在',
+    40003: '会员已被唤醒',
   },
 }

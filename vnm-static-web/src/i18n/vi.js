@@ -27,6 +27,8 @@ export default {
     rebate: "Hoàn Trả"
   },
   account: {
+    no_card_avail: "Không có thẻ sẵn có, tiến hành ",
+    add_a_bank_card: "Thêm thẻ ngân hàng",
     welcome: "Chào mừng",
     mainWallet: "Số dư",
     reminder: "Hỗ trợ",
@@ -180,6 +182,7 @@ export default {
     oldWithdrawPwd: "Mật khẩu Rút tiền cũ",
     newWithdrawPwd: "Mật khẩu Rút tiền mới",
     confirmWithdrawPwd: "Xác nhận Mật khẩu Rút tiền",
+    loginPwd: "Mật khẩu đăng nhập",
     securityVerification: "Xác minh bảo mật",
     phoneVerification: "Xác minh Số điện thoại",
     captcha: "Mã xác minh",
@@ -206,6 +209,7 @@ export default {
     oldWithdrawPwd: "Vui lòng nhập Mật khẩu Rút tiền cũ",
     newWithdrawPwd: "Vui lòng nhập Mật khẩu Rút tiền mới",
     confirmWithdrawPwd: "Vui lòng nhập Xác nhận Mật khẩu Rút tiền",
+    loginPwd: "Vui lòng nhập Mật khẩu đăng nhập",
     title: "Vui lòng nhập tiêu đề",
     content: "Vui lòng nhập nội dung",
     usernamereq: "Tên tài khoản không thể để trống",
@@ -223,6 +227,8 @@ export default {
     noMatch: "Mật khẩu xác nhận không khớp với mật khẩu mới",
     verifyPhone: "Vui lòng xác minh số điện thoại di động",
     onlyNumber: "Chỉ cho phép nhập số",
+    invalidPhoneLength: 'Số điện thoại phải dài 10 chữ số.',
+    invalidPhoneStartsWith0: 'Số điện thoại phải bắt đầu bằng số 0.',
     phoneVerification: "Vui lòng nhập mã xác minh điện thoại",
     min6: "Độ dài phải là 6 ký tự",
     lessthan50: "Độ dài phải ít hơn 50 ký tự",
@@ -340,7 +346,8 @@ export default {
     enterDigits: "Vui lòng nhập các chữ số",
     lengthShouldBe: "Chiều dài nên là",
     smsCodeRequired: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
-    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng"
+    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng",
+    settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
   },
   referTerms: {
     promotionStart: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",
@@ -372,8 +379,8 @@ export default {
     paymentMethod: "Phương thức thanh toán",
     amount: "Số tiền",
     inputDeposit: "Nhập số tiền",
-    minAmt: "Số tiền tối thiểu mỗi lần",
-    maxAmt: "Số tiền tối đa mỗi lần",
+    minAmt: "Tối thiểu mỗi lần",
+    maxAmt: "Tối đa mỗi lần",
     bank: "Ngân hàng",
     selectBank: "Chọn ngân hàng",
     napas: "Hỗ trợ chuyển khoản qua ngân hàng khác 24/7",
@@ -847,7 +854,8 @@ export default {
     tiktok: "Tiktok",
     automatic_payment: "Thanh toán tự động",
     otp_success_send_email: "OTP Code đã được gửi đến email của bạn",
-    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn."
+    otp_success_send_phone: "Mã OTP đã được gửi đến số điện thoại di động của bạn.",
+    login_to_continue: "Vui lòng đăng nhập để tiếp tục"
   },
   response: {
     101: "Không tìm thấy nền tảng",
@@ -912,8 +920,11 @@ export default {
     14001: "Số điện thoại này đã được đăng ký",
     14002: "Email này đã được đăng ký",
     14003: "Không tìm thấy mã đại lý",
+    14010: "IP hoặc SID trùng lặp",
     15202: "Mật khẩu mới không thể giống với mật khẩu cũ.",
     15201: "Mật khẩu cũ chưa chính xác.",
+    15204: "Số điện thoại không đúng.",
+    15205: "Mật khẩu không đúng.",
     21000: "Trò chơi này đã có trong danh sách trò chơi yêu thích của bạn.",
     24001: "Bản ghi điểm danh đã tồn tại.",
     24002: "Phát hiện cùng địa chỉ IP",

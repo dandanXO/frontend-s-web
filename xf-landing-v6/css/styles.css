@@ -48,6 +48,18 @@ a:hover {
   margin: auto;
 }
 
+.gold-text{
+  text-align: center;width:100%;
+  margin-bottom:5px;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top:5px;
+  background-clip: text;
+  background: linear-gradient(180deg, #FFF8BD 0%, #FFBE81 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 .top-wrapper {
   padding: 16px 16px 10px;
   display: flex;
@@ -68,7 +80,7 @@ a:hover {
 }
 
 .pop-btns-wrapper {
-  padding: 16px;
+  padding: 5px 16px 10px;
   height: calc(100% - 180px);
 }
 

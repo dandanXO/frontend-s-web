@@ -2,38 +2,33 @@
   <div class="form-wrapper">
     <form class="personal-info-form form-template">
       <div class="form-item">
-        <label>아이디(개인정보)</label>
-        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
-          @update:model-value="updateTouch" ref="name2Ref"  lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']"/>
+        <label>{{ $t('lang.personal_nickname') }}</label>
+        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
+          ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
       </div>
       <div class="form-item">
-        <label>실제 이름</label>
+        <label>{{ $t('lang.personal_real_name') }}</label>
         <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
           :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
           @update:model-value="updateTouch" />
       </div>
-      <!-- <div class="form-item">
-        <label>잔액</label>
-        <q-input dense outlined v-model="formDetail.mainWallet" :readonly="store.token ? 'readonly' : false"
-          @update:model-value="updateTouch" />
-      </div> -->
       <div class="form-item">
-        <label>이메일</label>
-        <q-input dense outlined v-model="formDetail.email" :readonly="!!store.email" @update:model-value="updateTouch" />
+        <label>{{ $t('lang.personal_id') }}</label>
+        <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
+          @update:model-value="updateTouch" />
       </div>
       <div class="form-item">
-        <label>전화</label>
+        <label>{{ $t('lang.personal_phone') }}</label>
         <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
           @update:model-value="updateTouch" />
       </div>
     </form>
     <div class="action-buttons">
       <div @click="closetheModal" class="primary-button blue">
-        닫기
+        {{ $t('lang.personal_close_btn') }}
       </div>
       <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
-        제출하다
+        {{ $t('lang.personal_update_btn') }}
       </div>
     </div>
   </div>
@@ -57,10 +52,6 @@ const personalState = reactive({
   memberInfo: {}
 });
 const store = userStore();
-const mainWallet = computed(() => {
-  const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
-  return store.currency.value + " " + balanceWithTwoDecimalPlaces;
-});
 
 const updateTouch = () => {
   hasTouched.value = true;
@@ -70,8 +61,7 @@ const loadInfo = () => {
   personalState.memberInfo = userStore();
   formDetail.realName = personalState.memberInfo.realName;
   formDetail.name2 = personalState.memberInfo.name2;
-  formDetail.mainWallet = personalState.memberInfo.token ? mainWallet : ''
-  formDetail.email = personalState.memberInfo.email || '';
+  formDetail.loginName = personalState.memberInfo.nickName;
   formDetail.telephone = personalState.memberInfo.telephone || ''
 }
 
@@ -82,13 +72,14 @@ const updateState = () => {
 
   const updateInfo = {};
 
-  if (personalState.memberInfo.name2 !== formDetail.name2) {
-    name2Ref.value.validate();
-    if (name2Ref.value.hasError) {
-      return;
-    }
+  name2Ref.value.validate();
+  realNameRef.value.validate();
 
-    updateInfo.name2 = formDetail.name2;
+  if (name2Ref.value.hasError || realNameRef.value.hasError) {
+    // validation error, do nothing
+  } else {
+    updateInfo.name2 = personalState.memberInfo.name2 !== formDetail.name2 ? formDetail.name2 : undefined;
+    updateInfo.realName = personalState.memberInfo.realName !== formDetail.realName ? formDetail.realName : undefined;
 
     api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
       const res = data
@@ -112,13 +103,6 @@ const updateState = () => {
         });
       }
     });
-  } else {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: '변경 사항 없음',
-      icon: "report_problem"
-    });
   }
 };
 
@@ -134,5 +118,4 @@ const closetheModal = () => {
 
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

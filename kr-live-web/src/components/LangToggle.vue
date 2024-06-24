@@ -1,29 +1,33 @@
 <template>
-    <q-page-sticky position="bottom-left" :offset="[18, 18]">
-      <q-btn fab v-if="showLangToggle" color="primary" @click="toggleLang">{{ lang }}</q-btn>
-    </q-page-sticky>
-  </template>
-  
-  <script setup>
-  import { ref } from "vue";
-  import { i18nStore } from "src/router/language";
+  <q-page-sticky position="bottom-right" :offset="[40, 230]" style="z-index:999999"
+    v-if="memberType === 'TEST' || isDevENV">
+    <q-btn class="floating" fab color="primary" @click="toggleLang">{{ lang }}</q-btn>
+  </q-page-sticky>
+</template>
 
-  const showLangToggle = ref(process.env.NODE_ENV === "development");
-  const { setLanguage, languageVal } = i18nStore();
-  
-  const lang = ref(languageVal);
+<script setup>
+import { ref } from "vue";
+import { i18nStore } from "src/router/language";
+import { userStore } from "src/stores";
+import { storeToRefs } from "pinia";
 
-  const toggleLang = () => {
-    if(lang.value === 'kr') {
-        lang.value = 'en';
-        setLanguage('en');
-    } else {
-        lang.value = 'kr';
-        setLanguage('kr');
-    }
+const store = userStore();
+const isDevENV = ref(process.env.NODE_ENV === "development");
+const { memberType } = storeToRefs(store);
+const { setLanguage, languageVal } = i18nStore();
+
+const lang = ref(languageVal);
+
+const toggleLang = () => {
+  if (lang.value === 'kr') {
+    lang.value = 'en';
+    setLanguage('en');
+  } else {
+    lang.value = 'kr';
+    setLanguage('kr');
   }
- 
-  </script>
-  
-  <style lang="scss" scoped>
-  </style>
+}
+
+</script>
+
+<style lang="scss" scoped></style>

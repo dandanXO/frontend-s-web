@@ -169,11 +169,15 @@
             </el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item v-if="form.valueType === 'COUNTRY_CODE_LIST'" :label="t('fields.country')" prop="value">
+        <el-form-item
+          v-if="form.valueType === 'COUNTRY_CODE_LIST'"
+          :label="t('fields.country')"
+          prop="value"
+        >
           <el-select
             v-model="form.value"
             multiple
-            placeholder="Select"
+            :placeholder="t('fields.country')"
             style="width: 240px"
           >
             <el-option
@@ -184,7 +188,11 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item v-if="form.valueType === 'IP_RANGE'" :label="t('fields.ipRange')" prop="value">
+        <el-form-item
+          v-if="form.valueType === 'IP_RANGE'"
+          :label="t('fields.ipRange')"
+          prop="value"
+        >
           <el-input
             v-model="uiControl.ipRangeLower"
             style="width: 150px"
@@ -197,7 +205,11 @@
             :placeholder="t('fields.upper')"
           />
         </el-form-item>
-        <el-form-item v-if="form.valueType === 'IP_LIST'" :label="t('fields.ip')" prop="value">
+        <el-form-item
+          v-if="form.valueType === 'IP_LIST'"
+          :label="t('fields.ip')"
+          prop="value"
+        >
           <div class="flex gap-2 mt-4">
             <el-tag
               v-for="ip in uiControl.ipList"
@@ -219,9 +231,40 @@
             @keyup.enter="handleInputConfirm"
             @blur="handleInputConfirm"
           />
-          <el-button v-else class="button-new-tag" size="small" @click="showInput">
-            + New Tag
-          </el-button>
+          <div v-else>
+            <el-button
+              class="button-new-tag"
+              size="small"
+              @click="showInput"
+            >
+              + {{ t('fields.ip') }}
+            </el-button>
+          </div>
+        </el-form-item>
+        <el-form-item
+          v-if="form.valueType === 'IP_RANGE'"
+          :label="t('fields.ipRange')"
+          prop="value"
+        >
+          <el-input
+            v-model="uiControl.ipRangeLower"
+            style="width: 150px"
+            :placeholder="t('fields.lower')"
+          />
+          <span style="margin: 0 10px;">-</span>
+          <el-input
+            v-model="uiControl.ipRangeUpper"
+            style="width: 150px"
+            :placeholder="t('fields.upper')"
+          />
+        </el-form-item>
+        <el-form-item :label="t('fields.remark')" prop="remark">
+          <el-input
+            type="textarea"
+            style="width: 300px"
+            v-model="form.remark"
+            :placeholder="t('fields.remark')"
+          />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
@@ -243,11 +286,12 @@
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
-      <el-table-column
-        prop="domain"
-        :label="t('fields.domain')"
-        width="200"
-      />
+      <el-table-column prop="siteId" :label="t('fields.site')">
+        <template #default="scope">
+          {{ getSiteName(scope.row.siteId) }}
+        </template>
+      </el-table-column>
+      <el-table-column prop="domain" :label="t('fields.domain')" width="200" />
       <el-table-column
         prop="domainType"
         :label="t('fields.domainType')"
@@ -257,7 +301,11 @@
           {{ t('domainType.' + scope.row.domainType) }}
         </template>
       </el-table-column>
-      <el-table-column prop="accessType" :label="t('fields.accessType')" width="200">
+      <el-table-column
+        prop="accessType"
+        :label="t('fields.accessType')"
+        width="150"
+      >
         <template #default="scope">
           <el-tag v-if="scope.row.accessType === 'WHITELIST'" type="success">
             {{ t('fields.whitelist') }}
@@ -267,9 +315,16 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="accessType" :label="t('fields.valueType')" width="200">
+      <el-table-column
+        prop="accessType"
+        :label="t('fields.valueType')"
+        width="150"
+      >
         <template #default="scope">
-          <el-tag v-if="scope.row.valueType === 'COUNTRY_CODE_LIST'" type="success">
+          <el-tag
+            v-if="scope.row.valueType === 'COUNTRY_CODE_LIST'"
+            type="success"
+          >
             {{ t('fields.country') }}
           </el-tag>
           <el-tag v-if="scope.row.valueType === 'IP_LIST'" type="success">
@@ -280,15 +335,12 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="value"
-        :label="t('fields.value')"
-        width="200"
-      />
+      <el-table-column prop="value" :label="t('fields.value')" width="150" />
+      <el-table-column prop="remark" :label="t('fields.remark')" width="150" />
       <el-table-column
         prop="createBy"
         :label="t('fields.updateBy')"
-        width="200"
+        width="150"
       />
       <el-table-column
         prop="createTime"
@@ -323,7 +375,14 @@
             @click="showEdit(scope.row)"
             v-permission="['sys:domain-access:update']"
           />
-          <el-button v-permission="['sys:domain-access:del']" icon="el-icon-delete" size="mini" type="danger" style="margin-left: 10px" @click="removeSetting(scope.row.id)" />
+          <el-button
+            v-permission="['sys:domain-access:del']"
+            icon="el-icon-delete"
+            size="mini"
+            type="danger"
+            style="margin-left: 10px"
+            @click="removeSetting(scope.row.id)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -347,7 +406,7 @@ import {
   createDomainAccess,
   getDomainAccessList,
   updateDomainAccess,
-  deleteDomainAccess
+  deleteDomainAccess,
 } from '../../../api/system-domain-access'
 import { getSiteListSimple } from '../../../api/site'
 import { getCountries } from '../../../api/country'
@@ -370,8 +429,8 @@ const uiControl = reactive({
   removeBtn: true,
   inputVisible: false,
   accessTypes: [
-    { value: "WHITELIST", label: t('fields.whitelist') },
-    { value: "BLACKLIST", label: t('fields.blacklist') }
+    { value: 'WHITELIST', label: t('fields.whitelist') },
+    { value: 'BLACKLIST', label: t('fields.blacklist') },
   ],
   ipList: [],
   ipRangeLower: null,
@@ -399,6 +458,7 @@ const form = reactive({
   accessType: null,
   valueType: null,
   value: null,
+  remark: null,
 })
 
 const formRules = reactive({
@@ -470,6 +530,10 @@ async function loadCountries() {
   countries.list = ret
 }
 
+function getSiteName(siteId) {
+  return sites.list.find(s => s.id === siteId).siteName
+}
+
 async function loadDomainTypes() {
   const { data: ret } = await getDomainTypes()
   domainTypes.list = ret
@@ -486,7 +550,16 @@ const removeIp = ip => {
 
 const handleInputConfirm = () => {
   if (inputValue.value) {
-    uiControl.ipList.push(inputValue.value)
+    if (!inputValue.value.includes(',') && !inputValue.value.includes('\n')) {
+      uiControl.ipList.push(inputValue.value)
+    } else {
+      const arr = inputValue.value.split(/,|\n/)
+      arr.forEach(item => {
+        if (item) {
+          uiControl.ipList.push(item)
+        }
+      })
+    }
   }
   uiControl.inputVisible = false
   inputValue.value = ''
@@ -523,7 +596,10 @@ function showEdit(sitePlatform) {
     for (const key in sitePlatform) {
       if (key === 'value' && sitePlatform.valueType === 'IP_LIST') {
         uiControl.ipList = sitePlatform.value.split(',')
-      } else if (key === 'value' && sitePlatform.valueType === 'COUNTRY_CODE_LIST') {
+      } else if (
+        key === 'value' &&
+        sitePlatform.valueType === 'COUNTRY_CODE_LIST'
+      ) {
         form.value = sitePlatform.value.split(',')
       } else if (key === 'value' && sitePlatform.valueType === 'IP_RANGE') {
         const arr = sitePlatform.value.split('-')

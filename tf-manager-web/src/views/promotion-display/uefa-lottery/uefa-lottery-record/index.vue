@@ -64,9 +64,17 @@
           icon="el-icon-plus"
           size="mini"
           type="primary"
-          @click="showDialog()"
+          @click="showDialog(true)"
         >
-          {{ t('fields.add') }}
+          {{ t('fields.addFakeLotteryRecord') }}
+        </el-button>
+        <el-button
+          icon="el-icon-plus"
+          size="mini"
+          type="primary"
+          @click="showDialog(false)"
+        >
+          {{ t('fields.addMemberLotteryRecord') }}
         </el-button>
       </div>
     </div>
@@ -94,9 +102,11 @@
           min-width="150"
         >
           <template #default="scope">
-            <span v-if="scope.row.loginName === null">-</span>
-            <span v-if="scope.row.loginName !== null">
+            <span v-if="scope.row.alias === null">
               {{ scope.row.loginName }}
+            </span>
+            <span v-else>
+              {{ scope.row.alias }}
             </span>
           </template>
         </el-table-column>
@@ -188,7 +198,7 @@
     </el-card>
   </div>
   <el-dialog
-    :title="t('fields.addLotteryRecord')"
+    :title="t('fields.addMemberLotteryRecord')"
     v-model="uiControl.dialogVisible"
     append-to-body
     width="580px"
@@ -250,12 +260,75 @@
       </div>
     </el-form>
   </el-dialog>
+  <el-dialog
+    :title="t('fields.addFakeLotteryRecord')"
+    v-model="uiControl.fakeDialogVisible"
+    append-to-body
+    width="580px"
+  >
+    <el-form
+      ref="fakeLotteryForm"
+      :model="fakeForm"
+      :rules="fakeFormRules"
+      :inline="true"
+      size="small"
+      label-width="150px"
+    >
+      <el-form-item :label="t('fields.recordTime')" prop="recordTime">
+        <el-date-picker
+          v-model="fakeForm.recordTime"
+          format="DD/MM/YYYY"
+          value-format="YYYY-MM-DD"
+          size="small"
+          :placeholder="t('fields.recordTime')"
+          style="margin-left: 5px;width: 150px"
+          :disabled-date="disabledDate"
+          :editable="false"
+          :clearable="false"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.memberName')" prop="memberName">
+        <el-input v-model="fakeForm.memberName" style="width: 350px" />
+      </el-form-item>
+      <el-form-item :label="t('fields.number')" prop="number">
+        <el-input
+          v-model="fakeForm.number"
+          style="width: 350px;"
+          @keypress="restrictInput"
+        />
+      </el-form-item>
+      <el-form-item :label="t('fields.promoCode')" prop="promoCode">
+        <el-select
+          v-model="fakeForm.promoCode"
+          size="small"
+          :placeholder="t('fields.promoCode')"
+          class="filter-item"
+          style="margin-left: 5px; width: 150px"
+        >
+          <el-option
+            v-for="item in privi"
+            :key="item.id"
+            :label="item.name"
+            :value="item.code"
+          />
+        </el-select>
+      </el-form-item>
+      <div class="dialog-footer">
+        <el-button @click="uiControl.dialogVisible = false">
+          {{ t('fields.cancel') }}
+        </el-button>
+        <el-button type="primary" @click="addLotteryRecord">
+          {{ t('fields.confirm') }}
+        </el-button>
+      </div>
+    </el-form>
+  </el-dialog>
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import moment from 'moment'
-import { getUefaLotteryRecords, getUefaLotteryPrivilege, addRecord } from '../../../../api/privilege-lottery'
+import { getUefaLotteryRecords, getUefaLotteryPrivilege, addRecord, addFakeRecord } from '../../../../api/privilege-lottery'
 import { getMemberBalanceByLoginNameSite } from "../../../../api/member";
 import { useI18n } from 'vue-i18n'
 import { ElMessage } from 'element-plus'
@@ -263,6 +336,7 @@ import { required } from "../../../../utils/validate";
 
 const { t } = useI18n()
 const lotteryForm = ref(null)
+const fakeLotteryForm = ref(null)
 const uiControl = reactive({
   status: [
     { key: 1, displayName: 'BET', value: 'BET' },
@@ -275,7 +349,9 @@ const uiControl = reactive({
     { key: 3, displayName: 'GROUP_SIX', value: 'GROUP_SIX' },
     { key: 4, displayName: 'TWO_D', value: 'TWO_D' },
   ],
-  dialogVisible: false
+  dialogVisible: false,
+  fakeDialogVisible: false,
+  isFake: false,
 })
 
 const startDate = convertStartDate(new Date())
@@ -311,6 +387,13 @@ const request = reactive({
 })
 
 const form = reactive({
+  number: null,
+  recordTime: null,
+  memberName: null,
+  promoCode: null,
+})
+
+const fakeForm = reactive({
   number: null,
   recordTime: null,
   memberName: null,
@@ -357,12 +440,21 @@ async function loadPrivi() {
   privi = ret;
 }
 
-function showDialog() {
-  if (lotteryForm.value) {
-    lotteryForm.value.resetFields()
+function showDialog(isFake) {
+  uiControl.isFake = isFake
+  if (isFake) {
+    if (fakeLotteryForm.value) {
+      fakeLotteryForm.value.resetFields()
+    }
+    fakeForm.recordTime = startDate
+    uiControl.fakeDialogVisible = true
+  } else {
+    if (lotteryForm.value) {
+      lotteryForm.value.resetFields()
+    }
+    form.recordTime = startDate
+    uiControl.dialogVisible = true
   }
-  form.recordTime = startDate
-  uiControl.dialogVisible = true
 }
 
 const loginNameValidator = async(rule, value, callback) => {
@@ -373,6 +465,13 @@ const loginNameValidator = async(rule, value, callback) => {
   callback();
 };
 
+const fakeFormRules = reactive({
+  number: [required(t('message.validateResultNumber'))],
+  memberName: [required(t('message.validateLoginNameRequired'))],
+  recordTime: [required(t('message.validateRecordTimeRequired'))],
+  promoCode: [required(t('message.validatePrivilegeRequired'))]
+});
+
 const formRules = reactive({
   number: [required(t('message.validateResultNumber'))],
   memberName: [required(t('message.validateLoginNameRequired')), { validator: loginNameValidator, trigger: "blur" }],
@@ -381,14 +480,25 @@ const formRules = reactive({
 });
 
 function addLotteryRecord() {
-  lotteryForm.value.validate(async valid => {
-    if (valid) {
-      await addRecord(form)
-      uiControl.dialogVisible = false
-      await loadRecords()
-      ElMessage({ message: t('message.addSuccess'), type: 'success' })
-    }
-  })
+  if (uiControl.isFake) {
+    fakeLotteryForm.value.validate(async valid => {
+      if (valid) {
+        await addFakeRecord(fakeForm)
+        uiControl.fakeDialogVisible = false
+        await loadRecords()
+        ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      }
+    })
+  } else {
+    lotteryForm.value.validate(async valid => {
+      if (valid) {
+        await addRecord(form)
+        uiControl.dialogVisible = false
+        await loadRecords()
+        ElMessage({ message: t('message.addSuccess'), type: 'success' })
+      }
+    })
+  }
 }
 
 onMounted(async () => {

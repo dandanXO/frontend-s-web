@@ -27,8 +27,12 @@
           {{ store.state.user.name }}
         </div>
         <el-row justify="space-between">
-          <el-col :span="6"> {{ t('fields.rebateWallet') }} </el-col>
-          <el-col :span="6" style="flex: none"> {{ affBalance }} </el-col>
+          <el-col :span="6"> {{ t('fields.recommenderCode') }} </el-col>
+          <el-col :span="6" style="flex: none"> {{ affInfo.affiliateCode }} </el-col>
+        </el-row>
+        <el-row justify="space-between">
+          <el-col :span="8"> {{ t('fields.rebateWallet') }} </el-col>
+          <el-col :span="4" style="flex: none"> {{ affBalance }} </el-col>
         </el-row>
         <el-row justify="space-between">
           <el-col :span="6"> {{ t('fields.commissionWallet') }} </el-col>
@@ -69,7 +73,7 @@
         >
           <template
             v-if="(parseInt(store.state.user.siteId) === 10)
-              ? (child.path === '/transfer' ? false : true)
+              ? (child.path === '/transfer' || child.path === '/commission-info' ? false : true)
               : (child.path === '/rebate' ? false : true)
             "
           >
@@ -104,7 +108,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, reactive } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import {
@@ -118,7 +122,7 @@ import {
 import { i18nStore } from '@/store/language'
 import { storeToRefs } from 'pinia'
 import { useStore } from '@/store'
-import { getAffiliateBalance, getAffiliateCommissionBalance } from '@/api/affiliate';
+import { getAffiliateBalance, getAffiliateCommissionBalance, getAffiliateInfo } from '@/api/affiliate';
 
 const { t } = useI18n()
 const route = useRoute()
@@ -140,6 +144,16 @@ let commBalance = 0
 
 const i18nStoreLanguage = i18nStore()
 const { languageVal } = storeToRefs(i18nStoreLanguage)
+
+const affInfo = reactive({
+  affiliateCode: null,
+  affiliateLevel: null,
+  downlineAffiliate: 0,
+  downlineMember: 0,
+  commission: 0,
+  revenueShare: 0,
+  shareRatio: [],
+})
 
 const setActiveNav = () => {
   const currentPath = route.path.substring(route.path.lastIndexOf('/'))
@@ -505,6 +519,10 @@ onMounted(async () => {
     affBalance = affBal
     const { data: commBal } = await getAffiliateCommissionBalance(store.state.user.id);
     commBalance = commBal
+    const { data: aff } = await getAffiliateInfo(store.state.user.id)
+    Object.keys({ ...aff }).forEach(field => {
+      affInfo[field] = aff[field]
+    })
   }
 })
 

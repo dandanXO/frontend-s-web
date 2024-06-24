@@ -114,7 +114,7 @@
     <template v-if="chgpwdTab === 'tabWithdrawPassword'">
       <q-form @submit="submitUpdateWithdrawPwd">
         <div class="change-pwd">
-          <template v-if="store.registeredWithdrawPassword && secondCodeId == null">
+          <template v-if="store.registeredWithdrawPassword && secondCodeId == null && !isForgotWithdrawPassword">
             <q-label>
               {{ $t("lang.chgpwd_please_enter_old_withdraw_password") }}
               <em>*</em>
@@ -143,6 +143,51 @@
                 />
               </template>
             </q-input>
+          </template>
+
+          <template v-if="isForgotWithdrawPassword">
+            <q-label>
+              {{ $t("lang.chgpwd_please_enter_login_password") }}
+              <em>*</em>
+            </q-label>
+            <q-input
+              ref="loginPasswordRef"
+              standout
+              v-model="formChgWithdrawPwd.loginPassword"
+              class="q-pb-xs"
+              hide-bottom-space
+              :type="isPwd ? 'password' : 'text'"
+              :label="$t('lang.chgpwd_login_password')"
+              lazy-rules
+              clearable
+              :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_login_password')]"
+            >
+              <template v-slot:append>
+                <q-icon
+                  color="dark"
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+
+            <q-label>
+              {{ $t("lang.chgpwd_please_enter_telephone") }}
+              <em>*</em>
+            </q-label>
+            <q-input
+              ref="telephoneRef"
+              standout
+              v-model="formChgWithdrawPwd.telephone"
+              class="q-pb-xs"
+              hide-bottom-space
+              type="text"
+              :label="$t('lang.chgpwd_telephone')"
+              lazy-rules
+              clearable
+              :rules="[(val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_telephone')]"
+            ></q-input>
           </template>
 
           <q-label>
@@ -174,35 +219,37 @@
             </template>
           </q-input>
 
-          <q-label>
-            {{ $t("lang.chgpwd_please_enter_confirm_withdraw_password") }}
-            <em>*</em>
-          </q-label>
-          <q-input
-            ref="confirmWithdrawPasswordRef"
-            standout
-            v-model="formChgWithdrawPwd.confirmNewPwd"
-            class="q-pb-xs"
-            hide-bottom-space
-            :type="isPwd ? 'password' : 'text'"
-            :label="$t('lang.chgpwd_confirm_withdraw_password')"
-            lazy-rules
-            clearable
-            :rules="[
-              (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_confirm_withdraw_password'),
-              (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
-              (val) => val === formChgWithdrawPwd.password || $t('lang.chgpwd_confirm_withdraw_password_not_match')
-            ]"
-          >
-            <template v-slot:append>
-              <q-icon
-                color="dark"
-                :name="isPwd ? 'visibility_off' : 'visibility'"
-                class="cursor-pointer"
-                @click="isPwd = !isPwd"
-              />
-            </template>
-          </q-input>
+          <template v-if="!isForgotWithdrawPassword">
+            <q-label>
+              {{ $t("lang.chgpwd_please_enter_confirm_withdraw_password") }}
+              <em>*</em>
+            </q-label>
+            <q-input
+              ref="confirmWithdrawPasswordRef"
+              standout
+              v-model="formChgWithdrawPwd.confirmNewPwd"
+              class="q-pb-xs"
+              hide-bottom-space
+              :type="isPwd ? 'password' : 'text'"
+              :label="$t('lang.chgpwd_confirm_withdraw_password')"
+              lazy-rules
+              clearable
+              :rules="[
+                (val) => (val && val.length > 0) || $t('lang.chgpwd_please_enter_confirm_withdraw_password'),
+                (val) => (val && val.length >= 6 && val.length <= 11) || $t('lang.length_between_6_11'),
+                (val) => val === formChgWithdrawPwd.password || $t('lang.chgpwd_confirm_withdraw_password_not_match')
+              ]"
+            >
+              <template v-slot:append>
+                <q-icon
+                  color="dark"
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+          </template>
 
           <template v-if="secondCodeId !== null">
             <q-label>
@@ -232,7 +279,14 @@
             </q-input>
           </template>
 
-          <div class="forget-pwd-tip" @click="openCaptchaDialog()" v-if="memberEmail !== null && secondCodeId == null">
+          <!-- <div class="forget-pwd-tip" @click="openCaptchaDialog()" v-if="memberEmail !== null && secondCodeId == null">
+            {{ $t("lang.chgpwd_forgot_withdraw_password") }}
+          </div> -->
+          <div
+            class="forget-pwd-tip"
+            @click="isForgotWithdrawPassword = true"
+            v-if="memberEmail !== null && secondCodeId == null && !isForgotWithdrawPassword"
+          >
             {{ $t("lang.chgpwd_forgot_withdraw_password") }}
           </div>
         </div>
@@ -283,8 +337,9 @@ import moment from "moment";
 import {api} from "boot/axios"
 import {useQuasar} from "quasar"
 import {userStore} from "src/stores";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import { useI18n } from "vue-i18n";
+import { watch } from "vue";
 
 export default defineComponent({
   name: "ChangePwdView",
@@ -292,6 +347,7 @@ export default defineComponent({
     // const isCardActive = ref();
     const isPwd = ref(true);
     const $q = useQuasar();
+    const route = useRoute();
     const router = useRouter();
     const store = userStore();
     const { t } = useI18n();
@@ -395,9 +451,10 @@ export default defineComponent({
     const innerCaptchaRef = ref();
     const innerCaptchaCodeId = ref();
     const secondCodeId = ref(null);
+    const isForgotWithdrawPassword = ref(false);
 
     const verifyOtpAndChangePassword = () => {
-      api.post(`/session/verifyOtpAndChangePassword`, qs.stringify({
+      api.post(`/session/withdrawPassword`, qs.stringify({
         password: formChgWithdrawPwd.password,
         code: formChgWithdrawPwd.otpCode,
         codeId: secondCodeId.value,
@@ -407,6 +464,7 @@ export default defineComponent({
             formChgWithdrawPwd.password = "";
             formChgWithdrawPwd.confirmNewPwd = "";
             formChgWithdrawPwd.otpCode= "";
+            store.registeredWithdrawPassword = true;
 
             $q.notify({
               color: "positive",
@@ -429,6 +487,15 @@ export default defineComponent({
       getCode();
     });
 
+    watch(
+      () => route.query,
+      (newQuery) => {
+        if (newQuery.name === 'withdraw') {
+          goToTab('tabWithdrawPassword');
+        }
+      },
+      { immediate: true, deep: true }
+    );
     //update pwd
     const updatePwdModalVisible = ref(false);
     const oldPasswordRef = ref();
@@ -484,12 +551,14 @@ export default defineComponent({
     const withdrawPasswordRef = ref();
     const confirmWithdrawPasswordRef = ref();
     const otpCodeRef = ref();
+    const loginPasswordRef = ref();
+    const telephoneRef = ref();
 
     const submitUpdateWithdrawPwd = () => {
-      withdrawPasswordRef.value.validate()
-      confirmWithdrawPasswordRef.value.validate();
+      // withdrawPasswordRef.value.validate()
+      // confirmWithdrawPasswordRef.value.validate();
 
-      if(store.registeredWithdrawPassword && secondCodeId.value == null) {
+      if(store.registeredWithdrawPassword && !isForgotWithdrawPassword.value) {
         oldWithdrawPasswordRef.value.validate();
         if (oldWithdrawPasswordRef.value.hasError || withdrawPasswordRef.value.hasError) {
         } else {
@@ -520,12 +589,13 @@ export default defineComponent({
       } else {
         if (withdrawPasswordRef.value.hasError) {
         } else {
-          if (secondCodeId.value !== null) {
+          if (!isForgotWithdrawPassword.value) {
             verifyOtpAndChangePassword();
           } else {
-            api.post("/session/withdrawPassword", qs.stringify({
-              oldPassword: '',
-              password: formChgWithdrawPwd.password
+            api.post("/session/withdrawPasswordWithPassNTel", qs.stringify({
+              password: formChgWithdrawPwd.loginPassword,
+              telephone: formChgWithdrawPwd.telephone,
+              withdrawPassword: formChgWithdrawPwd.password
             })).then((response) => {
               if (response.code === 0) {
                 $q.notify({
@@ -534,7 +604,10 @@ export default defineComponent({
                   message: t('lang.chgpwd_withdraw_password_updated_successfully'),
                   icon: "check_circle_outline"
                 });
-                router.go(-1);
+                isForgotWithdrawPassword.value = false;
+                formChgWithdrawPwd.loginPassword = "";
+                formChgWithdrawPwd.telephone = "";
+                formChgWithdrawPwd.password = "";
               } else {
                 $q.notify({
                   color: "negative",
@@ -580,7 +653,10 @@ export default defineComponent({
       innerCaptchaCodeId,
       verifyOtpAndChangePassword,
       secondCodeId,
-      otpCodeRef
+      otpCodeRef,
+      isForgotWithdrawPassword,
+      loginPasswordRef,
+      telephoneRef
     };
   }
 });

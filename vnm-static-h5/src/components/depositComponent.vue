@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-xs" style="overflow: auto; margin: 2px 8px">
+  <div class="q-pa-xs" style="overflow: auto; margin: 0px 8px">
     <!-- <div class="q-mb-lg">
       <span class="additional-tips">
         {{ $t("lang.deposit_encounterproblem") }}
@@ -52,7 +52,8 @@
           v-if="amountList.length === 0"
           hide-bottom-space
           ref="depositAmtRef"
-          :label="isUSDT ? $t('lang.deposit_enter_usdt') : $t('lang.deposit_enter_deposit_amount')"
+          type="number"
+          :label="$t('lang.withdraw_amount')"
           class="deposit-field"
           color="accent"
           name="localAmount"
@@ -90,14 +91,14 @@
           </template>
         </q-select>
 
-        <div class="q-mt-sm q-mb-sm text-grey text-bold">
+        <div class="q-mt-xs q-mb-sm text-grey text-bold">
           {{ $t("lang.deposit_minamount") }}:
           {{
             calculatedMinDeposit
               ? calculatedMinDeposit.toLocaleString() + " " + (isUSDT ? "USDT" : store.currency.value)
               : 0
           }}
-          <br />
+          &nbsp;&nbsp;&nbsp;&nbsp;
           {{ $t("lang.deposit_maxamount") }}:
           {{
             activeMethod.depositMax
@@ -600,7 +601,7 @@ async function pDepo(deposit) {
       // const res = ret.data
       // console.log(res)
       if (res.code === 0) {
-        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1) {
+        if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
           otag("event", "deposit");
         }
 
@@ -822,10 +823,40 @@ onMounted(() => {
   background: #4fb2ff !important;
 }
 
+
+.deposit-selection {
+  &.q-field {
+    border-radius: 10px;
+    box-shadow: $shadow-bg;
+  }
+  &.q-field--float .q-field__label{
+    display:none;
+  }
+  .q-field--auto-height .q-field__native{
+    line-height: 48px;
+  }
+  .q-field__control{
+    min-height: 48px;
+    height: 48px;
+
+    .q-field__control-container{
+      padding-top: 0px;
+    }
+    .q-field__marginal{
+      height: 48px;
+    }
+
+    .q-field__label{
+      line-height: 16px;
+    }
+  }
+}
+
+
 .deposit-field {
   &.q-field {
     border-radius: 10px;
-    padding: 0px 8px 10px;
+    padding: 0px 8px 5px;
     background: rgba(0, 0, 0, 0.05);
     box-shadow: $shadow-bg;
   }
@@ -833,12 +864,17 @@ onMounted(() => {
   .q-field--highlighted .q-field__label {
     color: $dark;
   }
-}
 
-.deposit-selection {
-  &.q-field {
-    border-radius: 10px;
-    box-shadow: $shadow-bg;
+  .q-field__control{
+    min-height: 48px;
+    height: 48px;
+
+    .q-field__control-container{
+      padding-top: 0px;
+    }
+    .q-field__marginal{
+      height: 48px;
+    }
   }
 }
 </style>

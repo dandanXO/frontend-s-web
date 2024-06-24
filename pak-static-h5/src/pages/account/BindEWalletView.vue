@@ -247,6 +247,7 @@ const onTypeToggleBtnClick = (index, name) => {
   selectedTypeToggleIndex.value = index;
   selectedTypeToggleName.value = name;
   bankCardInfo.bankId = bankList.value[index].id;
+  bankCardInfo.currencyId = bankList.value[index].currencyIds;
 };
 
 const categoryToggleList = ref(["EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20", "EBPAY", "ERC20"]);
@@ -272,7 +273,8 @@ const bankCardInfo = reactive({
   cardNumber: "",
   cardAccount: store.realName,
   cardAddress: "",
-  telephone: store.phone
+  telephone: store.phone,
+  currencyId: ""
   // smsCode: "",
   // smsCodeId: ""
 });
@@ -393,6 +395,7 @@ const loadBankCards = () => {
             }
 
             bankCardInfo.bankId = bankList.value[0].id;
+            bankCardInfo.currencyId = bankList.value[0].currencyIds;
           }
         })
         .catch((e) => {

@@ -538,7 +538,7 @@ function doDeposit(data) {
   loadingBtn.value = true;
   postDeposit(data).then((d) => {
     if (d.code === 0) {
-      if(window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1){
+      if (window.location.href.indexOf("5svn88.com") > -1 || window.location.href.indexOf("tfpromo88.com") > -1 || window.location.href.indexOf("tf88bof.com") > -1) {
         otag("event", "deposit");
       }
 

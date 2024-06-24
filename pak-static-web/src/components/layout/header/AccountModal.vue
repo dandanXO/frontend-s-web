@@ -58,18 +58,18 @@ import { watch } from "vue";
 const props = defineProps({
   isReg: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 });
 const { isReg } = toRefs(props);
 const visible = defineModel();
 const isForgetPwd = ref(false);
 const handleForgetPwd = () => {
-  isForgetPwd.value = true
-}
+  isForgetPwd.value = true;
+};
 const handleBackToLogin = () => {
-  isForgetPwd.value = false
-}
+  isForgetPwd.value = false;
+};
 const verifyInputsRef = ref([]);
 const activateTab = ref("login");
 const verifyPage = ref(false);
@@ -79,7 +79,7 @@ const finalVerifyCode = computed(() => verifyCodeInputs.value.join(""));
 
 const handleCloseModal = () => {
   visible.value = false;
-}
+};
 
 const handleVerifyInput = (e, index) => {
   if (verifyCodeInputs.value[index].length === 1) {
@@ -110,7 +110,7 @@ watch(visible, (newVal) => {
 </script>
 <style scoped lang="scss">
 .account-modal-wrapper {
-  font-family: "Inter", Arial,sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   display: flex;
   padding: 40px;
   align-items: center;
@@ -142,7 +142,6 @@ watch(visible, (newVal) => {
             text-align: center;
             padding: 0;
             font-size: 14px;
-            font-weight: 700;
             line-height: 14px;
 
             &.is-active {
@@ -182,7 +181,6 @@ watch(visible, (newVal) => {
     .verify-title {
       margin-bottom: 8px;
       font-size: 20px;
-      font-weight: 700;
       line-height: 24px;
       color: #ffffff;
     }
@@ -200,7 +198,6 @@ watch(visible, (newVal) => {
         width: 56px;
         height: 56px;
         font-size: 20px;
-        font-weight: 700;
         line-height: 24px;
         text-align: center;
         color: #ffffff;
@@ -215,7 +212,7 @@ watch(visible, (newVal) => {
       }
     }
   }
-  
+
   .forgetpwd-wrapper {
     display: flex;
     flex-direction: column;
@@ -242,7 +239,6 @@ watch(visible, (newVal) => {
     .forgetpwd-title {
       margin-top: 8px;
       font-size: 20px;
-      font-weight: 700;
       line-height: 24px;
       color: #ffffff;
     }
@@ -260,7 +256,6 @@ watch(visible, (newVal) => {
         width: 56px;
         height: 56px;
         font-size: 20px;
-        font-weight: 700;
         line-height: 24px;
         text-align: center;
         color: #ffffff;

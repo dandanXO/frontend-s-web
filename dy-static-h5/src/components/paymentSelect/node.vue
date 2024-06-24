@@ -193,7 +193,7 @@ $node-color: #4ab6fd;
   // justify-content: space-evenly;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  margin-bottom: 20px;
+  margin-bottom: 4px;
   align-items: flex-start;
 
   .payment-method-item {

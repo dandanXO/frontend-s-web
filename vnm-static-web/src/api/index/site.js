@@ -18,3 +18,7 @@ export function getCSAFromServer() {
 export function getRedEnvelopeFromServer() {
   return server.EVENT.get("/redPacketVip/nextRainTime?promoCode=Red_pocket_rain_8888VNDP");
 }
+
+export function getFloatingItems() {
+  return server.REST.get("/redirect");
+}
