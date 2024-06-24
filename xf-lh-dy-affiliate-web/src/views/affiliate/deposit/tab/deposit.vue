@@ -94,12 +94,12 @@
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
+              {{ $t('message.minDepositeAmount') }}: {{ calculatedMinDeposit ? formatMoney(calculatedMinDeposit) : 0 }}
               {{ isUSDT ? "USDT" : returnCurrency() }}
               <br>
               {{ $t('message.maxDepositeAmount') }}:
               {{
-                activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
+                activeMethod.depositMax ? formatMoney(activeMethod.depositMax) : "No Limit"
               }}
               {{ isUSDT ? "USDT" : returnCurrency() }}
             </div>
@@ -208,6 +208,7 @@ import { useRouter } from "vue-router";
 import { doIt } from "@/utils/action";
 import { useStore } from "@/store";
 import { useI18n } from "vue-i18n";
+import { formatMoney } from "@/utils/format-money";
 const { t } = useI18n();
 const router = useRouter();
 const loadingBtn = ref(false);
