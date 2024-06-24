@@ -6,12 +6,12 @@
         <ReminderText :reminderText="$t('lang.withdraw_reminder_text')" />
 
         <div class="withdrawalmethod">
-          <template v-if="!isLoaded">
+          <template v-if="isLoading">
             <q-skeleton v-for="rectSkeleton in 3" type="rect" class="withdraw-type-item"
               style="width:250px; height:45px;" :key="rectSkeleton" />
           </template>
           <div v-else v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
-            @click="selectMethod(method, i)" :class="{ active: i === activeItem }">
+            :class="{ active: method.id === selectedWithdrawalMethod.id }">
             <div class="withdraw-img">
               <q-img :src="imgURL + '/withdraw/' + method.icon" style="height: 26px; width: 26px;" :fit="'scale-down'">
                 <template v-slot:loading>
@@ -27,7 +27,7 @@
           <div class="form-item">
             <label>{{ isUSDT ? $t('lang.withdraw_virtual_currency') : $t('lang.withdraw_bank_card')
               }}</label>
-            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-skeleton v-if="isLoading" type="QInput" />
             <q-select v-else dense hide-bottom-space outlined ref="cardRef" v-model="withdrawInfo.cardId"
               option-value="id" emit-value :options="withdrawState.bankCardList" map-options
               :rules="[(val) => !!val || (isUSDT ? $t('lang.withdraw_please_select_wallet') : $t('lang.withdraw_please_select_bank_card'))]"
@@ -73,7 +73,7 @@
 
           <div class="form-item">
             <label>{{ $t('lang.withdraw_withdraw_amount') }}</label>
-            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-skeleton v-if="isLoading" type="QInput" />
             <q-input v-else type="number" dense outlined ref="amountRef" v-model="withdrawInfo.amount"
               class="withdraw-field" :rules="[
                 (val) => !!val || '출금 금액을 입력해주세요',
@@ -90,7 +90,7 @@
 
             <div class="select-amt-btn-wrapper">
               <template v-for="(item, index) in countOptions" :key="index">
-                <q-skeleton v-if="!isLoaded" type="QBtn" />
+                <q-skeleton v-if="isLoading" type="QBtn" />
                 <q-btn v-else class="select-amt-btn" size="md" :label="item + '만원'" @click="updateWithdrawItem(item)" />
               </template>
             </div>
@@ -98,7 +98,7 @@
 
           <div class="form-item q-pt-xs">
             <label>{{ $t('lang.withdraw_withdraw_password') }}</label>
-            <q-skeleton v-if="!isLoaded" type="QInput" />
+            <q-skeleton v-if="isLoading" type="QInput" />
             <q-input v-else :type="isPwd ? 'password' : 'text'" dense outlined ref="withdrawPassRef"
               v-model="withdrawInfo.withdrawPassword" class="withdraw-field" :rules="[
                 (val) => !!val || '출금 비밀번호를 입력하세요',
@@ -111,7 +111,7 @@
             </q-input>
           </div>
 
-          <q-skeleton v-if="!isLoaded" type="text" />
+          <q-skeleton v-if="isLoading" type="text" />
           <div v-else-if="selectedWithdrawalMethod" class="text-caption withdraw-range-hint">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
               <span>{{
@@ -131,7 +131,9 @@
             </template>
           </div>
 
-          <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="withdraw-exchange-rate-hint text-caption">
+          <q-skeleton v-if="isLoading" type="text" />
+          <div v-else-if="isUSDT && selectedWithdrawalMethod.exchangeRate"
+            class="withdraw-exchange-rate-hint text-caption">
             <span>실시간 환율</span>
             <span>：</span>
             <span class="q-pa-sm" style="color:aqua">
@@ -186,7 +188,7 @@ const { t } = useI18n();
 const store = userStore();
 const imgURL = process.env.IMAGE_CDN;
 
-const isLoaded = ref(false);
+const isLoading = ref(false);
 const withdrawFormRef = ref(null);
 const withdrawState = reactive({
   bankCardList: []
@@ -199,7 +201,6 @@ const withdrawPassRef = ref()
 const isUSDT = ref(false);
 const withdrawLoading = ref(false);
 
-const activeItem = ref(0);
 const countOptions = ref([1, 5, 10, 50, 100, 500, 1000]);
 const withdrawInfo = reactive({
   cardId: undefined,
@@ -222,19 +223,11 @@ const loadCards = () => {
       withdrawState.bankCardList = [];
       if (response.code === 0) {
         response.data.forEach(element => {
-          if (element.bankType === "BANK") {
-            if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-              withdrawState.bankCardList.push(element)
-            }
-          } else {
-            if (element.bankCode && element.bankCode.includes(selectedWithdrawalMethod.value.code)) {
-              withdrawState.bankCardList.push(element);
-            }
-          }
+          withdrawState.bankCardList.push(element)
         });
 
         if (withdrawState.bankCardList?.[0]) {
-          withdrawInfo.cardId = withdrawState.bankCardList[0];
+          withdrawInfo.cardId = withdrawState.bankCardList[0].id;
         }
 
 
@@ -262,22 +255,6 @@ const updateWithdrawItem = (amt) => {
 
   withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);
 }
-
-const selectMethod = (method, index) => {
-  if (withdrawInfo.cardId) {
-    withdrawInfo.cardId = null;
-  }
-
-  if (withdrawInfo.withdrawCode) {
-    withdrawInfo.withdrawCode = null;
-  }
-
-  selectedWithdrawalMethod.value = method;
-  withdrawInfo.withdrawCode = method.code;
-  isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-  activeItem.value = index;
-  loadCards();
-};
 
 
 
@@ -358,39 +335,28 @@ const getWithdrawalMethods = () => {
   })
 };
 
-const chooseCard = () => {
-  if (isUSDT.value) {
-    return t('lang.withdraw_virtual_wallet');
-  } else {
-    return t('lang.withdraw_bank_card');
-  }
-}
-
 const initWithdraw = () => {
+  isLoading.value = true;
   Promise.all([loadCards(), getWithdrawalMethods()]).then(([cards, withdrawMethods]) => {
     const availableBankType = cards?.[0]?.bankType;
 
     if (availableBankType) {
-      const methodIndex = withdrawMethods.findIndex(({ code }) => {
+      const methodIndex = withdrawMethods.findIndex(({ code }) => availableBankType === 'CRYPTO' && code.includes('USDT') || code === availableBankType);
 
-        if (availableBankType === 'CRYPTO' && code.includes('USDT')) {
-          return true;
-        }
-
-        return code === availableBankType;
-      });
-
-      withdrawalMethods.value = [withdrawMethods[methodIndex]];
-      selectMethod(withdrawMethods[methodIndex], 0);
+      const selectedMethod = withdrawMethods[methodIndex];
+      withdrawalMethods.value = [selectedMethod];
+      selectedWithdrawalMethod.value = selectedMethod;
+      withdrawInfo.withdrawCode = selectedMethod.code;
+      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
     }
 
     store.getBalance();
 
-    isLoaded.value = true;
+    isLoading.value = false;
   }).catch(() => {
-    isLoaded.value = true;
+    isLoading.value = false;
   }).finally(() => {
-    isLoaded.value = true;
+    isLoading.value = false;
   })
 }
 
