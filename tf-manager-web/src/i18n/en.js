@@ -2763,6 +2763,8 @@ export default {
     14008: 'Affiliate commission must be more than superior affiliate commission: ',
     14009: 'Affiliate income must be more than superior affiliate income',
     14011: 'Affiliate already exist',
+    14012: 'Can only edit affiliate to lower level',
+    14013: 'Affiliate has downline, cannot set to lower level',
     14100: 'The affiliate does not have this downline member',
     14101: 'This affiliate does not have permission to perform this action',
     14110: 'Platform and Site with same name already exist',
