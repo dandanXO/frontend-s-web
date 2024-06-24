@@ -25,17 +25,19 @@
 
         <q-form ref="withdrawFormRef" class="form-template">
           <div class="form-item">
-            <label>{{ chooseLabel() }}</label>
+            <label>{{ isUSDT ? $t('lang.withdraw_virtual_currency') : $t('lang.withdraw_bank_card')
+              }}</label>
             <q-skeleton v-if="!isLoaded" type="QInput" />
             <q-select v-else dense hide-bottom-space outlined ref="cardRef" v-model="withdrawInfo.cardId"
-              option-value="id" emit-value class="withdraw-selection" :options="withdrawState.bankCardList" map-options
-              :rules="[(val) => !!val || '선택해주세요' + chooseLabel()]" lazy-rules>
+              option-value="id" emit-value :options="withdrawState.bankCardList" map-options
+              :rules="[(val) => !!val || (isUSDT ? $t('lang.withdraw_please_select_wallet') : $t('lang.withdraw_please_select_bank_card'))]"
+              lazy-rules>
               <template v-slot:no-option>
                 <q-item>
                   <q-item-section class="text-grey text-bold text-caption">
-                    {{ "사용할 수 있는 것이 없습니다" + chooseCard() }}
+                    {{ $t('lang.withdraw_no_card_available') }}
                     <router-link class="text-bright" to="/?page=bankcardlist">
-                      {{ isUSDT || isEWALLET ? "추가하다" + chooseCard() : "연동" + chooseCard() }}
+                      {{ isUSDT ? $t('lang.withdraw_link_virtual_wallet') : $t('lang.withdraw_link_bank_card') }}
                     </router-link>
                   </q-item-section>
                 </q-item>
@@ -77,8 +79,7 @@
                 (val) => !!val || '출금 금액을 입력해주세요',
                 (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
                 (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-                (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다',
-                // isValidUSDTAmt
+                (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다'
               ]" clearable>
               <template v-slot:prepend>
                 <span style="z-index:1;font-size:16px;">
@@ -111,45 +112,52 @@
           </div>
 
           <q-skeleton v-if="!isLoaded" type="text" />
-          <div v-else-if="selectedWithdrawalMethod" class="text-grey text-caption">
+          <div v-else-if="selectedWithdrawalMethod" class="text-caption withdraw-range-hint">
             <template v-if="selectedWithdrawalMethod.withdrawMin && selectedWithdrawalMethod.withdrawMin">
-              {{
-                "출금금액/건: " +
-                selectedWithdrawalMethod.withdrawMin +
-                "만 - " +
-                selectedWithdrawalMethod.withdrawMax +
-                "만"
-              }}
-              <br />
+              <span>{{
+                $t('lang.withdraw_withdraw_amount_per_item') }}</span>
+              <span>：</span>
+              <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMin} 만 -
+                ${selectedWithdrawalMethod.withdrawMax} 만` }}</span>
             </template>
             <template v-if="selectedWithdrawalMethod.withdrawMaxAmount || selectedWithdrawalMethod.withdrawMaxTimes">
-              {{ `출금금액/일:${selectedWithdrawalMethod.withdrawMaxTimes}회 총 ${selectedWithdrawalMethod.withdrawMaxAmount}억`
-              }}
+              <span>{{
+                $t('lang.withdraw_withdraw_amount_per_day') }}</span>
+              <span>：</span>
+              <span class="q-pa-xs">{{ `${selectedWithdrawalMethod.withdrawMaxTimes}회 총
+                ${selectedWithdrawalMethod.withdrawMaxAmount}억`
+                }}
+              </span>
             </template>
           </div>
-          <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate">
-            <div class="q-my-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">실시간 환율：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
-                {{ store.currency.value }}
-              </span>
-            </div>
-            <div class="q-mt-sm" style="display: flex; justify-content: center; align-items: center">
-              <span style="flex: 1">예상 입금：</span>
-              <span style="flex: 3" class="bg-neontb text-neontb q-pa-sm">
-                {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
-                USDT
-              </span>
-            </div>
-            <div class="q-mt-sm text-neontb">*특별 설명: 제3자가 자동으로 1.00 USDT의 인출 수수료를 받습니다！</div>
+
+          <div v-if="isUSDT && selectedWithdrawalMethod.exchangeRate" class="withdraw-exchange-rate-hint text-caption">
+            <span>실시간 환율</span>
+            <span>：</span>
+            <span class="q-pa-sm" style="color:aqua">
+              1.00 USDT ≈ {{ selectedWithdrawalMethod.exchangeRate }}
+              {{ store.currency.value }}
+            </span>
+
+            <span>예상 입금</span>
+            <span>：</span>
+            <span class="q-pa-sm" style="color:aqua">
+              {{ (withdrawInfo.amount / selectedWithdrawalMethod.exchangeRate).toFixed(2) }}
+              USDT
+            </span>
+
+            <span><span style="color:red;padding:0 2px;">*</span>특별 설명</span>
+            <span>：</span>
+            <span class="q-pa-sm">
+              제3자가
+              자동으로 1.00
+              USDT의 인출 수수료를 받습니다！
+            </span>
           </div>
 
           <div class="q-py-md">
-            <div v-if="!isEWALLET && !isUSDT && !isALIPAY && selectedWithdrawalMethod.tips" class="selected-tip"
-              v-html="selectedWithdrawalMethod.tips"></div>
-            <div v-if="isALIPAY" class="selected-tip">
-              "알리페이 인출" 사용 가능 시간: 오전 10시 ~ 오후 12시, 다른 시간에 제출하면 시스템이 자동으로 취소됩니다！
+            <div v-if="!isUSDT && selectedWithdrawalMethod.tips" class="selected-tip"
+              v-html="selectedWithdrawalMethod.tips">
             </div>
           </div>
         </q-form>
@@ -177,7 +185,6 @@ const $q = useQuasar();
 const { t } = useI18n();
 const store = userStore();
 const imgURL = process.env.IMAGE_CDN;
-const imgWithdrawURL = process.env.IMAGE_CDN + "/withdraw/";
 
 const isLoaded = ref(false);
 const withdrawFormRef = ref(null);
@@ -190,8 +197,6 @@ const isPwd = ref(true)
 const withdrawPassRef = ref()
 
 const isUSDT = ref(false);
-const isEWALLET = ref(false);
-const isALIPAY = ref(false);
 const withdrawLoading = ref(false);
 
 const activeItem = ref(0);
@@ -218,10 +223,7 @@ const loadCards = () => {
       if (response.code === 0) {
         response.data.forEach(element => {
           if (element.bankType === "BANK") {
-            if (element.bankCode !== 'alipay' && element.bankType.includes(selectedWithdrawalMethod.value.code)) {
-              withdrawState.bankCardList.push(element)
-            }
-            if (element.bankCode === 'alipay' && selectedWithdrawalMethod.value.code === 'ALIPAY') {
+            if (element.bankType.includes(selectedWithdrawalMethod.value.code)) {
               withdrawState.bankCardList.push(element)
             }
           } else {
@@ -255,7 +257,6 @@ const loadCards = () => {
 };
 
 const updateWithdrawItem = (amt) => {
-  // debugger;
   const multiple = 10000;
   // 1원 = 10000;
 
@@ -274,8 +275,6 @@ const selectMethod = (method, index) => {
   selectedWithdrawalMethod.value = method;
   withdrawInfo.withdrawCode = method.code;
   isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
-  isEWALLET.value = withdrawInfo.withdrawCode.includes('KDPAY') || withdrawInfo.withdrawCode.includes('EBPAY') || withdrawInfo.withdrawCode.includes('OKPAY') || withdrawInfo.withdrawCode.includes('SZPAY')
-  isALIPAY.value = withdrawInfo.withdrawCode.includes('ALIPAY')
   activeItem.value = index;
   loadCards();
 };
@@ -338,13 +337,6 @@ const submitWithdraw = () => {
   }
 };
 
-const isValidUSDTAmt = (val) => {
-  if (!isUSDT.value) {
-    return true;
-  }
-  const usdtPattern = /^([1-9][0-9]*)$/;
-  return usdtPattern.test(withdrawInfo.amount) || "금액은 양수 여야합니다";
-}
 
 const getWithdrawalMethods = () => {
   return new Promise((resolve) => {
@@ -366,23 +358,11 @@ const getWithdrawalMethods = () => {
   })
 };
 
-const chooseLabel = () => {
-  if (isUSDT.value) {
-    return '선택 가상 화폐'
-  } else if (isEWALLET.value) {
-    return '선택 전자 지갑'
-  } else {
-    return t('lang.withdraw_bank_card')
-  }
-}
-
 const chooseCard = () => {
   if (isUSDT.value) {
-    return '가상 지갑'
-  } else if (isEWALLET.value) {
-    return '전자 지갑'
+    return t('lang.withdraw_virtual_wallet');
   } else {
-    return '은행 카드'
+    return t('lang.withdraw_bank_card');
   }
 }
 
@@ -611,5 +591,18 @@ onMounted(() => {
       }
     }
   }
+}
+
+.withdraw-range-hint {
+  display: grid;
+  grid-template-columns: auto 10px 1fr;
+  align-items: center;
+  color: #c4c4c4;
+}
+
+.withdraw-exchange-rate-hint {
+  display: grid;
+  grid-template-columns: auto 10px 1fr;
+  align-items: center;
 }
 </style>
