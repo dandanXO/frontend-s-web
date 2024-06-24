@@ -231,6 +231,10 @@ const loadCards = () => {
           }
         });
 
+        if (withdrawState.bankCardList?.[0]) {
+          withdrawInfo.cardId = withdrawState.bankCardList[0];
+        }
+
 
         if (cardRef.value) {
           cardRef.value.resetValidation();
