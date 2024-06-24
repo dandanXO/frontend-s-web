@@ -5,7 +5,6 @@
   </div>
   <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
-    <!-- <div class="title" v-else>{{ name }}</div> -->
     <div v-else>
       <span class="account-title">{{ name }}</span>
     </div>
@@ -33,36 +32,8 @@
             </div>
           </div>
         </div>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
-
-    <!--    <div class="sublist-container">-->
-    <!--      <span class="account-title">{{ subtitle }}: </span>-->
-    <!--      <q-radio-->
-    <!--          v-for="item in sublist"-->
-    <!--          v-model="selectedSubItem"-->
-    <!--          :key="`${item.key}`"-->
-    <!--          :val="item"-->
-    <!--      >-->
-    <!--        <slot>-->
-    <!--          <div class="sublist-item">-->
-    <!--            <img :src="imgURL + item.nodeIcon" />-->
-    <!--            {{ item.nodeName }}-->
-    <!--          </div>-->
-    <!--        </slot>-->
-    <!--      </q-radio>-->
-    <!--    </div>-->
 
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node @click="clickChildItem(item)" :name="item.nodeName" :class="[
@@ -80,7 +51,6 @@ const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
   emits: ["clicked"],
   computed: {
     selected() {

@@ -582,6 +582,12 @@ svg {
   background: #252e43;
 }
 
+.q-field--dense .q-field__control, .q-field--dense .q-field__marginal {
+  @media (max-width: 400px) {
+    height: 30px;
+  }
+}
+
 .q-field--outlined.q-field--readonly .q-field__control:before {
   border-color: grey;
   border-style: solid;

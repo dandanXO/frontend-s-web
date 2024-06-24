@@ -114,7 +114,7 @@
   </q-form>
 
   <div class="action-buttons">
-    <div @click="onSubmit" class="primary-button blue register-submit-btn" style="width:200px;">
+    <div @click="onSubmit" class="primary-button blue register-submit-btn">
       {{ $t('lang.reg_submit') }}
     </div>
   </div>
@@ -349,6 +349,24 @@ export default defineComponent({
   label {
     text-align: right;
   }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 80px 1fr;
+    gap: 10px;
+
+    label {
+      font-size: small;
+    }
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 60px 1fr;
+    gap: 5px;
+
+    label {
+      font-size: x-small;
+    }
+  }
 }
 
 .action-buttons {
@@ -359,10 +377,29 @@ export default defineComponent({
   gap: 10px;
   margin: 20px;
 
+  @media (max-width: 600px) {
+    margin: 5px auto 10px;
+    padding: 10px 5px 5px;
+  }
+
   .register-submit-btn {
     width: 145px;
     height: 36px;
+
+    @media (max-width: 600px) {
+      width: 120px;
+      min-width: 120px;
+      font-size: small;
+    }
+
+    @media (max-width: 400px) {
+      width: 100px;
+      min-width: 100px;
+      font-size: x-small;
+    }
   }
+
+
 }
 
 .bank-list-item {

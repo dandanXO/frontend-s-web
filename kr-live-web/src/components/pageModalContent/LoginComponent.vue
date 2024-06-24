@@ -190,10 +190,44 @@ const onSubmit = () => {
     gap: 15px;
     margin: 10px auto 20px;
 
+    @media (max-width: 600px) {
+      margin: 5px auto 10px;
+      padding: 10px 5px 5px;
+    }
+
     .login-submit-btn,
     .login-register-btn {
       width: 200px;
       height: 36px;
+
+      @media (max-width: 600px) {
+        width: 120px;
+        min-width: 120px;
+        font-size: small;
+      }
+
+      @media (max-width: 400px) {
+        width: 100px;
+        min-width: 100px;
+        font-size: x-small;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    label {
+      font-size: small;
+    }
+  }
+
+  @media (max-width: 400px) {
+    label {
+      font-size: x-small;
+    }
+
+    .captcha-img-wrapper {
+      min-width: 80px;
+      height: 30px;
     }
   }
 }

@@ -119,7 +119,7 @@
           <div class="select-amt-btn-wrapper">
             <template v-for="(item, index) in countOptions" :key="index">
               <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
+              <q-btn dense v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
                 @click="selectAmt(item)"></q-btn>
             </template>
             <q-skeleton v-if="isFetchingApi" type="QBtn" />

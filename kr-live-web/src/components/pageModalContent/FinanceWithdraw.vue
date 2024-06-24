@@ -91,7 +91,8 @@
             <div class="select-amt-btn-wrapper">
               <template v-for="(item, index) in countOptions" :key="index">
                 <q-skeleton v-if="isLoading" type="QBtn" />
-                <q-btn v-else class="select-amt-btn" size="md" :label="item + '만원'" @click="updateWithdrawItem(item)" />
+                <q-btn dense v-else class="select-amt-btn" size="md" :label="item + '만원'"
+                  @click="updateWithdrawItem(item)" />
               </template>
             </div>
           </div>
