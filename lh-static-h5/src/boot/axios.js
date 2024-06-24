@@ -63,7 +63,7 @@ const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
-  if (successRstUrl) {
+  if (successRstUrl && !isInApp()) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -84,6 +84,11 @@ function getInitApi(apiLinks, urlLsName) {
     } else {
       var apiLists = Object.values(apiLinks);
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
+    }
+
+    if(isInApp()){
+      localStorage.setItem(urlLsName, initApi);
+      return initApi;
     }
 
     axios.get(initApi + "/ping").then((res) => {
