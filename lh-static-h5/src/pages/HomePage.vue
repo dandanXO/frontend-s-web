@@ -113,19 +113,19 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
+        <img src="../assets/images/home/deposit-icon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
+        <img src="../assets/images/home/withdraw-icon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
+        <img src="../assets/images/home/transfer-icon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
+        <img src="../assets/images/home/vip-icon.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
@@ -2101,7 +2101,7 @@ export default defineComponent({
       }
 
       img {
-        width: 2rem;
+        width: 2.2rem;
       }
     }
   }
