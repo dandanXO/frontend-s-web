@@ -3,14 +3,10 @@
     <TFLoading v-if="logoShow"></TFLoading>
 
     <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
-      <div class="left-banner-tfgaming"
-        :style="`width: ${bannerWidth}px`"
-      ></div>
+      <div class="left-banner-tfgaming" :style="`width: ${bannerWidth}px`"></div>
     </template>
     <template v-if="!logoShow && transferInfo.platform === 'TFGaming' && UI.innerWidth > 1440">
-      <div class="right-banner-tfgaming"
-           :style="`width: ${bannerWidth}px`"
-      ></div>
+      <div class="right-banner-tfgaming" :style="`width: ${bannerWidth}px`"></div>
     </template>
 
     <template v-if="transferInfo.platform === 'PG'">
@@ -142,11 +138,10 @@ import { uiStore } from "@/store/ui";
 // import { Modal } from "ant-design-vue";
 
 const store = userStore();
-const UI= uiStore();
+const UI = uiStore();
 const { token } = storeToRefs(store);
 const isMobileDrawerActive = ref(false);
 const values = ref(["100", "200", "300", "500", "1000"]);
-
 
 const bannerWidth = computed(() => {
   return (UI.innerWidth - 1440) / 2;
@@ -257,7 +252,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
         platformCode === "TCG" ||
         platformCode === "PT" ||
         (platformCode === "BBINDY" && gameCode === "bbkeno_lobby_pc") ||
-        (platformCode==='TFGaming' && gameCode === 0)
+        (platformCode === "TFGaming" && gameCode === 0)
       ) {
         launchSessionGame(platformCode, {
           gameCode: gameCode,
@@ -282,6 +277,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               .replace(/<\/script>/g, scriptEndTag)
               .replaceAll(/\\\"/g, '"')
               .replaceAll(/\n/g, "");
+          }
+
+          if (platformCode === "PM") {
+            let url = new URL(srcData);
+            srcData = `${url.origin}/loader/eurocup-loader?${url.searchParams.toString()}`;
           }
 
           src.value = srcData;
@@ -312,38 +312,35 @@ const loadGame = () => {
   }
 };
 
-
-
-
 defineExpose({
   open
 });
 </script>
 <style lang="scss">
-.left-banner-tfgaming{
+.left-banner-tfgaming {
   background-image: url("../../assets/images/games/left-banner.png");
   height: calc(100vh - 50px);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top right;
-  position:absolute;
-  z-index:9999;
-  top:45px;
-  bottom:0px;
-  left:0px;
+  position: absolute;
+  z-index: 9999;
+  top: 45px;
+  bottom: 0px;
+  left: 0px;
 }
 
-.right-banner-tfgaming{
+.right-banner-tfgaming {
   background-image: url("../../assets/images/games/right-banner.png");
   height: calc(100vh - 50px);
-  background-size: cover;;
+  background-size: cover;
   background-position: top left;
   background-repeat: no-repeat;
-  position:absolute;
-  z-index:9999;
-  top:45px;
-  bottom:0px;
-  right:0px;
+  position: absolute;
+  z-index: 9999;
+  top: 45px;
+  bottom: 0px;
+  right: 0px;
 }
 
 .el-overlay {
