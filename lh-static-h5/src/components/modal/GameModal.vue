@@ -416,16 +416,19 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               // newWin.location.href = response.data;
               var currentUrl = window.location.hostname;
               window.location.href = response.data + `&homeUrl=${currentUrl}`;
-            } else if (platformCode === "PM") {
-              let url = new URL(srcData);
-              srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
-              src.value = srcData;
-              visible.value = true;
             } else if (way == "ANDROID") {
               var ref = cordova.InAppBrowser.open(srcData, "_blank", "location=no,zoom=no");
             } else {
               window.location.href = srcData;
             }
+
+            //NO NEED LIAO
+          // else if (platformCode === "PM") {
+          //     let url = new URL(srcData);
+          //     srcData = `${url.origin}/#/eurocup?${url.searchParams.toString()}`;
+          //     src.value = srcData;
+          //     visible.value = true;
+          //   }
 
             // newWin.location.href = response.data;
             // window.location.href = response.data;

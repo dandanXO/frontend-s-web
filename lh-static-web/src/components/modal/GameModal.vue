@@ -279,10 +279,11 @@ const open = (gameName, platformCode, gameCode, gameType) => {
               .replaceAll(/\n/g, "");
           }
 
-          if (platformCode === "PM") {
-            let url = new URL(srcData);
-            srcData = `${url.origin}/loader/eurocup-loader?${url.searchParams.toString()}`;
-          }
+          //NO NEED LIAO~~~
+          // if (platformCode === "PM") {
+          //   let url = new URL(srcData);
+          //   srcData = `${url.origin}/loader/eurocup-loader?${url.searchParams.toString()}`;
+          // }
 
           src.value = srcData;
           visible.value = true;
