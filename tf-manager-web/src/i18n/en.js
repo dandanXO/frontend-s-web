@@ -1917,6 +1917,7 @@ export default {
       'The password cannot be less than 6 digits or more than 12 digits',
     paymentUpdate: 'Copy to other way or level? if not just press update',
     paySuccess: 'Pay Success',
+    pleaseEnterAffiliateNameOrAffiliateCode: 'Please enter affiliate name or affiliate code',
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',

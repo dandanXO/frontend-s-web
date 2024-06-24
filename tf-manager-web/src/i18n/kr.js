@@ -1792,6 +1792,7 @@ export default {
     paymentUpdate:
       '다른 방법이나 레벨에 복사하시겠습니까? 그렇지 않으면 업데이트를 누르십시오',
     paySuccess: '결제 성공',
+    pleaseEnterAffiliateNameOrAffiliateCode: '제휴 이름 또는 제휴 코드를 입력하세요',
     promoDistributionSuccess: '프로모션 분배 성공',
     redeemCashSuccess: '현금 교환 성공',
     reenterPassword: '비밀번호를 다시 입력하십시오',
