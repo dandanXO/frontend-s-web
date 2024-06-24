@@ -1,161 +1,167 @@
 <template>
-  <div class="form-wrapper">
-    <div v-if="!isDisplay">
+  <div class="page-container">
 
-      <ReminderText :reminderText="$t('lang.deposit_reminder_text')" />
 
-      <div class="deposit-options">
-        <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
-        <div class="deposit-option-container">
-          <div class="node-wrapper">
-            <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect"
-              :isFetchingApi="isFetchingApi" />
+    <div class="form-wrapper">
+      <div v-if="!isDisplay">
+
+        <ReminderText :reminderText="$t('lang.deposit_reminder_text')" />
+
+        <div class="deposit-options">
+          <div class="lil-title">{{ $t('lang.deposit_payment_channel') }}</div>
+          <div class="deposit-option-container">
+            <div class="node-wrapper">
+              <Node :level="1" :list="payMethods" :gridcol="4" ref="paymentNode" @clicked="onSelect"
+                :isFetchingApi="isFetchingApi" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
-      <div style="text-align: center">입금하기</div>
-      <div class="submit-message">
-        <div class="line">
-          <span>은행 이름:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg0" :value="submitMessage[0]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
-              {{ copybtntxt0 }}
-            </q-btn>
+      <div class="inner-cont" v-if="isDisplay" style="overflow: auto">
+        <div style="text-align: center">입금하기</div>
+        <div class="submit-message">
+          <div class="line">
+            <span>은행 이름:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg0" :value="submitMessage[0]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('0')">
+                {{ copybtntxt0 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>이름:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg1" :value="submitMessage[1]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
-              {{ copybtntxt1 }}
-            </q-btn>
+          <div class="line">
+            <span>이름:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg1" :value="submitMessage[1]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('1')">
+                {{ copybtntxt1 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>은행 계좌:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg2" :value="submitMessage[2]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
-              {{ copybtntxt2 }}
-            </q-btn>
+          <div class="line">
+            <span>은행 계좌:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg2" :value="submitMessage[2]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('2')">
+                {{ copybtntxt2 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>은행지점:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
-              {{ copybtntxt4 }}
-            </q-btn>
+          <div class="line">
+            <span>은행지점:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg4" :value="submitMessage[4]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('4')">
+                {{ copybtntxt4 }}
+              </q-btn>
+            </div>
           </div>
-        </div>
-        <div class="line">
-          <span>입금 금액:</span>
-          <div class="copy-wrapper">
-            <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]"
-              v-on:focus="$event.target.select()" />
-            <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
-              {{ copybtntxt3 }}
-            </q-btn>
+          <div class="line">
+            <span>입금 금액:</span>
+            <div class="copy-wrapper">
+              <textarea rows="1" readonly class="info" ref="subMsg3" :value="submitMessage[3]"
+                v-on:focus="$event.target.select()" />
+              <q-btn class="bg-yellow text-black common-btn" @blur="blurCode" @click="copyMessage('3')">
+                {{ copybtntxt3 }}
+              </q-btn>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="deposit-container" v-else>
-      <q-form ref="depositForm" class="content-form form-template">
-        <div class="form-item">
-          <label>입금금액</label>
-          <q-skeleton v-if="isFetchingApi" type="QInput" />
-          <template v-else>
-            <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
-              :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
-              v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
-              <template v-slot:prepend>
-                <span style="z-index:1;font-size:16px;" class="text-bright">
-                  <template v-if="isUSDT">USDT</template>
-                  <template v-else>{{ store.currency.value }}</template>
-                </span>
-              </template>
-            </q-input>
-            <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
-              color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount"
-              padding="none">
-              <template v-slot:prepend>
-                <span style="font-size: 26px" class="text-bright">
-                  {{ store.currency.value }}
-                </span>
-              </template>
-            </q-select>
-          </template>
-
-          <q-skeleton type="text" v-if="isFetchingApi" />
-          <div v-else class="text-grey text-bold text-caption">
-            입금단위：{{
-              calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만" :
-                store.currency.value) : 0
-            }}
-            -
-            {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value === "₩"
-              ? "만" :
-              store.currency.value) : " " }}
-          </div>
-
-          <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
-            <span class="text-positive">
-              1.00 USDT ≈ {{ activeMethod.currencyRate }}
-              {{ store.currency.value }}
-            </span>
-          </div>
-
-          <div class="select-amt-btn-wrapper">
-            <template v-for="(item, index) in countOptions" :key="index">
-              <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn dense v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
-                @click="selectAmt(item)"></q-btn>
+      <div class="deposit-container" v-else>
+        <q-form ref="depositForm" class="content-form form-template">
+          <div class="form-item">
+            <label>입금금액</label>
+            <q-skeleton v-if="isFetchingApi" type="QInput" />
+            <template v-else>
+              <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
+                :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
+                v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
+                <template v-slot:prepend>
+                  <span style="z-index:1;font-size:16px;" class="text-bright">
+                    <template v-if="isUSDT">USDT</template>
+                    <template v-else>{{ store.currency.value }}</template>
+                  </span>
+                </template>
+              </q-input>
+              <q-select v-else ref="depositAmtRef" label="금액 선택" name="localAmount" class="deposit-selection" outlined
+                color="accent" :options="amountList" v-model="form.localAmount" :rules="verifyDepositAmount"
+                padding="none">
+                <template v-slot:prepend>
+                  <span style="font-size: 26px" class="text-bright">
+                    {{ store.currency.value }}
+                  </span>
+                </template>
+              </q-select>
             </template>
-            <q-skeleton v-if="isFetchingApi" type="QBtn" />
-            <q-btn v-else class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+
+            <q-skeleton type="text" v-if="isFetchingApi" />
+            <div v-else class="text-grey text-bold text-caption">
+              입금단위：{{
+                calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만"
+                  :
+                  store.currency.value) : 0
+              }}
+              -
+              {{ activeMethod.depositMax ? activeMethod.depositMax + " " + (isUSDT ? "USDT" : store.currency.value ===
+                "₩"
+                ? "만" :
+                store.currency.value) : " " }}
+            </div>
+
+            <div v-if="isUSDT && activeMethod.currencyRate" class="q-pb-xs" label="환율">
+              <span class="text-positive">
+                1.00 USDT ≈ {{ activeMethod.currencyRate }}
+                {{ store.currency.value }}
+              </span>
+            </div>
+
+            <div class="select-amt-btn-wrapper">
+              <template v-for="(item, index) in countOptions" :key="index">
+                <q-skeleton v-if="isFetchingApi" type="QBtn" />
+                <q-btn dense v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
+                  @click="selectAmt(item)"></q-btn>
+              </template>
+              <q-skeleton v-if="isFetchingApi" type="QBtn" />
+              <q-btn v-else class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+            </div>
           </div>
-        </div>
 
-        <div class="form-item" v-if="selectedPayType && bankCardList.length">
-          <label>입금계좌</label>
-          <BankComponent ref="payTypeClass" :is="selectedPayType" class="deposit-select-bank" v-model="form.bankId"
-            :bank-list="bankCardList" @selected="selectedBank" @successful="isDeposited = true"></BankComponent>
-        </div>
+          <div class="form-item" v-if="selectedPayType && bankCardList.length">
+            <label>입금계좌</label>
+            <BankComponent ref="payTypeClass" :is="selectedPayType" class="deposit-select-bank" v-model="form.bankId"
+              :bank-list="bankCardList" @selected="selectedBank" @successful="isDeposited = true"></BankComponent>
+          </div>
 
-        <q-select ref="offerRef" class="deposit-selection q-mt-xs" label="할인 선택" outlined
-          :options="unselectedPrivileges" v-model="selectedPrivilege" emit-value v-if="hasPrivilege && !isUSDT"
-          :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`" clearable
-          @update:model-value="checkMinDepositAmt">
-          <template v-slot:option="scope">
-            <q-item v-bind="scope.itemProps">
-              <q-item-section>
-                <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
-                  {{ scope.opt.name }}
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-        </q-select>
+          <q-select ref="offerRef" class="deposit-selection q-mt-xs" label="할인 선택" outlined
+            :options="unselectedPrivileges" v-model="selectedPrivilege" emit-value v-if="hasPrivilege && !isUSDT"
+            :display-value="`${selectedPrivilege ? selectedPrivilege.name : ''}`" clearable
+            @update:model-value="checkMinDepositAmt">
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section>
+                  <q-item-label style="text-overflow: ellipsis; overflow: auto; white-space: nowrap">
+                    {{ scope.opt.name }}
+                  </q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
 
-        <div class="form-item">
-          <label>입금자명</label>
-          <q-skeleton v-if="isFetchingApi" type="QInput" />
-          <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
-        </div>
+          <div class="form-item">
+            <label>입금자명</label>
+            <q-skeleton v-if="isFetchingApi" type="QInput" />
+            <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
+          </div>
 
-        <div class="q-mt-sm" v-html="activeMethod.msg"></div>
-      </q-form>
+          <div class="q-mt-sm" v-html="activeMethod.msg"></div>
+        </q-form>
+      </div>
     </div>
 
     <div class="action-buttons">

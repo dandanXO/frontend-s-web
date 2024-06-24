@@ -1,53 +1,41 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <q-card style="max-width: 860px; background: transparent; box-shadow: none;"
-      :style="isMinimalMode ? '' : 'width: 100%;'">
-      <div style="text-align: right;">
-        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
-      </div>
-
-      <q-card-section>
+    <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''"
+      :style="isMinimalMode ? 'width: 400px; max-width: 50vw;' : 'width: 900px; max-width: 90vw;'">
+      <div class="header">
+        <div style="text-align: right;">
+          <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
+        </div>
         <div class="page-dialog-main-header">
           <span class="header-info-description">{{ headerInfo.description }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
-      </q-card-section>
-
-      <q-separator color="grey" />
-
-      <q-card-section>
-        <div class="page-dialog-main">
-
-          <div class="page-dialog-main-container">
-            <div class="page-dialog-links" v-if="!isMinimalMode">
-              <p class="header-info-description">{{ headerInfo.description }}</p>
-            </div>
-            <div class="page-dialog-tabs">
-              <template v-if="!isMinimalMode">
-                <q-tabs v-model="page" align="justify" inline-label dense>
-                  <template v-for="item in formattedPagesInfo" :key="item.page">
-                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
-                      class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
-                      <img :src="item.iconActiveUrl" :alt="item.info"
-                        :style="page === item.page ? '' : 'filter:contrast(0)'" />
-                    </q-tab>
-                  </template>
-                </q-tabs>
-              </template>
-
-              <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;max-height:70vh'">
-                <template v-for="item in formattedPagesInfo" :key="item.page">
-                  <q-tab-panel :name="item.page">
-                    <component :is="item.component" @closeModal="closeDialog"></component>
-                  </q-tab-panel>
-                </template>
-              </q-tab-panels>
-            </div>
-          </div>
+        <q-separator color="grey" />
+      </div>
+      <div class="page-dialog-tabs" v-if="!isMinimalMode">
+        <q-tabs v-model="page" align="justify" inline-label dense style="background-color: #212632;">
+          <template v-for="item in formattedPagesInfo" :key="item.page">
+            <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
+              class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
+              <img :src="item.iconActiveUrl" :alt="item.info" :style="page === item.page ? '' : 'filter:contrast(0)'" />
+            </q-tab>
+          </template>
+        </q-tabs>
+      </div>
+      <div class=content>
+        <div class="page-dialog-links" v-if="!isMinimalMode">
+          <p class="header-info-description">{{ headerInfo.description }}</p>
         </div>
-      </q-card-section>
-    </q-card>
+        <q-tab-panels v-model="page" animated>
+          <template v-for="item in formattedPagesInfo" :key="item.page">
+            <q-tab-panel :name="item.page">
+              <component :is="item.component" @closeModal="closeDialog"></component>
+            </q-tab-panel>
+          </template>
+        </q-tab-panels>
+      </div>
+    </div>
   </q-dialog>
 </template>
 <script setup id="PageModal">
@@ -58,7 +46,6 @@ import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
-import FeedbackPage from "components/pageModalContent/FeedbackPage";
 import MessagesPage from "components/pageModalContent/MessagesPage";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
@@ -145,17 +132,6 @@ const pagesInfo = reactive([
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
-  // {
-  //   tabIndex: "log",
-  //   page: "personal/messages",
-  //   info: 'lang.page_modal_message',
-  //   iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-  //   component: FeedbackPage,
-  //   headerInfo: {
-  //     title: 'lang.page_modal_message',
-  //     description: "입금시 꼭 계좌문의를 하세요!"
-  //   }
-  // },
   {
     tabIndex: "log",
     page: "personal/messages",
@@ -178,18 +154,6 @@ const pagesInfo = reactive([
       description: ""
     }
   },
-  // {
-  //   tabIndex: "log",
-  //   href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
-  //   page: "customer/service",
-  //   info: 'lang.page_modal_customer_service',
-  //   iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-  //   component: FeedbackPage,
-  //   headerInfo: {
-  //     title: 'lang.page_modal_customer_service',
-  //     description: "입금시 꼭 계좌문의를 하세요!"
-  //   }
-  // },
   {
     tabIndex: "my",
     page: "personal/info",
@@ -301,10 +265,6 @@ onMounted(() => {
 </script>
 <style scoped lang="scss">
 // reset app.scss
-
-.q-panel>div {
-  height: unset;
-}
 
 .page-dialog {
   width: 980px;
@@ -431,10 +391,8 @@ onMounted(() => {
 }
 
 .page-dialog-tabs {
-  background: var(--main-bg-color);
-
   .q-tab-panels {
-    overflow-y: auto;
+    height: 100%;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -525,6 +483,25 @@ onMounted(() => {
       height: 40px;
       max-width: 40vw;
     }
+  }
+}
+
+.page-modal-container {
+  display: grid;
+  grid-template-rows: 89px auto 1fr;
+  width: 100%;
+  height: 100%;
+
+  &.minimal {
+    grid-template-rows: 89px fit-content;
+  }
+
+  .header {}
+
+  .content {
+    max-height: 100%;
+    overflow: auto;
+    background-color: #212632;
   }
 }
 </style>

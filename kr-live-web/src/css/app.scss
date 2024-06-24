@@ -669,6 +669,28 @@ input:internal-autofill-selected {
   // }
 }
 
+.page-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-top: 1px solid grey;
+  }
+}
+
 .form-item {
   display: flex;
   flex-direction: column;
@@ -679,7 +701,9 @@ input:internal-autofill-selected {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 60vh;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
 
   .form-template {
     display: grid;
