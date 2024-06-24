@@ -122,8 +122,8 @@ export default {
     date_picker_nov: "11월",
     date_picker_december: "십이월",
     date_picker_dec: "12월",
-    date_picker_close: "닫다",
-    date_picker_confirm: "확인하다",
+    date_picker_close: "닫기",
+    date_picker_confirm: "설정",
     // transaction record end
     // announcement start
     announcement_no_selected: "선택하지 않음",
@@ -174,14 +174,14 @@ export default {
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 ?0,000원 이상 만원 단위로만 가능합니다.
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다. 
 
     ※주의사항
     충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
     금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
 
     ※가상계좌 점검시간 안내
-    23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+    23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
     withdraw_bank_card: "환전 은행카드 선택",
@@ -216,7 +216,7 @@ export default {
     personal_nickname: "닉네임",
     personal_real_name: "실명",
     personal_id: "아이디",
-    personal_phone: "전화",
+    personal_phone: "전화번호",
     personal_close_btn: "닫기",
     personal_update_btn: "확인",
     // personal end
