@@ -300,10 +300,8 @@ export default defineComponent({
 
 
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
-        console.log('hereeeee')
         ajaxBarRef.value.stop();
-      }).catch(() => {
-        console.log('errrrorrr');
+      })?.catch(() => {
         ajaxBarRef.value.stop();
       });
     }, 500);
