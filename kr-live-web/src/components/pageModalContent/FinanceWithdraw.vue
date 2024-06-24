@@ -91,7 +91,8 @@
             <div class="select-amt-btn-wrapper">
               <template v-for="(item, index) in countOptions" :key="index">
                 <q-skeleton v-if="isLoading" type="QBtn" />
-                <q-btn v-else class="select-amt-btn" size="md" :label="item + '만원'" @click="updateWithdrawItem(item)" />
+                <q-btn dense v-else class="select-amt-btn" size="md" :label="item + '만원'"
+                  @click="updateWithdrawItem(item)" />
               </template>
             </div>
           </div>
@@ -151,9 +152,7 @@
             <span><span style="color:red;padding:0 2px;">*</span>특별 설명</span>
             <span>：</span>
             <span class="q-pa-sm">
-              제3자가
-              자동으로 1.00
-              USDT의 인출 수수료를 받습니다！
+              출금시 1테더 수수료를 받습니다
             </span>
           </div>
 

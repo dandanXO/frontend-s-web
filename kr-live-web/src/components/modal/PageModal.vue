@@ -8,7 +8,7 @@
 
       <q-card-section>
         <div class="page-dialog-main-header">
-          <span class="header-info-description" v-if="headerInfo.description">{{ headerInfo.description }}</span>
+          <span class="header-info-description">{{ headerInfo.description }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
@@ -21,7 +21,7 @@
 
           <div class="page-dialog-main-container">
             <div class="page-dialog-links" v-if="!isMinimalMode">
-              <p class="header-info-description" v-if="headerInfo.description">{{ headerInfo.description }}</p>
+              <p class="header-info-description">{{ headerInfo.description }}</p>
             </div>
             <div class="page-dialog-tabs">
               <template v-if="!isMinimalMode">
@@ -364,6 +364,7 @@ onMounted(() => {
 .page-dialog-tab {
   :deep(.q-tab__content) {
     flex-direction: row-reverse;
+    gap: 5px;
   }
 }
 
@@ -507,6 +508,7 @@ onMounted(() => {
       .q-tab__content {
         display: flex;
         flex-direction: column-reverse;
+        gap: 0px;
 
         .q-tab__label {
           margin-left: unset;

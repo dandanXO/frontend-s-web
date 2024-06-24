@@ -30,7 +30,8 @@
             <div class="form-item">
                 <label>{{ $t('lang.feedback_category') }}</label>
                 <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
-                    ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" />
+                    ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" clearable
+                    @update:model-value="type => composeForm.title = type" />
             </div>
             <div class="form-item">
                 <label>{{ $t('lang.message_title') }}</label>
@@ -41,7 +42,7 @@
             </div>
             <div class="form-item">
                 <label>{{ $t('lang.message_content') }}</label>
-                <q-input dense outlined ref="contentRef" type="textarea" rows="4" v-model="composeForm.content"
+                <q-input dense outlined ref="contentRef" type="textarea" rows="6" v-model="composeForm.content"
                     clearable lazy-rules :rules="[
                         (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
                     ]" />
