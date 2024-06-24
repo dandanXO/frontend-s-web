@@ -1,7 +1,7 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
     <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''"
-      :style="isMinimalMode ? 'width: 400px; max-width: 50vw;' : 'width: 900px; max-width: 90vw;'">
+      :style="isMinimalMode ? 'width: 400px; max-width: 50vw;' : 'width: 800px; max-width: 70vw;'">
       <div class="header">
         <div style="text-align: right;">
           <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
@@ -494,6 +494,7 @@ onMounted(() => {
 
   &.minimal {
     grid-template-rows: 89px fit-content;
+    height: fit-content;
   }
 
   .header {}
