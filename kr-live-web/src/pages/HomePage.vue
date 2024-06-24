@@ -1,5 +1,9 @@
 <template>
   <div class="main-section">
+
+    <q-ajax-bar ref="ajaxBarRef" position="top" size="5px" skip-hijack
+      style="background:linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%)" />
+
     <LangToggle />
 
     <q-page-sticky position="bottom-right" :offset="[40, 130]" style="z-index:999999" class="telegram-sticky floating">
@@ -216,6 +220,7 @@
 
 <script>
 /* eslint-disable */
+import { debounce } from 'quasar'
 import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { api } from "boot/axios";
@@ -257,6 +262,7 @@ export default defineComponent({
     AnnouncementList
   },
   setup() {
+    const ajaxBarRef = ref(null)
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
@@ -275,7 +281,8 @@ export default defineComponent({
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
-    const openGame = (p) => {
+    const openGame = debounce((p) => {
+      ajaxBarRef.value.start();
       // debugger;
       console.log(p);
       const gameType = p.gameType;
@@ -291,8 +298,13 @@ export default defineComponent({
         gameCode = 101;
       }
 
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
-    };
+
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
+    }, 500);
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
@@ -827,6 +839,7 @@ export default defineComponent({
     };
 
     return {
+      ajaxBarRef,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",

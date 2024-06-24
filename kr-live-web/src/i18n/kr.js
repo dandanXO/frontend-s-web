@@ -122,21 +122,9 @@ export default {
     date_picker_nov: "11월",
     date_picker_december: "십이월",
     date_picker_dec: "12월",
-    date_picker_close: "닫다",
-    date_picker_confirm: "확인하다",
+    date_picker_close: "닫기",
+    date_picker_confirm: "설정",
     // transaction record end
-    // withdraw start
-    withdraw_method: "출금방법",
-    withdraw_bank: "개설 은행",
-    withdraw_bank_choose: "선택하세요",
-    withdraw_bank_num: "은행 카드 번호",
-    withdraw_bank_num_choose: "은행 카드 번호를 입력하세요",
-    withdraw_bank_holder: "카드 계좌",
-    withdraw_bank_address: "카드 주소",
-    withdraw_bank_address_placeholder: "계좌 개설 은행 주소를",
-    withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
-    withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
-    // withdraw end
     // announcement start
     announcement_no_selected: "선택하지 않음",
     announcement_total: "총",
@@ -176,7 +164,7 @@ export default {
     message_type_activity: "활동",
     message_type_payment: "지불",
     message_type_all: "모두",
-    message_type_outbox: "보낼 편지함",
+    message_type_outbox: "보낸 문의함",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
@@ -186,14 +174,14 @@ export default {
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 ?0,000원 이상 만원 단위로만 가능합니다.
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다. 
 
     ※주의사항
     충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
     금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
 
     ※가상계좌 점검시간 안내
-    23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+    23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
     withdraw_bank_card: "환전 은행카드 선택",
@@ -203,12 +191,32 @@ export default {
     withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
     출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
     회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
+    withdraw_method: "출금방법",
+    withdraw_bank: "개설 은행",
+    withdraw_bank_choose: "선택하세요",
+    withdraw_bank_num: "은행 카드 번호",
+    withdraw_bank_num_choose: "은행 카드 번호를 입력하세요",
+    withdraw_bank_holder: "카드 계좌",
+    withdraw_bank_address: "카드 주소",
+    withdraw_bank_address_placeholder: "계좌 개설 은행 주소를",
+    withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    withdraw_virtual_currency: "가상 화폐",
+    withdraw_virtual_wallet: "가상 지갑",
+    withdraw_bank_card: "은행 카드",
+    withdraw_please_select_wallet: "가상 지갑을 선택해주세요",
+    withdraw_please_select_bank_card: "은행카드를 선택해주세요",
+    withdraw_no_card_available: "사용할 수 있는 것이 없습니다",
+    withdraw_link_virtual_wallet: "가상 지갑 연결",
+    withdraw_link_bank_card: "링크 은행 카드",
+    withdraw_withdraw_amount_per_item:  "출금금액/건",
+    withdraw_withdraw_amount_per_day: "출금금액/일",
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
     personal_real_name: "실명",
     personal_id: "아이디",
-    personal_phone: "전화",
+    personal_phone: "전화번호",
     personal_close_btn: "닫기",
     personal_update_btn: "확인",
     // personal end

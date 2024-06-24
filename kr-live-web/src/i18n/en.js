@@ -123,18 +123,6 @@ export default {
     date_picker_close: "Close",
     date_picker_confirm: "Confirm",
     // transaction record end
-    // withdraw start
-    withdraw_method: "Withdraw Method",
-    withdraw_bank: "Bank",
-    withdraw_bank_choose: "Select a bank",
-    withdraw_bank_num: "Bank Number",
-    withdraw_bank_num_choose: "Please enter bank number",
-    withdraw_bank_holder: "Bank Account Holder",
-    withdraw_bank_address: "Bank Address",
-    withdraw_bank_address_placeholder: "Account opening bank address",
-    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
-    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
-    // withdraw end
     // announcement start
     announcement_no_selected: "No selected",
     announcement_total: "Total",
@@ -187,6 +175,24 @@ export default {
     withdraw_withdraw_amount: "Withdraw Amount",
     withdraw_withdraw_password: "Withdraw Password",
     withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
+    withdraw_method: "Withdraw Method",
+    withdraw_bank: "Bank",
+    withdraw_bank_choose: "Select a bank",
+    withdraw_bank_num: "Bank Number",
+    withdraw_bank_num_choose: "Please enter bank number",
+    withdraw_bank_holder: "Bank Account Holder",
+    withdraw_bank_address: "Bank Address",
+    withdraw_bank_address_placeholder: "Account opening bank address",
+    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
+    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
+    withdraw_virtual_currency: "Virtual Currency",
+    withdraw_virtual_wallet: "Virtual Wallet",
+    withdraw_please_select: "Please select {currencyType}",
+    withdraw_no_card_available: "There is no option available",
+    withdraw_link_virtual_wallet: "Link virtual wallet",
+    withdraw_link_bank_card: "Link bank card",
+    withdraw_withdraw_amount_per_item: "Withdrawal amount/item",
+    withdraw_withdraw_amount_per_day: "Withdrawal amount/day",
     // withdraw end
     // personal start
     personal_nickname: "Nickname",
