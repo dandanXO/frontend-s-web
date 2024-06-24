@@ -29,7 +29,7 @@
                   <template v-for="item in formattedPagesInfo" :key="item.page">
                     <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
                       class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
-                      <img style="padding-right: 5px" :src="item.iconActiveUrl" :alt="item.info"
+                      <img :src="item.iconActiveUrl" :alt="item.info"
                         :style="page === item.page ? '' : 'filter:contrast(0)'" />
                     </q-tab>
                   </template>
@@ -473,6 +473,7 @@ onMounted(() => {
       display: block;
       margin: unset;
       text-align: center;
+      font-size: 10px;
     }
 
     .left-group {
@@ -485,8 +486,15 @@ onMounted(() => {
   }
 
   .page-dialog-main-header {
+    height: 40px;
+
+    .header-title {
+      font-size: 15px;
+    }
+
     .header-info-description {
       visibility: hidden;
+      overflow: hidden;
     }
 
     .q-btn {
@@ -502,8 +510,8 @@ onMounted(() => {
 
         .q-tab__label {
           margin-left: unset;
-          margin-top: 4px;
-          font-size: 15px;
+          margin-top: 0px;
+          font-size: 12px;
         }
       }
     }

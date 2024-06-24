@@ -13,7 +13,7 @@
           <div v-else v-for="(method, i) in withdrawalMethods" :key="i" class="withdraw-type-item"
             :class="{ active: method.id === selectedWithdrawalMethod.id }">
             <div class="withdraw-img">
-              <q-img :src="imgURL + '/withdraw/' + method.icon" style="height: 26px; width: 26px;" :fit="'scale-down'">
+              <q-img class="node-icon-img" :src="imgURL + '/withdraw/' + method.icon" :fit="'scale-down'">
                 <template v-slot:loading>
                   <q-spinner-orbit size="0.5em" />
                 </template>
@@ -445,11 +445,11 @@ onMounted(() => {
       align-items: center;
       padding: 5px;
       border-radius: 4px;
-    }
 
-    img {
-      width: 100%;
-      padding: 5px 10px;
+      .node-icon-img {
+        width: 26px;
+        height: 26px;
+      }
     }
 
     &.active {
@@ -488,11 +488,24 @@ onMounted(() => {
     }
   }
 
-  @media (max-width: 500px) {
-    flex-direction: column;
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
 
     .withdraw-type-item {
       width: 100%;
+
+      .withdraw-img {
+        .node-icon-img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .type-name {
+        font-size: 12px;
+      }
     }
   }
 
