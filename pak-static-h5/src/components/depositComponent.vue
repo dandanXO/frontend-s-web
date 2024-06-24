@@ -173,6 +173,26 @@
       </div>
     </q-card>
   </q-dialog>
+
+  <!-- iframe for deposit -->
+  <q-dialog width="100%" v-model="isDepositFrame" persistent>
+    <q-card>
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="popout-close"
+        @click="isDepositFrame = false"
+        v-close-popup
+        style="position: fixed; top: 12px; right: 0"
+      />
+      <iframe
+        :src="depositIframeSrc"
+        frameborder="0"
+        style="position: fixed; height: calc(100% - 60px); width: 100%; left: 0; top: 60px"
+      ></iframe>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
@@ -182,6 +202,7 @@ import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
+import { isAndroid } from "boot/utils";
 
 var qs = require("qs");
 
@@ -537,12 +558,14 @@ async function pDepo(deposit) {
         } else {
           if (
             (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
             Platform.is.name !== "webkit" &&
             !liff.isInClient()
           ) {
-            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
-              const newWin = window.open(`/`, `_self`);
+            if (store.getDeviceType() === "IOS" || store.isMobileSafari() || isAndroid()) {
+              // const newWin = window.open(`/`, `_self`);
+              depositIframeSrc.value = response.requestUrl;
+              isDepositFrame.value = true;
+
               if (response.payResultType === "GET_SUBMIT") {
                 newWin.location.href = response.requestUrl;
               }
@@ -625,6 +648,9 @@ async function pDepo(deposit) {
       btnLoading.value = false;
     });
 }
+
+const isDepositFrame = ref(false);
+const depositIframeSrc = ref();
 
 onMounted(() => {
   initPay();
