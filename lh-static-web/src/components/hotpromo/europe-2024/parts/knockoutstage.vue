@@ -163,7 +163,7 @@ onMounted(() => {
   position: relative;
   width: 1360px;
   height: 1215px;
-  background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
+  background: url(@/components/hotpromo/europe-2024/images/knockoutstage-bg.png) no-repeat;
   background-position: center top;
   color: #ffffff;
   margin: auto;
