@@ -158,11 +158,8 @@
 
     <q-item-section class="acct-nav">
       <div class="acct-title">
-        <div class="acct-title-1">福利中心 尽享优惠</div>
-        <router-link class="acct-title-link" to="/promo?redirect=account">
-          领取福利
-          <q-icon name="chevron_right" size="20px" />
-        </router-link>
+        <div class="acct-title-1">功能区</div>
+
       </div>
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
@@ -186,17 +183,17 @@
           </div>
         </router-link>
 
+        <router-link to="/account/records/bet">
+          <div class="acct-nav-item">
+            <img src="../assets/images/account/account-record-bet-icon.png" />
+            <div class="acct-nav-label">投注记录</div>
+          </div>
+        </router-link>
+
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
-          </div>
-        </router-link>
-
-        <router-link to="/account/invite">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-share-icon.png" />
-            <div class="acct-nav-label">呼朋唤友</div>
           </div>
         </router-link>
 
@@ -207,17 +204,17 @@
           </div>
         </router-link>
 
+      <router-link to="/account/vip">
+        <div class="acct-nav-item">
+          <img src="../assets/images/account/account-vip-icon.png" />
+          <div class="acct-nav-label">VIP 特权</div>
+        </div>
+      </router-link>
+
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
             <img src="../assets/images/account/account-changepwd-icon.png" />
             <div class="acct-nav-label">修改密码</div>
-          </div>
-        </router-link>
-
-        <router-link to="/affiliate">
-          <div class="acct-nav-item">
-            <img src="../assets/images/account/account-affiliate-icon.png" />
-            <div class="acct-nav-label">代理加盟</div>
           </div>
         </router-link>
 
@@ -257,6 +254,43 @@
         <!-- </router-link> -->
       </div>
     </q-item-section>
+
+<q-item-section class="acct-nav">
+  <div class="acct-title">
+    <div class="acct-title-1">热门推荐</div>
+  </div>
+  <div class="acct-menu" id="id-acct-menu">
+    <router-link to="/promo">
+      <div class="acct-nav-item">
+        <img src="../assets/images/account/account-promo-icon.png" />
+        <div class="acct-nav-label">优惠活动</div>
+      </div>
+    </router-link>
+
+    <router-link to="/account/invite">
+      <div class="acct-nav-item">
+        <img src="../assets/images/account/account-share-icon.png" />
+        <div class="acct-nav-label">分享赚钱</div>
+      </div>
+    </router-link>
+
+    <router-link to="/account/invite#summon-share">
+      <div class="acct-nav-item">
+        <img src="../assets/images/account/account-summon-share-icon.png" />
+        <div class="acct-nav-label">精英召回</div>
+      </div>
+    </router-link>
+
+
+    <router-link to="/affiliate">
+      <div class="acct-nav-item">
+        <img src="../assets/images/account/account-affiliate-icon.png" />
+        <div class="acct-nav-label">合作加盟</div>
+      </div>
+    </router-link>
+
+  </div>
+</q-item-section>
 
     <q-card class="card-account-banner">
       <q-card-section>
@@ -1190,9 +1224,20 @@ export default defineComponent({
     color: $font-2;
     // background-color: $lightblue;
     background: rgba(203, 229, 255, 1);
+    border-radius: 20px 20px 0 0;
     position: relative;
-    border-radius: 20px 20px 0px 0px;
-    position: relative;
+    &:before {
+      background: #458BFF;
+;
+      width: 5px;
+      height: 20px;
+      left: 0;
+      top: 5px;
+      bottom: 0;
+      margin: auto;
+      content: "";
+      position: absolute;
+    }
 
     .acct-title-1 {
       display: flex;
@@ -1225,7 +1270,6 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
     grid-gap: 10px;
     gap: 10px;
     row-gap: 10px;
@@ -1233,7 +1277,7 @@ export default defineComponent({
     margin-bottom: 10px;
     background-color: $white;
     border-radius: 0px 0px 20px 20px;
-    padding: 24px 0px 28px;
+    padding: 15px 0;
     box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
 
     &.shorter-menu {
