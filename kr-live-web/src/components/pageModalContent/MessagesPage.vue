@@ -28,6 +28,11 @@
     <div class="form-wrapper" v-if="isCreateMode">
         <form class="content-form form-template">
             <div class="form-item">
+                <label>{{ $t('lang.feedback_category') }}</label>
+                <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
+                    ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" />
+            </div>
+            <div class="form-item">
                 <label>{{ $t('lang.message_title') }}</label>
                 <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
                     v-model="composeForm.title" clearable lazy-rules :rules="[
@@ -160,7 +165,7 @@ const composeForm = reactive({
 });
 
 const isFetchingContent = ref(false);
-
+const messageTypes = ref([]);
 const inboxMessages = ref([]);
 
 const selectFirstMessage = () => {
@@ -284,8 +289,19 @@ const readMessage = (id, showReadNotify = true) => {
     }
 }
 
+const initMessageTypes = () => {
+    api.get("/session/feedback/types").then((typesRes) => {
+        const { code: typesResCode, data: typesResData } = typesRes.data
+
+        if (typesResCode === 0) {
+            messageTypes.value = typesResData;
+        }
+    })
+}
+
 onMounted(() => {
     initOutbox();
+    initMessageTypes();
 })
 </script>
 

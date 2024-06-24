@@ -488,7 +488,7 @@ onMounted(() => {
     }
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 600px) {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 10px;
