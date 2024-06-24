@@ -254,14 +254,14 @@
                 </div>
               </div>
 
-              <div class="payout-total">
-                <div>
-                  {{ $t("lang.bet_amount") }}
-                  <strong>{{ totalBetRecord.totalBet }}</strong>
+              <div class="payout-total text-caption">
+                <div class="q-pa-sm">
+                  <span>베팅 금액：</span>
+                  <span class="strong">{{ totalBetRecord.totalBet }}</span>
                 </div>
-                <div>
-                  베팅 승리
-                  <strong>{{ totalBetRecord.totalPayout }}</strong>
+                <div class="q-pa-sm">
+                  <span>베팅 승리：</span>
+                  <span class="strong">{{ totalBetRecord.totalPayout }}</span>
                 </div>
               </div>
             </q-form>
@@ -1156,17 +1156,13 @@ export default defineComponent({
 }
 
 .payout-total {
-  margin-left: 10px;
   display: inline-flex;
   justify-content: right;
   align-items: center;
   gap: 20px;
-  font-size: 16px;
 
-  strong {
-    color: $orange;
-    font-weight: bold;
-    font-size: 20px;
+  span.strong {
+    color: aqua;
   }
 }
 
