@@ -154,7 +154,7 @@ const resizeDom = () => {
   position: relative;
   width: 100%;
   height: 770px;
-  background: url(components/hotpromo/europe-2024/images/knockout-stage-bg.png) no-repeat;
+  background: url(components/hotpromo/europe-2024/images/knockoutstage-bg.png) no-repeat;
   background-size: 100% auto;
   background-position: top center;
   color: #ffffff;
