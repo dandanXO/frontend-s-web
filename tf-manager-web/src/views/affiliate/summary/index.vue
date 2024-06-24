@@ -723,7 +723,7 @@ function checkQuery() {
 
 async function loadRecord() {
   if (!hasRole(['ADMIN'])) {
-    if ((request.loginName === null || request.loginName.trim.length === 0) && (request.affiliateCode === null || request.affiliateCode.trim.length === 0)) {
+    if ((request.loginName === null || request.loginName.trim().length === 0) && (request.affiliateCode === null || request.affiliateCode.trim().length === 0)) {
       ElMessage({ message: t('message.pleaseEnterAffiliateNameOrAffiliateCode'), type: 'error' })
       return;
     }
