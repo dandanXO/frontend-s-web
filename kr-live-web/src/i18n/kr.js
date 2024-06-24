@@ -164,7 +164,7 @@ export default {
     message_type_activity: "활동",
     message_type_payment: "지불",
     message_type_all: "모두",
-    message_type_outbox: "보낼 편지함",
+    message_type_outbox: "보낸 문의함",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
