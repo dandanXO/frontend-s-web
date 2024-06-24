@@ -162,7 +162,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      console.log("TEST")
+      console.log("TEST 2")
       checkSID();
       // initCsWeb();
       getCSA();

@@ -11,8 +11,15 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
 const ESLintPlugin = require("eslint-webpack-plugin");
+const path = require("path");
 
 const {configure} = require("quasar/wrappers");
+
+const fs = require("fs-extra");
+const isImageCompress = true;
+
+const ImageminPlugin = require("imagemin-webpack-plugin").default;
+
 
 module.exports = configure(function (ctx) {
   return {
@@ -73,9 +80,27 @@ module.exports = configure(function (ctx) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
 
       chainWebpack(chain) {
-        chain
-          .plugin("eslint-webpack-plugin")
-          .use(ESLintPlugin, [{extensions: ["js", "vue"]}]);
+        chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+
+        // Add Image Compression
+        if (process.env.NODE_ENV === "production" && isImageCompress) {
+          chain.plugin("imagemin-webpack-plugin").use(ImageminPlugin, [
+            {
+              test: /\.(jpe?g|png|gif|svg)$/i,
+              pngquant: {
+                quality: "70"
+              }
+            }
+          ]);
+        }
+      },
+      // Add a hook to copy assets after the build
+      afterBuild({ cfg }) {
+        const fs = require("fs-extra");
+        const sourceDir = path.resolve(__dirname, "src/assets");
+        const destinationDir = path.resolve(__dirname, "dist/spa/static");
+
+        fs.copySync(sourceDir, destinationDir);
       },
       extendWebpack(cfg) {
         cfg.optimization.minimizer = [
@@ -92,7 +117,7 @@ module.exports = configure(function (ctx) {
           splitChunks: {
             chunks: 'all',
             maxInitialRequests: Infinity,
-            minSize: 30000,
+            minSize: 3000,
             cacheGroups: {
               vendor: {
                 test: /[\\/]node_modules[\\/]/,
