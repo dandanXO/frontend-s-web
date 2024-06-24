@@ -174,7 +174,7 @@ export default {
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다. 
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
 
     ※주의사항
     충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
@@ -184,7 +184,6 @@ export default {
     23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
-    withdraw_bank_card: "환전 은행카드 선택",
     withdraw_withdraw_amount: "출금금액",
     withdraw_withdraw_password: "출금 비밀번호",
     withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
@@ -564,7 +563,7 @@ export default {
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
     ok_btn: "Okay",
-    close_btn: "Close",
+    close_btn: "닫기",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
     old_password: "Old Password",
@@ -733,7 +732,7 @@ export default {
     automatic_payment: "지불대기",
     sending: "지불대기",
     waiting_callback: "지불대기",
-    success: "승인완료",
+    close_btn: "승인거절",
     fail: "승인거절",
     suspend: "승인대기",
     waiting_auto_payment: "자동지불대기",
