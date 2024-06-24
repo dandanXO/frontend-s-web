@@ -1897,6 +1897,7 @@ export default {
     passwordLength: '密码必须多于 6 字并少于 12 字',
     paymentUpdate: '是否需要复制？如无需复制请按开始',
     paySuccess: '支付成功',
+    pleaseEnterAffiliateNameOrAffiliateCode: '请输入代理名或者代理编码',
     promoDistributionSuccess: '发放奖金成功',
     redeemCashSuccess: '奖品折现成功',
     rebateSuccess: '返水派发中，请稍后再刷新查看记录',
