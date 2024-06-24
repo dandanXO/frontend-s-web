@@ -15,13 +15,12 @@
         selectItem === item ? 'active' : '',
       ]" :key="i" v-for="(item, i) in list">
         <div class="node-text">
-          <div class="node-icon"><q-img :src="imgURL + item.nodeIcon" style="height: 26px; width: 26px;"
-              :fit="'scale-down'">
+          <div class="node-icon"><q-img class="node-icon-img" :src="imgURL + item.nodeIcon" :fit="'scale-down'">
               <template v-slot:loading>
                 <q-spinner-orbit size="0.5em" />
               </template>
             </q-img></div>
-          <div class="">{{ item.nodeName }}</div>
+          <div class="node-label">{{ item.nodeName }}</div>
           <div class="promo" :style="item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
             ">
             <span class="val">{{ item.promoValue }}</span>
@@ -260,22 +259,35 @@ $node-color: #dd4645;
 }
 
 .payment-method-wrapper {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, 200px);
-  // grid-gap: 20px;
-  // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
   margin-top: 10px;
   flex-wrap: wrap;
   padding-bottom: 10px;
 
-  @media (max-width: 500px) {
-    flex-direction: column;
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 
     .node-item {
       width: 100%;
+
+      .node-label {
+        font-size: 12px;
+      }
+
+      .node-icon {
+        .node-icon-img {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
   }
 
   .payment-method-item {
@@ -571,10 +583,11 @@ $node-color: #dd4645;
     // background-color: #128787;
     padding: 5px;
     border-radius: 4px;
-  }
 
-  img {
-    width: 1.6rem;
+    .node-icon-img {
+      height: 26px;
+      width: 26px;
+    }
   }
 
   .overflow {
