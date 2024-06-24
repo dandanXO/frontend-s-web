@@ -29,7 +29,7 @@
         </div>
         <q-tab-panels v-model="page" animated>
           <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page">
+            <q-tab-panel :name="item.page" style="padding:0 16px;">
               <component :is="item.component" @closeModal="closeDialog"></component>
             </q-tab-panel>
           </template>
@@ -276,6 +276,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 8px;
+  padding: 5px 0;
 }
 
 .page-dialog-main {
@@ -367,8 +368,8 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
@@ -445,7 +446,6 @@ onMounted(() => {
   }
 
   .page-dialog-main-header {
-    height: 40px;
 
     .header-title {
       font-size: 15px;
@@ -500,9 +500,13 @@ onMounted(() => {
   .header {}
 
   .content {
+    display: flex;
+    flex-direction: column;
     max-height: 100%;
     overflow: auto;
     background-color: #212632;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 </style>
