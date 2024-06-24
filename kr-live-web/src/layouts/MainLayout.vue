@@ -17,9 +17,7 @@
         </div>
       </div>
     </q-page-container>
-    <!-- <q-footer v-if="ui.footer" elevated>
 
-    </q-footer> -->
     <footer>
       <div class="footer-box">
         <div class="box" v-for="(items, index) in footerBoxImgUrl" :key="index">
@@ -40,21 +38,15 @@ import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 
-import { RiCloseLine } from "vue-remix-icons";
 import { storeToRefs } from "pinia";
 import { i18nStore } from "src/router/language";
-import { useI18n } from "vue-i18n";
 import { openLiveChat } from "src/boot/utils";
-import AppDownload from "../components/AppDownload.vue";
 import LoginBar from "../components/LoginAndRegister/LoginBar";
 import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MainLayout",
   components: {
-    // RiArrowDropLeftLine,
-    RiCloseLine,
-    AppDownload,
     LoginBar
   },
 
@@ -109,9 +101,7 @@ export default defineComponent({
       }
     })
 
-    const { t } = useI18n();
     const { languageVal } = storeToRefs(i18nStore());
-    const { setLanguage } = i18nStore();
 
     const isHomePage = computed(() => {
       if (route.path === "/" || route.path === "/home") {
@@ -120,50 +110,18 @@ export default defineComponent({
       return false;
     });
 
-
-    const closeWindowOrBack = () => {
-      if (prevPage.value) {
-        router.replace(prevPage.value);
-      } else {
-        router.go(-1);
-      }
-
-      // if (((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit' && !liff.isInClient())) {
-      //   window.close();
-      // } else {
-      //   router.go(-1);
-      // }
-    };
     const pageName = ref("");
     const hasPage = ref(false);
     const hasLang = ref(false);
     const hasHeader = ref(false);
     const outOfApp = ref(false);
     const headerIcon = ref("");
-    const toggleLeftDrawer = () => {
-      ui.leftDrawerOpen = !ui.leftDrawerOpen;
-    };
 
     const openAffiliatePage = () => {
       router.push("/affiliate");
     };
 
-    const mainWalletValue = computed(() => {
-      const balanceWithTwoDecimalPlaces = parseFloat(store.balance).toFixed(2);
-      return balanceWithTwoDecimalPlaces;
-    });
-
-    onUnmounted(() => {
-      clearInterval(checkBalanceInterval);
-      clearInterval(checkUnreadMessagesInterval);
-    })
-
-    onMounted(() => {
-      if (store.hasToken()) {
-        store.getBalance();
-        store.getUnreadTotal();
-      }
-
+    const startAllIntervals = () => {
       checkBalanceInterval.value = setInterval(function () {
         if (store.hasToken()) {
           store.getBalance();
@@ -175,19 +133,38 @@ export default defineComponent({
           store.getUnreadTotal();
         }
       }, 30000);
+    }
+
+    const clearAllIntervals = () => {
+      clearInterval(checkBalanceInterval);
+      clearInterval(checkUnreadMessagesInterval);
+    }
+
+    onUnmounted(() => {
+      clearAllIntervals();
+    })
+
+    onMounted(() => {
+      if (store.hasToken()) {
+        store.getBalance();
+        store.getUnreadTotal();
+
+        startAllIntervals();
+      }
 
       window.addEventListener('offline', () => {
         store.isOffline = true;
+        clearAllIntervals();
       });
 
       window.addEventListener('online', () => {
         store.isOffline = false;
+        startAllIntervals();
       });
     });
 
     return {
       tab: ref("home"),
-      toggleLeftDrawer,
       logout,
       store,
       isHomePage,
@@ -196,13 +173,11 @@ export default defineComponent({
       hasPage,
       ui,
       prevPage,
-      closeWindowOrBack,
       outOfApp,
       hasHeader,
       headerIcon,
       languageVal,
       hasLang,
-      mainWalletValue,
       openAffiliatePage,
       openLiveChat,
       router,
