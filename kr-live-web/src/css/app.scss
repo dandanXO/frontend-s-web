@@ -684,10 +684,36 @@ input:internal-autofill-selected {
   }
 
   .action-buttons {
+    width: 100%;
     display: flex;
     justify-content: center;
     padding: 10px;
-    border-top: 1px solid grey;
+    border-top: 1px solid #515151;
+    gap: 10px;
+    align-items: center;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+      margin: 5px auto 10px;
+      padding: 10px 5px 5px;
+    }
+  
+    .primary-button {
+      @media (max-width: 600px) {
+        width: 120px;
+        min-width: 120px;
+        font-size: small;
+      }
+  
+      @media (max-width: 400px) {
+        width: 100px;
+        min-width: 100px;
+        font-size: x-small;
+      }
+    }
   }
 }
 
