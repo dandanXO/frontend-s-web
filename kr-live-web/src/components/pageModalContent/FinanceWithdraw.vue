@@ -152,9 +152,7 @@
             <span><span style="color:red;padding:0 2px;">*</span>특별 설명</span>
             <span>：</span>
             <span class="q-pa-sm">
-              제3자가
-              자동으로 1.00
-              USDT의 인출 수수료를 받습니다！
+              출금시 1테더 수수료를 받습니다
             </span>
           </div>
 

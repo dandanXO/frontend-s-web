@@ -224,11 +224,6 @@ const onSubmit = () => {
     label {
       font-size: x-small;
     }
-
-    .captcha-img-wrapper {
-      min-width: 80px;
-      height: 30px;
-    }
   }
 }
 </style>
