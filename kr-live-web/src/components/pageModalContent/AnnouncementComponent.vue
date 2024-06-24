@@ -1,5 +1,5 @@
 <template>
-  <div class="announcement-container">
+  <div class="announcement-container page-container">
     <div class="announcement-list-wrapper">
       <q-skeleton class="total" v-if="isLoading" type="QChip" />
       <span class="total" v-else>{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
@@ -98,7 +98,6 @@ onMounted(() => {
 .announcement-container {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
-  min-height: 550px;
 
   .total {
     margin-left: auto;
