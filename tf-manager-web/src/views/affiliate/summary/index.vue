@@ -721,6 +721,9 @@ function checkQuery() {
 }
 
 async function loadRecord() {
+  if (!hasRole(['ADMIN']) && (request.loginName === null || request.loginName.length === 0)) {
+    return;
+  }
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)
