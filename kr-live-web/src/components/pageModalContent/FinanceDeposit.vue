@@ -2,7 +2,7 @@
   <div class="page-container">
 
 
-    <div class="deposit-page">
+    <div class="form-wrapper">
       <div v-if="!isDisplay">
 
         <ReminderText :reminderText="$t('lang.deposit_reminder_text')" />
@@ -649,7 +649,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.deposit-page {
+.form-wrapper {
   padding: 20px;
 }
 
