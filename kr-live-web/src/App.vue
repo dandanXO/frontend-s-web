@@ -9,11 +9,9 @@ import { Platform, useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
-//test-update
 import { userStore } from "stores/index";
 import isString from "lodash/isString";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
 import PageModal from "components/modal/PageModal";
 
