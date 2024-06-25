@@ -15,7 +15,7 @@
     <JackpotPrize />
 
     <GameCategory :onClickGameCategory="(categoryName, categoryIndex) => switchMenu(categoryName, categoryIndex)"
-      :selectedCategory="currentSelectedMenu" />
+      :selectedCategory="currentSelectedMenu" data-aos="zoom-in-up" />
 
     <q-carousel v-model="currentSelectedMenu" transition-prev="slide-right" transition-next="slide-left" animated
       control-color="primary" class="rounded-borders" style="background: transparent; height: 100%;">
@@ -279,9 +279,34 @@ export default defineComponent({
     });
     const gameModalRef = ref(null);
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
+      if (!store.token) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+
+        router.push('/?page=login');
+        return;
+      }
+
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
+
     const openGame = debounce((p) => {
+      if (!store.token) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+
+        router.push('/?page=login');
+        return;
+      }
+
       ajaxBarRef.value.start();
       // debugger;
       console.log(p);
@@ -404,6 +429,8 @@ export default defineComponent({
     const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
+      selectedPlatId.value = '';
+      isShow.value = false;
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -1110,43 +1137,6 @@ export default defineComponent({
       width: 200px;
       margin: 0 auto;
     }
-  }
-}
-
-.img-coming-soon {
-  //max-width: 300px;
-  grid-column: 1 / 4;
-}
-
-.v-enter-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-leave-active {
-  transition: none;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-
-.favourite-star {
-  position: absolute;
-  z-index: 10;
-  top: 3px;
-  right: 3px;
-
-  &:hover {
-    opacity: 0.9;
-    transform: scale(1.2);
-    transform-origin: center;
-  }
-
-  &:active {
-    filter: brightness(0.85);
-    transform: scale(1.2);
-    transform-origin: center;
   }
 }
 

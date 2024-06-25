@@ -145,8 +145,8 @@ export default defineComponent({
 
 
     let tgDomain = location.origin;
-    if (store.isApp()) {
-      tgDomain = 'https://' + store.evip;
+    if (store.isApp() || window.location.pathname === "/invitefriend") {
+      tgDomain = store.evip;
     }
 
 

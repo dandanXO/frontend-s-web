@@ -25,7 +25,7 @@
         :src="
           $q.dark.isActive
             ? require('../assets/images/home/home-hamburger-menu-dark.png')
-            : require('../assets/images/home/home-hamburger-menu.png')
+            : require('../assets/images/home/home-hamburge-menu2.png')
         "
       />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
@@ -107,25 +107,25 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + floor(mainWallet, 2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
+        <img src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
+        <img src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
+        <img src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
+        <img src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
@@ -667,6 +667,7 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
 import { App } from "@capacitor/app";
+import floor from 'lodash/floor';
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1728,6 +1729,7 @@ export default defineComponent({
     });
 
     return {
+      floor,
       imageLoading,
       slide: ref(0),
       clickHomePopupImg,
@@ -2088,20 +2090,20 @@ export default defineComponent({
 
     .men {
       text-decoration: none;
-      color: $font-4;
+      color: $font-1;
       gap: 2px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 1.2rem;
+      font-size: 1rem;
 
       &:active {
         background: $grey-color;
       }
 
       img {
-        width: 2rem;
+        width: 2.2rem;
       }
     }
   }

@@ -170,6 +170,7 @@ const gameType = ref(props.gameType);
         .primary-button.blue {
           width: 100px;
           height: 30px;
+          min-width: 100px;
         }
       }
 

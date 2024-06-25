@@ -1,5 +1,5 @@
 <template>
-  <div class="announcement-container">
+  <div class="announcement-container page-container">
     <div class="announcement-list-wrapper">
       <q-skeleton class="total" v-if="isLoading" type="QChip" />
       <span class="total" v-else>{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
@@ -39,11 +39,7 @@
           </div>
           <span class="date-time">{{ formatDate(selected.createTime) }}</span>
           <div class="attachment" v-if="selected.attachment">
-            <q-img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)">
-              <template v-slot:loading>
-                <q-spinner-orbit size="0.5em" />
-              </template>
-            </q-img>
+            <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
           </div>
           <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
         </div>
@@ -98,7 +94,7 @@ onMounted(() => {
 .announcement-container {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
-  min-height: 550px;
+  padding: 20px;
 
   .total {
     margin-left: auto;
@@ -109,10 +105,11 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     padding-right: 10px;
+    min-height: 100%;
 
     .announcement-list {
       overflow-y: auto;
-      max-height: 550px;
+      max-height: 100%;
       height: 100%;
 
       .active-announcement {
@@ -133,7 +130,7 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 550px;
+      max-height: 100%;
       overflow-y: auto;
       padding-right: 10px;
 

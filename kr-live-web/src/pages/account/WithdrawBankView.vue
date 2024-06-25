@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="unlink-btn" @click="unbindBankCard(bc)">
-            <RiLinkUnlink />
+            <img src="../../assets/images/bankCardList/unlink-btn.svg" width="20px" />
           </div>
           <div class="">
             <div v-for="b in bc.cardNumber.split()" :key="b" class="card-num-box">
@@ -137,8 +137,6 @@
 
 <script lang="js">
 import { defineComponent, reactive, ref, onMounted, computed } from "vue";
-import { RiLinkUnlink } from "vue-remix-icons";
-// import moment from "moment";
 import { api } from "boot/axios"
 import { useQuasar } from "quasar";
 import { userStore } from "stores/index";
@@ -150,7 +148,6 @@ var qs = require("qs");
 export default defineComponent({
   name: "WithdrawBankView",
   components: {
-    RiLinkUnlink
   },
   setup() {
     const store = userStore();

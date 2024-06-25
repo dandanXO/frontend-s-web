@@ -270,7 +270,7 @@
     <router-link to="/account/invite">
       <div class="acct-nav-item">
         <img src="../assets/images/account/account-share-icon.png" />
-        <div class="acct-nav-label">分享赚钱</div>
+        <div class="acct-nav-label">推广赚钱</div>
       </div>
     </router-link>
 
@@ -1270,10 +1270,12 @@ export default defineComponent({
   .acct-menu {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-    gap: 10px;
-    row-gap: 10px;
+    grid-gap: 0px;
+    gap: 0px;
+    row-gap: 0px;
     height: auto;
+    max-height: 180px;
+
     margin-bottom: 10px;
     background-color: $white;
     border-radius: 0px 0px 20px 20px;

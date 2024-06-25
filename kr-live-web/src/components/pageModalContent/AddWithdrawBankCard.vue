@@ -1,96 +1,99 @@
 <template>
-  <div class="form-wrapper">
-    <q-card-section>
-      <div class="add-bank-card-wrapper">
-        <div>
-          <q-form class="form-template">
-            <div class="form-item">
-              <q-label>
-                {{ $t('lang.withdraw_method') }}
-                <em>*</em>
-              </q-label>
-              <q-select dense v-model="selectedBankType" outlined :options="bankTypes" option-label="name"
-                option-value="code" emit-value map-options @update:model-value="bankCardInfo.bankId = ''">
-                <template v-slot:selected-item="scope">
-                  <q-item-section avatar>
-                    <img v-if="scope.opt.icon" style="width: 24px; margin-top: 3px; margin-bottom:0px"
-                      :src="imgURL + '/withdraw/' + scope.opt.icon" />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                      {{ scope.opt.name }}
-                    </q-item-label>
-                  </q-item-section>
-                </template>
-              </q-select>
-            </div>
-
-            <div class="form-item">
-              <q-label>
-                {{ $t('lang.withdraw_bank') }}
-                <em>*</em>
-              </q-label>
-              <q-select dense ref="bankCardRef" outlined v-model="bankCardInfo.bankId" class="q-pb-xs" lazy-rules
-                clearable :options="filteredBankListByType" option-value="id" option-label="name" emit-value map-options
-                :rules="[(val) => val || $t('lang.withdraw_bank_choose')]">
-                <template v-slot:selected-item="scope">
-                  <q-item-section avatar>
-                    <img v-if="scope.opt.bankIcon" style="width: 24px; margin-top: 3px; margin-bottom:0px"
-                      :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-                      {{ scope.opt.name }}
-                    </q-item-label>
-                  </q-item-section>
-                </template>
-                <template v-slot:option="scope">
-                  <q-item v-bind="scope.itemProps">
+  <div class="page-container">
+    <div class="form-wrapper">
+      <q-card-section>
+        <div class="add-bank-card-wrapper">
+          <div>
+            <q-form class="form-template">
+              <div class="form-item">
+                <q-label>
+                  {{ $t('lang.withdraw_method') }}
+                  <em>*</em>
+                </q-label>
+                <q-select dense v-model="selectedBankType" outlined :options="bankTypes" option-label="name"
+                  option-value="code" emit-value map-options @update:model-value="bankCardInfo.bankId = ''">
+                  <template v-slot:selected-item="scope">
                     <q-item-section avatar>
-                      <img v-if="scope.opt.bankIcon" style="width: 24px; margin-top: 3px; margin-bottom: 0px"
+                      <img v-if="scope.opt.icon" style="width: 24px; margin-top: 3px; margin-bottom:0px"
+                        :src="imgURL + '/withdraw/' + scope.opt.icon" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        {{ scope.opt.name }}
+                      </q-item-label>
+                    </q-item-section>
+                  </template>
+                </q-select>
+              </div>
+
+              <div class="form-item">
+                <q-label>
+                  {{ $t('lang.withdraw_bank') }}
+                  <em>*</em>
+                </q-label>
+                <q-select dense ref="bankCardRef" outlined v-model="bankCardInfo.bankId" class="q-pb-xs" lazy-rules
+                  clearable :options="filteredBankListByType" option-value="id" option-label="name" emit-value
+                  map-options :rules="[(val) => val || $t('lang.withdraw_bank_choose')]">
+                  <template v-slot:selected-item="scope">
+                    <q-item-section avatar>
+                      <img v-if="scope.opt.bankIcon" style="width: 24px; margin-top: 3px; margin-bottom:0px"
                         :src="imgURL + '/payment/' + scope.opt.bankIcon" />
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label>{{ scope.opt.name }}</q-item-label>
+                      <q-item-label style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+                        {{ scope.opt.name }}
+                      </q-item-label>
                     </q-item-section>
-                  </q-item>
-                </template>
-              </q-select>
-            </div>
+                  </template>
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section avatar>
+                        <img v-if="scope.opt.bankIcon" style="width: 24px; margin-top: 3px; margin-bottom: 0px"
+                          :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>{{ scope.opt.name }}</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                </q-select>
+              </div>
 
-            <div class="form-item">
-              <q-label>
-                {{ $t('lang.withdraw_bank_num') }}
-                <em>*</em>
-              </q-label>
-              <q-input dense ref="cardNumberRef" :type="selectedBankType.includes('USDT') ? 'text' : 'number'" outlined
-                v-model="bankCardInfo.cardNumber" class="q-pb-xs" lazy-rules clearable
-                :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_bank_num_choose'), validateBankLength]"></q-input>
-            </div>
+              <div class="form-item">
+                <q-label>
+                  {{ $t('lang.withdraw_bank_num') }}
+                  <em>*</em>
+                </q-label>
+                <q-input dense ref="cardNumberRef" :type="selectedBankType.includes('USDT') ? 'text' : 'number'"
+                  outlined v-model="bankCardInfo.cardNumber" class="q-pb-xs" lazy-rules clearable
+                  :rules="[(val) => (val && val.length > 0) || $t('lang.withdraw_bank_num_choose'), validateBankLength]"></q-input>
+              </div>
 
-            <div class="form-item">
-              <q-label>
-                {{ $t('lang.withdraw_bank_holder') }}
-                <em>*</em>
-              </q-label>
-              <q-input dense outlined v-model="bankCardInfo.cardAccount" class="q-pb-xs" lazy-rules clearable
-                readonly></q-input>
-            </div>
+              <div class="form-item">
+                <q-label>
+                  {{ $t('lang.withdraw_bank_holder') }}
+                  <em>*</em>
+                </q-label>
+                <q-input dense outlined v-model="bankCardInfo.cardAccount" class="q-pb-xs" lazy-rules clearable
+                  readonly></q-input>
+              </div>
 
-            <div class="form-item">
-              <q-label>
-                {{ $t('lang.withdraw_bank_address') }}
-              </q-label>
-              <q-input ref="cardAddressRef" dense outlined v-model="bankCardInfo.cardAddress" class="q-pb-xs"
-                :label="$t('lang.withdraw_bank_address_placeholder')" clearable></q-input>
-            </div>
-          </q-form>
-          <div class="note">{{ $t('lang.withdraw_bank_holder_cannot_amend') }}.</div>
-          <div class="note">{{ $t('lang.withdraw_bank_holder_mismatch') }}！</div>
+              <div class="form-item">
+                <q-label>
+                  {{ $t('lang.withdraw_bank_address') }}
+                </q-label>
+                <q-input ref="cardAddressRef" dense outlined v-model="bankCardInfo.cardAddress" class="q-pb-xs"
+                  :label="$t('lang.withdraw_bank_address_placeholder')" clearable></q-input>
+              </div>
+            </q-form>
+            <div class="note">{{ $t('lang.withdraw_bank_holder_cannot_amend') }}.</div>
+            <div class="note">{{ $t('lang.withdraw_bank_holder_mismatch') }}！</div>
+          </div>
+          <WithdrawBankView ref="bankCardListRef" />
         </div>
-        <WithdrawBankView ref="bankCardListRef" />
-      </div>
-    </q-card-section>
+      </q-card-section>
+    </div>
+
     <div class="action-buttons">
       <div class="primary-button blue" @click="submitBankCard()">
         제출
@@ -336,6 +339,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+
 .add-bank-card-wrapper {
   display: grid;
   grid-template-columns: 1fr 300px;
