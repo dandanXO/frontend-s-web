@@ -1813,6 +1813,8 @@ export default {
     addFakeLotteryRecord: '新增假彩票记录',
     approveSummonRecord: '批准唤醒记录',
     updateAffiliateLevel: '编辑代理等级',
+    unsuccessFrom30min: '30分钟前的未成功提款',
+    unsuccessIn10time: '累计未成功10次的提款渠道',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
