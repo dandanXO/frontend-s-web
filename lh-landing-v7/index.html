@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="enter">进入网页版</div>
+      <a href="" id="visit-site-web-btn" class="enter">进入网页版</a>
     </div>
   </div>
 
@@ -119,7 +119,7 @@
 
   <div class="btn-box">
     <div class="enter-app">雷火全站APP</div>
-    <div class="enter-url">进入网页版</div>
+    <a href="" id="visit-site-h5-btn" class="enter-url">进入网页版</div>
   </div>
 
   <div class="up" id="up-btn">
@@ -238,6 +238,22 @@
   document.addEventListener('DOMContentLoaded', function () {
     const closeButton = document.querySelector('.info-div .close');
     const infoDiv = document.querySelector('.info-div');
+
+    const links = [
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh99966.com:9971",
+      "https://www.lh81097.com:9971",
+      "https://www.lh50891.com:9971",
+      "https://www.lh89186.com:9971"
+    ];
+
+    const link = links[Math.floor(Math.random()*links.length)];
+
+    document.querySelector('#visit-site-web-btn').setAttribute('href', link);
+    document.querySelector('#visit-site-h5-btn').setAttribute('href', link);
 
     closeButton.addEventListener('click', function () {
       infoDiv.style.bottom = '-100%';
