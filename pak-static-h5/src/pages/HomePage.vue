@@ -1,19 +1,19 @@
 <template>
   <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
   <q-carousel
-    class="home"
-    id="home"
-    autoplay
-    navigation
     v-model="slide"
-    swipeable
+    id="home"
+    class="home"
+    data-aos-duration="1200"
+    data-aos-once="true"
+    data-aos="fade-in"
     transition-next="slide-left"
     transition-prev="slide-right"
     animated
+    autoplay
     infinite
-    data-aos="fade-in"
-    data-aos-duration="1200"
-    data-aos-once="true"
+    navigation
+    swipeable
   >
     <q-carousel-slide
       v-for="(banner, i) in banners"
@@ -2999,7 +2999,12 @@ const gotoPromo = (banner) => {
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "open") {
-      playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      if (gameSplit[1][1] === "LuckySport"){
+        playGame(gameSplit[1][0], gameSplit[1][1], '#/special/uefaeuro', gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      } else {
+        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
+      }
+
     } else if (type === "page") {
       router.push(`/${urlSplit[1]}`);
     } else {
