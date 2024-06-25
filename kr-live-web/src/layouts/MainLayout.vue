@@ -297,16 +297,11 @@ export default defineComponent({
 
 footer {
   width: 100%;
-  height: 186px;
   background-color: #0d0e0f;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  @media (min-width: 1200px) {
-    height: 300px;
-  }
 }
 
 .footer-box {
