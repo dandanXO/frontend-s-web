@@ -774,7 +774,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
-    11000: "The recharge is being processed, please wait a moment before proceeding!",
+    11000: "Third party provider is experiencing difficulties",
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",

@@ -3,9 +3,7 @@
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
         <div class="icon-wrapper">
-          <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount" rounded
-            style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
-            :title="$t('lang.message_unread')" />
+          <UnreadNotificationBadge />
           <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
         </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
@@ -51,9 +49,7 @@
             @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
             class="credit-info cursor-pointer">
             <div class="icon-wrapper">
-              <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount && item.type === 'message'"
-                rounded style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
-                :title="$t('lang.message_unread')" />
+              <UnreadNotificationBadge v-if="item.type === 'message'" />
               <img :src="item.iconUrl" alt="" />
             </div>
             <div class="info-text">{{ $t(item.info) }}</div>
@@ -77,10 +73,11 @@
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import UnreadNotificationBadge from 'components/home/UnreadNotificationBadge';
 
 const store = userStore();
 const $q = useQuasar();
