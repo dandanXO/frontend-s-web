@@ -702,14 +702,18 @@ input:internal-autofill-selected {
     }
   
     .primary-button {
+      width: 150px;
+
       @media (max-width: 600px) {
         width: 120px;
+        height: 30px;
         min-width: 120px;
         font-size: small;
       }
   
       @media (max-width: 400px) {
         width: 100px;
+        height: 25px;
         min-width: 100px;
         font-size: x-small;
       }
