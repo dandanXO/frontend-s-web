@@ -6,6 +6,7 @@
       <HomeDownload></HomeDownload>
       <HomeHotGame></HomeHotGame>
       <HomeService></HomeService>
+      <EurocupPageBottomBanner />
     </div>
   </div>
   <GameModal ref="gameMenu" />
@@ -20,6 +21,7 @@ import HomeDownload from "@/components/home/HomeDownload.vue";
 // import HomeHotMatch from "@/components/home/HomeHotMatch.vue";
 import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/HomeService.vue";
+import EurocupPageBottomBanner from "@/components/home/EurocupPageBottomBanner.vue";
 
 const gameMenu = ref(null);
 const openGame = (gameName, platType, gameCode, scrollingState) => {
