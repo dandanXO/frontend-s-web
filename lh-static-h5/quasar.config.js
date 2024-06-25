@@ -88,7 +88,7 @@ module.exports = configure(function (ctx) {
             {
               test: /\.(jpe?g|png|gif|svg)$/i,
               pngquant: {
-                quality: "70"
+                quality: "85"
               }
             }
           ]);
