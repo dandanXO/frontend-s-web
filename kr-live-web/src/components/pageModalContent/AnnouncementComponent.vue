@@ -109,6 +109,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     padding-right: 10px;
+    min-height: 100%;
 
     .announcement-list {
       overflow-y: auto;

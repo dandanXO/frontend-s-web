@@ -424,12 +424,12 @@ onMounted(() => {
     position: relative;
     top: 0px;
 
-    .header-info-description {
-      display: block;
-      margin: unset;
-      text-align: center;
-      font-size: 10px;
-    }
+    // .header-info-description {
+    //   display: block;
+    //   margin: unset;
+    //   text-align: center;
+    //   font-size: 10px;
+    // }
 
     .left-group {
       display: flex;
@@ -446,10 +446,10 @@ onMounted(() => {
       font-size: 15px;
     }
 
-    .header-info-description {
-      visibility: hidden;
-      overflow: hidden;
-    }
+    // .header-info-description {
+    //   visibility: hidden;
+    //   overflow: hidden;
+    // }
 
     .q-btn {
       margin-right: 15px;
