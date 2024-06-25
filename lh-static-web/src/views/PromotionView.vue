@@ -70,7 +70,8 @@
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
-            selectedPromo.promoCode !== 'lh1-ftd-promo'
+            selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+            selectedPromo.promoCode !== 'lh1-aijiasu'
           "
         >
           <div class="promo-bg isDesktop">
@@ -102,8 +103,8 @@
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh-lpl-summer24'
-                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`:''
-            
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : ''
           }"
           :class="{
             fullwidth:
@@ -111,7 +112,8 @@
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
-               selectedPromo.promoCode === 'lh1-intel-esl'  ,
+              selectedPromo.promoCode === 'lh1-intel-esl' ||
+              selectedPromo.promoCode === 'lh1-aijiasu',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
