@@ -1519,6 +1519,19 @@ export default defineComponent({
       background-image: url("../assets/images/download/active-tab-bg-dark.png");
     }
   }
+
+  .vip-link {
+    background: $linear-bg-180;
+    &::before {
+      background-image: url("../assets/images/account/vip-diamond-dark.png");
+    }
+  }
+
+  .vip-progress {
+    :deep(.q-linear-progress__model) {
+      background: $linear-bg-180;
+    }
+  }
 }
 
 @media (max-width: 430px) {

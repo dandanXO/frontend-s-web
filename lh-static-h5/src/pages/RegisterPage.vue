@@ -626,7 +626,7 @@ function charType(num) {
     background-size: 100% auto;
   }
   .common-large-btn {
-    background: linear-gradient(180deg, #36CBD5 0%, #1D809A 100%);
+    background: $linear-bg-180;
   }
   .common-large-white-btn {
     color: $white;
