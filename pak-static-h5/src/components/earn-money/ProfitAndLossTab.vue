@@ -73,7 +73,7 @@
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span
-                v-if="['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee'].includes(col.field)"
+                v-if="['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee', 'bet', 'payout'].includes(col.field)"
                 :class="col.field === 'balance' ? props.row.type : ''"
               >
                 {{ convertToCommaAmount(col.value, true) }}
@@ -97,25 +97,12 @@ import moment from "moment";
 import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
 import { convertToCommaAmount, updateDate } from "src/boot/utils";
+import { api } from "boot/axios";
 
 const { t } = useI18n();
 
 const selectedDownLine = ref("today");
-const tableData = ref(
-  Array(10).fill({
-    username: "666666",
-    deposit: 6300,
-    withdraw: 6300,
-    bonus: 86,
-    validBet: 43312,
-    type: "loss",
-    balance: 17,
-    rebate: "2023-09-17 21:03",
-    referral: 27,
-    profitAndLoss: 41,
-    depositFee: 189
-  })
-);
+const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
@@ -131,26 +118,13 @@ const downLineOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("earnMoney.profitAndLoss.table.username"), name: "username", field: "username", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.username"), name: "username", field: "loginName", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.deposit"), name: "deposit", field: "deposit", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.withdraw"), name: "withdraw", field: "withdraw", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "bet", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.validBet"), name: "validBet", field: "validBet", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.bonus"), name: "bonus", field: "bonus", align: "center" },
-  {
-    label: t("earnMoney.profitAndLoss.table.validBet"),
-    name: "validBet",
-    field: "validBet",
-    align: "center"
-  },
-  { label: t("earnMoney.profitAndLoss.table.balance"), name: "balance", field: "balance", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.rebate"), name: "rebate", field: "rebate", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.referral"), name: "referral", field: "referral", align: "center" },
-  {
-    label: t("earnMoney.profitAndLoss.table.profitAndLoss"),
-    name: "profitAndLoss",
-    field: "profitAndLoss",
-    align: "center"
-  },
-  { label: t("earnMoney.profitAndLoss.table.depositFee"), name: "depositFee", field: "depositFee", align: "center" }
+  { label: t("earnMoney.profitAndLoss.table.payout"), name: "payout", field: "payout", align: "center" },
 ]);
 
 const handleDateSelect = (value) => {
@@ -158,19 +132,48 @@ const handleDateSelect = (value) => {
     case "today":
       form.value.startDate = updateDate(0);
       form.value.endDate = updateDate(0);
+      getDownlineProfitSummary();
       break;
     case "yesterday":
       form.value.startDate = updateDate(1);
       form.value.endDate = updateDate(1);
+      getDownlineProfitSummary();
       break;
     case "7days":
       form.value.startDate = updateDate(7);
       form.value.endDate = updateDate(0);
+      getDownlineProfitSummary();
       break;
   }
 };
-const handleSubmit = () => {};
 
-onMounted(handleSubmit);
+
+const getDownlineProfitSummary = () => {
+  const { username, startDate, endDate } = form.value;
+
+  let url = `/session/downline-profit-summary?regTime=${startDate}&regTime=${endDate}`;
+
+  if (username) {
+    url = `/session/downline-profit-summary?loginName=${username}&regTime=${startDate}&regTime=${endDate}`;
+  }
+
+  api
+    .get(url)
+    .then((response) => {
+      if (response.code === 0) {
+        tableData.value = response.data.records;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+const handleSubmit = () => { getDownlineProfitSummary() };
+
+onMounted(() => {
+  getDownlineProfitSummary();
+});
+
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>

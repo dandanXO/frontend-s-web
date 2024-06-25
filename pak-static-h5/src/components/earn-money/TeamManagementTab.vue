@@ -8,7 +8,7 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.startDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
@@ -21,45 +21,29 @@
             <q-popup-proxy cover transition-show="scale" transition-hide="scale">
               <q-date v-model="form.endDate" mask="YYYY-MM-DD">
                 <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat />
+                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
                 </div>
               </q-date>
             </q-popup-proxy>
           </template>
         </q-input>
       </div>
-      <div class="search-field__radio-row">
-        <q-radio
-          v-for="(option, index) in downLineOptions"
-          v-model="selectedDownLine"
-          :key="index"
-          :val="option.value"
-          :label="option.label"
-        />
-      </div>
+      <!-- <div class="search-field__radio-row">
+        <q-radio v-for="(option, index) in downLineOptions" v-model="selectedDownLine" :key="index" :val="option.value"
+          :label="option.label" />
+      </div> -->
       <div class="search-field__input-with-btn">
-        <q-input
-          v-model="form.username"
-          borderless
-          :placeholder="$t('earnMoney.teamManagement.searchField.username.placeholder')"
-        />
-        <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
+        <q-input v-model="form.username" :placeholder="$t('earnMoney.teamManagement.searchField.username.placeholder')"
+          borderless />
+        <q-btn @click="handleSubmit" class="btn-primary btn-primary__full" no-caps unelevated>
           {{ $t("earnMoney.teamManagement.searchField.searchButton") }}
         </q-btn>
       </div>
     </div>
 
     <div class="result-table">
-      <q-table
-        flat
-        :hide-pagination="true"
-        :columns="tableHeaders"
-        :rows="tableData"
-        row-key="name"
-        :rows-per-page-options="[0]"
-        style="overflow-x: scroll"
-        class="monthly-deposit-table"
-      >
+      <q-table :columns="tableHeaders" :hide-pagination="true" :rows-per-page-options="[0]" :rows="tableData"
+        class="monthly-deposit-table" row-key="name" style="overflow-x: scroll" flat>
         <template v-slot:header>
           <q-tr class="top-header">
             <q-td v-for="(header, index) in tableHeaders" :key="index">
@@ -93,22 +77,13 @@ import moment from "moment";
 import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
 import { convertToCommaAmount } from "src/boot/utils";
+import { api } from "boot/axios";
+import { userStore } from "src/stores";
 
 const { t } = useI18n();
-
+const store = userStore();
 const selectedDownLine = ref("ALL");
-const tableData = ref(
-  Array(10).fill({
-    type: "23026",
-    username: "666666",
-    emark: "666666",
-    upLine: "-",
-    registrationDate: "2023-09-17 21:03",
-    balance: 1235,
-    lastLogin: "2023-09-17 21:03",
-    lastDeposit: "2023-09-17 21:03"
-  })
-);
+const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
@@ -123,10 +98,10 @@ const downLineOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("earnMoney.teamManagement.table.type"), name: "type", field: "type", align: "center" },
-  { label: t("earnMoney.teamManagement.table.username"), name: "username", field: "username", align: "center" },
-  { label: t("earnMoney.teamManagement.table.emark"), name: "emark", field: "emark", align: "center" },
-  { label: t("earnMoney.teamManagement.table.upLine"), name: "upLine", field: "upLine", align: "center" },
+  { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
+  { label: t("earnMoney.teamManagement.table.downlineMember"), name: "downlineMember", field: "downlineMember", align: "center" },
+  { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
+  { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
   {
     label: t("earnMoney.teamManagement.table.registrationDate"),
     name: "registrationDate",
@@ -135,11 +110,36 @@ const tableHeaders = computed(() => [
   },
   { label: t("earnMoney.teamManagement.table.balance"), name: "balance", field: "balance", align: "center" },
   { label: t("earnMoney.teamManagement.table.lastLogin"), name: "lastLogin", field: "lastLogin", align: "center" },
-  { label: t("earnMoney.teamManagement.table.lastDeposit"), name: "lastDeposit", field: "lastDeposit", align: "center" }
+  { label: t("earnMoney.teamManagement.table.lastDeposit"), name: "lastDeposit", field: "lastDeposit", align: "center" },
+  { label: t("earnMoney.teamManagement.table.uplineLoginName"), name: "uplineLoginName", field: "uplineLoginName", align: "center" }
 ]);
 
-const handleSubmit = () => {};
+const getDownlines = () => {
+  const { username, startDate, endDate } = form.value;
 
-onMounted(handleSubmit);
+  let url = `/session/downlines?regTime=${startDate}&regTime=${endDate}`;
+
+  if (username) {
+    url = `/session/downlines?loginName=${username}&regTime=${startDate}&regTime=${endDate}`;
+  }
+
+  api
+    .get(url)
+    // .get(`/session/downlines?loginName=${form.value.username}&regTime=${form.value.startDate}&regTime=${form.value.endDate}`)
+    .then((response) => {
+      if (response.code === 0) {
+        tableData.value = response.data.records
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}
+
+const handleSubmit = () => { getDownlines() };
+
+onMounted(() => {
+  getDownlines();
+});
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>
