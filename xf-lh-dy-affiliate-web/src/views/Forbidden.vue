@@ -1,17 +1,129 @@
 <template>
   <div class="forbidden-page">
-    <div class="content">
-      <h1>403</h1>
-      <h2>Forbidden</h2>
-      <p>Sorry, but you don't have permission to access this page.</p>
+    <div class="container bg">
+      <div class="decs1">
+        <div>
+          <span class="title1">ACCESS RESTRICTED</span>
+          <br>
+          <span class="title2">访问受到限制</span>
+        </div>
+        <br>
+        <div>
+          <span class="ip">
+            您的IP地址为:
+            <span id="data">{{ ipAddress }}</span>
+            <span class="ipLock">
+              <img
+                src="../assets/403-images/lock_icon.png"
+              >
+            </span>
+          </span>
+        </div>
+        <br>
+        <div>
+          <span class="ip">
+            您的URL域名为:
+            <span id="data1">{{ hostName }}</span>
+            <span class="ipLock">
+              <img
+                src="../assets/403-images/lock_icon.png"
+              >
+            </span>
+          </span>
+        </div>
+
+        <div>
+          <br>
+          <span class="highlight">
+            Date:
+            <span id="date">{{ formattedDate }}</span>
+          </span>
+          <br>
+          <span class="highlight">
+            Time:
+            <span id="time">{{ formattedTime }}</span>
+          </span>
+        </div>
+
+        <div class="back-text" @click="backtoMain">
+          Back to Main Page.<br>
+          返回主页面。
+        </div>
+        <div class="decs cn">
+          <p>
+            <b>
+              由于地区限制，您所尝试的网页无法打开。如果您有任何疑问，请联系我们的客服团队。
+            </b>
+          </p>
+        </div>
+        <b>
+          <hr>
+          <div class="decs en">
+            <p>
+              The location you are trying to access the website from is
+              currently restricted. If you have any concerns, please contact our
+              Customer Services.
+            </p>
+          </div>
+          <hr>
+          <div class="decs en">
+            <p>
+              Vị trí hiện tại của bạn đăng nhập vào trang web bị hạn chế. Nếu có
+              bất kỳ thắc mắc gì, xin vui lòng liên hệ Đội ngũ Chăm Sóc Khách
+              Hàng của chúng tôi.
+            </p>
+          </div>
+          <hr>
+          <div class="decs en">
+            <p>
+              Pelanggan terhormat.Sesuai dengan peraturan perundangan, situs
+              tujuan anda tidak dapat diakses. Jika Anda mengalami kendala,
+              Silahkan hubungi layanan pelanggan kami.
+            </p>
+          </div>
+          <hr>
+          <div class="decs en">
+            <p>
+              สถานที่ที่คุณพยายามเข้าถึงไซต์ถูก จำกัด ไว้ในขณะนี้ ถ้าคุณมี
+              หากคุณมีข้อสงสัยใดๆ กรุณาติดต่อฝ่ายบริการลูกค้าของเรา
+            </p>
+          </div>
+          <hr>
+          <div class="decs en">
+            <p>
+              La página que está intentando ver no está disponible en esta
+              localización. Disculpe las molestias causadas. Si lo desea puede
+              contactar con nuestro servicio de atención al cliente
+            </p>
+          </div>
+        </b>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Forbidden',
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const ipAddress = sessionStorage.getItem('myIPAddress');
+const backtoMain = () => {
+  router.push('/')
 }
+const hostName = window.location.hostname;
+// Get the current date
+const currentDateTime = new Date();
+
+const month = currentDateTime.getMonth() + 1; // Months are zero-indexed
+const day = currentDateTime.getDate();
+const year = currentDateTime.getFullYear();
+
+const hours = currentDateTime.getHours();
+const minutes = currentDateTime.getMinutes().toString().padStart(2, '0');
+const seconds = currentDateTime.getSeconds().toString().padStart(2, '0');
+
+const formattedDate = `${month}/${day}/${year}`;
+const formattedTime = `${hours}:${minutes}:${seconds}`;
+
 </script>
 
 <style scoped>
@@ -20,69 +132,274 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url('https://source.unsplash.com/random/1600x900') no-repeat
-    center center;
   background-size: cover;
   color: #fff;
   text-align: center;
   overflow: hidden;
+  background: url(../assets/403-images/bg.png) no-repeat center center;
+}
+.back-text {
+  background: #ff0000;
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 20px;
 }
 
-.content {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 40px;
-  border-radius: 10px;
-  animation: fadeIn 1s ease-in-out;
+p {
+  margin-bottom: 0;
+  width: 60%;
 }
 
-.content h1 {
-  font-size: 6em;
-  margin: 0;
-  color: #ff6f61;
-  animation: bounce 1s infinite;
+.icon {
+  /* background: url(../assets/403-images/stop_icon.png) no-repeat center center; */
+  background-size: contain;
+  width: 100%;
+  height: 400px;
+  position: relative;
 }
 
-.content h2 {
-  font-size: 2em;
-  margin: 10px 0;
+.bg {
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+    width: 95%;
+    text-align: center;
 }
 
-.content p {
-  font-size: 1.2em;
-  margin: 20px 0;
+.decs {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.content a {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
+.decs1 {
+  text-align: center;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3em;
+}
+
+.title1 {
+  font-size: 24px;
+  font-family: 'MontSerrat';
+  color: #464545;
+}
+
+.title2 {
+  font-size: 46px;
+  font-family: 'Microsoft Yahei';
+  font-weight: bold;
+  color: #464545;
+}
+
+.ip {
+  background-color: #333333;
   color: #fff;
-  background: #ff6f61;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background 0.3s ease;
+  margin: auto;
+  position: relative;
+  border-radius: 6px 0 0 6px;
+  padding: 10px 55px 10px 15px;
 }
 
-.content a:hover {
-  background: #ff4f41;
+.ipLock {
+  background-color: #ff0000;
+  color: #fff;
+  margin: auto;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 0 6px 6px 0;
+  margin-right: -65px;
+  margin-left: 20px;
+    img {
+       width: 14px;
+    }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+.en {
+  font-size: 14px;
+  font-family: 'MontSerrat';
+  font-weight: lighter;
+  color: #5e5f5f;
+}
+
+.cn {
+  font-size: 14px;
+  font-family: 'Microsoft Yahei';
+  font-weight: bold;
+  color: #5e5f5f;
+}
+
+.highlight {
+  color: #3a3a3a;
+  font-weight: bold;
+}
+
+@media (max-width: 1440px) {
+  body {
+    height: 768px;
   }
 }
 
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
+@media (max-width: 1039px) {
+  .bg {
+    top: 65%;
   }
-  50% {
-    transform: translateY(-10px);
+}
+
+@media (max-width: 1024px) {
+  body {
+    height: 768px;
+  }
+
+  .bg {
+    top: 53%;
+  }
+
+  .en {
+    font-size: 14px;
+    font-family: 'MontSerrat';
+    font-weight: lighter;
+    color: #5e5f5f;
+  }
+
+  .cn {
+    font-size: 14px;
+    font-family: 'Microsoft Yahei';
+    font-weight: lighter;
+    color: #5e5f5f;
+  }
+}
+
+/* Medium devices (tablets, 768px) */
+@media (max-width: 770px) {
+  .bg {
+    top: 50%;
+  }
+}
+
+@media (max-width: 812px) {
+  .bg {
+    top: 120%;
+  }
+
+  .en {
+    font-size: 16px;
+  }
+
+  .cn {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bg {
+    top: 115%;
+  }
+
+  p {
+    width: 100%;
+  }
+}
+
+@media (max-width: 667px) {
+  .bg {
+    top: 120%;
+  }
+
+  .en {
+    font-size: 14px;
+  }
+
+  .cn {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 568px) {
+  .bg {
+    top: 130%;
+  }
+}
+
+@media (max-width: 540px) {
+  .bg {
+    top: 55%;
+  }
+}
+
+/* Medium devices (tablets, 768px) */
+@media (max-width: 480px) {
+  body {
+    height: 750px;
+  }
+
+  .bg {
+    top: 60%;
+  }
+
+  p {
+    width: 100%;
+  }
+
+  .title1 {
+    font-size: 20px;
+  }
+
+  .title2 {
+    font-size: 38px;
+  }
+
+  .decs1 {
+    margin-bottom: 2em;
+  }
+
+  .ipLock img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 375px) {
+  body {
+    height: 670px;
+  }
+
+  .bg {
+    top: 70%;
+  }
+
+  .ip {
+    padding: 10px 18px;
+    margin-left: -45px;
+  }
+}
+
+@media (max-width: 320px) {
+  .bg {
+    top: 85%;
+  }
+
+  .title1 {
+    font-size: 18px;
+  }
+
+  .title2 {
+    font-size: 34px;
+  }
+
+  .ip {
+    font-size: 11px;
+  }
+
+  .ipLock {
+    padding: 7px 15px;
+    top: 2px;
   }
 }
 </style>

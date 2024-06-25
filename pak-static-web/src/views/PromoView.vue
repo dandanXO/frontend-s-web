@@ -6,7 +6,7 @@
         <div class="promo-bg isMobile" :style="'background-image: url(' + imgURL + banner.mobileImageUrl + ')'" />
       </div>
       <div class="promo-main-container">
-        <div class="promo-type-wrapper" style="display: none">
+        <div class="promo-type-wrapper">
           <div class="type-list">
             <div
               v-for="p in promoTypes"
@@ -15,10 +15,11 @@
               :class="{ active: p.value === promoTabActive }"
               @click="switchPromoType(p)"
             >
-              <RiFunctionLine v-if="p && p.value === 'ALL'" />
+              <!-- <RiFunctionLine v-if="p && p.value === 'ALL'" />
               <template v-else>
                 {{ p.label }}
-              </template>
+                </template> -->
+                {{ $t(p.label)}}
             </div>
           </div>
         </div>
@@ -91,6 +92,7 @@ import { RiFunctionLine } from 'vue-remix-icons'
 import { loadPromo } from "@/api/index/promo.js";
 import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store"
+import { useI18n } from "vue-i18n";
 
 import HotPromotion from '@/components/HotPromotion'
 export default defineComponent({
@@ -100,19 +102,49 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const { t } = useI18n();
     const store = userStore()
     const imgURL = process.env.VUE_APP_IMAGE_CDN + '/promo/';
     const banner = ref([]);
     const promoState = reactive({
-      active: { value:'ALL', label:'ALL'},
+      active: { value:'ALL', label: t('promo.all')},
       promoList: [],
     });
     const isSpecialPromo = ref(false);
     const isSpecialPromoBanner = ref(false);
-    const promoTypes = ref([
-      { value: "ALL", label:"ALL"},
-      { value: "WELCOME", label:"WELCOME"},
-      { value: "VIP", label:"VIP"},
+    const promoTypes = ref([  
+      {
+        value: "ALL",
+        label: 'promo.all',
+      },
+      {
+        value: "EARN",
+        label: 'promo.earn'
+      },
+      {
+        value: "HOT",
+        label: 'promo.hot'
+      },
+      {
+        value: "NEW USER",
+        label: 'promo.new_user'
+      },
+      {
+        value: "SPORTS",
+        label: 'promo.sports'
+      },
+      {
+        value: "LIVE",
+        label: 'promo.live'
+      },
+      {
+        value: "SLOT",
+        label: 'promo.slot'
+      },
+      {
+        value: "VIP",
+        label: 'promo.vip'
+      }
       // { value: "SPORT", label:"SPORT"},
       // { value: "LIVE CASINO", label:"LIVE CASINO"},
       // { value: "SLOT", label:"SLOT"},
@@ -274,22 +306,20 @@ export default defineComponent({
       margin-right: auto;
       .promo-type-wrapper {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         // border-bottom: 4px solid rgb(255 255 255 / 15%);
+        border-bottom: 3px solid #FFFFFF0D;
         .type-list {
           display: flex;
           justify-content: center;
           align-items: center;
-          border-radius: 20px;
           overflow: hidden;
           gap: 20px;
-          padding: 1rem 0.2em;
+          padding: 1rem 0.2em 0;
           overflow: auto;
           .type-item {
             padding: 5px 10px;
             cursor: pointer;
-            border-radius: 20px;
-            box-shadow: 0 0 10px -3px #000000;
             white-space: nowrap;
 
             svg {
@@ -303,8 +333,23 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
+              // background: linear-gradient(270deg, #5800e8 0%, #0062e8 100%);
               color: #fff;
+              display: flex;
+              flex-direction: column;
+              position: relative;
+              &:after {
+                content: "";
+                background: #70BC62;
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                border-radius: 4px;
+                left: 0;
+
+              }
+
 
               img {
                 filter: grayscale(0);

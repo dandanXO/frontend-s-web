@@ -1,7 +1,15 @@
 <template>
   <div class="main-section">
+
+    <q-ajax-bar ref="ajaxBarRef" position="top" size="5px" skip-hijack
+      style="background:linear-gradient(320.55deg, #0286FF 0.35%, #00FF85 99.65%)" />
+
     <LangToggle />
 
+    <q-page-sticky position="bottom-right" :offset="[40, 130]" style="z-index:999999" class="telegram-sticky floating">
+      <a href="https://t.me/city88888" target="_blank">
+        <img src="../assets/images/index/telegram-icon.png" class="telegram-sticky-img"></a>
+    </q-page-sticky>
     <RollingText />
 
     <JackpotPrize />
@@ -14,8 +22,7 @@
       <q-carousel-slide name="live" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class=" game-list">
-            <GameItem :games="liveCasinoGames" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
-              :onClickGameItem="openGame" />
+            <GameItem :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
           </div>
         </div>
       </q-carousel-slide>
@@ -23,12 +30,10 @@
         <div class="game-list-wrapper">
           <!-- slot start -->
           <div class="game-list" v-if="!isShow">
-            <GameItem :games="platforms" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
-              :onClickGameItem="selectSlotPlat" />
+            <GameItem :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat" />
           </div>
 
-          <div class="game-scroll-lists" id="id-slot-board" v-if="isShow" :gameType="currentSelectedMenu"
-            :gameItemLoad="gameItemLoad">
+          <div class="game-scroll-lists" id="id-slot-board" v-if="isShow" :gameType="currentSelectedMenu">
             <q-scroll-area style="height: 500px"
               :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'">
               <div class="bookmarks">
@@ -98,21 +103,18 @@
       <q-carousel-slide name="sport" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class="game-list">
-            <GameItem :games="esportPlatform" :gameType="'esport'" :gameItemLoad="gameItemLoad"
-              :onClickGameItem="openGame" />
-            <GameItem :games="sportPlatform" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
-              :onClickGameItem="openGame" />
+            <GameItem :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame" />
+            <GameItem :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="casual" class="column no-wrap flex-center">
         <div class="game-list" v-if="!isShow">
-          <GameItem :games="platformMinigame" :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad"
-            :onClickGameItem="selectCasualPlat" />
+          <GameItem :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat" />
         </div>
         <!-- cq9 start -->
         <div class="game-scroll-lists" id="id-slot-board" v-if="isShow && selectedPlat.code === 'CQ9'"
-          :gameType="currentSelectedMenu" :gameItemLoad="gameItemLoad">
+          :gameType="currentSelectedMenu">
           <q-scroll-area style="height: 500px"
             :style="!$q.screen.gt.sm ? 'width: 80px; max-width: 80px' : 'width: 120px; max-width: 120px'">
             <div class="bookmarks">
@@ -218,9 +220,10 @@
 
 <script>
 /* eslint-disable */
+import { debounce } from 'quasar'
 import { defineComponent, onMounted, ref, reactive, computed, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { api, eventapi } from "boot/axios";
+import { useRouter } from "vue-router";
+import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -232,17 +235,13 @@ import AnnouncementList from "components/home/AnnouncementList.vue";
 import orderBy from "lodash/orderBy";
 import findIndex from "lodash/findIndex";
 import remove from "lodash/remove";
-import MarqueeText from "vue-marquee-text-component";
 import BacktoTop from "components/backtotop.vue";
-import { Vue3Marquee } from "vue3-marquee";
-import { RiStarLine, RiStarFill } from "vue-remix-icons";
 
 import { useUI } from "stores/ui";
 import { isMobile } from "boot/utils";
 import { App } from "@capacitor/app";
 import qs from "qs";
 import { useI18n } from "vue-i18n";
-import moment from "moment";
 import MinigamesGrid from 'components/game/MinigamesGrid';
 import LangToggle from "src/components/LangToggle.vue";
 import RollingText from "src/components/home/RollingText.vue";
@@ -252,11 +251,7 @@ export default defineComponent({
   name: "IndexPage",
   components: {
     GameModal,
-    MarqueeText,
     BacktoTop,
-    Vue3Marquee,
-    RiStarLine,
-    RiStarFill,
     GameItem,
     GameCategory,
     MinigamesGrid,
@@ -267,32 +262,17 @@ export default defineComponent({
     AnnouncementList
   },
   setup() {
+    const ajaxBarRef = ref(null)
     const $q = useQuasar();
     const { t } = useI18n();
     const ui = useUI();
     const siteId = process.env.SITEID;
-    const specialInviteBonusEligible = ref(false);
-    const specialInviteBonusAmt = ref(0);
-    const specialInviteBonusPopupVisible = ref(false);
-    const banners = ref([]);
 
     const gameBoardRef = ref();
     const gameBoardItemRef = ref();
 
     const router = useRouter();
     const store = userStore();
-
-    const showSticky = ref(true);
-    const checkSticky = () => {
-      const stickyOff = localStorage.getItem("LINE_STICKY_OFF");
-      if (stickyOff === "true") {
-        showSticky.value = false;
-      }
-    };
-    const closeLineSticky = () => {
-      showSticky.value = false;
-      localStorage.setItem("LINE_STICKY_OFF", "true");
-    };
 
     const mainWallet = computed(() => {
       return store.balance;
@@ -301,7 +281,8 @@ export default defineComponent({
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
-    const openGame = (p) => {
+    const openGame = debounce((p) => {
+      ajaxBarRef.value.start();
       // debugger;
       console.log(p);
       const gameType = p.gameType;
@@ -317,8 +298,13 @@ export default defineComponent({
         gameCode = 101;
       }
 
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
-    };
+
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
+    }, 500);
 
     const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
       gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
@@ -377,23 +363,6 @@ export default defineComponent({
       }
     ]);
 
-    function loadData() {
-      api
-        .get("/promo/banner?category=HOME")
-        .then((res) => {
-          if (res.data.code === 0) {
-            //
-            if (res.data.data.length > 0) {
-              banners.value = res.data.data;
-            } else {
-            }
-          } else {
-          }
-        })
-        .catch(() => {
-        });
-    }
-
     const platforms = ref([]);
 
     const selectedPlatId = ref();
@@ -432,50 +401,9 @@ export default defineComponent({
       // { name: "fish", label: "낚시 게임" }
     ];
 
-    const gameItemLoad = ref(false);
-
     const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
-      gameItemLoad.value = true;
-
-      setTimeout(() => {
-        gameItemLoad.value = false;
-      }, 2500);
-
       currentSelectedMenu.value = menu;
-      isShow.value = false;
-
-      // platforms.value = platforms.value.reverse();
-
-      const containerWidth = gameBoardRef.value.clientWidth;
-
-      const item = gameBoardItemRef.value[index];
-      const itemLeft = item.offsetLeft;
-      const itemWidth = item.clientWidth;
-
-      const scrollPosition = gameBoardRef.value.scrollLeft;
-
-      /**
-       * scrollLeft (scrollPosition) & offsetLeft (itemLeft) originated from left
-       * no complex calculation for left is normal
-       */
-      let toLeft = 0;
-      let isEdgeItem = false;
-
-      const moveAmount = containerWidth / 2;
-      const leftOffset = 30;
-
-      const rightCal = itemLeft - scrollPosition;
-      const rightEdge = containerWidth - itemWidth;
-      if (rightCal >= rightEdge) {
-        isEdgeItem = true;
-        toLeft = scrollPosition + moveAmount;
-      } else if (itemLeft <= scrollPosition + leftOffset) {
-        isEdgeItem = true;
-        toLeft = scrollPosition - moveAmount;
-      }
-
-      if (isEdgeItem) gameBoardRef.value.scrollTo({ left: toLeft, behavior: "smooth" });
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {
@@ -689,21 +617,12 @@ export default defineComponent({
         .catch((err) => { });
     };
 
-    // const announcementList = ref([]);
     const announcementTypes = ref([]);
 
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
-    const isStationNotice = ref(false);
     const noticeTitle = ref("");
     const activeKey = ref(null);
-    const openPopup = (noticeType) => {
-      // router.push("/?page=personal/messages");
-      // if (noticeType) {
-      //   noticeTitle.value = "Announcement";
-      //   isStationNotice.value = true;
-      // }
-    };
 
     const isShowBtt = ref(false);
     const scrollPosition = ref(0);
@@ -712,29 +631,6 @@ export default defineComponent({
       if (e.position.top > 400) {
         isShowBtt.value = true;
       }
-    };
-    const gotoPromo = (banner) => {
-      if (banner === 0) {
-        router.push(`/promo`);
-        return;
-      } else if (banner.promoPageId) {
-        router.push({ path: "/promo", query: { id: banner.promoPageId } });
-      } else if (banner.redirectUrl) {
-        if (banner.redirectUrl.startsWith("promo/")) {
-          const promoId = banner.redirectUrl.substring(6);
-          router.push({ path: "/promo", query: { id: promoId } });
-        } else if (banner.redirectUrl.startsWith("open/")) {
-          const parts = banner.redirectUrl.split("/");
-          if (parts.length === 5) {
-            const gameName = parts[1];
-            const platformCode = parts[2];
-            const gameCode = parts[3];
-            const status = parts[4];
-            gameModalRef.value.open(gameName, platformCode, gameCode, status);
-          }
-        }
-      }
-      // router.push(`/promo`);
     };
 
     // isH5 -- platform checker
@@ -849,56 +745,11 @@ export default defineComponent({
       // console.log(target)
     };
 
-    // const checkRedeemSpecialInviteBonusEligiblity = () => {
-    //   if (store.hasToken()) {
-    //     eventapi
-    //       .get("/privi/telephone/canRedeem", {
-    //         params: {
-    //           promoCode: "special-invitation-bonus"
-    //         }
-    //       })
-    //       .then((res) => {
-    //         if (res.data.data === true) {
-    //           specialInviteBonusEligible.value = true;
-    //         }
-    //       });
-    //   }
-    // };
-
-    const redeemSpecialInviteBonus = () => {
-      eventapi
-        .get("/privi/telephone/redeem", {
-          params: {
-            promoCode: "special-invitation-bonus"
-          }
-        })
-        .then((res) => {
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.success"),
-            icon: "check_circle_outline"
-          });
-
-          specialInviteBonusAmt.value = res.data.data;
-          toggleSpecialInviteBonusPopup(true);
-        });
-    };
-
-    const toggleSpecialInviteBonusPopup = (status) => {
-      if (status === false) {
-        specialInviteBonusEligible.value = false;
-      }
-
-      specialInviteBonusPopupVisible.value = status;
-    };
-
     onMounted(() => {
       checkPlatform();
       loadHomePromoPopup();
       loadHomeData();
       getVersionNo();
-      checkSticky();
     });
 
     const popupInterval = ref(null);
@@ -988,11 +839,11 @@ export default defineComponent({
     };
 
     return {
+      ajaxBarRef,
       imageLoading,
       slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       gameImgURL: process.env.IMAGE_CDN + "/game/",
-      banners,
       gameBoardRef,
       gameBoardItemRef,
       gameBoardItemData,
@@ -1052,41 +903,22 @@ export default defineComponent({
       openSlotGame,
       openFavGame,
       scrollPageRef,
-      isStationNotice,
-      closeLineSticky,
-      showSticky,
       isHomePromoModal,
-      openPopup,
       noticeTitle,
       announcementTypes,
       activeKey,
-      gotoPromo,
       router,
       isAppUpdateModal,
       isH5,
       openDownloadPage,
       cancelUpdate,
       favGamesList,
-      sortedFavGamesList,
-      specialInviteBonusEligible,
-      specialInviteBonusPopupVisible,
-      redeemSpecialInviteBonus,
-      toggleSpecialInviteBonusPopup,
-      gameItemLoad
+      sortedFavGamesList
     };
   }
 });
 </script>
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Bungee&display=swap");
-
-.home-decor-flower,
-.home-decor-bike,
-.home-decor-bike-2,
-.home-decor-tree {
-  display: none;
-}
-
 .slot-grid,
 .fish-grid {
   display: grid;
@@ -1638,38 +1470,6 @@ export default defineComponent({
 
   .main-section {
     background-repeat: repeat-x;
-
-    .home-decor-flower,
-    .home-decor-bike,
-    .home-decor-bike-2,
-    .home-decor-tree {
-      display: block;
-      position: absolute;
-    }
-
-    .home-decor-flower {
-      left: 0px;
-      top: 15%;
-      width: 100px;
-    }
-
-    .home-decor-bike {
-      left: 0px;
-      bottom: 92px;
-      width: 80px;
-    }
-
-    .home-decor-tree {
-      right: 0px;
-      bottom: 65px;
-      width: 80px;
-    }
-
-    .home-decor-bike-2 {
-      right: 80px;
-      bottom: 85px;
-      width: 80px;
-    }
   }
 
   .game-grid-lists {
@@ -1679,11 +1479,6 @@ export default defineComponent({
   .slot-grid,
   .fish-grid {
     grid-template-columns: repeat(6, 1fr);
-  }
-
-  .grid {
-    // grid-template-columns: repeat(6, 1fr);
-    // grid-template-rows: repeat(1, 1fr);
   }
 
   .game-grid-lists {
@@ -1707,10 +1502,6 @@ export default defineComponent({
       }
     }
   }
-
-  //#id-live-board {
-  //  grid-template-columns: repeat(4, 1fr);
-  //}
 
   #id-casual-board {
     grid-template-columns: repeat(4, 1fr);
@@ -2151,7 +1942,7 @@ export default defineComponent({
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  padding: 20px;
+  // padding: 20px;
   width: 100%;
 
   @media (max-width: 769px) {

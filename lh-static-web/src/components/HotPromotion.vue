@@ -9,6 +9,7 @@
     <InviteFriendPromo v-if="list.redirectUrl === 'lh1-invitefriend' && !isCommonPromo" />
     <EsportSafetyPromo v-if="list.redirectUrl === 'lh1-esport-safety' && !isCommonPromo" />
     <SportSafetyPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-sport-safety'" />
+    <MeiZhouBeiPromo v-if="list.redirectUrl === 'lh1meizhoubei' && !isCommonPromo" />
     <PredictionMatchPromo v-if="list.redirectUrl === 'lh1-s13-vote' && !isCommonPromo" />
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
     <NbaGamePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" />
@@ -117,6 +118,7 @@ import { claimBonusItem, submitLuckyNumber, luckyNumberList, winnerList } from "
 import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import TigerCardPromo from "../components/hotpromo/tigercard/tigerCardPromo.vue";
 import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
+import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue"
 // import PrizePoolVotePromo from "../components/hotpromo/prizePoolVote/prizePoolVotePromo.vue";
 import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
 import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
@@ -219,8 +221,8 @@ export default defineComponent({
     DuanWuJiePromo,
     DepositRebates,
     HongBaoPreEurocup,
-    WinLossPromo
-    // DailyBonus
+    WinLossPromo,
+    MeiZhouBeiPromo
   },
   props: {
     list: {
@@ -509,7 +511,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh-duanwujie24"||
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh1-deposit-rebates" ||
-      this.list.redirectUrl === "lh1-eurocup-guess"
+      this.list.redirectUrl === "lh1-eurocup-guess" ||
+      this.list.redirectUrl === "lh1meizhoubei"
     ) {
       this.isCommonPromo = false;
     } else {

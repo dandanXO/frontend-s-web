@@ -106,6 +106,7 @@
               </tr>
             </tbody>
           </table>
+          <div class="table-note">注：相同时间段比赛则以两场比赛总进球粒数派发红包雨</div>
         </div>
       </div>
     </div>
@@ -601,6 +602,13 @@ onMounted(() => {
   &:hover {
     filter: brightness(0.9);
   }
+}
+
+.table-note {
+  padding: 0;
+  margin:10px 0;
+  text-align: left;
+  color: #fcc939;
 }
 </style>
 

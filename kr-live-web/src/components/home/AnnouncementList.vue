@@ -58,9 +58,10 @@ const loadAnnouncement = () => {
 </script>
 
 <style lang="scss" scoped>
-.news-section {
-    margin-top: 20px;
-    padding: 0 16px;
+.news-section {    
+    max-width: 1400px;
+    width: 95%;
+    margin: 20px auto;
 }
 
 .news-split {

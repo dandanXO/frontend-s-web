@@ -122,21 +122,9 @@ export default {
     date_picker_nov: "11월",
     date_picker_december: "십이월",
     date_picker_dec: "12월",
-    date_picker_close: "닫다",
-    date_picker_confirm: "확인하다",
+    date_picker_close: "닫기",
+    date_picker_confirm: "설정",
     // transaction record end
-    // withdraw start
-    withdraw_method: "출금방법",
-    withdraw_bank: "개설 은행",
-    withdraw_bank_choose: "선택하세요",
-    withdraw_bank_num: "은행 카드 번호",
-    withdraw_bank_num_choose: "은행 카드 번호를 입력하세요",
-    withdraw_bank_holder: "카드 계좌",
-    withdraw_bank_address: "카드 주소",
-    withdraw_bank_address_placeholder: "계좌 개설 은행 주소를",
-    withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
-    withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
-    // withdraw end
     // announcement start
     announcement_no_selected: "선택하지 않음",
     announcement_total: "총",
@@ -159,37 +147,77 @@ export default {
     feedback_compose_confirm: "확인",
     feedback_previous_page: "전 페이지로 이동",
     // feedback end
+    // message start
+    message_loading_content: "콘텐츠 로드 중...",
+    message_unread: "읽히지 않는",
+    message_read: "읽었다",
+    message_read_at: "에서 읽다",
+    message_compose: "글쓰기",
+    message_title: "제목",
+    message_title_placeholder: "제목 입력해주세요",
+    message_cannot_be_empty: "비워둘 수 없습니다",
+    message_content: "내용",
+    message_compose_confirm: "확인",
+    message_previous_page: "전 페이지로 이동",
+    message_type_announcement: "발표",
+    message_type_notification: "공고",
+    message_type_activity: "활동",
+    message_type_payment: "지불",
+    message_type_all: "모두",
+    message_type_outbox: "보낸 문의함",
+    // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
     deposit_reminder: "알림",
-    deposit_reminder_caption: "입금 전 꼭 읽어주세요",
+    deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 ?0,000원 이상 만원 단위로만 가능합니다.
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
 
     ※주의사항
     충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
     금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
 
     ※가상계좌 점검시간 안내
-    23:50 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
+    23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
-    withdraw_bank_card: "환전 은행카드 선택",
     withdraw_withdraw_amount: "출금금액",
     withdraw_withdraw_password: "출금 비밀번호",
     withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
     withdraw_reminder_text: `본인명의 이외 타명의 계좌로는 출금 처리가 불가합니다.
     출금 최소 금액은 50,000원 이상 만원 단위로만 가능합니다.
     회원님의 환전을 진심으로 축하드리며, 항시 좋은날만 가득하시길 소망합니다.`,
+    withdraw_method: "출금방법",
+    withdraw_bank: "개설 은행",
+    withdraw_bank_choose: "선택하세요",
+    withdraw_bank_num: "은행 카드 번호",
+    withdraw_bank_num_choose: "은행 카드 번호를 입력하세요",
+    withdraw_bank_holder: "카드 계좌",
+    withdraw_bank_address: "카드 주소",
+    withdraw_bank_address_placeholder: "계좌 개설 은행 주소를",
+    withdraw_bank_holder_cannot_amend: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    withdraw_bank_holder_mismatch: "결제자 이름은 수정이 불가능하며, 등록된 이름과 일치해야 합니다",
+    withdraw_virtual_currency: "가상 화폐",
+    withdraw_virtual_wallet: "가상 지갑",
+    withdraw_bank_card: "은행 카드",
+    withdraw_please_select_wallet: "가상 지갑을 선택해주세요",
+    withdraw_please_select_bank_card: "은행카드를 선택해주세요",
+    withdraw_no_card_available: "사용할 수 있는 것이 없습니다",
+    withdraw_link_virtual_wallet: "가상 지갑 연결",
+    withdraw_link_bank_card: "링크 은행 카드",
+    withdraw_withdraw_amount_per_item:  "출금금액/건",
+    withdraw_withdraw_amount_per_day: "출금금액/일",
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
     personal_real_name: "실명",
     personal_id: "아이디",
-    personal_phone: "전화",
+    personal_phone: "전화번호",
+    personal_close_btn: "닫기",
+    personal_update_btn: "확인",
     // personal end
     // password start
     password_existing_password: "기존 비밀번호",
@@ -419,7 +447,6 @@ export default {
     no_message_selected: "There are no messages selected.",
     enter_information: "Please Enter Message",
     max_length_500: "Maximum Length 500",
-    message_cannot_be_empty: "Message cannot be empty.",
     no_message_at_moment: "No Message.",
     success: "성공",
     home_page: "Home",
@@ -505,8 +532,8 @@ export default {
     payment_on_going: "이체 진행 중",
     automatic_payment: "자동 지급",
     suspend: "일시 중단",
-    pending: "보류 중",
-    supplement_success: "보충 성공",
+    pending: "대기중",
+    supplement_success: "승인완료",
 
     // WithdrawBankView
     choose_a_card: "Choose a card",
@@ -536,7 +563,7 @@ export default {
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
     ok_btn: "Okay",
-    close_btn: "Close",
+    close_btn: "닫기",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
     old_password: "Old Password",
@@ -691,6 +718,25 @@ export default {
     participate: "Participate",
     sent_success: "Sent Successfully"
   },
+  status: {
+    pending: "대기중",
+    closed: "승인거절",
+    supplement_success: "승인완료",
+    success: "승인완료",
+    applying: "승인대기",
+    reject: "승인거절",
+    under_review: "검토중",
+    to_be_paid: "승인예정",
+    payment_on_going: "지불대기",
+    paying: "지불대기",
+    automatic_payment: "지불대기",
+    sending: "지불대기",
+    waiting_callback: "지불대기",
+    close_btn: "승인거절",
+    fail: "승인거절",
+    suspend: "승인대기",
+    waiting_auto_payment: "자동지불대기",
+  },
   error: {
       101: "플랫폼을 찾을 수 없음",
       102: "플랫폼이 닫혀 있음",
@@ -756,6 +802,7 @@ export default {
       14003: "제휴 코드를 찾을 수 없음",
       15201: "잘못된 이전 코드",
       15202: "새 코드가 이전 코드와 일치해야 함",
+      15206: "중복된 닉네임입니다",
       21000: "이 게임은 이미 즐겨찾기 목록에 있음",
       24001: "출석 기록이 이미 존재함",
       24002: "동일한 IP가 감지됨",

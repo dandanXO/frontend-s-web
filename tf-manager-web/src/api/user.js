@@ -9,6 +9,10 @@ export const indLoginRequest = (userInfo) => {
   return https().request("/auth/indLogin", Method.POST, userInfo, ContentType.form);
 };
 
+export const pakLoginRequest = (userInfo) => {
+  return https().request("/auth/pakLogin", Method.POST, userInfo, ContentType.form);
+};
+
 export const logoutRequest = () => {
   return https().request("/auth?_method=DELETE", Method.POST);
 };

@@ -28,7 +28,6 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
-    const pageModalRef = ref(null);
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -67,7 +66,7 @@ export default defineComponent({
 
       csclient.set("design", {
         bottom: "40px",
-        right: "40px",
+        right: "20px",
         icon: require("assets/images/index/cs-icon.png")
       });
 
@@ -94,43 +93,8 @@ export default defineComponent({
       });
     };
 
-    // const getCSA = () => {
-    //   cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
-    //     return res
-    //   })).then((data) => {
-    //     // console.log("here");
-    //     // console.log(data);
-    //     const url = new URL(data);
-    //     CSAUrl = url.hostname;
-    //     initCsWeb();
-    //     console.log(CSAUrl)
-    //   }).catch((err) => {
-    //     console.log(err);
-    //     CSAUrl = "csweb01.c8nhwrqx4.com";
-    //   });
-    // };
-
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
-    };
-
-    const initListenApp = () => {
-      App.addListener("appUrlOpen", function (event) {
-        // Example url: https://beerswift.app/tabs/tabs2
-        // slug = /tabs/tabs2
-        const slug = event.url.split(".com").pop();
-
-        // alert(slug);
-        console.log(slug);
-        // We only push to the route if there is a slug present
-        if (slug) {
-          // alert("GO");
-          // alert(slug);
-          router.push({
-            path: slug
-          });
-        }
-      });
     };
 
     const checkAgentFrom = () => {
@@ -183,23 +147,6 @@ export default defineComponent({
       initCsWeb();
       initStorage();
       checkAgentFrom();
-      // initListenApp();
-      // getCSA();
-
-      setInterval(function () {
-        // console.log("Get Balance")
-        if (store.hasToken()) {
-          store.getBalance();
-        }
-      }, 20000);
-
-      window.addEventListener('offline', () => {
-        store.isOffline = true;
-      });
-
-      window.addEventListener('online', () => {
-        store.isOffline = false;
-      });
 
       document.addEventListener(
         "deviceready",

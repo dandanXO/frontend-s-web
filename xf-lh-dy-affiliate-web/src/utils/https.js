@@ -52,6 +52,7 @@ const onResponse = (response) => {
     const store = useStore()
     const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
+      sessionStorage.setItem('myIPAddress', res.data)
       router.push('/403');
       return;
     }
@@ -175,7 +176,7 @@ const https = (api) => {
   console.log(currentHost)
   const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
   //Only Global or China.
-  if (currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf("-cn") > -1 ) {
+  if (currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf("-cn") > -1 || isLocalhost) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
   } else {
     apiUrl = isAff ? process.env.VUE_APP_GLOBAL_RST_API : (isCr ? process.env.VUE_APP_GLOBAL_CR_API : process.env.VUE_APP_GLOBAL_AFF_API)

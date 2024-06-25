@@ -686,7 +686,8 @@ export default {
     validateAppNameRequired: '应用名必填',
     validateAppIconRequired: '应用图标必填',
     validateShareRatioFormat: '佣金比例必须介于 0 至 1 之间',
-    depositShouldBetween: '存入金额介于 '
+    depositShouldBetween: '存入金额介于 ',
+    requiredPositiveInteger: "金额应为正数",
   },
   menu: {
     undefined: '',
@@ -833,5 +834,7 @@ export default {
     11011: '上级游戏佣金未设置',
     11012: '上级游戏佣金未设置: ',
     11013: '下级佣金比例不能大于上级',
+    14012: '只能创建比自己低的代理等级',
+    14013: '此代理已有下线，不能编辑更低的代理等级',
   },
 }
