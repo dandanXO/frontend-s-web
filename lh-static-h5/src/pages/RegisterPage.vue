@@ -625,6 +625,12 @@ function charType(num) {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
     background-size: 100% auto;
   }
+  .common-large-btn {
+    background: linear-gradient(180deg, #36CBD5 0%, #1D809A 100%);
+  }
+  .common-large-white-btn {
+    color: $white;
+  }
 }
 
 .input-icon-label-wrapper {

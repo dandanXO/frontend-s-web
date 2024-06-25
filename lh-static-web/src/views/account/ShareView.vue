@@ -409,6 +409,9 @@ export default defineComponent({
 
       p {
         color: $font-3-dark;
+        .number {
+          color: $active-color-dark;
+        }
       }
 
       .share-input {
@@ -424,6 +427,7 @@ export default defineComponent({
           box-shadow: none;
           background-color: $background-content-block-lighter-dark;
           border: none;
+          color: $active-color-dark;
         }
       }
     }

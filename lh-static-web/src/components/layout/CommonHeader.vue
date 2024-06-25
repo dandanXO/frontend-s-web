@@ -142,31 +142,31 @@
             <template #dropdown>
               <el-dropdown-menu class="profile-info-dropdown-content">
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
+                  <div class="profile-info-dropdown-content-item" >
+                    <img :src="loadIcon('personal')" />
                     <span>个人信息</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
+                  <div class="profile-info-dropdown-content-item" >
+                    <img :src="loadIcon('deposit')" />
                     <span>充值中心</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
+                  <div class="profile-info-dropdown-content-item" >
+                    <img :src="loadIcon('transfer')" />
                     <span>快速转账</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; margin: auto">
-                    <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
+                  <div class="profile-info-dropdown-content-item" >
+                    <img :src="loadIcon('promo')" />
                     <span>优惠领取</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">退出登录</button>
+                  <button class="standard-button profile-info-dropdown-content-item btn-color-white">退出登录</button>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </template>
@@ -188,8 +188,8 @@
                   <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
                 </span>
               </div>
-              <el-icon>
-                <RiRefreshLine color="#468CFF" />
+              <el-icon class="reload-btn">
+                <RiRefreshLine />
               </el-icon>
             </a>
           </div>
@@ -1434,6 +1434,18 @@ export default defineComponent({
       router.push(path);
     };
 
+    const loadIcon = (name) => {
+      if(isDark.value) {
+        try {
+          return require(`@/assets/images/home/header-dropdown-${name}-icon-dark.png`)
+        }catch(error) {
+          return require(`@/assets/images/home/header-dropdown-${name}-icon.png`)
+        }
+      } else {
+        return require(`@/assets/images/home/header-dropdown-${name}-icon.png`)
+      }
+    }
+
     return {
       token,
       el,
@@ -1506,7 +1518,8 @@ export default defineComponent({
       timestamp,
       openMiniGame,
       navigations,
-      checkToken
+      checkToken,
+      loadIcon
     };
   }
 });
@@ -1641,6 +1654,28 @@ body {
         margin-right: 0.5rem;
         white-space: nowrap;
       }
+
+      .reload-btn {
+        fill: #468CFF;
+      }
+    }
+  }
+}
+
+.profile-info-dropdown-content {
+  .profile-info-dropdown-content-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #a8b5c3;
+    margin: auto;
+
+    img {
+      max-width: 33px;
+    }
+
+    &.standard-button {
+      color: #468cff;
     }
   }
 }
@@ -2623,6 +2658,8 @@ body {
 
 .dark {
   .acc-dialog.el-dialog {
+    --el-dialog-bg-color: linear-gradient(180deg, #191B27 0%, #0A0C16 100%);
+
     .el-dialog__header {
       .el-dialog__close {
         color: $color-white !important;
@@ -2644,35 +2681,85 @@ body {
       box-shadow: $shadow-header-dark;
       .top-nav-inner {
         .navigations {
-          a {
-            color: $font-1-dark;
+          .header-menu-item {
+            color: $font-4-dark;
+            &.active {
+              .nav-title {
+                color: $active-color-dark;
+              }
+              &::after{
+                background: $active-color-dark;
+              }
+            }
+            > a {
+              .nav-title {
+                color: #7A91A1;
+              }
+              &:hover {
+                .nav-title {
+                  color: $active-color-dark;
+                }
+              }
+            }
           }
 
           .sub-menu {
             background: $background-content-block-dark;
             box-shadow: 0px -8px 8px 0px #1f2836 inset, 0px 4px 0px 0px #142b41;
           }
-        }
-      }
-    }
-  }
 
-  .header-menu-item {
-    .nav-title {
-      color: $font-4-dark;
-      &.active {
-        color: $color-white;
+          &.second-nav {
+            > a {
+              color: $font-3-dark;
+              .hover-icon {
+                filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg) brightness(92%) contrast(82%);
+              }
+
+              &:hover {
+                .hover-icon {
+                  filter: $active-color-dark-filter;
+                }
+                span {
+                  color: $active-color-dark;
+                }
+              }
+            }
+          }
+        }
+
+        .right-contents {
+          .header-btn {
+            &.btn-color-blue {
+              background: #394A65;
+              box-shadow: none;
+            }
+            &.btn-color-white{
+              background: $active-color-dark-linear;
+              position: relative;
+              box-shadow: 0px 0px 16.4px 0px #00D1FFCC;
+              color: $color-white;
+
+              &::before{
+                @include gradient-border(linear-gradient(180deg, #2EC0FF 0%, #F6FFFF 50%, #2EC0FF 100%));
+                border-radius: 2rem;
+              }
+            }
+          }
+        }
       }
     }
   }
 
   .profile-actions {
     .action-btn {
-      color: $color-white;
+      color: $font-3-dark;
 
       .icon-rounded {
         box-shadow: none;
         background-color: $background-content-block-lighter-dark;
+        img {
+          filter: $active-color-dark-filter;
+        }
       }
     }
   }
@@ -2680,6 +2767,21 @@ body {
   .profile-info {
     .profile-details {
       .details-name {
+        color: $color-white;
+      }
+      .details-balance {
+        .reload-btn {
+          fill: $active-color-dark;
+        }
+      }
+    }
+
+  }
+  .profile-info-dropdown-content {
+    .profile-info-dropdown-content-item {
+      color: $font-3-dark;
+
+      &.standard-button {
         color: $color-white;
       }
     }

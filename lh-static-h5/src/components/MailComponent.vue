@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <template v-if="props.type !== 'outbox'">
-      <q-tabs active-color="dark" indicator-color="bright" align="justify" v-model="mailboxMessageTab">
+      <q-tabs indicator-color="bright" align="justify" v-model="mailboxMessageTab">
         <q-tab :key="index" :name="item.type" v-for="(item, index) in mailboxMessageTypeData">
           <div class="tab-flex">
             <div class="red-dot-icon" v-if="hasUnreadMessages(item.type)" />
@@ -616,6 +616,12 @@ export default defineComponent({
   margin-right: 5px;
 }
 
+.q-tab {
+  &--active {
+    color: #000;
+  }
+}
+
 .body--dark {
   .q-card {
     box-shadow: none;
@@ -630,5 +636,11 @@ export default defineComponent({
   .q-tab-panels {
     background: $background-dark;
   }
+
+  .q-tab {
+    &--active {
+      color: $primary-dark;
+    }
+}
 }
 </style>

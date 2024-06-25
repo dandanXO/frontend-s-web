@@ -890,6 +890,9 @@ export default defineComponent({
 
   .account-container {
     .account-content-wrapper {
+      .step-item {
+        background: $active-color-dark-linear;
+      }
       .withdraw-type-item {
         border: unset;
         box-shadow: unset;

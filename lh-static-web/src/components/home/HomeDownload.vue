@@ -1,6 +1,7 @@
 <template>
   <div class="download-section">
-    <HomeTitle title="APP下载" subtitle="APP DOWNLOAD"></HomeTitle>
+    <!-- <HomeTitle title="APP下载" subtitle="APP DOWNLOAD"></HomeTitle> -->
+    <HomeTitleV2 title="APP下载" subtitle="APP DOWNLOAD" />
     <div class="download-container">
       <div class="left-container" data-aos="fade-left">
         <img src="../../assets/home/download/download-bg.png" width="100%" />
@@ -98,6 +99,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
+import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import HomeContentTitle from "@/atoms/HomeContentTitle.vue";
 import { uiStore } from "@/store/ui";
 import VueQRCodeComponent from "vue-qrcode-component";
@@ -267,6 +269,24 @@ onMounted(() => {});
       .right-container {
         .tab-wrapper {
           @include content-block-dark;
+          .tab-title {
+            color: $active-color-dark;
+          }
+          .tab-desc {
+            color: $font-3-dark;
+          }
+          .dl-tab{
+            .download{
+              .dl-wrapper{
+                .link-desc{
+                  color: $font-3-dark;
+                }
+                .dl-frame {
+                  background-image: url(../../assets/home/download/qr-frame-dark.png);
+                }
+              }
+            }
+          }
         }
       }
     }

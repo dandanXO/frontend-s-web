@@ -235,4 +235,15 @@ export default defineComponent({
 }
 .dl-wrapper {
 }
+
+.dark {
+  .img-desc,
+  .link-desc {
+    color: #A0BCD6;
+  }
+
+  .dl-frame {
+    background-image: url(../../assets/home/download/qr-frame-dark.png);
+  }
+}
 </style>

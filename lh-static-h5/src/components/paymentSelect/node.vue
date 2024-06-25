@@ -428,8 +428,23 @@ $node-color: #468cff;
 .body--dark {
   .node {
     .node-content {
-      .node-text > div {
-        color: $font-3-dark;
+      .node-item {
+        .node-text {
+          .node-txt-img {
+            border-color: $border-dark;
+            box-shadow: unset
+          }
+          > div {
+            color: $font-3-dark;
+          }
+        }
+        &.active {
+          .node-text {
+            .node-txt-img {
+              border-color: $primary-dark;
+            }
+          }
+        }
       }
     }
   }
