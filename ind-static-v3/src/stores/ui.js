@@ -14,7 +14,8 @@ export const useUI = defineStore("ui-store", {
       adjust_click_register_event: "",
       adjust_open_app_event: "",
       adjust_register_fail_event: "",
-      adjust_register_event: ""
+      adjust_register_event: "",
+      loggedIn: false
     };
   },
   actions: {
@@ -33,6 +34,9 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    },
+    showLoggedIn() {
+      this.loggedIn = true;
     }
   }
 });

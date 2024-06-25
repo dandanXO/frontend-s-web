@@ -1,10 +1,6 @@
 <template>
   <div class="register-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
+    <!-- <pre>hasAffiliate--{{ hasAffiliate }}</pre> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
@@ -436,13 +432,13 @@ export default defineComponent({
                 });
 
                 store.autoLogin(res.data);
+
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
+                  router.push(jumpUrl);
                   // location.href = "/";
                 }
-
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({

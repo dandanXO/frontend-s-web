@@ -231,14 +231,15 @@
             @keyup.enter="handleInputConfirm"
             @blur="handleInputConfirm"
           />
-          <el-button
-            v-else
-            class="button-new-tag"
-            size="small"
-            @click="showInput"
-          >
-            + {{ t('fields.ip') }}
-          </el-button>
+          <div v-else>
+            <el-button
+              class="button-new-tag"
+              size="small"
+              @click="showInput"
+            >
+              + {{ t('fields.ip') }}
+            </el-button>
+          </div>
         </el-form-item>
         <el-form-item
           v-if="form.valueType === 'IP_RANGE'"
@@ -285,6 +286,11 @@
       @selection-change="handleSelectionChange"
       :empty-text="t('fields.noData')"
     >
+      <el-table-column prop="siteId" :label="t('fields.site')">
+        <template #default="scope">
+          {{ getSiteName(scope.row.siteId) }}
+        </template>
+      </el-table-column>
       <el-table-column prop="domain" :label="t('fields.domain')" width="200" />
       <el-table-column
         prop="domainType"
@@ -524,6 +530,10 @@ async function loadCountries() {
   countries.list = ret
 }
 
+function getSiteName(siteId) {
+  return sites.list.find(s => s.id === siteId).siteName
+}
+
 async function loadDomainTypes() {
   const { data: ret } = await getDomainTypes()
   domainTypes.list = ret
@@ -540,7 +550,16 @@ const removeIp = ip => {
 
 const handleInputConfirm = () => {
   if (inputValue.value) {
-    uiControl.ipList.push(inputValue.value)
+    if (!inputValue.value.includes(',') && !inputValue.value.includes('\n')) {
+      uiControl.ipList.push(inputValue.value)
+    } else {
+      const arr = inputValue.value.split(/,|\n/)
+      arr.forEach(item => {
+        if (item) {
+          uiControl.ipList.push(item)
+        }
+      })
+    }
   }
   uiControl.inputVisible = false
   inputValue.value = ''

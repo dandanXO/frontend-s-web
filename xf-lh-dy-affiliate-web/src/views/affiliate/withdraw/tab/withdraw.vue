@@ -16,8 +16,8 @@
         </span>
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
-            $
             <span v-formatter="{data: balance, type: 'money'}" />
+            {{ returnCurrency() }}
           </span>
           <span v-else>****</span>
           <el-icon
@@ -83,15 +83,15 @@
         >
           {{ $t('message.singleLimit') }} :
           {{
-            selectedWithdrawalMethod.withdrawMin +
+            formatMoney(selectedWithdrawalMethod.withdrawMin) +
               ' - ' +
-              selectedWithdrawalMethod.withdrawMax
+              formatMoney(selectedWithdrawalMethod.withdrawMax)
           }}
         </div>
-        <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+        <div v-if="selectedWithdrawalMethod.withdrawMaxAmount">
           {{ $t('message.withdrawalToday') }} :
-          {{ selectedWithdrawalMethod.withdrawMaxAmount }}
-        </template>
+          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) }}
+        </div>
         <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
           {{ $t('message.remaining') }} :
           {{ selectedWithdrawalMethod.withdrawMaxTimes }}
@@ -231,6 +231,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { required } from '../../../../utils/validate'
+import { formatMoney } from "@/utils/format-money";
 
 const withdrawalMethods = ref([])
 const store = useStore()
@@ -245,6 +246,7 @@ const balance = ref(0)
 const showBalance = ref(false)
 const hasSecurityQn = ref(false)
 const hasWithdrawPw = ref(false)
+const siteId = store.state.user.siteId;
 const uiControl = reactive({
   dialogTitle: null,
   dialogType: null,
@@ -379,6 +381,18 @@ async function retrieveSecurityQuestion() {
     securityForm.questionThree = qn.questionThree
   } else {
     hasSecurityQn.value = false
+  }
+}
+
+const returnCurrency = () => {
+  if (siteId === 3 || siteId === '3') {
+    return "THB"
+  } else if (siteId === 8 || siteId === '8') {
+    return "VNDP"
+  } else if (siteId === 10 || siteId === '10') {
+    return "₩"
+  } else {
+    return "RMB"
   }
 }
 

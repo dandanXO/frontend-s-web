@@ -1,6 +1,6 @@
 <template>
     <q-intersection once @visibility="loadAnnouncement" transition-duration="1000">
-        <div class="news-section">
+        <div class="news-section" data-aos="zoom-in-up">
             <div class="news-title">
                 <div class="title-text">{{ $t('lang.menu_announcement') }}</div>
                 <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+

@@ -6,7 +6,7 @@
                 <div>{{ $t('lang.deposit_reminder') }}</div>
                 <div class=caption>{{ $t('lang.deposit_reminder_caption') }}</div>
             </div>
-            <div class="deposit-reminder-text">{{ props.reminderText }}</div>
+            <div class="deposit-reminder-text" v-html="props.reminderText"></div>
             <div class="action"></div>
         </div>
     </div>

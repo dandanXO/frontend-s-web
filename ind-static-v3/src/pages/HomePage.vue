@@ -185,7 +185,7 @@
           <div class="platform-game-wrapper" v-if="category.title === 'Lobby' && category.active">
             <swiper
               :slidesPerView="1.5"
-              :spaceBetween="0"
+              :spaceBetween="10"
               :scrollbar="{
                 hide: true
               }"
@@ -675,30 +675,7 @@
     </q-card>
   </q-dialog>
 
-  <!-- <q-dialog width="100%" v-model="withdrawalDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" v-close-popup />
-      <div class="popout-dialog-container popout-dialog-container--yel">
-        <div class="popout-main-title">
-          <div class="txt-title">Withdrawal</div>
-        </div>
-        <WithdrawalComponent @close-withdraw="closeWithDrawModal"></WithdrawalComponent>
-      </div>
-    </div>
-  </q-dialog> -->
   <WithdrawalModal ref="withdrawalModalRef"></WithdrawalModal>
-
-  <!-- <q-dialog width="100%" v-model="depositDialog" presistent>
-    <div class="popout-dialog">
-      <q-btn dense rounded icon="close" class="bg-yellow text-black popout-close" @click="closeDepositDialog" />
-      <div class="popout-dialog-container popout-dialog-container--yel">
-        <div class="popout-main-title">
-          <div class="txt-title">Deposit</div>
-        </div>
-        <DepositComponent />
-      </div>
-    </div>
-  </q-dialog> -->
 
   <q-dialog width="100%" v-model="guestKYCDialog" presistent>
     <div class="popout-dialog">

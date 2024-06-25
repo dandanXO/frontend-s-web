@@ -11,45 +11,31 @@
           </div>
 
           <template v-if="transferInfo.platform === 'PG'">
-            <iframe
-              @load="loadGame()"
-              v-show="!logoShow"
-              v-bind:srcdoc="src"
-              id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'"
-              frameborder="0"
-              class="game-iframe"
-            ></iframe>
+            <iframe @load="loadGame()" v-show="!logoShow" v-bind:srcdoc="src" id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
           </template>
           <template v-else>
-            <iframe
-              @load="loadGame()"
-              v-show="!logoShow"
-              :src="src"
-              id="game-iframe"
-              :scrolling="iframeScroll ? 'yes' : 'no'"
-              frameborder="0"
-              class="game-iframe"
-            ></iframe>
+            <iframe @load="loadGame()" v-show="!logoShow" :src="src" id="game-iframe"
+              :scrolling="iframeScroll ? 'yes' : 'no'" frameborder="0" class="game-iframe"></iframe>
           </template>
 
-<!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
-<!--            <div class="q-pa-sm q-pt-sm">-->
-<!--              <div>-->
-<!--                <template v-if="!quickTransferTab">-->
-<!--                  <div>-->
-<!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
-<!--                  </div>-->
-<!--                  <DepositComponent />-->
-<!--                </template>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </q-drawer>-->
+          <!--          <q-drawer v-model="drawerVisible" :breakpoint="500" overlay bordered class="bg-primary" side="right">-->
+          <!--            <div class="q-pa-sm q-pt-sm">-->
+          <!--              <div>-->
+          <!--                <template v-if="!quickTransferTab">-->
+          <!--                  <div>-->
+          <!--                    <span class="menu-title">{{ $t("lang.urgent_deposit") }}</span>-->
+          <!--                  </div>-->
+          <!--                  <DepositComponent />-->
+          <!--                </template>-->
+          <!--              </div>-->
+          <!--            </div>-->
+          <!--          </q-drawer>-->
         </div>
       </q-toolbar>
     </q-dialog>
     <q-dialog v-model="visibleComingSoon" class="gameDialog" style="width: 100%; margin: 0 auto">
-<!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
+      <!--      <img src="../../assets/logo-coming.png" style="width: 80%" />-->
     </q-dialog>
   </q-scroll-area>
 </template>
@@ -59,7 +45,6 @@ import { userStore } from "stores/index";
 // import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
-import DepositComponent from "components/depositComponent.vue";
 
 // import { transfer } from "api/personal/transfer";
 // import { message } from "ant-design-vue";
@@ -175,126 +160,132 @@ const closeDialog = () => {
   // AppFullscreen.exit()
 };
 const open = (gameName, platformCode, gameCode, gameType) => {
-  transferInfo.value = {
-    platform: platformCode
-  };
-  // debugger;
-  // AppFullscreen.request()
+  return new Promise((resolve, reject) => {
+    transferInfo.value = {
+      platform: platformCode
+    };
+    // debugger;
+    // AppFullscreen.request()
 
-  localStorage.removeItem("isOpenFromAccount");
-  localStorage.removeItem("isBacked");
+    localStorage.removeItem("isOpenFromAccount");
+    localStorage.removeItem("isBacked");
 
-  isInnerHtmlSrc.value = false;
-  // Get the iframe
-  const iFrame = document.getElementById("game-iframe");
+    isInnerHtmlSrc.value = false;
+    // Get the iframe
+    const iFrame = document.getElementById("game-iframe");
 
-  // Let's say that you want to access a button with the ID `'myButton'`,
-  // you can access via the followi ng code:
-  // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
-  // buttonInIFrame.style.visible = visible;
-  //   console.log(iframe)
-  title.value = gameName;
-  const store = userStore();
-  if (store.memberType !== "TEST" && gameType === "TEST") {
-    visibleComingSoon.value = true;
-  } else {
-    if (store.hasToken()) {
-      var way = null;
-      if (Platform.is.android) {
-        way = "ANDROID";
-      } else if (Platform.is.ios) {
-        way = "IOS";
-      }
-
-      const apiParams = {
-        platform: platformCode,
-        gameCode: gameCode,
-        isMobile: Platform.is.mobile ? true : false,
-        way: way
-      };
-
-      if (platformCode === "CG") {
-        apiParams.language = t("lang.langVal");
-      }
-
-      const gameLaunchNotif = $q.notify({
-        position: 'top',
-        spinnerColor: 'blue',
-        group: false, // required to be updatable
-        timeout: 0, // we want to be in control when it gets dismissed
-        spinner: true,
-        message: '로드 중...'
-      })
-
-      api
-        .get(`/session/launch?_time=${new Date().getTime()}`, {
-          params: apiParams
-        })
-        .then((ret) => {
-          gameLaunchNotif({
-            position: 'top',
-            icon: 'done', // we add an icon
-            spinner: false, // we reset the spinner setting so the icon can be displayed
-            message: '게임 시작..',
-            timeout: 2500 // we will timeout it in 2.5s
-          })
-
-          let srcDoc = ret.data.data;
-
-
-          if(platformCode === "PG") {
-            var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
-            if (firstFourChars === "http") {
-              src.value = srcDoc;
-            } else {
-              isInnerHtmlSrc.value = true;
-
-              const scriptEndTag = "</" + "script>";
-              srcDoc = srcDoc
-              .replace(/<\/script>/g, scriptEndTag)
-              .replace(/\\\"/g, '"')
-              .replace(/\n/g, "");
-
-              src.value = srcDoc;
-            }
-
-            visible.value = true;
-          } else if(Platform.is.ios &&  Platform.is.mobile && Platform.is.safari){
-            //
-            const newWin = window.open(`/`, "_self");
-
-            if(newWin){
-              newWin.location.href = srcDoc;
-            } else {
-              $q.notify({
-                color: "negative",
-                position: "top",
-                message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
-                icon: "report_problem"
-              });
-            }
-          } else {
-            window.open(srcDoc, "_blank");
-          }
-        }).catch(() => {
-          gameLaunchNotif({
-            position: 'top',
-            icon: 'error', // we add an icon
-            spinner: false, // we reset the spinner setting so the icon can be displayed
-            message: '오류',
-            timeout: 2500 // we will timeout it in 2.5s
-          })
-        });
+    // Let's say that you want to access a button with the ID `'myButton'`,
+    // you can access via the followi ng code:
+    // const buttonInIFrame = iFrame.contentWindow.document.getElementById('iphone-tips-close-button');
+    // buttonInIFrame.style.visible = visible;
+    //   console.log(iframe)
+    title.value = gameName;
+    const store = userStore();
+    if (store.memberType !== "TEST" && gameType === "TEST") {
+      visibleComingSoon.value = true;
     } else {
-      $q.notify({
-        color: "negative",
-        position: "top",
-        message: "로그인 해주세요",
-        icon: "report_problem"
-      });
-      // router.push({ path: "/login", query: { redirect: route.path } });
+      if (store.hasToken()) {
+        var way = null;
+        if (Platform.is.android) {
+          way = "ANDROID";
+        } else if (Platform.is.ios) {
+          way = "IOS";
+        }
+
+        const apiParams = {
+          platform: platformCode,
+          gameCode: gameCode,
+          isMobile: Platform.is.mobile ? true : false,
+          way: way
+        };
+
+        if (platformCode === "CG") {
+          apiParams.language = t("lang.langVal");
+        }
+
+        const gameLaunchNotif = $q.notify({
+          position: 'top',
+          spinnerColor: 'blue',
+          group: false, // required to be updatable
+          timeout: 0, // we want to be in control when it gets dismissed
+          spinner: true,
+          message: '로드 중...'
+        })
+
+        api
+          .get(`/session/launch?_time=${new Date().getTime()}`, {
+            params: apiParams
+          })
+          .then((ret) => {
+            gameLaunchNotif({
+              position: 'top',
+              icon: 'done', // we add an icon
+              spinner: false, // we reset the spinner setting so the icon can be displayed
+              message: '게임 시작..',
+              timeout: 2500 // we will timeout it in 2.5s
+            })
+
+            let srcDoc = ret.data.data;
+
+
+            if (platformCode === "PG") {
+              var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
+              if (firstFourChars === "http") {
+                src.value = srcDoc;
+              } else {
+                isInnerHtmlSrc.value = true;
+
+                const scriptEndTag = "</" + "script>";
+                srcDoc = srcDoc
+                  .replace(/<\/script>/g, scriptEndTag)
+                  .replace(/\\\"/g, '"')
+                  .replace(/\n/g, "");
+
+                src.value = srcDoc;
+              }
+
+              visible.value = true;
+            } else if (Platform.is.ios && Platform.is.mobile && Platform.is.safari) {
+              //
+              const newWin = window.open(`/`, "_self");
+
+              if (newWin) {
+                newWin.location.href = srcDoc;
+              } else {
+                $q.notify({
+                  color: "negative",
+                  position: "top",
+                  message: '无法打开充值页面。请检查游览器是否拦截弹窗页面，并修改为"允许弹窗"后再进行充值操作。',
+                  icon: "report_problem"
+                });
+              }
+            } else {
+              window.open(srcDoc, "_blank");
+            }
+
+            resolve();
+          }).catch(() => {
+            gameLaunchNotif({
+              position: 'top',
+              icon: 'error', // we add an icon
+              spinner: false, // we reset the spinner setting so the icon can be displayed
+              message: '오류',
+              timeout: 2500 // we will timeout it in 2.5s
+            })
+            reject();
+          });
+      } else {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+        reject();
+        // router.push({ path: "/login", query: { redirect: route.path } });
+      }
     }
-  }
+  })
 };
 
 const loadGame = () => {
@@ -361,11 +352,9 @@ defineExpose({
   color: #ffffff;
 }
 
-:deep(
-    .ant-form-vertical .ant-form-item-label > label,
-    .ant-col-24.ant-form-item-label > label,
-    .ant-col-xl-24.ant-form-item-label > label
-  ) {
+:deep(.ant-form-vertical .ant-form-item-label > label,
+  .ant-col-24.ant-form-item-label > label,
+  .ant-col-xl-24.ant-form-item-label > label) {
   color: #ffffff;
 }
 
@@ -425,6 +414,7 @@ defineExpose({
     max-width: 100%;
     width: 100%;
   }
+
   // .desktopview {
   //   display: none;
   // }
@@ -452,9 +442,11 @@ defineExpose({
       }
     }
   }
+
   :deep(.ant-drawer-body) {
     padding: 10px;
   }
+
   .button-group {
     display: flex;
     justify-content: center;
@@ -482,6 +474,7 @@ defineExpose({
       }
     }
   }
+
   .drawer-btn {
     cursor: pointer;
     right: 40px;
@@ -515,10 +508,12 @@ defineExpose({
       display: none;
     }
   }
+
   .additional-buttons {
     display: none;
     right: 0;
   }
+
   .additional-buttons.active {
     display: flex;
     right: 0px;
@@ -555,5 +550,4 @@ defineExpose({
 //       height: calc(100vh - env(safe-area-inset-left, 0) - env(safe-area-inset-right, 0) );
 //       // padding: env(safe-area-inset-top, 40px) env(safe-area-inset-right, 40px)  env(safe-area-inset-bottom, 40px)  env(safe-area-inset-left, 40px) ;
 //   }
-// }
-</style>
+// }</style>
