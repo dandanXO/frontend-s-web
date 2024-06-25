@@ -107,7 +107,7 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + floor(mainWallet, 2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
@@ -672,6 +672,7 @@ import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import {useLocalStorage} from "@vueuse/core"
 import { App } from "@capacitor/app";
+import floor from 'lodash/floor';
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1734,6 +1735,7 @@ export default defineComponent({
     });
 
     return {
+      floor,
       imageLoading,
       slide: ref(0),
       clickHomePopupImg,
