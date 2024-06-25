@@ -1,7 +1,6 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''"
-      :style="isMinimalMode ? 'width: 400px; max-width: 50vw;' : 'width: 800px; max-width: 70vw;'">
+    <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''">
       <div class="header">
         <div style="text-align: right;">
           <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
@@ -29,7 +28,7 @@
         </div>
         <q-tab-panels v-model="page" animated>
           <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page" style="padding:0 16px;">
+            <q-tab-panel :name="item.page" style="padding:0">
               <component :is="item.component" @closeModal="closeDialog"></component>
             </q-tab-panel>
           </template>
@@ -410,10 +409,6 @@ onMounted(() => {
   height: 100%;
 }
 
-:deep(.modal-body-buttons) {
-  background-color: var(--main-bg-color);
-}
-
 @media (max-width: 768px) {
   .page-dialog-main {
     width: 100%;
@@ -476,14 +471,6 @@ onMounted(() => {
       }
     }
   }
-
-  .modal-body-buttons {
-    .form-button {
-      width: 140px;
-      height: 40px;
-      max-width: 40vw;
-    }
-  }
 }
 
 .page-modal-container {
@@ -491,10 +478,19 @@ onMounted(() => {
   grid-template-rows: 89px auto 1fr;
   width: 100%;
   height: 100%;
+  min-width: 60vw;
+  max-width: 80vw;
 
   &.minimal {
     grid-template-rows: 89px fit-content;
     height: fit-content;
+    width: fit-content;
+    min-width: fit-content;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 70vw;
+    max-width: 95vw;
   }
 
   .header {}

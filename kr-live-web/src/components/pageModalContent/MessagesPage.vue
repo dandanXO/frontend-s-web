@@ -1,132 +1,134 @@
 <template>
-    <div style="display:flex;justify-content:space-between;">
-        <q-btn v-if="!isCreateMode" flat dense icon="edit" :label="$t('lang.message_compose')"
-            @click="isCreateMode = true" no-caps />
-        <q-btn v-else flat dense icon="arrow_back" :label="$t('lang.message_previous_page')"
-            @click="isCreateMode = false" no-caps />
+    <div class="message-page">
+        <div style="display:flex;justify-content:space-between;">
+            <q-btn v-if="!isCreateMode" flat dense icon="edit" :label="$t('lang.message_compose')"
+                @click="isCreateMode = true" no-caps />
+            <q-btn v-else flat dense icon="arrow_back" :label="$t('lang.message_previous_page')"
+                @click="isCreateMode = false" no-caps />
 
-        <q-btn-dropdown v-if="!isCreateMode" flat :label="$t(inboxCategoryLabel)" dense>
-            <q-list>
-                <q-item clickable v-close-popup @click="inboxCategory = category.type"
-                    v-for="category in inboxCategories" :key="category.type">
-                    <q-item-section>
-                        <q-item-label>{{ $t(category.label) }}</q-item-label>
-                    </q-item-section>
-                </q-item>
+            <q-btn-dropdown v-if="!isCreateMode" flat :label="$t(inboxCategoryLabel)" dense>
+                <q-list>
+                    <q-item clickable v-close-popup @click="inboxCategory = category.type"
+                        v-for="category in inboxCategories" :key="category.type">
+                        <q-item-section>
+                            <q-item-label>{{ $t(category.label) }}</q-item-label>
+                        </q-item-section>
+                    </q-item>
 
-            </q-list>
-        </q-btn-dropdown>
+                </q-list>
+            </q-btn-dropdown>
 
 
-        <!-- <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
+            <!-- <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
             <q-tab :name="category.type" :label="$t(category.label)" v-for="category in inboxCategories"
                 :key="category.type" />
         </q-tabs> -->
-    </div>
+        </div>
 
 
-    <div class="form-wrapper" v-if="isCreateMode">
-        <form class="content-form form-template">
-            <div class="form-item">
-                <label>{{ $t('lang.feedback_category') }}</label>
-                <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
-                    ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" clearable
-                    @update:model-value="type => composeForm.title = type" />
-            </div>
-            <div class="form-item">
-                <label>{{ $t('lang.message_title') }}</label>
-                <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
-                    v-model="composeForm.title" clearable lazy-rules :rules="[
-                        (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                    ]" />
-            </div>
-            <div class="form-item">
-                <label>{{ $t('lang.message_content') }}</label>
-                <q-input dense outlined ref="contentRef" type="textarea" rows="6" v-model="composeForm.content"
-                    clearable lazy-rules :rules="[
-                        (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                    ]" />
-            </div>
-        </form>
+        <div class="form-wrapper" v-if="isCreateMode">
+            <form class="content-form form-template">
+                <div class="form-item">
+                    <label>{{ $t('lang.feedback_category') }}</label>
+                    <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
+                        ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" clearable
+                        @update:model-value="type => composeForm.title = type" />
+                </div>
+                <div class="form-item">
+                    <label>{{ $t('lang.message_title') }}</label>
+                    <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
+                        v-model="composeForm.title" clearable lazy-rules :rules="[
+                            (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
+                        ]" />
+                </div>
+                <div class="form-item">
+                    <label>{{ $t('lang.message_content') }}</label>
+                    <q-input dense outlined ref="contentRef" type="textarea" rows="6" v-model="composeForm.content"
+                        clearable lazy-rules :rules="[
+                            (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
+                        ]" />
+                </div>
+            </form>
 
-        <div class="action-buttons">
-            <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
+            <div class="action-buttons">
+                <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
+                </div>
             </div>
         </div>
-    </div>
-    <div class="message-compose-form" v-else>
-        <div class="message-container">
-            <div class="message-list-wrapper">
-                <div class="header">
-                    <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
-                        :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
-                            initOutbox(currentPage)
-                        }" boundary-links input color="white" input-class="text-white-10" dense />
-                    <span>{{ $t('lang.announcement_total')
-                        }} {{ inboxMessages.total }}</span>
-                </div>
+        <div class="message-compose-form" v-else>
+            <div class="message-container">
+                <div class="message-list-wrapper">
+                    <div class="header">
+                        <q-pagination :modelValue="inboxMessages.current" :max="inboxMessages.pages"
+                            :max-pages="inboxMessages.size" @update:model-value="(currentPage) => {
+                                initOutbox(currentPage)
+                            }" boundary-links input color="white" input-class="text-white-10" dense />
+                        <span>{{ $t('lang.announcement_total')
+                            }} {{ inboxMessages.total }}</span>
+                    </div>
 
-                <q-list bordered separator class="message-list">
+                    <q-list bordered separator class="message-list">
+                        <template v-if="isLoading">
+                            <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
+                                <q-skeleton type="QToolbar" style="width:100%;" />
+                            </q-item>
+                        </template>
+                        <template v-else>
+                            <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
+                                @click="readMessage(item.id)" :active="item === selected" active-class="active-message"
+                                :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }" class="message">
+                                <q-badge v-if="item.hasOwnProperty('readTime') && !item.readTime" rounded
+                                    style="background:#DF3D31;margin:auto;margin-right:5px;min-height:9px;padding:2px 4.5px;"
+                                    :title="$t('lang.message_unread')" />
+                                <q-item-section>
+                                    <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
+                                    <q-item-label caption lines="2"><span class="caption">{{ item.content
+                                            }}</span></q-item-label>
+                                </q-item-section>
+
+                                <q-item-section side top class="info-wrapper">
+                                    <q-item-label caption>
+                                        <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
+                                            }}</span>
+                                    </q-item-label>
+                                </q-item-section>
+                            </q-item>
+                        </template>
+                    </q-list>
+                </div>
+                <q-scroll-area class="message-content-wrapper">
                     <template v-if="isLoading">
-                        <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
-                            <q-skeleton type="QToolbar" style="width:100%;" />
+                        <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
+                            <q-skeleton type="text" style="width:100%;" />
                         </q-item>
                     </template>
                     <template v-else>
-                        <q-item clickable v-ripple v-for="item in inboxMessages.records" :key="item.page"
-                            @click="readMessage(item.id)" :active="item === selected" active-class="active-message"
-                            :class="{ unread: item.hasOwnProperty('readTime') && !item.readTime }" class="message">
-                            <q-badge v-if="item.hasOwnProperty('readTime') && !item.readTime" rounded
-                                style="background:#DF3D31;margin:auto;margin-right:5px;min-height:9px;padding:2px 4.5px;"
-                                :title="$t('lang.message_unread')" />
-                            <q-item-section>
-                                <q-item-label lines="2"><span class="title">{{ item.title }}</span></q-item-label>
-                                <q-item-label caption lines="2"><span class="caption">{{ item.content
-                                        }}</span></q-item-label>
-                            </q-item-section>
-
-                            <q-item-section side top class="info-wrapper">
-                                <q-item-label caption>
-                                    <span class="date-time">{{ getLocaleDateTime(item.sendTime || item.createTime)
-                                        }}</span>
-                                </q-item-label>
-                            </q-item-section>
-                        </q-item>
-                    </template>
-                </q-list>
-            </div>
-            <q-scroll-area class="message-content-wrapper">
-                <template v-if="isLoading">
-                    <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
-                        <q-skeleton type="text" style="width:100%;" />
-                    </q-item>
-                </template>
-                <template v-else>
-                    <div v-if="selected" class="message-content">
-                        <div>
-                            <div class="title">{{ selected.title }}</div>
-                        </div>
-                        <div class="date-time-wrapper">
-                            <span class="date-time text-caption" v-if="selected.sendTime || selected.createTime">
-                                {{ getLocaleDateTime(selected.sendTime || selected.createTime, true) }}
-                            </span>
-                            <!-- <span class="date-time text-caption text-grey" v-if="selected.readTime">
+                        <div v-if="selected" class="message-content">
+                            <div>
+                                <div class="title">{{ selected.title }}</div>
+                            </div>
+                            <div class="date-time-wrapper">
+                                <span class="date-time text-caption" v-if="selected.sendTime || selected.createTime">
+                                    {{ getLocaleDateTime(selected.sendTime || selected.createTime, true) }}
+                                </span>
+                                <!-- <span class="date-time text-caption text-grey" v-if="selected.readTime">
                                 {{ $t('lang.message_read_at') }}
                                 {{
                                     getLocaleDateTime(selected.readTime, true)
                                 }}
                             </span> -->
+                            </div>
+                            <div class="content-loading" v-if="isFetchingContent">
+                                <template v-for="rectSkeleton in 5" :key="rectSkeleton">
+                                    <q-skeleton type="text" style="width:100%;" />
+                                </template>
+                            </div>
+                            <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
                         </div>
-                        <div class="content-loading" v-if="isFetchingContent">
-                            <template v-for="rectSkeleton in 5" :key="rectSkeleton">
-                                <q-skeleton type="text" style="width:100%;" />
-                            </template>
-                        </div>
-                        <div v-else class="content" v-html="selected.content" style="white-space: pre-line"></div>
-                    </div>
-                    <div class="message-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
-                </template>
-            </q-scroll-area>
+                        <div class="message-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
+                    </template>
+                </q-scroll-area>
+            </div>
         </div>
     </div>
 </template>
@@ -307,6 +309,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.message-page {
+    padding: 20px;
+}
+
 .content-form {
     padding: 10px 0;
 }

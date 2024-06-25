@@ -688,7 +688,7 @@ input:internal-autofill-selected {
     display: flex;
     justify-content: center;
     padding: 10px;
-    border-top: 1px solid #515151;
+    border-top: 1px solid #51515173;
     gap: 10px;
     align-items: center;
 
@@ -702,14 +702,18 @@ input:internal-autofill-selected {
     }
   
     .primary-button {
+      width: 150px;
+
       @media (max-width: 600px) {
         width: 120px;
+        height: 30px;
         min-width: 120px;
         font-size: small;
       }
   
       @media (max-width: 400px) {
         width: 100px;
+        height: 25px;
         min-width: 100px;
         font-size: x-small;
       }

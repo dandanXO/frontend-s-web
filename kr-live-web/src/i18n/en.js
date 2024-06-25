@@ -786,6 +786,7 @@ export default {
     14003: "Affiliate code not found",
     15201: "Incorrect old code",
     15202: "New code must match old code",
+    15206: "Duplicated nickname",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

@@ -340,6 +340,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px;
 }
 
 .form-item {
@@ -369,32 +370,6 @@ export default defineComponent({
       font-size: x-small;
     }
   }
-}
-
-.action-buttons {
-  @media (max-width: 600px) {
-    margin: 5px auto 10px;
-    padding: 10px 5px 5px;
-  }
-
-  .register-submit-btn {
-    width: 145px;
-    height: 36px;
-
-    @media (max-width: 600px) {
-      width: 120px;
-      min-width: 120px;
-      font-size: small;
-    }
-
-    @media (max-width: 400px) {
-      width: 100px;
-      min-width: 100px;
-      font-size: x-small;
-    }
-  }
-
-
 }
 
 .bank-list-item {

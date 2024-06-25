@@ -93,3 +93,9 @@ const submitUpdatePwd = () => {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+.form-wrapper {
+    padding: 20px;
+}
+</style>
