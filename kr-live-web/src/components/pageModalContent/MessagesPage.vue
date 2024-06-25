@@ -304,8 +304,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .message-page {
-    padding: 20px;
     height: 100%;
+    padding: 20px;
 }
 
 .content-form {
