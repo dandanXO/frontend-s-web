@@ -244,13 +244,13 @@ const iconInfo = reactive([
 }
 
 .content {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 90%;
+    width: 100%;
     flex-direction: row;
     height: 60px;
     display: flex;
