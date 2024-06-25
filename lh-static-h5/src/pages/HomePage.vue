@@ -113,19 +113,23 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-btnicon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/deposit-mid-dark.png"/>
+        <img v-else src="../assets/images/home/deposit-mid.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-btnicon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/withdraw-mid-dark.png"/>
+        <img v-else src="../assets/images/home/withdraw-mid.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-btnicon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/transfer-mid-dark.png"/>
+        <img v-else src="../assets/images/home/transfer-mid.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-btnicon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/vip-mid-dark.png"/>
+        <img v-else src="../assets/images/home/vip-mid.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
@@ -135,88 +139,64 @@
     <div class="game-left-list">
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
         <template v-if="tab === 'esport'">
-          <img src="../assets/images/home/games/esport-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/esport-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/esport-icon-dark.png')
-                : require('../assets/images/home/games/esport-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/esport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
         <template v-if="tab === 'sport'">
-          <img src="../assets/images/home/games/sport-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/sport-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/sport-icon-dark.png')
-                : require('../assets/images/home/games/sport-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/sport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
         <template v-if="tab === 'live'">
-          <img src="../assets/images/home/games/live-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/live-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/live-icon-dark.png')
-                : require('../assets/images/home/games/live-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/live-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
         <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/poker-icon-dark.png')
-                : require('../assets/images/home/games/poker-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/poker-icon.png" />
         </template>
       </div>
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
         <template v-if="tab === 'slot'">
-          <img src="../assets/images/home/games/slot-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/slot-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/slot-icon-dark.png')
-                : require('../assets/images/home/games/slot-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
         <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/casual-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/casual-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/casual-icon-dark.png')
-                : require('../assets/images/home/games/casual-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/casual-icon.png" />
         </template>
       </div>
 
@@ -232,30 +212,22 @@
       -->
       <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/lottery-icon-dark.png')
-                : require('../assets/images/home/games/lottery-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/lottery-icon.png" />
         </template>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/fish-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/fish-icon-dark.png')
-                : require('../assets/images/home/games/fish-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/fish-icon.png" />
         </template>
       </div>
     </div>
@@ -2519,8 +2491,11 @@ export default defineComponent({
       .platform-block {
         .platform-img-frame {
           border-radius: 20px;
+          .platform-label {
+            background-image: url(../assets/images/home/label-certified-dark.png);
+          }
           .platform-subtitle {
-            color: $font-3-dark;
+            color: $font-1-dark;
           }
         }
       }

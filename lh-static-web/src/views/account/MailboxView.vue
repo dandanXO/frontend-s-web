@@ -717,7 +717,7 @@ onMounted(() => {
     &:deep(.el-collapse) {
       .el-collapse-item__header {
         background: $background-content-block-lighter-dark;
-        color: $font-3-dark;
+        color: $font-0;
       }
     }
   }

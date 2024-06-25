@@ -224,7 +224,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // TODO: Remove after testing is completed.
-    isDark.value = false;
+    // isDark.value = false;
 
     if (to.meta.requiresAuth) {
       // 账号已在其他设备登录，

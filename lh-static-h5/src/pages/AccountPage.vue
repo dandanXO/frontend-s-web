@@ -22,7 +22,8 @@
         <q-card-section class="acct-section">
           <div class="left-sect">
             <div class="label">
-              <img src="../assets/images/account/account-wallet-icon.png" />
+              <img v-if="$q.dark.isActive" src="../assets/images/account/account-wallet-icon-dark.png" />
+              <img v-else src="../assets/images/account/account-wallet-icon.png" />
               <span>中心钱包</span>
               <div class="refresh-btn" @click="getBalance">
                 <img src="../assets/images/account/account-refresh-btn.png" />
@@ -164,56 +165,64 @@
       <div class="acct-menu" id="id-acct-menu">
         <router-link to="/account/personal">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-personal-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-personal-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-personal-icon.png" />
             <div class="acct-nav-label">账户信息</div>
           </div>
         </router-link>
 
         <router-link to="/account/withdraw">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-bank-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-bank-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-bank-icon.png" />
             <div class="acct-nav-label">银行信息</div>
           </div>
         </router-link>
 
         <router-link to="/account/records">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-record-icon.png" />
             <div class="acct-nav-label">交易信息</div>
           </div>
         </router-link>
 
         <router-link to="/account/records/bet">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-record-bet-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-record-bet-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-record-bet-icon.png" />
             <div class="acct-nav-label">投注记录</div>
           </div>
         </router-link>
 
         <router-link to="/account/inbox">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-notice-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.png" />
+          <img v-else src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
           </div>
         </router-link>
 
         <router-link to="/account/letters">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/user-feedbakc-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/user-feedback-icon-dark.png" />
+            <img v-else src="../assets/images/account/user-feedback-icon.png" />
             <div class="acct-nav-label">意见反馈</div>
           </div>
         </router-link>
 
       <router-link to="/account/vip">
         <div class="acct-nav-item">
-          <img src="../assets/images/account/account-vip-icon.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
+          <img v-else src="../assets/images/account/account-vip-icon.png" />
           <div class="acct-nav-label">VIP 特权</div>
         </div>
       </router-link>
 
         <router-link to="/account/changePwd">
           <div class="acct-nav-item">
-            <img src="../assets/images/account/account-changepwd-icon.png" />
+            <img v-if="$q.dark.isActive" src="../assets/images/account/account-changepwd-icon-dark.png" />
+            <img v-else src="../assets/images/account/account-changepwd-icon.png" />
             <div class="acct-nav-label">修改密码</div>
           </div>
         </router-link>
@@ -262,21 +271,24 @@
   <div class="acct-menu" id="id-acct-menu">
     <router-link to="/promo">
       <div class="acct-nav-item">
-        <img src="../assets/images/account/account-promo-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-promo-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-promo-icon.png" />
         <div class="acct-nav-label">优惠活动</div>
       </div>
     </router-link>
 
     <router-link to="/account/invite">
       <div class="acct-nav-item">
-        <img src="../assets/images/account/account-share-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-share-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-share-icon.png" />
         <div class="acct-nav-label">推广赚钱</div>
       </div>
     </router-link>
 
     <router-link to="/account/invite#summon-share">
       <div class="acct-nav-item">
-        <img src="../assets/images/account/account-summon-share-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-summon-share-icon.png" />
         <div class="acct-nav-label">精英召回</div>
       </div>
     </router-link>
@@ -284,7 +296,8 @@
 
     <router-link to="/affiliate">
       <div class="acct-nav-item">
-        <img src="../assets/images/account/account-affiliate-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-affiliate-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-affiliate-icon.png" />
         <div class="acct-nav-label">合作加盟</div>
       </div>
     </router-link>
@@ -340,7 +353,8 @@
     <a @click="isLogoutModal = true">
       <div class="acct-logout btn-pointer">
         <div class="acct-nav-label">退出登录</div>
-        <img src="../assets/images/account/account-logout-icon.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/account/account-logout-icon-dark.png" />
+        <img v-else src="../assets/images/account/account-logout-icon.png" />
       </div>
     </a>
   </q-page>
@@ -1479,6 +1493,46 @@ export default defineComponent({
 
   .acct-logout {
     @include content-block-dark;
+  }
+
+  .vipcard {
+    .btn-main {
+      background-image: url("../assets/images/account/account-btn-dark.png");
+    }
+  }
+
+  .acct-nav {
+    .acct-title {
+      background: #FFFFFF1A;
+      &::before {
+        background: $primary-dark;
+      }
+      .acct-title-1 {
+        color: $white;
+      }
+    }
+  }
+
+  .profile-dialog {
+    .q-card {
+      box-shadow: none;
+    }
+    .submitImgBtn{
+      background-image: url("../assets/images/download/active-tab-bg-dark.png");
+    }
+  }
+
+  .vip-link {
+    background: $linear-bg-180;
+    &::before {
+      background-image: url("../assets/images/account/vip-diamond-dark.png");
+    }
+  }
+
+  .vip-progress {
+    :deep(.q-linear-progress__model) {
+      background: $linear-bg-180;
+    }
   }
 }
 

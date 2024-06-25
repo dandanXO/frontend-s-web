@@ -36,15 +36,18 @@
     <div class="bank-detail-wrapper">
       <div class="bank-bind-item q-my-sm">
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/bank-card')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
+          <img v-if="$q.dark.isActive" class="bank-bind-img" src="../../assets/images/download/active-tab-bg-dark.png" />
+          <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加银行卡</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/crypto')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
+          <img v-if="$q.dark.isActive" class="bank-bind-img" src="../../assets/images/download/active-tab-bg-dark.png" />
+          <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加虚拟币账户</span>
         </div>
         <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/ewallet')">
-          <img class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
+          <img v-if="$q.dark.isActive" class="bank-bind-img" src="../../assets/images/download/active-tab-bg-dark.png" />
+          <img v-else class="bank-bind-img" src="../../assets/images/download/active-tab-bg.png" />
           <span>+添加电子钱包</span>
         </div>
         <!-- <div class="bank-bind-btn" @click="onBindCardClick('/account/withdraw/alipay')">

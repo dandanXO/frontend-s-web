@@ -2,15 +2,15 @@
   <div class="sticky-sidebar" @mouseleave="customerHovered = false">
     <div class="additional-info-items" v-if="customerHovered">
       <div class="additional-info-item" @click.stop.prevent="store.openLiveChat()">
-        <img src="../../assets/images/home/sticky-sidebar-headphone-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <span>24小时在线客服</span>
       </div>
       <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/email-icon.svg" />
         <span style="margin-left: 5px">cs@lh8080.com</span>
       </div>
       <div class="additional-info-item">
-        <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/phone-icon.svg" />
         <span style="margin-left: 5px"><span class="customer_phone">+85281701071</span></span>
       </div>
     </div>
@@ -20,25 +20,26 @@
         class="sticky-sidebar-item"
         @click="handleDarkModeClick"
       >
-        <img src="@/assets/images/home/sticky-sidebar-dark-mode-icon.png" />
+        <img v-if="isDark" src="@/assets/images/home/sticky-sidebar/light-mode-icon.svg" />
+        <img v-else src="@/assets/images/home/sticky-sidebar/dark-mode-icon.svg" />
         <div>{{ isDark ? "白天" : "黑暗" }}模式</div>
       </div>
-      <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
-        <img src="../../assets/images/home/sticky-sidebar-hot-promo-icon.png" />
+      <!-- <router-link to="/promotion" class="sticky-sidebar-item" @mouseover="customerHovered = false">
+        <img src="../../assets/images/home/sticky-sidebar/hot-promo-icon.svg" />
         <div>热门活动</div>
-      </router-link>
+      </router-link> -->
       <div class="sticky-sidebar-item" @mouseover="customerHovered = true">
-        <img src="../../assets/images/home/sticky-sidebar-cs-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/cs-icon.svg" />
         <div>客服中心</div>
       </div>
       <div @mouseover="customerHovered = false">
         <router-link to="/app" class="sticky-sidebar-item">
-          <img src="../../assets/images/home/sticky-sidebar-app-dl-icon.png" />
+          <img src="../../assets/images/home/sticky-sidebar/app-dl-icon.svg" />
           <div>APP下载</div>
         </router-link>
       </div>
       <div @mouseover="customerHovered = false" class="sticky-sidebar-item" @click="scrollToTop">
-        <img src="../../assets/images/home/sticky-sidebar-back-top-icon.png" />
+        <img src="../../assets/images/home/sticky-sidebar/back-top-icon.svg" />
         <div>返回顶部</div>
       </div>
     </div>
@@ -359,12 +360,17 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 28px;
   padding: 15px;
   background: #ffffff;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: 0px 0px 8px 0px #00000038;
+
+  > :first-child {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #7A80A14D;
+  }
 
   .sticky-sidebar-item {
     display: flex;
@@ -404,15 +410,27 @@ export default defineComponent({
 
 .dark {
   .sticky-sidebar-items {
-    @include content-block-dark;
+    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+
+    > :first-child {
+      border-color: #FFFFFF1A;
+    }
 
     .sticky-sidebar-item {
       color: $color-white;
+
+      &:hover {
+        color: $active-color-dark;
+      }
+
+      img {
+        filter: $active-color-dark-filter;
+      }
     }
   }
 
   .additional-info-items {
-    @include content-block-dark;
+    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
 
     .additional-info-item {
       color: $color-white;
@@ -420,6 +438,17 @@ export default defineComponent({
       &:hover {
         background: rgba($font-1-dark, 10%);
       }
+
+      img {
+        filter: $active-color-dark-filter;
+      }
+    }
+  }
+
+  .rocket-wrapper {
+    .close-btn {
+      border-color: $font-3-dark;
+      color: $font-3-dark;
     }
   }
 }

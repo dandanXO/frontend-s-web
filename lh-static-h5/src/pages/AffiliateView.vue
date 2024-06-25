@@ -616,6 +616,43 @@ const rows = [
 
 .body--dark {
   .affiliate-container {
+    .ambassador {
+      .btn-wrapper {
+        .join-btn,
+        .login-btn {
+          background: url("../assets/images/common/common-md-btn-dark.png") no-repeat;
+          background-size: 100% 100%;
+          box-shadow: none;
+        }
+        .contact-btn {
+          background: url("../assets/images/common/common-md-white-btn-dark.png") no-repeat;
+          background-size: 100% 100%;
+          box-shadow: none;
+          color: $white;
+        }
+        .mask {
+          display: none;
+        }
+      }
+    }
+    .section-title {
+      color: $primary-dark;
+    }
+    .contact-us {
+      .register-btn-wrapper {
+        .register-btn {
+          background: $linear-bg-180;
+          box-shadow: 0px -2.28px 5.21px 0px #93F2FF inset;
+        }
+      }
+      .contact-info {
+        .title-wrapper {
+          .two-four-hour-wrapper {
+            background: $linear-bg-180;
+          }
+        }
+      }
+    }
     .page-title {
       -webkit-text-stroke-color: $font-3-dark;
       text-shadow: 0px 7.8040986061px 7.8040986061px rgba(0, 0, 0, 0.47), 3.9020493031px 3.9020493031px 0px #9da6d4;

@@ -740,13 +740,31 @@
         .platform-title-wrap {
           .platform-title,
           .platform-subtitle {
-            background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
+            background: $active-color-dark-linear;
             background-clip: text;
           }
         }
 
+        .platform-list-box {
+          .platform-list-item {
+            &.active {
+              .list-item-btn {
+                background: $active-color-dark-linear;
+                box-shadow: $active-color-dark-shadow;
+              }
+            }
+          }
+        }
+
+        .platform-play-btn {
+          .btn-blue {
+            background: $active-color-dark-linear;
+            box-shadow: $active-color-dark-shadow;
+          }
+        }
+
         .platform-txt-box {
-          color: $font-3-dark;
+          color: $font-0;
         }
       }
     }
@@ -754,18 +772,54 @@
 
   .game-container {
     @include content-block-dark;
+    background: $background-content-block-dark;
+
+    .all-game-container {
+      position: relative;
+      border: none;
+      &::after {
+        @include gradient-border($active-color-dark-linear);
+        border-radius: 1.5rem;
+      }
+
+      .plat-options-container {
+        background: #272F3D;
+        box-shadow: none;
+        .plat-option {
+          .text {
+            color: $font-1;
+          }
+          &.active {
+            background: $active-color-dark-linear;
+            box-shadow: $active-color-dark-shadow;
+
+            .text {
+              color: $color-white;
+            }
+          }
+        }
+      }
+
+      .game-list-wrapper {
+        .game-slot {
+          background: #FFFFFF0D;
+          box-shadow: 0px 0px 10px 0px #0000001A;
+        }
+      }
+    }
   }
 
   .pagination-wrapper {
     &:deep(.el-pagination) {
       .el-pager {
         li {
-          background: #4e6b96;
+          background: #2C5252;
           border: 1px solid #dfe3e8;
           color: $color-white;
 
           &.is-active {
-            background: $accent;
+            background: $active-color-dark-linear;
+            box-shadow: $active-color-dark-shadow;
             color: $color-white;
           }
         }
@@ -773,7 +827,7 @@
 
       .btn-prev,
       .btn-next {
-        background: #4e6b96;
+        background: #2C5252;
         color: #c4cdd5;
         border: 1px solid #dfe3e8;
 

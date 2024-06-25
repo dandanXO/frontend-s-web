@@ -399,4 +399,36 @@ export default defineComponent({
     }
   }
 }
+
+.dark {
+  .footer {
+    .top-footer {
+      .top-footer-inner {
+        background-color: #0A0C16;
+        border: none;
+
+        .top-ft-rgt {
+          .s1 {
+            color: $font-3-dark;
+          }
+        }
+      }
+    }
+    .bottom-footer {
+      background:  #010105;
+      .bottom-footer-inner {
+        ul{
+          li{
+            a {
+              color: $font-3-dark;
+              &:hover{
+                color: $color-white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

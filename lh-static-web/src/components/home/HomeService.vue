@@ -1,6 +1,7 @@
 <template>
   <div class="service-section">
-    <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle>
+    <!-- <HomeTitle title="优质服务" subtitle="EXCELLENT SERVICE"></HomeTitle> -->
+    <HomeTitleV2 title="优质服务" subtitle="EXCELLENT SERVICE"/>
     <div class="service-container">
       <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -81,7 +82,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" :src="loadCircleBg()" />
                 <img class="icon" src="../../assets/home/service/deposit.png" />
               </div>
             </div>
@@ -98,7 +99,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" :src="loadCircleBg()" />
                 <img class="icon" src="../../assets/home/service/deposit.png" />
               </div>
             </div>
@@ -114,7 +115,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" :src="loadCircleBg()" />
                 <img class="icon" src="../../assets/home/service/deposit.png" />
               </div>
             </div>
@@ -131,7 +132,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" :src="loadCircleBg()" />
                 <img class="icon" src="../../assets/home/service/deposit.png" />
               </div>
             </div>
@@ -152,7 +153,17 @@
 <script setup>
 import { onMounted } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
+import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import Vue3autocounter from "vue3-autocounter";
+import { useDark } from "@vueuse/core";
+
+const isDark = useDark();
+
+const loadCircleBg = () => {
+  return isDark
+    ? require("../../assets/home/service/circle-bg-dark.png")
+    : require("../../assets/home/service/circle-bg.png");
+};
 
 onMounted(() => {});
 </script>
@@ -315,9 +326,30 @@ onMounted(() => {});
     .service-container {
       .top-container {
         .counter {
+          .circle {
+            background-image: url("@/assets/home/blue-circle-dark.png");
+
+            .inner-circle {
+              background: #14110d;
+              box-shadow: 0px 4px 20px 0px #0a4479f0 inset;
+
+              .type {
+                color: #dce6f1;
+              }
+              .auto-counter {
+                background: linear-gradient(180deg, #b1ecff 0%, #3ebdf3 100%);
+                background-clip: text;
+                -webkit-text-stroke-width: 0;
+              }
+              .unit {
+                color: $font-3-dark;
+              }
+            }
+          }
+
           .title,
           .title-en {
-            color: #dfe4ff;
+            color: $font-3-dark;
           }
         }
       }
@@ -329,7 +361,10 @@ onMounted(() => {});
           .item {
             .right-container {
               .title {
-                color: $font-1-dark;
+                color: $active-color-dark;
+              }
+              .desc {
+                color: $font-3-dark;
               }
             }
           }
