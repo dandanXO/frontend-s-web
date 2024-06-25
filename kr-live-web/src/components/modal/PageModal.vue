@@ -478,14 +478,20 @@ onMounted(() => {
   grid-template-rows: 89px auto 1fr;
   width: 100%;
   height: 100%;
-  min-width: 60vw;
-  max-width: 80vw;
+  min-width: 30vw;
+  max-width: 50vw;
+  max-height: 75vh;
 
   &.minimal {
     grid-template-rows: 89px fit-content;
     height: fit-content;
     width: fit-content;
     min-width: fit-content;
+  }
+
+  @media (max-width: 1400px) {
+    min-width: 60vw;
+    max-width: 85vw;
   }
 
   @media (max-width: 768px) {
