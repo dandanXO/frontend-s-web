@@ -153,7 +153,7 @@ const onSubmit = () => {
 
 <style lang="scss" scoped>
 .form-wrapper {
-  min-height: 260px;
+  padding: 20px;
 }
 
 .login-form {
@@ -195,14 +195,5 @@ const onSubmit = () => {
       font-size: x-small;
     }
   }
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin: 10px auto 20px;
 }
 </style>

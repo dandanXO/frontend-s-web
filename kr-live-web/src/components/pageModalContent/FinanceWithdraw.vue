@@ -220,31 +220,7 @@ const selectedWithdrawalMethod = ref([]);
 const loadCards = () => {
   return new Promise((resolve) => {
     api.get("/session/bankCard").then((resp) => {
-      const response = resp.data;
-
-      withdrawState.bankCardList = [];
-      if (response.code === 0) {
-        response.data.forEach(element => {
-          withdrawState.bankCardList.push(element)
-        });
-
-        if (withdrawState.bankCardList?.[0]) {
-          withdrawInfo.cardId = withdrawState.bankCardList[0].id;
-        }
-
-
-        if (cardRef.value) {
-          cardRef.value.resetValidation();
-        }
-        withdrawInfo.amount = "";
-        if (amountRef.value) {
-          setTimeout(() => {
-            amountRef.value.resetValidation();
-          }, 0)
-        }
-
-        resolve(response.data);
-      }
+      resolve(resp.data);
     }).catch((error) => {
       console.log("error", error);
     });
@@ -339,17 +315,38 @@ const getWithdrawalMethods = () => {
 
 const initWithdraw = () => {
   isLoading.value = true;
-  Promise.all([loadCards(), getWithdrawalMethods()]).then(([cards, withdrawMethods]) => {
-    const availableBankType = cards?.[0]?.bankType;
+  Promise.all([loadCards(), getWithdrawalMethods()]).then(([cardsRes, withdrawMethods]) => {
+    const availableBankType = cardsRes.data?.[0]?.bankType;
 
     if (availableBankType) {
       const methodIndex = withdrawMethods.findIndex(({ code }) => availableBankType === 'CRYPTO' && code.includes('USDT') || code === availableBankType);
 
-      const selectedMethod = withdrawMethods[methodIndex];
-      withdrawalMethods.value = [selectedMethod];
-      selectedWithdrawalMethod.value = selectedMethod;
-      withdrawInfo.withdrawCode = selectedMethod.code;
-      isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
+      if (methodIndex !== -1) {
+        withdrawState.bankCardList = [];
+        cardsRes.data.forEach(element => {
+          withdrawState.bankCardList.push(element)
+        });
+
+        if (cardRef.value) {
+          cardRef.value.resetValidation();
+        }
+        withdrawInfo.amount = "";
+        if (amountRef.value) {
+          setTimeout(() => {
+            amountRef.value.resetValidation();
+          }, 0)
+        }
+
+        const selectedMethod = withdrawMethods[methodIndex];
+        withdrawalMethods.value = [selectedMethod];
+        selectedWithdrawalMethod.value = selectedMethod;
+        withdrawInfo.withdrawCode = selectedMethod.code;
+        isUSDT.value = withdrawInfo.withdrawCode.includes('USDT')
+
+        if (withdrawState.bankCardList?.[0]) {
+          withdrawInfo.cardId = withdrawState.bankCardList[0].id;
+        }
+      }
     }
 
     store.getBalance();
@@ -368,6 +365,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+
 .select-amt-btn-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));

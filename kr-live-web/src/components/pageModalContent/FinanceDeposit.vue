@@ -649,6 +649,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+
 .submit-message {
   // width: calc(100% - 40px);
   border-radius: 10px;

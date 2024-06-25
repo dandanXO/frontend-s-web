@@ -98,6 +98,7 @@ onMounted(() => {
 .announcement-container {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
+  padding: 20px;
 
   .total {
     margin-left: auto;
@@ -111,7 +112,7 @@ onMounted(() => {
 
     .announcement-list {
       overflow-y: auto;
-      max-height: 550px;
+      max-height: 100%;
       height: 100%;
 
       .active-announcement {
@@ -132,7 +133,7 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 550px;
+      max-height: 100%;
       overflow-y: auto;
       padding-right: 10px;
 

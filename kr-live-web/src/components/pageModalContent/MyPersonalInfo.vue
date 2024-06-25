@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container">
+  <div class="page-container personal-info-page">
     <div class="form-wrapper">
       <form class="personal-info-form form-template">
         <div class="form-item">
@@ -121,4 +121,8 @@ const closetheModal = () => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+</style>
