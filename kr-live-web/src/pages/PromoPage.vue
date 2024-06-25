@@ -22,8 +22,8 @@
               :key="p"
               @click="switchPromoType(p)"
             >
-              <RiFunctionLine v-if="p && p.value === 'ALL'" />
-              <template v-else>{{ p.label }}</template>
+              <!-- <RiFunctionLine v-if="p && p.value === 'ALL'" />
+              <template v-else>{{ p.label }}</template> -->
             </div>
           </div>
         </div>
@@ -101,7 +101,6 @@
 <script lang="js">
 import {ref, defineComponent, onActivated, reactive, watch} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import {RiFunctionLine} from 'vue-remix-icons'
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
@@ -115,7 +114,6 @@ import HotPromotion from 'components/HotPromotion'
 export default defineComponent({
   name: "PromoView",
   components: {
-    RiFunctionLine,
     HotPromotion,
   },
   setup() {
