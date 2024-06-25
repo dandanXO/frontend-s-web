@@ -760,7 +760,13 @@ function showEdit(competition) {
       form.siteId = selectedPlatform.siteId
     }
     loadPlatformsForForm(form.siteId)
+    loadGameListForForm(form.platformId)
   })
+}
+
+async function loadGameListForForm(platformId) {
+  const { data: ret } = await getCompetitionGameList(platformId)
+  dialogGameName.list = ret
 }
 
 function create() {
