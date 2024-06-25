@@ -89,7 +89,7 @@ export const userStore = defineStore("userStore", {
       this.phone = tel;
     },
     isNotAppPromo() {
-      console.log(window.location.pathname);
+      // console.log(window.location.pathname);
       //当 LH H5 在 /promotion 或者某些页面时，很多Api都不需要Call + 省时间。
       if(
         window.location.pathname === "/deposit" ||
