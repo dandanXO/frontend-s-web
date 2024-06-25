@@ -1239,7 +1239,7 @@ const convertDateTolastWeek = date => {
 }
 
 const convertDateTo30min = date => {
-  var m = moment(date).subtract(30, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+  var m = moment(date).subtract(210, 'minutes').format('YYYY-MM-DD HH:mm:ss')
   return m
 }
 
