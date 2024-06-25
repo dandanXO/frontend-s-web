@@ -114,22 +114,22 @@
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
         <img v-if="$q.dark.isActive" src="../assets/images/home/deposit-mid-dark.png"/>
-        <img v-else src="../assets/images/home/deposit-mid.png" />
+        <img v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
         <img v-if="$q.dark.isActive" src="../assets/images/home/withdraw-mid-dark.png"/>
-        <img v-else src="../assets/images/home/withdraw-mid.png" />
+        <img v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
         <img v-if="$q.dark.isActive" src="../assets/images/home/transfer-mid-dark.png"/>
-        <img v-else src="../assets/images/home/transfer-mid.png" />
+        <img v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
         <img v-if="$q.dark.isActive" src="../assets/images/home/vip-mid-dark.png"/>
-        <img v-else src="../assets/images/home/vip-mid.png" />
+        <img v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
