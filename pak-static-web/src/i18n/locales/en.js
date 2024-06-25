@@ -552,6 +552,10 @@ export default {
         searchButton: "Search"
       },
       table: {
+        id: "ID",
+        downlineMember: "Downline Member",
+        vip: "VIP",
+        uplineLoginName: "Upline Username",
         type: "Types",
         username: "Username",
         emark: "Emarks",
@@ -588,7 +592,11 @@ export default {
         validBet: "Valid Bet",
         balance: "Win/Loss",
         rounds: "Rounds",
-        player: "Player"
+        player: "Player",
+        platform: "Platform",
+        players: "Players",
+        bet: "Bet",
+        payout: "Payout",
       }
     },
     profitAndLoss: {
@@ -613,7 +621,9 @@ export default {
         rebate: "Player Rebate",
         referral: "Referral",
         profitAndLoss: "Profit And Loss",
-        depositFee: "Deposit Fee"
+        depositFee: "Deposit Fee",
+        bet: "Bet",
+        payout: "Payout",
       }
     }
   },

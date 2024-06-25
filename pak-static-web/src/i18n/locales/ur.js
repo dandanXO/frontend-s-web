@@ -551,6 +551,10 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -587,7 +591,11 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -612,7 +620,9 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     }
   },

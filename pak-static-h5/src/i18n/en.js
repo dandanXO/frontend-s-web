@@ -346,7 +346,6 @@ export default {
         platform: "Platform",
         players: "Players",
         bet: "Bet",
-        validBet: "Valid Bet",
         payout: "Payout",
       }
     },
