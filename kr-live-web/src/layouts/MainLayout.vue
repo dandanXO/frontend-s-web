@@ -240,11 +240,11 @@ export default defineComponent({
   top: 50%;
   margin-top: -42px;
   left: 50%;
-  width: 300px;
+  width: 260px;
   transform: translate(-50%, -50%);
 
   @media (max-width: 1200px) {
-    width: 250px;
+    width: 220px;
   }
 
   @media (max-width: 768px) {
@@ -289,7 +289,7 @@ export default defineComponent({
   @media (min-width: 1200px) {
     background: url("../assets/home/home-banner-xl.jpg") no-repeat top center;
     background-size: cover;
-    height: 400px;
+    height: 380px;
   }
 
 
