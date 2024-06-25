@@ -23,12 +23,12 @@
         </q-tabs>
       </div>
       <div class=content>
-        <div class="page-dialog-links" v-if="!isMinimalMode">
+        <!-- <div class="page-dialog-links" v-if="!isMinimalMode">
           <p class="header-info-description">{{ headerInfo.description }}</p>
-        </div>
+        </div> -->
         <q-tab-panels v-model="page" animated>
           <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page" style="padding:0">
+            <q-tab-panel :name="item.page" style="padding:0;">
               <component :is="item.component" @closeModal="closeDialog"></component>
             </q-tab-panel>
           </template>
