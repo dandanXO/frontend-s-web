@@ -160,7 +160,7 @@ import { useDark } from "@vueuse/core";
 const isDark = useDark();
 
 const loadCircleBg = () => {
-  return isDark
+  return isDark.value
     ? require("../../assets/home/service/circle-bg-dark.png")
     : require("../../assets/home/service/circle-bg.png");
 };

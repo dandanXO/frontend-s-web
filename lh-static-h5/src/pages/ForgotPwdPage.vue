@@ -687,7 +687,7 @@ function charType(num) {
   }
 
   .common-large-btn {
-    background: $linear-bg-180;
+    background: $linear-bg-180-dark;
   }
 }
 </style>

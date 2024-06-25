@@ -1523,7 +1523,7 @@ export default defineComponent({
   }
 
   .vip-link {
-    background: $linear-bg-180;
+    background: $linear-bg-180-dark;
     &::before {
       background-image: url("../assets/images/account/vip-diamond-dark.png");
     }
@@ -1531,7 +1531,7 @@ export default defineComponent({
 
   .vip-progress {
     :deep(.q-linear-progress__model) {
-      background: $linear-bg-180;
+      background: $linear-bg-180-dark;
     }
   }
 }

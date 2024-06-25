@@ -614,7 +614,7 @@ export default defineComponent({
     }
   }
   .common-large-btn {
-    background: $linear-bg-180;
+    background: $linear-bg-180-dark;
   }
   .common-large-white-btn {
     color: $white;

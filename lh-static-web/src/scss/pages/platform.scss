@@ -747,11 +747,18 @@
 
         .platform-list-box {
           .platform-list-item {
-            &.active {
+            &.active,
+            &:hover {
               .list-item-btn {
                 background: $active-color-dark-linear;
                 box-shadow: $active-color-dark-shadow;
               }
+              .list-item-txt {
+                color: $active-color-dark;
+              }
+            }
+            .list-item-btn {
+              border: none;
             }
           }
         }

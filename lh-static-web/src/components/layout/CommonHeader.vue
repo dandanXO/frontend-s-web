@@ -2701,6 +2701,12 @@ body {
                 .nav-title {
                   color: $active-color-dark;
                 }
+                // .hover-icon {
+
+                // }
+                // :last-child {
+                //   color: $active-color-dark;
+                // }
               }
             }
           }
@@ -2711,18 +2717,20 @@ body {
           }
 
           &.second-nav {
-            > a {
-              color: $font-3-dark;
-              .hover-icon {
-                filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg) brightness(92%) contrast(82%);
-              }
-
-              &:hover {
+            .header-menu-item {
+              > a {
+                color: $font-3-dark;
                 .hover-icon {
-                  filter: $active-color-dark-filter;
+                  filter: brightness(0) saturate(100%) invert(78%) sepia(31%) saturate(266%) hue-rotate(168deg) brightness(92%) contrast(82%);
                 }
-                span {
-                  color: $active-color-dark;
+
+                &:hover {
+                  .hover-icon {
+                    filter: $active-color-dark-filter;
+                  }
+                  span {
+                    color: $active-color-dark;
+                  }
                 }
               }
             }
@@ -2762,6 +2770,9 @@ body {
         img {
           filter: $active-color-dark-filter;
         }
+      }
+      &:hover {
+        color: $active-color-dark;
       }
     }
   }

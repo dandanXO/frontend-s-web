@@ -641,14 +641,14 @@ const rows = [
     .contact-us {
       .register-btn-wrapper {
         .register-btn {
-          background: $linear-bg-180;
+          background: $linear-bg-180-dark;
           box-shadow: 0px -2.28px 5.21px 0px #93F2FF inset;
         }
       }
       .contact-info {
         .title-wrapper {
           .two-four-hour-wrapper {
-            background: $linear-bg-180;
+            background: $linear-bg-180-dark;
           }
         }
       }
