@@ -17,12 +17,6 @@
 
                 </q-list>
             </q-btn-dropdown>
-
-
-            <!-- <q-tabs v-model="inboxCategory" class="form-wrapped" dense>
-            <q-tab :name="category.type" :label="$t(category.label)" v-for="category in inboxCategories"
-                :key="category.type" />
-        </q-tabs> -->
         </div>
 
 
@@ -311,6 +305,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .message-page {
     padding: 20px;
+    height: 100%;
 }
 
 .content-form {
@@ -322,6 +317,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     margin: 0;
+    height: calc(100% - 35px);
 }
 
 .back-btn {
@@ -341,7 +337,7 @@ onMounted(() => {
 .message-container {
     display: grid;
     grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
-    min-height: 550px;
+    height: 100%;
 
     .total {
         margin-left: auto;
@@ -352,6 +348,7 @@ onMounted(() => {
         flex-direction: column;
         gap: 5px;
         padding-right: 10px;
+        min-height: 100%;
 
         .header {
             display: flex;
@@ -361,7 +358,7 @@ onMounted(() => {
 
         .message-list {
             overflow-y: auto;
-            max-height: 550px;
+            max-height: 100%;
             height: 100%;
 
             .message {
@@ -397,7 +394,7 @@ onMounted(() => {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 550px;
+            max-height: 100%;
             overflow-y: auto;
             padding-right: 10px;
 
