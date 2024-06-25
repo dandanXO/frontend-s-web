@@ -365,18 +365,18 @@
       </div>
     </q-card>
   </q-dialog>
-    <q-dialog
-      v-model="profileDialogVisible"
-      persistent
-      class="profile-dialog"
-    >
-      <q-card style="flex-direction: column; display: flex;">
-        <div class="header">
-          修改头像
-      <q-btn dense flat icon="close" v-close-popup>
-        <q-tooltip>Close</q-tooltip>
-      </q-btn>
-        </div>
+  <q-dialog
+    v-model="profileDialogVisible"
+    persistent
+    class="profile-dialog"
+  >
+    <q-card style="flex-direction: column; display: flex;">
+      <div class="header">
+        修改头像
+        <q-btn dense flat icon="close" v-close-popup>
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </div>
 
       <div class="grid-container">
         <div class="grid-item" v-for="(profImg, profIndex) in 13" :key="profIndex" :class="{selected : selectedImage === 'default-' + (profIndex+1) }" @click="selectImage('default-' + (profIndex+1))">
