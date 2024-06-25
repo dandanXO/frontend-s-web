@@ -301,6 +301,10 @@ export default {
         searchButton: "SEARCH"
       },
       table: {
+        id: "ID",
+        downlineMember: "Downline Member",
+        vip: "VIP",
+        uplineLoginName: "Upline Username",
         type: "Types",
         username: "Username",
         emark: "Emarks",
@@ -338,7 +342,11 @@ export default {
         validBet: "Valid Bet",
         balance: "Win/Loss",
         rounds: "Rounds",
-        player: "Player"
+        player: "Player",
+        platform: "Platform",
+        players: "Players",
+        bet: "Bet",
+        payout: "Payout",
       }
     },
     profitAndLoss: {
@@ -363,7 +371,9 @@ export default {
         rebate: "Player Rebate",
         referral: "Referral",
         profitAndLoss: "Profit And Loss",
-        depositFee: "Deposit Fee"
+        depositFee: "Deposit Fee",
+        bet: "Bet",
+        payout: "Payout",
       }
     }
   },
@@ -406,14 +416,14 @@ export default {
     updateNow: "Update now"
   },
   promo: {
-    all: 'ALL',
-    earn: 'EARN',
-    hot: 'HOT',
-    new_user: 'NEW USER',
-    sports: 'SPORTS',
-    live: 'LIVE',
-    slot: 'SLOT',
-    vip: 'VIP'
+    all: "ALL",
+    earn: "EARN",
+    hot: "HOT",
+    new_user: "NEW USER",
+    sports: "SPORTS",
+    live: "LIVE",
+    slot: "SLOT",
+    vip: "VIP"
   },
   error: {
     101: "Platform not found",

@@ -302,6 +302,10 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -338,7 +342,12 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -363,7 +372,9 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     }
   },
@@ -406,14 +417,14 @@ export default {
     updateNow: "ابھی اپ ڈیٹ کریں"
   },
   promo: {
-    all: 'سب',
-    earn: 'کمائیں',
-    hot: 'مقبول',
-    new_user: 'نیا صارف',
-    sports: 'کھیل',
-    live: 'لائیو',
-    slot: 'الیکٹرانک',
-    vip: 'وی آئی پی'
+    all: "سب",
+    earn: "کمائیں",
+    hot: "مقبول",
+    new_user: "نیا صارف",
+    sports: "کھیل",
+    live: "لائیو",
+    slot: "الیکٹرانک",
+    vip: "وی آئی پی"
   },
   error: {
     101: "پلیٹ فارم نہیں مل سکی",
