@@ -279,9 +279,34 @@ export default defineComponent({
     });
     const gameModalRef = ref(null);
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
+      if (!store.token) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+
+        router.push('/?page=login');
+        return;
+      }
+
       gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
     };
+
     const openGame = debounce((p) => {
+      if (!store.token) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+
+        router.push('/?page=login');
+        return;
+      }
+
       ajaxBarRef.value.start();
       // debugger;
       console.log(p);
@@ -404,6 +429,8 @@ export default defineComponent({
     const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
+      selectedPlatId.value = '';
+      isShow.value = false;
     };
     const liveTabs = ref("");
     const switchPlat = (plat, menuType) => {

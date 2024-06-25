@@ -240,17 +240,17 @@ const iconInfo = reactive([
     // background: linear-gradient(#292b31, #191b1e);
     background: rgba(18, 17, 33, 0.6);
     backdrop-filter: blur(6px);
+    width: 100%;
   }
 }
 
 .content {
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 100%;
     flex-direction: row;
     height: 60px;
     display: flex;
