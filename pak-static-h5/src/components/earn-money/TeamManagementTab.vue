@@ -98,12 +98,12 @@ const downLineOptions = computed(() => [
 ]);
 
 const tableHeaders = computed(() => [
-  { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
-  { label: t("earnMoney.teamManagement.table.downlineMember"), name: "downlineMember", field: "downlineMember", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.downlineMember"), name: "downlineMember", field: "downlineMember", align: "center" },
   { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
   { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
   { label: t("earnMoney.teamManagement.table.registrationDate"), name: "registrationDate", field: "registrationDate", align: "center" },
-  { label: t("earnMoney.teamManagement.table.balance"), name: "balance", field: "balance", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.balance"), name: "balance", field: "balance", align: "center" },
   { label: t("earnMoney.teamManagement.table.lastLogin"), name: "lastLogin", field: "lastLogin", align: "center" },
   { label: t("earnMoney.teamManagement.table.lastDeposit"), name: "lastDeposit", field: "lastDeposit", align: "center" },
   { label: t("earnMoney.teamManagement.table.uplineLoginName"), name: "uplineLoginName", field: "uplineLoginName", align: "center" }

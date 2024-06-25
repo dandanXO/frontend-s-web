@@ -65,17 +65,20 @@ const childrenTabs = computed(() => [
     background-size: 100% 100%;
 
     border-radius: 8px;
-    width: calc(100% - 20px);
-    min-width: 430px;
+    width: 100%;
+    // width: calc(100% - 20px);
+    // min-width: 430px;
     overflow-x: auto;
     //margin-bottom: 10px;
     margin: 10px auto;
 
     :deep(.q-tab__label) {
       font-weight: 700;
+      font-size: 12px;
     }
 
     :deep(.q-tab) {
+      min-width: 110px;
       white-space: normal;
     }
 
