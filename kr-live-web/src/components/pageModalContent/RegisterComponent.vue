@@ -134,7 +134,8 @@ import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "RegisterPage",
-  setup(_props) {
+  emits: ["closeModal"],
+  setup(_props, { emit }) {
     const { t } = useI18n();
     const store = userStore();
     const siteId = process.env.SITEID;
@@ -243,6 +244,8 @@ export default defineComponent({
               const res = ret.data;
               if (res.code === 0) {
                 SessionStorage.set("TOKEN", res.data);
+
+                emit("closeModal");
 
                 $q.notify({
                   color: "positive",

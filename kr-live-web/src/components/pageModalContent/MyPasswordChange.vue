@@ -5,7 +5,7 @@
                 <div class="form-item">
                     <label>{{ $t('lang.password_existing_password') }}</label>
                     <q-input dense ref="oldPasswordRef" type="password" outlined v-model="updatePwdInfo.oldPassword"
-                        clearable :rules="[
+                        :loading="isSubmitting" :disable="isSubmitting" clearable :rules="[
                             (val) =>
                                 (val && val.length >= 6) ||
                                 $t('lang.password_at_least_6_character')
@@ -18,7 +18,7 @@
                         (val) =>
                             (val && val.length >= 6) ||
                             $t('lang.password_at_least_6_character')
-                    ]" clearable />
+                    ]" clearable :loading="isSubmitting" :disable="isSubmitting" />
                 </div>
 
                 <div class="form-item">
@@ -30,13 +30,14 @@
                                 $t('lang.password_at_least_6_character'),
                             (val) =>
                                 val === updatePwdInfo.password || $t('lang.password_password_mismatch')
-                        ]" clearable />
+                        ]" clearable :loading="isSubmitting" :disable="isSubmitting" />
                 </div>
             </form>
         </div>
 
         <div class="action-buttons">
-            <div class="primary-button blue" @click="submitUpdatePwd">{{ $t('lang.password_change_password') }}</div>
+            <q-btn class="primary-button blue" @click="submitUpdatePwd" :label="$t('lang.password_change_password')"
+                :disable="isSubmitting" :loading="isSubmitting" />
         </div>
     </div>
 </template>
@@ -61,6 +62,8 @@ const oldPasswordRef = ref();
 const passwordRef = ref();
 const confirmRef = ref();
 
+const isSubmitting = ref(false);
+
 const updatePwdInfo = reactive({
     oldPassword: "",
     password: "",
@@ -74,6 +77,7 @@ const submitUpdatePwd = () => {
 
     if (oldPasswordRef.value.hasError || passwordRef.value.hasError || confirmRef.value.hasError) {
     } else {
+        isSubmitting.value = true;
         api.post("/session/password", qs.stringify({
             oldPassword: updatePwdInfo.oldPassword,
             password: updatePwdInfo.password
@@ -87,8 +91,11 @@ const submitUpdatePwd = () => {
             } else {
 
             }
+
+            isSubmitting.value = false;
         }).catch((error) => {
             console.log("error", error);
+            isSubmitting.value = false;
         });
     }
 };
