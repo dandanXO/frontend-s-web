@@ -1,28 +1,31 @@
 <template>
-  <div class="form-wrapper">
-    <form class="personal-info-form form-template">
-      <div class="form-item">
-        <label>{{ $t('lang.personal_nickname') }}</label>
-        <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
-          ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.personal_real_name') }}</label>
-        <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
-          :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
-          @update:model-value="updateTouch" />
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.personal_id') }}</label>
-        <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
-          @update:model-value="updateTouch" />
-      </div>
-      <div class="form-item">
-        <label>{{ $t('lang.personal_phone') }}</label>
-        <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
-          @update:model-value="updateTouch" />
-      </div>
-    </form>
+  <div class="page-container personal-info-page">
+    <div class="form-wrapper">
+      <form class="personal-info-form form-template">
+        <div class="form-item">
+          <label>{{ $t('lang.personal_nickname') }}</label>
+          <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
+            ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
+        </div>
+        <div class="form-item">
+          <label>{{ $t('lang.personal_real_name') }}</label>
+          <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
+            @update:model-value="updateTouch" />
+        </div>
+        <div class="form-item">
+          <label>{{ $t('lang.personal_id') }}</label>
+          <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
+            @update:model-value="updateTouch" />
+        </div>
+        <div class="form-item">
+          <label>{{ $t('lang.personal_phone') }}</label>
+          <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
+            @update:model-value="updateTouch" />
+        </div>
+      </form>
+    </div>
+
     <div class="action-buttons">
       <div @click="closetheModal" class="primary-button blue">
         {{ $t('lang.personal_close_btn') }}
@@ -118,4 +121,8 @@ const closetheModal = () => {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.form-wrapper {
+  padding: 20px;
+}
+</style>

@@ -3,9 +3,7 @@
     <div class="top-header">
       <div @click="toggleNav()" class="hamburger-wrapper">
         <div class="icon-wrapper">
-          <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount" rounded
-            style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
-            :title="$t('lang.message_unread')" />
+          <UnreadNotificationBadge />
           <img class="hamburger-img" src="../../assets/home/menu-icon.svg" />
         </div>
         <img class="logo-img" src="../../assets/images/index/kr-logo.png" />
@@ -48,12 +46,10 @@
             <div class="icon-section-label">메뉴</div>
           </div>
           <div v-for="(item, index) in iconInfo" :key="index"
-            @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
+            @click="goPageOrLogin(item?.page)"
             class="credit-info cursor-pointer">
             <div class="icon-wrapper">
-              <q-badge :label="store.unreadCount" class="red-dot" v-if="store.unreadCount && item.type === 'message'"
-                rounded style="background:#DF3D31;margin:auto;min-height:9px;padding:2px 4.5px;"
-                :title="$t('lang.message_unread')" />
+              <UnreadNotificationBadge v-if="item.type === 'message'" />
               <img :src="item.iconUrl" alt="" />
             </div>
             <div class="info-text">{{ $t(item.info) }}</div>
@@ -77,10 +73,11 @@
 import LoggedIn from "./LoggedIn.vue";
 import NotLoggedIn from "./NotLoggedIn.vue";
 import { reactive, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { userStore } from "stores/index";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import UnreadNotificationBadge from 'components/home/UnreadNotificationBadge';
 
 const store = userStore();
 const $q = useQuasar();
@@ -93,7 +90,7 @@ const toggleNav = () => {
   navActive.value = !navActive.value;
 };
 
-const showNotify = () => {
+const showNotify = (page) => {
   $q.notify({
     color: "negative",
     position: "top",
@@ -101,16 +98,22 @@ const showNotify = () => {
     icon: "report_problem"
   });
 
-  router.push('/?page=login')
+  router.push({
+    path: '/',
+    query: {
+      page: 'login',
+      redirect: page
+    }
+  })
 };
 
 const goPageOrLogin = (page) => {
   if (store.token) {
-    router.push(page);
+    router.push(`/?page=${page}`);
     return;
   }
 
-  showNotify();
+  showNotify(page);
 }
 
 const logout = () => {
@@ -118,72 +121,37 @@ const logout = () => {
 }
 
 const iconInfo = reactive([
-  // {
-  //   info: "송금신청",
-  //   iconUrl: require("../../assets/icon/deposit.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=finance/deposit`);
-  //   }
-  // },
   {
     info: 'lang.menu_announcement',
     iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=announcement`);
-    }
+    page: 'announcement',
   },
-  // {
-  //   info: "이벤트",
-  //   iconUrl: require("../../assets/icon/icon-promo.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=promo/all`);
-  //   }
-  // },
   {
     info: "lang.menu_deposit",
     iconUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/deposit`);
-    }
+    page: 'finance/deposit',
   },
   {
     info: "lang.menu_withdraw",
     iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/withdraw`);
-    }
+    page: 'finance/withdraw',
   },
   {
     info: "lang.menu_transaction_record",
     iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records`);
-    }
+    page: 'transaction/records',
   },
   {
     info: "lang.menu_rebates",
     iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records&tab=rebates`);
-    }
+    page: 'transaction/records&tab=rebates',
   },
   {
     type: 'message',
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=personal/messages`);
-    }
+    page: 'personal/messages',
   },
-  // {
-  //   info: "lang.menu_customer_service",
-  //   iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-  //   goPage: () => {
-  //     window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-  //   },
-  //   requireLogin: false
-  // },
 ]);
 </script>
 
@@ -240,6 +208,7 @@ const iconInfo = reactive([
     // background: linear-gradient(#292b31, #191b1e);
     background: rgba(18, 17, 33, 0.6);
     backdrop-filter: blur(6px);
+    width: 100%;
   }
 }
 
@@ -250,7 +219,6 @@ const iconInfo = reactive([
   overflow-x: auto;
 
   @media (min-width: 769px) {
-    width: 90%;
     flex-direction: row;
     height: 60px;
     display: flex;

@@ -1,6 +1,6 @@
 <template>
     <q-intersection once @visibility="isVisible = true">
-        <div class="news-section">
+        <div class="news-section" data-aos="zoom-in-up">
             <div class="news-title news-title__sub">
                 <div class="title-text">{{ $t('lang.withdraw_record_withdrawal_status') }}</div>
             </div>

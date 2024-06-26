@@ -9,11 +9,9 @@ import { Platform, useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
-//test-update
 import { userStore } from "stores/index";
 import isString from "lodash/isString";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import { useUI } from "stores/ui";
 import PageModal from "components/modal/PageModal";
 
@@ -28,7 +26,6 @@ export default defineComponent({
     $q.dark.set(true);
     $q.screen.setSizes({ sm: 500, md: 768, lg: 991, xl: 1280 });
     const channelValue = ref("");
-    const pageModalRef = ref(null);
 
     const checkSID = () => {
       const affiliateItem = sessionStorage.getItem("AFFILIATE_CODE");
@@ -94,43 +91,8 @@ export default defineComponent({
       });
     };
 
-    // const getCSA = () => {
-    //   cached.get("customerAddress", () => api.get("/config/customerAddress").then((res) => {
-    //     return res
-    //   })).then((data) => {
-    //     // console.log("here");
-    //     // console.log(data);
-    //     const url = new URL(data);
-    //     CSAUrl = url.hostname;
-    //     initCsWeb();
-    //     console.log(CSAUrl)
-    //   }).catch((err) => {
-    //     console.log(err);
-    //     CSAUrl = "csweb01.c8nhwrqx4.com";
-    //   });
-    // };
-
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
-    };
-
-    const initListenApp = () => {
-      App.addListener("appUrlOpen", function (event) {
-        // Example url: https://beerswift.app/tabs/tabs2
-        // slug = /tabs/tabs2
-        const slug = event.url.split(".com").pop();
-
-        // alert(slug);
-        console.log(slug);
-        // We only push to the route if there is a slug present
-        if (slug) {
-          // alert("GO");
-          // alert(slug);
-          router.push({
-            path: slug
-          });
-        }
-      });
     };
 
     const checkAgentFrom = () => {
@@ -183,8 +145,6 @@ export default defineComponent({
       initCsWeb();
       initStorage();
       checkAgentFrom();
-      // initListenApp();
-      // getCSA();
 
       document.addEventListener(
         "deviceready",

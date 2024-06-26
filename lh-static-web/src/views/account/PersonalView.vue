@@ -238,7 +238,7 @@
                 />
               </el-form-item>
               <div class="txt-center btn-container">
-                <button :loading="loadingPwBtn" class="standard-button btn-color-white" type="button" @click="clearPwd">
+                <button :loading="loadingPwBtn" class="standard-button btn-color-white standout" type="button" @click="clearPwd">
                   重新填写
                 </button>
 
@@ -1168,6 +1168,12 @@ export default defineComponent({
 
   .account-tip-text {
     color: $font-3-dark;
+  }
+
+  .standard-button.standout {
+    background: #394A65;
+    box-shadow: none;
+    color: $active-color-dark;
   }
 }
 </style>

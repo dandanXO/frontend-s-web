@@ -227,6 +227,7 @@ export default {
     UNSETTLED: 'UNSETTLED',
     SETTLED: 'SETTLED',
     CANCEL: 'CANCEL',
+    GIVEREWARD: 'TIPS',
   },
   giftType: {
     ENTITY: 'Entity',
@@ -1812,6 +1813,8 @@ export default {
     addFakeLotteryRecord: 'Add Fake Lottery Record',
     approveSummonRecord: 'Approve Summon Record',
     updateAffiliateLevel: 'Update Affiliate Level',
+    unsuccessFrom30min: 'Unsuccessful from 30 Minutes Ago',
+    unsuccessIn10time: 'Channels with 10 Unsuccessful',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
@@ -1917,6 +1920,7 @@ export default {
       'The password cannot be less than 6 digits or more than 12 digits',
     paymentUpdate: 'Copy to other way or level? if not just press update',
     paySuccess: 'Pay Success',
+    pleaseEnterAffiliateNameOrAffiliateCode: 'Please enter affiliate name or affiliate code',
     promoDistributionSuccess: 'Promo Distribution Success',
     redeemCashSuccess: 'Redeem Cash Success',
     reenterPassword: 'Please re-enter the password',
@@ -2764,6 +2768,8 @@ export default {
     14008: 'Affiliate commission must be more than superior affiliate commission: ',
     14009: 'Affiliate income must be more than superior affiliate income',
     14011: 'Affiliate already exist',
+    14012: 'Can only edit affiliate to lower level',
+    14013: 'Affiliate has downline, cannot set to lower level',
     14100: 'The affiliate does not have this downline member',
     14101: 'This affiliate does not have permission to perform this action',
     14110: 'Platform and Site with same name already exist',

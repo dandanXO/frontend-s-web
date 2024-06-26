@@ -1589,12 +1589,11 @@ const uiControl = reactive({
   ],
   commissionMax: 2,
   affiliateLevel: [
-    { key: 1, displayName: 'CHIEF AFFILIATE', value: 'CHIEF_AFFILIATE' },
-    { key: 2, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 3, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 4, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 5, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
-    { key: 6, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
+    { key: 1, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
+    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
+    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
+    { key: 4, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
+    { key: 5, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
   ],
 })
 

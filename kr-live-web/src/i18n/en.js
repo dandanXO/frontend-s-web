@@ -167,6 +167,12 @@ export default {
     // deposit start
     deposit_payment_channel: "Payment Channel",
     deposit_confirm_deposit: "Deposit",
+    deposit_deposit_amount: "Deposit Amount",
+    deposit_depositor_name: "Depositor Name",
+    deposit_deposit_unit: "Deposit Unit",
+    deposit_ten_thousand_won: "Ten Thousand Won",
+    deposit_clear_amount: "Clear",
+    deposit_please_enter_amount: "Please enter amount",
     deposit_reminder: "Reminder",
     deposit_reminder_caption: "Please read before deposit",
     // deposit end
@@ -193,6 +199,7 @@ export default {
     withdraw_link_bank_card: "Link bank card",
     withdraw_withdraw_amount_per_item: "Withdrawal amount/item",
     withdraw_withdraw_amount_per_day: "Withdrawal amount/day",
+    withdraw_confirm_withdraw: "Confirm Withdraw",
     // withdraw end
     // personal start
     personal_nickname: "Nickname",
@@ -774,7 +781,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
-    11000: "No bank card",
+    11000: "Third party provider is experiencing difficulties",
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
@@ -786,6 +793,7 @@ export default {
     14003: "Affiliate code not found",
     15201: "Incorrect old code",
     15202: "New code must match old code",
+    15206: "Duplicated nickname",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

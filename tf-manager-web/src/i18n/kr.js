@@ -217,6 +217,7 @@ export default {
     UNSETTLED: '미정산',
     SETTLED: '정산 완료',
     CANCEL: '취소',
+    GIVEREWARD: '보상',
   },
   giftType: {
     ENTITY: '실물',
@@ -1792,6 +1793,7 @@ export default {
     paymentUpdate:
       '다른 방법이나 레벨에 복사하시겠습니까? 그렇지 않으면 업데이트를 누르십시오',
     paySuccess: '결제 성공',
+    pleaseEnterAffiliateNameOrAffiliateCode: '제휴 이름 또는 제휴 코드를 입력하세요',
     promoDistributionSuccess: '프로모션 분배 성공',
     redeemCashSuccess: '현금 교환 성공',
     reenterPassword: '비밀번호를 다시 입력하십시오',
@@ -2597,6 +2599,8 @@ export default {
     14008: '제휴 수수료는 상위 제휴 수수료보다 커야합니다:',
     14009: '제휴 수입은 상위 제휴 수입보다 커야합니다',
     14011: '제휴가 이미 존재합니다',
+    14012: '낮은 레벨의 제휴만 생성 가능',
+    14013: '제휴사에는 다운라인이 있으므로 더 낮은 수준으로 설정할 수 없습니다.',
     14100: '제휴에이 다운 라인 회원이 없습니다',
     14101: '이 제휴는이 작업을 수행할 수있는 권한이 없습니다',
     14110: '동일한 이름의 플랫폼 및 사이트가 이미 존재합니다',

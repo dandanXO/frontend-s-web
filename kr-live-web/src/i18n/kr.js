@@ -169,12 +169,18 @@ export default {
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
+    deposit_deposit_amount: "입금금액",
+    deposit_depositor_name: "입금자명",
+    deposit_deposit_unit: "입금단위",
+    deposit_ten_thousand_won: "만원",
+    deposit_clear_amount: "삭제",
+    deposit_please_enter_amount: "금액을 입력하세요",
     deposit_reminder: "알림",
     deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
     본인명의 이외 타명의 입금은 처리가 불가합니다
     계좌는 실시간으로 변경되며, 입금시 마다 계좌번호 확인 해주시기 바랍니다.
-    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다. 
+    입금 최소 금액은 30,000원 이상 만원 단위로만 가능합니다.
 
     ※주의사항
     충전하실 금액 입력 후 입금계좌요청 시 금액수정이 불가합니다.
@@ -184,7 +190,6 @@ export default {
     23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
-    withdraw_bank_card: "환전 은행카드 선택",
     withdraw_withdraw_amount: "출금금액",
     withdraw_withdraw_password: "출금 비밀번호",
     withdraw_withdraw_code_4_digits: "4자리 숫자를 입력하세요",
@@ -211,6 +216,7 @@ export default {
     withdraw_link_bank_card: "링크 은행 카드",
     withdraw_withdraw_amount_per_item:  "출금금액/건",
     withdraw_withdraw_amount_per_day: "출금금액/일",
+    withdraw_confirm_withdraw: "환전신청",
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
@@ -564,7 +570,7 @@ export default {
     enter_ur_id: "ID is required.",
     enter_ur_dob: "Please confirm your DOB.",
     ok_btn: "Okay",
-    close_btn: "Close",
+    close_btn: "닫기",
     if_you_wish_to_change_please_contact: "If you wish to change your personal information, please contact our ",
     live_chat: "Live Chat",
     old_password: "Old Password",
@@ -733,7 +739,7 @@ export default {
     automatic_payment: "지불대기",
     sending: "지불대기",
     waiting_callback: "지불대기",
-    success: "승인완료",
+    close_btn: "승인거절",
     fail: "승인거절",
     suspend: "승인대기",
     waiting_auto_payment: "자동지불대기",
@@ -790,7 +796,7 @@ export default {
       10006: "이름을 사용할 수 없음",
       10007: "게임 방에 들어가는 중 오류 발생",
       10008: "오류",
-      11000: "은행 카드 없음",
+      11000: "제3자 채널에서 이상 현상이 발생합니다",
       11003: "입금 실패",
       12100: "출금 비밀번호가 일치하지 않습니다",
       13000: "도메인 이름을 찾을 수 없음",
@@ -803,6 +809,7 @@ export default {
       14003: "제휴 코드를 찾을 수 없음",
       15201: "잘못된 이전 코드",
       15202: "새 코드가 이전 코드와 일치해야 함",
+      15206: "중복된 닉네임입니다",
       21000: "이 게임은 이미 즐겨찾기 목록에 있음",
       24001: "출석 기록이 이미 존재함",
       24002: "동일한 IP가 감지됨",

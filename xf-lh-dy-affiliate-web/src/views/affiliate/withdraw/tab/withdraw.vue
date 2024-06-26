@@ -63,10 +63,10 @@
         prop="amount"
         style="margin-bottom: 5px;"
       >
-        <el-input-number
+        <el-input
           style="width: 100%;"
           controls-position="right"
-          v-model="withdrawInfo.amount"
+          v-model="withdrawAmountFormatted"
           :placeholder="t('fields.enterTheWithdrawalAmount')"
           :min="selectedWithdrawalMethod.withdrawMin"
           :max="selectedWithdrawalMethod.withdrawMax"
@@ -215,7 +215,7 @@
 
 <script setup>
 import { View, Hide, Refresh } from '@element-plus/icons-vue'
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import {
   loadBankCards,
@@ -260,6 +260,22 @@ const withdrawInfo = reactive({
   amount: '',
 })
 
+const withdrawAmountFormatted = ref('');
+
+const isDigitsWithComma = (value) => {
+  const withdrawAmount = value.replace(/\$\s?|(,*)/g, '');
+  return !isNaN(withdrawAmount);
+}
+
+watch(() => withdrawAmountFormatted.value, () => {
+  const withdrawAmount = withdrawAmountFormatted.value.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(withdrawAmount)) {
+  } else {
+    withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    withdrawInfo.amount = Number(withdrawAmount);
+  }
+})
+
 const securityForm = reactive({
   questionOne: null,
   answerOne: null,
@@ -288,7 +304,7 @@ const checkAmt = (rule, value, callback) => {
     return callback(new Error(t('message.requiredAmount')))
   }
   setTimeout(() => {
-    if (!Number.isInteger(value)) {
+    if (!Number.isInteger(value) && !isDigitsWithComma(value)) {
       callback(new Error(t('message.inputDigits')))
     } else {
       if (

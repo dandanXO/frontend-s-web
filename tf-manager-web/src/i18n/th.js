@@ -162,6 +162,7 @@ export default {
     UNSETTLED: 'ยังไม่ได้ชำระ',
     SETTLED: 'ชำระแล้ว',
     CANCEL: 'ยกเลิก',
+    GIVEREWARD: 'รางวัล',
   },
   dashboard: {
     memberCount: 'จำนวนสมาชิก',
@@ -1263,6 +1264,7 @@ export default {
     passwordLength: 'รหัสผ่านต้องไม่น้อยกว่า 6 หลักหรือมากกว่า 12 หลัก',
     paymentUpdate: 'คัดลอกไปยังวิธีหรือระดับอื่น? หากไม่ก็กดอัปเดต',
     paySuccess: 'การชำระเงินสำเร็จ',
+    pleaseEnterAffiliateNameOrAffiliateCode: 'กรุณากรอกชื่อพันธมิตรหรือรหัสพันธมิตร',
     promoDistributionSuccess: 'การแจกจ่ายโปรโมชั่นสำเร็จ',
     reenterPassword: 'กรุณากรอกรหัสผ่านอีกครั้ง',
     rebateSuccess: 'การจ่ายเงินคืน สำเร็จ',

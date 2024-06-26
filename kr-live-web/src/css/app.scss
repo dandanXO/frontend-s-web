@@ -656,17 +656,63 @@ input:internal-autofill-selected {
   padding-bottom: 0;
 }
 
-.home-popup-banner {
-  .q-dialog__backdrop {
-    background: #00000080;
-  }
-}
-
 @media (min-width: 991px) {
   // #q-app {
   //   background: url("../assets/images/common/bg-web-thai-theme.png") no-repeat top center;
   //   background-size: 100% 100%;
   // }
+}
+
+.page-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+
+  .action-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-top: 1px solid #51515173;
+    gap: 10px;
+    align-items: center;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+      margin: 5px auto 10px;
+      padding: 10px 5px 5px;
+    }
+  
+    .primary-button {
+      width: 150px;
+
+      @media (max-width: 600px) {
+        width: 120px;
+        height: 30px;
+        min-width: 120px;
+        font-size: small;
+      }
+  
+      @media (max-width: 400px) {
+        width: 100px;
+        height: 25px;
+        min-width: 100px;
+        font-size: x-small;
+      }
+    }
+  }
 }
 
 .form-item {
@@ -678,8 +724,10 @@ input:internal-autofill-selected {
 .form-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 60vh;
+  justify-content: flex-start;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
 
   .form-template {
     display: grid;

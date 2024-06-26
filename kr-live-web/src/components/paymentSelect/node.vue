@@ -5,7 +5,6 @@
   </div>
   <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
-    <!-- <div class="title" v-else>{{ name }}</div> -->
     <div v-else>
       <span class="account-title">{{ name }}</span>
     </div>
@@ -15,13 +14,12 @@
         selectItem === item ? 'active' : '',
       ]" :key="i" v-for="(item, i) in list">
         <div class="node-text">
-          <div class="node-icon"><q-img :src="imgURL + item.nodeIcon" style="height: 26px; width: 26px;"
-              :fit="'scale-down'">
+          <div class="node-icon"><q-img class="node-icon-img" :src="imgURL + item.nodeIcon" :fit="'scale-down'">
               <template v-slot:loading>
                 <q-spinner-orbit size="0.5em" />
               </template>
             </q-img></div>
-          <div class="">{{ item.nodeName }}</div>
+          <div class="node-label">{{ item.nodeName }}</div>
           <div class="promo" :style="item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
             ">
             <span class="val">{{ item.promoValue }}</span>
@@ -34,36 +32,8 @@
             </div>
           </div>
         </div>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
-
-    <!--    <div class="sublist-container">-->
-    <!--      <span class="account-title">{{ subtitle }}: </span>-->
-    <!--      <q-radio-->
-    <!--          v-for="item in sublist"-->
-    <!--          v-model="selectedSubItem"-->
-    <!--          :key="`${item.key}`"-->
-    <!--          :val="item"-->
-    <!--      >-->
-    <!--        <slot>-->
-    <!--          <div class="sublist-item">-->
-    <!--            <img :src="imgURL + item.nodeIcon" />-->
-    <!--            {{ item.nodeName }}-->
-    <!--          </div>-->
-    <!--        </slot>-->
-    <!--      </q-radio>-->
-    <!--    </div>-->
 
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node @click="clickChildItem(item)" :name="item.nodeName" :class="[
@@ -81,7 +51,6 @@ const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
   emits: ["clicked"],
   computed: {
     selected() {
@@ -260,22 +229,35 @@ $node-color: #dd4645;
 }
 
 .payment-method-wrapper {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, 200px);
-  // grid-gap: 20px;
-  // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
   margin-top: 10px;
   flex-wrap: wrap;
   padding-bottom: 10px;
 
-  @media (max-width: 500px) {
-    flex-direction: column;
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 
     .node-item {
       width: 100%;
+
+      .node-label {
+        font-size: 12px;
+      }
+
+      .node-icon {
+        .node-icon-img {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
   }
 
   .payment-method-item {
@@ -571,10 +553,11 @@ $node-color: #dd4645;
     // background-color: #128787;
     padding: 5px;
     border-radius: 4px;
-  }
 
-  img {
-    width: 1.6rem;
+    .node-icon-img {
+      height: 26px;
+      width: 26px;
+    }
   }
 
   .overflow {

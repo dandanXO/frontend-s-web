@@ -1,121 +1,123 @@
 <template>
-  <q-form class="register-form" @keypress.enter="onSubmit">
-    <div class="form-item">
-      <label>{{ $t('lang.reg_referrer') }}</label>
-      <q-input dense :placeholder="$t('lang.reg_referrer_placeholder')" ref="codeAffiliate" outlined
-        v-model="regForm.codeAffiliate" :disable="hasAffiliate" clearable></q-input>
-    </div>
+  <div class="page-container">
+    <q-form class="register-form page-content" @keypress.enter="onSubmit">
+      <div class="form-item">
+        <label>{{ $t('lang.reg_referrer') }}</label>
+        <q-input dense :placeholder="$t('lang.reg_referrer_placeholder')" ref="codeAffiliate" outlined
+          v-model="regForm.codeAffiliate" :disable="hasAffiliate" clearable></q-input>
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_nickname') }}</label>
-      <q-input dense ref="nicknameRef" outlined v-model="regForm.name2" clearable />
-    </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_nickname') }}</label>
+        <q-input dense ref="nicknameRef" outlined v-model="regForm.name2" clearable />
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_userid') }}</label>
-      <q-input dense ref="loginNameRef" outlined v-model="regForm.loginName" lazy-rules :rules="[
-        (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-        (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-        (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
-      ]" clearable />
-    </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_userid') }}</label>
+        <q-input dense ref="loginNameRef" outlined v-model="regForm.loginName" lazy-rules :rules="[
+          (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+          (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+          (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+        ]" clearable />
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_pass') }}</label>
-      <div>
-        <q-input dense :placeholder="$t('lang.reg_pass_placeholder')" ref="pwdRef" outlined v-model="regForm.password"
-          :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+      <div class="form-item">
+        <label>{{ $t('lang.reg_pass') }}</label>
+        <div>
+          <q-input dense :placeholder="$t('lang.reg_pass_placeholder')" ref="pwdRef" outlined v-model="regForm.password"
+            :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+            ]" clearable>
+            <template v-slot:append>
+              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+
+      <div class="form-item">
+        <label>{{ $t('lang.reg_confirm_pass') }}</label>
+        <q-input dense :placeholder="$t('lang.reg_confirm_pass_placeholder')" ref="confirmPwdRef" outlined
+          :type="isCfmPwd ? 'password' : 'text'" v-model="regForm.confirmPwd" lazy-rules :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
+            (val) => val === regForm.password || $t('lang.password_do_not_match'),
             (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
           ]" clearable>
           <template v-slot:append>
-            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+            <q-icon :name="isCfmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+              @click="isCfmPwd = !isCfmPwd" />
           </template>
         </q-input>
       </div>
-    </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_confirm_pass') }}</label>
-      <q-input dense :placeholder="$t('lang.reg_confirm_pass_placeholder')" ref="confirmPwdRef" outlined
-        :type="isCfmPwd ? 'password' : 'text'" v-model="regForm.confirmPwd" lazy-rules :rules="[
-          (val) => (val && val.length > 0) || $t('lang.please_confirm_pass'),
-          (val) => val === regForm.password || $t('lang.password_do_not_match'),
-          (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-        ]" clearable>
-        <template v-slot:append>
-          <q-icon :name="isCfmPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-            @click="isCfmPwd = !isCfmPwd" />
-        </template>
-      </q-input>
-    </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_phone_num') }}</label>
+        <q-input dense :placeholder="$t('lang.reg_phone_placeholder')" ref="telRef" outlined v-model="regForm.telephone"
+          lazy-rules :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
+            (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
+          ]" clearable>
+        </q-input>
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_phone_num') }}</label>
-      <q-input dense :placeholder="$t('lang.reg_phone_placeholder')" ref="telRef" outlined v-model="regForm.telephone"
-        lazy-rules :rules="[
-          (val) => (val && val.length > 0) || $t('lang.please_confirm_phone_number'),
-          (val) => (val && val.length > 7) || $t('lang.please_enter_valid_phone')
-        ]" clearable>
-      </q-input>
-    </div>
-
-    <div class="form-item">
-      <label>{{ $t('lang.reg_bank') }}</label>
-      <q-select dense outlined :placeholder="$t('lang.reg_bank_placeholder')" ref="bankCardRef" v-model="regForm.bankId"
-        :options="banksList" option-value="id" option-label="name" emit-value map-options lazy-rules
-        :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" transition-show="jump-up"
-        transition-hide="jump-up" clearable>
-        <template v-slot:no-option></template>
-        <template v-slot:option="scope">
-          <div v-bind="scope.itemProps" dense class="bank-list-item" style="padding:0 5px;">
-            <div avatar v-if="scope.opt.bankIcon">
-              <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank') }}</label>
+        <q-select dense outlined :placeholder="$t('lang.reg_bank_placeholder')" ref="bankCardRef"
+          v-model="regForm.bankId" :options="banksList" option-value="id" option-label="name" emit-value map-options
+          lazy-rules :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" transition-show="jump-up"
+          transition-hide="jump-up" clearable>
+          <template v-slot:no-option></template>
+          <template v-slot:option="scope">
+            <div v-bind="scope.itemProps" dense class="bank-list-item" style="padding:0 5px;">
+              <div avatar v-if="scope.opt.bankIcon">
+                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+              </div>
+              <div>
+                {{ scope.opt.name }}
+              </div>
             </div>
-            <div>
-              {{ scope.opt.name }}
+          </template>
+          <template v-slot:selected-item="scope">
+            <div v-bind="scope.itemProps" dense class="bank-list-item">
+              <div avatar v-if="scope.opt.bankIcon">
+                <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
+              </div>
+              <div>
+                {{ scope.opt.name }}
+              </div>
             </div>
-          </div>
-        </template>
-        <template v-slot:selected-item="scope">
-          <div v-bind="scope.itemProps" dense class="bank-list-item">
-            <div avatar v-if="scope.opt.bankIcon">
-              <img style="width: 30px" :src="imgURL + '/payment/' + scope.opt.bankIcon" />
-            </div>
-            <div>
-              {{ scope.opt.name }}
-            </div>
-          </div>
-        </template>
-      </q-select>
-    </div>
+          </template>
+        </q-select>
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_bank_acc_num') }}</label>
-      <q-input dense type="number" :placeholder="$t('lang.reg_bank_acc_num_placeholder')" ref="cardNumRef" outlined
-        v-model="regForm.cardNumber" lazy-rules clearable
-        :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"></q-input>
-    </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank_acc_num') }}</label>
+        <q-input dense type="number" :placeholder="$t('lang.reg_bank_acc_num_placeholder')" ref="cardNumRef" outlined
+          v-model="regForm.cardNumber" lazy-rules clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"></q-input>
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_bank_acc_holder') }}</label>
-      <q-input dense :placeholder="$t('lang.reg_bank_acc_holder_placeholder')" ref="cardAccRef" outlined
-        v-model="regForm.cardAccount" lazy-rules clearable
-        :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"></q-input>
-    </div>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_bank_acc_holder') }}</label>
+        <q-input dense :placeholder="$t('lang.reg_bank_acc_holder_placeholder')" ref="cardAccRef" outlined
+          v-model="regForm.cardAccount" lazy-rules clearable
+          :rules="[(val) => (val && val.length > 0) || $t('lang.card_account_cannot_empty')]"></q-input>
+      </div>
 
-    <div class="form-item">
-      <label>{{ $t('lang.reg_withdraw_password') }}</label>
-      <q-input dense :placeholder="$t('lang.reg_withdraw_password_placeholder')" ref="withdrawPasswordRef" outlined
-        v-model="regForm.withdrawPassword" clearable lazy-rules :rules="[
-          (val) => (val.length === 4) || $t('lang.reg_withdraw_password_4_digits')
-        ]" mask="#  #  #  #" fill-mask unmasked-value />
-    </div>
-  </q-form>
+      <div class="form-item">
+        <label>{{ $t('lang.reg_withdraw_password') }}</label>
+        <q-input dense :placeholder="$t('lang.reg_withdraw_password_placeholder')" ref="withdrawPasswordRef" outlined
+          v-model="regForm.withdrawPassword" clearable lazy-rules :rules="[
+            (val) => (val.length === 4) || $t('lang.reg_withdraw_password_4_digits')
+          ]" mask="#  #  #  #" fill-mask unmasked-value />
+      </div>
+    </q-form>
 
-  <div class="action-buttons">
-    <div @click="onSubmit" class="primary-button blue register-submit-btn" style="width:200px;">
-      {{ $t('lang.reg_submit') }}
+    <div class="action-buttons">
+      <div @click="onSubmit" class="primary-button blue register-submit-btn">
+        {{ $t('lang.reg_submit') }}
+      </div>
     </div>
   </div>
 </template>
@@ -338,6 +340,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 20px;
 }
 
 .form-item {
@@ -349,19 +352,23 @@ export default defineComponent({
   label {
     text-align: right;
   }
-}
 
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 20px;
+  @media (max-width: 600px) {
+    grid-template-columns: 80px 1fr;
+    gap: 10px;
 
-  .register-submit-btn {
-    width: 145px;
-    height: 36px;
+    label {
+      font-size: small;
+    }
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 60px 1fr;
+    gap: 5px;
+
+    label {
+      font-size: x-small;
+    }
   }
 }
 

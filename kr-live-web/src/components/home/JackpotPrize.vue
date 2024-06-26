@@ -2,7 +2,7 @@
   <q-intersection @visibility="(isElemVisible) => {
     isVisible = isElemVisible
   }" />
-  <div class="jackpot">
+  <div class="jackpot" data-aos="zoom-in">
     <div class="jackpot-txt">
       <q-skeleton v-if="isLoading" type="text" style="width:100%;" />
       <span style="margin:0 auto" v-else>{{ isNaN(jackpotPrizeAmt) ? '' : (new
