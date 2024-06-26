@@ -21,11 +21,13 @@
       <div class="info-box">
         <div class="qr-code-box">
           <div class="qr-code-item">
-            <div class="qrcode"></div>
+            <div class="qrcode"><qrcode-vue :value="value" size="145" level="H" /></div>
             <div class="qrcode-info">安卓手机扫码下载</div>
           </div>
           <div class="qr-code-item">
-            <div class="qrcode"></div>
+            <div class="qrcode">
+              <div class="qrcode"><qrcode-vue :value="value" size="145" level="H" /></div>
+            </div>
             <div class="qrcode-info">苹果手机扫码下载</div>
           </div>
         </div>
@@ -54,14 +56,14 @@
             </div>
           </div>
           <div class="download">
-            <div class="icon"></div>
+            <div class="icon"><div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div></div>
             <div class="info">
               <img src="../../../assets/promo/aijiasu/apple-icon.png" alt="" />
               <div>苹果手机下载</div>
             </div>
           </div>
           <div class="download">
-            <div class="icon"></div>
+            <div class="icon"><div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div></div>
             <div class="info">
               <img src="../../../assets/promo/aijiasu/android-icon.png" alt="" />
               <div>安卓手机下载</div>
@@ -69,16 +71,132 @@
           </div>
         </div>
       </div>
-      <div class="session2"></div>
+      <div class="session2">
+        <img src="../../../assets/promo/aijiasu/title2.png" alt="" />
+        <div class="content">
+          <img src="../../../assets/promo/aijiasu/session2-1.png" alt="" />
+          <img src="../../../assets/promo/aijiasu/session2-2.png" alt="" />
+          <img src="../../../assets/promo/aijiasu/session2-3.png" alt="" />
+        </div>
+      </div>
 
-      <div class="session3"></div>
+      <div class="session3">
+        <img src="../../../assets/promo/aijiasu/title3.png" alt="" />
+        <div class="tabs">
+          <div :class="`tab ${activeTab === 0 ? 'active' : 'inactive'}`" @click="handleActiveClick(0)">Windows教程</div>
+          <div :class="`tab ${activeTab === 1 ? 'active' : 'inactive'}`" @click="handleActiveClick(1)">
+            苹果手机教程
+          </div>
+          <div :class="`tab ${activeTab === 2 ? 'active' : 'inactive'}`" @click="handleActiveClick(2)">
+            安卓手机教程
+          </div>
+        </div>
+        <div class="slider" style="position: relative" v-if="activeTab === 0">
+          <swiper
+            :spaceBetween="20"
+            :loop="false"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+            class="swiper-wrapper"
+          >
+            <swiper-slide>
+              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+            </swiper-slide>
+            <swiper-slide><div style="color: #fff">2</div></swiper-slide>
+            <swiper-slide><div style="color: #fff">3</div></swiper-slide>
+          </swiper>
+          <div class="swiper-button-prev" @click="prevSlide"></div>
+          <div class="swiper-button-next" @click="nextSlide"></div>
+        </div>
+        <div class="slider" v-if="activeTab === 1" style="position: relative">
+          <swiper
+            :spaceBetween="20"
+            :loop="false"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+            class="swiper-wrapper"
+          >
+            <swiper-slide>
+              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+            </swiper-slide>
+            <swiper-slide><div style="color: #fff">2-2</div></swiper-slide>
+            <swiper-slide><div style="color: #fff">2-3</div></swiper-slide>
+          </swiper>
+          <div class="swiper-button-prev" @click="prevSlide"></div>
+          <div class="swiper-button-next" @click="nextSlide"></div>
+        </div>
+        <div class="slider" v-if="activeTab === 2" style="position: relative">
+          <swiper
+            :spaceBetween="20"
+            :loop="false"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+            class="swiper-wrapper"
+          >
+            <swiper-slide>
+              <div class="img-box"><img src="../../../assets/promo/aijiasu/demo-img.png" alt="" /></div>
+            </swiper-slide>
+            <swiper-slide><div style="color: #fff">3-2</div></swiper-slide>
+            <swiper-slide><div style="color: #fff">3-3</div></swiper-slide>
+          </swiper>
+          <div class="swiper-button-prev" @click="prevSlide"></div>
+          <div class="swiper-button-next" @click="nextSlide"></div>
+        </div>
+      </div>
 
-      <div class="session4"></div>
+      <div class="session4">
+        <img src="../../../assets/promo/aijiasu/title4.png" alt="" />
+
+        <div class="content">
+          <div>
+            1.
+            此活动需要在IP域名注册后的用户来申请，只限新用户，需要账号首存，提供有下载爱加速以及开通爱加速首月会员截图才可申请。
+          </div>
+          <div>2. 符合以上条件情况下联系在线客服即可申请，优惠以红包券一倍流水发放。</div>
+          <div>
+            3.
+            如何使用优惠券：电脑版用户，点击会员中心-自助优惠-优惠券专区，选择您的优惠券使用即可。手机版用户，访问【我的】页面-自助优惠-优惠券专区，即可使用您的优惠券。 
+          </div>
+          <div>
+            4. 此次优惠每位玩家﹑每户﹑每一住址
+            、每一电子邮箱地址﹑每一电话号码﹑相同支付方式(相同借记卡/信用卡/银行账户/姓名及号码)
+            只能享有一次优惠,一旦确认为套利玩家，立即没收盈利和本金。
+          </div>
+          <div>5. 雷火电竞对本次活动拥有最终解释权。</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/navigation";
+import QrcodeVue from "qrcode.vue";
+const activeTab = ref(0);
+
+const value = ref("https://example.com");
+
+const handleActiveClick = (num) => {
+  activeTab.value = num;
+};
+
+const $swiper = ref(null);
+
+const onSwiper = (swiper) => {
+  $swiper.value = swiper;
+};
+
+const prevSlide = () => {
+  $swiper.value.slidePrev();
+};
+
+const nextSlide = () => {
+  $swiper.value.slideNext();
+};
+</script>
 
 <style lang="scss" scoped>
 .bachground {
@@ -89,7 +207,7 @@
 }
 
 .main {
-  height: 1600px;
+  /* height: 2500px; */
 
   .banner-info {
     margin-left: 890px;
@@ -101,7 +219,6 @@
       position: absolute;
       top: -80px;
       left: -200px;
-      /* background: radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%); */
       background: radial-gradient(
         ellipse closest-side at center center,
         rgba(0, 0, 0, 255) 0%,
@@ -171,6 +288,9 @@
       flex-direction: column;
       align-items: center;
       .qrcode {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 149px;
         height: 149px;
         background-color: #fff;
@@ -247,6 +367,14 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          .qrcode{
+            background-color: #fff;
+            width: 109px;
+            height: 109px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+          }
         }
         .info {
           display: flex;
@@ -261,6 +389,119 @@
           margin-top: 22px;
         }
       }
+    }
+  }
+
+  .session2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 22px;
+    .content {
+      margin-top: 21px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .session3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 49px;
+    .tabs {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 21px;
+    }
+    .tab {
+      background-size: 100% 100%;
+      background-position: center center;
+      width: 309px;
+      height: 67px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Microsoft YaHei UI;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 22.86px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .active {
+      background-image: url("../../../assets/promo/aijiasu/tab-active.png");
+      color: #221313;
+    }
+    .inactive {
+      background-image: url("../../../assets/promo/aijiasu/tab-inactive.png");
+      color: #fff;
+    }
+    .swiper-wrapper {
+      max-width: 900px;
+      margin-top: 66px;
+    }
+
+    .img-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    :deep(.swiper-button-prev) {
+      left: -110px;
+
+      background: url(../../../assets/promo/aijiasu/back.png) no-repeat center center;
+      background-size: contain;
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      &:after {
+        color: transparent;
+      }
+    }
+
+    :deep(.swiper-button-next) {
+      right: -110px;
+      background: url(../../../assets/promo/aijiasu/next.png) no-repeat center center;
+      background-size: contain;
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      &:after {
+        color: transparent;
+      }
+    }
+  }
+
+  .session4 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 65px;
+    margin-bottom: 84px;
+    .content {
+      height: 269px;
+      width: 1193px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      background: #0a0126;
+      font-family: Microsoft YaHei UI;
+      font-size: 19px;
+      font-weight: 400;
+      line-height: 24.13px;
+      text-align: left;
+      color: #ffffff;
+      padding: 21px 10px;
+      border: 1px solid;
+      border-image: linear-gradient(90deg, #ff7272 0%, #dee227 31%, #00ef0a 60%, #08ffff 97.5%) 1;
     }
   }
 }
