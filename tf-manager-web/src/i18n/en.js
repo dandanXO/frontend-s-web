@@ -1812,8 +1812,8 @@ export default {
     addFakeLotteryRecord: 'Add Fake Lottery Record',
     approveSummonRecord: 'Approve Summon Record',
     updateAffiliateLevel: 'Update Affiliate Level',
-    unsuccessFrom30min: 'Unsuccessful Withdrawal from 30 Minutes Ago',
-    unsuccessIn10time: 'Channels with 10 Cumulative Unsuccessful Withdrawals',
+    unsuccessFrom30min: 'Unsuccessful from 30 Minutes Ago',
+    unsuccessIn10time: 'Channels with 10 Unsuccessful',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
