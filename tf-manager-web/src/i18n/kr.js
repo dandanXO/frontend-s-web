@@ -217,6 +217,7 @@ export default {
     UNSETTLED: '미정산',
     SETTLED: '정산 완료',
     CANCEL: '취소',
+    GIVEREWARD: '보상',
   },
   giftType: {
     ENTITY: '실물',

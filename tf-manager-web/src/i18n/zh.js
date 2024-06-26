@@ -233,6 +233,7 @@ export default {
     UNSETTLED: '未结算',
     SETTLED: '已结算',
     CANCEL: '已取消',
+    GIVEREWARD: '打赏',
   },
   giftType: {
     ENTITY: '实体',
