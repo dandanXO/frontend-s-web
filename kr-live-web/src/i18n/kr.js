@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "확인 중",
     reg_check_captcha: "Captcha 코드 확인",
     reg_enter_captcha: "입력하다 Captcha",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     // register end
     // menu start
     menu_announcement: "공지사항",

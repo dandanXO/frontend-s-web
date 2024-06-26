@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "Verifying",
     reg_check_captcha: "Captcha Code Check",
     reg_enter_captcha: "Enter captcha code",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     // register end
     // menu start
     menu_announcement: "Announcement",
