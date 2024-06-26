@@ -169,9 +169,8 @@
     </div>
 
     <div class="action-buttons">
-      <div @click="submitWithdraw" class="primary-button blue" :class="withdrawLoading ? 'disabled' : ''">
-        {{ btnLoading ? $t('lang.loading') : '환전신청' }}
-      </div>
+      <q-btn @click="submitWithdraw" class="primary-button blue" :loading="withdrawLoading" :disable="withdrawLoading"
+        :label="$t('lang.withdraw_confirm_withdraw')" />
     </div>
   </div>
 </template>

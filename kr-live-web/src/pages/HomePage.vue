@@ -73,8 +73,8 @@
                 </q-form>
               </div>
               <div class="slot-grid" style="padding-bottom: 20px">
-                <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
-                  v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+                <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index" style="height: auto"
+                  class="btn-pointer inner-slot-game">
                   <transition name="in-view">
                     <q-list class="btn-slot-game q-col-gutter-none"
                       @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
@@ -155,8 +155,8 @@
               </q-form>
             </div>
             <div class="slot-grid" style="padding-bottom: 20px">
-              <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
-                v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+              <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index" style="height: auto"
+                class="btn-pointer inner-slot-game">
                 <transition name="in-view">
                   <q-list class="btn-slot-game q-col-gutter-none"
                     @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
@@ -194,28 +194,6 @@
   <DepositRecords />
 
   <GameModal ref="gameModalRef"></GameModal>
-
-  <q-dialog width="100%" class="modal-update-div" v-model="isAppUpdateModal" show-cancel-button
-    :showCancelButton="false" :showConfirmButton="false">
-    <q-card style="width: 100%" class="bg-bright text-black">
-      <div class="modalcontent">
-        <div class="headers">
-          <div class="titles backgroundColor">
-            {{ $t("lang.update_app_title") }}
-          </div>
-        </div>
-        <div class="contents">{{ $t("lang.detected_new_version") }}</div>
-        <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
-            {{ $t("lang.cancel") }}
-          </div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">
-            {{ $t("lang.update_now") }}
-          </div>
-        </div>
-      </div>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -274,9 +252,6 @@ export default defineComponent({
     const router = useRouter();
     const store = userStore();
 
-    const mainWallet = computed(() => {
-      return store.balance;
-    });
     const gameModalRef = ref(null);
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       if (!store.token) {
@@ -343,7 +318,6 @@ export default defineComponent({
       return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
     });
 
-    const isHomePromoModal = ref(false);
     const favLists = computed(() => {
       let lists = [];
       favGamesList.value.forEach((element) => {
@@ -355,9 +329,6 @@ export default defineComponent({
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
-    const pokerGames = [
-
-    ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
     const esportsGame = ref([]);
@@ -523,12 +494,6 @@ export default defineComponent({
             })
             .catch((err) => {
               isLoading.value = false;
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: "Loading failed",
-              //   icon: "report_problem"
-              // });
             })
         )
         .then((res) => {
@@ -586,20 +551,12 @@ export default defineComponent({
     };
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
-      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
-      //假裝打 api 接 json 回傳
-      // const res = await fetch("fakeData/homePagePlatList.json");
-
-      // const result = await res.json();
-
-      // const resData = result.data;
-
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -608,47 +565,18 @@ export default defineComponent({
           })
         )
         .then((data) => {
-          // console.log("HEre");
-          // console.log(data);
-
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
           liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
-
-          //TODO:: HArdcoded.
-          console.log(liveCasinoGames.value);
-          // liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
-
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
-
-          console.log("SORT");
-          console.log(sportPlatform.value);
-
           platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL") || (element.gameType.includes("FISH") && element.code === "CQ9"));
-
-          // xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
-          // lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
-
-          //   if (currentSelectedMenu.value === "slots") {
-          //     switchPlat(platforms.value[0], "slots");
-          //     platforms.value.forEach((e, i) => {
-          //       if (e.code === "AWS") {
-          //         platforms.value.splice(i, 1);
-          //       }
-          //     });
-          //   } else if (currentSelectedMenu.value === "fish") {
-          //     switchPlat(fishPlatforms.value[0], "fish");
-          //   }
         })
         .catch((err) => { });
     };
 
-    const announcementTypes = ref([]);
-
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
-    const noticeTitle = ref("");
     const activeKey = ref(null);
 
     const isShowBtt = ref(false);
@@ -674,141 +602,27 @@ export default defineComponent({
       }
     };
 
-    const download_url = ref("");
-    const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
-        ui.setVersion(info.version + " " + info.build);
-        // console.log("Current Ver: " + current_version);
-
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        console.log(res, ">>res");
-        if (res.data.code === 0) {
-          var version_info = res.data.data.version;
-          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
-          download_url.value = res.data.data.url;
-          // console.log("latest_ver_no Ver: " + latest_ver_no);
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
-      } else if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
-        ui.appVersion = "iOS App";
-      } else if (isH5.value && Platform.is.mobile) {
-        const res = await api.get(`/config/appVersionAndUrl?type=ALL&device=ANDROID`);
-
-        if (res.data.code === 0) {
-          store.setAppDownloadUrl(res.data.data.url);
-        }
-      }
-    };
-
-    const openDownloadPage = () => {
-      window.open(download_url.value, "_system");
-      isAppUpdateModal.value = false;
-    };
-    const cancelUpdate = () => {
-      isAppUpdateModal.value = false;
-    };
-
-    const downloadUrl = ref("");
-
-    const toggleFavGame = (gameId, status) => {
-      if (status === true) {
-        api.post("/session/member/fav-games", qs.stringify({ gameId: gameId })).then((res) => {
-          // console.log(res);
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.fav_game_added"),
-            icon: "report_problem"
-          });
-          favGamesList.value.push({ id: gameId });
-        });
-      } else {
-        api.delete("/session/member/fav-games?gameId=" + gameId).then((res) => {
-          console.log(res);
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.fav_game_removed"),
-            icon: "report_problem"
-          });
-          remove(favGamesList.value, {
-            id: gameId
-          });
-        });
-      }
-    };
-
-    const onIntersection = (entry) => {
-      // if (entry.isIntersecting === true) {
-      //   add(entry.target.dataset.id)
-      // }
-      // else {
-      //   remove(entry.target.dataset.id)
-      // }
-    };
     const position = ref(0);
     const scrollToTop = (el) => {
       scrollSlotRef.value?.setScrollPosition("vertical", position);
       scrollPageRef.value?.setScrollPosition("vertical", position);
       isShowBtt.value = false;
-      // const target = getScrollTarget(el[0])
-      // const duration = 1000
-      // console.log(target)
     };
 
     onMounted(() => {
       checkPlatform();
-      loadHomePromoPopup();
       loadHomeData();
-      getVersionNo();
-    });
-
-    const popupInterval = ref(null);
-
-
-    onUnmounted(() => {
-      clearInterval(popupInterval.value);
     });
 
     const loadHomeData = async () => {
       if (store.hasToken()) {
         await store.getMemberInfo();
-
-        // getFavGameList();
-        // store.getUnreadTotal();
       }
-      // loadData();
+
       getPlatList();
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
-
-    const loadHomePromoPopup = () => {
-      const isPromoPopup = SessionStorage.getItem("isHomePromoModal");
-      if (!isPromoPopup) {
-        isHomePromoModal.value = true;
-      }
-    };
-
-    const closePopupModal = () => {
-      SessionStorage.set("isHomePromoModal", "1");
-    };
 
     const isShow = ref(false);
     const selectSlotPlat = (plat) => {
@@ -851,12 +665,6 @@ export default defineComponent({
       }
     };
 
-    const showFavourite = () => {
-      isShow.value = true;
-      selectedPlatId.value = -99;
-      // getFavGameList();
-    };
-
     const showMiniType = ref(0);
     const showTypeWeb = (id) => {
       showMiniType.value = id;
@@ -868,14 +676,12 @@ export default defineComponent({
     return {
       ajaxBarRef,
       imageLoading,
-      slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       gameImgURL: process.env.IMAGE_CDN + "/game/",
       gameBoardRef,
       gameBoardItemRef,
       gameBoardItemData,
       store,
-      ui,
       platforms,
       fishPlatforms,
       comingSoonImg,
@@ -885,18 +691,13 @@ export default defineComponent({
       lotteryGamesMore,
       lotteryGamesList,
       isShow,
-      mainWallet,
       playGame,
       gameModalRef,
-      pokerGames,
       switchPlat,
       scrolling,
       scrollToTop,
       switchMenu,
       gamePage,
-      onIntersection,
-      toggleFavGame,
-      favLists,
       isLoading,
       selectedPlat,
       scrollPosition,
@@ -912,13 +713,11 @@ export default defineComponent({
       esportsGame,
       esportPlatform,
       sportPlatform,
-      showFavourite,
       selectFishPlat,
       selectLotteryPlat,
       selectSlotPlat,
       selectCasualPlat,
       platformMinigame,
-      closePopupModal,
       isGoMiniGame,
       miniGames,
       miniGamesMore,
@@ -928,19 +727,9 @@ export default defineComponent({
       showMiniType,
       openGame,
       openSlotGame,
-      openFavGame,
       scrollPageRef,
-      isHomePromoModal,
-      noticeTitle,
-      announcementTypes,
       activeKey,
-      router,
-      isAppUpdateModal,
-      isH5,
-      openDownloadPage,
-      cancelUpdate,
-      favGamesList,
-      sortedFavGamesList
+      isH5
     };
   }
 });
@@ -999,147 +788,6 @@ export default defineComponent({
   }
 }
 
-
-
-.game-grid-lists {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  width: calc(100% - 20px);
-  margin: 6px auto 20px;
-  padding-bottom: 30px;
-  // padding-top: 15px;
-  transition: 1s ease-in;
-
-  @media (min-width: 769px) {
-    margin: 12px auto 20px;
-    padding-top: 15px;
-  }
-
-  .game-item {
-    border-radius: 2px;
-    position: relative;
-    //border: 2px solid #789EFF;
-
-    .platform-img {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 672/828;
-      background-size: 100% 100%;
-      /* background-size: contain; */
-      background-repeat: no-repeat;
-      background-position: top center;
-    }
-
-    .plat-form-box {
-      position: absolute;
-      /* position: relative; */
-      left: 2px;
-      bottom: 2px;
-      right: 2px;
-      width: calc(100% - 4px);
-      height: 45px;
-      background-color: #1f2833;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .plat-form-text {
-        color: #fff;
-        font-size: 20px;
-        line-height: 28px;
-        position: relative;
-      }
-    }
-
-    .platform-company-box {
-      position: absolute;
-      left: 3px;
-      bottom: 46px;
-      background-color: #0000004d;
-      backdrop-filter: blur(5px);
-      width: 98%;
-      height: 41px;
-
-      .company-image {
-        width: 100%;
-        height: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-      }
-
-      @media (min-width: 760px) {
-        height: 56px;
-      }
-    }
-
-    /* img {
-      width: 100%;
-    } */
-  }
-}
-
-.home-bottom-section {
-  margin-top: 16px;
-
-  .marquee {
-    background: $third-color;
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    max-width: 100%;
-    height: 50px;
-    padding: 4px 10px;
-    overflow-x: hidden;
-  }
-
-  .content {
-    width: calc(100vw - 20px);
-    margin: auto;
-
-    img {
-      margin-left: 15px;
-      margin-right: 15px;
-    }
-  }
-
-  .track {
-    position: absolute;
-    white-space: nowrap;
-    will-change: transform;
-    animation: marquee 30s linear infinite;
-  }
-
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-
-    to {
-      transform: translateX(-1500px);
-    }
-  }
-
-  .bottom-footer {
-    //background: url("../assets/images/index/footer-desc-bg.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: 60px 0px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 12px;
-    padding: 6px 12px 60px;
-
-    .footer-logo {
-      text-align: center;
-      width: 200px;
-      margin: 0 auto;
-    }
-  }
-}
-
 .game-scroll-lists {
   display: flex;
   justify-content: space-between;
@@ -1193,14 +841,6 @@ export default defineComponent({
         filter: brightness(0.86);
       }
 
-      &:first-of-type {
-        // border-radius: 10px 10px 0px 0px;
-      }
-
-      &:last-of-type {
-        // border-radius: 0px 0px 10px 10px;
-      }
-
       span {
         color: rgba(200, 200, 200, 0.5);
         font-size: 20px;
@@ -1242,24 +882,6 @@ export default defineComponent({
   svg {
     color: $header-color;
     width: 48px;
-  }
-}
-
-.mid-grid-column {
-  grid-column: 2/3;
-}
-
-.coming-soon-div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  grid-column: 2/3;
-
-  img {
-    width: 200px;
-    height: auto;
   }
 }
 
@@ -1403,23 +1025,7 @@ export default defineComponent({
   }
 }
 
-@media (min-width: 600px) {}
-
 @media (min-width: 769px) {
-  .grid {
-    .game-board-item {
-      img {
-        // width: auto;
-        // max-height: 40px;
-      }
-    }
-  }
-
-  .game-grid-lists {
-    padding-top: 15px;
-    column-gap: 25px;
-    grid-template-columns: repeat(4, 1fr);
-  }
 
   .game-scroll-lists {
     .bookmarks {
@@ -1446,24 +1052,8 @@ export default defineComponent({
     padding: 0px 12px;
   }
 
-  .grid .game-board-item {
-    cursor: pointer;
-    // border-radius: 10px;
-    // max-width: 110px;
-    // max-height: 125px;
-    // aspect-ratio: 110/125;
-
-    span {
-      font-size: 1em;
-    }
-  }
-
   .main-section {
     background-repeat: repeat-x;
-  }
-
-  .game-grid-lists {
-    grid-template-columns: repeat(4, 1fr);
   }
 
   .slot-grid,
@@ -1471,453 +1061,8 @@ export default defineComponent({
     grid-template-columns: repeat(6, 1fr);
   }
 
-  .game-grid-lists {
-    grid-template-columns: repeat(5, 1fr);
-    column-gap: 20px;
-
-    .platform-company-box {
-      position: absolute;
-      left: 3px;
-      bottom: 46px;
-      background-color: #0000004d;
-      backdrop-filter: blur(5px);
-      width: 98%;
-      height: 56px;
-
-      .company-image {
-        width: 100%;
-        height: 100%;
-        background-repeat: no-repeat;
-        background-position: center center;
-      }
-    }
-  }
-
   #id-casual-board {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .mid-grid-column {
-    grid-column: 4/6;
-  }
-
-  .coming-soon-div {
-    grid-column: 4/6;
-  }
-}
-
-.modal-update-div {
-  .menu-title {
-    >div:first-child {
-      width: 32px;
-    }
-  }
-
-  .description {
-    color: $border-color;
-  }
-
-  .modalcontent {
-    background: #fff;
-    height: 232px;
-    box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 0px 0px 16px;
-
-    .headers {
-      width: 100%;
-      box-sizing: border-box;
-      height: 37px;
-      line-height: 37px;
-      background: #1976d2;
-      color: #fff;
-      text-align: center;
-      font-size: 15px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .contents {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 12px;
-      text-align: center;
-
-      .contentfonts {
-        text-align: center;
-        color: #333;
-        font-size: 16px;
-        margin: 37px 0 20.5px 0;
-      }
-
-      .inputs {
-        width: 292px;
-        height: 36px;
-        border-radius: 4px 4px;
-        border: 1px solid #666;
-        box-sizing: border-box;
-        margin: 0 auto;
-        padding-left: 20px;
-
-        .van-field__control {
-          height: 100%;
-          width: 100%;
-        }
-      }
-    }
-
-    .btnsreas {
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      margin-top: 23.5px;
-
-      .cacnels {
-        flex: 1;
-        background: #f7fcfd;
-        box-sizing: border-box;
-        color: #1976d2;
-        border: 1px solid #1976d2;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        letter-spacing: 1px;
-        font-size: 14px;
-        margin-right: 8px;
-      }
-
-      .confirmsbtns {
-        flex: 1;
-        box-sizing: border-box;
-        border-radius: 6px;
-        line-height: 40px;
-        height: 40px;
-        text-align: center;
-        color: #fff;
-        background: #1976d2;
-        letter-spacing: 1px;
-        font-size: 14px;
-      }
-    }
-  }
-}
-
-.bonus-sticky-box {
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  height: 101px;
-  margin-top: 10px;
-}
-
-.special-invite-bonus-sticky {
-  //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-sticky.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  width: 115px;
-  height: 135px;
-  //position: absolute;/**/
-  //right: 50%;
-  //top: 0;
-
-  animation: tilt-shaking 2s ease-in-out infinite;
-}
-
-@keyframes tilt-shaking {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  3% {
-    transform: rotate(6deg);
-  }
-
-  6% {
-    transform: rotate(0deg);
-  }
-
-  9% {
-    transform: rotate(-6deg);
-  }
-
-  12% {
-    transform: rotate(0deg);
-  }
-
-  15% {
-    transform: rotate(6deg);
-  }
-
-  18% {
-    transform: rotate(0deg);
-  }
-
-  21% {
-    transform: rotate(-6deg);
-  }
-
-  24% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-.special-invite-bonus-container {
-  position: relative;
-
-  .header-decoration-wrapper {
-    .header-decoration {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      height: 200px;
-      position: relative;
-
-      .confetti {
-        position: absolute;
-      }
-
-      .money-bags {
-        position: absolute;
-        top: 150px;
-      }
-    }
-  }
-
-  .special-invite-bonus-content {
-    //background: url("./../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-bg.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    margin: 30px;
-    max-width: 495px;
-    min-height: 300px;
-    padding: 30px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    justify-content: center;
-
-    .title-wrapper {
-      display: flex;
-      align-items: center;
-
-      .reward-amt {
-        font-size: 30px;
-        font-weight: 700;
-        color: #ffe35a;
-        margin-left: 20px;
-      }
-    }
-
-    .desc-wrapper {
-      display: flex;
-      flex-direction: column;
-
-      .desc-title {
-        color: #ffcf1f;
-      }
-
-      .desc-content {
-        color: #e79dff;
-      }
-    }
-
-    .special-invite-bonus-popup-confirm-btn {
-      //background: url("../assets/images/promotion/special-invite-bonus/special-invite-bonus-popup-confirm-btn.png");
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-      max-width: 200px;
-      width: 100%;
-      min-height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 10px auto 0px;
-      font-weight: 700;
-      font-size: 18px;
-    }
-  }
-}
-
-.home-popup-banner {
-  .promo-popup-div {
-    width: 100%;
-    padding: 8px;
-    position: relative;
-
-    .popup-btn {
-      position: absolute;
-      top: 0px;
-      left: 10px;
-      z-index: 999;
-      cursor: pointer;
-    }
-
-    img {
-      width: 100%;
-      position: relative;
-      z-index: -1;
-    }
-
-    .popup-list {
-      margin-top: -100px;
-    }
-
-    a,
-    a:visited,
-    a:active,
-    a:focus {
-      color: #fff9e2;
-      position: relative;
-    }
-
-    .popup-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 92%;
-      margin: 0 auto;
-      // border: 2px solid #d483ff;
-      // background: rgba(52, 41, 97, 0.9);
-      border-radius: 11px;
-      //margin-bottom: 14px;
-      line-height: 20px;
-      font-size: 16px;
-      text-align: center;
-      padding: 8px;
-      // box-shadow: 0px 3px 2px 0px #ddb2ff42 inset;
-      // box-shadow: 0px 0px 5px 3px #8000ffd9;
-      cursor: pointer;
-      text-shadow: 1px 2px 2px #000000;
-      //background: url("../assets/images/common/home-popup-item-bg-thai-theme.png") no-repeat center center;
-      background-size: 100% 100%;
-
-      &:hover {
-        opacity: 0.9;
-      }
-
-      &:active {
-        filter: brightness(1.1);
-      }
-
-      em {
-        color: #ecff17;
-        font-size: 16px;
-        font-weight: 600;
-        font-style: normal;
-      }
-
-      span {
-        padding: 10px;
-        margin: 0px 35px;
-      }
-    }
-  }
-}
-
-.home-sticky-div {
-  z-index: 4000;
-}
-
-.home-sticky {
-  //display:none;
-  position: relative;
-  width: 175px;
-  height: 240px;
-
-  .sticky-bear {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 55;
-  }
-
-  .sticky-close-btn {
-    position: absolute;
-    right: 5px;
-    top: 37px;
-    z-index: 30;
-    border-radius: 50%;
-    width: 20px;
-    padding: 0px;
-    line-height: 20px;
-    height: 20px;
-    background: $white;
-    color: $text-gray;
-
-    &:active {
-      filter: brightness(0.8);
-    }
-  }
-
-  .sticky-container {
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    z-index: 15;
-
-    width: 125px;
-    aspect-ratio: 184/518;
-    //background: url("../assets/home/line-board.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    //padding: 10px 0;
-    padding: 15px 0px 10px;
-    border-radius: 10px 0px 0px 10px;
-
-    color: $white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0px;
-    justify-content: flex-end;
-
-    .line-title {
-      padding-top: 3px;
-      font-size: 12px;
-    }
-
-    .line-img {
-      width: 80px;
-      height: auto;
-      margin: 0 auto;
-      background: #fff;
-    }
-
-    .line-bottom {
-      font-size: 12px;
-    }
-  }
-}
-
-.main-slide-txt {
-  font-size: 1.5rem;
-  max-width: 10rem;
-  margin-right: auto;
-  line-height: 1.4;
-  color: #ffc700;
-
-  @media (min-width: 769px) {
-    font-size: 2rem;
-    max-width: 15rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  @media (min-width: 1280px) {
-    font-size: 2.5rem;
-    max-width: 20rem;
   }
 }
 

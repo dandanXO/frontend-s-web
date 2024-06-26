@@ -167,6 +167,12 @@ export default {
     // deposit start
     deposit_payment_channel: "Payment Channel",
     deposit_confirm_deposit: "Deposit",
+    deposit_deposit_amount: "Deposit Amount",
+    deposit_depositor_name: "Depositor Name",
+    deposit_deposit_unit: "Deposit Unit",
+    deposit_ten_thousand_won: "Ten Thousand Won",
+    deposit_clear_amount: "Clear",
+    deposit_please_enter_amount: "Please enter amount",
     deposit_reminder: "Reminder",
     deposit_reminder_caption: "Please read before deposit",
     // deposit end
@@ -193,6 +199,7 @@ export default {
     withdraw_link_bank_card: "Link bank card",
     withdraw_withdraw_amount_per_item: "Withdrawal amount/item",
     withdraw_withdraw_amount_per_day: "Withdrawal amount/day",
+    withdraw_confirm_withdraw: "Confirm Withdraw",
     // withdraw end
     // personal start
     personal_nickname: "Nickname",
