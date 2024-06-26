@@ -1613,6 +1613,7 @@ export default {
     vipWheelRecords: 'VIP转盘记录',
     virtualVotes: '虚拟投票',
     visitNumber: '访问量',
+    votes: '票数',
     voteTime: '投票时间',
     walletType: '钱包类型',
     way: '设备',
