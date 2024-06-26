@@ -71,7 +71,7 @@
               </div>
               <div
                 class="mailcontents"
-                v-if="isSelectedMail === det.id"
+                v-if="isSelectedMail === det.id && det.content"
                 v-html="det.content.replace(/\n/g, '<br/>')"
               ></div>
               <div v-if="mailType === 'outbox'" class="buttons">
