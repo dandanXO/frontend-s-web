@@ -2,7 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img src="../assets/promo/top-promo-banner.jpg" />
+        <img v-if="!isDark" src="../assets/promo/top-promo-banner.jpg" />
+        <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
 
@@ -162,6 +163,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 import moment from "moment";
+import { useDark } from "@vueuse/core";
 
 import HotPromotion from '@/components/HotPromotion'
 import { useLocalStorage } from "@vueuse/core";
@@ -171,6 +173,8 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const isDark = useDark();
+
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
@@ -349,7 +353,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel,
-      countDay
+      countDay,
+      isDark
     }
   },
 });
