@@ -169,6 +169,12 @@ export default {
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
+    deposit_deposit_amount: "입금금액",
+    deposit_depositor_name: "입금자명",
+    deposit_deposit_unit: "입금단위",
+    deposit_ten_thousand_won: "만원",
+    deposit_clear_amount: "삭제",
+    deposit_please_enter_amount: "금액을 입력하세요",
     deposit_reminder: "알림",
     deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
@@ -210,6 +216,7 @@ export default {
     withdraw_link_bank_card: "링크 은행 카드",
     withdraw_withdraw_amount_per_item:  "출금금액/건",
     withdraw_withdraw_amount_per_day: "출금금액/일",
+    withdraw_confirm_withdraw: "환전신청",
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
