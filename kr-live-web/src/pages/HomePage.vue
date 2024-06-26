@@ -73,8 +73,8 @@
                 </q-form>
               </div>
               <div class="slot-grid" style="padding-bottom: 20px">
-                <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
-                  v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+                <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index" style="height: auto"
+                  class="btn-pointer inner-slot-game">
                   <transition name="in-view">
                     <q-list class="btn-slot-game q-col-gutter-none"
                       @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
@@ -155,8 +155,8 @@
               </q-form>
             </div>
             <div class="slot-grid" style="padding-bottom: 20px">
-              <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index"
-                v-intersection="onIntersection" style="height: auto" class="btn-pointer inner-slot-game">
+              <div v-for="(game, index) in gamePage.gameList" :key="index" :data-id="index" style="height: auto"
+                class="btn-pointer inner-slot-game">
                 <transition name="in-view">
                   <q-list class="btn-slot-game q-col-gutter-none"
                     @click="openSlotGame(game.name, game.code, selectedPlat.status, game)">
@@ -194,28 +194,6 @@
   <DepositRecords />
 
   <GameModal ref="gameModalRef"></GameModal>
-
-  <q-dialog width="100%" class="modal-update-div" v-model="isAppUpdateModal" show-cancel-button
-    :showCancelButton="false" :showConfirmButton="false">
-    <q-card style="width: 100%" class="bg-bright text-black">
-      <div class="modalcontent">
-        <div class="headers">
-          <div class="titles backgroundColor">
-            {{ $t("lang.update_app_title") }}
-          </div>
-        </div>
-        <div class="contents">{{ $t("lang.detected_new_version") }}</div>
-        <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate">
-            {{ $t("lang.cancel") }}
-          </div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">
-            {{ $t("lang.update_now") }}
-          </div>
-        </div>
-      </div>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
@@ -274,9 +252,6 @@ export default defineComponent({
     const router = useRouter();
     const store = userStore();
 
-    const mainWallet = computed(() => {
-      return store.balance;
-    });
     const gameModalRef = ref(null);
     const openSlotGame = (gameName, gameCode, gameStatus, gameInfo) => {
       if (!store.token) {
@@ -343,7 +318,6 @@ export default defineComponent({
       return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
     });
 
-    const isHomePromoModal = ref(false);
     const favLists = computed(() => {
       let lists = [];
       favGamesList.value.forEach((element) => {
@@ -355,9 +329,6 @@ export default defineComponent({
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
       gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
     };
-    const pokerGames = [
-
-    ];
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
     const esportsGame = ref([]);
@@ -523,12 +494,6 @@ export default defineComponent({
             })
             .catch((err) => {
               isLoading.value = false;
-              // $q.notify({
-              //   color: "negative",
-              //   position: "top",
-              //   message: "Loading failed",
-              //   icon: "report_problem"
-              // });
             })
         )
         .then((res) => {
@@ -586,20 +551,12 @@ export default defineComponent({
     };
     const changePage = (page, pageSize) => {
       gamePage.gameList = gameListData.value;
-      // gamePage.gameList = gameListData.value.slice((page - 1) * pageSize, page * pageSize);
     };
 
     var platformApiUrl = store.hasToken() ? "/session/loggedInPlatform" : "/platform";
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
-      //假裝打 api 接 json 回傳
-      // const res = await fetch("fakeData/homePagePlatList.json");
-
-      // const result = await res.json();
-
-      // const resData = result.data;
-
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -608,47 +565,18 @@ export default defineComponent({
           })
         )
         .then((data) => {
-          // console.log("HEre");
-          // console.log(data);
-
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
           liveCasinoGames.value = data.filter((element) => element.gameType.includes("LIVE"));
-
-          //TODO:: HArdcoded.
-          console.log(liveCasinoGames.value);
-          // liveCasinoGames.value = liveCasinoGames.value.sort((a,b) => b.id - a.id);
-
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
-
-          console.log("SORT");
-          console.log(sportPlatform.value);
-
           platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL") || (element.gameType.includes("FISH") && element.code === "CQ9"));
-
-          // xfjGames.value = data.filter((element) => element.gameType.includes("MINIGAME"));
-          // lotteryGames.value = data.filter((element) => element.gameType.includes("LOTTERY"));
-
-          //   if (currentSelectedMenu.value === "slots") {
-          //     switchPlat(platforms.value[0], "slots");
-          //     platforms.value.forEach((e, i) => {
-          //       if (e.code === "AWS") {
-          //         platforms.value.splice(i, 1);
-          //       }
-          //     });
-          //   } else if (currentSelectedMenu.value === "fish") {
-          //     switchPlat(fishPlatforms.value[0], "fish");
-          //   }
         })
         .catch((err) => { });
     };
 
-    const announcementTypes = ref([]);
-
     const comingSoonImg = require(`../assets/home/slot/StayTuned.png`);
 
-    const noticeTitle = ref("");
     const activeKey = ref(null);
 
     const isShowBtt = ref(false);
@@ -674,141 +602,27 @@ export default defineComponent({
       }
     };
 
-    const download_url = ref("");
-    const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
-        ui.setVersion(info.version + " " + info.build);
-        // console.log("Current Ver: " + current_version);
-
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        console.log(res, ">>res");
-        if (res.data.code === 0) {
-          var version_info = res.data.data.version;
-          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
-          download_url.value = res.data.data.url;
-          // console.log("latest_ver_no Ver: " + latest_ver_no);
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
-      } else if (Platform.is.ios && "standalone" in window.navigator && window.navigator.standalone) {
-        ui.appVersion = "iOS App";
-      } else if (isH5.value && Platform.is.mobile) {
-        const res = await api.get(`/config/appVersionAndUrl?type=ALL&device=ANDROID`);
-
-        if (res.data.code === 0) {
-          store.setAppDownloadUrl(res.data.data.url);
-        }
-      }
-    };
-
-    const openDownloadPage = () => {
-      window.open(download_url.value, "_system");
-      isAppUpdateModal.value = false;
-    };
-    const cancelUpdate = () => {
-      isAppUpdateModal.value = false;
-    };
-
-    const downloadUrl = ref("");
-
-    const toggleFavGame = (gameId, status) => {
-      if (status === true) {
-        api.post("/session/member/fav-games", qs.stringify({ gameId: gameId })).then((res) => {
-          // console.log(res);
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.fav_game_added"),
-            icon: "report_problem"
-          });
-          favGamesList.value.push({ id: gameId });
-        });
-      } else {
-        api.delete("/session/member/fav-games?gameId=" + gameId).then((res) => {
-          console.log(res);
-          $q.notify({
-            color: "positive",
-            position: "top",
-            message: t("lang.fav_game_removed"),
-            icon: "report_problem"
-          });
-          remove(favGamesList.value, {
-            id: gameId
-          });
-        });
-      }
-    };
-
-    const onIntersection = (entry) => {
-      // if (entry.isIntersecting === true) {
-      //   add(entry.target.dataset.id)
-      // }
-      // else {
-      //   remove(entry.target.dataset.id)
-      // }
-    };
     const position = ref(0);
     const scrollToTop = (el) => {
       scrollSlotRef.value?.setScrollPosition("vertical", position);
       scrollPageRef.value?.setScrollPosition("vertical", position);
       isShowBtt.value = false;
-      // const target = getScrollTarget(el[0])
-      // const duration = 1000
-      // console.log(target)
     };
 
     onMounted(() => {
       checkPlatform();
-      loadHomePromoPopup();
       loadHomeData();
-      getVersionNo();
-    });
-
-    const popupInterval = ref(null);
-
-
-    onUnmounted(() => {
-      clearInterval(popupInterval.value);
     });
 
     const loadHomeData = async () => {
       if (store.hasToken()) {
         await store.getMemberInfo();
-
-        // getFavGameList();
-        // store.getUnreadTotal();
       }
-      // loadData();
+
       getPlatList();
     };
     const imageLoading = ref(false);
     const selectedLiveTab = ref();
-
-    const loadHomePromoPopup = () => {
-      const isPromoPopup = SessionStorage.getItem("isHomePromoModal");
-      if (!isPromoPopup) {
-        isHomePromoModal.value = true;
-      }
-    };
-
-    const closePopupModal = () => {
-      SessionStorage.set("isHomePromoModal", "1");
-    };
 
     const isShow = ref(false);
     const selectSlotPlat = (plat) => {
@@ -851,12 +665,6 @@ export default defineComponent({
       }
     };
 
-    const showFavourite = () => {
-      isShow.value = true;
-      selectedPlatId.value = -99;
-      // getFavGameList();
-    };
-
     const showMiniType = ref(0);
     const showTypeWeb = (id) => {
       showMiniType.value = id;
@@ -868,14 +676,12 @@ export default defineComponent({
     return {
       ajaxBarRef,
       imageLoading,
-      slide: ref(0),
       imgURL: process.env.IMAGE_CDN + "/promo/",
       gameImgURL: process.env.IMAGE_CDN + "/game/",
       gameBoardRef,
       gameBoardItemRef,
       gameBoardItemData,
       store,
-      ui,
       platforms,
       fishPlatforms,
       comingSoonImg,
@@ -885,18 +691,13 @@ export default defineComponent({
       lotteryGamesMore,
       lotteryGamesList,
       isShow,
-      mainWallet,
       playGame,
       gameModalRef,
-      pokerGames,
       switchPlat,
       scrolling,
       scrollToTop,
       switchMenu,
       gamePage,
-      onIntersection,
-      toggleFavGame,
-      favLists,
       isLoading,
       selectedPlat,
       scrollPosition,
@@ -912,13 +713,11 @@ export default defineComponent({
       esportsGame,
       esportPlatform,
       sportPlatform,
-      showFavourite,
       selectFishPlat,
       selectLotteryPlat,
       selectSlotPlat,
       selectCasualPlat,
       platformMinigame,
-      closePopupModal,
       isGoMiniGame,
       miniGames,
       miniGamesMore,
@@ -928,19 +727,9 @@ export default defineComponent({
       showMiniType,
       openGame,
       openSlotGame,
-      openFavGame,
       scrollPageRef,
-      isHomePromoModal,
-      noticeTitle,
-      announcementTypes,
       activeKey,
-      router,
-      isAppUpdateModal,
-      isH5,
-      openDownloadPage,
-      cancelUpdate,
-      favGamesList,
-      sortedFavGamesList
+      isH5
     };
   }
 });
