@@ -36,7 +36,7 @@
     // console.log(globalThis);
   </script>
 
-   <script type="text/javascript">
+  <script type="text/javascript">
     //Call a Message to Parent (If App.)
     console.log("0411-11")
 
@@ -47,7 +47,7 @@
       window.location.pathname === "/invitefriend" ||
       window.location.pathname === "/privilege/invite" ||
       window.location.pathname === "/viptest" ||
-     window.location.pathname === "/deposittest"
+      window.location.pathname === "/deposittest"
     ){
 
       //IOS
@@ -60,7 +60,7 @@
       if( window["WebScript"]){
         window["WebScript"].notifyApp("LH_ANDROID");
       }
-      // window.localStorage.setItem('https://123123.com', "LH_H5_RST_URL");
+
       window.addEventListener('message', function(event) {
         if(event.data.data !== undefined){
           // {"actDomain":"https://przvnboftl.anpoxuaq9ae.com:9972","crDomain":"https://m.lh330696.com:9971","rstDomain":"https://apodnbo0tl.anipoius54d.com:9972"}
@@ -84,6 +84,16 @@
           }
         }
       });
+    }
+  </script>
+
+  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+  <script type="text/javascript">
+    var hostname = window.location.hostname;
+    console.log(hostname);
+    if (hostname.indexOf("lh99966.com") > -1) {
+      console.log("Track");
+      LA.init({id:"KTtv5inKGfP1Jw2q",ck:"KTtv5inKGfP1Jw2q"})
     }
   </script>
 </head>

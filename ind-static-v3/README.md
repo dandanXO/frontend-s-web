@@ -1,4 +1,4 @@
-# IndWin7 App (inr-h5-project)
+# Ind3 App (inr-h5-project)
 
 India 3 (**INR**) H5 APP
 

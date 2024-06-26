@@ -6,10 +6,6 @@
         <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
         </div> -->
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
-        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
-        <div class="little2-title"><div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
-        <div class="little2-content">会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。</div>
         <table class="luck8-game-info-table">
           <tr>
             <th>电游平台</th>
@@ -19,19 +15,19 @@
             <th>活动彩金</th>
             <th>操作</th>
           </tr>
-          
+
           <tr v-for="(item, index) in tableData" :key="index">
             <td>
               {{ item.platform }}
               <!-- <span class="inner-time">{{ item.time }}</span> -->
             </td>
             <td>{{ item.betTime }}</td>
-            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
+            <td>{{ item.betId }}</td>
             <td>{{ item.bet }}</td>
             <td>{{ item.prizeAmount }}</td>
             <td>
-              <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="!item.claimTime ? 'option-btn-active' : 'option-btn-disable'">
-                {{ item.claimTime ? '已领取' : '领取彩金' }}
+              <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'">
+                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取彩金' }}
               </button>
             </td>
           </tr>
@@ -39,6 +35,12 @@
             <td colspan="6">暂无数据</td>
           </tr>
         </table>
+        <div class="little-title" style="margin-top:20px;">
+          <div class="left">申请方式</div>
+          <div class="right">
+            会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
+          </div>
+        </div>
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
@@ -62,27 +64,32 @@
             <th>流水要求</th>
           </tr>
           <tr>
-            <td>≥********888</td>
+            <td>********888</td>
             <td>3</td>
             <td>388 元</td>
             <td rowspan="4">8 倍</td>
           </tr>
           <tr>
-            <td>≥*******8888</td>
+            <td>*******8888</td>
             <td>5</td>
             <td>888 元</td>
           </tr>
           <tr>
-            <td>≥******88888</td>
+            <td>******88888</td>
             <td>8</td>
             <td>1,888 元</td>
           </tr>
           <tr>
-            <td>≥*****888888</td>
+            <td>*****888888</td>
             <td>10</td>
             <td>2,888 元</td>
           </tr>
         </table>
+        <div class="little2-title">
+          <div style="margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;">
+          </div>范例
+        </div>
+        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
       </div>
       <div class="luck8-game-bottom-rule">
         <div class="title"></div>
@@ -101,7 +108,6 @@
           <div class="item">
             5.为避免文字理解差异，如有疑问可联系在线客服，雷火电竞保留活动最终解释权；
           </div>
-          
         </div>
       </div>
 
@@ -161,7 +167,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, watch } from "vue";
+import { ref, onMounted, computed } from "vue";
 import moment from "moment";
 import { getSlotLucky8, submitSlotLucky8 } from "@/api/promotion/slotlucky";
 import { ElMessage } from "element-plus";
@@ -178,6 +184,8 @@ const tableData = ref([]);
 const store= userStore();
 
 const recordList = ref([]);
+
+const hasClaimed = computed(() => tableData.value?.some((item) => item.claimTime))
 
 const handleSubmitVote = (item) => {
   submitSlotLucky8(promoCode.value, item.id)
@@ -393,26 +401,7 @@ onMounted(getSlotLucky8Data);
     height: 44px;
     margin-bottom: 40px;
   }
-  .little2-title{
-    width: 100%;
-    font-family: PingFang TC;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    text-align: left;
-    color: #4BA5FF;
-    margin-top: 20px;
-  }
-  .little2-content{
-    width: 100%;
-    font-family: PingFang TC;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    text-align: left;
-  }
+
   .little-title {
     display: flex;
     align-items: center;
@@ -454,6 +443,27 @@ onMounted(getSlotLucky8Data);
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .little2-title{
+    width: 100%;
+    font-family: PingFang TC;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #4BA5FF;
+    margin-top: 20px;
+  }
+  .little2-content{
+    width: 100%;
+    font-family: PingFang TC;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: -0.02em;
+    text-align: left;
+  }
 
   .title {
     background-image: url("../../../assets/promo/lh-luck8/info-title.png");
@@ -500,7 +510,7 @@ onMounted(getSlotLucky8Data);
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  margin-top: 12px;
+  margin: 12px 0;
   th {
     height: 56px;
     font-size: 20px;
@@ -593,8 +603,16 @@ onMounted(getSlotLucky8Data);
   border-radius: 100px;
   color: rgba(255, 255, 255, 1);
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-  
 
+
+}
+.option-btn-redeemed{
+  width: 120px;
+  height: 36px;
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 1);
+  background: linear-gradient(180deg,#48D179 0%, #00A63A 100%);
+  pointer-events: none;
 }
 .option-btn-disable{
   width: 120px;
@@ -605,6 +623,7 @@ onMounted(getSlotLucky8Data);
   pointer-events: none;
 
 }
+
 .luck8-game-bottom-rule {
   width: 100%;
   height: 100%;

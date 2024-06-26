@@ -1,36 +1,40 @@
 <template>
-    <div class="form-wrapper">
-        <form class="update-pwd-form form-template">
-            <div class="form-item">
-                <label>{{ $t('lang.password_existing_password') }}</label>
-                <q-input dense ref="oldPasswordRef" type="password" outlined v-model="updatePwdInfo.oldPassword"
-                    clearable :rules="[
+    <div class="page-container">
+        <div class="form-wrapper">
+            <form class="update-pwd-form form-template">
+                <div class="form-item">
+                    <label>{{ $t('lang.password_existing_password') }}</label>
+                    <q-input dense ref="oldPasswordRef" type="password" outlined v-model="updatePwdInfo.oldPassword"
+                        clearable :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                $t('lang.password_at_least_6_character')
+                        ]" />
+                </div>
+
+                <div class="form-item">
+                    <label>{{ $t('lang.password_new_password') }}</label>
+                    <q-input dense ref="passwordRef" type="password" outlined v-model="updatePwdInfo.password" :rules="[
                         (val) =>
                             (val && val.length >= 6) ||
                             $t('lang.password_at_least_6_character')
-                    ]" />
-            </div>
+                    ]" clearable />
+                </div>
 
-            <div class="form-item">
-                <label>{{ $t('lang.password_new_password') }}</label>
-                <q-input dense ref="passwordRef" type="password" outlined v-model="updatePwdInfo.password" :rules="[
-                    (val) =>
-                        (val && val.length >= 6) ||
-                        $t('lang.password_at_least_6_character')
-                ]" clearable />
-            </div>
+                <div class="form-item">
+                    <label>{{ $t('lang.password_confirm_new_password') }}</label>
+                    <q-input dense ref="confirmRef" type="password" outlined v-model="updatePwdInfo.confirm_pass"
+                        :rules="[
+                            (val) =>
+                                (val && val.length >= 6) ||
+                                $t('lang.password_at_least_6_character'),
+                            (val) =>
+                                val === updatePwdInfo.password || $t('lang.password_password_mismatch')
+                        ]" clearable />
+                </div>
+            </form>
+        </div>
 
-            <div class="form-item">
-                <label>{{ $t('lang.password_confirm_new_password') }}</label>
-                <q-input dense ref="confirmRef" type="password" outlined v-model="updatePwdInfo.confirm_pass" :rules="[
-                    (val) =>
-                        (val && val.length >= 6) ||
-                        $t('lang.password_at_least_6_character'),
-                    (val) =>
-                        val === updatePwdInfo.password || $t('lang.password_password_mismatch')
-                ]" clearable />
-            </div>
-        </form>
         <div class="action-buttons">
             <div class="primary-button blue" @click="submitUpdatePwd">{{ $t('lang.password_change_password') }}</div>
         </div>
@@ -89,3 +93,9 @@ const submitUpdatePwd = () => {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+.form-wrapper {
+    padding: 20px;
+}
+</style>

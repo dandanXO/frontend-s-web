@@ -107,6 +107,7 @@ const groupByDateTabList = ref(
     "2024-06-24",
     "2024-06-25",
     "2024-06-26",
+    "2024-06-27",
   ]);
 groupByDateTabList.value = groupByDateTabList.value.filter(number => number >= moment().format("YYYY-MM-DD"));
 
@@ -118,7 +119,6 @@ const groupByGroupTabList = ref(["A", "B", "C", "D", "E", "F"]);
 const { width } = useWindowSize();
 
 const tabPerPage = computed(() => {
-  if (width.value < 390) return 2;
   if (width.value < 490) return 3;
   return 4;
 });

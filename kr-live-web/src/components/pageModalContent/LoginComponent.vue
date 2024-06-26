@@ -1,55 +1,57 @@
 <template>
-  <div class="form-wrapper">
-    <q-form class="login-form form-template" @keypress.enter="onSubmit">
-      <div class="form-item">
-        <label>{{ $t('lang.login_account') }}</label>
-        <q-input :disable="isLoading" :loading="isLoading" dense ref="loginNameRef" outlined clearable
-          v-model="loginForm.loginName" lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
-            (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
-          ]" />
-      </div>
+  <div class="page-container">
+    <div class="form-wrapper page-content">
+      <q-form class="login-form form-template" @keypress.enter="onSubmit">
+        <div class="form-item">
+          <label>{{ $t('lang.login_account') }}</label>
+          <q-input :disable="isLoading" :loading="isLoading" dense ref="loginNameRef" outlined clearable
+            v-model="loginForm.loginName" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_username_cannot_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.username_between_6_12'),
+              (val) => val.match(/^[A-Za-z0-9]+$/) || $t('lang.only_letter_number_allowed')
+            ]" />
+        </div>
 
-      <div class="form-item">
-        <label>{{ $t('lang.login_password') }}</label>
-        <q-input :disable="isLoading" :loading="isLoading" dense ref="pwdRef" outlined clearable
-          v-model="loginForm.password" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
-            (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
-            (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
-          ]">
-          <template v-slot:append>
-            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-          </template>
-        </q-input>
-      </div>
+        <div class="form-item">
+          <label>{{ $t('lang.login_password') }}</label>
+          <q-input :disable="isLoading" :loading="isLoading" dense ref="pwdRef" outlined clearable
+            v-model="loginForm.password" :type="isPwd ? 'password' : 'text'" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || $t('lang.input_password_empty'),
+              (val) => (val.length > 5 && val.length <= 12) || $t('lang.password_between_6_12')
+            ]">
+            <template v-slot:append>
+              <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+            </template>
+          </q-input>
+        </div>
 
-      <div class="form-item">
-        <label>{{ $t('lang.login_captcha') }}</label>
-        <div class="captcha-code">
-          <q-input :disable="isLoading" :loading="isLoading" dense ref="captchaRef" outlined clearable
-            class="captcha-code-input" v-model="loginForm.captchaCode" lazy-rules
-            :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
-          <div class="captcha-img-wrapper">
-            <q-spinner-orbit size="30px" v-if="captchaLoading" />
-            <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+        <div class="form-item">
+          <label>{{ $t('lang.login_captcha') }}</label>
+          <div class="captcha-code">
+            <q-input :disable="isLoading" :loading="isLoading" dense ref="captchaRef" outlined clearable
+              class="captcha-code-input" v-model="loginForm.captchaCode" lazy-rules
+              :rules="[(val) => (val && val.length > 0) || $t('lang.enter_captcha_code')]" />
+            <div class="captcha-img-wrapper">
+              <q-spinner-orbit size="30px" v-if="captchaLoading" />
+              <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
+            </div>
           </div>
         </div>
-      </div>
+      </q-form>
 
-      <div class="action-buttons">
-        <q-btn :disable="isLoading" @click="onSubmit" class="primary-button yellow login-submit-btn">
-          {{ $t('lang.login_submit') }}
-        </q-btn>
-        <q-btn :disable="isLoading" class="primary-button blue login-register-btn" to="/?page=register">
-          {{ $t('lang.login_register') }}
-        </q-btn>
-      </div>
-    </q-form>
+      <q-inner-loading :showing="isLoading" style="background:#1414144d;">
+        <q-spinner-orbit style="width:50px;height:50px;" />
+      </q-inner-loading>
+    </div>
 
-    <q-inner-loading :showing="isLoading" style="background:#1414144d;">
-      <q-spinner-orbit style="width:50px;height:50px;" />
-    </q-inner-loading>
+    <div class="action-buttons vertical">
+      <q-btn :disable="isLoading" @click="onSubmit" class="primary-button yellow login-submit-btn">
+        {{ $t('lang.login_submit') }}
+      </q-btn>
+      <q-btn :disable="isLoading" class="primary-button blue login-register-btn" to="/?page=register">
+        {{ $t('lang.login_register') }}
+      </q-btn>
+    </div>
   </div>
 </template>
 
@@ -59,11 +61,12 @@ import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { errorNotify, successNotify } from "src/boot/utils";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const { t: $t } = useI18n();
+const route = useRoute();
 
 const loginNameRef = ref();
 const pwdRef = ref();
@@ -134,6 +137,17 @@ const onSubmit = () => {
         })
         .then(() => {
           successNotify($t('lang.login_success_msg'));
+
+
+          if(route.query.page) {
+            router.push({
+              path: '/',
+              query: {
+                page: route.query.redirect
+              }
+            })
+            return;
+          }
           router.push("/");
         })
         .catch((error) => {
@@ -151,7 +165,7 @@ const onSubmit = () => {
 
 <style lang="scss" scoped>
 .form-wrapper {
-  min-height: unset;
+  padding: 20px;
 }
 
 .login-form {
@@ -182,18 +196,15 @@ const onSubmit = () => {
     }
   }
 
-  .action-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin: 10px auto 20px;
+  @media (max-width: 600px) {
+    label {
+      font-size: small;
+    }
+  }
 
-    .login-submit-btn,
-    .login-register-btn {
-      width: 200px;
-      height: 36px;
+  @media (max-width: 400px) {
+    label {
+      font-size: x-small;
     }
   }
 }

@@ -43,14 +43,6 @@ export const userStore = defineStore("userStore", {
     getAppDownloadUrl() {
       return this.appDownloadUrl;
     },
-    getUnreadTotal() {
-      api.get("/session/inbox/getUnreadTotal").then((ret) => {
-        const res = ret.data;
-        if (res.code === 0) {
-          this.unreadCount = res.data;
-        }
-      });
-    },
     hasToken() {
       return !!SessionStorage.getItem("TOKEN") || !!this.token;
     },
@@ -187,6 +179,16 @@ export const userStore = defineStore("userStore", {
           this.memberLogout();
         }
       });
+    },
+    getUnreadTotal() {
+      if (this.token && !this.isOffline) {
+        api.get("/session/inbox/getUnreadTotal").then((ret) => {
+          const res = ret.data;
+          if (res.code === 0) {
+            this.unreadCount = res.data;
+          }
+        });
+      }
     },
     getBalance() {
       if (this.token && !this.isOffline) {

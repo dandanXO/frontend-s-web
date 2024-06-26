@@ -435,11 +435,9 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
+                  router.push(jumpUrl);
                   // location.href = "/";
                 }
-
-                sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({
                   color: "negative",

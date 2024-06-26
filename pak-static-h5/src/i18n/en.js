@@ -397,6 +397,24 @@ export default {
     noRecord: "No record",
     noMoreRecord: "No more record"
   },
+  appUpdate: {
+    updateHeader: "Update Announcement",
+    isOutdatedAppContent_01: "Your App Version Is Outdated,",
+    isOutdatedAppContent_02: "Please Update The App Now",
+    newAppVersionContent_01: "New Version Detected, Do You Want To Update?",
+    cancel: "Cancel",
+    updateNow: "Update now"
+  },
+  promo: {
+    all: 'ALL',
+    earn: 'EARN',
+    hot: 'HOT',
+    new_user: 'NEW USER',
+    sports: 'SPORTS',
+    live: 'LIVE',
+    slot: 'SLOT',
+    vip: 'VIP'
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -452,7 +470,7 @@ export default {
     10007: "Error entering game room",
     10008: "Error",
     11003: "Deposit failed",
-    11005: "Please try again",
+    11005: "The current user's operations are too frequent. Please try again.",
     12100: "Withdraw password not match",
     12101: "The new withdraw password cannot be the same as the old withdraw password",
     13000: "Domain name not found",

@@ -122,6 +122,20 @@
           @click="requestExportExcel"
         >{{ t('fields.requestExportToExcel') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-if="hasPermission(['sys:withdraw:unsuccess:list'])"
+          @click="unsuccessFrom30min"
+        >{{ t('fields.unsuccessFrom30min') }}
+        </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="unsuccessIn10time"
+          v-if="hasPermission(['sys:withdraw:unsuccess:list'])"
+        >{{ t('fields.unsuccessIn10time') }}
+        </el-button>
       </div>
     </div>
 
@@ -344,8 +358,8 @@
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @current-change="loadRecord"
-        @size-change="loadRecord"
+        @current-change="loadRecordByRequestType"
+        @size-change="loadRecordByRequestType"
       />
       <div class="table-footer" v-permission="['sys:withdraw:record:sum']">
         <span>{{ t('fields.noOfWithdrawTimes') }}</span>
@@ -773,7 +787,9 @@ import {
   getMemberWithdrawRecord,
   autoWithdrawToFail,
   getExportWithdrawRecord,
-  autoWithdrawToSuccess
+  autoWithdrawToSuccess,
+  getUnsuccessfulIn10time,
+  getqueryUnsuccessIn30min
 } from '../../../../api/member-withdraw-record'
 import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
 import { getAllWithdrawBankCard } from '../../../../api/bank-card'
@@ -795,6 +811,7 @@ const site = ref(null)
 const siteId = ref(null)
 const searchForm = ref(null)
 const toFailForm = ref(null)
+const requestType = ref(null)
 const clickedFail = ref(null)
 const vipList = reactive({
   list: [],
@@ -1094,7 +1111,7 @@ async function toFail(memberWithdrawRecord) {
   } else {
     page.loading = true
     await autoWithdrawToFail(memberWithdrawRecord.id, 'Auto Withdraw Fail', 'Auto Withdraw Fail', memberWithdrawRecord.withdrawDate, memberWithdrawRecord.siteId)
-    await loadRecord()
+    await loadRecordByRequestType()
     ElMessage({ message: t('message.updateToFailSuccess'), type: 'success' })
     page.loading = false
   }
@@ -1103,7 +1120,7 @@ async function toFail(memberWithdrawRecord) {
 async function toSuccess(val) {
   page.loading = true
   await autoWithdrawToSuccess(val.id, val.withdrawDate, val.siteId)
-  await loadRecord()
+  await loadRecordByRequestType()
   page.loading = false
 }
 
@@ -1188,12 +1205,74 @@ function checkQuery() {
   return query
 }
 
+async function loadRecordByRequestType() {
+  if (requestType.value === "unsuccessFrom30min") {
+    unsuccessFrom30min()
+  } else if (requestType.value === "unsuccessIn10time") {
+    unsuccessIn10time()
+  } else {
+    loadRecord()
+  }
+}
+
 async function loadRecord() {
+  requestType.value = "loadRecord"
   uiControl.dialogVisible = false
   page.loading = true
 
   const query = checkQuery()
   const { data: ret } = await getMemberWithdrawRecord(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.total = ret.total
+  if (page.records.length !== 0) {
+    page.totalAmount = ret.sums.withdrawAmount
+  } else {
+    page.totalAmount = 0
+  }
+  page.loading = false
+}
+
+const convertDateTolastWeek = date => {
+  var m = moment(date).subtract(1, 'weeks').startOf('isoWeek').format('YYYY-MM-DD HH:mm:ss')
+  return m
+}
+
+const convertDateTo30min = date => {
+  var m = moment(date).subtract(210, 'minutes').format('YYYY-MM-DD HH:mm:ss')
+  return m
+}
+
+const convertDate = date => {
+  var m = moment(date).format('YYYY-MM-DD HH:mm:ss')
+  return m
+}
+
+async function unsuccessFrom30min() {
+  requestType.value = "unsuccessFrom30min"
+  uiControl.dialogVisible = false
+  page.loading = true
+  searchRequest.date = [convertDateTolastWeek(new Date()), convertDateTo30min(new Date())]
+  const query = checkQuery()
+  const { data: ret } = await getqueryUnsuccessIn30min(query)
+  page.pages = ret.pages
+  page.records = ret.records
+  page.total = ret.total
+  if (page.records.length !== 0) {
+    page.totalAmount = ret.sums.withdrawAmount
+  } else {
+    page.totalAmount = 0
+  }
+  page.loading = false
+}
+
+async function unsuccessIn10time() {
+  requestType.value = "unsuccessIn10time"
+  uiControl.dialogVisible = false
+  page.loading = true
+  searchRequest.date = [convertDateTolastWeek(new Date()), convertDate(new Date())]
+  const query = checkQuery()
+  const { data: ret } = await getUnsuccessfulIn10time(query)
   page.pages = ret.pages
   page.records = ret.records
   page.total = ret.total

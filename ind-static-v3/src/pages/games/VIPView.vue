@@ -1022,23 +1022,23 @@ const swipeRight = () => {
 
   &11 {
     background-image: url("../../assets/images/vip/badge/banner11.png");
-    color: #de346a;
+    color: #af904c;
     .progress-bar-inner-bar {
-      background: #de346a;
+      background: #af904c;
     }
     .vip-current-level {
-      background: #de346a;
+      background: #af904c;
     }
   }
 
   &12 {
     background-image: url("../../assets/images/vip/badge/banner12.png");
-    color: #4f79ff;
+    color: #f9eccc;
     .progress-bar-inner-bar {
-      background: #4f79ff;
+      background: #f9eccc;
     }
     .vip-current-level {
-      background: #4f79ff;
+      background: #f9eccc;
     }
   }
 

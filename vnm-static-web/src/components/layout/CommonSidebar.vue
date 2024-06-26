@@ -44,9 +44,9 @@
         <div>{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
-    <!-- <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+     <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../../assets/home/red_envelope.png" />
-    </div> -->
+    </div>
     
 
   <GameModal ref="gameMenu" />
