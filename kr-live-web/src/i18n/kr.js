@@ -57,6 +57,7 @@ export default {
     page_modal_deposit: "입금신청",
     page_modal_withdraw: "출금신청",
     page_modal_message: "문의",
+    page_modal_message_compose: "문의 글쓰기",
     page_modal_customer_service: "고객센터",
     page_modal_promo: "이벤트",
     page_modal_personal_info: "개인정보",
@@ -188,7 +189,7 @@ export default {
     금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
 
     ※가상계좌 점검시간 안내
-    23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
+    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
     withdraw_withdraw_amount: "출금금액",

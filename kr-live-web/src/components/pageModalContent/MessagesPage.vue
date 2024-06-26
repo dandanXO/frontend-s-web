@@ -1,12 +1,7 @@
 <template>
     <div class="message-page">
-        <div style="display:flex;justify-content:space-between;">
-            <q-btn v-if="!isCreateMode" flat dense icon="edit" :label="$t('lang.message_compose')"
-                @click="isCreateMode = true" no-caps />
-            <q-btn v-else flat dense icon="arrow_back" :label="$t('lang.message_previous_page')"
-                @click="isCreateMode = false" no-caps />
-
-            <q-btn-dropdown v-if="!isCreateMode" flat :label="$t(inboxCategoryLabel)" dense>
+        <div class="message-category-dropdown">
+            <q-btn-dropdown flat :label="$t(inboxCategoryLabel)" dense>
                 <q-list>
                     <q-item clickable v-close-popup @click="inboxCategory = category.type"
                         v-for="category in inboxCategories" :key="category.type">
@@ -19,37 +14,7 @@
             </q-btn-dropdown>
         </div>
 
-
-        <div class="form-wrapper" v-if="isCreateMode">
-            <form class="content-form form-template">
-                <div class="form-item">
-                    <label>{{ $t('lang.feedback_category') }}</label>
-                    <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
-                        ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" clearable
-                        @update:model-value="type => composeForm.title = type" />
-                </div>
-                <div class="form-item">
-                    <label>{{ $t('lang.message_title') }}</label>
-                    <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
-                        v-model="composeForm.title" clearable lazy-rules :rules="[
-                            (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                        ]" />
-                </div>
-                <div class="form-item">
-                    <label>{{ $t('lang.message_content') }}</label>
-                    <q-input dense outlined ref="contentRef" type="textarea" rows="6" v-model="composeForm.content"
-                        clearable lazy-rules :rules="[
-                            (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                        ]" />
-                </div>
-            </form>
-
-            <div class="action-buttons">
-                <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
-                </div>
-            </div>
-        </div>
-        <div class="message-compose-form" v-else>
+        <div class="message-compose-form">
             <div class="message-container">
                 <div class="message-list-wrapper">
                     <div class="header">
@@ -128,7 +93,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { reactive, ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useQuasar } from "quasar";
 import { api } from "boot/axios";
 import moment from 'moment'
@@ -137,9 +102,6 @@ import { userStore } from "src/stores";
 var qs = require("qs");
 
 const $q = useQuasar();
-const isCreateMode = ref(false);
-const titleRef = ref();
-const contentRef = ref();
 const selected = ref();
 const isLoading = ref(false);
 const inboxCategory = ref('ALL');
@@ -154,15 +116,11 @@ const inboxCategoryLabel = computed(() => {
 })
 const store = userStore();
 
-const inboxCategories = [{ type: 'Outbox', label: 'lang.message_type_outbox' }, { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }]
-
-const composeForm = reactive({
-    title: "",
-    content: "",
-});
+const inboxCategories = [
+    // { type: 'Outbox', label: 'lang.message_type_outbox' },
+    { type: 'ALL', label: 'lang.message_type_all' }, { type: 'ANNOUNCEMENT', label: 'lang.message_type_announcement' }, { type: 'NOTIFICATION', label: 'lang.message_type_notification' }, { type: 'ACTIVITY', label: 'lang.message_type_activity' }, { type: 'PAYMENT', label: 'lang.message_type_payment' }];
 
 const isFetchingContent = ref(false);
-const messageTypes = ref([]);
 const inboxMessages = ref([]);
 
 const selectFirstMessage = () => {
@@ -180,41 +138,11 @@ const selectFirstMessage = () => {
 
 watch(() => inboxCategory.value, () => {
     initOutbox();
-})
+});
 
 watch(() => inboxMessages.value.records, () => {
     selectFirstMessage();
-})
-
-const sendMessage = () => {
-    titleRef.value.validate();
-    contentRef.value.validate();
-
-    if (titleRef.value.hasError || contentRef.value.hasError) {
-    } else {
-        api.post("/session/writeOutbox", qs.stringify(composeForm)).then((res) => {
-            const resCode = res.data.code;
-            const resMessage = res.data.message
-            if (resCode === 0) {
-                $q.notify({
-                    color: "positive",
-                    position: "top",
-                    message: "성공적으로 보냈습니다",
-                    icon: "check_circle_outline"
-                });
-                composeForm.title = "";
-                composeForm.content = "";
-            } else {
-                $q.notify({
-                    color: "negative",
-                    position: "top",
-                    message: resMessage,
-                    icon: "report_problem"
-                });
-            }
-        });
-    }
-};
+});
 
 const initOutbox = (page = 1) => {
     isLoading.value = true;
@@ -286,19 +214,8 @@ const readMessage = (id, showReadNotify = true) => {
     }
 }
 
-const initMessageTypes = () => {
-    api.get("/session/feedback/types").then((typesRes) => {
-        const { code: typesResCode, data: typesResData } = typesRes.data
-
-        if (typesResCode === 0) {
-            messageTypes.value = typesResData;
-        }
-    })
-}
-
 onMounted(() => {
     initOutbox();
-    initMessageTypes();
 })
 </script>
 
@@ -306,6 +223,17 @@ onMounted(() => {
 .message-page {
     height: 100%;
     padding: 20px;
+    position: relative;
+}
+
+.message-category-dropdown {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px 10px;
+    z-index: 1;
 }
 
 .content-form {
@@ -317,7 +245,7 @@ onMounted(() => {
     flex-direction: column;
     gap: 10px;
     margin: 0;
-    height: calc(100% - 35px);
+    height: 100%;
 }
 
 .back-btn {
@@ -384,6 +312,7 @@ onMounted(() => {
 
     .message-content-wrapper {
         height: 100%;
+        padding-top: 30px;
 
         .date-time-wrapper {
             display: flex;
