@@ -227,6 +227,7 @@ export default {
     UNSETTLED: 'UNSETTLED',
     SETTLED: 'SETTLED',
     CANCEL: 'CANCEL',
+    GIVEREWARD: 'TIPS',
   },
   giftType: {
     ENTITY: 'Entity',

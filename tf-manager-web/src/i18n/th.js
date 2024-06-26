@@ -162,6 +162,7 @@ export default {
     UNSETTLED: 'ยังไม่ได้ชำระ',
     SETTLED: 'ชำระแล้ว',
     CANCEL: 'ยกเลิก',
+    GIVEREWARD: 'รางวัล',
   },
   dashboard: {
     memberCount: 'จำนวนสมาชิก',
