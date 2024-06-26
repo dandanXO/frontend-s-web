@@ -992,7 +992,6 @@ export default defineComponent({
       opacity: 1;
 
       .q-tab__label {
-        color: $primary;
         font-weight: bold;
       }
     }
@@ -1074,7 +1073,7 @@ export default defineComponent({
           .promo-item {
             background-image: url(../assets/images/promo/promo-item-bg-dark.png);
             .promo-ribbon {
-              background: linear-gradient(90deg, #464cc2 0.15%, #aea2ef 94.25%);
+              background: linear-gradient(90deg, #36CBD5 0%, #1D809A 100%);
               clip-path: polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%);
               &::after {
                 display: none;
@@ -1116,6 +1115,9 @@ export default defineComponent({
   .promo {
     .q-tabs {
       background: $background-dark-light;
+      .q-tab--active {
+        color: $primary-dark;
+      }
     }
     .q-tab-panels {
       background: $background-dark;

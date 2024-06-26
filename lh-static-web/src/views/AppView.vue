@@ -1176,8 +1176,16 @@ export default defineComponent({
   .intro-container {
     .buttons {
       .platform-qr-code {
-        background-color: $background-content-block-dark;
+        background: url(@/assets/home/download/qr-frame-dark.png) no-repeat;
         color: $font-3-dark;
+      }
+      .platform-button {
+        background: $active-color-dark-linear;
+        box-shadow: $active-color-dark-shadow;
+
+        &:hover {
+          filter: brightness(1.2);
+        }
       }
     }
   }

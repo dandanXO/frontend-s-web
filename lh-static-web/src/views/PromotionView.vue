@@ -103,7 +103,7 @@
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh-lpl-summer24'
                 ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`:''
-            
+
           }"
           :class="{
             fullwidth:
@@ -968,13 +968,24 @@ export default defineComponent({
           @include content-block-dark;
 
           .type-list {
-            .type-item {
-              background: linear-gradient(180deg, #294e85 0%, #464e79 100%);
-              box-shadow: 0px 3.32px 7.61px 0px #bbdcff inset, 0px -1.66px 6.09px 0px #a2bff4 inset;
+            > img {
+              filter: brightness(0) saturate(100%) invert(58%) sepia(83%) saturate(350%) hue-rotate(135deg) brightness(100%) contrast(93%);
+            }
 
-              &.active {
-                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+            .type-item {
+              background: #394A65;
+              box-shadow: none;
+
+              &.active,
+              &:hover {
+                background: $active-color-dark-linear;
+                box-shadow: $active-color-dark-shadow;
+              }
+
+              &:not(&.active) {
+                img {
+                  filter: brightness(0) saturate(100%) invert(70%) sepia(87%) saturate(444%) hue-rotate(140deg) brightness(83%) contrast(87%);
+                }
               }
 
               .label {
@@ -991,18 +1002,38 @@ export default defineComponent({
 
             .promo-img-wrapper {
               .promo-label {
+                .label-type {
+                  background: $active-color-dark-linear;
+                  &::after {
+                    border: none;
+                    bottom: 0;
+                    left: calc(100% - 1px);
+                    background: $active-color-dark-linear;
+                    width: 20px;
+                    clip-path: polygon(0 0, 0% 110%, 100% 0);
+                  }
+                }
+
                 .label-date {
                   color: rgba($color-white, 20%);
                 }
               }
 
               .promo-details {
+                .front-title {
+                  color: #2AA6B8;
+                }
+
                 .front-sub {
                   color: $color-white;
                 }
 
                 .front-btn {
-                  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
+                  background: $active-color-dark-linear;
+                  box-shadow: $active-color-dark-shadow;
+                  &:hover {
+                    filter: brightness(1.2);
+                  }
                 }
               }
             }

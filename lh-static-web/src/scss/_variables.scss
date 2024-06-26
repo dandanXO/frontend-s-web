@@ -57,15 +57,33 @@ $page-trans: all 0.5s ease-in-out;
 $shadow-header-dark: 0px -20px 30px 0px #00153269 inset, 0px -4px 5px 0px #141424d6 inset, 0px 4px 0px 0px #0000000f,
   0px 4px 10px 0px #0000001a;
 
-$background-dark: #20242a;
-$background-content-block-dark: #28313e;
+$background-dark: linear-gradient(180deg, #191B27 0%, #0A0C16 100%);
+$background-content-block-dark: #1B202C;
 $background-content-block-lighter-dark: #364253;
 
+$active-color-dark: #45FDFB;
+$active-color-dark-filter: brightness(0) saturate(100%) invert(96%) sepia(99%) saturate(1288%) hue-rotate(138deg) brightness(104%) contrast(98%);
+$link-color-dark: #7AD4F0;
+$active-color-dark-linear: linear-gradient(180deg, #36CBD5 0%, #1D809A 100%);
+$active-color-dark-shadow: 0px -2.28px 5.21px 0px #93F2FF inset;
+
 $font-1-dark: #dfe4ff;
-$font-3-dark: #a4aabb;
+$font-3-dark: #A0BCD6;
 $font-4-dark: #f3f7fa;
+$font-5-dark: #E9E9E9;
 
 @mixin content-block-dark {
   background: $background-content-block-dark;
   box-shadow: none;
+}
+
+@mixin gradient-border($color) {
+  position: absolute;
+  content:'';
+  inset: 0;
+  padding: 1px;
+  background: $color;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
