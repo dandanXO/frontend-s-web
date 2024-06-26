@@ -366,7 +366,7 @@ export default defineComponent({
   min-height: 600px;
 
   .promo-banner {
-    background: #f3f7fd;
+    //background: #f3f7fd;
     width: 100%;
     display: flex;
     justify-content: center;
