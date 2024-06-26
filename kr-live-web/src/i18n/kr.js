@@ -234,6 +234,9 @@ export default {
     password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
     password_change_password: "변경완료",
     // password end
+    // page modal start
+    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

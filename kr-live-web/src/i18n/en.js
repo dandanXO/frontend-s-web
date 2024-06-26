@@ -217,6 +217,9 @@ export default {
     password_password_mismatch: "Confirm Password must be the same as New Password",
     password_change_password: "Change password",
     // password end
+    // page modal start
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
