@@ -736,8 +736,6 @@ const closeUserKYCDialog = (updateInfo) => {
     if(updateInfo.realName){
       formDetail.realName = updateInfo.realName;
     }
-
-    console.log("updateInfo::", updateInfo);
   });
 };
 
