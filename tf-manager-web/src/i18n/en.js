@@ -1611,6 +1611,7 @@ export default {
     vipWheelRecords: 'VIP Wheel Records',
     virtualVotes: 'Virtual Votes',
     visitNumber: 'Visit Number',
+    votes: 'Votes',
     voteTime: 'Vote Time',
     walletType: 'Wallet Type',
     way: 'Way',
