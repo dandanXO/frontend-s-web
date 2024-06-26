@@ -8,7 +8,7 @@
           <div class="circle">
             <div class="inner-circle">
               <div class="type">CURRENT SPEED</div>
-              <Vue3autocounter
+              <Vue3AutoCounter
                 class="auto-counter"
                 :startAmount="0"
                 :endAmount="Math.floor(Math.random() * 31) + 50"
@@ -26,7 +26,7 @@
           <div class="circle">
             <div class="inner-circle">
               <div class="type">TOTALLY AMOUNT</div>
-              <Vue3autocounter
+              <Vue3AutoCounter
                 class="auto-counter"
                 :startAmount="0"
                 :endAmount="14"
@@ -44,7 +44,7 @@
           <div class="circle">
             <div class="inner-circle">
               <div class="type">CURRENT SPEED</div>
-              <Vue3autocounter
+              <Vue3AutoCounter
                 class="auto-counter"
                 :startAmount="0"
                 :endAmount="Math.floor(Math.random() * 31) + 70"
@@ -62,7 +62,7 @@
           <div class="circle">
             <div class="inner-circle">
               <div class="type">TOTALLY AMOUNT</div>
-              <Vue3autocounter
+              <Vue3AutoCounter
                 class="auto-counter"
                 :startAmount="0"
                 :endAmount="90"
@@ -154,7 +154,7 @@
 import { onMounted } from "vue";
 import HomeTitle from "@/atoms/HomeTitle.vue";
 import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
-import Vue3autocounter from "vue3-autocounter";
+import Vue3AutoCounter from "vue3-autocounter";
 import { useDark } from "@vueuse/core";
 
 const isDark = useDark();
