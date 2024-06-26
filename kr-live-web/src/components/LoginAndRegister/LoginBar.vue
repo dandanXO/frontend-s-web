@@ -46,7 +46,7 @@
             <div class="icon-section-label">메뉴</div>
           </div>
           <div v-for="(item, index) in iconInfo" :key="index"
-            @click="store.token || item?.requireLogin === false ? item.goPage() : showNotify()"
+            @click="goPageOrLogin(item?.page)"
             class="credit-info cursor-pointer">
             <div class="icon-wrapper">
               <UnreadNotificationBadge v-if="item.type === 'message'" />
@@ -90,7 +90,7 @@ const toggleNav = () => {
   navActive.value = !navActive.value;
 };
 
-const showNotify = () => {
+const showNotify = (page) => {
   $q.notify({
     color: "negative",
     position: "top",
@@ -98,16 +98,22 @@ const showNotify = () => {
     icon: "report_problem"
   });
 
-  router.push('/?page=login')
+  router.push({
+    path: '/',
+    query: {
+      page: 'login',
+      redirect: page
+    }
+  })
 };
 
 const goPageOrLogin = (page) => {
   if (store.token) {
-    router.push(page);
+    router.push(`/?page=${page}`);
     return;
   }
 
-  showNotify();
+  showNotify(page);
 }
 
 const logout = () => {
@@ -115,72 +121,37 @@ const logout = () => {
 }
 
 const iconInfo = reactive([
-  // {
-  //   info: "송금신청",
-  //   iconUrl: require("../../assets/icon/deposit.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=finance/deposit`);
-  //   }
-  // },
   {
     info: 'lang.menu_announcement',
     iconUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=announcement`);
-    }
+    page: 'announcement',
   },
-  // {
-  //   info: "이벤트",
-  //   iconUrl: require("../../assets/icon/icon-promo.svg"),
-  //   goPage: () => {
-  //     router.push(`/?page=promo/all`);
-  //   }
-  // },
   {
     info: "lang.menu_deposit",
     iconUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/deposit`);
-    }
+    page: 'finance/deposit',
   },
   {
     info: "lang.menu_withdraw",
     iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=finance/withdraw`);
-    }
+    page: 'finance/withdraw',
   },
   {
     info: "lang.menu_transaction_record",
     iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records`);
-    }
+    page: 'transaction/records',
   },
   {
     info: "lang.menu_rebates",
     iconUrl: require("../../assets/icon/icon-betting.svg"),
-    goPage: () => {
-      router.push(`/?page=transaction/records&tab=rebates`);
-    }
+    page: 'transaction/records&tab=rebates',
   },
   {
     type: 'message',
     info: "lang.menu_message",
     iconUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    // iconUrl: require("../../assets/icon/pageModal/mail-icon.svg"),
-    goPage: () => {
-      router.push(`/?page=personal/messages`);
-    }
+    page: 'personal/messages',
   },
-  // {
-  //   info: "lang.menu_customer_service",
-  //   iconUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-  //   goPage: () => {
-  //     window.open(`https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr`);
-  //   },
-  //   requireLogin: false
-  // },
 ]);
 </script>
 

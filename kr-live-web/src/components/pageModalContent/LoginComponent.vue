@@ -61,11 +61,12 @@ import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { errorNotify, successNotify } from "src/boot/utils";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const { t: $t } = useI18n();
+const route = useRoute();
 
 const loginNameRef = ref();
 const pwdRef = ref();
@@ -136,6 +137,17 @@ const onSubmit = () => {
         })
         .then(() => {
           successNotify($t('lang.login_success_msg'));
+
+
+          if(route.query.page) {
+            router.push({
+              path: '/',
+              query: {
+                page: route.query.redirect
+              }
+            })
+            return;
+          }
           router.push("/");
         })
         .catch((error) => {
