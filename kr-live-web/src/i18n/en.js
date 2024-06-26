@@ -57,6 +57,7 @@ export default {
     page_modal_deposit: "Deposit",
     page_modal_withdraw: "Withdraw",
     page_modal_message: "Message",
+    page_modal_message_compose: "Compose Message",
     page_modal_customer_service: "Customer Service",
     page_modal_promo: "Promo",
     page_modal_personal_info: "Personal Info",

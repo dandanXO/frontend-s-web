@@ -49,6 +49,7 @@ import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import MessageCompose from "../pageModalContent/MessageCompose.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -134,6 +135,17 @@ const pagesInfo = reactive([
     component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "log",
+    page: "personal/messages/create",
+    info: 'lang.page_modal_message_compose',
+    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+    component: MessageCompose,
+    headerInfo: {
+      title: 'lang.page_modal_message_compose',
       description: "lang.page_modal_desc_text"
     }
   },
