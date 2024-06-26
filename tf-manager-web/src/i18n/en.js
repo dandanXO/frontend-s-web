@@ -1814,6 +1814,7 @@ export default {
     updateAffiliateLevel: 'Update Affiliate Level',
     unsuccessFrom30min: 'Unsuccessful Withdrawal from 30 Minutes Ago',
     unsuccessIn10time: 'Channels with 10 Cumulative Unsuccessful Withdrawals',
+    platformAccountName: 'Platform Account Name',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',
