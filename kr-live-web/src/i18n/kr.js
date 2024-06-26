@@ -160,10 +160,10 @@ export default {
     message_content: "내용",
     message_compose_confirm: "확인",
     message_previous_page: "전 페이지로 이동",
-    message_type_announcement: "발표",
-    message_type_notification: "공고",
+    message_type_announcement: "공지",
+    message_type_notification: "알림",
     message_type_activity: "활동",
-    message_type_payment: "지불",
+    message_type_payment: "입출금",
     message_type_all: "모두",
     message_type_outbox: "보낸 문의함",
     // message end
