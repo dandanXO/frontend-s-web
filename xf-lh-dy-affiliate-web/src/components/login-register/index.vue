@@ -1237,9 +1237,13 @@ export default defineComponent({
     )
 
     const swipeToContactUs = () => {
-      var myElement = document.getElementById('login-swiper')
-      console.log(myElement)
-      myElement.swiper.slideTo(1)
+      if (props.siteId !== '10') {
+        var myElement = document.getElementById('login-swiper')
+        console.log(myElement)
+        myElement.swiper.slideTo(1)
+      } else {
+        window.open('https://t.me/city88888', '_blank').focus();
+      }
     }
 
     const getCaptcha = () => {

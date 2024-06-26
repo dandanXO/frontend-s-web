@@ -1,16 +1,12 @@
 <template>
   <div class="register-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
+    <!-- <pre>hasAffiliate--{{ hasAffiliate }}</pre> -->
 
     <div class="register-form-wrapper">
       <q-form class="q-gutter-y-md rounded-borders">
         <InputRowGrid>
           <template #fields>
-            <InputField :label="'Phone Number'">
+            <InputField>
               <template #input>
                 <q-input
                   type="tel"
@@ -30,13 +26,14 @@
                   label-color="brand"
                 >
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/phone.svg" />
+                    <!-- <img src="../assets/images/auth/phone.svg" /> -->
+                    <q-icon name="phone_android" size="sm" />
                   </template>
                 </q-input>
               </template>
             </InputField>
 
-            <InputField :label="'Password'">
+            <InputField>
               <template #input>
                 <q-input
                   ref="pwdRef"
@@ -62,7 +59,8 @@
                   </template>
 
                   <template v-slot:prepend>
-                    <img src="../assets/images/auth/pass.svg" />
+                    <q-icon name="lock" size="sm" />
+                    <!-- <img src="../assets/images/auth/pass.svg" /> -->
                   </template>
                 </q-input>
                 <!-- <div v-if="regForm.password" class="password-str-div">
@@ -434,13 +432,13 @@ export default defineComponent({
                 });
 
                 store.autoLogin(res.data);
+
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
+                  router.push(jumpUrl);
                   // location.href = "/";
                 }
-
                 sessionStorage.removeItem("REFERRAL_CODE");
               } else {
                 $q.notify({

@@ -1,5 +1,5 @@
 <template>
-<!--    <span class="form-field-label">{{ props.label }}</span>-->
+   <span class="form-field-label">{{ props.label }}</span>
     <div class="landing-input">
         <slot name="input"></slot>
     </div>
@@ -23,7 +23,7 @@
   }
   :deep(.q-field__control):before {
     border-color: #2C323B;
-    background-color: #141812;
+    background-color: #1a1e289e;
     border-width: 2px;
     border-radius: 10px;
   }

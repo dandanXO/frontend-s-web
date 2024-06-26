@@ -4,6 +4,7 @@ import { SessionStorage, Notify, Platform } from "quasar";
 import LocalStorage from "boot/local-storage";
 import OneSignal from "onesignal-cordova-plugin";
 import { isAndroid } from "boot/utils";
+import { useUI } from "stores/ui";
 
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
@@ -44,7 +45,7 @@ export const userStore = defineStore("userStore", {
       readMsgLists: [],
       aaid: "",
       googleadid: "",
-      h5Url: "https://m.indwin7.com/",
+      h5Url: "https://m.ind3.com/",
       hasUpdatedOneSignal: false
     };
   },
@@ -277,10 +278,14 @@ export const userStore = defineStore("userStore", {
       }
     },
     autoLogin(token) {
+      const ui = useUI();
+
       if (isAndroid()) {
         LocalStorage.set("TOKEN", token, 86400);
+        ui.showLoggedIn();
       } else {
         SessionStorage.set("TOKEN", token);
+        ui.showLoggedIn();
       }
     },
     memberLogout() {
@@ -305,3 +310,5 @@ export const userStore = defineStore("userStore", {
     }
   }
 });
+
+// const ui = useUI();

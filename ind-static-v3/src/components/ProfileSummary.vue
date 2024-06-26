@@ -24,7 +24,7 @@
           <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">
@@ -225,7 +225,7 @@ const refreshBalance = () => {
 
 const onClickLogo = () => {
   if (isAndroid()) {
-    window.open("https://m.indwin7.com/", "_blank");
+    window.open("https://m.ind3.com/", "_blank");
     return;
   }
 
@@ -283,7 +283,7 @@ const checkTopDownloadAppear = () => {
 const topDownloadUrl = ref("");
 
 const getTopDownloadUrl = () => {
-  api.get("/app/download/affiliate/url?siteCode=IW2&affiliateCode=3B1BFB").then((res) => {
+  api.get("/app/download/affiliate/url?siteCode=INR&affiliateCode=3B1BFB").then((res) => {
     if (res.code === 0) {
       topDownloadUrl.value = res.data.url;
     }

@@ -1,6 +1,6 @@
-# IndWin7 App (iw2-h5-project)
+# Ind3 App (inr-h5-project)
 
-India 2 (**IW2**) H5 APP
+India 3 (**INR**) H5 APP
 
 - Node Version >= 16.17.0
 - H5 + Android APP
