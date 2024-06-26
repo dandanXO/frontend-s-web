@@ -73,13 +73,13 @@ watch(
         if (!visible.value) visible.value = false;
 
         // determine the extact pageInfoItem based on route info
-        const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+        const pageInfoItem = [...pagesInfo, ...minimalModePagesInfo].find(({ page }) => page === route.query.page);
         // determine which left side tab to land on
-        if (pageInfoItem?.tabIndex) {
-          tabIndex.value = pageInfoItem.tabIndex;
+        if (pageInfoItem) {
+          tabIndex.value = pageInfoItem?.tabIndex;
           open(route.query.page);
         } else {
-          router.push('/')
+          router.push('/');
         }
       });
     } else {

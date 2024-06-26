@@ -735,8 +735,7 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-.slot-grid,
-.fish-grid {
+.slot-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin: 0px auto 10px;
@@ -745,8 +744,7 @@ export default defineComponent({
   row-gap: 10px;
   width: calc(100% - 20px);
 
-  .inner-slot-game,
-  .inner-fish-game {
+  .inner-slot-game {
     position: relative;
   }
 
@@ -762,8 +760,7 @@ export default defineComponent({
     }
   }
 
-  .slot-name,
-  .fish-name {
+  .slot-name {
     text-align: center;
     padding: 5px 2px 0px;
     font-size: 10px;
@@ -894,8 +891,6 @@ export default defineComponent({
     aspect-ratio: 672 / 828;
   }
 
-  &:hover {}
-
   .select-type-div {
     position: absolute;
     top: 0px;
@@ -989,42 +984,6 @@ export default defineComponent({
   }
 }
 
-.fav-slot-game {
-  img {
-    width: 100%;
-    display: block;
-  }
-}
-
-#id-lottery-board {
-  row-gap: 25px;
-}
-
-.lottery-tcg-list {
-  &.game-item {
-    width: 110px;
-    height: 110px;
-    margin: 0 auto 15px;
-    padding: 9px;
-    //background-image: url("../assets/images/index/thai-tcg-bg.png");
-    background-size: 100% 100%;
-
-    .platform-img {
-      aspect-ratio: 1/1;
-    }
-
-    .game-name {
-      width: 100%;
-      display: block;
-      padding: 10px 0px;
-      white-space: normal;
-      line-height: 14px;
-      height: 30px;
-      text-align: center;
-    }
-  }
-}
-
 @media (min-width: 769px) {
 
   .game-scroll-lists {
@@ -1039,8 +998,7 @@ export default defineComponent({
     }
   }
 
-  .slot-grid,
-  .fish-grid {
+  .slot-grid {
     grid-template-columns: repeat(4, 1fr);
     column-gap: 14px;
     row-gap: 14px;
@@ -1056,8 +1014,7 @@ export default defineComponent({
     background-repeat: repeat-x;
   }
 
-  .slot-grid,
-  .fish-grid {
+  .slot-grid {
     grid-template-columns: repeat(6, 1fr);
   }
 
