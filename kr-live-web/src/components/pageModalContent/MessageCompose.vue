@@ -1,5 +1,5 @@
 <template>
-    <div class="message-page">
+    <div class="page-container">
         <div class="form-wrapper">
             <form class="content-form form-template">
                 <div class="form-item">
@@ -23,10 +23,10 @@
                         ]" />
                 </div>
             </form>
+        </div>
 
-            <div class="action-buttons">
-                <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
-                </div>
+        <div class="action-buttons">
+            <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
             </div>
         </div>
     </div>
@@ -102,6 +102,10 @@ onMounted(() => {
 
 .content-form {
     padding: 10px 0;
+}
+
+.form-wrapper {
+    padding: 20px;
 }
 
 .message-compose-form {
