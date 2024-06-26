@@ -15,6 +15,10 @@
       :style="{ top: date.top + 'px', left: date.left + 'px' }"
     >
       <!-- <span v-html="formatDate(date.matchTime)" />   -->
+      <span class="match-name" v-if="date.group ==='16'">1/8决赛<br/></span>
+      <span class="match-name" v-else-if="date.group ==='8'">1/4决赛<br/></span>
+      <span class="match-name" v-else-if="date.group ==='4'">半决赛<br/></span>
+
       <span v-if="date.matchTime" v-html="formatDate(date.matchTime)"></span>
       <span v-else>待定中</span>
     </div>
@@ -163,7 +167,7 @@ onMounted(() => {
   position: relative;
   width: 1360px;
   height: 1215px;
-  background: url(@/components/hotpromo/europe-2024/images/knockout-stage-background.png) no-repeat;
+  background: url(@/components/hotpromo/europe-2024/images/knockoutstage-bg1.png) no-repeat;
   background-position: center top;
   color: #ffffff;
   margin: auto;
@@ -181,6 +185,11 @@ onMounted(() => {
     line-height: 18px;
     letter-spacing: 0.12em;
     text-align: center;
+
+    .match-name{
+      font-size: 18px;
+      font-weight:bold;
+    }
   }
   .bracket-final {
     position: absolute;

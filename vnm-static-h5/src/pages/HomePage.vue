@@ -687,6 +687,11 @@
 
 
 
+  <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
+    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+    </div>
+  </q-page-sticky>
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
@@ -1267,17 +1272,10 @@ export default defineComponent({
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-          // debugger;
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            localStorage.removeItem(key);
-            // isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
@@ -1950,6 +1948,7 @@ export default defineComponent({
     };
     const fabPos = ref([18, 0]);
     const promoPos = ref([18, 108]);
+    const packetPos= ref([120, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
@@ -2098,6 +2097,7 @@ export default defineComponent({
       showRocket,
       checkShowRocket,
       fabPos,
+      packetPos,
       draggingRocketFab,
       draggingPromoFab,
       moveRocketFab,

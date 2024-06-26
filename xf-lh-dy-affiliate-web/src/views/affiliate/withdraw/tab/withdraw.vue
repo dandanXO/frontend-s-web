@@ -16,8 +16,8 @@
         </span>
         <span v-else>
           <span v-if="showBalance" class="card-panel-num">
-            $
             <span v-formatter="{data: balance, type: 'money'}" />
+            {{ returnCurrency() }}
           </span>
           <span v-else>****</span>
           <el-icon
@@ -63,10 +63,10 @@
         prop="amount"
         style="margin-bottom: 5px;"
       >
-        <el-input-number
+        <el-input
           style="width: 100%;"
           controls-position="right"
-          v-model="withdrawInfo.amount"
+          v-model="withdrawAmountFormatted"
           :placeholder="t('fields.enterTheWithdrawalAmount')"
           :min="selectedWithdrawalMethod.withdrawMin"
           :max="selectedWithdrawalMethod.withdrawMax"
@@ -83,15 +83,15 @@
         >
           {{ $t('message.singleLimit') }} :
           {{
-            selectedWithdrawalMethod.withdrawMin +
+            formatMoney(selectedWithdrawalMethod.withdrawMin) +
               ' - ' +
-              selectedWithdrawalMethod.withdrawMax
+              formatMoney(selectedWithdrawalMethod.withdrawMax)
           }}
         </div>
-        <template v-if="selectedWithdrawalMethod.withdrawMaxAmount">
+        <div v-if="selectedWithdrawalMethod.withdrawMaxAmount">
           {{ $t('message.withdrawalToday') }} :
-          {{ selectedWithdrawalMethod.withdrawMaxAmount }}
-        </template>
+          {{ formatMoney(selectedWithdrawalMethod.withdrawMaxAmount) }}
+        </div>
         <template v-if="selectedWithdrawalMethod.withdrawMaxTimes">
           {{ $t('message.remaining') }} :
           {{ selectedWithdrawalMethod.withdrawMaxTimes }}
@@ -215,7 +215,7 @@
 
 <script setup>
 import { View, Hide, Refresh } from '@element-plus/icons-vue'
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import { ElMessageBox, ElNotification } from 'element-plus'
 import {
   loadBankCards,
@@ -231,6 +231,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useStore } from '@/store'
 import { required } from '../../../../utils/validate'
+import { formatMoney } from "@/utils/format-money";
 
 const withdrawalMethods = ref([])
 const store = useStore()
@@ -245,6 +246,7 @@ const balance = ref(0)
 const showBalance = ref(false)
 const hasSecurityQn = ref(false)
 const hasWithdrawPw = ref(false)
+const siteId = store.state.user.siteId;
 const uiControl = reactive({
   dialogTitle: null,
   dialogType: null,
@@ -256,6 +258,22 @@ const withdrawState = reactive({
 const withdrawInfo = reactive({
   cardId: undefined,
   amount: '',
+})
+
+const withdrawAmountFormatted = ref('');
+
+const isDigitsWithComma = (value) => {
+  const withdrawAmount = value.replace(/\$\s?|(,*)/g, '');
+  return !isNaN(withdrawAmount);
+}
+
+watch(() => withdrawAmountFormatted.value, () => {
+  const withdrawAmount = withdrawAmountFormatted.value.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(withdrawAmount)) {
+  } else {
+    withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    withdrawInfo.amount = Number(withdrawAmount);
+  }
 })
 
 const securityForm = reactive({
@@ -286,7 +304,7 @@ const checkAmt = (rule, value, callback) => {
     return callback(new Error(t('message.requiredAmount')))
   }
   setTimeout(() => {
-    if (!Number.isInteger(value)) {
+    if (!Number.isInteger(value) && !isDigitsWithComma(value)) {
       callback(new Error(t('message.inputDigits')))
     } else {
       if (
@@ -379,6 +397,18 @@ async function retrieveSecurityQuestion() {
     securityForm.questionThree = qn.questionThree
   } else {
     hasSecurityQn.value = false
+  }
+}
+
+const returnCurrency = () => {
+  if (siteId === 3 || siteId === '3') {
+    return "THB"
+  } else if (siteId === 8 || siteId === '8') {
+    return "VNDP"
+  } else if (siteId === 10 || siteId === '10') {
+    return "₩"
+  } else {
+    return "RMB"
   }
 }
 

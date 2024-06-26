@@ -1,6 +1,6 @@
 {
   "name": "Jolly88",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Jolly88 App",
   "author": "Mika <mika@eagrp.net>",
   "private": true,
@@ -16,6 +16,8 @@
     "@capacitor/cli": "^4.0.1",
     "@capacitor/preferences": "^4.0.1",
     "@capacitor/splash-screen": "^4.0.1",
-    "cordova-plugin-file": "^8.0.0"
+    "cordova-plugin-file": "^8.0.0",
+    "com.adjust.sdk": "^4.38.1",
+    "cordova-plugin-inappbrowser": "^5.0.0"
   }
 }

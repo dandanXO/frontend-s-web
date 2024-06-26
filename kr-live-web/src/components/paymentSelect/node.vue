@@ -1,7 +1,10 @@
 <template>
-  <div class="node" v-if="list && list.length !== 0">
+  <div v-if="isFetchingApi" class="node-content payment-method-wrapper">
+    <q-skeleton v-for="rectSkeleton in 4" type="rect" class="withdraw-type-item" style="width:250px; height:45px;"
+      :key="rectSkeleton" />
+  </div>
+  <div class="node" v-else-if="list && list.length !== 0">
     <div v-if="level === 1" />
-    <!-- <div class="title" v-else>{{ name }}</div> -->
     <div v-else>
       <span class="account-title">{{ name }}</span>
     </div>
@@ -11,13 +14,12 @@
         selectItem === item ? 'active' : '',
       ]" :key="i" v-for="(item, i) in list">
         <div class="node-text">
-          <div class="node-icon"><q-img :src="imgURL + item.nodeIcon" style="height: 26px; width: 26px;"
-              :fit="'scale-down'">
+          <div class="node-icon"><q-img class="node-icon-img" :src="imgURL + item.nodeIcon" :fit="'scale-down'">
               <template v-slot:loading>
-                <q-spinner-gears size="0.5em" />
+                <q-spinner-orbit size="0.5em" />
               </template>
             </q-img></div>
-          <div class="">{{ item.nodeName }}</div>
+          <div class="node-label">{{ item.nodeName }}</div>
           <div class="promo" :style="item.promoStyle + 'background-image: url(' + item.promoIcon + ')'
             ">
             <span class="val">{{ item.promoValue }}</span>
@@ -30,36 +32,8 @@
             </div>
           </div>
         </div>
-        <!-- <el-icon
-          title="编辑"
-          style="margin: 0 10px"
-          class="pointer"
-          @click.stop="editHandle(item, i, idx)"
-        >
-        <Edit />
-        </el-icon>
-        <el-tag @click.stop="deleteItem(idx, index, element)">x</el-tag>-->
       </div>
-      <!-- </div> -->
-      <!--      <el-button icon="el-icon-refresh" size="mini" v-if="level === 1" type="primary" @click="addNode()">submit</el-button>-->
     </div>
-
-    <!--    <div class="sublist-container">-->
-    <!--      <span class="account-title">{{ subtitle }}: </span>-->
-    <!--      <q-radio-->
-    <!--          v-for="item in sublist"-->
-    <!--          v-model="selectedSubItem"-->
-    <!--          :key="`${item.key}`"-->
-    <!--          :val="item"-->
-    <!--      >-->
-    <!--        <slot>-->
-    <!--          <div class="sublist-item">-->
-    <!--            <img :src="imgURL + item.nodeIcon" />-->
-    <!--            {{ item.nodeName }}-->
-    <!--          </div>-->
-    <!--        </slot>-->
-    <!--      </q-radio>-->
-    <!--    </div>-->
 
     <div :key="i + nodeKey" v-for="(item, i) in list">
       <node @click="clickChildItem(item)" :name="item.nodeName" :class="[
@@ -77,7 +51,6 @@ const imgURL = process.env.IMAGE_CDN + "/payment/";
 export default defineComponent({
   name: "NodeComp",
   order: 1,
-  // setup: (props, { emit }) => {},
   emits: ["clicked"],
   computed: {
     selected() {
@@ -120,6 +93,10 @@ export default defineComponent({
     },
   },
   props: {
+    isFetchingApi: {
+      type: Boolean,
+      default: false,
+    },
     list: {
       type: Array,
       default: function () {
@@ -252,28 +229,40 @@ $node-color: #dd4645;
 }
 
 .payment-method-wrapper {
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, 200px);
-  // grid-gap: 20px;
-  // margin-top: 10px;
   display: flex;
   grid-gap: 20px;
   margin-top: 10px;
   flex-wrap: wrap;
   padding-bottom: 10px;
 
-  @media (max-width: 500px) {
-    flex-direction: column;
+  @media (max-width: 600px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
 
     .node-item {
       width: 100%;
+
+      .node-label {
+        font-size: 12px;
+      }
+
+      .node-icon {
+        .node-icon-img {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
   }
 
   .payment-method-item {
     text-align: center;
     border-radius: 6px;
-    border: 2px solid #4b4b4b;
     color: #ffffff;
     cursor: pointer;
     padding: 20px 35px;
@@ -338,15 +327,11 @@ $node-color: #dd4645;
       padding: 10px 8px;
       cursor: pointer;
       background: #252e43;
-      box-shadow: 6px 6px #161b23;
-
-      &:hover {}
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
       &.active {
         background-color: #1c1c32;
         border-radius: 6px;
-        border: solid 1px #1c1c32;
-        box-shadow: none;
         filter: drop-shadow(0px 0px 3px #ffffff);
       }
     }
@@ -546,6 +531,41 @@ $node-color: #dd4645;
 
   img {
     width: 2rem;
+  }
+}
+
+.payment-method-item {
+  width: calc(33% - 20px);
+  padding: 0.2rem 0.35rem !important;
+  justify-content: flex-start !important;
+
+  filter: none !important;
+
+  &.active {
+    background: $linear-bg-2 !important;
+    background: $linear-bg-2;
+  }
+
+  .node-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // background-color: #128787;
+    padding: 5px;
+    border-radius: 4px;
+
+    .node-icon-img {
+      height: 26px;
+      width: 26px;
+    }
+  }
+
+  .overflow {
+    flex: 1 1 auto;
+    line-height: 1.2;
+    text-align: left;
+    font-size: 0.85rem !important;
+    margin-top: 0.15em;
   }
 }
 </style>

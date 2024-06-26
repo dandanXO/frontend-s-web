@@ -1,6 +1,4 @@
 <template>
-
-  <!-- <q-spinner v-if="props.gameItemLoad" class="spin-center" color="teal" size="50px" /> -->
   <div :class="`game-item ${game.name.toLowerCase()}`" v-for="game, gameIndex in props.games" :key="gameIndex"
     @click="() => props.onClickGameItem(game)">
     <div class="game-item-content">
@@ -45,22 +43,20 @@
           " />
       </div>
       <div class="game-entry-btn">
-        <div class="primary-button blue"><img class="star"
-            src="../../assets/home/games/game-entry-button-star.svg" />게임입장<img class="star"
-            src="../../assets/home/games/game-entry-button-star.svg" /></div>
+        <div class="primary-button blue"><img class="star" src="../../assets/home/games/game-entry-button-star.svg" />{{
+          $t('lang.game_item_entry') }}<img class="star" src="../../assets/home/games/game-entry-button-star.svg" />
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue";
-import { QSpinner } from "quasar";
-const props = defineProps(["games", "onClickGameItem", "gameType", "gameItemLoad"]);
+const props = defineProps(["games", "onClickGameItem", "gameType"]);
 const gameType = ref(props.gameType);
 </script>
 <style lang="scss" scoped>
 .game-item {
-  aspect-ratio: 290 / 530;
   background: url('../../assets/home/games/background-placeholder.png') no-repeat center center;
   background-size: 100% 100%;
   position: relative;
@@ -69,6 +65,8 @@ const gameType = ref(props.gameType);
   padding: 20px;
   max-width: 200px;
   width: 100%;
+  aspect-ratio: 200 / 365;
+  height: fit-content;
 
   @media (max-width: 769px) {
     max-width: 130px;
@@ -172,6 +170,7 @@ const gameType = ref(props.gameType);
         .primary-button.blue {
           width: 100px;
           height: 30px;
+          min-width: 100px;
         }
       }
 

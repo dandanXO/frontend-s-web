@@ -12,15 +12,17 @@
         :rows-per-page-options="[props.rowsPerPage || 10]"
         :hide-pagination="true"
         >
+        
             <template v-slot:loading>
                 <q-inner-loading showing color="primary" />
             </template>
             <template v-slot:item="props" v-if="slots.item">
                 <slot name="item" :props="props"></slot>
             </template>
-
-            <template v-if="slots.slots?.['body-cell-status']" v-slot:body-cell-status="props">
-                <slot name="body-cell-status" :props="props"></slot>
+            <template v-slot:body-cell-status="props">
+                <q-td :props="props">
+                    {{ getAllStatus(props.value) }}
+                </q-td>
             </template>
 
             <template 
@@ -52,11 +54,41 @@
 
 <script setup>
 import { useSlots } from 'vue';
+import {useI18n} from "vue-i18n";
+const {t} = useI18n();
 
 const slots = useSlots();
 
 const props = defineProps(['tableColumns', 'dataState', 'pagination', 'loading', 'rowsPerPage', 'rowKey']);
 const emit = defineEmits(['onChangePage']);
+
+const getAllStatus = (allStatus) => {
+    if (allStatus === 'PENDING') {
+    return t('status.pending') // Pending
+    } else if (allStatus === 'SUCCESS') {
+    return t('status.success') // Success
+    } else if (allStatus === 'SUPPLEMENT_SUCCESS') {
+    return t('status.supplement_success') // Supplement Success
+    } else if (allStatus === 'CLOSED') {
+    return t('status.close_btn') // Closed
+    } else if (allStatus === 'APPLY') {
+    return t('status.applying') //Applying
+    } else if (allStatus === 'FAIL') {
+    return t('status.fail') // Failed
+    } else if (allStatus === 'STEP_1') {
+    return t('status.under_review') //Under review
+    } else if (allStatus === 'STEP_2') {
+    return t('status.to_be_paid') // To be paid
+    } else if (allStatus === 'STEP_3') {
+    return t('status.payment_on_going') // Payment on going
+    } else if (allStatus === 'STEP_4') {
+    return t('status.automatic_payment') // Automatic Payment
+    } else if (allStatus === 'STEP_5') {
+    return t('status.suspend') //Suspend
+    }  else {
+    return allStatus
+    }
+}
 </script>
 
 <style lang="scss" scoped>

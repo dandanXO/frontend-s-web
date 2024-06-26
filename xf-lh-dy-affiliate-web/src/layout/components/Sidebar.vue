@@ -31,8 +31,8 @@
           <el-col :span="6" style="flex: none"> {{ affInfo.affiliateCode }} </el-col>
         </el-row>
         <el-row justify="space-between">
-          <el-col :span="6"> {{ t('fields.rebateWallet') }} </el-col>
-          <el-col :span="6" style="flex: none"> {{ affBalance }} </el-col>
+          <el-col :span="8"> {{ t('fields.rebateWallet') }} </el-col>
+          <el-col :span="4" style="flex: none"> {{ affBalance }} </el-col>
         </el-row>
         <el-row justify="space-between">
           <el-col :span="6"> {{ t('fields.commissionWallet') }} </el-col>
@@ -73,7 +73,7 @@
         >
           <template
             v-if="(parseInt(store.state.user.siteId) === 10)
-              ? (child.path === '/transfer' ? false : true)
+              ? (child.path === '/transfer' || child.path === '/commission-info' ? false : true)
               : (child.path === '/rebate' ? false : true)
             "
           >

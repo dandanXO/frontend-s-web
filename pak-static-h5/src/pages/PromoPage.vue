@@ -15,12 +15,22 @@
     </q-tabs>
   </div>
 
+  <!-- <q-tabs
+    scroll-target=".q-tab--active"
+    v-if="!isPromoDetail"
+    v-model="tab"
+    align="justify"
+    class="promo-cat-tab extension-tab"
+  >
+    <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" />
+  </q-tabs> -->
+
   <!-- <pre>promoState.promoList{{ promoState.promoList }}</pre> -->
 
-  <div class="promo-container" v-touch-swipe.left="swipeLeft" v-touch-swipe.right="swipeRight">
+  <div class="promo-container">
     <div class="promo">
       <q-tabs v-if="!isPromoDetail" v-model="tab" align="justify">
-        <!-- <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="tab.label" /> -->
+        <q-tab v-for="(tab, i) in tabItems" :key="i" :name="tab.name" :label="$t(tab.label)" />
       </q-tabs>
 
       <q-tab-panels v-model="tab" animated>
@@ -213,36 +223,36 @@ export default defineComponent({
     const ui = useUI();
     const isDisplayLogin = ref(false);
 
-    const tab = ref("all");
-    const tabItems = [
+    // const tab = ref("all");
+    // const tabItems = [
 
-      {name: "all", label: '全部'},
-      // { name: "slot game", label: '电子'},
-      // { name: "fish", label: '捕鱼'},
-      // { name: "live casino", label: '真人'},
-      // { name: "poker", label: '棋牌'},
+    //   {name: "all", label: '全部'},
+    //   // { name: "slot game", label: '电子'},
+    //   // { name: "fish", label: '捕鱼'},
+    //   // { name: "live casino", label: '真人'},
+    //   // { name: "poker", label: '棋牌'},
 
-      // {
-      //   name: "all",
-      //   label: "全部",
-      // },
-      // {
-      //   name: "sport",
-      //   label: "体育",
-      // },
-      // {
-      //   name: "esport",
-      //   label: "电竞",
-      // },
-      // {
-      //   name: "live casino",
-      //   label: "真人",
-      // },
-      // {
-      //   name: "slot game",
-      //   label: "电游",
-      // },
-    ];
+    //   // {
+    //   //   name: "all",
+    //   //   label: "全部",
+    //   // },
+    //   // {
+    //   //   name: "sport",
+    //   //   label: "体育",
+    //   // },
+    //   // {
+    //   //   name: "esport",
+    //   //   label: "电竞",
+    //   // },
+    //   // {
+    //   //   name: "live casino",
+    //   //   label: "真人",
+    //   // },
+    //   // {
+    //   //   name: "slot game",
+    //   //   label: "电游",
+    //   // },
+    // ];
 
     onActivated(() => {
       // if promo name is present, do not show promo list on first load
@@ -482,7 +492,7 @@ export default defineComponent({
     // });
 
     const swipeLeft = () => {
-      router.push('/vip')
+      // router.push('/vip')
     };
 
     // Handle swipe right
@@ -493,6 +503,18 @@ export default defineComponent({
     const closeFullGameDialog = () => {
       fullGameDialog.value = false;
     };
+
+    const tab = ref("all");
+    const tabItems = [
+      { name: "all", label: 'promo.all' },
+      { name: "earn", label: 'promo.earn' },
+      { name: "hot", label: 'promo.hot' },
+      { name: "new user", label: 'promo.new_user' },
+      { name: "sports", label: 'promo.sports' },
+      { name: "live", label: "promo.live" },
+      { name: "slot", label: "promo.slot" },
+      { name: "vip", label: "promo.vip" },
+    ];
 
     return {
       promoState,
@@ -523,7 +545,7 @@ export default defineComponent({
       swipeRight,
       route,
       allGames,
-      closeFullGameDialog
+      closeFullGameDialog,
     }
   },
 });
@@ -1038,13 +1060,14 @@ export default defineComponent({
 .promo {
   .q-tabs {
     // background: rgba(113, 125, 146, 0.2);
-    background: #063c50;
-    width: 100%;
-    margin: 0 auto;
+    // background: #2b501d;
+    width: calc(100% - 40px);
+    margin: 10px 20px 0;
   }
 
   .q-tab {
     min-height: 40px;
+    color: #8c968f;
   }
 
   .q-tab__content {
@@ -1059,13 +1082,14 @@ export default defineComponent({
     font-size: 13px;
   }
 
+  .q-tab--inactive {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
   .q-tab--active .q-tab__indicator {
-    // background: url("../assets/images/promotion/tab_bg.png") no-repeat center center;
-    background-size: 20px 10px;
     width: 100%;
-    height: 10px;
-    // background: salmon !important;
-    filter: hue-rotate(311deg);
+    height: 2px;
+    background: #70bc62;
   }
 
   .q-tab__label {
