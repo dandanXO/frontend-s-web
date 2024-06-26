@@ -4,30 +4,34 @@
             <form class="content-form form-template">
                 <div class="form-item">
                     <label>{{ $t('lang.feedback_category') }}</label>
-                    <q-select outlined dense name="title" v-model="composeForm.messageType" :options="messageTypes"
-                        ref="messageTypeRef" :rules="[(val) => !!val || $t('lang.feedback_category_select')]" clearable
-                        @update:model-value="type => composeForm.title = type" />
+                    <q-skeleton v-if="isFetchingMessageTypes" type="QInput" />
+                    <q-select v-else outlined dense name="title" v-model="composeForm.messageType"
+                        :options="messageTypes" ref="messageTypeRef" clearable
+                        @update:model-value="type => composeForm.title = type" :disable="isSubmittingMessage"
+                        :loading="isSubmittingMessage" />
                 </div>
                 <div class="form-item">
                     <label>{{ $t('lang.message_title') }}</label>
-                    <q-input dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
+                    <q-skeleton v-if="isFetchingMessageTypes" type="QInput" />
+                    <q-input v-else dense outlined ref="titleRef" :placeholder="$t('lang.message_title_placeholder')"
                         v-model="composeForm.title" clearable lazy-rules :rules="[
                             (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                        ]" />
+                        ]" :disable="isSubmittingMessage" :loading="isSubmittingMessage" />
                 </div>
                 <div class="form-item">
                     <label>{{ $t('lang.message_content') }}</label>
-                    <q-input dense outlined ref="contentRef" type="textarea" rows="6" v-model="composeForm.content"
-                        clearable lazy-rules :rules="[
+                    <q-skeleton v-if="isFetchingMessageTypes" type="QInput" />
+                    <q-input v-else dense outlined ref="contentRef" type="textarea" rows="6"
+                        v-model="composeForm.content" clearable lazy-rules :rules="[
                             (val) => (val && val.length > 0) || $t('lang.message_cannot_be_empty'),
-                        ]" />
+                        ]" :disable="isSubmittingMessage" :loading="isSubmittingMessage" />
                 </div>
             </form>
         </div>
 
         <div class="action-buttons">
-            <div class="primary-button blue" @click.prevent="sendMessage">{{ $t('lang.message_compose_confirm') }}
-            </div>
+            <q-btn class="primary-button blue" @click.prevent="sendMessage" :label="$t('lang.message_compose_confirm')"
+                :disable="isSubmittingMessage" :loading="isSubmittingMessage" />
         </div>
     </div>
 </template>
@@ -49,12 +53,16 @@ const composeForm = reactive({
 
 const messageTypes = ref([]);
 
+const isFetchingMessageTypes = ref(false);
+const isSubmittingMessage = ref(false);
+
 const sendMessage = () => {
     titleRef.value.validate();
     contentRef.value.validate();
 
     if (titleRef.value.hasError || contentRef.value.hasError) {
     } else {
+        isSubmittingMessage.value = true;
         api.post("/session/writeOutbox", qs.stringify(composeForm)).then((res) => {
             const resCode = res.data.code;
             const resMessage = res.data.message
@@ -75,17 +83,26 @@ const sendMessage = () => {
                     icon: "report_problem"
                 });
             }
+            isSubmittingMessage.value = false;
+        }).catch(() => {
+            isSubmittingMessage.value = false;
         });
     }
 };
 
 const initMessageTypes = () => {
+    isFetchingMessageTypes.value = true;
+
     api.get("/session/feedback/types").then((typesRes) => {
         const { code: typesResCode, data: typesResData } = typesRes.data
 
         if (typesResCode === 0) {
             messageTypes.value = typesResData;
         }
+
+        isFetchingMessageTypes.value = false;
+    }).catch(() => {
+        isFetchingMessageTypes.value = false;
     })
 }
 
