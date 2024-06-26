@@ -129,7 +129,7 @@
                   @click="selectAmt(item)"></q-btn>
               </template>
               <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
+              <q-btn dense v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
                 @click="clearInfo"></q-btn>
             </div>
           </div>
