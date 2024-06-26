@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "확인 중",
     reg_check_captcha: "Captcha 코드 확인",
     reg_enter_captcha: "입력하다 Captcha",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     // register end
     // menu start
     menu_announcement: "공지사항",
@@ -234,6 +235,9 @@ export default {
     password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
     password_change_password: "변경완료",
     // password end
+    // page modal start
+    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

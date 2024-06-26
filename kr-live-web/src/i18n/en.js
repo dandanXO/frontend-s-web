@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "Verifying",
     reg_check_captcha: "Captcha Code Check",
     reg_enter_captcha: "Enter captcha code",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     // register end
     // menu start
     menu_announcement: "Announcement",
@@ -217,6 +218,9 @@ export default {
     password_password_mismatch: "Confirm Password must be the same as New Password",
     password_change_password: "Change password",
     // password end
+    // page modal start
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
