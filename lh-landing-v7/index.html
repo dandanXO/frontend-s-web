@@ -220,19 +220,31 @@
 
   window.dispatchEvent(new Event('resize'));
 
+  let startY = 0;
+  let endY = 0;
 
+  document.body.addEventListener('touchstart', function(e) {
+    startY = e.touches[0].clientY;
+  });
 
-  function myFunction(event) {
-    event.preventDefault();
-    const infoDiv = document.querySelector('.info-div');
-    infoDiv.style.bottom = '0';
+  document.body.addEventListener('touchend', function(e) {
+    endY = e.changedTouches[0].clientY;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // 设置一个阈值，判断是否为有效滑动
+    if (startY - endY > swipeThreshold) {
+      const infoDiv = document.querySelector('.info-div');
+      infoDiv.style.bottom = '0%';
+    }
   }
 
-
-  const upBtn= document.getElementById("up-btn")
-  document.addEventListener('touchmove', function (event) {
-    const infoDiv = document.querySelector('.info-div');
-    infoDiv.style.bottom = '0%';
+  document.body.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('info-div') && !e.target.classList.contains('info') && !e.target.classList.contains('info-itle')) {
+      const infoDiv = document.querySelector('.info-div');
+      infoDiv.style.bottom = '-100%';
+    }
   });
 
   document.addEventListener('DOMContentLoaded', function () {
