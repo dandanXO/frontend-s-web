@@ -69,7 +69,7 @@ const handleScrollClick = (type) => {
   .tab-view-tabs-wrapper {
     display: flex;
     justify-content: center;
-    gap: 18px;
+    gap: 1px;
 
     .tab-view-tabs__scroll-btn {
       background-color: transparent;

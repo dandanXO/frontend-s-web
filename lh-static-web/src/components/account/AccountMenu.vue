@@ -254,6 +254,10 @@ async function saveCroppedImage() {
     isLoadingUpload.value = false
 
     submitPhoto();
+    // Reset all values after submission
+    selectedImage.value = '';
+    inputImage.value = '';
+    croppedImg.value = '';
   } else {
     // Handle case when croppedImg is not available
     console.error('No cropped image available');
@@ -338,6 +342,8 @@ async function submitPhoto() {
   updateDialogVisible.value = false
   ElMessage({ message: '修改成功', type: 'success' })
   store.profilePhoto = data.data
+  store.getMemberInfo();
+  window.location.reload();
   submitPhotoLoading.value = false
   isLoadingUpload.value = false
 }

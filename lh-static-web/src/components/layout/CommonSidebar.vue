@@ -124,7 +124,9 @@ export default defineComponent({
 
     const gameMenu = ref(null);
     const openGame = (gameName, platType, gameCode, scrollingState) => {
-      gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+      if (!isDragging.value && clickAllowed.value) {
+        gameMenu.value.open(gameName, platType, gameCode, scrollingState);
+      }
     };
 
     const downloadUrl = ref("");
@@ -183,6 +185,7 @@ export default defineComponent({
     const rocketPosition = ref({ top: window.innerHeight - 200, left: window.innerWidth - 220 });
     const promoPosition = ref({ top: window.innerHeight - 320, left: window.innerWidth - 220 });
     const isDragging = ref(false);
+    const clickAllowed = ref(true);
     const shiftX = ref(0);
     const shiftY = ref(0);
     const currentElement = ref(null);
@@ -191,7 +194,8 @@ export default defineComponent({
       const rect = event.target.getBoundingClientRect();
       shiftX.value = event.clientX - rect.left;
       shiftY.value = event.clientY - rect.top;
-      isDragging.value = true;
+      isDragging.value = false;
+      clickAllowed.value = true;
       document.addEventListener("mousemove", onMouseMove);
       document.addEventListener("mouseup", stopDragging);
 
@@ -200,6 +204,8 @@ export default defineComponent({
       event.target.style.cursor = "pointer";
     }
     const onMouseMove = (event) => {
+      isDragging.value = true;
+      clickAllowed.value = false;
       if (isDragging.value) {
         if (currentElement.value === 'rocket') {
           rocketPosition.value.left = event.clientX - shiftX.value;
@@ -215,14 +221,18 @@ export default defineComponent({
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", stopDragging);
 
+      setTimeout(() => {
+        clickAllowed.value = true;
+      }, 1000); // Delay of 1 second
       // Reset cursor to default
       document.body.style.cursor = "default";
     };
     const currentPromo = ref(null)
     const currentPromoIndex = ref(0);
     const gotoPromo = (code) => {
-
-      router.push(`/promotion?name=${code}`)
+      if (!isDragging.value && clickAllowed.value) {
+        router.push(`/promotion?name=${code}`)
+      }
     }
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
@@ -271,7 +281,9 @@ export default defineComponent({
       gamePromo,
       currentPromo,
       currentPromoIndex,
-      gotoPromo
+      gotoPromo,
+      clickAllowed,
+      isDragging
     };
   }
 });
