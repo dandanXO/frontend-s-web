@@ -5,33 +5,63 @@ import { isAndroid } from "boot/utils";
 import { SessionStorage } from "quasar";
 
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from "vue-router";
-import routes from "./routes";
 
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Router instance.
- */
+function isInApp(){
+  if( window.location.pathname === "/vip" ||
+    window.location.pathname === "/viptest" ||
+    window.location.pathname === "/promotion" ||
+    window.location.pathname === "/deposit" ||
+    window.location.pathname === "/deposittest" ||
+    window.location.pathname === "/invitefriend" ||
+    window.location.pathname === "/privilege/invite"){
+    return true;
+  }
+  return false;
+}
+
+let routes;
+
+if(isInApp()){
+  routes= require("./routers-app").default;
+}else{
+  routes= require("./routes").default;
+}
+
+async function getRoutes() {
+  let routes;
+  if(isInApp()){
+    routes= await import('./routers-app');
+  }else{
+    routes= await import("./routes");
+  }
+
+  console.log(routes.default)
+  return routes.default;
+}
+const routesPromise = getRoutes();
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
+
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+    routes: [],
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
+
+  routesPromise.then(items => {
+    Router.addRoute(...items);
+  });
+  console.log(Router)
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
