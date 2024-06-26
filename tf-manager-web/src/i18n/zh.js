@@ -1815,6 +1815,7 @@ export default {
     updateAffiliateLevel: '编辑代理等级',
     unsuccessFrom30min: '30分钟前的未成功提款',
     unsuccessIn10time: '累计未成功10次的提款渠道',
+    platformAccountName: '平台账号名',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
