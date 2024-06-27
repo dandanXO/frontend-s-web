@@ -6,7 +6,7 @@
           <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
         </div>
         <div class="page-dialog-main-header">
-          <span class="header-info-description">{{ headerInfo.description }}</span>
+          <span class="header-info-description">{{ $t(headerInfo.description) }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
@@ -23,12 +23,9 @@
         </q-tabs>
       </div>
       <div class=content>
-        <div class="page-dialog-links" v-if="!isMinimalMode">
-          <p class="header-info-description">{{ headerInfo.description }}</p>
-        </div>
-        <q-tab-panels v-model="page" animated>
+        <q-tab-panels v-model="page" animated swipeable infinite>
           <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page" style="padding:0">
+            <q-tab-panel :name="item.page" style="padding:0;">
               <component :is="item.component" @closeModal="closeDialog"></component>
             </q-tab-panel>
           </template>
@@ -52,6 +49,7 @@ import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import MessageCompose from "../pageModalContent/MessageCompose.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -76,16 +74,14 @@ watch(
         if (!visible.value) visible.value = false;
 
         // determine the extact pageInfoItem based on route info
-        const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+        const pageInfoItem = [...pagesInfo, ...minimalModePagesInfo].find(({ page }) => page === route.query.page);
         // determine which left side tab to land on
-        if (pageInfoItem?.tabIndex) {
-          tabIndex.value = pageInfoItem.tabIndex;
+        if (pageInfoItem) {
+          tabIndex.value = pageInfoItem?.tabIndex;
+          open(route.query.page);
         } else {
-          // default to first tab if unable to proceed with the above
-          tabIndex.value = "log";
+          router.push('/');
         }
-
-        open(route.query.page);
       });
     } else {
       // router.push("/");
@@ -117,7 +113,7 @@ const pagesInfo = reactive([
     component: FinanceDeposit,
     headerInfo: {
       title: 'lang.page_modal_deposit',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -128,7 +124,7 @@ const pagesInfo = reactive([
     component: FinanceWithdraw,
     headerInfo: {
       title: 'lang.page_modal_withdraw',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -139,7 +135,18 @@ const pagesInfo = reactive([
     component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "log",
+    page: "personal/messages/create",
+    info: 'lang.page_modal_message_compose',
+    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+    component: MessageCompose,
+    headerInfo: {
+      title: 'lang.page_modal_message_compose',
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -161,7 +168,7 @@ const pagesInfo = reactive([
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -172,7 +179,7 @@ const pagesInfo = reactive([
     component: AnnouncementComponent,
     headerInfo: {
       title: 'lang.page_modal_announcement',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -196,7 +203,7 @@ const pagesInfo = reactive([
     component: TransitRecord,
     headerInfo: {
       title: 'lang.page_modal_transaction_record',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -207,7 +214,7 @@ const pagesInfo = reactive([
     component: MyPasswordChange,
     headerInfo: {
       title: 'lang.page_modal_change_password',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
 ]);
@@ -379,6 +386,8 @@ onMounted(() => {
     color: #000;
     text-align: left;
     margin-left: 10px;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .header-title {

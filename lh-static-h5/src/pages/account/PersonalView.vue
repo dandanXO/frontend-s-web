@@ -552,6 +552,9 @@ export default defineComponent({
       box-shadow: none;
       border: 1px solid $border-dark;
     }
+    .web {
+      color: $primary-dark;
+    }
   }
 }
 </style>

@@ -5,7 +5,7 @@
                 {{ formattedDate }}
             </div>
             <div class="match-details">
-                免费参与竞猜，小组赛第二轮（共3轮）
+                免费参与竞猜，小组赛第三轮（共3轮）
             </div>
             <div class="winloss-matches">
                 <div class="match" v-for="(match, i) in ongoingMatches" :key="i">

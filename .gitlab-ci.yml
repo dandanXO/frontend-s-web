@@ -577,6 +577,20 @@ deploy-lh-cesu:
 
 #===============================================================================================
 
+deploy-dy-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-cesu
+
+#===============================================================================================
+
+deploy-xf-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-cesu
+
+#===============================================================================================
+
 build-kr-live-web:
   extends: .build-projects
   variables:

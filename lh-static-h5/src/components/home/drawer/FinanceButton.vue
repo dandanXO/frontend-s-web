@@ -19,4 +19,10 @@ defineEmits(["click"]);
   font-size: 1rem;
   cursor: pointer;
 }
+
+.body--dark {
+  .finance-button {
+    background-image: url("../../../assets/images/download/active-tab-bg-dark.png");
+  }
+}
 </style>

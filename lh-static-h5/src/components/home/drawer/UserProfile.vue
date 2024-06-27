@@ -38,8 +38,8 @@ import moment from "moment"
 import LinkableButton from "components/home/drawer/LinkableButton.vue";
 import FinanceButton from "components/home/drawer/FinanceButton.vue";
 import DefaultAvatarImg from "assets/images/home/default-avatar.png";
-import DrawerDeposit from "assets/images/home/drawer-deposit.png";
-import DrawerWithdraw from "assets/images/home/drawer-withdraw.png";
+import DrawerDeposit from "assets/images/home/drawer-deposit.svg";
+import DrawerWithdraw from "assets/images/home/drawer-withdraw.svg";
 
 const isLogin = ref(false);
 
@@ -102,6 +102,9 @@ onMounted(() => {
         gap: 4px;
         align-items: center;
         justify-content: center;
+        img {
+          max-width: 18px;
+        }
       }
     }
   }

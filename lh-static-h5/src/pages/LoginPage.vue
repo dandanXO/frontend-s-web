@@ -607,6 +607,17 @@ export default defineComponent({
   .login-container {
     background: url(../assets/images/login/login-bg-dark.jpg) no-repeat top center;
     background-size: 100% auto;
+    .login-content {
+      .login-via-phone-div {
+        color: $primary-dark;
+      }
+    }
+  }
+  .common-large-btn {
+    background: $linear-bg-180-dark;
+  }
+  .common-large-white-btn {
+    color: $white;
   }
 }
 

@@ -1,6 +1,7 @@
 <template>
   <div class="hotgame-section">
-    <HomeTitle title="热门游戏" subtitle="TOP GAMES"></HomeTitle>
+    <!-- <HomeTitle title="热门游戏" subtitle="TOP GAMES"></HomeTitle> -->
+    <HomeTitleV2 title="热门游戏" subtitle="TOP GAMES"/>
     <div class="hotgame-container">
       <div class="hotgame-wrapper" v-for="(hotgame, hotgameIndex) in hotgameData" :key="`${hotgame}-${hotgameIndex}`">
         <div class="hotgame-banner-wrapper">
@@ -162,6 +163,7 @@
 import { onMounted, ref, Transition } from "vue";
 import { useRouter } from "vue-router";
 import HomeTitle from "@/atoms/HomeTitle.vue";
+import HomeTitleV2 from "@/atoms/HomeTitleV2.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
@@ -1414,9 +1416,15 @@ $transition_timer: 0.5s;
       .hotgame-wrapper {
         .hotgame-banner-wrapper {
           .hotgame-banner {
-            background: linear-gradient(180deg, #28313e 0%, #476ba8 100%);
-            box-shadow: 0px 2px 4.58px 0px #bbdcff inset;
-            color: $color-white;
+            background: linear-gradient(180deg, #00273D 0%, #02132C 100%);
+            box-shadow: 0px -1px 3.66px 0px #11131E inset;
+            color: $font-5-dark;
+
+            &.highlight {
+              background: $active-color-dark-linear;
+              box-shadow: 0px -2px 4.58px 0px #FFDCBB inset;
+              color: $color-white;
+            }
 
             .hotgame-text {
               color: unset;
@@ -1426,18 +1434,43 @@ $transition_timer: 0.5s;
 
         .hotgame-content-wrapper {
           @include content-block-dark;
+          background: linear-gradient(180deg, #1B202D 0%, #00010B 100%);
 
           .left-container {
             .title-wrapper {
               .title,
               .subtitle {
-                background: linear-gradient(180deg, #c2e9fb 0%, #a1c4fc 100%);
+                background: linear-gradient(180deg, #C2FBFB 0%, #299AAD 100%);
                 background-clip: text;
               }
             }
 
-            .desc {
-              color: $font-3-dark;
+            .description {
+                .desc {
+                  color: $font-3-dark;
+                }
+              }
+
+            .game-provider-wrapper {
+              .game-provider {
+                .game-provider-img {
+                  background: linear-gradient(180deg, #113765 0%, #212428 100%);
+                  border-color: #36677C;
+                  &.active {
+                    background: linear-gradient(180deg, #38D2DA 0%, #1B7893 100%);
+                    border-color: #52E4ED;
+                    box-shadow: 0px 3.35px 3.35px 0px #00000040;
+                  }
+                }
+                .game-provider-text.active {
+                  color: $color-white;
+                }
+              }
+            }
+
+            .game-start-btn {
+              background: linear-gradient(180deg, #3BDCE2 0%, #18708E 100%);
+              box-shadow: none;
             }
           }
         }

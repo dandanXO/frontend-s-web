@@ -45,7 +45,7 @@
       <div class="menu-box">
         <div class="account-menu-list">
           <router-link v-for="item in menuItems" :key="item.route" :to="item.route" class="account-menu-item">
-            <img class="account-avatar" :src="require(`../../assets/images/account/menu-icon-${item.icon}.png`)" />
+            <img class="account-avatar" :src="loadMenuItemIcon(item.icon)" />
             {{ item.label }}
 
             <div v-if="item.icon === 'inbox' && store.unreadTotal > 0" class="unread-total">
@@ -81,7 +81,7 @@
       </div>
     </el-form>
   </el-dialog>
-  <el-dialog 
+  <el-dialog
     v-model="updateDialogVisible"
     append-to-body
     :close-on-press-escape="false"
@@ -104,10 +104,10 @@
             />
             <div @click="$refs.inputImage.click()" class="upload-btn">上传头像</div>
             上传头像支持jpg,jpeg,png,bmp格式的图片，文件小于1MB
-              
+
           </el-form-item>
-          <cropper 
-            v-if="uploadedImage.url" 
+          <cropper
+            v-if="uploadedImage.url"
               background-class="cropper-background"
               ref="cropperRef"
               class="cropper"
@@ -133,10 +133,10 @@
         <img v-if="croppedImg" style="border-radius: 50%; width: 250px; height: 250px;" :src="croppedImg">
       </div>
     </div>
-    
+
     <el-button :loading="isLoadingUpload" class="standard-button btn-color-blue" size="large" v-if="croppedImg" @click="saveCroppedImage()">保存</el-button>
 
-  </el-dialog>  
+  </el-dialog>
 </template>
 
 <script setup>
@@ -150,11 +150,13 @@ import { ElMessage } from "element-plus";
 import { Cropper, CircleStencil } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 import 'vue-advanced-cropper/dist/theme.compact.css';
-import { useLocalStorage } from "@vueuse/core";
+import { useDark, useLocalStorage } from "@vueuse/core";
 components: {
   Cropper,
   CircleStencil
 }
+
+const isDark = useDark()
 
 const timestamp = moment().unix();
 
@@ -250,8 +252,12 @@ async function saveCroppedImage() {
     selectedImage.value = data.data
     inputImage.value = ''
     isLoadingUpload.value = false
-    
+
     submitPhoto();
+    // Reset all values after submission
+    selectedImage.value = '';
+    inputImage.value = '';
+    croppedImg.value = '';
   } else {
     // Handle case when croppedImg is not available
     console.error('No cropped image available');
@@ -265,7 +271,7 @@ async function attachImage(event) {
     return ElMessage.error('图片必须小于1MB,请重新上传');
   } else {
     const file = event.target.files[0];
-    uploadedImage.url = URL.createObjectURL(file); 
+    uploadedImage.url = URL.createObjectURL(file);
   }
 }
 
@@ -299,7 +305,7 @@ async function attachPhoto(fileImg) {
     // Create a File object from the Blob
     file = new File([blob], 'image.' + mimeType.split('/')[1], { type: mimeType });
   } else {
-    file = fileImg; 
+    file = fileImg;
   }
   // Use the File object for further processing
   const allowFileTypes = ['image/jpeg', 'image/png', 'image/gif'];
@@ -336,6 +342,8 @@ async function submitPhoto() {
   updateDialogVisible.value = false
   ElMessage({ message: '修改成功', type: 'success' })
   store.profilePhoto = data.data
+  store.getMemberInfo();
+  window.location.reload();
   submitPhotoLoading.value = false
   isLoadingUpload.value = false
 }
@@ -352,7 +360,36 @@ onMounted(() => {
     selectedImage.value = store.profilePhoto
   }
 });
+
+const loadMenuItemIcon = (icon) => {
+  if(isDark.value){
+    try{
+      return require(`@/assets/images/account/menu-icon-${icon}-dark.png`)
+    }catch(e) {
+      return require(`@/assets/images/account/menu-icon-${icon}.png`)
+    }
+  }else {
+    return require(`@/assets/images/account/menu-icon-${icon}.png`)
+  }
+}
 </script>
+<style scoped lang="scss">
+.dark {
+  .account-container {
+    .account-container-wrap{
+      .profile-actions{
+        .action-btn{
+          .icon-rounded{
+            img {
+              filter: brightness(0) saturate(100%) invert(44%) sepia(45%) saturate(828%) hue-rotate(146deg) brightness(85%) contrast(83%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</style>
 <style lang="scss">
 .account-container {
   background-size: cover;
@@ -490,10 +527,10 @@ onMounted(() => {
 
         }
       }
-    } 
+    }
     .rightBox {
       display: flex;
-      justify-content: center; 
+      justify-content: center;
       align-items: center;
       flex-direction: column;
       gap: 10px;

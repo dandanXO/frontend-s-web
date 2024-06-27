@@ -52,7 +52,6 @@
 <script setup id="FinanceDeposit">
 import { onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
-import moment from "moment";
 import { getLocaleDateTime } from "src/boot/utils";
 
 const store = userStore();

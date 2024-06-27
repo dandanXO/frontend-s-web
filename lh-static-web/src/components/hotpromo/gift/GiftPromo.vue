@@ -89,7 +89,7 @@
         <div class="member-bet-box" ref="memberBetBoxRef">
           <div style="width: 100px">
             <span class="member-valid-bet">
-              <Vue3autocounter
+              <Vue3Autocounter
                 ref="counter"
                 :startAmount="0.0"
                 :endAmount="memberBetDisplay"
@@ -183,7 +183,7 @@ import { onMounted, ref, reactive } from "vue";
 import { userStore } from "@/store";
 import { ElMessage } from "element-plus";
 import { getGiftList, getGiftBet, redeemGift, getGiftRecord } from "@/api/index/promo";
-import Vue3autocounter from "vue3-autocounter";
+import Vue3Autocounter from "vue3-autocounter";
 import { TweenMax } from "gsap";
 import * as _ from "lodash";
 import { useLocalStorage } from "@vueuse/core";

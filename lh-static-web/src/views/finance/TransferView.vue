@@ -499,6 +499,13 @@ body .transferinout .el-dialog__header .el-dialog__title {
     border-radius: 12px;
   }
 }
+
+.dark {
+  .el-dialog__header {
+    box-shadow: none;
+
+  }
+}
 </style>
 <style scoped lang="scss">
 .card {
@@ -735,14 +742,51 @@ body .transferinout .el-dialog__header .el-dialog__title {
     background-color: $background-content-block-lighter-dark;
   }
 
-  .transfer-plat-wrapper {
-    .transfer-plat-item {
-      border-color: #ecedf01a;
+  .blue-btn {
+    background: $active-color-dark-linear;
+    box-shadow: $active-color-dark-shadow;
+    &.outline{
+      box-shadow: none;
+      background: #394A65;
+      :deep(span) {
+        background: $active-color-dark-linear;
+        background-clip: text;
+        color: transparent;
+      }
     }
   }
 
-  .blue-btn {
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.66px 0px #5894ff inset;
+  .deposit-ad {
+    .blue-btn {
+      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      box-shadow: 0px -2px 5px 0px #b1d7ff inset;
+      box-shadow: 0px -1px 4px 0px #5894ff inset;
+      color: #fff;
+      &.outline {
+        background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+        box-shadow: 0px 2px 4px 0px #bbdcff inset;
+        box-shadow: 0px -1px 4px 0px #a2bff4 inset;
+        :deep(span) {
+          color: #468cff;
+        }
+      }
+    }
+  }
+
+  .transfer-plat-wrapper {
+    .transfer-plat-item {
+      border-color: #ecedf01a;
+      .platform-details {
+        .plat-name {
+          svg {
+            fill: currentColor;
+          }
+          .el-icon {
+            color: inherit;
+          }
+        }
+      }
+    }
   }
 
   .transfer-info-form {

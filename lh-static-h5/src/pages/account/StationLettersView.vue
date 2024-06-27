@@ -2,7 +2,7 @@
   <q-page>
     <div class="transit-buttons">
       <router-link class="btn" v-for="(trans, i) in transitList" :key="i" :to="`/account/${trans.code}`">
-        <img :src="require(`../../assets/images/inbox/${trans.icon}-icon.png`)" />
+        <img :src="loadIcon(trans.icon)" />
         {{ trans.name }}
         <div class="right">
           <img src="../../assets/images/inbox/account-right-icon.svg" />
@@ -14,12 +14,14 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {userStore} from "../../stores/index";
+import { useQuasar } from "quasar";
 
 export default defineComponent({
   name: "MailBoxPage",
   components: {
   },
   setup() {
+    const $q = useQuasar()
 
     const store = userStore();
     const transitList = ref([
@@ -46,13 +48,26 @@ export default defineComponent({
 
     ]);
 
+    const loadIcon = (name) => {
+      if($q.dark.isActive) {
+        try {
+          return require(`../../assets/images/inbox/${name}-icon-dark.png`)
+        } catch {
+          return require(`../../assets/images/inbox/${name}-icon.png`)
+        }
+      } else {
+        return require(`../../assets/images/inbox/${name}-icon.png`)
+      }
+    }
+
     onMounted(() => {
       // store.getUnreadTotal();
     })
 
     return {
       store,
-      transitList
+      transitList,
+      loadIcon
     };
 
   }
@@ -112,6 +127,9 @@ export default defineComponent({
       border-color: #666666;
       &:last-child {
         border-bottom: none;
+      }
+      &:active {
+        background-color: $background-dark-header;
       }
     }
   }
