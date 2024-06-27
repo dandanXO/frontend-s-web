@@ -639,7 +639,7 @@ async function pDepo(deposit) {
             isDepositFrame.value = true;
 
             if (response.payResultType === "GET_SUBMIT") {
-              newWin.location.href = response.requestUrl;
+              // newWin.location.href = response.requestUrl;
             }
             if (response.payResultType === "POST_SUBMIT") {
               if (response.paramKey === null || response.paramKey === "") {
@@ -676,16 +676,21 @@ async function pDepo(deposit) {
           } else {
             localStorage.setItem("formDetails", JSON.stringify(form));
             if (response.payResultType === "GET_SUBMIT") {
-              if (
-                (Platform.is.desktop || Platform.is.webkit) &&
-                !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
-              ) {
-                location.href = response.requestUrl;
-              } else {
-                openURL(response.requestUrl);
-              }
+
+              depositIframeSrc.value = response.requestUrl;
+              depositIframeLoading.value = true;
+              isDepositFrame.value = true;
+
+              // if (
+              //   (Platform.is.desktop || Platform.is.webkit) &&
+              //   !Platform.is.capacitor &&
+              //   Platform.is.name !== "webkit" &&
+              //   !liff.isInClient()
+              // ) {
+              //   location.href = response.requestUrl;
+              // } else {
+              //   openURL(response.requestUrl);
+              // }
             }
             if (response.payResultType === "POST_SUBMIT") {
               localStorage.setItem("responseDetails", JSON.stringify(response));
