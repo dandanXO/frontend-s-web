@@ -244,28 +244,26 @@ export default defineComponent({
       });
     }, 500);
 
-    const openFavGame = (gameName, gameCode, gameStatus, gameInfo) => {
-      gameModalRef.value.open(gameName, gameInfo.platformCode, gameCode, gameStatus);
-    };
-
-    const favGamesList = ref([]);
-    const sortedFavGamesList = computed(() => {
-      if (favGamesList.value.length === 0) {
-        return [];
-      }
-      return favGamesList.value.sort((a, b) => a.updateTime - b.updateTime);
-    });
-
-    const favLists = computed(() => {
-      let lists = [];
-      favGamesList.value.forEach((element) => {
-        lists.push(element.id);
-      });
-      return lists;
-    });
-
     const playGame = (gameName, platformCode, gameCode, gameStatus) => {
-      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus);
+      if (!store.token) {
+        $q.notify({
+          color: "negative",
+          position: "top",
+          message: "로그인 해주세요",
+          icon: "report_problem"
+        });
+
+        router.push('/?page=login');
+        return;
+      }
+
+      ajaxBarRef.value.start();
+
+      gameModalRef.value.open(gameName, platformCode, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
     };
     const xfjGames = ref([]);
     const liveCasinoGames = ref([]);
