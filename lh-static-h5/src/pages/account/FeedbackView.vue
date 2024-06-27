@@ -697,7 +697,6 @@ onMounted(() => {
     }
 
     .questions-title {
-      font-family: PingFang SC;
       font-size: 16px;
       font-weight: 600;
       line-height: 22px;
@@ -811,7 +810,6 @@ onMounted(() => {
   }
 
   .span1 {
-    font-family: PingFang SC;
     font-size: 30px;
     font-weight: 600;
     line-height: 30px;
@@ -823,7 +821,6 @@ onMounted(() => {
   }
 
   .span2 {
-    font-family: PingFang SC;
     font-size: 16px;
     font-weight: 400;
     line-height: 30px;
@@ -832,7 +829,6 @@ onMounted(() => {
   }
 
   .span3 {
-    font-family: PingFang SC;
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
