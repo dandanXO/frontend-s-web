@@ -38,12 +38,16 @@
           @update:model-value="handleDateSelect"
         />
       </div>
-      <div class="search-field__input-with-btn" style="justify-content: flex-end">
-<!--        <q-input-->
-<!--          v-model="form.username"-->
-<!--          borderless-->
-<!--          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"-->
-<!--        />-->
+      <div class="search-field__input-with-btn" style="justify-content: space-between; align-items: center;">
+        <!--        <q-input-->
+        <!--          v-model="form.username"-->
+        <!--          borderless-->
+        <!--          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"-->
+        <!--        />-->
+        <div>
+          &nbsp;
+          <span  v-if="referralName">Referral: <span class="span-username">{{referralName}}</span></span>
+        </div>
 
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
           {{ $t("earnMoney.profitAndLoss.searchField.searchButton") }}
@@ -74,8 +78,11 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
+              <span v-if="col.field === 'loginName'">
+                <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
+              </span>
               <span
-                v-if="
+                v-else-if="
                   ['downlineFtdAmount', 'downlineDepositAmount', 'downlineWithdrawAmount', 'downlineBetAmount', 'downlinePayoutAmount'].includes(
                     col.field
                   )
@@ -97,6 +104,16 @@
     </div>
 
     <div class="sum-wrapper">
+
+      <div class="loading-board" v-if="loading">
+        <q-spinner
+          class="loading-spinner"
+          color="primary"
+          size="4em"
+          :thickness="3"
+        />
+      </div>
+
       <div class="sum-item">
         <div class="item-amount">
           Rs
@@ -128,13 +145,13 @@
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
       </div>
 
-<!--      <div class="sum-item">-->
-<!--        <div class="item-amount">-->
-<!--          Rs-->
-<!--          <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>-->
-<!--        </div>-->
-<!--        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>-->
-<!--      </div>-->
+      <!--      <div class="sum-item">-->
+      <!--        <div class="item-amount">-->
+      <!--          Rs-->
+      <!--          <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>-->
+      <!--        </div>-->
+      <!--        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>-->
+      <!--      </div>-->
 
       <div class="sum-item">
         <div class="item-amount">
@@ -168,9 +185,11 @@ const sumsData = reactive({
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
-  username: ""
+  username: "",
+  referrerId: ""
 });
 const loading= ref(false);
+const referralName= ref("");
 
 const displayStartDate = computed(() => moment(form.value.startDate).format("MM/DD"));
 const displayEndDate = computed(() => moment(form.value.endDate).format("MM/DD"));
@@ -215,8 +234,16 @@ const handleDateSelect = (value) => {
   }
 };
 
+
+const searchByReferral = (props) => {
+  form.value.username= "";
+  form.value.referrerId= props.row.id;
+  referralName.value= props.row.loginName;
+  getDownlineProfitSummary();
+}
+
 const getDownlineProfitSummary = () => {
-  const { username, startDate, endDate } = form.value;
+  const { username, startDate, endDate, referrerId } = form.value;
   loading.value= true;
 
   let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
@@ -224,7 +251,11 @@ const getDownlineProfitSummary = () => {
   if (username) {
     url = `/session/downline-profit-summary?siteId=11&loginName=${username}&recordTime=${startDate}&recordTime=${endDate}`;
   }
+  if (referrerId) {
+    url = `/session/downline-profit-summary?siteId=11&referrerId=${referrerId}&recordTime=${startDate}&recordTime=${endDate}`;
+  }
 
+  tableData.value= [];
   api
     .get(url)
     .then((response) => {
@@ -241,6 +272,8 @@ const getDownlineProfitSummary = () => {
 };
 
 const handleSubmit = () => {
+  form.value.referrerId= "";
+  referralName.value= "";
   getDownlineProfitSummary();
 };
 
