@@ -55,7 +55,6 @@
 import { ref } from "vue";
 const props = defineProps(["game", "onClickGameItem", "gameType"]);
 const game = ref(props.game);
-console.log('here')
 </script>
 <style lang="scss" scoped>
 .game-item {
