@@ -20,15 +20,15 @@ function isInApp(){
 }
 
 
-let routes;
-
+let fullroutes;
 if(isInApp()){
   console.log("In App")
-  routes= require("./routers-app").default
+  fullroutes= require("./routers-app").default
 }else{
   console.log("Normal")
-  routes= require("./routes").default
+  fullroutes= require("./routes").default
 }
+console.log(fullroutes);
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
@@ -37,10 +37,9 @@ export default route(function (/* { store, ssrContext } */) {
       ? createWebHistory
       : createWebHashHistory;
 
-
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes,
+    routes: [...fullroutes],
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
