@@ -36,6 +36,11 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo" />
+    <div style="text-align: center;" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token"  >
+      <div class="cs-btn" @click="goToCsChat()">
+        联系客服
+      </div>
+    </div>
 
     <AppHongBao
       v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
@@ -131,6 +136,7 @@
 /* eslint-disable */
 import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
+import {useRouter} from "vue-router"
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
@@ -332,7 +338,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-deposit-rebates" ||
       this.list.redirectUrl === "lh1-eurocup-guess" ||
       this.list.redirectUrl === "lh1meizhoubei" ||
-      this.list.redirectUrl === "lh1-aijiasu"
+      this.list.redirectUrl === "lh1-aijiasu" ||
+      this.list.redirectUrl === "lh1ouzhoubeibaopei"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -429,7 +436,15 @@ export default defineComponent({
     // }
     // }
 
+
+    const router = useRouter();
+    const goToCsChat = () => {
+      router.push("/liveChat");
+    };
+
+
     return {
+      goToCsChat,
       store,
       filterWinnerLists,
       formState,
@@ -581,6 +596,18 @@ export default defineComponent({
   }
 }
 
+.cs-btn{
+  color: #ffffff;
+  padding: 5px 30px;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 4.5799999237px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 3.6640000343px 0px #5894ff inset;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+
 @media (max-width: 768px) {
   .hot-promo {
     .promo-bg {
@@ -611,4 +638,3 @@ export default defineComponent({
   }
 }
 </style>
-./hotpromo/EurocupManual1/EurocupManual.vue

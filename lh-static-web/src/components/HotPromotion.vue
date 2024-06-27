@@ -24,11 +24,6 @@
       :params="list.param"
     />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
-    <!--    <AppHongBao
-      v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
-      :promo-code="list.promoCode"
-      :params="list.param"
-    />-->
     <HongBaoYu2024
       v-if="list.redirectUrl === 'tiqianhongbaozz' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
@@ -51,9 +46,12 @@
         src="../assets/images/promotion/hotpromo/lhfeedback/feedback.png"
       />
     </div>
+    <div style="text-align: center;" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token"  >
+      <div class="cs-btn" @click="store.openLiveChat()">
+        联系客服
+      </div>
+    </div>
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
-    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'lh1-vip-upgrade-bonus' && !isCommonPromo && store.token" />
-    <ReferBonusPromo v-if="list.redirectUrl === 'lh1-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite v-if="list.redirectUrl === 'lh1-invite' && !isCommonPromo && store.token" />
     <FootballFight v-if="list.redirectUrl === 'lh1-football-fight' && !isCommonPromo && store.token" />
 
@@ -519,7 +517,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-deposit-rebates" ||
       this.list.redirectUrl === "lh1-eurocup-guess" ||
       this.list.redirectUrl === "lh1meizhoubei" ||
-      this.list.redirectUrl === "lh1-aijiasu"
+      this.list.redirectUrl === "lh1-aijiasu" ||
+      this.list.redirectUrl === "lh1ouzhoubeibaopei"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -789,6 +788,31 @@ export default defineComponent({
         }
       }
     }
+  }
+}
+
+.cs-btn{
+  cursor: pointer;
+  color: #ffffff;
+  padding: 5px 30px;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 4.5799999237px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 3.6640000343px 0px #5894ff inset;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 26px;
+  width: 198px;
+  height: 52px;
+  line-height: 52px;
+  font-size: 16px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 
