@@ -1,40 +1,37 @@
 <template>
   <div class="team-management-wrapper">
-    <div class="search-field">
-      <div class="search-field__date-range">
-        <q-input v-model="displayStartDate" filled readonly>
-          <template #append>
-            <img src="../../assets/images/earn-money/calendar-icon.svg" />
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="form.startDate" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </template>
-        </q-input>
-        <span>-</span>
-        <q-input v-model="displayEndDate" filled readonly>
-          <template #append>
-            <img src="../../assets/images/earn-money/calendar-icon.svg" />
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="form.endDate" mask="YYYY-MM-DD">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </template>
-        </q-input>
-      </div>
-      <!-- <div class="search-field__radio-row">
-        <q-radio v-for="(option, index) in downLineOptions" v-model="selectedDownLine" :key="index" :val="option.value"
-          :label="option.label" />
-      </div> -->
+    <div class="search-field" style="margin-bottom: 0.5rem;">
+      <!--      <div class="search-field__date-range">-->
+      <!--        <q-input v-model="displayStartDate" filled readonly>-->
+      <!--          <template #append>-->
+      <!--            <img src="../../assets/images/earn-money/calendar-icon.svg" />-->
+      <!--            <q-popup-proxy cover transition-show="scale" transition-hide="scale">-->
+      <!--              <q-date v-model="form.startDate" mask="YYYY-MM-DD">-->
+      <!--                <div class="row items-center justify-end">-->
+      <!--                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />-->
+      <!--                </div>-->
+      <!--              </q-date>-->
+      <!--            </q-popup-proxy>-->
+      <!--          </template>-->
+      <!--        </q-input>-->
+      <!--        <span>-</span>-->
+      <!--        <q-input v-model="displayEndDate" filled readonly>-->
+      <!--          <template #append>-->
+      <!--            <img src="../../assets/images/earn-money/calendar-icon.svg" />-->
+      <!--            <q-popup-proxy cover transition-show="scale" transition-hide="scale">-->
+      <!--              <q-date v-model="form.endDate" mask="YYYY-MM-DD">-->
+      <!--                <div class="row items-center justify-end">-->
+      <!--                  <q-btn v-close-popup label="Close" color="white" flat @click="handleSubmit()" />-->
+      <!--                </div>-->
+      <!--              </q-date>-->
+      <!--            </q-popup-proxy>-->
+      <!--          </template>-->
+      <!--        </q-input>-->
+      <!--      </div>-->
+
       <div class="search-field__input-with-btn">
         <q-input v-model="form.username" :placeholder="$t('earnMoney.teamManagement.searchField.username.placeholder')"
-          borderless />
+                 borderless />
         <q-btn @click="handleSubmit" class="btn-primary btn-primary__full" no-caps unelevated>
           {{ $t("earnMoney.teamManagement.searchField.searchButton") }}
         </q-btn>
@@ -42,8 +39,10 @@
     </div>
 
     <div class="result-table">
+      <span  v-if="referralName">Referral: <span class="span-username">{{referralName}}</span></span>
       <q-table :columns="tableHeaders" :hide-pagination="true" :rows-per-page-options="[0]" :rows="tableData"
-        class="monthly-deposit-table" row-key="name" style="overflow-x: scroll" flat>
+               :loading="loading"
+               class="monthly-deposit-table" row-key="name" style="overflow-x: scroll" flat>
         <template v-slot:header>
           <q-tr class="top-header">
             <q-td v-for="(header, index) in tableHeaders" :key="index">
@@ -56,7 +55,7 @@
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span v-if="col.field === 'loginName'">
-                <span class="span-username">{{ col.value }}</span>
+                <span class="span-username" @click="searchByReferral(props)">{{ col.value }}</span>
               </span>
               <span v-else-if="col.field === 'balance'">
                 {{ convertToCommaAmount(col.value, true) }}
@@ -69,6 +68,13 @@
               </span>
             </q-td>
           </q-tr>
+
+          <!--          <q-tr v-show="props.expand" :props="props" :key="`e_${props.row.index}`" class="q-virtual-scroll&#45;&#45;with-prev">-->
+          <!--            <q-td colspan="100%">-->
+          <!--              <div class="text-left">This is expand slot for row above: {{ props.row.name }} (Index: {{ props.row.index }}).</div>-->
+          <!--            </q-td>-->
+          <!--          </q-tr>-->
+
         </template>
       </q-table>
     </div>
@@ -90,8 +96,12 @@ const tableData = ref([]);
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
-  username: ""
+  username: "",
+  referrerId: ""
 });
+const referralName= ref("");
+
+const loading= ref(false);
 
 const displayStartDate = computed(() => moment(form.value.startDate).format("MM/DD"));
 const displayEndDate = computed(() => moment(form.value.endDate).format("MM/DD"));
@@ -105,8 +115,8 @@ const tableHeaders = computed(() => [
   { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
   { label: t("earnMoney.teamManagement.table.registrationDate"), name: "regTime", field: "regTime", align: "center" },
   { label: t("earnMoney.teamManagement.table.downlineMember"), name: "totalDownlineCount", field: "totalDownlineCount", align: "center" },
-  { label: "Today Register Count", name: "todayRegCount", field: "todayRegCount", align: "center" },
-  { label: "Yesterday Register Count", name: "yesterdayRegCount", field: "yesterdayRegCount", align: "center" },
+  { label: t("earnMoney.teamManagement.table.todayRegCount") , name: "todayRegCount", field: "todayRegCount", align: "center" },
+  { label: t("earnMoney.teamManagement.table.ytdRegCount") , name: "yesterdayRegCount", field: "yesterdayRegCount", align: "center" },
 
   // { label: t("earnMoney.teamManagement.table.downlineDepositMember"), name: "downlineDepositMember", field: "downlineDepositMember", align: "center" },
   // { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
@@ -116,29 +126,46 @@ const tableHeaders = computed(() => [
   // { label: t("earnMoney.teamManagement.table.uplineLoginName"), name: "uplineLoginName", field: "uplineLoginName", align: "center" }
 ]);
 
-const getDownlines = () => {
-  const { username, startDate, endDate } = form.value;
+const searchByReferral = (props) => {
+  form.value.username= "";
+  form.value.referrerId= props.row.id;
+  referralName.value= props.row.loginName;
+  getDownlines();
+}
 
-  let url = `/session/downlines?regTime=${startDate}&regTime=${endDate}`;
+const getDownlines = () => {
+  const { username, startDate, endDate, referrerId } = form.value;
+  loading.value= true;
+
+  let url = `/session/downlines`;
 
   if (username) {
-    url = `/session/downlines?loginName=${username}&regTime=${startDate}&regTime=${endDate}`;
+    url = `/session/downlines?loginName=${username}`;
+  }
+  if (referrerId) {
+    url = `/session/downlines?referrerId=${referrerId}`;
   }
 
   api
     .get(url)
     // .get(`/session/downlines?loginName=${form.value.username}&regTime=${form.value.startDate}&regTime=${form.value.endDate}`)
     .then((response) => {
+      loading.value= false;
       if (response.code === 0) {
         tableData.value = response.data.records
       }
     })
     .catch((e) => {
+      loading.value= false;
       console.log(e);
     });
 }
 
-const handleSubmit = () => { getDownlines() };
+const handleSubmit = () => {
+  form.value.referrerId= "";
+  referralName.value= "";
+  getDownlines()
+};
 
 onMounted(() => {
   getDownlines();

@@ -38,12 +38,13 @@
           @update:model-value="handleDateSelect"
         />
       </div>
-      <div class="search-field__input-with-btn">
-        <q-input
-          v-model="form.username"
-          borderless
-          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"
-        />
+      <div class="search-field__input-with-btn" style="justify-content: flex-end">
+<!--        <q-input-->
+<!--          v-model="form.username"-->
+<!--          borderless-->
+<!--          :placeholder="$t('earnMoney.profitAndLoss.searchField.username.placeholder')"-->
+<!--        />-->
+
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
           {{ $t("earnMoney.profitAndLoss.searchField.searchButton") }}
         </q-btn>
@@ -57,6 +58,7 @@
         :columns="tableHeaders"
         :rows="tableData"
         row-key="name"
+        :loading="loading"
         :rows-per-page-options="[0]"
         style="overflow-x: scroll"
         class="monthly-deposit-table"
@@ -100,7 +102,7 @@
           Rs
           <span>{{ convertToCommaAmount(sumsData.downlineBetAmount, true) }}</span>
         </div>
-        <div class="item-title">{{ "Bet Amount" }}</div>
+        <div class="item-title">{{  $t("earnMoney.profitAndLoss.sums.betamount")  }}</div>
       </div>
 
       <div class="sum-item">
@@ -115,7 +117,7 @@
         <div class="item-amount">
           <span>{{ sumsData.downlineDepositCount }}</span>
         </div>
-        <div class="item-title">{{ "Deposit Count" }}</div>
+        <div class="item-title">{{  $t("earnMoney.profitAndLoss.sums.depositcount")  }}</div>
       </div>
 
       <div class="sum-item">
@@ -168,6 +170,7 @@ const form = ref({
   endDate: moment().format(DATE_FORMAT),
   username: ""
 });
+const loading= ref(false);
 
 const displayStartDate = computed(() => moment(form.value.startDate).format("MM/DD"));
 const displayEndDate = computed(() => moment(form.value.endDate).format("MM/DD"));
@@ -180,10 +183,10 @@ const downLineOptions = computed(() => [
 const tableHeaders = computed(() => [
   { label: t("earnMoney.profitAndLoss.table.username"), name: "username", field: "loginName", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.deposit"), name: "deposit", field: "downlineDepositAmount", align: "center" },
-  { label: "Deposit Count", name: "deposit_count", field: "downlineDepositCount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.depositcount") , name: "deposit_count", field: "downlineDepositCount", align: "center" },
 
-  { label: "FTD Amount", name: "ftd", field: "downlineFtdAmount", align: "center" },
-  { label: "FTD Count", name: "ftd_count", field: "downlineFtdCount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.ftdamount") , name: "ftd", field: "downlineFtdAmount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.ftdcount") , name: "ftd_count", field: "downlineFtdCount", align: "center" },
 
   { label: t("earnMoney.profitAndLoss.table.withdraw"), name: "withdraw", field: "downlineWithdrawAmount", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "downlineBetAmount", align: "center" },
@@ -214,6 +217,7 @@ const handleDateSelect = (value) => {
 
 const getDownlineProfitSummary = () => {
   const { username, startDate, endDate } = form.value;
+  loading.value= true;
 
   let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
 
@@ -224,12 +228,14 @@ const getDownlineProfitSummary = () => {
   api
     .get(url)
     .then((response) => {
+      loading.value= false;
       if (response.code === 0) {
         tableData.value = response.data.records;
         sumsData = response.data.sums;
       }
     })
     .catch((e) => {
+      loading.value= false;
       console.log(e);
     });
 };
