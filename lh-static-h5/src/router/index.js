@@ -19,26 +19,16 @@ function isInApp(){
   return false;
 }
 
+
 let routes;
 
 if(isInApp()){
-  routes= require("./routers-app").default;
+  console.log("In App")
+  routes= require("./routers-app").default
 }else{
-  routes= require("./routes").default;
+  console.log("Normal")
+  routes= require("./routes").default
 }
-
-async function getRoutes() {
-  let routes;
-  if(isInApp()){
-    routes= await import('./routers-app');
-  }else{
-    routes= await import("./routes");
-  }
-
-  console.log(routes.default)
-  return routes.default;
-}
-const routesPromise = getRoutes();
 
 export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
@@ -50,7 +40,7 @@ export default route(function (/* { store, ssrContext } */) {
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
-    routes: [],
+    routes,
 
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
@@ -58,10 +48,6 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE)
   });
 
-  routesPromise.then(items => {
-    Router.addRoute(...items);
-  });
-  console.log(Router)
   Router.beforeEach((to, from, next) => {
     const user = userStore();
     const ui = useUI();
