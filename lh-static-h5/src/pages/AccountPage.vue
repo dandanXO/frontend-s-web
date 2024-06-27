@@ -11,7 +11,7 @@
           <span class="nickname-span">{{ store.nickName }}</span>
 
           <!-- <span class="join-span">加入雷火电竞第一天</span> -->
-          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+<!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
     </div>
@@ -472,7 +472,6 @@
 import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import {useLocalStorage} from "@vueuse/core"
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -516,7 +515,7 @@ export default defineComponent({
       });
     };
 
-    const appVersionNo = ref(null);
+    // const appVersionNo = ref(null);
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
         return 0;
@@ -556,16 +555,16 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.6";
-      } else {
-      }
-    };
+    // const getVersionNo = async () => {
+    //   if (store.getDeviceType() == "ANDROID") {
+    //     const info = await App.getInfo();
+    //     var current_version = info.version + "." + info.build;
+    //     appVersionNo.value = current_version;
+    //   } else if (store.getDeviceType() == "IOS") {
+    //     appVersionNo.value = "iOS v0.6";
+    //   } else {
+    //   }
+    // };
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
@@ -591,7 +590,7 @@ export default defineComponent({
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
-      getVersionNo();
+      // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
@@ -867,7 +866,6 @@ export default defineComponent({
       openDeposit,
       openWithdraw,
       openTransfer,
-      appVersionNo,
       isLoadingBalance,
       selfTgurl,
       vip_progress,
