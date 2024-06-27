@@ -69,6 +69,10 @@
     :deep(table) {
       .top-header {
         color: #f1f1f1;
+
+        td {
+          font-size: 12px;
+        }
       }
 
       thead {

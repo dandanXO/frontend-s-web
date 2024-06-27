@@ -303,6 +303,7 @@ export default {
       table: {
         id: "ID",
         downlineMember: "Downline Member",
+        downlineDepositMember: "Downline Deposit Member",
         vip: "VIP",
         uplineLoginName: "Upline Username",
         type: "Types",
