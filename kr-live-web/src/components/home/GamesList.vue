@@ -970,7 +970,7 @@ export default defineComponent({
   }
 
   .slot-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     column-gap: 14px;
     row-gap: 14px;
   }
@@ -986,11 +986,7 @@ export default defineComponent({
   }
 
   .slot-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  #id-casual-board {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(9, 1fr);
   }
 }
 
