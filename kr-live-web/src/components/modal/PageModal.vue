@@ -6,7 +6,7 @@
           <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
         </div>
         <div class="page-dialog-main-header">
-          <span class="header-info-description">{{ $t(headerInfo.description) }}</span>
+          <span class="header-info-description">{{ headerInfo.description ? $t(headerInfo.description) : '' }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
