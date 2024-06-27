@@ -88,7 +88,12 @@
     <div class="deposit-container" v-else>
       <q-form ref="depositForm" class="q-gutter-y-xs deposit-form">
         <div class="deposit-enter-amt" v-if="amountList.length === 0">
-          <div class="lil-title flex-div">{{ $t("form.depositAmount") }}   <div class="tutorial-link" @click="openDepositPage" style="margin-left:25px;">{{ $t("deposit.depositTutorial") }}</div></div>
+          <div class="lil-title flex-div">
+            {{ $t("form.depositAmount") }}
+            <div class="tutorial-link" @click="openDepositPage" style="margin-left: 25px">
+              {{ $t("deposit.depositTutorial") }}
+            </div>
+          </div>
           <q-input
             class="deposit-input q-mt-sm"
             ref="depositAmtRef"
@@ -175,10 +180,18 @@
     </div>
 
     <div class="q-mt-sm step-desc-div q-mb-lg">
-      <p>1. Recharge tutorial: <span class="tutorial-link" @click="openDepositPage">Picture</span> / <span class="tutorial-link" @click="openDepositVideo">Video</span></p>
+      <p>
+        1. Recharge tutorial:
+        <span class="tutorial-link" @click="openDepositPage">Picture</span>
+        /
+        <span class="tutorial-link" @click="openDepositVideo">Video</span>
+      </p>
       <p>2. Fill in the correct wallet account number</p>
       <p>3. Fill in the correct CNIC number</p>
-      <p>4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically credited.</p>
+      <p>
+        4. The submitted amount must be consistent with the payment amount, otherwise it will not be automatically
+        credited.
+      </p>
     </div>
 
     <div class="bottom-content" style="height: 110px"></div>
@@ -236,6 +249,31 @@
       <KYCUserForm @closeUserKYCDialog="closeUserKYCDialog" />
     </div>
   </q-dialog>
+
+  <!-- iframe for deposit -->
+  <q-dialog width="100%" v-model="isDepositFrame" persistent>
+    <q-card>
+      <q-btn
+        dense
+        rounded
+        icon="close"
+        class="popout-close"
+        @click="isDepositFrame = false"
+        v-close-popup
+        style="position: fixed; top: 12px; right: 0"
+      />
+      <iframe
+        :src="depositIframeSrc"
+        frameborder="0"
+        style="position: fixed; height: calc(100% - 60px); width: 100%; left: 0; top: 60px"
+        @load="iframeLoaded"
+      ></iframe>
+
+      <div v-if="depositIframeLoading" class="loading-overlay">
+        <q-spinner color="primary" size="40px"></q-spinner>
+      </div>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup>
@@ -253,6 +291,7 @@ import KYCUserForm from "../../components/KYCUserForm.vue";
 import PrimaryButton from "src/components/auth/PrimaryButton.vue";
 import DepositComponent from "../../components/depositComponent.vue";
 import { t } from "src/boot/lang";
+import { isAndroid } from "boot/utils";
 
 const imgURL = process.env.IMAGE_CDN;
 
@@ -592,49 +631,48 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
-            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
-              const newWin = window.open(`/`, `_self`);
-              if (response.payResultType === "GET_SUBMIT") {
-                newWin.location.href = response.requestUrl;
-              }
-              if (response.payResultType === "POST_SUBMIT") {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                }
-              }
-            } else {
-              const newWin = window.open(`/`);
-              if (!newWin) {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message:
-                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
-                  icon: "report_problem"
-                });
-                btnLoading.value = false;
-                return;
-              }
-              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              if (response.payResultType === "GET_SUBMIT") {
-                newWin.location.href = response.requestUrl;
-              }
-              if (response.payResultType === "POST_SUBMIT") {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                }
+          if ((Platform.is.desktop || Platform.is.webkit) && Platform.is.name !== "webkit" && !liff.isInClient()) {
+            // if (store.getDeviceType() === "IOS" || store.isMobileSafari() || isAndroid()) {
+            // const newWin = window.open(`/`, `_self`);
+            depositIframeSrc.value = response.requestUrl;
+            depositIframeLoading.value = true;
+            isDepositFrame.value = true;
+
+            if (response.payResultType === "GET_SUBMIT") {
+              newWin.location.href = response.requestUrl;
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              if (response.paramKey === null || response.paramKey === "") {
+                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+              } else {
+                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
               }
             }
+            // } else {
+            //   const newWin = window.open(`/`);
+            //   if (!newWin) {
+            //     $q.notify({
+            //       color: "negative",
+            //       position: "top",
+            //       message:
+            //         "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+            //       icon: "report_problem"
+            //     });
+            //     btnLoading.value = false;
+            //     return;
+            //   }
+            //   newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            //   if (response.payResultType === "GET_SUBMIT") {
+            //     newWin.location.href = response.requestUrl;
+            //   }
+            //   if (response.payResultType === "POST_SUBMIT") {
+            //     if (response.paramKey === null || response.paramKey === "") {
+            //       newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            //     } else {
+            //       newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            //     }
+            //   }
+            // }
           } else {
             localStorage.setItem("formDetails", JSON.stringify(form));
             if (response.payResultType === "GET_SUBMIT") {
@@ -742,25 +780,33 @@ const isDepositTutorial = ref(false);
 
 const openDepositPage = () => {
   // alert(selectedPayType.value);
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/1RoNBxSPtiT-JL94Q2koI5J3HV69Nl7j0/view", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
     // isDepositTutorial.value= true;
-    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank")
+    window.open("https://drive.google.com/file/d/1uVpFov1xcBs4GU1MwzbzeqbHtBzkHAct/view?usp=sharing", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/17bj72DAfC0IwLJ7HZ1xeslBNdRpkIxMW/view", "_blank");
   }
-}
+};
 
-const openDepositVideo =() => {
-  if(selectedPayType.value === "EASYPAISA"){
-    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank")
-  }else if(selectedPayType.value === "JAZZCASH"){
-    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank")
-  }else {
-    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank")
+const openDepositVideo = () => {
+  if (selectedPayType.value === "EASYPAISA") {
+    window.open("https://drive.google.com/file/d/1xBIZuDG1yY6Zeo-RF8-M-3I3E6o9VddX/view", "_blank");
+  } else if (selectedPayType.value === "JAZZCASH") {
+    window.open("https://drive.google.com/file/d/1wTnGejKAFXqtup1HqNZu6w_8e8Z8LQez/view", "_blank");
+  } else {
+    window.open("https://drive.google.com/file/d/1WakPk-541lVptQ8kODH1BIit84H92TMu/view", "_blank");
   }
-}
+};
+
+const isDepositFrame = ref(false);
+const depositIframeSrc = ref();
+const depositIframeLoading = ref(false);
+
+const iframeLoaded = () => {
+  depositIframeLoading.value = false; // Set loading to false when iframe finishes loading
+};
 
 onActivated(() => {
   checkNewUser();
@@ -1034,8 +1080,8 @@ onMounted(() => {
   }
 }
 
-.flex-div{
-  display:flex;
+.flex-div {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
 }
@@ -1066,10 +1112,10 @@ onMounted(() => {
   text-decoration: underline;
 }
 
-.step-desc-div{
+.step-desc-div {
   color: #bacef1;
 
-  p{
+  p {
     margin: 5px 0px;
   }
 }
@@ -1080,5 +1126,17 @@ onMounted(() => {
   right: 10px;
   cursor: pointer;
   z-index: 1;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity and color as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
