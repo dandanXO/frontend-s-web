@@ -5,9 +5,9 @@
     <q-virtual-scroll :items="gameList" separator v-slot="{ item: games, index }" class="slot-grid-virtualized">
         <div :key="index" class="slot-grid-row" :style="`grid-template-columns: repeat(${arrSize}, 1fr)`">
             <q-img class="slot-grid-item" @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
-                v-for="game in games" :key="game.id" loading="lazy" :src="game.icon" :placeholder-src="game.default"
-                fit="fill" height="auto" spinner-color="white" position="50% 20%"
-                style="border-radius: 20px; overflow: hidden" :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''">
+                v-for="game in games" :key="game.id" loading="lazy" :src="game.icon" fit="fill" height="auto"
+                spinner-color="white" position="50% 20%" style="border-radius: 20px; overflow: hidden"
+                :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''">
                 <template v-slot:loading>
                     <img :src="game.default" style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden" />
                 </template>
