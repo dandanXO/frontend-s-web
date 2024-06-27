@@ -70,7 +70,7 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="downlineMember" :label="t('fields.downlineMember')" width="180">
+        <el-table-column v-if="request.siteId !== 11" prop="downlineMember" :label="t('fields.downlineMember')" width="180">
           <template
             #default="scope"
             v-if="hasPermission(['sys:member-refer:list'])"
@@ -81,6 +81,18 @@
             <span v-else>{{ scope.row.downlineMember }}</span>
           </template>
         </el-table-column>
+        <el-table-column v-else prop="downlineMember" :label="t('fields.allDownlineMember')" width="180">
+          <template
+            #default="scope"
+            v-if="hasPermission(['sys:member-refer:list'])"
+          >
+            <a v-if="scope.row.downlineMember > 0">
+              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.downlineMember }}</el-link>
+            </a>
+            <span v-else>{{ scope.row.downlineMember }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column v-if="request.siteId === 11" prop="downlineDepositMember" :label="t('fields.downlineDepositMember')" width="180" />
         <el-table-column
           prop="loginName"
           :label="t('fields.loginName')"

@@ -852,6 +852,7 @@ export default {
     downlineCommission: '下级分红',
     downlineCommissionRate: '下级分红比率',
     downlineMember: '直属会员',
+    allDownlineMember: '全部下级会员',
     downlineProfit: '下级盈利',
     downloadTemplate: '下载模板',
     draw: '平局',
