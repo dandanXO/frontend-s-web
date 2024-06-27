@@ -11,7 +11,7 @@
       <q-carousel-slide name="live" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class=" game-list">
-            <GameItem :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+            <GameItems :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
           </div>
         </div>
       </q-carousel-slide>
@@ -19,7 +19,7 @@
         <div class="game-list-wrapper">
           <!-- slot start -->
           <div class="game-list" v-if="!isShow">
-            <GameItem :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat" />
+            <GameItems :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat" />
           </div>
 
           <div class="game-scroll-lists" id="id-slot-board" v-if="isShow" :gameType="currentSelectedMenu">
@@ -92,14 +92,14 @@
       <q-carousel-slide name="sport" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class="game-list">
-            <GameItem :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame" />
-            <GameItem :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+            <GameItems :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame" />
+            <GameItems :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="casual" class="column no-wrap flex-center">
         <div class="game-list" v-if="!isShow">
-          <GameItem :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat" />
+          <GameItems :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat" />
         </div>
         <!-- cq9 start -->
         <div class="game-scroll-lists" id="id-slot-board" v-if="isShow && selectedPlat.code === 'CQ9'"
@@ -191,7 +191,7 @@ import { cached } from "boot/cache";
 import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
-import GameItem from "components/game/GameItem";
+import GameItems from "components/game/GameItems";
 import GameCategory from "components/game/GameCategory";
 import orderBy from "lodash/orderBy";
 import findIndex from "lodash/findIndex";
@@ -207,7 +207,7 @@ export default defineComponent({
   components: {
     GameModal,
     BacktoTop,
-    GameItem,
+    GameItems,
     GameCategory,
     MinigamesGrid,
   },
