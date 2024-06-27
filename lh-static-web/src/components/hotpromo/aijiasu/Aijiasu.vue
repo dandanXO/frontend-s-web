@@ -56,14 +56,18 @@
             </div>
           </div>
           <div class="download">
-            <div class="icon"><div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div></div>
+            <div class="icon">
+              <div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div>
+            </div>
             <div class="info">
               <img src="../../../assets/promo/aijiasu/apple-icon.png" alt="" />
               <div>苹果手机下载</div>
             </div>
           </div>
           <div class="download">
-            <div class="icon"><div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div></div>
+            <div class="icon">
+              <div class="qrcode"><qrcode-vue :value="value" size="105" level="H" /></div>
+            </div>
             <div class="info">
               <img src="../../../assets/promo/aijiasu/android-icon.png" alt="" />
               <div>安卓手机下载</div>
@@ -83,12 +87,26 @@
       <div class="session3">
         <img src="../../../assets/promo/aijiasu/title3.png" alt="" />
         <div class="tabs">
-          <div :class="`tab ${activeTab === 0 ? 'active' : 'inactive'}`" @click="handleActiveClick(0)">Windows教程</div>
+          <div :class="`tab ${activeTab === 0 ? 'active' : 'inactive'}`" @click="handleActiveClick(0)">
+            <img
+              src="../../../assets/promo/aijiasu/window-icon.png"
+              alt=""
+              v-if="activeTab !== 0"
+              style="margin-right: 8px"
+            />
+            <img src="../../../assets/promo/aijiasu/window-black.png" alt="" v-if="activeTab === 0" style="margin-right:
+            8px;"> Windows教程
+          </div>
           <div :class="`tab ${activeTab === 1 ? 'active' : 'inactive'}`" @click="handleActiveClick(1)">
-            苹果手机教程
+            <img src="../../../assets/promo/aijiasu/apple-icon.png" alt="" v-if="activeTab !== 1"  style="margin-right:
+            8px;"> <img src="../../../assets/promo/aijiasu/apple-black.png" alt="" v-if="activeTab === 1" width="23"
+            height="23"  style="margin-right:
+            8px;"/> 苹果手机教程
           </div>
           <div :class="`tab ${activeTab === 2 ? 'active' : 'inactive'}`" @click="handleActiveClick(2)">
-            安卓手机教程
+            <img src="../../../assets/promo/aijiasu/android-icon.png" alt="" v-if="activeTab !== 2"  style="margin-right:
+            8px;"> <img src="../../../assets/promo/aijiasu/android-black.png" alt="" v-if="activeTab === 2"width="19"
+            height="19" style="margin-right: 8px;"> 安卓手机教程
           </div>
         </div>
         <div class="slider" style="position: relative" v-if="activeTab === 0">
@@ -367,13 +385,13 @@ const nextSlide = () => {
           display: flex;
           align-items: center;
           justify-content: center;
-          .qrcode{
+          .qrcode {
             background-color: #fff;
             width: 109px;
             height: 109px;
             display: flex;
             align-items: center;
-            justify-content: center
+            justify-content: center;
           }
         }
         .info {
