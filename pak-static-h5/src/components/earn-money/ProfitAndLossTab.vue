@@ -175,7 +175,7 @@ const { t } = useI18n();
 
 const selectedDownLine = ref("today");
 const tableData = ref([]);
-const sumsData = reactive({
+const sumsData = ref({
   downlineBetAmount: 0.0,
   downlineDepositCount: 0,
   downlinePayoutAmount: 0.0,
@@ -262,7 +262,7 @@ const getDownlineProfitSummary = () => {
       loading.value= false;
       if (response.code === 0) {
         tableData.value = response.data.records;
-        sumsData = response.data.sums;
+        sumsData.value = response.data.sums;
       }
     })
     .catch((e) => {
