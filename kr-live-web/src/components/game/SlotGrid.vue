@@ -4,7 +4,8 @@
     </q-intersection>
     <q-virtual-scroll :items="gameList" separator v-slot="{ item: games, index }" class="slot-grid-virtualized">
         <div :key="index" class="slot-grid-row" :style="`grid-template-columns: repeat(${arrSize}, 1fr)`">
-            <q-img v-for="game in games" :key="game.id" loading="lazy" :src="game.icon" :placeholder-src="game.default"
+            <q-img class="slot-grid-item" @click="openSlotGame(game.name, game.code, selectedPlat.status, game)"
+                v-for="game in games" :key="game.id" loading="lazy" :src="game.icon" :placeholder-src="game.default"
                 fit="fill" height="auto" spinner-color="white" position="50% 20%"
                 style="border-radius: 20px; overflow: hidden" :imgClass="selectedPlat.code === 'PG' ? 'zoomin' : ''">
                 <template v-slot:loading>
@@ -56,5 +57,9 @@ const chunk = (arr, size) => {
     display: grid;
     gap: 20px;
     padding-bottom: 20px;
+}
+
+.slot-grid-item {
+    cursor: pointer;
 }
 </style>
