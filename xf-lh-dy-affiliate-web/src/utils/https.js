@@ -78,6 +78,8 @@ const onResponse = (response) => {
         router.go("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         router.go("/pak/login")
+      }else if (siteId === "15" || siteId === 15) {
+        router.go("/kaka/login")
       }
       location.reload()
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
