@@ -304,6 +304,7 @@ export default {
       table: {
         id: "شناخت",
         downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
         vip: "وی آئی پی",
         uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
@@ -346,7 +347,6 @@ export default {
         platform: "پلیٹ فارم",
         players: "کھلاڑی",
         bet: "بیٹ",
-        validBet: "معتبر بیٹ",
         payout: "ادائیگی"
       }
     },
