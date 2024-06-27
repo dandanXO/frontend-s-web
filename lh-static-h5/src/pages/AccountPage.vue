@@ -470,7 +470,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import {useLocalStorage} from "@vueuse/core"
@@ -586,11 +586,12 @@ export default defineComponent({
         icon: "check_circle_outline"
       });
     };
-
+    onActivated(() => {
+      store.getUnreadTotal();
+    })
     onMounted(() => {
       getBalance();
       store.getBalance();
-      store.getUnreadTotal();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
