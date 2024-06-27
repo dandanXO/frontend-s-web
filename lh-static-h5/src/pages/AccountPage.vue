@@ -289,7 +289,7 @@
       <div class="acct-nav-item">
         <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
         <img v-else src="../assets/images/account/account-summon-share-icon.png" />
-        <div class="acct-nav-label">精英召回</div>
+        <div class="acct-nav-label">召回奖金</div>
       </div>
     </router-link>
 
