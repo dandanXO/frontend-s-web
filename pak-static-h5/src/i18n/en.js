@@ -375,6 +375,14 @@ export default {
         depositFee: "Deposit Fee",
         bet: "Bet",
         payout: "Payout",
+      },
+      sums: {
+        bet: "Bet",
+        validBet: "Valid Bet",
+        bonus: "Bonus",
+        payout: "Payout",
+        deposit: "Deposit",
+        withdraw: "Withdraw",
       }
     }
   },
