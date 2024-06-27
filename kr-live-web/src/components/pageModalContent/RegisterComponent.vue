@@ -243,7 +243,7 @@ export default defineComponent({
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
-                SessionStorage.set("TOKEN", res.data);
+                // SessionStorage.set("TOKEN", res.data);
 
                 emit("closeModal");
 
@@ -256,7 +256,7 @@ export default defineComponent({
 
                 setTimeout(() => {
                   router.push("/");
-                  location.reload();
+                  // location.reload();
                 }, 1000);
               } else {
                 $q.notify({
