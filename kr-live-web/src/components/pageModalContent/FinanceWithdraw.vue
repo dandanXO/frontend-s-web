@@ -226,6 +226,7 @@ const parseDigitsWithComma = (value) => {
 watch(() => withdrawAmountFormatted.value, () => {
   const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
   if (isNaN(withdrawAmount)) {
+    withdrawInfo.amount = '';
   } else {
     withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     withdrawInfo.amount = Number(withdrawAmount);
