@@ -4,7 +4,6 @@
       <img src="../../../assets/promo/aijiasu/background-top.png" alt="" style="margin: 0px" />
     </div>
     <div class="backgroun-bottom">
-      <img src="../../../assets/promo/aijiasu/background-bottom.png" alt="" style="margin: 0px" />
     </div>
   </div>
   <div class="main">
@@ -17,11 +16,11 @@
       </div>
       <div class="info-box">
         <div class="qr-code-box">
-          <div class="qr-code-item">
+          <div class="qr-code-item" v-if="mobileOS === 'Android'">
             <div class="qrcode"><qrcode-vue :value="value" size="124" level="H" /></div>
             <div class="qrcode-info">安卓手机扫码下载</div>
           </div>
-          <div class="qr-code-item">
+          <div class="qr-code-item" v-if="mobileOS === 'iOS'">
             <div class="qrcode">
               <div class="qrcode"><qrcode-vue :value="value" size="124" level="H" /></div>
             </div>
@@ -110,9 +109,32 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,onMounted } from "vue";
 import QrcodeVue from "qrcode.vue";
 const value = ref("https://example.com");
+
+
+const mobileOS = ref('unknown');
+
+const getMobileOperatingSystem = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  // iOS detection
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return 'iOS';
+  }
+
+  // Android detection
+  if (/android/i.test(userAgent)) {
+    return 'Android';
+  }
+
+  return 'unknown';
+};
+
+onMounted(() => {
+  mobileOS.value = getMobileOperatingSystem();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -121,6 +143,13 @@ const value = ref("https://example.com");
   top: 0px;
   left: 0px;
   z-index: 0;
+  height: 100%;
+  .backgroun-bottom{
+    height: calc(100% - 10px);
+    background-image: url('../../../assets/promo/aijiasu/background-bottom.png');
+    background-size: cover;
+  background-position: center center;
+  }
 }
 .main {
   position: relative;
@@ -139,9 +168,8 @@ const value = ref("https://example.com");
     color: transparent;
     font-size: 3rem;
     font-weight: 400;
-    line-height: 79.39px;
+    line-height: 54px;
     text-align: left;
-    margin-bottom: 6px;
   }
   .title2,
   .title3 {
@@ -151,7 +179,6 @@ const value = ref("https://example.com");
     line-height: 54.32px;
     text-align: left;
     color: rgba(255, 255, 255, 1);
-    margin-bottom: 6px;
   }
 
   .title4 {
@@ -160,8 +187,6 @@ const value = ref("https://example.com");
     font-weight: 700;
     line-height: 25.4px;
     text-align: left;
-
-    margin-top: 22px;
     color: rgba(255, 255, 255, 1);
     span {
       color: rgba(250, 255, 27, 1);
@@ -170,14 +195,15 @@ const value = ref("https://example.com");
   .info-box {
     display: flex;
     align-items: center;
+    justify-content: space-around;
     margin-top: 16px;
   }
   .qr-code-box {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    width: 398px;
-    height: 224px;
+    justify-content: center;
+    width: 170px;
+    height: 188px;
     background: rgba(18, 0, 0, 0.6);
     border: 1px solid;
     border-image: linear-gradient(90deg, #ff7272 0%, #dee227 31%, #00ef0a 60%, #08ffff 97.5%) 1;
@@ -187,6 +213,7 @@ const value = ref("https://example.com");
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 8px;
       .qrcode {
         display: flex;
         align-items: center;
@@ -197,7 +224,7 @@ const value = ref("https://example.com");
       }
       .qrcode-info {
         font-family: Microsoft YaHei UI;
-        font-size: 17.25px;
+        font-size: 16px;
         font-weight: 700;
         line-height: 21.9px;
         text-align: left;
@@ -209,7 +236,7 @@ const value = ref("https://example.com");
   .info {
     .item-text1 {
       font-family: Microsoft YaHei UI;
-      font-size: 21px;
+      font-size: 19px;
       font-weight: 700;
       line-height: 40.64px;
       text-align: left;
@@ -239,7 +266,6 @@ const value = ref("https://example.com");
     align-items: center;
     margin-top: 22px;
     .content {
-      height: 99px;
       display: flex;
       align-items: center;
       font-family: Microsoft YaHei UI;
@@ -249,6 +275,7 @@ const value = ref("https://example.com");
       text-align: left;
       color: rgba(236, 230, 238, 1);
       background: linear-gradient(90deg, rgba(10, 1, 38, 0) 0%, #0a0126 50%, rgba(10, 1, 38, 0) 100%);
+      padding: 16px;
     }
     .download-content {
       display: flex;
@@ -368,7 +395,7 @@ const value = ref("https://example.com");
       font-family: Microsoft YaHei UI;
       font-size: 19px;
       font-weight: 400;
-      line-height: 24.13px;
+      line-height: 28px;
       text-align: left;
       color: #ffffff;
       padding: 21px 10px;
