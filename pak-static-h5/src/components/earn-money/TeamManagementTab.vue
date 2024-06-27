@@ -146,6 +146,7 @@ const getDownlines = () => {
     url = `/session/downlines?referrerId=${referrerId}`;
   }
 
+  tableData.value= [];
   api
     .get(url)
     // .get(`/session/downlines?loginName=${form.value.username}&regTime=${form.value.startDate}&regTime=${form.value.endDate}`)

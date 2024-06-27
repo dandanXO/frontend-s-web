@@ -62,13 +62,15 @@
   }
 }
 
+.span-username{
+  color: lightblue;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .result-table {
 
-  .span-username{
-    color: lightblue;
-    font-weight: bold;
-    text-decoration: underline;
-  }
+
 
   .q-table__container {
     background-color: transparent;
@@ -113,10 +115,30 @@
 }
 
 .sum-wrapper {
+  position:relative;
   margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+
+  .loading-board{
+    position: absolute;
+    background: rgba(0,0,0,0.3);
+    left:0px;
+    right:0px;
+    top:0px;
+    bottom:0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .loading-spinner{
+
+
+    }
+  }
+
+
   .sum-item {
     display: flex;
     flex-direction: column;
