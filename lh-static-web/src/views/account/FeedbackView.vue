@@ -70,7 +70,7 @@
             </div>
 
             <div class="mail-input-item">
-              <div class="input-title">内容</div>
+              <div class="input-title">内容<span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span></div>
               <div class="input-fill">
                 <el-input
                   v-model="mailboxState.mailboxList.write.content"
@@ -1230,6 +1230,10 @@ onUnmounted(() => {
     .input-title {
       font-size: 1rem;
       color: #424f72;
+      .red-note {
+        color: #ff0000;
+        margin-left: 10px;
+      }
     }
     .input-fill {
       :deep(.el-form-item__label) {

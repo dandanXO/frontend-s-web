@@ -200,6 +200,7 @@
             <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.png" />
           <img v-else src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
+            <div class="unread" v-if="store.unreadInboxMail > 0">{{store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString()}}</div>
           </div>
         </router-link>
 
@@ -289,7 +290,7 @@
       <div class="acct-nav-item">
         <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
         <img v-else src="../assets/images/account/account-summon-share-icon.png" />
-        <div class="acct-nav-label">精英召回</div>
+        <div class="acct-nav-label">召回奖金</div>
       </div>
     </router-link>
 
@@ -469,7 +470,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 import {useLocalStorage} from "@vueuse/core"
@@ -585,11 +586,12 @@ export default defineComponent({
         icon: "check_circle_outline"
       });
     };
-
+    onActivated(() => {
+      store.getUnreadTotal();
+    })
     onMounted(() => {
       getBalance();
       store.getBalance();
-      // store.getUnreadTotal();
       // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
@@ -1314,10 +1316,22 @@ export default defineComponent({
         text-decoration: none;
         padding: 6px;
         border-radius: 4px;
+        position: relative;
 
         .acct-nav-label {
           white-space: nowrap;
           color: $font-1;
+        }
+        .unread {
+          position: absolute;
+          
+    border-radius: 50%;
+    background: #ff0000;
+    left: 80%;
+    top: -3px;
+    color: #ffffff;
+    padding: 1px 5px;
+    font-size: 10px;
         }
 
         img {

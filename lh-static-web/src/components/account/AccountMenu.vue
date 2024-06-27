@@ -208,8 +208,8 @@ const menuItems = ref([
   { route: "/center/mailbox", label: "消息中心", icon: "inbox" },
   { route: "/vip", label: "VIP特权", icon: "vip" },
   // { route: "/center/promo", label: "优惠领取", icon: "promo" },
-  { route: "/center/feedback", label: "会员建议", icon: "feedback" },
-  { route: "/center/share", label: "分享好友", icon: "transitrecord" }
+  { route: "/center/feedback", label: "反馈奖励", icon: "feedback" },
+  { route: "/center/share", label: "推广赚钱", icon: "transitrecord" }
 ]);
 
 const checkMailboxUnread = () => {
