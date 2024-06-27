@@ -846,6 +846,7 @@ export default {
     downlineCommission: 'Downline Commission',
     downlineCommissionRate: 'Downline Commission Rate',
     downlineMember: 'Downline Member',
+    allDownlineMember: 'All Downline Member',
     downlineProfit: 'Downline Profit',
     downloadTemplate: 'Download Template',
     draw: 'Draw',
