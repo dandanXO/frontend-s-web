@@ -84,8 +84,9 @@ const downLineOptions = computed(() => [
 
 const tableHeaders = computed(() => [
   // { label: t("rewardView.teamManagement.table.id"), key: "id" },
-  // { label: t("rewardView.teamManagement.table.downlineMember"), key: "downlineMember" },
   { label: t("rewardView.teamManagement.table.username"), key: "loginName" },
+  { label: t("rewardView.teamManagement.table.downlineMember"), key: "downlineMember" },
+  { label: t("rewardView.teamManagement.table.downlineDepositMember"), key: "downlineDepositMember" },
   { label: t("rewardView.teamManagement.table.vip"), key: "vip" },
   { label: t("rewardView.teamManagement.table.registrationDate"), key: "registrationDate" },
   // { label: t("rewardView.teamManagement.table.balance"), key: "balance" },

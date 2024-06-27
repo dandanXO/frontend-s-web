@@ -73,7 +73,11 @@
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span
-                v-if="['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee', 'bet', 'payout'].includes(col.field)"
+                v-if="
+                  ['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee', 'bet', 'payout'].includes(
+                    col.field
+                  )
+                "
                 :class="col.field === 'balance' ? props.row.type : ''"
               >
                 {{ convertToCommaAmount(col.value, true) }}
@@ -89,10 +93,60 @@
         </template>
       </q-table>
     </div>
+
+    <div class="sum-wrapper">
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.bet, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.bet") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.valid_bet, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.validBet") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.bonus, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.bonus") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.payout, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.deposit, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.withdraw, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.withdraw") }}</div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, reactive } from "vue";
 import moment from "moment";
 import { DATE_FORMAT } from "../../constant/format";
 import { useI18n } from "vue-i18n";
@@ -103,6 +157,14 @@ const { t } = useI18n();
 
 const selectedDownLine = ref("today");
 const tableData = ref([]);
+const sumsData = reactive({
+  bet: 0.0,
+  valid_bet: 0.0,
+  bonus: 0.0,
+  payout: 0.0,
+  deposit: 0.0,
+  withdraw: 0.0
+});
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
@@ -124,7 +186,7 @@ const tableHeaders = computed(() => [
   { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "bet", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.validBet"), name: "validBet", field: "validBet", align: "center" },
   { label: t("earnMoney.profitAndLoss.table.bonus"), name: "bonus", field: "bonus", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.payout"), name: "payout", field: "payout", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.payout"), name: "payout", field: "payout", align: "center" }
 ]);
 
 const handleDateSelect = (value) => {
@@ -147,7 +209,6 @@ const handleDateSelect = (value) => {
   }
 };
 
-
 const getDownlineProfitSummary = () => {
   const { username, startDate, endDate } = form.value;
 
@@ -162,18 +223,20 @@ const getDownlineProfitSummary = () => {
     .then((response) => {
       if (response.code === 0) {
         tableData.value = response.data.records;
+        sumsData = response.data.sums;
       }
     })
     .catch((e) => {
       console.log(e);
     });
-}
+};
 
-const handleSubmit = () => { getDownlineProfitSummary() };
+const handleSubmit = () => {
+  getDownlineProfitSummary();
+};
 
 onMounted(() => {
   getDownlineProfitSummary();
 });
-
 </script>
 <style scoped lang="scss" src="../../css/page/earnMoney.scss"></style>

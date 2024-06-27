@@ -375,6 +375,14 @@ export default {
         depositFee: "جمع کرانے کی فیس",
         bet: "بیٹ",
         payout: "ادائیگی"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا"
       }
     }
   },

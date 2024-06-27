@@ -553,6 +553,7 @@ export default {
       table: {
         id: "شناخت",
         downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
         vip: "وی آئی پی",
         uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
@@ -623,6 +624,14 @@ export default {
         depositFee: "جمع کرانے کی فیس",
         bet: "بیٹ",
         payout: "ادائیگی"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا"
       }
     }
   },
