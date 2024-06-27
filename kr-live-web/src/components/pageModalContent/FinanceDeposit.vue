@@ -275,6 +275,7 @@ const parseDigitsWithComma = (value) => {
 watch(() => depositAmountFormatted.value, () => {
   const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
   if (isNaN(depositAmount)) {
+    form.localAmount = ''
   } else {
     depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     form.localAmount = Number(depositAmount);
