@@ -29,8 +29,6 @@
     <LPLSummer v-if="list.redirectUrl === 'dy-promo-application-B' && !isCommonPromo && store.token"></LPLSummer>
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
-    <!-- <VIPUpgradePromo v-if="list.redirectUrl === 'dy2-vip-upgrade-bonus' && !isCommonPromo && store.token" />
-    <ReferBonusPromo v-if="list.redirectUrl === 'dy2-refer-bonus' && !isCommonPromo && store.token" /> -->
     <PrivilegeInvite
       v-if="
         (list.redirectUrl === 'Dongying-refer' ||
@@ -83,6 +81,10 @@
         style="max-width: 1200px; width: 100%; margin: 25px auto 0px"
         src="../assets/images/promotion/webfeedback.png"
       />
+    </div>
+
+    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
+      <div class="cs-btn" @click="store.openLiveChat()">联系客服</div>
     </div>
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
@@ -339,7 +341,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy-fish-hongbao" ||
       this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
       this.list.redirectUrl === "fankuijianyi" ||
-      this.list.redirectUrl === "dy2meizhoubei"
+      this.list.redirectUrl === "dy2meizhoubei" ||
+      this.list.redirectUrl === "dy-ouzhoumianpei"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -488,6 +491,30 @@ export default defineComponent({
         gap: 50px;
       }
     }
+  }
+}
+
+.cs-btn {
+  cursor: pointer;
+  display: block;
+  width: 198px;
+  height: 52px;
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
+  background-blend-mode: normal, normal;
+  border-radius: 26px;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 52px;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 
