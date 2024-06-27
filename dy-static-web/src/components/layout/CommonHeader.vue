@@ -1910,11 +1910,11 @@ export default defineComponent({
 
     };
     const submitLogin = () => {
-      loadingBtn.value = true;
 
       (async () => {
         const sidParam = store.visitorId;
         loginRef.value.validate().then(() => {
+          loadingBtn.value = true;
           store
             .memberLogin({
               loginName: loginForm.loginName,
@@ -1941,14 +1941,15 @@ export default defineComponent({
                 // loginForm.password = null
                 // loginForm.captchaCode = null
                 getCode();
+                loadingBtn.value = false;
               }
             }).catch((error) => {
             // message.error(error.message);
             console.log(error.message);
             getCode();
+            loadingBtn.value = false;
           });
         });
-        loadingBtn.value = false;
       })();
     };
 

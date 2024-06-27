@@ -1005,7 +1005,7 @@ $border-settings: 1px solid #e5e7eb;
       table {
         border: none;
         th {
-          background-color: #001a33;
+          background-color: #0E464D;
           color: $color-white;
           border: none;
         }
@@ -1013,6 +1013,13 @@ $border-settings: 1px solid #e5e7eb;
           background-color: #28313e;
           color: $color-white;
           border-color: #3b4c6f;
+        }
+        tbody {
+          tr {
+            > :nth-last-child(2) {
+              background-color: #057886;
+            }
+          }
         }
       }
     }

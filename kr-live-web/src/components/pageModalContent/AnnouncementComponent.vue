@@ -39,11 +39,7 @@
           </div>
           <span class="date-time">{{ formatDate(selected.createTime) }}</span>
           <div class="attachment" v-if="selected.attachment">
-            <q-img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)">
-              <template v-slot:loading>
-                <q-spinner-orbit size="0.5em" />
-              </template>
-            </q-img>
+            <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
           </div>
           <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
         </div>
@@ -56,7 +52,6 @@
 <script setup id="FinanceDeposit">
 import { onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
-import moment from "moment";
 import { getLocaleDateTime } from "src/boot/utils";
 
 const store = userStore();

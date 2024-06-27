@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="enter">进入网页版</div>
+      <a href="" id="visit-site-web-btn" class="enter">进入网页版</a>
     </div>
   </div>
 
@@ -118,8 +118,8 @@
   </div>
 
   <div class="btn-box">
-    <div class="enter-app">雷火全站APP</div>
-    <div class="enter-url">进入网页版</div>
+<!--    <div class="enter-app">雷火全站APP</div>-->
+    <a href="" id="visit-site-h5-btn" class="enter-url">进入网页版</a>
   </div>
 
   <div class="up" id="up-btn">
@@ -220,24 +220,54 @@
 
   window.dispatchEvent(new Event('resize'));
 
+  let startY = 0;
+  let endY = 0;
 
+  document.body.addEventListener('touchstart', function(e) {
+    startY = e.touches[0].clientY;
+  });
 
-  function myFunction(event) {
-    event.preventDefault();
-    const infoDiv = document.querySelector('.info-div');
-    infoDiv.style.bottom = '0';
+  document.body.addEventListener('touchend', function(e) {
+    endY = e.changedTouches[0].clientY;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50; // 设置一个阈值，判断是否为有效滑动
+    if (startY - endY > swipeThreshold) {
+      const infoDiv = document.querySelector('.info-div');
+      infoDiv.style.bottom = '0%';
+    }
   }
 
-
-  const upBtn= document.getElementById("up-btn")
-  document.addEventListener('touchmove', function (event) {
-    const infoDiv = document.querySelector('.info-div');
-    infoDiv.style.bottom = '0%';
+  document.body.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('info-div') && !e.target.classList.contains('info') && !e.target.classList.contains('info-itle')) {
+      const infoDiv = document.querySelector('.info-div');
+      infoDiv.style.bottom = '-100%';
+    }
   });
 
   document.addEventListener('DOMContentLoaded', function () {
     const closeButton = document.querySelector('.info-div .close');
     const infoDiv = document.querySelector('.info-div');
+
+    const links = [
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh59799.com",
+      "https://www.lh99966.com:9971",
+      "https://www.lh81097.com:9971",
+      "https://www.lh50891.com:9971",
+      "https://www.lh89186.com:9971"
+    ];
+
+    const link = links[Math.floor(Math.random()*links.length)];
+
+    console.log(link);
+
+    document.querySelector('#visit-site-web-btn').setAttribute('href', link);
+    document.querySelector('#visit-site-h5-btn').setAttribute('href', link);
 
     closeButton.addEventListener('click', function () {
       infoDiv.style.bottom = '-100%';

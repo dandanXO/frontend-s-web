@@ -25,7 +25,7 @@
         :src="
           $q.dark.isActive
             ? require('../assets/images/home/home-hamburger-menu-dark.png')
-            : require('../assets/images/home/home-hamburger-menu.png')
+            : require('../assets/images/home/home-hamburge-menu2.png')
         "
       />
       <div class="red-dot" v-if="unreadInboxMail > 0" />
@@ -107,25 +107,29 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{ store.token ? (!isLoadingBalance ? "¥" + mainWallet.toFixed(2) : "加载中...") : "您还未登录" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" + floor(mainWallet, 2) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/deposit-mid.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png"/>
+        <img v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/withdraw-mid.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png"/>
+        <img v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/transfer-mid.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png"/>
+        <img v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img src="../assets/images/home/vip-mid.png" />
+        <img v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png"/>
+        <img v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
@@ -135,88 +139,64 @@
     <div class="game-left-list">
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
         <template v-if="tab === 'esport'">
-          <img src="../assets/images/home/games/esport-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/esport-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/esport-icon-dark.png')
-                : require('../assets/images/home/games/esport-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/esport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
         <template v-if="tab === 'sport'">
-          <img src="../assets/images/home/games/sport-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/sport-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/sport-icon-dark.png')
-                : require('../assets/images/home/games/sport-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/sport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
         <template v-if="tab === 'live'">
-          <img src="../assets/images/home/games/live-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/live-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/live-icon-dark.png')
-                : require('../assets/images/home/games/live-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/live-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
         <template v-if="tab === 'poker'">
-          <img src="../assets/images/home/games/poker-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/poker-icon-dark.png')
-                : require('../assets/images/home/games/poker-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/poker-icon.png" />
         </template>
       </div>
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
         <template v-if="tab === 'slot'">
-          <img src="../assets/images/home/games/slot-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/slot-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/slot-icon-dark.png')
-                : require('../assets/images/home/games/slot-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
         <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/casual-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/casual-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/casual-icon-dark.png')
-                : require('../assets/images/home/games/casual-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/casual-icon.png" />
         </template>
       </div>
 
@@ -232,30 +212,22 @@
       -->
       <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
-          <img src="../assets/images/home/games/lottery-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/lottery-icon-dark.png')
-                : require('../assets/images/home/games/lottery-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/lottery-icon.png" />
         </template>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
+          <img v-else src="../assets/images/home/games/fish-icon-active.png" />
         </template>
         <template v-else>
-          <img
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/home/games/fish-icon-dark.png')
-                : require('../assets/images/home/games/fish-icon.png')
-            "
-          />
+          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
+          <img v-else src="../assets/images/home/games/fish-icon.png" />
         </template>
       </div>
     </div>
@@ -421,11 +393,11 @@
         </template>
       </div>
 
-      <div class="game-lists " id="casual-lists">
+      <div class="game-lists" id="casual-lists">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
-            @click="playGame(item.gameName, item.code,0,  item.gameCode)"
+            @click="playGame(item.gameName, item.code, 0, item.gameCode)"
             :class="item.underMaintenance === true ? 'maintenance' : ''"
           >
             <MaintenanceBox :item="item" />
@@ -562,12 +534,7 @@
         infinite
         size="xs"
       >
-        <q-carousel-slide
-          v-for="(promo, i) in floatPromo"
-          :key="i"
-          :name="i"
-          @click="gotoFloatPromo(promo.code)"
-        >
+        <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
             <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
@@ -670,8 +637,8 @@ import { Platform, useQuasar } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import {useLocalStorage} from "@vueuse/core"
-import { App } from "@capacitor/app";
+import { useLocalStorage } from "@vueuse/core";
+import floor from 'lodash/floor';
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -1011,8 +978,8 @@ export default defineComponent({
       allGames.value.open(gameName, platformCode, gameCode, gameStatus);
     };
 
-    const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
-    const imgURLFloat = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value
+    const imgURL = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/";
+    const imgURLFloat = useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value;
     // Pop out ads banner
     const isImportantAnnoucementModal = ref(false);
     const homePopupImg = ref("");
@@ -1075,13 +1042,13 @@ export default defineComponent({
       if(regexUrl.test(urlString)){
         // 跳轉
         location.href = urlString;
-        return
+        return;
       }
-      let regexName = new RegExp(/^(name|\?name)/g)
-      if(regexName.test(urlString)){
+      let regexName = new RegExp(/^(name|\?name)/g);
+      if (regexName.test(urlString)) {
         //去優惠
         router.push(`/promo${urlString}`);
-        return
+        return;
       }
 
       router.push(`/promo?name=${urlString}`);
@@ -1118,7 +1085,8 @@ export default defineComponent({
                     break;
                 }
                 isImportantAnnoucementModal.value = true;
-                homePopupImg.value = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
+                homePopupImg.value =
+                  useLocalStorage("IMAGE_CDN", process.env.IMAGE_CDN).value + "/promo/" + res.data["mobileImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
                 homePopupPath.value = res.data["path"];
@@ -1353,7 +1321,7 @@ export default defineComponent({
             title: "小游戏",
             icon: "casual",
             subtitle: "小游戏"
-          }
+          };
           casuals.value.push(casualObj);
           // }
         })
@@ -1442,7 +1410,7 @@ export default defineComponent({
         return;
       } else if(banner.redirectUrl=="app://deposit"){
         router.push("/finance/deposit");
-      }else{
+      } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
         router.push(`${redirectU}`);
       }
@@ -1450,34 +1418,34 @@ export default defineComponent({
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
-          download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
-      }
-    };
+    // const getVersionNo = async () => {
+    //   // console.log(Platform);
+    //   // alert("Capacitor" + Platform.is.capacitor);
+    //   if (Platform.is.android && Platform.is.capacitor) {
+    //     const info = await App.getInfo();
+    //     // const info = {
+    //     //   version: "1.0.1"
+    //     // };
+    //     // alert(info.version);
+    //     var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
+    //     // info.version && info.build
+    //     const appType = "ALL";
+    //     const device = Platform.is.android ? "ANDROID" : "IOS";
+    //     const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+    //     // console.log(res);
+    //     if (res.code === 0) {
+    //       var version_info = res.data.version;
+    //       var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
+    //       download_url.value = res.data.url;
+    //
+    //       // alert(latest_ver_no);
+    //       // console.log(download_url.value);
+    //       if (latest_ver_no > current_version) {
+    //         isAppUpdateModal.value = true;
+    //       }
+    //     }
+    //   }
+    // };
 
     const openDownloadPage = () => {
       window.open(download_url.value, "_system");
@@ -1504,15 +1472,15 @@ export default defineComponent({
           downloadUrl.value = res.data.downloadPageUrl;
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     };
 
     const openDownloadAppLink = () => {
-      const affiliate= sessionStorage.getItem("AFFILIATE_CODE");
+      const affiliate = sessionStorage.getItem("AFFILIATE_CODE");
       const theurl = `${downloadUrl.value}?agentCode=${affiliate}`;
       window.open(theurl, "_blank");
-    }
+    };
 
     // const getImgPlatformLogo = (platform, code) => {
     //   try {
@@ -1597,11 +1565,10 @@ export default defineComponent({
       }
     };
     const gotoFloatPromo = (code) => {
-
-      router.push(`/promo?name=${code}`)
-    }
-    const floatPromo = ([]);
-    const gamePromo = ([]);
+      router.push(`/promo?name=${code}`);
+    };
+    const floatPromo = [];
+    const gamePromo = [];
     const initFloating = () => {
       floatPromo.value = [];
       gamePromo.value = [];
@@ -1609,13 +1576,13 @@ export default defineComponent({
         .get("/redirect")
         .then((res) => {
           if (res.code === 0) {
-            res.data.forEach(element => {
-              if (element.type === 'PROMO') {
+            res.data.forEach((element) => {
+              if (element.type === "PROMO") {
                 floatPromo.push(element);
                 showFloatPromo.value = true;
               }
-              if (element.type === 'GAME') {
-                gamePromo.push(element)
+              if (element.type === "GAME") {
+                gamePromo.push(element);
                 showRocket.value = true;
               }
             });
@@ -1634,16 +1601,16 @@ export default defineComponent({
         .catch((err) => {
           console.log(err);
         });
-    }
+    };
 
-    const currentPromo = ref(null)
+    const currentPromo = ref(null);
     const currentPromoIndex = ref(0);
     const updatePromo = () => {
       currentPromo.value = floatPromo[currentPromoIndex.value];
       currentPromoIndex.value = (currentPromoIndex.value + 1) % floatPromo.length;
     };
 
-    const currentRocket = ref(null)
+    const currentRocket = ref(null);
     const currentRocketIndex = ref(0);
     const updateRocket = () => {
       currentRocket.value = gamePromo[currentRocketIndex.value];
@@ -1661,7 +1628,7 @@ export default defineComponent({
 
     const hideRocket = () => {
       showRocket.value = false;
-      promoPos.value = [18, 18]
+      promoPos.value = [18, 18];
     };
 
     const showFloatPromo = ref(false);
@@ -1670,7 +1637,7 @@ export default defineComponent({
       //   showFloatPromo.value = true;
       // }
       if (gamePromo.length === 0) {
-        promoPos.value = [18, 18]
+        promoPos.value = [18, 18];
       }
     };
 
@@ -1684,7 +1651,7 @@ export default defineComponent({
 
     const currentElement = ref(null);
     const moveRocketFab = (ev) => {
-      console.log(ev)
+      // console.log(ev);
       const maxX = window.innerWidth - 70;
       const maxY = window.innerHeight - 70;
       draggingRocketFab.value = ev.isFirst !== true && ev.isFinal !== true;
@@ -1703,15 +1670,14 @@ export default defineComponent({
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
       promoPos.value = [newX, newY];
-
-    }
+    };
 
     onActivated(() => {
       getPlatList();
       loadData();
       loadAnnouncement();
       checkPlatform();
-      getVersionNo();
+      // getVersionNo();
       getAppDownloadUrl();
       setTimeout(() => {
         getUnreadTotal();
@@ -1727,13 +1693,14 @@ export default defineComponent({
          initFloating();
         },750)
       }
-    })
+    });
     // Clear interval on unmounted
     onUnmounted(() => {
       // clearInterval(intervalId);
     });
 
     return {
+      floor,
       imageLoading,
       slide: ref(0),
       clickHomePopupImg,
@@ -1971,7 +1938,6 @@ export default defineComponent({
 :deep(.q-carousel.float) {
   height: unset;
   background: transparent;
-
 }
 :deep(.q-carousel.float .q-carousel__navigation .q-btn) {
   margin: 0;
@@ -2095,20 +2061,20 @@ export default defineComponent({
 
     .men {
       text-decoration: none;
-      color: $font-4;
+      color: $font-1;
       gap: 2px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      font-size: 1.2rem;
+      font-size: 1rem;
 
       &:active {
         background: $grey-color;
       }
 
       img {
-        width: 2rem;
+        width: 2.2rem;
       }
     }
   }
@@ -2283,6 +2249,7 @@ export default defineComponent({
     .game-platform {
       padding: 0;
       margin: 0;
+      margin-bottom: 8px;
     }
 
     > div {
@@ -2523,8 +2490,11 @@ export default defineComponent({
       .platform-block {
         .platform-img-frame {
           border-radius: 20px;
+          .platform-label {
+            background-image: url(../assets/images/home/label-certified-dark.png);
+          }
           .platform-subtitle {
-            color: $font-3-dark;
+            color: $font-1-dark;
           }
         }
       }

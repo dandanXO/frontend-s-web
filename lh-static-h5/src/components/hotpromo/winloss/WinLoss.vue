@@ -5,7 +5,7 @@
                 {{ formattedDate }}
             </div>
             <div class="match-details">
-                免费参与竞猜，小组赛第二轮（共3轮）
+                免费参与竞猜，{{ matchText }}（共3轮）
             </div>
             <div class="winloss-matches">
                 <div class="match" v-for="(match, i) in ongoingMatches" :key="i">
@@ -171,6 +171,7 @@ const selectedItem = ref({
   name: null
 });
 
+const matchText= ref("");
 const formattedDate = ref(null);
 const getMatches = () => {
   eventapi.get("/uefa/match/ongoing").then((res) => {
@@ -179,6 +180,17 @@ const getMatches = () => {
 
       if (ongoingMatches.value.length > 0) {
         formattedDate.value = getFormattedDateComponents(ongoingMatches.value[0].matchTime);
+
+
+        if(ongoingMatches.value[0].teamGroup === "16"){
+          matchText.value= "16强"
+        }else if(ongoingMatches.value[0].teamGroup === "8"){
+          matchText.value= "8强"
+        }else if(ongoingMatches.value[0].teamGroup === "4"){
+          matchText.value= "半决赛"
+        }else{
+          matchText.value= "总决赛"
+        }
       }
     }
   });

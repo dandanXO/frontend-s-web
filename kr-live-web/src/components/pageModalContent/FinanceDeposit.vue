@@ -76,12 +76,12 @@
       <div class="deposit-container" v-else>
         <q-form ref="depositForm" class="content-form form-template">
           <div class="form-item">
-            <label>입금금액</label>
+            <label>{{ $t('lang.deposit_deposit_amount') }}</label>
             <q-skeleton v-if="isFetchingApi" type="QInput" />
             <template v-else>
               <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
-                :label="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
-                v-model="form.localAmount" placeholder="입금 금액을 입력하세요" :rules="verifyDepositAmount" clearable>
+                :placeholder="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
+                v-model="form.localAmount" :rules="verifyDepositAmount" clearable>
                 <template v-slot:prepend>
                   <span style="z-index:1;font-size:16px;" class="text-bright">
                     <template v-if="isUSDT">USDT</template>
@@ -102,7 +102,7 @@
 
             <q-skeleton type="text" v-if="isFetchingApi" />
             <div v-else class="text-grey text-bold text-caption">
-              입금단위：{{
+              {{ $t('lang.deposit_deposit_unit') }}：{{
                 calculatedMinDeposit ? calculatedMinDeposit + " " + (isUSDT ? "USDT" : store.currency.value === "₩" ? "만"
                   :
                   store.currency.value) : 0
@@ -124,11 +124,13 @@
             <div class="select-amt-btn-wrapper">
               <template v-for="(item, index) in countOptions" :key="index">
                 <q-skeleton v-if="isFetchingApi" type="QBtn" />
-                <q-btn dense v-else class="select-amt-btn" :key="index" :label="isUSDT ? `${item} USDT` : item + '만원'"
+                <q-btn dense v-else class="select-amt-btn" :key="index"
+                  :label="isUSDT ? `${item} USDT` : item + $t('lang.deposit_ten_thousand_won')"
                   @click="selectAmt(item)"></q-btn>
               </template>
               <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn v-else class="select-amt-btn active" label="삭제" @click="clearInfo"></q-btn>
+              <q-btn dense v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
+                @click="clearInfo"></q-btn>
             </div>
           </div>
 
@@ -154,7 +156,7 @@
           </q-select>
 
           <div class="form-item">
-            <label>입금자명</label>
+            <label>{{ $t('lang.deposit_depositor_name') }}</label>
             <q-skeleton v-if="isFetchingApi" type="QInput" />
             <q-input v-else dense v-model="depositAccName" class="account-name-field" outlined readonly />
           </div>
@@ -182,12 +184,14 @@ import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
 import { storeToRefs } from "pinia";
 import ReminderText from 'components/finance/ReminderText';
+import { useI18n } from "vue-i18n";
 
 var qs = require("qs");
 const $q = useQuasar();
 const store = userStore();
 const route = useRoute();
 const router = useRouter();
+const { t } = useI18n();
 
 const calculatedMinDeposit = ref("");
 const isDeposited = ref(false);
@@ -209,7 +213,6 @@ const subMsg4 = ref();
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
-const isOpenFromAccount = ref(false);
 const isUSDT = ref(false);
 const depositForm = ref(null);
 const privilegeList = ref([]);
@@ -226,9 +229,7 @@ const depositAmtRef = ref("");
 const { realName } = storeToRefs(store);
 const depositAccName = realName;
 
-const currentPath = ref(route.path);
 const extensionState = ref(false);
-const extensionToken = ref("");
 const isFetchingApi = ref(false);
 
 const form = reactive({
@@ -236,11 +237,6 @@ const form = reactive({
   privilegeId: null,
   localAmount: null,
   bankId: null
-});
-
-const checkAmount = reactive({
-  flag: true,
-  errorMessage: ""
 });
 
 const copyMessage = (position) => {
@@ -270,7 +266,7 @@ const blurCode = () => {
 };
 
 const verifyDepositAmount = ref([
-  (val) => !!val || "금액을 입력하세요",
+  (val) => !!val || t('lang.deposit_please_enter_amount'),
   (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",
   (val) =>
     val > calculatedMinDeposit.value - 1 ||
@@ -758,6 +754,5 @@ onMounted(() => {
 .select-amt-btn {
   background: linear-gradient(to right, #38F3FF 0%, #00B7ED 100%);
   color: #1a1a1a;
-  white-space: nowrap;
 }
 </style>

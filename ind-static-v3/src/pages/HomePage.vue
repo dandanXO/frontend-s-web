@@ -1612,10 +1612,10 @@ const loadHotGameList = () => {
   cached
     .get(key2, () =>
       api
-        .get("/sitePlatformAndGamesByLabel", {
-          // .get("/member/hot", {
+        // .get("/sitePlatformAndGamesByLabel", {
+          .get("/member/hot", {
           params: {
-            gameLabel: "HOT",
+            // gameLabel: "HOT",
             device: regDevice
           }
         })

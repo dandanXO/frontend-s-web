@@ -32,3 +32,7 @@ export const getGameQuizAnswers = (query) => {
 export const updateGameQuizAnswer = (id, status) => {
   return https().request(`/game-quiz-answer/${id}?_method=PUT`, Method.POST, { status: status }, ContentType.form);
 };
+
+export const getGameQuizAnswersForExport = (query) => {
+  return https().request("/game-quiz-answer/export", Method.GET, query, ContentType.form);
+};

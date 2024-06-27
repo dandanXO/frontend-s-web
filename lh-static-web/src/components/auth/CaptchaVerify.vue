@@ -130,53 +130,7 @@ defineExpose({
 });
 </script>
 
-<style scoped lang="scss">
-.light-bg {
-  font-size: 14px;
-  background-color: #f7f8fb;
-  border-radius: 15px;
-  box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
-}
-
-.form-field {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  padding: 8px 15px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  width: 100%;
-
-  .form-field-icon {
-    margin: auto;
-  }
-}
-
-.blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
-  color: #fff;
-  font-size: 14px;
-  border-radius: 30px;
-
-  &.disabled {
-    filter: grayscale(1);
-  }
-}
-
-.primary-btn {
-  margin-top: 20px;
-  width: 100%;
-}
-
-.dark {
-  .light-bg {
-    background-color: $background-content-block-lighter-dark;
-    box-shadow: none;
-  }
-}
-</style>
+<style scoped lang="scss" src="@/scss/pages/accountDialog.scss"/>
 
 <style lang="scss">
 .form-field {

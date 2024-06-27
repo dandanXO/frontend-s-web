@@ -1,5 +1,5 @@
 <template>
-    <div class="rolling-text-container">
+    <div class="rolling-text-container" data-aos="flip-up">
         <div class="rolling-text-wrapper">
             <div class="volume">
                 <img src="../../assets/icon/icon-announcement.svg" />
@@ -35,7 +35,6 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue';
 import MarqueeText from "vue-marquee-text-component";
-import moment from 'moment';
 import { useI18n } from "vue-i18n";
 import { userStore } from "stores/index";
 import { useRoute } from 'vue-router';

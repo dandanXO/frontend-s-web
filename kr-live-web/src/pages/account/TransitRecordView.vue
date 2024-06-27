@@ -246,9 +246,8 @@
                   }" @updateEndDate="(endDate) => {
                     searchForm.gameBetRecord.endDate = endDate
                   }" />
-                <q-select style="width: 100%; max-width: 175px" v-model="searchForm.gameBetRecord.platform" dense
-                  outlined clearable :options="platformsList" label="게임 플랫폼" color="white" label-color="grey"
-                  option-label="name" option-value="code" emit-value map-options />
+                <q-select style="width: 100%; max-width: 175px" v-model="searchForm.gameBetRecord.gameType" dense
+                  outlined clearable :options="platformsList" label="게임 플랫폼" color="white" label-color="grey" />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
@@ -987,7 +986,7 @@ export default defineComponent({
     });
     const platformsList = ref([])
     const getPlatList = () => {
-      api.get("/platform").then((res) => {
+      api.get("/gameTypes").then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           platformsList.value = ret.data

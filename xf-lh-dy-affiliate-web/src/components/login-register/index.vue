@@ -574,6 +574,7 @@ import indLogo from '@/assets/images/ind/ind-logo.png'
 import ind2Logo from '@/assets/images/ind2/789logo.png'
 import lhLogo from '@/assets/images/lh/logo.png'
 import viLogo from '@/assets/images/vi/vilogo.svg'
+import kakaLogo from "@/assets/images/kaka/logo-kaka-game.png"
 import krLogo from '@/assets/images/kr/kr-logo.png'
 import pakLogo from '@/assets/images/pak/logowhitee.png'
 import { getVerificationImage } from '@/api/verification'
@@ -963,7 +964,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '8' || props.siteId === 8) {
+            if (props.siteId === '15' || props.siteId === 15) {
               if (step.value === 1) {
                 step.value = 2
                 return
@@ -1011,13 +1012,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
-        if (state.loginForm.site === 'VNM') {
+        if (state.loginForm.site === 'KA1') {
           getCaptcha()
         }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KRW') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA1' || state.loginForm.site === 'KRW') {
           router
             .push({
               path: state.redirect || '/',
@@ -1311,6 +1312,14 @@ export default defineComponent({
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = viLogo
         state.loginForm.site = 'VNM'
+        setLanguage('vi')
+      }
+      if (props.siteId === '15') {
+        currentSite.value.firstLiner = 'Start From KAKA Live'
+        currentSite.value.secondLiner =
+          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
+        currentSite.value.logo = kakaLogo
+        state.loginForm.site = 'KA1'
         setLanguage('vi')
       }
       if (props.siteId === '10') {

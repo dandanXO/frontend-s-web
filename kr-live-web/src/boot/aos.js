@@ -3,5 +3,7 @@ import AOS from "aos";
 
 import "aos/dist/aos.css";
 export default boot(({ app }) => {
-  app.use(AOS.init());
+  app.use(AOS.init({
+    once: true
+  }));
 });
