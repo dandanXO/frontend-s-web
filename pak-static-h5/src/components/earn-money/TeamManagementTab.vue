@@ -55,10 +55,13 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
-              <span v-if="col.field === 'balance'">
+              <span v-if="col.field === 'loginName'">
+                <span class="span-username">{{ col.value }}</span>
+              </span>
+              <span v-else-if="col.field === 'balance'">
                 {{ convertToCommaAmount(col.value, true) }}
               </span>
-              <span v-else-if="['registrationDate', 'lastLogin', 'lastDeposit'].includes(col.field)">
+              <span v-else-if="['regTime', 'lastLogin', 'lastDeposit'].includes(col.field)">
                 {{ moment(col.value).format("YY-MM-DD HH:mm") }}
               </span>
               <span v-else>
@@ -100,14 +103,17 @@ const downLineOptions = computed(() => [
 const tableHeaders = computed(() => [
   // { label: t("earnMoney.teamManagement.table.id"), name: "id", field: "id", align: "center" },
   { label: t("earnMoney.teamManagement.table.username"), name: "loginName", field: "loginName", align: "center" },
-  { label: t("earnMoney.teamManagement.table.downlineMember"), name: "downlineMember", field: "downlineMember", align: "center" },
-  { label: t("earnMoney.teamManagement.table.downlineDepositMember"), name: "downlineDepositMember", field: "downlineDepositMember", align: "center" },
-  { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
-  { label: t("earnMoney.teamManagement.table.registrationDate"), name: "registrationDate", field: "registrationDate", align: "center" },
+  { label: t("earnMoney.teamManagement.table.registrationDate"), name: "regTime", field: "regTime", align: "center" },
+  { label: t("earnMoney.teamManagement.table.downlineMember"), name: "totalDownlineCount", field: "totalDownlineCount", align: "center" },
+  { label: "Today Register Count", name: "todayRegCount", field: "todayRegCount", align: "center" },
+  { label: "Yesterday Register Count", name: "yesterdayRegCount", field: "yesterdayRegCount", align: "center" },
+
+  // { label: t("earnMoney.teamManagement.table.downlineDepositMember"), name: "downlineDepositMember", field: "downlineDepositMember", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.vip"), name: "vip", field: "vip", align: "center" },
   // { label: t("earnMoney.teamManagement.table.balance"), name: "balance", field: "balance", align: "center" },
-  { label: t("earnMoney.teamManagement.table.lastLogin"), name: "lastLogin", field: "lastLogin", align: "center" },
-  { label: t("earnMoney.teamManagement.table.lastDeposit"), name: "lastDeposit", field: "lastDeposit", align: "center" },
-  { label: t("earnMoney.teamManagement.table.uplineLoginName"), name: "uplineLoginName", field: "uplineLoginName", align: "center" }
+  // { label: t("earnMoney.teamManagement.table.lastLogin"), name: "lastLogin", field: "lastLogin", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.lastDeposit"), name: "lastDeposit", field: "lastDeposit", align: "center" },
+  // { label: t("earnMoney.teamManagement.table.uplineLoginName"), name: "uplineLoginName", field: "uplineLoginName", align: "center" }
 ]);
 
 const getDownlines = () => {

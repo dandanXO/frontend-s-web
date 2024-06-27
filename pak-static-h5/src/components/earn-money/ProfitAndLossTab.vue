@@ -74,7 +74,7 @@
             <q-td v-for="col in props.cols" :key="col.name" :props="props">
               <span
                 v-if="
-                  ['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee', 'bet', 'payout'].includes(
+                  ['downlineFtdAmount', 'downlineDepositAmount', 'downlineWithdrawAmount', 'downlineBetAmount', 'downlinePayoutAmount'].includes(
                     col.field
                   )
                 "
@@ -98,47 +98,46 @@
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(sumsData.bet, true) }}</span>
+          <span>{{ convertToCommaAmount(sumsData.downlineBetAmount, true) }}</span>
         </div>
-        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.bet") }}</div>
+        <div class="item-title">{{ "Bet Amount" }}</div>
       </div>
 
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(sumsData.valid_bet, true) }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.validBet") }}</div>
-      </div>
-
-      <div class="sum-item">
-        <div class="item-amount">
-          Rs
-          <span>{{ convertToCommaAmount(sumsData.bonus, true) }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.bonus") }}</div>
-      </div>
-
-      <div class="sum-item">
-        <div class="item-amount">
-          Rs
-          <span>{{ convertToCommaAmount(sumsData.payout, true) }}</span>
-        </div>
-        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
-      </div>
-
-      <div class="sum-item">
-        <div class="item-amount">
-          Rs
-          <span>{{ convertToCommaAmount(sumsData.deposit, true) }}</span>
+          <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>
       </div>
 
       <div class="sum-item">
         <div class="item-amount">
+          <span>{{ sumsData.downlineDepositCount }}</span>
+        </div>
+        <div class="item-title">{{ "Deposit Count" }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
           Rs
-          <span>{{ convertToCommaAmount(sumsData.withdraw, true) }}</span>
+          <span>{{ convertToCommaAmount(sumsData.downlinePayoutAmount, true) }}</span>
+        </div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.payout") }}</div>
+      </div>
+
+<!--      <div class="sum-item">-->
+<!--        <div class="item-amount">-->
+<!--          Rs-->
+<!--          <span>{{ convertToCommaAmount(sumsData.downlineDepositAmount, true) }}</span>-->
+<!--        </div>-->
+<!--        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.deposit") }}</div>-->
+<!--      </div>-->
+
+      <div class="sum-item">
+        <div class="item-amount">
+          Rs
+          <span>{{ convertToCommaAmount(sumsData.downlineWithdrawAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.withdraw") }}</div>
       </div>
@@ -158,12 +157,11 @@ const { t } = useI18n();
 const selectedDownLine = ref("today");
 const tableData = ref([]);
 const sumsData = reactive({
-  bet: 0.0,
-  valid_bet: 0.0,
-  bonus: 0.0,
-  payout: 0.0,
-  deposit: 0.0,
-  withdraw: 0.0
+  downlineBetAmount: 0.0,
+  downlineDepositCount: 0,
+  downlinePayoutAmount: 0.0,
+  downlineDepositAmount: 0.0,
+  downlineWithdrawAmount: 0.0
 });
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
@@ -181,12 +179,17 @@ const downLineOptions = computed(() => [
 
 const tableHeaders = computed(() => [
   { label: t("earnMoney.profitAndLoss.table.username"), name: "username", field: "loginName", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.deposit"), name: "deposit", field: "deposit", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.withdraw"), name: "withdraw", field: "withdraw", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "bet", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.validBet"), name: "validBet", field: "validBet", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.bonus"), name: "bonus", field: "bonus", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.payout"), name: "payout", field: "payout", align: "center" }
+  { label: t("earnMoney.profitAndLoss.table.deposit"), name: "deposit", field: "downlineDepositAmount", align: "center" },
+  { label: "Deposit Count", name: "deposit_count", field: "downlineDepositCount", align: "center" },
+
+  { label: "FTD Amount", name: "ftd", field: "downlineFtdAmount", align: "center" },
+  { label: "FTD Count", name: "ftd_count", field: "downlineFtdCount", align: "center" },
+
+  { label: t("earnMoney.profitAndLoss.table.withdraw"), name: "withdraw", field: "downlineWithdrawAmount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "downlineBetAmount", align: "center" },
+  // { label: t("earnMoney.profitAndLoss.table.validBet"), name: "validBet", field: "validBet", align: "center" },
+  // { label: t("earnMoney.profitAndLoss.table.bonus"), name: "bonus", field: "bonus", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.payout"), name: "payout", field: "downlinePayoutAmount", align: "center" }
 ]);
 
 const handleDateSelect = (value) => {
@@ -212,10 +215,10 @@ const handleDateSelect = (value) => {
 const getDownlineProfitSummary = () => {
   const { username, startDate, endDate } = form.value;
 
-  let url = `/session/downline-profit-summary?regTime=${startDate}&regTime=${endDate}`;
+  let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
 
   if (username) {
-    url = `/session/downline-profit-summary?loginName=${username}&regTime=${startDate}&regTime=${endDate}`;
+    url = `/session/downline-profit-summary?siteId=11&loginName=${username}&recordTime=${startDate}&recordTime=${endDate}`;
   }
 
   api

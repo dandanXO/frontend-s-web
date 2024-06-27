@@ -43,7 +43,7 @@ const currentTab = ref("reward");
 const childrenTabs = computed(() => [
   { label: t("earnMoney.tabs.reward"), name: "reward", component: RewardTab },
   { label: t("earnMoney.tabs.teamManagement"), name: "team-management", component: TeamManagementTab },
-  { label: t("earnMoney.tabs.teamBetting"), name: "team-betting", component: TeamBettingTab },
+  // { label: t("earnMoney.tabs.teamBetting"), name: "team-betting", component: TeamBettingTab },
   { label: t("earnMoney.tabs.profitAndLoss"), name: "profit-and-loss", component: ProfitAndLossTab }
 ]);
 </script>
