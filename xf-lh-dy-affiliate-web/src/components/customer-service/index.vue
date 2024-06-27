@@ -24,7 +24,7 @@
         </div>
         <div class="girl">
           <img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png">
-          <img v-else-if="props.siteId === '8'" src="../../assets/images/login/cus-girl-vn.png">
+          <img v-else-if="props.siteId === '8' || props.siteId === '15'" src="../../assets/images/login/cus-girl-vn.png">
           <img v-else src="../../assets/images/login/cus-girl.png"></div>
       </div>
     </div>
