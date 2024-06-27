@@ -198,7 +198,13 @@ export default defineComponent({
         return;
       }
 
-      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
+      ajaxBarRef.value.start();
+
+      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
     };
 
     const openGame = debounce((p) => {
