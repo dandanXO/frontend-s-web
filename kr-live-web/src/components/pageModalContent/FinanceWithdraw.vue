@@ -219,12 +219,12 @@ const selectedWithdrawalMethod = ref([]);
 const withdrawAmountFormatted = ref('');
 
 const parseDigitsWithComma = (value) => {
-  const withdrawAmount = value.replace(/\$\s?|(,*)/g, '');
+  const withdrawAmount = value?.replace(/\$\s?|(,*)/g, '');
   return withdrawAmount;
 }
 
 watch(() => withdrawAmountFormatted.value, () => {
-  const withdrawAmount = withdrawAmountFormatted.value.replace(/\$\s?|(,*)/g, '');
+  const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
   if (isNaN(withdrawAmount)) {
   } else {
     withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -246,7 +246,7 @@ const updateWithdrawItem = (amt) => {
   const multiple = 10000;
   // 1원 = 10000;
 
-  withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);
+  withdrawAmountFormatted.value = `${Number(withdrawInfo.amount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 

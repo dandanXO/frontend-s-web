@@ -268,12 +268,12 @@ const blurCode = () => {
 const depositAmountFormatted = ref('');
 
 const parseDigitsWithComma = (value) => {
-  const depositAmount = value.replace(/\$\s?|(,*)/g, '');
+  const depositAmount = value?.replace(/\$\s?|(,*)/g, '');
   return depositAmount;
 }
 
 watch(() => depositAmountFormatted.value, () => {
-  const depositAmount = depositAmountFormatted.value.replace(/\$\s?|(,*)/g, '');
+  const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
   if (isNaN(depositAmount)) {
   } else {
     depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -621,7 +621,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  form.localAmount = Number(form.localAmount) + (amt * multiple);
+  depositAmountFormatted.value = `${Number(form.localAmount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 };
 
 function clearInfo() {
