@@ -197,7 +197,8 @@
                   v-if="
                     selectedPromo.promoType &&
                     selectedPromo.promoCode !== 'lh1-game-steps' &&
-                    selectedPromo.promoCode !== 'lh-eurocup-manual'
+                    selectedPromo.promoCode !== 'lh-eurocup-manual' &&
+                    selectedPromo.promoCode !== 'lh1-aijiasu'
                   "
                   :class="{
                     welcome: selectedPromo.promoType.toLowerCase() === 'welcome',

@@ -221,22 +221,41 @@ const nextSlide = () => {
   position: absolute;
   top: 0px;
   left: 0px;
+  bottom: 0px;
   z-index: -2;
+  width:100%;
+
+  .backgroun-top{
+    img{
+      width: 100%;
+    }
+  }
+  .backgroun-bottom{
+    height: 100%;
+
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 
 .main {
   /* height: 2500px; */
 
   .banner-info {
-    margin-left: 890px;
-    margin-top: 80px;
+    width: 100%;
+    max-width: 1400px;
+    //margin-top: 80px;
+    margin: 80px auto 0px;
+    padding-left: 450px;
     position: relative;
     .black-bg {
       width: 1096px;
       height: 486px;
       position: absolute;
-      top: -80px;
-      left: -200px;
+      top: -100px;
+      right: 0px;
       background: radial-gradient(
         ellipse closest-side at center center,
         rgba(0, 0, 0, 255) 0%,
@@ -502,7 +521,7 @@ const nextSlide = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 65px;
+    margin-top: 25px;
     margin-bottom: 84px;
     .content {
       height: 269px;

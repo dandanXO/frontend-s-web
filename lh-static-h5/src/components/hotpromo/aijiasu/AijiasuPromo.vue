@@ -236,13 +236,13 @@ onMounted(() => {
   .info {
     .item-text1 {
       font-family: Microsoft YaHei UI;
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 700;
-      line-height: 40.64px;
+      line-height: 26px;
       text-align: left;
       color: rgba(250, 255, 0, 1);
-      margin-top: 16.46px;
-      margin-bottom: 17px;
+      margin-top: 6px;
+      margin-bottom: 6px;
     }
     .item-text2 {
       font-family: Microsoft YaHei UI;
@@ -269,7 +269,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       font-family: Microsoft YaHei UI;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 25.4px;
       text-align: left;
@@ -322,8 +322,9 @@ onMounted(() => {
             display: flex;
             align-items: center;
             .logo {
-              width: 33px;
-              height: 33px;
+              width: 18px;
+              height: 18px;
+              margin-right: 3px;
             }
           }
         }
@@ -393,7 +394,7 @@ onMounted(() => {
       justify-content: space-around;
       background: #0a0126;
       font-family: Microsoft YaHei UI;
-      font-size: 19px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 28px;
       text-align: left;
