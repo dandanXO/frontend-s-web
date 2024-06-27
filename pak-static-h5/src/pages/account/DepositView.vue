@@ -266,7 +266,12 @@
         :src="depositIframeSrc"
         frameborder="0"
         style="position: fixed; height: calc(100% - 60px); width: 100%; left: 0; top: 60px"
+        @load="iframeLoaded"
       ></iframe>
+
+      <div v-if="depositIframeLoading" class="loading-overlay">
+        <q-spinner color="primary" size="40px"></q-spinner>
+      </div>
     </q-card>
   </q-dialog>
 </template>
@@ -626,51 +631,48 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if (
-            (Platform.is.desktop || Platform.is.webkit) &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
-          ) {
-            if (store.getDeviceType() === "IOS" || store.isMobileSafari() || isAndroid()) {
-              // const newWin = window.open(`/`, `_self`);
-              depositIframeSrc.value = response.requestUrl;
-              isDepositFrame.value = true;
+          if ((Platform.is.desktop || Platform.is.webkit) && Platform.is.name !== "webkit" && !liff.isInClient()) {
+            // if (store.getDeviceType() === "IOS" || store.isMobileSafari() || isAndroid()) {
+            // const newWin = window.open(`/`, `_self`);
+            depositIframeSrc.value = response.requestUrl;
+            depositIframeLoading.value = true;
+            isDepositFrame.value = true;
 
-              if (response.payResultType === "GET_SUBMIT") {
-                newWin.location.href = response.requestUrl;
-              }
-              if (response.payResultType === "POST_SUBMIT") {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                }
-              }
-            } else {
-              const newWin = window.open(`/`);
-              if (!newWin) {
-                $q.notify({
-                  color: "negative",
-                  position: "top",
-                  message:
-                    "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
-                  icon: "report_problem"
-                });
-                btnLoading.value = false;
-                return;
-              }
-              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-              if (response.payResultType === "GET_SUBMIT") {
-                newWin.location.href = response.requestUrl;
-              }
-              if (response.payResultType === "POST_SUBMIT") {
-                if (response.paramKey === null || response.paramKey === "") {
-                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                } else {
-                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-                }
+            if (response.payResultType === "GET_SUBMIT") {
+              newWin.location.href = response.requestUrl;
+            }
+            if (response.payResultType === "POST_SUBMIT") {
+              if (response.paramKey === null || response.paramKey === "") {
+                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+              } else {
+                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
               }
             }
+            // } else {
+            //   const newWin = window.open(`/`);
+            //   if (!newWin) {
+            //     $q.notify({
+            //       color: "negative",
+            //       position: "top",
+            //       message:
+            //         "Unable to open the recharge page. Please check if your browser is blocking pop-up pages and change the settings to 'Allow pop-ups' before attempting to recharge again.",
+            //       icon: "report_problem"
+            //     });
+            //     btnLoading.value = false;
+            //     return;
+            //   }
+            //   newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+            //   if (response.payResultType === "GET_SUBMIT") {
+            //     newWin.location.href = response.requestUrl;
+            //   }
+            //   if (response.payResultType === "POST_SUBMIT") {
+            //     if (response.paramKey === null || response.paramKey === "") {
+            //       newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            //     } else {
+            //       newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+            //     }
+            //   }
+            // }
           } else {
             localStorage.setItem("formDetails", JSON.stringify(form));
             if (response.payResultType === "GET_SUBMIT") {
@@ -800,6 +802,11 @@ const openDepositVideo = () => {
 
 const isDepositFrame = ref(false);
 const depositIframeSrc = ref();
+const depositIframeLoading = ref(false);
+
+const iframeLoaded = () => {
+  depositIframeLoading.value = false; // Set loading to false when iframe finishes loading
+};
 
 onActivated(() => {
   checkNewUser();
@@ -1119,5 +1126,17 @@ onMounted(() => {
   right: 10px;
   cursor: pointer;
   z-index: 1;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity and color as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
