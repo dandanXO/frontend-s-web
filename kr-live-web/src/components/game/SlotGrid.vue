@@ -35,6 +35,10 @@ const arrSize = computed(() => {
         return 6;
     }
 
+    if (size.value?.width <= 1200) {
+        return 7;
+    }
+
     return 9;
 });
 

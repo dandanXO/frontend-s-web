@@ -198,7 +198,13 @@ export default defineComponent({
         return;
       }
 
-      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus);
+      ajaxBarRef.value.start();
+
+      gameModalRef.value.open(gameName, selectedPlat.code, gameCode, gameStatus)?.then(() => {
+        ajaxBarRef.value.stop();
+      })?.catch(() => {
+        ajaxBarRef.value.stop();
+      });
     };
 
     const openGame = debounce((p) => {
@@ -329,7 +335,7 @@ export default defineComponent({
       // { name: "fish", label: "낚시 게임" }
     ];
 
-    const currentSelectedMenu = ref("slots");
+    const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       selectedPlatId.value = '';
