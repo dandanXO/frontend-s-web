@@ -7,15 +7,6 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <PrivilegeInvite
-      v-if="
-        !isCommonPromo &&
-        store.token &&
-        (list.redirectUrl === 'Dongying-refer' ||
-          list.redirectUrl === 'lh1-vip-upgrade-bonus' ||
-          list.redirectUrl === 'lh1-refer-bonus')
-      "
-    />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
     <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
@@ -137,6 +128,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
 import { eventapi } from "boot/axios";
