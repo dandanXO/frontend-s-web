@@ -335,7 +335,7 @@ export default defineComponent({
       // { name: "fish", label: "낚시 게임" }
     ];
 
-    const currentSelectedMenu = ref("slots");
+    const currentSelectedMenu = ref("live");
     const switchMenu = (menu, index) => {
       currentSelectedMenu.value = menu;
       selectedPlatId.value = '';
