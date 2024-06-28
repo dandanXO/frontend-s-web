@@ -27,6 +27,16 @@
           {{ t('fields.search') }}
         </el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
+        <el-button
+          icon="el-icon-close"
+          size="mini"
+          type="danger"
+          v-permission="['sys:rollover-record:cancel']"
+          :disabled="!uiControl.foundOngoingRecord"
+          @click="showCancelAllEdit()"
+        >
+          {{ t('fields.batchCancel') }}
+        </el-button>
       </div>
     </div>
 
@@ -185,13 +195,14 @@
     </el-card>
 
     <el-dialog :title="uiControl.dialogTitle" v-model="uiControl.dialogVisible" append-to-body width="680px">
-      <el-form v-if="uiControl.dialogType === 'CANCEL'" ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="120px">
+      <el-form v-if="uiControl.dialogType === 'CANCEL' || uiControl.dialogType === 'CANCEL ALL'" ref="formRef" :model="form" :rules="formRules" :inline="true" size="small" label-width="120px">
         <el-form-item :label="t('fields.remark')" prop="remark">
           <el-input type="textarea" v-model="form.remark" :rows="6" style="width: 450px;" maxlength="500" show-word-limit />
         </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
-          <el-button type="primary" @click="cancelRecord">{{ t('fields.confirm') }}</el-button>
+          <el-button v-if="uiControl.dialogType === 'CANCEL'" type="primary" @click="cancelRecord">{{ t('fields.confirm') }}</el-button>
+          <el-button v-else type="primary" @click="cancelAllRecord">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -202,7 +213,12 @@
 import { defineProps, nextTick, onMounted, reactive, ref } from 'vue'
 import { hasPermission, hasRole } from '../../../../../utils/util'
 import { useI18n } from 'vue-i18n'
-import { cancelRollover, getMemberRolloverRecords, getTotal } from '../../../../../api/member-rollover-records'
+import {
+  cancelAllRollover,
+  cancelRollover,
+  getMemberRolloverRecords,
+  getTotal, hasOngoingRecords,
+} from '../../../../../api/member-rollover-records'
 import { required } from '../../../../../utils/validate';
 import { ElMessage } from 'element-plus';
 import { useRoute } from 'vue-router';
@@ -229,6 +245,7 @@ const uiControl = reactive({
   dialogTitle: t('fields.cancelRolloverRecord'),
   dialogType: 'CANCEL',
   dialogVisible: false,
+  foundOngoingRecord: false,
   recordStatus: [
     { key: 1, displayName: 'ONGOING', value: 'ONGOING' },
     { key: 2, displayName: 'COMPLETED', value: 'COMPLETED' },
@@ -303,6 +320,8 @@ async function loadRolloverRecords() {
     page.totalValidBet = 0
     page.rolloverRequired = 0
   }
+  const { data: result } = await hasOngoingRecords(query);
+  uiControl.foundOngoingRecord = result;
   page.loading = false
 }
 
@@ -326,10 +345,22 @@ function showEdit(rolloverRecord) {
   });
 }
 
+function showCancelAllEdit() {
+  if (page.records.length > 0) {
+    showDialog("CANCEL ALL");
+    var record = page.records[0];
+    form.siteId = record.siteId;
+    form.memberId = record.memberId;
+  }
+}
+
 function showDialog(type) {
   if (type === "CANCEL") {
     form.remark = null;
     uiControl.dialogTitle = t('fields.cancelRolloverRecord');
+  } else if (type === "CANCEL ALL") {
+    form.remark = null;
+    uiControl.dialogTitle = t('fields.cancelAllRolloverRecord');
   }
   uiControl.dialogType = type;
   uiControl.dialogVisible = true;
@@ -339,6 +370,17 @@ function cancelRecord() {
   formRef.value.validate(async (valid) => {
     if (valid) {
       await cancelRollover(form);
+      uiControl.dialogVisible = false;
+      ElMessage({ message: t('message.cancelRolloverRecordSuccess'), type: "success" });
+      await loadRolloverRecords();
+    }
+  });
+}
+
+function cancelAllRecord() {
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await cancelAllRollover(form);
       uiControl.dialogVisible = false;
       ElMessage({ message: t('message.cancelRolloverRecordSuccess'), type: "success" });
       await loadRolloverRecords();

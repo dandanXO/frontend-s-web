@@ -685,6 +685,7 @@ export default {
     cancelQuiz: 'Cancel Quiz',
     cancelRemark: 'Cancel Remark',
     cancelRolloverRecord: 'Cancel Rollover Record',
+    cancelAllRolloverRecord: 'Cancel All Rollover Record',
     cancelUpdate: 'Cancel Update',
     cancelType: 'Cancel Type',
     cardAccount: 'Card Account',
