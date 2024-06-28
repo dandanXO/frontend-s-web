@@ -86,7 +86,7 @@
     <div class="midd">
       <div class="station-notice-wrapper">
         <div class="volume">
-          <img src="../assets/images/home/announce-icon.png" />
+          <img loading="lazy" src="../assets/images/home/announce-icon.png" />
         </div>
         <marquee-text :repeat="5" :duration="announcementList.length * 120">
           <div v-if="announcementList">
@@ -113,23 +113,23 @@
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png"/>
-        <img v-else src="../assets/images/home/deposit-btnicon.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png"/>
+        <img loading="lazy" v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png"/>
-        <img v-else src="../assets/images/home/withdraw-btnicon.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png"/>
+        <img loading="lazy" v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png"/>
-        <img v-else src="../assets/images/home/transfer-btnicon.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png"/>
+        <img loading="lazy" v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png"/>
-        <img v-else src="../assets/images/home/vip-btnicon.png" />
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png"/>
+        <img loading="lazy" v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
     </div>
@@ -139,64 +139,64 @@
     <div class="game-left-list">
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
         <template v-if="tab === 'esport'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/esport-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/esport-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/esport-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/esport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
         <template v-if="tab === 'sport'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/sport-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/sport-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/sport-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/sport-icon.png" />
         </template>
       </div>
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
         <template v-if="tab === 'live'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/live-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/live-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/live-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/live-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
         <template v-if="tab === 'poker'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/poker-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/poker-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/poker-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/poker-icon.png" />
         </template>
       </div>
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
         <template v-if="tab === 'slot'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/slot-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/slot-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/slot-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/slot-icon.png" />
         </template>
       </div>
 
       <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
         <template v-if="tab === 'casual'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/casual-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/casual-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/casual-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/casual-icon.png" />
         </template>
       </div>
 
@@ -212,22 +212,22 @@
       -->
       <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
         <template v-if="tab === 'lottery'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/lottery-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/lottery-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon.png" />
         </template>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
         <template v-if="tab === 'fishing'">
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
-          <img v-else src="../assets/images/home/games/fish-icon-active.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/fish-icon-active.png" />
         </template>
         <template v-else>
-          <img v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
-          <img v-else src="../assets/images/home/games/fish-icon.png" />
+          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
+          <img loading="lazy" v-else src="../assets/images/home/games/fish-icon.png" />
         </template>
       </div>
     </div>
@@ -251,7 +251,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -283,7 +283,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -315,7 +315,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -347,7 +347,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -379,7 +379,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -411,7 +411,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -443,7 +443,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -475,7 +475,7 @@
               <div class="platform-label"></div>
               <div class="platform-content">
                 <div class="platform-logo">
-                  <img :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
+                  <img loading="lazy" :src="getImgPlatformLogo(item.icon, item.name, item.alias)" />
                 </div>
                 <div class="platform-title">{{ item.title }}</div>
                 <div class="platform-subtitle">{{ item.subtitle }}</div>
@@ -514,7 +514,7 @@
           @click="playGame(game.platform, game.platform, game.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+            <div class="rocket"><img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -536,7 +536,7 @@
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket"><img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -620,7 +620,7 @@
         <div class="promo-banner-container">
           <div class="promo-banner-content" v-if="homePopupType === 'TEXT'" v-html="homePopupContent"></div>
           <div class="promo-banner-img" @click="clickHomePopupImg(homePopupPath)" v-else>
-            <img :src="homePopupImg" class="alert-img" />
+            <img loading="lazy" :src="homePopupImg" class="alert-img" />
           </div>
         </div>
       </q-card-section>

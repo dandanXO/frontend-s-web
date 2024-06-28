@@ -64,8 +64,8 @@
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
                   <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
                   <div class="right-title">
-                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                    <img src="../assets/images/inbox/arrow-up-line.svg" v-if="isSelectedMail === det.id" />
+                    <img src="../assets/images/inbox/arrow-down-line.svg" v-if="isSelectedMail !== det.id" />
                   </div>
                 </div>
               </div>
@@ -121,16 +121,11 @@
 <script>
 import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
 import moment from "moment";
-import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
 
 export default defineComponent({
-  components: {
-    RiArrowDownSLine,
-    RiArrowUpSLine
-  },
   props: {
     list: {
       type: Array,
@@ -330,12 +325,12 @@ export default defineComponent({
           .then((res) => {
             if (res.code === 0) {
               !readTime &&
-                $q.notify({
-                  message: "已读消息",
-                  type: "positive",
-                  position: "top",
-                  icon: "check_circle_outline"
-                });
+              $q.notify({
+                message: "已读消息",
+                type: "positive",
+                position: "top",
+                icon: "check_circle_outline"
+              });
               mail.content = res.data.content;
               onLoad();
             }
@@ -641,6 +636,6 @@ export default defineComponent({
     &--active {
       color: $primary-dark;
     }
-}
+  }
 }
 </style>

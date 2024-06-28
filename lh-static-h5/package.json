@@ -46,7 +46,6 @@
     "vue-advanced-cropper": "^2.8.8",
     "vue-marquee-text-component": "^2.0.1",
     "vue-qrcode-component": "^2.1.1",
-    "vue-remix-icons": "^1.1.1",
     "vue-router": "^4.4.0",
     "vue3-carousel": "^0.1.40"
   },

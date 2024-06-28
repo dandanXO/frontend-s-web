@@ -328,7 +328,6 @@ onMounted(() => {
     height: 69px;
     background-size: contain;
     color: #ffffff !important;
-    font-family: PingFang SC;
     font-size: 30px;
     font-weight: 600;
     line-height: 42px;
@@ -397,7 +396,6 @@ onMounted(() => {
 
     td,
     th {
-      font-family: PingFang SC;
       font-size: 14px;
       font-weight: 600;
       line-height: 28px;
@@ -475,7 +473,6 @@ onMounted(() => {
 
 .main-desc {
   color: #7A8EB9;
-  font-family: PingFang SC;
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
@@ -485,7 +482,6 @@ onMounted(() => {
 
 .sub-desc {
   color: #7A8EB9;
-  font-family: PingFang SC;
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;

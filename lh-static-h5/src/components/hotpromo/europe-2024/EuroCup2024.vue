@@ -66,7 +66,6 @@ function activateTab(index) {
       background-size: contain;
       color: #ffffff;
       font-weight: bold;
-      font-family: "PingFang SC";
       font-size: 1rem;
       font-weight: 800;
       //line-height: 34.75px;
