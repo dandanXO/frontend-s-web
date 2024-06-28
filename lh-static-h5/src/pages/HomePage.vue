@@ -107,7 +107,7 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{ store.token ? (!isLoadingBalance ? "¥" + floor(mainWallet, 2) : "加载中...") : "您还未登录" }}
+        {{ store.token ? (!isLoadingBalance ? "¥" +  convertToCommaAmount(mainWallet, true) : "加载中...") : "您还未登录" }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
@@ -638,7 +638,6 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
-import floor from 'lodash/floor';
 
 import { useUI } from "stores/ui";
 // Import Swiper Vue.js components
@@ -653,6 +652,7 @@ import UserProfile from "components/home/drawer/UserProfile.vue";
 import LinkGroup from "components/home/drawer/LinkGroup.vue";
 import SystemConfig from "components/home/drawer/SystemConfig.vue";
 import { onMounted } from "vue";
+import { convertToCommaAmount } from "src/boot/utils";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation]);
 
@@ -1700,7 +1700,6 @@ export default defineComponent({
     });
 
     return {
-      floor,
       imageLoading,
       slide: ref(0),
       clickHomePopupImg,
@@ -1805,7 +1804,8 @@ export default defineComponent({
       currentRocket,
       currentRocketIndex,
       rocketSlide: ref(0),
-      promoSlide: ref(0)
+      promoSlide: ref(0),
+      convertToCommaAmount
     };
   }
 });
