@@ -2,7 +2,6 @@
     background: url('../../../assets/images/promo/hotpromo/ftd/content-frame.png') no-repeat center center;
     background-size: 100% 100%;
     width: 100%;
-    font-family: 'PingFang SC';
     font-size: 14px;
     font-weight: 400;
     line-height: 26.6px;
@@ -28,10 +27,10 @@
 
         .stats-table {
             width: 100%;
-    
+
             tr {
                 background-color: #FFFFFF1A !important;
-    
+
                 th {
                     height: 60px;
                     background-color: #3759B14D !important;
@@ -40,14 +39,13 @@
                     text-align: center;
                     padding: 20px 0px;
                     border-bottom: 1px solid #FFFFFF1A;
-    
+
                     &:not(:last-child) {
                         border-right: 1px solid #FFFFFF1A;
                     }
                 }
-    
+
                 td {
-                    font-family: 'PingFang SC';
                     font-size: 12px;
                     font-weight: 600;
                     text-align: center;
@@ -56,7 +54,7 @@
                     border-top: none !important;
                     border-color: #FFFFFF1A !important;
                     background-color: #FFFFFF1A !important;
-                    
+
                     &:not(:last-child) {
                         border-right: 1px solid #FFFFFF1A;
                         border-bottom: 1px solid #FFFFFF1A;
@@ -72,7 +70,6 @@
     }
 
     .notes {
-        font-family: PingFang SC;
         font-size: 15px;
         font-weight: 500;
         line-height: 26.5px;

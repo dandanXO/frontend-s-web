@@ -200,7 +200,6 @@ import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 // import EssentialLink from "components/EssentialLink.vue";
 
-// import { RiArrowDropLeftLine } from "vue-remix-icons";
 import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({

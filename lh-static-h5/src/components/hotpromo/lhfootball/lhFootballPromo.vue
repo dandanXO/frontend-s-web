@@ -196,7 +196,6 @@ const getPromotionPrize = () => {
     margin-top: 20%;
     color: #fffbfb;
     text-align: center;
-    font-family: PingFang SC;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;

@@ -24,7 +24,7 @@
           </div>
           <div class="rounded-btn" @click="newMailVisible = true">
             Compose
-            <div class="new"><RiMailAddLine /></div>
+            <div class="new"></div>
           </div>
         </div>
         <div class="mail-list">
@@ -138,14 +138,12 @@
 <script lang="js">
 import { defineComponent, onMounted, reactive, ref } from "vue";
 // import { mailInbox, mailOutbox, wirteMail } from "@/api/personal/mailbox";
-import { RiMailAddLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 var qs = require("qs");
 
 export default defineComponent({
   name: "MailboxView",
-  components: { RiMailAddLine },
   setup() {
     const mailboxState = reactive({
       active: "inbox",

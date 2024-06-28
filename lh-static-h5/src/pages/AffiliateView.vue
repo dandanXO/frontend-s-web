@@ -364,7 +364,6 @@ const rows = [
         .desc {
           color: $font-2;
           text-align: left;
-          font-family: PingFang SC;
           font-size: 0.75rem;
 
           font-weight: 500;
@@ -393,7 +392,6 @@ const rows = [
 
       color: #fff;
       text-align: center;
-      font-family: PingFang SC;
       font-weight: 400;
       line-height: normal;
       word-break: keep-all;
@@ -434,7 +432,6 @@ const rows = [
 
       li {
         color: $font-1;
-        font-family: PingFang SC;
         font-size: 0.75rem;
         font-weight: 600;
         margin: 0.25rem 0;
@@ -449,7 +446,6 @@ const rows = [
 
     .subtitle {
       color: $font-2;
-      font-family: PingFang SC;
       font-size: 0.9rem;
       font-weight: 400;
     }
@@ -477,14 +473,12 @@ const rows = [
 
     td {
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
       font-weight: 400;
     }
 
     .red-note {
       color: $negative;
-      font-family: PingFang SC;
       font-size: 0.75rem;
       font-weight: 400;
       line-height: normal;
@@ -498,7 +492,6 @@ const rows = [
       padding: 1rem;
 
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
 
       font-weight: 400;
@@ -521,7 +514,6 @@ const rows = [
         width: 100%;
         color: #fff;
         text-align: center;
-        font-family: PingFang SC;
         font-weight: 400;
         line-height: normal;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -588,7 +580,6 @@ const rows = [
 
         .contact-method {
           color: $font-1;
-          font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
         }

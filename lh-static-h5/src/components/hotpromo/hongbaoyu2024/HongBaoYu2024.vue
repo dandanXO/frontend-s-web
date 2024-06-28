@@ -223,7 +223,6 @@ onMounted(() => {
         color: #3f8cff;
         font-size: 20px;
         font-weight: 700;
-        font-family: "PingFang SC";
         margin-bottom: auto;
       }
       .activity-content-container {
@@ -346,7 +345,6 @@ onMounted(() => {
     color: #fffbfb;
 
     text-align: center;
-    font-family: PingFang SC;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;

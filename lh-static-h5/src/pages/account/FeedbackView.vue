@@ -891,7 +891,6 @@ onMounted(() => {
   align-items: center;
   height: 30px;
 
-  font-family: PingFang SC;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
@@ -1025,7 +1024,6 @@ onMounted(() => {
   .quiz-announcement-inner {
     position: relative;
     align-self: start;
-    font-family: PingFang SC;
     font-size: 16px;
     font-weight: 500;
     line-height: 44px;
