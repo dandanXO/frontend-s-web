@@ -97,7 +97,7 @@ import { onMounted, ref, reactive, onActivated } from "vue";
 import { api } from "boot/axios";
 import { cached } from "boot/cache";
 import { userStore } from "src/stores";
-import moment from "moment/moment";
+import moment from "moment";
 import RecordComponent from "../../components/RecordComponent.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/swiper-bundle.css";

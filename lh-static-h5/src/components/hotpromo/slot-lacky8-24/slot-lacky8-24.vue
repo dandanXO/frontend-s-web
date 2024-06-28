@@ -298,7 +298,6 @@ onMounted(getSlotLucky8Data);
 
 <style scoped lang="scss">
 .slot-lacky8-box {
-  font-family: PingFang TC;
   width: 100%;
   height: 100%;
   display: flex;
@@ -437,7 +436,6 @@ onMounted(getSlotLucky8Data);
 }
 .little2-title{
     width: 100%;
-    font-family: PingFang TC;
     font-size: 15px;
     font-weight: 400;
     line-height: 18px;
@@ -448,7 +446,6 @@ onMounted(getSlotLucky8Data);
   }
   .little2-content{
     width: 100%;
-    font-family: PingFang TC;
     font-size: 15px;
     font-weight: 400;
     line-height: 18px;

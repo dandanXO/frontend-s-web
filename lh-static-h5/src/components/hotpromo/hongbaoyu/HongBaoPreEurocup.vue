@@ -531,7 +531,6 @@ onMounted(() => {
     margin-top: 58%;
     color: #fffbfb;
     text-align: center;
-    font-family: PingFang SC;
     font-size: 1.3em;
     font-style: normal;
     font-weight: 600;

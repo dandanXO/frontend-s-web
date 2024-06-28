@@ -27,7 +27,7 @@
     </div>
 
     <div class="ambassador">
-      <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
+      <img loading="lazy" class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -35,7 +35,7 @@
           size="md"
           class="join-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -43,7 +43,7 @@
           size="md"
           class="login-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
         <!--        @click.stop.prevent="-->
@@ -60,7 +60,7 @@
           size="md"
           class="contact-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
         </q-btn>
       </div>
     </div>
@@ -187,8 +187,8 @@
           size="lg"
           class="register-btn"
         >
-          <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
-          <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
+          <img loading="lazy" class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
+          <img loading="lazy" class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
       </div>
 
@@ -205,11 +205,11 @@
         <div class="title-wrapper">
           <div class="section-title">联系我们</div>
           <div class="two-four-hour-wrapper">
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <div class="two-four-content">
               <a :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-                <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
+                <img loading="lazy" class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
                 <span class="two-four-text">24小时在线客服</span>
               </a>
             </div>
@@ -364,7 +364,6 @@ const rows = [
         .desc {
           color: $font-2;
           text-align: left;
-          font-family: PingFang SC;
           font-size: 0.75rem;
 
           font-weight: 500;
@@ -393,7 +392,6 @@ const rows = [
 
       color: #fff;
       text-align: center;
-      font-family: PingFang SC;
       font-weight: 400;
       line-height: normal;
       word-break: keep-all;
@@ -434,7 +432,6 @@ const rows = [
 
       li {
         color: $font-1;
-        font-family: PingFang SC;
         font-size: 0.75rem;
         font-weight: 600;
         margin: 0.25rem 0;
@@ -449,7 +446,6 @@ const rows = [
 
     .subtitle {
       color: $font-2;
-      font-family: PingFang SC;
       font-size: 0.9rem;
       font-weight: 400;
     }
@@ -477,14 +473,12 @@ const rows = [
 
     td {
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
       font-weight: 400;
     }
 
     .red-note {
       color: $negative;
-      font-family: PingFang SC;
       font-size: 0.75rem;
       font-weight: 400;
       line-height: normal;
@@ -498,7 +492,6 @@ const rows = [
       padding: 1rem;
 
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
 
       font-weight: 400;
@@ -521,7 +514,6 @@ const rows = [
         width: 100%;
         color: #fff;
         text-align: center;
-        font-family: PingFang SC;
         font-weight: 400;
         line-height: normal;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -588,7 +580,6 @@ const rows = [
 
         .contact-method {
           color: $font-1;
-          font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
         }
