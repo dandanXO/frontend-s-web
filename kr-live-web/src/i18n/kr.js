@@ -2,8 +2,8 @@ export default {
   lang: {
     // login start
     login: "로그인",
-    login_account: "계정",
-    login_password: "암호",
+    login_account: "아이디",
+    login_password: "비밀번호",
     login_captcha: "보안 문자",
     login_submit: "로그인",
     login_register: "회원가입",

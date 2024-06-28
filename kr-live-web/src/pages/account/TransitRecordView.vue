@@ -75,7 +75,7 @@
             <template #body-cell-operation="props">
               <q-td>
                 <div class="primary-button blue-square" v-if="props?.props?.row.status === 'PENDING'"
-                  @click="($event) => openReminder(props)" style="width: 75px;height: 30px; font-size: 12px">
+                  @click="($event) => openReminder(props?.props)" style="width: 75px;height: 30px; font-size: 12px">
                   {{ $t('lang.reminder') }}
                 </div>
               </q-td>
@@ -205,7 +205,7 @@
             <template v-slot:body-cell-operation="props">
               <q-td>
                 <q-btn v-if="props?.props?.row.status === 'STEP_1'" size="sm" :label="$t('lang.reminder')" color="brand"
-                  @click="($event) => openReminder(props?.prop)" />
+                  @click="($event) => openReminder(props?.props)" />
 
                 <q-btn v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0" size="sm"
                   :label="$t('lang.confirm_withdraw_success')" color="brand"
