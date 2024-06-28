@@ -27,17 +27,17 @@
               </div>
             </div>
             <div class="sidebar-section top">
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=personal/info`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('personal/info')">
                 <img :src="require('../../assets/icon/sidebar-icon-transaction-record.svg')" alt="" />
                 <div class="info-text">마이페이지</div>
               </div>
             </div>
             <div class="sidebar-section middle">
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/deposit`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('finance/deposit')">
                 <img :src="require('../../assets/icon/sidebar-icon-deposit.svg')" alt="" />
                 <div class="info-text">{{ $t('lang.menu_deposit') }}</div>
               </div>
-              <div class="sidebar-section-item" @click="goPageOrLogin(`/?page=finance/withdraw`)">
+              <div class="sidebar-section-item" @click="goPageOrLogin('finance/withdraw')">
                 <img :src="require('../../assets/icon/sidebar-icon-withdraw.svg')" alt="" />
                 <div class="info-text">{{ $t('lang.menu_withdraw') }}</div>
               </div>

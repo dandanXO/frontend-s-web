@@ -65,7 +65,6 @@
               </div>
               <SlotGrid :gameList="gamePage.gameList" :openSlotGame="openSlotGame" :selectedPlat="selectedPlat" />
               <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-              <q-scroll-observer @scroll="scrolling" />
             </q-scroll-area>
           </div>
           <!-- slot end -->
@@ -130,7 +129,6 @@
             </div>
             <SlotGrid :gameList="gamePage.gameList" :openSlotGame="openSlotGame" :selectedPlat="selectedPlat" />
             <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-            <q-scroll-observer @scroll="scrolling" />
           </q-scroll-area>
         </div>
         <!-- cq9 end -->
@@ -526,12 +524,6 @@ export default defineComponent({
 
     const isShowBtt = ref(false);
     const scrollPosition = ref(0);
-    const scrolling = (e) => {
-      scrollPosition.value = e.position;
-      if (e.position.top > 400) {
-        isShowBtt.value = true;
-      }
-    };
 
     // isH5 -- platform checker
     const isH5 = ref(false);
@@ -558,7 +550,6 @@ export default defineComponent({
       isLoading.value = true;
       checkPlatform();
       loadHomeData();
-      console.log('here')
     });
 
     const loadHomeData = async () => {
@@ -641,7 +632,6 @@ export default defineComponent({
       playGame,
       gameModalRef,
       switchPlat,
-      scrolling,
       scrollToTop,
       switchMenu,
       gamePage,
