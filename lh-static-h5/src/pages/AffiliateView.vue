@@ -27,7 +27,7 @@
     </div>
 
     <div class="ambassador">
-      <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
+      <img loading="lazy" class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -35,7 +35,7 @@
           size="md"
           class="join-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -43,7 +43,7 @@
           size="md"
           class="login-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
         <!--        @click.stop.prevent="-->
@@ -60,7 +60,7 @@
           size="md"
           class="contact-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
         </q-btn>
       </div>
     </div>
@@ -187,8 +187,8 @@
           size="lg"
           class="register-btn"
         >
-          <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
-          <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
+          <img loading="lazy" class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
+          <img loading="lazy" class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
       </div>
 
@@ -205,11 +205,11 @@
         <div class="title-wrapper">
           <div class="section-title">联系我们</div>
           <div class="two-four-hour-wrapper">
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <div class="two-four-content">
               <a :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-                <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
+                <img loading="lazy" class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
                 <span class="two-four-text">24小时在线客服</span>
               </a>
             </div>

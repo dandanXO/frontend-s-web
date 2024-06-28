@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                     </a>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -159,6 +159,7 @@
                 "
               >
                 <img
+                  loading="lazy"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
@@ -213,6 +214,7 @@
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
+                    loading="lazy"
                     v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
