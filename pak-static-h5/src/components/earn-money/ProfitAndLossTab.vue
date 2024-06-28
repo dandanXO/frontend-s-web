@@ -38,7 +38,7 @@
           @update:model-value="handleDateSelect"
         />
       </div>
-      <div class="search-field__input-with-btn" style="justify-content: space-between; align-items: center;">
+      <div class="search-field__input-with-btn" style="justify-content: space-between; align-items: center">
         <!--        <q-input-->
         <!--          v-model="form.username"-->
         <!--          borderless-->
@@ -46,7 +46,12 @@
         <!--        />-->
         <div>
           &nbsp;
-          <span  v-if="referralName">Referral: <span class="span-username">{{referralName}}</span></span>
+          <span v-if="referralName">
+            Referral:
+            <span class="span-username">{{ referralName }}</span>
+            &nbsp;
+            <q-btn size="xs" style="min-height: 24px; height:24px;" round color="red" icon="close" @click="closeReferral()" />
+          </span>
         </div>
 
         <q-btn no-caps unelevated class="btn-primary btn-primary__full" @click="handleSubmit">
@@ -83,9 +88,13 @@
               </span>
               <span
                 v-else-if="
-                  ['downlineFtdAmount', 'downlineDepositAmount', 'downlineWithdrawAmount', 'downlineBetAmount', 'downlinePayoutAmount'].includes(
-                    col.field
-                  )
+                  [
+                    'downlineFtdAmount',
+                    'downlineDepositAmount',
+                    'downlineWithdrawAmount',
+                    'downlineBetAmount',
+                    'downlinePayoutAmount'
+                  ].includes(col.field)
                 "
                 :class="col.field === 'balance' ? props.row.type : ''"
               >
@@ -104,14 +113,8 @@
     </div>
 
     <div class="sum-wrapper">
-
       <div class="loading-board" v-if="loading">
-        <q-spinner
-          class="loading-spinner"
-          color="primary"
-          size="4em"
-          :thickness="3"
-        />
+        <q-spinner class="loading-spinner" color="primary" size="4em" :thickness="3" />
       </div>
 
       <div class="sum-item">
@@ -119,7 +122,7 @@
           Rs
           <span>{{ convertToCommaAmount(sumsData.downlineBetAmount, true) }}</span>
         </div>
-        <div class="item-title">{{  $t("earnMoney.profitAndLoss.sums.betamount")  }}</div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.betamount") }}</div>
       </div>
 
       <div class="sum-item">
@@ -134,7 +137,7 @@
         <div class="item-amount">
           <span>{{ sumsData.downlineDepositCount }}</span>
         </div>
-        <div class="item-title">{{  $t("earnMoney.profitAndLoss.sums.depositcount")  }}</div>
+        <div class="item-title">{{ $t("earnMoney.profitAndLoss.sums.depositcount") }}</div>
       </div>
 
       <div class="sum-item">
@@ -188,8 +191,8 @@ const form = ref({
   username: "",
   referrerId: ""
 });
-const loading= ref(false);
-const referralName= ref("");
+const loading = ref(false);
+const referralName = ref("");
 
 const displayStartDate = computed(() => moment(form.value.startDate).format("MM/DD"));
 const displayEndDate = computed(() => moment(form.value.endDate).format("MM/DD"));
@@ -201,13 +204,28 @@ const downLineOptions = computed(() => [
 
 const tableHeaders = computed(() => [
   { label: t("earnMoney.profitAndLoss.table.username"), name: "username", field: "loginName", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.deposit"), name: "deposit", field: "downlineDepositAmount", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.depositcount") , name: "deposit_count", field: "downlineDepositCount", align: "center" },
+  {
+    label: t("earnMoney.profitAndLoss.table.deposit"),
+    name: "deposit",
+    field: "downlineDepositAmount",
+    align: "center"
+  },
+  {
+    label: t("earnMoney.profitAndLoss.table.depositcount"),
+    name: "deposit_count",
+    field: "downlineDepositCount",
+    align: "center"
+  },
 
-  { label: t("earnMoney.profitAndLoss.table.ftdamount") , name: "ftd", field: "downlineFtdAmount", align: "center" },
-  { label: t("earnMoney.profitAndLoss.table.ftdcount") , name: "ftd_count", field: "downlineFtdCount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.ftdamount"), name: "ftd", field: "downlineFtdAmount", align: "center" },
+  { label: t("earnMoney.profitAndLoss.table.ftdcount"), name: "ftd_count", field: "downlineFtdCount", align: "center" },
 
-  { label: t("earnMoney.profitAndLoss.table.withdraw"), name: "withdraw", field: "downlineWithdrawAmount", align: "center" },
+  {
+    label: t("earnMoney.profitAndLoss.table.withdraw"),
+    name: "withdraw",
+    field: "downlineWithdrawAmount",
+    align: "center"
+  },
   { label: t("earnMoney.profitAndLoss.table.bet"), name: "bet", field: "downlineBetAmount", align: "center" },
   // { label: t("earnMoney.profitAndLoss.table.validBet"), name: "validBet", field: "validBet", align: "center" },
   // { label: t("earnMoney.profitAndLoss.table.bonus"), name: "bonus", field: "bonus", align: "center" },
@@ -234,17 +252,16 @@ const handleDateSelect = (value) => {
   }
 };
 
-
 const searchByReferral = (props) => {
-  form.value.username= "";
-  form.value.referrerId= props.row.id;
-  referralName.value= props.row.loginName;
+  form.value.username = "";
+  form.value.referrerId = props.row.id;
+  referralName.value = props.row.loginName;
   getDownlineProfitSummary();
-}
+};
 
 const getDownlineProfitSummary = () => {
   const { username, startDate, endDate, referrerId } = form.value;
-  loading.value= true;
+  loading.value = true;
 
   let url = `/session/downline-profit-summary?siteId=11&recordTime=${startDate}&recordTime=${endDate}`;
 
@@ -255,25 +272,31 @@ const getDownlineProfitSummary = () => {
     url = `/session/downline-profit-summary?siteId=11&referrerId=${referrerId}&recordTime=${startDate}&recordTime=${endDate}`;
   }
 
-  tableData.value= [];
+  tableData.value = [];
   api
     .get(url)
     .then((response) => {
-      loading.value= false;
+      loading.value = false;
       if (response.code === 0) {
         tableData.value = response.data.records;
         sumsData.value = response.data.sums;
       }
     })
     .catch((e) => {
-      loading.value= false;
+      loading.value = false;
       console.log(e);
     });
 };
 
+const closeReferral = () => {
+  referralName.value = "";
+  form.value.referrerId = "";
+  getDownlineProfitSummary();
+};
+
 const handleSubmit = () => {
-  form.value.referrerId= "";
-  referralName.value= "";
+  form.value.referrerId = "";
+  referralName.value = "";
   getDownlineProfitSummary();
 };
 

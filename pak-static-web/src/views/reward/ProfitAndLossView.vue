@@ -32,10 +32,24 @@
       </a-checkbox-group>
 
       <div class="search-field__spacer" />
+
+      <div class="referral-name-search" v-if="referralName">
+        Referral:
+        <span class="span-username">{{ referralName }}</span>
+        &nbsp;
+
+        <a-button class="referral-close-btn" shape="circle" size="xs" @click="closeReferral()">
+          <CloseOutlined size="xs" />
+        </a-button>
+      </div>
       <a-input
+        v-else
+        style="max-width: 400px; margin-right: 20px"
+        allowClear
         v-model:value="form.username"
         :placeholder="$t('rewardView.profitAndLoss.searchField.username.placeholder')"
       />
+
       <a-button @click="handleSubmit">{{ $t("rewardView.profitAndLoss.searchField.searchButton") }}</a-button>
     </div>
 
@@ -47,32 +61,47 @@
           </tr>
         </thead>
         <tbody>
-          <template v-if="tableData.length > 0">
-            <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
-              <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
-                <span
-                  v-if="
-                    ['deposit', 'withdraw', 'bonus', 'validBet', 'balance', 'depositFee', 'bet', 'payout'].includes(
-                      header.key
-                    )
-                  "
-                  :class="header.key === 'balance' ? row.type : ''"
-                >
-                  {{ addThousandsComma(row[header.key], true) }}
-                </span>
-                <span v-else-if="header.key === 'rebate'">
-                  {{ moment(row[header.key]).format("YY-MM-DD HH:mm") }}
-                </span>
-                <span v-else>
-                  {{ row[header.key] }}
-                </span>
-              </td>
+          <template v-if="isLoading">
+            <tr>
+              <td colspan="8" height="60"><a-spin /></td>
             </tr>
           </template>
           <template v-else>
-            <tr>
-              <td colspan="7">No data</td>
-            </tr>
+            <template v-if="tableData.length > 0">
+              <tr v-for="(row, rowIndex) in tableData" :key="`row-${rowIndex}`">
+                <td v-for="(header, colIndex) in tableHeaders" :key="`row-${rowIndex}-${colIndex}`">
+                  <span v-if="header.key === 'loginName'">
+                    <span class="span-username" @click="searchByReferral(row)">{{ row[header.key] }}</span>
+                  </span>
+
+                  <span
+                    v-else-if="
+                      [
+                        'downlineDepositAmount',
+                        'downlineFtdAmount',
+                        'downlineWithdrawAmount',
+                        'downlineBetAmount',
+                        'downlinePayoutAmount'
+                      ].includes(header.key)
+                    "
+                    :class="header.key === 'balance' ? row.type : ''"
+                  >
+                    {{ addThousandsComma(row[header.key], true) }}
+                  </span>
+                  <span v-else-if="header.key === 'rebate'">
+                    {{ moment(row[header.key]).format("YY-MM-DD HH:mm") }}
+                  </span>
+                  <span v-else>
+                    {{ row[header.key] }}
+                  </span>
+                </td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr>
+                <td colspan="8">No data</td>
+              </tr>
+            </template>
           </template>
         </tbody>
       </table>
@@ -82,31 +111,30 @@
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ addThousandsComma(sumsData.bet, true) }}</span>
+          <span>{{ addThousandsComma(sumsData.downlineBetAmount, true) }}</span>
         </div>
-        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.bet") }}</div>
+        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.betAmount") }}</div>
       </div>
 
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ addThousandsComma(sumsData.valid_bet, true) }}</span>
+          <span>{{ addThousandsComma(sumsData.downlineDepositCount, true) }}</span>
         </div>
-        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.validBet") }}</div>
+        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.deposit") }}</div>
+      </div>
+
+      <div class="sum-item">
+        <div class="item-amount">
+          <span>{{ sumsData.downlinePayoutAmount }}</span>
+        </div>
+        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.depositCount") }}</div>
       </div>
 
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ addThousandsComma(sumsData.bonus, true) }}</span>
-        </div>
-        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.bonus") }}</div>
-      </div>
-
-      <div class="sum-item">
-        <div class="item-amount">
-          Rs
-          <span>{{ addThousandsComma(sumsData.payout, true) }}</span>
+          <span>{{ addThousandsComma(sumsData.downlineDepositAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.payout") }}</div>
       </div>
@@ -114,15 +142,7 @@
       <div class="sum-item">
         <div class="item-amount">
           Rs
-          <span>{{ addThousandsComma(sumsData.deposit, true) }}</span>
-        </div>
-        <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.deposit") }}</div>
-      </div>
-
-      <div class="sum-item">
-        <div class="item-amount">
-          Rs
-          <span>{{ addThousandsComma(sumsData.withdraw, true) }}</span>
+          <span>{{ addThousandsComma(sumsData.downlineWithdrawAmount, true) }}</span>
         </div>
         <div class="item-title">{{ $t("rewardView.profitAndLoss.sums.withdraw") }}</div>
       </div>
@@ -137,24 +157,30 @@ import { useI18n } from "vue-i18n";
 import { useSingleCheckbox } from "@/hooks/singleCheckbox";
 import { addThousandsComma, updateDate } from "@/utils/utils";
 import { getDownlineProfitSummaryAPI } from "@/api/personal/reward";
+import { CloseOutlined } from "@ant-design/icons-vue";
 
 const { t } = useI18n();
 const { selectedValue, handleCheckedChange } = useSingleCheckbox("today", (value) => handleDateSelect(value));
 
 const tableData = ref([]);
-const sumsData = reactive({
-  bet: 0.0,
-  valid_bet: 0.0,
-  bonus: 0.0,
-  payout: 0.0,
-  deposit: 0.0,
-  withdraw: 0.0
+const sumsData = ref({
+  downlineBetAmount: 0.0,
+  downlineDepositCount: 0,
+  downlinePayoutAmount: 0.0,
+  downlineDepositAmount: 0.0,
+  downlineWithdrawAmount: 0.0
 });
+
 const form = ref({
   startDate: moment().format(DATE_FORMAT),
   endDate: moment().format(DATE_FORMAT),
-  username: ""
+  username: "",
+  referrerId: "",
+  siteId: ""
 });
+
+const isLoading = ref(false);
+const referralName = ref("");
 
 const dateOptions = computed(() => [
   { label: t("rewardView.profitAndLoss.searchField.date.today"), value: "today" },
@@ -164,12 +190,13 @@ const dateOptions = computed(() => [
 
 const tableHeaders = computed(() => [
   { label: t("rewardView.profitAndLoss.table.username"), key: "loginName" },
-  { label: t("rewardView.profitAndLoss.table.deposit"), key: "deposit" },
-  { label: t("rewardView.profitAndLoss.table.withdraw"), key: "withdraw" },
-  { label: t("rewardView.profitAndLoss.table.bet"), key: "bet" },
-  { label: t("rewardView.profitAndLoss.table.validBet"), key: "validBet" },
-  { label: t("rewardView.profitAndLoss.table.bonus"), key: "bonus" },
-  { label: t("rewardView.profitAndLoss.table.payout"), key: "payout" }
+  { label: t("rewardView.profitAndLoss.table.deposit"), key: "downlineDepositAmount" },
+  { label: t("rewardView.profitAndLoss.table.depositCount"), key: "downlineDepositCount" },
+  { label: t("rewardView.profitAndLoss.table.ftdAmount"), key: "downlineFtdAmount" },
+  { label: t("rewardView.profitAndLoss.table.ftdCount"), key: "downlineFtdCount" },
+  { label: t("rewardView.profitAndLoss.table.withdraw"), key: "downlineWithdrawAmount" },
+  { label: t("rewardView.profitAndLoss.table.bet"), key: "downlineBetAmount" },
+  { label: t("rewardView.profitAndLoss.table.payout"), key: "downlinePayoutAmount" }
 ]);
 
 const handleDateSelect = (value) => {
@@ -192,26 +219,40 @@ const handleDateSelect = (value) => {
   }
 };
 
-const getDownlineProfitSummary = () => {
-  const { username, startDate, endDate } = form.value;
+const searchByReferral = (props) => {
+  form.value.username = "";
+  form.value.referrerId = props.id;
+  referralName.value = props.loginName;
+  getDownlineProfitSummary();
+};
 
-  const params = new URLSearchParams();
+const closeReferral = () => {
+  referralName.value = "";
+  form.value.referrerId = "";
+  getDownlineProfitSummary();
+};
+
+const getDownlineProfitSummary = () => {
+  const { username, startDate, endDate, referrerId, siteId } = form.value;
+  isLoading.value = true;
+
+  let paramString = `siteId=${siteId}&recordTime=${startDate}&recordTime=${endDate}`;
 
   if (username) {
-    params.append("loginName", username);
+    paramString = `siteId=${siteId}&loginName=${username}&recordTime=${startDate}&recordTime=${endDate}`;
+  }
+  if (referrerId) {
+    paramString = `siteId=${siteId}&referrerId=${referrerId}&recordTime=${startDate}&recordTime=${endDate}`;
   }
 
-  params.append("regTime", startDate);
-  params.append("regTime", endDate);
-
-  const queryString = params.toString();
-  const paramString = `${queryString}`;
+  tableData.value = [];
 
   getDownlineProfitSummaryAPI(paramString)
     .then((response) => {
       if (response.code === 0) {
         tableData.value = response.data.records;
-        sumsData = response.data.sums;
+        sumsData.value = response.data.sums;
+        isLoading.value = false;
       }
     })
     .catch((e) => {
