@@ -83,6 +83,12 @@ const closeSecondBanner = () => {
 
 <style lang="scss" scoped>
 .login-popup-banner-1-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    overflow: auto;
+    justify-content: center;
     padding: 70px;
 
     @media (max-width: 600px) {
@@ -195,6 +201,12 @@ const closeSecondBanner = () => {
 }
 
 .login-popup-banner-2-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    overflow: auto;
+    justify-content: center;
     padding: 70px;
 
     @media (max-width: 600px) {

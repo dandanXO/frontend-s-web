@@ -180,6 +180,7 @@ const iconInfo = reactive([
       width: 35px;
       height: 35px;
       margin-left: 10px;
+      display: none;
     }
   }
 
