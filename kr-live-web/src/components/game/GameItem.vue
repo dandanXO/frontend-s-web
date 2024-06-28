@@ -1,5 +1,5 @@
 <template>
-    <q-skeleton v-show="!isImgFullyLoaded" type="rect" style="width:200px;height:365px;" />
+    <q-skeleton v-show="!isImgFullyLoaded" type="rect" style="width:200px;height:365px;" class="scooped-skeleton" />
     <div data-aos="zoom-in" v-show="isImgFullyLoaded" :class="`game-item ${game.name.toLowerCase()}`"
         @click="() => props.onClickGameItem(game)">
         <div class="game-item-content">
@@ -224,5 +224,9 @@ const isImgFullyLoaded = computed(() => {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+.scooped-skeleton {
+    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px
 }
 </style>
