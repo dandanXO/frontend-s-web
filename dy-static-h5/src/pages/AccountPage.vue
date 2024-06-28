@@ -237,7 +237,7 @@
         <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_mailbox.svg" />
-            <div class="acct-nav-label">会员建议</div>
+            <div class="acct-nav-label">反馈奖励</div>
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
