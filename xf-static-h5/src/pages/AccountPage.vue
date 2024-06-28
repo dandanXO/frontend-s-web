@@ -134,7 +134,7 @@
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.png" />
-            <div class="acct-nav-label">分享好友</div>
+            <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link>
         <router-link to="/promo">
