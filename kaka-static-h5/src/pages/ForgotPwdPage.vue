@@ -718,12 +718,17 @@ function charType(num) {
   .q-field--standout.q-field--rounded .q-field__control {
     border-radius: 12px;
   }
+.q-field__prepend {
 
+  img {
+    filter: hue-rotate(140deg);
+  }
+}
   q-label {
     padding-top: 3px;
     padding-left: 8px;
     padding-bottom: 3px;
-    color: #424f72;
+    color: #ffffff;
     font-size: 1rem;
   }
 }
@@ -768,7 +773,7 @@ function charType(num) {
   margin: 0 auto;
   background: $white;
   border-radius: 10px;
-  box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+  box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
   padding: 15px 12px 20px;
 
   q-label {

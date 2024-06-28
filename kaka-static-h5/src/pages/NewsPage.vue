@@ -103,7 +103,7 @@ const newsItems = ref([
       // background: salmon;
       padding: 12px;
       border-radius: 12px;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+      box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
       // box-shadow: 0px 4px 0px 0px #a7c2dd;
       display: flex;
       gap: 12px;

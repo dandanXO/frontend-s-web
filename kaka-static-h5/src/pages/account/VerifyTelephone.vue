@@ -362,7 +362,7 @@ export default defineComponent({
   }
 
   input.q-placeholder {
-    //color: #333333 !important;
+    //color: #ffffff !important;
   }
 }
 

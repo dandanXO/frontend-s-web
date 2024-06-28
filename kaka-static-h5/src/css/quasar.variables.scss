@@ -12,38 +12,37 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #468CFF;
-$secondary: #F3F7FD;
-$accent: #424F72;
+$primary: #fd574c;
+$secondary: #f3f7fd;
+$accent: #ffffff;
 
-$dark: #333333;
+$dark: #ffffff;
 $dark-page: #666;
 
-$font-1: #7A80A1;
-$font-2: #424F72;
-$font-3: #6B7B95;
+$font-1: #7a80a1;
+$font-2: #ffffff;
+$font-3: #6b7b95;
 $font-4: #313441;
 
-$grey-color: #A4AABB;
+$grey-color: #a4aabb;
 
 $black: #000000;
 $white: #ffffff;
-$positive: #24AE4B;
-$negative: #F53434;
+$positive: #24ae4b;
+$negative: #f53434;
 
-$info: #458BFF;
-$warning: #FFA031;
+$info: #458bff;
+$warning: #ffa031;
 
-$lightblue: #E7F3FF;
-
+$lightblue: #e7f3ff;
 
 $box-width: calc(100% - 2rem);
 
-$shadow-bg:  0px -2px 6px 2px #c3d4e6 inset;
+$shadow-bg: 0px -2px 6px 2px #e6c3c3 inset;
 
-$linear-bg:  linear-gradient(270deg, #3080F4 0%, #70B1FF 100%);
-$bg-blue: #A9C9EA;
-
+$linear-bg: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+$bg-red: #eaa9a9;
+$bg-blue: #a9c9ea;
 
 $md-size: 18px;
 $font-size: 16px;

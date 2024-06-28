@@ -2198,7 +2198,7 @@ export default defineComponent({
       }
 
       .news-txt {
-        color: #333333;
+        color: #ffffff;
         font-size: 12px;
         padding: 8px;
         max-height: 40px; /* Assuming 4 lines of text with 12px font size and 12px padding */
@@ -2231,7 +2231,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 8px;
-    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+    box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
     background: rgba(252, 253, 254, 0.3);
     padding: 12px 6px;
     border-top-left-radius: 12px;
@@ -2389,6 +2389,7 @@ export default defineComponent({
     display: flex;
     gap: 12px;
 
+    color: #313441;
     :deep(.q-btn) {
       min-width: 80px;
       min-height: 12px;
@@ -2531,7 +2532,7 @@ export default defineComponent({
   .modalcontent {
     &.welcome {
       font-family: "Inter";
-      background: #ffffffcc;
+      background: #1e212c;
       margin-top: 50px;
       padding: 0;
       .welcome-header {
@@ -2574,7 +2575,7 @@ export default defineComponent({
           align-items: center;
           flex: 1;
           .main-header {
-            color: #424f72;
+            color: #ffffff;
             font-size: 16px;
             font-weight: 900;
             line-height: 19.36px;
@@ -2609,7 +2610,7 @@ export default defineComponent({
             align-items: center;
           }
           .lastline {
-            color: #424f72;
+            color: #ffffff;
             font-size: 12px;
             font-weight: 900;
             line-height: 16px;
@@ -2665,7 +2666,7 @@ export default defineComponent({
       box-sizing: border-box;
       padding: 20px 12px 15px;
       text-align: center;
-      color: #468cff;
+      color: #FD574C;
       font-size: 2.2rem;
 
       .contentfonts {
@@ -3073,7 +3074,7 @@ export default defineComponent({
 
   .home-header {
     .header-middle {
-      color: #313441;
+      color: #ffffff;
 
       :deep(.q-btn) {
         min-width: 75px;
@@ -3448,7 +3449,7 @@ export default defineComponent({
       }
 
       .match-title {
-        color: #424f72;
+        color: #ffffff;
         font-weight: 700;
         font-size: 16px;
         text-align: center;

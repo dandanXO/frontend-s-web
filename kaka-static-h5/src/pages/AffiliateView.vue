@@ -502,7 +502,7 @@ const rows = [
     .sample-container {
       border-radius: 1.25rem;
       background: #fcfdfe;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+      box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 0px 0px #a7c2dd;
       padding: 1rem;
 
       color: $font-1;

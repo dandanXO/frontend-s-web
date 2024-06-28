@@ -433,7 +433,7 @@ const dateClosePopup = ref(true);
       gap: 10px;
       // background: salmon;
       background-image: url("../../../assets/images/promo/hotpromo/lottery/prize-bg.png");
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+      box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
       border-radius: 8px;
       padding: 10px 20px;
       margin-top: 20px;
@@ -489,7 +489,7 @@ const dateClosePopup = ref(true);
             background-color: #f4f7f8;
             border-radius: 6px;
             box-shadow: 0px 0px 8px 0px #a9c9ea inset;
-            color: #424f72;
+            color: #ffffff;
           }
         }
       }
@@ -513,7 +513,7 @@ const dateClosePopup = ref(true);
           justify-content: center;
           gap: 15px;
           color: #87898a;
-          box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
+          box-shadow: 0px -4px 4px 0px #E6C3C3 inset;
           background: #ffffff;
           border-radius: 6px;
 

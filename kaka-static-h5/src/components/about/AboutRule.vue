@@ -45,7 +45,7 @@
 .about-info {
   .info-section {
     margin: 20px 0 0 0;
-    color: #424f72;
+    color: #ffffff;
     font-weight: 700;
     line-height: 193.482%;
 

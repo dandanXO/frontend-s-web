@@ -156,7 +156,7 @@
             <div class="header-title-div" style="margin-top: 25px">
               <span class="span3">
                 此次问卷提供
-                <span class="span1" style="color: #468cff">18-188元</span>
+                <span class="span1" style="color: #FD574C">18-188元</span>
                 建议金
               </span>
             </div>
@@ -716,7 +716,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424f72;
+    color: #ffffff;
     margin-top: 10px;
     gap: 5px;
   }
@@ -753,7 +753,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424f72;
+    color: #ffffff;
     margin-top: 30px;
     gap: 5px;
   }
@@ -875,7 +875,7 @@ onMounted(() => {
 
     .input-title {
       font-size: 1rem;
-      color: #424f72;
+      color: #ffffff;
     }
 
     .input-fill {

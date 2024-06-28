@@ -152,7 +152,7 @@ onMounted(() => {});
 .write-board-div {
   .q-field--filled .q-field__control {
     border-radius: 10px;
-    border: 1px solid $bg-blue;
+    border: 1px solid $bg-red;
     background: #f7f8fb;
   }
 }

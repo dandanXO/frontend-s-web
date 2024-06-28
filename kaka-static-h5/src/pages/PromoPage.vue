@@ -942,7 +942,7 @@ export default defineComponent({
     width: 100%;
     margin: 0 auto;
     padding-bottom: 8px;
-    // box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
+    // box-shadow: 0px -6px 6px 0px #E6C3C3 inset;
 
     .q-tab {
       color: $font-1;
