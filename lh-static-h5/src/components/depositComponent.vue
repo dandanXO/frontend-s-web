@@ -251,13 +251,11 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, watch } from "vue";
+import { ref, reactive, onMounted, shallowRef } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
-import { api, cashier } from "boot/axios";
+import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
-import { doIt } from "boot/action";
-import liff from "@line/liff";
 
 var qs = require("qs");
 
@@ -433,8 +431,7 @@ const initPay = () => {
       !(
         (Platform.is.desktop || Platform.is.webkit) &&
         !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
+        Platform.is.name !== "webkit"
       )
     ) {
       let isBacked = localStorage.getItem("isBacked");
@@ -507,9 +504,6 @@ async function onSelect(value) {
 
   clearInfo();
   // if (!Platform.is.android || !Platform.is.capacitor) {
-  // }
-  // if (liff.isInClient()) {
-  //   clearInfo();
   // }
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
@@ -657,8 +651,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -708,8 +701,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;
