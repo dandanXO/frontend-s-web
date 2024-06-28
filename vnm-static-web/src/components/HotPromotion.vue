@@ -12,6 +12,13 @@
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo " :promo-code="list.promoCode" />
 
     <HongBaoYu2024
+      v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+      :params="list.param"
+    />
+
+
+    <HongBaoYu2024
       v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
@@ -312,7 +319,8 @@ export default defineComponent({
       this.list.redirectUrl === "Red_pocket_euro2024" ||
       this.list.redirectUrl === "vnm-eurocup24"||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
-      this.list.redirectUrl === "vnm-eurocup-luckydraw"
+      this.list.redirectUrl === "vnm-eurocup-luckydraw" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket"
     ) {
       this.isCommonPromo = false;
     } else {
