@@ -68,6 +68,11 @@ body {
     background: #fd3227;
     border: #fd3227;
   }
+  .el-dropdown-menu__item:not(.is-disabled):focus,
+  .el-dropdown-menu__item:not(.is-disabled):hover {
+    background: #f9cfcc;
+    color: #fd4f44;
+  }
   .el-input__wrapper {
     &.is-focus {
       box-shadow: 0 0 0 1px #ff5c5c inset;
