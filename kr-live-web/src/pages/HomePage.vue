@@ -14,6 +14,8 @@
   <AnnouncementList />
 
   <DepositRecords />
+
+  <LoggedInPopupBanner />
 </template>
 
 <script setup>
@@ -23,6 +25,7 @@ import JackpotPrize from "src/components/home/JackpotPrize.vue";
 import GamesList from "src/components/home/GamesList.vue";
 import AnnouncementList from "src/components/home/AnnouncementList.vue";
 import DepositRecords from "src/components/home/DepositRecords.vue";
+import LoggedInPopupBanner from "src/components/home/LoggedInPopupBanner.vue";
 </script>
 
 <style scoped lang="scss"></style>
