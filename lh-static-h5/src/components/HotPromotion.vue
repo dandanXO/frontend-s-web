@@ -36,10 +36,8 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo" />
-    <div style="text-align: center;" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token"  >
-      <div class="cs-btn" @click="goToCsChat()">
-        联系客服
-      </div>
+    <div style="text-align: center" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token">
+      <div class="cs-btn" @click="goToCsChat()">联系客服</div>
     </div>
 
     <AppHongBao
@@ -136,51 +134,50 @@
 /* eslint-disable */
 import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
-import {useRouter} from "vue-router"
+import { useRouter } from "vue-router";
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
-import * as _ from "lodash";
-import moment from "moment";
-import ClaimPromo from "../components/hotpromo/claimPromo.vue";
-import DragonCardPromo from "../components/hotpromo/dragoncard/dragonCardPromo.vue";
-import EurocupVotePromo from "../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue";
-import GoldenEggPromo from "../components/hotpromo/goldenegg/goldenEggPromo.vue";
-import HongBaoPreEurocup from "../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue";
-import HongBaoYu2024 from "../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue";
-import UpcomingMatchPromo from "../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue";
-import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
-import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
-import FeedbackAwardPromo from "../components/hotpromo/feedbackaward/feedbackAwardPromo.vue";
-import PrivilegeInvitePromo from "../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue";
-import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
-import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
-import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
-import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
-import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
-import UpgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
-import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
-import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
-import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
-import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
-import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
-import SummonerPromo from "../components/hotpromo/summoner/SummonerPromo.vue";
-import AppHongBao from "../components/hotpromo/apphongbao/AppHongBao.vue";
-import FtdPromo from "../components/hotpromo/ftd/FtdPromo.vue";
-import LOLMsi2024Promo from "../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue";
-import EuroCup2024 from "../components/hotpromo/europe-2024/EuroCup2024.vue";
-import EuroCup2024FirstShoot from "./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue";
-import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
-import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
-import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
-import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
-import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue";
-import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
-import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
-import IntelEls24 from "../components/hotpromo/intel-els-24/intel-els-24.vue";
-import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
-import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
-import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
-import AijiasuPromo from "../components/hotpromo/aijiasu/AijiasuPromo.vue";
+const moment = () => import("moment");
+const ClaimPromo = () => import("../components/hotpromo/claimPromo.vue");
+const DragonCardPromo = () => import("../components/hotpromo/dragoncard/dragonCardPromo.vue");
+const EurocupVotePromo = () => import("../components/hotpromo/eurocup-2024-vote/eurocupVotePromo.vue");
+const GoldenEggPromo = () => import("../components/hotpromo/goldenegg/goldenEggPromo.vue");
+const HongBaoPreEurocup = () => import("../components/hotpromo/hongbaoyu/HongBaoPreEurocup.vue");
+const HongBaoYu2024 = () => import("../components/hotpromo/hongbaoyu2024/HongBaoYu2024.vue");
+const UpcomingMatchPromo = () => import("../components/hotpromo/upcomingmatch/upcomingMatchPromo.vue");
+const MeiZhouBeiPromo = () => import("../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue");
+const InsuranceSubmitPromo = () => import("../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue");
+const FeedbackAwardPromo = () => import("../components/hotpromo/feedbackaward/feedbackAwardPromo.vue");
+const PrivilegeInvitePromo = () => import("../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue");
+const EsportQuiz = () => import("../components/hotpromo/esportquiz/EsportQuiz.vue");
+const LotteryPromo = () => import("../components/hotpromo/lottery/LotteryPromo.vue");
+const DailyLoginPromo = () => import("../components/hotpromo/dailylogin/dailyLoginPromo.vue");
+const LoginRewardPromo = () => import("../components/hotpromo/loginreward/loginRewardPromo.vue");
+const FootballFightPromo = () => import("../components/hotpromo/footballfight/footballFightPromo.vue");
+const UpgradeHongBaoPromo = () => import("../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue");
+const LplSummerPromo = () => import("../components/hotpromo/lplsummer/LplSummerPromo.vue");
+const BbDacha2024Promo = () => import("../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue");
+const LhStepGamePromo = () => import("../components/hotpromo/lhstepgame/LhStepGamePromo.vue");
+const CS2Sign = () => import("../components/hotpromo/CS2Sign/CS2Sign.vue");
+const BonusSpinWheel = () => import("../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue");
+const SummonerPromo = () => import("../components/hotpromo/summoner/SummonerPromo.vue");
+const AppHongBao = () => import("../components/hotpromo/apphongbao/AppHongBao.vue");
+const FtdPromo = () => import("../components/hotpromo/ftd/FtdPromo.vue");
+const LOLMsi2024Promo = () => import("../components/hotpromo/LOL-msi-2024/LOLMsi2024Promo.vue");
+const EuroCup2024 = () => import("../components/hotpromo/europe-2024/EuroCup2024.vue");
+const EuroCup2024FirstShoot = () => import("./hotpromo/europe-2024-first-shoot/EuroCup2024FirstShoot.vue");
+const BlastPremierPromo = () => import("../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue");
+const EurocupManual = () => import("../components/hotpromo/EurocupManual/EurocupManual.vue");
+const SportZhongChao = () => import("../components/hotpromo/SportZhongChao/SportZhongChao.vue");
+const Nba24Match = () => import("../components/hotpromo/Nba24Match/Nba24Match.vue");
+const SlotLacky8 = () => import("../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue");
+const fishHongbao = () => import("../components/hotpromo/fishHongbao/fishHongbao.vue");
+const LPLSummer2024 = () => import("../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue");
+const IntelEls24 = () => import("../components/hotpromo/intel-els-24/intel-els-24.vue");
+const DuanWuJiePromo = () => import("../components/hotpromo/dragonboat/DragonBoat.vue");
+const DepositRebates = () => import("../components/hotpromo/depositRebates/depositRebates.vue");
+const WinLossPromo = () => import("../components/hotpromo/winloss/WinLoss.vue");
+const AijiasuPromo = () => import("../components/hotpromo/aijiasu/AijiasuPromo.vue");
 
 export default defineComponent({
   name: "HotPromo",
@@ -387,9 +384,8 @@ export default defineComponent({
         var data = res.data.data;
 
         for (let i in data) {
-          _.each(data[i].winners, function (winner, index) {
+          data[i].winners.forEach((winner) => {
             winner.date = moment(data[i].resultTime).format("DD/MM/YYYY");
-
             winnerDataSource.value.push(winner);
           });
         }
@@ -436,12 +432,10 @@ export default defineComponent({
     // }
     // }
 
-
     const router = useRouter();
     const goToCsChat = () => {
       router.push("/liveChat");
     };
-
 
     return {
       goToCsChat,
@@ -596,7 +590,7 @@ export default defineComponent({
   }
 }
 
-.cs-btn{
+.cs-btn {
   color: #ffffff;
   padding: 5px 30px;
   background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
