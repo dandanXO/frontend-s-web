@@ -1,7 +1,11 @@
 <template>
-    <div :class="`game-item ${game.name.toLowerCase()}`" @click="() => props.onClickGameItem(game)">
+    <q-skeleton v-show="!isImgFullyLoaded" type="rect" style="width:200px;height:365px;" />
+    <div data-aos="zoom-in" v-show="isImgFullyLoaded" :class="`game-item ${game.name.toLowerCase()}`"
+        @click="() => props.onClickGameItem(game)">
         <div class="game-item-content">
-            <img class="bg-overlay" :src="(() => {
+            <img @load="() => {
+                imgLoadStatus.bg = true;
+            }" class="bg-overlay" :src="(() => {
                 try {
                     return `${require(`../../assets/home/games/${gameType}/game-bg-${game.name.toLowerCase()}.png`)}`;
                 } catch (e) {
@@ -13,7 +17,9 @@
             <div class="game-info-wrapper">
                 <img class="arrow" src="../../assets/home/games/game-item-arrow.svg" />
                 <div class="game-name">{{ game?.alias || game.name }}</div>
-                <img class="game-logo" :src="(() => {
+                <img class="game-logo" @load="() => {
+                    imgLoadStatus.logo = true;
+                }" :src="(() => {
                     try {
                         return `${require(`../../assets/home/games/logo/game-logo-${game.name.toLowerCase()}.png`)}`;
                     } catch (e) {
@@ -23,7 +29,9 @@
                     " />
             </div>
             <div class="avatar-wrapper">
-                <img class="avatar-bg" :src="(() => {
+                <img class="avatar-bg" @load="() => {
+                    imgLoadStatus.avatarBg = true;
+                }" :src="(() => {
                     try {
                         return `${require(`../../assets/home/games/${gameType}/game-rounded-${game.name.toLowerCase()}.png`)
                             }`;
@@ -32,7 +40,9 @@
                     }
                 })()
                     " />
-                <img class="avatar" :src="(() => {
+                <img class="avatar" @load="() => {
+                    imgLoadStatus.avatar = true;
+                }" :src="(() => {
                     try {
                         return `${require(`../../assets/home/games/${gameType}/game-${game.name.toLowerCase()}.png`)}`;
                     } catch (e) {
@@ -52,9 +62,19 @@
     </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, computed } from "vue";
 const props = defineProps(["game", "onClickGameItem", "gameType"]);
 const game = ref(props.game);
+const imgLoadStatus = reactive({
+    bg: false,
+    logo: false,
+    avatarBg: false,
+    avatar: false
+})
+
+const isImgFullyLoaded = computed(() => {
+    return Object.values(imgLoadStatus).some(status => status === false) === false;
+})
 </script>
 <style lang="scss" scoped>
 .game-item {

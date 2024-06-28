@@ -149,17 +149,17 @@ const pagesInfo = reactive([
       description: "lang.page_modal_desc_text"
     }
   },
-  {
-    tabIndex: "log",
-    page: "promo/all",
-    info: 'lang.page_modal_promo',
-    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
-    component: PromoComponent,
-    headerInfo: {
-      title: 'lang.page_modal_promo',
-      description: ""
-    }
-  },
+  // {
+  //   tabIndex: "log",
+  //   page: "promo/all",
+  //   info: 'lang.page_modal_promo',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
+  //   component: PromoComponent,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_promo',
+  //     description: ""
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "personal/info",
