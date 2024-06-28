@@ -595,7 +595,6 @@ const rows = [
 
         .contact-id {
           color: $grey-color;
-          font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
           line-height: normal;
@@ -606,7 +605,6 @@ const rows = [
 
   .section-title {
     color: $primary;
-    font-family: PingFang SC;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: normal;

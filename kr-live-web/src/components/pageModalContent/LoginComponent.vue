@@ -138,8 +138,7 @@ const onSubmit = () => {
         .then(() => {
           successNotify($t('lang.login_success_msg'));
 
-
-          if(route.query.page) {
+          if (route.query.redirect) {
             router.push({
               path: '/',
               query: {

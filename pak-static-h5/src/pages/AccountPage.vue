@@ -8,10 +8,18 @@
       <q-form ref="profileFormRef" class="pc-form">
         <InputRowGrid>
           <template #fields>
-            <div class="pc-form-item">
+            <div
+              :class="{ 'item-click': formDetail.realName === null }"
+              @click="openPersonalCenterDialog()"
+              class="pc-form-item"
+            >
               <InputField :label="$t('form.fullName')">
                 <template #input>
-                  <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly></q-input>
+                  <q-input v-model="formDetail.realName" outlined clearable hide-bottom-space readonly>
+                    <template v-slot:append v-if="formDetail.realName === null">
+                      <q-icon name="chevron_right" />
+                    </template>
+                  </q-input>
                 </template>
               </InputField>
             </div>
@@ -20,7 +28,7 @@
               <InputField :label="$t('form.email')">
                 <template #input>
                   <q-input v-model="formDetail.email" outlined clearable hide-bottom-space readonly>
-                    <template v-slot:append>
+                    <template v-slot:append v-if="!formDetail.emailVerified">
                       <q-icon name="chevron_right" />
                     </template>
                   </q-input>
@@ -721,10 +729,13 @@ const userKYCDialog = ref(false);
 const openUserKYCDialog = () => {
   userKYCDialog.value = true;
 };
-const closeUserKYCDialog = () => {
+const closeUserKYCDialog = (updateInfo) => {
   store.getMemberInfo().then(() => {
     loadInfo();
     userKYCDialog.value = false;
+    if(updateInfo.realName){
+      formDetail.realName = updateInfo.realName;
+    }
   });
 };
 
@@ -765,10 +776,34 @@ const copyLoginName = () => {
 
 const verificationCodeDialog = ref(false);
 const openVerificationCodeDialog = () => {
-  captchaRef.value = "";
-  getCode();
+  api
+    .get(`/member/checkEmailRegisterStatus?email=${updateEmailInfo.email}`)
+    .then((response) => {
+      if (response.code === 0) {
+        if (response.data) {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Email already used. Please try another email.",
+            icon: "report_problem"
+          });
+        } else {
+          verificationCodeDialog.value = !verificationCodeDialog.value;
+        }
+      }
+    })
+    .catch((e) => {
+      $q.notify({
+        color: "negative",
+        position: "top",
+        message: e.message,
+        icon: "report_problem"
+      });
+    });
 
-  verificationCodeDialog.value = !verificationCodeDialog.value;
+  captchaRef.value = "";
+  // getCode();
+
   getCode();
 };
 
@@ -1309,9 +1344,12 @@ const submitUpdateEmail = () => {
             icon: "check_circle_outline"
           });
           bindEmailDialog.value = false;
-          setTimeout(() => {
-            startRefresh();
-          }, 2000);
+          formDetail.email = updateEmailInfo.email;
+          formDetail.emailVerified = true;
+
+          // setTimeout(() => {
+          //   startRefresh();
+          // }, 2000);
         } else {
           $q.notify({
             color: "negative",

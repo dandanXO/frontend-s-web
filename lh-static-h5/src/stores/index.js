@@ -95,7 +95,7 @@ export const userStore = defineStore("userStore", {
         window.location.pathname === "/deposit" ||
         window.location.pathname === "/vip" ||
         window.location.pathname === "/promotion"){
-        console.log("IS In App")
+        // console.log("IS In App")
         return false;
       }
       return true;

@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "확인 중",
     reg_check_captcha: "Captcha 코드 확인",
     reg_enter_captcha: "입력하다 Captcha",
+    reg_bank_acc_num_less_than_17_char: "은행계좌번호 최대 17자",
     // register end
     // menu start
     menu_announcement: "공지사항",
@@ -56,6 +57,7 @@ export default {
     page_modal_deposit: "입금신청",
     page_modal_withdraw: "출금신청",
     page_modal_message: "문의",
+    page_modal_message_compose: "문의 글쓰기",
     page_modal_customer_service: "고객센터",
     page_modal_promo: "이벤트",
     page_modal_personal_info: "개인정보",
@@ -159,16 +161,22 @@ export default {
     message_content: "내용",
     message_compose_confirm: "확인",
     message_previous_page: "전 페이지로 이동",
-    message_type_announcement: "발표",
-    message_type_notification: "공고",
+    message_type_announcement: "공지",
+    message_type_notification: "알림",
     message_type_activity: "활동",
-    message_type_payment: "지불",
+    message_type_payment: "입출금",
     message_type_all: "모두",
     message_type_outbox: "보낸 문의함",
     // message end
     // deposit start
     deposit_payment_channel: "결제 채널",
     deposit_confirm_deposit: "계좌요청",
+    deposit_deposit_amount: "입금금액",
+    deposit_depositor_name: "입금자명",
+    deposit_deposit_unit: "입금단위",
+    deposit_ten_thousand_won: "만원",
+    deposit_clear_amount: "삭제",
+    deposit_please_enter_amount: "금액을 입력하세요",
     deposit_reminder: "알림",
     deposit_reminder_caption: "출금 전 꼭 읽어주세요",
     deposit_reminder_text: `입금 계좌요청 후 입금 하신뒤 > 아래 신청완료를 클릭하셔야 충전처리 가능합니다.
@@ -181,7 +189,7 @@ export default {
     금액을 잘못 기재하셨다면 우선 충전신청 주시면 취소 처리 도와드리겠습니다.
 
     ※가상계좌 점검시간 안내
-    23:30 ~ 00:40 이용에 참고 해주시길 바랍니다.`,
+    23:30 ~ 00:30 이용에 참고 해주시길 바랍니다.`,
     // deposit end
     // withdraw start
     withdraw_withdraw_amount: "출금금액",
@@ -210,6 +218,7 @@ export default {
     withdraw_link_bank_card: "링크 은행 카드",
     withdraw_withdraw_amount_per_item:  "출금금액/건",
     withdraw_withdraw_amount_per_day: "출금금액/일",
+    withdraw_confirm_withdraw: "환전신청",
     // withdraw end
     // personal start
     personal_nickname: "닉네임",
@@ -227,6 +236,9 @@ export default {
     password_password_mismatch: "비밀번호 확인 는 변경할 비밀번호 와 동일해야 합니다",
     password_change_password: "변경완료",
     // password end
+    // page modal start
+    page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",

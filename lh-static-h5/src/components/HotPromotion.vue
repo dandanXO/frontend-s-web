@@ -7,37 +7,25 @@
       :loading-claim="btnLoading"
       @daily-slot="handleSlot()"
     />
-    <PrivilegeInvite
-      v-if="
-        !isCommonPromo &&
-        store.token &&
-        (list.redirectUrl === 'Dongying-refer' ||
-          list.redirectUrl === 'lh1-vip-upgrade-bonus' ||
-          list.redirectUrl === 'lh1-refer-bonus')
-      "
-    />
     <DragonCardPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-dragon-card'" />
-<!--    <PrizePoolVotePromo v-if="!isCommonPromo && list.redirectUrl === 'Dongying-team-vote'" />-->
     <EurocupVotePromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-team-vote'" />
     <GoldenEggPromo v-if="!isCommonPromo && list.redirectUrl === 'goldenegg'" />
     <HongBaoYu2024 v-if="!isCommonPromo && list.redirectUrl === 'hongbaoyu'" :promo-code="list.promoCode" />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-nba-safety'" platformType="NBA" />
 
-    <HongBaoPreEurocup v-if="!isCommonPromo && list.redirectUrl === 'lh1-jiajianghongbaoyu'" :promo-code="list.promoCode" />
+    <HongBaoPreEurocup
+      v-if="!isCommonPromo && list.redirectUrl === 'lh1-jiajianghongbaoyu'"
+      :promo-code="list.promoCode"
+    />
 
     <UpcomingMatchPromo
       v-if="
         (!isCommonPromo && list.redirectUrl === 'lh1-esport-safety') ||
         (!isCommonPromo && list.redirectUrl === 'lh1-sport-safety')
       "
-      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : ('SPORT')"
+      :platformType="list.redirectUrl === 'lh1-esport-safety' ? 'ESPORT' : 'SPORT'"
     />
-    <MeiZhouBeiPromo
-      v-if="
-        (!isCommonPromo && list.redirectUrl === 'lh1meizhoubei')
-      "
-      platformType="COPA"
-    />
+    <MeiZhouBeiPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1meizhoubei'" platformType="COPA" />
 
     <InsuranceSubmitPromo
       v-if="
@@ -48,6 +36,11 @@
     />
 
     <FeedbackAwardPromo v-if="list.redirectUrl === 'lh1-feedback-award' && !isCommonPromo" />
+    <div style="text-align: center;" v-if="list.redirectUrl === 'lh1ouzhoubeibaopei' && store.token"  >
+      <div class="cs-btn" @click="goToCsChat()">
+        联系客服
+      </div>
+    </div>
 
     <AppHongBao
       v-if="list.redirectUrl === 'lh1-app-hongbao' && !isCommonPromo && store.token"
@@ -67,7 +60,6 @@
 
     <LotteryPromo v-if="list.redirectUrl === 'lh1-lottery' && !isCommonPromo && store.token" />
 
-    <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
     <EsportQuiz v-if="list.redirectUrl === 'lh1-quiz' && !isCommonPromo" />
 
     <DailyLoginPromo v-if="list.redirectUrl === 'lh1-monthly-sign' && !isCommonPromo" />
@@ -82,23 +74,9 @@
       :params="list.param"
     />
 
-    <GiftPromo v-if="list.redirectUrl === 'lh1-gift' && !isCommonPromo && store.token"></GiftPromo>
-
-    <AsiaCup2024Promo
-      v-if="
-        (list.redirectUrl === 'asian-cup-2024' || list.redirectUrl === 'dy-promo-application-A') &&
-        !isCommonPromo &&
-        store.token
-      "
-    ></AsiaCup2024Promo>
-    <BasketballHot v-if="list.redirectUrl === '/dy-promo-basketball' && !isCommonPromo"></BasketballHot>
     <LplSummerPromo v-if="list.redirectUrl === 'lh1-lpl-game' && !isCommonPromo && store.token"></LplSummerPromo>
 
-    <Cny2024Promo v-if="list.redirectUrl === 'lh1-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'lh1-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
-    <CnyStepGame2024Promo
-      v-if="list.redirectUrl === 'lh1-cny-step-game' && !isCommonPromo && store.token"
-    ></CnyStepGame2024Promo>
     <LhStepGamePromo
       v-if="list.redirectUrl === 'lh1-game-steps' && !isCommonPromo && store.token"
       :pageContent="list.pageContent"
@@ -125,13 +103,17 @@
     <EurocupManual v-if="list.redirectUrl === 'lh-eurocup-manual' && !isCommonPromo && store.token" />
     <SportZhongChao v-if="list.redirectUrl === 'lh-sport-zhongchao' && !isCommonPromo && store.token" />
     <Nba24Match v-if="list.redirectUrl === 'lh-nba24-match' && !isCommonPromo && store.token" />
-    <SlotLacky8 v-if="list.redirectUrl === 'lh1-slot-lucky8' && !isCommonPromo && store.token" :promo-code="list.promoCode"  />
+    <SlotLacky8
+      v-if="list.redirectUrl === 'lh1-slot-lucky8' && !isCommonPromo && store.token"
+      :promo-code="list.promoCode"
+    />
     <fishHongbao v-if="list.redirectUrl === 'lh-fish-hongbao' && !isCommonPromo && store.token" />
     <LPLSummer2024 v-if="list.redirectUrl === 'lh-lpl-summer24' && !isCommonPromo && store.token" />
     <IntelEls24 v-if="list.redirectUrl === 'lh1-intel-esl' && !isCommonPromo && store.token" />
     <DuanWuJiePromo v-if="list.redirectUrl === 'lh-duanwujie24' && !isCommonPromo && store.token" />
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && !isCommonPromo && store.token" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess' && !isCommonPromo && store.token" />
+    <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -151,8 +133,10 @@
 </template>
 
 <script>
+/* eslint-disable */
 import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "stores/index";
+import {useRouter} from "vue-router"
 import { eventapi } from "boot/axios";
 import { useQuasar } from "quasar";
 import * as _ from "lodash";
@@ -168,21 +152,14 @@ import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.v
 import InsuranceSubmitPromo from "../components/hotpromo/insurancesubmit/insuranceSubmitPromo.vue";
 import FeedbackAwardPromo from "../components/hotpromo/feedbackaward/feedbackAwardPromo.vue";
 import PrivilegeInvitePromo from "../components/hotpromo/privilegeinvite/privilegeInvitePromo.vue";
-// import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import EsportQuiz from "../components/hotpromo/esportquiz/EsportQuiz.vue";
 import LotteryPromo from "../components/hotpromo/lottery/LotteryPromo.vue";
 import DailyLoginPromo from "../components/hotpromo/dailylogin/dailyLoginPromo.vue";
 import LoginRewardPromo from "../components/hotpromo/loginreward/loginRewardPromo.vue";
 import FootballFightPromo from "../components/hotpromo/footballfight/footballFightPromo.vue";
 import UpgradeHongBaoPromo from "../components/hotpromo/upgradehongbao/upgradeHongBaoPromo.vue";
-// import GiftPromo from "../components/hotpromo/gift/GiftPromo.vue";
-// import PrivilegeInvite from "../components/hotpromo/privilegeinviteA/PrivilegeInvite.vue";
-// import AsiaCup2024Promo from "../components/hotpromo/asiacup2024/AsiaCup2024Promo.vue";
-// import BasketballHot from "../components/hotpromo/basketballHot/BasketballHot.vue";
 import LplSummerPromo from "../components/hotpromo/lplsummer/LplSummerPromo.vue";
-// import Cny2024Promo from "../components/hotpromo/cny2024/Cny2024Promo.vue";
 import BbDacha2024Promo from "../components/hotpromo/bbdacha2024/BbDacha2024Promo.vue";
-// import CnyStepGame2024Promo from "../components/hotpromo/cnystepgame2024/CnyStepGame2024Promo.vue";
 import LhStepGamePromo from "../components/hotpromo/lhstepgame/LhStepGamePromo.vue";
 import CS2Sign from "../components/hotpromo/CS2Sign/CS2Sign.vue";
 import BonusSpinWheel from "../components/hotpromo/bonusSpinWheel/BonusSpinWheel.vue";
@@ -196,13 +173,14 @@ import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPre
 import EurocupManual from "../components/hotpromo/EurocupManual/EurocupManual.vue";
 import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao.vue";
 import Nba24Match from "../components/hotpromo/Nba24Match/Nba24Match.vue";
-import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue"
+import SlotLacky8 from "../components/hotpromo/slot-lacky8-24/slot-lacky8-24.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import LPLSummer2024 from "../components/hotpromo/lpl-summer-2024/LPLSummer2024.vue";
 import IntelEls24 from "../components/hotpromo/intel-els-24/intel-els-24.vue";
 import DuanWuJiePromo from "../components/hotpromo/dragonboat/DragonBoat.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
+import AijiasuPromo from "../components/hotpromo/aijiasu/AijiasuPromo.vue";
 
 export default defineComponent({
   name: "HotPromo",
@@ -222,23 +200,16 @@ export default defineComponent({
     InsuranceSubmitPromo,
     FeedbackAwardPromo,
     PrivilegeInvitePromo,
-    // InviteFriendPromo,
     EsportQuiz,
     LotteryPromo,
     DailyLoginPromo,
     LoginRewardPromo,
     FootballFightPromo,
     UpgradeHongBaoPromo,
-    // GiftPromo,
-    // PrivilegeInvite,
-    // AsiaCup2024Promo,
-    // BasketballHot,
     HongBaoPreEurocup,
     LplSummerPromo,
-    // Cny2024Promo,
     BbDacha2024Promo,
     CS2Sign,
-    // CnyStepGame2024Promo
     BonusSpinWheel,
     LhStepGamePromo,
     SummonerPromo,
@@ -254,7 +225,8 @@ export default defineComponent({
     LPLSummer2024,
     DuanWuJiePromo,
     DepositRebates,
-    WinLossPromo
+    WinLossPromo,
+    AijiasuPromo
   },
   props: {
     list: {
@@ -356,16 +328,18 @@ export default defineComponent({
       this.list.redirectUrl === "lh-eurocup-manual" ||
       this.list.redirectUrl === "lh-sport-zhongchao" ||
       this.list.redirectUrl === "lh-nba24-match" ||
-      this.list.redirectUrl === "lh1-slot-lucky8"||
+      this.list.redirectUrl === "lh1-slot-lucky8" ||
       this.list.redirectUrl === "lh-fish-hongbao" ||
       this.list.redirectUrl === "lh-lpl-summer24" ||
-      this.list.redirectUrl === "lh1-intel-esl"||
-      this.list.redirectUrl === "lh-sport-zhongchao"||
+      this.list.redirectUrl === "lh1-intel-esl" ||
+      this.list.redirectUrl === "lh-sport-zhongchao" ||
       this.list.redirectUrl === "lh-duanwujie24" ||
       this.list.redirectUrl === "tiqianhongbao" ||
       this.list.redirectUrl === "lh1-deposit-rebates" ||
       this.list.redirectUrl === "lh1-eurocup-guess" ||
-      this.list.redirectUrl === "lh1meizhoubei"
+      this.list.redirectUrl === "lh1meizhoubei" ||
+      this.list.redirectUrl === "lh1-aijiasu" ||
+      this.list.redirectUrl === "lh1ouzhoubeibaopei"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -462,7 +436,15 @@ export default defineComponent({
     // }
     // }
 
+
+    const router = useRouter();
+    const goToCsChat = () => {
+      router.push("/liveChat");
+    };
+
+
     return {
+      goToCsChat,
       store,
       filterWinnerLists,
       formState,
@@ -614,6 +596,18 @@ export default defineComponent({
   }
 }
 
+.cs-btn{
+  color: #ffffff;
+  padding: 5px 30px;
+  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  box-shadow: 0px -2px 4.5799999237px 0px #b1d7ff inset;
+  box-shadow: 0px -1px 3.6640000343px 0px #5894ff inset;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+
 @media (max-width: 768px) {
   .hot-promo {
     .promo-bg {
@@ -644,4 +638,3 @@ export default defineComponent({
   }
 }
 </style>
-./hotpromo/EurocupManual1/EurocupManual.vue

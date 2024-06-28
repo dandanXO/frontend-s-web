@@ -11,7 +11,7 @@
           <span class="nickname-span">{{ store.nickName }}</span>
 
           <!-- <span class="join-span">加入雷火电竞第一天</span> -->
-          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>
+<!--          <span v-if="appVersionNo">版本：{{ appVersionNo }}</span>-->
         </div>
       </div>
     </div>
@@ -200,6 +200,7 @@
             <img v-if="$q.dark.isActive" src="../assets/images/account/account-notice-icon-dark.png" />
           <img v-else src="../assets/images/account/account-notice-icon.png" />
             <div class="acct-nav-label">消息提醒</div>
+            <div class="unread" v-if="store.unreadInboxMail > 0">{{store.unreadInboxMail > 99 ? "99+" : store.unreadInboxMail.toString()}}</div>
           </div>
         </router-link>
 
@@ -289,7 +290,7 @@
       <div class="acct-nav-item">
         <img v-if="$q.dark.isActive" src="../assets/images/account/account-summon-share-icon-dark.png" />
         <img v-else src="../assets/images/account/account-summon-share-icon.png" />
-        <div class="acct-nav-label">精英召回</div>
+        <div class="acct-nav-label">召回奖金</div>
       </div>
     </router-link>
 
@@ -469,10 +470,9 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount } from "vue";
+import { defineComponent, ref, reactive, computed, onMounted, onBeforeUnmount, onActivated } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
 import {useLocalStorage} from "@vueuse/core"
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -516,7 +516,7 @@ export default defineComponent({
       });
     };
 
-    const appVersionNo = ref(null);
+    // const appVersionNo = ref(null);
     const vipLevel = computed(() => {
       if (store.vip == "VIP0") {
         return 0;
@@ -556,16 +556,16 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.6";
-      } else {
-      }
-    };
+    // const getVersionNo = async () => {
+    //   if (store.getDeviceType() == "ANDROID") {
+    //     const info = await App.getInfo();
+    //     var current_version = info.version + "." + info.build;
+    //     appVersionNo.value = current_version;
+    //   } else if (store.getDeviceType() == "IOS") {
+    //     appVersionNo.value = "iOS v0.6";
+    //   } else {
+    //   }
+    // };
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
@@ -586,12 +586,13 @@ export default defineComponent({
         icon: "check_circle_outline"
       });
     };
-
+    onActivated(() => {
+      store.getUnreadTotal();
+    })
     onMounted(() => {
       getBalance();
       store.getBalance();
-      // store.getUnreadTotal();
-      getVersionNo();
+      // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
@@ -867,7 +868,6 @@ export default defineComponent({
       openDeposit,
       openWithdraw,
       openTransfer,
-      appVersionNo,
       isLoadingBalance,
       selfTgurl,
       vip_progress,
@@ -1316,10 +1316,22 @@ export default defineComponent({
         text-decoration: none;
         padding: 6px;
         border-radius: 4px;
+        position: relative;
 
         .acct-nav-label {
           white-space: nowrap;
           color: $font-1;
+        }
+        .unread {
+          position: absolute;
+          
+    border-radius: 50%;
+    background: #ff0000;
+    left: 80%;
+    top: -3px;
+    color: #ffffff;
+    padding: 1px 5px;
+    font-size: 10px;
         }
 
         img {

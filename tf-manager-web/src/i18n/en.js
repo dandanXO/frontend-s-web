@@ -227,6 +227,7 @@ export default {
     UNSETTLED: 'UNSETTLED',
     SETTLED: 'SETTLED',
     CANCEL: 'CANCEL',
+    GIVEREWARD: 'TIPS',
   },
   giftType: {
     ENTITY: 'Entity',
@@ -1610,6 +1611,7 @@ export default {
     vipWheelRecords: 'VIP Wheel Records',
     virtualVotes: 'Virtual Votes',
     visitNumber: 'Visit Number',
+    votes: 'Votes',
     voteTime: 'Vote Time',
     walletType: 'Wallet Type',
     way: 'Way',
@@ -1814,6 +1816,7 @@ export default {
     updateAffiliateLevel: 'Update Affiliate Level',
     unsuccessFrom30min: 'Unsuccessful from 30 Minutes Ago',
     unsuccessIn10time: 'Channels with 10 Unsuccessful',
+    platformAccountName: 'Platform Account Name',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

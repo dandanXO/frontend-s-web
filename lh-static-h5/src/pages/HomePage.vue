@@ -638,7 +638,6 @@ import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
 import { useLocalStorage } from "@vueuse/core";
-import { App } from "@capacitor/app";
 import floor from 'lodash/floor';
 
 import { useUI } from "stores/ui";
@@ -1419,34 +1418,34 @@ export default defineComponent({
 
     const download_url = ref("");
     const isAppUpdateModal = ref(false);
-    const getVersionNo = async () => {
-      // console.log(Platform);
-      // alert("Capacitor" + Platform.is.capacitor);
-      if (Platform.is.android && Platform.is.capacitor) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        // alert(info.version);
-        var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
-          download_url.value = res.data.url;
-
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            isAppUpdateModal.value = true;
-          }
-        }
-      }
-    };
+    // const getVersionNo = async () => {
+    //   // console.log(Platform);
+    //   // alert("Capacitor" + Platform.is.capacitor);
+    //   if (Platform.is.android && Platform.is.capacitor) {
+    //     const info = await App.getInfo();
+    //     // const info = {
+    //     //   version: "1.0.1"
+    //     // };
+    //     // alert(info.version);
+    //     var current_version = parseInt(info.version.replace(/\./g, "") + info.build);
+    //     // info.version && info.build
+    //     const appType = "ALL";
+    //     const device = Platform.is.android ? "ANDROID" : "IOS";
+    //     const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+    //     // console.log(res);
+    //     if (res.code === 0) {
+    //       var version_info = res.data.version;
+    //       var latest_ver_no = parseInt(version_info.replace(/\./g, ""));
+    //       download_url.value = res.data.url;
+    //
+    //       // alert(latest_ver_no);
+    //       // console.log(download_url.value);
+    //       if (latest_ver_no > current_version) {
+    //         isAppUpdateModal.value = true;
+    //       }
+    //     }
+    //   }
+    // };
 
     const openDownloadPage = () => {
       window.open(download_url.value, "_system");
@@ -1678,7 +1677,7 @@ export default defineComponent({
       loadData();
       loadAnnouncement();
       checkPlatform();
-      getVersionNo();
+      // getVersionNo();
       getAppDownloadUrl();
       setTimeout(() => {
         getUnreadTotal();

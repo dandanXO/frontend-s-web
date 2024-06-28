@@ -338,7 +338,7 @@ async function loadPrivilege(val) {
         }
       });
 
-      console.log(privilegeList.value)
+      // console.log(privilegeList.value)
       unselectedPrivileges.value.push({
         code: "LATER",
         depositMin: 0,
