@@ -225,8 +225,4 @@ const isImgFullyLoaded = computed(() => {
     justify-content: center;
     width: 100%;
 }
-
-.scooped-skeleton {
-    mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px
-}
 </style>
