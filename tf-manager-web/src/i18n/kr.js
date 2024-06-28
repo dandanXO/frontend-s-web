@@ -633,6 +633,7 @@ export default {
     cancelQuiz: '퀴즈 취소',
     cancelRemark: '비고 취소',
     cancelRolloverRecord: '롤오버 레코드 취소',
+    cancelAllRolloverRecord: '롤오버 모든 레코드 취소',
     cancelUpdate: '업데이트 취소',
     cancelType: '취소 유형',
     cardAccount: '카드 계정',
