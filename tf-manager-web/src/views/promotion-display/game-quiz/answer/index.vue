@@ -65,6 +65,14 @@
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">
           {{ t('fields.reset') }}
         </el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          v-permission="['sys:game-quiz-answer:export']"
+          @click="requestExportExcel"
+        >
+          {{ t('fields.requestExportToExcel') }}
+        </el-button>
       </div>
     </div>
     <el-dialog
@@ -192,6 +200,22 @@
       @size-change="loadGameQuizAnswer"
     />
   </div>
+  <el-dialog
+    :title="t('fields.exportToExcel')"
+    v-model="uiControl.messageVisible"
+    append-to-body
+    width="500px"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+  >
+    <span>{{ t('message.requestExportToExcelDone1') }}</span>
+    <router-link :to="`/site-management/download-manager`">
+      <el-link type="primary">
+        {{ t('menu.DownloadManager') }}
+      </el-link>
+    </router-link>
+    <span>{{ t('message.requestExportToExcelDone2') }}</span>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -205,7 +229,7 @@ import { nextTick, onMounted } from "@vue/runtime-core";
 import { useStore } from '@/store';
 import { TENANT } from "@/store/modules/user/action-types";
 import { useI18n } from "vue-i18n";
-import { getGameQuizAnswers, updateGameQuizAnswer } from "@/api/game-quiz";
+import { getGameQuizAnswers, updateGameQuizAnswer, getGameQuizAnswersForExport } from "@/api/game-quiz";
 import { getShortcuts } from "@/utils/datetime";
 import moment from "moment";
 
@@ -253,7 +277,8 @@ const uiControl = reactive({
     { key: 2, displayName: 'CANCEL', value: 'CANCEL' },
     { key: 3, displayName: 'WIN', value: 'WIN' },
     { key: 4, displayName: 'LOSE', value: 'LOSE' }
-  ]
+  ],
+  messageVisible: false
 });
 const page = reactive({
   pages: 0,
@@ -280,18 +305,7 @@ const formRules = reactive({
 
 async function loadGameQuizAnswer() {
   page.loading = true;
-  const requestCopy = { ...request };
-  const query = {};
-  Object.entries(requestCopy).forEach(([key, value]) => {
-    if (value) {
-      query[key] = value;
-    }
-  });
-  if (request.startTime !== null) {
-    if (request.startTime.length === 2) {
-      query.startTime = request.startTime.join(",");
-    }
-  }
+  const query = checkQuery()
   const { data: ret } = await getGameQuizAnswers(query);
   page.pages = ret.pages;
   page.records = ret.records;
@@ -346,6 +360,32 @@ function resetQuery() {
   request.status = null;
   request.loginName = null;
   request.startTime = [convertStartDate(new Date()), convertDate(new Date())];
+}
+
+function checkQuery() {
+  const requestCopy = { ...request };
+  const query = {};
+  Object.entries(requestCopy).forEach(([key, value]) => {
+    if (value) {
+      query[key] = value;
+    }
+  });
+  if (request.startTime !== null) {
+    if (request.startTime.length === 2) {
+      query.startTime = request.startTime.join(",");
+    }
+  }
+  return query;
+}
+
+async function requestExportExcel() {
+  const query = checkQuery()
+  query.requestBy = store.state.user.name
+  query.requestTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
+  const { data: ret } = await getGameQuizAnswersForExport(query)
+  if (ret) {
+    uiControl.messageVisible = true
+  }
 }
 
 onMounted(async () => {

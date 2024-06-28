@@ -40,6 +40,7 @@ export default {
     reg_captcha_verifying: "Verifying",
     reg_check_captcha: "Captcha Code Check",
     reg_enter_captcha: "Enter captcha code",
+    reg_bank_acc_num_less_than_17_char: "Bank account number max 17 numbers",
     // register end
     // menu start
     menu_announcement: "Announcement",
@@ -56,6 +57,7 @@ export default {
     page_modal_deposit: "Deposit",
     page_modal_withdraw: "Withdraw",
     page_modal_message: "Message",
+    page_modal_message_compose: "Compose Message",
     page_modal_customer_service: "Customer Service",
     page_modal_promo: "Promo",
     page_modal_personal_info: "Personal Info",
@@ -123,18 +125,6 @@ export default {
     date_picker_close: "Close",
     date_picker_confirm: "Confirm",
     // transaction record end
-    // withdraw start
-    withdraw_method: "Withdraw Method",
-    withdraw_bank: "Bank",
-    withdraw_bank_choose: "Select a bank",
-    withdraw_bank_num: "Bank Number",
-    withdraw_bank_num_choose: "Please enter bank number",
-    withdraw_bank_holder: "Bank Account Holder",
-    withdraw_bank_address: "Bank Address",
-    withdraw_bank_address_placeholder: "Account opening bank address",
-    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
-    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
-    // withdraw end
     // announcement start
     announcement_no_selected: "No selected",
     announcement_total: "Total",
@@ -179,6 +169,12 @@ export default {
     // deposit start
     deposit_payment_channel: "Payment Channel",
     deposit_confirm_deposit: "Deposit",
+    deposit_deposit_amount: "Deposit Amount",
+    deposit_depositor_name: "Depositor Name",
+    deposit_deposit_unit: "Deposit Unit",
+    deposit_ten_thousand_won: "Ten Thousand Won",
+    deposit_clear_amount: "Clear",
+    deposit_please_enter_amount: "Please enter amount",
     deposit_reminder: "Reminder",
     deposit_reminder_caption: "Please read before deposit",
     // deposit end
@@ -187,12 +183,33 @@ export default {
     withdraw_withdraw_amount: "Withdraw Amount",
     withdraw_withdraw_password: "Withdraw Password",
     withdraw_withdraw_code_4_digits: "Withdraw password must be 4 digits",
+    withdraw_method: "Withdraw Method",
+    withdraw_bank: "Bank",
+    withdraw_bank_choose: "Select a bank",
+    withdraw_bank_num: "Bank Number",
+    withdraw_bank_num_choose: "Please enter bank number",
+    withdraw_bank_holder: "Bank Account Holder",
+    withdraw_bank_address: "Bank Address",
+    withdraw_bank_address_placeholder: "Account opening bank address",
+    withdraw_bank_holder_cannot_amend: "Payer name cannot be modified and must match the registered name",
+    withdraw_bank_holder_mismatch: "Note: If the cardholder name does not match, you can correct the information by contacting online customer service. Thank you for your support and understanding!",
+    withdraw_virtual_currency: "Virtual Currency",
+    withdraw_virtual_wallet: "Virtual Wallet",
+    withdraw_please_select: "Please select {currencyType}",
+    withdraw_no_card_available: "There is no option available",
+    withdraw_link_virtual_wallet: "Link virtual wallet",
+    withdraw_link_bank_card: "Link bank card",
+    withdraw_withdraw_amount_per_item: "Withdrawal amount/item",
+    withdraw_withdraw_amount_per_day: "Withdrawal amount/day",
+    withdraw_confirm_withdraw: "Confirm Withdraw",
     // withdraw end
     // personal start
     personal_nickname: "Nickname",
     personal_real_name: "Real Name",
     personal_id: "ID",
     personal_phone: "Phone",
+    personal_close_btn: "Close",
+    personal_update_btn: "Update",
     // personal end
     // password start
     password_existing_password: "Existing Password",
@@ -202,6 +219,9 @@ export default {
     password_password_mismatch: "Confirm Password must be the same as New Password",
     password_change_password: "Change password",
     // password end
+    // page modal start
+    page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
+    // page modal end
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -695,6 +715,25 @@ export default {
     participate: "Participate",
     sent_success: "Sent Successfully"
   },
+  status: {
+    pending: "Pending",
+    closed: "Closed",
+    supplement_success: "Supplement Success",
+    success: "Success",
+    applying: "Applying",
+    reject: "Reject",
+    under_review: "Under Review",
+    to_be_paid: "To Be Paid",
+    payment_on_going: "Payment Ongoing",
+    paying: "Paying",
+    automatic_payment: "Automatic Payment",
+    sending: "Sending",
+    waiting_callback: "Waiting Callback",
+    success: "Success",
+    fail: "Fail",
+    suspend: "Suspend",
+    waiting_auto_payment: "Waiting Auto Payment",
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -747,7 +786,7 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
-    11000: "No bank card",
+    11000: "Third party provider is experiencing difficulties",
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",
@@ -759,6 +798,7 @@ export default {
     14003: "Affiliate code not found",
     15201: "Incorrect old code",
     15202: "New code must match old code",
+    15206: "Duplicated nickname",
     21000: "This game is already in your favorite games list.",
     24001: "The attendance record already exists.",
     24002: "Detected same IP",

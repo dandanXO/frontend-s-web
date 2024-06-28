@@ -111,7 +111,7 @@
           <div class="vip-rules-btn-container">
             <img
               class="vip-rules-btn"
-              :src="require(`../../assets/images/vip/left-vip-${tab === 'rules' ? 'active' : 'inactive'}-btn.png`)"
+              :src="require(`../../assets/images/vip/left-vip-${tab === 'rules' ? 'active' : 'inactive'}-btn${$q.dark.isActive ? '-dark' :''}.png`)"
               alt=""
             />
             <span class="common-text">升级规则</span>
@@ -122,7 +122,7 @@
             <img
               class="vip-privileges-btn"
               :src="
-                require(`../../assets/images/vip/right-vip-${tab === 'privileges' ? 'active' : 'inactive'}-btn.png`)
+                require(`../../assets/images/vip/right-vip-${tab === 'privileges' ? 'active' : 'inactive'}-btn${$q.dark.isActive ? '-dark' :''}.png`)
               "
               alt=""
             />
@@ -193,7 +193,8 @@
 
     <div class="tnc-container" v-if="tab === 'rules'">
       <div class="tnc-title">
-        <img class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
+        <img v-if="$q.dark.isActive" class="tnc-img" src="../../assets/images/vip/title-bg-dark.png" alt="" />
+        <img v-else class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
         <span class="common-text">规则与条款</span>
       </div>
 

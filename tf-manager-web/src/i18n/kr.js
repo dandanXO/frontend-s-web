@@ -217,6 +217,7 @@ export default {
     UNSETTLED: '미정산',
     SETTLED: '정산 완료',
     CANCEL: '취소',
+    GIVEREWARD: '보상',
   },
   giftType: {
     ENTITY: '실물',
@@ -686,6 +687,7 @@ export default {
     confirmStatus: '상태 확인',
     confirmBy: '확인자',
     content: '콘텐츠',
+    contentList: '글머리 기호 목록',
     convertRate: '환율',
     copy: '복사',
     copyPayment: '지불 복사',
@@ -1822,6 +1824,7 @@ export default {
     paymentUpdate:
       '다른 방법이나 레벨에 복사하시겠습니까? 그렇지 않으면 업데이트를 누르십시오',
     paySuccess: '결제 성공',
+    pleaseEnterAffiliateNameOrAffiliateCode: '제휴 이름 또는 제휴 코드를 입력하세요',
     promoDistributionSuccess: '프로모션 분배 성공',
     redeemCashSuccess: '현금 교환 성공',
     reenterPassword: '비밀번호를 다시 입력하십시오',

@@ -36,3 +36,7 @@ export const cancelTeamVotesRecord = async (id) => {
 export const getTeamListSimple = () => {
   return https().request("/team-votes/simple", Method.GET);
 }
+
+export const getTeamVotesRecordForExport = (query) => {
+  return https().request("/team-votes/record/export", Method.GET, query, ContentType.form);
+};

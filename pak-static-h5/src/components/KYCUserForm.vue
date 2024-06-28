@@ -99,7 +99,7 @@ const updateNewUserState = () => {
           message: "Updated successfully",
           icon: "check_circle_outline"
         });
-        emits("closeUserKYCDialog");
+        emits("closeUserKYCDialog", updateInfo);
       } else {
         $q.notify({
           color: "negative",

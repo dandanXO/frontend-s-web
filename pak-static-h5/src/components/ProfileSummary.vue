@@ -86,11 +86,11 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
+      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/auth/menu-telegram.png" />
+          <img src="../assets/images/auth/menu-tiktok.png" />
         </div>
-        {{ $t("sideNav.telegram") }}
+        Tik Tok
       </a>
 
       <a
@@ -99,7 +99,7 @@
         target="_blank"
       >
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        {{ $t("sideNav.whatsapp") }}
+        Whatsapp
       </a>
 
       <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">
@@ -133,7 +133,7 @@
           <img src="../assets/images/auth/auth-logo-text-only.png" @click="onClickLogo" />
         </div>
       </div>
-      <div class="profile-wrapper" v-if="store.hasToken()">
+      <div class="profile-wrapper" v-if="ui.loggedIn || store.hasToken()">
         <div class="profile-details-container">
           <template v-if="!homeProfile">
             <div class="profile-rating">

@@ -1,18 +1,12 @@
 <template>
   <div class="login-container">
-    <!-- <div class="back-left">
-      <router-link :to="'/landing'">
-        <q-btn dense rounded icon="arrow_back_ios_new" class="text-white q-mt-sm" />
-      </router-link>
-    </div> -->
+    <!-- <router-link :to="'/landing'" class="back-left">
+      <q-icon name="reply" />
+    </router-link> -->
 
-    <!-- <div class="login-form-logo-img">
-      <img src="../assets/images/auth/auth-logo.png" />
-    </div> -->
-
-    <div style="display: flex; justify-content: center; padding: 30px">
-      <img src="../assets/images/index/logo-test.png" width="90" />
-    </div>
+    <router-link :to="'/'" class="back-left">
+      <q-icon class="header-icon" name="reply" />
+    </router-link>
 
     <div class="login-form-wrapper">
       <q-form ref="loginFormRef" @submit="onSubmit">
@@ -551,9 +545,17 @@ export default defineComponent({
 }
 
 .back-left {
-  position: fixed;
-  top: 16px;
-  left: 16px;
+  color: #fff;
+  font-size: 22px;
+  background: linear-gradient(180deg, #454a3f 0%, #21231f 100%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin: 1rem 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .login-form-logo-img {

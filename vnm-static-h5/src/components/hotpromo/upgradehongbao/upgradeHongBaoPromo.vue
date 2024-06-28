@@ -181,7 +181,7 @@ onMounted(() => {
   width: 100%;
   max-width: 1400px;
   text-align: center;
-  margin: 20px auto;
+  margin: 20px auto 0px;
 
   .buttons {
     display: flex;
@@ -259,6 +259,8 @@ onMounted(() => {
 
     .prize-redeem {
       cursor: pointer;
+      width: 57%;
+      margin: auto;
     }
 
     .current-content {

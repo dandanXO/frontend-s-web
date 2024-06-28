@@ -143,6 +143,28 @@
             />
           </el-select>
         </el-form-item>
+        <el-form-item
+          :label="t('fields.platformAccountName')"
+          prop="platformAccountId"
+        >
+          <el-select
+            filterable
+            v-model="form.platformAccountNames"
+            size="small"
+            :placeholder="t('fields.platformAccount')"
+            class="filter-item"
+            no-data-text="No data. empty platform name "
+            style="width: 200px; margin-left: 5px"
+            multiple
+          >
+            <el-option
+              v-for="item in filteredPlatformAcc"
+              :key="item.id"
+              :label="item.name"
+              :value="item.name"
+            />
+          </el-select>
+        </el-form-item>
         <el-form-item :label="t('fields.alias')" prop="alias">
           <el-input
             style="width: 300px"
@@ -348,6 +370,7 @@ const form = reactive({
   platformId: null,
   status: null,
   platformAccountId: null,
+  platformAccountNames: null,
   alias: null,
   followType: null,
   gameType: null,
@@ -358,6 +381,7 @@ const formRules = reactive({
   platformId: [required(t('message.validatePlatformNameRequired'))],
   status: [required(t('message.validateStatusRequired'))],
   platformAccountId: [required(t('message.validatePlatformAccountRequired'))],
+  platformAccountNames: [required(t('message.validatePlatformAccountNamesRequired'))],
 })
 
 const sites = reactive({
@@ -454,6 +478,7 @@ function showDialog(type) {
     form.id = null
     form.status = '1'
     form.showTransfer = true
+    form.platformAccountNames = null
     uiControl.dialogTitle = t('fields.addSitePlatform')
   } else if (type === 'EDIT') {
     uiControl.dialogTitle = t('fields.editSitePlatform')
@@ -479,6 +504,7 @@ function showEdit(sitePlatform) {
       }
     }
     filterPlatformAccVal.value = form.platformId
+    form.platformAccountNames = sitePlatform.platformAccountNames.split(",")
   })
 }
 
@@ -491,7 +517,8 @@ function create() {
       } else if (form.followType === 'FOLLOW') {
         form.gameType = null
       }
-      await createSitePlatform(form)
+      const requestForm = checkForm()
+      await createSitePlatform(requestForm)
       uiControl.dialogVisible = false
       await loadSitePlatform()
       ElMessage({ message: t('message.addSuccess'), type: 'success' })
@@ -508,12 +535,25 @@ function edit() {
       } else if (form.followType === 'FOLLOW') {
         form.gameType = null
       }
-      await updateSitePlatform(form)
+      const requestForm = checkForm()
+      await updateSitePlatform(requestForm)
       uiControl.dialogVisible = false
       await loadSitePlatform()
       ElMessage({ message: t('message.editSuccess'), type: 'success' })
     }
   })
+}
+
+function checkForm() {
+  const formCopy = { ...form };
+  const requestForm = {};
+  Object.entries(formCopy).forEach(([key, value]) => {
+    if (value) {
+      requestForm[key] = value;
+    }
+  });
+  requestForm.platformAccountNames = formCopy.platformAccountNames.join(',')
+  return requestForm;
 }
 
 function submit() {

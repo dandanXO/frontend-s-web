@@ -54,7 +54,7 @@
         </div>
 
         <div class="write-board-div q-pa-md">
-          <div class="top q-pb-md">内容</div>
+          <div class="top q-pb-md">内容<span class="red-note">注:若您的建议和反馈被本平台使用采纳，我们将奉送38~888元奖金</span></div>
           <q-input
             ref="contentRef"
             :rules="[
@@ -189,6 +189,10 @@ onMounted(() => {
 
     margin: 14px auto 15px;
 
+    .red-note {
+        color: #ff0000;
+        width: 85%;
+      }
     .q-field--filled .q-field__control {
     }
   }

@@ -1,6 +1,7 @@
 <template>
     <div class="category-list">
-        <div :class="`category ${category.name} ${props.selectedCategory === category.name ? 'active' : ''}`" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex" 
+        <div :class="`category ${category.name} ${props.selectedCategory === category.name ? 'active' : ''}`"
+            v-for="(category, categoryIndex) in categoryList" :key="categoryIndex"
             @click="() => props.onClickGameCategory(category.name, categoryIndex)">
             <div class="category-labels">
                 <div class="category-kr-label">{{ $t(category.label) }}</div>
@@ -11,15 +12,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 const categoryList = [
     { name: "live", label: "lang.game_category_live", enLabel: "LIVE CASINO" },
     { name: "slots", label: "lang.game_category_slot", enLabel: "SLOT GAME" },
-    // { name: "esport", label: "E-스포츠", enLabel: "ESPORTS" },
     { name: "sport", label: "lang.game_category_sport", enLabel: "SPORTS" },
     { name: "casual", label: "lang.game_category_minigame", enLabel: "MINI GAME" }
-    // { name: "fish", label: "낚시 게임" }
 ];
 
 const props = defineProps(['onClickGameCategory', 'selectedCategory']);
@@ -33,7 +30,7 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
     padding: 20px;
     justify-content: center;
 
-    
+
     @media (max-width: 768px) {
         padding: 5px 10px;
         gap: 0px;
@@ -160,7 +157,8 @@ const props = defineProps(['onClickGameCategory', 'selectedCategory']);
         }
     }
 
-    &:hover, &.active {
+    &:hover,
+    &.active {
         filter: grayscale(0);
         background-size: 130% 130%;
         border: 2px solid #5dd8ff;

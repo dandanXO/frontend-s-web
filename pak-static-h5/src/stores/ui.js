@@ -11,7 +11,9 @@ export const useUI = defineStore("ui-store", {
       slotLists: [],
       bottomInsetHeight: 0,
       CSAUrl: "",
-      downloadAppUrl: ""
+      LiveUrl: null,
+      downloadAppUrl: "",
+      loggedIn: false
     };
   },
   actions: {
@@ -30,6 +32,9 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    },
+    showLoggedIn() {
+      this.loggedIn = true;
     }
   }
 });

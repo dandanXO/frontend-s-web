@@ -25,6 +25,7 @@ export default {
         liveSupport: "زندہ حمایت",
         feedback: "تاثرات",
         telegram: "Telegram",
+        tikTok: "Tik Tok",
         whatsapp: "Whatsapp",
         language: "زبان"
       },
@@ -758,6 +759,16 @@ export default {
         bonus: "بونس"
       }
     }
+  },
+  promo: {
+    all: 'سب',
+    earn: 'کمائیں',
+    hot: 'مقبول',
+    new_user: 'نیا صارف',
+    sports: 'کھیل',
+    live: 'لائیو',
+    slot: 'الیکٹرانک',
+    vip: 'وی آئی پی'
   },
   error: {
     101: "پلیٹ فارم نہیں ملا",

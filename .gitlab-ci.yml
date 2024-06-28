@@ -127,6 +127,7 @@ deploy-xf-landing-v6:
     PROJECT: xf-landing-v6
 
 #===============================================================================================
+
 deploy-tha-download:
   extends: .s3-deploy
   variables:
@@ -138,6 +139,13 @@ deploy-tha-download-new:
   extends: .s3-deploy
   variables:
     PROJECT: tha-download-new
+
+#===============================================================================================
+
+deploy-tha2-download:
+  extends: .s3-deploy
+  variables:
+    PROJECT: tha2-download
 
 #===============================================================================================
 
@@ -267,6 +275,13 @@ deploy-vnm-landing-v5-2:
 
 #===============================================================================================
 
+deploy-vnm-landing-v6:
+  extends: .s3-deploy
+  variables:
+    PROJECT: vnm-landing-v6
+
+#===============================================================================================
+
 deploy-vnm-maintenance:
   extends: .s3-deploy
   variables:
@@ -342,6 +357,20 @@ build-image-ind-static-v2:
     PROJECT: ind-static-v2
   needs:
     - build-ind-static-v2
+
+#===============================================================================================
+
+build-ind-static-v3:
+  extends: .build-projects
+  variables:
+    PROJECT: ind-static-v3
+
+build-image-ind-static-v3:
+  extends: .docker-build
+  variables:
+    PROJECT: ind-static-v3
+  needs:
+    - build-ind-static-v3
 
 #===============================================================================================
 
@@ -534,10 +563,31 @@ deploy-lh-landing-v6:
 
 #===============================================================================================
 
+deploy-lh-landing-v7:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-landing-v7
+
+#===============================================================================================
+
 deploy-lh-cesu:
   extends: .s3-deploy
   variables:
     PROJECT: lh-cesu
+
+#===============================================================================================
+
+deploy-dy-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: dy-cesu
+
+#===============================================================================================
+
+deploy-xf-cesu:
+  extends: .s3-deploy
+  variables:
+    PROJECT: xf-cesu
 
 #===============================================================================================
 

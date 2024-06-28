@@ -1,53 +1,37 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <q-card style="max-width: 860px; background: transparent; box-shadow: none;"
-      :style="isMinimalMode ? '' : 'width: 100%;'">
-      <div style="text-align: right;">
-        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
-      </div>
-
-      <q-card-section>
+    <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''">
+      <div class="header">
+        <div style="text-align: right;">
+          <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
+        </div>
         <div class="page-dialog-main-header">
-          <span class="header-info-description">{{ headerInfo.description }}</span>
+          <span class="header-info-description">{{ headerInfo.description ? $t(headerInfo.description) : '' }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
-      </q-card-section>
-
-      <q-separator color="grey" />
-
-      <q-card-section>
-        <div class="page-dialog-main">
-
-          <div class="page-dialog-main-container">
-            <div class="page-dialog-links" v-if="!isMinimalMode">
-              <p class="header-info-description">{{ headerInfo.description }}</p>
-            </div>
-            <div class="page-dialog-tabs">
-              <template v-if="!isMinimalMode">
-                <q-tabs v-model="page" align="justify" inline-label dense>
-                  <template v-for="item in formattedPagesInfo" :key="item.page">
-                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
-                      class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
-                      <img style="padding-right: 5px" :src="item.iconActiveUrl" :alt="item.info"
-                        :style="page === item.page ? '' : 'filter:contrast(0)'" />
-                    </q-tab>
-                  </template>
-                </q-tabs>
-              </template>
-
-              <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;max-height:70vh'">
-                <template v-for="item in formattedPagesInfo" :key="item.page">
-                  <q-tab-panel :name="item.page">
-                    <component :is="item.component" @closeModal="closeDialog"></component>
-                  </q-tab-panel>
-                </template>
-              </q-tab-panels>
-            </div>
-          </div>
-        </div>
-      </q-card-section>
-    </q-card>
+        <q-separator color="grey" />
+      </div>
+      <div class="page-dialog-tabs" v-if="!isMinimalMode">
+        <q-tabs v-model="page" align="justify" inline-label dense style="background-color: #212632;">
+          <template v-for="item in formattedPagesInfo" :key="item.page">
+            <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
+              class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
+              <img :src="item.iconActiveUrl" :alt="item.info" :style="page === item.page ? '' : 'filter:contrast(0)'" />
+            </q-tab>
+          </template>
+        </q-tabs>
+      </div>
+      <div class=content>
+        <q-tab-panels v-model="page" animated swipeable infinite>
+          <template v-for="item in formattedPagesInfo" :key="item.page">
+            <q-tab-panel :name="item.page" style="padding:0;">
+              <component :is="item.component" @closeModal="closeDialog"></component>
+            </q-tab-panel>
+          </template>
+        </q-tab-panels>
+      </div>
+    </div>
   </q-dialog>
 </template>
 <script setup id="PageModal">
@@ -58,7 +42,6 @@ import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
 import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
-import FeedbackPage from "components/pageModalContent/FeedbackPage";
 import MessagesPage from "components/pageModalContent/MessagesPage";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
@@ -66,6 +49,7 @@ import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import MessageCompose from "../pageModalContent/MessageCompose.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -90,16 +74,14 @@ watch(
         if (!visible.value) visible.value = false;
 
         // determine the extact pageInfoItem based on route info
-        const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+        const pageInfoItem = [...pagesInfo, ...minimalModePagesInfo].find(({ page }) => page === route.query.page);
         // determine which left side tab to land on
-        if (pageInfoItem?.tabIndex) {
-          tabIndex.value = pageInfoItem.tabIndex;
+        if (pageInfoItem) {
+          tabIndex.value = pageInfoItem?.tabIndex;
+          open(route.query.page);
         } else {
-          // default to first tab if unable to proceed with the above
-          tabIndex.value = "log";
+          router.push('/');
         }
-
-        open(route.query.page);
       });
     } else {
       // router.push("/");
@@ -131,7 +113,7 @@ const pagesInfo = reactive([
     component: FinanceDeposit,
     headerInfo: {
       title: 'lang.page_modal_deposit',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -142,20 +124,9 @@ const pagesInfo = reactive([
     component: FinanceWithdraw,
     headerInfo: {
       title: 'lang.page_modal_withdraw',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
-  // {
-  //   tabIndex: "log",
-  //   page: "personal/messages",
-  //   info: 'lang.page_modal_message',
-  //   iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-  //   component: FeedbackPage,
-  //   headerInfo: {
-  //     title: 'lang.page_modal_message',
-  //     description: "입금시 꼭 계좌문의를 하세요!"
-  //   }
-  // },
   {
     tabIndex: "log",
     page: "personal/messages",
@@ -164,7 +135,18 @@ const pagesInfo = reactive([
     component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "log",
+    page: "personal/messages/create",
+    info: 'lang.page_modal_message_compose',
+    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+    component: MessageCompose,
+    headerInfo: {
+      title: 'lang.page_modal_message_compose',
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -178,18 +160,6 @@ const pagesInfo = reactive([
       description: ""
     }
   },
-  // {
-  //   tabIndex: "log",
-  //   href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
-  //   page: "customer/service",
-  //   info: 'lang.page_modal_customer_service',
-  //   iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
-  //   component: FeedbackPage,
-  //   headerInfo: {
-  //     title: 'lang.page_modal_customer_service',
-  //     description: "입금시 꼭 계좌문의를 하세요!"
-  //   }
-  // },
   {
     tabIndex: "my",
     page: "personal/info",
@@ -198,7 +168,7 @@ const pagesInfo = reactive([
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -209,7 +179,7 @@ const pagesInfo = reactive([
     component: AnnouncementComponent,
     headerInfo: {
       title: 'lang.page_modal_announcement',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -233,7 +203,7 @@ const pagesInfo = reactive([
     component: TransitRecord,
     headerInfo: {
       title: 'lang.page_modal_transaction_record',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
@@ -244,7 +214,7 @@ const pagesInfo = reactive([
     component: MyPasswordChange,
     headerInfo: {
       title: 'lang.page_modal_change_password',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
 ]);
@@ -302,10 +272,6 @@ onMounted(() => {
 <style scoped lang="scss">
 // reset app.scss
 
-.q-panel>div {
-  height: unset;
-}
-
 .page-dialog {
   width: 980px;
   height: 692px;
@@ -316,6 +282,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 8px;
+  padding: 5px 0;
 }
 
 .page-dialog-main {
@@ -364,6 +331,7 @@ onMounted(() => {
 .page-dialog-tab {
   :deep(.q-tab__content) {
     flex-direction: row-reverse;
+    gap: 5px;
   }
 }
 
@@ -406,8 +374,8 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
@@ -418,6 +386,8 @@ onMounted(() => {
     color: #000;
     text-align: left;
     margin-left: 10px;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .header-title {
@@ -430,10 +400,8 @@ onMounted(() => {
 }
 
 .page-dialog-tabs {
-  background: var(--main-bg-color);
-
   .q-tab-panels {
-    overflow-y: auto;
+    height: 100%;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -448,10 +416,6 @@ onMounted(() => {
 .q-tab-panels {
   background: var(--main-bg-color);
   height: 100%;
-}
-
-:deep(.modal-body-buttons) {
-  background-color: var(--main-bg-color);
 }
 
 @media (max-width: 768px) {
@@ -469,12 +433,12 @@ onMounted(() => {
     position: relative;
     top: 0px;
 
-    .header-info-description {
-      display: block;
-      margin: unset;
-      text-align: center;
-      padding-top: 12px;
-    }
+    // .header-info-description {
+    //   display: block;
+    //   margin: unset;
+    //   text-align: center;
+    //   font-size: 10px;
+    // }
 
     .left-group {
       display: flex;
@@ -486,9 +450,15 @@ onMounted(() => {
   }
 
   .page-dialog-main-header {
-    .header-info-description {
-      visibility: hidden;
+
+    .header-title {
+      font-size: 15px;
     }
+
+    // .header-info-description {
+    //   visibility: hidden;
+    //   overflow: hidden;
+    // }
 
     .q-btn {
       margin-right: 15px;
@@ -500,22 +470,54 @@ onMounted(() => {
       .q-tab__content {
         display: flex;
         flex-direction: column-reverse;
+        gap: 0px;
 
         .q-tab__label {
           margin-left: unset;
-          margin-top: 4px;
-          font-size: 15px;
+          margin-top: 0px;
+          font-size: 12px;
         }
       }
     }
   }
+}
 
-  .modal-body-buttons {
-    .form-button {
-      width: 140px;
-      height: 40px;
-      max-width: 40vw;
-    }
+.page-modal-container {
+  display: grid;
+  grid-template-rows: 89px auto 1fr;
+  width: 100%;
+  height: 100%;
+  min-width: 30vw;
+  max-width: 50vw;
+  max-height: 75vh;
+
+  &.minimal {
+    grid-template-rows: 89px fit-content;
+    height: fit-content;
+    width: fit-content;
+    min-width: fit-content;
+  }
+
+  @media (max-width: 1400px) {
+    min-width: 60vw;
+    max-width: 85vw;
+  }
+
+  @media (max-width: 768px) {
+    min-width: 70vw;
+    max-width: 95vw;
+  }
+
+  .header {}
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    overflow: auto;
+    background-color: #212632;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 </style>

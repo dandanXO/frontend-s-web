@@ -52,6 +52,7 @@ const onResponse = (response) => {
     const store = useStore()
     const siteId = store.state.user.siteId
     if(res.code === ResponseCode.ERROR_FORBIDDEN || res.code === ResponseCode.ERROR_FORBIDDEN2){
+      sessionStorage.setItem('myIPAddress', res.data)
       router.push('/403');
       return;
     }
@@ -77,6 +78,8 @@ const onResponse = (response) => {
         router.go("/kr/login")
       } else if (siteId === "11" || siteId === 11) {
         router.go("/pak/login")
+      }else if (siteId === "15" || siteId === 15) {
+        router.go("/kaka/login")
       }
       location.reload()
     } else if (res.code === ResponseCode.ERROR_TOKEN_EXPIRED ||
@@ -165,6 +168,8 @@ const https = (api) => {
   // const ind2Host = "iw2-xt5dzo.xlpfl0qqf3p.com"
   // const lhHost = "lh1-affiliate.phoicynxeey.com"
   const lh2Host = "lh1-affiliate.lhf2ifpudro.com"
+  const xf1Host = "affiliate-web.gwd4jptunz.com";
+  const xf2Host = "xf1-affiliate.gwd4jptunz.com"
   // const vnmHost = "vnm-affiliate.th80to83w1.com"
   // const krwHost = "krw-affiliate.hiemloelebc.com";
   // const testLocal = "localhost:9998"
@@ -175,7 +180,7 @@ const https = (api) => {
   console.log(currentHost)
   const isLocalhost = currentHost.indexOf("localhost") > -1 || currentHost.indexOf("127.0.0.1") > -1;
   //Only Global or China.
-  if (currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf("-cn") > -1 || isLocalhost) {
+  if (currentHost.indexOf("-cn") > -1 || currentHost.indexOf(lh2Host) > -1 || currentHost.indexOf(xf1Host) > -1 || currentHost.indexOf(xf2Host) > -1 || isLocalhost) {
     apiUrl = isAff ? process.env.VUE_APP_RST_API : (isCr ? process.env.VUE_APP_CR_API : process.env.VUE_APP_AFF_API)
   } else {
     apiUrl = isAff ? process.env.VUE_APP_GLOBAL_RST_API : (isCr ? process.env.VUE_APP_GLOBAL_CR_API : process.env.VUE_APP_GLOBAL_AFF_API)
