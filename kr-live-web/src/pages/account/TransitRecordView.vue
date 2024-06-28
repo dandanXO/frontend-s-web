@@ -3,10 +3,10 @@
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped" dense>
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />
-        <q-tab name="turnover" :label="$t('lang.turnover')" />
+        <!-- <q-tab name="turnover" :label="$t('lang.turnover')" /> -->
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
         <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
-        <q-tab name="rebates" :label="$t('lang.rebates')" />
+        <!-- <q-tab name="rebates" :label="$t('lang.rebates')" /> -->
         <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
         <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>

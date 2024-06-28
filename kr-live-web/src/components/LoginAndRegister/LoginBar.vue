@@ -135,16 +135,16 @@ const iconInfo = reactive([
     iconUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     page: 'finance/withdraw',
   },
-  {
-    info: "lang.menu_transaction_record",
-    iconUrl: require("../../assets/icon/icon-betting.svg"),
-    page: 'transaction/records',
-  },
-  {
-    info: "lang.menu_rebates",
-    iconUrl: require("../../assets/icon/icon-betting.svg"),
-    page: 'transaction/records&tab=rebates',
-  },
+  // {
+  //   info: "lang.menu_transaction_record",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   page: 'transaction/records',
+  // },
+  // {
+  //   info: "lang.menu_rebates",
+  //   iconUrl: require("../../assets/icon/icon-betting.svg"),
+  //   page: 'transaction/records&tab=rebates',
+  // },
   {
     type: 'message',
     info: "lang.menu_message",
