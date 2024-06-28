@@ -70,7 +70,7 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column v-if="request.siteId !== 11" prop="downlineMember" :label="t('fields.downlineMember')" width="120">
+        <el-table-column prop="downlineMember" :label="t('fields.downlineMember')" width="180">
           <template
             #default="scope"
             v-if="hasPermission(['sys:member-refer:summary'])"
@@ -78,23 +78,7 @@
             <a v-if="scope.row.downlineMember > 0">
               <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.memberId)">{{ scope.row.downlineMember }}</el-link>
             </a>
-            <span v-else>{{ scope.row.downlineMember ? scope.row.downlineMember : 0 }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column v-else prop="downlineMember" :label="t('fields.allDownlineMember')" width="120">
-          <template
-            #default="scope"
-            v-if="hasPermission(['sys:member-refer:summary'])"
-          >
-            <a v-if="scope.row.downlineMember > 0">
-              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.memberId)">{{ scope.row.downlineMember }}</el-link>
-            </a>
-            <span v-else>{{ scope.row.downlineMember ? scope.row.downlineMember : 0 }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column v-if="request.siteId === 11" prop="depositDownlineCount" :label="t('fields.depositDownlineCount')" width="120">
-          <template #default="scope">
-            <span>{{ scope.row.depositDownlineCount ? scope.row.depositDownlineCount : 0 }}</span>
+            <span v-else>{{ scope.row.downlineMember }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -111,8 +95,9 @@
             </router-link>
           </template>
         </el-table-column>
-        <el-table-column v-if="request.siteId !== 11" prop="ftdDownlineCount" :label="t('fields.ftdDownlineCount')" width="120" />
-        <el-table-column v-if="request.siteId !== 11" prop="regDownlineCount" :label="t('fields.regDownlineCount')" width="120" />
+        <el-table-column prop="ftdDownlineCount" :label="t('fields.ftdDownlineCount')" width="120" />
+        <el-table-column prop="depositDownlineCount" :label="t('fields.depositDownlineCount')" width="120" />
+        <el-table-column prop="regDownlineCount" :label="t('fields.regDownlineCount')" width="120" />
         <el-table-column
           prop="deposit"
           :label="t('fields.depositAmount')"

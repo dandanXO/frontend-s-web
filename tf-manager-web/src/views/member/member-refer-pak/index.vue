@@ -8,21 +8,6 @@
           style="width: 200px;"
           :placeholder="t('fields.loginName')"
         />
-        <el-date-picker
-          v-model="request.regTime"
-          format="DD/MM/YYYY"
-          value-format="YYYY-MM-DD"
-          size="small"
-          class="input-small"
-          style="margin-left: 5px;"
-          type="daterange"
-          range-separator=":"
-          :start-placeholder="t('fields.startDate')"
-          :end-placeholder="t('fields.endDate')"
-          :shortcuts="shortcuts"
-          :disabled-date="disabledDate"
-          :editable="false"
-        />
         <el-select
           v-model="request.siteId"
           size="small"
@@ -70,15 +55,15 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="downlineMember" :label="t('fields.downlineMember')" width="180">
+        <el-table-column prop="totalDownlineCount" :label="t('fields.downlineMember')" width="100">
           <template
             #default="scope"
-            v-if="hasPermission(['sys:member-refer:list'])"
+            v-if="hasPermission(['sys:member-refer-pak:list'])"
           >
-            <a v-if="scope.row.downlineMember > 0">
-              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.downlineMember }}</el-link>
+            <a v-if="scope.row.totalDownlineCount > 0">
+              <el-link type="primary" @click="reloadMembers(scope.row.loginName, scope.row.id)">{{ scope.row.totalDownlineCount }}</el-link>
             </a>
-            <span v-else>{{ scope.row.downlineMember }}</span>
+            <span v-else>{{ scope.row.totalDownlineCount }}</span>
           </template>
         </el-table-column>
         <el-table-column
@@ -93,17 +78,6 @@
             <router-link :to="`details/${scope.row.id}?site=${request.siteId}`">
               <el-link type="primary">{{ scope.row.loginName }}</el-link>
             </router-link>
-          </template>
-        </el-table-column>
-        <el-table-column prop="vip" :label="t('fields.vipLevel')" width="100" />
-        <el-table-column
-          prop="balance"
-          :label="t('fields.balance')"
-          width="120"
-        >
-          <template #default="scope">
-            $
-            <span v-formatter="{data: scope.row.balance, type: 'money'}" />
           </template>
         </el-table-column>
         <el-table-column
@@ -123,23 +97,8 @@
             />
           </template>
         </el-table-column>
-        <el-table-column
-          prop="lastLoginTime"
-          :label="t('fields.lastLoginTime')"
-          width="150"
-        >
-          <template #default="scope">
-            <span v-if="scope.row.lastLoginTime === null">-</span>
-            <span
-              v-if="scope.row.lastLoginTime !== null"
-              v-formatter="{
-                data: scope.row.lastLoginTime,
-                timeZone: timeZone,
-                type: 'date',
-              }"
-            />
-          </template>
-        </el-table-column>
+        <el-table-column prop="todayRegCount" :label="t('fields.todayRegCount')" width="100" />
+        <el-table-column prop="yesterdayRegCount" :label="t('fields.yesterdayRegCount')" width="100" />
       </el-table>
       <el-pagination
         class="pagination"
@@ -156,7 +115,7 @@
 <script setup>
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
-  getMemberReferParent
+  getPakMemberReferParent
 } from '../../../api/member-refer-event'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
@@ -164,9 +123,6 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
-import { getShortcuts } from '@/utils/datetime'
-import moment from "moment/moment";
-import { formatInputTimeZone } from "@/utils/format-timeZone";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -177,7 +133,6 @@ const table = ref(null)
 const siteList = reactive({
   list: [],
 })
-const shortcuts = getShortcuts(t)
 let timeZone = null
 
 const uiControl = reactive({
@@ -199,7 +154,6 @@ const request = reactive({
   loginName: null,
   siteId: null,
   memberRemark: null,
-  regTime: null,
   referrerId: null,
 })
 
@@ -207,7 +161,6 @@ function resetQuery() {
   request.loginName = null
   request.memberRemark = null
   request.siteId = site.value ? site.value.id : siteList.list[0].id
-  request.regTime = null
   request.referrerId = null
   uiControl.referrer = null
 }
@@ -216,28 +169,8 @@ function checkQuery() {
   const requestCopy = { ...request }
   const query = {}
   Object.entries(requestCopy).forEach(([key, value]) => {
-    if (key === 'regTime' && value) {
-      query[key] = [...requestCopy.regTime]
-    } else {
-      if (value) {
-        query[key] = value
-      }
-    }
+    query[key] = value
   })
-  timeZone = siteList.list.find(e => e.id === requestCopy.siteId).timeZone;
-  if (request.regTime !== null) {
-    if (request.regTime.length === 2) {
-      query.regTime[0] = moment(query.regTime[0]).format(
-        'YYYY-MM-DD 00:00:00'
-      )
-      query.regTime[0] = formatInputTimeZone(query.regTime[0], timeZone);
-      query.regTime[1] = moment(query.regTime[1]).format(
-        'YYYY-MM-DD 23:59:59'
-      )
-      query.regTime[1] = formatInputTimeZone(query.regTime[1], timeZone);
-      query.regTime = query.regTime.join(',')
-    }
-  }
   return query
 }
 
@@ -255,11 +188,10 @@ async function reloadMembers(loginName, uplineId) {
 }
 
 async function loadMembers() {
-  console.log("loadmembers")
   page.loading = true
   uiControl.searchDialogVisible = false
   const query = checkQuery()
-  const result = await getMemberReferParent(query)
+  const result = await getPakMemberReferParent(query)
 
   page.pages = result.data.pages
   page.records = result.data.records
@@ -276,7 +208,7 @@ function changePage(page) {
 
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
-  siteList.list = site
+  siteList.list = site.filter(e => e.id === 11)
 }
 
 onMounted(async () => {
