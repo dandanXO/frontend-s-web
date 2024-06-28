@@ -689,6 +689,7 @@ export default {
     cancelQuiz: '取消赛事问答',
     cancelRemark: '取消备注',
     cancelRolloverRecord: '取消流水记录',
+    cancelAllRolloverRecord: '取消全部流水记录',
     cancelUpdate: '取消更新',
     cancelType: '取消类型',
     cardAccount: '银行户名',
