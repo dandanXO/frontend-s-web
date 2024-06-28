@@ -563,7 +563,9 @@ export default {
         registrationDate: "رجسٹریشن تاریخ",
         balance: "بیلنس",
         lastLogin: "آخری لاگ ان وقت",
-        lastDeposit: "آخری جمع وقت"
+        lastDeposit: "آخری جمع وقت",
+        todayRegistercount: "آج کی رجسٹریشن کی تعداد",
+        yesterdayRegisterCount: "کل کی رجسٹریشن کی تعداد"
       }
     },
     teamBetting: {
@@ -623,7 +625,10 @@ export default {
         profitAndLoss: "منافع اور نقصان",
         depositFee: "جمع کرانے کی فیس",
         bet: "بیٹ",
-        payout: "ادائیگی"
+        payout: "ادائیگی",
+        depositCount: "جمع کرنے کی تعداد",
+        ftdAmount: "FTD رقم",
+        ftdCount: "FTD تعداد"
       },
       sums: {
         bet: "بیٹ",
@@ -631,7 +636,9 @@ export default {
         bonus: "بونس",
         payout: "ادائیگی",
         deposit: "ڈپازٹ",
-        withdraw: "نکالنا"
+        withdraw: "نکالنا",
+        betAmount: "بیٹ کی رقم",
+        depositCount: "جمع کرنے کی تعداد"
       }
     }
   },
@@ -780,14 +787,14 @@ export default {
     }
   },
   promo: {
-    all: 'سب',
-    earn: 'کمائیں',
-    hot: 'مقبول',
-    new_user: 'نیا صارف',
-    sports: 'کھیل',
-    live: 'لائیو',
-    slot: 'الیکٹرانک',
-    vip: 'وی آئی پی'
+    all: "سب",
+    earn: "کمائیں",
+    hot: "مقبول",
+    new_user: "نیا صارف",
+    sports: "کھیل",
+    live: "لائیو",
+    slot: "الیکٹرانک",
+    vip: "وی آئی پی"
   },
   error: {
     101: "پلیٹ فارم نہیں ملا",

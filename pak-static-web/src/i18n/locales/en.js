@@ -564,7 +564,9 @@ export default {
         registrationDate: "Registration Date",
         balance: "Balance",
         lastLogin: "Last Login Time",
-        lastDeposit: "Last Deposit Time"
+        lastDeposit: "Last Deposit Time",
+        todayRegistercount: "Today Register Count",
+        yesterdayRegisterCount: "Yesterday Register Count"
       }
     },
     teamBetting: {
@@ -597,7 +599,7 @@ export default {
         platform: "Platform",
         players: "Players",
         bet: "Bet",
-        payout: "Payout",
+        payout: "Payout"
       }
     },
     profitAndLoss: {
@@ -625,6 +627,9 @@ export default {
         depositFee: "Deposit Fee",
         bet: "Bet",
         payout: "Payout",
+        depositCount: "Deposit Count",
+        ftdAmount: "FTD Amount",
+        ftdCount: "FTD Count"
       },
       sums: {
         bet: "Bet",
@@ -633,6 +638,8 @@ export default {
         payout: "Payout",
         deposit: "Deposit",
         withdraw: "Withdraw",
+        betAmount: "Bet Amount",
+        depositCount: "Deposit count",
       }
     }
   },
@@ -781,14 +788,14 @@ export default {
     }
   },
   promo: {
-    all: 'ALL',
-    earn: 'EARN',
-    hot: 'HOT',
-    new_user: 'NEW USER',
-    sports: 'SPORTS',
-    live: 'LIVE',
-    slot: 'SLOT',
-    vip: 'VIP'
+    all: "ALL",
+    earn: "EARN",
+    hot: "HOT",
+    new_user: "NEW USER",
+    sports: "SPORTS",
+    live: "LIVE",
+    slot: "SLOT",
+    vip: "VIP"
   },
   error: {
     101: "Platform not found",
