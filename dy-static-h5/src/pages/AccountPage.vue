@@ -186,7 +186,7 @@
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.svg" />
-            <div class="acct-nav-label">呼朋唤友</div>
+            <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
