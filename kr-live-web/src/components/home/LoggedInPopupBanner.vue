@@ -85,11 +85,31 @@ const closeSecondBanner = () => {
 .login-popup-banner-1-container {
     padding: 70px;
 
+    @media (max-width: 600px) {
+        padding: 60px;
+    }
+
+    @media (max-width: 450px) {
+        padding: 50px;
+    }
+
     .corner-logo-img {
         position: absolute;
         top: -50px;
         right: -50px;
         width: 150px;
+
+        @media (max-width: 600px) {
+            top: -50px;
+            right: -40px;
+            width: 130px;
+        }
+
+        @media (max-width: 450px) {
+            top: -45px;
+            right: -35px;
+            width: 120px;
+        }
     }
 
     .banner-title-img {
@@ -104,12 +124,20 @@ const closeSecondBanner = () => {
         background-size: 100% 100%;
         background-position: center center;
         aspect-ratio: 600 / 1000;
-        height: 600px;
+        width: 350px;
         display: flex;
         flex-direction: column;
         gap: 20px;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: 600px) {
+            width: 300px;
+        }
+
+        @media (max-width: 450px) {
+            width: 250px;
+        }
     }
 
     .section {
@@ -124,6 +152,14 @@ const closeSecondBanner = () => {
         padding: 10px 25px;
         font-size: 12px;
         text-align: center;
+
+        @media (max-width: 600px) {
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+        }
     }
 
     .agree-checkbox {
@@ -131,26 +167,74 @@ const closeSecondBanner = () => {
         align-items: center;
         justify-content: flex-start;
         width: calc(80% + 25px);
+
+        @media (max-width: 600px) {
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+        }
     }
 
     .primary-button {
         margin: 0;
+
+        @media (max-width: 600px) {
+            min-width: 100px;
+            width: 100px;
+            height: 35px;
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+            height: 30px;
+        }
     }
 }
 
 .login-popup-banner-2-container {
     padding: 70px;
 
+    @media (max-width: 600px) {
+        padding: 60px;
+    }
+
+    @media (max-width: 450px) {
+        padding: 50px;
+    }
+
     .corner-logo-img {
         position: absolute;
         top: -50px;
         right: -50px;
         width: 150px;
+
+        @media (max-width: 600px) {
+            top: -50px;
+            right: -40px;
+            width: 130px;
+        }
+
+        @media (max-width: 450px) {
+            top: -45px;
+            right: -35px;
+            width: 120px;
+        }
     }
 
     .banner-title-img {
         aspect-ratio: 324 / 353;
         width: 50%;
+
+        @media (max-width: 600px) {
+            width: 45%;
+        }
+
+        @media (max-width: 450px) {
+            width: 40%;
+        }
     }
 
     .content {
@@ -159,12 +243,20 @@ const closeSecondBanner = () => {
         background-size: 100% 100%;
         background-position: center center;
         aspect-ratio: 600 / 1000;
-        height: 600px;
+        width: 350px;
         display: flex;
         flex-direction: column;
         gap: 10px;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: 600px) {
+            width: 300px;
+        }
+
+        @media (max-width: 450px) {
+            width: 250px;
+        }
     }
 
     .section {
@@ -179,6 +271,14 @@ const closeSecondBanner = () => {
         padding: 10px 25px;
         font-size: 12px;
         text-align: center;
+
+        @media (max-width: 600px) {
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+        }
     }
 
     .agree-checkbox {
@@ -186,10 +286,30 @@ const closeSecondBanner = () => {
         align-items: center;
         justify-content: flex-start;
         width: calc(80% + 25px);
+
+        @media (max-width: 600px) {
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+        }
     }
 
     .primary-button {
         margin: 0;
+
+        @media (max-width: 600px) {
+            min-width: 100px;
+            width: 100px;
+            height: 35px;
+            font-size: 10px;
+        }
+
+        @media (max-width: 450px) {
+            font-size: 9px;
+            height: 30px;
+        }
     }
 }
 </style>
