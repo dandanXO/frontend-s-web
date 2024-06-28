@@ -779,7 +779,7 @@ function showDialog(type, affiliateId) {
     allMemberPage.affiliateId = affiliateId
     allMemberRequest.current = 1
     loadAllMember(affiliateId)
-    popUpRequest.recordTime = request.recordTime
+    // popUpRequest.recordTime = request.recordTime
     popUpRequest.regTime = null
   }
   currentAffiliateId.value = affiliateId
