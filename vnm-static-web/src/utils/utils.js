@@ -103,7 +103,7 @@ export const getVisitorId = async () => {
     const { timezone, ...allComponents } = result.components;
     // console.log(allComponents);
     const sidParam = FingerprintJS.hashComponents(allComponents);
-    console.log(timezone);
+    // console.log(timezone);
     console.log("Use Normal Fingerprint");
     console.log(sidParam);
     localStorage.setItem("VISITOR_ID", sidParam);

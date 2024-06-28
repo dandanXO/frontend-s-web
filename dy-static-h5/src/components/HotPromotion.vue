@@ -73,6 +73,10 @@
       "
     ></LplSummerPromo>
 
+    <div style="text-align: center" v-if="list.redirectUrl === 'dy-ouzhoumianpei' && store.token">
+      <div class="cs-btn" @click="goToCsChat()">联系客服</div>
+    </div>
+
     <Cny2024Promo v-if="list.redirectUrl === 'dy2-cny2024-promo' && !isCommonPromo && store.token"></Cny2024Promo>
     <BbDacha2024Promo v-if="list.redirectUrl === 'dy2-asian-zone' && !isCommonPromo && store.token"></BbDacha2024Promo>
     <CnyStepGame2024Promo
@@ -159,6 +163,7 @@ import SportZhongChao from "../components/hotpromo/SportZhongChao/SportZhongChao
 import BlastPremierPromo from "../components/hotpromo/BlastPremierPromo/BlastPremierPromo.vue";
 import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import MeiZhouBeiPromo from "../components/hotpromo/meizhoubei/MeiZhouBeiPromo.vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "HotPromo",
@@ -284,7 +289,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy-sport-zhongchao" ||
       this.list.redirectUrl === "dy-fish-hongbao" ||
       this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
-      this.list.redirectUrl === "dy2meizhoubei"
+      this.list.redirectUrl === "dy2meizhoubei" ||
+      this.list.redirectUrl === "dy-ouzhoumianpei"
     ) {
       this.isCommonPromo = false;
     } else {
@@ -314,6 +320,11 @@ export default defineComponent({
       onlyMe: false,
       resultTime: ""
     });
+
+    const router = useRouter();
+    const goToCsChat = () => {
+      router.push("/liveChat");
+    };
 
     const winnerDataSource = ref([]);
     const filterWinnerLists = () => {
@@ -389,7 +400,8 @@ export default defineComponent({
       loading,
       btnLoading,
       isClaimModal,
-      claimMsg
+      claimMsg,
+      goToCsChat
     };
   }
 });
@@ -531,6 +543,30 @@ export default defineComponent({
     width: 80px;
     border-radius: 5px;
     -moz-border-radius: 5px;
+  }
+}
+
+.cs-btn {
+  cursor: pointer;
+  display: block;
+  width: 198px;
+  height: 52px;
+  background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000);
+  background-blend-mode: normal, normal;
+  border-radius: 26px;
+  color: #fff;
+  font-size: 16px;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 52px;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    filter: brightness(0.85);
+    transform: translate(0px, 1px);
   }
 }
 

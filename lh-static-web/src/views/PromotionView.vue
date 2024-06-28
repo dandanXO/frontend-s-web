@@ -2,7 +2,8 @@
   <div class="promo-container">
     <div class="promo-banner" v-if="!isPromoDetail">
       <div class="promo-banner-image">
-        <img src="../assets/promo/top-promo-banner.jpg" />
+        <img v-if="!isDark" src="../assets/promo/top-promo-banner.jpg" />
+        <img v-else src="../assets/promo/promo-banner-dark.png" />
       </div>
     </div>
 
@@ -70,7 +71,8 @@
           v-if="
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
-            selectedPromo.promoCode !== 'lh1-ftd-promo'
+            selectedPromo.promoCode !== 'lh1-ftd-promo' &&
+            selectedPromo.promoCode !== 'lh1-aijiasu'
           "
         >
           <div class="promo-bg isDesktop">
@@ -102,8 +104,8 @@
               selectedPromo?.promoCode === 'lh-sport-zhongchao' ||
               selectedPromo?.promoCode === 'lh-nba24-match' ||
               selectedPromo?.promoCode === 'lh-lpl-summer24'
-                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`:''
-
+                ? `url(${imgURL + selectedPromo.desktopImgBackgroundUrl})`
+                : ''
           }"
           :class="{
             fullwidth:
@@ -111,7 +113,8 @@
               selectedPromo.promoCode === 'lh1-ftd-promo' ||
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
-               selectedPromo.promoCode === 'lh1-intel-esl'  ,
+              selectedPromo.promoCode === 'lh1-intel-esl' ||
+              selectedPromo.promoCode === 'lh1-aijiasu',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
@@ -162,6 +165,7 @@ import { loadPromoBanner } from "@/api/index/promo";
 import { userStore } from "@/store";
 import { ElMessage, ElMessageBox } from "element-plus";
 import moment from "moment";
+import { useDark } from "@vueuse/core";
 
 import HotPromotion from '@/components/HotPromotion'
 import { useLocalStorage } from "@vueuse/core";
@@ -171,6 +175,8 @@ export default defineComponent({
     HotPromotion
   },
   setup() {
+    const isDark = useDark();
+
     const store = userStore();
     const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.VUE_APP_IMAGE_CDN).value + '/promo/';
     const banner = ref([]);
@@ -349,7 +355,8 @@ export default defineComponent({
       banner,
       imgURL,
       getPromoLabel,
-      countDay
+      countDay,
+      isDark
     }
   },
 });
@@ -361,7 +368,7 @@ export default defineComponent({
   min-height: 600px;
 
   .promo-banner {
-    background: #f3f7fd;
+    //background: #f3f7fd;
     width: 100%;
     display: flex;
     justify-content: center;

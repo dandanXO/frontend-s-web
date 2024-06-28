@@ -1613,6 +1613,7 @@ export default {
     vipWheelRecords: 'VIP转盘记录',
     virtualVotes: '虚拟投票',
     visitNumber: '访问量',
+    votes: '票数',
     voteTime: '投票时间',
     walletType: '钱包类型',
     way: '设备',
@@ -1816,6 +1817,7 @@ export default {
     updateAffiliateLevel: '编辑代理等级',
     unsuccessFrom30min: '30分钟前的未成功',
     unsuccessIn10time: '未成功10次的渠道',
+    platformAccountName: '平台账号名',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',

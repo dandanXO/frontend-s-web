@@ -19,8 +19,8 @@
         <div class="left-content-items">
           <div class="sidebar-section-wrapper">
             <div class="sidebar-section-title">
-              <span v-if="store.token">{{ store.nickName }}<br />님 환영합니다 </span>
-              <span v-else>{{ $t('lang.login') }}</span>
+              <span v-if="store.token" class="member-name">{{ store.nickName }}<br />님 환영합니다 </span>
+              <span v-else class="login-text">{{ $t('lang.login') }}</span>
               <div class="balance-info">
                 <img class="balance-info-icon" :src="require('../../assets/icon/sidebar-icon-balance.svg')" alt="" />
                 <div class="info-text">{{ store.balance }} <span style="color: #00FFFF">원</span></div>
@@ -45,8 +45,7 @@
             <div class="separator" />
             <div class="icon-section-label">메뉴</div>
           </div>
-          <div v-for="(item, index) in iconInfo" :key="index"
-            @click="goPageOrLogin(item?.page)"
+          <div v-for="(item, index) in iconInfo" :key="index" @click="goPageOrLogin(item?.page)"
             class="credit-info cursor-pointer">
             <div class="icon-wrapper">
               <UnreadNotificationBadge v-if="item.type === 'message'" />
@@ -231,10 +230,10 @@ const iconInfo = reactive([
   .left-content-items {
     width: 70%;
     height: 100%;
-    padding: 20px 30px;
+    padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     background: #00000080;
     backdrop-filter: blur(10px);
     border-right: 1px solid #454F63;
@@ -271,7 +270,7 @@ const iconInfo = reactive([
     width: 100%;
 
     .sidebar-section-title {
-      font-size: 28px;
+      font-size: 20px;
       font-weight: 500;
       line-height: 28px;
       display: flex;
@@ -375,6 +374,8 @@ const iconInfo = reactive([
       background: none;
       backdrop-filter: none;
       border: none;
+      padding: 20px 30px;
+      gap: 20px;
 
       .sidebar-section-wrapper,
       .sidebar-logout-button {

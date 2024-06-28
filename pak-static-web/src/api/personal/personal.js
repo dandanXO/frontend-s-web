@@ -101,6 +101,10 @@ export function verifyEmail(emailInfo) {
   return server.REST.post("/session/verifyAndUpdateEmail", emailInfo);
 }
 
+export function checkExistingEmail(email) {
+  return server.REST.get(`/member/checkEmailRegisterStatus?email=${email}`);
+}
+
 export function checkWithdrawPassword() {
   return server.REST.get("/session/withdrawPasswordExist");
 }

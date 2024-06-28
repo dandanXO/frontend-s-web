@@ -75,12 +75,12 @@
             <div class="form-item">
               <label>{{ $t('lang.withdraw_withdraw_amount') }}</label>
               <q-skeleton v-if="isLoading" type="QInput" />
-              <q-input v-else type="number" dense outlined ref="amountRef" v-model="withdrawInfo.amount"
-                class="withdraw-field" :rules="[
-                  (val) => !!val || '출금 금액을 입력해주세요',
-                  (val) => val >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
-                  (val) => val <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
-                  (val) => (val && /^\d+$/.test(val)) || '출금 금액에는 소수점을 사용할 수 없습니다'
+              <q-input v-else dense outlined ref="amountRef" v-model="withdrawAmountFormatted" class="withdraw-field"
+                :rules="[
+                  (val) => !!parseDigitsWithComma(val) || '출금 금액을 입력해주세요',
+                  (val) => parseDigitsWithComma(val) >= selectedWithdrawalMethod.withdrawMin || '올바른 출금 금액을 입력해주세요',
+                  (val) => parseDigitsWithComma(val) <= selectedWithdrawalMethod.withdrawMax || '올바른 출금 금액을 입력해주세요',
+                  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || '출금 금액에는 소수점을 사용할 수 없습니다'
                 ]" clearable>
                 <template v-slot:prepend>
                   <span style="z-index:1;font-size:16px;">
@@ -177,7 +177,7 @@
 
 <script setup id="FinanceWithdraw">
 
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, watch } from "vue";
 import { api } from "boot/axios";
 import { userStore } from "src/stores";
 import { useQuasar } from "quasar";
@@ -216,6 +216,23 @@ const cardRef = ref();
 const withdrawalMethods = ref([]);
 const selectedWithdrawalMethod = ref([]);
 
+const withdrawAmountFormatted = ref('');
+
+const parseDigitsWithComma = (value) => {
+  const withdrawAmount = value?.replace(/\$\s?|(,*)/g, '');
+  return withdrawAmount;
+}
+
+watch(() => withdrawAmountFormatted.value, () => {
+  const withdrawAmount = withdrawAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(withdrawAmount)) {
+    withdrawInfo.amount = '';
+  } else {
+    withdrawAmountFormatted.value = `${withdrawAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    withdrawInfo.amount = Number(withdrawAmount);
+  }
+})
+
 const loadCards = () => {
   return new Promise((resolve) => {
     api.get("/session/bankCard").then((resp) => {
@@ -230,7 +247,7 @@ const updateWithdrawItem = (amt) => {
   const multiple = 10000;
   // 1원 = 10000;
 
-  withdrawInfo.amount = Number(withdrawInfo.amount) + (amt * multiple);
+  withdrawAmountFormatted.value = `${Number(withdrawInfo.amount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
 

@@ -81,7 +81,7 @@
             <template v-else>
               <q-input dense outlined v-if="amountList.length === 0" ref="depositAmtRef"
                 :placeholder="isUSDT ? 'USDT 금액을 입력하세요' : '입금 금액을 입력하세요'" class="deposit-field" name="localAmount"
-                v-model="form.localAmount" :rules="verifyDepositAmount" clearable>
+                v-model="depositAmountFormatted" :rules="verifyDepositAmount" clearable>
                 <template v-slot:prepend>
                   <span style="z-index:1;font-size:16px;" class="text-bright">
                     <template v-if="isUSDT">USDT</template>
@@ -129,7 +129,7 @@
                   @click="selectAmt(item)"></q-btn>
               </template>
               <q-skeleton v-if="isFetchingApi" type="QBtn" />
-              <q-btn v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
+              <q-btn dense v-else class="select-amt-btn active" :label="$t('lang.deposit_clear_amount')"
                 @click="clearInfo"></q-btn>
             </div>
           </div>
@@ -174,7 +174,7 @@
 </template>
 
 <script setup id="FinanceDeposit">
-import { ref, onMounted, reactive, shallowRef } from "vue";
+import { ref, onMounted, reactive, shallowRef, watch } from "vue";
 import { userStore } from "src/stores";
 import { useRouter, useRoute } from "vue-router";
 import Node from "../../components/paymentSelect/node.vue";
@@ -265,14 +265,31 @@ const blurCode = () => {
   });
 };
 
+const depositAmountFormatted = ref('');
+
+const parseDigitsWithComma = (value) => {
+  const depositAmount = value?.replace(/\$\s?|(,*)/g, '');
+  return depositAmount;
+}
+
+watch(() => depositAmountFormatted.value, () => {
+  const depositAmount = depositAmountFormatted.value?.replace(/\$\s?|(,*)/g, '');
+  if (isNaN(depositAmount)) {
+    form.localAmount = ''
+  } else {
+    depositAmountFormatted.value = `${depositAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    form.localAmount = Number(depositAmount);
+  }
+})
+
 const verifyDepositAmount = ref([
-  (val) => !!val || t('lang.deposit_please_enter_amount'),
-  (val) => (val && /^\d+$/.test(val)) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",
+  (val) => !!parseDigitsWithComma(val) || t('lang.deposit_please_enter_amount'),
+  (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",
   (val) =>
-    val > calculatedMinDeposit.value - 1 ||
+    parseDigitsWithComma(val) > calculatedMinDeposit.value - 1 ||
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax,
   (val) =>
-    val < activeMethod.value.depositMax + 1 ||
+    parseDigitsWithComma(val) < activeMethod.value.depositMax + 1 ||
     "입금은 사이여야 합니다 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax
 ]);
 
@@ -605,7 +622,7 @@ function selectPayType(value) {
 const selectAmt = (amt) => {
   const multiple = isUSDT.value ? 1 : 10000;
   // 1원 = 10000;
-  form.localAmount = Number(form.localAmount) + (amt * multiple);
+  depositAmountFormatted.value = `${Number(form.localAmount) + (amt * multiple)}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 };
 
 function clearInfo() {

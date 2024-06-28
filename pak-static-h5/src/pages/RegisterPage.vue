@@ -466,7 +466,7 @@ export default defineComponent({
                 sessionStorage.removeItem("REFERRAL_CODE");
                 if (store.hasToken()) {
                   const jumpUrl = route.query.redirect ? route.query.redirect : "/";
-                  router.go(jumpUrl);
+                  router.push(jumpUrl);
                 }
 
                 sessionStorage.removeItem("REFERRAL_CODE");

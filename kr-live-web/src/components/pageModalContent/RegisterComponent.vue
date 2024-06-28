@@ -66,7 +66,7 @@
         <q-select dense outlined :placeholder="$t('lang.reg_bank_placeholder')" ref="bankCardRef"
           v-model="regForm.bankId" :options="banksList" option-value="id" option-label="name" emit-value map-options
           lazy-rules :rules="[(val) => !!val || $t('lang.please_select_a_bank_account')]" transition-show="jump-up"
-          transition-hide="jump-up" clearable>
+          transition-hide="jump-up" clearable @update:model-value="onUpdateBankCard">
           <template v-slot:no-option></template>
           <template v-slot:option="scope">
             <div v-bind="scope.itemProps" dense class="bank-list-item" style="padding:0 5px;">
@@ -94,8 +94,10 @@
       <div class="form-item">
         <label>{{ $t('lang.reg_bank_acc_num') }}</label>
         <q-input dense type="number" :placeholder="$t('lang.reg_bank_acc_num_placeholder')" ref="cardNumRef" outlined
-          v-model="regForm.cardNumber" lazy-rules clearable
-          :rules="[(val) => (val && val.length > 0) || $t('lang.please_enter_card_num')]"></q-input>
+          v-model="regForm.cardNumber" lazy-rules clearable :rules="[
+            (val) => (val && val.length > 0) || $t('lang.please_enter_card_num'),
+            validateBankLength
+          ]"></q-input>
       </div>
 
       <div class="form-item">
@@ -123,7 +125,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from "vue";
+import { defineComponent, ref, reactive, onMounted, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar, Platform, SessionStorage } from "quasar";
 import { userStore } from "stores/index";
@@ -171,6 +173,12 @@ export default defineComponent({
       withdrawPassword: "",
       regHost: location.hostname
     });
+
+    const onUpdateBankCard = () => {
+      if (regForm.cardNumber) {
+        cardNumRef.value.resetValidation();
+      }
+    }
 
     const nicknameRef = ref();
     const loginNameRef = ref();
@@ -235,7 +243,7 @@ export default defineComponent({
             .then((ret) => {
               const res = ret.data;
               if (res.code === 0) {
-                SessionStorage.set("TOKEN", res.data);
+                // SessionStorage.set("TOKEN", res.data);
 
                 emit("closeModal");
 
@@ -248,7 +256,7 @@ export default defineComponent({
 
                 setTimeout(() => {
                   router.push("/");
-                  location.reload();
+                  // location.reload();
                 }, 1000);
               } else {
                 $q.notify({
@@ -282,13 +290,17 @@ export default defineComponent({
       });
     };
 
-    let validateBankLength = (val) => {
-      if (selectedBankType.value === "Bank") {
-        return (val.length > 5 && val.length < 13) || t("lang.length_between_6_12");
-      } else if (selectedBankType.value === "Crypto") {
-        return (val.length > 33 && val.length < 38) || t("lang.length_between_34_37");
+    const validateBankLength = (val) => {
+      const paymentType = banksList.value.find(({ id }) => id === regForm.bankId);
+      if (!/^[A-Za-z0-9]+$/.test(val)) return "숫자를 입력하세요";
+
+      if (paymentType.bankType === "BANK") {
+        return ((val.length <= 17) || t('lang.reg_bank_acc_num_less_than_17_char'));
+      } else if (paymentType.code.includes("USDT")) {
+        return ((val.length >= 34 && val.length <= 36) || "길이는 34에서 36자 여야 합니다");
       }
     };
+
     const hasAffiliate = ref(false);
     const getAffiliateCode = () => {
       const affCode = sessionStorage.getItem("AFFILIATE_CODE");
@@ -305,6 +317,7 @@ export default defineComponent({
     };
 
     return {
+      onUpdateBankCard,
       regForm,
       nicknameRef,
       loginNameRef,

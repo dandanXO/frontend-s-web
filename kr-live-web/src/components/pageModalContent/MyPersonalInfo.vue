@@ -4,41 +4,45 @@
       <form class="personal-info-form form-template">
         <div class="form-item">
           <label>{{ $t('lang.personal_nickname') }}</label>
-          <q-input dense v-model="formDetail.name2" :readonly="!!store.name2" outlined @update:model-value="updateTouch"
-            ref="name2Ref" lazy-rules :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" />
+          <q-skeleton v-if="isFetchingPersonalInfo" type="QInput" />
+          <q-input v-else dense v-model="formDetail.name2" :readonly="!!store.name2" outlined
+            @update:model-value="updateTouch" ref="name2Ref" lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :loading="isSubmitting"
+            :disable="isSubmitting" />
         </div>
         <div class="form-item">
           <label>{{ $t('lang.personal_real_name') }}</label>
-          <q-input dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
+          <q-skeleton v-if="isFetchingPersonalInfo" type="QInput" />
+          <q-input v-else dense ref="realNameRef" outlined v-model="formDetail.realName" lazy-rules
             :rules="[(val) => (val && val.length > 0) || '비워둘 수 없습니다.']" :readonly="!!store.realName"
-            @update:model-value="updateTouch" />
+            @update:model-value="updateTouch" :loading="isSubmitting" :disable="isSubmitting" />
         </div>
         <div class="form-item">
           <label>{{ $t('lang.personal_id') }}</label>
-          <q-input dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
-            @update:model-value="updateTouch" />
+          <q-skeleton v-if="isFetchingPersonalInfo" type="QInput" />
+          <q-input v-else dense outlined v-model="formDetail.loginName" :readonly="store.token ? 'readonly' : false"
+            @update:model-value="updateTouch" :loading="isSubmitting" :disable="isSubmitting" />
         </div>
         <div class="form-item">
           <label>{{ $t('lang.personal_phone') }}</label>
-          <q-input dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
-            @update:model-value="updateTouch" />
+          <q-skeleton v-if="isFetchingPersonalInfo" type="QInput" />
+          <q-input v-else dense outlined v-model="formDetail.telephone" :readonly="!!store.telephone"
+            @update:model-value="updateTouch" :loading="isSubmitting" :disable="isSubmitting" />
         </div>
       </form>
     </div>
 
     <div class="action-buttons">
-      <div @click="closetheModal" class="primary-button blue">
-        {{ $t('lang.personal_close_btn') }}
-      </div>
-      <div @click="updateState" class="primary-button yellow" :class="hasTouched ? '' : 'disabled'">
-        {{ $t('lang.personal_update_btn') }}
-      </div>
+      <q-btn @click="closetheModal" class="primary-button blue" :label="$t('lang.personal_close_btn')"
+        :loading="isSubmitting" :disable="isSubmitting" />
+      <q-btn @click="updateState" class="primary-button yellow" :disable="!hasTouched || isSubmitting"
+        :loading="isSubmitting" :label="$t('lang.personal_update_btn')" />
     </div>
   </div>
 </template>
 
 <script setup id="RegisterComponent">
-import { reactive, ref, onMounted, computed, defineEmits } from "vue";
+import { reactive, ref, onMounted, defineEmits } from "vue";
 import { userStore } from "stores/index";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
@@ -55,6 +59,8 @@ const personalState = reactive({
   memberInfo: {}
 });
 const store = userStore();
+const isFetchingPersonalInfo = ref(false);
+const isSubmitting = ref(false);
 
 const updateTouch = () => {
   hasTouched.value = true;
@@ -84,6 +90,7 @@ const updateState = () => {
     updateInfo.name2 = personalState.memberInfo.name2 !== formDetail.name2 ? formDetail.name2 : undefined;
     updateInfo.realName = personalState.memberInfo.realName !== formDetail.realName ? formDetail.realName : undefined;
 
+    isSubmitting.value = true;
     api.post("/session/account", qs.stringify(updateInfo)).then(({ data }) => {
       const res = data
       if (res.code === 0) {
@@ -105,13 +112,20 @@ const updateState = () => {
           icon: "report_problem"
         });
       }
+      isSubmitting.value = false;
+    }).catch(() => {
+      isSubmitting.value = false;
     });
   }
 };
 
 onMounted(() => {
+  isFetchingPersonalInfo.value = true;
   store.getMemberInfo().then(() => {
     loadInfo();
+    isFetchingPersonalInfo.value = false;
+  }).catch(() => {
+    isFetchingPersonalInfo.value = false;
   });
 })
 
