@@ -129,7 +129,7 @@ onMounted(() => {
   }
 
   :deep(.el-tabs__item.is-active) {
-    background: #e7f3ff;
+    background: #FFE7E7;
     height: 50px;
     color:  $font-5;
   }

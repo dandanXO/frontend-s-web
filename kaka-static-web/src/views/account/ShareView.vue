@@ -212,7 +212,7 @@ export default defineComponent({
     }
   }
   .menu-title {
-    color: #424F72;
+    color: #9AA8CB;
     font-weight: 700;
     font-size: 24px;
   }
@@ -238,7 +238,7 @@ export default defineComponent({
         border: none;
         padding: 10px;
         background: #F7F8FB;
-        box-shadow: 0px 0px 8px 0px #A9C9EA inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 20px;
     outline: none;
         color: #7A80A1;
@@ -255,7 +255,7 @@ export default defineComponent({
 
 .friends {
   .subtitle {
-      color: #424F72;
+      color: #9AA8CB;
   font-weight: 700;
   margin-bottom: 10px;
 
@@ -329,7 +329,7 @@ export default defineComponent({
 }
 
 .copy-btn{
-  background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
   border-radius: 30px;
 }
 </style>

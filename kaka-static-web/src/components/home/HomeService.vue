@@ -1,6 +1,6 @@
 <template>
   <div class="service-section">
-    <HomeTitle title="TF88 Service"></HomeTitle>
+    <HomeTitle title="KAKA Service"></HomeTitle>
     <div class="service-container">
       <!-- <div class="top-container" data-aos="fade-down">
         <div class="counter">
@@ -81,7 +81,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" src="../../assets/home/red-circle.png" />
                 <img class="icon" src="../../assets/home/service/security.png" />
               </div>
             </div>
@@ -98,7 +98,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" src="../../assets/home/red-circle.png" />
                 <img class="icon" src="../../assets/home/service/trust.png" />
               </div>
             </div>
@@ -116,7 +116,7 @@
           <div class="item">
             <div class="left-container">
               <div class="circle-wrapper">
-                <img class="circle" src="../../assets/home/service/circle-bg.png" />
+                <img class="circle" src="../../assets/home/red-circle.png" />
                 <img class="icon" src="../../assets/home/service/service.png" />
               </div>
             </div>
@@ -169,7 +169,7 @@ onMounted(() => {});
           border-radius: 50%;
           //border: 3px solid #94baf8;
           //background: linear-gradient(180deg, #93f2ff 3.39%, #3a69f7 100%);
-          background-image: url("../../assets/home/blue-circle.png");
+          background-image: url("../../assets/home/red-circle.png");
           background-repeat: no-repeat;
           background-position: center center;
           background-size: 100% 100%;
@@ -202,7 +202,7 @@ onMounted(() => {});
               font-weight: 600;
               line-height: normal;
               letter-spacing: 0.14144rem;
-              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+              background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
               background-clip: text;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
@@ -282,13 +282,13 @@ onMounted(() => {});
 
           .right-container {
             .title{
-              color: #444444;
+              color: #A4AABB;
               font-size: 20px;
               margin-bottom: 5px;
               font-weight: 600;
             }
             .desc{
-              color: #444444;
+              color: #A4AABB;
               display: flex;
               flex-direction: column;
               gap: 10px;

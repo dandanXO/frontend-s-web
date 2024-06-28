@@ -50,8 +50,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
 body {
+  a {
+    color: #fd4f44;
+    &:hover {
+      color: #ff928a;
+    }
+  }
+  svg {
+    color: #fd3227;
+  }
+  .el-switch__label.is-active {
+    color: #fd3227;
+  }
+  .el-switch.is-checked .el-switch__core {
+    background: #fd3227;
+    border: #fd3227;
+  }
+  .el-input__wrapper {
+    &.is-focus {
+      box-shadow: 0 0 0 1px #ff5c5c inset;
+    }
+  }
+  .el-radio-button__original-radio:checked + .el-radio-button__inner {
+    background: #fd3227;
+    border-color: #fd3227;
+  }
+  .el-radio-button__inner:hover {
+    color: #fd3227;
+  }
   .roboto {
     font-family: "Roboto";
     .profile-actions {
@@ -88,7 +116,7 @@ body {
   .el-input__wrapper,
   .el-textarea__inner {
     background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #ffa09a inset;
   }
   .el-date-editor--date {
     .el-input__wrapper {
@@ -115,7 +143,7 @@ body {
     font-size: 35px;
     background: #a1a1a1;
     &:hover {
-      background: #468cff;
+      background: #fd3c31;
     }
     &--left {
       border-radius: 0 5px 5px 0;
@@ -167,7 +195,7 @@ body {
   }
   .el-form-item {
     &__label {
-      color: #000000;
+      color: #9aa8cb;
     }
     &.is-error {
       margin-bottom: 30px;
@@ -184,7 +212,7 @@ body {
   }
 
   .el-tabs__item {
-    color: #444444;
+    color: #9aa8cb;
 
     &:after {
       content: "";
@@ -197,15 +225,19 @@ body {
       right: 0;
       margin: auto;
     }
+    &:hover {
+      opacity: 0.9;
+      color: #fd3c31;
+    }
   }
   .el-tabs__item.is-active {
     border-color: #e9ecef #e9ecef #dee2e6;
 
-    color: #468cff;
+    color: #fd3c31;
     font-weight: bold;
     &:after {
       content: "";
-      background: #468cff;
+      background: #fd3c31;
       width: 30px;
       height: 2px;
       position: absolute;
@@ -264,7 +296,7 @@ body {
   }
   .el-table th.el-table__cell.is-leaf {
     border-bottom: 0;
-    background: #e7f3ff;
+    background: #ffe7e7;
   }
 
   .el-tabs--card {
@@ -273,7 +305,7 @@ body {
       .el-tabs__nav {
       }
       .el-tabs__item {
-        // color: #468cff;
+        // color:  #FD3C31;
         // font-weight: bold;
         // border: 0;
         // border-radius: 5px 5px 0 0;
@@ -287,8 +319,8 @@ body {
           // border-top-right-radius: 0.25rem;
           // color: white;
           // border-radius: 1.875rem;
-          // background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          // box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+          // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+          // box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
         }
       }
     }
@@ -314,7 +346,7 @@ body {
   }
   .el-dialog__header {
     border-radius: 12px 12px 0 0;
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
   }
 }
 .full-modal {
@@ -363,9 +395,15 @@ body {
     font-size: var(--el-font-size-base);
     border-radius: var(--el-border-radius-base);
     letter-spacing: 3px;
-    background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
+    // background-image: linear-gradient(90deg, #2d74f6 0, #7abdfc 100%), linear-gradient(#000, #000) !important;
     min-width: 200px;
     border: 0;
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+    border: 1px solid #fd897e;
+  }
+  &:hover {
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+    border: 1px solid #fd897e !important;
   }
 }
 .common-btn,
@@ -376,18 +414,19 @@ body {
   border-radius: 50px;
   color: $color-white;
   gap: 10px;
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-  // box-shadow: 0px -1px 4px 0px #5894ff inset;
+  background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+  box-shadow: 0px 2px 4.58px 0px #ffa09a inset;
+  // box-shadow: 0px -4.11px 9.41px 0px #FFA09A inset;
+
   color: #fff;
   cursor: pointer;
   border: 0;
 
   &.outline {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4px 0px #bbdcff inset;
-    box-shadow: 0px -1px 4px 0px #a2bff4 inset;
-    color: #468cff;
+    box-shadow: 0px 2px 4px 0px #ffa09a inset;
+    box-shadow: 0px 2px 4.58px 0px #ffa09a inset;
+    color: #fd3c31;
   }
   // &--small {
   //   padding: 3px;
@@ -405,16 +444,16 @@ body {
   //   min-width: 200px;
   // }
   &.grey {
-    background-color: #4e8cfb;
+    background-color: #fd3126;
   }
   &.light {
-    background-color: #4e5efb;
+    background-color: #fd897e;
   }
   &:hover,
   &:focus {
     color: #ffffff;
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+    box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
     filter: brightness(0.9);
   }
   &:active {
@@ -455,7 +494,7 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+  box-shadow: 0px 2px 4.58px 0px #ffa09a inset, 0px -1px 3.664px 0px #ffa09a inset;
   cursor: pointer;
   transition: 0.3s all;
   line-height: 1;
@@ -479,14 +518,16 @@ body {
   }
 
   &.btn-color-blue {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+    // box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
     color: $color-white;
+    background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+    box-shadow: 0px -4.11px 9.41px 0px #ffa09a inset;
   }
 
   &.btn-color-white {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+    box-shadow: 0px -1.66px 6.09px 0px #f4a2a2 inset;
     color: $font-1;
   }
 }

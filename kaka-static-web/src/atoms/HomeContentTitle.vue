@@ -40,7 +40,7 @@ defineProps(["title"]);
     width: 100%;
     bottom: 0;
     z-index: -1;
-    background: linear-gradient(180deg, #73b2ff 31.25%, #3981ff 100%);
+    background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
   }
 
   span.title:before {

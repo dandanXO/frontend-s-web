@@ -5,6 +5,7 @@
       <HomeAnnouncement></HomeAnnouncement>
       <HomeHotMatches></HomeHotMatches>
       <NewsSection></NewsSection>
+      <HomeHotGame></HomeHotGame>
       <HomeDownload></HomeDownload>
       <HomeService></HomeService>
     </div>
@@ -20,6 +21,7 @@ import NewsSection from "@/components/home/NewsSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeDownload from "@/components/home/HomeDownload.vue";
 import HomeHotMatches from "@/components/home/HomeHotMatches.vue";
+import HomeHotGame from "@/components/home/HomeHotGame.vue";
 import HomeService from "@/components/home/HomeService.vue";
 
 const gameMenu = ref(null);
@@ -32,7 +34,8 @@ const openGame = (gameName, platType, gameCode, scrollingState) => {
 <style scoped lang="scss">
 .home {
   margin: 0px;
-  background-image: url("../assets/images/home/home-bg.jpg");
+  // background-image: url("../assets/images/home/home-bg.jpg");
+  background: #1E212C;
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;

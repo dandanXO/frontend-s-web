@@ -340,17 +340,17 @@ export default defineComponent({
           line-height: 30px;
           padding: 10px 20px;
           border-radius: 100px;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+          background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+          box-shadow: 0px -2px 4.579999923706055px 0px #fd897e inset;
           cursor: pointer;
           z-index: 1;
           text-align: center;
 
           &.outline {
             background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-            box-shadow: 0px 2px 4.579999923706055px 0px #bbdcff inset;
-            box-shadow: 0px -1px 3.6640000343322754px 0px #a2bff4 inset;
-            color: #468cff;
+            box-shadow: 0px 2px 4.579999923706055px 0px #FFA09A inset;
+            box-shadow: 0px -1px 3.6640000343322754px 0px #ffa09a inset;
+            color:  #FD3C31;
           }
         }
 

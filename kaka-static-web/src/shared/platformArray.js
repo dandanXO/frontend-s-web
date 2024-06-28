@@ -268,7 +268,7 @@ export const lotteryPlatforms = [
     code: "TCG",
     name: "TCG",
     image: "tcg",
-    message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at KAKA offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage: "TC Gaming XỔ SỐ Đông Nam Á cung cấp hệ thống quản lý linh hoạt và hiệu quả nhất cho phép người chơi cài đặt cấu hình tỷ lệ cá cược, giới hạn và tiền thưởng một cách độc lập. ",
     caption: "",
     gameCode: ""
@@ -277,7 +277,7 @@ export const lotteryPlatforms = [
     code: "GPI",
     name: "GPI",
     image: "gpi",
-    message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at KAKA offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage: "Sảnh chơi xổ số online được phát hành và triển khai trên nền tảng ứng dụng công nghệ hiện đại blockchain nhằm đảm bảo sự công bằng và chính xác cho người chơi.",
     caption: "",
     gameCode: "sode"
@@ -286,7 +286,7 @@ export const lotteryPlatforms = [
     code: "LOTO",
     name: "LOTO",
     image: "loto",
-    message: "Lottery at TF88 offers attractive odds and diverse betting options, with fast payouts after the draw.",
+    message: "Lottery at KAKA offers attractive odds and diverse betting options, with fast payouts after the draw.",
     vimessage: "Một sảnh xổ số nổi bật với chức năng xem Livestream quay số kéo dài cả ngày ở tất cả những trò chơi số trong sảnh. Ngoài ra kết quả xổ số của các miền đều được cập nhật nhanh chóng và chính xác.",
     caption: "",
     gameCode: ""

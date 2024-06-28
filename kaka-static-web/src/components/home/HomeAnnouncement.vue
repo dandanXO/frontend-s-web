@@ -137,7 +137,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .notice-header {
-  color: #468CFF;
+  color:  #FD3C31;
   font-size: 22px;
   font-weight: 600;
   line-height: 30px;
@@ -212,7 +212,7 @@ onMounted(() => {
           width: 100%;
 
           .station-notice-item {
-            color: #444444;
+            color: #7A80A1;
             margin-right: 50px;
             font-size: 15px;
             line-height: 15px;

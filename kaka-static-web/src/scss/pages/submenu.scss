@@ -26,8 +26,8 @@
     &:hover {
       background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
       .platform-menu-btn a {
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        color: $color-white;
+        background: #7a80a1;
+        color: #ffffff;
       }
     }
   }
@@ -45,8 +45,10 @@
       &:hover {
         background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
         .platform-menu-btn a {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-          color: $color-white;
+          // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+          // color: $color-white;
+          background: #7a80a1;
+          color: #ffffff;
         }
       }
 
@@ -65,8 +67,10 @@
   &:not(.special) .platform-menu-item:hover {
     background: linear-gradient(180deg, #73b2ff1e 0%, #3982ff23 100%);
     .platform-menu-btn a {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-      color: $color-white;
+      // background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+      // color: $color-white;
+      background: #7a80a1;
+      color: #ffffff;
     }
   }
 
@@ -181,13 +185,16 @@
         justify-content: center;
         align-items: center;
         border-radius: 2rem;
+        // background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
+        // box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+
         background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-        box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+        color: #7a80a1;
         cursor: pointer;
         transition: 0.3s all;
 
         &:hover {
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          background: #7a80a1;
           color: $color-white;
         }
       }

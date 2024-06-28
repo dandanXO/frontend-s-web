@@ -307,7 +307,7 @@ onMounted(() => {
       left: 400px;
       font-size: 35px;
       font-weight: bold;
-      color: #ffffff;
+      color: #7A80A1;
       line-height: 1;
 
       .euro-countdown-num {
@@ -359,7 +359,7 @@ onMounted(() => {
   .hot-matches-title {
     font-size: 24px;
     font-weight: 700;
-    color: #313441;
+    color: #7A80A1;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -422,7 +422,7 @@ onMounted(() => {
       width: 40%;
 
       .match-title {
-        color: #424f72;
+        color: #9AA8CB;
         font-weight: 700;
         font-size: 24px;
         text-align: center;
@@ -431,7 +431,7 @@ onMounted(() => {
         top: 16px;
       }
       .match-time {
-        color: #444444;
+        color: #7A80A1;
         font-size: 20px;
         text-align: center;
         margin-top: 12px;
@@ -487,7 +487,7 @@ onMounted(() => {
       .team-name {
         font-size: 18px;
         text-align: center;
-        color: #444444;
+        color: #7A80A1;
         min-height: 50px;
         display: flex;
         justify-content: center;

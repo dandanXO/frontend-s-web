@@ -333,7 +333,7 @@ onMounted(() => {
   font-size: 14px;
   background-color: #f7f8fb;
   border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  box-shadow: 0px 0px 8px 0px #FFA09A inset;;
   margin-bottom: 30px;
 }
 
@@ -351,12 +351,13 @@ onMounted(() => {
   .form-field-icon {
     margin: auto;
     height: 30px;
+    filter: hue-rotate(140deg);
   }
 }
 
 .blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+  box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
   font-size: 14px;
   border-radius: 30px;
@@ -373,7 +374,7 @@ onMounted(() => {
   justify-content: space-between;
 
   .highlight {
-    color: #5e8aee;
+    color: #fd4f44;
   }
 }
 .flex-div {
@@ -413,7 +414,7 @@ onMounted(() => {
 
   .el-tabs__nav {
     border-radius: 30px;
-    box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+    box-shadow: 0px -1.7px 6.09px 0px #ffa09a inset;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 5px;
@@ -423,8 +424,8 @@ onMounted(() => {
   .el-tabs--top .el-tabs__item.is-top {
     font-size: 14px;
     border-radius: 30px;
-    color: #468cff;
-    // box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+    color:  #FD3C31;
+    // box-shadow: 0px -1.7px 6.09px 0px #ffa09a inset;
     display: flex;
     width: 150px;
     padding: 0;
@@ -432,8 +433,8 @@ onMounted(() => {
     min-width: 200px;
 
     &.is-active {
-      background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-      box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+      background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+      box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
       color: #fff;
       font-size: 14px;
       border-radius: 30px;
@@ -441,8 +442,8 @@ onMounted(() => {
   }
 
   .el-dialog__header {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+    box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
     color: #fff;
   }
 }

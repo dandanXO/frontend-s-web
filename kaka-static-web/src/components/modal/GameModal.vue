@@ -627,7 +627,7 @@ defineExpose({
 
       &.active {
         background: #ffffff;
-        color: #000000;
+        color: #ffffff;
       }
     }
   }
@@ -640,7 +640,7 @@ defineExpose({
     border-radius: 10px;
     text-align: center;
     background: #ffffff;
-    color: #000000;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;

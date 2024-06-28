@@ -5,7 +5,7 @@
         {{ $t("personal.personalInfo") }}
         <span style="font-size: 14px">
           {{ $t("personal.url") }}:
-          <a :href="evipWeb" style="color: #468cff">{{ evipWeb }}</a>
+          <a :href="evipWeb">{{ evipWeb }}</a>
         </span>
       </div>
     </div>
@@ -1395,7 +1395,7 @@ watch (
   align-items: center;
   max-width: 620px;
   .link {
-    color: #468cff;
+    color:  #FD3C31;
     cursor: pointer;
   }
 }
@@ -1423,7 +1423,7 @@ watch (
         color: #999999;
         font-weight: bold;
         width: 650px;
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         background: #f7f8fb;
         border-radius: 6px;
         margin: 5px 0 20px;
@@ -1436,7 +1436,7 @@ watch (
     color: #999999;
     font-weight: bold;
     width: 650px;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #FFA09A inset;;
     background: #f7f8fb;
     border-radius: 6px;
     margin: 5px 0 20px;
@@ -1474,7 +1474,7 @@ watch (
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 20px;
         background: #f7f8fb;
         height: 38px;

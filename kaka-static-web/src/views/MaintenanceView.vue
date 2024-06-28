@@ -61,7 +61,7 @@ const { languageVal } = storeToRefs(i18nStoreLanguage)
   .maintenance-title {
     margin-top: 10px;
     font-family: PingFang SC;
-    color: #4c88f8;
+    color: #FD574C;
     font-size: 40px;
     font-weight: 800;
   }

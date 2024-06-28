@@ -543,21 +543,24 @@ export default defineComponent({
   .amt {
     padding: 20px 50px;
     color: #a4aabb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #FFA09A inset;;
     border-radius: 10px;
     background: #f7f8fb;
     cursor: pointer;
     border: 2px solid transparent;
     &:hover {
       background: #ffffff;
-      border: 2px solid #468cff;
+      border: 2px solid  #FD3C31;
       box-shadow: 0px 0px 4px 0px #00358b4d;
     }
   }
 }
 .bank-card {
   width: 33%;
-  background: linear-gradient(98.09deg, #f0f7ff -1.13%, #e7f3ff 97.1%);
+  background:linear-gradient(98.09deg, #FFF0F0 -1.13%, #FFE7E7 97.1%);
+
+  margin-right: 20px;
+    margin-bottom: 20px;
   border: 2px solid transparent;
   cursor: pointer;
 
@@ -565,7 +568,7 @@ export default defineComponent({
     width: 40px;
   }
   &.selected {
-    border: 2px solid #468cff;
+    border: 2px solid  #FD3C31;
   }
   :deep(.el-card__body) {
     // font-family: Poppins;
@@ -579,7 +582,7 @@ export default defineComponent({
       gap: 10px;
       flex-direction: column;
       .bankName {
-        color: #468cff;
+        color:  #FD3C31;
         font-size: 14px;
         font-weight: 600;
         line-height: 21px;
@@ -606,7 +609,7 @@ export default defineComponent({
   background-color: #fff;
   border-radius: 12px;
   padding: 20px 40px;
-  color: #424f72;
+  color: #9AA8CB;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
 }
@@ -736,7 +739,7 @@ export default defineComponent({
       }
 
       &.active {
-        border: 2px solid #468cff;
+        border: 2px solid  #FD3C31;
         box-shadow: unset;
         // border-bottom: 4px solid #1bcef1;
         // border: 1px solid #ffd800;
@@ -779,7 +782,7 @@ export default defineComponent({
         right: -1px;
         background: #ffd800;
         padding: 5px;
-        color: #000000;
+        color: #ffffff;
         font-size: 12px;
         line-height: 10px;
         border-radius: 0 10px;
@@ -827,7 +830,7 @@ export default defineComponent({
   :deep(.el-input__wrapper),
   :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #FFA09A inset;;
   }
 }
 </style>

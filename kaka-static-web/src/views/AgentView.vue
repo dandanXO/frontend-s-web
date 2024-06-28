@@ -314,7 +314,8 @@ export default defineComponent({
 <style scoped lang="scss">
 .wrapper {
   font-size: 15px;
-  background-color: #F3F7FD;
+  background-color: #1E212C
+;
 
   .affiliate {
     background: url("../assets/images/affiliate/agent_index_top_bg_vg.jpg") no-repeat center top;
@@ -332,7 +333,7 @@ export default defineComponent({
       gap: 10px;
       display: flex;
       flex-direction: column;
-      color: $font-5;
+      color: $color-white;
       // font-family: Poppins;
       font-size: 40.79px;
       font-weight: 700;
@@ -364,15 +365,14 @@ export default defineComponent({
         cursor: pointer;
         width: 100%;
         padding: 0px 50px;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
+        box-shadow: 0px -1px 3.66px 0px #FF736A inset;
 
         &.outline {
           background: linear-gradient(180deg, #F8FBFF 0%, #FDFEFF 100%);
-          box-shadow: 0px 2px 5px 0px #BBDCFF inset;
-          box-shadow: 0px -1px 4px 0px #A2BFF4 inset;
-          color: #424F72;
+          box-shadow: 0px -1px 4px 0px #FF736A inset;
+          color: #9AA8CB;
         }
       }
     }
@@ -412,7 +412,7 @@ export default defineComponent({
       gap: 50px;
       .affiliate-main-title {
         font-size: 36px;
-        color: #2e84f5;
+        color: #FD574C;
         text-align: center;
       }
       .affiliate-subgroup {
@@ -434,7 +434,7 @@ export default defineComponent({
           .affiliate-subtitle {
             font-size: 20px;
             font-weight: 700;
-            color: #2e84f5;
+            color: #FD574C;
           }
           .affiliate-terms {
             color: $font-5;
@@ -442,7 +442,7 @@ export default defineComponent({
             font-weight: 700;
           }
           .highlight {
-            color: #2e84f5;
+            color: #FD574C;
           }
         }
       }
@@ -476,7 +476,7 @@ export default defineComponent({
         color: $font-5;
         height: 56px;
         font-weight: 700;
-        background-color: #E7F3FF;
+        background-color: #FFE7E7;
       }
       .agent-stress-tip {
         color: #A7A5A5;
@@ -532,10 +532,11 @@ export default defineComponent({
         color: #fff;
         font-size: 16px;
         cursor: pointer;
-        background: linear-gradient(180deg, #73B2FF 0%, #3981FF 100%);
+        background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
         border-radius: 50px;
-        box-shadow: 0px -2px 5px 0px #B1D7FF inset;
-        box-shadow: 0px -1px 4px 0px #5894FF inset;
+        box-shadow: 0px -2px 5px 0px #fd897e inset;
+        box-shadow: 0px -4.11px 9.41px 0px #FFA09A inset;
+
       }
       .agent-contact-bg {
         background-color: #f8f8f8;

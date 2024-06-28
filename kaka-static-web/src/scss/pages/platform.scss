@@ -6,6 +6,7 @@
   padding-top: 0px;
   padding-bottom: 10px;
   width: 100%;
+  background-color: #1e212c;
 }
 .empty-container {
   display: flex;
@@ -20,7 +21,7 @@
   }
   font-size: 50px;
 
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+  background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -135,7 +136,7 @@
           font-weight: 700;
           line-height: 36px;
           text-align: left;
-          color: #000000;
+          color: #ffffff;
           text-transform: uppercase;
         }
       }
@@ -145,7 +146,7 @@
       }
 
       .platform-txt-box {
-        color: $font-5;
+        color: #ffffff;
         margin-top: 1rem;
         max-width: 32rem;
         min-width: 45px;
@@ -181,7 +182,8 @@
 
           .list-item-btn {
             border: 0;
-            background: linear-gradient(180deg, #7ed5ff, #0e7dff);
+            background: linear-gradient(180deg, #fd574c 0%, #ffa09a 100%);
+
             padding: 0.35rem;
             box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.3);
 
@@ -200,7 +202,8 @@
 
           .list-item-btn {
             border: 0;
-            background: linear-gradient(180deg, #7ed5ff, #0e7dff);
+            background: linear-gradient(180deg, #fd574c 0%, #ffa09a 100%);
+
             padding: 0.35rem;
             box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.3);
 
@@ -216,7 +219,7 @@
 
         .list-item-btn {
           background: linear-gradient(180deg, #dcebff, #f4f4f4);
-          border: 1px solid #0e7dff;
+          border: 1px solid #898989;
           height: 4rem;
           width: 4rem;
           display: flex;
@@ -250,7 +253,7 @@
         .list-item-txt {
           text-align: center;
           white-space: nowrap;
-          color: #737373;
+          color: #ffffff;
           font-weight: bold;
         }
       }
@@ -499,7 +502,7 @@
       padding: 0.5rem 0.5rem;
       border-radius: 3rem;
       background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-      box-shadow: 0px 2px 5px 0px #bbdcff inset, 0px -3px 4px 0px #a2bff4 inset;
+      box-shadow: 0px -1px 3.66px 0px #ff736a inset;
     }
 
     .plat-option {
@@ -514,7 +517,7 @@
       box-shadow: 0px -3px 6px 0px transparent inset, 0px -2px 4px 0px transparent inset;
       transition: 0.3s all;
       .text {
-        color: #5894ff;
+        color: #7a80a1;
         font-size: 20px;
         font-weight: bold;
       }
@@ -526,16 +529,16 @@
       }
 
       &:hover {
-        background: linear-gradient(180deg, #73b2ff60 0%, #3982ff69 100%);
-        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
+        background: linear-gradient(180deg, #fd897e 0%, #ff5f56 100%);
+        box-shadow: 0px -2px 4.58px 0px #ffa09a inset;
         .text {
           color: #ffffff;
         }
       }
 
       &.active {
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
+        background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+        box-shadow: 0px -2px 4.58px 0px #ffa09a inset;
         .text {
           color: #ffffff;
         }
@@ -605,8 +608,8 @@
           //background: #67c23a;
           //color: #e6e6e6;
           //background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-          //box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
-          background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+          //box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+          background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
           color: #fff;
           border-radius: 20px;
           justify-content: center;
@@ -854,8 +857,8 @@
       cursor: pointer;
       padding: 8px 4px;
       background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-      box-shadow: 0px 2px 5px 0px #bbdcff inset, 0px -3px 4px 0px #a2bff4 inset;
-      color: #5894ff;
+      box-shadow: 0px 2px 5px 0px #ffa09a inset, 0px -3px 4px 0px #ffa09a inset;
+      color: #7a80a1;
       font-weight: bold;
       font-size: 20px;
 
@@ -867,8 +870,8 @@
       }
 
       &.active {
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-        box-shadow: 0px -3px 6px 0px #b1d7ff inset, 0px -2px 4px 0px #5894ff inset;
+        background: linear-gradient(180deg, #fd897e 0%, #fd3126 100%);
+        box-shadow: 0px -2px 4.58px 0px #ffa09a inset;
         color: #fff;
       }
     }

@@ -230,7 +230,7 @@ onMounted(() => {
   font-size: 14px;
   background-color: #f7f8fb;
   border-radius: 15px;
-  box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+  box-shadow: 0px 0px 8px 0px #FFA09A inset;;
   // margin-bottom: 30px;
 }
 
@@ -248,6 +248,7 @@ onMounted(() => {
   .form-field-icon {
     margin: auto;
     height: 30px;
+    filter: hue-rotate(140deg);
   }
 }
 :deep(.el-form-item--large .el-form-item__label) {
@@ -264,13 +265,13 @@ onMounted(() => {
     gap: 5px;
   }
   .highlight {
-    color: #5e8aee;
+    color: #fd4f44;
   }
 }
 
 .blue-bg {
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+  box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
   color: #fff;
   font-size: 14px;
   border-radius: 8px;
@@ -293,8 +294,10 @@ onMounted(() => {
 
   padding: 10px 0;
   border-radius: 8px;
-  color: #000000;
-  box-shadow: 0px -3.5004611015319824px 3.5004611015319824px 0px #c3d4e6 inset;
+  color: #7A80A1;
+
+  box-shadow: 0px -3.5px 3.5px 0px #FFA09A inset;
+
 }
 
 .flex-div {
