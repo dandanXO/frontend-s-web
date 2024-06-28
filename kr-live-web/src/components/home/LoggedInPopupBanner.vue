@@ -89,7 +89,7 @@ const closeSecondBanner = () => {
     width: 100vw;
     overflow: auto;
     justify-content: center;
-    padding: 70px;
+    padding: 40px;
 
     @media (max-width: 600px) {
         padding: 60px;
@@ -130,7 +130,7 @@ const closeSecondBanner = () => {
         background-size: 100% 100%;
         background-position: center center;
         aspect-ratio: 600 / 1000;
-        width: 350px;
+        width: 300px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -138,7 +138,7 @@ const closeSecondBanner = () => {
         align-items: center;
 
         @media (max-width: 600px) {
-            width: 300px;
+            width: 280px;
         }
 
         @media (max-width: 450px) {

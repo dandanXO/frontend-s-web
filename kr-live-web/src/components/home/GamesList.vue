@@ -960,6 +960,7 @@ export default defineComponent({
   display: flex;
   width: 100%;
   // min-height: 500px;
+  padding: 20px;
 }
 
 .game-list {
