@@ -2511,6 +2511,7 @@ export default {
     'Member Refer Reward List': '会员邀请奖励记录',
     'Refer Rebate': '邀请奖励',
     'Domain Access': '域名访问设置',
+    'KRW Stats Report': '韩国站点数据报表',
   },
   google: {
     google_auth_menu: '谷歌验证',

@@ -2397,6 +2397,7 @@ export default {
     'Member Summon Event': '회원 소환 이벤트',
     'Member Summon List': '회원 소환 목록',
     'Affiliate Bet Rebate Record': '제휴 베팅 리베이트 기록',
+    'KRW Stats Report': '한국 사이트 데이터 보고서',
   },
   google: {
     google_auth_menu: 'Google 인증자',

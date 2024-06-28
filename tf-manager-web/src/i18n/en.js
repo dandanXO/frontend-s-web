@@ -2553,6 +2553,7 @@ export default {
     'Member Refer Reward List': 'Member Refer Reward List',
     'Refer Rebate': 'Refer Rebate',
     'Domain Access': 'Domain Access',
+    'KRW Stats Report': 'KRW Statistics Report',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
