@@ -5,10 +5,8 @@
 <script>
 import { defineComponent, onMounted, onUnmounted, ref } from "vue";
 import { Platform, useQuasar } from "quasar";
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { api } from "boot/axios";
 import CsClient from "csweb-client";
-// import CsClient from "boot/client";
 import { userStore } from "src/stores";
 import axios from "axios";
 import { cached } from "boot/cache";

@@ -198,7 +198,6 @@ import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
-// import EssentialLink from "components/EssentialLink.vue";
 
 import { translateRecord } from "src/directives/translate";
 
