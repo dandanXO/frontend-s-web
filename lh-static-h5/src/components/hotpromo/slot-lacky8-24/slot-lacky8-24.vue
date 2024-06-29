@@ -683,7 +683,7 @@ onMounted(getSlotLucky8Data);
   pointer-events: none;
 }
 .option-btn-disable{
-  font-size: 14px;
+  font-size: 12px;
   width: 56px;
   height: 24px;
   border-radius: 100px;
