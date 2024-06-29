@@ -10,8 +10,8 @@
           <tr>
             <th>电游平台<br>游戏时间</th>
             <th>获奖注单号</th>
-            <th>投注金额</th>
-            <th>活动彩金</th>
+            <th><span style="white-space: nowrap;">投注</span>金额</th>
+            <th><span style="white-space: nowrap;">活动</span>彩金</th>
             <th>操作</th>
           </tr>
           <tr v-for="(item, index) in tableData" :key="index">
@@ -467,7 +467,7 @@ onMounted(getSlotLucky8Data);
   align-items: center;
 
   .title {
-    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title.png");
+    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title2.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
@@ -565,11 +565,12 @@ onMounted(getSlotLucky8Data);
     font-size: 8px;
     line-height: 10px;
     width: 69px;
-    display:block;
+    display: block;
+    margin: auto;
   }
   th {
     height: 32px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     color: #fff;
@@ -600,7 +601,7 @@ onMounted(getSlotLucky8Data);
   td {
     border: 1px solid #acd4f6;
     height: 32px;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 18px;
     color: #000000;
@@ -661,18 +662,18 @@ onMounted(getSlotLucky8Data);
 }
 
 .option-btn-active{
-  font-size: 14px;
-  width: 56px;
+  font-size: 12px;
+  width: 60px;
   height: 24px;
   border-radius: 100px;
   border: none;
   color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-
-
 }
+
 .option-btn-redeemed{
-  font-size: 14px;
+  font-size: 12px;
   width: 56px;
   height: 24px;
   border-radius: 100px;
