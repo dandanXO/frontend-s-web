@@ -107,28 +107,30 @@
   <div class="details-bar">
     <div class="message" @click="refreshBalance">
       <span class="main-balance" :class="!store.token ? 'main-nologin' : ''">
-        {{ store.token ? (!isLoadingBalance ? "¥" +  convertToCommaAmount(mainWallet, true) : "加载中...") : "您还未登录" }}
+        {{
+          store.token ? (!isLoadingBalance ? "¥" + convertToCommaAmount(mainWallet, true) : "加载中...") : "您还未登录"
+        }}
       </span>
       <span>{{ store.token ? "中心钱包" : "登录/注册后查看" }}</span>
     </div>
     <div class="menulist">
       <router-link to="/finance/deposit?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png"/>
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/deposit-btnicon-dark.png" />
         <img loading="lazy" v-else src="../assets/images/home/deposit-btnicon.png" />
         <div class="">存款</div>
       </router-link>
       <router-link to="/finance/withdraw?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png"/>
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/withdraw-btnicon-dark.png" />
         <img loading="lazy" v-else src="../assets/images/home/withdraw-btnicon.png" />
         <div class="">取款</div>
       </router-link>
       <router-link to="/account/transfer?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png"/>
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/transfer-btnicon-dark.png" />
         <img loading="lazy" v-else src="../assets/images/home/transfer-btnicon.png" />
         <div class="">转账</div>
       </router-link>
       <router-link to="/account/vip?redirect=home" class="men btn-pointer">
-        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png"/>
+        <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/vip-btnicon-dark.png" />
         <img loading="lazy" v-else src="../assets/images/home/vip-btnicon.png" />
         <div class="">VIP</div>
       </router-link>
@@ -138,66 +140,84 @@
   <div class="home-game-section">
     <div class="game-left-list">
       <div @click="selectTab('esport')" class="game-platform btn-pointer" id="esport-platform">
-        <template v-if="tab === 'esport'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/esport-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/esport-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'esport' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/esport-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/esport-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/esport-icon.png" />
+          </div>
+        </div>
       </div>
       <div @click="selectTab('sport')" class="game-platform btn-pointer" id="sport-platform">
-        <template v-if="tab === 'sport'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/sport-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/sport-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'sport' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/sport-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/sport-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/sport-icon.png" />
+          </div>
+        </div>
       </div>
       <div @click="selectTab('live')" class="game-platform btn-pointer" id="live-platform">
-        <template v-if="tab === 'live'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/live-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/live-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'live' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/live-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/live-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/live-icon.png" />
+          </div>
+        </div>
       </div>
 
       <div @click="selectTab('poker')" class="game-platform btn-pointer" id="poker-platform">
-        <template v-if="tab === 'poker'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/poker-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/poker-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'poker' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/poker-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/poker-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/poker-icon.png" />
+          </div>
+        </div>
       </div>
       <div @click="selectTab('slot')" class="game-platform btn-pointer" id="slot-platform">
-        <template v-if="tab === 'slot'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/slot-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/slot-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'slot' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/slot-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/slot-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/slot-icon.png" />
+          </div>
+        </div>
       </div>
 
       <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/casual-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/casual-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'casual' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/casual-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/casual-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/casual-icon.png" />
+          </div>
+        </div>
       </div>
 
       <!--
@@ -211,24 +231,30 @@
       </div>
       -->
       <div @click="selectTab('lottery')" class="game-platform btn-pointer" id="lottery-platform">
-        <template v-if="tab === 'lottery'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'lottery' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/lottery-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/lottery-icon.png" />
+          </div>
+        </div>
       </div>
       <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/fish-icon-active.png" />
-        </template>
-        <template v-else>
-          <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
-          <img loading="lazy" v-else src="../assets/images/home/games/fish-icon.png" />
-        </template>
+        <div class="platform-item">
+          <img loading="lazy" src="../assets/images/home/games/icon-placeholder.png" />
+          <div class="platform-icon--active" :class="tab === 'fishing' ? 'show' : ''">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-active-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/fish-icon-active.png" />
+          </div>
+          <div class="platform-icon">
+            <img loading="lazy" v-if="$q.dark.isActive" src="../assets/images/home/games/fish-icon-dark.png" />
+            <img loading="lazy" v-else src="../assets/images/home/games/fish-icon.png" />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -514,7 +540,9 @@
           @click="playGame(game.platform, game.platform, game.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+            <div class="rocket">
+              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" />
+            </div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -536,7 +564,9 @@
       >
         <q-carousel-slide v-for="(promo, i) in floatPromo" :key="i" :name="i" @click="gotoFloatPromo(promo.code)">
           <div class="rocket-wrapper">
-            <div class="rocket"><img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket">
+              <img loading="lazy" style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" />
+            </div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -612,8 +642,8 @@
   </q-dialog>
 
   <q-dialog width="100%" v-model="isImportantAnnoucementModal" @update:model-value="offPopupModal()">
-    <q-card flat style="width: 70%; max-width: 500px;background-color: transparent; margin: 0 auto;" class="text-white">
-      <q-card-section style="background-color: transparent;">
+    <q-card flat style="width: 70%; max-width: 500px; background-color: transparent; margin: 0 auto" class="text-white">
+      <q-card-section style="background-color: transparent">
         <div class="close-alert" @click="setExpiryBanner()">
           <q-icon size="24px" name="close"></q-icon>
         </div>
@@ -999,7 +1029,7 @@ export default defineComponent({
 
     const offPopupModal = () => {
       setExpiryBanner();
-    }
+    };
 
     const setWithExpiry = (key, value, interval) => {
       const now = new Date();
@@ -1026,7 +1056,7 @@ export default defineComponent({
     };
 
     const isImpt = getWithExpiry("isImpt");
-    const clickHomePopupImg = (urlString)=>{
+    const clickHomePopupImg = (urlString) => {
       // debugger;
       const openPattern = /^\/open\/(.*)/;
       if (urlString.match(openPattern)) {
@@ -1034,12 +1064,12 @@ export default defineComponent({
         const [gameName, platformCode, gameCode] = extractedUrl.split("/");
         // /open/FB体育/FB/XXXX-123/OPEN
 
-        allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
         return;
       }
 
-      let regexUrl = new RegExp(/^(https:\/\/)/g)
-      if(regexUrl.test(urlString)){
+      let regexUrl = new RegExp(/^(https:\/\/)/g);
+      if (regexUrl.test(urlString)) {
         // 跳轉
         location.href = urlString;
         return;
@@ -1052,7 +1082,7 @@ export default defineComponent({
       }
 
       router.push(`/promo?name=${urlString}`);
-    }
+    };
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
@@ -1400,15 +1430,14 @@ export default defineComponent({
       }
     };
     const gotoPromo = (banner) => {
-
       const openPattern = /^\/open\/(.*)/;
-      if ((banner.redirectUrl).match(openPattern)) {
+      if (banner.redirectUrl.match(openPattern)) {
         const extractedUrl = banner.redirectUrl.match(openPattern)[1];
         const [gameName, platformCode, gameCode] = extractedUrl.split("/");
 
-        allGames.value.open(gameName, platformCode, gameCode, 'OPEN');
+        allGames.value.open(gameName, platformCode, gameCode, "OPEN");
         return;
-      } else if(banner.redirectUrl=="app://deposit"){
+      } else if (banner.redirectUrl == "app://deposit") {
         router.push("/finance/deposit");
       } else {
         const redirectU = "/promo?name=" + banner.redirectUrl;
@@ -1681,17 +1710,17 @@ export default defineComponent({
       getAppDownloadUrl();
       setTimeout(() => {
         getUnreadTotal();
-      },750)
+      }, 750);
 
       rightPlatformContainer.value.addEventListener("scroll", onHomeScroll);
     });
 
     onMounted(() => {
-      if ((store.token)) {
+      if (store.token) {
         checkShowImgTop();
         setTimeout(() => {
-         initFloating();
-        },750)
+          initFloating();
+        }, 750);
       }
     });
     // Clear interval on unmounted
@@ -2250,6 +2279,28 @@ export default defineComponent({
       padding: 0;
       margin: 0;
       margin-bottom: 8px;
+
+      .platform-item {
+        position: relative;
+      }
+
+      .platform-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      .platform-icon--active{
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+
+        &.show {
+          opacity: 1;
+          z-index: 2;
+        }
+      }
     }
 
     > div {
