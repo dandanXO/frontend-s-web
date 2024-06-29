@@ -19,7 +19,7 @@
               {{ item.platform }} <br>
               <span class="inner-time">{{ item.betTime }}</span>
             </td>
-            <td>{{ item.betId }}</td>
+            <td style="font-size: 95%;">{{ item.betId }}</td>
             <td>{{ item.bet }}</td>
             <td>{{ item.prizeAmount }}</td>
             <td>
@@ -679,15 +679,17 @@ onMounted(getSlotLucky8Data);
   border-radius: 100px;
   border: none;
   color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
   background: linear-gradient(180deg,#48D179 0%, #00A63A 100%);
   pointer-events: none;
 }
 .option-btn-disable{
-  font-size: 14px;
+  font-size: 12px;
   width: 56px;
   height: 24px;
   border-radius: 100px;
   border: none;
+  white-space: nowrap;
   background: rgba(217, 217, 217, 1);
   color: rgba(255, 255, 255, 1);
   pointer-events: none;
