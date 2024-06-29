@@ -10,8 +10,8 @@
           <tr>
             <th>电游平台<br>游戏时间</th>
             <th>获奖注单号</th>
-            <th><span style="white-space: nowrap;">投注</span>金额</th>
-            <th><span style="white-space: nowrap;">活动</span>彩金</th>
+            <th><span style="white-space: nowrap;">投注</span><span style="white-space: nowrap;">金额</span></th>
+            <th><span style="white-space: nowrap;">活动</span><span style="white-space: nowrap;">彩金</span></th>
             <th>操作</th>
           </tr>
           <tr v-for="(item, index) in tableData" :key="index">
