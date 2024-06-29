@@ -123,9 +123,9 @@ const tabPerPage = computed(() => {
 const groupedMatches = computed(() => {
   const groupByDay = {};
   matches.value.forEach((match) => {
-    if (match.teamGroup === "2" || match.teamGroup === "4" || match.teamGroup === "8" || match.teamGroup === "16") {
-      return;
-    }
+    // if (match.teamGroup === "2" || match.teamGroup === "4" || match.teamGroup === "8" || match.teamGroup === "16") {
+    //   return;
+    // }
     const dayKey = moment(match.matchTime).format("YYYY-MM-DD");
 
     if (!groupByDay[dayKey]) {
