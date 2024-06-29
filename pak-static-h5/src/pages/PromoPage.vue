@@ -104,6 +104,19 @@
                 />
                 <!-- </div> -->
               </div>
+
+              <div class="promo-content-inner">
+                <div class="content-title">{{ selectedPromo.title }}</div>
+
+                <!-- <div>{{ parsedParam }}</div> -->
+
+                <div class="content-para">{{ parsedParamSub }}</div>
+                <div class="content-date">
+                  <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+                  {{ parsedParamDate }}
+                </div>
+              </div>
+
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -123,9 +136,7 @@
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
+
                   <div v-html="selectedPromo.pageContent"></div>
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
@@ -176,7 +187,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -516,6 +527,35 @@ export default defineComponent({
       { name: "vip", label: "promo.vip" },
     ];
 
+    // promo param split.
+    const parsedParamSub = computed(() => {
+      try {
+        const paramObj = JSON.parse(selectedPromo.value.param);
+        return paramObj.sub; // Assuming 'sub' is a string
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return ''; // Default value or handle the error as per your application logic
+      }
+    });
+
+    const parsedParamDate = computed(() => {
+      try {
+        const paramObj = JSON.parse(selectedPromo.value.param);
+        return paramObj.date; // Assuming 'sub' is a string
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return ''; // Default value or handle the error as per your application logic
+      }
+    });
+
+    // const parsedParam = () => {
+    //   if (selectedPromo.value.param) {
+    //     return JSON.parse(selectedPromo.value.param);
+    //   } else {
+    //     return ''
+    //   }
+    // }
+
     return {
       promoState,
       promoTypes,
@@ -546,6 +586,8 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
+      parsedParamSub,
+parsedParamDate
     }
   },
 });
@@ -995,9 +1037,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
-          display: none;
+          // display: none;
         }
 
         .promo-view-container {
@@ -1131,14 +1173,29 @@ export default defineComponent({
 
 // promo content-inner
 .promo-content-inner {
+  padding: 12px 0px;
+  margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
   .content-title {
-    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+    color: #ffffff;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 14px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
+    }
   }
 }
 
