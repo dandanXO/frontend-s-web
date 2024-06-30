@@ -1,7 +1,7 @@
 <template>
   <header class="header-container" :class="scroll > 40 ? 'on-scrolled' : ''">
     <div class="top-nav-wrapper" @mouseleave="selectedMenu = ''">
-      <!-- <div class="side left"><img src="../../assets/home/header_side.png"></div> -->
+      <div class="side left"><img src="../../assets/home/header_side.png"></div>
       <div class="top-nav-inner" :class="store.token && 'logged-in-nav'">
         <router-link class="logospon" to="/home">
           <img class="logo" src="../../assets/logo-bebest.svg" />
@@ -157,7 +157,7 @@
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="logout">
-                  <button class="standard-button btn-color-white" style="color: #468cff">
+                  <button class="standard-button btn-color-white" style="color: #FD3C31">
                     {{ $t("menu.logout") }}
                   </button>
                 </el-dropdown-item>
@@ -205,7 +205,7 @@
         </div> -->
       </div>
 
-      <!-- <div class="side right"><img src="../../assets/home/header_side.png"></div> -->
+      <div class="side right"><img src="../../assets/home/header_side.png"></div>
     </div>
 
     <!-- <el-dialog
@@ -448,7 +448,7 @@
       <div class="noticedialog">
         <div class="title" style="flex-direction: column; display: flex">
           {{ $t("vip.rebateBonus") }}
-          <span style="font-size: 30px; color: #5196ff">{{ rebateAmt ? rebateAmt : 0 }}</span>
+          <span style="font-size: 30px; color: #FD3126;">{{ rebateAmt ? rebateAmt : 0 }}</span>
         </div>
         <div class="standard-button-container">
           <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">
@@ -1697,6 +1697,7 @@ body {
     .details-balance {
       display: flex;
       align-items: center;
+      color: #FD3C31;
 
       .assets-text {
         white-space: nowrap;
@@ -1732,7 +1733,7 @@ body {
       color: $link-active;
 
       .icon-rounded {
-        box-shadow: 0px 2px 5px 0px #498bd1 inset;
+        box-shadow: 0px 2px 5px 0px #FFA09A inset;
       }
     }
 
@@ -1743,7 +1744,7 @@ body {
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      box-shadow: 0px 2px 5px 0px #bbdcff inset;
+      box-shadow: 0px 2px 5px 0px #FFA09A inset;
     }
 
     img {
@@ -1854,22 +1855,25 @@ body {
   transition: all 0.3s ease;
 
   .top-nav-wrapper {
+    display: flex;
     .side {
-      position: absolute;
-      top: 0;
+      // position: absolute;
+      // top: 0;
       &.left {
-        left: 0px;
+        margin-left: -50px;
+        // left: 0px;
       }
       &.right {
-        right: 0px;
+        // right: 0px;
+    margin-right: -50px;
         transform: rotateY(180deg);
       }
     }
-    padding: 10px;
-    background: $color-white;
-
+    padding: 10px;    
     position: relative;
-    box-shadow: $shadow-header;
+    background: #1E212C;
+    box-shadow: 0px -4px 4px 0px #FFFFFF1A inset;
+
 
     .top-nav-inner {
       max-width: 1350px;
@@ -1879,7 +1883,7 @@ body {
       justify-content: space-between;
       align-items: center;
       gap: 15px;
-
+      z-index: 99;
       &.logged-in-nav {
         max-width: 1530px;
       }
@@ -1920,7 +1924,7 @@ body {
         &.second-nav {
           margin-left: auto;
           margin-right: auto;
-          gap: 24px;
+          gap: 14px;
         }
 
         a {
@@ -1929,7 +1933,8 @@ body {
           flex-direction: column;
           text-decoration: none;
           gap: 2px;
-          color: #444444;
+          color: #7A80A1;
+
 
           &.icon {
             gap: 0;
@@ -1945,7 +1950,7 @@ body {
           }
 
           span:first-child {
-            color: #000000;
+            color: #ffffff;
             font-size: 1rem;
             height: 30px;
             display: flex;
@@ -1972,7 +1977,7 @@ body {
             }
 
             img.hover-icon {
-              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(205deg) brightness(107%)
+              filter: brightness(0) invert(41%) sepia(53%) saturate(2002%) hue-rotate(-26deg) brightness(90%)
               contrast(102%);
             }
           }
@@ -1980,8 +1985,9 @@ body {
 
         .sub-menu {
           transition: $page-trans;
-          background: rgba(239, 242, 245, 0.95);
-          box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+          background: #1E212C;
+          box-shadow: 0px -8px 8px 0px #FFFFFF1A inset;
+
           backdrop-filter: blur(24.5px);
           overflow: hidden;
           height: 0px;
@@ -2109,7 +2115,7 @@ body {
 
   span.normal-pwd {
     background: #f2c037;
-    color: #000000;
+    color: #ffffff;
   }
 
   span.strong-pwd {
@@ -2526,6 +2532,7 @@ body {
         // align-items: center;
         padding-top: 0px;
         padding-bottom: 0px;
+        gap: 20px;
       }
 
       .acc-dialog-left {
@@ -2568,9 +2575,9 @@ body {
           img {
             display: block;
             // width: 100%;
-            width: calc(100% + 90px);
-            margin: -50px 0px -45px -90px;
-          }
+            width: calc(100% + 6px);
+            margin: -110px 0px -10px -9px;
+        }
 
 
 
@@ -2613,7 +2620,7 @@ body {
             // width: calc(100% + 70px);
             // margin: -50px 0px -10px -60px;
             width: calc(80% + 70px);
-            margin: -190px 0px -10px -20px;
+            margin: -190px 0px -10px -8px;
           }
         }
       }
@@ -2670,12 +2677,12 @@ body {
 //   .el-dialog__header .el-dialog__headerbtn {
 //     .el-dialog {
 //       &__close {
-//         color: #000000;
+//         color: #ffffff;
 //         opacity: 0.5;
 
 //         &:hover {
 //           opacity: 1;
-//           color: #000000;
+//           color: #ffffff;
 //         }
 //       }
 //     }
@@ -2696,7 +2703,7 @@ body {
   align-items: center;
   border-radius: 2rem;
   background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-  box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+  box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
   cursor: pointer;
   transition: 0.3s all;
 
@@ -2705,15 +2712,18 @@ body {
   }
 
   &.btn-color-blue {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    text-transform: uppercase;
     color: $color-white;
+    background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+    box-shadow: 0px 0px 4px 1px #FD3C31;
+    border: 2px solid #000000;
   }
 
   &.btn-color-white {
+    text-transform: uppercase;
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
-    color: #444444;
+    box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
+    color: #000000;
     position: relative;
     img {
       position: absolute;
@@ -2745,7 +2755,7 @@ body {
     width: 100%;
     padding: 0px 6px 0px 8px;
     z-index: 2;
-    color: #444444;
+    color: #7A80A1;
     letter-spacing: 1px;
     text-align: center;
     font-weight: bold;

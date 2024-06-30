@@ -697,7 +697,7 @@ onMounted(() => {
   // height: 50px;
   // background-color: #db7e42;
   // margin: 68px auto 0;
-  // color: #000000;
+  // color: #ffffff;
   // font-size: 18px;
   margin: 20px auto;
 }
@@ -848,7 +848,7 @@ onMounted(() => {
 .deposit-form {
   :deep(.el-input__wrapper), :deep(.el-select__wrapper) {
     background-color: #f7f8fb;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #FFA09A inset;;
   }
   :deep(.el-form-item) {
     display: flex;
@@ -964,7 +964,7 @@ onMounted(() => {
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  color: #000000;
+  color: #ffffff;
 
   .linebox {
     display: flex;

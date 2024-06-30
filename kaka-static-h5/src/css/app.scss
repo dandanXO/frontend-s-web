@@ -26,7 +26,11 @@ body {
 .q-page {
   max-width: 550px;
   margin: 0 auto;
+<<<<<<< HEAD
   background: $new-dark;
+=======
+  background: #1e212c;
+>>>>>>> 3c5f6dc99f92b98a34415188fbe21d1e4f6abf9d
   &.roboto {
     font-family: "Roboto";
   }
@@ -167,10 +171,9 @@ body.platform-ios .q-dialog__inner--minimized > div {
 body .q-header {
   padding: 3px 10px 8px;
   padding-top: calc(3px + env(safe-area-inset-top, 0));
-  background: $secondary;
-
+  background: #1e212c;
   &.with-shadow {
-    box-shadow: 0px -6px 6px 0px #c3d4e6 inset;
+    box-shadow: 0px -6px 6px 0px #1d202b inset;
   }
 }
 
@@ -448,7 +451,7 @@ svg {
 
 .modal-common-div {
   .modalcontent {
-    background: $white;
+    background: #1e212c;
     height: auto;
     border-radius: 10px;
     box-sizing: border-box;
@@ -467,7 +470,7 @@ svg {
     box-sizing: border-box;
     height: 55px;
     line-height: 55px;
-    background: $white;
+    background: #1e212c;
     color: $primary;
     text-align: center;
     font-size: 1.2rem;
@@ -603,7 +606,7 @@ svg {
 }
 
 .bg-lyblue {
-  // background: #0089ED;
+  // background: #FD574C;
   // background: linear-gradient(180deg, #52ACFF, #3559DA);
   background-color: #4c9dec;
   color: #ffffff;

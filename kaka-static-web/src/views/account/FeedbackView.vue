@@ -806,14 +806,14 @@ onMounted(() => {
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
         height: 42px;
       }
 
       :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
       }
@@ -836,7 +836,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #9AA8CB;
     margin-top: 10px;
     gap: 5px;
   }
@@ -870,7 +870,7 @@ onMounted(() => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: #424F72;
+    color: #9AA8CB;
     margin-top: 30px;
     gap: 5px;
 
@@ -902,14 +902,14 @@ onMounted(() => {
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
         height: 42px;
       }
 
       :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
       }
@@ -1009,7 +1009,7 @@ onMounted(() => {
 
     .input-title {
       font-size: 1rem;
-      color: #424f72;
+      color: #9AA8CB;
     }
     .input-fill {
       :deep(.el-form-item__label) {
@@ -1017,14 +1017,14 @@ onMounted(() => {
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
         height: 42px;
       }
 
       :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #FFA09A inset;;
         border-radius: 10px;
         background: #f7f8fb;
       }

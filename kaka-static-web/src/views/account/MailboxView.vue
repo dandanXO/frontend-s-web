@@ -507,6 +507,7 @@ const onSubmit = () => {
         cursor: pointer;
         border-radius: 10px;
 
+        color: #000000;
         &:hover {
           background: #eeeeee;
         }

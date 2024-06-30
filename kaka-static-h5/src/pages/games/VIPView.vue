@@ -924,7 +924,7 @@ onActivated(() => {
 <style lang="scss">
 .vip-container {
   padding: 1.5rem;
-  background: $secondary;
+  background: #1e212c;
 
   .q-carousel {
     height: unset;
@@ -1042,7 +1042,7 @@ onActivated(() => {
   .level-promo-container {
     border-radius: 1.25rem;
     background: #fcfdfe;
-    box-shadow: 0px -4px 8px 0px #c3d4e6 inset, 0px 4px 0px 0px #a7c2dd;
+    box-shadow: 0px -4px 8px 0px #E6C3C3 inset, 0px 4px 0px 0px #a7c2dd;
     margin-top: 12px;
     margin-left: -60px;
     margin-right: -60px;
@@ -1094,7 +1094,7 @@ onActivated(() => {
         display: flex;
         justify-content: center;
         padding: 6px;
-        color: #468cff;
+        color: #FD574C;
         font-weight: bold;
         font-size: 12px;
       }
@@ -1188,7 +1188,7 @@ onActivated(() => {
       width: 100%;
       border-radius: 1.25rem;
       background: #fcfdfe;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 1px 0px #a7c2dd;
+      box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 1px 0px #a7c2dd;
 
       thead {
         th {
@@ -1230,7 +1230,7 @@ onActivated(() => {
       padding: 1rem 2rem;
       border-radius: 1.25rem;
       background: #fcfdfe;
-      box-shadow: 0px -8px 8px 0px #c3d4e6 inset, 0px 4px 1px 0px #a7c2dd;
+      box-shadow: 0px -8px 8px 0px #E6C3C3 inset, 0px 4px 1px 0px #a7c2dd;
 
       ul {
         list-style-type: decimal;
@@ -1274,7 +1274,7 @@ onActivated(() => {
   }
 
   .common-amount {
-    color: #468cff;
+    color: #FD574C;
     font-weight: bold;
   }
 

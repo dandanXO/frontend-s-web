@@ -315,12 +315,12 @@ onMounted(() => {
       color: #3f8cff;
       width: 200px;
 
-      box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
+      box-shadow: 0px -2px 4.579999923706055px 0px #fd897e inset;
 
       box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
 
       &.blue {
-        background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+        background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
         color: #ffffff;
       }
     }

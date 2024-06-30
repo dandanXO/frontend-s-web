@@ -306,7 +306,7 @@ $node-color: #4873f1;
         gap: 5px;
         & > div {
           font-size: 12px;
-          color: #424f72;
+          color: #9AA8CB;
         }
         img {
           background-color: #f7f7f7;
@@ -339,7 +339,7 @@ $node-color: #4873f1;
       &.active {
         // background-color: #1c1c32;
         // border-radius: 6px;
-        border: solid 2px #468cff;
+        border: solid 2px  #FD3C31;
         box-shadow: unset;
         // box-shadow: none;
         // filter: drop-shadow(0px 0px 3px #ffffff);
@@ -351,7 +351,7 @@ $node-color: #4873f1;
       min-width: 6rem;
       background-color: #f7f8fb;
       border-radius: 15px;
-      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      box-shadow: 0px 0px 8px 0px #FFA09A inset;;
       margin-bottom: 30px;
       border: 2px solid;
       .payment-method-wrapper {
@@ -366,7 +366,7 @@ $node-color: #4873f1;
       flex-direction: column;
       & > div {
         font-size: 12px;
-        color: #424f72;
+        color: #9AA8CB;
         font-weight: 700;
       }
 
@@ -473,14 +473,14 @@ $node-color: #4873f1;
       // right: 0;
       // background: #dd4645;
       // padding: 5px;
-      // color: #000000;
+      // color: #ffffff;
       // font-size: 12px;
       // line-height: 10px;
       // top: -8px;
       // right: -1px;
       // background: #dd4645;
       // padding: 5px;
-      // color: #000000;
+      // color: #ffffff;
       // font-size: 12px;
       // line-height: 10px;
       // border-radius: 0 10px;

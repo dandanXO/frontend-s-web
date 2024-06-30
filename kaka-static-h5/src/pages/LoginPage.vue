@@ -183,7 +183,7 @@
               size="xs"
               checked-icon="task_alt"
               unchecked-icon="highlight_off"
-              color="light-blue-4"
+              color="#FD574C"
             />
           </div>
 
@@ -607,6 +607,7 @@ export default defineComponent({
   background-size: cover;
   // height: 100%;
   // min-height: 100vh;
+    background-position: center -120px;
 
   .back-left {
     // position: absolute;
@@ -679,12 +680,12 @@ export default defineComponent({
     }
     .text-title {
       font-size: 24px;
-      color: #333333;
+      color: #ffffff;
       font-weight: 800;
     }
     .text-desc {
       font-size: 14px;
-      color: #424f72;
+      color: #ffffff;
     }
   }
 
@@ -735,9 +736,15 @@ export default defineComponent({
     margin: 0 auto;
     background: $white;
     border-radius: 10px;
-    box-shadow: 0px -8px 8px 0px #c3d4e6 inset;
+    box-shadow: 0px -8px 8px 0px #E6C3C3 inset;
     padding: 15px 12px 15px;
+    
+.q-field__prepend {
 
+img {
+  filter: hue-rotate(140deg);
+}
+}
     q-label {
       padding-top: 3px;
       padding-left: 8px;
@@ -794,7 +801,7 @@ export default defineComponent({
 }
 
 .checked {
-  color: #0089ed;
+  color: #FD574C;
 }
 
 .home-header {

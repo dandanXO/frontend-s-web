@@ -165,7 +165,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 $group-color: #76c034;
 // $node-color: #dd4645;
-$node-color: #468cff;
+$node-color: #FD574C;
 .title {
   color: $group-color;
   margin: 10px auto;

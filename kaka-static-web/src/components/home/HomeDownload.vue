@@ -164,7 +164,7 @@ onMounted(() => {});
           }
 
           .tab-desc {
-            color: $font-5;
+            color: #A4AABB;
             font-size: 1.25rem;
             font-weight: 400;
             line-height: 1.875rem;
@@ -172,7 +172,7 @@ onMounted(() => {});
           }
           .download-desc {
             font-weight: 700;
-            color: #424f72;
+            color: #424F72;
             font-size: 1.3rem;
             margin: 1rem;
           }
@@ -228,7 +228,7 @@ onMounted(() => {});
               }
 
               .link {
-                color: #468cff;
+                color:  #FD3C31;
                 font-family: PingFang SC;
                 font-size: 0.75rem;
                 text-align: center;
@@ -257,9 +257,9 @@ onMounted(() => {});
               justify-content: center;
               border-radius: 3.0625rem;
               background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-              box-shadow: 0px 2px 4.58px 0px #bbdcff inset, 0px -1px 3.664px 0px #a2bff4 inset;
+              box-shadow: 0px 2px 4.58px 0px #FFA09A inset, 0px -1px 3.664px 0px #ffa09a inset;
               padding: 0.25rem 0;
-              color: #468cff;
+              color:  #FD3C31;
               font-size: 0.875rem;
               font-weight: 400;
               line-height: normal;

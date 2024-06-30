@@ -50,7 +50,8 @@ export default defineComponent({
 
 <style lang="scss">
 .account-container {
-  background-image: url("../../assets/images/home/main-bg.jpg");
+  // background-image: url("../../assets/images/home/main-bg.jpg");
+  background: #1e212c;
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top center;
@@ -71,7 +72,7 @@ export default defineComponent({
     justify-content: space-between;
     align-items: stretch;
     gap: 20px;
-    color: #000000;
+    color: #ffffff;
     .account-box {
       // background-color: #fff;
       // box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
@@ -142,7 +143,7 @@ export default defineComponent({
       .account-info-wrapper {
         text-align: center;
         width: 100%;
-        background: linear-gradient(180deg, #8ec1ff 0%, #3981ff 100%);
+        background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
         box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
         border-radius: 15px;
         position: relative;
@@ -198,7 +199,7 @@ export default defineComponent({
             &:hover,
             &.router-link-exact-active {
               // background-color: $lightblue;
-              color: $font-2;
+              color: #424F72;
               position: relative;
               font-weight: 600;
 

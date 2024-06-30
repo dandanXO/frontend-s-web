@@ -471,7 +471,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   }
 }
 .el-button.outline.blue-btn > span {
-  color: #468cff;
+  color:  #FD3C31;
 }
 
 .el-dialog {
@@ -481,9 +481,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
 .el-dialog__header {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-  box-shadow: 0px -1px 4px 0px #5894ff inset;
+  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+  box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
+  box-shadow: 0px -4.11px 9.41px 0px #FFA09A inset;
+
   border: 0;
   color: #fff;
   padding: 10px;
@@ -498,7 +499,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
     width: 402px;
     height: 52px;
     border-radius: 12px;
-    box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+    box-shadow: 0px 0px 8px 0px #FFA09A inset;;
   }
 
   .el-form-item {
@@ -521,7 +522,7 @@ body .transferinout .el-dialog__header .el-dialog__title {
   flex-direction: column;
   gap: 10px;
   padding: 20px 40px;
-  color: #424f72;
+  color: #9AA8CB;
   height: 100%;
   box-shadow: 0 5px 8px 0 rgba(206, 223, 227, 0.25);
 }
@@ -555,9 +556,10 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
 .blue-btn {
   gap: 10px;
-  background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-  box-shadow: 0px -2px 5px 0px #b1d7ff inset;
-  box-shadow: 0px -1px 4px 0px #5894ff inset;
+  background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+  box-shadow: 0px 2px 4.58px 0px #FFA09A inset;
+  box-shadow: 0px -4.11px 9.41px 0px #FFA09A inset;
+
   color: #fff;
   padding: 8px 30px;
   cursor: pointer;
@@ -567,16 +569,16 @@ body .transferinout .el-dialog__header .el-dialog__title {
 
   &.outline {
     background: linear-gradient(180deg, #f8fbff 0%, #fdfeff 100%);
-    box-shadow: 0px 2px 4px 0px #bbdcff inset;
-    box-shadow: 0px -1px 4px 0px #a2bff4 inset;
-    color: #468cff;
+    box-shadow: 0px 2px 4px 0px #FFA09A inset;
+    box-shadow: 0px 2px 4.58px 0px #FFA09A inset;;
+    color:  #FD3C31;
   }
 }
 
 .balance-plat-item {
   display: grid;
   grid-template-columns: 1fr auto;
-  background-color: #e7f3ff;
+  background-color: #FFE7E7;
   padding: 20px;
   border-radius: 12px;
   align-items: center;

@@ -1166,6 +1166,8 @@ body {
         .card-bank-name {
           font-weight: 600;
           font-size: .8rem;
+          color:  #FD574C;
+
           &.txt-blue {
             color: $font-blue;
           }

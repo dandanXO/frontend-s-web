@@ -391,7 +391,7 @@ onMounted(async () => {
   .selection-modal-wrapper {
     width: 100%;
     background: $white;
-    box-shadow: 0px 4px 6px 0px #c3d4e6 inset;
+    box-shadow: 0px 4px 6px 0px #E6C3C3 inset;
     border-radius: 10px;
     padding: 1.25rem;
 
@@ -408,7 +408,7 @@ onMounted(async () => {
       }
 
       .select-confirm {
-        color: #468cff;
+        color: #FD574C;
         font-size: 1.1rem;
         font-weight: 600;
       }

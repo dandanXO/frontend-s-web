@@ -402,8 +402,8 @@ function retrieveWinnerList() {
           background: white;
         }
         :deep(.el-table th.el-table__cell) {
-          background: #e7f3ff;
-          color: #000000;
+          background: #FFE7E7;
+          color: #ffffff;
           text-align: center;
         }
         :deep(.el-table td.el-table__cell) {
@@ -435,7 +435,7 @@ function retrieveWinnerList() {
     .common-btn {
       font-size: 20px;
       width: 80%;
-      background-image: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
+      background-image: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
       border-radius: 30px;
       opacity: 0.8;
 

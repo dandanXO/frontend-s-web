@@ -510,7 +510,7 @@ onMounted(() => {
 }
 
 .transfer-amt-input {
-  background: $bg-blue;
+  background: $bg-red;
   border-radius: 10px;
   padding-left: 8px;
   padding-right: 8px;

@@ -107,12 +107,12 @@ $loadingwidth: 300px;
 .loading {
   img {
     width: 100%;
-    max-width: 300px;
+    max-width: 200px;
   }
   .txt {
     display: block;
     font-size: 30px;
-    color: #a09ffb;
+    color: #fd3b30;
   }
   display: flex;
   flex-direction: column;
@@ -143,12 +143,12 @@ $loadingwidth: 300px;
 
   li:nth-child(-n + 3) {
     background: rgba(255, 255, 255, 0.9);
-    box-shadow: inset 0px 0px 10px 2px rgb(226 142 253), 0px 0px 20px rgb(181 134 222);
+    box-shadow: inset 0px 0px 10px 2px rgb(253, 142, 142), 0px 0px 20px rgb(222, 134, 134);
   }
 
   li:nth-child(n + 4) {
-    box-shadow: inset 0px 0px 10px 1px rgba(55, 72, 228, 0.4),
-      0px 0px 20px rgba(0, 119, 255, 0.1);
+    box-shadow: inset 0px 0px 10px 1px rgba(228, 55, 55, 0.4),
+      0px 0px 20px rgba(255, 0, 0, 0.1);
   }
 
   li:nth-child(3) {
@@ -159,11 +159,11 @@ $loadingwidth: 300px;
   @keyframes pulse {
     0% {
       background: rgba(255, 255, 255, 1);
-    box-shadow: inset 0px 0px 10px 2px rgb(172, 142, 253), 0px 0px 20px rgb(109, 0, 204);
+    box-shadow: inset 0px 0px 10px 2px rgb(253, 142, 142), 0px 0px 20px rgb(204, 0, 0);
     }
     100% {
       background: rgba(255, 255, 255, 0);
-    box-shadow: inset 0px 0px 10px 2px rgba(172, 142, 253, 0.4), 0px 0px 20px rgba(109, 0, 204, 0.1);
+    box-shadow: inset 0px 0px 10px 2px rgba(253, 142, 142, 0.4), 0px 0px 20px rgba(204, 0, 0, 0.1);
     }
   }
 

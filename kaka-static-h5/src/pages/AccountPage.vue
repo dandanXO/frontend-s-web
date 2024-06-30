@@ -374,7 +374,7 @@
         <div class="titles">{{ $t("lang.menu_rebate") }}</div>
         <q-btn class="color-font-1" flat v-close-popup round dense icon="close" />
       </div>
-      <div class="contents" style="font-size: 30px; color: #468cff">{{ rebateAmt }}</div>
+      <div class="contents" style="font-size: 30px; color: #FD574C">{{ rebateAmt }}</div>
       <div class="btnsreas">
         <div class="confirmsbtns common-md-btn btn-standard-height" @click="claimRebateAmt">
           {{ $t("lang.rebate_claim_now") }}
@@ -687,7 +687,7 @@ export default defineComponent({
   }
 
   .livechat {
-    background: #0089ed;
+    background: #FD574C;
     color: #ffffff;
     border-radius: 50px;
     cursor: pointer;
@@ -737,6 +737,7 @@ export default defineComponent({
 
     align-items: center;
     padding: 10px 14px;
+    filter: hue-rotate(145deg);
   }
 
   .acct-section {
@@ -788,7 +789,7 @@ export default defineComponent({
       a {
         font-size: 16px;
         display: block;
-        //color: #0089ed;
+        //color: #FD574C;
         color: #fff;
         text-decoration: none;
       }
@@ -802,7 +803,7 @@ export default defineComponent({
   }
 
   .amt {
-    color: $white;
+    color: #000000;
     font-size: 1rem;
     font-weight: bold;
     width: calc(100% - 135px);
@@ -952,6 +953,7 @@ export default defineComponent({
 }
 
 .acct-nav {
+  filter: hue-rotate(145deg);
   width: $box-width;
   margin: 0px auto;
   padding: 0px;
@@ -1017,7 +1019,7 @@ export default defineComponent({
     background-color: $white;
     border-radius: 0px 0px 20px 20px;
     padding: 24px 0px 28px;
-    box-shadow: 0px -4px 4px 0px #c3d4e6 inset;
+    box-shadow: 0px -4px 4px 0px #E6C3C3 inset;
 
     &.shorter-menu {
       grid-template-rows: repeat(2, 1fr);
@@ -1063,7 +1065,7 @@ export default defineComponent({
 
 .acct-logout {
   padding: 12px;
-  box-shadow: 0px -2px 8px 0px #c3d4e6 inset;
+  box-shadow: 0px -2px 8px 0px #E6C3C3 inset;
   text-align: center;
   font-size: 1.2rem;
   background: $white;
@@ -1081,6 +1083,7 @@ export default defineComponent({
 
   img {
     width: 25px;
+    filter: hue-rotate(145deg);
   }
 }
 

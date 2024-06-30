@@ -55,7 +55,7 @@
                     @update:model-value="(newValue) => (selectedMailIds[det.id] = newValue ?? false)"
                     size="sm"
                     style="font-size: 14px"
-                    color="#0089ED"
+                    color="#FD574C"
                   />
                   <q-chip size="sm" :label="$t('lang.mail_read')" v-if="det.readTime && det.sendTime" />
                   {{ det.title }}

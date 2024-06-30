@@ -58,7 +58,7 @@
   </div>
     <el-dialog class="" v-model="isRebateDialogVisible" width="600px" align-center>
       <div class="noticedialog">
-        <div class="title" style="flex-direction: column;display:flex;">{{$t('vip.rebateBonus')}} <span style="font-size: 30px; color: #5196ff;">{{ rebateAmt ? rebateAmt : 0 }}</span></div>
+        <div class="title" style="flex-direction: column;display:flex;">{{$t('vip.rebateBonus')}} <span style="font-size: 30px; color: #FD3126;">{{ rebateAmt ? rebateAmt : 0 }}</span></div>
         <div class="standard-button-container">
           <button class="standard-button btn-color-white" @click="isRebateDialogVisible = false">{{$t('common.cancel')}}</button>
           <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('promo.btn_claim_now')}}</button>
@@ -214,7 +214,7 @@ const menuItems = ref([
 
         &:hover {
           .icon-rounded {
-            box-shadow: 0px 2px 5px 0px #498bd1 inset;
+            box-shadow: 0px 2px 5px 0px #FFA09A inset;
           }
         }
 
@@ -226,7 +226,7 @@ const menuItems = ref([
           justify-content: center;
           border-radius: 50%;
           background-color: $color-white;
-          box-shadow: 0px 2px 5px 0px #bbdcff inset;
+          box-shadow: 0px 2px 5px 0px #FFA09A inset;
         }
 
         img {

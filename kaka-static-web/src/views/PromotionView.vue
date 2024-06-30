@@ -356,7 +356,8 @@ export default defineComponent({
     padding: 50px;
     position: relative;
     padding-top: max(270px, 15vw);
-    background-color: #f3f7fd;
+    background-color: #1E212C
+;
   }
   .promo-view-container {
     line-height: 30px;
@@ -394,7 +395,7 @@ export default defineComponent({
       }
       th {
         // background-image: linear-gradient(0deg, #0494fc 0, #15bdfc 100%), linear-gradient(#d0d1d3, #d0d1d3);
-        background: #e7f3ff;
+        background: #FFE7E7;
         p {
           margin: 0;
         }
@@ -496,10 +497,10 @@ export default defineComponent({
           min-height: 818px;
           position: sticky;
           top: 100px;
+          background: #ffffff;
+          border-radius: 10px;
           .promo-title {
-            color: #4C88F8;
-            font-size: 20px;
-            color: #4C88F8;
+            color: #FD574C;
             font-size: 20px;
             display: flex;
             gap: 10px;
@@ -514,13 +515,13 @@ export default defineComponent({
                 content: '';
                 width: 13px;
                 height: 2px;
-                background: #4C88F8;
+                background: #FD574C;
               }
               &:after {
                 content: '';
                 width: 55px;
                 height: 2px;
-                background: #4C88F8;
+                background: #FD574C;
               }
             }
             .lineafter {
@@ -532,14 +533,14 @@ export default defineComponent({
               &:before {
                 content: '';
                 width: 13px;
-                background: #4C88F8;
+                background: #FD574C;
                 height: 2px;
               }
               &:after {
                 content: '';
                 width: 55px;
                 height: 2px;
-                background: #4C88F8;
+                background: #FD574C;
               }
 
             }
@@ -560,11 +561,12 @@ export default defineComponent({
             position: relative;
             width: 100%;
             border-radius: 30px;
-            box-shadow: 0px -1.6610169410705566px 6.085966110229492px 0px #a2bff4 inset;
+
+box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
 
             .label {
               z-index: 0;
-              color: #468cff;
+              color:  #FD3C31;
               font-size: 16px;
             }
 
@@ -584,9 +586,8 @@ export default defineComponent({
             }
             &.active,
             &:hover {
-              background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-              box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-
+              background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+              box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
               // background: #4b4e66;
               // box-shadow: 0 0 5px #ffffff;
               // background-image: linear-gradient(90deg,#35d8f2 0,#2188c9 100%),linear-gradient(#5243bd,#5243bd);
@@ -757,7 +758,7 @@ export default defineComponent({
                 font-weight: 700;
               }
               .front-title {
-                color: #4c88f8;
+                color: #FD574C;
                 font-size: 20px;
                 font-weight: 700;
               }
@@ -769,11 +770,8 @@ export default defineComponent({
               .front-btn {
                 color: #ffffff;
                 padding: 5px 30px;
-                background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-
-                box-shadow: 0px -2px 4.579999923706055px 0px #b1d7ff inset;
-
-                box-shadow: 0px -1px 3.6640000343322754px 0px #5894ff inset;
+                background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);
+                box-shadow: 0px -1.66px 6.09px 0px #F4A2A2 inset;
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;

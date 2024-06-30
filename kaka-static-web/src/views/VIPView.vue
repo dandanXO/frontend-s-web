@@ -35,14 +35,14 @@
 
                 <span v-if="vipIndex !==0">
                   {{ $t('vip.vipUpgradeRequired') }}:
-                  <span style="color: #424f72">
+                  <span style="color: #9AA8CB">
                   {{$t('vip.totalBetMonth')}} {{vip.upgrade}}
                   </span>
                 </span>
                 <br/>
 
                 {{ $t('vip.vipMaintainRequired') }}:
-                <span style="color: #424f72"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
+                <span style="color: #9AA8CB"><span v-if="vipIndex === 0">{{$t('vip.3timedeposit')}}</span>
                 <span v-else>{{$t('vip.totalBetMonth')}} {{ vip.maintain }}
                 </span>
                 </span>
@@ -338,7 +338,7 @@
       <div class="section-title">{{ $t('vip.vipTerms') }}</div>
       <img
         class="terms-conditions-title-separator"
-        :src="require('../assets/vip/terms-condition-title-separator.png')"
+        :src="require('../assets/vip/term-condition-title-separator.png')"
       />
       <ol class="terms">
         <!-- <li v-for="(term, i) in currentDisplayTerms" :key="i" class="term">
@@ -353,7 +353,7 @@
 
   <el-dialog class="" v-model="privilegeClaimedModalVisible" width="600px" align-center>
     <div class="noticedialog">
-      <div class="title" style="flex-direction: column;display:flex;">{{modalTitle}} <span style="font-size: 30px; color: #5196ff;">{{ amount ? amount : 0 }}</span></div>
+      <div class="title" style="flex-direction: column;display:flex;">{{modalTitle}} <span style="font-size: 30px; color: #FD3126;">{{ amount ? amount : 0 }}</span></div>
       <div class="standard-button-container">
         <button class="standard-button btn-color-blue" @click="claimNow()">{{$t('common.confirm')}}</button>
       </div>
@@ -719,7 +719,7 @@ $border-settings: 1px solid #e5e7eb;
     background: url("../assets/vip/button.png") no-repeat center center;
     background-size: contain;
     padding: 15px;
-    color: #000000;
+    color: #ffffff;
     display: flex;
     justify-content: center;
     margin-top: 15px;
@@ -737,8 +737,8 @@ $border-settings: 1px solid #e5e7eb;
 }
 .vip-container {
   position:relative;
-  background-image: url("../assets/vip/vip-bg.jpg");
-  background-color: #f3f7fd;
+  background-image: url("../assets/vip/vip-bg.png");
+  background-color: #1E212C;
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -798,7 +798,7 @@ $border-settings: 1px solid #e5e7eb;
         // color: #cdae77;
         // box-shadow: 0px 2px 5px 0px #cdae77 inset;
         background: linear-gradient(360deg, #E29100 0%, #F8D79D 70%, #F2E4B6 80%, #ffb42a 100%);
-        color: #000000;
+        color: #ffffff;
         &.unavailable {
           cursor: unset;
           pointer-events: none;
@@ -985,11 +985,17 @@ $border-settings: 1px solid #e5e7eb;
     margin: 50px auto;
     max-width: 1300px;
     width: 95%;
+    .vip-table {
+      
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    }
 
     .tbl-title {
       padding: 10px;
       font-weight: bold;
-      color: #000000;
+      color: #ffffff;
       text-transform: uppercase;
       &.free {
       }
@@ -1072,17 +1078,29 @@ $border-settings: 1px solid #e5e7eb;
     margin: 0 auto;
     width: 80%;
     position: relative;
+    max-width: 1280px;
 
     .section-title {
       background: linear-gradient(90deg, #e5cda5 0.87%, #b48f57 100%);
       background-clip: text;
       text-align: center;
       font-size: 48px;
+      font-family: Play;
+      font-size: 25.72px;
+      font-weight: 700;
+      line-height: 45.96px;
+      letter-spacing: 0.05em;
+      text-align: center;
+      color:#B48F57;
+      margin-top: 10px;
+
     }
 
     .terms-conditions-title-separator {
       width: 100%;
       height: 100%;
+      margin-top: -40px;
+      padding-bottom: 50px;
     }
 
     .terms {
@@ -1092,11 +1110,14 @@ $border-settings: 1px solid #e5e7eb;
       font-size: 16px;
       font-weight: 400;
       line-height: 30px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 20px 20px 20px 60px;
 
       .term {
         max-width: 1300px;
         width: 100%;
-        margin-top: 39px;
+        margin-bottom: 10px;
         list-style-type: decimal;
       }
     }

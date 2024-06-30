@@ -327,7 +327,7 @@ onActivated(() => {
 
     .bank-bind-item {
       background: $white;
-      box-shadow: 0px -4px 6px 0px #c3d4e6 inset;
+      box-shadow: 0px -4px 6px 0px #E6C3C3 inset;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -360,7 +360,7 @@ onActivated(() => {
 
     .bank-detail-item {
       background: $white;
-      box-shadow: 0px -4px 6px 0px #c3d4e6 inset;
+      box-shadow: 0px -4px 6px 0px #E6C3C3 inset;
       border-radius: 10px;
       display: flex;
       align-items: center;

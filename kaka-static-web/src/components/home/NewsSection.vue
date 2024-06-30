@@ -169,7 +169,7 @@ onMounted(() => {
         flex: 3;
         cursor: pointer;
         .news-title {
-          color: #444444;
+          color: #7A80A1;
           font-size: 20px;
           font-weight: 700;
           height: 30px;
@@ -180,7 +180,7 @@ onMounted(() => {
           font-size: 14px;
           overflow: hidden;
           text-overflow: ellipsis;
-          color: #444444;
+          color: #7A80A1;
           margin: 15px 0;
         }
         .standard-button {

@@ -114,7 +114,7 @@ defineExpose({
     font-size: 14px;
   background-color: #f7f8fb;
   border-radius: 15px;
-    box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
+    box-shadow: 0px -1.7px 6.09px 0px #ffa09a inset;
 }
 
 .form-field {
@@ -130,13 +130,14 @@ defineExpose({
     margin-top: 40px;
     .form-field-icon {
         margin: auto;
-    height: 30px;
+        height: 30px;
+        filter: hue-rotate(145deg);
     }
 }
 
 .blue-bg {
-    background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
-    box-shadow: 0px -2px 4.58px 0px #b1d7ff inset, 0px -1px 3.664px 0px #5894ff inset;
+    background: linear-gradient(180deg, #FD897E 0%, #FD3126 100%);;
+    box-shadow: 0px -2px 4.58px 0px #fd897e inset, 0px -1px 3.664px 0px #5894ff inset;
     color: #fff;
     font-size: 14px;
     border-radius: 30px;

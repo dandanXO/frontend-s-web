@@ -127,7 +127,7 @@ onMounted(() => {
   margin-left: auto;
   margin-right: auto;
   background: #ffffff;
-  box-shadow: 0px -4px 6px 2px #c3d4e6 inset;
+  box-shadow: 0px -4px 6px 2px #E6C3C3 inset;
   border-radius: 10px;
   // padding: 15px 12px 20px;
 }

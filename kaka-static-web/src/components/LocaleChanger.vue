@@ -72,4 +72,14 @@ export default {
       width: 25px;
     }
   }
+  .profile-info-dropdown-content {
+    
+  .el-dropdown-menu__item {
+    gap: 5px;
+    img {
+      width: 25px;
+      filter: hue-rotate(140deg);
+    }
+  }
+  }
 </style>
