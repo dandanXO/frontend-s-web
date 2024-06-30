@@ -404,7 +404,6 @@
 <script>
 import { defineComponent, ref, reactive, onMounted } from "vue";
 import moment from "moment";
-import Swal from "sweetalert2";
 import { useQuasar } from "quasar";
 import { useRouter } from "vue-router";
 import { getRecommendPrivilegeRecord, getRebateInfo } from "../api/privilegeInvite/privilegeInvite";

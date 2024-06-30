@@ -412,7 +412,6 @@ export default defineComponent({
     font-size: 20px;
     text-align: center;
     color: #00E9FE;
-    font-family: "PingFang", "Roboto";
   }
 
   .vote-records {
@@ -422,7 +421,6 @@ export default defineComponent({
     gap: 10px;
 
     .vote-record-item {
-      font-family: "PingFang", "Roboto";
       background-color: #0A243E;
       border: 2px solid #00EAFE4D;
       border-radius: 4px;
@@ -567,7 +565,6 @@ export default defineComponent({
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
-    font-family: PingFang SC;
     font-size: 17px;
     font-weight: 600;
     line-height: 20.6px;
@@ -789,7 +786,6 @@ export default defineComponent({
 
 
 .countries-wrapper .c-note {
-  font-family: PingFang SC;
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
@@ -807,7 +803,6 @@ export default defineComponent({
   padding: 5px;
   position: relative;
   .table-title{
-    font-family: PingFang SC;
     font-size: 14px;
     font-weight: 500;
     line-height: 17.6px;

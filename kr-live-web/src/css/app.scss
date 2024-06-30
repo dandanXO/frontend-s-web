@@ -819,3 +819,7 @@ input:internal-autofill-selected {
   50%  { transform: translate(0, 3px); }
   100%   { transform: translate(0, 0px); }    
 }
+
+.scooped-skeleton {
+  mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px
+}

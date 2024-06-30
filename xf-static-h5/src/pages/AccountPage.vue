@@ -134,7 +134,7 @@
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.png" />
-            <div class="acct-nav-label">分享好友</div>
+            <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link>
         <router-link to="/promo">
@@ -176,7 +176,7 @@
         <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_mailbox.png" />
-            <div class="acct-nav-label">站内信</div>
+            <div class="acct-nav-label">反馈奖励</div>
             <!--          ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>

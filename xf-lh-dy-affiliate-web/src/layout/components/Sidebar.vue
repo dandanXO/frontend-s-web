@@ -73,7 +73,7 @@
         >
           <template
             v-if="(parseInt(store.state.user.siteId) === 10)
-              ? (child.path === '/transfer' || child.path === '/commission-info' ? false : true)
+              ? (child.path === '/commission-info' ? false : true)
               : (child.path === '/rebate' ? false : true)
             "
           >

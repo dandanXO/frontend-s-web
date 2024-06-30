@@ -56,7 +56,7 @@ const router = useRouter();
 const { t } = useI18n();
 const visible = ref(false);
 const page = ref("");
-const tabIndex = ref("log");
+const tabIndex = ref("");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {
@@ -106,7 +106,7 @@ const headerInfo = computed(() => {
 
 const pagesInfo = reactive([
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/deposit",
     info: 'lang.page_modal_deposit',
     iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
@@ -117,7 +117,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/withdraw",
     info: 'lang.page_modal_withdraw',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
@@ -128,7 +128,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "message",
     page: "personal/messages",
     info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
@@ -139,7 +139,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "message",
     page: "personal/messages/create",
     info: 'lang.page_modal_message_compose',
     iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
@@ -150,18 +150,29 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
-    page: "promo/all",
-    info: 'lang.page_modal_promo',
-    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
-    component: PromoComponent,
+    tabIndex: "message",
+    page: "announcement",
+    info: 'lang.page_modal_announcement',
+    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
+    component: AnnouncementComponent,
     headerInfo: {
-      title: 'lang.page_modal_promo',
-      description: ""
+      title: 'lang.page_modal_announcement',
+      description: "lang.page_modal_desc_text"
     }
   },
+  // {
+  //   tabIndex: "log",
+  //   page: "promo/all",
+  //   info: 'lang.page_modal_promo',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
+  //   component: PromoComponent,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_promo',
+  //     description: ""
+  //   }
+  // },
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "personal/info",
     info: 'lang.page_modal_personal_info',
     iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
@@ -172,18 +183,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "my",
-    page: "announcement",
-    info: 'lang.page_modal_announcement',
-    iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
-    component: AnnouncementComponent,
-    headerInfo: {
-      title: 'lang.page_modal_announcement',
-      description: "lang.page_modal_desc_text"
-    }
-  },
-  {
-    tabIndex: "my",
+    tabIndex: "finance",
     page: "bankcardlist",
     info: 'lang.page_modal_bank_card_list',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
@@ -196,7 +196,7 @@ const pagesInfo = reactive([
   },
 
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "transaction/records",
     info: 'lang.page_modal_transaction_record',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
@@ -207,7 +207,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "personal/updatePwd",
     info: 'lang.page_modal_change_password',
     iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),

@@ -42,11 +42,11 @@
         </router-link>
         <router-link to="/center/mailbox" class="account-menu-item">
           <RiMailLine />
-          收发信息
+          反馈奖励
         </router-link>
         <router-link to="/center/share" class="account-menu-item">
           <RiShareBoxLine />
-          分享好友
+          推广赚钱
         </router-link>
         <!--        <router-link-->
         <!--          to="/center/share"-->

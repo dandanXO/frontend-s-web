@@ -47,7 +47,7 @@
       <span v-else>暂无赛程</span>
     </tab-view>
   </transition>
-  <div class="tab-title">小组赛积分</div>
+  <div class="tab-title">积分榜</div>
 
   <tab-view :tab-list="groupByGroupTabList" class="group-by-group-tab" v-model="activeGroupTab">
     <template #tab="{ tab }">
@@ -96,18 +96,15 @@ const activeDayTab = ref(startDate);
 
 const groupByDateTabList = ref(
   [
-    "2024-06-16",
-    "2024-06-17",
-    "2024-06-18",
-    "2024-06-19",
-    "2024-06-20",
-    "2024-06-21",
-    "2024-06-22",
-    "2024-06-23",
-    "2024-06-24",
-    "2024-06-25",
-    "2024-06-26",
-    "2024-06-27",
+    "2024-06-30",
+    "2024-07-01",
+    "2024-07-02",
+    "2024-07-03",
+    "2024-07-06",
+    "2024-07-07",
+    "2024-07-10",
+    "2024-07-11",
+    "2024-07-15",
   ]);
 groupByDateTabList.value = groupByDateTabList.value.filter(number => number >= moment().format("YYYY-MM-DD"));
 
@@ -126,9 +123,9 @@ const tabPerPage = computed(() => {
 const groupedMatches = computed(() => {
   const groupByDay = {};
   matches.value.forEach((match) => {
-    if (match.teamGroup === "2" || match.teamGroup === "4" || match.teamGroup === "8" || match.teamGroup === "16") {
-      return;
-    }
+    // if (match.teamGroup === "2" || match.teamGroup === "4" || match.teamGroup === "8" || match.teamGroup === "16") {
+    //   return;
+    // }
     const dayKey = moment(match.matchTime).format("YYYY-MM-DD");
 
     if (!groupByDay[dayKey]) {
@@ -147,7 +144,11 @@ const groupedMatches = computed(() => {
 });
 
 const currentGroupedMatches = computed(() => {
-  return groupedMatches.value.find((group) => group.date === activeDayTab.value) || {};
+  return groupedMatches.value.find((group) => {
+    const ongoingMatches = (group.matchList || []).filter(({ status }) => status !== 'ENDED');
+    const hasOngoingMatches = ongoingMatches?.length > 0;
+    return group.date === activeDayTab.value && hasOngoingMatches;
+  }) || {};
 });
 
 const groupedTeams = computed(() => {

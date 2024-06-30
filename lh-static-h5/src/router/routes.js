@@ -5,10 +5,6 @@ const routes = [
     children: [{ path: "", component: () => import("pages/HomePage.vue") }]
   },
   {
-    path: "/welcome",
-    children: [{ path: "", component: () => import("pages/WelcomePage.vue") }]
-  },
-  {
     path: "/login",
     component: () => import("layouts/MainLayout.vue"),
     children: [{ path: "", component: () => import("pages/LoginPage.vue") }]
@@ -252,39 +248,6 @@ const routes = [
       {
         path: "",
         component: () => import("pages/records/BetHistoryRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  // {
-  //   path: "/account/records/recommend",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/records/RecommendRecordView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
-  // {
-  //   path: "/account/records/help",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/records/HelpRecordView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
-  {
-    path: "/account/transit",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/TransitRecordView.vue")
       }
     ],
     meta: { requiresAuth: true }

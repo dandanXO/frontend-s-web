@@ -182,9 +182,9 @@ const resizeDom = () => {
     }
 
     .bracket-team__name {
-      font-size: 0.7rem;
+      font-size: 0.6rem;
       line-height: 1.1rem;
-      letter-spacing: 0.12rem;
+      letter-spacing: -0.01rem;
       word-break: keep-all;
     }
   }
