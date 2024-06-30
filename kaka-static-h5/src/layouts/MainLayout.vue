@@ -127,14 +127,14 @@ export default defineComponent({
     const { languageVal } = storeToRefs(i18nStoreLanguage);
 
     const goToPrevPage = (prePage) => {
-      if(prePage === "/"){
-        router.push("/")
-      }else if(window.location.pathname === "/promoapp"){
-        window.location.href = "vnmapp:/promo"
-      }else{
-        router.push('/' + prePage)
+      if (prePage === "/") {
+        router.push("/");
+      } else if (window.location.pathname === "/promoapp") {
+        window.location.href = "vnmapp:/promo";
+      } else {
+        router.push("/" + prePage);
       }
-    }
+    };
 
     const logout = () => {
       store.memberLogout().then(() => {
@@ -185,13 +185,13 @@ export default defineComponent({
             var platformName = translateRecord(route.query.platform);
             pageName.value = `${platformName} ${t("lang.page_lobby")}`;
           }
-        }else if (route.path === "/minigame") {
+        } else if (route.path === "/minigame") {
           prevPage.value = "";
           hasPage.value = true;
           hasDrawer.value = true;
           pageName.value = t("lang.page_game");
           if (route.query.platform) {
-            var platformName = translateRecord(route.query.platform + 'minigame');
+            var platformName = translateRecord(route.query.platform + "minigame");
             pageName.value = `${platformName}`;
           }
         } else if (route.path === "/account/vip") {
@@ -236,7 +236,7 @@ export default defineComponent({
           } else {
             prevPage.value = "/";
           }
-        }else if (route.path === "/promoapp") {
+        } else if (route.path === "/promoapp") {
           hasPage.value = true;
           pageName.value = t("lang.page_promotions");
           prevPage.value = "";
