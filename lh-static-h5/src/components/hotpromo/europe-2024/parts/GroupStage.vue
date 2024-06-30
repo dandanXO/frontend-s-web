@@ -144,7 +144,11 @@ const groupedMatches = computed(() => {
 });
 
 const currentGroupedMatches = computed(() => {
-  return groupedMatches.value.find((group) => group.date === activeDayTab.value) || {};
+  return groupedMatches.value.find((group) => {
+    const ongoingMatches = (group.matchList || []).filter(({ status }) => status !== 'ENDED');
+    const hasOngoingMatches = ongoingMatches?.length > 0;
+    return group.date === activeDayTab.value && hasOngoingMatches;
+  }) || {};
 });
 
 const groupedTeams = computed(() => {
