@@ -19,9 +19,9 @@ const isSpecialLH = specialLinks.some((link) => window.location.hostname.include
 
 
 if (isSpecialLH){
-  var rstSpecialArray = ["https://apodnbo0tl.anipoius54d.com", "https://ap2gh538tl.se17xiasedy.com"];
-  var evtSpecialArray = ["https://prk46vfitl.111z35h0mt.com", "https://prkuo09ctl.1rqrhcll8p.com"];
-  var crtSpecialArray =["https://cauomdoptl.baw7xptuqr1.com", "https://caaukstntl.ectuu384q0h.com"];
+  var rstSpecialArray = ["https://apqyf3gol.h90bya08.com", "ap00clgol.k5lsvztp.com"];
+  var evtSpecialArray = ["https://prcugtgol.icsb4ayzq.com", "https://pr57wngol.7zvf5tljv.com"];
+  var crtSpecialArray =["https://caa11pgx.14ia6oml.com", "https://cad7hs7u.615zee5m.com"];
 
   var rstApi = getInitApi(rstSpecialArray, "LH_WEB_RST_URL");
   var evtApi = getInitApi(evtSpecialArray, "LH_WEB_EVT_URL");
