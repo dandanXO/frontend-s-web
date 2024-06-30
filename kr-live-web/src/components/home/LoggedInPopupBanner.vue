@@ -8,12 +8,11 @@
                     공지 및 규정을 꼭 숙지하시기 바랍니다
                 </div>
                 <div class="agree-checkbox">
-                    <q-checkbox v-model="isAgreeFirstBannerTermsConditions" color="primary" checked-icon="check_circle"
-                        unchecked-icon="radio_button_unchecked" keep-color />
+                    <!-- <q-checkbox v-model="isAgreeFirstBannerTermsConditions" color="primary" checked-icon="check_circle"
+                        unchecked-icon="radio_button_unchecked" keep-color /> -->
                     <span>사용자가 클릭하여 닫기에 동의합니다</span>
                 </div>
-                <q-btn class="primary-button yellow" :label="'나는 동의한다'" :disable="!isAgreeFirstBannerTermsConditions"
-                    @click="closeFirstBanner" />
+                <q-btn class="primary-button yellow" :label="'동의'" @click="closeFirstBanner" />
             </div>
         </div>
     </q-dialog>
@@ -33,12 +32,11 @@
                     정상게임하시는 회원님들은 신경쓰지  않으셔도 되는 내용입니다
                 </div>
                 <div class="agree-checkbox">
-                    <q-checkbox v-model="isAgreeSecondBannerTermsConditions" color="primary" checked-icon="check_circle"
-                        unchecked-icon="radio_button_unchecked" keep-color />
+                    <!-- <q-checkbox v-model="isAgreeSecondBannerTermsConditions" color="primary" checked-icon="check_circle"
+                        unchecked-icon="radio_button_unchecked" keep-color /> -->
                     <span>사용자가 클릭하여 닫기에 동의합니다</span>
                 </div>
-                <q-btn class="primary-button yellow" :label="'나는 동의한다'" :disable="!isAgreeSecondBannerTermsConditions"
-                    @click="closeSecondBanner" />
+                <q-btn class="primary-button yellow" :label="'동의'" @click="closeSecondBanner" />
             </div>
         </div>
     </q-dialog>
@@ -172,7 +170,7 @@ const closeSecondBanner = () => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        width: calc(80% + 25px);
+        width: 80%;
 
         @media (max-width: 600px) {
             font-size: 10px;
@@ -297,7 +295,7 @@ const closeSecondBanner = () => {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        width: calc(80% + 25px);
+        width: 80%;
 
         @media (max-width: 600px) {
             font-size: 10px;
