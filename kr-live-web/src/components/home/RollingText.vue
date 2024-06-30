@@ -10,8 +10,7 @@
             <div style="width:100%;text-align:center;" v-if="isLoading">
                 <q-skeleton type="text" style="width:100%;" />
             </div>
-            <marquee-text :repeat="financeRecords.length" :duration="financeRecords.length * 20"
-                v-else-if="financeRecords.length > 0">
+            <marquee v-else-if="financeRecords.length > 0" scrollamount="3">
                 <div>
                     <span style="color: #fff;" v-for="(a, i) in financeRecords" :key="i">
                         <span style="color:#03fff2;">{{ formatTransactionType(a.transactionType) }}</span> {{
@@ -22,7 +21,7 @@
                         <span class="text-caption text-grey">{{ getLocaleDateTime(a.transactionTime, true) }}</span>
                     </span>
                 </div>
-            </marquee-text>
+            </marquee>
             <div v-else style="width:100%;text-align:center;">
                 <span style="color: #fff;">
                     {{ $t('lang.roll_text_no_content') }}
@@ -34,7 +33,6 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
-import MarqueeText from "vue-marquee-text-component";
 import { useI18n } from "vue-i18n";
 import { userStore } from "stores/index";
 import { useRoute } from 'vue-router';

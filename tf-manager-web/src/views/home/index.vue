@@ -368,13 +368,10 @@
         <Chart :options="financialPiechatOptions" />
       </el-card>
       <el-card>
-        <Chart :options="vipPiechatOptions" />
+        <Chart :options="depositBarchatOptions" />
       </el-card>
     </el-row>
     <el-row class="payment-chart-summary">
-      <el-card>
-        <Chart :options="depositSummaryBarchatOptions" />
-      </el-card>
       <el-card>
         <div style="font-size: 18px; font-weight: 600;">
           {{ t('dashboard.paymentMethodSummary') }}
@@ -411,10 +408,8 @@
           />
         </el-table>
       </el-card>
-    </el-row>
-    <el-row class="chart-summary-2">
       <el-card>
-        <Chart :options="depositBarchatOptions" />
+        <Chart :options="depositSummaryBarchatOptions" />
       </el-card>
     </el-row>
   </div>
@@ -797,7 +792,7 @@ const depositSummaryBarchatOptions = reactive({
   title: {
     text: t('dashboard.merchantDepositSummary'),
   },
-  height: '200px',
+  height: '240px',
   tooltip: {
     trigger: 'axis',
   },
@@ -922,7 +917,7 @@ async function getDailySummaryList() {
     ret.siteMemberDailySummaryFinancialVO,
     financialPiechatOptions
   )
-  getFinancialChart(ret.siteMemberDailySummaryVipVO, vipPiechatOptions)
+  // getFinancialChart(ret.siteMemberDailySummaryVipVO, vipPiechatOptions)
   getDepositSummaryChart(ret.siteDepositReportVO)
   getTotalDailySummary()
 }

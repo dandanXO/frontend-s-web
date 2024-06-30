@@ -23,3 +23,7 @@ export const getSiteMemberReportExport = (data) => {
 export const getTotalSiteMemberReport = (data) => {
   return https().request("/report/getTotalSiteMemberReport/", Method.GET, data, ContentType.json);
 };
+
+export const getKoreaStatsReport = () => {
+  return https().request("/report/krwSiteReport/", Method.GET);
+};

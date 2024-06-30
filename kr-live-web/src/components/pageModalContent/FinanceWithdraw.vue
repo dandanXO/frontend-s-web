@@ -233,6 +233,10 @@ watch(() => withdrawAmountFormatted.value, () => {
   }
 })
 
+watch(() => withdrawInfo.amount, () => {
+  withdrawAmountFormatted.value = `${withdrawInfo.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+})
+
 const loadCards = () => {
   return new Promise((resolve) => {
     api.get("/session/bankCard").then((resp) => {
