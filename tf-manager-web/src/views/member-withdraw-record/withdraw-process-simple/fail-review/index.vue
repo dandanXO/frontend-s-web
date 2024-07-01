@@ -83,7 +83,7 @@
         {{ t('fields.fail') }}
       </el-button>
       <el-button
-        ref="auriWithdrawBtnRef"
+        ref="autoWithdrawBtnRef"
         size="mini"
         type="primary"
         :disabled="uiControl.toAutoWithdrawBtn"
