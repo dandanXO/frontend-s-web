@@ -45,6 +45,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.desktopImgUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.desktopImgUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -85,6 +86,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.desktopImgBackgroundUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.desktopImgBackgroundUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -119,6 +121,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.mobileImgUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.mobileImgUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -159,6 +162,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.mobileImgBackgroundUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.mobileImgBackgroundUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -193,6 +197,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.desktopBannerUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.desktopBannerUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
@@ -227,6 +232,7 @@
           >
             {{ t('fields.browse') }}
           </el-button>
+          <el-button v-if="form.mobileBannerUrl" icon="el-icon-remove" size="mini" type="danger" @click="form.mobileBannerUrl=''">{{ t('fields.remove') }}</el-button>
         </el-row>
       </el-form-item>
     </el-row>
