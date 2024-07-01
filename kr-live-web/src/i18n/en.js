@@ -222,6 +222,7 @@ export default {
     // page modal start
     page_modal_desc_text: "Be sure to inquire about your account when making a deposit!",
     // page modal end
+    file_too_large_or_invalid_file: "File is too large/ invalid file, please upload a new file",
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -786,7 +787,6 @@ export default {
     10006: "Name cannot be used",
     10007: "Error entering game room",
     10008: "Error",
-    11000: "Third party provider is experiencing difficulties",
     11003: "Deposit failed",
     13000: "Domain name not found",
     13001: "Cannot query information older than 3 months",

@@ -2,8 +2,8 @@ export default {
   lang: {
     // login start
     login: "로그인",
-    login_account: "계정",
-    login_password: "암호",
+    login_account: "아이디",
+    login_password: "비밀번호",
     login_captcha: "보안 문자",
     login_submit: "로그인",
     login_register: "회원가입",
@@ -239,6 +239,7 @@ export default {
     // page modal start
     page_modal_desc_text: "입금시 꼭 계좌문의를 하세요!",
     // page modal end
+    file_too_large_or_invalid_file: "파일이 너무 크거나 잘못된 파일입니다. 새 파일을 업로드하세요.",
     langVal: "en",
     register: "Register",
     personal_information: "Personal Information",
@@ -801,7 +802,6 @@ export default {
       10006: "이름을 사용할 수 없음",
       10007: "게임 방에 들어가는 중 오류 발생",
       10008: "오류",
-      11000: "제3자 채널에서 이상 현상이 발생합니다",
       11003: "입금 실패",
       12100: "출금 비밀번호가 일치하지 않습니다",
       13000: "도메인 이름을 찾을 수 없음",

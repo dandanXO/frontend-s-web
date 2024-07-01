@@ -36,27 +36,14 @@
 </template>
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
-import { ref, reactive, computed, watch, nextTick, onMounted } from "vue";
-import { useI18n } from 'vue-i18n';
-import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
-import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
-import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
-import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
-import MessagesPage from "components/pageModalContent/MessagesPage";
-import RegisterComponent from "components/pageModalContent/RegisterComponent";
-import LoginComponent from "components/pageModalContent/LoginComponent";
-import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
-import PromoComponent from "components/pageModalContent/PromoComponent.vue";
-import TransitRecord from "src/pages/account/TransitRecordView.vue";
-import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
-import MessageCompose from "../pageModalContent/MessageCompose.vue";
+import { ref, reactive, computed, watch, nextTick, onMounted, defineAsyncComponent, markRaw } from "vue";
+
 
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
 const visible = ref(false);
 const page = ref("");
-const tabIndex = ref("log");
+const tabIndex = ref("");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {
@@ -66,8 +53,7 @@ const isMinimalMode = computed(() => {
 
 watch(
   () => route.query,
-  (_, __) => {
-    console.log(route.query);
+  () => {
     if (route.query && route.query.page) {
       nextTick(() => {
         page.value = route.query.page;
@@ -78,13 +64,12 @@ watch(
         // determine which left side tab to land on
         if (pageInfoItem) {
           tabIndex.value = pageInfoItem?.tabIndex;
-          open(route.query.page);
+          visible.value = true;
         } else {
           router.push('/');
         }
       });
     } else {
-      // router.push("/");
       visible.value = false;
     }
   },
@@ -92,8 +77,6 @@ watch(
 );
 
 const tabClick = (targetPage) => {
-  page.value = targetPage;
-  // TODO
   router.replace({
     query: { page: targetPage },
     silent: true
@@ -104,9 +87,43 @@ const headerInfo = computed(() => {
   return formattedPagesInfo.value.find((item) => item.page === page.value)?.headerInfo || {};
 });
 
+const MyPersonalInfo = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/MyPersonalInfo.vue')
+))
+const FinanceDeposit = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/FinanceDeposit.vue')
+))
+const FinanceWithdraw = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/FinanceWithdraw.vue')
+))
+const AnnouncementComponent = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/AnnouncementComponent.vue')
+))
+const AddWithdrawBankCard = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/AddWithdrawBankCard.vue')
+))
+const MessagesPage = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/MessagesPage.vue')
+))
+const RegisterComponent = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/RegisterComponent.vue')
+))
+const LoginComponent = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/LoginComponent.vue')
+))
+const TransitRecord = markRaw(defineAsyncComponent(() =>
+  import('src/pages/account/TransitRecordView.vue')
+))
+const MyPasswordChange = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/MyPasswordChange.vue')
+))
+const MessageCompose = markRaw(defineAsyncComponent(() =>
+  import('components/pageModalContent/MessageCompose.vue')
+))
+
 const pagesInfo = reactive([
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/deposit",
     info: 'lang.page_modal_deposit',
     iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
@@ -117,7 +134,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/withdraw",
     info: 'lang.page_modal_withdraw',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
@@ -128,7 +145,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "message",
     page: "personal/messages",
     info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
@@ -139,7 +156,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "message",
     page: "personal/messages/create",
     info: 'lang.page_modal_message_compose',
     iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
@@ -150,29 +167,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "log",
-    page: "promo/all",
-    info: 'lang.page_modal_promo',
-    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
-    component: PromoComponent,
-    headerInfo: {
-      title: 'lang.page_modal_promo',
-      description: ""
-    }
-  },
-  {
-    tabIndex: "my",
-    page: "personal/info",
-    info: 'lang.page_modal_personal_info',
-    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
-    component: MyPersonalInfo,
-    headerInfo: {
-      title: "개인정보",
-      description: "lang.page_modal_desc_text"
-    }
-  },
-  {
-    tabIndex: "my",
+    tabIndex: "message",
     page: "announcement",
     info: 'lang.page_modal_announcement',
     iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
@@ -183,20 +178,30 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "my",
+    tabIndex: "personal",
+    page: "personal/info",
+    info: 'lang.page_modal_personal_info',
+    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
+    component: MyPersonalInfo,
+    headerInfo: {
+      title: "lang.page_modal_personal_info",
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  {
+    tabIndex: "finance",
     page: "bankcardlist",
     info: 'lang.page_modal_bank_card_list',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: AddWithdrawBankCard,
     headerInfo: {
       title: 'lang.page_modal_bank_card_list',
-      subTitle: "BANK CARD LIST",
       description: ""
     }
   },
 
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "transaction/records",
     info: 'lang.page_modal_transaction_record',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
@@ -207,7 +212,7 @@ const pagesInfo = reactive([
     }
   },
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "personal/updatePwd",
     info: 'lang.page_modal_change_password',
     iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
@@ -250,28 +255,16 @@ const formattedPagesInfo = computed(() => {
   return pagesInfo;
 });
 
-const goToFirstTab = (tabIndex) => {
-  const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
-  router.push(`/?page=${item?.page}`);
-};
-
 const closeDialog = () => {
   visible.value = false;
   page.value = "";
   router.push({ path: route.pathname });
 };
-const open = (pageName) => {
-  console.log(pageName);
-  visible.value = true;
-};
 
 onMounted(() => {
-  console.log(router.currentRoute.value.fullPath);
 });
 </script>
 <style scoped lang="scss">
-// reset app.scss
-
 .page-dialog {
   width: 980px;
   height: 692px;
@@ -433,13 +426,6 @@ onMounted(() => {
     position: relative;
     top: 0px;
 
-    // .header-info-description {
-    //   display: block;
-    //   margin: unset;
-    //   text-align: center;
-    //   font-size: 10px;
-    // }
-
     .left-group {
       display: flex;
       flex-direction: row;
@@ -454,11 +440,6 @@ onMounted(() => {
     .header-title {
       font-size: 15px;
     }
-
-    // .header-info-description {
-    //   visibility: hidden;
-    //   overflow: hidden;
-    // }
 
     .q-btn {
       margin-right: 15px;
@@ -508,7 +489,6 @@ onMounted(() => {
     max-width: 95vw;
   }
 
-  .header {}
 
   .content {
     display: flex;

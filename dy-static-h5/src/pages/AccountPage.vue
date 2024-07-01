@@ -186,7 +186,7 @@
         <router-link to="/account/invite">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_share.svg" />
-            <div class="acct-nav-label">呼朋唤友</div>
+            <div class="acct-nav-label">推广赚钱</div>
           </div>
         </router-link>
         <router-link to="/promo?redirect=account">
@@ -237,7 +237,7 @@
         <router-link to="/account/mail">
           <div class="acct-nav-item">
             <img src="../assets/images/account/menu_mailbox.svg" />
-            <div class="acct-nav-label">会员建议</div>
+            <div class="acct-nav-label">反馈奖励</div>
             <!--            ({{ store.unreadInboxMail }})-->
           </div>
         </router-link>
@@ -312,7 +312,7 @@
 import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
+// import { App } from "@capacitor/app";
 import { RiRefreshLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 
@@ -367,16 +367,16 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.6";
-      } else {
-      }
-    };
+    // const getVersionNo = async () => {
+    //   if (store.getDeviceType() == "ANDROID") {
+    //     const info = await App.getInfo();
+    //     var current_version = info.version + "." + info.build;
+    //     appVersionNo.value = current_version;
+    //   } else if (store.getDeviceType() == "IOS") {
+    //     appVersionNo.value = "iOS v0.6";
+    //   } else {
+    //   }
+    // };
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
@@ -385,7 +385,7 @@ export default defineComponent({
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
-      getVersionNo();
+      // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");

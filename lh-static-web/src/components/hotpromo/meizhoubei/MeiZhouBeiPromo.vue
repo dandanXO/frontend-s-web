@@ -535,4 +535,18 @@ onMounted(() => {
     font-size: 20px;
   }
 }
+
+.dark {
+  .bet-info-box {
+    .bet-info-details {
+      background-color: $background-content-block-lighter-dark;
+      .info-team-name {
+        color: $font-3-dark;
+      }
+    }
+    .bet-info-vs {
+      color: $color-white;
+    }
+  }
+}
 </style>

@@ -27,8 +27,8 @@
   });
 
 const schedTabs = ref([
-  { name: '小组赛', content: GroupStage },
-  { name: '淘汰赛', content: KnockoutStage },
+  { name: '欧洲杯赛程', content: GroupStage },
+  { name: '对阵图', content: KnockoutStage },
 ]);
 const schedActiveTab = ref(0);
 function activateSchedTab(index) {
@@ -51,7 +51,6 @@ function activateSchedTab(index) {
         background-size: contain;
         color: #ffffff;
         font-weight: bold;
-        font-family: 'PingFang SC';
     font-size: 15px;
         font-weight: 800;
         line-height: 34.75px;

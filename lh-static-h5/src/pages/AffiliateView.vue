@@ -1,6 +1,7 @@
 <template>
   <div class="affiliate-container">
-    <div class="page-title">雷火合营计划</div>
+    <div class="page-title" v-if="!$q.dark.isActive">雷火合营计划</div>
+    <div class="page-title-img" v-else><img src="../assets/images/affiliate/affiliate-title.png" /></div>
 
     <div class="branding">
       <div class="branding-wrapper">
@@ -27,7 +28,7 @@
     </div>
 
     <div class="ambassador">
-      <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
+<!--      <img loading="lazy" class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />-->
       <div class="btn-wrapper">
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -35,7 +36,7 @@
           size="md"
           class="join-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -43,7 +44,7 @@
           size="md"
           class="login-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
 
         <!--        @click.stop.prevent="-->
@@ -60,7 +61,7 @@
           size="md"
           class="contact-btn"
         >
-          <img class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
+          <img loading="lazy" class="mask" src="../assets/images/affiliate/btn-mask-white.png" alt="" />
         </q-btn>
       </div>
     </div>
@@ -187,8 +188,8 @@
           size="lg"
           class="register-btn"
         >
-          <img class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
-          <img class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
+          <img loading="lazy" class="mask-img" src="../assets/images/affiliate/register-btn-icon.png" alt="" />
+          <img loading="lazy" class="mask-img2" src="../assets/images/affiliate/register-btn-icon2.png" alt="" />
         </q-btn>
       </div>
 
@@ -205,11 +206,11 @@
         <div class="title-wrapper">
           <div class="section-title">联系我们</div>
           <div class="two-four-hour-wrapper">
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
-            <img class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
+            <img loading="lazy" class="two-four-mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
             <div class="two-four-content">
               <a :href="affiliateUrl + 'login?view=2&agent=' + (affCode ? affCode : '')" target="_blank">
-                <img class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
+                <img loading="lazy" class="two-four-img" src="../assets/images/affiliate/headset-white.png" alt="" />
                 <span class="two-four-text">24小时在线客服</span>
               </a>
             </div>
@@ -242,7 +243,7 @@
 
 <script setup>
 import { userStore } from "../stores/index";
-import { Platform } from "quasar";
+import { Platform, useQuasar } from "quasar";
 import { ref } from "vue";
 
 const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
@@ -257,6 +258,7 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   );
 };
 
+const $q= useQuasar();
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const regDevice = Platform.is.mobile ? "H5" : "WEB";
 const store = userStore();
@@ -319,7 +321,6 @@ const rows = [
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
       3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
-    font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
     background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
@@ -332,11 +333,21 @@ const rows = [
     -webkit-text-stroke-color: #b1e4ff;
   }
 
+  .page-title-img {
+    width: 80%;
+    margin: 0 auto;
+
+    img{
+      width: 100%;
+    }
+
+  }
+
   .branding {
     display: flex;
     justify-content: space-between;
     padding: 0 1.25rem;
-    margin: 1.25rem 0 2rem 0;
+    margin: 1.25rem 0 0rem 0;
 
     .branding-wrapper {
       display: flex;
@@ -364,7 +375,6 @@ const rows = [
         .desc {
           color: $font-2;
           text-align: left;
-          font-family: PingFang SC;
           font-size: 0.75rem;
 
           font-weight: 500;
@@ -378,7 +388,7 @@ const rows = [
   .ambassador {
     display: flex;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 0rem;
 
     .ambassador-img {
       width: 50%;
@@ -393,7 +403,6 @@ const rows = [
 
       color: #fff;
       text-align: center;
-      font-family: PingFang SC;
       font-weight: 400;
       line-height: normal;
       word-break: keep-all;
@@ -434,7 +443,6 @@ const rows = [
 
       li {
         color: $font-1;
-        font-family: PingFang SC;
         font-size: 0.75rem;
         font-weight: 600;
         margin: 0.25rem 0;
@@ -449,7 +457,6 @@ const rows = [
 
     .subtitle {
       color: $font-2;
-      font-family: PingFang SC;
       font-size: 0.9rem;
       font-weight: 400;
     }
@@ -477,14 +484,12 @@ const rows = [
 
     td {
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
       font-weight: 400;
     }
 
     .red-note {
       color: $negative;
-      font-family: PingFang SC;
       font-size: 0.75rem;
       font-weight: 400;
       line-height: normal;
@@ -498,7 +503,6 @@ const rows = [
       padding: 1rem;
 
       color: $font-1;
-      font-family: PingFang SC;
       font-size: 1rem;
 
       font-weight: 400;
@@ -521,7 +525,6 @@ const rows = [
         width: 100%;
         color: #fff;
         text-align: center;
-        font-family: PingFang SC;
         font-weight: 400;
         line-height: normal;
         background: linear-gradient(180deg, #73b2ff 0%, #3981ff 100%);
@@ -588,7 +591,6 @@ const rows = [
 
         .contact-method {
           color: $font-1;
-          font-family: PingFang SC;
           font-size: 1rem;
           font-weight: 400;
         }

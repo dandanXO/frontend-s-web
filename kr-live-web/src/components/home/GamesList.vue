@@ -11,7 +11,8 @@
       <q-carousel-slide name="live" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class=" game-list">
-            <GameItems :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+            <GameItems :games="liveCasinoGames" :gameType="currentSelectedMenu" :onClickGameItem="openGame"
+              :isLoading="isLoading" />
           </div>
         </div>
       </q-carousel-slide>
@@ -19,7 +20,8 @@
         <div class="game-list-wrapper">
           <!-- slot start -->
           <div class="game-list" v-if="!isShow">
-            <GameItems :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat" />
+            <GameItems :games="platforms" :gameType="currentSelectedMenu" :onClickGameItem="selectSlotPlat"
+              :isLoading="isLoading" />
           </div>
 
           <div class="game-scroll-lists" id="id-slot-board" v-if="isShow" :gameType="currentSelectedMenu">
@@ -63,7 +65,6 @@
               </div>
               <SlotGrid :gameList="gamePage.gameList" :openSlotGame="openSlotGame" :selectedPlat="selectedPlat" />
               <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-              <q-scroll-observer @scroll="scrolling" />
             </q-scroll-area>
           </div>
           <!-- slot end -->
@@ -72,14 +73,17 @@
       <q-carousel-slide name="sport" class="column no-wrap flex-center">
         <div class="game-list-wrapper">
           <div class="game-list">
-            <GameItems :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame" />
-            <GameItems :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame" />
+            <GameItems :games="esportPlatform" :gameType="'esport'" :onClickGameItem="openGame"
+              :isLoading="isLoading" />
+            <GameItems :games="sportPlatform" :gameType="currentSelectedMenu" :onClickGameItem="openGame"
+              :isLoading="isLoading" />
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="casual" class="column no-wrap flex-center">
         <div class="game-list" v-if="!isShow">
-          <GameItems :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat" />
+          <GameItems :games="platformMinigame" :gameType="currentSelectedMenu" :onClickGameItem="selectCasualPlat"
+            :isLoading="isLoading" />
         </div>
         <!-- cq9 start -->
         <div class="game-scroll-lists" id="id-slot-board" v-if="isShow && selectedPlat.code === 'CQ9'"
@@ -125,7 +129,6 @@
             </div>
             <SlotGrid :gameList="gamePage.gameList" :openSlotGame="openSlotGame" :selectedPlat="selectedPlat" />
             <BacktoTop v-if="scrollPosition.top > 400" @click="scrollToTop" />
-            <q-scroll-observer @scroll="scrolling" />
           </q-scroll-area>
         </div>
         <!-- cq9 end -->
@@ -493,6 +496,7 @@ export default defineComponent({
     var platformApiKey = store.hasToken() ? "LOGGEDPLATFORMS" : "PLATFORMS";
 
     const getPlatList = async () => {
+      isLoading.value = true;
       cached
         .get(platformApiKey, () =>
           api.get(platformApiUrl).then((res) => {
@@ -501,6 +505,7 @@ export default defineComponent({
           })
         )
         .then((data) => {
+          isLoading.value = false;
           fishPlatforms.value = data.filter((element) => element.gameType.includes("FISH"));
           platforms.value = data.filter((element) => element.gameType.includes("SLOT"));
           esportPlatform.value = data.filter((element) => element.gameType.includes("ESPORT"));
@@ -508,7 +513,9 @@ export default defineComponent({
           sportPlatform.value = data.filter((element) => element.gameType.split(",").indexOf("SPORT") > -1);
           platformMinigame.value = data.filter((element) => element.gameType.includes("CASUAL") || (element.gameType.includes("FISH") && element.code === "CQ9"));
         })
-        .catch((err) => { });
+        .catch((err) => {
+          isLoading.value = false;
+        });
     };
 
     const comingSoonImg = require(`../../assets/home/slot/StayTuned.png`);
@@ -517,12 +524,6 @@ export default defineComponent({
 
     const isShowBtt = ref(false);
     const scrollPosition = ref(0);
-    const scrolling = (e) => {
-      scrollPosition.value = e.position;
-      if (e.position.top > 400) {
-        isShowBtt.value = true;
-      }
-    };
 
     // isH5 -- platform checker
     const isH5 = ref(false);
@@ -546,6 +547,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      isLoading.value = true;
       checkPlatform();
       loadHomeData();
     });
@@ -630,7 +632,6 @@ export default defineComponent({
       playGame,
       gameModalRef,
       switchPlat,
-      scrolling,
       scrollToTop,
       switchMenu,
       gamePage,
@@ -958,7 +959,6 @@ export default defineComponent({
 .game-list-wrapper {
   display: flex;
   width: 100%;
-  min-height: 500px;
 }
 
 .game-list {
@@ -968,9 +968,9 @@ export default defineComponent({
   gap: 10px;
   // padding: 20px;
   width: 100%;
+  padding: 10px;
 
   @media (max-width: 769px) {
-    padding: 0px 10px;
     gap: 5px;
   }
 

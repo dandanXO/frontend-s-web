@@ -11,11 +11,7 @@
 <script setup>
 import { onMounted } from "vue";
 import { doIt } from "boot/action";
-import { cashier } from "boot/axios";
 import { useQuasar, Platform } from "quasar";
-import i18n from "../i18n/index";
-import liff from "@line/liff";
-// import {Preferences} from "@capacitor/preferences";
 import { useRouter } from "vue-router";
 
 const qs = require("qs");
@@ -66,8 +62,7 @@ function closeWindowOrBack() {
   if (
     (Platform.is.desktop || Platform.is.webkit) &&
     !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
+    Platform.is.name !== "webkit"
   ) {
     window.close();
   } else {
@@ -79,8 +74,7 @@ function postMessage(item1, item2) {
   if (
     (Platform.is.desktop || Platform.is.webkit) &&
     !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
+    Platform.is.name !== "webkit"
   ) {
     window.opener.postMessage(item1, item2);
   } else {
@@ -112,8 +106,7 @@ onMounted(async () => {
   if (
     (Platform.is.desktop || Platform.is.webkit) &&
     !Platform.is.capacitor &&
-    Platform.is.name !== "webkit" &&
-    !liff.isInClient()
+    Platform.is.name !== "webkit"
   ) {
     let params = localStorage.getItem("formDetails");
     params = params ? JSON.parse(params) : "";

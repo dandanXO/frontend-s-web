@@ -53,19 +53,19 @@
                     color="#0089ED"
                   />
 
-                  <div class="read-label" v-if="det.readTime && det.sendTime" >
+                  <div class="read-label" v-if="det.readTime && det.sendTime">
                     <img src="../assets/images/inbox/read-mail.png" />
                   </div>
                   <div class="read-label" v-else>
                     <img src="../assets/images/inbox/unread-mail.png" />
                   </div>
 
-
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
-                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
+                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
+                    <i>{{ formatSendTime(det.sendTime) }}</i>
+                  </div>
                   <div class="right-title">
-                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                    <img src="../assets/images/inbox/arrow-down-icon.svg" :class="isSelectedMail === det.id && 'arrow-rotate'"  />
                   </div>
                 </div>
               </div>
@@ -121,16 +121,11 @@
 <script>
 import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
 import moment from "moment";
-import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
 
 export default defineComponent({
-  components: {
-    RiArrowDownSLine,
-    RiArrowUpSLine
-  },
   props: {
     list: {
       type: Array,
@@ -536,8 +531,8 @@ export default defineComponent({
     color: $font-1;
     word-break: break-all;
 
-    .read-label{
-      display:flex;
+    .read-label {
+      display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 8px;
@@ -570,6 +565,16 @@ export default defineComponent({
 
   .right-title {
     display: flex;
+    width: 20px;
+    img {
+      display: block;
+      width: 16px;
+      transition: 0.3s all;
+
+      &.arrow-rotate{
+        transform:  scaleY(-1);
+      }
+    }
   }
 
   .mailcontents {
@@ -630,6 +635,7 @@ export default defineComponent({
     }
     .mailcontents {
       background: $background-dark-header;
+      color: $white;
     }
   }
 
@@ -641,6 +647,6 @@ export default defineComponent({
     &--active {
       color: $primary-dark;
     }
-}
+  }
 }
 </style>

@@ -143,8 +143,6 @@
 </template>
 <script setup id="GameModal">
 import { userStore } from "stores/index";
-// import { launchSessionGame } from "api/platform/platform";
-// import { isMobile } from "utils/utils";
 import { useRoute, useRouter } from "vue-router";
 import { ref, defineExpose, reactive, shallowRef } from "vue";
 import { isAndroid, isHuaweiPhone } from "boot/utils";
@@ -152,8 +150,6 @@ import { isAndroid, isHuaweiPhone } from "boot/utils";
 import { storeToRefs } from "pinia";
 import { api } from "boot/axios";
 import { useQuasar, Platform, AppFullscreen, openURL } from "quasar";
-import liff from "@line/liff";
-// import { ScreenOrientation } from '@ionic-native/screen-orientation';
 const $q = useQuasar();
 
 const store = userStore();

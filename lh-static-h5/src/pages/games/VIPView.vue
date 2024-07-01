@@ -21,11 +21,12 @@
       >
         <div class="vip-card-container">
           <div class="card-img-wrap">
-            <img class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
+            <img loading="lazy" class="card-img" :src="require(`../../assets/images/vip/vip${vip.level}.png`)" alt="" />
           </div>
 
           <div class="status">
             <img
+              loading="lazy"
               :src="
                 require(`../../assets/images/vip/status-${
                   vip.progressBarVal === 100 || vipLevel >= vip.level ? 'achieved' : 'inachieved'
@@ -87,7 +88,7 @@
           v-if="claimDesc.availableBtn || claimDesc.claimedBtn"
           :class="claimDesc.claimedBtn ? 'status-claimed' : ''"
         >
-          <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
+          <img loading="lazy" class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
           <span class="common-text">
             {{ claimDesc.claimedBtn ? "已领取" : "立即领取" }}
           </span>
@@ -98,7 +99,7 @@
           @click="router.push('/finance/deposit?from=vip')"
           v-if="claimDesc.depositPromoBtn"
         >
-          <img class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
+          <img loading="lazy" class="claim-btn" src="../../assets/images/vip/claim-btn.png" alt="" />
           <span class="common-text">前往存款</span>
         </div>
       </q-card-section>
@@ -120,6 +121,7 @@
         <q-tab name="privileges" :ripple="false">
           <div class="vip-privileges-btn-container">
             <img
+              loading="lazy"
               class="vip-privileges-btn"
               :src="
                 require(`../../assets/images/vip/right-vip-${tab === 'privileges' ? 'active' : 'inactive'}-btn${$q.dark.isActive ? '-dark' :''}.png`)
@@ -193,8 +195,8 @@
 
     <div class="tnc-container" v-if="tab === 'rules'">
       <div class="tnc-title">
-        <img v-if="$q.dark.isActive" class="tnc-img" src="../../assets/images/vip/title-bg-dark.png" alt="" />
-        <img v-else class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
+        <img loading="lazy" v-if="$q.dark.isActive" class="tnc-img" src="../../assets/images/vip/title-bg-dark.png" alt="" />
+        <img loading="lazy" v-else class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
         <span class="common-text">规则与条款</span>
       </div>
 
@@ -220,7 +222,7 @@
     </div>
     <div class="tnc-container" v-else>
       <div class="tnc-title">
-        <img class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
+        <img loading="lazy" class="tnc-img" src="../../assets/images/vip/title-bg.png" alt="" />
         <span class="common-text">规则与条款</span>
       </div>
 
@@ -955,6 +957,13 @@ onActivated(() => {
     box-shadow: 0px 4.58px 4.58px 0px #bbdcff inset, 0px -3.664px 3.664px 0px #a2bff4 inset;
   }
 
+  .q-carousel--arrows-horizontal.q-carousel--with-padding {
+    .q-carousel__slide {
+      padding-left: 10vw;
+      padding-right: 10vw;
+    }
+  }
+
   .common-text {
     font-size: 1rem;
     font-weight: 400;
@@ -1020,6 +1029,24 @@ onActivated(() => {
 
     .vip-card-common-text {
       font-size: 1rem;
+    }
+
+    .q-carousel--arrows-horizontal.q-carousel--with-padding {
+    .q-carousel__slide {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+  }
+  }
+}
+
+@media (max-width: 400px) {
+  .vip-container {
+    .q-carousel--arrows-horizontal.q-carousel--with-padding {
+      .q-carousel__slide {
+        padding-left: 12vw;
+        padding-right: 12vw;
+      }
     }
   }
 }

@@ -282,6 +282,10 @@ watch(() => depositAmountFormatted.value, () => {
   }
 })
 
+watch(() => form.localAmount, () => {
+  depositAmountFormatted.value = `${form.localAmount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+})
+
 const verifyDepositAmount = ref([
   (val) => !!parseDigitsWithComma(val) || t('lang.deposit_please_enter_amount'),
   (val) => (parseDigitsWithComma(val) && /^\d+$/.test(parseDigitsWithComma(val))) || (val && isUSDT.value) || "입금 금액에는 소수가 포함될 수 없습니다",

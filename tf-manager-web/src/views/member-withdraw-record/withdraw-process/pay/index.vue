@@ -279,7 +279,7 @@
       :title="uiControl.dialogTitle"
       v-model="uiControl.dialogVisible"
       append-to-body
-      width="580px"
+      width="600px"
     >
       <el-form
         v-if="
@@ -289,7 +289,7 @@
         :model="payForm"
         :inline="true"
         size="small"
-        label-width="150px"
+        label-width="170px"
       >
         <el-form-item :label="t('fields.loginName')" prop="loginName">
           <el-input
@@ -320,6 +320,19 @@
           <el-button
             style="margin-left: 10px"
             @click="copy(payForm.withdrawAmount, 'Withdraw Amount')"
+          >
+            {{ t('fields.copy') }}
+          </el-button>
+        </el-form-item>
+        <el-form-item :label="t('fields.localCurrencyAmount')" prop="localCurrencyAmount">
+          <el-input
+            v-model="payForm.localCurrencyAmount"
+            style="width: 300px;"
+            disabled
+          />
+          <el-button
+            style="margin-left: 10px"
+            @click="copy(payForm.localCurrencyAmount, 'Local Currency Amount')"
           >
             {{ t('fields.copy') }}
           </el-button>
@@ -932,6 +945,7 @@ function addToPayForm(memberWithdrawRecord) {
   payForm.loginName = memberWithdrawRecord.loginName
   payForm.cardAccount = memberWithdrawRecord.cardAccount
   payForm.withdrawAmount = memberWithdrawRecord.withdrawAmount
+  payForm.localCurrencyAmount = memberWithdrawRecord.localCurrencyAmount
   payForm.bankName = memberWithdrawRecord.bankName
   payForm.cardNumber = memberWithdrawRecord.cardNumber
   payForm.cardAddress = memberWithdrawRecord.cardAddress

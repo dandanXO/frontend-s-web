@@ -167,13 +167,15 @@
       <div class="promo-rules-div">
         <p>1.在活动日期内每日达到参与条件，即可在队伍下方点击投票，每位会员每日最高享受有10票名额；</p>
 
-        <p>2.所有雷火电竞会员均可参加此活动，活动奖金只需3倍水即可提款；</p>
+        <p>2.活动期间，当日获得的投票数如未使用，则次日清零当日的投票次数，请会员及时参与投票；</p>
 
-        <p>3.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
+        <p>3.所有雷火电竞会员均可参加此活动，活动奖金只需3倍水即可提款；</p>
 
-        <p>4.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+        <p>4.奖金派发时间以欧洲杯得出冠军队伍后，奖金将在24小时内派发到游戏主账户，并且站内信通知奖金公告；</p>
 
-        <p>5.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
+        <p>5.每位有效玩家、手机号码、电子邮箱、银行卡、IP地址、每台设备只能使用一个账号享受优惠，如发现有违规者我们将保留在任何时候都可以停止、取消优惠或索回已支付的全部优惠的权利；</p>
+
+        <p>6.雷火电竞有权延长、缩短、终止，或者修改此活动，最终解释权归雷火电竞所有；</p>
       </div>
 
       <q-dialog v-model="isVoteRecordModalVisible">
@@ -412,7 +414,6 @@ export default defineComponent({
     font-size: 20px;
     text-align: center;
     color: #00E9FE;
-    font-family: "PingFang", "Roboto";
   }
 
   .vote-records {
@@ -422,7 +423,6 @@ export default defineComponent({
     gap: 10px;
 
     .vote-record-item {
-      font-family: "PingFang", "Roboto";
       background-color: #0A243E;
       border: 2px solid #00EAFE4D;
       border-radius: 4px;
@@ -567,7 +567,6 @@ export default defineComponent({
     -webkit-text-fill-color: transparent;
     background-clip: text;
     color: transparent;
-    font-family: PingFang SC;
     font-size: 17px;
     font-weight: 600;
     line-height: 20.6px;
@@ -757,13 +756,18 @@ export default defineComponent({
   padding: 0 5px;
   width: 100%;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline;
   padding: 5px 5px 2px;
   gap: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   &:before {
     content: "";
+    float: left;
+    position: relative;
+    top: 2.5px;
+    margin-right: 5px;
     background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
     background-size: contain;
     width: 10px;
@@ -789,7 +793,6 @@ export default defineComponent({
 
 
 .countries-wrapper .c-note {
-  font-family: PingFang SC;
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
@@ -807,7 +810,6 @@ export default defineComponent({
   padding: 5px;
   position: relative;
   .table-title{
-    font-family: PingFang SC;
     font-size: 14px;
     font-weight: 500;
     line-height: 17.6px;

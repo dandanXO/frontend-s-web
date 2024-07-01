@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                     </a>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="promo-item-side-img">
-                          <img :src="imgURL + promo.mobileImgUrl" />
+                          <img loading="lazy" :src="imgURL + promo.mobileImgUrl" />
                         </div>
                       </div>
                       <!-- <div class="promo-img-wrapper"> -->
@@ -159,6 +159,7 @@
                 "
               >
                 <img
+                  loading="lazy"
                   class="promo-content"
                   :src="imgURL + selectedPromo.mobileBannerUrl"
                   style="display: block; width: 100%"
@@ -213,6 +214,7 @@
                 </div>
                 <div v-if="['lh-cs2-blast-2024'].includes(selectedPromo.promoCode)" class="corner-decor">
                   <img
+                    loading="lazy"
                     v-if="selectedPromo.promoCode === 'lh-cs2-blast-2024'"
                     src="../assets/images/promo/hotpromo/CS2CCTPromo/bg.png"
                   />
@@ -953,6 +955,18 @@ export default defineComponent({
         //   background: #272c3d;
         //   border-radius: 10px;
         // }
+        .promo-card {
+          background-color: #FFFFFF;
+          color: #7A8EB9;
+        }
+
+        // for lh1ouzhoubeibaopei
+        .sport {
+          em {
+            color: #c24f4a;
+            font-style: normal;
+          }
+        }
       }
     }
   }
@@ -1115,12 +1129,29 @@ export default defineComponent({
           table {
             th {
               background: $background-dark-header;
-              color: $font-3-dark;
+              color: $white;
             }
             td {
               background: $background-dark-light;
               border-color: $border-dark;
-              color: #999999;
+              color: $white;
+            }
+            tbody > tr:first-child td {
+              background: $background-dark-header;
+              color: $white;
+            }
+          }
+
+          .promo-card {
+            @include content-block-dark;
+            color: $font-1;
+          }
+
+          // for lh1ouzhoubeibaopei
+          .sport {
+            em {
+              color: #F04918;
+              font-style: normal;
             }
           }
         }
@@ -1128,7 +1159,7 @@ export default defineComponent({
     }
   }
 
-  .promo {
+  .promo:not(.unfixed) {
     .q-tabs {
       background: $background-dark-light;
       .q-tab--active {

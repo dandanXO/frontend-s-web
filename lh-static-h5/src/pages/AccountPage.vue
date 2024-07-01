@@ -212,7 +212,7 @@
           </div>
         </router-link>
 
-      <router-link to="/account/vip">
+      <router-link to="/account/vip?from=account">
         <div class="acct-nav-item">
           <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
           <img v-else src="../assets/images/account/account-vip-icon.png" />
@@ -1324,7 +1324,7 @@ export default defineComponent({
         }
         .unread {
           position: absolute;
-          
+
     border-radius: 50%;
     background: #ff0000;
     left: 80%;
@@ -1709,7 +1709,6 @@ export default defineComponent({
     gap: 10px;
     .cropped_title {
       color: #7A80A1;
-      font-family: PingFang SC;
       font-size: 20px;
       font-weight: 500;
       line-height: 28px;

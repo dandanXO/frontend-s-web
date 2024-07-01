@@ -260,4 +260,21 @@ onMounted(() => {
     }
   }
 }
+
+.body--dark {
+  .bet-info-box {
+    background: $background-dark-light;
+    box-shadow: none;
+
+     .bet-info-title {
+      color: $white;
+     }
+
+    .bet-info-details {
+      .info-team-name {
+        color: $white;
+      }
+    }
+  }
+}
 </style>
