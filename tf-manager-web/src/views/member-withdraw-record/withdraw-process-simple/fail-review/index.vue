@@ -938,7 +938,7 @@ async function toAutoPay() {
 
 onMounted(async () => {
   await loadSites()
-  request.siteId = 11
+  request.siteId = siteList.list[0].id
   loadVips()
   loadFinancialLevels()
   loadBanks()
