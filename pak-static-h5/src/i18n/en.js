@@ -367,6 +367,20 @@ export default {
       }
     }
   },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "Remaining draw times",
+      congratulations: "Congratulations"
+    },
+    signIn7Days: {
+      continuousSignIn: "Continuous sign-in:",
+      expired: "Expired",
+      day: "day",
+      days: "days",
+      signIn: "Sign in",
+      signedIn: "Signed in"
+    }
+  },
   records: {
     gamePlatform: "Game Platform",
     bet: "Bet",
@@ -406,14 +420,14 @@ export default {
     updateNow: "Update now"
   },
   promo: {
-    all: 'ALL',
-    earn: 'EARN',
-    hot: 'HOT',
-    new_user: 'NEW USER',
-    sports: 'SPORTS',
-    live: 'LIVE',
-    slot: 'SLOT',
-    vip: 'VIP'
+    all: "ALL",
+    earn: "EARN",
+    hot: "HOT",
+    new_user: "NEW USER",
+    sports: "SPORTS",
+    live: "LIVE",
+    slot: "SLOT",
+    vip: "VIP"
   },
   error: {
     101: "Platform not found",
@@ -514,6 +528,11 @@ export default {
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
     45000: "Not reaching the minimum withdrawal amount",
-    45001: "Received random bonus today"
+    45001: "Received random bonus today",
+    50000: "The maximum number of transfers for today has been reached",
+    50001: "The number of available transfers has been reached, please continue betting before transferring again",
+    51000: "Today's sign-in reward has already been claimed",
+    51001: "Requirements not met",
+    51002: "The reward has already been claimed by another account"
   }
 };

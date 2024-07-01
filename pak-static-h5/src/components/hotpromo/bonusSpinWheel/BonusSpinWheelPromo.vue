@@ -29,36 +29,23 @@
 
     <div class="remaining-draw-wrapper">
       <p class="remaining-draw-text">
-        Remaining draw times:
+        {{ $t("hotPromo.aviatorWheel.remainingDrawTimes") }}
         <span id="remaning-draw-amt">{{ remainingDraws }}</span>
       </p>
     </div>
-
-    <!-- <div class="promo-info-container">
-      <div class="promo-info-banner">
-        <div class="promo-info-header"></div>
-        <div class="promo-info-content">
-          <div v-if="winnersList.length > 0" class="winners-list">
-            <div class="winners-list-item" v-for="(item, index) in winnersList" :key="index">
-              <div class="winner-date">{{ moment(item.recordTime).format("YYYY-MM-DD") }}</div>
-              <div class="winner-loginName">恭喜 {{ item.loginName }}</div>
-              <div class="winner-prize">{{ item.bonus }}</div>
-            </div>
-          </div>
-          <div class="nowinners-list" v-else>暂无数据</div>
-        </div>
-      </div>
-    </div> -->
   </div>
 
-  <!-- <PrimaryButton :label="'Confirm'" :onClick="(showPrizePopup = true)" /> -->
-
-  <q-dialog v-model="showPrizePopup">
+  <q-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="prize-popup">
-      <!-- show prize popup -->
-      how prize popup
+      <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
+      <div class="prize-gold">
+        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-gold.png" width="80" />
+        <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
+      </div>
+
+      <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
+
       <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">Confirm</q-btn>
-      <!-- <PrimaryButton :label="'Confirm'" :@click="(showPrizePopup = false)" /> -->
     </div>
   </q-dialog>
 </template>
@@ -67,24 +54,17 @@ import { ref, onMounted } from "vue";
 import { eventapi } from "src/boot/axios";
 import { useQuasar } from "quasar";
 import moment from "moment";
-import { defineProps } from "vue";
-import PrimaryButton from "src/components/auth/PrimaryButton.vue";
+import { useI18n } from "vue-i18n";
 
-const props = defineProps({
-  list: {
-    type: Object,
-    default: () => ({})
-  }
-});
-
+const { t } = useI18n();
 const $q = useQuasar();
 
 // spin wheel constants
-const TOTAL_ITEMS = 8;
+const TOTAL_ITEMS = 10;
 const DEFAUL_SPEED = 1;
 const MAX_SPEED = 4;
 const FULL_DEGREE = 360;
-const SPIN_WHEEL_PRIZES = [1888, -1, 8, 18, 88, 188, 588, 888];
+const SPIN_WHEEL_PRIZES = [3888, 888, 388, 188, 28, 18, 0, 58888, 18888, 8888];
 
 // spin wheel element refs
 const spinBoardRef = ref();
@@ -125,18 +105,16 @@ const spin = (prizeIndex, stopCallback) => {
 };
 
 const getRecords = () => {
-  // eventapi
-  //   .get("/betWheel/records")
-  //   .then((res) => {
-  //     if (res.code == 0) {
-  //       winnersList.value = res.data;
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log("here", err);
-  //   });
-
-  winnersList.value = 3;
+  eventapi
+    .get("/aviatorWheel/records")
+    .then((res) => {
+      if (res.code == 0) {
+        winnersList.value = res.data;
+      }
+    })
+    .catch((err) => {
+      console.log("here", err);
+    });
 };
 
 const stopSpin = (prizeIndex, stopCallback) => {
@@ -201,42 +179,40 @@ const spinWheel = () => {
     $q.notify({
       color: "negative",
       position: "top",
-      message: "剩余抽奖次数：0",
+      message: `t("hotPromo.avaitorWheel.remainingDrawTimes"): 0`,
       icon: "report_problem"
     });
     return;
   }
 
-  // eventapi
-  //   .post("/betWheel/spin")
-  //   .then((res) => {
-  //     if (res.code == 0) {
-  //       var bonusIndex = res.data.bonus;
-  //       if(res.data.type === 'CONSOLATION'){
-  //         bonusIndex = -1;
-  //       }
-  //       const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
+  eventapi
+    .post("/aviatorWheel/spin")
+    .then((res) => {
+      if (res.code == 0) {
+        var bonusIndex = res.data.bonusAmount;
+        if (res.data.type === "CONSOLATION") {
+          bonusIndex = -1;
+        }
+        const prizeIndex = SPIN_WHEEL_PRIZES.findIndex((prize) => prize === bonusIndex);
 
-  //       spin(prizeIndex, () => {
-  //         showPrizePopup.value = true;
-  //         prizePopupBonusAmt.value = res.data.bonus;
-  //         remainingDraws.value = res.data.availableSpin;
-  //       });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+        spin(prizeIndex, () => {
+          showPrizePopup.value = true;
+          prizePopupBonusAmt.value = res.data.bonusAmount;
+          remainingDraws.value = res.data.availableSpin;
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const initSpinWheel = () => {
-  eventapi.get("/betWheel/init").then((res) => {
+  eventapi.get("/aviatorWheel/init").then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.availableSpin;
     }
   });
-
-  remainingDraws.value = 3;
 
   getRecords();
 };
@@ -351,6 +327,7 @@ onMounted(() => {
   &.disabled {
     filter: brightness(0.85);
     opacity: 1 !important;
+    pointer-events: none;
   }
 }
 
@@ -429,6 +406,28 @@ onMounted(() => {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.prize-popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden !important;
+}
+
+.prize-gold {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #c7c7c7;
+}
+
+.prize-amount {
+  font-size: 38px;
+  color: #ffffff;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .prizePopupContainer {
@@ -528,7 +527,7 @@ onMounted(() => {
 
 .remaining-draw-wrapper {
   .remaining-draw-text {
-    color: #7a8eb9;
+    color: #9f9f9f;
     font-size: 20px;
     margin: 10px auto 15px;
     text-align: center;

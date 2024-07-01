@@ -110,8 +110,8 @@
 
                 <!-- <div>{{ parsedParam }}</div> -->
 
-                <div class="content-para">{{ parsedParamSub }}</div>
-                <div class="content-date">
+                <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+                <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
                   {{ parsedParamDate }}
                 </div>
@@ -530,31 +530,29 @@ export default defineComponent({
     // promo param split.
     const parsedParamSub = computed(() => {
       try {
-        const paramObj = JSON.parse(selectedPromo.value.param);
-        return paramObj.sub; // Assuming 'sub' is a string
+        if (selectedPromo.value && selectedPromo.value.param) {
+          const paramObj = JSON.parse(selectedPromo.value.param);
+          return paramObj.sub || '';
+        }
+        return '';
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        return ''; // Default value or handle the error as per your application logic
+        return '';
       }
     });
 
     const parsedParamDate = computed(() => {
       try {
-        const paramObj = JSON.parse(selectedPromo.value.param);
-        return paramObj.date; // Assuming 'sub' is a string
+        if (selectedPromo.value && selectedPromo.value.param) {
+          const paramObj = JSON.parse(selectedPromo.value.param);
+          return paramObj.date || '';
+        }
+        return '';
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        return ''; // Default value or handle the error as per your application logic
+        return '';
       }
     });
-
-    // const parsedParam = () => {
-    //   if (selectedPromo.value.param) {
-    //     return JSON.parse(selectedPromo.value.param);
-    //   } else {
-    //     return ''
-    //   }
-    // }
 
     return {
       promoState,
@@ -587,7 +585,7 @@ export default defineComponent({
       allGames,
       closeFullGameDialog,
       parsedParamSub,
-parsedParamDate
+      parsedParamDate
     }
   },
 });
@@ -1005,10 +1003,11 @@ parsedParamDate
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 0 15px;
 
           li {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            color: #9f9f9f;
           }
         }
 
@@ -1016,17 +1015,27 @@ parsedParamDate
           width: 100%;
           border-spacing: 0;
           border-collapse: collapse;
+          margin-bottom: 20px;
 
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            // background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+
+            &:first-child {
+              border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 8px;
+            }
           }
 
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
+            background-color: #1c241b;
             border: 1px solid #2e3039;
           }
         }

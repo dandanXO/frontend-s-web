@@ -12,7 +12,8 @@
     <WelcomeTaskPromo v-if="!isCommonPromo && list.redirectUrl === 'welcomenewuser' && store.token" />
     <InviteFriendPromo v-if="list.redirectUrl === 'invitefriend' && !isCommonPromo" />
 
-    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" :list="list" />
+    <BonusSpinWheelPromo v-if="list.redirectUrl === 'pak-spin-wheel' && !isCommonPromo && store.token" />
+    <SignIn7DaysPromo v-if="list.redirectUrl === 'pak-signin-bonus' && !isCommonPromo && store.token" />
 
     <div v-if="list.redirectUrl === 'fucaiiphone' && store.hasToken()" class="promo-4">
       <div class="tabs">
@@ -189,6 +190,7 @@ import HongBaoYuPromo from "../components/hotpromo/hongbaoyu/HongBaoYu.vue";
 import WelcomeTaskPromo from "../components/hotpromo/welcometask/welcomeTaskPromo.vue";
 import InviteFriendPromo from "../components/hotpromo/invitefriend/inviteFriendPromo.vue";
 import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
+import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo";
 
 export default defineComponent({
   name: "HotPromo",
@@ -201,7 +203,8 @@ export default defineComponent({
     HongBaoYuPromo,
     WelcomeTaskPromo,
     InviteFriendPromo,
-    BonusSpinWheelPromo
+    BonusSpinWheelPromo,
+    SignIn7DaysPromo
   },
   props: {
     list: {
@@ -259,6 +262,7 @@ export default defineComponent({
       this.list.redirectUrl === "welcomenewuser" ||
       this.list.redirectUrl === "fucaiiphone" ||
       this.list.redirectUrl === "pak-spin-wheel" ||
+      this.list.redirectUrl === "pak-signin-bonus" ||
       this.list.id === 40
     ) {
       this.isCommonPromo = false;
