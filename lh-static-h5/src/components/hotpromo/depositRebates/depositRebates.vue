@@ -217,9 +217,9 @@ const openLession = (card) => {
               font-style: normal;
               color: #ff0000;
 
-              &.light-bg {
-                color: #b30505;
-              }
+              //&.light-bg {
+              //  color: #b30505;
+              //}
             }
           }
         }
