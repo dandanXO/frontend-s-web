@@ -133,25 +133,25 @@
                 class="profile-info-dropdown-content"
               >
                 <el-dropdown-item command="personal">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-personal-icon.png" />
                     <span>{{ $t("menu.personalInfo") }}</span>
                   </div>
                 </el-dropdown-item>
                 <el-dropdown-item command="deposit">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-deposit-icon.png" />
                     <span>{{ $t("menu.deposit") }}</span>
                   </div>
                 </el-dropdown-item>
                 <!-- <el-dropdown-item command="transfer">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3;width: 100%;">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909;width: 100%;">
                     <img src="../../assets/images/home/header-dropdown-transfer-icon.png" />
                     <span>{{$t('menu.transfer')}}</span>
                   </div>
                 </el-dropdown-item> -->
                 <el-dropdown-item command="promotion">
-                  <div style="display: flex; align-items: center; gap: 10px; color: #a8b5c3; width: 100%">
+                  <div style="display: flex; align-items: center; gap: 10px; color: #ec0909; width: 100%">
                     <img src="../../assets/images/home/header-dropdown-promo-icon.png" />
                     <span>{{ $t("menu.promotion") }}</span>
                   </div>
@@ -1590,7 +1590,7 @@ export default defineComponent({
 body {
   .el-button.is-disabled,
   .el-button.is-disabled:hover {
-    background-color: #a8b5c3;
+    background-color: #ec0909;
   }
 
   .el-input.wTip .el-input-group__append {
@@ -1616,7 +1616,7 @@ body {
 
   .el-dropdown-menu__item {
     // min-width: 130px;
-    // color: #a8b5c3;
+    // color: #ec0909;
     // gap: 8px;
     width: 100%;
     justify-content: center;
