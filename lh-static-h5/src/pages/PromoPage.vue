@@ -1159,7 +1159,7 @@ export default defineComponent({
     }
   }
 
-  .promo {
+  .promo:not(.unfixed) {
     .q-tabs {
       background: $background-dark-light;
       .q-tab--active {
