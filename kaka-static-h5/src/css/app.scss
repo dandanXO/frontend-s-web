@@ -290,12 +290,14 @@ svg {
 
 .common-large-white-btn {
   background-color: $white;
-  box-shadow: $shadow-bg;
   // aspect-ratio: 1000/114;
   font-size: 1.2rem;
   color: $font-1;
   border-radius: 10px;
   filter: hue-rotate(145deg);
+  box-shadow: 0px -2px 6px 2px #a2a8ff9e inset;
+  font-size: 1.2rem;
+  color: #333333;
 
   &:hover {
     opacity: 0.9;
@@ -586,6 +588,9 @@ svg {
 }
 
 .login-container {
+  a {
+    color: $primary;
+  }
   .q-field--standout.q-field--rounded .q-field__control {
     border-radius: 12px;
     border: 1px solid #ecedf0;
