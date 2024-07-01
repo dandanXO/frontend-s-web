@@ -245,7 +245,7 @@ export default defineComponent({
           params: {
             way: way,
             sid: sidParam,
-            siteCode: "vnm"
+            siteCode: "ka2"
           }
         });
       }
@@ -309,6 +309,7 @@ export default defineComponent({
     };
 
     onMounted(() => {
+      console.log("Kaka H5")
       checkSID();
       // initCsWeb();
       getCSA();
