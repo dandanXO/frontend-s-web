@@ -318,37 +318,37 @@
         </template>
         <span :class="tab === 'lottery' && 'active'" style="white-space: nowrap">{{ $t("lang.menu_lottery") }}</span>
       </div>
-      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">
-        <template v-if="tab === 'fishing'">
-          <img src="../assets/images/home/games/fish-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/fish-icon.png" />
-        </template>
-        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>
-      </div>
+<!--      <div @click="selectTab('fishing')" class="game-platform btn-pointer" id="fishing-platform">-->
+<!--        <template v-if="tab === 'fishing'">-->
+<!--          <img src="../assets/images/home/games/fish-icon-active.png" />-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <img src="../assets/images/home/games/fish-icon.png" />-->
+<!--        </template>-->
+<!--        <span :class="tab === 'fishing' && 'active'">{{ $t("lang.menu_others") }}</span>-->
+<!--      </div>-->
 
-      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">
-        <template v-if="tab === 'casual'">
-          <img src="../assets/images/home/games/minigame-icon-active.png" />
-        </template>
-        <template v-else>
-          <img src="../assets/images/home/games/minigame-icon.png" />
-        </template>
-        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">
-          {{ $t("lang.menu_minigame") }}
-        </span>
-      </div>
-      <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="fishing-platform">
+<!--      <div @click="selectTab('casual')" class="game-platform btn-pointer" id="casual-platform">-->
+<!--        <template v-if="tab === 'casual'">-->
+<!--          <img src="../assets/images/home/games/minigame-icon-active.png" />-->
+<!--        </template>-->
+<!--        <template v-else>-->
+<!--          <img src="../assets/images/home/games/minigame-icon.png" />-->
+<!--        </template>-->
+<!--        <span :style="$t('lang.langVal') === 'en' ? '' : { top: '32px' }" :class="tab === 'casual' && 'active'">-->
+<!--          {{ $t("lang.menu_minigame") }}-->
+<!--        </span>-->
+<!--      </div>-->
+      <div @click="selectTab('hashgame')" class="game-platform btn-pointer" id="hashgame-platform">
         <template v-if="tab === 'hashgame'">
           <img src="../assets/images/home/games/hashgame-icon-active.png" />
         </template>
         <template v-else>
           <img src="../assets/images/home/games/hashgame-icon.png" />
         </template>
-        <span :class="tab === 'others' && 'active'">{{ $t("lang.menu_others") }}</span>
+        <span :class="tab === 'hashgame' && 'active'" style="top:30px;">{{ $t("lang.menu_hashgame") }}</span>
       </div>
-      <div @click="selectTab('others')" class="game-platform btn-pointer" id="fishing-platform">
+      <div @click="selectTab('others')" class="game-platform btn-pointer" id="others-platform">
         <template v-if="tab === 'others'">
           <img src="../assets/images/home/games/others-icon-active.png" />
         </template>
@@ -1082,6 +1082,10 @@ export default defineComponent({
     };
 
     const onHomeScroll = (position) => {
+      if (isSelecting.value === true) {
+        return;
+      }
+
       if (route.path === "/") {
         if (!isScrolling.value) {
           const rightPlatform = document.getElementById("id-right-platform");
@@ -1113,11 +1117,11 @@ export default defineComponent({
           var windowHeight = window.innerHeight;
 
           if (windowHeight + 15 > bodyOffset.bottom) {
-            tab.value = "cockfight";
+            tab.value = "others";
           } else if (0 > positionTop7 - 5 && positionTop8 >= blockHeight) {
-            tab.value = "fishing";
+            tab.value = "others";
           } else if (0 > positionTop6half - 5 && positionTop7 >= blockHeight) {
-            tab.value = "casual";
+            tab.value = "hashgame";
           } else if (0 > positionTop6 - 5 && positionTop6half >= blockHeight) {
             tab.value = "lottery";
           } else if (0 > positionTop5 - 5 && positionTop6 >= blockHeight) {
@@ -1155,15 +1159,16 @@ export default defineComponent({
       if (tab === "esport") {
         scrollToSlide("esport-lists");
       }
-      if (tab === "fishing") {
+      if (tab === "fishing" || tab === "others") {
         scrollToSlide("fishing-lists");
       }
       if (tab === "cockfight") {
         scrollToSlide("cockfight-lists");
       }
-      if (tab === "casual") {
+      if (tab === "casual" || tab === "hashgame") {
         scrollToSlide("casual-lists");
       }
+
     };
 
     const onSlideChange = (swiper) => {
@@ -1509,9 +1514,19 @@ export default defineComponent({
     };
 
     const tab = ref("sport");
+    const isSelecting = ref(false);
+    const timerTimeout = ref(null);
     const selectTab = (item) => {
+      if (timerTimeout.value) {
+        clearTimeout(timerTimeout.value);
+      }
+      isSelecting.value = true;
       tab.value = item;
       setSelectedSwiper(item);
+
+      timerTimeout.value = setTimeout(() => {
+        isSelecting.value = false;
+      }, 750);
     };
 
     const liveTabs = ref("");
