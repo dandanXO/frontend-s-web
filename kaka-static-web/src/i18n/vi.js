@@ -165,6 +165,11 @@ export default {
     euroCountdown01a: "EURO 2024 - CÒN ",
     euroCountdown02: " NGÀY",
   },
+  hotGame: {
+    enterGame: "Vào game",
+    enterPlat: "Vào nền tảng",
+    maintainenceTime: "Thời gian bảo trì"
+  },
   personal: {
     url: "Truy Cập",
     personalInfo: "Thông tin cá nhân",
