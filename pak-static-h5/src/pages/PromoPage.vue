@@ -104,6 +104,16 @@
                 />
                 <!-- </div> -->
               </div>
+
+              <div class="promo-content-inner">
+                <div class="content-title">{{ selectedPromo.title }}</div>
+                <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
+                <div class="content-date" v-if="parsedParamDate">
+                  <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
+                  {{ parsedParamDate }}
+                </div>
+              </div>
+
               <div class="inner">
                 <div v-if="selectedPromo.hasPromo">
                   <HotPromotion :list="selectedPromo" />
@@ -123,9 +133,7 @@
                     <div class="top-subtitle">Get unlimited rewards!</div>
                     <div class="top-title">{{ selectedPromo.title }}</div>
                   </div> -->
-                  <div class="promo-content-inner">
-                    <div class="content-title">{{ selectedPromo.title }}</div>
-                  </div>
+
                   <div v-html="selectedPromo.pageContent"></div>
                   <!-- <div class="join-container" :style="`bottom: calc(72px + ${ui.bottomInsetHeight}px`">
                     <div class="promo-date">
@@ -176,7 +184,7 @@
 </template>
 
 <script lang="js">
-import {ref, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
+import {ref, computed, defineComponent, onMounted, reactive, watch, onBeforeUnmount, onActivated} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {api} from "boot/axios";
 import {useQuasar} from "quasar";
@@ -516,6 +524,22 @@ export default defineComponent({
       { name: "vip", label: "promo.vip" },
     ];
 
+    // promo param split.
+    const parsedParam = computed(() => {
+      try {
+        if (selectedPromo.value && selectedPromo.value.param) {
+          return JSON.parse(selectedPromo.value.param);
+        }
+        return {};
+      } catch (error) {
+        console.error('Error parsing JSON:', error);
+        return {};
+      }
+    });
+
+    const parsedParamSub = computed(() => parsedParam.value.sub || '');
+    const parsedParamDate = computed(() => parsedParam.value.date || '');
+
     return {
       promoState,
       promoTypes,
@@ -546,6 +570,8 @@ export default defineComponent({
       route,
       allGames,
       closeFullGameDialog,
+      parsedParamSub,
+      parsedParamDate
     }
   },
 });
@@ -963,10 +989,11 @@ export default defineComponent({
         ol,
         ul {
           margin: 0;
-          padding: 15px;
+          padding: 0 15px;
 
           li {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            color: #9f9f9f;
           }
         }
 
@@ -974,17 +1001,27 @@ export default defineComponent({
           width: 100%;
           border-spacing: 0;
           border-collapse: collapse;
+          margin-bottom: 20px;
 
           th {
             padding: 5px;
             text-align: center;
-            background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            // background-image: linear-gradient(0deg, #07414c 0, #058096 100%), linear-gradient(#d0d1d3, #d0d1d3);
+            background: linear-gradient(180deg, #70bc62 0%, #33562d 100%);
+
+            &:first-child {
+              border-top-left-radius: 8px;
+            }
+
+            &:last-child {
+              border-top-right-radius: 8px;
+            }
           }
 
           td {
             padding: 5px;
             text-align: center;
-            background-color: #202228;
+            background-color: #1c241b;
             border: 1px solid #2e3039;
           }
         }
@@ -995,9 +1032,9 @@ export default defineComponent({
         }
 
         .hot-promo {
-          background: #272c3d;
+          // background: #272c3d;
           border-radius: 10px;
-          display: none;
+          // display: none;
         }
 
         .promo-view-container {
@@ -1131,14 +1168,29 @@ export default defineComponent({
 
 // promo content-inner
 .promo-content-inner {
+  padding: 12px 0px;
+  margin: 0 12px;
+  border-bottom: 1px solid #ffffff1a;
   .content-title {
-    background: linear-gradient(180deg, #d6b335 0%, #fff96b 50%, #f2ae01 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
+    color: #ffffff;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: bold;
+  }
+  .content-para {
+    font-size: 14px;
+    padding-top: 4px;
+    color: #9f9f9f;
+  }
+  .content-date {
+    padding-top: 6px;
+    color: #9f9f9f;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    img {
+      display: block;
+      width: 30px;
+    }
   }
 }
 
