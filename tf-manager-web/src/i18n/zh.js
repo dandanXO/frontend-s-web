@@ -2398,6 +2398,7 @@ export default {
     'Piggy Bank': '存钱罐',
     'Loss Rebate Record': '亏损返水记录',
     'Fish Red Packet': '捕鱼红包配置',
+    'Bet Game Type Rebate Record': '投注游戏类型返水记录',
     'Site Management': '站点管理',
     Message: '信息',
     Announcement: '公告',
