@@ -217,7 +217,6 @@ import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import { doIt } from "boot/action";
-import liff from "@line/liff";
 
 var qs = require("qs");
 
@@ -346,14 +345,7 @@ function initPay() {
     }
 
     // if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== 'webkit')) {
-    if (
-      !(
-        (Platform.is.desktop || Platform.is.webkit) &&
-        !Platform.is.capacitor &&
-        Platform.is.name !== "webkit" &&
-        !liff.isInClient()
-      )
-    ) {
+    if (!((Platform.is.desktop || Platform.is.webkit) && !Platform.is.capacitor && Platform.is.name !== "webkit")) {
       let isBacked = localStorage.getItem("isBacked");
       isBacked = isBacked ? JSON.parse(isBacked) : false;
       if (isBacked === true) {
@@ -417,9 +409,7 @@ async function onSelect(value) {
   clearInfo();
   // if (!Platform.is.android || !Platform.is.capacitor) {
   // }
-  // if (liff.isInClient()) {
-  //   clearInfo();
-  // }
+
   if (depositAmtRef.value) {
     depositAmtRef.value.resetValidation();
   }
@@ -570,8 +560,7 @@ async function pDepo(deposit) {
             !extensionState.value &&
             (Platform.is.desktop || Platform.is.webkit) &&
             !Platform.is.capacitor &&
-            Platform.is.name !== "webkit" &&
-            !liff.isInClient()
+            Platform.is.name !== "webkit"
           ) {
             if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
               const newWin = window.open(`/`, `_self`);
@@ -621,8 +610,7 @@ async function pDepo(deposit) {
               if (
                 (Platform.is.desktop || Platform.is.webkit) &&
                 !Platform.is.capacitor &&
-                Platform.is.name !== "webkit" &&
-                !liff.isInClient()
+                Platform.is.name !== "webkit"
               ) {
                 location.href = response.requestUrl;
                 btnLoading.value = false;

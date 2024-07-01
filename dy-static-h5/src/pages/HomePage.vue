@@ -1533,7 +1533,6 @@ import { Thumbs, Controller, Grid } from "swiper";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/scrollbar";
-import { App } from "@capacitor/app";
 import * as _ from "lodash";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
@@ -2188,36 +2187,36 @@ export default defineComponent({
     const isAppUpdateModal = ref(false);
     const getVersionNo = async () => {
       // console.log(store.hasCheckedVersion);
-      if (Platform.is.android && Platform.is.capacitor && !store.hasCheckedVersion) {
-        const info = await App.getInfo();
-        // const info = {
-        //   version: "1.0.1"
-        // };
-        console.log("App Info");
-        console.log(info);
-        // alert(info.version);
-        var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
-        console.log(current_version);
-        // info.version && info.build
-        const appType = "ALL";
-        const device = Platform.is.android ? "ANDROID" : "IOS";
-        const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
-        // console.log(res);
-        if (res.code === 0) {
-          var version_info = res.data.version;
-          var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
-          download_url.value = res.data.url;
-
-          console.log(latest_ver_no);
-          // alert(latest_ver_no);
-          // console.log(download_url.value);
-          if (latest_ver_no > current_version) {
-            console.log("Need to Updat");
-            isAppUpdateModal.value = true;
-            store.hasCheckedVersion = true;
-          }
-        }
-      }
+      // if (Platform.is.android && Platform.is.capacitor && !store.hasCheckedVersion) {
+      //   const info = await App.getInfo();
+      //   // const info = {
+      //   //   version: "1.0.1"
+      //   // };
+      //   console.log("App Info");
+      //   console.log(info);
+      //   // alert(info.version);
+      //   var current_version = parseInt(info.version.replaceAll(".", "") + info.build);
+      //   console.log(current_version);
+      //   // info.version && info.build
+      //   const appType = "ALL";
+      //   const device = Platform.is.android ? "ANDROID" : "IOS";
+      //   const res = await api.get(`/config/appVersionAndUrl?type=${appType}&device=${device}`);
+      //   // console.log(res);
+      //   if (res.code === 0) {
+      //     var version_info = res.data.version;
+      //     var latest_ver_no = parseInt(version_info.replaceAll(".", ""));
+      //     download_url.value = res.data.url;
+      //
+      //     console.log(latest_ver_no);
+      //     // alert(latest_ver_no);
+      //     // console.log(download_url.value);
+      //     if (latest_ver_no > current_version) {
+      //       console.log("Need to Updat");
+      //       isAppUpdateModal.value = true;
+      //       store.hasCheckedVersion = true;
+      //     }
+      //   }
+      // }
     };
 
     const openDownloadPage = () => {
@@ -2295,12 +2294,13 @@ export default defineComponent({
     // };
 
     onMounted(() => {
+      console.log("Home Page");
       checkShowImgTop();
       getPlatList();
       loadData();
       loadAnnouncement();
       checkPlatform();
-      getVersionNo();
+      // getVersionNo();
       getAppDownloadUrl();
       if (isAndroid() && !isHuaweiPhone()) {
         window.screen.orientation.lock("portrait");

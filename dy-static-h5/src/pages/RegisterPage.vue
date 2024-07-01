@@ -525,7 +525,6 @@ function charType(num) {
   -webkit-text-fill-color: transparent;
   font-size: 28px;
   text-align: center;
-  font-family: Wave;
   padding: 10px;
   display: flex;
   gap: 20px;
