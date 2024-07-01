@@ -701,8 +701,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px;
-  padding: 10px;
+  padding: 10px 5px;
   overflow: hidden;
   position: relative;
 }
@@ -753,25 +752,24 @@ export default defineComponent({
   color: #fff;
   font-size: 10px;
   font-weight: normal;
-  padding: 0 5px;
+  padding: 5px 0px 2px;
   width: 100%;
   text-align: center;
   display: inline;
-  padding: 5px 5px 2px;
   gap: 5px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  //text-overflow: ellipsis;
+  //overflow: hidden;
   white-space: nowrap;
   &:before {
     content: "";
     float: left;
     position: relative;
-    top: 2.5px;
-    margin-right: 5px;
+    top: 3.5px;
+    margin-right: 2px;
     background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
     background-size: contain;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
 }
 
