@@ -7,7 +7,7 @@
       </div>
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-mail-icon.png" />
-        <span style="margin-left: 5px">vnsupport@tf88.com</span>
+        <span style="margin-left: 5px">vnsupport@kaka.com</span>
       </div>
       <!-- <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-phone-icon.png" />
@@ -21,7 +21,7 @@
       </div> -->
       <div class="additional-info-item">
         <img src="../../assets/images/home/sticky-sidebar-telegram-icon.png" />
-        <span style="margin-left: 5px">@TF88_CS</span>
+        <span style="margin-left: 5px">@KAKA_CS</span>
       </div>
     </div>
     <div class="sticky-sidebar-items">

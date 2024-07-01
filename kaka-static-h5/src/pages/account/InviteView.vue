@@ -206,7 +206,7 @@ export default defineComponent({
 
       li {
         margin-bottom: 10px;
-        color: #9aa8cb;
+        color: #ffffffc2;
       }
     }
   }
@@ -218,7 +218,7 @@ export default defineComponent({
     margin-bottom: 15px;
 
     .box-header-row {
-      background: #e7f3ff;
+      background: #FFE7E7;
 
       td {
         font-weight: bold;
@@ -282,7 +282,7 @@ export default defineComponent({
     font-size: 1.3rem;
     font-weight: bold;
     margin: 0px auto 10px;
-    color: $font-2;
+    color: #ffffff;
   }
 
   .personal-content-box .title-top-line1 {

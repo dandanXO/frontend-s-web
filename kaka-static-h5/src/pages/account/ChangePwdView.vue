@@ -665,6 +665,8 @@ export default defineComponent({
 .change-pwd {
   padding: 20px 15px 24px;
   background: $white;
+  color: #333333;
+
   width: $box-width;
   margin: 15px auto 20px;
   border-radius: 10px;

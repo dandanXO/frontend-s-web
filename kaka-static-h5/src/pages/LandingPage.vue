@@ -2,7 +2,7 @@
   <div class="main-wrapper">
     <div class="full-container">
       <div class="top-wrapper">
-        <img src="../assets/images/landing/tf88-logo.png" alt="TF880 Logo" title="TF88 Logo" />
+        <img src="../assets/images/landing/kaka-logo.png" alt="KAKA0 Logo" title="KAKA Logo" />
       </div>
 
       <div class="banner-wrapper">
@@ -37,7 +37,7 @@
 
 
         <div class="action-a action-btn register" @click="goToPage('/register')">
-          <img src="../assets/images/landing/register-icon.png" alt="TF88 Register" title="TF88 Register"/>
+          <img src="../assets/images/landing/register-icon.png" alt="KAKA Register" title="KAKA Register"/>
           <div class="action-btn__text-wrapper">
             <span class="action-btn__title">Đăng Ký Ngay</span>
             <span class="action-btn__description">TẶNG 18-88K <img src="./../assets/images/landing/hot-pill.png" /></span>
@@ -45,7 +45,7 @@
         </div>
 
         <div class="action-a action-btn download" @click="goToPage('/register')">
-          <img src="../assets/images/landing/download-icon.png" alt="TF88 Dpwnload" title="TF88 Download"/>
+          <img src="../assets/images/landing/download-icon.png" alt="KAKA Dpwnload" title="KAKA Download"/>
           <div class="action-btn__text-wrapper">
             <span class="action-btn__title">Tải APP</span>
             <span class="action-btn__description">MƯA LÌ XÌ MỖI TUẦN LÊN ĐẾN 8,888K</span>
@@ -98,7 +98,7 @@
         <div class="main-sticky-btn benefit">
           <img class="main-sticky-btn__icon" src="../assets/images/landing/gift-icon.png" alt="AN TOÀN TUYỆT ĐỐI" title="AN TOÀN TUYỆT ĐỐI" />
           <div class="main-sticky-btn__text-wrapper">
-            <span class="main-sticky-btn__title">THAM GIA CƯỢC TẠI TF88</span>
+            <span class="main-sticky-btn__title">THAM GIA CƯỢC TẠI KAKA</span>
             <span class="main-sticky-btn__description">
                 <span class="hight-light">NẠP RÚT NHANH CHÓNG,</span><br/>AN TOÀN TUYỆT ĐỐI
               </span>

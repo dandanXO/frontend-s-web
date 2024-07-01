@@ -124,7 +124,7 @@ onMounted(() => {
   border-radius: 12px;
 
   &.daily-details {
-    background: #e7f3ff;
+    background: #FFE7E7;
 
     .dailylogin-title {
       color: #3981ff;

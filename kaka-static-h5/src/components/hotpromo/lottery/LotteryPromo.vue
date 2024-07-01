@@ -488,7 +488,7 @@ const dateClosePopup = ref(true);
             text-align: center;
             background-color: #f4f7f8;
             border-radius: 6px;
-            box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+            box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
             color: #ffffff;
           }
         }

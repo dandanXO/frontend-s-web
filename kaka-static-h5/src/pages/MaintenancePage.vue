@@ -23,7 +23,7 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-02.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_01") }}
-            <a href="mailto:vnsupport@tf88.com">vnsupport@tf88.com</a>
+            <a href="mailto:vnsupport@KAKA.com">vnsupport@KAKA.com</a>
           </div>
         </div>
         <div class="contact-item">
@@ -39,7 +39,7 @@
           <div class="contact-img"><img src="../assets/images/home/float-cs-04.png" /></div>
           <div>
             {{ $t("lang.maintenance_contact_03") }}
-            <a href="https://t.me/TF88_CS" target="_blank">@TF88_CS</a>
+            <a href="https://t.me/KAKA_CS" target="_blank">@KAKA_CS</a>
           </div>
         </div>
       </div>

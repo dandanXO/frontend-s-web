@@ -681,8 +681,8 @@ export default {
     advice4:
       "When you are experiencing negative emotions, drunkenness, insecurity,... Look for another hobby instead of gambling.",
     advice5: "Don't be afraid to seek help from those around you when you feel things are getting worse.",
-    tf88SupportTitle: "Help from KAKA responsible bets",
-    tf88SupportContent:
+    kakaSupportTitle: "Help from KAKA responsible bets",
+    kakaSupportContent:
       "As one of the leading game platforms in Vietnam, and Asia. We ensure negative principles of prevention and containment when betting on all parties including providers and platform regulators. In addition, KAKA's team is always equipped with enough knowledge and skills about responsible betting ready to support you at any time.",
     ageRestriction:
       "KAKA PROHIBITS ALL PLAYERS UNDER THE AGE OF 18 FROM ACCESSING, PARTICIPATING IN BETTING ON OUR PLATFORM",

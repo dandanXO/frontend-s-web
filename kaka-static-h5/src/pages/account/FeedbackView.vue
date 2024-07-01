@@ -686,14 +686,14 @@ onMounted(() => {
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
         border-radius: 10px;
         background: #f7f8fb;
         height: 42px;
       }
 
       :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
         border-radius: 10px;
         background: #f7f8fb;
       }
@@ -780,14 +780,14 @@ onMounted(() => {
     }
 
     :deep(.el-input__wrapper) {
-      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
       border-radius: 10px;
       background: #f7f8fb;
       height: 42px;
     }
 
     :deep(.el-textarea__inner) {
-      box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+      box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
       border-radius: 10px;
       background: #f7f8fb;
     }
@@ -884,14 +884,14 @@ onMounted(() => {
       }
 
       :deep(.el-input__wrapper) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
         border-radius: 10px;
         background: #f7f8fb;
         height: 42px;
       }
 
       :deep(.el-textarea__inner) {
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
         border-radius: 10px;
         background: #f7f8fb;
       }

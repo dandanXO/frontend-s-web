@@ -153,7 +153,7 @@ onMounted(getAppDownloadUrl);
   margin-top: 10px;
 
   .q-tabs {
-    background: $white;
+    background: rgba(113, 125, 146, 0.2);
     width: $box-width;
     margin: 0 auto;
     padding: 15px 14px;

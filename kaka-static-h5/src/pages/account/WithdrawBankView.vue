@@ -382,7 +382,7 @@ onActivated(() => {
     }
 
     .bank-card {
-      background: url(../../assets/images/account/bank-card-bg.png);
+      background: #FFE0E0;
       background-size: 100% 100%;
       border-radius: 10px;
       display: flex;
@@ -423,7 +423,7 @@ onActivated(() => {
       }
 
       .right-container {
-        color: #3d89ff;
+        color: #FD574C;
         font-size: 1rem;
         font-weight: 400;
       }
