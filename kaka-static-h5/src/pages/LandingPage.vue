@@ -2,7 +2,7 @@
   <div class="main-wrapper">
     <div class="full-container">
       <div class="top-wrapper">
-        <img src="../assets/images/landing/KAKA-logo.png" alt="KAKA0 Logo" title="KAKA Logo" />
+        <img src="../assets/images/landing/kaka-logo.png" alt="KAKA0 Logo" title="KAKA Logo" />
       </div>
 
       <div class="banner-wrapper">

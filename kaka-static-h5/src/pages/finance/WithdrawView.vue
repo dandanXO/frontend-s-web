@@ -141,7 +141,7 @@
             clearable
           >
             <template v-slot:prepend>
-              <img src="../../assets/images/login/password-icon.png" width="24" />
+              <img src="../../assets/images/login/password-icon-red.png" width="24" />
             </template>
             <template v-slot:append>
               <q-icon
