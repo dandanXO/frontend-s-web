@@ -37,12 +37,10 @@
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
 import { ref, reactive, computed, watch, nextTick, onMounted, defineAsyncComponent, markRaw } from "vue";
-import { useI18n } from 'vue-i18n';
 
 
 const route = useRoute();
 const router = useRouter();
-const { t } = useI18n();
 const visible = ref(false);
 const page = ref("");
 const tabIndex = ref("");
@@ -55,7 +53,7 @@ const isMinimalMode = computed(() => {
 
 watch(
   () => route.query,
-  (_, __) => {
+  () => {
     if (route.query && route.query.page) {
       nextTick(() => {
         page.value = route.query.page;
@@ -79,7 +77,6 @@ watch(
 );
 
 const tabClick = (targetPage) => {
-  page.value = targetPage;
   router.replace({
     query: { page: targetPage },
     silent: true
@@ -199,7 +196,6 @@ const pagesInfo = reactive([
     component: AddWithdrawBankCard,
     headerInfo: {
       title: 'lang.page_modal_bank_card_list',
-      subTitle: "BANK CARD LIST",
       description: ""
     }
   },
