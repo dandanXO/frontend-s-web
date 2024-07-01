@@ -390,7 +390,7 @@ const onSubmitJackpot = () => {
   }
 
   const number = parseInt(inputValues.value.join(""));
-  selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
+  selectNumber("vnm-euro-2024-lottery-stage-two", number).then((res) => {
     if (res.code === 0) {
       $q.notify({
         type: "positive",
