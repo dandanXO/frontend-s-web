@@ -2440,6 +2440,7 @@ export default {
     'Piggy Bank': 'Piggy Bank',
     'Loss Rebate Record': 'Loss Rebate Record',
     'Fish Red Packet': 'Fish Red Packet Config',
+    'Bet Game Type Rebate Record': 'Bet Game Type Rebate Record',
     'Site Management': 'Site Management',
     Message: 'Message',
     Announcement: 'Announcement',
