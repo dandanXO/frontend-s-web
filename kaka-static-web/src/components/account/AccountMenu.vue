@@ -12,7 +12,7 @@
             <span v-if="!isLoadingBalance">{{ store.currency.value }} {{ displayBalance(store.balance) }}</span>
           </span>
           <el-icon>
-            <RiRefreshLine color="#468CFF" />
+            <RiRefreshLine color="#FD574C" />
           </el-icon>
         </div>
         <div class="profile-actions">

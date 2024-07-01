@@ -726,6 +726,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     min-height: 30px;
+    background: linear-gradient(1deg, #3b5cfe, #33a2ff);
   }
 
   .top-section {

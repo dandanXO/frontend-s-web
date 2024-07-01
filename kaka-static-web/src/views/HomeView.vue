@@ -4,7 +4,7 @@
     <div class="home-mid-section">
       <HomeAnnouncement></HomeAnnouncement>
       <HomeHotMatches></HomeHotMatches>
-      <NewsSection></NewsSection>
+      <!-- <NewsSection></NewsSection> -->
       <HomeHotGame></HomeHotGame>
       <HomeDownload></HomeDownload>
       <HomeService></HomeService>
@@ -17,7 +17,7 @@
 import GameModal from "@/components/modal/GameModal.vue";
 import { ref } from "vue";
 import HomeBanner from "@/components/home/HomeBanner.vue";
-import NewsSection from "@/components/home/NewsSection.vue";
+// import NewsSection from "@/components/home/NewsSection.vue";
 import HomeAnnouncement from "@/components/home/HomeAnnouncement.vue";
 import HomeDownload from "@/components/home/HomeDownload.vue";
 import HomeHotMatches from "@/components/home/HomeHotMatches.vue";

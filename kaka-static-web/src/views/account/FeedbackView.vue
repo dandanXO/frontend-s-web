@@ -175,7 +175,7 @@
                 <span class="span2">下月问卷将于次月1号重新开启</span>
               </div>
               <div class="header-title-div" style="margin-top: 25px">
-                <span class="span3">此次问卷提供<span class="span1" style="color: #468CFF">18-188元</span>建议金</span> 
+                <span class="span3">此次问卷提供<span class="span1" style="color: #FD574C">18-188元</span>建议金</span> 
               </div>
               <div class="qr-code-div">
                 <VueQRCodeComponent :size="188" :text="referralLink" />

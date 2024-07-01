@@ -170,7 +170,7 @@ const goToDeposit = () => {
     .slide-title {
       font-weight: 900;
       font-size: 20px;
-      color: #9AA8CB;
+      color: #ffffff;
     }
     .slide-content {
       text-align: center;
@@ -251,7 +251,8 @@ const goToDeposit = () => {
     font-size: 36px;
     font-weight: bold;
     color: #ffffff;
-    text-shadow: 5px 5px 25px #5894ff;
+    // text-shadow: 5px 5px 25px #5894ff;
+    text-shadow: 5px 5px 25px #ff0000;
     flex-direction: column;
     display: flex;
     justify-content: center;

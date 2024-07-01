@@ -182,7 +182,7 @@
                 </span>
               </div>
               <el-icon>
-                <RiRefreshLine color="#468CFF" />
+                <RiRefreshLine color="#FD574C" />
               </el-icon>
             </a>
           </div>
@@ -1865,8 +1865,10 @@ body {
       }
       &.right {
         // right: 0px;
-    margin-right: -50px;
-        transform: rotateY(180deg);
+    margin-left: -70px;
+    transform: rotateY(180deg);
+    overflow: hidden;
+    padding-right: 60px;
       }
     }
     padding: 10px;    

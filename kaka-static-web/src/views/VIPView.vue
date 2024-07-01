@@ -1181,8 +1181,10 @@ $border-settings: 1px solid #e5e7eb;
   svg {
     width: 30px;
     height: 30px;
-    background: url(../assets/vip/nextprev.png) no-repeat center center;
     background-size: contain;
+    background: #ffffff;
+    border-radius: 50%;
+    color: #400000;
   }
 }
 

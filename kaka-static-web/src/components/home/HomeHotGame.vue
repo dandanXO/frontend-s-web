@@ -15,7 +15,7 @@
             </div>
             <div class="hotgame-text">
               <div class="title">{{ hotgame.title }}</div>
-              <div class="subtitle">{{ hotgame.subtitle }}</div>
+              <!-- <div class="subtitle">{{ hotgame.subtitle }}</div> -->
             </div>
             <div class="character-wrapper">
               <img :class="`character-${hotgame.subtitle.toLowerCase()}`" :src="hotgame.charImgPath" />

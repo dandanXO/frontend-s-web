@@ -363,13 +363,17 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    color: #9AA8CB;
+    color: #ffffff;
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;
 
     &:hover {
-      background-color: #e5f5ff;
+      background-color: #ffe5e5;
+    }
+    img {
+      
+      width: 40px;
     }
   }
 }
@@ -394,13 +398,16 @@ export default defineComponent({
     color: #000;
     gap: 5px;
     cursor: pointer;
-
+    img {
+      
+      width: 50px;
+    }
     &:hover {
       img {
         filter: brightness(1.05);
       }
 
-      color: #4e93ff;
+      color: #ff4e4e;
     }
   }
 }
