@@ -955,6 +955,18 @@ export default defineComponent({
         //   background: #272c3d;
         //   border-radius: 10px;
         // }
+        .promo-card {
+          background-color: #FFFFFF;
+          color: #7A8EB9;
+        }
+
+        // for lh1ouzhoubeibaopei
+        .sport {
+          em {
+            color: #c24f4a;
+            font-style: normal;
+          }
+        }
       }
     }
   }
@@ -1117,12 +1129,29 @@ export default defineComponent({
           table {
             th {
               background: $background-dark-header;
-              color: $font-3-dark;
+              color: $white;
             }
             td {
               background: $background-dark-light;
               border-color: $border-dark;
-              color: #999999;
+              color: $white;
+            }
+            tbody > tr:first-child td {
+              background: $background-dark-header;
+              color: $white;
+            }
+          }
+
+          .promo-card {
+            @include content-block-dark;
+            color: $font-1;
+          }
+
+          // for lh1ouzhoubeibaopei
+          .sport {
+            em {
+              color: #F04918;
+              font-style: normal;
             }
           }
         }

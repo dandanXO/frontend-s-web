@@ -212,7 +212,7 @@
           </div>
         </router-link>
 
-      <router-link to="/account/vip">
+      <router-link to="/account/vip?from=account">
         <div class="acct-nav-item">
           <img v-if="$q.dark.isActive" src="../assets/images/account/account-vip-icon-dark.png" />
           <img v-else src="../assets/images/account/account-vip-icon.png" />

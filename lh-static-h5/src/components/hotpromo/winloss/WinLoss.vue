@@ -373,6 +373,7 @@ onMounted(() => {
     }
   }
   ol {
+    padding-left: 40px !important;
     li {
       color: #ffffff;
       font-size: 1.3rem;

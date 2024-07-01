@@ -754,13 +754,18 @@ export default defineComponent({
   padding: 0 5px;
   width: 100%;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: inline;
   padding: 5px 5px 2px;
   gap: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   &:before {
     content: "";
+    float: left;
+    position: relative;
+    top: 2.5px;
+    margin-right: 5px;
     background: url("../eurocup-2024-vote/images/point-icon.png")no-repeat center center;
     background-size: contain;
     width: 10px;
