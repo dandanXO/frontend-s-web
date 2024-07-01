@@ -24,7 +24,7 @@
             <td>{{ item.prizeAmount }}</td>
             <td>
               <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'">
-                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取彩金' }}
+                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取' }}
               </button>
             </td>
           </tr>
