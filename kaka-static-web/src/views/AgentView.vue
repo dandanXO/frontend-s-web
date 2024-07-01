@@ -238,7 +238,7 @@ export default defineComponent({
   setup() {
     const i18nStoreLanguage = i18nStore()
     const { languageVal } = storeToRefs(i18nStoreLanguage)
-    const affiliateUrl = ref("https://vnm-affiliate.th80to83w1.com/");
+    const affiliateUrl = ref("https://ka1-os.cn23lh0d1nf.com/");
 
     const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
       var left = (screen.width - popupWinWidth) * 2;
