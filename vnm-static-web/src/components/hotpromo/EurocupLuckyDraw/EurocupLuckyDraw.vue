@@ -349,7 +349,7 @@ const getJackpotAmt = () => {
 const onSubmitJackpot = () => {
   isLoadingJackpot.value = true;
   const number = inputValues.value.join("");
-  selectNumber("vnm-euro-2024-lottery-stage-one", number).then((res) => {
+  selectNumber("vvnm-euro-2024-lottery-stage-two", number).then((res) => {
     if (res.code === 0) {
       ElMessage.success(t("status.success"));
       isLoadingJackpot.value = false;
