@@ -106,20 +106,17 @@ export default boot(({ app, router }) => {
 
     if (res.code !== ResponseCode.SUCCESS) {
       Loading.hide();
-      const messageTranslated = errorMessages[res.code] || "Error";
 
-      if (res.code === ResponseCode.ERROR_SYSTEM) {
+      if (res.code === ResponseCode.ERROR_SYSTEM ||
+        res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT ||
+        res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG ||
+        res.code === ResponseCode.ERROR_GUEST_LOGGED
+      ) {
+        // debugger;
+        res.message= i18n.global.t("error." + res.code) + (res.data && res.data.parameter ? res.data.parameter : "") || "Error";
         return res;
       }
-      if (res.code === ResponseCode.TOO_OFTEN_REQUEST || res.code === ResponseCode.ERROR_AMOUNT_DEPOSIT) {
-        return res;
-      }
-      if (res.code === ResponseCode.EMPTY_PROMO_POPOUT || res.code === ResponseCode.ERROR_PAYMENT_CHANNEL_WRONG) {
-        return res;
-      }
-      if (res.code === ResponseCode.ERROR_GUEST_LOGGED) {
-        return res;
-      }
+
       if (res.code === ResponseCode.ERROR_UNAUTHORIZED) {
         location.reload();
       } else {
