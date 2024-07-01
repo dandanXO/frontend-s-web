@@ -1,6 +1,7 @@
 <template>
   <div class="affiliate-container">
-    <div class="page-title">雷火合营计划</div>
+    <div class="page-title" v-if="!$q.dark.isActive">雷火合营计划</div>
+    <div class="page-title-img" v-else><img src="../assets/images/affiliate/affiliate-title.png" /></div>
 
     <div class="branding">
       <div class="branding-wrapper">
@@ -27,7 +28,7 @@
     </div>
 
     <div class="ambassador">
-      <img loading="lazy" class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
+<!--      <img loading="lazy" class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />-->
       <div class="btn-wrapper">
         <q-btn
           :href="affiliateUrl + 'login?agent=' + (affCode ? affCode : '')"
@@ -242,7 +243,7 @@
 
 <script setup>
 import { userStore } from "../stores/index";
-import { Platform } from "quasar";
+import { Platform, useQuasar } from "quasar";
 import { ref } from "vue";
 
 const affiliateUrl = ref("https://lh1-affiliate.phoicynxeey.com/lh/");
@@ -257,6 +258,7 @@ const openWindow = (pageURL, pageTitle, popupWinWidth, popupWinHeight) => {
   );
 };
 
+const $q= useQuasar();
 const affCode = sessionStorage.getItem("AFFILIATE_CODE");
 const regDevice = Platform.is.mobile ? "H5" : "WEB";
 const store = userStore();
@@ -319,7 +321,6 @@ const rows = [
     text-align: center;
     text-shadow: 0px 7.804098606109619px 7.804098606109619px rgba(0, 0, 0, 0.47),
       3.9020493030548096px 3.9020493030548096px 0px #9da6d4;
-    font-family: FZTanHeiS-B-GB;
     font-size: 3.46239rem;
     font-weight: 400;
     background: url("../assets/images/affiliate/title-bg.jpeg"), lightgray 50% / cover no-repeat;
@@ -332,11 +333,21 @@ const rows = [
     -webkit-text-stroke-color: #b1e4ff;
   }
 
+  .page-title-img {
+    width: 80%;
+    margin: 0 auto;
+
+    img{
+      width: 100%;
+    }
+
+  }
+
   .branding {
     display: flex;
     justify-content: space-between;
     padding: 0 1.25rem;
-    margin: 1.25rem 0 2rem 0;
+    margin: 1.25rem 0 0rem 0;
 
     .branding-wrapper {
       display: flex;
@@ -377,7 +388,7 @@ const rows = [
   .ambassador {
     display: flex;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 0rem;
 
     .ambassador-img {
       width: 50%;
