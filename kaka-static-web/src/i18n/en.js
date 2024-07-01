@@ -541,7 +541,7 @@ export default {
   },
   about: {
     affiliate: "Affiliates",
-    aboutus: "About TFgaming",
+    aboutus: "About KAKA gaming",
     welcome:
       "Welcome to KAKA Gaming! We are one of the leading online gambling providers in Vietnam, with a mission to give our customers great entertainment and the opportunity to earn lots of bonuses.",
     product: "PRODUCT",

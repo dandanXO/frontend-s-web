@@ -172,7 +172,7 @@ onMounted(() => {});
           }
           .download-desc {
             font-weight: 700;
-            color: #424F72;
+            color: #ffffff;
             font-size: 1.3rem;
             margin: 1rem;
           }

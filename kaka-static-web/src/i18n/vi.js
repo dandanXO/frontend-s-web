@@ -535,7 +535,7 @@ export default {
   },
   about: {
     affiliate: "Đại Lý",
-    aboutus: "Về TFGaming",
+    aboutus: "Về KAKA gaming",
     welcome:
       "Chào mừng bạn đến với KAKA Gaming! Chúng tôi là một trong những nhà cung cấp cá cược trực tuyến hàng đầu tại Việt Nam, với sứ mệnh mang đến cho khách hàng giải trí tuyệt vời và cơ hội kiếm được nhiều phần thưởng.",
     product: "SẢN PHẨM",
