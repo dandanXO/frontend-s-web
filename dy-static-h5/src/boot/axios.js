@@ -3,8 +3,6 @@ import { createPinia } from "pinia";
 import { Loading, Notify, SessionStorage, Dialog } from "quasar";
 import { ResponseCode } from "../api/response";
 import LocalStorage from "boot/local-storage";
-import { stringify } from "qs";
-import i18n from "../i18n/index";
 import axios from "axios";
 import { getRndInteger } from "boot/utils";
 

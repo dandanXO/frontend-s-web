@@ -75,7 +75,6 @@ import VueQRCodeComponent from 'vue-qrcode-component'
 import {userStore} from "src/stores";
 import {Platform, useQuasar} from "quasar";
 import {api} from "boot/axios"
-import {Clipboard} from '@capacitor/clipboard';
 import {isAndroid} from "boot/utils";
 
 export default defineComponent({
@@ -109,34 +108,29 @@ export default defineComponent({
       // alert(navigator.clipboard);
       // alert(Platform.is.chrome);
       // Navigator clipboard api needs a secure context (https)
-    // else if (navigator.clipboard && Platform.is.chrome) {
-    //     await navigator.clipboard.writeText(textToCopy);
-    //   }
-      if (store.getDeviceType() === 'ANDROID') {
-        await Clipboard.write({
-          string: textToCopy
-        });
-      } else {
-        // Use the 'out of viewport hidden text area' trick
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
+      // else if (navigator.clipboard && Platform.is.chrome) {
+      //     await navigator.clipboard.writeText(textToCopy);
+      //   }
 
-        // Move textarea out of the viewport so it's not visible
-        textArea.style.position = "absolute";
-        textArea.style.left = "-999999px";
+      // Use the 'out of viewport hidden text area' trick
+      const textArea = document.createElement("textarea");
+      textArea.value = textToCopy;
 
-        document.body.prepend(textArea);
-        textArea.focus();
-        textArea.select();
+      // Move textarea out of the viewport so it's not visible
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
 
-        try {
-          document.execCommand("copy");
-        } catch (error) {
-          console.error(error);
-        } finally {
-          document.body.removeChild(textArea);
-          // textArea.remove();
-        }
+      document.body.prepend(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        document.execCommand("copy");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        document.body.removeChild(textArea);
+        // textArea.remove();
       }
     }
 

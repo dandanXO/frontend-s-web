@@ -57,29 +57,6 @@ const routes = [
     children: [{ path: "", component: () => import("pages/LiveChatPage.vue") }]
   },
   {
-    path: "/fish",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "aviator",
-        component: () => import("pages/games/AviatorView.vue")
-      }
-    ]
-  },
-  {
-    path: "/poker",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "poker",
-        component: () => import("pages/games/PokerView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
     path: "/slot",
     component: () => import("layouts/MainLayout.vue"),
     children: [
@@ -89,42 +66,6 @@ const routes = [
         component: () => import("pages/games/SlotView.vue")
       }
     ]
-  },
-  {
-    path: "/sport",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "sport",
-        component: () => import("pages/games/sportFrameView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  // {
-  //   path: "/sports",
-  //   // component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       name: "sport",
-  //       component: () => import("components/sportsOuter.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: false }
-  // },
-  {
-    path: "/e-sport",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        name: "e-sport",
-        component: () => import("pages/games/E-SportView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
   },
   {
     path: "/account/vip",
@@ -189,17 +130,6 @@ const routes = [
       {
         path: "",
         component: () => import("pages/account/RecordsView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/promotion",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/account/PromotionView.vue")
       }
     ],
     meta: { requiresAuth: true }
@@ -336,61 +266,6 @@ const routes = [
     ],
     meta: { requiresAuth: true, keepAlive: false }
   },
-  // {
-  //   path: "/account/records/change",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/records/ChangeRecordView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true, keepAlive: false }
-  // },
-  // {
-  //   path: "/account/records/betrecord",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/records/BetRecordView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true, keepAlive: false }
-  // },
-  {
-    path: "/account/records/recommend",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/RecommendRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  {
-    path: "/account/records/help",
-    component: () => import("layouts/MainLayout.vue"),
-    children: [
-      {
-        path: "",
-        component: () => import("pages/records/HelpRecordView.vue")
-      }
-    ],
-    meta: { requiresAuth: true }
-  },
-  // {
-  //   path: "/account/records/bill",
-  //   component: () => import("layouts/MainLayout.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: () => import("pages/records/BillRecordView.vue")
-  //     }
-  //   ],
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: "/account/transit",
     component: () => import("layouts/MainLayout.vue"),

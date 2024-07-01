@@ -312,7 +312,7 @@
 import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
-import { App } from "@capacitor/app";
+// import { App } from "@capacitor/app";
 import { RiRefreshLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 
@@ -367,16 +367,16 @@ export default defineComponent({
     const mainWallet = computed(() => {
       return store.balance.toFixed(2);
     });
-    const getVersionNo = async () => {
-      if (store.getDeviceType() == "ANDROID") {
-        const info = await App.getInfo();
-        var current_version = info.version + "." + info.build;
-        appVersionNo.value = current_version;
-      } else if (store.getDeviceType() == "IOS") {
-        appVersionNo.value = "iOS v0.6";
-      } else {
-      }
-    };
+    // const getVersionNo = async () => {
+    //   if (store.getDeviceType() == "ANDROID") {
+    //     const info = await App.getInfo();
+    //     var current_version = info.version + "." + info.build;
+    //     appVersionNo.value = current_version;
+    //   } else if (store.getDeviceType() == "IOS") {
+    //     appVersionNo.value = "iOS v0.6";
+    //   } else {
+    //   }
+    // };
     const isLoadingBalance = ref(false);
 
     const selfTgurl = ref("https://" + store.evip);
@@ -385,7 +385,7 @@ export default defineComponent({
       getBalance();
       store.getBalance();
       // store.getUnreadTotal();
-      getVersionNo();
+      // getVersionNo();
       getPromoImage();
       if (store.isApp()) {
         var btmSwiper = document.getElementById("id-acct-menu");
