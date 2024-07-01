@@ -23,8 +23,8 @@
         <li>{{ $t('about.advice4') }}</li>
         <li>{{ $t('about.advice5') }}</li>
     </ul>
-    <span class="content">{{ $t('about.tf88SupportTitle') }}</span>
-    <p>{{ $t('about.tf88SupportContent') }}</p>
+    <span class="content">{{ $t('about.kakaSupportTitle') }}</span>
+    <p>{{ $t('about.kakaSupportContent') }}</p>
     <div class="note" style="color: orange; font-size: 16px;">
         {{ $t('about.ageRestriction') }}
     </div>

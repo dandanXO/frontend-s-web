@@ -17,6 +17,7 @@ body {
 
 #q-app {
   background: $new-dark;
+  color: $white;
   box-shadow: 0px 0px 5px 0px $accent;
 }
 
@@ -102,7 +103,7 @@ a:focus {
 
 .page-title {
   min-height: 50px;
-  color: $font-2;
+  // color: $font-2;
   font-size: 1.3rem;
   text-align: center;
   padding: 10px;
@@ -272,14 +273,18 @@ svg {
   font-size: 1.2rem;
   color: $white;
   border-radius: 10px;
+  filter: hue-rotate(145deg);
 
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
+  }
+  img {
+    filter: hue-rotate(-145deg);
   }
 }
 
@@ -290,13 +295,14 @@ svg {
   font-size: 1.2rem;
   color: $font-1;
   border-radius: 10px;
+  filter: hue-rotate(145deg);
 
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
   }
 }
@@ -314,13 +320,14 @@ svg {
   width: 115px;
   color: $font-1;
   border-radius: 10px;
+  filter: hue-rotate(145deg);
 
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
   }
 }
@@ -335,14 +342,18 @@ svg {
   color: $white;
   border-radius: 10px;
   padding: 0 16px !important;
+  filter: hue-rotate(145deg);
 
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
+  }
+  img {
+    filter: hue-rotate(-145deg);
   }
 }
 
@@ -356,13 +367,14 @@ svg {
   color: $font-1;
   text-align: center;
   border-radius: 10px;
+  filter: hue-rotate(145deg);
 
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
   }
 }
@@ -377,13 +389,17 @@ svg {
   color: $white;
   border-radius: 10px;
 
+  filter: hue-rotate(145deg);
   &:hover {
     opacity: 0.9;
   }
 
   &:active {
-    filter: brightness(0.85);
+    filter: brightness(0.85) hue-rotate(145deg);
     transform: translate(0px, 1px);
+  }
+  img {
+    filter: hue-rotate(-145deg);
   }
 }
 
@@ -448,7 +464,10 @@ svg {
 
 .modal-common-div {
   .modalcontent {
-    background: #1e212c;
+    background: #fcfdfe;
+
+    box-shadow: 0px -8px 8px 0px #ffa09a inset, 0px 4px 0px 0px #ff736a;
+
     height: auto;
     border-radius: 10px;
     box-sizing: border-box;
@@ -467,8 +486,8 @@ svg {
     box-sizing: border-box;
     height: 55px;
     line-height: 55px;
-    background: #1e212c;
-    color: $primary;
+    // background: #1e212c;
+    // color: $primary;
     text-align: center;
     font-size: 1.2rem;
     border-bottom: 2px solid #ecedf0;
@@ -608,7 +627,10 @@ svg {
   background-color: #4c9dec;
   color: #ffffff;
 }
-
+.q-checkbox__inner--truthy,
+.q-checkbox__inner--indet {
+  color: #ff0044;
+}
 @media (max-width: 450px) {
   .sm-screen-txt {
     font-size: 70% !important;

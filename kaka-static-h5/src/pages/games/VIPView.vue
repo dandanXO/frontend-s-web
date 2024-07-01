@@ -217,14 +217,14 @@
                 <q-th colspan="4">{{ $t("lang.vip_exclusive_promotions") }}</q-th>
               </q-tr>
               <q-tr>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_min_deposit") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_max_bonus") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_return_over") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_bet_limit") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_priority_payment_method") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
-                <q-th style="background: #e7f3ff">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_percent_monthlyreload") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_min_deposit") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_max_bonus") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_return_over") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_bet_limit") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_priority_payment_method") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_24_7_cc_team") }}</q-th>
+                <q-th style="background: #ffe7e7">{{ $t("lang.vip_invitation_to_ee") }}</q-th>
               </q-tr>
             </template>
             <template v-slot:body="props">
@@ -1000,6 +1000,7 @@ onActivated(() => {
           font-size: 8vw;
           font-weight: 700;
           line-height: 1;
+          color: #333333;
         }
       }
 
@@ -1089,7 +1090,7 @@ onActivated(() => {
       border-radius: 20px;
 
       .item-percent {
-        background: #e7f3ff;
+        background: #FFE7E7;
         border-radius: 24px;
         display: flex;
         justify-content: center;
@@ -1218,6 +1219,7 @@ onActivated(() => {
 
       .tnc-img {
         width: 95%;
+        filter: hue-rotate(145deg);
       }
 
       span {

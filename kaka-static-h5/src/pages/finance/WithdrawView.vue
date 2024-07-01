@@ -667,7 +667,7 @@ export default defineComponent({
       // box-shadow: none;
       // filter: drop-shadow(0px 0px 3px #ffffff);
       img {
-        border: 3px solid #33bcd4;
+        border: 3px solid #d43333;
         border-radius: 10px;
       }
 

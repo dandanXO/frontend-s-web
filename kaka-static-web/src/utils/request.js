@@ -10,7 +10,7 @@ const rstArray = process.env.VUE_APP_RST_API.split(",");
 const evtArray = process.env.VUE_APP_EVT_API.split(",");
 const crArray = process.env.VUE_APP_CR_API.split(",");
 
-const globalLinks= ["tf88won"];
+const globalLinks= ["kakawon"];
 console.log(window.location.hostname);
 const isGlobalVN = globalLinks.some(link => window.location.hostname.includes(link));
 

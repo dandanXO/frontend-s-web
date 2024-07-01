@@ -69,7 +69,7 @@
         <p>{{ $t("lang.compose_msgsubmitsuccess") }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="bg-new-dark text-white">
         <q-btn class="common-md-btn" flat :label="$t('lang.compose_confirm')" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -132,8 +132,10 @@ onMounted(() => {});
 
   .write-board-div {
     background: $white;
+    color: #333333;
     box-shadow: $shadow-bg;
 
+    border-radius: 10px;
     margin: 14px auto 15px;
 
     .q-field--filled .q-field__control {

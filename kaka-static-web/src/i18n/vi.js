@@ -674,8 +674,8 @@ export default {
       "Khi bạn trải qua các cảm xúc tiêu cực, say rượu, không an toàn,... Tìm một sở thích khác thay vì cá cược.",
     advice5:
       "Đừng ngần ngại tìm sự giúp đỡ từ những người xung quanh khi bạn cảm thấy mọi thứ đang trở nên tồi tệ hơn.",
-    tf88SupportTitle: "Sự hỗ trợ từ cá cược có trách nhiệm của KAKA",
-    tf88SupportContent:
+    kakaSupportTitle: "Sự hỗ trợ từ cá cược có trách nhiệm của KAKA",
+    kakaSupportContent:
       "Là một trong những nền tảng game hàng đầu tại Việt Nam và châu Á. Chúng tôi đảm bảo các nguyên tắc tiêu cực của phòng ngừa và kiểm soát khi đặt cược trên tất cả các bên bao gồm cả nhà cung cấp và các cơ quan quản lý nền tảng. Ngoài ra, đội ngũ của KAKA luôn được trang bị đủ kiến thức và kỹ năng về cá cược có trách nhiệm sẵn sàng hỗ trợ bạn bất cứ lúc nào.",
     ageRestriction:
       "KAKA CẤM TẤT CẢ CÁC NGƯỜI CHƠI DƯỚI 18 TUỔI TRUY CẬP, THAM GIA CÁ CƯỢC TRÊN NỀN TẢNG CỦA CHÚNG TÔI",

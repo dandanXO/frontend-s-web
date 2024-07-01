@@ -640,7 +640,7 @@
 
   <div class="home-news">
     <div class="home-news-title-section">
-      <div class="news-title">{{ $t("lang.tf88_news") }}</div>
+      <div class="news-title">{{ $t("lang.KAKA_news") }}</div>
       <div class="news-see-all">
         <q-btn rounded no-caps color="lightbluebtn" class="sm-screen-txt" @click="goToNewsPage">
           {{ $t("lang.see_all") }}
@@ -690,15 +690,15 @@
     <div class="float-btn"><img src="../assets/images/home/floating-btn.png" width="20px" /></div>
     <div class="float-menu" :class="isMenuFloat && 'show-menu'">
       <router-link to="/liveChat" class="menu-item"><img src="../assets/images/home/float-cs-01.png" /></router-link>
-      <a href="mailto:vnsupport@tf88.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
+      <a href="mailto:vnsupport@KAKA.com" class="menu-item"><img src="../assets/images/home/float-cs-02.png" /></a>
       <a href="tel:+84945091999" class="menu-item"><img src="../assets/images/home/float-cs-03.png" /></a>
-      <a href="https://t.me/TF88_CS" target="_blank" class="menu-item">
+      <a href="https://t.me/KAKA_CS" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-04.png" />
       </a>
       <a href="https://chat.zalo.me/?phone=+639672541561" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-05.png" />
       </a>
-      <a href="https://www.facebook.com/TF88vnofficial" target="_blank" class="menu-item">
+      <a href="https://www.facebook.com/KAKAvnofficial" target="_blank" class="menu-item">
         <img src="../assets/images/home/float-cs-06.png" />
       </a>
     </div>
@@ -1727,7 +1727,7 @@ export default defineComponent({
     const newsDetail_05 = ref([]);
 
     const goToNewsPage = () => {
-      window.open("http://tf88club.net");
+      window.open("http://KAKAclub.net");
     };
 
     const gotoPromo = (banner) => {
@@ -2142,6 +2142,7 @@ export default defineComponent({
 .home-news {
   width: calc(100% - 2rem);
   margin: 0 auto 32px;
+  display: none;
 
   .home-news-title-section {
     margin-bottom: 12px;
@@ -2151,7 +2152,7 @@ export default defineComponent({
     .news-title {
       font-size: 18px;
       font-weight: 700;
-      color: #313441;
+      color: #333333;
     }
   }
 
