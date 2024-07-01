@@ -441,6 +441,7 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: #000;
     .jackpot-title {
       font-weight: 700;
       padding: 5px;
@@ -497,7 +498,7 @@ onMounted(() => {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        color: #ffffff;
+        color: #000;
         font-size: 16px;
         &__content {
           font-weight: 500;
@@ -552,7 +553,7 @@ onMounted(() => {
       text-align: left;
       width: 100%;
       margin-top: 5px;
-      color: #ffffff;
+      color: #000;
       display: flex;
       justify-content: space-between;
       gap:10px;
@@ -615,18 +616,18 @@ onMounted(() => {
             padding: 2px 20px;
             font-weight: 700;
             font-size: 16px;
-            color: #ffffff;
+            color: #fff;
             width: 130px;
             text-align: center;
             }
             &__sub {
-                color: #ffffff;
+                color: #000;
                 font-size: 16px;
             }
         }
     }
     .section-list {
-        color: #ffffff;
+        color: #000;
         display: flex;
         flex-direction: column; 
         gap: 10px;
@@ -670,14 +671,14 @@ onMounted(() => {
                     white-space: nowrap;
                     border-radius: 100px;
                     padding: 4px 8px;
-                    color: #FFFFFF;
+                    color: #000;
                     width: fit-content;
                     display: inline-block;
                     background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
                 }
                 .point {
                     width: 100%;
-                    color: #ffffff;
+                    color: #000;
                     border-radius: 50%;
                     height: 30px;
                     display: block;

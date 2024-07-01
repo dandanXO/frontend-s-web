@@ -100,13 +100,14 @@
   </div>
 </template>
 <script>
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import { userStore } from "@/store";
 import { getAppDownloadUrlFromServer, getRedEnvelopeFromServer, getFloatingItems } from "@/api/index/site";
 import GameModal from "@/components/modal/GameModal.vue";
 import { useLocalStorage } from "@vueuse/core";
 import { uiStore } from "@/store/ui";
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   components: {
