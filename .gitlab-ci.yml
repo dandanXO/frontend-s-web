@@ -567,6 +567,12 @@ deploy-lh-landing-v7:
   extends: .s3-deploy
   variables:
     PROJECT: lh-landing-v7
+#===============================================================================================
+
+deploy-lh-redirect:
+  extends: .s3-deploy
+  variables:
+    PROJECT: lh-redirect
 
 #===============================================================================================
 
@@ -642,7 +648,7 @@ build-image-pak-static-h5:
     PROJECT: pak-static-h5
   needs:
     - build-pak-static-h5
-    
+
 #===============================================================================================
 
 build-kaka-static-web:
