@@ -2294,6 +2294,7 @@ export default defineComponent({
     // };
 
     onMounted(() => {
+      console.log("Home Page");
       checkShowImgTop();
       getPlatList();
       loadData();
