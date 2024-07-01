@@ -387,6 +387,7 @@ function retrieveWinnerList() {
           align-items: center;
           justify-content: center;
           gap: 15px;
+          color: #fff;
         }
 
         .retrieve-btn {
