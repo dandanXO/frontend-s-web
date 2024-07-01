@@ -71,7 +71,7 @@
           icon="el-icon-search"
           size="mini"
           type="primary"
-          @click="loadVipRebateRecords()"
+          @click="loadBetGameTypeRebateRecords()"
         >{{ t('fields.search') }}</el-button>
         <el-button icon="el-icon-refresh" size="mini" type="warning" @click="resetQuery()">{{ t('fields.reset') }}</el-button>
         <div class="btn-group">
@@ -111,7 +111,7 @@
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <template #header>
         <div class="clearfix">
-          <span class="role-span">{{ t('fields.vipRebateRecord') }}</span>
+          <span class="role-span">{{ t('fields.betRebateRecord') }}</span>
         </div>
       </template>
       <el-table :data="page.records" ref="table"
@@ -245,7 +245,7 @@
         v-model:page-size="request.size"
         v-model:page-count="page.pages"
         v-model:current-page="request.current"
-        @size-change="loadVipRebateRecords()"
+        @size-change="loadBetGameTypeRebateRecords()"
       />
     </el-card>
   </div>
@@ -604,7 +604,7 @@ function checkQuery() {
   return query;
 }
 
-async function loadVipRebateRecords() {
+async function loadBetGameTypeRebateRecords() {
   page.loading = true;
   const query = checkQuery();
   const { data: ret } = await getBetGameTypeRebateRecord(query);
@@ -621,7 +621,7 @@ async function loadVipRebateRecords() {
 
 function changepage(page) {
   request.current = page;
-  loadVipRebateRecords();
+  loadBetGameTypeRebateRecords();
 }
 
 function showEdit(type, adjust) {
@@ -646,7 +646,7 @@ async function adjust() {
       await adjustAmount(form.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
-      await loadVipRebateRecords()
+      await loadBetGameTypeRebateRecords()
     }
   });
 }
@@ -657,7 +657,7 @@ async function adjustBet() {
       await adjustBetAmount(form.id, form)
       uiControl.dialogVisible = false
       ElMessage({ message: t('message.adjustSuccess'), type: 'success' })
-      await loadVipRebateRecords()
+      await loadBetGameTypeRebateRecords()
     }
   });
 }
@@ -811,7 +811,7 @@ async function confirmImport() {
       importedPage.buttonLoading = false;
       ElMessage({ message: t('message.cancelSuccess'), type: 'success' });
       clearImport();
-      loadVipRebateRecords();
+      loadBetGameTypeRebateRecords();
       importForm.cause = null;
     }
   });
@@ -829,7 +829,7 @@ async function cancelBySearch() {
     const query = checkQuery();
     await cancelByQuery(query);
     ElMessage({ message: t('message.cancelSuccess'), type: "success" });
-    loadVipRebateRecords()
+    loadBetGameTypeRebateRecords()
   });
 }
 
