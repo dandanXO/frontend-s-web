@@ -107,9 +107,6 @@
 
               <div class="promo-content-inner">
                 <div class="content-title">{{ selectedPromo.title }}</div>
-
-                <!-- <div>{{ parsedParam }}</div> -->
-
                 <div class="content-para" v-if="parsedParamSub">{{ parsedParamSub }}</div>
                 <div class="content-date" v-if="parsedParamDate">
                   <div><img src="../assets/images/promotion/calendar-icon.png" /></div>
@@ -528,31 +525,20 @@ export default defineComponent({
     ];
 
     // promo param split.
-    const parsedParamSub = computed(() => {
+    const parsedParam = computed(() => {
       try {
         if (selectedPromo.value && selectedPromo.value.param) {
-          const paramObj = JSON.parse(selectedPromo.value.param);
-          return paramObj.sub || '';
+          return JSON.parse(selectedPromo.value.param);
         }
-        return '';
+        return {};
       } catch (error) {
         console.error('Error parsing JSON:', error);
-        return '';
+        return {};
       }
     });
 
-    const parsedParamDate = computed(() => {
-      try {
-        if (selectedPromo.value && selectedPromo.value.param) {
-          const paramObj = JSON.parse(selectedPromo.value.param);
-          return paramObj.date || '';
-        }
-        return '';
-      } catch (error) {
-        console.error('Error parsing JSON:', error);
-        return '';
-      }
-    });
+    const parsedParamSub = computed(() => parsedParam.value.sub || '');
+    const parsedParamDate = computed(() => parsedParam.value.date || '');
 
     return {
       promoState,

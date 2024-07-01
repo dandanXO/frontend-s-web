@@ -4,52 +4,53 @@
       <div class="container-title">
         {{ $t("hotPromo.signIn7Days.continuousSignIn") }}
         <span>{{ todayDay }}{{ $t("hotPromo.signIn7Days.days") }}</span>
-
-        <div class="title-img">
-          <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-title-img.png" />
-        </div>
       </div>
 
-      <div class="container-checkin">
-        <div class="checkin-item" v-for="item in checkInDayHistory" :key="item">
-          <template v-if="item.rewardState === 'CLAIMED'">
-            <div class="checkin-coin">
-              <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-tick.png" />
-            </div>
-          </template>
-          <template v-else-if="item.rewardState === 'EXPIRED'">
-            <div class="checkin-coin expired-coin">
-              <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-coin.png" />
-            </div>
-            <div class="checkin-txt">{{ item.day }}{{ $t("hotPromo.signIn7Days.day") }}</div>
-            <span class="expired-txt">{{ $t("hotPromo.signIn7Days.expired") }}</span>
-          </template>
-          <template v-else>
-            <div class="checkin-coin">
-              <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-coin.png" />
-            </div>
-            <div class="checkin-txt">{{ item.day }}{{ $t("hotPromo.signIn7Days.day") }}</div>
-          </template>
-        </div>
-      </div>
-
-      <template v-if="todayCheckInState === 'YES'">
-        <div class="btn-checkin-wrap" @click="checkInClaim()">
-          <div class="btn-checkin">
-            <div><img src="./../../../assets/images/promotion/hotpromo/signin-7days/btn-checkin-icon.png" /></div>
-            {{ $t("hotPromo.signIn7Days.signIn") }}
+      <div class="wrap-checkin">
+        <div class="container-checkin">
+          <div class="checkin-item" v-for="item in checkInDayHistory" :key="item">
+            <template v-if="item.rewardState === 'CLAIMED'">
+              <div class="checkin-coin">
+                <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-tick.png" />
+              </div>
+            </template>
+            <template v-else-if="item.rewardState === 'EXPIRED'">
+              <div class="checkin-coin expired-coin">
+                <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-coin.png" />
+              </div>
+              <div class="checkin-txt">{{ item.day }}{{ $t("hotPromo.signIn7Days.day") }}</div>
+              <span class="expired-txt">{{ $t("hotPromo.signIn7Days.expired") }}</span>
+            </template>
+            <template v-else>
+              <div class="checkin-coin">
+                <img src="./../../../assets/images/promotion/hotpromo/signin-7days/checkin-coin.png" />
+              </div>
+              <div class="checkin-txt">{{ item.day }}{{ $t("hotPromo.signIn7Days.day") }}</div>
+            </template>
           </div>
         </div>
-      </template>
-      <template v-else>
-        <div class="btn-checkin-wrap checked">
-          <div class="btn-checkin">{{ $t("hotPromo.signIn7Days.signedIn") }}</div>
-        </div>
-      </template>
+
+        <template v-if="todayCheckInState === 'YES'">
+          <div class="btn-checkin-wrap" @click="checkInClaim()">
+            <div class="btn-checkin">
+              <template v-if="btn_loading"><a-spin /></template>
+              <template v-else>
+                <div><img src="./../../../assets/images/promotion/hotpromo/signin-7days/btn-checkin-icon.png" /></div>
+                {{ $t("hotPromo.signIn7Days.signIn") }}
+              </template>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="btn-checkin-wrap checked">
+            <div class="btn-checkin">{{ $t("hotPromo.signIn7Days.signedIn") }}</div>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 
-  <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+  <el-dialog v-model="showPrizePopup" backdrop-filter="none">
     <div class="prize-popup">
       <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
       <div class="prize-gold">
@@ -58,21 +59,15 @@
 
       <div class="prize-amount">Rs {{ bonusAmount }}</div>
 
-      <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">
-        {{ $t("btn.confirm") }}
-      </q-btn>
+      <button no-caps unelevated class="btn-primary confirm-modal-action confirm" @click="showPrizePopup = false">
+        {{ $t("common.confirmModal.confirmButton") }}
+      </button>
     </div>
-  </q-dialog>
+  </el-dialog>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { eventapi } from "src/boot/axios";
-import { useQuasar } from "quasar";
-import moment from "moment";
-import { defineProps } from "vue";
-
-const $q = useQuasar();
-
+import { getNewRegcheckInInit, claimNewRegCheckIn } from "../../../api/index/promo";
 const showPrizePopup = ref(false);
 
 const days7 = ref([]);
@@ -86,7 +81,7 @@ const getCheckInDayHistory = () => {
 };
 
 const initDays7 = () => {
-  eventapi.get("/newRegCheckIn/init").then((res) => {
+  getNewRegcheckInInit().then((res) => {
     if (res.code == 0) {
       days7.value = res.data;
       todayDay.value = res.data.todayDay;
@@ -96,14 +91,19 @@ const initDays7 = () => {
   });
 };
 
+const btn_loading = ref(false);
+
 const checkInClaim = () => {
-  eventapi.post("/newRegCheckIn/claimBonus").then((res) => {
+  btn_loading.value = true;
+  claimNewRegCheckIn().then((res) => {
     if (res.code == 0) {
       showPrizePopup.value = true;
       todayDay.value = res.data.todayDay;
       todayCheckInState.value = res.data.todayCheckInState;
       checkInDayHistory.value = res.data.checkInDayHistory;
       bonusAmount.value = res.data.bonusAmount;
+
+      btn_loading.value = false;
     }
   });
 };
@@ -159,9 +159,16 @@ onMounted(() => {
     }
   }
 
+  .wrap-checkin {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   .container-checkin {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    grid-template-columns: repeat(7, 1fr);
     row-gap: 16px;
     column-gap: 16px;
     margin-top: 16px;
@@ -203,10 +210,13 @@ onMounted(() => {
   }
 
   .btn-checkin-wrap {
+    width: 200px;
     margin-top: 20px;
     background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
     padding: 2px;
     border-radius: 8px;
+    height: 46px;
+    cursor: pointer;
 
     &.checked {
       background: rgba(255, 255, 255, 0.05);
@@ -234,6 +244,38 @@ onMounted(() => {
       display: block;
       width: 14px;
       margin: 0 !important;
+    }
+  }
+}
+
+.confirm-modal-action {
+  padding: 11px 12px;
+  border-radius: 4px;
+  background: transparent;
+  flex: 1;
+  font-size: 16px;
+  line-height: 20.92px;
+  text-align: center;
+
+  &.confirm {
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    color: #000a01;
+  }
+
+  &.cancel {
+    color: #ffffff;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      inset: 0;
+      padding: 1px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
   }
 }

@@ -32,6 +32,13 @@
       <DailyLoginCashBonusPromo :pageContent="list.pageContent" />
     </div>
 
+    <div v-if="!isCommonPromo && store.token && list.redirectUrl === 'pak-spin-wheel'">
+      <BonusSpinWheelPromo :pageContent="list.pageContent" />
+    </div>
+    <div v-if="!isCommonPromo && store.token && list.redirectUrl === 'pak-signin-bonus'">
+      <SignIn7DaysPromo :pageContent="list.pageContent" />
+    </div>
+
     <ClaimPromo
       v-if="isCommonPromo && store.token"
       :promo-id="list.id"
@@ -63,6 +70,8 @@ import ClaimPromo from "../components/hotpromo/claimPromo.vue";
 import P4WApp from "../components/hotpromo/p4wApp.vue";
 import P4WRedPacket from "../components/hotpromo/p4wRedPacket.vue";
 import DailyLoginCashBonusPromo from "../components/hotpromo/DAILY-LOGIN-CASH-BONUS/DailyLoginCashBonusPromo.vue";
+import BonusSpinWheelPromo from "../components/hotpromo/bonusSpinWheel/BonusSpinWheelPromo.vue";
+import SignIn7DaysPromo from "../components/hotpromo/signIn7Days/SignIn7DaysPromo.vue";
 import Roulette from "@/components/roulette.vue";
 import JiliTop50 from "./hotpromo/JiliTop50/JiliTop50.vue";
 import { ElMessage } from "element-plus";
@@ -83,6 +92,8 @@ export default defineComponent({
     // DailyBonus
     Roulette,
     DailyLoginCashBonusPromo,
+    BonusSpinWheelPromo,
+    SignIn7DaysPromo,
     JiliTop50
   },
   props: {
@@ -179,7 +190,9 @@ export default defineComponent({
       this.list.promoCode === "P4W-TOP-BET" ||
       this.list.promoCode === "P4W-CNY-VIP-RED-PACKET" ||
       this.list.promoCode === "P4W-DOWNLOAD-BONUS" ||
-      this.list.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS"
+      this.list.promoCode === "P4W-VIP-DAILY-CHECKIN-BONUS" ||
+      this.list.redirectUrl === "pak-spin-wheel" ||
+      this.list.redirectUrl === "pak-signin-bonus"
     ) {
       this.isCommonPromo = false;
     } else {

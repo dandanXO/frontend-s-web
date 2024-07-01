@@ -11,8 +11,8 @@
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/click-spin-top.png" />
       </div>
       <!-- <div class="wheel-stage">
-        <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-stg.png" />
-      </div> -->
+          <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/spin-wheel-stg.png" />
+        </div> -->
       <div class="spin-wheel-board">
         <div class="spin-wheel-frame">
           <div id="spin-wheel-id" class="spin-wheel">
@@ -35,9 +35,9 @@
     </div>
   </div>
 
-  <q-dialog v-model="showPrizePopup" backdrop-filter="none">
+  <el-dialog v-model="showPrizePopup" backdrop-filter="none" width="75%" align-center>
     <div class="prize-popup">
-      <q-btn icon="close" flat round dense v-close-popup class="q-ml-auto" />
+      <el-btn icon="close" flat round dense @click="showPrizePopup = false" class="q-ml-auto" />
       <div class="prize-gold">
         <img src="./../../../assets/images/promotion/hotpromo/bonus-spinwheel/prize-gold.png" width="80" />
         <div>{{ $t("hotPromo.aviatorWheel.congratulations") }}</div>
@@ -45,19 +45,19 @@
 
       <div class="prize-amount">Rs {{ prizePopupBonusAmt }}</div>
 
-      <q-btn no-caps unelevated class="btn-primary" @click="showPrizePopup = false">{{ $t("btn.confirm") }}</q-btn>
+      <button no-caps unelevated class="confirm-modal-action confirm" @click="showPrizePopup = false">
+        {{ $t("common.confirmModal.confirmButton") }}
+      </button>
     </div>
-  </q-dialog>
+  </el-dialog>
 </template>
+
 <script setup>
 import { ref, onMounted } from "vue";
-import { eventapi } from "src/boot/axios";
-import { useQuasar } from "quasar";
-import moment from "moment";
+import { getAviatorWheelRecords, postAviatorWheelSpin, getAviatorWheelInit } from "../../../api/index/promo";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const $q = useQuasar();
 
 // spin wheel constants
 const TOTAL_ITEMS = 10;
@@ -105,8 +105,7 @@ const spin = (prizeIndex, stopCallback) => {
 };
 
 const getRecords = () => {
-  eventapi
-    .get("/aviatorWheel/records")
+  getAviatorWheelRecords()
     .then((res) => {
       if (res.code == 0) {
         winnersList.value = res.data;
@@ -176,17 +175,16 @@ const spinWheel = () => {
   }
 
   if (remainingDraws.value <= 0) {
-    $q.notify({
-      color: "negative",
-      position: "top",
-      message: `t("hotPromo.avaitorWheel.remainingDrawTimes"): 0`,
-      icon: "report_problem"
-    });
+    // $q.notify({
+    //   color: "negative",
+    //   position: "top",
+    //   message: `t("hotPromo.avaitorWheel.remainingDrawTimes"): 0`,
+    //   icon: "report_problem"
+    // });
     return;
   }
 
-  eventapi
-    .post("/aviatorWheel/spin")
+  postAviatorWheelSpin()
     .then((res) => {
       if (res.code == 0) {
         var bonusIndex = res.data.bonusAmount;
@@ -208,7 +206,7 @@ const spinWheel = () => {
 };
 
 const initSpinWheel = () => {
-  eventapi.get("/aviatorWheel/init").then((res) => {
+  getAviatorWheelInit().then((res) => {
     if (res.code == 0) {
       remainingDraws.value = res.data.availableSpin;
     }
@@ -313,6 +311,10 @@ onMounted(() => {
   right: 0;
   margin: auto;
   z-index: 25;
+  img {
+    display: block;
+    width: 100%;
+  }
 }
 .draw-btn {
   width: 80px;
@@ -413,6 +415,8 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   overflow: hidden !important;
+  height: 100%;
+  width: 100%;
 }
 
 .prize-gold {
@@ -628,6 +632,50 @@ onMounted(() => {
         font-weight: 700;
         color: #3f8cff;
       }
+    }
+  }
+}
+
+.el-dialog {
+  background: transparent;
+  border-radius: 12px;
+
+  .el-dialog__title {
+    color: #ffffff;
+  }
+  .el-form-item__label {
+    color: #ffffff;
+  }
+}
+
+.confirm-modal-action {
+  padding: 11px 12px;
+  border-radius: 4px;
+  background: transparent;
+  flex: 1;
+  font-size: 16px;
+  line-height: 20.92px;
+  text-align: center;
+
+  &.confirm {
+    background: linear-gradient(180deg, #1baa99 0%, #8ac542 100%);
+    color: #000a01;
+  }
+
+  &.cancel {
+    color: #ffffff;
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: "";
+      inset: 0;
+      padding: 1px;
+      border-radius: 4px;
+      background: linear-gradient(180deg, #13a89e 0%, #8cc63f 100%);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
   }
 }

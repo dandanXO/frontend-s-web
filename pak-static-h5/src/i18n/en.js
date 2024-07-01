@@ -367,20 +367,6 @@ export default {
       }
     }
   },
-  hotPromo: {
-    aviatorWheel: {
-      remainingDrawTimes: "Remaining draw times",
-      congratulations: "Congratulations"
-    },
-    signIn7Days: {
-      continuousSignIn: "Continuous sign-in:",
-      expired: "Expired",
-      day: "day",
-      days: "days",
-      signIn: "Sign in",
-      signedIn: "Signed in"
-    }
-  },
   records: {
     gamePlatform: "Game Platform",
     bet: "Bet",
@@ -428,6 +414,20 @@ export default {
     live: "LIVE",
     slot: "SLOT",
     vip: "VIP"
+  },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "Remaining draw times",
+      congratulations: "Congratulations"
+    },
+    signIn7Days: {
+      continuousSignIn: "Continuous sign-in:",
+      expired: "Expired",
+      day: "day",
+      days: "days",
+      signIn: "Sign in",
+      signedIn: "Signed in"
+    }
   },
   error: {
     101: "Platform not found",

@@ -367,20 +367,6 @@ export default {
       }
     }
   },
-  hotPromo: {
-    aviatorWheel: {
-      remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
-      congratulations: "مبارک ہو"
-    },
-    signIn7Days: {
-      continuousSignIn: "مسلسل سائن ان:",
-      expired: "میعاد ختم ہو چکی ہے",
-      day: "دن",
-      days: "دن",
-      signIn: "سائن ان",
-      signedIn: "سائن ان کیا ہوا"
-    }
-  },
   records: {
     gamePlatform: "گیم پلیٹ فارم",
     bet: "شرط",
@@ -428,6 +414,20 @@ export default {
     live: "لائیو",
     slot: "الیکٹرانک",
     vip: "وی آئی پی"
+  },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "باقی قرعہ اندازی کے اوقات",
+      congratulations: "مبارک ہو"
+    },
+    signIn7Days: {
+      continuousSignIn: "مسلسل سائن ان:",
+      expired: "میعاد ختم ہو چکی ہے",
+      day: "دن",
+      days: "دن",
+      signIn: "سائن ان",
+      signedIn: "سائن ان کیا ہوا"
+    }
   },
   error: {
     101: "پلیٹ فارم نہیں مل سکی",
