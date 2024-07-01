@@ -1887,9 +1887,16 @@ const loadShareRatio = async () => {
   if (shareRatio.length > 0) {
     shareRatioList.list = shareRatio
     memberShareRatioList.list = memberShareRatio
-    if (memberShareRatio.length === 0) {
+    if (memberShareRatio.length === 0 || shareRatio.length !== 5) {
       const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
       memberShareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
+      const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+      missingRatio.forEach(ratio => {
+        shareRatioList.list.push({
+          code: ratio.code,
+          value: 0
+        })
+      })
     }
   } else {
     const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
