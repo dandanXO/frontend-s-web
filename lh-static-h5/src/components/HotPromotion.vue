@@ -112,6 +112,7 @@
     <DepositRebates v-if="list.redirectUrl === 'lh1-deposit-rebates' && !isCommonPromo && store.token" />
     <WinLossPromo v-if="list.redirectUrl === 'lh1-eurocup-guess' && !isCommonPromo && store.token" />
     <AijiasuPromo v-if="list.redirectUrl === 'lh1-aijiasu' && !isCommonPromo && store.token" />
+    <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && !isCommonPromo && store.token" />
   </div>
 
   <q-dialog v-model="isClaimModal" persistent>
@@ -179,6 +180,7 @@ const DuanWuJiePromo = defineAsyncComponent(() => import("../components/hotpromo
 const DepositRebates = defineAsyncComponent(() => import("../components/hotpromo/depositRebates/depositRebates.vue"));
 const WinLossPromo = defineAsyncComponent(() => import("../components/hotpromo/winloss/WinLoss.vue"));
 const AijiasuPromo = defineAsyncComponent(() => import("../components/hotpromo/aijiasu/AijiasuPromo.vue"));
+const EuroRegen = defineAsyncComponent(() => import("../components/hotpromo/EuroRegen/EuroRegen.vue"));
 
 export default defineComponent({
   name: "HotPromo",
@@ -224,7 +226,8 @@ export default defineComponent({
     DuanWuJiePromo,
     DepositRebates,
     WinLossPromo,
-    AijiasuPromo
+    AijiasuPromo,
+    EuroRegen
   },
   props: {
     list: {
@@ -337,7 +340,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-eurocup-guess" ||
       this.list.redirectUrl === "lh1meizhoubei" ||
       this.list.redirectUrl === "lh1-aijiasu" ||
-      this.list.redirectUrl === "lh1ouzhoubeibaopei"
+      this.list.redirectUrl === "lh1ouzhoubeibaopei" ||
+      this.list.redirectUrl === "lh1-eurocup-regen"
     ) {
       this.isCommonPromo = false;
     } else {
