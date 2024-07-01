@@ -1012,13 +1012,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
-        if (state.loginForm.site === 'KA1') {
+        if (state.loginForm.site === 'KA2') {
           getCaptcha()
         }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA1' || state.loginForm.site === 'KRW') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' || state.loginForm.site === 'KRW') {
           router
             .push({
               path: state.redirect || '/',
@@ -1319,7 +1319,7 @@ export default defineComponent({
         currentSite.value.secondLiner =
           'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
         currentSite.value.logo = kakaLogo
-        state.loginForm.site = 'KA1'
+        state.loginForm.site = 'KA2'
         setLanguage('vi')
       }
       if (props.siteId === '10') {
