@@ -959,8 +959,6 @@ export default defineComponent({
 .game-list-wrapper {
   display: flex;
   width: 100%;
-  // min-height: 500px;
-  padding: 20px;
 }
 
 .game-list {
@@ -970,9 +968,9 @@ export default defineComponent({
   gap: 10px;
   // padding: 20px;
   width: 100%;
+  padding: 10px;
 
   @media (max-width: 769px) {
-    padding: 0px 10px;
     gap: 5px;
   }
 
