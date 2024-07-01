@@ -50,7 +50,6 @@
 import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
 import {RiArrowRightSLine} from "vue-remix-icons"
-import * as _ from "lodash"
 
 export default defineComponent({
   name: "AnnouncementView",
@@ -90,11 +89,11 @@ export default defineComponent({
       }
       var hasAnnounce = true;
 
-      _.each(announcementsList.value, function (item, index) {
+      announcementsList.value.forEach(item => {
         if (item.typeId == id) {
           hasAnnounce = false;
         }
-      });
+      })
 
       return hasAnnounce;
     }

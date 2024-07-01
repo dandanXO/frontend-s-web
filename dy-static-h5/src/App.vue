@@ -29,23 +29,26 @@ export default defineComponent({
         const visitorId = localStorage.getItem("VISITOR_ID") ?? (await getVisitorId());
         store.visitorId = visitorId;
 
-        console.log("SID");
-        console.log(visitorId);
+        if (store.isNotAppPromo()) {
+          console.log("SID");
+          console.log(visitorId);
 
-        const obj = {
-          identifier: store.visitorId,
-          affiliateCode: affiliateItem
-        };
-        api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
-          if (res.code === 0) {
-          }
-        });
+          const obj = {
+            identifier: store.visitorId,
+            affiliateCode: affiliateItem
+          };
+          api.post("/memberAccessLog", qs.stringify(obj)).then((res) => {
+            if (res.code === 0) {
+            }
+          });
+        }
       })();
     };
     let csclient;
     let CSAUrl;
 
     const getCSA = () => {
+      if (!store.isNotAppPromo()) return;
       cached
         .get("customerAddress", () =>
           api.get("/config/customerAddress/v2").then((res) => {
@@ -117,7 +120,7 @@ export default defineComponent({
       const sidParam = store.visitorId;
       const way = "h5";
 
-      if (sidParam) {
+      if (sidParam && store.isNotAppPromo()) {
         const res = await axios.get("https://memsta.eatrhaquke.com/memberStatistics/submit", {
           params: {
             way: way,
