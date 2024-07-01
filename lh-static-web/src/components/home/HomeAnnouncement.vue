@@ -240,14 +240,14 @@ onMounted(() => {
 
 .dark {
   .top-bar-wrapper {
-    background: rgba($font-1-dark, 0.1);
-    box-shadow: 0px -20px 30px 0px #4e8fe669 inset, 0px 4px 10px 0px #0000001a;
+    background: linear-gradient(180deg, #2A2E3B 0%, #1F3342 100%);
+    box-shadow: none;
     .top-bar-inner {
       .station-notice-container {
         .station-notice-box {
           .station-notice {
             .station-notice-item {
-              color: $color-white;
+              color: $font-3-dark;
             }
           }
         }

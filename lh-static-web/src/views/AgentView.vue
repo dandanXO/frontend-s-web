@@ -536,20 +536,47 @@ export default defineComponent({
 .dark {
   .wrapper {
     .affiliate {
-      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top;
+      background: url("../assets/images/affiliate/agent_index_top_bg_vg_dark.png") no-repeat center top, $background-dark;
       background-position: top center;
       background-size: 100%;
-      background-color: $background-dark;
+
+      .buttons {
+        a {
+          background: $active-color-dark-linear;
+          box-shadow: $active-color-dark-shadow;
+          color: $color-white;
+
+          &.outline {
+            box-shadow: none;
+            background: #394A65;
+          }
+        }
+      }
 
       .affiliate-program {
         .affiliate-subgroup {
           .affiliate-sub {
             @include content-block-dark;
+            background: #28313E;
             color: $font-3-dark;
+
+            .affiliate-subtitle,
+            .highlight {
+              background: $active-color-dark-linear;
+              background-clip: text;
+              color: transparent;
+            }
 
             .affiliate-terms {
               color: inherit;
             }
+          }
+        }
+
+        .agent-reg-btn {
+          background: $active-color-dark-linear;
+          &:hover {
+            filter: brightness(1.2);
           }
         }
 

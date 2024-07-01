@@ -65,11 +65,11 @@
           <!--        </router-link>-->
           <router-link to="/center/share" class="account-menu-item">
             <RiShareBoxFill class="green" />
-            分享好友
+            推广赚钱
           </router-link>
           <router-link to="/center/feedback" class="account-menu-item">
             <RiMailFill class="pink" />
-            会员建议
+            反馈奖励
           </router-link>
         </div>
       </div>

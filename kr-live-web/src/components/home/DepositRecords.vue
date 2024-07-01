@@ -34,11 +34,11 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import moment from 'moment';
 import { useI18n } from 'vue-i18n';
 import { userStore } from "stores/index";
 import { useRoute } from 'vue-router';
 import { getLocaleDateTime } from '../../boot/utils'
+import { storeToRefs } from 'pinia';
 
 const { t } = useI18n();
 const isLoading = ref(false);
@@ -46,17 +46,23 @@ const financeRecords = ref([]);
 const store = userStore();
 const route = useRoute();
 const isVisible = ref(false);
+const { financeRecords: storeFinanceRecords } = storeToRefs(store);
 
 const loadFinanceRecords = () => {
     isLoading.value = true;
 
-    store.getFinanceRecords().then((records) => {
-        financeRecords.value = records;
+    if (storeFinanceRecords.value) {
+        financeRecords.value = storeFinanceRecords.value;
         isLoading.value = false;
-    }).catch((err) => {
-        console.log(err)
-        isLoading.value = false;
-    });
+    } else {
+        store.getFinanceRecords().then((records) => {
+            financeRecords.value = records;
+            isLoading.value = false;
+        }).catch((err) => {
+            console.log(err)
+            isLoading.value = false;
+        });
+    }
 };
 
 watch(() => route.query.page || isVisible.value, () => {
@@ -64,6 +70,10 @@ watch(() => route.query.page || isVisible.value, () => {
     } else {
         loadFinanceRecords();
     }
+})
+
+watch(() => storeFinanceRecords.value, () => {
+    loadFinanceRecords();
 })
 
 const formatTransactionType = (transactionType) => {

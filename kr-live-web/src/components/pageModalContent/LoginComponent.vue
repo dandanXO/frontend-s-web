@@ -25,7 +25,7 @@
           </q-input>
         </div>
 
-        <div class="form-item">
+        <!-- <div class="form-item">
           <label>{{ $t('lang.login_captcha') }}</label>
           <div class="captcha-code">
             <q-input :disable="isLoading" :loading="isLoading" dense ref="captchaRef" outlined clearable
@@ -36,7 +36,7 @@
               <img v-else class="captcha-img" height="56px" :src="verificationImg" @click.prevent="getCode" />
             </div>
           </div>
-        </div>
+        </div> -->
       </q-form>
 
       <q-inner-loading :showing="isLoading" style="background:#1414144d;">
@@ -61,11 +61,12 @@ import { api } from "boot/axios";
 import { userStore } from "stores/index";
 import { errorNotify, successNotify } from "src/boot/utils";
 import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const store = userStore();
 const router = useRouter();
 const { t: $t } = useI18n();
+const route = useRoute();
 
 const loginNameRef = ref();
 const pwdRef = ref();
@@ -76,8 +77,8 @@ const captchaLoading = ref(false);
 const loginForm = reactive({
   loginName: "",
   password: "",
-  captchaCode: "",
-  codeId: ""
+  // captchaCode: "",
+  // codeId: ""
 });
 const verificationImg = ref("");
 const isPwd = ref(true);
@@ -120,9 +121,12 @@ const onSubmit = () => {
   (async () => {
     loginNameRef.value.validate();
     pwdRef.value.validate();
-    captchaRef.value.validate();
+    // captchaRef.value.validate();
 
-    if (loginNameRef.value.hasError || pwdRef.value.hasError || captchaRef.value.hasError) {
+    if (loginNameRef.value.hasError
+      || pwdRef.value.hasError
+      // || captchaRef.value.hasError
+    ) {
     } else {
       isLoading.value = true;
 
@@ -131,11 +135,21 @@ const onSubmit = () => {
           loginName: loginForm.loginName.trim(),
           password: loginForm.password,
           sid: store.visitorId,
-          captchaCode: loginForm.captchaCode,
-          codeId: loginForm.codeId
+          // captchaCode: loginForm.captchaCode,
+          // codeId: loginForm.codeId
         })
         .then(() => {
           successNotify($t('lang.login_success_msg'));
+
+          if (route.query.redirect) {
+            router.push({
+              path: '/',
+              query: {
+                page: route.query.redirect
+              }
+            })
+            return;
+          }
           router.push("/");
         })
         .catch((error) => {

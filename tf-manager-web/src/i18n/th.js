@@ -162,6 +162,7 @@ export default {
     UNSETTLED: 'ยังไม่ได้ชำระ',
     SETTLED: 'ชำระแล้ว',
     CANCEL: 'ยกเลิก',
+    GIVEREWARD: 'รางวัล',
   },
   dashboard: {
     memberCount: 'จำนวนสมาชิก',
@@ -405,6 +406,7 @@ export default {
     cancelDeposit: 'ยกเลิกการฝากเงิน',
     cancelRemark: 'เหตุผลที่ยกเลิก',
     cancelRolloverRecord: 'บันทึกการยกเลิกโรโอเวอร์',
+    cancelAllRolloverRecord: 'ยกเลิกบันทึกแบบโรลโอเวอร์ทั้งหมด',
     cancelUpdate: 'ยกเลิกการอัพเดต',
     cancelType: 'ยกเลิกประเภท',
     cardAccount: 'บัญชีบัตร',

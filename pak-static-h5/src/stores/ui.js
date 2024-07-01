@@ -12,7 +12,8 @@ export const useUI = defineStore("ui-store", {
       bottomInsetHeight: 0,
       CSAUrl: "",
       LiveUrl: null,
-      downloadAppUrl: ""
+      downloadAppUrl: "",
+      loggedIn: false
     };
   },
   actions: {
@@ -31,6 +32,9 @@ export const useUI = defineStore("ui-store", {
     },
     changePromoName(name) {
       this.pageName = name;
+    },
+    showLoggedIn() {
+      this.loggedIn = true;
     }
   }
 });

@@ -766,7 +766,6 @@ onMounted(() => {
 
 .tips-p {
   color: #17c7ff;
-  font-family: PingFang SC;
   font-size: 12px;
   font-weight: 600;
   line-height: 20px;

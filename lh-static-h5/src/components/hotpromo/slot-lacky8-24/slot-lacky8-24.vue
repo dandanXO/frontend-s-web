@@ -10,8 +10,8 @@
           <tr>
             <th>电游平台<br>游戏时间</th>
             <th>获奖注单号</th>
-            <th>投注金额</th>
-            <th>活动彩金</th>
+            <th><span style="white-space: nowrap;">投注</span><span style="white-space: nowrap;">金额</span></th>
+            <th><span style="white-space: nowrap;">活动</span><span style="white-space: nowrap;">彩金</span></th>
             <th>操作</th>
           </tr>
           <tr v-for="(item, index) in tableData" :key="index">
@@ -19,7 +19,7 @@
               {{ item.platform }} <br>
               <span class="inner-time">{{ item.betTime }}</span>
             </td>
-            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
+            <td style="font-size: 95%;">{{ item.betId }}</td>
             <td>{{ item.bet }}</td>
             <td>{{ item.prizeAmount }}</td>
             <td>
@@ -61,23 +61,23 @@
             <th>流水要求</th>
           </tr>
           <tr>
-            <td>≥********888</td>
+            <td>********888</td>
             <td>3</td>
             <td>388 元</td>
             <td rowspan="4">8 倍</td>
           </tr>
           <tr>
-            <td>≥*******8888</td>
+            <td>*******8888</td>
             <td>5</td>
             <td>888 元</td>
           </tr>
           <tr>
-            <td>≥******88888</td>
+            <td>******88888</td>
             <td>8</td>
             <td>1,888 元</td>
           </tr>
           <tr>
-            <td>≥*****888888</td>
+            <td>*****888888</td>
             <td>10</td>
             <td>2,888 元</td>
           </tr>
@@ -298,7 +298,6 @@ onMounted(getSlotLucky8Data);
 
 <style scoped lang="scss">
 .slot-lacky8-box {
-  font-family: PingFang TC;
   width: 100%;
   height: 100%;
   display: flex;
@@ -322,7 +321,7 @@ onMounted(getSlotLucky8Data);
     width: 120px;
     height: 24px;
     background: linear-gradient(180deg, #70cbfb 0%, #4aa5ff 49%, #4aa5ff 91.5%, #6ec7fd 100%);
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 18px;
     display: flex;
@@ -375,7 +374,7 @@ onMounted(getSlotLucky8Data);
     flex: 1;
 
     .slot-lacky8-game-content-center-time {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 1.1rem;
       color: #479af7;
@@ -385,7 +384,7 @@ onMounted(getSlotLucky8Data);
       margin-bottom: 15px;
     }
     .slot-lacky8-game-content-center-schedule {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 1rem;
       color: #1b1b1b99;
@@ -395,7 +394,7 @@ onMounted(getSlotLucky8Data);
 }
 
 .slot-lacky8-game-content-btn {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 500;
   line-height: 16.8px;
   color: #00000066;
@@ -419,14 +418,14 @@ onMounted(getSlotLucky8Data);
   justify-content: space-between;
   align-items: center;
   .slot-lacky8-game-bottom-left-title {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     line-height: 16.8px;
     color: #000000;
     width: calc(100% - 61px);
   }
   .slot-lacky8-game-bottom-left-btn {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
     line-height: 18px;
     color: #479af7;
@@ -437,8 +436,7 @@ onMounted(getSlotLucky8Data);
 }
 .little2-title{
     width: 100%;
-    font-family: PingFang TC;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: -0.02em;
@@ -448,8 +446,7 @@ onMounted(getSlotLucky8Data);
   }
   .little2-content{
     width: 100%;
-    font-family: PingFang TC;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 18px;
     letter-spacing: -0.02em;
@@ -470,7 +467,7 @@ onMounted(getSlotLucky8Data);
   align-items: center;
 
   .title {
-    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title.png");
+    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title2.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
@@ -482,23 +479,23 @@ onMounted(getSlotLucky8Data);
     width: 100%;
     align-items: center;
     margin: 12px 0;
+    gap: 16px;
     .left {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 160px;
-      height: 20px;
+      width: 290px;
+      height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
-      margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 400;
       line-height: 18px;
       color: #000000;
@@ -536,19 +533,19 @@ onMounted(getSlotLucky8Data);
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 80px;
-      height: 20px;
+      width: 90px;
+      height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
       margin-right: 16px;
     }
     .right {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 400;
       line-height: 18px;
       color: #000000;
@@ -568,11 +565,12 @@ onMounted(getSlotLucky8Data);
     font-size: 8px;
     line-height: 10px;
     width: 69px;
-    display:block;
+    display: block;
+    margin: auto;
   }
   th {
     height: 32px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     color: #fff;
@@ -603,7 +601,7 @@ onMounted(getSlotLucky8Data);
   td {
     border: 1px solid #acd4f6;
     height: 32px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 18px;
     color: #000000;
@@ -611,7 +609,7 @@ onMounted(getSlotLucky8Data);
 }
 
 .slot-lack8-game-info-table-2{
-  font-size: 10px;
+  font-size: 14px;
   width: 100%;
   height: 100%;
   border-collapse: separate !important;
@@ -625,7 +623,7 @@ onMounted(getSlotLucky8Data);
   }
   th {
     height: 32px;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     color: #fff;
@@ -656,7 +654,7 @@ onMounted(getSlotLucky8Data);
   td {
     border: 1px solid #acd4f6;
     height: 32px;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 18px;
     color: #000000;
@@ -664,32 +662,34 @@ onMounted(getSlotLucky8Data);
 }
 
 .option-btn-active{
-  font-size: 10px;
-  width: 56px;
+  font-size: 12px;
+  width: 60px;
   height: 24px;
   border-radius: 100px;
   border: none;
   color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
   background: linear-gradient(180deg, #70CBFB 0%, #4AA5FF 49%, #4AA5FF 91.5%, #6EC7FD 100%);
-
-
 }
+
 .option-btn-redeemed{
-  font-size: 10px;
+  font-size: 12px;
   width: 56px;
   height: 24px;
   border-radius: 100px;
   border: none;
   color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
   background: linear-gradient(180deg,#48D179 0%, #00A63A 100%);
   pointer-events: none;
 }
 .option-btn-disable{
-  font-size: 10px;
+  font-size: 12px;
   width: 56px;
   height: 24px;
   border-radius: 100px;
   border: none;
+  white-space: nowrap;
   background: rgba(217, 217, 217, 1);
   color: rgba(255, 255, 255, 1);
   pointer-events: none;
@@ -715,7 +715,7 @@ onMounted(getSlotLucky8Data);
     margin-bottom: 16px;
   }
   .content {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 18px;
     color: #000000;
@@ -723,6 +723,7 @@ onMounted(getSlotLucky8Data);
       text-indent: -11px;
       padding-left: 24px;
       padding-right: 8px;
+      margin-bottom: 15px;
     }
   }
 }
@@ -758,7 +759,7 @@ onMounted(getSlotLucky8Data);
     border-collapse: collapse !important;
     th {
       height: 32px;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 18px;
       color: #fff;
@@ -775,7 +776,7 @@ onMounted(getSlotLucky8Data);
     }
     tr {
       height: 32px;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       line-height: 18px;
       color: #7a8eb9;

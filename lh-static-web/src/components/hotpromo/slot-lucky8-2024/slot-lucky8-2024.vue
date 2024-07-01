@@ -22,7 +22,7 @@
               <!-- <span class="inner-time">{{ item.time }}</span> -->
             </td>
             <td>{{ item.betTime }}</td>
-            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
+            <td>{{ item.betId }}</td>
             <td>{{ item.bet }}</td>
             <td>{{ item.prizeAmount }}</td>
             <td>
@@ -64,23 +64,23 @@
             <th>流水要求</th>
           </tr>
           <tr>
-            <td>≥********888</td>
+            <td>********888</td>
             <td>3</td>
             <td>388 元</td>
             <td rowspan="4">8 倍</td>
           </tr>
           <tr>
-            <td>≥*******8888</td>
+            <td>*******8888</td>
             <td>5</td>
             <td>888 元</td>
           </tr>
           <tr>
-            <td>≥******88888</td>
+            <td>******88888</td>
             <td>8</td>
             <td>1,888 元</td>
           </tr>
           <tr>
-            <td>≥*****888888</td>
+            <td>*****888888</td>
             <td>10</td>
             <td>2,888 元</td>
           </tr>

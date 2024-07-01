@@ -101,6 +101,17 @@ import PhoneOrEmailFindPwd from "@/components/auth/PhoneOrEmailFindPwd.vue";
       box-shadow: none;
       border: 1px solid $background-content-block-lighter-dark;
     }
+
+    .el-tabs--top {
+      .el-tabs__item.is-top {
+        color: $active-color-dark;
+        &.is-active {
+          color: $color-white;
+          background: $active-color-dark-linear;
+          box-shadow: $active-color-dark-shadow;
+        }
+      }
+    }
   }
 
   .card-bg {

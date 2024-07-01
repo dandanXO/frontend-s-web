@@ -3,10 +3,10 @@
     <div class="account-content transit">
       <q-tabs v-model="recordActive" class="form-wrapped" dense>
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />
-        <q-tab name="turnover" :label="$t('lang.turnover')" />
+        <!-- <q-tab name="turnover" :label="$t('lang.turnover')" /> -->
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
         <!-- <q-tab name="transfer" :label="$t('lang.transfer')" /> -->
-        <q-tab name="rebates" :label="$t('lang.rebates')" />
+        <!-- <q-tab name="rebates" :label="$t('lang.rebates')" /> -->
         <q-tab name="gameBetRecord" :label="$t('lang.gameBetRecord')" />
         <q-tab name="reminderRecord" :label="$t('lang.reminderRecord')" />
       </q-tabs>
@@ -75,7 +75,7 @@
             <template #body-cell-operation="props">
               <q-td>
                 <div class="primary-button blue-square" v-if="props?.props?.row.status === 'PENDING'"
-                  @click="($event) => openReminder(props)" style="width: 75px;height: 30px; font-size: 12px">
+                  @click="($event) => openReminder(props?.props)" style="width: 75px;height: 30px; font-size: 12px">
                   {{ $t('lang.reminder') }}
                 </div>
               </q-td>
@@ -182,8 +182,11 @@
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
-                      <q-btn v-if="props?.props?.row.status === 'STEP_1'" size="sm" :label="$t('lang.reminder')"
-                        color="brand" @click="($event) => openReminder(props?.props)" />
+                      <div class="primary-button blue" v-if="props?.props?.row.status === 'STEP_1'" color="brand"
+                        @click="($event) => openReminder(props?.props)"
+                        style="width: 75px;height: 30px; font-size: 12px">
+                        {{ $t('lang.reminder') }}
+                      </div>
 
                       <q-btn v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
                         size="sm" :label="$t('lang.confirm_withdraw_success')" color="brand"
@@ -204,8 +207,10 @@
 
             <template v-slot:body-cell-operation="props">
               <q-td>
-                <q-btn v-if="props?.props?.row.status === 'STEP_1'" size="sm" :label="$t('lang.reminder')" color="brand"
-                  @click="($event) => openReminder(props?.prop)" />
+                <div class="primary-button blue-square" v-if="props?.props?.row.status === 'STEP_1'" color="brand"
+                  @click="($event) => openReminder(props?.props)" style="width: 75px;height: 30px; font-size: 12px">
+                  {{ $t('lang.reminder') }}
+                </div>
 
                 <q-btn v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0" size="sm"
                   :label="$t('lang.confirm_withdraw_success')" color="brand"
@@ -246,9 +251,8 @@
                   }" @updateEndDate="(endDate) => {
                     searchForm.gameBetRecord.endDate = endDate
                   }" />
-                <q-select style="width: 100%; max-width: 175px" v-model="searchForm.gameBetRecord.platform" dense
-                  outlined clearable :options="platformsList" label="게임 플랫폼" color="white" label-color="grey"
-                  option-label="name" option-value="code" emit-value map-options />
+                <q-select style="width: 100%; max-width: 175px" v-model="searchForm.gameBetRecord.gameType" dense
+                  outlined clearable :options="platformsList" label="게임 플랫폼" color="white" label-color="grey" />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
@@ -987,7 +991,7 @@ export default defineComponent({
     });
     const platformsList = ref([])
     const getPlatList = () => {
-      api.get("/platform").then((res) => {
+      api.get("/gameTypes").then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           platformsList.value = ret.data

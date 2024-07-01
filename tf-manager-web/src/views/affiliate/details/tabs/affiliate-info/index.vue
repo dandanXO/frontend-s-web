@@ -586,7 +586,7 @@
           </span>
           <span v-if="affiliateDetails.affiliateLevel === null">-</span>
           <el-button
-            v-if="parseInt(memberDetail.siteId) === 10"
+            v-if="parseInt(memberDetail.siteId) === 10 && memberDetail.affiliateStatus === 'NORMAL'"
             type="info"
             size="mini"
             style="float: right;"

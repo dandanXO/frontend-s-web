@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "Jura";
+  src: url("../fonts/Jura-Medium.ttf");
+}
+
+@font-face {
+  font-family: "PingFang";
+  src: url("../fonts/PingFangNormal.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Wave";
+  src: url("../fonts/310-CAI978.ttf");
+}
+
+/** Regular */
+@font-face {
+  font-family: "SF Pro";
+  font-weight: 400;
+  src: url("../fonts/SFPRODISPLAYREGULAR.otf") format('opentype');
+}
+
+/** Medium */
+@font-face {
+  font-family: "SF Pro";
+  font-weight: 500;
+  src: url("../fonts/SFPRODISPLAYMEDIUM.otf") format('opentype');
+}
+
+/** Bold */
+@font-face {
+  font-family: "SF Pro";
+  font-weight: 700;
+  src: url("../fonts/SFPRODISPLAYBOLD.otf") format('opentype');
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");

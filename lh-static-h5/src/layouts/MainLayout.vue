@@ -69,103 +69,125 @@
         :class="$q.dark.isActive ? '' : 'bg-white'"
         align="justify"
       >
-        <q-route-tab to="/" name="home" exact>
-          <img
-            class="inactive"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/home-icon-dark.png')
-                : require('../assets/images/footer/home-icon.png')
-            "
-          />
-          <img
-            class="hover"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/home-icon-active-dark.png')
-                : require('../assets/images/footer/home-icon-active.png')
-            "
-          />
-          <span>首页</span>
-        </q-route-tab>
-        <q-route-tab to="/account/transfer" name="transfer">
-          <img
-            class="inactive"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/withdraw-icon-dark.png')
-                : require('../assets/images/footer/withdraw-icon.png')
-            "
-          />
-          <img
-            class="hover"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/withdraw-icon-active-dark.png')
-                : require('../assets/images/footer/withdraw-icon-active.png')
-            "
-          />
-          <span>账户</span>
-        </q-route-tab>
-        <q-route-tab to="/promo" name="promo">
-          <img
-            class="inactive"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/promo-icon-dark.png')
-                : require('../assets/images/footer/promo-icon.png')
-            "
-          />
-          <img
-            class="hover"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/promo-icon-active-dark.png')
-                : require('../assets/images/footer/promo-icon-active.png')
-            "
-          />
-          <span>优惠</span>
-        </q-route-tab>
-        <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
-          <img
-            class="inactive"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/chat-icon-dark.png')
-                : require('../assets/images/footer/chat-icon.png')
-            "
-          />
-          <img
-            class="hover"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/chat-icon-active-dark.png')
-                : require('../assets/images/footer/chat-icon-active.png')
-            "
-          />
-          <span>客服</span>
-        </q-route-tab>
+      <q-route-tab to="/" name="home" exact>
+        <img
+          class="inactive"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/home-icon-dark.png"
+        />
+        <img
+          class="inactive"
+          v-else
+          src="../assets/images/footer/home-icon.png"
+        />
+        <img
+          class="hover"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/home-icon-active-dark.png"
+        />
+        <img
+          class="hover"
+          v-else
+          src="../assets/images/footer/home-icon-active.png"
+        />
+        <span>首页</span>
+      </q-route-tab>
 
-        <q-route-tab to="/account" name="account">
-          <img
-            class="inactive"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/account-icon-dark.png')
-                : require('../assets/images/footer/account-icon.png')
-            "
-          />
-          <img
-            class="hover"
-            :src="
-              $q.dark.isActive
-                ? require('../assets/images/footer/account-icon-active-dark.png')
-                : require('../assets/images/footer/account-icon-active.png')
-            "
-          />
+      <q-route-tab to="/account/transfer" name="transfer">
+        <img
+          class="inactive"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/withdraw-icon-dark.png"
+        />
+        <img
+          class="inactive"
+          v-else
+          src="../assets/images/footer/withdraw-icon.png"
+        />
+        <img
+          class="hover"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/withdraw-icon-active-dark.png"
+        />
+        <img
+          class="hover"
+          v-else
+          src="../assets/images/footer/withdraw-icon-active.png"
+        />
+        <span>账户</span>
+      </q-route-tab>
 
-          <span>我的</span>
-        </q-route-tab>
+      <q-route-tab to="/promo" name="promo">
+        <img
+          class="inactive"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/promo-icon-dark.png"
+        />
+        <img
+          class="inactive"
+          v-else
+          src="../assets/images/footer/promo-icon.png"
+        />
+        <img
+          class="hover"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/promo-icon-active-dark.png"
+        />
+        <img
+          class="hover"
+          v-else
+          src="../assets/images/footer/promo-icon-active.png"
+        />
+        <span>优惠</span>
+      </q-route-tab>
+
+      <q-route-tab class="cs-web-id" to="/liveChat" id="cs-web-id" name="live">
+        <img
+          class="inactive"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/chat-icon-dark.png"
+        />
+        <img
+          class="inactive"
+          v-else
+          src="../assets/images/footer/chat-icon.png"
+        />
+        <img
+          class="hover"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/chat-icon-active-dark.png"
+        />
+        <img
+          class="hover"
+          v-else
+          src="../assets/images/footer/chat-icon-active.png"
+        />
+        <span>客服</span>
+      </q-route-tab>
+
+      <q-route-tab to="/account" name="account">
+        <img
+          class="inactive"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/account-icon-dark.png"
+        />
+        <img
+          class="inactive"
+          v-else
+          src="../assets/images/footer/account-icon.png"
+        />
+        <img
+          class="hover"
+          v-if="$q.dark.isActive"
+          src="../assets/images/footer/account-icon-active-dark.png"
+        />
+        <img
+          class="hover"
+          v-else
+          src="../assets/images/footer/account-icon-active.png"
+        />
+        <span>我的</span>
+      </q-route-tab>
       </q-tabs>
     </q-footer>
   </q-layout>
@@ -176,9 +198,7 @@ import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { userStore } from "stores/index";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
-// import EssentialLink from "components/EssentialLink.vue";
 
-// import { RiArrowDropLeftLine } from "vue-remix-icons";
 import { translateRecord } from "src/directives/translate";
 
 export default defineComponent({

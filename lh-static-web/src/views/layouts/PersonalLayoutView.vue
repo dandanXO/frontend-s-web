@@ -273,13 +273,14 @@ export default defineComponent({
 .dark {
   .account-container {
     background-image: none;
-    background-color: $background-dark;
+    background: $background-dark;
 
     .account-container-wrap {
       .account-menu-container {
         @include content-block-dark;
 
         .account-info-wrapper {
+          background: $active-color-dark-linear;
           box-shadow: none;
         }
 

@@ -1,19 +1,16 @@
 <template>
   <div v-if="props.isLoading" class="loading-spinner">
-    <q-spinner-orbit :color="'blue'" size="8em" />
+    <q-spinner-orbit :color="'primary'" size="8em" />
   </div>
   <div class="minigames-grid" v-else>
-    <div v-for="(game, index) in props.minigames" :key="index" class="minigames-grid-item"
-      @click="playGame(game.name, 'TFGaming', game.code)" :style="{
-        backgroundImage: (() => {
-          try {
-            return `url(${game.icon})`;
-          } catch (e) {
-            return `url(${require(`../../assets/home/slot/StayTuned.png`)})`;
-          }
-        })()
-      }">
-    </div>
+    <q-img v-for="(game, index) in props.minigames" loading="lazy" :src="game.icon" fit="fill" height="auto"
+      spinner-color="white" position="50% 20%" style="border-radius: 20px; overflow: hidden" :key="index"
+      @click="playGame(game.name, 'TFGaming', game.code)" class="minigames-grid-item">
+      <template v-slot:loading>
+        <img :src="defaultImg" style="width: 100%; height: 100%; border-radius: 15px; overflow: hidden" />
+      </template>
+    </q-img>
+
     <div v-for="(game, index) in props.minigamesMore" :key="index" class="minigames-grid-item minigame-select-div"
       @click="props.showTypeH5(game.id)" @mouseover="props.showTypeWeb(game.id)" @mouseleave="props.showTypeWeb(0)">
 
@@ -39,6 +36,7 @@
 
 <script setup>
 const props = defineProps(['minigames', 'minigamesMore', 'showTypeWeb', 'showTypeH5', 'playGame', 'showMiniType', 'isLoading']);
+const defaultImg = require(`../../assets/images/games/aviator/default.png`);
 </script>
 
 <style lang="scss" scoped>

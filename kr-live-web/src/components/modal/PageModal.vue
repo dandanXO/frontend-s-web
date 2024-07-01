@@ -6,7 +6,7 @@
           <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
         </div>
         <div class="page-dialog-main-header">
-          <span class="header-info-description">{{ headerInfo.description }}</span>
+          <span class="header-info-description">{{ headerInfo.description ? $t(headerInfo.description) : '' }}</span>
           <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
           <span></span>
         </div>
@@ -23,12 +23,9 @@
         </q-tabs>
       </div>
       <div class=content>
-        <div class="page-dialog-links" v-if="!isMinimalMode">
-          <p class="header-info-description">{{ headerInfo.description }}</p>
-        </div>
-        <q-tab-panels v-model="page" animated>
+        <q-tab-panels v-model="page" animated swipeable infinite>
           <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page" style="padding:0">
+            <q-tab-panel :name="item.page" style="padding:0;">
               <component :is="item.component" @closeModal="closeDialog"></component>
             </q-tab-panel>
           </template>
@@ -52,13 +49,14 @@ import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import MessageCompose from "../pageModalContent/MessageCompose.vue";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 const visible = ref(false);
 const page = ref("");
-const tabIndex = ref("log");
+const tabIndex = ref("");
 
 // minimal mode hides left side links and top section tabs
 const isMinimalMode = computed(() => {
@@ -76,16 +74,14 @@ watch(
         if (!visible.value) visible.value = false;
 
         // determine the extact pageInfoItem based on route info
-        const pageInfoItem = pagesInfo.find(({ page }) => page === route.query.page);
+        const pageInfoItem = [...pagesInfo, ...minimalModePagesInfo].find(({ page }) => page === route.query.page);
         // determine which left side tab to land on
-        if (pageInfoItem?.tabIndex) {
-          tabIndex.value = pageInfoItem.tabIndex;
+        if (pageInfoItem) {
+          tabIndex.value = pageInfoItem?.tabIndex;
+          open(route.query.page);
         } else {
-          // default to first tab if unable to proceed with the above
-          tabIndex.value = "log";
+          router.push('/');
         }
-
-        open(route.query.page);
       });
     } else {
       // router.push("/");
@@ -110,73 +106,84 @@ const headerInfo = computed(() => {
 
 const pagesInfo = reactive([
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/deposit",
     info: 'lang.page_modal_deposit',
     iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     component: FinanceDeposit,
     headerInfo: {
       title: 'lang.page_modal_deposit',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "finance",
     page: "finance/withdraw",
     info: 'lang.page_modal_withdraw',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: FinanceWithdraw,
     headerInfo: {
       title: 'lang.page_modal_withdraw',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "log",
+    tabIndex: "message",
     page: "personal/messages",
     info: 'lang.page_modal_message',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
     component: MessagesPage,
     headerInfo: {
       title: 'lang.page_modal_message',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "log",
-    page: "promo/all",
-    info: 'lang.page_modal_promo',
-    iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
-    component: PromoComponent,
+    tabIndex: "message",
+    page: "personal/messages/create",
+    info: 'lang.page_modal_message_compose',
+    iconActiveUrl: require("../../assets/icon/pageModal/pencil-icon.svg"),
+    component: MessageCompose,
     headerInfo: {
-      title: 'lang.page_modal_promo',
-      description: ""
+      title: 'lang.page_modal_message_compose',
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "my",
-    page: "personal/info",
-    info: 'lang.page_modal_personal_info',
-    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
-    component: MyPersonalInfo,
-    headerInfo: {
-      title: "개인정보",
-      description: "입금시 꼭 계좌문의를 하세요!"
-    }
-  },
-  {
-    tabIndex: "my",
+    tabIndex: "message",
     page: "announcement",
     info: 'lang.page_modal_announcement',
     iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     component: AnnouncementComponent,
     headerInfo: {
       title: 'lang.page_modal_announcement',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
+    }
+  },
+  // {
+  //   tabIndex: "log",
+  //   page: "promo/all",
+  //   info: 'lang.page_modal_promo',
+  //   iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
+  //   component: PromoComponent,
+  //   headerInfo: {
+  //     title: 'lang.page_modal_promo',
+  //     description: ""
+  //   }
+  // },
+  {
+    tabIndex: "personal",
+    page: "personal/info",
+    info: 'lang.page_modal_personal_info',
+    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
+    component: MyPersonalInfo,
+    headerInfo: {
+      title: "개인정보",
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "my",
+    tabIndex: "finance",
     page: "bankcardlist",
     info: 'lang.page_modal_bank_card_list',
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
@@ -189,25 +196,25 @@ const pagesInfo = reactive([
   },
 
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "transaction/records",
     info: 'lang.page_modal_transaction_record',
     iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
     component: TransitRecord,
     headerInfo: {
       title: 'lang.page_modal_transaction_record',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
   {
-    tabIndex: "my",
+    tabIndex: "personal",
     page: "personal/updatePwd",
     info: 'lang.page_modal_change_password',
     iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
     component: MyPasswordChange,
     headerInfo: {
       title: 'lang.page_modal_change_password',
-      description: "입금시 꼭 계좌문의를 하세요!"
+      description: "lang.page_modal_desc_text"
     }
   },
 ]);
@@ -379,6 +386,8 @@ onMounted(() => {
     color: #000;
     text-align: left;
     margin-left: 10px;
+    max-height: 100%;
+    overflow-y: auto;
   }
 
   .header-title {

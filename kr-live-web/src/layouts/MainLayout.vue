@@ -248,16 +248,14 @@ export default defineComponent({
   }
 
   @media (max-width: 768px) {
-    width: 200px;
+    width: 150px;
     margin-top: 0px;
-    top: calc(50% + 30px);
-    display: none; // temp
+    top: calc(25% + 30px);
+    // display: none;
   }
 
   @media (max-width: 500px) {
-    width: 200px;
-    margin-top: 0px;
-    display: none; // temp
+    // display: none;
   }
 }
 

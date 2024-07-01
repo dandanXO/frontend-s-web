@@ -1,0 +1,231 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #e5f1fd;
+    font-family: yahei, serif;
+}
+
+body {
+    height: 100%;
+    min-height: 100vh;
+    background-image: url("../images/background-board.jpg");
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.mobile {
+    display: none !important;
+}
+
+.desktop {
+    display: block !important;
+}
+
+span.color-red {
+    color: #eb333a;
+}
+
+.wrapper {
+    padding: 0px 20px 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.content-wrapper {
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0 0;
+    /* padding: 20px; */
+    /* background: #ffffff; */
+}
+
+.header-container .logo-img {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+}
+
+.main-title {
+    text-align: center;
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 60px;
+}
+
+.main-title p{
+    font-size: 40px;
+    color: #fff;
+    margin: 0px;
+    font-weight: 700;
+}
+
+.main-title img {
+    display: block;
+    width: 100%;
+    max-width: 410px;
+}
+
+.main-content {
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 16px;
+    max-width: 1000px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.liner-set {
+    background: #d1d9ed;
+    border-radius: 30px;
+    padding: 5px;
+    display: flex;
+    gap: 16px;
+}
+
+.line-bg {
+    background-image: url("../images/line-bg.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 50px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 22px;
+    padding-left: 36px;
+    padding-right: 36px;
+    white-space: nowrap;
+}
+
+.line-speed {
+    width: 100%;
+    line-height: 100%;
+}
+
+.line-speed span {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+.line-btn {
+    white-space: nowrap;
+    background-image: url("../images/line-btn-bg.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 50px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    padding-left: 36px;
+    padding-right: 36px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.footer-content {
+    padding-top: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-title {
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.browsers-list {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.browsers-list .browser {
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.browser img {
+    display: block;
+    width: 100%;
+    max-width: 45px;
+}
+
+@media only screen and (max-width: 767px) {
+    .header-container,
+    .main-title {
+        width: 70%;
+        margin: auto;
+    }
+
+    .liner-set {
+        gap: 10px;
+    }
+
+    .line-btn {
+        font-size: 14px;
+        padding: 0 20px;
+    }
+
+    .line-bg {
+        font-size: 16px;
+        padding: 0 20px;
+    }
+
+    .line-speed {
+        flex-direction: column;
+    }
+
+    .line-speed span {
+        margin: 5px 0 0;
+        display: block;
+    }
+
+    .footer-content {
+        padding-top: 60px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .line-btn {
+        font-size: 12px;
+        padding: 0 15px;
+    }
+
+    .line-bg {
+        font-size: 12px;
+        padding: 0 15px;
+    }
+}

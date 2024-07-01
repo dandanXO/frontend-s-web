@@ -20,6 +20,8 @@ const isImageCompress = true;
 
 const ImageminPlugin = require("imagemin-webpack-plugin").default;
 
+const ContextReplacementPlugin = require('webpack').ContextReplacementPlugin
+
 
 module.exports = configure(function (ctx) {
   return {
@@ -71,7 +73,9 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      // analyze: true,
+      analyze: {
+        analyzerMode: 'static'
+      },
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
@@ -81,6 +85,21 @@ module.exports = configure(function (ctx) {
 
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+
+        // remove moment locale file
+        chain.plugin('context-replacement-plugin').use(ContextReplacementPlugin, [/moment[\/\\]locale$/, /zh-cn/])
+
+        // override image bundle rule
+        chain.module.rules.delete('images')
+        chain.module.rule('asset-module').test(/\.(jpe?g|png|gif|svg)$/i).set('type', 'asset/resource')
+        .set('generator', {
+          filename: 'img/[name].[hash:8][ext]'
+        })
+        .set('parser', {
+          dataUrlCondition: {
+            maxSize: 10 * 1024
+          }
+        })
 
         // Add Image Compression
         if (process.env.NODE_ENV === "production" && isImageCompress) {
