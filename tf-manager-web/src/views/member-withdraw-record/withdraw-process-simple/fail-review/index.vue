@@ -70,6 +70,30 @@
         </el-button>
       </div>
     </div>
+
+    <div class="btn-group">
+      <el-button
+        ref="failBtnRef"
+        size="mini"
+        type="danger"
+        :disabled="uiControl.toFailBtn"
+        @click="toFail()"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.fail') }}
+      </el-button>
+      <el-button
+        ref="auriWithdrawBtnRef"
+        size="mini"
+        type="primary"
+        :disabled="uiControl.toAutoWithdrawBtn"
+        @click="showDialog('AUTOPAY')"
+        @keydown.enter.prevent
+      >
+        {{ t('fields.bulkApprove') }}
+      </el-button>
+    </div>
+
     <el-card class="box-card" shadow="never" style="margin-top: 20px">
       <el-table
         height="600"
@@ -517,6 +541,48 @@
         </div>
       </el-form>
     </el-dialog>
+    <el-dialog
+      v-if="uiControl.dialogType === 'AUTOPAY'"
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="580px"
+    >
+      <el-form
+        v-if="uiControl.dialogType === 'AUTOPAY'"
+        ref="toFailForm"
+        :model="autopayForm"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-form-item
+          :label="t('fields.withdrawPlatform')"
+          prop="withdrawPlatformId"
+        >
+          <el-select
+            v-model="autopayForm.withdrawPlatformId"
+            size="small"
+            :placeholder="t('fields.withdrawPlatform')"
+            class="filter-item"
+            style="width: 300px;"
+          >
+            <el-option
+              v-for="item in withdrawPlatformList.list"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="toAutoPay">
+            {{ t('fields.confirm') }}
+          </el-button>
+        </div>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
@@ -530,7 +596,9 @@ import {
   autoWithdrawToFail,
   getMemberWithdrawRecordFailReview,
   getTotalWithdrawAmountByStatus,
-  autoWithdrawToSuccess
+  autoWithdrawToSuccess,
+  autoWithdrawToFailBatch,
+  fromApplyToAutopayBatch
 } from '../../../../api/member-withdraw-record'
 import { getSiteListSimple } from "@/api/site"
 import { ElMessage } from 'element-plus'
@@ -541,6 +609,7 @@ import { convertDateToEnd, convertDateToStart, getShortcuts } from "@/utils/date
 import { getConfigList } from '../../../../api/config'
 import { formatInputTimeZone } from "@/utils/format-timeZone"
 import { getMemberWithdrawLog } from '../../../../api/member-withdraw-log'
+import { getWithdrawPlatformsSimpleBySiteId } from "../../../../api/withdraw-platform";
 
 const store = useStore();
 const { t } = useI18n();
@@ -574,6 +643,8 @@ const uiControl = reactive({
   dialogTitle: '',
   dialogType: 'SEARCH',
   toApproveBtn: true,
+  toFailBtn: true,
+  toAutoWithdrawBtn: true,
 })
 
 let chooseRecord = []
@@ -607,10 +678,16 @@ const failForm = reactive({
   failReason: null,
   withdrawDate: ''
 })
+const autopayForm = reactive({
+  withdrawPlatformId: null,
+})
 const reasonTypeList = reactive({
   list: [],
 })
 const reasonTemplateList = reactive({
+  list: [],
+})
+const withdrawPlatformList = reactive({
   list: [],
 })
 function disabledDate(time) {
@@ -639,10 +716,19 @@ function handleSelectionChange(val) {
   chooseRecord = val
   if (chooseRecord.length > 10) {
     uiControl.toApproveBtn = true
+    uiControl.toFailBtn = true
+    uiControl.toAutoWithdrawBtn = true
     ElMessage.warning("最多只能选择十条记录");
   } else {
     uiControl.toApproveBtn = false
+    uiControl.toFailBtn = false
+    uiControl.toAutoWithdrawBtn = false
   }
+}
+
+async function loadWithdrawPlatform() {
+  const { data: ret } = await getWithdrawPlatformsSimpleBySiteId(request.siteId);
+  withdrawPlatformList.list = ret
 }
 
 const page = reactive({
@@ -713,6 +799,14 @@ async function loadReasonTemplates() {
   reasonTemplateList.list = reasonTemplate
 }
 
+function populateFailReason(evt) {
+  reasonTemplateList.list.forEach(reasonTemplate => {
+    if (evt === reasonTemplate.id) {
+      failForm.failReason = reasonTemplate.value
+    }
+  })
+}
+
 async function loadRecord() {
   uiControl.dialogVisible = false
   page.loading = true
@@ -774,8 +868,10 @@ async function showDialog(type, memberWithdrawRecord) {
     if (toFailForm.value) {
       toFailForm.value.resetFields()
     }
-    failForm.id = memberWithdrawRecord.id
-    failForm.withdrawDate = memberWithdrawRecord.withdrawDate
+    if (memberWithdrawRecord) {
+      failForm.id = memberWithdrawRecord.id
+      failForm.withdrawDate = memberWithdrawRecord.withdrawDate
+    }
     await loadReasonTypes()
     failForm.reasonType = reasonTypeList.list[0].value
     uiControl.dialogTitle = t('fields.failReason')
@@ -787,6 +883,9 @@ async function showDialog(type, memberWithdrawRecord) {
     logPage.loading = false
   } else if (type === 'SEARCH') {
     uiControl.dialogTitle = t('fields.advancedSearch')
+  } else if (type === 'AUTOPAY') {
+    loadWithdrawPlatform()
+    uiControl.dialogTitle = t('fields.autopay')
   }
   uiControl.dialogType = type
   uiControl.dialogVisible = true
@@ -796,13 +895,26 @@ async function fail() {
   toFailForm.value.validate(async valid => {
     if (valid) {
       clickedFail.value = true
-      await autoWithdrawToFail(
-        failForm.id,
-        failForm.reasonType,
-        failForm.failReason,
-        failForm.withdrawDate,
-        request.siteId
-      )
+      if (failForm.id) {
+        await autoWithdrawToFail(
+          failForm.id,
+          failForm.reasonType,
+          failForm.failReason,
+          failForm.withdrawDate,
+          request.siteId
+        )
+      } else {
+        await autoWithdrawToFailBatch(
+          chooseRecord.map(a => ({
+            id: a.id,
+            checkBy: failForm.reasonType,
+            remark: failForm.failReason,
+            withdrawDate: a.withdrawDate,
+            siteId: request.siteId
+          }))
+        )
+      }
+
       uiControl.dialogVisible = false
       clickedFail.value = false
       await loadRecord()
@@ -811,9 +923,22 @@ async function fail() {
   })
 }
 
+async function toAutoPay() {
+  await fromApplyToAutopayBatch(
+    chooseRecord.map(a => ({
+      id: a.id,
+      withdrawPlatformId: autopayForm.withdrawPlatformId,
+      withdrawDate: a.withdrawDate,
+      siteId: request.siteId
+    }))
+  )
+  await loadRecord()
+  ElMessage({ message: t('message.success'), type: 'success' })
+}
+
 onMounted(async () => {
   await loadSites()
-  request.siteId = siteList.list[0].id
+  request.siteId = 11
   loadVips()
   loadFinancialLevels()
   loadBanks()
