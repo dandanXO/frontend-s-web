@@ -49,13 +49,9 @@
 <script lang="js">
 import {defineComponent, onMounted, ref} from "vue";
 import {api} from "boot/axios";
-import {RiArrowRightSLine} from "vue-remix-icons"
 
 export default defineComponent({
   name: "AnnouncementView",
-  components: [
-    RiArrowRightSLine
-  ],
   setup() {
     const tab = ref("");
     const tabItems = ref([]);
