@@ -86,6 +86,7 @@
               <div
                 class="inner"
                 :class="{
+                  lhworldcup: selectedPromo.promoCode === 'dy2worldcup',
                   cny2024: selectedPromo.promoCode === 'dy2-cny2024-promo',
                   hongbaoyu: selectedPromo.promoCode === 'hongbaoyu',
                   cnystepgame: selectedPromo.promoCode === 'dy2-cny-step-game',
@@ -335,12 +336,12 @@ export default defineComponent({
           promoItems.forEach((element) => {
             // if ((store.memberType !== "TEST" && element.privilegeStatus === "TEST")) {
             // } else {
-              promoState.promoList.push(element);
-              // console.log(promoState.promoList);
+            promoState.promoList.push(element);
+            // console.log(promoState.promoList);
 
-              if (route.query.name && String(element.redirectUrl) === route.query.name) {
-                showPromoDetails(element);
-              }
+            if (route.query.name && String(element.redirectUrl) === route.query.name) {
+              showPromoDetails(element);
+            }
             // }
           });
           // console.log("Final Promos");
@@ -725,6 +726,39 @@ export default defineComponent({
         flex-direction: column;
         gap: 20px;
         font-size: 12px;
+
+        &.lhworldcup {
+          background: #e7f1fd;
+          margin: 0px;
+          width: 100%;
+          padding: 0px 16px 20px;
+
+          img {
+            padding-top: 10px;
+            padding-bottom: 10px;
+          }
+
+          table {
+            p {
+              margin: 0px;
+            }
+
+            tr:first-child {
+              td {
+                background-image: linear-gradient(0deg, #0094ff, #19c6ff), linear-gradient(#2e3039, #2e3039);
+                color: #fff;
+              }
+            }
+
+            th {
+              background-color: inherit;
+            }
+
+            td {
+              background-color: inherit;
+            }
+          }
+        }
 
         &.eurocupManual {
           margin: 0;
