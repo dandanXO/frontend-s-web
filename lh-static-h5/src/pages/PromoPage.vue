@@ -155,7 +155,8 @@
                   selectedPromo.mobileBannerUrl &&
                   !isSpecialPromo &&
                   selectedPromo.promoCode !== 'lh1-ftd-promo' &&
-                  selectedPromo.promoCode !== 'lh1-aijiasu'
+                  selectedPromo.promoCode !== 'lh1-aijiasu' &&
+                  selectedPromo.promoCode !== 'lh1-eurocup-regen'
                 "
               >
                 <img
@@ -178,7 +179,8 @@
                     selectedPromo.promoCode === 'lh-duanwujie24' || selectedPromo.promoCode === 'lh1-deposit-rebates',
                   lheuromanual: selectedPromo.promoCode === 'lh-eurocup-manual',
                   meizhoubei: selectedPromo.promoCode === 'lh1meizhoubei',
-                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu'
+                  aijiasu: selectedPromo.promoCode === 'lh1-aijiasu',
+                  euroRegen: selectedPromo.promoCode === 'lh1-eurocup-regen'
                 }"
                 :style="[
                   selectedPromo.promoCode === 'lh-eurocup-manual' || selectedPromo.promoCode === 'lh1-deposit-rebates'
@@ -843,6 +845,11 @@ export default defineComponent({
         gap: 20px;
         font-size: 12px;
         &.aijiasu {
+          width: 100%;
+          gap: 0px;
+          margin: 0px;
+        }
+        &.euroRegen {
           width: 100%;
           gap: 0px;
           margin: 0px;

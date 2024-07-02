@@ -72,7 +72,8 @@
             (selectedPromo?.desktopBannerUrl || selectedPromo?.mobileBannerUrl) &&
             selectedPromo.promoCode !== 'lh1-game-steps' &&
             selectedPromo.promoCode !== 'lh1-ftd-promo' &&
-            selectedPromo.promoCode !== 'lh1-aijiasu'
+            selectedPromo.promoCode !== 'lh1-aijiasu' &&
+            selectedPromo.promoCode !== 'lh1-eurocup-regen'
           "
         >
           <div class="promo-bg isDesktop">
@@ -114,7 +115,8 @@
               selectedPromo.promoCode === 'lh-eurocup-manual' ||
               selectedPromo.promoCode === 'lh-lpl-summer24' ||
               selectedPromo.promoCode === 'lh1-intel-esl' ||
-              selectedPromo.promoCode === 'lh1-aijiasu',
+              selectedPromo.promoCode === 'lh1-aijiasu' ||
+              selectedPromo.promoCode === 'lh1-eurocup-regen',
             'europe-first-shoot': selectedPromo.promoCode === 'lh1-eurocup-firstshoot',
             bgautosize: selectedPromo.promoCode === 'lh1-eurocup-2024'
           }"
