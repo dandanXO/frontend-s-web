@@ -117,83 +117,115 @@ export const eSportsPlatforms = [
     gameCode: ""
   },
 ];
-
 export const slotPlatforms = [
   {
     code: "PG",
-    name: "PG电子",
+    name: "PG",
     image: "pg",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
+    message: "Classic and diverse, fair and safe gaming environment, enjoy thousands of video games, with high jackpots every day.",
+    vimessage: "Kinh điển đa dạng, môi trường trò chơi công bằng và an toàn, tận hưởng hàng nghìn trò chơi điện tử, với giải độc đắc cao mỗi ngày.",
     caption: "",
     gameCode: ""
   },
   {
     code: "SW",
-    name: "SW电子",
+    name: "SW",
     image: "sw",
-    message: "经典多元化,公平安全游戏环境,畅想数千款电子游戏,天天高额大奖。 ",
+    message: "Classic and diverse, fair and safe gaming environment, enjoy thousands of video games, with high jackpots every day.",
+    vimessage: "Kinh điển đa dạng, môi trường trò chơi công bằng và an toàn, tận hưởng hàng nghìn trò chơi điện tử, với giải độc đắc cao mỗi ngày.",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "JILI",
+    name: "JILI",
+    image: "jili",
+    message: "Classic and diverse, fair and safe gaming environment, enjoy thousands of video games, with high jackpots every day.",
+    vimessage: "Kinh điển đa dạng, môi trường trò chơi công bằng và an toàn, tận hưởng hàng nghìn trò chơi điện tử, với giải độc đắc cao mỗi ngày.",
     caption: "",
     gameCode: ""
   },
   {
     code: "PT",
-    name: "PT电子",
+    name: "PT",
     image: "pt",
-    message: "精选全球千种游戏任您畅玩，为玩家提供极致的游戏体验。触手可及的千万累计奖池，等您—触即发! ",
+    message: "Select thousands of games from around the world for you to play, providing the ultimate gaming experience. The massive jackpot pool is at your fingertips, ready to be triggered!",
+    vimessage: "Chọn hàng nghìn trò chơi từ khắp nơi trên thế giới để bạn chơi, mang lại trải nghiệm chơi game tối thượng. Giải thưởng tích lũy khổng lồ trong tầm tay của bạn, sẵn sàng để kích hoạt!",
     caption: "",
     gameCode: ""
   },
-  // {
-  //   code: "EVO",
-  //   name: "EVO电子",
-  //   image: "evo",
-  //   message:
-  //     "透明、公正的机制为您的游戏体验保驾护航。千种游戏，多重累计奖金，且不断创新打造精品。最新社区型互动游戏更是作为行业先驱为您第时间呈上，只为给您打造独一无二的极致体验。",
-  //   caption: "",
-  //   gameCode: ""
-  // }
+  {
+    code: "PP",
+    name: "PP",
+    image: "pp",
+    message: "Select thousands of games from around the world for you to play, providing the ultimate gaming experience. The massive jackpot pool is at your fingertips, ready to be triggered!",
+    vimessage: "Chọn hàng nghìn trò chơi từ khắp nơi trên thế giới để bạn chơi, mang lại trải nghiệm chơi game tối thượng. Giải thưởng tích lũy khổng lồ trong tầm tay của bạn, sẵn sàng để kích hoạt!",
+    caption: "",
+    gameCode: ""
+  },
   {
     code: "AG",
     name: "XIN",
     image: "ag",
-    message: "坚持创新、打造精品,最缤纷的电子游艺画面，最刺激的游戏体验，各类老虎机应有尽有，彩池大奖由您触发! ",
+    message: "Committed to innovation and excellence, the most colorful electronic game screens, the most exciting gaming experience, various slot machines are all available, and the jackpot can be triggered by you!",
+    vimessage: "Cam kết đổi mới và xuất sắc, màn hình trò chơi điện tử đầy màu sắc nhất, trải nghiệm chơi game thú vị nhất, nhiều máy đánh bạc khác nhau đều có sẵn, và giải độc đắc có thể được kích hoạt bởi bạn!",
     caption: "",
     gameCode: ""
   },
   {
     code: "BBINDY",
-    name: "BBIN电子",
+    name: "BBIN",
     image: "bbin",
-    message: "拥有丰富的游戏类型及功能，提供多种玩法与电子游戏试玩，带给玩家惊艳的游戏体验，游戏总数近千款！ ",
+    message: "Rich game types and features, offering various play styles and video game demos, bringing players an amazing gaming experience with nearly a thousand games!",
+    vimessage: "Các loại trò chơi và tính năng phong phú, cung cấp nhiều phong cách chơi và bản demo trò chơi điện tử, mang lại cho người chơi trải nghiệm chơi game tuyệt vời với gần một nghìn trò chơi!",
     caption: "",
     gameCode: ""
-  }
-  // {
-  //   code: "PINNACLE",
-  //   name: "平博电子",
-  //   image: "",
-  //   message: "",
-  //   caption: "",
-  //   gameCode: ""
-  // }
-  // {
-  //   code: "CQ",
-  //   name: "CQ电子",
-  //   image: "cq",
-  //   message:
-  //     "每款游戏独特的游戏体验、视觉风格,带来刺激人心的全新体验。不断为您带来新的更新、特色、角色，以及眩目的精彩游戏供您探索。",
-  //   caption: "",
-  //   gameCode: ""
-  // },
-  // {
-  //   code: "MG",
-  //   name: "MG电子",
-  //   image: "mg",
-  //   message:
-  //     "最具实力的电子游戏，最古老的电子游戏，涵盖电子所有类型，上千连线上万翻倍，超高几率免费机会，游戏轻松大收获。",
-  //   caption: "",
-  //   gameCode: ""
-  // }
+  },
+  {
+    code: "MGP",
+    name: "mgp",
+    image: "mgp",
+    message: "Select thousands of games from around the world for you to play, providing the ultimate gaming experience. The massive jackpot pool is at your fingertips, ready to be triggered!",
+    vimessage: "Chọn hàng nghìn trò chơi từ khắp nơi trên thế giới để bạn chơi, mang lại trải nghiệm chơi game tối thượng. Giải thưởng tích lũy khổng lồ trong tầm tay của bạn, sẵn sàng để kích hoạt!",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "rich88",
+    name: "rich88",
+    image: "rich88",
+    message: "Select thousands of games from around the world for you to play, providing the ultimate gaming experience. The massive jackpot pool is at your fingertips, ready to be triggered!",
+    vimessage: "Chọn hàng nghìn trò chơi từ khắp nơi trên thế giới để bạn chơi, mang lại trải nghiệm chơi game tối thượng. Giải thưởng tích lũy khổng lồ trong tầm tay của bạn, sẵn sàng để kích hoạt!",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "GPI",
+    name: "GPI",
+    image: "gpi",
+    message: "Committed to innovation and excellence, the most colorful electronic game screens, the most exciting gaming experience, various slot machines are all available, and the jackpot can be triggered by you!",
+    vimessage: "Cam kết đổi mới và xuất sắc, màn hình trò chơi điện tử đầy màu sắc nhất, trải nghiệm chơi game thú vị nhất, nhiều máy đánh bạc khác nhau đều có sẵn, và giải độc đắc có thể được kích hoạt bởi bạn!",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "CQ9",
+    name: "cq9",
+    image: "cq9",
+    message: "Rich game types and features, offering various play styles and video game demos, bringing players an amazing gaming experience with nearly a thousand games!",
+    vimessage: "Các loại trò chơi và tính năng phong phú, cung cấp nhiều phong cách chơi và bản demo trò chơi điện tử, mang lại cho người chơi trải nghiệm chơi game tuyệt vời với gần một nghìn trò chơi!",
+    caption: "",
+    gameCode: ""
+  },
+  {
+    code: "habanero",
+    name: "haba88",
+    image: "haba88",
+    message: "Committed to innovation and excellence, the most colorful electronic game screens, the most exciting gaming experience, various slot machines are all available, and the jackpot can be triggered by you!",
+    vimessage: "Cam kết đổi mới và xuất sắc, màn hình trò chơi điện tử đầy màu sắc nhất, trải nghiệm chơi game thú vị nhất, nhiều máy đánh bạc khác nhau đều có sẵn, và giải độc đắc có thể được kích hoạt bởi bạn!",
+    caption: "",
+    gameCode: ""
+  },
 ];
 
 // poker
@@ -292,14 +324,14 @@ export const lotteryPlatforms = [
     gameCode: ""
   }
 ];
-
 // fishing
 export const fishingPlatforms = [
   {
     code: "SP",
     name: "Simple PLAY",
     image: "sp",
-    message: "The DG entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience. We adopt state of the art equipment, and provide professional technical support thus ensure the ",
+    message: "The DG entertainment platform with hundreds of well-trained professional dealers, bringing you an experience just like a real casino. We adopt state-of-the-art equipment and provide professional technical support to ensure the best experience.",
+    vimessage: "Nền tảng giải trí DG với hàng trăm người chia bài chuyên nghiệp được đào tạo bài bản, mang lại cho bạn trải nghiệm như tại sòng bạc thực sự. Chúng tôi sử dụng thiết bị hiện đại và cung cấp hỗ trợ kỹ thuật chuyên nghiệp để đảm bảo trải nghiệm tốt nhất.",
     caption: "",
     gameCode: ""
   },
@@ -307,7 +339,8 @@ export const fishingPlatforms = [
     code: "JILI",
     name: "JILI",
     image: "jili",
-    message: "The DG entertainment platform with hundreds of well-trained professional dealers, bring you just like real casino experience. We adopt state of the art equipment, and provide professional technical support thus ensure the",
+    message: "The DG entertainment platform with hundreds of well-trained professional dealers, bringing you an experience just like a real casino. We adopt state-of-the-art equipment and provide professional technical support to ensure the best experience.",
+    vimessage: "Nền tảng giải trí DG với hàng trăm người chia bài chuyên nghiệp được đào tạo bài bản, mang lại cho bạn trải nghiệm như tại sòng bạc thực sự. Chúng tôi sử dụng thiết bị hiện đại và cung cấp hỗ trợ kỹ thuật chuyên nghiệp để đảm bảo trải nghiệm tốt nhất.",
     caption: "",
     gameCode: ""
   }

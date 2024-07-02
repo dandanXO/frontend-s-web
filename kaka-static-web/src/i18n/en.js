@@ -166,6 +166,11 @@ export default {
     euroCountdown01a: "EURO 2024 - ",
     euroCountdown02: " DAYS LEFT"
   },
+  hotGame: {
+    enterGame: "Enter Game",
+    enterPlat: "Enter Platform",
+    maintainenceTime: "Maintenance time"
+  },
   personal: {
     url: "URL",
     personalInfo: "Personal information",
