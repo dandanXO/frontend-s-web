@@ -10,44 +10,46 @@
             <div class="promo-content-header">活动内容：活动期间，欧洲杯每周负盈利≥500即可在固定活动时间范围内领取对应档位彩金；
             </div>
 
-            <table class="promo-content-table">
-                <thead>
-                    <th>负盈利</th>
-                    <th>负盈利统计时间段</th>
-                    <th>日日领取彩金</th>
-                    <th>领取时间段</th>
-                    <th>流水倍数</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>≥500</td>
-                        <td rowspan="6">06月15日~07月15日</td>
-                        <td>3</td>
-                        <td rowspan="6">07月17日~07月21日</td>
-                        <td rowspan="6">8倍/不限游戏</td>
-                    </tr>
-                    <tr>
-                        <td>≥5,000</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>≥10,000</td>
-                        <td>36</td>
-                    </tr>
-                    <tr>
-                        <td>≥30,000</td>
-                        <td>108</td>
-                    </tr>
-                    <tr>
-                        <td>≥100,000</td>
-                        <td>258</td>
-                    </tr>
-                    <tr>
-                        <td>≥500,000</td>
-                        <td>1,188</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="promo-content-table-wrapper">
+                <table class="promo-content-table">
+                    <thead>
+                        <th>负盈利</th>
+                        <th>负盈利统计时间段</th>
+                        <th>日日领取彩金</th>
+                        <th>领取时间段</th>
+                        <th>流水倍数</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>≥500</td>
+                            <td rowspan="6">06月15日~07月15日</td>
+                            <td>3</td>
+                            <td rowspan="6">07月17日~07月21日</td>
+                            <td rowspan="6">8倍/不限游戏</td>
+                        </tr>
+                        <tr>
+                            <td>≥5,000</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>≥10,000</td>
+                            <td>36</td>
+                        </tr>
+                        <tr>
+                            <td>≥30,000</td>
+                            <td>108</td>
+                        </tr>
+                        <tr>
+                            <td>≥100,000</td>
+                            <td>258</td>
+                        </tr>
+                        <tr>
+                            <td>≥500,000</td>
+                            <td>1,188</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="promo-rules">
                 <img class="promo-rules-header" style="width: 250px"
@@ -138,9 +140,14 @@
     text-align: center;
 }
 
+.promo-content-table-wrapper {
+    border-radius: 12px;
+    border: 1px solid #5274FC;
+    overflow: hidden;
+}
+
 .promo-content-table {
     width: 100%;
-    background-color: #FFFFFF;
     border-collapse: collapse;
 
     th {
@@ -150,14 +157,34 @@
 
     td {
         color: #202020;
+        background-color: #FFFFFF;
+        border: 1px solid #5274FC !important;
     }
 
     th,
     td {
-        border: 1px solid #5274FC;
+        border-bottom: 1px solid #5274FC;
+        border-right: 1px solid #5274FC;
         padding: 5px 10px;
         text-align: center;
     }
+
+    tr:last-child td,
+    tr:first-child td:nth-child(2),
+    tr:first-child td:nth-child(4),
+    tr:first-child td:nth-child(5) {
+        border-bottom: none !important;
+    }
+
+    th:nth-child(5),
+    tr:first-child td:nth-child(5) {
+        border-right: none !important;
+    }
+
+    td:first-child {
+        border-left: none !important;
+    }
+
 }
 
 .promo-rules {
