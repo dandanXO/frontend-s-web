@@ -118,7 +118,7 @@
   </div>
 
   <div class="btn-box">
-<!--    <div class="enter-app">雷火全站APP</div>-->
+    <a href="" id="visit-app-btn" class="enter-app">雷火全站APP</a>
     <a href="" id="visit-site-h5-btn" class="enter-url">进入网页版</a>
   </div>
 
@@ -251,6 +251,7 @@
     const closeButton = document.querySelector('.info-div .close');
     const infoDiv = document.querySelector('.info-div');
 
+    const appLink= "https://www.lhd150.app/"
     const links = [
       "https://www.lh59799.com",
       "https://www.lh59799.com",
@@ -268,6 +269,9 @@
 
     document.querySelector('#visit-site-web-btn').setAttribute('href', link);
     document.querySelector('#visit-site-h5-btn').setAttribute('href', link);
+
+    document.querySelector('#visit-app-btn').setAttribute('href', appLink);
+
 
     closeButton.addEventListener('click', function () {
       infoDiv.style.bottom = '-100%';
