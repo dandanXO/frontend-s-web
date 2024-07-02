@@ -33,6 +33,12 @@
       v-if="!isCommonPromo && list.redirectUrl === 'dy-jiajianghongbaoyu'"
     />
 
+    <HongBaoPreEurocupPromo
+      :promo-code="list.promoCode"
+      :pageContent="list.pageContent"
+      :promo-param="list.param"
+      v-if="!isCommonPromo && list.redirectUrl === 'tiqianhongbao'"
+    />
     <UpcomingMatchPromo v-if="!isCommonPromo && list.redirectUrl === 'nba-game'" platformType="NBA" />
     <UpcomingMatchPromo
       v-if="
@@ -103,6 +109,7 @@
     />
     <SportZhongChao v-if="list.redirectUrl === 'dy-sport-zhongchao' && !isCommonPromo && store.token" />
     <fishHongbao v-if="list.redirectUrl === 'dy-fish-hongbao' && !isCommonPromo && store.token" />
+
     <div style="text-align: center" v-if="list.redirectUrl === 'fankuijianyi' && !isCommonPromo && store.token">
       <img style="width: 100%; margin: 10px auto 0px" src="../assets/images/promotion/hotpromo/h5feedback.png" />
     </div>
@@ -290,7 +297,8 @@ export default defineComponent({
       this.list.redirectUrl === "dy-fish-hongbao" ||
       this.list.redirectUrl === "dy-jiajianghongbaoyu" ||
       this.list.redirectUrl === "dy2meizhoubei" ||
-      this.list.redirectUrl === "dy-ouzhoumianpei"
+      this.list.redirectUrl === "dy-ouzhoumianpei" ||
+      this.list.redirectUrl === "tiqianhongbao"
     ) {
       this.isCommonPromo = false;
     } else {
