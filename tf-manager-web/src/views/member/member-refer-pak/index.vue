@@ -37,6 +37,34 @@
         </el-button>
       </div>
     </div>
+    <el-dialog
+      :title="uiControl.dialogTitle"
+      v-model="uiControl.dialogVisible"
+      append-to-body
+      width="700px"
+    >
+      <el-form
+        ref="formRef"
+        :model="form"
+        :rules="formRules"
+        :inline="true"
+        size="small"
+        label-width="150px"
+      >
+        <el-row>
+          <el-form-item :label="t('fields.loginName')" prop="loginName">
+            <el-input v-model="form.loginName" disabled />
+          </el-form-item>
+          <el-form-item :label="t('fields.referrer')" prop="loginName">
+            <el-input v-model="form.referrerLoginName" />
+          </el-form-item>
+        </el-row>
+        <div class="dialog-footer">
+          <el-button @click="uiControl.dialogVisible = false">{{ t('fields.cancel') }}</el-button>
+          <el-button type="primary" @click="submit">{{ t('fields.confirm') }}</el-button>
+        </div>
+      </el-form>
+    </el-dialog>
     <el-card class="box-card" shadow="never" style="margin-top: 40px">
       <template #header>
         <div class="clearfix">
@@ -99,6 +127,11 @@
         </el-table-column>
         <el-table-column prop="todayRegCount" :label="t('fields.todayRegCount')" width="100" />
         <el-table-column prop="yesterdayRegCount" :label="t('fields.yesterdayRegCount')" width="100" />
+        <el-table-column :label="t('fields.operate')" align="center" fixed="right" min-width="120">
+          <template #default="scope" v-if="hasPermission(['sys:member-refer-pak:change-referrer'])">
+            <el-button icon="el-icon-edit" size="mini" type="success" @click="showEditDialog(scope.row)">{{ t('fields.changeReferrer') }}</el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -115,7 +148,8 @@
 <script setup>
 import { computed, reactive, ref, onMounted } from 'vue'
 import {
-  getPakMemberReferParent
+  getPakMemberReferParent,
+  changeMemberReferrer
 } from '../../../api/member-refer-event'
 import { getSiteListSimple } from '../../../api/site'
 import { hasPermission } from '../../../utils/util'
@@ -123,6 +157,8 @@ import { useStore } from '../../../store'
 import { TENANT } from '../../../store/modules/user/action-types'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import { required } from "@/utils/validate";
 
 const router = useRouter()
 const { t } = useI18n()
@@ -130,10 +166,18 @@ const store = useStore()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const site = ref(null)
 const table = ref(null)
+const formRef = ref(null);
 const siteList = reactive({
   list: [],
 })
 let timeZone = null
+
+const form = reactive({
+  memberId: null,
+  siteId: null,
+  loginName: null,
+  referrerLoginName: null,
+});
 
 const uiControl = reactive({
   dialogVisible: false,
@@ -209,6 +253,32 @@ function changePage(page) {
 async function loadSites() {
   const { data: site } = await getSiteListSimple()
   siteList.list = site.filter(e => e.id === 11)
+}
+
+async function showEditDialog(row) {
+  uiControl.dialogTitle = t('fields.changeReferrer')
+  uiControl.dialogVisible = true
+  form.memberId = row.id
+  form.siteId = row.siteId
+  form.loginName = row.loginName
+  form.referrerLoginName = null
+}
+
+const formRules = reactive({
+  siteId: [required(t('message.validateSiteRequired'))],
+  memberId: [required(t('message.validateMemberRequired'))],
+  referrerLoginName: [required(t('message.validateReferrerRequired'))],
+})
+
+function submit() {
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await changeMemberReferrer(form.siteId, form.memberId, form.referrerLoginName);
+      uiControl.dialogVisible = false
+      await loadMembers()
+      ElMessage({ message: t('message.editSuccess'), type: "success" });
+    }
+  });
 }
 
 onMounted(async () => {

@@ -1812,6 +1812,7 @@ export default {
     upper: '上限',
     addMemberLotteryRecord: '新增会员彩票记录',
     addFakeLotteryRecord: '新增假彩票记录',
+    changeReferrer: '更改推荐人',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
