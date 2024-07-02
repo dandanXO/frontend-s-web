@@ -50,6 +50,13 @@
               {{ copybtntxt3 }}
             </button>
           </div>
+          <div class="linebox" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
+            <span>备注：</span>
+            <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
+            <button @blur="blurCode" @click="copyMessage('5')" class="common-btn">
+              {{ copybtntxt5 }}
+            </button>
+          </div>
         </div>
       </div>
       <div class="deposit-container" v-else>
@@ -207,11 +214,13 @@ const subMsg1 = ref();
 const subMsg2 = ref();
 const subMsg3 = ref();
 const subMsg4 = ref();
+const subMsg5 = ref();
 const copybtntxt0 = ref("复制");
 const copybtntxt1 = ref("复制");
 const copybtntxt2 = ref("复制");
 const copybtntxt3 = ref("复制");
 const copybtntxt4 = ref("复制");
+const copybtntxt5 = ref("复制");
 const copyMessage = (position) => {
   let copyText = null;
   copyText = eval(`subMsg${position}.value.innerText`);
@@ -226,7 +235,7 @@ const copyMessage = (position) => {
 
   // Remove the temporary textarea element
   document.body.removeChild(tempTextarea);
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt[position].value = "已复制";
   // copyText.select()
   // document.execCommand("copy")
@@ -234,7 +243,7 @@ const copyMessage = (position) => {
 };
 
 const blurCode = () => {
-  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4];
+  const copybtntxt = [copybtntxt0, copybtntxt1, copybtntxt2, copybtntxt3, copybtntxt4, copybtntxt5];
   copybtntxt.forEach((element) => {
     element.value = "复制";
   });
