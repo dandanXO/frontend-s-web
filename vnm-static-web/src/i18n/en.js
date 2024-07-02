@@ -117,6 +117,7 @@ export default {
     bankAcc: "Bank Account",
     backCard: "Account number",
     depositAmount: "amount",
+    remark: "Remark",
     branch: "Branch",
     submitSuccess: "Submit successful",
     updateSuccess: "Update successful",

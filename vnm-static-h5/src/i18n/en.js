@@ -584,6 +584,8 @@ export default {
     dv_submit: "Submit",
     dv_copy: "Copy",
     dv_copied: "Copied",
+    dv_branch: "Branch",
+    dv_remark: "Remark",
 
     // affiliate
     affiliate_title: "Affiliate program",
