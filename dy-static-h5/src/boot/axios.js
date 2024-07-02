@@ -28,7 +28,7 @@ const eventapi = axios.create({ baseURL: evtApi });
 
 function getInitApi(apiLinks, urlLsName) {
   var successRstUrl = localStorage.getItem(urlLsName);
-  if (successRstUrl) {
+  if (successRstUrl && !isInApp()) {
     axios
       .get(successRstUrl + "/ping")
       .then((res) => {
@@ -51,6 +51,11 @@ function getInitApi(apiLinks, urlLsName) {
       var initApi = apiLists[getRndInteger(0, apiLists.length)];
     }
 
+    if (isInApp()) {
+      localStorage.setItem(urlLsName, initApi);
+      return initApi;
+    }
+
     axios.get(initApi + "/ping").then((res) => {
       console.log(res);
       if (res.status === 200) {
@@ -61,6 +66,21 @@ function getInitApi(apiLinks, urlLsName) {
     });
     return initApi;
   }
+}
+
+function isInApp() {
+  if (
+    window.location.pathname === "/vip" ||
+    window.location.pathname === "/viptest" ||
+    window.location.pathname === "/promotion" ||
+    window.location.pathname === "/deposit" ||
+    window.location.pathname === "/deposittest" ||
+    window.location.pathname === "/invitefriend" ||
+    window.location.pathname === "/privilege/invite"
+  ) {
+    return true;
+  }
+  return false;
 }
 
 export default boot(({ app, router }) => {

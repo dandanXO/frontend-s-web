@@ -67,7 +67,7 @@
             </div>
             <div class="amt" @click="getBalance">
               {{ !isLoadingBalance ? mainWallet : "加载中..." }}
-              <RiRefreshLine />
+              <img class="svg" src="~assets/account/refresh-line.svg" />
             </div>
           </div>
           <div class="right-sect">
@@ -313,12 +313,10 @@ import { defineComponent, ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { userStore } from "stores/index";
 import { useRouter } from "vue-router";
 // import { App } from "@capacitor/app";
-import { RiRefreshLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 
 export default defineComponent({
   name: "AccountPage",
-  components: { RiRefreshLine },
   setup() {
     const router = useRouter();
     const store = userStore();
@@ -612,7 +610,7 @@ export default defineComponent({
     align-items: center;
     gap: 10px;
 
-    svg {
+    img {
       height: 20px;
       fill: #434343;
     }

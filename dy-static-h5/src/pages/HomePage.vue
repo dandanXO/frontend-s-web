@@ -1521,7 +1521,6 @@ import { useQuasar, Platform } from "quasar";
 import { userStore } from "stores/index";
 import GameModal from "components/modal/GameModal";
 import MarqueeText from "vue-marquee-text-component";
-import { RiVolumeUpLine } from "vue-remix-icons";
 
 import { useUI } from "stores/ui";
 import { Scrollbar } from "swiper";
@@ -1533,7 +1532,6 @@ import { Thumbs, Controller, Grid } from "swiper";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/scrollbar";
-import * as _ from "lodash";
 
 SwiperCore.use([Keyboard, Mousewheel, A11y, HashNavigation, Navigation, Pagination]);
 
@@ -2080,8 +2078,8 @@ export default defineComponent({
             }
           });
 
-          slot.value = _.orderBy(slot.value, ["num"], ["asc"]);
-          hotgames.value = _.orderBy(hotgames.value, ["order"], ["asc"]);
+          slot.value.sort((a, b) => a.num - b.num);
+          hotgames.value.sort((a, b) => a.order - b.order);
 
           // console.log(hotgames.value);
         })
