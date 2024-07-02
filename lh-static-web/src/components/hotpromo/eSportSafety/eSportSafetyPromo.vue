@@ -170,7 +170,7 @@ import { userStore } from "@/store";
 import {
   getUpcomingESportMatches,
   getESportInsurancePlatformOptions,
-  submitESportInsuranceForm,
+  submitESportInsurance,
   getESportInsuranceRecords
 } from "@/api/promotion/eSportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
@@ -244,7 +244,8 @@ const loadESportPlatformOptions = () => {
 };
 
 const applyESportInsurance = () => {
-  toggleESportInsuranceModal(true);
+  // toggleESportInsuranceModal(true);
+  submitForm();
 };
 
 const toggleESportInsuranceModal = (status) => {
@@ -288,36 +289,25 @@ const init = () => {
 };
 
 const submitForm = async (elForm) => {
-  if (!elForm) return;
+  isSubmitting.value = true;
+  const res = await submitESportInsurance();
 
-  await elForm.validate(async (valid) => {
-    if (valid) {
-      isSubmitting.value = true;
-      const params = {
-        gameMatchId: eSportInsuranceFormData.gameMatchId,
-        transactionId: eSportInsuranceFormData.transactionId,
-        platform: eSportInsuranceFormData.platform
-      };
-      const res = await submitESportInsuranceForm(params);
-
-      if (res.code === 0) {
-        ElMessage.success({
-          type: "success",
-          message: "提交成功"
-        });
-        eSportInsuranceFormRef.value.resetFields();
-        isESportInsuranceModalVisible.value = false;
-        isSubmitting.value = false;
-      } else {
-        ElMessage.error({
-          type: "error",
-          message: res.message
-        });
-        isSubmitting.value = false;
-      }
-    }
-  });
-};
+  if (res.code === 0) {
+    ElMessage.success({
+      type: "success",
+      message: "提交成功"
+    });
+    // eSportInsuranceFormRef.value.resetFields();
+    // isESportInsuranceModalVisible.value = false;
+    isSubmitting.value = false;
+  } else {
+    ElMessage.error({
+      type: "error",
+      message: res.message
+    });
+    isSubmitting.value = false;
+  }
+}
 
 const $swiper = ref(null);
 

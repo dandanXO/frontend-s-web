@@ -44,9 +44,9 @@
         <div>{{ $t("stickySidebar.backToTop") }}</div>
       </div>
     </div>
-    <!-- <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+     <div class="red-envelope" v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
       <img src="../../assets/home/red_envelope.png" />
-    </div> -->
+    </div>
     
 
   <GameModal ref="gameMenu" />
@@ -64,7 +64,7 @@
           <img :src="`${imgURL}/game/${game.icon}`" />
         </div>
       </div> -->
-      <el-carousel height="130px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
+      <el-carousel height="100px" :indicator-position="gamePromo.length > 1 ? 'outside' : 'none'" arrow="never" :autoplay="true" :interval="3000">
         <el-carousel-item v-for="(game, i) in gamePromo" :key="i">
             <div @click="openGame(game.platform, game.platform, game.code)" class="rocket-container">
               <div class="rocket"><img :src="`${imgURL}/game/${game.icon}`" /></div>
@@ -255,20 +255,18 @@ export default defineComponent({
     onMounted(() => {
       getAppDownloadUrl();
       getCheckRedPacket();
-      if (store.token && store.memberType === 'TEST') {
-        initFloating();
-      }
+      initFloating();
     });
 
 
-    watch(
-      () => store.token,
-      () => {
-        if (store.token && store.memberType === 'TEST') {
-          initFloating();
-        }
-      }
-    );
+    // watch(
+    //   () => store.token,
+    //   () => {
+    //     if (store.token) {
+    //       initFloating();
+    //     }
+    //   }
+    // );
     return {
       store,
       customerHovered,
@@ -325,7 +323,7 @@ export default defineComponent({
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 1px solid #333333;
+    color: #aaaaaa;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -33,8 +33,8 @@
           :key="i"
           v-for="(item, i) in list"
         >
-          <el-row :gutter="10" justify="space-between" align="middle">
-            <el-col :span="6" style="position: relative">
+          <el-row :gutter="10" justify="space-between" align="middle" class="node-elrow">
+            <el-col :span="6" style="position: relative;">
               <!-- eslint-disable -->
               <img
                 v-if="item.icon === 'OFFLINE' || item.icon === 'test'"
@@ -837,8 +837,13 @@ $node-color: #309799;
     background: #e9f4f5;
     color: $node-color;
 
+    .node-elrow{
+      width: 320px;
+    }
+
     img {
-      width: 100%;
+      width: 80px;
+      height: 80px;
     }
 
     .node-text {

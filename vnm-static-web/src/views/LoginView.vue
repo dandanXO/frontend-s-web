@@ -12,8 +12,7 @@
             <AccountLogin page-type="view" />
           </el-tab-pane>
           <el-tab-pane label="手机登录">
-            <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70"
-                     size="large">
+            <el-form ref="mobileLoginRef" :rules="mobileLoginRules" :model="loginForm" label-width="70" size="large">
               <div class="light-bg form-field">
                 <img class="form-field-icon" src="@/assets/home/auth/phone-icon.png" />
                 <el-form-item tabindex="1" label="手机号" prop="phoneNumber">
@@ -26,14 +25,23 @@
                 <el-form-item tabindex="2" label="验证码" prop="code">
                   <el-row :gutter="10" style="justify-content: center; align-items: center">
                     <el-col :span="10">
-                      <el-input v-model="loginForm.code" label="验证码" placeholder="手机验证码"
-                                @keyup.enter="phoneLogin" />
+                      <el-input
+                        v-model="loginForm.code"
+                        label="验证码"
+                        placeholder="手机验证码"
+                        @keyup.enter="phoneLogin"
+                      />
                     </el-col>
                     <el-col :span="14">
-                      <el-button v-if="loginCountdown === 0" @click="openCaptchaForm('LOGIN')"
-                                 size="small" color="#3bafda" style="width:100%;min-height:30px; font-size:12px;"
-                                 class="blue-bg">
-                        {{ $t('personal.getVerificationCode') }}
+                      <el-button
+                        v-if="loginCountdown === 0"
+                        @click="openCaptchaForm('LOGIN')"
+                        size="small"
+                        color="#3bafda"
+                        style="width: 100%; min-height: 30px; font-size: 12px"
+                        class="blue-bg"
+                      >
+                        {{ $t("personal.getVerificationCode") }}
                       </el-button>
                       <el-button v-else disabled size="small" class="blue-bg">
                         已发送（倒数{{ loginCountdown }}秒）
@@ -44,40 +52,51 @@
               </div>
 
               <div class="agreement-and-forget-pass">
-                <div class="font-gray">登录即代表同意并遵守《用户协议》</div><div><router-link to="/forgotPwd">忘记密码</router-link></div>
+                <div class="font-gray">登录即代表同意并遵守《用户协议》</div>
+                <div><router-link to="/forgotPwd">忘记密码</router-link></div>
               </div>
 
               <el-button :loading="loadingBtn" size="large" class="blue-bg primary-btn" @click="phoneLogin">
                 登录
               </el-button>
-
-
             </el-form>
 
             <div class="flex-div">
-              <div style="visibility:hidden"><router-link to="/">先去逛逛</router-link></div>
-              <div style="text-align: left;"  class="font-gray">没有账号？<router-link to="/register">去注册</router-link></div>
+              <div style="visibility: hidden"><router-link to="/">先去逛逛</router-link></div>
+              <div style="text-align: left" class="font-gray">
+                没有账号？
+                <router-link to="/register">去注册</router-link>
+              </div>
             </div>
           </el-tab-pane>
         </el-tabs>
 
-        <el-dialog v-model="captchaDialogVisible" title="验证码" width="50%" align-center style="max-width: 500px"
-                   :close-on-click-modal="false" @keydown.enter.prevent>
+        <el-dialog
+          v-model="captchaDialogVisible"
+          title="验证码"
+          width="50%"
+          align-center
+          style="max-width: 500px"
+          :close-on-click-modal="false"
+          @keydown.enter.prevent
+        >
           <el-form ref="captchaRef" :rules="captchaRules" :model="captchaForm" label-width="70" size="large">
             <div class="light-bg form-field">
               <img class="form-field-icon" src="@/assets/home/auth/verification-icon.png" />
               <el-form-item tabindex="3" label="验证码" prop="captchaCode">
-                <div style="display:flex;width:100%;">
-                  <el-input v-model="captchaForm.captchaCode" label="验证码" placeholder="验证码"
-                            @keyup.enter="sendOtp" />
-                  <img style="width:150px;" :src="verificationImg" @click="getCode" />
+                <div style="display: flex; width: 100%">
+                  <el-input
+                    v-model="captchaForm.captchaCode"
+                    label="验证码"
+                    placeholder="验证码"
+                    @keyup.enter="sendOtp"
+                  />
+                  <img style="width: 150px" :src="verificationImg" @click="getCode" />
                 </div>
               </el-form-item>
             </div>
 
-            <el-button size="large" class="blue-bg primary-btn" @click="sendOtp">
-              发送
-            </el-button>
+            <el-button size="large" class="blue-bg primary-btn" @click="sendOtp">发送</el-button>
           </el-form>
         </el-dialog>
       </div>
@@ -101,36 +120,34 @@ const captchaRules = {
   captchaCode: [
     {
       required: true,
-      message: t('placeholder.captchaReq'),
+      message: t("placeholder.captchaReq"),
       trigger: "blur"
     },
     {
       min: 4,
       max: 4,
-      message: t('placeholder.min4'),
+      message: t("placeholder.min4"),
       trigger: "blur"
     }
   ]
 };
 
-
 const isValidPhone = (r, v) => {
   const phonePattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/;
   if (!v) {
-    return Promise.reject(t('placeholder.mobileNo'));
+    return Promise.reject(t("placeholder.mobileNo"));
   } else if (phonePattern.test(v)) {
     return Promise.resolve();
   } else {
-    return Promise.reject(t('placeholder.validMobileNo'));
+    return Promise.reject(t("placeholder.validMobileNo"));
   }
 };
-
 
 const mobileLoginRules = {
   phoneNumber: [
     {
       required: true,
-      message: t('placeholder.mobileNo'),
+      message: t("placeholder.mobileNo"),
       trigger: "blur"
     },
     {
@@ -138,16 +155,16 @@ const mobileLoginRules = {
       trigger: "blur"
     }
   ],
-  code:[
+  code: [
     {
       required: true,
-      message: t('placeholder.captchaReq'),
+      message: t("placeholder.captchaReq"),
       trigger: "blur"
     },
     {
       min: 6,
       max: 6,
-      message: t('placeholder.min6'),
+      message: t("placeholder.min6"),
       trigger: "blur"
     }
   ]
@@ -163,7 +180,6 @@ const captchaForm = reactive({
   captchaCode: "",
   codeId: ""
 });
-
 
 const passForm = reactive({
   email: ""
@@ -195,36 +211,35 @@ const sendOtp = async () => {
       captchaCode: captchaForm.captchaCode,
       codeId: captchaForm.codeId
     };
-    sendSms(smsDetail)
-      .then((response) => {
-        if (response.code == 0) {
-          loginForm.smsCodeId = response.data.codeId;
-          ElMessage({
-            type: "success",
-            message: t('common.sendPhoneVerificationSuccess')
-          });
-          captchaDialogVisible.value = false;
-          getCode();
-          loginCountdown.value = 60;
-          countdownTimer("LOGIN");
-        } else {
-          ElMessage.error(response.message);
-          getCode();
-        }
-      });
+    sendSms(smsDetail).then((response) => {
+      if (response.code == 0) {
+        loginForm.smsCodeId = response.data.codeId;
+        ElMessage({
+          type: "success",
+          message: t("common.sendPhoneVerificationSuccess")
+        });
+        captchaDialogVisible.value = false;
+        getCode();
+        loginCountdown.value = 60;
+        countdownTimer("LOGIN");
+      } else {
+        ElMessage.error(response.message);
+        getCode();
+      }
+    });
   }
 };
 
 const openCaptchaForm = (type) => {
-  mobileLoginRef.value.validateField("phoneNumber").then(() => {
-    captchaForm.captchaCode = "";
-    captchaForm.type = type;
-    captchaDialogVisible.value = true;
-    getCode();
-  }).catch((err) => {
-
-  })
-
+  mobileLoginRef.value
+    .validateField("phoneNumber")
+    .then(() => {
+      captchaForm.captchaCode = "";
+      captchaForm.type = type;
+      captchaDialogVisible.value = true;
+      getCode();
+    })
+    .catch((err) => {});
 };
 
 const phoneLogin = () => {
@@ -234,7 +249,7 @@ const phoneLogin = () => {
 
     mobileLoginRef.value.validate().then(() => {
       if (!loginForm.smsCodeId) {
-        ElMessage.error('请先获取验证码');
+        ElMessage.error("请先获取验证码");
         return;
       }
       store
@@ -254,9 +269,10 @@ const phoneLogin = () => {
             loginForm.phoneNumber = null;
             loginForm.code = null;
           }
-        }).catch((error) => {
-        console.log(error.message);
-      });
+        })
+        .catch((error) => {
+          console.log(error.message);
+        });
     });
   })();
   loadingBtn.value = false;
@@ -307,8 +323,8 @@ onMounted(() => {
 }
 
 .card-bg {
-  background-color: #F7F9FC;
-  box-shadow: 0px 0px 10px 0px #0000001A;
+  background-color: #f7f9fc;
+  box-shadow: 0px 0px 10px 0px #0000001a;
   padding: 50px;
   border-radius: 10px;
 }
@@ -328,6 +344,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-top: 50px !important;
   position: relative;
   width: 100%;
 
@@ -356,10 +373,10 @@ onMounted(() => {
   justify-content: space-between;
 
   .highlight {
-    color: #5E8AEE;
+    color: #5e8aee;
   }
 }
-.flex-div{
+.flex-div {
   margin-top: 25px;
   display: flex;
   align-items: center;
@@ -394,7 +411,6 @@ onMounted(() => {
     display: none;
   }
 
-
   .el-tabs__nav {
     border-radius: 30px;
     box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
@@ -407,7 +423,7 @@ onMounted(() => {
   .el-tabs--top .el-tabs__item.is-top {
     font-size: 14px;
     border-radius: 30px;
-    color: #468CFF;
+    color: #468cff;
     // box-shadow: 0px -1.7px 6.09px 0px #a2bff4 inset;
     display: flex;
     width: 150px;
@@ -431,4 +447,3 @@ onMounted(() => {
   }
 }
 </style>
-  

@@ -445,6 +445,7 @@ function handleChangePayType() {
 }
 
 function showDialog(type) {
+  resetBankAndCurrency()
   clearCheckAll()
   if (type === 'CREATE') {
     if (bankForm.value) {

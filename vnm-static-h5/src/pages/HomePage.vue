@@ -316,7 +316,6 @@
       <div
         @click="selectTab('casual')"
         class="game-platform btn-pointer"
-        v-if="store.memberType === 'TEST'"
         id="casual-platform"
       >
         <template v-if="tab === 'casual'">
@@ -524,7 +523,7 @@
         </template>
       </div>
 
-      <div class="game-lists fade-in-image" id="casual-lists" v-show="store.memberType === 'TEST'">
+      <div class="game-lists fade-in-image" id="casual-lists">
         <template v-for="(item, index) in casuals" :key="index">
           <div
             class="platform-block"
@@ -687,7 +686,12 @@
 
 
 
-  
+
+  <q-page-sticky position="bottom-right" :offset="packetPos" style="z-index: 999">
+    <div v-if="store && store.token && isRedPacketShow" @click="getRedEnvelope">
+      <img src="../assets/images/home/red_envelope.png" class="red-envelope" />
+    </div>
+  </q-page-sticky>
 
   <q-page-sticky v-if="showRocket" position="bottom-right" :offset="fabPos" style="z-index: 999">
     <div class="rebates-absolute" :disable="draggingRocketFab" v-touch-pan.prevent.mouse="moveRocketFab">
@@ -710,7 +714,7 @@
           @click="playGame(game.platform, game.platform, game.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
+            <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/game/${game.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -737,7 +741,7 @@
           @click="gotoFloatPromo(promo.code)"
         >
           <div class="rocket-wrapper">
-            <div class="rocket"><img style="width: 100px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
+            <div class="rocket"><img style="width: 75px" :src="`${imgURLFloat}/promo/${currentPromo.icon}`" /></div>
           </div>
         </q-carousel-slide>
       </q-carousel>
@@ -1268,17 +1272,10 @@ export default defineComponent({
       }
       const item = JSON.parse(itemStr);
       const now = new Date();
-      api
-        .get("/member/ads-popout")
-        .then((res) => {
-          // debugger;
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            localStorage.removeItem(key);
-            // isImportantAnnoucementModal.value = true;
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
@@ -1667,9 +1664,7 @@ export default defineComponent({
       if (Platform.is.android && Platform.is.capacitor) {
         initOneSignal();
       }
-      if (store.token && store.memberType === 'TEST') {
         initFloating();
-      }
 
       // eventapi.get("/redPacketVip/nextRainTime?promoCode=vi-mualixi-redpacket").then((resp) => {
       //   console.log(resp);
@@ -1928,9 +1923,9 @@ export default defineComponent({
 
     const showRocket = ref(false);
     const checkShowRocket = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showRocket.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showRocket.value = true;
+      // }
     };
 
     const hideRocket = () => {
@@ -1940,9 +1935,9 @@ export default defineComponent({
 
     const showFloatPromo = ref(false);
     const checkFloatPromo = () => {
-      if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
-        showFloatPromo.value = true;
-      }
+      // if (store.memberType === "TEST" || store.memberType === "PROMO_TEST") {
+      //   showFloatPromo.value = true;
+      // }
       if (gamePromo.length === 0) {
         promoPos.value = [18, 18]
       }
@@ -1951,8 +1946,9 @@ export default defineComponent({
     const hideFloatPromo = () => {
       showFloatPromo.value = false;
     };
-    const fabPos = ref([18, 18]);
-    const promoPos = ref([18, 128]);
+    const fabPos = ref([18, 0]);
+    const promoPos = ref([18, 108]);
+    const packetPos= ref([120, 18]);
     const draggingRocketFab = ref(false);
     const draggingPromoFab = ref(false);
 
@@ -2101,6 +2097,7 @@ export default defineComponent({
       showRocket,
       checkShowRocket,
       fabPos,
+      packetPos,
       draggingRocketFab,
       draggingPromoFab,
       moveRocketFab,
@@ -3007,12 +3004,12 @@ export default defineComponent({
   height: 14px;
   min-height: 14px;
   border-radius: 50%;
-  border: 1px solid #333333;
+  color: #aaaaaa;
   display: flex;
   justify-content: center;
   align-items: center;
   line-height: 1;
-  font-size: 6px;
+  font-size: 10px;
   font-weight: bold;
   margin-left: 24px;
   position: absolute;

@@ -72,7 +72,7 @@ body {
 }
 
 .main-content {
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
   padding-bottom: 20px;
 }
@@ -260,7 +260,7 @@ svg {
 
 .q-tab {
   background: transparent;
-  color: $text-footer;
+  // color: $text-footer;
   font-weight: 700;
 
   &--active {
@@ -365,21 +365,6 @@ svg {
 
 .text-brand {
   color: $header-color;
-}
-
-.bg-brand {
-  // background-image: $linear-bg-1;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 18px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn2-blue.svg") no-repeat center center;
 }
 
 .menu-title {
@@ -572,21 +557,6 @@ svg {
   border-radius: 10px;
 }
 
-.third-btn {
-  // background: $linear-bg-4;
-  height: 70px;
-  width: 200px;
-  background-size: contain;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 12px;
-  padding-bottom: 5px;
-  margin: auto 10px;
-  background: url("../assets/images/pages-modal/btn1-gray.svg") no-repeat center center;
-}
-
 .close-btn {
   background: $linear-bg-gray;
 }
@@ -646,21 +616,6 @@ input:internal-autofill-selected {
     0px -0.4545rem 0.4545rem 0px rgba(171, 16, 99, 0.76) inset;
 }
 
-.btn-w-blue {
-  background-image: url("../assets/home/btn-blue.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  width: 104px;
-  height: 46px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  padding-bottom: 6px;
-}
-
 .btn-lg {
   min-height: 2.5rem;
   min-width: 8.45rem;
@@ -714,6 +669,58 @@ input:internal-autofill-selected {
   // }
 }
 
+.page-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  height: 100%;
+
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-height: 100%;
+    overflow: auto;
+  }
+
+  .action-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    border-top: 1px solid #51515173;
+    gap: 10px;
+    align-items: center;
+
+    &.vertical {
+      flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+      margin: 5px auto 10px;
+      padding: 10px 5px 5px;
+    }
+  
+    .primary-button {
+      width: 150px;
+
+      @media (max-width: 600px) {
+        width: 120px;
+        height: 30px;
+        min-width: 120px;
+        font-size: small;
+      }
+  
+      @media (max-width: 400px) {
+        width: 100px;
+        height: 25px;
+        min-width: 100px;
+        font-size: x-small;
+      }
+    }
+  }
+}
+
 .form-item {
   display: flex;
   flex-direction: column;
@@ -723,8 +730,10 @@ input:internal-autofill-selected {
 .form-wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 500px;
+  justify-content: flex-start;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
 
   .form-template {
     display: grid;
@@ -742,7 +751,8 @@ input:internal-autofill-selected {
 }
 
 .primary-button {
-  width: 124px;
+  min-width: 124px;
+  width: fit-content;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -797,4 +807,54 @@ input:internal-autofill-selected {
     background: url("../assets/home/btn-red.svg") no-repeat center center;
     background-size: cover;
   }
+}
+
+.cs-web-id.csweb-btn {
+  background: transparent !important;
+  border: none !important;
+  width: 120px !important;
+  height: auto !important;
+
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+
+  img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 405 / 283 !important;
+  }
+
+  @media (max-width: 600px) {
+    width: 80px !important;
+  }
+}
+
+.telegram-sticky {
+  img.telegram-sticky-img {
+    width: 60px !important;
+    height: auto !important;
+  }
+
+  @media (max-width: 600px) {
+    margin: 105px 35px !important;
+
+    img.telegram-sticky-img {
+      width: 40px !important;
+    }
+  }
+}
+
+.floating {
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  0% { transform: translate(0,  0px); }
+  50%  { transform: translate(0, 3px); }
+  100%   { transform: translate(0, 0px); }    
 }

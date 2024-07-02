@@ -25,6 +25,7 @@ export default {
         liveSupport: "زندہ حمایت",
         feedback: "تاثرات",
         telegram: "Telegram",
+        tikTok: "Tik Tok",
         whatsapp: "Whatsapp",
         language: "زبان"
       },
@@ -485,43 +486,159 @@ export default {
       newUserError: "براہ کرم اپنی ذاتی تفصیلات بھریں"
     }
   },
-  shareView: {
+  rewardView: {
     title: "اِنعام کی رقم",
-    summary: {
-      income: "میری کل آمدنی",
-      invitees: "میرے کل دعوتیوں کی تعداد"
+    tabs: {
+      reward: "انعام",
+      teamManagement: "ٹیم کا انتظام",
+      teamBetting: "ٹیم بیٹنگ",
+      profitAndLoss: "صارف کا منافع اور نقصان"
     },
-    inviteLink: {
-      title: "دوستوں کو لنک کے ذریعے دعوت دیں",
-      description: "دعوتی بونس کیسے حاصل کریں۔",
-      step1: "دوستوں کو دعوتی لنک کے ذریعے مدعو کریں۔",
-      step2: "رجسٹریشن کے لئے لنک استعمال کریں۔",
-      step3: "رجسٹریشن کے بعد جمع کروائیں۔",
-      copyButton: "لنک کاپی کریں",
-      copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
-      copyFail: "لنک کاپی کرنے میں ناکامی"
-    },
-    earnYesterday: {
-      title: "کل کی موجودہ میزان",
-      table: {
-        header: {
-          player: "کھلاڑی",
-          money: "پیسے "
+    reward: {
+      summary: {
+        income: "میری کل آمدنی",
+        invitees: "میرے کل دعوتیوں کی تعداد"
+      },
+      inviteLink: {
+        title: "دوستوں کو لنک کے ذریعے دعوت دیں",
+        description: "دعوتی بونس کیسے حاصل کریں۔",
+        step1: "دوستوں کو دعوتی لنک کے ذریعے مدعو کریں۔",
+        step2: "رجسٹریشن کے لئے لنک استعمال کریں۔",
+        step3: "رجسٹریشن کے بعد جمع کروائیں۔",
+        copyButton: "لنک کاپی کریں",
+        copySuccess: "لنک کلپ بورڈ میں کاپی کر لیا گیا ہے",
+        copyFail: "لنک کاپی کرنے میں ناکامی",
+        shareTitle: "B9GAME شیئر کریں اور کمائیں",
+        shareText:
+          "B9GAME شیئر کریں اور کمائیں:\nہر دوست کے لئے 500 روپے تک کمائیں۔\nاپنے پہلے ڈپازٹ پر 5% کی رعایت حاصل کریں۔\nتمام بیٹس پر طویل مدتی 0.6% کی رعایت کا لطف اٹھائیں۔\nابھی ایپ ڈاؤن لوڈ کریں اور ایک خفیہ نقد انعام حاصل کریں!\n{url}"
+      },
+      earnYesterday: {
+        title: "کل کی موجودہ میزان",
+        table: {
+          header: {
+            player: "کھلاڑی",
+            money: "پیسے "
+          }
         }
+      },
+      info: {
+        bet: "شرط لگانا",
+        eligibleRefer: "اہل ریفر",
+        invite: "دعوت دینا",
+        topUp: "تاپ اپ"
+      },
+      bonus: {
+        table: {
+          header: {
+            friendCount: "دوستوں کی تعداد",
+            inviteBonus: "دعوتی بونس"
+          }
+        }
+      },
+      shareModal: {
+        title: "شیئر کریں اور کمائیں"
       }
     },
-    info: {
-      bet: "شرط لگانا",
-      eligibleRefer: "اہل ریفر",
-      invite: "دعوت دینا",
-      topUp: "تاپ اپ"
-    },
-    bonus: {
+    teamManagement: {
+      searchField: {
+        downLine: {
+          all: "سبھی ڈاؤن لائنز",
+          direct: "سیدھے ڈاؤن لائنز"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
       table: {
-        header: {
-          friendCount: "دوستوں کی تعداد",
-          inviteBonus: "دعوتی بونس"
-        }
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
+        type: "انواع",
+        username: "صارف کا نام",
+        emark: "اي ماركس",
+        upLine: "اَپ لائن ایجنٹ",
+        registrationDate: "رجسٹریشن تاریخ",
+        balance: "بیلنس",
+        lastLogin: "آخری لاگ ان وقت",
+        lastDeposit: "آخری جمع وقت",
+        todayRegistercount: "آج کی رجسٹریشن کی تعداد",
+        yesterdayRegisterCount: "کل کی رجسٹریشن کی تعداد"
+      }
+    },
+    teamBetting: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل"
+        },
+        gameType: {
+          label: "کھیل کی قسم",
+          options: {
+            slot: "اسلام و علیکم",
+            live: "زندہ کیسینو",
+            sport: "کھیل",
+            fish: "مچھلی",
+            poker: "پوکر"
+          }
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        vendor: "فروخت کار",
+        gameType: "کھیل کی قسم",
+        betAmount: "شرط رقم",
+        winning: "فتح",
+        validBet: "درست شرط",
+        balance: "فتح/نقصان",
+        rounds: "راؤنڈ",
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
+      }
+    },
+    profitAndLoss: {
+      searchField: {
+        date: {
+          today: "آج",
+          yesterday: "کل",
+          "7day": "7 دن"
+        },
+        username: {
+          placeholder: "صارف کا نام"
+        },
+        searchButton: "تلاش"
+      },
+      table: {
+        username: "صارف کا نام",
+        deposit: "جمع",
+        withdraw: "واپسی",
+        bonus: "انعام",
+        validBet: "معتبر شرط",
+        balance: "فتح/نقصان",
+        rebate: "کھلاڑی کی ریبیٹ",
+        referral: "رجحان",
+        profitAndLoss: "منافع اور نقصان",
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی",
+        depositCount: "جمع کرنے کی تعداد",
+        ftdAmount: "FTD رقم",
+        ftdCount: "FTD تعداد"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا",
+        betAmount: "بیٹ کی رقم",
+        depositCount: "جمع کرنے کی تعداد"
       }
     }
   },
@@ -668,6 +785,16 @@ export default {
         bonus: "بونس"
       }
     }
+  },
+  promo: {
+    all: "سب",
+    earn: "کمائیں",
+    hot: "مقبول",
+    new_user: "نیا صارف",
+    sports: "کھیل",
+    live: "لائیو",
+    slot: "الیکٹرانک",
+    vip: "وی آئی پی"
   },
   error: {
     101: "پلیٹ فارم نہیں ملا",

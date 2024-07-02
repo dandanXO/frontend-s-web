@@ -87,6 +87,7 @@
               </tr>
             </tbody>
           </table>
+          <div class="table-note">注：相同时间段比赛则以两场比赛总进球粒数派发红包雨</div>
         </div>
       </div>
     </div>
@@ -592,6 +593,12 @@ onMounted(() => {
 }
 ::v-global(.hongbaoyu-dialog .el-dialog__header) {
   border-bottom: 0 !important;
+}
+
+.table-note {
+  padding: 0;
+  margin:10px 0;
+  text-align: left;
 }
 </style>
 

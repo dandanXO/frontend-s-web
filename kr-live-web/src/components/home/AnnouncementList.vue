@@ -1,32 +1,34 @@
 <template>
     <q-intersection once @visibility="loadAnnouncement" transition-duration="1000">
-        <div class="news-section">
+        <div class="news-section" data-aos="zoom-in-up">
             <div class="news-title">
-                <div class="title-text">공지사항</div>
+                <div class="title-text">{{ $t('lang.menu_announcement') }}</div>
                 <router-link class="more-text" :to="store.hasToken() ? '/?page=announcement' : '/?page=login'">+
-                    더보기</router-link>
+                    {{ $t('lang.announcement_see_more') }}</router-link>
             </div>
-            <div class="news-item-box" v-if="isLoading" style="display:flex;justify-content:center;">
-                <q-spinner-gears size="2em" />
-            </div>
+            <template v-if="isLoading">
+                <q-skeleton class="news-item-box" v-for="(_item, index) in 5" :key="index" style="width:100%;" />
+            </template>
             <template v-else-if="announcementList.length > 0">
-                <div v-for="(item, index) in announcementList" :key="index" class="news-item-box">
-                    <div class="news-item-left">
-                        <div class="news-item-title" :title="item.title">
-                            [
-                            {{ item.title }}
-                            ] ※
-                            {{ item.content }}
-                            ※
+                <div style="max-height:500px;overflow:auto;">
+                    <div v-for="(item, index) in announcementList" :key="index" class="news-item-box">
+                        <div class="news-item-left">
+                            <div class="news-item-title" :title="item.title">
+                                [
+                                {{ item.title }}
+                                ] ※
+                                {{ item.content }}
+                                ※
+                            </div>
                         </div>
-                    </div>
-                    <div class="news-item-right">
-                        <div class="news-item-date">{{ item.createTime }}</div>
+                        <div class="news-item-right">
+                            <div class="news-item-date">{{ item.createTime }}</div>
+                        </div>
                     </div>
                 </div>
             </template>
             <div v-else class="news-item-box" style="justify-content: center;">
-                아직 콘텐츠가 없습니다
+                {{ $t('lang.announcement_no_content') }}
             </div>
         </div>
     </q-intersection>
@@ -56,9 +58,10 @@ const loadAnnouncement = () => {
 </script>
 
 <style lang="scss" scoped>
-.news-section {
-    margin-top: 20px;
-    padding: 0 16px;
+.news-section {    
+    max-width: 1400px;
+    width: 95%;
+    margin: 20px auto;
 }
 
 .news-split {
@@ -112,15 +115,8 @@ const loadAnnouncement = () => {
     }
 
     .more-text {
-        font-size: 14px;
-        line-height: 19.6px;
         color: #ff3c3c;
         cursor: pointer;
-
-        @media (min-width: 769px) {
-            font-size: 20px;
-            line-height: 28px;
-        }
     }
 }
 

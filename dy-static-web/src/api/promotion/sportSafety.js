@@ -12,6 +12,22 @@ export function submitSportInsuranceForm(params) {
   return server.EVENT.post("/game-match/submit", params);
 }
 
+export function submitSportInsurance() {
+  return server.EVENT.post("/game-match/submit/SPORT");
+}
+
 export function getSportInsuranceRecords(params) {
   return server.EVENT.get(`/game-match/records/${params.gameType}?size=${params.size}&current=${params.current}`);
+}
+
+export function getUpcomingCopaMatches() {
+  return server.EVENT.get("/game-match/upcoming/COPA");
+}
+
+export function getCopaPlatformOptions() {
+  return server.EVENT.get("/game-match/platform/COPA");
+}
+
+export function submitCopaForm() {
+  return server.EVENT.post("/game-match/submit/COPA", {});
 }
