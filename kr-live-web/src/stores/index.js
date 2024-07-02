@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
-import liff from "@line/liff";
 import { useUI } from "stores/ui";
 import moment from 'moment';
 

@@ -9,6 +9,7 @@
 // https://v2.quasar.dev/quasar-cli-webpack/quasar-config-js
 
 const ESLintPlugin = require("eslint-webpack-plugin");
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 const { configure } = require("quasar/wrappers");
 const process = require("process");
@@ -68,6 +69,12 @@ module.exports = configure(function (ctx) {
 
       chainWebpack(chain) {
         chain.plugin("eslint-webpack-plugin").use(ESLintPlugin, [{ extensions: ["js", "vue"] }]);
+      },
+
+      chainWebpack(chain) {
+        chain.plugin("moment-locales-webpack-plugin").use(MomentLocalesPlugin, [{
+          localesToKeep: ['ko', 'en'],
+      }]);
       }
     },
 
