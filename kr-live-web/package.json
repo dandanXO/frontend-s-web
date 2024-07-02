@@ -27,7 +27,6 @@
     "@fingerprintjs/fingerprintjs-pro-vue-v3": "1.4.0",
     "@ionic-native/screen-orientation": "^5.36.0",
     "@koas/v-hscroll": "^1.0.3",
-    "@line/liff": "^2.21.3",
     "@quasar/extras": "^1.0.0",
     "@vueuse/core": "^9.2.0",
     "aos": "^2.3.4",
