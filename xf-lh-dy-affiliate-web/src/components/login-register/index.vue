@@ -964,7 +964,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '15' || props.siteId === 15) {
+            if (props.siteId === '15' || props.siteId === 15 || props.siteId === '8' || props.siteId === 8) {
               if (step.value === 1) {
                 step.value = 2
                 return
