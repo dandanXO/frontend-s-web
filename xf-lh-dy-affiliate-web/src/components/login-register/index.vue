@@ -1317,9 +1317,9 @@ export default defineComponent({
         setLanguage('vi')
       }
       if (props.siteId === '15') {
-        currentSite.value.firstLiner = 'Start From KAKA Live'
+        currentSite.value.firstLiner = 'Bắt đầu với KAKA'
         currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
+          'trở thành một huyền thoại<br/>Hoặc trở thành nhà điếu văn của huyền thoại?'
         currentSite.value.logo = kakaLogo
         state.loginForm.site = 'KA2'
         setLanguage('vi')
@@ -1570,7 +1570,7 @@ a {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
       center;
   }
-  &.vi {
+  &.vi,  &.kaka {
     font-family: 'Roboto';
     .loginPage .right .top .log {
       font-family: 'Roboto';
@@ -1619,6 +1619,11 @@ a {
       }
     }
 
+    .inner{
+      max-width: 1300px;
+
+    }
+
     .common-btn {
       &:not(.default-btn) {
         background-color: var(--kaka-primary);
@@ -1626,6 +1631,23 @@ a {
       &.default-btn {
         border-color: var(--kaka-primary);
         color: var(--kaka-primary);
+      }
+    }
+
+    .loginPage {
+      max-width: 1300px;
+      .left {
+        flex:2;
+        .first-liner {
+          font-family: "Roboto",sans-serif;
+          margin-bottom: 15px;
+          width: 750px;
+          max-width: 750px;
+        }
+        .second-liner{
+          width: 750px;
+          max-width: 750px;
+        }
       }
     }
   }
