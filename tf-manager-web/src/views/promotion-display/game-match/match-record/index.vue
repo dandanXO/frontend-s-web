@@ -134,17 +134,17 @@
       <el-table-column prop="siteName" :label="t('fields.site')" width="120" />
       <el-table-column prop="loginName" :label="t('fields.loginName')" width="150" />
       <el-table-column prop="vipName" :label="t('fields.vipLevel')" width="120" />
-      <!-- <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280">
+      <el-table-column prop="matchTitle" :label="t('fields.matchTitle')" width="280">
         <template #default="scope">
           <span>{{ scope.row.matchTitle + ' ' + scope.row.teamOne + ' vs ' + scope.row.teamTwo }}</span>
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column prop="gameType" :label="t('fields.gameType')" width="140">
         <template #default="scope">
           <span>{{ t('gameType.' + scope.row.gameType) }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="transactionId" :label="t('fields.transactionId')" width="180" /> -->
+      <el-table-column prop="transactionId" :label="t('fields.transactionId')" width="180" />
       <el-table-column prop="status" :label="t('fields.status')" width="140">
         <template #default="scope">
           <el-tag v-if="scope.row.status === 'PENDING_MATCH'" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
@@ -153,9 +153,10 @@
           <el-tag v-if="scope.row.status === 'CANCEL'" type="danger" size="mini">{{ t('status.gameMatchRecord.' + scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200">
+      <el-table-column prop="matchTime" :label="t('fields.matchTime')" width="200">
         <template #default="scope">
           <span v-if="scope.row.matchTime === null">-</span>
+          <!-- eslint-disable -->
           <span
             v-if="scope.row.matchTime !== null"
             v-formatter="{
@@ -165,7 +166,7 @@
             }"
           />
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column prop="amount" :label="t('fields.amount')" width="140">
         <template #default="scope">
           $ <span v-formatter="{data: scope.row.amount, type: 'money'}" />
@@ -220,7 +221,7 @@
       >
         <template #default="scope">
           <el-button
-            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA'"
+            v-if="scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH' "
             size="small"
             type="success"
             v-permission="['sys:game-match-record:update']"
@@ -230,7 +231,7 @@
             {{ t('fields.settle') }}
           </el-button>
           <el-button
-            v-if="(scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH') && scope.row.gameType !== 'COPA'"
+            v-if="scope.row.status === 'PENDING_SETTLE' || scope.row.status === 'PENDING_MATCH' "
             size="small"
             type="danger"
             v-permission="['sys:game-match-record:update']"
@@ -318,8 +319,6 @@ const uiControl = reactive({
     { key: 1, displayName: 'NBA', value: 'NBA' },
     { key: 2, displayName: 'SPORT', value: 'SPORT' },
     { key: 3, displayName: 'ESPORT', value: 'ESPORT' },
-    { key: 4, displayName: 'MSI', value: 'MSI' },
-    { key: 5, displayName: 'COPA', value: 'COPA' }
   ],
 });
 const page = reactive({

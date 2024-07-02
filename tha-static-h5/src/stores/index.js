@@ -1,23 +1,13 @@
 import { defineStore } from "pinia";
 import { api, cashier, eventapi } from "boot/axios";
 import { SessionStorage, Notify, Platform } from "quasar";
-import LocalStorage from "boot/local-storage";
 import liff from "@line/liff";
 import { useUI } from "stores/ui";
-import { isAndroid } from "boot/utils";
 var qs = require("qs");
 const TOKEN_KEY = "TOKEN";
 
 export const userStore = defineStore("userStore", {
   state: () => {
-    const getStoreToken = () => {
-      if (isAndroid()) {
-        return LocalStorage.getItem("TOKEN", "");
-      } else {
-        return SessionStorage.getItem("TOKEN") || "";
-      }
-    };
-
     return {
       id: 0,
       profilePicture: "",
@@ -29,7 +19,7 @@ export const userStore = defineStore("userStore", {
       email: "",
       memberType: "",
       balance: 0,
-      token: getStoreToken(),
+      token: SessionStorage.getItem("TOKEN") || "",
       vip: "",
       currency: { value: "฿", label: "บาท" },
       unreadCount: 0,
@@ -38,9 +28,7 @@ export const userStore = defineStore("userStore", {
       phoneVerified: false,
       emailVerified: false,
       appDownloadUrl: "",
-      visitorId: "",
-      aaid: "",
-      googleadid: ""
+      visitorId: ""
     };
   },
   actions: {
@@ -59,24 +47,7 @@ export const userStore = defineStore("userStore", {
       });
     },
     hasToken() {
-      if (isAndroid()) {
-        // console.log("android");
-        if (LocalStorage.getItem("TOKEN", "") !== "") {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return !!SessionStorage.getItem("TOKEN");
-      }
-    },
-    autoLogin(token) {
-      this.token = token;
-      if (isAndroid()) {
-        LocalStorage.set("TOKEN", token, 864000);
-      } else {
-        SessionStorage.set("TOKEN", token);
-      }
+      return !!SessionStorage.getItem("TOKEN");
     },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
@@ -94,11 +65,7 @@ export const userStore = defineStore("userStore", {
       var string = qs.stringify(loginInfo);
       return api.post("/member/login", string).then((ret) => {
         if (ret.data.code === 0) {
-          if (isAndroid()) {
-            LocalStorage.set("TOKEN", ret.data.data, 86400);
-          } else {
-            SessionStorage.set("TOKEN", ret.data.data);
-          }
+          SessionStorage.set("TOKEN", ret.data.data);
         } else {
           Notify.create({
             color: "negative",
@@ -112,32 +79,17 @@ export const userStore = defineStore("userStore", {
     getMemberInfo() {
       const ui = useUI();
       api.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
+        const token = SessionStorage.getItem("TOKEN");
         req.headers.token = token;
         return req;
       });
       cashier.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
+        const token = SessionStorage.getItem("TOKEN");
         req.headers.TOKEN = token;
         return req;
       });
       eventapi.interceptors.request.use(async (req) => {
-        var token;
-        if (isAndroid()) {
-          token = LocalStorage.getItem("TOKEN");
-        } else {
-          token = SessionStorage.getItem("TOKEN");
-        }
+        const token = SessionStorage.getItem("TOKEN");
         req.headers.TOKEN = token;
         return req;
       });
@@ -212,9 +164,7 @@ export const userStore = defineStore("userStore", {
     },
     memberLogout() {
       return api.post("/session/logout").then(() => {
-        LocalStorage.remove("TOKEN");
         SessionStorage.remove("TOKEN");
-
         location.reload();
       });
     }

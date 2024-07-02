@@ -1,62 +1,95 @@
 <template>
   <q-dialog @hide="closeDialog" v-model="visible" class="page-dialog" no-route-dismiss persistent>
-    <div class="page-modal-container" :class="isMinimalMode ? 'minimal' : ''">
-      <div class="header">
-        <div style="text-align: right;">
-          <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
-        </div>
-        <div class="page-dialog-main-header">
-          <span class="header-info-description">{{ headerInfo.description }}</span>
-          <span class="header-title">{{ headerInfo.title ? $t(headerInfo.title) : '' }}</span>
-          <span></span>
-        </div>
-        <q-separator color="grey" />
+    <q-card style="max-width: none; background: transparent; box-shadow: none">
+
+      <div style="text-align: right;">
+        <img class="header-close-btn" src="../../assets/images/index/modal-close-btn.svg" @click="closeDialog()" />
       </div>
-      <div class="page-dialog-tabs" v-if="!isMinimalMode">
-        <q-tabs v-model="page" align="justify" inline-label dense style="background-color: #212632;">
-          <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info ? $t(item.info) : ''"
-              class="page-dialog-tab" v-if="item.tabIndex === tabIndex && item.page !== 'bankcardlist'">
-              <img :src="item.iconActiveUrl" :alt="item.info" :style="page === item.page ? '' : 'filter:contrast(0)'" />
-            </q-tab>
-          </template>
-        </q-tabs>
-      </div>
-      <div class=content>
-        <div class="page-dialog-links" v-if="!isMinimalMode">
-          <p class="header-info-description">{{ headerInfo.description }}</p>
+
+      <div class="page-dialog-main">
+
+        <div class="page-dialog-main-container">
+          <q-toolbar class="page-dialog-main-header text-white">
+            <p class="header-info-description">{{ headerInfo.description }}</p>
+            <p class="header-title">
+              <span>{{ headerInfo.title }}</span>
+              <!-- <br /> -->
+              <!-- <span>{{ headerInfo.subTitle }}</span> -->
+            </p>
+            <p>
+              <!-- <img
+                class="header-close-btn"
+                src="../../assets/images/index/modal-close-btn.svg"
+                @click="closeDialog()"
+                style="padding-right:10px"
+              /> -->
+            </p>
+          </q-toolbar>
+          <div class="page-dialog-links" v-if="!isMinimalMode">
+            <p class="header-info-description">{{ headerInfo.description }}</p>
+          </div>
+          <div class="page-dialog-tabs" :style="isMinimalMode ? '' : 'min-height:600px;'">
+            <template v-if="!isMinimalMode">
+              <q-tabs style="padding:5px 0px;" v-model="page" align="justify" inline-label>
+                <template v-for="item in formattedPagesInfo" :key="item.page">
+                  <template v-if="item.page === 'customer/service'">
+                    <q-route-tab :href="item?.href" target="_blank" :label="item.info" class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex">
+                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info" />
+                    </q-route-tab>
+                  </template>
+                  <template v-else>
+                    <q-tab @click="tabClick(item.page)" :name="item.page" :label="item.info" class="page-dialog-tab"
+                      v-if="item.tabIndex === tabIndex">
+                      <img style="padding-right: 5px" :src="page === item.page ? item.iconActiveUrl : item.iconUrl"
+                        :alt="item.info" />
+                    </q-tab>
+                  </template>
+                </template>
+              </q-tabs>
+            </template>
+
+            <q-tab-panels v-model="page" animated :style="isMinimalMode ? '' : 'min-height:600px;'">
+              <template v-for="item in formattedPagesInfo" :key="item.page">
+                <q-tab-panel :name="item.page">
+                  <component :is="item.component" @closeModal="closeDialog"></component>
+                </q-tab-panel>
+              </template>
+            </q-tab-panels>
+          </div>
         </div>
-        <q-tab-panels v-model="page" animated>
-          <template v-for="item in formattedPagesInfo" :key="item.page">
-            <q-tab-panel :name="item.page" style="padding:0">
-              <component :is="item.component" @closeModal="closeDialog"></component>
-            </q-tab-panel>
-          </template>
-        </q-tab-panels>
       </div>
-    </div>
+    </q-card>
   </q-dialog>
 </template>
 <script setup id="PageModal">
 import { useRoute, useRouter } from "vue-router";
-import { ref, reactive, computed, watch, nextTick, onMounted } from "vue";
+import { userStore } from "stores/index";
+import { ref, defineExpose, reactive, computed, watch, nextTick, onMounted } from "vue";
 import { useI18n } from 'vue-i18n';
 import FinanceDeposit from "components/pageModalContent/FinanceDeposit";
 import FinanceWithdraw from "components/pageModalContent/FinanceWithdraw";
 import AnnouncementComponent from "components/pageModalContent/AnnouncementComponent";
-import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard";
-import MessagesPage from "components/pageModalContent/MessagesPage";
+import CustomerService from "components/pageModalContent/CustomerService";
 import RegisterComponent from "components/pageModalContent/RegisterComponent";
 import LoginComponent from "components/pageModalContent/LoginComponent";
 import MyPersonalInfo from "components/pageModalContent/MyPersonalInfo.vue";
+import MyMessages from "components/pageModalContent/MyMessages.vue";
 import PromoComponent from "components/pageModalContent/PromoComponent.vue";
 import TransitRecord from "src/pages/account/TransitRecordView.vue";
+import MyTransfer from "components/pageModalContent/MyTransfer.vue";
 import MyPasswordChange from "components/pageModalContent/MyPasswordChange.vue";
+import DepositRecord from "components/pageModalContent/DepositRecord.vue";
+import WithdrawRecord from "components/pageModalContent/WithdrawRecord.vue";
+import AddWithdrawBankCard from "components/pageModalContent/AddWithdrawBankCard.vue";
+import WithdrawBankView from "src/pages/account/WithdrawBankView.vue";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 const visible = ref(false);
+const store = userStore();
 const page = ref("");
 const tabIndex = ref("log");
 
@@ -108,132 +141,236 @@ const headerInfo = computed(() => {
   return formattedPagesInfo.value.find((item) => item.page === page.value)?.headerInfo || {};
 });
 
+const isLinkActive = (key) => {
+  switch (key) {
+    case "log":
+      return ["finance/deposit", "finance/withdraw", "notify", "customer/service"].includes(route.query.page);
+    case "my":
+      return ["test"].includes(route.query.page);
+    case "finance":
+      // TODO
+      return false;
+    default:
+      return false;
+  }
+};
+
 const pagesInfo = reactive([
   {
     tabIndex: "log",
     page: "finance/deposit",
-    info: 'lang.page_modal_deposit',
+    info: t('lang.page_modal_deposit'),
+    iconUrl: require("../../assets/icon/deposit.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/wallet-icon.svg"),
     component: FinanceDeposit,
     headerInfo: {
-      title: 'lang.page_modal_deposit',
+      title: t('lang.page_modal_deposit'),
+      subTitle: "DEPOSIT",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "finance/withdraw",
-    info: 'lang.page_modal_withdraw',
+    info: t('lang.page_modal_withdraw'),
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: FinanceWithdraw,
     headerInfo: {
-      title: 'lang.page_modal_withdraw',
+      title: t('lang.page_modal_withdraw'),
+      subTitle: "WITHDRAW",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "personal/messages",
-    info: 'lang.page_modal_message',
+    info: t('lang.page_modal_message'),
+    iconUrl: require("../../assets/icon/messages.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/paper-plane-icon.svg"),
-    component: MessagesPage,
+    component: CustomerService,
     headerInfo: {
-      title: 'lang.page_modal_message',
+      title: t('lang.page_modal_message'),
+      subTitle: "MESSAGES",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "log",
     page: "promo/all",
-    info: 'lang.page_modal_promo',
+    info: t('lang.page_modal_promo'),
+    iconUrl: require("../../assets/icon/promo.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/gift-icon.svg"),
     component: PromoComponent,
     headerInfo: {
-      title: 'lang.page_modal_promo',
+      title: t('lang.page_modal_promo'),
+      subTitle: "EVENT",
       description: ""
+    }
+  },
+  {
+    tabIndex: "log",
+    href: "https://csweb01.amv4xjcbd.com/?partnerId=12&lang=kr",
+    page: "customer/service",
+    info: t('lang.page_modal_customer_service'),
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconActiveUrl: require("../../assets/icon/pageModal/speech-icon.svg"),
+    component: CustomerService,
+    headerInfo: {
+      title: t('lang.page_modal_customer_service'),
+      subTitle: "Q&A",
+      description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "personal/info",
-    info: 'lang.page_modal_personal_info',
+    info: t('lang.page_modal_personal_info'),
+    iconUrl: require("../../assets/icon/personal-info.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
     component: MyPersonalInfo,
     headerInfo: {
       title: "개인정보",
+      subTitle: "PERSONAL INFO",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
     page: "announcement",
-    info: 'lang.page_modal_announcement',
+    info: t('lang.page_modal_announcement'),
+    iconUrl: require("../../assets/icon/notify.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/bell-icon.svg"),
     component: AnnouncementComponent,
     headerInfo: {
-      title: 'lang.page_modal_announcement',
+      title: t('lang.page_modal_announcement'),
+      subTitle: "NOTICE",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
   {
     tabIndex: "my",
-    page: "bankcardlist",
-    info: 'lang.page_modal_bank_card_list',
+    page: "withdrawcard",
+    info: t('lang.page_modal_add_bank_card'),
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
     component: AddWithdrawBankCard,
     headerInfo: {
-      title: 'lang.page_modal_bank_card_list',
-      subTitle: "BANK CARD LIST",
-      description: ""
+      title: t('lang.page_modal_add_bank_card'),
+      subTitle: "ADD BANK CARD",
+      description: "출금 계좌에 새 은행 카드 추가"
     }
   },
-
+  // {
+  //   tabIndex: "my",
+  //   page: "bankcardlist",
+  //   info: t('lang.page_modal_bank_card_list'),
+  //   iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+  //   iconActiveUrl: require("../../assets/icon/pageModal/card-icon.svg"),
+  //   component: WithdrawBankView,
+  //   headerInfo: {
+  //     title: t('lang.page_modal_bank_card_list'),
+  //     subTitle: "BANK CARD LIST",
+  //     description: ""
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "transaction/records",
-    info: 'lang.page_modal_transaction_record',
+    info: t('lang.page_modal_transaction_record'),
+    iconUrl: require("../../assets/icon/transaction-record.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/paper-icon.svg"),
     component: TransitRecord,
     headerInfo: {
-      title: 'lang.page_modal_transaction_record',
+      title: t('lang.page_modal_transaction_record'),
+      subTitle: "TRANSACTIONS",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
+  // {
+  //   tabIndex: "my",
+  //   page: "transaction/transfer",
+  //   info: "포인트전환",
+  //   iconUrl: require("../../assets/icon/transfer.svg"),
+  //   iconActiveUrl: require("../../assets/icon/transfer-active.svg"),
+  //   component: MyTransfer,
+  //   headerInfo: {
+  //     title: "포인트전환",
+  //     subTitle: "TRANSFER",
+  //     description: "입금시 꼭 계좌문의를 하세요!",
+  //   }
+  // },
   {
     tabIndex: "my",
     page: "personal/updatePwd",
-    info: 'lang.page_modal_change_password',
+    info: t('lang.page_modal_change_password'),
+    iconUrl: require("../../assets/icon/password-update.svg"),
     iconActiveUrl: require("../../assets/icon/pageModal/key-icon.svg"),
     component: MyPasswordChange,
     headerInfo: {
-      title: 'lang.page_modal_change_password',
+      title: t('lang.page_modal_change_password'),
+      subTitle: "PASSWORD CHANGE",
       description: "입금시 꼭 계좌문의를 하세요!"
     }
   },
+  // {
+  //   tabIndex: "finance",
+  //   page: "finance/depositRecord",
+  //   info: "입금",
+  //   iconUrl: require("../../assets/icon/deposit.svg"),
+  //   iconActiveUrl: require("../../assets/icon/deposit-active.svg"),
+  //   component: DepositRecord,
+  //   headerInfo: {
+  //     title: "입금",
+  //     subTitle: "DEPOSIT RECORD",
+  //     description: "입금시 꼭 계좌문의를 하세요!",
+  //   }
+  // },
+  {
+    tabIndex: "finance",
+    page: "finance/withdrawRecord",
+    info: "출금",
+    iconUrl: require("../../assets/icon/withdrawMoney.svg"),
+    iconActiveUrl: require("../../assets/icon/withdrawMoney-active.svg"),
+    component: WithdrawRecord,
+    headerInfo: {
+      title: "출금",
+      subTitle: "WITHDRAW RECORD",
+      description: "입금시 꼭 계좌문의를 하세요!"
+    }
+  }
 ]);
 
 const minimalModePagesInfo = reactive([
   {
     page: "register",
-    info: "lang.login_register",
-    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
+    info: "회원가입",
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
     component: RegisterComponent,
     headerInfo: {
-      title: "lang.login_register",
+      title: "회원가입",
+      subTitle: "REGISTER",
       description: ""
     }
   },
   {
     page: "login",
-    info: "lang.login",
-    iconActiveUrl: require("../../assets/icon/pageModal/user-icon.svg"),
+    info: "로그인",
+    iconUrl: require("../../assets/icon/customerService.svg"),
+    iconActiveUrl: require("../../assets/icon/customerService-active.svg"),
     component: LoginComponent,
     headerInfo: {
-      title: "lang.login",
+      title: "로그인",
+      subTitle: "LOGIN",
       description: ""
     }
   }
 ]);
+
+// const minimalLoginModePagesInfo = reactive([
+
+// ]);
 
 const formattedPagesInfo = computed(() => {
   if (isMinimalMode.value) {
@@ -242,6 +379,33 @@ const formattedPagesInfo = computed(() => {
 
   return pagesInfo;
 });
+
+const leftLinks = reactive([
+  {
+    key: "log",
+    info: "로그인",
+    clickHandler: () => {
+      tabIndex.value = "log";
+      goToFirstTab("log");
+    }
+  },
+  {
+    key: "my",
+    info: "마이페이지",
+    clickHandler: () => {
+      tabIndex.value = "my";
+      goToFirstTab("my");
+    }
+  },
+  {
+    key: "finance",
+    info: "입출금내역",
+    clickHandler: () => {
+      tabIndex.value = "finance";
+      goToFirstTab("finance");
+    }
+  }
+]);
 
 const goToFirstTab = (tabIndex) => {
   const item = pagesInfo.find((page) => page.tabIndex === tabIndex);
@@ -255,7 +419,13 @@ const closeDialog = () => {
 };
 const open = (pageName) => {
   console.log(pageName);
+  // if (store.hasToken()) {
+  //   if (!visible.value) {
   visible.value = true;
+  // }
+  // } else {
+  //   router.push({ path: "/login", query: { redirect: route.path } });
+  // }
 };
 
 onMounted(() => {
@@ -265,25 +435,51 @@ onMounted(() => {
 <style scoped lang="scss">
 // reset app.scss
 
+.q-panel>div {
+  height: unset;
+}
+
+.page-dialog {
+  .q-dialog__inner--minimized>div {
+    // max-height: unset;
+  }
+}
+
+// ---
+
 .page-dialog {
   width: 980px;
   height: 692px;
+  //background: #23263cbc;
   display: flex;
+  //outline: 1px solid red;
 }
 
 .page-dialog-links {
   position: absolute;
   left: 0;
   top: 8px;
-  padding: 5px 0;
 }
 
 .page-dialog-main {
   --main-bg-color: #212632;
+  // top: 80px;
+  // position: absolute;
+  // padding: 0 0 0 140px;
   box-sizing: content-box;
+  // width: 860px;
   width: 100%;
   max-width: 860px;
   max-height: 100%;
+
+  :deep(.q-panel) {}
+
+  &,
+  .q-tab-panel {
+    //min-height: 624px;
+  }
+
+  .q-tabs__content {}
 
   .q-tab {
     color: #767676;
@@ -319,14 +515,16 @@ onMounted(() => {
 
 .top-actions {
   display: flex;
+  //justify-content: flex-end;
 }
 
 .page-dialog-tab {
   :deep(.q-tab__content) {
     flex-direction: row-reverse;
-    gap: 5px;
   }
 }
+
+:deep(.q-tab__label) {}
 
 :deep(.q-tab) {
   border-bottom: 2px solid #32394B;
@@ -350,6 +548,7 @@ onMounted(() => {
 }
 
 .header-close-btn {
+  // margin-right: 25px;
   width: 40px;
   cursor: pointer;
 
@@ -359,6 +558,7 @@ onMounted(() => {
 }
 
 .page-dialog-main-header {
+  justify-content: space-between;
   height: 56px;
   width: 100%;
   padding: unset;
@@ -367,32 +567,53 @@ onMounted(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  justify-content: space-between;
-
-
-  .header-info-description {
-    color: #000;
-    text-align: left;
-    margin-left: 10px;
-  }
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 
   .header-title {
     text-align: center;
     white-space: nowrap;
     color: #161822;
     font-weight: bold;
-    font-size: 1.3rem;
+  }
+
+  p {
+    flex: 1;
+    margin: auto;
+    color: #fff;
+
+    &.header-info-description {
+      color: #000;
+      text-align: left;
+      margin-left: 10px;
+    }
+
+    &:nth-child(2) {
+      text-align: center;
+
+      span:first-child {
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    }
+
+    &:last-child {
+      text-align: right;
+    }
   }
 }
 
 .page-dialog-tabs {
+  // height: 600px;
+  // min-height: calc(100vh - 240px);
+  background: var(--main-bg-color);
+
+  :deep(.q-tab) {
+    // padding-bottom: 10px;
+  }
+
   .q-tab-panels {
-    height: 100%;
+    overflow-y: auto;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
   }
@@ -400,13 +621,20 @@ onMounted(() => {
 
 .q-panel {
   .q-tab-panel {
+    // padding: 10px 20px 60px;
     box-sizing: border-box;
+    // overflow-y: scroll;
+    // max-height: calc(90vh - 200px);
   }
 }
 
 .q-tab-panels {
   background: var(--main-bg-color);
   height: 100%;
+}
+
+:deep(.modal-body-buttons) {
+  background-color: var(--main-bg-color);
 }
 
 @media (max-width: 768px) {
@@ -419,17 +647,24 @@ onMounted(() => {
     max-width: auto;
   }
 
+  .page-dialog-main-container {
+    // top: 50%;
+    // transform: translate(-50%, -50%);
+    // left: 50%;
+    // position: relative;
+  }
+
   .page-dialog-links {
     background-color: var(--main-bg-color);
     position: relative;
     top: 0px;
 
-    // .header-info-description {
-    //   display: block;
-    //   margin: unset;
-    //   text-align: center;
-    //   font-size: 10px;
-    // }
+    .header-info-description {
+      display: block;
+      margin: unset;
+      text-align: center;
+      padding-top: 12px;
+    }
 
     .left-group {
       display: flex;
@@ -441,15 +676,12 @@ onMounted(() => {
   }
 
   .page-dialog-main-header {
+    // height: 60px;
+    // background-image: url("../../assets/images/pages-modal/modal-header-mobile.png");
 
-    .header-title {
-      font-size: 15px;
+    .header-info-description {
+      visibility: hidden;
     }
-
-    // .header-info-description {
-    //   visibility: hidden;
-    //   overflow: hidden;
-    // }
 
     .q-btn {
       margin-right: 15px;
@@ -461,54 +693,29 @@ onMounted(() => {
       .q-tab__content {
         display: flex;
         flex-direction: column-reverse;
-        gap: 0px;
 
         .q-tab__label {
           margin-left: unset;
-          margin-top: 0px;
-          font-size: 12px;
+          margin-top: 4px;
+          font-size: 15px;
         }
       }
     }
   }
-}
 
-.page-modal-container {
-  display: grid;
-  grid-template-rows: 89px auto 1fr;
-  width: 100%;
-  height: 100%;
-  min-width: 30vw;
-  max-width: 50vw;
-  max-height: 75vh;
-
-  &.minimal {
-    grid-template-rows: 89px fit-content;
-    height: fit-content;
-    width: fit-content;
-    min-width: fit-content;
+  .q-panel {
+    .q-tab-panel {
+      // padding: 10px 20px 100px;
+      // max-height: calc(95vh - 250px);
+    }
   }
 
-  @media (max-width: 1400px) {
-    min-width: 60vw;
-    max-width: 85vw;
-  }
-
-  @media (max-width: 768px) {
-    min-width: 70vw;
-    max-width: 95vw;
-  }
-
-  .header {}
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-    overflow: auto;
-    background-color: #212632;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  .modal-body-buttons {
+    .form-button {
+      width: 140px;
+      height: 40px;
+      max-width: 40vw;
+    }
   }
 }
 </style>

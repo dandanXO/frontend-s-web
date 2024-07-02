@@ -24,3 +24,7 @@ export const getMemberReferSummary = (form) => {
 export const getPakMemberReferSummary = (form) => {
   return https().request("/refer-friend/summary-pak", Method.GET, form, ContentType.form);
 };
+
+export const changeMemberReferrer = (siteId, memberId, loginName) => {
+  return https().request("/refer-friend/change-referrer?_method=PUT", Method.POST, { siteId: siteId, memberId: memberId, referrerLoginName: loginName }, ContentType.form);
+}

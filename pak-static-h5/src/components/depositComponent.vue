@@ -173,30 +173,6 @@
       </div>
     </q-card>
   </q-dialog>
-
-  <!-- iframe for deposit -->
-  <q-dialog width="100%" v-model="isDepositFrame" persistent>
-    <q-card>
-      <q-btn
-        dense
-        rounded
-        icon="close"
-        class="popout-close"
-        @click="isDepositFrame = false"
-        v-close-popup
-        style="position: fixed; top: 12px; right: 0"
-      />
-      <iframe
-        :src="depositIframeSrc"
-        frameborder="0"
-        style="position: fixed; height: calc(100% - 60px); width: 100%; left: 0; top: 60px"
-      ></iframe>
-
-      <div v-if="depositIframeLoading" class="loading-overlay">
-        <q-spinner color="primary" size="40px"></q-spinner>
-      </div>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script setup id="DepositComponent">
@@ -206,7 +182,6 @@ import BankComponent from "components/finance/fBank";
 import { cashier } from "boot/axios";
 import { Platform, useQuasar, openURL } from "quasar";
 import liff from "@line/liff";
-import { isAndroid } from "boot/utils";
 
 var qs = require("qs");
 
@@ -560,36 +535,38 @@ async function pDepo(deposit) {
           const submitResult = res.data.result.data;
           submitMessage.value = submitResult.split(",");
         } else {
-          if ((Platform.is.desktop || Platform.is.webkit) && Platform.is.name !== "webkit" && !liff.isInClient()) {
-            // if (store.getDeviceType() === "IOS" || store.isMobileSafari() || isAndroid()) {
-            // const newWin = window.open(`/`, `_self`);
-            depositIframeSrc.value = response.requestUrl;
-            isDepositFrame.value = true;
-
-            if (response.payResultType === "GET_SUBMIT") {
-              newWin.location.href = response.requestUrl;
-            }
-            if (response.payResultType === "POST_SUBMIT") {
-              if (response.paramKey === null || response.paramKey === "") {
-                newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-              } else {
-                newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+          if (
+            (Platform.is.desktop || Platform.is.webkit) &&
+            !Platform.is.capacitor &&
+            Platform.is.name !== "webkit" &&
+            !liff.isInClient()
+          ) {
+            if (store.getDeviceType() === "IOS" || store.isMobileSafari()) {
+              const newWin = window.open(`/`, `_self`);
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
+              }
+            } else {
+              const newWin = window.open(`/`);
+              newWin.localStorage.setItem("formDetails", JSON.stringify(form));
+              if (response.payResultType === "GET_SUBMIT") {
+                newWin.location.href = response.requestUrl;
+              }
+              if (response.payResultType === "POST_SUBMIT") {
+                if (response.paramKey === null || response.paramKey === "") {
+                  newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                } else {
+                  newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
+                }
               }
             }
-            // } else {
-            //   const newWin = window.open(`/`);
-            //   newWin.localStorage.setItem("formDetails", JSON.stringify(form));
-            //   if (response.payResultType === "GET_SUBMIT") {
-            //     newWin.location.href = response.requestUrl;
-            //   }
-            //   if (response.payResultType === "POST_SUBMIT") {
-            //     if (response.paramKey === null || response.paramKey === "") {
-            //       newWin.location.href = `display?${response.data}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-            //     } else {
-            //       newWin.location.href = `display?paramKey=${response.paramKey}&payResultType=${response.payResultType}&requestUrl=${response.requestUrl}`;
-            //     }
-            //   }
-            // }
           } else {
             localStorage.setItem("formDetails", JSON.stringify(form));
             if (response.payResultType === "GET_SUBMIT") {
@@ -648,14 +625,6 @@ async function pDepo(deposit) {
       btnLoading.value = false;
     });
 }
-
-const isDepositFrame = ref(false);
-const depositIframeSrc = ref();
-const depositIframeLoading = ref(false);
-
-const iframeLoaded = () => {
-  depositIframeLoading.value = false; // Set loading to false when iframe finishes loading
-};
 
 onMounted(() => {
   initPay();
@@ -878,17 +847,5 @@ onMounted(() => {
   &.disabled {
     opacity: 0.7;
   }
-}
-
-.loading-overlay {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 60px);
-  background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity and color as needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

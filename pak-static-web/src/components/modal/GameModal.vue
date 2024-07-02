@@ -212,14 +212,7 @@ const open = (gameName, platformCode, gameCode, gameType) => {
           let srcDoc = res.data;
           var firstFourChars = srcDoc.substring(0, 4).toLowerCase();
           if (firstFourChars === "http") {
-            if (platformCode === "LuckySport" && gameCode !== "") {
-              src.value = srcDoc.replace(gameCode, "");
-              setTimeout(function () {
-                src.value = srcDoc.substring(0, srcDoc.indexOf("?"));
-              }, 1000);
-            } else {
-              src.value = srcDoc;
-            }
+            src.value = srcDoc;
           } else {
             isInnerHtmlSrc.value = true;
 

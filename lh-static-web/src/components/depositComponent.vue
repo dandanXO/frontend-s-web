@@ -88,7 +88,7 @@
               {{ store.currency.label }}
             </span>
           </el-form-item>
-
+          
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
             label="银行"
@@ -121,14 +121,18 @@
             </el-select>
           </el-form-item>
 
-          <div class="btn-confirm rollover-info" v-if="selectedPromo && selectedPromo.name && (selectedPromo.gameTypeRollover || selectedPromo.rollover)">
-            <p v-if="selectedPromo.gameTypeRollover && selectedPromo.gameTypeRollover !== '{}'">
-              {{getRollOverText(selectedPromo.gameTypeRollover) }}
-            </p>
-            <p v-else>
-              流水倍数要求（本金+彩金）：{{selectedPromo.rollover}}倍
-            </p>
-          </div>
+          <!-- <el-form-item
+            v-if="isUSDT && activeMethod.currencyRate"
+            class="helptxt"
+            label="จํานวนเงินโดยประมาณ"
+          >
+            <span style="color: #9bffd1"
+              >{{
+                (form.localAmount * activeMethod.currencyRate).toFixed(2)
+              }}
+              USDT</span
+            >
+          </el-form-item> -->
 
           <div class="btn-confirm">
             <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
@@ -167,8 +171,10 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted, shallowRef , watch } from "vue";
+import { ref, reactive, onMounted, shallowRef } from "vue";
 import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
+import { RiSpamLine } from "vue-remix-icons";
+// import { message } from "ant-design-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Node from "@/components/paymentSelect/node";
 import BankComponent from "@/components/finance/BankComponent";
@@ -178,6 +184,9 @@ import { useRouter, useRoute } from "vue-router";
 // import { InfoFilled } from "@element-plus/icons-vue";
 import { doIt } from "@/utils/action";
 
+{
+  RiSpamLine;
+}
 const router = useRouter();
 const route = useRoute();
 const loadingBtn = ref(false);
@@ -193,7 +202,6 @@ const amountList = ref([]);
 const bankCardList = ref([]);
 const privilegeList = ref([]);
 const selectedPrivilege = ref(null);
-const selectedPromo = ref({});
 const unselectedPrivileges = ref([]);
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
@@ -274,39 +282,6 @@ const rules = {
     }
   ]
 };
-
-const getRollOverText = (rolltext) => {
-  const thetext= JSON.parse(rolltext);
-
-  var fulltext= '流水倍数要求（本金+彩金）：';
-  var rolloverlists= [];
-  if(thetext.sport){
-    rolloverlists.push("体育"+thetext.sport+"倍");
-  }
-  if(thetext.esport){
-    rolloverlists.push("电竞"+thetext.esport+"倍");
-  }
-  if(thetext.slot){
-    rolloverlists.push("电子"+thetext.slot+"倍");
-  }
-  if(thetext.live){
-    rolloverlists.push("真人"+thetext.live+"倍");
-  }
-  if(thetext.poker){
-    rolloverlists.push("棋牌"+thetext.poker+"倍");
-  }
-  if(thetext.fish){
-    rolloverlists.push("捕鱼"+thetext.fish+"倍");
-  }
-  if(thetext.lottery){
-    rolloverlists.push("彩票"+thetext.lottery+"倍");
-  }
-  if(thetext.casual){
-    rolloverlists.push("小游戏"+thetext.casual+"倍");
-  }
-  fulltext += rolloverlists.join("，")
-  return fulltext;
-}
 
 function initPay() {
   isLoading.value = true;
@@ -435,7 +410,6 @@ function clearInfo() {
   form.localAmount = "";
   form.bankId = "";
   selectedPrivilege.value = null;
-  selectedPromo.value= {};
   checkMinDepositAmt();
 }
 
@@ -622,18 +596,6 @@ async function verifyBank(r, v) {
   }
 }
 
-
-watch(
-  () => selectedPrivilege.value,
-  () => {
-    if (selectedPrivilege.value) {
-      selectedPromo.value = unselectedPrivileges.value.find(item => item.id === selectedPrivilege.value);
-    }else{
-      selectedPromo.value= null;
-    }
-  }
-);
-
 onMounted(() => {
   initPay();
 });
@@ -659,7 +621,8 @@ onMounted(() => {
     font-weight: normal;
   }
 }
-
+</style>
+<style lang="scss">
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -711,7 +674,16 @@ onMounted(() => {
   margin-bottom: 18px;
 }
 
-
+// .deposit {
+//   margin-bottom: 0;
+//   min-height: 70vh;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   & > div {
+//     height: 180px;
+//   }
+// }
 .account-content {
   .wload {
     // display: flex;
@@ -822,7 +794,12 @@ onMounted(() => {
   color: #ffffff;
 }
 
-
+// .account-tip {
+//   color: #ffffff;
+//   &-text {
+//     color: #ffffff;
+//   }
+// }
 :deep(.ant-select) {
   height: 42px;
   width: 280px;
@@ -844,11 +821,44 @@ onMounted(() => {
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
   line-height: 30px;
 }
-.deposit-container :deep(.el-form-item){
-  margin-bottom: 10px;
-}
 </style>
 <style scoped lang="scss">
+// @media (max-width: 768px) {
+//   .account-content .node-wrapper {
+//     padding: 0;
+//   }
+//   .account-content .deposit-container {
+//     padding: 20px 0;
+//   }
+//   .account-content.deposit {
+//     .node-wrapper {
+//       margin: 30px -10px;
+//       padding: 0 10px;
+//     }
+//   }
+//   .payment-method-wrapper {
+//     grid-template-columns: repeat(auto-fill, 80px);
+//     grid-gap: 10px;
+
+//     .payment-method-item {
+//       > img {
+//         width: 40px;
+//         height: 40px;
+//       }
+//     }
+//   }
+//   .payment-channel-wrapper {
+//     grid-template-columns: repeat(auto-fill, 160px);
+//     grid-column-gap: 10px;
+//   }
+//   .deposit-container {
+//     :deep(.helptxt .ant-form-item-control-input-content) {
+//       flex-direction: column;
+//       align-items: flex-start;
+//       gap: 5px;
+//     }
+//   }
+// }
 
 .dark {
   .deposit-container {
@@ -925,12 +935,8 @@ onMounted(() => {
   }
 }
 
-.rollover-info{
-  color:  #bd4646;
-}
-
 .btn-confirm {
-  margin-left: 100px;
+  margin-left: 90px;
   margin-bottom: 10px;
 }
 </style>

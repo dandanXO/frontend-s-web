@@ -86,11 +86,11 @@
         {{ $t("sideNav.feedback") }}
       </div> -->
 
-      <a class="side-menu-item side-menu-item__transparent" href="https://www.tiktok.com/@b9game" target="_blank">
+      <a class="side-menu-item side-menu-item__transparent" href="https://t.me/B9game" target="_blank">
         <div class="item-icon">
-          <img src="../assets/images/auth/menu-tiktok.png" />
+          <img src="../assets/images/auth/menu-telegram.png" />
         </div>
-        Tik Tok
+        {{ $t("sideNav.telegram") }}
       </a>
 
       <a
@@ -99,7 +99,7 @@
         target="_blank"
       >
         <div class="item-icon"><img src="../assets/images/auth/menu-whatsapp.png" /></div>
-        Whatsapp
+        {{ $t("sideNav.whatsapp") }}
       </a>
 
       <div class="side-menu-item side-menu-item__transparent" @click="handleMenuRouteClick('/language')">

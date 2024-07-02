@@ -107,7 +107,6 @@ const groupByDateTabList = ref(
     "2024-06-24",
     "2024-06-25",
     "2024-06-26",
-    "2024-06-27",
   ]);
 groupByDateTabList.value = groupByDateTabList.value.filter(number => number >= moment().format("YYYY-MM-DD"));
 

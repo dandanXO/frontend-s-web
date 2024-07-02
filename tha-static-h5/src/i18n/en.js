@@ -29,9 +29,6 @@ export default {
     username_between_6_12: "Username should contain 6-12 characters",
     first_digit_must_be_0: "First digit must be 0",
 
-    i_agree_to: "I have Agree To The",
-    use_privacy: "Use Privacy Agreement",
-
     // vip
     level: "Level",
     upgrade: "Upgrade",

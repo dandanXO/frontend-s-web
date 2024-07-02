@@ -1,19 +1,19 @@
 <template>
   <ProfileSummary :homeProfile="true" @activateSlide="handleActivateSlide" />
   <q-carousel
-    v-model="slide"
-    id="home"
     class="home"
-    data-aos-duration="1200"
-    data-aos-once="true"
-    data-aos="fade-in"
+    id="home"
+    autoplay
+    navigation
+    v-model="slide"
+    swipeable
     transition-next="slide-left"
     transition-prev="slide-right"
     animated
-    autoplay
     infinite
-    navigation
-    swipeable
+    data-aos="fade-in"
+    data-aos-duration="1200"
+    data-aos-once="true"
   >
     <q-carousel-slide
       v-for="(banner, i) in banners"
@@ -72,12 +72,6 @@
             <img src="../assets/images/index/cs-cs.png" />
           </a>
         </div>
-      </div>
-    </q-page-sticky>
-
-    <q-page-sticky position="bottom-right" :offset="liveDragPos" class="floating-btn" v-if="isLiveUrlShow">
-      <div v-touch-pan.prevent.mouse="moveLiveIcon" @click="openLiveInNewTab(ui.LiveUrl)">
-        <div class="live-icon-wrapper"></div>
       </div>
     </q-page-sticky>
 
@@ -216,7 +210,13 @@
                     class="platform-game-item btn-effect"
                     @click="playGame(item.name, item.code, '', 'OPEN', 'LIVE')"
                   >
-                    <div>
+                    <div
+                      data-aos="zoom-in"
+                      data-aos-delay="100"
+                      data-aos-duration="1200"
+                      data-aos-once="true"
+                      data-aos-anchor="#home"
+                    >
                       <div class="platform-game-img">
                         <div
                           class="game--bg"
@@ -456,16 +456,7 @@
               <template v-for="(item, index) in slot" :key="index">
                 <swiper-slide
                   class="platform-game-item btn-effect"
-                  @click="
-                    openGame(
-                      item.name,
-                      item.code,
-                      '',
-                      item.status,
-                      item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT',
-                      item.id
-                    )
-                  "
+                  @click="openGame(item.name, item.code, '', item.status, item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT', item.id)"
                 >
                   <div
                     data-aos="zoom-in"
@@ -513,16 +504,7 @@
               <template v-for="(item, index) in slot" :key="index">
                 <div
                   class="platform-game-item btn-effect"
-                  @click="
-                    openGame(
-                      item.name,
-                      item.code,
-                      '',
-                      item.status,
-                      item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT',
-                      item.id
-                    )
-                  "
+                  @click="openGame(item.name, item.code, '', item.status, item.gameType === 'CASUAL' ? 'CASUAL' : 'SLOT', item.id)"
                 >
                   <div class="platform-game-img">
                     <div
@@ -996,24 +978,22 @@
     :showConfirmButton="false"
     :persistent="isOutdatedApp"
   >
-    <q-card style="width: 100%">
+    <q-card style="width: 100%" class="bg-bright text-black">
       <div class="modalcontent">
         <div class="headers">
-          <div class="titles backgroundColor">{{ $t("appUpdate.updateHeader") }}</div>
+          <div class="titles backgroundColor">Update Announcement</div>
         </div>
         <div class="contents">
           <template v-if="isOutdatedApp">
-            {{ $t("appUpdate.isOutdatedAppContent_01") }}
+            Your App Version Is Outdated,
             <br />
-            {{ $t("appUpdate.isOutdatedAppContent_02") }}
+            Please Update The App Now
           </template>
-          <template v-else>{{ $t("appUpdate.newAppVersionContent_01") }}</template>
+          <template v-else>New Version Detected, Do You Want To Update?</template>
         </div>
         <div class="btnsreas">
-          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">
-            {{ $t("appUpdate.cancel") }}
-          </div>
-          <div class="confirmsbtns btncolor" @click="openDownloadPage">{{ $t("appUpdate.updateNow") }}</div>
+          <div class="cacnels borderColor fontColor" @click="cancelUpdate" v-if="!isOutdatedApp">Cancel</div>
+          <div class="confirmsbtns btncolor" @click="openDownloadPage">Update Now</div>
         </div>
       </div>
     </q-card>
@@ -1331,9 +1311,6 @@ const categoriesList = ref([
 const isCsTabVisible = ref(false);
 const csTabRef = ref();
 
-const isLiveTabVisible = ref(false);
-const liveTabRef = ref();
-
 const translatedCategoriesList = computed(() => {
   return categoriesList.value.map((category) => ({
     ...category,
@@ -1383,10 +1360,6 @@ const checkHash = () => {
 
 const csDragPos = ref([10, 0]);
 const isDraggingCsIcon = ref(false);
-
-const liveDragPos = ref([16, 0]);
-const isDraggingLiveIcon = ref(false);
-const isLiveUrlShow = ref(false);
 
 const slide = ref(0);
 
@@ -1569,260 +1542,7 @@ const livecasino = ref([
 ]);
 const poker = ref([]);
 const lottery = ref([]);
-const slot = ref([
-  {
-    id: 8,
-    name: "JiliGames",
-    code: "JILI",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "JiliGames",
-    sequence: 1
-  },
-  {
-    id: 124,
-    name: "Turbo",
-    code: "Turbo",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 2
-  },
-  {
-    id: 21,
-    name: "PG",
-    code: "PG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Relax Gaming",
-    sequence: 3
-  },
-  {
-    id: 51,
-    name: "JOKER",
-    code: "JOKER",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "JOKER",
-    sequence: 4
-  },
-  {
-    id: 31,
-    name: "JDB",
-    code: "JDB",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT,FISH",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 5
-  },
-  {
-    id: 107,
-    name: "Big time Gaming",
-    code: "WCBTG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Big Time",
-    sequence: 6
-  },
-  {
-    id: 111,
-    name: "Relax",
-    code: "WCRelax",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Relax Gaming",
-    sequence: 7
-  },
-  {
-    id: 16,
-    name: "TFGaming",
-    code: "TFGaming",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "CASUAL",
-    followType: "NEW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: null,
-    sequence: 999
-  },
-  {
-    id: 106,
-    name: "No limit city",
-    code: "WCNLC",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "No Limit City",
-    sequence: 999
-  },
-  {
-    id: 108,
-    name: "Wazdan",
-    code: "WCWazdan",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Wazdan",
-    sequence: 999
-  },
-  {
-    id: 104,
-    name: "Netent",
-    code: "WCNetent",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Netent",
-    sequence: 999
-  },
-  {
-    id: 105,
-    name: "Red tiger",
-    code: "WCRT",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Red Tiger",
-    sequence: 999
-  },
-  {
-    id: 109,
-    name: "One touch",
-    code: "WCOTS",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "One Touch Slot",
-    sequence: 999
-  },
-  {
-    id: 120,
-    name: "World Match",
-    code: "WCWM",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "World Match",
-    sequence: 999
-  },
-  {
-    id: 113,
-    name: "PNG",
-    code: "WCPNG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "PNG",
-    sequence: 999
-  },
-  {
-    id: 116,
-    name: "Habanero",
-    code: "WCHB",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Habanero",
-    sequence: 999
-  },
-  {
-    id: 121,
-    name: "Spinix",
-    code: "WCSpinix",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "Spinix",
-    sequence: 999
-  },
-  {
-    id: 142,
-    name: "FiveG",
-    code: "FiveG",
-    status: "OPEN",
-    walletType: "SEAMLESS",
-    gameType: "SLOT",
-    followType: "FOLLOW",
-    underMaintenance: false,
-    maintenanceStartTime: null,
-    maintenanceEndTime: null,
-    alias: "5G",
-    sequence: 999
-  }
-]);
+const slot = ref([{"id":8,"name":"JiliGames","code":"JILI","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JiliGames","sequence":1},{"id":124,"name":"Turbo","code":"Turbo","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":2},{"id":21,"name":"PG","code":"PG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Relax Gaming","sequence":3},{"id":51,"name":"JOKER","code":"JOKER","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"JOKER","sequence":4},{"id":31,"name":"JDB","code":"JDB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT,FISH","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":5},{"id":107,"name":"Big time Gaming","code":"WCBTG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Big Time","sequence":6},{"id":111,"name":"Relax","code":"WCRelax","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Relax Gaming","sequence":7},{"id":16,"name":"TFGaming","code":"TFGaming","status":"OPEN","walletType":"SEAMLESS","gameType":"CASUAL","followType":"NEW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":null,"sequence":999},{"id":106,"name":"No limit city","code":"WCNLC","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"No Limit City","sequence":999},{"id":108,"name":"Wazdan","code":"WCWazdan","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Wazdan","sequence":999},{"id":104,"name":"Netent","code":"WCNetent","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Netent","sequence":999},{"id":105,"name":"Red tiger","code":"WCRT","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Red Tiger","sequence":999},{"id":109,"name":"One touch","code":"WCOTS","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"One Touch Slot","sequence":999},{"id":120,"name":"World Match","code":"WCWM","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"World Match","sequence":999},{"id":113,"name":"PNG","code":"WCPNG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"PNG","sequence":999},{"id":116,"name":"Habanero","code":"WCHB","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Habanero","sequence":999},{"id":121,"name":"Spinix","code":"WCSpinix","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"Spinix","sequence":999},{"id":142,"name":"FiveG","code":"FiveG","status":"OPEN","walletType":"SEAMLESS","gameType":"SLOT","followType":"FOLLOW","underMaintenance":false,"maintenanceStartTime":null,"maintenanceEndTime":null,"alias":"5G","sequence":999}]);
 const fishing = ref([]);
 const casuals = ref([]);
 
@@ -2304,7 +2024,6 @@ const loadHotGameList = () => {
         .catch((err) => {})
     )
     .then((res) => {
-      hotGameList.value = [];
       hotlists = res;
 
       // cached
@@ -2345,8 +2064,8 @@ const loadHotGameList = () => {
             return { ...item5, ...matchingItem };
           });
 
-          console.log("End");
-          console.log(JSON.stringify(hotGameList.value));
+          // console.log("End");
+          // console.log(hotGameList.value);
           // console.log(livecasino.value);
         });
     });
@@ -2926,7 +2645,7 @@ const getPlatList = () => {
           var liveObj = Object.assign({}, element);
           livecasino.value.push(liveObj);
         }
-        if (platTypes.indexOf("SLOT") > -1 || (platTypes.indexOf("CASUAL") > -1 && element.code !== "Spribe")) {
+        if (platTypes.indexOf("SLOT") > -1 || (platTypes.indexOf("CASUAL") > -1 && element.code !=='Spribe')) {
           var slotObj = Object.assign({}, element);
           let slotItem = {
             id: slotObj.id,
@@ -2959,8 +2678,8 @@ const getPlatList = () => {
       slot.value.sort((a, b) => a.sequence - b.sequence);
       lottery.value.sort((a, b) => a.sequence - b.sequence);
 
-      // console.log("After");
-      // console.log(JSON.stringify(slot.value));
+      console.log("After");
+      console.log(JSON.stringify(slot.value));
       loadHotGameList();
     })
     .catch((err) => {});
@@ -2999,12 +2718,7 @@ const gotoPromo = (banner) => {
   if (urlSplit.length >= 2) {
     const type = urlSplit[0];
     if (type === "open") {
-      if (gameSplit[1][1] === "LuckySport"){
-        playGame(gameSplit[1][0], gameSplit[1][1], '#/special/uefaeuro', gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
-      } else {
-        playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
-      }
-
+      playGame(gameSplit[1][0], gameSplit[1][1], gameSplit[1][2], gameSplit[1][3], gameSplit[1][4], gameSplit[1][5]);
     } else if (type === "page") {
       router.push(`/${urlSplit[1]}`);
     } else {
@@ -3131,17 +2845,6 @@ const moveCsIcon = (ev) => {
   csDragPos.value = [csDragPos.value[0] - ev.delta.x, csDragPos.value[1] - ev.delta.y];
 };
 
-const moveLiveIcon = (ev) => {
-  isDraggingLiveIcon.value = ev.isFirst !== true && ev.isFinal !== true;
-
-  liveDragPos.value = [liveDragPos.value[0] - ev.delta.x, liveDragPos.value[1] - ev.delta.y];
-};
-
-const openLiveInNewTab = (url) => {
-  const absoluteUrl = url;
-  window.open(absoluteUrl, "_blank");
-};
-
 const pushNotificationData = ref();
 
 const populatePushNotificationData = (data) => {
@@ -3180,14 +2883,6 @@ const loadCustomerAddress = () => {
       console.log(data);
       var url = data.liveUrl1;
       ui.CSAUrl = url;
-
-      if (data.studioUrl) {
-        var lvUrl = data.studioUrl;
-        ui.LiveUrl = lvUrl;
-        isLiveUrlShow.value = true;
-
-        csDragPos.value = [10, 70];
-      }
     });
 };
 
@@ -4102,14 +3797,6 @@ watch(
 .home-wrapper {
   width: calc(100% - 16px);
   margin: auto;
-}
-
-.live-icon-wrapper {
-  width: 63px;
-  height: 70px;
-  background: url("../assets/images/index/icon-live.png") no-repeat center center;
-  background-size: contain;
-  position: relative;
 }
 
 .cs-icon-wrapper {

@@ -645,8 +645,6 @@ const { t } = useI18n()
 const LOGIN_USER_TYPE = computed(() => store.state.user.userType)
 const route = useRoute()
 const store = useStore()
-const LOGIN_SITE_ID = store.state.user.siteId;
-console.log(LOGIN_SITE_ID);
 const site = ref(null)
 const inputImage = ref(null)
 const imageFormRef = ref(null)
@@ -769,61 +767,19 @@ const labelType = reactive({
     { key: 8, displayName: t('promoLabel.featured'), value: 7 },
   ],
 })
-
-const promoTypes = ref([]);
-
-function loadPromoTypes() {
-  console.log("Load")
-  console.log(LOGIN_SITE_ID);
-  console.log(form.siteId)
-  if (LOGIN_SITE_ID === 11 || form.siteId === 11) {
-    promoTypes.value = [
-      { typeName: 'EARN', value: 12, displayName: "EARN" },
-      { typeName: 'HOT', value: 13, displayName: "HOT" },
-      { typeName: 'NEW USER', value: 14, displayName: "NEW" },
-      { typeName: 'SPORTS', value: 17, displayName: "SPORTS" },
-      { typeName: 'LIVE', value: 18, displayName: "LIVE" },
-      { typeName: 'SLOT', value: 16, displayName: "SLOT" },
-      { typeName: 'VIP', value: 15, displayName: "VIP" },
-    ]
-  } else if (LOGIN_SITE_ID === 0) {
-    promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-      { typeName: 'LIVE CASINO', value: 5, displayName: t('promoType.LIVECASINO') },
-      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
-      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
-
-      { typeName: 'EARN', value: 12, displayName: "EARN" },
-      { typeName: 'HOT', value: 13, displayName: "HOT" },
-      { typeName: 'NEW USER', value: 14, displayName: "NEW" },
-      { typeName: 'SPORTS', value: 17, displayName: "SPORTS" },
-      { typeName: 'LIVE', value: 18, displayName: "LIVE" },
-      { typeName: 'SLOT', value: 16, displayName: "SLOT" },
-      { typeName: 'VIP', value: 15, displayName: "VIP" },
-    ]
-  } else {
-    promoTypes.value = [
-      { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
-      { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
-      { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
-      { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
-      { typeName: 'LIVE CASINO', value: 5, displayName: t('promoType.LIVECASINO') },
-      { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
-      { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
-      { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
-      { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
-      { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
-      { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
-    ]
-  }
-}
+const promoTypes = [
+  { typeName: 'WELCOME', value: 1, displayName: t('promoType.WELCOME') },
+  { typeName: 'SPORT', value: 2, displayName: t('promoType.SPORT') },
+  { typeName: 'ESPORT', value: 3, displayName: t('promoType.ESPORT') },
+  { typeName: 'FISH', value: 4, displayName: t('promoType.FISH') },
+  { typeName: 'LIVE CASINO', value: 5, displayName: t('promoType.LIVECASINO') },
+  { typeName: 'SLOT GAME', value: 6, displayName: t('promoType.SLOTGAME') },
+  { typeName: 'POKER', value: 7, displayName: t('promoType.POKER') },
+  { typeName: 'DAILY', value: 8, displayName: t('promoType.DAILY') },
+  { typeName: 'FTD', value: 9, displayName: t('promoType.FTD') },
+  { typeName: 'LOTTERY', value: 11, displayName: t('promoType.LOTTERY') },
+  { typeName: 'OTHER', value: 10, displayName: t('promoType.OTHER') },
+]
 
 function handleCheckedChangePromoType() {
   form.promoType = selected.promoTypeChecked.join(',')
@@ -961,7 +917,6 @@ async function loadForm(id, siteId) {
     }
 
     form.siteId = ret.siteId
-    loadPromoTypes();
     // checked promoType checkboxes
     // const promoArr = form.promoType.split(",").map(Number)
     const promoArr = form.promoType.split(',')
@@ -1154,7 +1109,7 @@ function submitImageUpload() {
 }
 
 onMounted(() => {
-  console.log('promoPage')
+  console.log('new page ')
   loadSites()
   if (LOGIN_USER_TYPE.value === TENANT.value) {
     imageRequest.siteId = store.state.user.siteId
@@ -1164,7 +1119,6 @@ onMounted(() => {
     loadForm(route.params.id, route.params.siteId)
   } else {
     addParam()
-    loadPromoTypes()
   }
 })
 </script>

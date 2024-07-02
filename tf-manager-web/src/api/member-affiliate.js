@@ -256,12 +256,3 @@ export const getAffiliateShareRatio = (id) => {
     Method.GET
   )
 }
-
-export const updateLevel = (id, level) => {
-  return https().request(
-    `/affiliate/${id}/updateLevel?_method=PUT`,
-    Method.POST,
-    { affiliateLevel: level },
-    ContentType.form
-  )
-}

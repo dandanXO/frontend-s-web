@@ -1,70 +1,32 @@
 <template>
-    <q-intersection once @visibility="isVisible = true">
-        <div class="news-section" data-aos="zoom-in-up">
+    <div>
+        <div class="news-section">
             <div class="news-title news-title__sub">
-                <div class="title-text">{{ $t('lang.withdraw_record_withdrawal_status') }}</div>
+                <div class="title-text">출금현황</div>
             </div>
 
-            <template v-if="isLoading">
-                <q-skeleton class="news-item-box" v-for="(_item, index) in 5" :key="index" style="width:100%;" />
-            </template>
-            <template v-else-if="financeRecords.length > 0">
-                <div style="max-height:500px;overflow:auto;">
-                    <div class="news-item-box" v-for="d, index in financeRecords" :key="index">
-                        <div class="news-item-left">
-                            <div class="news-item-title">
-                                {{ formatTransactionType(d.transactionType) }}
-                                {{ d.loginName }}
-                                <span style="color: #01e1ff">{{ d.amount }}원</span>
-                            </div>
-                        </div>
-                        <div class="news-item-right">
-                            <div class="news-item-date">{{ getLocaleDateTime(d.transationTime, true) }}
-                            </div>
-                        </div>
+            <div class="news-item-box" v-for="d, index in props.depositRecordList" :key="index">
+                <div class="news-item-left">
+                    <div class="news-item-title">
+                        {{ formatTransactionType(d.transactionType) }}
+                        {{ d.loginName }}
+                        <span style="color: #01e1ff">{{ d.amount }}원</span>
                     </div>
                 </div>
-            </template>
-            <div v-else class="news-item-box" style="justify-content: center;">
-                {{ $t('lang.withdraw_record_no_content') }}
+                <div class="news-item-right">
+                    <div class="news-item-date">{{ moment(d.transationTime).format('YYYY-MM-DD hh:mm A') }}</div>
+                </div>
             </div>
         </div>
-    </q-intersection>
+    </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
 import moment from 'moment';
 import { useI18n } from 'vue-i18n';
-import { userStore } from "stores/index";
-import { useRoute } from 'vue-router';
-import { getLocaleDateTime } from '../../boot/utils'
 
 const { t } = useI18n();
-const isLoading = ref(false);
-const financeRecords = ref([]);
-const store = userStore();
-const route = useRoute();
-const isVisible = ref(false);
-
-const loadFinanceRecords = () => {
-    isLoading.value = true;
-
-    store.getFinanceRecords().then((records) => {
-        financeRecords.value = records;
-        isLoading.value = false;
-    }).catch((err) => {
-        console.log(err)
-        isLoading.value = false;
-    });
-};
-
-watch(() => route.query.page || isVisible.value, () => {
-    if (route.query.page && !isVisible.value) {
-    } else {
-        loadFinanceRecords();
-    }
-})
+const props = defineProps(['depositRecordList']);
 
 const formatTransactionType = (transactionType) => {
     if (transactionType === 'DEPOSIT') {
@@ -80,11 +42,10 @@ const formatTransactionType = (transactionType) => {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .news-section {
-    max-width: 1400px;
-    width: 95%;
-    margin: 20px auto;
+    margin-top: 20px;
+    padding: 0 16px;
 }
 
 .news-split {
@@ -130,6 +91,18 @@ const formatTransactionType = (transactionType) => {
     .title-text {
         font-size: 14px;
         line-height: 19.6px;
+
+        @media (min-width: 769px) {
+            font-size: 20px;
+            line-height: 28px;
+        }
+    }
+
+    .more-text {
+        font-size: 14px;
+        line-height: 19.6px;
+        color: #ff3c3c;
+        cursor: pointer;
 
         @media (min-width: 769px) {
             font-size: 20px;

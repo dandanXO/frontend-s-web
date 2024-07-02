@@ -1,6 +1,6 @@
 <template>
   <div v-if="props.isLoading" class="loading-spinner">
-    <q-spinner-orbit :color="'blue'" size="8em" />
+    <q-spinner-hourglass :color="'blue'" size="8em" />
   </div>
   <div class="minigames-grid" v-else>
     <div v-for="(game, index) in props.minigames" :key="index" class="minigames-grid-item"

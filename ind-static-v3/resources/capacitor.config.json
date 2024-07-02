@@ -1,9 +1,0 @@
-{
-  "appId": "com.ind.appind3",
-  "appName": "Ind3",
-  "webDir": "www",
-  "server": {
-    "androidScheme": "https",
-    "hostname": "7rzyd3kui.Ind3.com"
-  }
-}
