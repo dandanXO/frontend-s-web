@@ -1889,10 +1889,16 @@ const loadShareRatio = async () => {
     memberShareRatioList.list = memberShareRatio
     if (memberShareRatio.length === 0 || shareRatio.length !== 5) {
       const { data: shareRatio } = await getConfigListByGroup('AGENT_SHARE_RATIO', memberDetail.siteId)
-      memberShareRatioList.list = JSON.parse(JSON.stringify(shareRatio))
       const missingRatio = shareRatio.filter(item => !shareRatioList.list.some(ratio => ratio.code === item.code))
+      const missingMemberRatio = shareRatio.filter(item => !memberShareRatioList.list.some(ratio => ratio.code === item.code))
       missingRatio.forEach(ratio => {
         shareRatioList.list.push({
+          code: ratio.code,
+          value: 0
+        })
+      })
+      missingMemberRatio.forEach(ratio => {
+        memberShareRatioList.list.push({
           code: ratio.code,
           value: 0
         })
