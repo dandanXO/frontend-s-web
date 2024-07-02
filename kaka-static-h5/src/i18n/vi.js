@@ -514,24 +514,31 @@ export default {
     vip_24_7_cc_team: "Đội ngũ chăm sóc sách hàng VIP 24/7",
     vip_invitation_to_ee: "Thư mời tham gia các sự kiện độc quyền",
     vip_terms_title: "Quy tắc và Điều khoản",
-    vip_terms_para_01:
-      "Chương trình áp dụng cho tất cả các thành viên có tài khoản VNDP hợp lệ tại KAKA. Chương trình dựa trên tổng số tiền cược hợp lệ hàng tháng của người chơi từ 00:00:00 ngày đầu tiên của tháng đến 23:59:59 ngày cuối cùng của tháng (GMT +8).",
-    vip_terms_para_02:
-      "Hệ thống sẽ tự động nâng cấp cấp độ VIP của tất cả các thành viên sau 12:00:00 (GMT +8) vào ngày đầu tiên của tháng mới, miễn là tổng số tiền cược hợp lệ của thành viên phải đủ điều kiện để tiến lên cấp độ VIP tương ứng. Khuyến mãi sẽ không cần tuân thủ từng cấp độ VIP.",
-    vip_terms_para_03:
-      "Tiền thưởng Nâng cấp: sau khi thành viên được nâng cấp lên một cấp độ VIP mới, thành viên có thể nhấp vào nút NHẬN trên trang VIP. Số tiền thưởng sẽ dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 1 vòng cược trước khi rút tiền.",
-    vip_terms_para_04:
-      "Tiền thưởng Nâng cấp không thể được nhận cùng lúc với Tiền thưởng Hàng tháng. Nếu thành viên được thăng cấp VIP trong tháng này, thành viên sẽ nhận được Tiền thưởng Nâng cấp. Hệ thống sẽ xem xét Tiền thưởng Hàng tháng cho các tài khoản chưa được thăng cấp VIP trong tháng này và đã đáp ứng yêu cầu để duy trì cấp độ VIP.",
-    vip_terms_para_05:
-      "Tiền thưởng Hàng tháng: Thành viên cần đáp ứng các yêu cầu duy trì cấp độ VIP hiện tại trước khi nhận tiền thưởng. (Ví dụ: Nếu thành viên ở cấp độ VIP3, sau đó trong tháng cần đạt ít nhất 600.000 VNDP tổng cược trong tháng). Sau khi đủ điều kiện, thành viên có thể nhấp vào nút NHẬN trên trang VIP vào ngày đầu tiên của tháng. Số tiền thưởng dựa trên cấp độ VIP tương ứng và số tiền thưởng cần phải qua 3 vòng cược trước khi rút tiền.",
-    vip_terms_para_06:
-      "Tiền thưởng Sinh nhật: Trong tháng sinh nhật, thành viên có thể liên hệ với Dịch vụ Khách hàng để được xác minh và nhận tiền thưởng tương ứng với cấp độ VIP hiện tại của thành viên. Lưu ý: tất cả thông tin xác minh với Dịch vụ Khách hàng",
-    vip_terms_para_07:
-      "Tiền thưởng Hoàn trả: Thành viên được nâng cấp lên cấp độ nhận tiền thưởng hoàn trả tương ứng với cấp độ VIP hiện tại. Tiền thưởng hoàn trả tại các sản phẩm Casino trực tuyến, lọ quay sẽ không vượt quá 50.000 VNDP mỗi ngày và không giới hạn cho các sản phẩm khác.",
-    vip_terms_para_08:
-      "Tất cả cược hòa, cược HỦY, cược 2 chiều, kèo châu Âu dưới 1,75, cược châu Á dưới 0,75, Trò chơi số, Thể thao ảo, Jackpot tiến triển RNG, Máy đánh bạc tiến triển RNG sẽ không được tính. doanh thu cược cho chương trình này. Điều khoản và điều kiện chung của chương trình áp dụng.",
-    vip_terms_para_09:
-      "KAKA có quyền sửa đổi, từ chối hoặc hủy bỏ chương trình thành viên VIP này vào bất kỳ thời điểm nào mà không cần thông báo trước.",
+    vip_terms_para_01: "Thành viên khi đủ điều kiện thăng cấp, hệ thống sẽ cập nhật ngay cấp VIP mới. Không giới hạn số lần thăng cấp VIP và số lần nhận tiền thưởng thăng VIP mỗi ngày.",
+    vip_terms_para_02: "Tiền thưởng thăng cấp: Sau khi được thăng cấp VIP mới, thành viên có thể bấm nút NHẬN trên trang VIP để nhận tiền thưởng thăng cấp.",
+    vip_terms_para_03: "Điều kiện bảo lưu: Thành viên cần duy trì các cược hợp lệ như trên trong vòng 30 ngày sau khi thăng cấp để duy trì cấp độ, nếu các cược hợp lệ không được hoàn thành trong vòng 30 ngày sẽ bị hạ 1 cấp. Hệ thống kết thúc thống kê vào lúc 23:59 ngày của ngày thứ 30.",
+    vip_terms_para_04: "Tiền thưởng hàng tháng: Trong vòng từ lúc 01:00 ngày 01 đến 23:59 ngày 07 hàng tháng, thành viên cần liên hệ CSKH 24/7 để nhận tiền thưởng. Nếu quá hạn xem như từ bỏ.",
+    vip_terms_para_05: "Tiền thưởng sinh nhật: Thành viên sau khi đăng ký tài khoản, có lịch sử nạp tiền từ 15 ngày trở lên, cần liên hệ CSKH 24/7 ngay trong ngày sinh nhật để nhận thưởng.",
+    vip_terms_para_06: "Mỗi thành viên chỉ có thể nhận được 1 lần thưởng thăng cấp cho mỗi cấp VIP.",
+    vip_terms_para_07: "Tiền thưởng chỉ cần 1 vòng cược là có thể rút tiền.",
+    vip_terms_para_08: "Chương trình thành viên VIP này có thể áp dụng chung với các khuyến mãi khác của KAKAGAME.",
+    vip_terms_para_09: "Để tránh sự hiểu nhầm trong cách hiểu văn bản, KAKAGAME bảo lưu quyền giải thích cuối cùng, cũng như thay đổi, từ chối, hủy bỏ chương trình thành viên VIP này mà không cần báo trước.",
+    vip_tableHeader1: "Cấp VIP",
+    vip_tableHeader2: "Tổng Cược Hợp Lệ",
+    vip_tableHeader3: "Nạp Tích Lũy",
+    vip_tableHeader4: "Điều Kiện Bảo Lưu",
+    vip_tableHeader5: "Thưởng Thăng Cấp",
+    vip_tableHeader6: "Thưởng Tháng",
+    vip_tableHeader7: "Quà Sinh Nhật",
+    vip_tableHeader8: "Số Lần Rút Hàng Ngày",
+    vip_tableHeader9: "Hạn Mức Rút Hàng Ngày",
+    vip_header1: "THĂNG VIP HOÀNG GIA, THẢ GA NHẬN THƯỞNG",
+    vip_target: "ĐỐI TƯỢNG THAM GIA: ",
+    vip_targetdet: 'TẤT CẢ CÁC THÀNH VIÊN CỦA KAKAGAME',
+    vip_duration: "THỜI GIAN DIỄN RA: ",
+    vip_durationdet: "BẮT ĐẦU TỪ LÚC ĐĂNG KÝ TÀI KHOẢN ĐẾN KHI CÓ THÔNG BÁO KẾT THÚC",
+    vip_note: "Chú ý: ",
+    vip_notedet: '1 điểm = 1000VND',
     vip_sport_rebate: "Thể Thao",
     vip_esport_rebate: "E-Sport",
     vip_livecasino_rebate: "Live Casino",

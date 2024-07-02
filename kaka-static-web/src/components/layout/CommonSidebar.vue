@@ -364,7 +364,7 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    color: #ffffff;
+    color: #b20000;
     gap: 10px;
     cursor: pointer;
     padding: 10px 25px;

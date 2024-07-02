@@ -508,24 +508,31 @@ export default {
     vip_24_7_cc_team: "24/7 VIP Customer Care Team",
     vip_invitation_to_ee: "Invitation to Exclusive Events",
     vip_terms_title: "Terms & Conditions",
-    vip_terms_para_01:
-      "The program applies to all members who have a valid VNDP account at KAKA. The program is based on the player's total monthly valid bet from 00:00:00 first day of month to 23:59:59 last day of month (GMT +8).",
-    vip_terms_para_02:
-      "The system will automatically upgrade the VIP level of all members after 12:00:00 (GMT +8) on the first day of the new month, provided that the member's total valid bet must be qualified to advance to the corresponding VIP level. The promotion will not need to comply with each VIP rank.",
-    vip_terms_para_03:
-      "Upgrade Bonus: after the member is upgraded to a new VIP level, the member can click the GET button on the VIP page. The amount of the bonus will be based on the corresponding VIP level and the bonus needs to go through 1 betting round before withdrawing.",
-    vip_terms_para_04:
-      "The Upgrade Bonus cannot be claimed at the same time as the Monthly Bonus. If member is promoted to VIP this month, member will receive Upgrade Bonus. The system will review the Monthly Bonus for accounts that have not been promoted to VIP this month and have met the requirements to maintain the VIP level.",
-    vip_terms_para_05:
-      "Monthly Bonus: Members need to meet the maintenance requirements of the current VIP level before receiving the bonus. (Example: If the member is in VIP3, then in the month need to reach at least 600,000 VNDP total bet in the month). After qualifying, members can click the GET button on the VIP page on the first day of the month. The amount of the bonus is based on the corresponding VIP level and the bonus needs to go through 3 betting rounds before withdrawing.",
-    vip_terms_para_06:
-      "Birthday bonus: In the month of birthday, member can contact Customer Service to be verified and receive bonus corresponding to member's current VIP level. Note: all verification information with Customer Service is absolutely confidential and safe.",
-    vip_terms_para_07:
-      "Rebate Bonus: Members are upgraded to the rebate bonus level corresponding to the existing VIP level. The rebate bonus at Online Casino products, spinning jars will not exceed 50,000 VNDP per day and is not limited to other products.",
-    vip_terms_para_08:
-      "All draw bets, CANCEL bets, 2-way bets, European handicap under 1.75, Asian bets under 0.75, Number Game, Fantasy Sports, Progressive RNG Jackpot, Progressive RNG Slots will not be counted. bet revenue for this program. General terms &amp; conditions of the promotion apply.",
-    vip_terms_para_09:
-      "KAKA reserves the right to modify, refuse or cancel this VIP membership program at any time without prior notice.",
+    vip_terms_para_01: "When a member meets the level-up conditions, the system will immediately update to the new VIP level. There is no limit to the number of VIP level-ups and the number of times you can receive VIP level-up bonuses each day.",
+    vip_terms_para_02: "Level-up bonus: After reaching a new VIP level, members can click the CLAIM button on the VIP page to receive the level-up bonus.",
+    vip_terms_para_03: "Retention condition: Members need to maintain valid bets as stated above within 30 days after leveling up to maintain their level. If the valid bets are not completed within 30 days, the member will be downgraded by one level. The system ends the statistics at 23:59 on the 30th day.",
+    vip_terms_para_04: "Monthly bonus: From 01:00 on the 1st to 23:59 on the 7th of each month, members need to contact 24/7 customer service to receive the monthly bonus. If overdue, it is considered forfeited.",
+    vip_terms_para_05: "Birthday bonus: After registering an account and having a deposit history of at least 15 days, members need to contact 24/7 customer service on their birthday to receive the bonus.",
+    vip_terms_para_06: "Each member can only receive the level-up bonus once for each VIP level.",
+    vip_terms_para_07: "The bonus only requires 1x betting turnover to withdraw.",
+    vip_terms_para_08: "This VIP member program can be combined with other KAKAGAME promotions.",
+    vip_terms_para_09: "To avoid misunderstanding of the text, KAKAGAME reserves the final interpretation right and can change, reject, or cancel this VIP member program without prior notice.",
+    vip_tableHeader1: "VIP Level",
+    vip_tableHeader2: "Total Valid Bets",
+    vip_tableHeader3: "Accumulated Deposits",
+    vip_tableHeader4: "Retention Condition",
+    vip_tableHeader5: "Level-Up Bonus",
+    vip_tableHeader6: "Monthly Bonus",
+    vip_tableHeader7: "Birthday Gift",
+    vip_tableHeader8: "Daily Withdrawal Limit",
+    vip_tableHeader9: "Daily Withdrawal Limit Amount",
+    vip_header1: "ROYAL VIP PROMOTION, ENJOY REWARDS",
+    vip_target: "PARTICIPANTS: ",
+    vip_targetdet: "ALL MEMBERS OF KAKAGAME",
+    vip_duration: "DURATION: ",
+    vip_durationdet: "FROM ACCOUNT REGISTRATION UNTIL ANNOUNCED END",
+    vip_note: "Note: ",
+    vip_notedet: "1 point = 1000 VND",
     vip_sport_rebate: "Sport Rebate",
     vip_esport_rebate: "E-sports Rebate",
     vip_livecasino_rebate: "Live Casino Rebate",
