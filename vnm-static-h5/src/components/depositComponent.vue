@@ -809,7 +809,7 @@ onMounted(() => {
     font-size: 14px;
     align-items: center;
     background: #063c50;
-    padding: 15px 10px;
+    padding: 10px;
 
     span:first-child {
       // flex: 1;

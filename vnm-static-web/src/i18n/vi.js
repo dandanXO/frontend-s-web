@@ -97,7 +97,7 @@ export default {
     loading: "Đang tải",
     submit: "Gửi",
     sendVerificationCode: "Gửi mã xác minh",
-    copy: "Sao chép",
+    copy: "Copy",
     copied: "Đã sao chép",
     confirm: "Xác nhận",
     cancel: "Hủy",
