@@ -24,8 +24,8 @@
       :params="list.param"
     />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
-    <HongBaoYu2024
-      v-if="list.redirectUrl === 'tiqianhongbaozz' && !isCommonPromo && store.token"
+    <HongBaoPreEurocup
+      v-if="list.redirectUrl === 'tiqianhongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
