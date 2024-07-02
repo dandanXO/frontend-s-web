@@ -20,7 +20,7 @@
       </q-card-section>
       <q-card-section class="page-title" v-if="hasPage">
         <router-link :to="prevPage ? '/' + prevPage : '/'">
-          <RiArrowLeftLine />
+          <img class="svg" src="~assets/images/index/arrow-left-line.svg" />
         </router-link>
         {{ pageName }}
         <q-btn
@@ -161,14 +161,9 @@ import { Platform } from "quasar";
 import { useUI } from "stores/ui";
 import { useRoute, useRouter } from "vue-router";
 import { translateRecord } from "src/directives/translate";
-import { RiArrowLeftLine } from "vue-remix-icons";
 
 export default defineComponent({
   name: "MainLayout",
-
-  components: {
-    RiArrowLeftLine
-  },
 
   setup() {
     const route = useRoute();

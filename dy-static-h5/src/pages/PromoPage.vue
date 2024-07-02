@@ -140,7 +140,7 @@
     <q-card style="width: 100%; padding: 20px" class="bg-white text-black text-right">
       <q-card-section class="q-mb-md gologin-popup">
         <strong>
-          <RiErrorWarningLine />
+          <img class="svg" src="~assets/promo/error-warning-line.svg" />
           系统提示
         </strong>
         请登录后再操作
@@ -159,7 +159,6 @@ import {api} from "boot/axios";
 import {useQuasar} from "quasar";
 import {useUI} from "stores/ui";
 import {userStore} from "stores/index";
-import {RiErrorWarningLine} from "vue-remix-icons";
 import {isAndroid} from "boot/utils";
 import {SessionStorage} from "quasar";
 import LocalStorage from "boot/local-storage";
@@ -171,7 +170,7 @@ import HotPromotion from "components/HotPromotion";
 export default defineComponent({
   name: "PromoView",
   components: {
-    HotPromotion, RiErrorWarningLine,
+    HotPromotion,
   },
   setup() {
     const store = userStore();
