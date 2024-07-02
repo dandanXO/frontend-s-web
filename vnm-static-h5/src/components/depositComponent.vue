@@ -47,7 +47,7 @@
             {{ copybtntxt3 }}
           </q-btn>
         </div>
-        <div class="line">
+        <div class="line" v-if="submitMessage[5] && submitMessage[5] !== 'null'">
           <span>{{ $t("lang.dv_remark") }}：</span>
           <span class="info" ref="subMsg5">{{ submitMessage[5] }}</span>
           <q-btn color="brightbtn" @blur="blurCode" @click="copyMessage('5')" class="common-btn">
