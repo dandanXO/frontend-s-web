@@ -3,6 +3,10 @@
         <img class="banner-img" src="@/assets/images/promotion/hotpromo/EuroRegen/banner.png" />
 
         <div class="promo-content-wrapper">
+          <div style="color:#ff0000;font-size:40px;text-align:center;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+            还没完成，不要测试先。
+          </div>
+
             <div class="claim-wrapper">
                 <div class="claim-button">立即领取</div>
             </div>
@@ -71,6 +75,13 @@
         </div>
     </div>
 </template>
+
+<script setup>
+
+import { userStore } from "@/store";
+
+const store= userStore();
+</script>
 
 <style lang="scss" scoped>
 .euro-regen-container {
