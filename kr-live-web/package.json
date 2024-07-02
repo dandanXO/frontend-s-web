@@ -57,6 +57,7 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^9.0.0",
     "eslint-webpack-plugin": "^3.1.1",
+    "moment-locales-webpack-plugin": "^1.2.0",
     "prettier": "^2.5.1",
     "quasar-cli": "^0.17.26",
     "terser-webpack-plugin": "~5.3.6",
