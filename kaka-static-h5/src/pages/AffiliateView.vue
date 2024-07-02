@@ -25,7 +25,7 @@
         <img class="vg-img" src="../assets/images/affiliate/vg.png" alt="" />
         <div class="desc-container">
           <div class="title">
-            
+
             <div class="vn">Dịch vụ tốt nhất</div>
             <div class="en">Best Quality Service</div>
           </div>
@@ -37,7 +37,7 @@
       <img class="ambassador-img" src="../assets/images/affiliate/ambassador.png" alt="" />
       <div class="btn-wrapper">
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_joinus')"
           no-caps
           size="md"
@@ -46,7 +46,7 @@
           <img class="mask" src="../assets/images/affiliate/btn-mask-blue.png" alt="" />
         </q-btn>
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_login')"
           no-caps
           size="md"
@@ -209,7 +209,7 @@
     <div class="contact-us">
       <div class="register-btn-wrapper">
         <q-btn
-          :href="'https://vnm-affiliate.th80to83w1.com/login?agent=' + (affCode ? affCode : '')"
+          :href="'https://ka1-os.cn23lh0d1nf.com/kaka/login?agent=' + (affCode ? affCode : '')"
           :label="$t('lang.affiliate_apply_agency')"
           size="lg"
           no-caps
@@ -330,7 +330,7 @@ const rows = [
   .logo {
     width: 200px;
     margin: 0 auto;
-    img{ 
+    img{
       width: 100%;
     }
   }
@@ -387,7 +387,7 @@ const rows = [
           line-height: normal;
         }
         .title {
-          
+
           .vn {
             color: #ffffff;
           }
