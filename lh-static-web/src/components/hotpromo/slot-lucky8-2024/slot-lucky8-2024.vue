@@ -44,12 +44,12 @@
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">
-            永久有效
-          </div>
-        </div>
+<!--        <div class="little-title">-->
+<!--          <div class="left">活动时间</div>-->
+<!--          <div class="right">-->
+<!--            永久有效-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">
