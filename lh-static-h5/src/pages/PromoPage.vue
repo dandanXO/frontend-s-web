@@ -861,7 +861,12 @@ export default defineComponent({
             padding-bottom: 10px;
           }
 
+
           table {
+
+            p{
+              margin: 0px;
+            }
 
             tr:first-child{
               td{
