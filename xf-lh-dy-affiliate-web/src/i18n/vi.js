@@ -33,6 +33,10 @@ export default {
     paopao: 'Bubble',
     zalo: 'Zalo',
     telegram: 'Telegram',
+    24: {
+      line1: 'liên hệ chúng tôi',
+      line2: 'Đường dây nóng dịch vụ 7X24'
+    }
   },
   depositStatus: {
     SUCCESS: 'Thành công',
