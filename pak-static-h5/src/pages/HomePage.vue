@@ -1036,14 +1036,14 @@
                 <div v-for="(ann, idx) in announcementList" :key="idx">
                   <span v-if="ann.typeId === tab.id">
                     <q-expansion-item
-                      style="max-height: 65vh; overflow: auto"
+                      style="max-height: 75vh; overflow: auto"
                       group="somegroup"
                       icon="volume_up"
                       :label="ann.title"
                     >
                       <q-card>
                         <q-card-section>
-                          {{ ann.content }}
+                          <div v-html="processedContent(ann.content)" />
                         </q-card-section>
                       </q-card>
                     </q-expansion-item>
@@ -3322,6 +3322,10 @@ const downloadHeart = ref(false);
 //     downloadHeart.value = true;
 //   }
 // };
+
+const processedContent = (content) => {
+  return content.replace(/\n/g, "<br>");
+};
 
 onActivated(() => {
   store.getUnreadTotal();
