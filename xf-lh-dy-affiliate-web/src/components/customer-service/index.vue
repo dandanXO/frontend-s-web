@@ -1,7 +1,15 @@
 <template>
-  <div class="customer-service">
+  <div
+    class="customer-service"
+    :class="{
+      kaka: props.siteId === '15'
+    }"
+  >
     <div class="inner">
-      <div class="bg-design"><img src="../../assets/images/login/cus-service.png"></div>
+      <div class="bg-design">
+        <img v-if="props.siteId === '15'" src="../../assets/images/kaka/cus-service-kaka.png">
+        <img v-else src="../../assets/images/login/cus-service.png">
+      </div>
       <div class="title">
         {{ t('common.zhuanshukefufuwu') }}
       </div>
@@ -25,7 +33,17 @@
         <div class="girl">
           <img v-if="props.siteId === '7'" src="../../assets/images/login/cus-guy.png">
           <img v-else-if="props.siteId === '8' || props.siteId === '15'" src="../../assets/images/login/cus-girl-vn.png">
-          <img v-else src="../../assets/images/login/cus-girl.png"></div>
+          <img v-else src="../../assets/images/login/cus-girl.png">
+          <div v-if="props.siteId === '15'" class="kaka-cs-24">
+            <img src="../../assets/images/kaka/cs-24-kaka.svg">
+            <p>
+              {{ $t('common.24.line1') }}
+              <br>
+              <br>
+              {{ $t('common.24.line2') }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -185,6 +203,71 @@ const initContactList = () => {
       },
     ]
   }
+  if (props.siteId === '15') {
+    contactlist.value = [
+      {
+        icon: 'cmail-kaka',
+        type: t('common.email'),
+        link: mailLink(),
+        btns: [{
+          text: t('common.askus'),
+          action: ''
+        }]
+      },
+      {
+        icon: 'cqq-kaka',
+        type: t('common.qq'),
+        link: qqLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://im.qq.com/index/'
+        }]
+      },
+      {
+        icon: 'cskype-kaka',
+        type: t('common.skype'),
+        link: 'live:.cid.1b8d9a018a52a8f5',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://www.skype.com/zh-Hans/get-skype/'
+        }]
+      },
+      {
+        icon: 'cflygram-kaka',
+        type: 'Telegram',
+        link: telegramLink(),
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://telegram.org/'
+        }]
+      },
+      {
+        icon: 'ccon-doi-kaka',
+        type: t('common.paopao'),
+        link: 'LH10086',
+        btns: [{
+          text: t('common.copy'),
+          action: ''
+        },
+        {
+          text: t('common.download'),
+          action: 'https://paopaoim.com/index.html'
+        }]
+      }
+    ]
+  }
 }
 const copyMessage = (position, text, btnPosition) => {
   console.log(position);
@@ -234,6 +317,65 @@ onMounted(() => {
     background: url('../../assets/images/login/cus-bg.png');
     width: 100%;
     height: 100vh;
+    &.kaka {
+      background: url('../../assets/images/kaka/cus-bg-kaka.png') no-repeat center 33%;
+      background-color: #1E212C;
+
+      .el-button--primary {
+        --el-button-background-color: #FF4545;
+        --el-button-border-color: #FF4545;
+      }
+      .el-button--plain {
+        --el-button-background-color: transparent;
+        --el-button-border-color: #FF4545;
+        --el-button-font-color: #FF4545;
+      }
+      .bar {
+        background: linear-gradient(90deg, #FF3333 0%, rgba(255, 26, 26, 0) 101.54%);
+      }
+      .inner {
+        .title {
+          color: #fff;
+        }
+        .bg-design {
+          z-index: 0;
+        }
+        .services {
+          z-index: 1;
+          position: relative;
+
+          .contact-box {
+            background: linear-gradient(180deg, #FEFFFF 0%, #FDDADA 100%);
+            box-shadow: 0px -3px 4px 0px #FFFFFF inset, 0px 4px 4px 0px #0000000D;
+          }
+          .girl {
+            position: relative;
+            .kaka-cs-24 {
+              display: flex;
+              align-items: center;
+              gap: 17px;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              background-color: #fff;
+              border-radius: 22px;
+              padding: 16px 20px;
+              img {
+                width: 86px;
+              }
+              p {
+                font-size: 16px;
+                font-style: italic;
+                font-weight: 900;
+                line-height: 19.36px;
+              }
+            }
+          }
+        }
+
+      }
+    }
     .inner {
         width: 100%;
         max-width: 1280px;
