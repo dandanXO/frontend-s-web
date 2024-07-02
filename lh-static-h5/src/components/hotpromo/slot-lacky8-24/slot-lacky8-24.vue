@@ -41,12 +41,12 @@
       </div>
       <div class="slot-lacky8-game-info">
         <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">
-            永久有效
-          </div>
-        </div>
+<!--        <div class="little-title">-->
+<!--          <div class="left">活动时间</div>-->
+<!--          <div class="right">-->
+<!--            永久有效-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="little-title" style="flex-direction: column;align-items:unset;">
           <div class="left">活动内容</div>
           <div class="right" style="margin-top: 4px;">
