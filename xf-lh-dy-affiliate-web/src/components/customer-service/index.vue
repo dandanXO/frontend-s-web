@@ -324,11 +324,23 @@ onMounted(() => {
       .el-button--primary {
         --el-button-background-color: #FF4545;
         --el-button-border-color: #FF4545;
+        &:hover,
+        &:active {
+          border-color: var(--el-button-border-color);
+          background-color: var(--el-button-background-color);
+          filter: brightness(1.2);
+        }
       }
       .el-button--plain {
         --el-button-background-color: transparent;
         --el-button-border-color: #FF4545;
         --el-button-font-color: #FF4545;
+        &:hover,
+        &:active {
+          --el-color-primary: #FF4545;
+          border-color: var(--el-button-border-color);
+          background-color: #FDF4F4;
+        }
       }
       .bar {
         background: linear-gradient(90deg, #FF3333 0%, rgba(255, 26, 26, 0) 101.54%);
