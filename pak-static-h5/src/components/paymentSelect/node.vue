@@ -18,9 +18,9 @@
         <div class="node-text">
           <div class="node-txt-img"><img :src="imgURL + item.nodeIcon" /></div>
           <div class="overflow txt-title">{{ item.nodeName }}</div>
-          <!-- <div class="promo">
+          <div class="promo">
             <img v-if="item.promotionIcon" :src="`${imgURL}${item.promotionIcon}`" />
-          </div> -->
+          </div>
 
           <div class="payment-method-wrapper">
             <div

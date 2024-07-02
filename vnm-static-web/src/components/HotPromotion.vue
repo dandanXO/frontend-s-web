@@ -12,7 +12,7 @@
     <EurocupLuckyDraw v-if="list.redirectUrl === 'vnm-eurocup-luckydraw' && !isCommonPromo " :promo-code="list.promoCode" />
 
     <HongBaoYu2024
-      v-if="list.redirectUrl === 'Red_pocket_euro2024' && !isCommonPromo && store.token"
+      v-if="list.redirectUrl === 'vi-mualixi-redpacket' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -309,7 +309,7 @@ export default defineComponent({
       this.list.redirectUrl === "vi-penny-bank" ||
       this.list.redirectUrl === "vi-slot-netloss" ||
       this.list.redirectUrl === "vi-poker-cashback" ||
-      this.list.redirectUrl === "Red_pocket_euro2024" ||
+      this.list.redirectUrl === "vi-mualixi-redpacket" ||
       this.list.redirectUrl === "vnm-eurocup24"||
       this.list.redirectUrl === "vnm-euro-2024-bet-reward" ||
       this.list.redirectUrl === "vnm-eurocup-luckydraw"

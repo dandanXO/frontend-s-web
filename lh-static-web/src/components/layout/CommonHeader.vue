@@ -185,7 +185,7 @@
                 <span class="assets-text">总资产：</span>
                 <span class="amount">
                   <span v-if="isLoadingBalance">加载中...</span>
-                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ floor(store.balance, 2) }}</span>
+                  <span v-if="!isLoadingBalance">{{ store.currency.value }}{{ store.balance }}</span>
                 </span>
               </div>
               <el-icon>
@@ -479,7 +479,6 @@ import RegisterAccount from "@/components/auth/RegisterAccount.vue";
 import ForgotPwdDialog from "@/views/ForgotPwdDialog.vue";
 import { uploadImage, saveImage } from '@/api/personal/common'
 import { getPlatformListDisplay, getLoggedInPlatformList } from "@/api/platform/platform";
-import floor from 'lodash/floor';
 
 export default defineComponent({
   name: "CommonHeader",
@@ -1436,7 +1435,6 @@ export default defineComponent({
     };
 
     return {
-      floor,
       token,
       el,
       height,

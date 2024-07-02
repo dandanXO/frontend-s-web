@@ -12,11 +12,3 @@ export const getTotal = (rollover) => {
 export const cancelRollover = (rollover) => {
   return https().request("/rolloverRecord/cancel?_method=PUT", Method.POST, rollover, ContentType.form);
 }
-
-export const hasOngoingRecords = (rollover) => {
-  return https().request("/rolloverRecord/hasOngoingRecord", Method.GET, rollover, ContentType.form);
-};
-
-export const cancelAllRollover = (rollover) => {
-  return https().request("/rolloverRecord/cancelAll?_method=PUT", Method.POST, rollover, ContentType.form);
-}

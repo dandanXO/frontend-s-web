@@ -89,7 +89,7 @@
         </el-table-column>
         <el-table-column prop="betStatus" :label="t('fields.betStatus')" align="center" min-width="140">
           <template #default="scope">
-            <el-tag v-if="scope.row.betStatus === 'SETTLE' || scope.row.betStatus === 'PATCH' || scope.row.betStatus === 'BET_N_SETTLE'" size="mini" type="success">{{ t('betStatus.SETTLED') }}</el-tag>
+            <el-tag v-if="scope.row.betStatus === 'SETTLE' || scope.row.betStatus === 'PATCH'" size="mini" type="success">{{ t('betStatus.SETTLED') }}</el-tag>
             <el-tag v-else-if="scope.row.betStatus === 'BET'" size="mini" type="secondary">{{ t('betStatus.BET') }}</el-tag>
             <el-tag v-else-if="scope.row.betStatus === 'CANCEL' || scope.row.betStatus === 'ROLLBACK'" size="mini" type="danger">{{ t('betStatus.CANCEL') }}</el-tag>
             <el-tag v-else size="mini" type="warning">{{ t('betStatus.UNSETTLED') }}</el-tag>

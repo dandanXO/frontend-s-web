@@ -88,18 +88,6 @@ export const userStore = defineStore("userStore", {
     setPhone(tel) {
       this.phone = tel;
     },
-    isNotAppPromo() {
-      // console.log(window.location.pathname);
-      //当 LH H5 在 /promotion 或者某些页面时，很多Api都不需要Call + 省时间。
-      if(
-        window.location.pathname === "/deposit" ||
-        window.location.pathname === "/vip" ||
-        window.location.pathname === "/promotion"){
-        console.log("IS In App")
-        return false;
-      }
-      return true;
-    },
     memberLogin(loginInfo) {
       var regDevice = Platform.is.mobile ? "H5" : "WEB";
       if ("standalone" in window.navigator && window.navigator.standalone) {
@@ -189,7 +177,6 @@ export const userStore = defineStore("userStore", {
         req.headers.TOKEN = token;
         return req;
       });
-
       return api.get("/session/member").then((response) => {
         if (response.code === 0) {
           this.id = response.data.id;

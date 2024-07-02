@@ -169,7 +169,7 @@ import { userStore } from "@/store";
 import {
   getUpcomingSportMatches,
   getSportInsurancePlatformOptions,
-  submitSportInsurance,
+  submitSportInsuranceForm,
   getSportInsuranceRecords
 } from "@/api/promotion/sportSafety";
 import { getLoggedInPlatformList } from "@/api/platform/platform";
@@ -243,7 +243,7 @@ const loadSportPlatformOptions = () => {
 };
 
 const applySportInsurance = () => {
-  submitForm();
+  toggleSportInsuranceModal(true);
 };
 
 const toggleSportInsuranceModal = (status) => {
@@ -280,20 +280,30 @@ const init = () => {
 };
 
 const submitForm = async (elForm) => {
-  
-  isSubmitting.value = true;
-      const res = await submitSportInsurance();
+  if (!elForm) return;
+
+  await elForm.validate(async (valid) => {
+    if (valid) {
+      isSubmitting.value = true;
+      const params = {
+        gameMatchId: sportInsuranceFormData.gameMatchId,
+        transactionId: sportInsuranceFormData.transactionId,
+        platform: sportInsuranceFormData.platform
+      };
+      const res = await submitSportInsuranceForm(params);
 
       if (res.code === 0) {
         ElMessage.success({
           type: "success",
           message: "提交成功"
         });
-        // sportInsuranceFormRef.value.resetFields();
-        // isSportInsuranceModalVisible.value = false;
+        sportInsuranceFormRef.value.resetFields();
+        isSportInsuranceModalVisible.value = false;
       }
 
       isSubmitting.value = false;
+    }
+  });
 };
 
 const $swiper = ref(null);

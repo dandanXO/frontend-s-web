@@ -74,16 +74,16 @@
             class="inactive"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/home-icon-dark.png')
-                : require('../assets/images/footer/home-icon.png')
+                ? require('../assets/images/footer/home-icon-dark.svg')
+                : require('../assets/images/footer/home-icon.svg')
             "
           />
           <img
             class="hover"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/home-icon-active-dark.png')
-                : require('../assets/images/footer/home-icon-active.png')
+                ? require('../assets/images/footer/home-icon-active-dark.svg')
+                : require('../assets/images/footer/home-icon-active.svg')
             "
           />
           <span>首页</span>
@@ -93,16 +93,16 @@
             class="inactive"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/withdraw-icon-dark.png')
-                : require('../assets/images/footer/withdraw-icon.png')
+                ? require('../assets/images/footer/withdraw-icon-dark.svg')
+                : require('../assets/images/footer/withdraw-icon.svg')
             "
           />
           <img
             class="hover"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/withdraw-icon-active-dark.png')
-                : require('../assets/images/footer/withdraw-icon-active.png')
+                ? require('../assets/images/footer/withdraw-icon-active-dark.svg')
+                : require('../assets/images/footer/withdraw-icon-active.svg')
             "
           />
           <span>账户</span>
@@ -112,16 +112,16 @@
             class="inactive"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/promo-icon-dark.png')
-                : require('../assets/images/footer/promo-icon.png')
+                ? require('../assets/images/footer/promo-icon-dark.svg')
+                : require('../assets/images/footer/promo-icon.svg')
             "
           />
           <img
             class="hover"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/promo-icon-active-dark.png')
-                : require('../assets/images/footer/promo-icon-active.png')
+                ? require('../assets/images/footer/promo-icon-active-dark.svg')
+                : require('../assets/images/footer/promo-icon-active.svg')
             "
           />
           <span>优惠</span>
@@ -131,16 +131,16 @@
             class="inactive"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/chat-icon-dark.png')
-                : require('../assets/images/footer/chat-icon.png')
+                ? require('../assets/images/footer/chat-icon-dark.svg')
+                : require('../assets/images/footer/chat-icon.svg')
             "
           />
           <img
             class="hover"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/chat-icon-active-dark.png')
-                : require('../assets/images/footer/chat-icon-active.png')
+                ? require('../assets/images/footer/chat-icon-active-dark.svg')
+                : require('../assets/images/footer/chat-icon-active.svg')
             "
           />
           <span>客服</span>
@@ -151,16 +151,16 @@
             class="inactive"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/account-icon-dark.png')
-                : require('../assets/images/footer/account-icon.png')
+                ? require('../assets/images/footer/account-icon-dark.svg')
+                : require('../assets/images/footer/account-icon.svg')
             "
           />
           <img
             class="hover"
             :src="
               $q.dark.isActive
-                ? require('../assets/images/footer/account-icon-active-dark.png')
-                : require('../assets/images/footer/account-icon-active.png')
+                ? require('../assets/images/footer/account-icon-active-dark.svg')
+                : require('../assets/images/footer/account-icon-active.svg')
             "
           />
 

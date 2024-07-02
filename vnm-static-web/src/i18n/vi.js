@@ -27,8 +27,6 @@ export default {
     rebate: "Hoàn Trả"
   },
   account: {
-    no_card_avail: "Không có thẻ sẵn có, tiến hành ",
-    add_a_bank_card: "Thêm thẻ ngân hàng",
     welcome: "Chào mừng",
     mainWallet: "Số dư",
     reminder: "Hỗ trợ",
@@ -346,8 +344,7 @@ export default {
     enterDigits: "Vui lòng nhập các chữ số",
     lengthShouldBe: "Chiều dài nên là",
     smsCodeRequired: "Vui lòng nhập mã xác minh qua tin nhắn SMS",
-    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng",
-    settleWithdrawPwd: "Vui lòng thêm mật khẩu rút tiền"
+    bankBranchAddress: "Địa chỉ chi nhánh ngân hàng"
   },
   referTerms: {
     promotionStart: "Khuyến mãi bắt đầu từ 00:00:00 ngày 01/06/2022 (GMT +8). ",

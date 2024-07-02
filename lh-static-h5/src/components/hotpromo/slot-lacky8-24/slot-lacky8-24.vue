@@ -3,9 +3,13 @@
     <div class="slot-lacky8-container">
       <div class="slot-lacky8-game-money-info">
         <div class="title"></div>
-        <!-- <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
+        <div style="color:#ff0000;font-size:40px;" v-if="store.memberType==='TEST' || store.memberType==='PROMO_TEST'">
           还没完成，不要测试先。
-        </div> -->
+        </div>
+        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
+        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
+        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>申请方式</div>
+        <div class="little2-content">会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。</div>
         <table class="slot-lacky8-game-info-table">
           <tr>
             <th>电游平台<br>游戏时间</th>
@@ -16,28 +20,19 @@
           </tr>
           <tr v-for="(item, index) in tableData" :key="index">
             <td>
-              {{ item.platform }} <br>
-              <span class="inner-time">{{ item.betTime }}</span>
+              {{ item.platformName }} <br>
+              <span class="inner-time">{{ item.time }}</span>
             </td>
-            <td>{{ '******'+(String(item.betId).slice(-3)) }}</td>
-            <td>{{ item.bet }}</td>
-            <td>{{ item.prizeAmount }}</td>
+            <td>{{ item.acctNumber }}</td>
+            <td>{{ item.first }}</td>
+            <td>{{ item.second }}</td>
             <td>
-              <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'">
-                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取彩金' }}
+              <button @click="!item.claimed ? handleSubmitVote(item): null" :class="!item.claimed ? 'option-btn-active' : 'option-btn-disable'">
+                {{ item.claimed ? '已领取' : '领取彩金' }}
               </button>
             </td>
-          </tr>
-          <tr v-if="tableData.length === 0">
-            <td colspan="5">暂无数据</td>
-          </tr>
+          </tr>\
         </table>
-        <div class="little-title">
-          <div class="left">申请方式</div>
-          <div class="right" style="margin-top: 4px;">
-            会员获得符合盈利金额注单号，注单产生当日 23:59:59 内，通过活动详情页的领奖处点击领取彩金，彩金立即派发至中心钱包，逾期视为放弃。
-          </div>
-        </div>
       </div>
       <div class="slot-lacky8-game-info">
         <div class="title"></div>
@@ -82,8 +77,6 @@
             <td>2,888 元</td>
           </tr>
         </table>
-        <div class="little2-title"><div style="vertical-align: text-bottom;margin-right:4px; display: inline-block;width: 4px;height: 16px; background-color: #4BA5FF;"></div>范例</div>
-        <div class="little2-content">会员 A 在任一电子娱乐游戏投注，获得注单编号******8888，该笔注单投注金额为 100，即可获得 5 X 100 =500 元 幸运注单守护金。</div>
       </div>
       <div class="slot-lacky8-game-bottom-rule">
         <div class="title"></div>
@@ -215,7 +208,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, watch } from "vue";
 import moment from "moment";
 import { getSlotLucky8, submitSlotLucky8 } from "../../../api/promotion/slotlucky";
 import { useQuasar } from "quasar";
@@ -230,7 +223,7 @@ const confirmVoteDialog = ref(false);
 
 const store= userStore();
 const tableData = ref([]);
-const hasClaimed = computed(() => tableData.value?.some((item) => item.claimTime))
+
 const recordList = ref([]);
 const handleSubmitVote = (item) => {
   submitSlotLucky8(promoCode.value, item.id)
@@ -239,11 +232,10 @@ const handleSubmitVote = (item) => {
         $q.notify({
           color: "positive",
           position: "top",
-          message: "领取成功！",
+          message: "投票成功！",
           icon: "check_circle_outline"
         });
         getSlotLucky8Data();
-        store.getBalance();
       } else {
         $q.notify({
           color: "negative",
@@ -253,6 +245,9 @@ const handleSubmitVote = (item) => {
         });
       }
     })
+    .finally(() => {
+      confirmVoteDialog.value = false;
+    });
 };
 
 const imgURL = useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value + "/promo/";
@@ -287,9 +282,28 @@ const displayGuessResult = (record) => {
 };
 
 const getSlotLucky8Data = async () => {
-
+  
   const res = await getSlotLucky8(promoCode.value);
-  tableData.value = res.data
+  tableData.value = [
+    {
+        "id": 1,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": false
+    },
+    {
+      "id": 2,
+        "platformName": "平台名",
+        "time": "2024.4.2 23:32:32",
+        "acctNumber": "*******888",
+        "first": 388,
+        "second": 388,
+        "claimed": true
+    }
+]
 };
 
 onMounted(getSlotLucky8Data);
@@ -470,28 +484,28 @@ onMounted(getSlotLucky8Data);
   align-items: center;
 
   .title {
-    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title.png");
+    background-image: url("../../../assets/promo/lh-slot-lacky8/info-title2.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     width: 240px;
     height: 20px;
-    margin-bottom: 16px;
+    margin-bottom: 0px;
   }
   .little-title {
     display: flex;
     width: 100%;
     align-items: center;
-    margin: 12px 0;
+    margin-bottom: 12px;
     .left {
       background-image: url("../../../assets/promo/lh-slot-lacky8/info-little-title-bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      width: 160px;
-      height: 20px;
+      width: 120px;
+      height: 30px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 600;
       line-height: 23.33px;
       color: #ffffff;
@@ -566,9 +580,7 @@ onMounted(getSlotLucky8Data);
   margin-top:12px;
   .inner-time{
     font-size: 8px;
-    line-height: 10px;
     width: 69px;
-    display:block;
   }
   th {
     height: 32px;
@@ -618,7 +630,6 @@ onMounted(getSlotLucky8Data);
   border-spacing: 0;
   text-align: center;
   vertical-align: middle;
-  margin-bottom: 12px;
   .inner-time{
     font-size: 8px;
     width: 69px;
@@ -674,16 +685,6 @@ onMounted(getSlotLucky8Data);
 
 
 }
-.option-btn-redeemed{
-  font-size: 10px;
-  width: 56px;
-  height: 24px;
-  border-radius: 100px;
-  border: none;
-  color: rgba(255, 255, 255, 1);
-  background: linear-gradient(180deg,#48D179 0%, #00A63A 100%);
-  pointer-events: none;
-}
 .option-btn-disable{
   font-size: 10px;
   width: 56px;
@@ -693,6 +694,7 @@ onMounted(getSlotLucky8Data);
   background: rgba(217, 217, 217, 1);
   color: rgba(255, 255, 255, 1);
   pointer-events: none;
+
 }
 
 .slot-lacky8-game-bottom-rule {

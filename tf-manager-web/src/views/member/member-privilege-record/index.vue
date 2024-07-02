@@ -215,7 +215,7 @@
       </el-row>
       <el-row>
         <el-form-item :label="t('fields.turnoverMultiple')" prop="rollover">
-          <el-input v-model="form.rollover" style="width: 350px;" :disabled="uiControl.promoAmountInput" />
+          <el-input v-model="form.rollover" style="width: 350px;" disabled />
         </el-form-item>
       </el-row>
       <el-row>

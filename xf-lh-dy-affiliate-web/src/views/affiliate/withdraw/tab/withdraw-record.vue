@@ -67,7 +67,7 @@
       <tbody v-if="page.records.length > 0">
         <tr v-for="item in page.records" :key="item.id">
           <td>{{ item.serialNumber }}</td>
-          <td>{{ formatMoney(item.withdrawAmount) }} {{ returnCurrency() }}</td>
+          <td>$ {{ item.withdrawAmount }}</td>
           <td>{{ item.withdrawDate }}</td>
           <td>{{ item.bankName }}</td>
           <td>{{ item.cardNumber }}</td>
@@ -127,7 +127,6 @@ import moment from 'moment'
 import { getWithdrawRecords } from '@/api/affiliate-withdraw-record'
 import { useI18n } from 'vue-i18n'
 import emptyComp from '@/components/empty'
-import { formatMoney } from "@/utils/format-money";
 
 const store = useStore()
 const { t } = useI18n()
@@ -158,7 +157,6 @@ const uiControl = reactive({
     },
   ],
 })
-const siteId = store.state.user.siteId;
 
 const defaultTime = [
   new Date(2000, 1, 1, 0, 0, 0),
@@ -281,18 +279,6 @@ const page = reactive({
   total: 0,
   totalWithdraw: 0,
 })
-
-const returnCurrency = () => {
-  if (siteId === 3 || siteId === '3') {
-    return "THB"
-  } else if (siteId === 8 || siteId === '8') {
-    return "VNDP"
-  } else if (siteId === 10 || siteId === '10') {
-    return "₩"
-  } else {
-    return "RMB"
-  }
-}
 
 function convertDate(date) {
   return moment(date).format('YYYY-MM-DD HH:mm:ss')

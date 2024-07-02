@@ -694,8 +694,7 @@ export default {
     validateAppNameRequired: 'App Name is required',
     validateAppIconRequired: 'App Icon is required',
     validateShareRatioFormat: 'Share Ratio must be between 0 to 1',
-    depositShouldBetween: 'Deposit amount should be between ',
-    requiredPositiveInteger: 'Required Positive Integer',
+    depositShouldBetween: 'Deposit amount should be between '
   },
   menu: {
     undefined: '',
@@ -843,7 +842,5 @@ export default {
     11011: 'Superior share ratio not set',
     11012: 'Superior share ratio not set for game type: ',
     11013: 'Affiliate share ratio cannot exceed superior ratio',
-    14012: 'Can only create affiliate with lower level',
-    14013: 'Affiliate has downline, cannot set to lower level',
   },
 }

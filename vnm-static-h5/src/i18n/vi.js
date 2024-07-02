@@ -140,7 +140,7 @@ export default {
     change_password_btn: "Đổi mật khẩu",
     please_enter_email: "Vui lòng nhập email",
     email: "Địa chỉ email",
-    email_sent_txt: "OTP đã được đến số điện thoại đăng ký của bạn, vui lòng nhập OTP và mật khẩu mới.",
+    email_sent_txt: "OTP đã được gửi đến email của bạn, vui lòng nhập OTP và mật khẩu mới.",
     otp_code: "Mã OTP",
     please_enter_otp: "Vui lòng nhập mã OTP",
     new_password: "Mật khẩu mới",
@@ -149,7 +149,6 @@ export default {
     password_security_level_must_be_at_least_good: "Mức độ bảo mật mật khẩu phải ít nhất là tốt",
     password_reset_complete: "Đặt lại mật khẩu hoàn tất",
     account_sent_to_email: "Tên người dùng đã được gửi đến email của bạn",
-    settle_withdraw_pwd: "Vui lòng thêm mật khẩu rút tiền",
 
     // change password
     chgpwd_password: "Mật khẩu",
@@ -383,7 +382,7 @@ export default {
     bd_otp_code: "Mã OTP",
     bd_please_enter_otp: "Vui lòng nhập mã OTP",
     bd_reminder_name_issue:
-      "Chú ý: Nếu tên tài khoản không khớp với tên tài khoản ngân hàng, Quý Khách vui lòng liên hệ Chăm sóc khách hàng 24/7 để yêu cầu sửa thông tin. ",
+      "Nhắc nhở nhẹ nhàng: Nếu tên chủ thẻ không khớp, bạn có thể liên hệ với dịch vụ khách hàng trực tuyến để sửa thông tin. Cảm ơn bạn đã ủng hộ và hiểu biết!",
     bd_submit: "Gửi",
     bd_please_enter_digit_only: "Vui lòng chỉ nhập số",
     bd_length_between_16_19: "Chiều dài nên từ 16-19",
@@ -1293,7 +1292,6 @@ export default {
     upload_fail_please_try: "Tải lên thất bại. Vui lòng thử lại sau.",
     upload_image: "Tải Ảnh Lên",
     esport: "E-sport",
-    hashgame: "Hash game",
     livecasino: "Live",
     sport: "Sport",
     slot: "Slot",

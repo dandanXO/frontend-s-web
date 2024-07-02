@@ -582,7 +582,6 @@ import {
 import { getSiteListSimple } from '../../../api/site'
 import { useI18n } from 'vue-i18n'
 import { getShortcuts } from '@/utils/datetime'
-import { ElMessage } from 'element-plus'
 
 const { t } = useI18n()
 const siteList = reactive({
@@ -722,12 +721,6 @@ function checkQuery() {
 }
 
 async function loadRecord() {
-  if (!hasRole(['ADMIN']) && (request.siteId === 1 || request.siteId === 6 || request.siteId === 7)) {
-    if ((request.loginName === null || request.loginName.trim().length === 0) && (request.affiliateCode === null || request.affiliateCode.trim().length === 0)) {
-      ElMessage({ message: t('message.pleaseEnterAffiliateNameOrAffiliateCode'), type: 'error' })
-      return;
-    }
-  }
   page.loading = true
   const query = checkQuery()
   const { data: ret } = await getAffiliateSummary(query)

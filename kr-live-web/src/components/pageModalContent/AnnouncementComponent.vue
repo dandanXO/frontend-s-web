@@ -1,66 +1,50 @@
 <template>
-  <div class="announcement-container page-container">
+  <div class="announcement-container">
     <div class="announcement-list-wrapper">
-      <q-skeleton class="total" v-if="isLoading" type="QChip" />
-      <span class="total" v-else>{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
+      <span class="total">{{ $t('lang.announcement_total') }} {{ announcementList?.length }}</span>
 
       <q-list bordered separator class="announcement-list">
-        <template v-if="isLoading">
-          <q-item v-for="rectSkeleton in 6" :key="rectSkeleton">
-            <q-skeleton type="QToolbar" style="width:100%;" />
-          </q-item>
-        </template>
-        <template v-else>
-          <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
-            :active="item === selected" active-class="active-announcement" class="announcement">
-            <q-item-section>
-              <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
-              <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
-            </q-item-section>
+        <q-item clickable v-ripple v-for="item in announcementList" :key="item.page" @click="selected = item"
+          :active="item === selected" active-class="active-announcement">
+          <q-item-section>
+            <q-item-label lines="1"><span class="title">{{ item.title }}</span></q-item-label>
+            <q-item-label caption lines="2"><span class="caption">{{ item.content }}</span></q-item-label>
+          </q-item-section>
 
-            <q-item-section side top class="info-wrapper">
-              <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
-              <q-icon name="image" v-if="item.attachment" :title="$t('lang.announcement_has_attachment')" />
-            </q-item-section>
-          </q-item>
-        </template>
+          <q-item-section side top class="info-wrapper">
+            <q-item-label caption><span class="date-time">{{ formatDate(item.createTime) }}</span></q-item-label>
+            <q-icon name="image" v-if="item.attachment" :title="$t('lang.announcement_has_attachment')" />
+          </q-item-section>
+        </q-item>
       </q-list>
     </div>
     <q-scroll-area class="announcement-content-wrapper">
-      <template v-if="isLoading">
-        <q-item v-for="rectSkeleton in 10" :key="rectSkeleton">
-          <q-skeleton type="text" style="width:100%;" />
-        </q-item>
-      </template>
-      <template v-else>
-        <div v-if="selected" class="announcement-content">
-          <div>
-            <div class="title">{{ selected.title }}</div>
-          </div>
-          <span class="date-time">{{ formatDate(selected.createTime) }}</span>
-          <div class="attachment" v-if="selected.attachment">
-            <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
-          </div>
-          <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
+      <div v-if="selected" class="announcement-content">
+        <div>
+          <div class="title">{{ selected.title }}</div>
         </div>
-        <div class="announcement-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
-      </template>
+        <span class="date-time">{{ formatDate(selected.createTime) }}</span>
+        <div class="attachment" v-if="selected.attachment">
+          <img class="attachment-img" :src="getAttachmentImgSrc(selected.attachment)" />
+        </div>
+        <div class="content" v-html="selected.content" style="white-space: pre-line"></div>
+      </div>
+      <div class="announcement-no-data" v-else>{{ $t('lang.announcement_no_selected') }}</div>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup id="FinanceDeposit">
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import { userStore } from "stores/index";
 import moment from "moment";
-import { getLocaleDateTime } from "src/boot/utils";
+import { storeToRefs } from "pinia";
 
 const store = userStore();
-const announcementList = ref();
+const { announcementList } = storeToRefs(store);
 const selected = ref();
-const formatDate = (timestamp) => getLocaleDateTime(timestamp);
+const formatDate = (timestamp) => moment(timestamp).locale('ko').format("LL");
 const getAttachmentImgSrc = (attachmentPath) => process.env.IMAGE_CDN + '/announcement/' + attachmentPath;
-const isLoading = ref(false);
 
 const selectFirstAnnouncement = () => {
   if (!selected.value && announcementList.value) {
@@ -78,13 +62,7 @@ onMounted(() => {
   if (announcementList.value) {
     selectFirstAnnouncement();
   } else {
-    isLoading.value = true;
-    store.getAnnouncementList().then((announcements) => {
-      announcementList.value = announcements;
-      isLoading.value = false;
-    }).catch((err) => {
-      isLoading.value = false;
-    });
+    store.getAnnouncementList();
   }
 })
 
@@ -94,7 +72,7 @@ onMounted(() => {
 .announcement-container {
   display: grid;
   grid-template-columns: minmax(300px, 30%) minmax(300px, auto);
-  padding: 20px;
+  min-height: 550px;
 
   .total {
     margin-left: auto;
@@ -105,11 +83,10 @@ onMounted(() => {
     flex-direction: column;
     gap: 5px;
     padding-right: 10px;
-    min-height: 100%;
 
     .announcement-list {
       overflow-y: auto;
-      max-height: 100%;
+      max-height: 550px;
       height: 100%;
 
       .active-announcement {
@@ -130,7 +107,7 @@ onMounted(() => {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      max-height: 100%;
+      max-height: 550px;
       overflow-y: auto;
       padding-right: 10px;
 
@@ -163,25 +140,13 @@ onMounted(() => {
 
   @media (max-width: 768px) {
     display: grid;
-    grid-template-columns: minmax(150px, 30%) auto;
-
-    .announcement-list-wrapper {
-      .header {
-        flex-direction: column;
-      }
-
-      .announcement-list {
-        .announcement {
-          padding: 0;
-        }
-      }
-    }
+    grid-template-columns: minmax(150px, 30%) 70%;
 
     .q-item {
       display: flex;
       flex-direction: column;
       padding: 0;
-      font-size: 12px;
+      font-size: 0.7rem;
 
       .title {
         font-size: 15px;
@@ -189,7 +154,7 @@ onMounted(() => {
       }
 
       .text-caption {
-        font-size: 10px;
+        font-size: 12px;
         line-height: 20px;
       }
 
@@ -216,7 +181,7 @@ onMounted(() => {
         font-size: 12px;
 
         .title {
-          font-size: 20px;
+          font-size: 24px;
           line-height: 28px;
         }
 

@@ -38,18 +38,6 @@ export default route(function (/* { store, ssrContext } */) {
     const user = userStore();
     const ui = useUI();
 
-    if (
-      to.path === "/sport" ||
-      to.path === "/insert-bankinfo" ||
-      to.path === "/login" ||
-      to.path === "/register" ||
-      to.path === "/forgot-password"
-    ) {
-      ui.hiddenFooter();
-    } else {
-      ui.showFooter();
-    }
-
     if (to.name === "loginToken") {
       ui.isAffiliateB = true;
       localStorage.setItem("AGENT_B", "1");
@@ -70,6 +58,8 @@ export default route(function (/* { store, ssrContext } */) {
       next(`/register`);
     }
 
+    // console.log(location.href);
+
     if (user.hasToken()) {
       if (to.path === "/login") {
         next({ path: "/" });
@@ -77,7 +67,11 @@ export default route(function (/* { store, ssrContext } */) {
         // if (user.token) {
         //   user.getMemberInfo().then(() => next({ ...to, replace: true }));
         // }
-
+        if (to.path === "/sport" || to.path === "/insert-bankinfo") {
+          ui.hiddenFooter();
+        } else {
+          ui.showFooter();
+        }
         if (to.path === "/finance/deposit") {
           next();
           // if (user.nickName === "" || !user.nickName) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="account-content transit">
-      <q-tabs v-model="recordActive" class="form-wrapped" dense>
+      <q-tabs v-model="recordActive" class="form-wrapped">
         <q-tab name="deposit" :label="$t('lang.deposit_title')" />
         <q-tab name="turnover" :label="$t('lang.turnover')" />
         <q-tab name="withdraw" :label="$t('lang.withdraw')" />
@@ -15,24 +15,29 @@
           <div>
             <q-form layout="inline" :model="searchForm.deposit">
               <div class="left">
-                <DateFilter :startDate="searchForm.deposit.startDate" :endDate="searchForm.deposit.endDate"
+                <DateFilter 
+                  :startDate="searchForm.deposit.startDate" 
+                  :endDate="searchForm.deposit.endDate" 
                   @updateStartDate="(startDate) => {
                     searchForm.deposit.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.deposit.endDate = endDate
-                  }" />
+                  }" 
+                />
 
-                <div class="primary-button blue-square" @click="searchRecord">{{ $t('lang.search') }}</div>
+                <div class="primary-button blue-square"  @click="searchRecord">{{ $t('lang.search') }}</div>
               </div>
             </q-form>
           </div>
           <!-- :grid="$q.screen.lt.md" -->
-          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.deposit"
-            :dataState="dataState.deposit" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }">
-            <template #item="props">
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.deposit" :dataState="dataState.deposit"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          >
+          <template #item="props">
               <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
@@ -54,9 +59,12 @@
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
-                      <div class="primary-button blue-square" v-if="props?.props?.row.status === 'PENDING'"
-                        @click="($event) => openReminder(props?.props)">
-                        {{ $t('lang.reminder') }}
+                      <div
+                        class="primary-button blue-square"
+                        v-if="props?.props?.row.status === 'PENDING'"
+                        @click="($event) => openReminder(props?.props)"
+                      >
+                      {{ $t('lang.reminder') }}
                       </div>
                     </div>
                   </div>
@@ -74,37 +82,46 @@
 
             <template #body-cell-operation="props">
               <q-td>
-                <div class="primary-button blue-square" v-if="props?.props?.row.status === 'PENDING'"
-                  @click="($event) => openReminder(props)" style="width: 75px;height: 30px; font-size: 12px">
+                <div
+                  class="primary-button blue-square"
+                  v-if="props?.props?.row.status === 'PENDING'"
+                  @click="($event) => openReminder(props)"
+                  style="width: 75px;height: 30px; font-size: 12px"
+                >
                   {{ $t('lang.reminder') }}
                 </div>
               </q-td>
             </template>
-          </DataTable>
+            </DataTable>
 
         </q-tab-panel>
         <q-tab-panel name="turnover">
           <div>
             <q-form layout="inline" :model="searchForm.turnover">
               <div class="left">
-                <DateFilter :startDate="searchForm.turnover.startDate" :endDate="searchForm.turnover.endDate"
+                <DateFilter 
+                  :startDate="searchForm.turnover.startDate" 
+                  :endDate="searchForm.turnover.endDate" 
                   @updateStartDate="(startDate) => {
                     searchForm.turnover.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.turnover.endDate = endDate
-                  }" />
+                  }" 
+                />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
             </q-form>
           </div>
-          <DataTable :pagination="null" :loading="loading" :tableColumns="tableColumns.turnover"
-            :dataState="dataState.turnover" :rowsPerPage="searchForm[recordActive].size" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }">
-            <template v-slot:item="props">
+          <DataTable :pagination="null" :loading="loading" :tableColumns="tableColumns.turnover" :dataState="dataState.turnover" :rowsPerPage="searchForm[recordActive].size"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          >
+          <template v-slot:item="props">
               <div :props="props" class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
                   <div class="q-table__grid-item-row">
@@ -132,33 +149,40 @@
             </template>
 
             <template v-slot:body-cell-type="props">
-              <q-td class="text-center">
-                {{ getTurnoverType(props?.props?.value) }}
+              <q-td>
+                <div>
+                  {{ getTurnoverType(props?.props?.value) }}
+                </div>
               </q-td>
             </template>
-          </DataTable>
+        </DataTable>
         </q-tab-panel>
         <q-tab-panel name="withdraw">
           <div>
             <q-form layout="inline" :model="searchForm.withdraw">
               <div class="left">
-                <DateFilter :startDate="searchForm.withdraw.startDate" :endDate="searchForm.withdraw.endDate"
+                <DateFilter 
+                  :startDate="searchForm.withdraw.startDate" 
+                  :endDate="searchForm.withdraw.endDate" 
                   @updateStartDate="(startDate) => {
                     searchForm.withdraw.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.withdraw.endDate = endDate
-                  }" />
+                  }" 
+                />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
             </q-form>
           </div>
-          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.withdraw"
-            :dataState="dataState.withdraw" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }">
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.withdraw" :dataState="dataState.withdraw"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          >
             <template v-slot:item="props">
               <!-- <pre>{{props}}</pre> -->
               <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -182,12 +206,21 @@
                   <div class="q-table__grid-item-row">
                     <div class="q-table__grid-item-title">{{ $t("lang.operation") }}</div>
                     <div class="q-table__grid-item-value">
-                      <q-btn v-if="props?.props?.row.status === 'STEP_1'" size="sm" :label="$t('lang.reminder')"
-                        color="brand" @click="($event) => openReminder(props?.props)" />
+                      <q-btn
+                        v-if="props?.props?.row.status === 'STEP_1'"
+                        size="sm"
+                        :label="$t('lang.reminder')"
+                        color="brand"
+                        @click="($event) => openReminder(props?.props)"
+                      />
 
-                      <q-btn v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
-                        size="sm" :label="$t('lang.confirm_withdraw_success')" color="brand"
-                        @click="openWithdrawConfirmDialog(props?.props)" />
+                      <q-btn
+                        v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
+                        size="sm"
+                        :label="$t('lang.confirm_withdraw_success')"
+                        color="brand"
+                        @click="openWithdrawConfirmDialog(props?.props)"
+                      />
                     </div>
                   </div>
                 </div>
@@ -204,12 +237,21 @@
 
             <template v-slot:body-cell-operation="props">
               <q-td>
-                <q-btn v-if="props?.props?.row.status === 'STEP_1'" size="sm" :label="$t('lang.reminder')" color="brand"
-                  @click="($event) => openReminder(props?.prop)" />
+                <q-btn
+                  v-if="props?.props?.row.status === 'STEP_1'"
+                  size="sm"
+                  :label="$t('lang.reminder')"
+                  color="brand"
+                  @click="($event) => openReminder(props?.prop)"
+                />
 
-                <q-btn v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0" size="sm"
-                  :label="$t('lang.confirm_withdraw_success')" color="brand"
-                  @click="openWithdrawConfirmDialog(props?.props)" />
+                <q-btn
+                  v-if="props?.props?.row.status === 'SUCCESS' && props?.props?.row.confirmStatus === 0"
+                  size="sm"
+                  :label="$t('lang.confirm_withdraw_success')"
+                  color="brand"
+                  @click="openWithdrawConfirmDialog(props?.props)"
+                />
               </q-td>
             </template>
           </DataTable>
@@ -218,81 +260,108 @@
           <div>
             <q-form layout="inline" :model="searchForm.rebates">
               <div class="left">
-                <DateFilter :startDate="searchForm.rebates.startDate" :endDate="searchForm.rebates.endDate"
+                <DateFilter 
+                  :startDate="searchForm.rebates.startDate" 
+                  :endDate="searchForm.rebates.endDate" 
                   @updateStartDate="(startDate) => {
                     searchForm.rebates.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.rebates.endDate = endDate
-                  }" />
+                  }" 
+                />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
             </q-form>
           </div>
-          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.rebates"
-            :dataState="dataState.rebates" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }" />
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.rebates" :dataState="dataState.rebates"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          />
         </q-tab-panel>
         <q-tab-panel name="gameBetRecord">
           <div>
             <q-form layout="inline" :model="searchForm.gameBetRecord">
               <div class="left wrap-box">
-                <DateFilter :startDate="searchForm.gameBetRecord.startDate" :endDate="searchForm.gameBetRecord.endDate"
+                <DateFilter 
+                  :startDate="searchForm.gameBetRecord.startDate" 
+                  :endDate="searchForm.gameBetRecord.endDate" 
                   @updateStartDate="(startDate) => {
                     searchForm.gameBetRecord.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.gameBetRecord.endDate = endDate
-                  }" />
-                <q-select style="width: 100%; max-width: 175px" v-model="searchForm.gameBetRecord.platform" dense
-                  outlined clearable :options="platformsList" label="게임 플랫폼" color="white" label-color="grey"
-                  option-label="name" option-value="code" emit-value map-options />
+                  }" 
+                />
+                <q-select
+                  style="width: 100%; max-width: 175px"
+                  v-model="searchForm.gameBetRecord.platform"
+                  dense
+                  outlined
+                  clearable
+                  :options="platformsList"
+                  label="게임 플랫폼"
+                  color="white"
+                  label-color="grey"
+                  option-label="name"
+                  option-value="code"
+                  emit-value
+                  map-options
+                />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
 
-              <div class="payout-total text-caption">
-                <div class="q-pa-sm">
-                  <span>베팅 금액：</span>
-                  <span class="strong">{{ totalBetRecord.totalBet }}</span>
+              <div class="payout-total">
+                <div>
+                  {{ $t("lang.bet_amount") }}
+                  <strong>{{ totalBetRecord.totalBet }}</strong>
                 </div>
-                <div class="q-pa-sm">
-                  <span>베팅 승리：</span>
-                  <span class="strong">{{ totalBetRecord.totalPayout }}</span>
+                <div>
+                  {{ $t("lang.amount_paid") }}
+                  <strong>{{ totalBetRecord.totalPayout }}</strong>
                 </div>
               </div>
             </q-form>
           </div>
-          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.gameBetRecord"
-            :dataState="dataState.gameBetRecord" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }" />
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.gameBetRecord" :dataState="dataState.gameBetRecord"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          />
         </q-tab-panel>
         <q-tab-panel name="reminderRecord">
           <div>
             <q-form layout="inline" :model="searchForm.reminderRecord">
               <div class="left">
-                <DateFilter :startDate="searchForm.reminderRecord.startDate"
-                  :endDate="searchForm.reminderRecord.endDate" @updateStartDate="(startDate) => {
+                <DateFilter 
+                  :startDate="searchForm.reminderRecord.startDate" 
+                  :endDate="searchForm.reminderRecord.endDate" 
+                  @updateStartDate="(startDate) => {
                     searchForm.reminderRecord.startDate = startDate
-                  }" @updateEndDate="(endDate) => {
+                  }" 
+                  @updateEndDate="(endDate) => {
                     searchForm.reminderRecord.endDate = endDate
-                  }" />
+                  }" 
+                />
                 <div class="primary-button blue-square" @click="searchRecord">
                   {{ $t('lang.search') }}
                 </div>
               </div>
             </q-form>
           </div>
-          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.reminderRecord"
-            :dataState="dataState.reminderRecord" :rowKey="'orderNo'" @onChangePage="(currentPage) => {
-              pagination.current = currentPage;
-              recordPage(pagination)
-            }">
+          <DataTable :pagination="pagination" :loading="loading" :tableColumns="tableColumns.reminderRecord" :dataState="dataState.reminderRecord" :rowKey="'orderNo'"
+          @onChangePage="(currentPage) => {
+            pagination.current = currentPage;
+            recordPage(pagination)
+          }"
+          >
             <template v-slot:item="props">
               <div class="q-table__grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="q-table__grid-item-card q-table__card q-table__card--dark q-dark">
@@ -327,9 +396,17 @@
         </q-tab-panel>
       </q-tab-panels>
       <q-dialog style="margin: 20px" v-model="betRecordDialog">
-        <q-table dense class="datatable" :grid="$q.screen.lt.md" :loading="loading" :columns="tableColumns.betRecord"
-          :rows="dataState.betRecord" :no-data-label="noDataLabel" :rows-per-page-label="rowPerPageLabel"
-          :rows-per-page-options="[]" row-key="serialNumber"></q-table>
+        <q-table dense
+            class="datatable"
+          :grid="$q.screen.lt.md"
+          :loading="loading"
+          :columns="tableColumns.betRecord"
+          :rows="dataState.betRecord"
+          :no-data-label="noDataLabel"
+          :rows-per-page-label="rowPerPageLabel"
+          :rows-per-page-options="[]"
+          row-key="serialNumber"
+        ></q-table>
       </q-dialog>
 
       <q-dialog v-model="reminderDialog" no-backdrop-dismiss no-esc-dismis>
@@ -341,13 +418,40 @@
             </q-toolbar>
           </q-card-section>
           <q-card-section>
-            <q-form ref="formRef" v-model="reminderForm" hide-required-mark name="basic" colon autocomplete="off"
-              label-align="left" label-cols="5" class="reminder-dialog-form">
-              <q-input :label="$t('lang.order_number')" dense outlined v-model="reminderForm.orderNo" color="white"
-                padding="none" readonly disable />
+            <q-form
+              ref="formRef"
+              v-model="reminderForm"
+              hide-required-mark
+              name="basic"
+              colon
+              autocomplete="off"
+              label-align="left"
+              label-cols="5"
+              class="reminder-dialog-form"
+            >
+              <q-input
+                :label="$t('lang.order_number')"
+                dense
+                outlined
+                v-model="reminderForm.orderNo"
+                color="white"
+                padding="none"
+                readonly
+                disable
+              />
               <FileUpload @photoResponse="getImageLink" ref="uploadFileRef" />
-              <q-input type="textarea" v-model="reminderForm.memberRemark" :label="$t('lang.finance_remark')" dense
-                outlined autogrow color="white" class="q-mt-md" :rows="2" :max-rows="5" />
+              <q-input
+                type="textarea"
+                v-model="reminderForm.memberRemark"
+                :label="$t('lang.finance_remark')"
+                dense
+                outlined
+                autogrow
+                color="white"
+                class="q-mt-md"
+                :rows="2"
+                :max-rows="5"
+              />
               <div class="primary-button blue-square" @click="submitReminder" style="margin:15px 0px;">
                 {{ $t('lang.send') }}
               </div>
@@ -377,14 +481,14 @@
 </template>
 
 <script lang="js">
-import { defineComponent, onMounted, reactive, ref, watch } from "vue";
-import { api } from "boot/axios"
-import { SessionStorage, useQuasar } from "quasar"
+import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {api} from "boot/axios"
+import {SessionStorage, useQuasar} from "quasar"
 import each from "lodash/each"
-import { userStore } from "stores/index"
+import {userStore} from "stores/index"
 import FileUpload from "components/FileUpload.vue"
 import moment from "moment"
-import { useI18n } from "vue-i18n";
+import {useI18n} from "vue-i18n";
 import DateFilter from 'components/transaction/DateFilter';
 import DataTable from 'components/transaction/DataTable';
 import { useRoute } from "vue-router";
@@ -400,7 +504,7 @@ export default defineComponent({
 
     var qs = require("qs");
     const store = userStore();
-    const { t } = useI18n();
+    const {t} = useI18n();
     const route = useRoute();
     const uploadFileRef = ref();
     const recordActive = ref(route.query.tab || "gameBetRecord");
@@ -411,59 +515,59 @@ export default defineComponent({
       totalBet: 0,
       totalPayout: 0
     })
-
+    
     const $q = useQuasar();
     const dateLocale = {
-      days: [
-        t('lang.date_picker_sunday'),
-        t('lang.date_picker_monday'),
-        t('lang.date_picker_tuesday'),
-        t('lang.date_picker_wednesday'),
-        t('lang.date_picker_thursday'),
-        t('lang.date_picker_friday'),
-        t('lang.date_picker_saturday')
-      ],
-      daysShort: [
-        t('lang.date_picker_sun'),
-        t('lang.date_picker_mon'),
-        t('lang.date_picker_tue'),
-        t('lang.date_picker_wed'),
-        t('lang.date_picker_thu'),
-        t('lang.date_picker_fri'),
-        t('lang.date_picker_sat')
-      ],
-      months: [
-        t('lang.date_picker_january'),
-        t('lang.date_picker_february'),
-        t('lang.date_picker_march'),
-        t('lang.date_picker_april'),
-        t('lang.date_picker_may'),
-        t('lang.date_picker_june'),
-        t('lang.date_picker_july'),
-        t('lang.date_picker_august'),
-        t('lang.date_picker_september'),
-        t('lang.date_picker_october'),
-        t('lang.date_picker_november'),
-        t('lang.date_picker_december')
-      ],
-      monthsShort: [
-        t('lang.date_picker_jan'),
-        t('lang.date_picker_feb'),
-        t('lang.date_picker_mar'),
-        t('lang.date_picker_apr'),
-        t('lang.date_picker_may_short'),
-        t('lang.date_picker_jun'),
-        t('lang.date_picker_jul'),
-        t('lang.date_picker_aug'),
-        t('lang.date_picker_sep'),
-        t('lang.date_picker_oct'),
-        t('lang.date_picker_nov'),
-        t('lang.date_picker_dec')
-      ],
-      firstDayOfWeek: 0, // 0-6, 0 - Sunday, 1 Monday, ...
-      format24h: true,
-      pluralDay: '날들'
-    }
+        days: [
+          t('lang.date_picker_sunday'),
+          t('lang.date_picker_monday'),
+          t('lang.date_picker_tuesday'),
+          t('lang.date_picker_wednesday'),
+          t('lang.date_picker_thursday'),
+          t('lang.date_picker_friday'),
+          t('lang.date_picker_saturday')
+        ],
+        daysShort: [
+          t('lang.date_picker_sun'),
+          t('lang.date_picker_mon'),
+          t('lang.date_picker_tue'),
+          t('lang.date_picker_wed'),
+          t('lang.date_picker_thu'),
+          t('lang.date_picker_fri'),
+          t('lang.date_picker_sat')
+        ],
+        months: [
+          t('lang.date_picker_january'),
+          t('lang.date_picker_february'),
+          t('lang.date_picker_march'),
+          t('lang.date_picker_april'),
+          t('lang.date_picker_may'),
+          t('lang.date_picker_june'),
+          t('lang.date_picker_july'),
+          t('lang.date_picker_august'),
+          t('lang.date_picker_september'),
+          t('lang.date_picker_october'),
+          t('lang.date_picker_november'),
+          t('lang.date_picker_december')
+        ],
+        monthsShort: [
+          t('lang.date_picker_jan'),
+          t('lang.date_picker_feb'),
+          t('lang.date_picker_mar'),
+          t('lang.date_picker_apr'),
+          t('lang.date_picker_may_short'),
+          t('lang.date_picker_jun'),
+          t('lang.date_picker_jul'),
+          t('lang.date_picker_aug'),
+          t('lang.date_picker_sep'),
+          t('lang.date_picker_oct'),
+          t('lang.date_picker_nov'),
+          t('lang.date_picker_dec')
+        ],
+        firstDayOfWeek: 0, // 0-6, 0 - Sunday, 1 Monday, ...
+        format24h: true,
+        pluralDay: '날들'
+      }
 
     const searchForm = reactive({
       turnover: {
@@ -531,8 +635,7 @@ export default defineComponent({
     const commonColumns = [
       {
         label: t('lang.order_number'),
-        field: "serialNumber",
-        align: 'left'
+        field: "serialNumber"
       }
     ];
     const tableColumns = {
@@ -546,14 +649,12 @@ export default defineComponent({
         {
           label: t('lang.status'),
           field: "status",
-          name: "status",
-          align: 'center'
+          name: "status"
         },
         {
           label: t('lang.deposit_date'),
           field: "depositDate",
-          name: "depositDate",
-          align: 'center'
+          name: "depositDate"
           // slots: { customRender: "depositDate" }
         },
         {
@@ -571,8 +672,7 @@ export default defineComponent({
         {
           label: t('lang.status'),
           field: "status",
-          name: "status",
-          align: 'center'
+          name: "status"
         },
         // {
         //   label: 'Confirm Status',
@@ -583,7 +683,6 @@ export default defineComponent({
         {
           label: t('lang.withdraw_date'),
           field: "withdrawDate",
-          align: 'center'
           // slots: { customRender: "withdrawDate" }
         },
         {
@@ -639,8 +738,7 @@ export default defineComponent({
         {
           label: t('lang.type'),
           field: "type",
-          name: "type",
-          align: 'center'
+          name: "type"
         },
         {
           label: t('lang.amount'),
@@ -653,7 +751,6 @@ export default defineComponent({
         {
           label: t('lang.record_time'),
           field: "recordTime",
-          align: 'center'
           // slots: { customRender: "recordTime" }
         }
       ],
@@ -1068,7 +1165,7 @@ export default defineComponent({
         memberId: searchForm.betRecord.memberId,
         current: searchForm.betRecord.current,
       }
-      api.get("/session/member/betRecord", { params: obj }).then((res) => {
+      api.get("/session/member/betRecord", {params: obj}).then((res) => {
         const ret = res.data
         if (ret.code === 0) {
           betRecordDialog.value = true
@@ -1156,13 +1253,17 @@ export default defineComponent({
 }
 
 .payout-total {
+  margin-left: 10px;
   display: inline-flex;
   justify-content: right;
   align-items: center;
   gap: 20px;
+  font-size: 16px;
 
-  span.strong {
-    color: aqua;
+  strong {
+    color: $orange;
+    font-weight: bold;
+    font-size: 20px;
   }
 }
 
@@ -1170,8 +1271,7 @@ export default defineComponent({
   // margin: 10px;
   padding: 0;
 
-  :deep(.q-table__container),
-  :deep(.q-table__grid-item-card) {
+  :deep(.q-table__container), :deep(.q-table__grid-item-card) {
     background: #212632;
   }
 
@@ -1274,7 +1374,7 @@ export default defineComponent({
     flex-wrap: wrap;
     row-gap: 5px;
 
-    >label {
+    > label {
       width: 45%;
       flex: 1 1 160px;
     }

@@ -10,7 +10,12 @@
         1000VND
       </div> -->
       <div class="node-wrapper">
-        <Node :level="1" :list="payMethods" ref="paymentNode" @clicked="onSelect" />
+        <Node
+          :level="1"
+          :list="payMethods"
+          ref="paymentNode"
+          @clicked="onSelect"
+        />
       </div>
 
       <div v-if="submitMessage.length > 0 && isDisplay" class="inner-cont">
@@ -18,42 +23,69 @@
           <div class="linebox">
             <span>银行名称：</span>
             <span class="info" ref="subMsg0">{{ submitMessage[0] }}</span>
-            <button @blur="blurCode" @click="copyMessage('0')" class="common-btn">
+            <button
+              @blur="blurCode"
+              @click="copyMessage('0')"
+              class="common-btn"
+            >
               {{ copybtntxt0 }}
             </button>
           </div>
           <div class="linebox">
             <span>银行户名：</span>
             <span class="info" ref="subMsg1">{{ submitMessage[1] }}</span>
-            <button @blur="blurCode" @click="copyMessage('1')" class="common-btn">
+            <button
+              @blur="blurCode"
+              @click="copyMessage('1')"
+              class="common-btn"
+            >
               {{ copybtntxt1 }}
             </button>
           </div>
           <div class="linebox">
             <span>银行卡号：</span>
             <span class="info" ref="subMsg2">{{ submitMessage[2] }}</span>
-            <button @blur="blurCode" @click="copyMessage('2')" class="common-btn">
+            <button
+              @blur="blurCode"
+              @click="copyMessage('2')"
+              class="common-btn"
+            >
               {{ copybtntxt2 }}
             </button>
           </div>
           <div class="linebox">
             <span>支付行：</span>
             <span class="info" ref="subMsg4">{{ submitMessage[4] }}</span>
-            <button @blur="blurCode" @click="copyMessage('4')" class="common-btn">
+            <button
+              @blur="blurCode"
+              @click="copyMessage('4')"
+              class="common-btn"
+            >
               {{ copybtntxt4 }}
             </button>
           </div>
           <div class="linebox">
             <span>存款金额：</span>
             <span class="info" ref="subMsg3">{{ submitMessage[3] }}</span>
-            <button @blur="blurCode" @click="copyMessage('3')" class="common-btn">
+            <button
+              @blur="blurCode"
+              @click="copyMessage('3')"
+              class="common-btn"
+            >
               {{ copybtntxt3 }}
             </button>
           </div>
         </div>
       </div>
       <div class="deposit-container" v-else>
-        <el-form ref="formRef" :model="form" :rules="rules" autocomplete="off" label-width="100px" label-suffix=":">
+        <el-form
+          ref="formRef"
+          :model="form"
+          :rules="rules"
+          autocomplete="off"
+          label-width="100px"
+          label-suffix=":"
+        >
           <el-space>
             <el-form-item class="helptxt" label="金额" prop="localAmount">
               <el-input
@@ -62,17 +94,24 @@
                 :placeholder="isUSDT ? '输入USDT金额' : '输入存款金额'"
               />
 
-              <el-select placeholder="选择存款金额" v-else v-model="form.localAmount">
-                <el-option v-for="amount in amountList" :key="amount" :value="amount">
+              <el-select
+                placeholder="选择存款金额"
+                v-else
+                v-model="form.localAmount"
+              >
+                <el-option
+                  v-for="amount in amountList"
+                  :key="amount"
+                  :value="amount"
+                >
                   {{ amount }}
                 </el-option>
               </el-select>
             </el-form-item>
             <div class="account-tip">
-              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }}
-              {{ isUSDT ? "USDT" : store.currency.label }} -
-              {{ activeMethod.depositMax ? activeMethod.depositMax : "No Limit" }}
-              {{ isUSDT ? "USDT" : store.currency.label }}
+              单笔存款：{{ calculatedMinDeposit ? calculatedMinDeposit : 0 }} {{ isUSDT ? "USDT" : store.currency.label }}  -   {{
+                activeMethod.depositMax ? activeMethod.depositMax : "No Limit"
+              }} {{ isUSDT ? "USDT" : store.currency.label }}
             </div>
           </el-space>
 
@@ -90,7 +129,7 @@
               {{ store.currency.label }}
             </span>
           </el-form-item>
-
+          
           <el-form-item
             v-show="selectedPayType && bankCardList.length"
             label="银行"
@@ -107,7 +146,12 @@
               @selected="selectedBank"
             ></BankComponent>
           </el-form-item>
-          <el-form-item prop="privilegeId" name="privilegeId" v-if="hasPrivilege && !isUSDT" label="优惠">
+          <el-form-item
+            prop="privilegeId"
+            name="privilegeId"
+            v-if="hasPrivilege && !isUSDT"
+            label="优惠"
+          >
             <el-select
               v-model="selectedPrivilege"
               placeholder="选择优惠"
@@ -115,15 +159,15 @@
               @focus="loadPrivilege(activeMethod)"
               clearable
             >
-              <el-option v-for="p in unselectedPrivileges" :key="p.id" :value="p.id" :label="p.name">
+              <el-option
+                v-for="p in unselectedPrivileges"
+                :key="p.id"
+                :value="p.id"
+                :label="p.name"
+              >
                 {{ p.name }}
               </el-option>
             </el-select>
-          </el-form-item>
-          <el-form-item label="">
-            <div class="txt-center">
-              <el-button :loading="loadingBtn" size="large" @click="confirmDeposit" class="common-btn">确定</el-button>
-            </div>
           </el-form-item>
 
           <!-- <el-form-item
@@ -140,7 +184,10 @@
           </el-form-item> -->
           <el-form-item v-if="selectedPayType" class="tip">
             <!-- <template #label></template> -->
-            <span class="account-tip-text" style="margin-bottom: 10px; display: block; width: 100%">
+            <span
+              class="account-tip-text"
+              style="margin-bottom: 10px; display: block; width: 100%"
+            >
               <div v-html="activeMethod.msg"></div>
               <!-- {{ activeMethod.msg }} -->
             </span>
@@ -149,9 +196,25 @@
                 更新个人信息的新帐户可以参与促销活动。
             </div> -->
           </el-form-item>
+          <div class="txt-center">
+            <el-button
+              :loading="loadingBtn"
+              size="large"
+              @click="confirmDeposit"
+              class="common-btn"
+            >
+              确定
+            </el-button>
+          </div>
         </el-form>
       </div>
-      <el-dialog width="500px" v-model="isDeposited" :maskClosable="false" :closable="false" title="已存款">
+      <el-dialog
+        width="500px"
+        v-model="isDeposited"
+        :maskClosable="false"
+        :closable="false"
+        title="已存款"
+      >
         您将被重定向到您的银行页面以完成存款。
         <br />
         <br />
@@ -166,7 +229,12 @@
 </template>
 <script setup>
 import { ref, reactive, onMounted, shallowRef } from "vue";
-import { loadPay, loadPrivileges, verifyAmount, postDeposit } from "@/api/personal/deposit";
+import {
+  loadPay,
+  loadPrivileges,
+  verifyAmount,
+  postDeposit
+} from "@/api/personal/deposit";
 import { loadBankCards } from "@/api/personal/personal";
 import { RiSpamLine } from "vue-remix-icons";
 // import { message } from "ant-design-vue";
@@ -402,7 +470,10 @@ function checkMinDepositAmt(value, option) {
   } else {
     unselectedPrivileges.value.forEach((element) => {
       if (element.id === option.key) {
-        calculatedMinDeposit.value = Math.max(activeMethod.value.depositMin, element.depositMin);
+        calculatedMinDeposit.value = Math.max(
+          activeMethod.value.depositMin,
+          element.depositMin
+        );
       }
     });
   }
@@ -446,37 +517,39 @@ function confirmDeposit() {
         .catch(() => {});
       return;
     } else if (withdrawState.bankCardList.length === 0) {
-      if (isUSDT.value == true) {
+      if ( isUSDT.value == true) {
         ElMessageBox.alert("请先绑定虚拟币钱包", "系统提示", {
-          showClose: false,
-          showCancelButton: false,
-          confirmButtonText: "确认",
-          draggable: false,
-          buttonSize: "small",
-          closeOnClickModal: false,
-          center: true
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: "确认",
+        draggable: false,
+        buttonSize: "small",
+        closeOnClickModal: false,
+        center: true
+      })
+        .then(() => {
+          router.push("/center/withdrawbank");
         })
-          .then(() => {
-            router.push("/center/withdrawbank");
-          })
-          .catch(() => {});
-        return;
+        .catch(() => {});
+      return;
       } else {
         ElMessageBox.alert("请先绑定银行卡", "系统提示", {
-          showClose: false,
-          showCancelButton: false,
-          confirmButtonText: "确认",
-          draggable: false,
-          buttonSize: "small",
-          closeOnClickModal: false,
-          center: true
+        showClose: false,
+        showCancelButton: false,
+        confirmButtonText: "确认",
+        draggable: false,
+        buttonSize: "small",
+        closeOnClickModal: false,
+        center: true
+      })
+        .then(() => {
+          router.push("/center/withdrawbank");
         })
-          .then(() => {
-            router.push("/center/withdrawbank");
-          })
-          .catch(() => {});
-        return;
+        .catch(() => {});
+      return;
       }
+
+      
     }
   }
   loadingBtn.value = true;
@@ -583,7 +656,12 @@ function doDeposit(data) {
 async function verifyDepositAmount(r, v) {
   if (v !== null && v.trim() !== "" && v.match(/^([1-9][0-9]*)$/) !== null) {
     if (v < calculatedMinDeposit.value || v > activeMethod.value.depositMax) {
-      return Promise.reject("存入金额介于 " + calculatedMinDeposit.value + " - " + activeMethod.value.depositMax);
+      return Promise.reject(
+        "存入金额介于 " +
+          calculatedMinDeposit.value +
+          " - " +
+          activeMethod.value.depositMax
+      );
     } else {
       if (checkAmount.flag) {
         return Promise.resolve();
@@ -631,7 +709,8 @@ onMounted(() => {
     font-weight: normal;
   }
 }
-
+</style>
+<style lang="scss">
 .payment-channel-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fill, 180px);
@@ -725,7 +804,10 @@ onMounted(() => {
   .deposit-container {
     padding: 20px 30px;
     // background: #23263c;
-    .ant-form.ant-form-horizontal .ant-form-item .ant-form-item-control-input-content .ant-input {
+    .ant-form.ant-form-horizontal
+      .ant-form-item
+      .ant-form-item-control-input-content
+      .ant-input {
       background: #23263c;
       border: #23263c;
       max-width: 280px;
@@ -752,7 +834,11 @@ onMounted(() => {
     :deep(.ant-form-item.select .ant-form-item-control-input) {
       max-width: 280px;
     }
-    :deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
+    :deep(
+        .ant-select-single:not(.ant-select-customize-input)
+          .ant-select-selector
+          .ant-select-selection-search-input
+      ) {
       height: 40px;
     }
     :deep(.ant-select:not(.ant-select-customize-input) .ant-select-selector) {
@@ -767,6 +853,7 @@ onMounted(() => {
 </style>
 <style scoped lang="scss">
 .txt-center {
+  margin: 50px auto 20px;
   text-align: center;
 }
 :deep(.ant-form-item-label > label) {
@@ -784,17 +871,21 @@ onMounted(() => {
   margin-right: 24px;
 }
 
-.deposit-container :deep(.el-form-item) {
-  margin-bottom: 10px;
-}
-
-:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector
+  ) {
   height: 42px;
 }
-:deep(.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input) {
+:deep(
+    .ant-select-single:not(.ant-select-customize-input)
+      .ant-select-selector
+      .ant-select-selection-search-input
+  ) {
   height: 40px;
 }
-:deep(.ant-select-single .ant-select-selector .ant-select-selection-placeholder) {
+:deep(
+    .ant-select-single .ant-select-selector .ant-select-selection-placeholder
+  ) {
   line-height: 30px;
 }
 :deep(.ant-select-single .ant-select-selector .ant-select-selection-item) {
@@ -802,6 +893,44 @@ onMounted(() => {
 }
 </style>
 
+<style scoped lang="scss">
+// @media (max-width: 768px) {
+//   .account-content .node-wrapper {
+//     padding: 0;
+//   }
+//   .account-content .deposit-container {
+//     padding: 20px 0;
+//   }
+//   .account-content.deposit {
+//     .node-wrapper {
+//       margin: 30px -10px;
+//       padding: 0 10px;
+//     }
+//   }
+//   .payment-method-wrapper {
+//     grid-template-columns: repeat(auto-fill, 80px);
+//     grid-gap: 10px;
+
+//     .payment-method-item {
+//       > img {
+//         width: 40px;
+//         height: 40px;
+//       }
+//     }
+//   }
+//   .payment-channel-wrapper {
+//     grid-template-columns: repeat(auto-fill, 160px);
+//     grid-column-gap: 10px;
+//   }
+//   .deposit-container {
+//     :deep(.helptxt .ant-form-item-control-input-content) {
+//       flex-direction: column;
+//       align-items: flex-start;
+//       gap: 5px;
+//     }
+//   }
+// }
+</style>
 <style lang="scss">
 .inner-cont {
   height: 100%;
@@ -837,7 +966,7 @@ onMounted(() => {
     }
     span.info {
       flex: 3;
-      color: #ffffff;
+      color:#ffffff;
     }
     button {
       width: 80px;

@@ -175,16 +175,6 @@
             </q-item>
           </template>
         </q-select>
-
-        <div class="rollover-info" v-if="selectedPrivilege && selectedPrivilege.name && (selectedPrivilege.gameTypeRollover || selectedPrivilege.rollover)">
-          <p v-if="selectedPrivilege.gameTypeRollover  && selectedPromo.gameTypeRollover !== '{}'">
-            {{getRollOverText(selectedPrivilege.gameTypeRollover) }}
-          </p>
-          <p v-else>
-            流水倍数要求（本金+彩金）：{{selectedPrivilege.rollover}}倍
-          </p>
-        </div>
-
         <!--        <div class="q-mt-xs" v-if="amountList.length !== 0">-->
         <!--          <q-btn-->
         <!--            class="common-large-btn"-->
@@ -251,7 +241,7 @@
 </template>
 
 <script setup id="DepositComponent">
-import { ref, reactive, onMounted, shallowRef, watch } from "vue";
+import { ref, reactive, onMounted, onActivated, shallowRef, onBeforeUnmount } from "vue";
 import Node from "../components/paymentSelect/node.vue";
 import BankComponent from "components/finance/fBank";
 import { api, cashier } from "boot/axios";
@@ -303,7 +293,6 @@ const amountList = ref([]);
 const privilegeList = ref([]);
 const unselectedPrivileges = ref([]);
 const selectedPrivilege = ref("");
-const selectedPromo = ref({});
 const selectedPayType = shallowRef("");
 const freePrivilege = ref(null);
 const hasPrivilege = ref(false);
@@ -347,39 +336,6 @@ const blurCode = () => {
     element.value = "复制";
   });
 };
-
-const getRollOverText = (rolltext) => {
-  const thetext= JSON.parse(rolltext);
-
-  var fulltext= '流水倍数要求（本金+彩金）：';
-  var rolloverlists= [];
-  if(thetext.sport){
-    rolloverlists.push("体育"+thetext.sport+"倍");
-  }
-  if(thetext.esport){
-    rolloverlists.push("电竞"+thetext.esport+"倍");
-  }
-  if(thetext.slot){
-    rolloverlists.push("电子"+thetext.slot+"倍");
-  }
-  if(thetext.live){
-    rolloverlists.push("真人"+thetext.live+"倍");
-  }
-  if(thetext.poker){
-    rolloverlists.push("棋牌"+thetext.poker+"倍");
-  }
-  if(thetext.fish){
-    rolloverlists.push("捕鱼"+thetext.fish+"倍");
-  }
-  if(thetext.lottery){
-    rolloverlists.push("彩票"+thetext.lottery+"倍");
-  }
-  if(thetext.casual){
-    rolloverlists.push("小游戏"+thetext.casual+"倍");
-  }
-  fulltext += rolloverlists.join("，")
-  return fulltext;
-}
 
 const verifyDepositAmount = ref([
   (val) => !!val || "请输入金额",
@@ -788,7 +744,6 @@ const checkExtension = () => {
   }
 };
 
-
 onMounted(() => {
   initPay();
   if (route.meta && route.meta.isApp) {
@@ -898,7 +853,7 @@ onMounted(() => {
     padding: 0px 8px 10px;
     background: rgba(0, 0, 0, 0.05);
     box-shadow: $shadow-bg;
-    margin-bottom: 4px;
+    margin-bottom: 18px;
     height: 56px;
   }
 
@@ -919,10 +874,6 @@ onMounted(() => {
   }
 }
 
-.rollover-info{
-  color:  #bd4646;
-  font-size: 12px;
-}
 
 </style>
 <style scoped lang="scss">

@@ -582,19 +582,9 @@
             </div>
           </template>
           <span v-if="affiliateDetails.affiliateLevel !== null">
-            {{ t(`affiliate.level.${affiliateDetails.affiliateLevel}`) }}
+            {{ affiliateDetails.affiliateLevel }}
           </span>
           <span v-if="affiliateDetails.affiliateLevel === null">-</span>
-          <el-button
-            v-if="parseInt(memberDetail.siteId) === 10"
-            type="info"
-            size="mini"
-            style="float: right;"
-            v-permission="['sys:affiliate:update:affiliate-level']"
-            @click="showDialog('UPDATE_AFFILIATE_LEVEL')"
-          >
-            {{ t('fields.update') }}
-          </el-button>
         </el-descriptions-item>
         <el-descriptions-item
           label-align="left"
@@ -1440,40 +1430,6 @@
           <el-button type="primary" @click="updateField('RISK')">{{ t('fields.confirm') }}</el-button>
         </div>
       </el-form>
-      <el-form
-        v-if="uiControl.dialogType === 'UPDATE_AFFILIATE_LEVEL'"
-        ref="updateLevelModel"
-        :model="levelForm"
-        :inline="true"
-        size="small"
-        label-width="150px"
-      >
-        <el-form-item :label="t('fields.affiliateLevel')" prop="level">
-          <el-select
-            v-model="levelForm.level"
-            size="small"
-            :placeholder="t('fields.timeType')"
-            class="filter-item"
-            style="width: 350px;"
-            default-first-option
-          >
-            <el-option
-              v-for="item in uiControl.affiliateLevel"
-              :key="item.key"
-              :label="t(`affiliate.level.${item.value}`)"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <div class="dialog-footer">
-          <el-button @click="uiControl.dialogVisible = false">
-            {{ t('fields.cancel') }}
-          </el-button>
-          <el-button type="primary" @click="updateAffiliateLevel">
-            {{ t('fields.confirm') }}
-          </el-button>
-        </div>
-      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -1514,8 +1470,7 @@ import {
   updateTimeType,
   updateBelongType,
   updateViewLoginName,
-  getAffiliateShareRatio,
-  updateLevel,
+  getAffiliateShareRatio
 } from '../../../../../api/member-affiliate'
 import { useStore } from '../../../../../store'
 import { useI18n } from 'vue-i18n'
@@ -1588,13 +1543,6 @@ const uiControl = reactive({
     },
   ],
   commissionMax: 2,
-  affiliateLevel: [
-    { key: 1, displayName: 'MASTER AFFILIATE', value: 'MASTER_AFFILIATE' },
-    { key: 2, displayName: 'SUPER AFFILIATE', value: 'SUPER_AFFILIATE' },
-    { key: 3, displayName: 'AFFILIATE', value: 'AFFILIATE' },
-    { key: 4, displayName: 'SUB AFFILIATE', value: 'SUB_AFFILIATE' },
-    { key: 5, displayName: 'JUNIOR AFFILIATE', value: 'JUNIOR_AFFILIATE' },
-  ],
 })
 
 const loading = reactive({
@@ -1618,7 +1566,6 @@ const commissionForm = ref(null)
 const updateTimeTypeModel = ref(null)
 const updateBelongTypeModel = ref(null)
 const changeAffForm = ref(null)
-const updateLevelModel = ref(null)
 const riskForm = reactive({
   risk: null
 });
@@ -1750,10 +1697,6 @@ const belongTypeForm = reactive({
 
 const affForm = reactive({
   affiliateCode: null,
-})
-
-const levelForm = reactive({
-  level: null,
 })
 
 const validatePassword = (rule, value, callback) => {
@@ -2006,9 +1949,6 @@ function showDialog(type) {
       selectedRiskColor.levelColor = riskList.list[0].levelColor;
     }
     uiControl.dialogTitle = t('fields.updateRiskLevel');
-  } else if (type === 'UPDATE_AFFILIATE_LEVEL') {
-    levelForm.level = affiliateDetails.affiliateLevel
-    uiControl.dialogTitle = t('fields.updateAffiliateLevel')
   }
   uiControl.dialogVisible = true
 }
@@ -2178,24 +2118,6 @@ function updateMemberTimeType() {
       uiControl.dialogVisible = false
       ElMessage({
         message: t('message.updateTimeTypeSuccess'),
-        type: 'success',
-      })
-    }
-  })
-}
-
-function updateAffiliateLevel() {
-  updateLevelModel.value.validate(async valid => {
-    if (valid) {
-      await updateLevel(props.affId, levelForm.level)
-      const data = await getAffiliateRecord(props.affId)
-      Object.keys({ ...data.data }).forEach(detailField => {
-        memberDetail[detailField] = data.data[detailField]
-      })
-      uiControl.dialogVisible = false
-      affiliateDetails.affiliateLevel = levelForm.level
-      ElMessage({
-        message: t('message.updateAffiliateLevelSuccess'),
         type: 'success',
       })
     }
