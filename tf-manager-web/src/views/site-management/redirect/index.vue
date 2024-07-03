@@ -42,6 +42,7 @@
         <template #default="scope">
           <span v-if="scope.row.type === 'GAME'">{{ t('fields.gameCode') }}</span>
           <span v-else-if="scope.row.type === 'PROMO'">{{ t('fields.promo') }}</span>
+          <span v-else-if="scope.row.type === 'DOMAIN'">{{ t('fields.domainEasy') }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="code" :label="t('fields.code')" min-width="250" />
@@ -389,7 +390,8 @@ const uiControl = reactive({
   dialogType: "CREATE",
   type: [
     { key: 0, displayName: 'gameCode', value: 'GAME' },
-    { key: 1, displayName: 'promo', value: 'PROMO' }
+    { key: 1, displayName: 'promo', value: 'PROMO' },
+    { key: 2, displayName: 'domainEasy', value: 'DOMAIN' }
   ],
   imageSelectionTitle: '',
   imageSelectionType: '',
