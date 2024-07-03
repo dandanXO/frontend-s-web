@@ -1186,49 +1186,32 @@ $border-settings: 1px solid #e5e7eb;
       }
     }
 
-    &4, &5, &6 {
+    &6, &7, &8, &9, &10 {
       background: url("../assets/vip/badge/banner-3.png") no-repeat top center;
       background-size: contain;
     }
 
-    &7, &8, &9 {
+    &11, &12, &13, &14, &15 {
       background: url("../assets/vip/badge/banner-5.png") no-repeat top center;
       background-size: contain;
     }
 
-    &10, &11, &12 {
-      background: url("../assets/vip/badge/banner-6.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &13, &14, &15 {
+    &16, &17, &18, &19, &20 {
       background: url("../assets/vip/badge/banner-7.png") no-repeat top center;
       background-size: contain;
     }
 
-    &16, &17, &18 {
-      background: url("../assets/vip/badge/banner-8.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &19, &20, &21 {
+    &21, &22, &23, &24, &25 {
       background: url("../assets/vip/badge/banner-9.png") no-repeat top center;
       background-size: contain;
     }
 
-    &22, &23, &24 {
-      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-      background-size: contain;
-    }
-
-
-    &25, &26, &27 {
-      background: url("../assets/vip/badge/banner-10.png") no-repeat top center;
-      background-size: contain;
-    }
-
-    &28, &29, &30 {
+    &26, &27, &28, &29 {
       background: url("../assets/vip/badge/banner-11.png") no-repeat top center;
+      background-size: contain;
+    }
+    &30 {
+      background: url("../assets/vip/badge/banner-12.png") no-repeat top center;
       background-size: contain;
     }
 
