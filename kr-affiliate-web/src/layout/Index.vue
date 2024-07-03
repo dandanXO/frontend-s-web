@@ -1,13 +1,10 @@
 <template>
   <ElConfigProvider :locale="locale">
     <div :class="classObj" class="app-wrapper">
-      <div class="fixed-header">
-        <Navbar />
-      </div>
       <div v-if="classObj.mobile && sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
       <div class="main-container">
         <Sidebar class="sidebar-container" />
-        <AppMain />
+        <AppMain class="content-container" />
       </div>
     </div>
   </ElConfigProvider>
@@ -124,10 +121,13 @@ export default defineComponent({
   display: flex;
   position: relative;
   background: #f3f8fc;
-  // navbar height = 50px;
-  margin-top: 50px;
+  gap: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.content-container {
   padding: 20px;
-  gap: 20px;
 }
 
 .sidebar-container {
@@ -138,8 +138,6 @@ export default defineComponent({
   bottom: 0;
   left: 0;
   z-index: 1;
-  // overflow: hidden;
-  padding: 30px 0px 35px;
 }
 
 .fixed-header {
@@ -153,23 +151,9 @@ export default defineComponent({
 
 /* for mobile response 适配移动端 */
 .mobile {
-  // .main-container {
-  //   margin-left: 60px;
-  // }
-
   .sidebar-container {
     transition: transform 0.28s;
-    // width: $sideBarWidth !important;
-    position: fixed !important;
-    z-index: 99;
-    // top: 70px;
-    // bottom: 10px;
-    // left: 10px;
-    // height: 90vh;
-    top: 50px;
-    bottom: 0;
-    left: 0;
-    height: calc(100vh - 43px);
+    height: 100%;
     padding: 0;
     border-radius: 0;
   }
@@ -193,10 +177,10 @@ export default defineComponent({
   }
 
   .sidebar-container {
-    left: -20%;
+    width: 0;
 
     &.expanded {
-      left: 0;
+      width: auto;
     }
   }
 
