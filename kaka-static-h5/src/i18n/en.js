@@ -476,6 +476,7 @@ export default {
     upgrade_bonus: "Upgrade bonus",
     return_bonus: "Return bonus",
     vip_welcome_bonus: "Welcome bonus",
+    vip_levelup_bonus: "Level Up bonus",
     vip_monthly_bonus: "Monthly bonus",
     vip_birthday_bonus: "Birthday bonus",
     vip_request: "Request",
