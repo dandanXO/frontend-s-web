@@ -1850,6 +1850,10 @@ export default {
     unsuccessFrom30min: '30分钟前的未成功',
     unsuccessIn10time: '未成功10次的渠道',
     platformAccountName: '平台账号名',
+    subRegCount: '下级注册人数',
+    subDepositCount: '下级存款人数',
+    ftdDownlineAmount: '下级首存金额',
+    changeReferrer: '更改推荐人',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
@@ -2513,6 +2517,8 @@ export default {
     'Refer Rebate': '邀请奖励',
     'Domain Access': '域名访问设置',
     'KRW Stats Report': '韩国站点数据报表',
+    'Member Refer Pak': '邀请列表-巴基斯坦',
+    'Member Refer Summary Pak': '会员邀请统计-巴基斯坦',
   },
   google: {
     google_auth_menu: '谷歌验证',
