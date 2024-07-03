@@ -5,12 +5,10 @@
 
 <script>
 import { defineAsyncComponent, defineComponent, markRaw, onMounted, ref } from "vue";
-import { Platform, useQuasar } from "quasar";
+import { useQuasar } from "quasar";
 import { getVisitorId } from "boot/utils";
 import { api } from "boot/axios";
-import CsClient from "csweb-client";
 import { userStore } from "stores/index";
-import isString from "lodash/isString";
 import { useRouter } from "vue-router";
 import { useUI } from "stores/ui";
 
@@ -50,48 +48,6 @@ export default defineComponent({
     };
 
     const store = userStore();
-
-    const regDevice = Platform.is.mobile && Platform.is.capacitor ? "ANDROID" : Platform.is.mobile ? "H5" : "WEB";
-
-    let csclient;
-    const initCsWeb = () => {
-      csclient = new CsClient("12", regDevice, "kr", "3", "prod");
-
-      csclient.set("pageurl", "/liveChat");
-      csclient.set("btnid", "cs-web-id");
-      csclient.set("notification-type", {
-        type: "breathing",
-        color: "#FB4BFF"
-      });
-
-      csclient.set("design", {
-        bottom: "40px",
-        right: "20px",
-        icon: require("assets/images/index/cs-icon.png")
-      });
-
-      if (store.token) {
-        csclient.set("token", store.token);
-      }
-
-      //客服初始化。
-      csclient.init();
-
-      csclient.receiveListener("message", function (callback) {
-        //收到新消息。
-        // alert(callback);
-      });
-
-      //CsClient Event Listener.
-      window.addEventListener("message", function (event) {
-        // console.log("Message received from the iframe: " + event.data); // Message received from child
-        if (isString(event.data)) {
-          if (event.data == "closenotice") {
-            router.go(-1);
-          }
-        }
-      });
-    };
 
     const initStorage = () => {
       localStorage.removeItem("LINE_STICKY_OFF");
@@ -144,7 +100,7 @@ export default defineComponent({
 
     onMounted(() => {
       checkSID();
-      initCsWeb();
+      // initCsWeb();
       initStorage();
       checkAgentFrom();
 
