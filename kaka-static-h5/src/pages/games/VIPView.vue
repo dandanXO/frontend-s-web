@@ -684,26 +684,20 @@ const vipClaimItems = [
   }
 ];
 const returnNumber = (vipLevel) => {
-  if (vipLevel <= 3) {
+  if (vipLevel <= 5) {
     return '1'
-  } else if (vipLevel <= 6) {
-    return '2'
-  } else if (vipLevel <= 9) {
+  } else if (vipLevel <= 10) {
     return '3'
-  } else if (vipLevel <= 12) {
-    return '4'
   } else if (vipLevel <= 15) {
     return '5'
-  } else if (vipLevel <= 18) {
-    return '6'
-  } else if (vipLevel <= 21) {
+  } else if (vipLevel <= 20) {
     return '7'
-  } else if (vipLevel <= 24) {
-    return '8'
-  } else if (vipLevel <= 27) {
+  } else if (vipLevel <= 25) {
     return '9'
+  } else if (vipLevel <= 29) {
+    return '11'
   } else if (vipLevel <= 30) {
-    return '10'
+    return '12'
   }
 }
 
