@@ -379,6 +379,7 @@ export default defineComponent({
     };
 
     const isImpt = getWithExpiry("isImpt");
+    const isFirstView = ref(false);
 
     const checkShowImgTop = () => {
       const lastTime = sessionStorage.getItem("indexImgTop");
