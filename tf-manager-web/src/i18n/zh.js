@@ -1855,6 +1855,9 @@ export default {
     ftdDownlineAmount: '下级首存金额',
     changeReferrer: '更改推荐人',
     memberShareRatio: '玩家返水比例',
+    downlineMembers: '下线人数',
+    todayRegCount: '今日团队注册',
+    yesterdayRegCount: '昨日团队注册',
   },
   message: {
     startenddatemore3months: '开始与结束时间不能多于3个月',
