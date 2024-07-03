@@ -675,7 +675,7 @@
 <script setup>
 /* eslint-disable */
 import GameModal from "@/components/modal/GameModal.vue";
-import { defineComponent, ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { loadHomePopup, loadPromoBanner } from "@/api/index/promo";
 // import { numberCounter } from "vue3-number-counter";
 import Vue3autocounter from "vue3-autocounter";
@@ -704,17 +704,17 @@ const setWithExpiry = (key, value, interval) => {
     value: value,
     expiry: now.getTime() + interval
   };
-  localStorage.setItem(key, JSON.stringify(item));
+  sessionStorage.setItem(key, JSON.stringify(item));
 };
 const getWithExpiry = (key) => {
-  const itemStr = localStorage.getItem(key);
+  const itemStr = sessionStorage.getItem(key);
   if (!itemStr) {
     return null;
   }
   const item = JSON.parse(itemStr);
   const now = new Date();
   if (now.getTime() > item.expiry) {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
     return null;
   }
   return item.value;
@@ -737,7 +737,7 @@ const homePopupType = ref("");
 const homePopupId = ref(0);
 
 const checkShowImgTop = () => {
-  const lastTime = localStorage.getItem("indexImgTop");
+  const lastTime = sessionStorage.getItem("indexImgTop");
   if (lastTime) {
     const diff = new Date().getTime() - Number(lastTime);
     if (diff > 1000 * 60 * 60 * 12) {
@@ -832,6 +832,15 @@ onMounted(() => {
     checkShowImgTop();
   }
 });
+
+watch(
+  () => store.token,
+  () => {
+    if (store.token && store.memberType === "TEST") {
+      checkShowImgTop();
+    }
+  }
+);
 </script>
 
 <style lang="scss">

@@ -2263,11 +2263,11 @@ export default defineComponent({
     const homePopupFrequencyNum = ref(0);
 
     const checkShowImgTop = () => {
-      const lastTime = localStorage.getItem("indexImgTop");
+      const lastTime = sessionStorage.getItem("indexImgTop");
       if (lastTime) {
         const diff = new Date().getTime() - Number(lastTime);
         if (diff > 1000 * 60 * 60 * 12) {
-          localStorage.removeItem("indexImgTop");
+          sessionStorage.removeItem("indexImgTop");
         }
       } else {
         api
