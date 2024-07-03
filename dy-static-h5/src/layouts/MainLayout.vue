@@ -472,6 +472,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "存款";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         } else if (route.path === "/deposit") {
           hasPage.value = false;
           pageName.value = "存款";
@@ -498,10 +502,18 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "提款";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         } else if (route.path === "/account/transfer") {
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "转账";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         } else if (route.path === "/account/records") {
           prevPage.value = "account";
           hasPage.value = true;
@@ -554,6 +566,10 @@ export default defineComponent({
           prevPage.value = "account";
           hasPage.value = true;
           pageName.value = "消息中心 ";
+          if (route.query.redirect) {
+            var redirectPage = route.query.redirect;
+            prevPage.value = redirectPage;
+          }
         } else if (route.path === "/account/mail/outbox") {
           prevPage.value = "account/mail";
           hasPage.value = true;

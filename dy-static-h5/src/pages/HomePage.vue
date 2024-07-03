@@ -26,7 +26,7 @@
         <div class="header-left">
           <img class="top-logo" id="logo" src="../assets/index/logo.png" />
         </div>
-        <router-link class="header-right" to="/account/inbox">
+        <router-link class="header-right" to="/account/inbox?redirect=home">
           <div class="notification-section">
             <img src="../assets/index/home-notification-icon.svg" alt="" />
             <div class="notification-dot" v-if="store.unreadInboxMail > 0"></div>
@@ -85,7 +85,7 @@
           </div>
           <marquee-text :repeat="5" :duration="calculateMaxContentLength() < 30 ? calculateMaxContentLength() * 4 : 70">
             <div v-if="announcementList">
-              <span style="color: #235187;" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
+              <span style="color: #235187" v-for="(a, i) in announcementList" :key="i" @click="openPopup(a)">
                 {{ a.content }}
               </span>
             </div>
@@ -129,15 +129,15 @@
           </div>
 
           <div class="row col gap-25 justify-end">
-            <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit">
+            <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit?redirect=home">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
               <p>存款</p>
             </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw">
+            <router-link class="text-center cash-button" :unelevated="true" to="/finance/withdraw?redirect=home">
               <img src="../assets/index/home-withdrawal-icon.svg" alt="" width="100%" />
               <p>提款</p>
             </router-link>
-            <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer">
+            <router-link class="text-center cash-button" :unelevated="true" to="/account/transfer?redirect=home">
               <img src="../assets/index/home-transfer-icon.svg" alt="" width="100%" />
               <p>转帐</p>
             </router-link>
@@ -2533,7 +2533,7 @@ export default defineComponent({
     }
 
     span {
-      color: #35648F;
+      color: #35648f;
       font-weight: 500;
       font-size: 12px;
     }
@@ -2895,7 +2895,7 @@ export default defineComponent({
     padding: 5px 10px;
     justify-content: center;
     align-items: center;
-    background-color: #E7F2FF;
+    background-color: #e7f2ff;
 
     .marquee-text-wrap {
       color: #000;
@@ -3234,7 +3234,7 @@ export default defineComponent({
     > p {
       font-size: 14px;
       font-weight: 500;
-      color: #3B5778;
+      color: #3b5778;
       margin: 0;
     }
   }
