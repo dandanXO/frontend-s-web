@@ -308,7 +308,9 @@ function getSummaries(val) {
     if (index === 0) {
       sums[index] = 'Total';
     } else if (sumKeys.includes(column.property)) {
-      sums[index] = page.sums[column.property];
+      sums[index] = page.sums[column.property].toFixed(2);
+    } else if (index === 10) {
+      sums[index] = (sums[8] - sums[9]).toFixed(2);
     }
   });
   return sums;
