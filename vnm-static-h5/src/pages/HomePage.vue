@@ -2376,9 +2376,10 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: $box-width;
+  width: 100%;
+  padding: 4px 1rem;
   margin: 0 auto;
-  padding: 4px;
+  box-shadow: 0px -2px 6px 0px #c3d4e6 inset;
 
   .header-left {
     // height: 50px;
