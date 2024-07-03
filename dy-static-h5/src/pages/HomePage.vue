@@ -1567,10 +1567,6 @@ export default defineComponent({
   },
   setup() {
     const isFirstView = ref(false);
-    const closeAlert = () => {
-      localStorage.setItem("indexImgTop", new Date().getTime());
-      isFirstView.value = false;
-    };
     const thumbsSwiper = ref(null);
     const firstSwiper = ref(null);
     const secondSwiper = ref(null);
@@ -2488,7 +2484,6 @@ export default defineComponent({
       setSecondSwiper,
       setSelectedSwiper,
       isFirstView,
-      closeAlert,
       isAppUpdateModal,
       cancelUpdate,
       openDownloadPage,

@@ -367,26 +367,14 @@ export default defineComponent({
 
     const getWithExpiry = (key) => {
       const itemStr = sessionStorage.getItem(key);
-      if (!itemStr) {
-        return null;
-      }
+      if (!itemStr) return null;
+
       const item = JSON.parse(itemStr);
       const now = new Date();
-      loadHomePromoBanner()
-        .then((res) => {
-          if (now.getTime() > item.expiry || item.id !== res.data["id"] || item.frequency !== res.data["frequency"]) {
-            sessionStorage.removeItem(key);
-            isImportantAnnouncementModal.value = true;
-            homePopupImg.value =
-              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/" + res.data["desktopImgUrl"];
-            homePopupContent.value = res.data["content"];
-            homePopupType.value = res.data["type"];
-            homePopupId.value = res.data["id"];
-            homePopupFrequency.value = res.data["frequency"];
-            return null;
-          }
-        })
-        .catch(() => {});
+      if (now.getTime() > item.expiry) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
       return item.value;
     };
 
