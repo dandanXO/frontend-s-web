@@ -248,7 +248,6 @@ export default {
     accumulateDeposit: "جمع شدہ جمع",
     reward: "انعام",
     levelUpgrade: "سطح اپ گریڈ",
-    monthly: "ماہانہ",
     dailyWithdrawal: "یومیہ واپسی",
     limit: "حد",
     vipStatus_txt: "وی آئی پی اسٹیٹس کو ماہانہ جمع شدہ رقم سے اپ گریڈ کیا جا سکتا ہے",
@@ -301,6 +300,13 @@ export default {
         searchButton: "تلاش"
       },
       table: {
+        id: "شناخت",
+        downlineMember: "ڈاؤن لائن ممبر",
+        downlineDepositMember: "ڈاؤن لائن ڈپازٹ ممبر",
+        todayRegCount: "آج کی رجسٹر تعداد",
+        ytdRegCount: "کل کی رجسٹر تعداد",
+        vip: "وی آئی پی",
+        uplineLoginName: "اپ لائن یوزر نیم",
         type: "انواع",
         username: "صارف کا نام",
         emark: "اي ماركس",
@@ -337,7 +343,11 @@ export default {
         validBet: "درست شرط",
         balance: "فتح/نقصان",
         rounds: "راؤنڈ",
-        player: "کھلاڑی"
+        player: "کھلاڑی",
+        platform: "پلیٹ فارم",
+        players: "کھلاڑی",
+        bet: "بیٹ",
+        payout: "ادائیگی"
       }
     },
     profitAndLoss: {
@@ -362,7 +372,22 @@ export default {
         rebate: "کھلاڑی کی ریبیٹ",
         referral: "رجحان",
         profitAndLoss: "منافع اور نقصان",
-        depositFee: "جمع کرانے کی فیس"
+        ftdamount: "FTD رقم",
+        ftdcount: "FTD تعداد",
+        depositcount: "جمع کرنے کی تعداد",
+        depositFee: "جمع کرانے کی فیس",
+        bet: "بیٹ",
+        payout: "ادائیگی"
+      },
+      sums: {
+        bet: "بیٹ",
+        validBet: "معتبر بیٹ",
+        betamount: "شرط کی رقم",
+        depositcount: "جمع کی تعداد",
+        bonus: "بونس",
+        payout: "ادائیگی",
+        deposit: "ڈپازٹ",
+        withdraw: "نکالنا"
       }
     }
   },
