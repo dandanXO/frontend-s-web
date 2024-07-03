@@ -329,15 +329,6 @@
             />
           </div>
         </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10" :label="t('fields.memberShareRatio')" prop="memberShareRatio">
-          <div v-for="item in memberShareRatioList.list" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
-            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
-          </div>
-        </el-form-item>
         <div class="dialog-footer">
           <el-button @click="uiControl.dialogVisible = false">
             {{ $t('fields.cancel') }}
@@ -399,15 +390,6 @@
         </el-form-item>
         <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.shareRatio !== null" :label="t('fields.shareRatio')" prop="shareRatio">
           <div v-for="item in eForm.shareRatio" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
-            <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
-            <el-input
-              v-model="item.value"
-              style=" width:100px; margin-left: auto; order: 2"
-            />
-          </div>
-        </el-form-item>
-        <el-form-item v-if="parseInt(store.state.user.siteId) === 10 && eForm.memberShareRatio !== null" :label="t('fields.memberShareRatio')" prop="memberShareRatio">
-          <div v-for="item in eForm.memberShareRatio" :key="item.code" style="width: 350px; display: flex; margin-bottom:5px;">
             <span>{{ t('affiliateShareRatio.' + item.code) }}</span>
             <el-input
               v-model="item.value"
@@ -481,9 +463,6 @@ const affInfo = ref(null)
 const checkId = ref(null)
 const breadcrumbNameList = ref([])
 const shareRatioList = reactive({
-  list: [],
-})
-const memberShareRatioList = reactive({
   list: [],
 })
 // const shortcuts = [
@@ -618,7 +597,6 @@ const cForm = reactive({
   affiliateCode: null,
   commission: 0,
   shareRatio: null,
-  memberShareRatio: null,
 })
 
 const eForm = reactive({
@@ -628,7 +606,6 @@ const eForm = reactive({
   commission: null,
   shareRatio: null,
   affiliateLevel: null,
-  memberShareRatio: null,
 })
 
 // function convertDate(date) {
@@ -675,15 +652,6 @@ const validateShareRatio = (rule, value, callback) => {
   callback()
 }
 
-const validateMemberShareRatio = (rule, value, callback) => {
-  memberShareRatioList.list.forEach((item) => {
-    if (item.value === '' || item.value < 0 || item.value > 1) {
-      callback(new Error(t('message.validateShareRatioFormat')))
-    }
-  })
-  callback()
-}
-
 const cFormRules = reactive({
   affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
   loginName: [
@@ -705,7 +673,6 @@ const cFormRules = reactive({
     { validator: validateCommission, trigger: 'blur' },
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
-  memberShareRatio: [{ validator: validateMemberShareRatio, trigger: 'blur' }],
 })
 
 const eFormRules = reactive({
@@ -715,7 +682,6 @@ const eFormRules = reactive({
   ],
   shareRatio: [{ validator: validateShareRatio, trigger: 'blur' }],
   affiliateLevel: [required(t('message.requiredAffiliateLevel'))],
-  memberShareRatio: [{ validator: validateMemberShareRatio, trigger: 'blur' }],
 })
 
 function restrictCommissionDecimalInput(event) {
@@ -798,7 +764,7 @@ function showEdit(affiliate) {
   nextTick(() => {
     for (const key in affiliate) {
       if (Object.keys(eForm).find(k => k === key)) {
-        if (key === 'shareRatio' || key === 'memberShareRatio') {
+        if (key === 'shareRatio') {
           eForm[key] = [...affiliate[key]]
         } else {
           eForm[key] = affiliate[key]
@@ -808,17 +774,9 @@ function showEdit(affiliate) {
     if (eForm.shareRatio === null || eForm.shareRatio === undefined) {
       eForm.shareRatio = []
     }
-    if (eForm.memberShareRatio === null || eForm.memberShareRatio === undefined) {
-      eForm.memberShareRatio = []
-    }
     for (var item = 0; item < shareRatioList.list.length; item++) {
       if (!eForm.shareRatio.some(child => child.code === shareRatioList.list[item].code)) {
         eForm.shareRatio.push({ code: shareRatioList.list[item].code, value: 0 })
-      }
-    }
-    for (var item2 = 0; item2 < memberShareRatioList.list.length; item2++) {
-      if (!eForm.memberShareRatio.some(child => child.code === memberShareRatioList.list[item2].code)) {
-        eForm.memberShareRatio.push({ code: memberShareRatioList.list[item2].code, value: 0 })
       }
     }
   })
@@ -830,7 +788,6 @@ async function addAffiliate() {
       if (parseInt(cForm.siteId) === 10) {
         // join share ratio by comma
         cForm.shareRatio = shareRatioList.list.map(item => item.code + ":" + item.value).join(',');
-        cForm.memberShareRatio = memberShareRatioList.list.map(item => item.code + ":" + item.value).join(',');
       }
       await regsterAffiliate(cForm)
       uiControl.dialogVisible = false
@@ -849,7 +806,6 @@ async function editAffiliate() {
       if (parseInt(form.siteId) === 10) {
         // join share ratio by comma
         form.shareRatio = eForm.shareRatio.map(item => item.code + ":" + item.value).join(',');
-        form.memberShareRatio = eForm.memberShareRatio.map(item => item.code + ":" + item.value).join(',');
       }
       form.affiliateLevel = eForm.affiliateLevel
       await editAffiliateCommission(eForm.id, form)
@@ -905,7 +861,6 @@ onMounted(async () => {
   await loadDownlineAffiliates()
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
     shareRatioList.list = JSON.parse(JSON.stringify(res.data))
-    memberShareRatioList.list = JSON.parse(JSON.stringify(res.data))
   });
   affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
     return level.value === affiliateLevel.value

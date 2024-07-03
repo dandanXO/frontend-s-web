@@ -112,3 +112,7 @@ export const bindGoogleKey = (id, siteId, code) => {
 export const registerMember = (form) => {
   return https().request(`/downline/registerMember`, Method.POST, form, ContentType.form);
 }
+
+export const editMemberRatio = (memberId, ratio) => {
+  return https().request(`/downline/${memberId}/editRatio?_method=PUT`, Method.POST, { memberShareRatio: ratio }, ContentType.form);
+};
