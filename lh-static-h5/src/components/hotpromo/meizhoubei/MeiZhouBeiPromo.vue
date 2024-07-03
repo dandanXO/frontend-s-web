@@ -51,7 +51,7 @@ import { ref, onMounted, defineProps, computed } from "vue";
 import {useLocalStorage} from "@vueuse/core"
 import "swiper/css";
 import "swiper/css/navigation";
-
+import { useQuasar } from "quasar";
 import { eventapi } from "src/boot/axios";
 
 const props = defineProps({
@@ -70,6 +70,7 @@ const getMatchDateOnly = (matchTime) => {
   return dateString || "";
 };
 
+const $q = useQuasar();
 
 const handleSubmit = () => {
   eventapi
@@ -81,13 +82,6 @@ const handleSubmit = () => {
           position: "top",
           message: "已成功申请",
           icon: "check_circle_outline"
-        });
-      } else {
-        $q.notify({
-          color: "negative",
-          position: "top",
-          message: response.message,
-          icon: "report_problem"
         });
       }
     })
