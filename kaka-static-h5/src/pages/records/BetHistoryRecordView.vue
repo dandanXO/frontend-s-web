@@ -449,6 +449,11 @@ onMounted(async () => {
   align-items: center;
   justify-content: space-between;
 
+  background: #fff;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    color: #000;
   span {
     font-size: 14px;
     padding-left: 5px;
