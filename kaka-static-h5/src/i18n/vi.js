@@ -482,6 +482,7 @@ export default {
     upgrade_bonus: "Tiền thưởng nâng cấp",
     return_bonus: "Tiền thưởng hoàn lại",
     vip_welcome_bonus: "THƯỞNG NÂNG CẤP",
+    vip_levelup_bonus: "THƯỞNG THĂNG CẤP",
     vip_monthly_bonus: "THƯỞNG HÀNG THÁNG",
     vip_birthday_bonus: "MỪNG SINH NHẬT",
     vip_request: "Yêu cầu",
