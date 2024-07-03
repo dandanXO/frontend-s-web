@@ -107,7 +107,7 @@
 <style lang="scss" scoped>
 .container {
   font-size: 16px;
-  background-color: #E7F1FD;
+  background-color: #1e212c;
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -191,7 +191,7 @@
 
 
       .content {
-        color: #ffffff;
+        //color: #ffffff;
 
         .pill {
           white-space: nowrap;

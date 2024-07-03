@@ -13,7 +13,7 @@
 
         <div class="point">
           <div class="blue-hexagon">Áp dụng</div>
-          <div>Cho tất cả các thành viên của TF88</div>
+          <div>Cho tất cả các thành viên của KAKA</div>
         </div>
 
         <div class="point">
@@ -80,19 +80,19 @@
               khuyến mãi này.</li>
             <li> Tiền thưởng cần trải qua 03 vòng cược tại Thể Thao trước khi có thể rút tiền.</li>
             <li>Vé cược hợp lệ cần đặt cược tại kèo Cược Chấp hoặc 1X2.</li>
-            <li>Nếu TF88 kiểm tra thấy mỗi thành viên, mỗi địa chỉ email, mỗi số điện thoại sử dụng cùng một
+            <li>Nếu KAKA kiểm tra thấy mỗi thành viên, mỗi địa chỉ email, mỗi số điện thoại sử dụng cùng một
               tài khoản ngân hàng hoặc trùng địa chỉ IP thì chỉ có một tài khoản được nhận tiền thưởng của
               Khuyến mãi này (nếu có nhiều thông đồng hoặc sử dụng nhiều tài khoản thì tất cả tiền thắng
               cược sẽ bị mất).</li>
-            <li>Nếu TF88 phát hiện thành viên liên tục đăng ký tài khoản, lợi dụng sơ hở của trò chơi hoặc
-              cố ý vi phạm, TF88 có quyền hủy hoặc rút lại tiền thưởng của Thành viên.</li>
+            <li>Nếu KAKA phát hiện thành viên liên tục đăng ký tài khoản, lợi dụng sơ hở của trò chơi hoặc
+              cố ý vi phạm, KAKA có quyền hủy hoặc rút lại tiền thưởng của Thành viên.</li>
             <li>Tất cả cược HÒA, cược HỦY, cược 2 BÊN, vé cược đặt tại tỷ lệ cược: DEC {{ '<' }} 1.75, MY -0.6 đến
               0.75, Thể thao ảo, Đua ngựa, Number Game sẽ không được áp dụng cho chương trình
               này.</li>
             <li>Các tài khoản có cùng IP hoặc thông tin dữ liệu tương tự sẽ không được tham gia chương trình
               khuyến mãi này.</li>
-            <li> Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại TF88.</li>
-            <li>TF88 có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian
+            <li> Chương trình không thể kết hợp cùng các khuyến mãi nạp khác tại KAKA.</li>
+            <li>KAKA có quyền chỉnh sửa, từ chối hoặc hủy bỏ chương trình Khuyến mãi này bất cứ thời gian
               nào mà không cần báo trước.</li>
             <li>Điều khoản & Điều kiện khuyến mãi chung được áp dụng.</li>
           </ol>

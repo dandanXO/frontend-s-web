@@ -885,7 +885,7 @@ export default defineComponent({
           th {
             padding: 5px;
             text-align: center;
-            background-color: #e7f3ff;
+            background-color: #FFE7E7;
           }
 
           td {
@@ -941,7 +941,6 @@ export default defineComponent({
     background: $secondary;
     width: 100%;
     margin: 0 auto;
-    padding-bottom: 8px;
     // box-shadow: 0px -6px 6px 0px #E6C3C3 inset;
 
     .q-tab {

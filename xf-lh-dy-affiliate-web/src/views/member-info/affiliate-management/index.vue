@@ -860,7 +860,7 @@ onMounted(async () => {
   await loadAffiliateInfo()
   await loadDownlineAffiliates()
   getConfigListByGroup('AGENT_SHARE_RATIO', store.state.user.siteId).then(res => {
-    shareRatioList.list = res.data;
+    shareRatioList.list = JSON.parse(JSON.stringify(res.data))
   });
   affiliateLevelKey.value = uiControl.affiliateLevel.filter((level) => {
     return level.value === affiliateLevel.value

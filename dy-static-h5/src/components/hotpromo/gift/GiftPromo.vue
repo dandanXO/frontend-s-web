@@ -203,7 +203,7 @@ import { useQuasar } from "quasar";
 import { getGiftList, getGiftBet, redeemGift, getGiftRecord } from "../../../api/index/promo";
 import Vue3autocounter from "vue3-autocounter";
 import { TweenMax } from "gsap";
-import * as _ from "lodash";
+import { throttle } from "src/boot/utils";
 
 const $q = useQuasar();
 const store = userStore();
@@ -358,7 +358,7 @@ function loadMemberBet() {
         };
         TweenMax.to(mbb, 2, {
           x: leftMargin,
-          onUpdate: _.throttle(progressItemActive, 200)
+          onUpdate: throttle(progressItemActive, 200)
         });
       }
     } else {

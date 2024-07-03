@@ -7,13 +7,15 @@
       props.siteId !== '8' ? '' : 'vi',
       props.siteId !== '10' ? '' : 'kr',
       props.siteId !== '11' ? '' : 'pak',
+      props.siteId !== '15' ? '' : 'kaka'
     ]"
   >
+    <img class="float-logo" v-if="props.siteId === '15'" :src="currentSite.logo">
     <div class="inner">
       <div class="loginPage">
         <div class="left">
           <div class="logo">
-            <img :src="currentSite.logo">
+            <img v-if="props.siteId !== '15'" :src="currentSite.logo">
           </div>
           <div class="first-liner" v-html="currentSite.firstLiner" />
           <div class="second-liner" v-html="currentSite.secondLiner" />
@@ -964,7 +966,7 @@ export default defineComponent({
         state.regForm.siteId = props.siteId
         regFormRef.value.validate(async valid => {
           if (valid) {
-            if (props.siteId === '15' || props.siteId === 15) {
+            if (props.siteId === '15' || props.siteId === 15 || props.siteId === '8' || props.siteId === 8) {
               if (step.value === 1) {
                 step.value = 2
                 return
@@ -1012,13 +1014,13 @@ export default defineComponent({
           elDialog.classList.remove('shake')
         }, 500)
         methods.onGetImage()
-        if (state.loginForm.site === 'KA1') {
+        if (state.loginForm.site === 'KA2') {
           getCaptcha()
         }
         state.coordinates.splice(0)
       },
       onSuccess: async () => {
-        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA1' || state.loginForm.site === 'KRW') {
+        if (state.loginForm.site === 'IND' || state.loginForm.site === 'IW2' || state.loginForm.site === 'VNM' || state.loginForm.site === 'KA2' || state.loginForm.site === 'KRW') {
           router
             .push({
               path: state.redirect || '/',
@@ -1315,11 +1317,11 @@ export default defineComponent({
         setLanguage('vi')
       }
       if (props.siteId === '15') {
-        currentSite.value.firstLiner = 'Start From KAKA Live'
+        currentSite.value.firstLiner = 'Bắt đầu với KAKA'
         currentSite.value.secondLiner =
-          'Nơi bắt đầu mới -Chia sẻ cơ hội-Hợp tác thành công'
+          'trở thành một huyền thoại<br/>Hoặc trở thành nhà điếu văn của huyền thoại?'
         currentSite.value.logo = kakaLogo
-        state.loginForm.site = 'KA1'
+        state.loginForm.site = 'KA2'
         setLanguage('vi')
       }
       if (props.siteId === '10') {
@@ -1560,6 +1562,7 @@ a {
   align-items: center;
   height: 100vh;
   padding: 20px;
+  position: relative;
   background: url('../../assets/images/login/firstbg.svg') no-repeat center
     center;
   background-size: cover;
@@ -1567,7 +1570,7 @@ a {
     background: url('../../assets/images/login/lh-bg.jpg') no-repeat center
       center;
   }
-  &.vi {
+  &.vi,  &.kaka {
     font-family: 'Roboto';
     .loginPage .right .top .log {
       font-family: 'Roboto';
@@ -1575,6 +1578,76 @@ a {
     .loginPage .left {
       .second-liner {
         font-family: 'Roboto';
+      }
+    }
+  }
+  &.kaka {
+    --kaka-primary: #FF4545;
+    background-image: url('../../assets/images/kaka/first-bg-kaka.png') ;
+
+    .el-link.el-link--primary {
+      --el-link-font-color: var(--kaka-primary);
+      &:hover {
+        color: var(--kaka-primary);
+      }
+    }
+
+    :deep(.el-input__inner) {
+      background-color: #FDF4F4;
+      border: 1px solid #F0D8D8;
+      color: #000;
+      border-radius: 14px;
+      &::placeholder {
+        color: #DCD5D5;
+      }
+    }
+
+    .float-logo {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+    }
+
+    .loginPage {
+      .right{
+        .top {
+          background-image: url('../../assets/images/kaka/top-kaka.png') ;
+        }
+        .bot {
+          background-image: url('../../assets/images/kaka/dow-kaka.png') ;
+        }
+      }
+    }
+
+    .inner{
+      max-width: 1300px;
+
+    }
+
+    .common-btn {
+      &:not(.default-btn) {
+        background-color: var(--kaka-primary);
+      }
+      &.default-btn {
+        border-color: var(--kaka-primary);
+        color: var(--kaka-primary);
+      }
+    }
+
+    .loginPage {
+      max-width: 1300px;
+      .left {
+        flex:2;
+        .first-liner {
+          font-family: "Roboto",sans-serif;
+          margin-bottom: 15px;
+          width: 750px;
+          max-width: 750px;
+        }
+        .second-liner{
+          width: 750px;
+          max-width: 750px;
+        }
       }
     }
   }

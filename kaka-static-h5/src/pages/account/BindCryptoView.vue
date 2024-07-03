@@ -29,7 +29,7 @@
         </q-input>
       </div>
 
-      <q-card-actions style="margin: 0 auto" align="center" class="bg-white text-teal">
+      <q-card-actions style="margin: 0 auto" align="center" class="bg-new-dark text-white">
         <q-btn
           style="width: 100%"
           class="common-md-btn"
@@ -53,7 +53,7 @@
         <p>{{ $t("lang.system_operation_success") }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="bg-new-dark text-white">
         <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -71,7 +71,7 @@
         <p>{{ captchaFailedMessage || $t("lang.system_verify_failed") }}</p>
       </div>
 
-      <q-card-actions style="width: 100%" align="center" class="bg-white text-teal">
+      <q-card-actions style="width: 100%" align="center" class="bg-new-dark text-white">
         <q-btn class="common-md-btn" flat :label="$t('lang.system_confirm')" v-close-popup />
       </q-card-actions>
     </q-card>
@@ -447,7 +447,7 @@ onMounted(() => {
       .q-field__control {
         border-radius: 0.5rem;
         background: #f7f8fb;
-        box-shadow: 0px 0px 8px 0px #a9c9ea inset;
+        box-shadow: 0px 0px 8px 0px #e6c3c3 inset;
       }
 
       .get-otp-btn {

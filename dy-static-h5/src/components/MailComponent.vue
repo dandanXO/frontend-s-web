@@ -53,19 +53,20 @@
                     color="#0089ED"
                   />
 
-                  <div class="read-label" v-if="det.readTime && det.sendTime" >
+                  <div class="read-label" v-if="det.readTime && det.sendTime">
                     <img src="../assets/images/inbox/read-mail.png" />
                   </div>
                   <div class="read-label" v-else>
                     <img src="../assets/images/inbox/unread-mail.png" />
                   </div>
 
-
                   <div class="title-text" :title="det.title">{{ det.title }}</div>
-                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`"><i>{{ formatSendTime(det.sendTime) }}</i></div>
+                  <div v-if="det.sendTime" class="send-time" :title="`发送时间: ${formatSendTime(det.sendTime)}`">
+                    <i>{{ formatSendTime(det.sendTime) }}</i>
+                  </div>
                   <div class="right-title">
-                    <RiArrowUpSLine v-if="isSelectedMail === det.id" />
-                    <RiArrowDownSLine v-if="isSelectedMail !== det.id" />
+                    <img class="svg" v-if="isSelectedMail === det.id" src="~assets/account/mail/arrow-up-s-line.svg" />
+                    <img class="svg" v-if="isSelectedMail !== det.id" src="~assets/account/mail/arrow-down-s-line.svg" />
                   </div>
                 </div>
               </div>
@@ -119,18 +120,13 @@
   </q-page>
 </template>
 <script>
-import { defineComponent, onActivated, onMounted, ref, computed } from "vue";
+import { defineComponent, onMounted, ref, computed } from "vue";
 import moment from "moment";
-import { RiArrowDownSLine, RiArrowUpSLine } from "vue-remix-icons";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
 import qs from "qs";
 
 export default defineComponent({
-  components: {
-    RiArrowDownSLine,
-    RiArrowUpSLine
-  },
   props: {
     list: {
       type: Array,
@@ -535,8 +531,8 @@ export default defineComponent({
     font-size: 1.1rem;
     word-break: break-all;
 
-    .read-label{
-      display:flex;
+    .read-label {
+      display: flex;
       align-items: center;
       justify-content: center;
       margin-right: 8px;
@@ -613,5 +609,4 @@ export default defineComponent({
   border-radius: 50%;
   margin-right: 5px;
 }
-
 </style>

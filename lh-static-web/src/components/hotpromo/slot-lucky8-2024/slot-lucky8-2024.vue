@@ -27,7 +27,7 @@
             <td>{{ item.prizeAmount }}</td>
             <td>
               <button @click="!item.claimTime ? handleSubmitVote(item): null" :class="item.claimTime ? 'option-btn-redeemed' : hasClaimed ? 'option-btn-disable' : 'option-btn-active'">
-                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取彩金' }}
+                {{ item.claimTime ? '已领取' : hasClaimed ?  '已失效' : '领取' }}
               </button>
             </td>
           </tr>
@@ -44,12 +44,12 @@
       </div>
       <div class="luck8-game-info">
         <div class="title"></div>
-        <div class="little-title">
-          <div class="left">活动时间</div>
-          <div class="right">
-            永久有效
-          </div>
-        </div>
+<!--        <div class="little-title">-->
+<!--          <div class="left">活动时间</div>-->
+<!--          <div class="right">-->
+<!--            永久有效-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="little-title">
           <div class="left">活动内容</div>
           <div class="right">

@@ -75,7 +75,6 @@ import { cached } from "boot/cache";
 import { userStore } from "src/stores";
 import moment from "moment/moment";
 import RecordComponent from "../../components/RecordComponent.vue";
-import * as _ from "lodash";
 
 const store = userStore();
 const visible = ref(true);
@@ -239,7 +238,7 @@ const loadPlatformLists = () => {
         value: ""
       });
 
-      _.each(data, function (item, index) {
+      data.forEach((item) => {
         var option = {
           label: getGameName(item.name),
           value: item.code

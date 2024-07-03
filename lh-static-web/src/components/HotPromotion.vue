@@ -24,8 +24,8 @@
       :params="list.param"
     />
     <FtdPromo v-if="list.redirectUrl === 'lh1-ftd-promo' && !isCommonPromo && store.token" />
-    <HongBaoYu2024
-      v-if="list.redirectUrl === 'tiqianhongbaozz' && !isCommonPromo && store.token"
+    <HongBaoPreEurocup
+      v-if="list.redirectUrl === 'tiqianhongbao' && !isCommonPromo && store.token"
       :promo-code="list.promoCode"
       :params="list.param"
     />
@@ -99,6 +99,7 @@
     <DepositRebates v-if="!isCommonPromo && list.redirectUrl === 'lh1-deposit-rebates'" />
     <WinLossPromo v-if="!isCommonPromo && list.redirectUrl === 'lh1-eurocup-guess'" />
     <Aijiasu v-if="!isCommonPromo && list.redirectUrl === 'lh1-aijiasu'" />
+    <EuroRegen v-if="list.redirectUrl === 'lh1-eurocup-regen' && !isCommonPromo && store.token" />
 
     <el-dialog class="award-modal" :modal="false" v-model="privilegeClaimedModalVisible" align-center>
       <div class="modal-div">
@@ -168,6 +169,7 @@ import fishHongbao from "../components/hotpromo/fishHongbao/fishHongbao.vue";
 import DepositRebates from "../components/hotpromo/depositRebates/depositRebates.vue";
 import WinLossPromo from "../components/hotpromo/winloss/WinLoss.vue";
 import Aijiasu from "../components/hotpromo/aijiasu/Aijiasu.vue";
+import EuroRegen from "../components/hotpromo/EuroRegen/EuroRegen.vue";
 import { ElMessage } from "element-plus";
 import { userStore } from "@/store";
 import moment from "moment";
@@ -226,7 +228,8 @@ export default defineComponent({
     HongBaoPreEurocup,
     WinLossPromo,
     MeiZhouBeiPromo,
-    Aijiasu
+    Aijiasu,
+    EuroRegen
   },
   props: {
     list: {
@@ -518,7 +521,8 @@ export default defineComponent({
       this.list.redirectUrl === "lh1-eurocup-guess" ||
       this.list.redirectUrl === "lh1meizhoubei" ||
       this.list.redirectUrl === "lh1-aijiasu" ||
-      this.list.redirectUrl === "lh1ouzhoubeibaopei"
+      this.list.redirectUrl === "lh1ouzhoubeibaopei" ||
+      this.list.redirectUrl === "lh1-eurocup-regen"
     ) {
       this.isCommonPromo = false;
     } else {

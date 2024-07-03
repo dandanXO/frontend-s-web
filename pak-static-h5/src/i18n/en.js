@@ -441,6 +441,20 @@ export default {
     slot: "SLOT",
     vip: "VIP"
   },
+  hotPromo: {
+    aviatorWheel: {
+      remainingDrawTimes: "Remaining draw times",
+      congratulations: "Congratulations"
+    },
+    signIn7Days: {
+      continuousSignIn: "Continuous sign-in:",
+      expired: "Expired",
+      day: "day",
+      days: "days",
+      signIn: "Sign in",
+      signedIn: "Signed in"
+    }
+  },
   error: {
     101: "Platform not found",
     102: "Platform is closed",
@@ -475,6 +489,11 @@ export default {
     1001: "Account is closed",
     1002: "Account is for affiliates",
     1004: "The account is temporarily locked due to entering the wrong password many times",
+    1011: "The current account has already bound a phone number",
+    1012: "The current account has already bound an email address",
+    1013: "The current account has already bound a birthday",
+    1014: "The current account has already bound a name",
+    1015: "The current account has already bound a nickname",
     1300: "Amount must be a number greater than 0",
     1301: "This card is not supported",
     1302: "This currency is not supported",
@@ -540,6 +559,11 @@ export default {
     35010: "35010 Member cannot receive this privilege",
     35011: "35011 Member cannot receive this privilege.",
     45000: "Not reaching the minimum withdrawal amount",
-    45001: "Received random bonus today"
+    45001: "Received random bonus today",
+    50000: "The maximum number of transfers for today has been reached",
+    50001: "The number of available transfers has been reached, please continue betting before transferring again",
+    51000: "Today's sign-in reward has already been claimed",
+    51001: "Requirements not met",
+    51002: "The reward has already been claimed by another account"
   }
 };

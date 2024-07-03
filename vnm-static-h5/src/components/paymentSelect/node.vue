@@ -404,6 +404,8 @@ $node-color: #468cff;
       position: absolute;
       right: -5px;
       top: -5px;
+      left: -5px;
+      margin: auto;
       background-repeat: no-repeat;
       background-size: 100%;
       background-position: top center;

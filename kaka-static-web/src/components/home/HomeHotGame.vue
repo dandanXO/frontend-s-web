@@ -15,7 +15,7 @@
             </div>
             <div class="hotgame-text">
               <div class="title">{{ hotgame.title }}</div>
-              <div class="subtitle">{{ hotgame.subtitle }}</div>
+              <!-- <div class="subtitle">{{ hotgame.subtitle }}</div> -->
             </div>
             <div class="character-wrapper">
               <img :class="`character-${hotgame.subtitle.toLowerCase()}`" :src="hotgame.charImgPath" />
@@ -55,11 +55,18 @@
               <!-- <div class="subtitle">{{ hotgame.content[hotgame.currentProvider.toLowerCase()] }}</div> -->
             </div>
             <div class="description">
-              <div class="desc">
+              <div class="desc" v-if="languageVal === 'vi'">
                 {{
                   hotgame.content &&
                   hotgame.content[hotgame.currentProvider.toLowerCase()] &&
-                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.vimessage
+                }}
+              </div>
+              <div class="desc" v-else>
+                {{
+                  hotgame.content &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()] &&
+                  hotgame.content[hotgame.currentProvider.toLowerCase()].desc.vimessage
                 }}
               </div>
               <!-- <div class="desc">还有超多独家创新玩法，足够新颖，极易操作的游戏界面， 更是在您游戏过程中增光添彩！</div> -->
@@ -113,7 +120,7 @@
                 class="common-btn game-start-btn"
                 @click="onEnterGameClick(hotgame, hotgame.type)"
               >
-                {{ hotgame.type !== "slot" ? `进入游戏` : `进入场馆` }}
+                {{ hotgame.type !== "slot" ? $t('hotGame.enterGame') : $t('hotGame.enterPlat') }}
               </el-button>
             </template>
 
@@ -126,7 +133,7 @@
                 "
                 class="maintenance-p"
               >
-                维护时间:
+                {{ $t('hotgame.maintenanceTime') }}:
                 <em>
                   {{ moment(hotgame.currentPlat?.maintenanceStartTime).format("YYYY/MM/DD hh:mm A") }} -
                   {{ moment(hotgame.currentPlat?.maintenanceEndTime).format("YYYY/MM/DD hh:mm A") }}
@@ -167,8 +174,9 @@ import HomeTitle from "@/atoms/HomeTitle.vue";
 import { getPlatformList, getLoggedInPlatformList } from "@/api/platform/platform";
 import { userStore } from "@/store";
 import GameModal from "@/components/modal/GameModal";
+import { i18nStore } from '@/store/language';
+import { storeToRefs } from 'pinia';
 import * as _ from "lodash";
-
 import {
   eSportsPlatforms,
   fishingPlatforms,
@@ -181,6 +189,8 @@ import {
 import moment from "moment";
 import { useDark } from "@vueuse/core";
 
+const i18nStoreLanguage = i18nStore()
+const { languageVal } = storeToRefs(i18nStoreLanguage)
 const { t } = useI18n();
 const store = userStore();
 const router = useRouter();
@@ -714,7 +724,7 @@ const checkPlatforms = () => {
         const additem = _.clone(plat);
         if (item.type === "slot" && additem.code === "AG") {
           additem.name = "XIN";
-          additem.alias = "XIN电子";
+          additem.alias = "XIN";
         }
         item.content.providerList.push(additem);
       }
@@ -754,7 +764,7 @@ const updatePlatforms = (platforms, item, keyModifier) => {
     const newObject = {
       title: p.cnname,
       subtitle: item.subtitle,
-      desc: p.message,
+      desc: p,
       charImgPath: p.image
     };
     item.content[p.code.toLowerCase() + keyModifier] = newObject;
@@ -911,6 +921,7 @@ $transition_timer: 0.5s;
           gap: 0.8rem;
           position: relative;
           width: 55%;
+          height: 90%;
 
           //&.maintenance {
           //  filter: grayscale(0.8);
@@ -953,11 +964,12 @@ $transition_timer: 0.5s;
           }
 
           .description {
-            min-height: 100px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+          max-height: 120px;
+          justify-content: flex-start;
+          overflow: hidden;
           }
 
           .desc {

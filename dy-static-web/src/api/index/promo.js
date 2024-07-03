@@ -261,3 +261,7 @@ export function duanwuDepositBet() {
 export function getSportMatch() {
   return server.EVENT.get("/sport-match/today");
 }
+
+export function loadHomePopup() {
+  return server.REST.get("/member/ads-popout");
+}

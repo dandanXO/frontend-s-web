@@ -161,6 +161,7 @@
         .blue-hexagon {
           font-weight: bold;
           color: #fff;
+          white-space: nowrap;
           display: flex;
           justify-content: center;
           align-items: center;

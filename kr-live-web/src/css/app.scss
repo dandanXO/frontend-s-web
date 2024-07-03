@@ -770,28 +770,6 @@ input:internal-autofill-selected {
   }
 }
 
-.cs-web-id.csweb-btn {
-  background: transparent !important;
-  border: none !important;
-  width: 120px !important;
-  height: auto !important;
-
-  animation-name: floating;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-
-  img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 405 / 283 !important;
-  }
-
-  @media (max-width: 600px) {
-    width: 80px !important;
-  }
-}
-
 .telegram-sticky {
   img.telegram-sticky-img {
     width: 60px !important;
@@ -821,5 +799,13 @@ input:internal-autofill-selected {
 }
 
 .scooped-skeleton {
-  mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px
+  mask: radial-gradient(30px at 40px 40px, transparent 98%, black) -40px -40px;
+  
+  width: 200px;
+  height: 365px;
+
+  @media (max-width: 769px) {
+    max-width: 130px;
+    max-height: 238px;
+  }
 }

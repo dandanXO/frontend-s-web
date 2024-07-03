@@ -530,6 +530,8 @@ export default {
     todayWithdrawal: '今日总提款',
     depositWithdrawalDiff: '存提差',
     recommenderCode: '邀请码',
+    memberShareRatio: '玩家返水比例',
+    editShareRatio: '编辑返水',
   },
   google: {
     google_auth_menu: '谷歌验证',
@@ -834,6 +836,9 @@ export default {
     11011: '上级游戏佣金未设置',
     11012: '上级游戏佣金未设置: ',
     11013: '下级佣金比例不能大于上级',
+    11014: '下级代理的返水比例总和不能超过上级的返水比例',
+    11015: '此代理没有设置返水比例',
+    11016: '玩家返水比例不能超过代理返水比例',
     14012: '只能创建比自己低的代理等级',
     14013: '此代理已有下线，不能编辑更低的代理等级',
   },

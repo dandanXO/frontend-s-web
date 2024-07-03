@@ -635,6 +635,7 @@ export default defineComponent({
     }
     .mailcontents {
       background: $background-dark-header;
+      color: $white;
     }
   }
 
