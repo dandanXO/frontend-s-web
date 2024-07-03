@@ -764,7 +764,7 @@ export default defineComponent({
                   isImportantAnnoucementModal.value = true;
                   homePopupImg.value =
                     useLocalStorage("IMAGE_CDN" ,process.env.IMAGE_CDN).value +
-                      "/adspopout/" +
+                      "/promo/" +
                       res.data["mobileImgUrl"];
                   homePopupContent.value = res.data["content"];
                   homePopupType.value = res.data["type"];
@@ -1100,7 +1100,10 @@ export default defineComponent({
       loadAnnouncement();
       checkPlatform();
       getVersionNo();
-      checkShowImgTop();
+      if(store.token && store.memberType ==='TEST'){
+        checkShowImgTop();
+      }
+
       getAppDownloadUrl();
     });
     const imageLoading = ref(false);

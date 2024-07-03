@@ -299,13 +299,13 @@
 
 <script>
 /* eslint-disable */
-import GameModal from "@/components/modal/GameModal";
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, watch } from "vue";
 import { loadPromoBanner, loadHomePromoBanner } from "@/api/index/promo";
 import { useLocalStorage } from "@vueuse/core";
 import Vue3autocounter from "vue3-autocounter";
 import { ElMessageBox } from "element-plus";
 import { useRouter } from "vue-router";
+import { userStore } from "@/store";
 
 export default defineComponent({
   // directives: {
@@ -338,6 +338,7 @@ export default defineComponent({
       });
     };
 
+    const store = userStore();
     // Pop out ads banner
     const homePopupImg = ref("");
     const homePopupContent = ref("");
@@ -376,9 +377,7 @@ export default defineComponent({
             sessionStorage.removeItem(key);
             isImportantAnnoucementModal.value = true;
             homePopupImg.value =
-              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
-              "/adspopout/" +
-              res.data["desktopImgUrl"];
+              useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value + "/promo/" + res.data["desktopImgUrl"];
             homePopupContent.value = res.data["content"];
             homePopupType.value = res.data["type"];
             homePopupId.value = res.data["id"];
@@ -423,7 +422,7 @@ export default defineComponent({
                 isImportantAnnoucementModal.value = true;
                 homePopupImg.value =
                   useLocalStorage("IMAGE_CDN", process.env.VUE_APP_IMAGE_CDN).value +
-                  "/adspopout/" +
+                  "/promo/" +
                   res.data["desktopImgUrl"];
                 homePopupContent.value = res.data["content"];
                 homePopupType.value = res.data["type"];
@@ -466,8 +465,20 @@ export default defineComponent({
 
     onMounted(() => {
       loadBanners();
-      checkShowImgTop();
+      if (store.token && store.memberType === "TEST") {
+        checkShowImgTop();
+      }
     });
+
+    watch(
+      () => store.token,
+      () => {
+        if (store.token) {
+          checkShowImgTop();
+        }
+      }
+    );
+
     return {
       banners,
       isImportantAnnoucementModal,
