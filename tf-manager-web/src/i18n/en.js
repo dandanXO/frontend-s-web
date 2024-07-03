@@ -1854,6 +1854,9 @@ export default {
     ftdDownlineAmount: 'FTD Downline Amount',
     changeReferrer: 'Change Referrer',
     memberShareRatio: 'Member Share Ratio',
+    downlineMembers: 'Downline Members',
+    todayRegCount: 'Today Register Count',
+    yesterdayRegCount: 'Yesterday Register Count',
   },
   message: {
     startenddatemore3months: 'Start and End date cannot more than 3 months',

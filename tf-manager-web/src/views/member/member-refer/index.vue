@@ -70,7 +70,7 @@
         highlight-current-row
         :empty-text="t('fields.noData')"
       >
-        <el-table-column prop="downlineMember" :label="t('fields.downlineMember')" width="180">
+        <el-table-column prop="downlineMember" :label="t('fields.downlineMembers')" width="180">
           <template
             #default="scope"
             v-if="hasPermission(['sys:member-refer:list'])"
