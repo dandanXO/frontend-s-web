@@ -128,7 +128,7 @@
             </div>
           </div>
 
-          <div class="row col gap-20 justify-end">
+          <div class="row col gap-25 justify-end">
             <router-link class="text-center cash-button" :unelevated="true" to="/finance/deposit">
               <img src="../assets/index/home-deposit-icon.svg" alt="" width="100%" />
               <p>存款</p>
@@ -243,7 +243,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -280,7 +280,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -317,7 +317,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -344,7 +344,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -381,7 +381,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -420,7 +420,7 @@
                             <div class="maintenance-box" v-if="hot.underMaintenance">
                               <p>维护中</p>
                               <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                                <div class="small-size q-mt-md">维护时间:</div>
+                                <div class="small-size q-mt-md">维护时间：</div>
                                 <p class="small-size">
                                   {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                                 </p>
@@ -460,7 +460,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -497,7 +497,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -536,7 +536,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -573,7 +573,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -610,7 +610,7 @@
                           <div class="maintenance-box" v-if="hot.underMaintenance">
                             <p>维护中</p>
                             <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -648,7 +648,7 @@
                         <div class="maintenance-box" v-if="hot.underMaintenance">
                           <p>维护中</p>
                           <template v-if="hot.maintenanceStartTime && hot.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(hot.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -695,7 +695,7 @@
                       <div class="maintenance-box" v-if="es.underMaintenance">
                         <p>维护中</p>
                         <template v-if="es.maintenanceStartTime && es.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间:</div>
+                          <div class="small-size q-mt-md">维护时间：</div>
                           <p class="small-size">
                             {{ moment(es.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
@@ -749,7 +749,7 @@
                       <div class="maintenance-box" v-if="sp.underMaintenance">
                         <p>维护中</p>
                         <template v-if="sp.maintenanceStartTime && sp.maintenanceEndTime">
-                          <div class="small-size q-mt-md">维护时间:</div>
+                          <div class="small-size q-mt-md">维护时间：</div>
                           <p class="small-size">
                             {{ moment(sp.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                           </p>
@@ -802,7 +802,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -839,7 +839,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -876,7 +876,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -913,7 +913,7 @@
                         <div class="maintenance-box" v-if="live.underMaintenance">
                           <p>维护中</p>
                           <template v-if="live.maintenanceStartTime && live.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(live.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1000,7 +1000,7 @@
                           <div class="maintenance-box" v-if="slt.underMaintenance">
                             <p>维护中</p>
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -1058,7 +1058,7 @@
                           <div class="maintenance-box" v-if="slt.underMaintenance">
                             <p>维护中</p>
                             <template v-if="slt.maintenanceStartTime && slt.maintenanceEndTime">
-                              <div class="small-size q-mt-md">维护时间:</div>
+                              <div class="small-size q-mt-md">维护时间：</div>
                               <p class="small-size">
                                 {{ moment(slt.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                               </p>
@@ -1114,7 +1114,7 @@
                         <div class="maintenance-box" v-if="poke.underMaintenance">
                           <p>维护中</p>
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1151,7 +1151,7 @@
                         <div class="maintenance-box" v-if="poke.underMaintenance">
                           <p>维护中</p>
                           <template v-if="poke.maintenanceStartTime && poke.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(poke.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1198,7 +1198,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1235,7 +1235,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1272,7 +1272,7 @@
                         <div class="maintenance-box" v-if="lotter.underMaintenance">
                           <p>维护中</p>
                           <template v-if="lotter.maintenanceStartTime && lotter.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(lotter.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1319,7 +1319,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1356,7 +1356,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1394,7 +1394,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1431,7 +1431,7 @@
                         <div class="maintenance-box" v-if="fish.underMaintenance">
                           <p>维护中</p>
                           <template v-if="fish.maintenanceStartTime && fish.maintenanceEndTime">
-                            <div class="small-size q-mt-md">维护时间:</div>
+                            <div class="small-size q-mt-md">维护时间：</div>
                             <p class="small-size">
                               {{ moment(fish.maintenanceStartTime).format("YYYY/MM/DD hh:mm:ss A") }}
                             </p>
@@ -1958,7 +1958,7 @@ export default defineComponent({
                 espObj.title = "小艾电竞";
               }
               if (espObj.code === "IMES") {
-                espObj.title = "IM电竞";
+                espObj.title = "IM 电竞";
                 esportOrder = 2;
               }
               if (!espObj.title) {
@@ -1977,7 +1977,7 @@ export default defineComponent({
               var spObj = Object.assign({}, element);
               var sportOrder = 3;
               if (spObj.code === "IM") {
-                spObj.title = "IM体育";
+                spObj.title = "IM 体育";
               }
               if (spObj.code === "PM") {
                 spObj.title = "熊猫体育";
@@ -1987,13 +1987,13 @@ export default defineComponent({
                 spObj.title = "小艾体育";
               }
               if (spObj.code === "CR") {
-                spObj.title = "CR体育";
+                spObj.title = "CR 体育";
               }
               if (spObj.code === "SABA") {
                 spObj.title = spObj.code + "体育";
               }
               if (spObj.code === "FB") {
-                spObj.title = "FB体育";
+                spObj.title = "FB 体育";
               }
               spObj.icon = "sport";
               spObj.subtitle = "体育赛事";
@@ -2063,9 +2063,9 @@ export default defineComponent({
               fishObj.subtitle = "捕鱼游戏";
 
               if (fishObj.code === "AGF") {
-                fishObj.title = "AG捕鱼";
+                fishObj.title = "AG 捕鱼";
               } else if (fishObj.code === "PMFISH") {
-                fishObj.title = "DB捕鱼";
+                fishObj.title = "DB 捕鱼";
               }
 
               if (fishObj.code !== "AG") {
