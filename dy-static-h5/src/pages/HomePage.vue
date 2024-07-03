@@ -2568,7 +2568,7 @@ export default defineComponent({
   }
 
   &.padding-normal {
-    padding-top: 136px;
+    padding-top: 58px;
   }
 
   &.padding-second {
