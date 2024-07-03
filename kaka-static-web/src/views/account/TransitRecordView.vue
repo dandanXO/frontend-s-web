@@ -1844,6 +1844,7 @@ export default defineComponent({
   align-items: center;
   gap: 20px;
   margin-bottom: 20px;
+  color: #333333;
 }
 
 :deep(.ant-select:hover .ant-select-clear) {
