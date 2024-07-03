@@ -1849,6 +1849,10 @@ export default {
     unsuccessFrom30min: 'Unsuccessful from 30 Minutes Ago',
     unsuccessIn10time: 'Channels with 10 Unsuccessful',
     platformAccountName: 'Platform Account Name',
+    subRegCount: 'Sub Register Count',
+    subDepositCount: 'Sub Deposit Count',
+    ftdDownlineAmount: 'FTD Downline Amount',
+    changeReferrer: 'Change Referrer',
     memberShareRatio: 'Member Share Ratio',
   },
   message: {
@@ -2557,6 +2561,8 @@ export default {
     'Refer Rebate': 'Refer Rebate',
     'Domain Access': 'Domain Access',
     'KRW Stats Report': 'KRW Statistics Report',
+    'Member Refer Pak': 'Member Refer Pak',
+    'Member Refer Summary Pak': 'Member Refer Summary Pak',
   },
   google: {
     google_auth_menu: 'Google Authenticator',
