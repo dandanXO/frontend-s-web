@@ -2319,8 +2319,8 @@ export default defineComponent({
 
     .headicon {
       flex: 1;
-      width: 15%;
       //width: 120px;
+    height: 40px;
     }
 
     .download-txt-container {
